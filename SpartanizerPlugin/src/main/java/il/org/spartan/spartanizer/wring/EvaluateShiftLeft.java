@@ -63,14 +63,14 @@ public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression>
     return "Evaluate substraction of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != LEFT_SHIFT)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != LEFT_SHIFT)
       return null;
-    switch (EvaluateAux.getEvaluatedTypeForShift(e)) {
+    switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
       case INT:
-        return replacementInt(extract.allOperands(e), e);
+        return replacementInt(extract.allOperands(x), x);
       case LONG:
-        return replacementLong(extract.allOperands(e), e);
+        return replacementLong(extract.allOperands(x), x);
       default:
         return null;
     }

@@ -92,12 +92,12 @@ public class subject {
     }
 
     /** Make a deep copy of expression and assign it to ast
-     * @param e JD
+     * @param x JD
      * @return a copy of the expression e
      * @see #rebase
      * @see duplicate#duplicate */
-    Expression claim(final Expression e) {
-      return wizard.rebase(duplicate.of(extract.core(e)), ast);
+    Expression claim(final Expression x) {
+      return wizard.rebase(duplicate.of(extract.core(x)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists

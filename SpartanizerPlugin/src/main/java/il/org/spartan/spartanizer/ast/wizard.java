@@ -131,15 +131,15 @@ public interface wizard {
 
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
-   * @param e an expression whose operator is either
+   * @param x an expression whose operator is either
    *        {@link Operator#CONDITIONAL_AND} or {@link Operator#CONDITIONAL_OR}
    * @return {@link Operator#CONDITIONAL_AND} if the operator present on the
    *         parameter is {@link Operator#CONDITIONAL_OR}, or
    *         {@link Operator#CONDITIONAL_OR} if this operator is
    *         {@link Operator#CONDITIONAL_AND}
    * @see duplicate#deMorgan(Operator) */
-  static Operator deMorgan(final InfixExpression e) {
-    return wizard.deMorgan(e.getOperator());
+  static Operator deMorgan(final InfixExpression x) {
+    return wizard.deMorgan(x.getOperator());
   }
 
   /** Compute the "de Morgan" conjugate of an operator.
@@ -238,12 +238,12 @@ public interface wizard {
   }
 
   /** Parenthesize an expression (if necessary).
-   * @param e JD
+   * @param x JD
    * @return a
    *         {@link il.org.spartan.spartanizer.assemble.duplicate#duplicate(Expression)}
    *         of the parameter wrapped in parenthesis. */
-  static Expression parenthesize(final Expression e) {
-    return iz.noParenthesisRequired(e) ? duplicate.of(e) : make.parethesized(e);
+  static Expression parenthesize(final Expression x) {
+    return iz.noParenthesisRequired(x) ? duplicate.of(x) : make.parethesized(x);
   }
 
   static ASTParser parser(final int kind) {
@@ -307,9 +307,9 @@ public interface wizard {
    * @param ¢ string to compare all names to
    * @param es SimplesNames to compare by their string value to cmpTo
    * @return true if all names are the same (string wise) or false otherwise */
-  static boolean same(final Expression e, final Expression... es) {
+  static boolean same(final Expression x, final Expression... es) {
     for (final Expression ¢ : es)
-      if (!same(¢, e))
+      if (!same(¢, x))
         return false;
     return true;
   }

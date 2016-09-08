@@ -27,14 +27,14 @@ public class ConcatStrings extends Wring.ReplaceCurrentNode<InfixExpression> imp
     return "Concat the strings to a one string";
   }
 
-  @SuppressWarnings("unused") @Override String description(final InfixExpression e) {
+  @SuppressWarnings("unused") @Override String description(final InfixExpression x) {
     return "Concat the string literals to a single string";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != wizard.PLUS2)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != wizard.PLUS2)
       return null;
-    final List<Expression> operands = extract.allOperands(e);
+    final List<Expression> operands = extract.allOperands(x);
     assert operands.size() >= 2;
     boolean isChanged = false;
     int i = 0;
@@ -43,7 +43,7 @@ public class ConcatStrings extends Wring.ReplaceCurrentNode<InfixExpression> imp
         ++i;
       else {
         isChanged = true;
-        final StringLiteral l = e.getAST().newStringLiteral();
+        final StringLiteral l = x.getAST().newStringLiteral();
         l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());
         operands.remove(i);
         operands.remove(i);

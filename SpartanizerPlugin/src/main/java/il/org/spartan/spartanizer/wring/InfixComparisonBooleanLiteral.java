@@ -26,16 +26,16 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static BooleanLiteral literal(final InfixExpression e) {
-    return az.booleanLiteral(core(literalOnLeft(e) ? step.left(e) : step.right(e)));
+  private static BooleanLiteral literal(final InfixExpression x) {
+    return az.booleanLiteral(core(literalOnLeft(x) ? step.left(x) : step.right(x)));
   }
 
-  private static boolean literalOnLeft(final InfixExpression e) {
-    return iz.booleanLiteral(core(step.left(e)));
+  private static boolean literalOnLeft(final InfixExpression x) {
+    return iz.booleanLiteral(core(step.left(x)));
   }
 
-  private static boolean literalOnRight(final InfixExpression e) {
-    return iz.booleanLiteral(core(step.right(e)));
+  private static boolean literalOnRight(final InfixExpression x) {
+    return iz.booleanLiteral(core(step.right(x)));
   }
 
   private static boolean negating(final InfixExpression x, final BooleanLiteral l) {

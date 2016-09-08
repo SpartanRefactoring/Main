@@ -31,26 +31,26 @@ public class FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
 
-  private static Expression buildDividers(final List<Expression> es) {
-    final Expression one = lisp.first(es).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one, lisp.first(es)).to(DIVIDE);
-    if (es.size() == 1)
+  private static Expression buildDividers(final List<Expression> xs) {
+    final Expression one = lisp.first(xs).getAST().newNumberLiteral("1");
+    final Expression $ = subject.pair(one, lisp.first(xs)).to(DIVIDE);
+    if (xs.size() == 1)
       return $;
-    es.remove(0);
-    es.add(0, $);
-    return subject.operands(es).to(DIVIDE);
+    xs.remove(0);
+    xs.add(0, $);
+    return subject.operands(xs).to(DIVIDE);
   }
 
-  private static Expression buildMultipliers(final List<Expression> es) {
-    switch (es.size()) {
+  private static Expression buildMultipliers(final List<Expression> xs) {
+    switch (xs.size()) {
       case 0:
         return null;
       case 1:
-        return lisp.first(es);
+        return lisp.first(xs);
       case 2:
-        return subject.pair(lisp.first(es), lisp.second(es)).to(TIMES);
+        return subject.pair(lisp.first(xs), lisp.second(xs)).to(TIMES);
       default:
-        return subject.operands(es).to(TIMES);
+        return subject.operands(xs).to(TIMES);
     }
   }
 }

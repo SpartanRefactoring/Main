@@ -38,12 +38,12 @@ public enum make {
     return $;
   }
 
-  public static Expression minus(final Expression e) {
-    final PrefixExpression ¢ = az.prefixExpression(e);
-    return ¢ == null ? minus(e, az.numberLiteral(e))
+  public static Expression minus(final Expression x) {
+    final PrefixExpression ¢ = az.prefixExpression(x);
+    return ¢ == null ? minus(x, az.numberLiteral(x))
         : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
             : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
-                : e;
+                : x;
   }
 
   /** Create a new {@link SimpleName} instance at the AST of the parameter
@@ -62,9 +62,9 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-  public static ParenthesizedExpression parethesized(final Expression e) {
-    final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(e) == null ? e : duplicate.of(e));
+  public static ParenthesizedExpression parethesized(final Expression x) {
+    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
+    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
     return $;
   }
 
@@ -74,8 +74,8 @@ public enum make {
     return subject.operand(¢).toThrow();
   }
 
-  static Expression minus(final Expression e, final NumberLiteral l) {
-    return l == null ? minusOf(e) //
+  static Expression minus(final Expression x, final NumberLiteral l) {
+    return l == null ? minusOf(x) //
         : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }

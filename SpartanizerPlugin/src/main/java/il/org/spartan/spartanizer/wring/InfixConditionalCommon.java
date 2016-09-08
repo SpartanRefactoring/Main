@@ -46,15 +46,15 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     return "Factor out common logical component of ||";
   }
 
-  @Override Expression replacement(final InfixExpression e) {
-    final Operator o = e.getOperator();
+  @Override Expression replacement(final InfixExpression x) {
+    final Operator o = x.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
     final Operator conjugate = conjugate(o);
-    final InfixExpression left = az.infixExpression(core(step.left(e)));
+    final InfixExpression left = az.infixExpression(core(step.left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = az.infixExpression(core(step.right(e)));
+    final InfixExpression right = az.infixExpression(core(step.right(x)));
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = step.left(left);

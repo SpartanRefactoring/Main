@@ -40,16 +40,16 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
 
-  @Override ConditionalExpression replacement(final ConditionalExpression e) {
-    final ConditionalExpression $ = subject.pair(core(e.getElseExpression()), core(e.getThenExpression())).toCondition(make.notOf(e.getExpression()));
+  @Override ConditionalExpression replacement(final ConditionalExpression x) {
+    final ConditionalExpression $ = subject.pair(core(x.getElseExpression()), core(x.getThenExpression())).toCondition(make.notOf(x.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
     if (!iz.conditional(then) && iz.conditional(elze))
       return null;
     if (iz.conditional(then) && !iz.conditional(elze))
       return $;
-    final ConditionalExpression parent = az.conditionalExpression(e.getParent());
-    if (parent != null && parent.getElseExpression() == e && compatibleCondition(parent.getExpression(), e.getExpression())) {
+    final ConditionalExpression parent = az.conditionalExpression(x.getParent());
+    if (parent != null && parent.getElseExpression() == x && compatibleCondition(parent.getExpression(), x.getExpression())) {
       final Expression alignTo = parent.getThenExpression();
       final double a1 = align(elze, alignTo);
       final double a2 = align(then, alignTo);

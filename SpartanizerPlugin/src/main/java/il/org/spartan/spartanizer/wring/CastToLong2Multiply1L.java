@@ -27,11 +27,11 @@ public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastEx
     return "Use 1L*" + step.expression(x) + " instead of (long)" + step.expression(x);
   }
 
-  @Override ASTNode replacement(final CastExpression e) {
+  @Override ASTNode replacement(final CastExpression x) {
     return eval(//
-        () -> replacement(step.expression(e))//
+        () -> replacement(step.expression(x))//
     ).when(//
-        step.type(e).isPrimitiveType() && "long".equals("" + step.type(e)) //
+        step.type(x).isPrimitiveType() && "long".equals(step.type(x) + "") //
     );
   }
 }

@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public class TermsCollector {
-  public static boolean isLeafTerm(final Expression e) {
-    return !iz.infixPlus(e) && !iz.infixMinus(e);
+  public static boolean isLeafTerm(final Expression x) {
+    return !iz.infixPlus(x) && !iz.infixMinus(x);
   }
 
   private final List<Expression> positive = new ArrayList<>();
@@ -45,19 +45,19 @@ public class TermsCollector {
     return this;
   }
 
-  Void collectPlusNonLeaf(final InfixExpression e) {
-    assert e != null;
-    assert !isLeafTerm(e);
-    assert iz.infixPlus(e) || iz.infixMinus(e);
-    return iz.infixPlus(e) ? collectPlusPrefixPlusExpression(e) //
-        : collectPlusPrefixMinusExpression(e);
+  Void collectPlusNonLeaf(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafTerm(x);
+    assert iz.infixPlus(x) || iz.infixMinus(x);
+    return iz.infixPlus(x) ? collectPlusPrefixPlusExpression(x) //
+        : collectPlusPrefixMinusExpression(x);
   }
 
-  Void collectPlusPrefixMinusExpression(final InfixExpression e) {
-    assert e != null;
-    assert !isLeafTerm(e);
-    assert iz.infixMinus(e);
-    final List<Expression> es = hop.operands(e);
+  Void collectPlusPrefixMinusExpression(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafTerm(x);
+    assert iz.infixMinus(x);
+    final List<Expression> es = hop.operands(x);
     addPositiveTerm(core(lisp.first(es)));
     return collectNegativeTerms(lisp.rest(es));
   }

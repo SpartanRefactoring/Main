@@ -99,8 +99,8 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
    * </pre>
    * </ol>
   */
-  private static Expression simplifyTernary(final ConditionalExpression e) {
-    return simplifyTernary(core(e.getThenExpression()), core(e.getElseExpression()), duplicate.of(e.getExpression()));
+  private static Expression simplifyTernary(final ConditionalExpression x) {
+    return simplifyTernary(core(x.getThenExpression()), core(x.getElseExpression()), duplicate.of(x.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
@@ -114,11 +114,11 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return "Convert conditional expression into logical expression";
   }
 
-  @Override Expression replacement(final ConditionalExpression e) {
-    return simplifyTernary(e);
+  @Override Expression replacement(final ConditionalExpression x) {
+    return simplifyTernary(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression e) {
-    return isTernaryOfBooleanLitreral(e);
+  @Override boolean scopeIncludes(final ConditionalExpression x) {
+    return isTernaryOfBooleanLitreral(x);
   }
 }

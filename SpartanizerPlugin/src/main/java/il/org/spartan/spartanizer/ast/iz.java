@@ -100,11 +100,11 @@ public enum iz {
     return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
 
-  /** @param e JD
+  /** @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
    *         expression. */
-  public static boolean comparison(final InfixExpression e) {
-    return in(e.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
+  public static boolean comparison(final InfixExpression x) {
+    return in(x.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
 
   public static boolean comparison(final Operator o) {
@@ -131,49 +131,40 @@ public enum iz {
   }
 
   /** Check whether an expression is a "conditional or" (||)
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
-  public static boolean conditionalOr(final Expression e) {
-    return conditionalOr(az.infixExpression(e));
+  public static boolean conditionalOr(final Expression x) {
+    return conditionalOr(az.infixExpression(x));
   }
 
   /** Check whether an expression is a "conditional or" (||)
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
-  public static boolean conditionalOr(final InfixExpression e) {
-    return e != null && e.getOperator() == CONDITIONAL_OR;
+  public static boolean conditionalOr(final InfixExpression x) {
+    return x != null && x.getOperator() == CONDITIONAL_OR;
   }
 
   /** Determine whether a node is a "specific", i.e., <code><b>null</b></code>
    * or <code><b>this</b></code> or literal.
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a
    *         "specific" */
-  public static boolean constant(final Expression e) {
-    switch (e.getNodeType()) {
-      case CHARACTER_LITERAL:
-      case NUMBER_LITERAL:
-      case NULL_LITERAL:
-      case THIS_EXPRESSION:
-        return true;
-      case PREFIX_EXPRESSION:
-        return iz.constant(extract.core(((PrefixExpression) e).getOperand()));
-      default:
-        return false;
-    }
+  public static boolean constant(final Expression x) {
+    return is(x, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
+        || is(x, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) x).getOperand()));
   }
 
   /** Check whether the operator of an expression is susceptible for applying
    * one of the two de Morgan laws.
-   * @param e InfixExpression
+   * @param x InfixExpression
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
    *         which the de Morgan laws apply. */
-  public static boolean deMorgan(final InfixExpression e) {
-    return iz.deMorgan(e.getOperator());
+  public static boolean deMorgan(final InfixExpression x) {
+    return iz.deMorgan(x.getOperator());
   }
 
   /** Check whether an operator is susceptible for applying one of the two de
@@ -271,24 +262,24 @@ public enum iz {
     return is(¢, INFIX_EXPRESSION);
   }
 
-  public static boolean infixDivide(final Expression e) {
-    return step.operator(az.infixExpression(e)) == DIVIDE;
+  public static boolean infixDivide(final Expression x) {
+    return step.operator(az.infixExpression(x)) == DIVIDE;
   }
 
   public static boolean infixExpression(final ASTNode n) {
     return is(n, INFIX_EXPRESSION);
   }
 
-  public static boolean infixMinus(final Expression e) {
-    return step.operator(az.infixExpression(e)) == wizard.MINUS2;
+  public static boolean infixMinus(final Expression x) {
+    return step.operator(az.infixExpression(x)) == wizard.MINUS2;
   }
 
-  public static boolean infixPlus(final Expression e) {
-    return step.operator(az.infixExpression(e)) == wizard.PLUS2;
+  public static boolean infixPlus(final Expression x) {
+    return step.operator(az.infixExpression(x)) == wizard.PLUS2;
   }
 
-  public static boolean infixTimes(final Expression e) {
-    return step.operator(az.infixExpression(e)) == TIMES;
+  public static boolean infixTimes(final Expression x) {
+    return step.operator(az.infixExpression(x)) == TIMES;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
@@ -454,8 +445,8 @@ public enum iz {
     return is(¢, MODIFIER);
   }
 
-  public static boolean negative(final Expression e) {
-    return negative(az.prefixExpression(e)) || negative(az.numberLiteral(e));
+  public static boolean negative(final Expression x) {
+    return negative(az.prefixExpression(x)) || negative(az.numberLiteral(x));
   }
 
   public static boolean negative(final NumberLiteral ¢) {
@@ -553,10 +544,10 @@ public enum iz {
   }
 
   /** Checks if expression is simple.
-   * @param e an expression
+   * @param x an expression
    * @return true iff argument is simple */
-  public static boolean simple(final Expression e) {
-    return is(e, //
+  public static boolean simple(final Expression x) {
+    return is(x, //
         BOOLEAN_LITERAL, //
         CHARACTER_LITERAL, //
         NULL_LITERAL, //
@@ -616,11 +607,11 @@ public enum iz {
 
   /** Determine whether a node is <code><b>this</b></code> or
    * <code><b>null</b></code>
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
-  public static boolean thisOrNull(final Expression e) {
-    return iz.oneOf(e, NULL_LITERAL, THIS_EXPRESSION);
+  public static boolean thisOrNull(final Expression x) {
+    return iz.oneOf(x, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}

@@ -18,9 +18,9 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return wizard.same(¢, left);
   }
 
-  private static List<Expression> associativeReplace(final List<Expression> es, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(es);
-    for (final Expression ¢ : es)
+  private static List<Expression> associativeReplace(final List<Expression> xs, final Expression left) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    for (final Expression ¢ : xs)
       if (asLeft(¢, left)) {
         $.remove(¢);
         break;
