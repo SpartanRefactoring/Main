@@ -3,14 +3,10 @@ package il.org.spartan.fun.Dr.Seuss;
 import il.org.spartan.*;
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 
-/**
- * @author yogi
- *
- */
-/**
- * @author yogi
- *
- */
+
+/** Dr. Seuss Nonsense
+ * @author Yossi Gil
+ * @year 2016 */
 public class Things {
   private static final Thing[] things = il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.things;
 
@@ -31,7 +27,7 @@ public class Things {
 
   private static void nothing(final Object... os) {
     if (os.length >= 2)
-      for (Object o : os)
+      for (final Object o : os)
         nothing(o);
   }
 
