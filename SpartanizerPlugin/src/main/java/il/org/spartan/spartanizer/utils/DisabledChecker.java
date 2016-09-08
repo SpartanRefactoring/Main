@@ -12,10 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 public class DisabledChecker {
   /** Disable spartanization identifier, used by the programmer to indicate a
    * method/class not to be spartanized */
-  public final static String dsis[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
+  public final static String disablers[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
   /** Enable spartanization identifier, used by the programmer to indicate a
    * method/class to be spartanized */
-  public final static String esis[] = { "@EnableSpartan", "Spartan", "[[spartan]]", "[[sparta]]" };
+  public final static String enablers[] = { "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
   final Set<ASTNode> dns;
   final Set<ASTNode> ens;
 
@@ -30,20 +30,18 @@ public class DisabledChecker {
   /** @param n node
    * @return true iff spartanization is disabled for n */
   public boolean check(final ASTNode n) {
-    ASTNode p = n;
-    while (p != null) {
+    for (ASTNode p = n; p != null; p = p.getParent()) {
       if (dns.contains(p))
         return true;
       if (ens.contains(p))
         return false;
-      p = p.getParent();
     }
     return false;
   }
 
   private class BodyDeclarationVisitor extends ASTVisitor {
-    @SuppressWarnings("hiding") Set<ASTNode> dns;
-    @SuppressWarnings("hiding") Set<ASTNode> ens;
+    @SuppressWarnings("hiding") final Set<ASTNode> dns;
+    @SuppressWarnings("hiding") final Set<ASTNode> ens;
 
     BodyDeclarationVisitor(final Set<ASTNode> dns, final Set<ASTNode> ens) {
       this.dns = dns;
@@ -83,16 +81,22 @@ public class DisabledChecker {
     }
 
     private boolean go(final BodyDeclaration d) {
-      final Javadoc j = d.getJavadoc();
-      if (j == null)
-        return true;
-      final String s = j.toString();
-      for (final String dsi : dsis)
+      return go(d, d.getJavadoc());
+    }
+
+    public boolean go(final BodyDeclaration d, final Javadoc j) {
+      return j == null || go(d, j.toString());
+    }
+
+    public boolean go(final BodyDeclaration d, final String s) {
+      for (final String dsi : disablers)
         if (s.contains(dsi)) {
           dns.add(d);
           return true;
         }
-      for (final String esi : esis)
+      // TODO: Or, on the face of it, this is a bug.
+      // You do the same thing for both enablers and disablers
+      for (final String esi : enablers)
         if (s.contains(esi)) {
           ens.add(d);
           return true;
