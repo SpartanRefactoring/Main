@@ -231,7 +231,7 @@ import il.org.spartan.utils.*;
   private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration d) {
-        $.set("" + d.getName());
+        $.set(d.getName() + "");
         return false;
       }
     });

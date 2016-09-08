@@ -22,34 +22,34 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static ASTNode replacementDouble(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    double sub = EvaluateAux.extractDouble(es.get(0));
+    double sub = EvaluateAux.extractDouble(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
         return null;
       if (index != 0)
         sub -= EvaluateAux.extractDouble(¢);
       ++index;
     }
-    return e.getAST().newNumberLiteral(Double.toString(sub));
+    return x.getAST().newNumberLiteral(Double.toString(sub));
   }
 
-  private static ASTNode replacementInt(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    int sub = EvaluateAux.extractInt(es.get(0));
+    int sub = EvaluateAux.extractInt(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
         return null;
       if (index != 0)
         sub -= EvaluateAux.extractInt(¢);
       ++index;
     }
-    return e.getAST().newNumberLiteral(Integer.toString(sub));
+    return x.getAST().newNumberLiteral(Integer.toString(sub));
   }
 
   private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
