@@ -5,7 +5,7 @@ import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 
 /** Dr. Seuss Nonsense
  * @author Yossi Gil
- * @year 2016 */
+ * @since 2016 */
 public class Things {
   private static final Thing[] things = il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.things;
 

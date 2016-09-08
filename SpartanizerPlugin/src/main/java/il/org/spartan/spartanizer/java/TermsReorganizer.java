@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
- * @year 2016 */
+ * @since 2016 */
 public class TermsReorganizer {
   public static Expression simplify(final InfixExpression x) {
     return build(new TermsCollector(x));
