@@ -109,7 +109,7 @@ public interface type {
    * at compile time by using overloading. Only use for testing, mainly for
    * testing of type.
    * @author Shalmon Niv
-   * @year 2016 */
+   * @since 2016 */
   @SuppressWarnings("unused") interface Axiom {
     static type.Primitive.Certain type(final boolean x) {
       return type.Primitive.Certain.BOOLEAN;
@@ -518,7 +518,7 @@ public interface type {
   /** Types we do not full understand yet.
    * @author Yossi Gil
    * @author Shalmon Niv
-   * @year 2016 */
+   * @since 2016 */
   interface Odd extends inner.implementation {
     /** Those anonymous characters that know little or nothing about themselves
      * TODO: Not sure we need all these {@link type.Odd.Types} values. */
@@ -548,7 +548,7 @@ public interface type {
 
   /** Primitive type or a set of primitive types
    * @author Yossi Gil
-   * @year 2016 */
+   * @since 2016 */
   interface Primitive extends inner.implementation {
     /** @return All {@link Certain} types that an expression of this type can
      *         be **/

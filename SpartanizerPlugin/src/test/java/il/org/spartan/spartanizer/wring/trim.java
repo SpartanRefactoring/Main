@@ -21,7 +21,7 @@ import il.org.spartan.plugin.*;
 */
 /** ??
  * @author Yossi Gil
- * @year 2016 */
+ * @since 2016 */
 public interface trim {
   static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
@@ -80,7 +80,7 @@ public interface trim {
 
   /** Unit tests demonstrating the fluent API
    * @author Yossi Gil
-   * @year 2016 */
+   * @since 2016 */
   @SuppressWarnings("static-method") //
   @Ignore public static class TEST {
     @Test public void trimming_of_gives() {
