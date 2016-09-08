@@ -35,6 +35,11 @@ import org.eclipse.jdt.core.dom.*;
       prudentType = t;
       hiding = null;
     }
+    
+    static boolean prudentTypeComparison(PrudentType t1,PrudentType t2){
+      return t1 == null ? t2 == null : 
+        (t2 != null && (t1 == PrudentType.NOTHING || t2 == PrudentType.NOTHING || t1 == t2)); 
+    }
 
     @Override public boolean equals(final Object o) {
       return o == this || o != null && getClass() == o.getClass() && equals(((Information) o));
@@ -51,8 +56,8 @@ import org.eclipse.jdt.core.dom.*;
           return false;
       } else if (!hiding.equals(i.hiding))
         return false;
-      /* if (prudentType != other.prudentType) //TODO how to correctly compare
-       * prudentType - best case scenario - contains(). return false; */
+      if (prudentTypeComparison(prudentType,i.prudentType)) 
+        return false;
       if (self == null) {
         if (i.self != null)
           return false;
