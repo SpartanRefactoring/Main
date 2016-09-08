@@ -1200,6 +1200,11 @@ public class TrimmerTest250 {
     trimming("j = j ^ k").to("j ^= k");
   }
 
+  @Ignore public void issue141_01() {
+    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
+        + "out(\"elements\", os);   \n" + "}").to(null);
+  }
+
   // @formatter:off
   enum A { a1() {{ f(); }
       public void f() {
