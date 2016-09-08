@@ -117,33 +117,33 @@ public class TermsCollector {
     return collectNegativeTerms(hop.operands(e));
   }
 
-  private Void collectNegativeTerm(final Expression e) {
-    assert e != null;
-    return isLeafTerm(e) ? addMinusTerm(e) : collectMinusPrefix(az.infixExpression(e));
+  private Void collectNegativeTerm(final Expression x) {
+    assert x != null;
+    return isLeafTerm(x) ? addMinusTerm(x) : collectMinusPrefix(az.infixExpression(x));
   }
 
-  private Void collectNegativeTerms(final Iterable<Expression> es) {
-    assert es != null;
-    for (final Expression e : es)
+  private Void collectNegativeTerms(final Iterable<Expression> xs) {
+    assert xs != null;
+    for (final Expression e : xs)
       collectNegativeTerm(core(e));
     return null;
   }
 
-  private Void collectPlusPrefix(final Expression e) {
-    assert e != null;
-    return isLeafTerm(e) ? addPlus(e) : collectPlusNonLeaf(az.infixExpression(e));
+  private Void collectPlusPrefix(final Expression x) {
+    assert x != null;
+    return isLeafTerm(x) ? addPlus(x) : collectPlusNonLeaf(az.infixExpression(x));
   }
 
-  private Void collectPlusPrefixPlusExpression(final InfixExpression e) {
-    assert e != null;
-    assert !isLeafTerm(e);
-    assert iz.infixPlus(e);
-    return collectPositiveTerms(hop.operands(e));
+  private Void collectPlusPrefixPlusExpression(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafTerm(x);
+    assert iz.infixPlus(x);
+    return collectPositiveTerms(hop.operands(x));
   }
 
-  private Void collectPositiveTerms(final Iterable<Expression> es) {
-    assert es != null;
-    for (final Expression e : es)
+  private Void collectPositiveTerms(final Iterable<Expression> xs) {
+    assert xs != null;
+    for (final Expression e : xs)
       addPositiveTerm(core(e));
     return null;
   }
