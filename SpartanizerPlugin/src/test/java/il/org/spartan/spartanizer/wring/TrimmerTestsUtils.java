@@ -60,9 +60,13 @@ public class TrimmerTestsUtils {
     public Operand(final String inner) {
       super(inner);
     }
+    
+    public void stays() {
+        checkSame();
+    }
 
     public Operand to(final String expected) {
-      if (expected == null || expected.isEmpty())
+      if (expected.isEmpty())
         checkSame();
       else {
         final Wrap w = Wrap.find(get());
