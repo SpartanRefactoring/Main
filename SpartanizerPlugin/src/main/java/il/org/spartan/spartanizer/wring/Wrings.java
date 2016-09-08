@@ -79,7 +79,7 @@ public enum Wrings {
   static int length(final ASTNode... ns) {
     int $ = 0;
     for (final ASTNode n : ns)
-      $ += ("" + n).length();
+      $ += (n + "").length();
     return $;
   }
 
@@ -97,13 +97,13 @@ public enum Wrings {
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s) ? $ : main;
   }
 
-  static boolean mixedLiteralKind(final List<Expression> es) {
-    if (es.size() <= 2)
+  static boolean mixedLiteralKind(final List<Expression> xs) {
+    if (xs.size() <= 2)
       return false;
     int previousKind = -1;
-    for (final Expression e : es)
+    for (final Expression e : xs)
       if (e instanceof NumberLiteral || e instanceof CharacterLiteral) {
-        final int currentKind = new LiteralParser("" + e).type().ordinal();
+        final int currentKind = new LiteralParser(e + "").type().ordinal();
         assert currentKind >= 0;
         if (previousKind == -1)
           previousKind = currentKind;

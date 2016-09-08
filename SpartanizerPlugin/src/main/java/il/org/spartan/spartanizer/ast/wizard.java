@@ -76,7 +76,7 @@ public interface wizard {
   }
 
   static String body(final ASTNode ¢) {
-    return tide.clean("" + ¢);
+    return tide.clean(¢ + "");
   }
 
   /** the function checks if all the given assignments have the same left hand
@@ -157,11 +157,11 @@ public interface wizard {
 
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
-   * @param es JD
+   * @param xs JD
    * @return first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
-  static Expression find(final boolean b, final List<Expression> es) {
-    for (final Expression $ : es)
+  static Expression find(final boolean b, final List<Expression> xs) {
+    for (final Expression $ : xs)
       if (iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue())
         return $;
     return null;
@@ -233,8 +233,8 @@ public interface wizard {
     return nonAssociative(az.infixExpression(n));
   }
 
-  static boolean nonAssociative(final InfixExpression e) {
-    return e != null && in(e.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+  static boolean nonAssociative(final InfixExpression x) {
+    return x != null && in(x.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   /** Parenthesize an expression (if necessary).

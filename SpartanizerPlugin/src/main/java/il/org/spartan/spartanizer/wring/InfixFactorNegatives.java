@@ -73,26 +73,26 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
-    for (final Expression e : es)
+  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
+    for (final Expression e : xs)
       gather(e, $);
     return $;
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Use at most one arithmetical negation, for first factor of " + e.getOperator();
+  @Override String description(final InfixExpression x) {
+    return "Use at most one arithmetical negation, for first factor of " + x.getOperator();
   }
 
-  @Override Rewrite make(final InfixExpression e, final ExclusionManager exclude) {
-    final List<Expression> es = gather(e);
+  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
+    final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
-    final int totalNegation = minus.level(e);
-    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(e)) == 1)
+    final int totalNegation = minus.level(x);
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(x)) == 1)
       return null;
     if (exclude != null)
-      exclude.exclude(e);
-    return new Rewrite(description(e), e) {
+      exclude.exclude(x);
+    return new Rewrite(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : lisp.first(es);
         for (final Expression ¢ : es)
