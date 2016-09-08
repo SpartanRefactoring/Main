@@ -7,7 +7,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wring.*;
 import il.org.spartan.utils.*;
 
