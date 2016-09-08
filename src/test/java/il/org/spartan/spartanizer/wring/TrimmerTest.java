@@ -26,7 +26,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
-  /** END OF STABLING TESTS */
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to(null);
   }
