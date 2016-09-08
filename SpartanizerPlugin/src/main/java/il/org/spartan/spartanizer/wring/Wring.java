@@ -67,39 +67,39 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   static abstract class AbstractSorting extends ReplaceCurrentNode<InfixExpression> {
-    @Override final String description(final InfixExpression e) {
-      return "Reorder operands of " + e.getOperator();
+    @Override final String description(final InfixExpression x) {
+      return "Reorder operands of " + x.getOperator();
     }
 
     abstract boolean sort(List<Expression> operands);
   }
 
   static abstract class InfixSorting extends AbstractSorting {
-    @Override boolean eligible(final InfixExpression e) {
-      final List<Expression> es = extract.allOperands(e);
+    @Override boolean eligible(final InfixExpression x) {
+      final List<Expression> es = extract.allOperands(x);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
 
-    @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = extract.allOperands(e);
-      return !sort(operands) ? null : subject.operands(operands).to(e.getOperator());
+    @Override Expression replacement(final InfixExpression x) {
+      final List<Expression> operands = extract.allOperands(x);
+      return !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
     }
   }
 
   static abstract class InfixSortingOfCDR extends AbstractSorting {
-    @Override boolean eligible(final InfixExpression e) {
-      final List<Expression> es = extract.allOperands(e);
+    @Override boolean eligible(final InfixExpression x) {
+      final List<Expression> es = extract.allOperands(x);
       es.remove(0);
       return !Wrings.mixedLiteralKind(es) && sort(es);
     }
 
-    @Override Expression replacement(final InfixExpression e) {
-      final List<Expression> operands = extract.allOperands(e);
+    @Override Expression replacement(final InfixExpression x) {
+      final List<Expression> operands = extract.allOperands(x);
       final Expression first = operands.remove(0);
       if (!sort(operands))
         return null;
       operands.add(0, first);
-      return subject.operands(operands).to(e.getOperator());
+      return subject.operands(operands).to(x.getOperator());
     }
   }
 

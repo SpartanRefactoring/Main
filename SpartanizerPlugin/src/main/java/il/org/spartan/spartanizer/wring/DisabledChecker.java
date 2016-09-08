@@ -10,12 +10,14 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Roth
  * @since 2016/05/13 */
 public class DisabledChecker {
-  /** Disable spartanization identifier, used by the programmer to indicate a
-   * method/class not to be spartanized */
-  public final static String disablers[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
-  /** Enable spartanization identifier, used by the programmer to indicate a
-   * method/class to be spartanized */
-  public final static String enablers[] = { "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
+  /**
+   * Disable spartanization identifier, used by the programmer to indicate a method/class not to be spartanized 
+   */
+  public static final String disablers[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
+  /**
+   * Enable spartanization identifier, used by the programmer to indicate a method/class to be spartanized 
+   */
+  public static final String enablers[] = { "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
   final Set<ASTNode> dns;
   final Set<ASTNode> ens;
 
@@ -85,7 +87,7 @@ public class DisabledChecker {
     }
 
     public boolean go(final BodyDeclaration d, final Javadoc j) {
-      return j == null || go(d, j.toString());
+      return j == null || go(d, (j + ""));
     }
 
     public boolean go(final BodyDeclaration d, final String s) {

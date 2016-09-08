@@ -41,16 +41,16 @@ public enum Wrings {
     return (IfStatement) lisp.first(statements(b));
   }
 
-  static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
-    final List<Expression> operands = extract.allOperands(e);
+  static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
+    final List<Expression> operands = extract.allOperands(x);
     wizard.removeAll(b, operands);
     switch (operands.size()) {
       case 0:
-        return e.getAST().newBooleanLiteral(b);
+        return x.getAST().newBooleanLiteral(b);
       case 1:
         return duplicate.of(operands.get(0));
       default:
-        return subject.operands(operands).to(e.getOperator());
+        return subject.operands(operands).to(x.getOperator());
     }
   }
 
