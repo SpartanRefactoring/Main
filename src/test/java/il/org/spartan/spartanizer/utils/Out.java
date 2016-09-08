@@ -16,12 +16,12 @@ public class Out {
     System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
 
-  public static void out(final String name, final int a) {
-    System.out.printf("%s = %d\n", name, a);
+  public static void out(final String name, final int i) {
+    System.out.printf("%s = %d\n", name, new Integer(i));
   }
 
-  public static void out(final String name, final boolean v) {
-    System.out.printf("%s = %b\n", name, v);
+  public static void out(final String name, final boolean b) {
+    System.out.printf("%s = %b\n", name, new Boolean(b));
   }
 
   public static void out(final String name, final Object[] os) {
@@ -31,24 +31,28 @@ public class Out {
     else if (os.length == 1)
       System.out.printf("Only one %s: %s\n", name, os[0]);
     else
-      System.out.printf("Total of %d %s:\n\t%s\n", os.length, name, separate.these(os).by("\n\t"));
+      System.out.printf("Total of %d %s:\n\t%s\n", new Integer(os.length), name, separate.these(os).by("\n\t"));
   }
 
-  public static void out(final String name, final Collection<Object> a) {
+  public static void out(final String name, final Collection<Object> os) {
     assert name != null;
-    if (a == null || a.isEmpty())
+    if (os == null || os.isEmpty()) {
       System.out.printf("No %s\n", name);
-    else if (a.size() == 1)
-      System.out.printf("Only 1 %s: %s\n", name, a.iterator().next());
-    else {
-      System.out.printf("Total of %d %s:\n", a.size(), name);
-      int n = 0;
-      final Once ellipsis = new Once("\t...\n");
-      for (final Object o : a)
-        if (++n > MAX_FIRST && n <= a.size() - MAX_LAST)
-          System.out.print(ellipsis);
-        else
-          System.out.printf("\t%2d) %s\n", n, o);
+      return;
+    }
+    if (os.size() == 1) {
+      System.out.printf("Only 1 %s: %s\n", name, os.iterator().next());
+      return;
+    }
+    System.out.printf("Total of %d %s:\n", Integer.valueOf(os.size()), name);
+    int n = 0;
+    for (final Object o : os) {
+      if (++n > MAX_FIRST && n <= os.size() - MAX_LAST) {
+        System.out.print("\t...\n");
+        return;
+      }
+      System.out.printf("\t%2d) %s\n", Integer.valueOf(n), o);
+      continue;
     }
   }
 }
