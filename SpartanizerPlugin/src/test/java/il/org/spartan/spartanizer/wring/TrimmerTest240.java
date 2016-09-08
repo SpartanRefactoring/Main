@@ -2795,6 +2795,10 @@ public class TrimmerTest240 {
     trimming("class T { T() { super(); a++;}").to("class T { T() { ++a;}");
   }
 
+  @Test public void removeSuperWithReceiver() {
+    trimming("class X{X(Y o){o.super();}}").to(null); 
+  }
+
   @Test public void renameToDollarActual() {
     trimming(//
         "        public static DeletePolicy fromInt(int initialSetting) {\n" + //
