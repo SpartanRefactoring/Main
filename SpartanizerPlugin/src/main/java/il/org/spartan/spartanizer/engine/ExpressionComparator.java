@@ -66,27 +66,31 @@ public enum ExpressionComparator implements Comparator<Expression> {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
-          f($, child);
+          addWeight($, child);
       }
 
-      void f(final Int $, final ASTNode ¢) {
+      /**
+       * @param a Accumulator
+       * @param ¢ Node to check
+       */
+      void addWeight(final Int a, final ASTNode ¢) {
         if (iz.is(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)
-            ++$.inner;
+            ++a.inner;
           return;
         }
         if (iz.is(¢, EMPTY_STATEMENT))
           return;
         if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
-          $.inner += 4;
+          a.inner += 4;
           return;
         }
         if (!iz.is(¢, IF_STATEMENT))
-          $.inner += 3;
+          a.inner += 3;
         else {
-          $.inner += 4;
+          a.inner += 4;
           if (step.elze(az.ifStatement(¢)) != null)
-            ++$.inner;
+            ++a.inner;
         }
       }
     });

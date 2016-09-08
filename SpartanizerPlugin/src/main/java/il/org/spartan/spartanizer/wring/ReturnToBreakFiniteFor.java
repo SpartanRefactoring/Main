@@ -107,7 +107,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
   @Override boolean scopeIncludes(final Block b) {
-    final List<Statement> statementList = b.statements();
+    final List<Statement> statementList = step.statements(b);
     return b != null && statementList.size() > 1 && statementList.get(0) instanceof ForStatement && statementList.get(1) instanceof ReturnStatement;
   }
 }

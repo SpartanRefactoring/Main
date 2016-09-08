@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
@@ -596,8 +596,7 @@ public interface type {
       }
     }
 
-    /** <p>
-     * Tells how much we know about the type of of a variable, function, or
+    /** Tells how much we know about the type of of a variable, function, or
      * expression. This should be conservative approximation to the real type of
      * the entity, what a rational, but prudent programmer would case about the
      * type
