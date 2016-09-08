@@ -77,6 +77,9 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     };
   }
 
+  // TODO Dor: I sprartanized a bit only to discover that this looks buggy! how
+  // can you assume it is an if without checking for it, and if you checked
+  // already, why do you check again?
   private Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     final Statement $ = az.ifStatement(s).getThenStatement();
     final Statement elze = az.ifStatement(s).getElseStatement();
@@ -88,14 +91,17 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
       return $;
     if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
       return elze;
-    if (az.block($) != null) {
-      final List<Statement> statementsList = az.block($).statements();
-      for (final Statement sl : statementsList) {
-        if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
-          return handleIf(sl, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
-          return sl;
-      }
+    return handleIf(nextReturn, az.block($));
+  }
+
+  private Statement handleIf(final ReturnStatement nextReturn, Block b) {
+    if (b == null)
+      return null;
+    for (final Statement $ : step.statements(b)) {
+      if (az.ifStatement($) != null || az.ifStatement($) != null)
+        return handleIf($, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement($)))
+        return $;
     }
     return null;
   }
