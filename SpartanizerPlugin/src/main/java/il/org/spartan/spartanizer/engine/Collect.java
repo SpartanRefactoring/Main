@@ -166,13 +166,13 @@ public enum Collect {
       /** Tries to add to the list provided by the closure (into) the
        * identifiers from all the {@link VariableDeclarationExpression}s from
        * the given list (es).
-       * @param es is a {@link List} of any type which extends a
+       * @param xs is a {@link List} of any type which extends a
        *        {@link Expression}
        * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
-      boolean consider(final List<? extends Expression> es) {
-        for (final Expression e : es)
+      boolean consider(final List<? extends Expression> xs) {
+        for (final Expression e : xs)
           addFragments(fragments(az.variableDeclarationExpression(e)));
         return true;
       }
@@ -236,12 +236,12 @@ public enum Collect {
 
       /** ThiWs function is needed cause a definition can be not in a
        * declaration form, and then #asVariableDeclarationExpression() will fail
-       * @param e JD
+       * @param x JD
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
        *         {@link Expression} is equal to the ASTnode's provided by the
        *         closure (n) */
-      boolean consider(final Expression e) {
-        return add(az.simpleName(e));
+      boolean consider(final Expression x) {
+        return add(az.simpleName(x));
       }
 
       boolean consider(final List<? extends Expression> initializers) {
@@ -301,8 +301,8 @@ public enum Collect {
         return collect(step.right(a));
       }
 
-      @Override public boolean visit(final CastExpression e) {
-        return collect(step.expression(e));
+      @Override public boolean visit(final CastExpression x) {
+        return collect(step.expression(x));
       }
 
       @Override public boolean visit(final ClassInstanceCreation c) {
@@ -330,8 +330,8 @@ public enum Collect {
         return true;
       }
 
-      @Override public boolean visit(final InstanceofExpression e) {
-        return collect(step.left(e));
+      @Override public boolean visit(final InstanceofExpression x) {
+        return collect(step.left(x));
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
@@ -369,8 +369,8 @@ public enum Collect {
         return collect((Expression) o);
       }
 
-      boolean collect(final Expression e) {
-        collectExpression(e);
+      boolean collect(final Expression x) {
+        collectExpression(x);
         return true;
       }
 
@@ -380,9 +380,9 @@ public enum Collect {
         return true;
       }
 
-      void collectExpression(final Expression e) {
-        if (e instanceof SimpleName)
-          collectExpression((SimpleName) e);
+      void collectExpression(final Expression x) {
+        if (x instanceof SimpleName)
+          collectExpression((SimpleName) x);
       }
 
       void collectExpression(final SimpleName n) {

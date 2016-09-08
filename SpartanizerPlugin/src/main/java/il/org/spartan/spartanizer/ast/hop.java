@@ -75,13 +75,13 @@ public interface hop {
   }
 
   /** @param n the node from which to extract the proper fragment
-   * @param e the name by which to look for the fragment
+   * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
    *         if ¢ or name are null) */
   // TODO this seems a bug
-  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression e) {
-    return hasNull(n, e) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || e.getNodeType() != SIMPLE_NAME ? null
-        : findDefinition((VariableDeclarationStatement) n, (SimpleName) e);
+  static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
+    return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
+        : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
   }
 
   /** Find the last statement residing under a given {@link Statement}

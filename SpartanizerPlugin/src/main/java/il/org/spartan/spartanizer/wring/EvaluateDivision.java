@@ -22,19 +22,19 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static ASTNode replacementDouble(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() || !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    double divide = EvaluateAux.extractDouble(es.get(0));
+    double divide = EvaluateAux.extractDouble(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
         divide /= EvaluateAux.extractDouble(¢);
       ++index;
     }
-    return e.getAST().newNumberLiteral(Double.toString(divide));
+    return x.getAST().newNumberLiteral(Double.toString(divide));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
