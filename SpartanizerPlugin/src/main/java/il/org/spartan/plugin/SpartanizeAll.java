@@ -1,7 +1,7 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.plugin.DialogBoxes.*;
 import static il.org.spartan.plugin.SpartanizeCurrent.*;
-import static il.org.spartan.spartanizer.spartanizations.DialogBoxes.*;
 
 import java.lang.reflect.*;
 import java.util.*;
