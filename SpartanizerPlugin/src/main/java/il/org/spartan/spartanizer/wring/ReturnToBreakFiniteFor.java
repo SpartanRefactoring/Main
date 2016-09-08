@@ -69,8 +69,17 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
                  r.replace(s,(ASTNode) ((Block)into.s("break;")).statements().get(0), g);
                }
            };
-         }
+         } 
       }
+      if(iz.returnStatement(body)){
+            if(compareReturnStatements(nextReturn,az.returnStatement(body)))
+              return new Rewrite(description(), body) {
+                @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+                  r.replace(body,(ASTNode) ((Block)into.s("break;")).statements().get(0), g);
+                }
+            };
+
+     }
       return null;
   }
   
