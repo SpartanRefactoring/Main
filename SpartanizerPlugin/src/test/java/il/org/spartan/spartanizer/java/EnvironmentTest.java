@@ -13,7 +13,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //

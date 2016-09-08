@@ -6,8 +6,6 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
-import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -4160,6 +4158,11 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue131_2() {
     trimming("for(int i=4 ; i<s.length() ; ++i){i+=9;return xxx;}return xxx;")
     .to("for(int i=4 ; i<s.length() ; ++i){i+=9;break;}return xxx;");
+  }
+  
+  @Test public void issue131_3() {
+    trimming("for(int i=4 ; i<s.length() ; ++i)return xxx;return xxx;")
+    .to("for(int i=4 ; i<s.length() ; ++i)break;return xxx;");
   }
       
 }

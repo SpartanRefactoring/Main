@@ -47,6 +47,14 @@ public enum az {
     return !iz.statement(¢) ? null : (Statement) ¢;
   }
 
+  /** Convert, if possible, an {@link Object} to a {@link ASTNode}
+   * @param ¢ JD
+   * @return argument, but down-casted to a {@link ASTNode}, or
+   *         <code><b>null</b></code> if no such down-cast is possible.. */
+  public static ASTNode astNode(final Object ¢) {
+    return !iz.astNode(¢) ? null : (ASTNode) ¢;
+  }
+
   /** Converts a boolean into a bit value
    * @param $ JD
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
@@ -103,11 +111,19 @@ public enum az {
   }
 
   /** Down-cast, if possible, to {@link ExpressionStatement}
-   * @param ¢ JD
+   * @param $ JD
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static ExpressionStatement expressionStatement(final ASTNode ¢) {
-    return !(¢ instanceof ExpressionStatement) ? null : (ExpressionStatement) ¢;
+  public static ExpressionStatement expressionStatement(final ASTNode $) {
+    return !($ instanceof ExpressionStatement) ? null : (ExpressionStatement) $;
+  }
+
+  /** Down-cast, if possible, to {@link ForStatement}
+   * @param $ JD
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static ForStatement forStatement(Statement $) {
+    return !iz.is($, FOR_STATEMENT) ? null : (ForStatement) $;
   }
 
   /** Down-cast, if possible, to {@link IfStatement}
@@ -225,28 +241,20 @@ public enum az {
 
   /** Convert, is possible, an {@link ASTNode} to a
    * {@link ConditionalExpression}
-   * @param ¢ JD
+   * @param $ JD
    * @return argument, but down-casted to a {@link ConditionalExpression}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static ThrowStatement throwStatement(final ASTNode ¢) {
-    return !(¢ instanceof ThrowStatement) ? null : (ThrowStatement) ¢;
+  public static ThrowStatement throwStatement(final ASTNode $) {
+    return !iz.is($, THROW_STATEMENT) ? null : (ThrowStatement) $;
   }
 
   /** Convert, if possible, an {@link Expression} to a
    * {@link VariableDeclarationExpression}
-   * @param ¢ JD
+   * @param $ JD
    * @return argument, but down-casted to a
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
-  public static VariableDeclarationExpression variableDeclarationExpression(final Expression ¢) {
-    return ¢.getNodeType() != VARIABLE_DECLARATION_EXPRESSION ? null : (VariableDeclarationExpression) ¢;
-  }
-
-  /** Convert, if possible, an {@link Object} to a {@link ASTNode}
-   * @param ¢ JD
-   * @return argument, but down-casted to a {@link ASTNode}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static ASTNode astNode(final Object ¢) {
-    return !iz.astNode(¢) ? null : (ASTNode) ¢;
+  public static VariableDeclarationExpression variableDeclarationExpression(final Expression $) {
+    return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 }
