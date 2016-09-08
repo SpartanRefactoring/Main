@@ -63,11 +63,8 @@ public interface trim {
           return super.checkAllConditions(pm);
         }
 
-        /*@Override public <T> T getAdapter(final Class<T> adapter) {
-          // TODO Auto-generated method stub
-          return (T) super.getAdapter(adapter);
-        }*/
-
+        /* @Override public <T> T getAdapter(final Class<T> adapter) { // TODO
+         * Auto-generated method stub return (T) super.getAdapter(adapter); } */
         @Override public FluentTrimmerApplication of(final String codeFragment) {
           // TODO Auto-generated method stub
           return super.of(codeFragment);
