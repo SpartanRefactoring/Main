@@ -29,10 +29,10 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static Expression chopHead(final InfixExpression e) {
-    final List<Expression> es = extract.allOperands(e);
+  private static Expression chopHead(final InfixExpression x) {
+    final List<Expression> es = extract.allOperands(x);
     es.remove(0);
-    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(e.getOperator());
+    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(x.getOperator());
   }
 
   private static Operator conjugate(final Operator o) {
