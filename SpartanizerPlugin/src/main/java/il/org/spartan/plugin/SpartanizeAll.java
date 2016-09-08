@@ -13,8 +13,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-import il.org.spartan.spartanizer.spartanizations.*;
-
 /** A handler for {@link Spartanizations}. This handler executes all safe
  * Spartanizations on all java files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
