@@ -23,9 +23,9 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Canonicalization {
-  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression e) {
+  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
     final VariableDeclarationFragment $ = duplicate.of(f);
-    $.setInitializer(duplicate.of(e));
+    $.setInitializer(duplicate.of(x));
     return $;
   }
 

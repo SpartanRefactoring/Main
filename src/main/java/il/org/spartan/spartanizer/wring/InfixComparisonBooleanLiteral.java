@@ -38,25 +38,25 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     return iz.booleanLiteral(core(step.right(e)));
   }
 
-  private static boolean negating(final InfixExpression e, final BooleanLiteral l) {
-    return l.booleanValue() != (e.getOperator() == EQUALS);
+  private static boolean negating(final InfixExpression x, final BooleanLiteral l) {
+    return l.booleanValue() != (x.getOperator() == EQUALS);
   }
 
-  private static Expression nonLiteral(final InfixExpression e) {
-    return literalOnLeft(e) ? step.right(e) : step.left(e);
+  private static Expression nonLiteral(final InfixExpression x) {
+    return literalOnLeft(x) ? step.right(x) : step.left(x);
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression e) {
-    return !e.hasExtendedOperands() && in(e.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(e) || literalOnRight(e));
+  @Override public boolean scopeIncludes(final InfixExpression x) {
+    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Eliminate redundant comparison with '" + literal(e) + "'";
+  @Override String description(final InfixExpression x) {
+    return "Eliminate redundant comparison with '" + literal(x) + "'";
   }
 
-  @Override Expression replacement(final InfixExpression e) {
-    final BooleanLiteral literal = literal(e);
-    final Expression nonliteral = core(nonLiteral(e));
-    return plant(!negating(e, literal) ? nonliteral : make.notOf(nonliteral)).into(e.getParent());
+  @Override Expression replacement(final InfixExpression x) {
+    final BooleanLiteral literal = literal(x);
+    final Expression nonliteral = core(nonLiteral(x));
+    return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 }
