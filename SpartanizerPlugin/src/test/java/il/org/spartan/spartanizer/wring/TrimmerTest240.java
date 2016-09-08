@@ -23,8 +23,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class TrimmerTest240 {
+@SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest240 {
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").to(null);
   }
