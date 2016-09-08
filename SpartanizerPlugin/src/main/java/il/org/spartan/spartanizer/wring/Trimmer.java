@@ -68,9 +68,7 @@ public class Trimmer extends Spartanization {
     final DisabledChecker dc = new DisabledChecker(u);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        if (dc.check(n))
-          return true;
-        if (!inRange(m, n))
+        if (dc.check(n) || !inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w != null) {
