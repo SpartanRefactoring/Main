@@ -38,12 +38,12 @@ public enum az {
   public static Annotation annotation(final IExtendedModifier $) {
     return !iz.annotation($) ? null : (Annotation) $;
   }
+
   /** Down-cast, if possible, to {@link ArrayInitializer}
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-
-  public static ArrayInitializer arrayInitializer(Expression $) {
+  public static ArrayInitializer arrayInitializer(final Expression $) {
     return !iz.is($, ARRAY_INITIALIZER) ? null : (ArrayInitializer) $;
   }
 
@@ -157,11 +157,12 @@ public enum az {
   public static InfixExpression infixExpression(final ASTNode $) {
     return !($ instanceof InfixExpression) ? null : (InfixExpression) $;
   }
+
   /** Down-cast, if possible, to {@link InstanceofExpression}
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static InstanceofExpression instanceofExpression(Expression $) {
+  public static InstanceofExpression instanceofExpression(final Expression $) {
     return !iz.is($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
@@ -217,6 +218,7 @@ public enum az {
   public static NumberLiteral numberLiteral(final ASTNode $) {
     return !iz.isNumberLiteral($) ? null : (NumberLiteral) $;
   }
+
   /** Down-cast, if possible, to {@link ParenthesizedExpression}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -273,8 +275,7 @@ public enum az {
     return !iz.is($, STRING_LITERAL) ? null : (StringLiteral) $;
   }
 
-  /** Convert, is possible, an {@link ASTNode} to a
-   * {@link ThrowStatement}
+  /** Convert, is possible, an {@link ASTNode} to a {@link ThrowStatement}
    * @param $ result
    * @return argument, but down-casted to a {@link ConditionalExpression}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */

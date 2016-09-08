@@ -18,8 +18,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.type.*;
-import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
@@ -639,7 +637,7 @@ public interface type {
           , STRING), //
       BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
-      @Override public boolean canB(Certain c) {
+      @Override public boolean canB(final Certain c) {
         return options.contains(c);
       }
 
@@ -648,8 +646,8 @@ public interface type {
 
       private Uncertain(final String description, final Primitive... ps) {
         this.description = description;
-        for (Primitive p : ps)
-          for (Certain c : p.options())
+        for (final Primitive p : ps)
+          for (final Certain c : p.options())
             if (!options.contains(c))
               options.add(c);
       }
