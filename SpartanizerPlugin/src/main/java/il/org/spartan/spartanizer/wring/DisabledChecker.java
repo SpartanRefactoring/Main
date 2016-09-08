@@ -28,9 +28,7 @@ public class DisabledChecker {
   }
 
   /** @param n node
-   * @return true iff spartanization is disabled for n 
-   *[[Hedonistic] 
-   * */
+   * @return true iff spartanization is disabled for n [[Hedonistic] */
   public boolean check(final ASTNode n) {
     for (ASTNode p = n; p != null; p = p.getParent()) {
       if (dns.contains(p))
