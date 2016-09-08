@@ -36,43 +36,34 @@ import org.eclipse.jdt.core.dom.*;
       hiding = null;
     }
 
-    @Override public boolean equals(final Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      final Information other = (Information) obj;
+    @Override public boolean equals(final Object o) {
+      return o == this || o != null && getClass() == o.getClass() && equals(((Information) o));
+    }
+
+    public boolean equals(final Information i) {
       if (blockScope == null) {
-        if (other.blockScope != null)
+        if (i.blockScope != null)
           return false;
-      } else if (!blockScope.equals(other.blockScope))
+      } else if (!blockScope.equals(i.blockScope))
         return false;
       if (hiding == null) {
-        if (other.hiding != null)
+        if (i.hiding != null)
           return false;
-      } else if (!hiding.equals(other.hiding))
+      } else if (!hiding.equals(i.hiding))
         return false;
       /* if (prudentType != other.prudentType) //TODO how to correctly compare
        * prudentType - best case scenario - contains(). return false; */
       if (self == null) {
-        if (other.self != null)
+        if (i.self != null)
           return false;
-      } else if (!self.equals(other.self))
+      } else if (!self.equals(i.self))
         return false;
       return true;
     }
 
     @Override public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + (blockScope == null ? 0 : blockScope.hashCode());
-      result = prime * result + (hiding == null ? 0 : hiding.hashCode());
-      // result = prime * result + ((prudentType == null) ? 0 :
-      // prudentType.hashCode());
-      result = prime * result + (self == null ? 0 : self.hashCode());
-      return result;
+      return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * (1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))
+          + (self == null ? 0 : self.hashCode());
     }
   }
 
