@@ -12,6 +12,7 @@ public @interface NestedENV {
     @Entry(name = "void", clazz = void.class), //
     @Entry(name = "DELME", clazz = DELME.class)//
 }) class DELME {
+  /** Internationally Empty (Dan and ALex: why? */
 }
 
 @interface Entries {
@@ -27,4 +28,5 @@ public @interface NestedENV {
 }
 
 @Entry(name = "int", clazz = int.class) class STAM {
+  /** TODO: Alex and Dan, do not keep this in production code. Remove it */
 }

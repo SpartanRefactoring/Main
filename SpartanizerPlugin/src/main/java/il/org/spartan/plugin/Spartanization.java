@@ -254,7 +254,7 @@ import il.org.spartan.spartanizer.engine.*;
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor spm = new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    final IProgressMonitor spm = newSubMonitor(pm);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
@@ -306,7 +306,7 @@ import il.org.spartan.spartanizer.engine.*;
     m.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor subProgressMonitor = new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    final IProgressMonitor subProgressMonitor = newSubMonitor(m);
     final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(subProgressMonitor);
     textChange.setEdit(createRewrite(cu, subProgressMonitor).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
@@ -320,13 +320,17 @@ import il.org.spartan.spartanizer.engine.*;
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    textChange.setEdit(createRewrite(new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL), m).rewriteAST());
+    textChange.setEdit(createRewrite(newSubMonitor(pm), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       if (!preview)
         textChange.perform(pm);
       else
         changes.add(textChange);
     pm.done();
+  }
+
+  private static IProgressMonitor newSubMonitor(final IProgressMonitor m) {
+    return new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
   }
 
   /** Creates a change from each compilation unit and stores it in the changes
@@ -336,7 +340,7 @@ import il.org.spartan.spartanizer.engine.*;
   protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException, CoreException {
     pm.beginTask("Iterating over gathered compilation units...", cus.size());
     for (final ICompilationUnit cu : cus)
-      scanCompilationUnit(cu, new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
+      scanCompilationUnit(cu, newSubMonitor(pm));
     pm.done();
   }
 
@@ -362,8 +366,7 @@ import il.org.spartan.spartanizer.engine.*;
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(),
-          new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
+      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(), newSubMonitor(pm));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
@@ -388,6 +391,6 @@ import il.org.spartan.spartanizer.engine.*;
 
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
     pm.beginTask("Checking preconditions...", 2);
-    scanCompilationUnits(getUnits(pm), new SubProgressMonitor(pm, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL));
+    scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
   }
 }

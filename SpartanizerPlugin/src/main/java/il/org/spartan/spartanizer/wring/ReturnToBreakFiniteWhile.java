@@ -84,8 +84,9 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
       return $;
     if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
       return elze;
-    if (az.block($) != null) {
-      final List<Statement> statementList = az.block($).statements();
+    Block b = az.block($);
+    if (b != null) {
+      final List<Statement> statementList = step.statements(b);
       for (final Statement sl : statementList) {
         if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
           return handleIf(sl, nextReturn);
@@ -97,7 +98,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
   }
 
   @Override boolean scopeIncludes(final Block b) {
-    final List<Statement> statementList = b.statements();
-    return b != null && statementList.size() > 1 && statementList.get(0) instanceof WhileStatement && statementList.get(1) instanceof ReturnStatement;
+    final List<Statement> ss = step.statements(b);
+    return b != null && ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
   }
 }
