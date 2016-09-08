@@ -122,7 +122,7 @@ public enum az {
    * @param $ JD
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static ForStatement forStatement(Statement $) {
+  public static ForStatement forStatement(final Statement $) {
     return !iz.is($, FOR_STATEMENT) ? null : (ForStatement) $;
   }
 

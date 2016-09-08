@@ -288,24 +288,23 @@ public class ArithmeticTest {
     @Test public void issue92_9() {
       trimming("3*4+2").to("12+2").to("14");
     }
-    
+
     @Test public void issue143_1() {
       trimming("1*31").to("31");
     }
-    
+
     @Test public void issue143_2() {
       trimming("@Override public int hashCode() { "//
           + "return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))"
           + "+(self == null ? 0 : self.hashCode());" //
-          +"}")
-      .to("@Override public int hashCode() { "//
-              + "return (self == null ? 0 : self.hashCode())"
-              + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
-              +"}")
-      .to("@Override public int hashCode() { "//
-              + "return (self == null ? 0 : self.hashCode())"
-              + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));"
-              + "}");
+          + "}")
+              .to("@Override public int hashCode() { "//
+                  + "return (self == null ? 0 : self.hashCode())"
+                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
+                  + "}")
+              .to("@Override public int hashCode() { "//
+                  + "return (self == null ? 0 : self.hashCode())"
+                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));" + "}");
     }
   }
 }
