@@ -24,9 +24,9 @@ import il.org.spartan.spartanizer.engine.*;
 public final class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> implements Kind.Canonicalization {
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
-      if (m instanceof MarkerAnnotation && ("" + ((MarkerAnnotation) m).getTypeName()).contains("Deprecated"))
+      if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))
         return false;
-    return ("" + i.getName()).equals("" + d.getName()) && arguments(i).size() == parameters(d).size();
+    return (i.getName() + "").equals(d.getName() + "") && arguments(i).size() == parameters(d).size();
   }
 
   @Override String description(final MethodDeclaration d) {

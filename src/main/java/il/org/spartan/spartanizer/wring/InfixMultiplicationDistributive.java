@@ -113,18 +113,18 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     );
   }
 
-  private ASTNode replacement(final List<Expression> es) {
-    if (es.size() == 1)
-      return az.infixExpression(es.get(0)).getOperator() != TIMES ? null : es.get(0);
-    if (es.size() == 2)
-      return replacement(az.infixExpression(es.get(0)), az.infixExpression(es.get(1)));
+  private ASTNode replacement(final List<Expression> xs) {
+    if (xs.size() == 1)
+      return az.infixExpression(xs.get(0)).getOperator() != TIMES ? null : xs.get(0);
+    if (xs.size() == 2)
+      return replacement(az.infixExpression(xs.get(0)), az.infixExpression(xs.get(1)));
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
-    List<Expression> temp = new ArrayList<>(es);
-    for (int i = 0; i < es.size(); ++i) {
-      System.out.println(" === " + es.get(i));
+    List<Expression> temp = new ArrayList<>(xs);
+    for (int i = 0; i < xs.size(); ++i) {
+      System.out.println(" === " + xs.get(i));
       temp = removeFirstEl(temp);
-      for (final Expression op : extract.allOperands(az.infixExpression(es.get(i)))) { // b
+      for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
             addCommon(op, common);
