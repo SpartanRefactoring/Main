@@ -84,7 +84,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
       return $;
     if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
       return elze;
-    Block b = az.block($);
+    final Block b = az.block($);
     if (b != null) {
       final List<Statement> statementList = step.statements(b);
       for (final Statement sl : statementList) {

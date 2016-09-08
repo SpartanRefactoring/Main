@@ -69,10 +69,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
           addWeight($, child);
       }
 
-      /**
-       * @param a Accumulator
-       * @param ¢ Node to check
-       */
+      /** @param a Accumulator
+       * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
         if (iz.is(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)

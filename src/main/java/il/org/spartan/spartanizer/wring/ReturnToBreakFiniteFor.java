@@ -42,7 +42,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
-    return r1 != null && r2 != null && (r1.getExpression() + "").equals((r2.getExpression() + ""));
+    return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
@@ -94,7 +94,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return handleIf(nextReturn, az.block($));
   }
 
-  private Statement handleIf(final ReturnStatement nextReturn, Block b) {
+  private Statement handleIf(final ReturnStatement nextReturn, final Block b) {
     if (b == null)
       return null;
     for (final Statement $ : step.statements(b)) {
