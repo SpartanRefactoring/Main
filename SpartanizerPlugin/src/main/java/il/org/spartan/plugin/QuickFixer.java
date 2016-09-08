@@ -4,8 +4,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.spartanizer.spartanizations.*;
-
 /** A quickfix generator for spartanization refactoring
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @since 2013/07/01 */
