@@ -29,6 +29,6 @@ public enum Modifiers {
   }
 
   private static int gt(final Modifiers m1, final Modifiers m2) {
-    return m1.ordinal() - m2.ordinal(); 
+    return m1.ordinal() - m2.ordinal();
   }
 }

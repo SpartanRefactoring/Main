@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
@@ -91,7 +91,6 @@ public enum sideEffects {
         throw new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName());
     }
   }
-
 
   private static boolean free(final ArrayCreation c) {
     final ArrayInitializer i = c.getInitializer();
