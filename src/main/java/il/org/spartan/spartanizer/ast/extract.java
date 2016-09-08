@@ -244,12 +244,12 @@ public enum extract {
   public static InfixExpression firstPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final InfixExpression e) {
+      @Override public boolean visit(final InfixExpression x) {
         if ($.get() != null)
           return false;
-        if (e.getOperator() != InfixExpression.Operator.PLUS)
+        if (x.getOperator() != InfixExpression.Operator.PLUS)
           return true;
-        $.set(e);
+        $.set(x);
         return false;
       }
     });

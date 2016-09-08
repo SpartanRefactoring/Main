@@ -51,8 +51,8 @@ public class MethodExplorer {
         return true;
       }
 
-      boolean add(final List<? extends Expression> es) {
-        for (final Expression e : es)
+      boolean add(final List<? extends Expression> xs) {
+        for (final Expression e : xs)
           addFragments(fragments(az.variableDeclarationExpression(e)));
         return true;
       }

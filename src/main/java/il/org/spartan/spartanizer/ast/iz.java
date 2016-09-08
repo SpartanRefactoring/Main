@@ -122,12 +122,12 @@ public enum iz {
   }
 
   /** Check whether an expression is a "conditional and" (&&)
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
    *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_AND} */
-  public static boolean conditionalAnd(final InfixExpression e) {
-    return e.getOperator() == CONDITIONAL_AND;
+  public static boolean conditionalAnd(final InfixExpression x) {
+    return x.getOperator() == CONDITIONAL_AND;
   }
 
   /** Check whether an expression is a "conditional or" (||)

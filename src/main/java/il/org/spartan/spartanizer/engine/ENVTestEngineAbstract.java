@@ -196,14 +196,14 @@ public abstract class ENVTestEngineAbstract {
 
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
-        if (foundTestedAnnotation) {
-          final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
-          if (enviromentSet == null)
-            return;
-          compareOutOfOrder(enviromentSet);
-          compareInOrder(enviromentSet);
-          foundTestedAnnotation = false;
-        }
+        if (!foundTestedAnnotation)
+          return;
+        final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
+        if (enviromentSet == null)
+          return;
+        compareOutOfOrder(enviromentSet);
+        compareInOrder(enviromentSet);
+        foundTestedAnnotation = false;
       }
     });
   }
