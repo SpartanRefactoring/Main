@@ -36,16 +36,12 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return "Convert the Return inside the loop to break";
   }
 
-  private static boolean isInfiniteLoop(ForStatement n) {
-    if (az.booleanLiteral(n.getExpression()) == null)
-      return false;
-    return true;
+  private static boolean isInfiniteLoop(ForStatement s) {
+    return az.booleanLiteral(s.getExpression()) != null;
   }
 
   private static boolean compareReturnStatements(ReturnStatement r1, ReturnStatement r2) {
-    if (r1 == null || r2 == null)
-      return false;
-    return r1.getExpression().toString().equals(r2.getExpression().toString());
+    return r1 != null && r2 != null && (r1.getExpression() + "").equals((r2.getExpression() + ""));
   }
 
   @SuppressWarnings("all") @Override Rewrite make(Block n) {
@@ -55,65 +51,53 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     if (isInfiniteLoop(forStatement))
       return null;
     Statement body = forStatement.getBody();
-    Statement toChange = null;
-    if(az.ifStatement(body)!=null){
-      toChange = handleIf(body,nextReturn);
-    }
-    if (iz.block(body)) {
-      List<Statement> blockStatements = ((Block) body).statements();
-      for (Statement s : blockStatements){
-        if(az.ifStatement(s)!=null){
-          toChange = handleIf(s,nextReturn);
-        }
+    Statement toChange = az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
+    if (iz.block(body)){
+      List<Statement> statementList1 = ((Block) body).statements();
+      for (Statement s : statementList1) {
+        if (az.ifStatement(s) != null)
+          toChange = handleIf(s, nextReturn);
         if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
           toChange = s;
           break;
         }
       }
     }
-    if (iz.returnStatement(body) && //
-        compareReturnStatements(nextReturn, az.returnStatement(body)))
+    if (iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)))
       toChange = body;
-    if (toChange == null)
-      return null;
-    Statement theChange = toChange;
-    return new Rewrite(description(), theChange) {
+    Statement change = toChange;
+    return toChange == null ? null : new Rewrite(description(), change) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(theChange, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
+        r.replace(change, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
       }
     };
   }
 
   private Statement handleIf(Statement s, ReturnStatement nextReturn) {
-     Statement then = az.ifStatement(s).getThenStatement();
+     Statement $ = az.ifStatement(s).getThenStatement();
      Statement elze = az.ifStatement(s).getElseStatement();
-     if (az.ifStatement(then)!=null)
-         return handleIf(then,nextReturn);
+     if (az.ifStatement($)!=null)
+         return handleIf($,nextReturn);
      if (az.ifStatement(elze)!=null)
        return handleIf(elze,nextReturn);
-     if (compareReturnStatements(nextReturn, az.returnStatement(then)))
-       return then;
+     if (compareReturnStatements(nextReturn, az.returnStatement($)))
+       return $;
      if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
        return elze;
-     if(az.block(then)!=null){
-       List<Statement> statementsList = az.block(then).statements();
-       for(Statement sl:statementsList){
-         if (az.ifStatement(sl)!=null)
-           return handleIf(sl,nextReturn);
-       if (az.ifStatement(sl)!=null)
-         return handleIf(sl,nextReturn);
-       if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
-         return sl;
-       }
+     if(az.block($)!=null){
+       List<Statement> statementList = az.block($).statements();
+       for (Statement sl : statementList) {
+        if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
+          return handleIf(sl, nextReturn);
+        if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
+          return sl;
+      }
      }
      return null;
   }
 
-  @Override boolean scopeIncludes(final Block s) {
-    List<Statement> statementList = s.statements();
-    if (s != null && statementList.size() > 1 && statementList.get(0) instanceof ForStatement //
-        && statementList.get(1) instanceof ReturnStatement)
-      return true;
-    return false;
+  @Override boolean scopeIncludes(final Block b) {
+    List<Statement> statementList = b.statements();
+    return b != null && statementList.size() > 1 && statementList.get(0) instanceof ForStatement && statementList.get(1) instanceof ReturnStatement;
   }
 }
