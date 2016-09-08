@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
-
+//TOOD Niv: Who wrote this class?
 public class FactorsCollector {
   public static boolean isLeafFactor(final Expression x) {
     return !iz.infixTimes(x) && !iz.infixDivide(x);

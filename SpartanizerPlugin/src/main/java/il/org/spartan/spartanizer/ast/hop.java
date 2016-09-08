@@ -7,6 +7,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+/** An empty <code><b>interface</b></code> for fluent programming. The name
+ * should say it all: The name, followed by a dot, followed by a method name,
+ * should read like a sentence phrase.
+ * @author Yossi Gil
+ * @since 2016 */
 public interface hop {
   /** Retrieves the ancestors of the ASTNode, via an Iterator.
    * @param ¢ JD
@@ -38,7 +43,8 @@ public interface hop {
    *         type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
-      if (iz.is($, ANONYMOUS_CLASS_DECLARATION //
+      if (iz.is($
+          , ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //

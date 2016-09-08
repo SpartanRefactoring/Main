@@ -8,6 +8,9 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 
+/** Reorganizer terms in a canonical way
+ * @author Yossi Gil
+ * @year 2016 */
 public class TermsReorganizer {
   public static Expression simplify(final InfixExpression x) {
     return build(new TermsCollector(x));
