@@ -8,13 +8,13 @@ import org.eclipse.jdt.core.dom.*;
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 @SuppressWarnings({ "unused" }) public interface Environment {
-  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintaing
-   * it for now, this class is intentionally package level, and intenrationally
-   * defined locall. For now, cients should not be messing with it */
+  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
+   * for now, this class is intentionally package level, and intenationally
+   * defined local. For now, clients should not be messing with it */
   static class Information {
     /** The containing block, whose death marks the death of this entry; not
      * sure, but I think this entry can be shared by many nodes at the same
-     * leve */
+     * level */
     public final ASTNode blockScope;
     /** What do we know about an entry hidden by this one */
     public final Information hiding;
@@ -45,24 +45,15 @@ import org.eclipse.jdt.core.dom.*;
     }
 
     public boolean equals(final Information i) {
-      if (blockScope == null) {
-        if (i.blockScope != null)
-          return false;
-      } else if (!blockScope.equals(i.blockScope))
-        return false;
-      if (hiding == null) {
-        if (i.hiding != null)
-          return false;
-      } else if (!hiding.equals(i.hiding))
-        return false;
-      if (prudentTypeComparison(prudentType, i.prudentType))
-        return false;
-      if (self == null) {
-        if (i.self != null)
-          return false;
-      } else if (!self.equals(i.self))
-        return false;
-      return true;
+      return eq(blockScope, i.blockScope) && eq(hiding, i.hiding) && eq(prudentType, i.prudentType) && eq(self, i.self);
+    }
+
+    public static boolean eq(Object o1, Object o2) {
+      if (o1 == o2)
+        return true;
+      if (o1 == null && o2 == null)
+        return true;
+      return o2.equals(o1);
     }
 
     @Override public int hashCode() {
@@ -84,6 +75,7 @@ import org.eclipse.jdt.core.dom.*;
       nest = parent;
     }
 
+    // TODO: Alex: Convert this into JavaDoc
     /* @return true iff Env is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
