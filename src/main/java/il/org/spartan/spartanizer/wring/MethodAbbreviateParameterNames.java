@@ -39,7 +39,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   @Override String description(final MethodDeclaration d) {
-    return "" + d.getName();
+    return d.getName() + "";
   }
 
   @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {

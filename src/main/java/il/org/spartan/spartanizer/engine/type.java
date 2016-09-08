@@ -179,17 +179,17 @@ public interface type {
       return !$.isNoInfo() ? $ : lookDown(x.getRightHandSide()).isNumeric() ? NUMERIC : lookDown(x.getRightHandSide());
     }
 
-    private static implementation lookDown(final CastExpression e) {
-      return typeSwitch("" + step.type(e));
+    private static implementation lookDown(final CastExpression x) {
+      return typeSwitch(step.type(x) + "");
     }
 
     private static implementation lookDown(final ClassInstanceCreation c) {
-      return typeSwitch("" + c.getType());
+      return typeSwitch(c.getType() + "");
     }
 
-    private static implementation lookDown(final ConditionalExpression e) {
-      final implementation $ = lookDown(e.getThenExpression());
-      final implementation ¢ = lookDown(e.getElseExpression());
+    private static implementation lookDown(final ConditionalExpression x) {
+      final implementation $ = lookDown(x.getThenExpression());
+      final implementation ¢ = lookDown(x.getElseExpression());
       // If we don't know much about one operand but do know enough about the
       // other, we can still learn something
       return $ == ¢ ? $
@@ -199,14 +199,14 @@ public interface type {
                       : NOTHING; //
     }
 
-    /** @param e JD
+    /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    private static implementation lookDown(final Expression e) {
-      if (hasType(e))
-        return getType(e);
-      switch (e.getNodeType()) {
+    private static implementation lookDown(final Expression x) {
+      if (hasType(x))
+        return getType(x);
+      switch (x.getNodeType()) {
         case NULL_LITERAL:
           return NULL;
         case CHARACTER_LITERAL:
@@ -216,33 +216,33 @@ public interface type {
         case BOOLEAN_LITERAL:
           return BOOLEAN;
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) e);
+          return lookDown((NumberLiteral) x);
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) e);
+          return lookDown((CastExpression) x);
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) e);
+          return lookDown((PrefixExpression) x);
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) e);
+          return lookDown((InfixExpression) x);
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) e);
+          return lookDown((PostfixExpression) x);
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) e);
+          return lookDown((ParenthesizedExpression) x);
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) e);
+          return lookDown((ClassInstanceCreation) x);
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) e);
+          return lookDown((MethodInvocation) x);
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) e);
+          return lookDown((ConditionalExpression) x);
         case ASSIGNMENT:
-          return lookDown((Assignment) e);
+          return lookDown((Assignment) x);
         default:
           return NOTHING;
       }
     }
 
-    private static implementation lookDown(final InfixExpression e) {
-      final InfixExpression.Operator o = e.getOperator();
-      final List<Expression> es = extract.allOperands(e);
+    private static implementation lookDown(final InfixExpression x) {
+      final InfixExpression.Operator o = x.getOperator();
+      final List<Expression> es = extract.allOperands(x);
       assert es.size() >= 2;
       implementation $ = lookDown(lisp.first(es)).underBinaryOperator(o, lookDown(lisp.second(es)));
       lisp.chop(lisp.chop(es));
@@ -639,7 +639,7 @@ public interface type {
       }
 
       @Override public String key() {
-        return "" + represents;
+        return represents + "";
       }
 
       /** @return A list of all Primitive.Certain types that an expression of

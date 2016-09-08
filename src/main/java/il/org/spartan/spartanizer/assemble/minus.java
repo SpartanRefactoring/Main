@@ -56,9 +56,9 @@ public enum minus {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
-  private static List<Expression> peel(final List<Expression> es) {
+  private static List<Expression> peel(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : es)
+    for (final Expression e : xs)
       $.add(peel(e));
     return $;
   }

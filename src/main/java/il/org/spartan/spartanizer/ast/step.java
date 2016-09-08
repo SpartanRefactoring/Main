@@ -236,12 +236,12 @@ public enum step {
     return e == null ? null : e.getOperator();
   }
 
-  public static PostfixExpression.Operator operator(final PostfixExpression e) {
-    return e == null ? null : e.getOperator();
+  public static PostfixExpression.Operator operator(final PostfixExpression x) {
+    return x == null ? null : x.getOperator();
   }
 
-  public static PrefixExpression.Operator operator(final PrefixExpression e) {
-    return e == null ? null : e.getOperator();
+  public static PrefixExpression.Operator operator(final PrefixExpression x) {
+    return x == null ? null : x.getOperator();
   }
 
   /** Expose the list of parameters in a {@link MethodDeclaration}
@@ -316,8 +316,8 @@ public enum step {
     return ¢.getThenStatement();
   }
 
-  public static Type type(final CastExpression e) {
-    return e.getType();
+  public static Type type(final CastExpression x) {
+    return x.getType();
   }
 
   @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
