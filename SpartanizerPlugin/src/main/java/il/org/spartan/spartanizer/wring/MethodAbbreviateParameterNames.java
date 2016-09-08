@@ -22,20 +22,48 @@ import il.org.spartan.spartanizer.engine.*;
  *
  * @Deprecated annotation */
 @Deprecated public final class MethodAbbreviateParameterNames extends Wring<MethodDeclaration> implements Kind.Abbreviation {
+  private static List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
+    final List<SingleVariableDeclaration> $ = new ArrayList<>();
+    for (final SingleVariableDeclaration d : ds)
+      if (suitable(d))
+        $.add(d);
+    return !$.isEmpty() ? $ : null;
+  }
+
+  private static String getExtraDimensions(final SingleVariableDeclaration d) {
+    String $ = "";
+    for (int i = d.getExtraDimensions(); i > 0; --i)
+      $ = $ + "s";
+    return $;
+  }
+
+  private static boolean isShort(final SingleVariableDeclaration d) {
+    final String n = spartan.shorten(d.getType());
+    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
+  }
+
   private static boolean legal(final SingleVariableDeclaration d, final MethodDeclaration m, final Collection<SimpleName> newNames) {
     if (spartan.shorten(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
     for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
+      if (n.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
     for (final SimpleName n : newNames)
-      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
+      if (n.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
     for (final SingleVariableDeclaration n : parameters(m))
-      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
+      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
+    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()) + pluralVariadic(d));
+  }
+
+  private static String pluralVariadic(final SingleVariableDeclaration d) {
+    return d.isVarargs() ? "s" : getExtraDimensions(d);
+  }
+
+  private static boolean suitable(final SingleVariableDeclaration d) {
+    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 
   @Override String description(final MethodDeclaration d) {
@@ -62,26 +90,5 @@ import il.org.spartan.spartanizer.engine.*;
           rename(key, renameMap.get(key), d, r, g);
       }
     };
-  }
-
-  private List<SingleVariableDeclaration> find(final List<SingleVariableDeclaration> ds) {
-    final List<SingleVariableDeclaration> $ = new ArrayList<>();
-    for (final SingleVariableDeclaration d : ds)
-      if (suitable(d))
-        $.add(d);
-    return !$.isEmpty() ? $ : null;
-  }
-
-  private boolean isShort(final SingleVariableDeclaration d) {
-    final String n = spartan.shorten(d.getType());
-    return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
-  }
-
-  @SuppressWarnings("static-method") private String pluralVariadic(final SingleVariableDeclaration d) {
-    return d.isVarargs() ? "s" : "";
-  }
-
-  private boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 }
