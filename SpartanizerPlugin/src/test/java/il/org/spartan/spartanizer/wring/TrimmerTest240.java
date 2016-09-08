@@ -2795,7 +2795,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void removeSuperWithReceiver() {
-    trimming("class X{X(Y o){o.super();}}").to(null); 
+    trimming("class X{X(Y o){o.super();}}").to(null);
   }
 
   @Test public void renameToDollarActual() {
