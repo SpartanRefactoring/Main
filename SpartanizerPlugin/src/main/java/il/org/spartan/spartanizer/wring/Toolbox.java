@@ -99,6 +99,7 @@ public class Toolbox {
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
             new ReturnToBreakFiniteFor(),//
+            new ReturnToBreakFiniteWhile(),//
             null) //
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //

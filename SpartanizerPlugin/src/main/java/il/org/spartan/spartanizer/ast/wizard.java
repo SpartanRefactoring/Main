@@ -281,13 +281,13 @@ public interface wizard {
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * @param ¢ JD
-   * @param es JD */
-  static void removeAll(final boolean b, final List<Expression> es) {
+   * @param xs JD */
+  static void removeAll(final boolean b, final List<Expression> xs) {
     for (;;) {
-      final Expression ¢ = find(b, es);
+      final Expression ¢ = find(b, xs);
       if (¢ == null)
         return;
-      es.remove(¢);
+      xs.remove(¢);
     }
   }
 
