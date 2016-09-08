@@ -55,21 +55,21 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     return $;
   }
 
-  private static List<Expression> gather(final InfixExpression e) {
-    return gather(e, new ArrayList<Expression>());
+  private static List<Expression> gather(final InfixExpression x) {
+    return gather(x, new ArrayList<Expression>());
   }
 
-  private static List<Expression> gather(final InfixExpression e, final List<Expression> $) {
-    if (e == null)
+  private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
+    if (x == null)
       return $;
-    if (!in(e.getOperator(), TIMES, DIVIDE)) {
-      $.add(e);
+    if (!in(x.getOperator(), TIMES, DIVIDE)) {
+      $.add(x);
       return $;
     }
-    gather(core(step.left(e)), $);
-    gather(core(step.right(e)), $);
-    if (e.hasExtendedOperands())
-      gather(extendedOperands(e), $);
+    gather(core(step.left(x)), $);
+    gather(core(step.right(x)), $);
+    if (x.hasExtendedOperands())
+      gather(extendedOperands(x), $);
     return $;
   }
 
