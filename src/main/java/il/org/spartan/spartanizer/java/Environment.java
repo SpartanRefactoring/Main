@@ -67,8 +67,8 @@ import org.eclipse.jdt.core.dom.*;
     }
 
     @Override public int hashCode() {
-      return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * (1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))
-          + (self == null ? 0 : self.hashCode());
+      return (self == null ? 0 : self.hashCode())
+          + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
     }
   }
 
