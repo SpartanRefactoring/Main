@@ -4169,5 +4169,25 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("for(int i=4 ; i<s.length() ; ++i)if(t=4)return xxx;return xxx;")
     .to("for(int i=4 ; i<s.length() ; ++i)if(t=4)break;return xxx;");
   }
+  
+  @Test public void issue131_5() {
+    trimming("while(i>5){i+=9;i++;return xxx;}return xxx;")
+    .to("while(i>5){i+=9;++i;break;}return xxx;");
+  }
+  
+  @Test public void issue131_6() {
+    trimming("while(i>5){i+=9;return xxx;}return xxx;")
+    .to("while(i>5){i+=9;break;}return xxx;");
+  }
+  
+  @Test public void issue131_7() {
+    trimming("while(i>5)return xxx;return xxx;")
+    .to("while(i>5)break;return xxx;");
+  }
+  
+  @Test public void issue131_8() {
+    trimming("while(i>5)if(t=4)return xxx;return xxx;")
+    .to("while(i>5)if(t=4)break;return xxx;");
+  }
         
 }
