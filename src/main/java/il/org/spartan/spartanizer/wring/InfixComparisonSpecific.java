@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** reorder comparisons so that the specific value is placed on the right.

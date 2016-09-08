@@ -31,14 +31,15 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Yossi Gil
  * @author Niv Shalmon
- * @since 2016-08-XX */
+ * @since 2016-08 */
+// TODO: Niv, eliminate this class
 public enum PrudentType {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
   BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
   VOID("void", "nothing at all"),
-  // Doubtful types, from four fold uncertainty down to bilalteral
+  // Doubtful types, from four fold uncertainty down to bilateral
   // schizophrenia" .
   ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
   NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //

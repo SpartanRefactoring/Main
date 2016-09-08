@@ -12,9 +12,18 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-09-06 */
 public interface metrics {
   /** @param n JD
-   * @return The total number of nodes in the AST */
-  @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
-    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
+   * @return The total number of distinct kind of nodes in the AST */
+  @SuppressWarnings("boxing") static int dexterity(final ASTNode n) {
+    if (n == null)
+      return 0;
+    final Recurser<Integer> recurse = new Recurser<>(n, 0);
+    final Set<Integer> nodesTypeSet = new HashSet<>();
+    return recurse.preVisit((x) -> {
+      if (nodesTypeSet.contains(x.getRoot().getNodeType()))
+        return x.getCurrent();
+      nodesTypeSet.add(x.getRoot().getNodeType());
+      return x.getCurrent() + 1;
+    });
   }
 
   /** @param n JD
@@ -32,17 +41,8 @@ public interface metrics {
   }
 
   /** @param n JD
-   * @return The total number of distinct kind of nodes in the AST */
-  @SuppressWarnings("boxing") static int dexterity(final ASTNode n) {
-    if (n == null)
-      return 0;
-    final Recurser<Integer> recurse = new Recurser<>(n, 0);
-    final Set<Integer> nodesTypeSet = new HashSet<>();
-    return recurse.preVisit((x) -> {
-      if (nodesTypeSet.contains(x.getRoot().getNodeType()))
-        return x.getCurrent();
-      nodesTypeSet.add(x.getRoot().getNodeType());
-      return x.getCurrent() + 1;
-    });
+   * @return The total number of nodes in the AST */
+  @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
+    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
   }
 }

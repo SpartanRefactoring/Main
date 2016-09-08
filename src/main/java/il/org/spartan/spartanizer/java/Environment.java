@@ -178,7 +178,9 @@ import org.eclipse.jdt.core.dom.*;
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  /** @return null iff the name is not in use in the Env. */
+  // TODO: Dan - don't use abbreviation, use {@link Environment} or 'this
+  // instance'
+  /** @return null iff the name is not in use in the this instance. */
   default Information get(final String name) {
     return null;
   }
@@ -188,7 +190,8 @@ import org.eclipse.jdt.core.dom.*;
     return false;
   }
 
-  /** @return null iff the name is not hiding anything from outer scopes. */
+  /** @return null iff the name is not hiding anything from outer scopes,
+   *         otherwise ?? TODO */
   default Information hiding(final String name) {
     return nest().get(name);
   }

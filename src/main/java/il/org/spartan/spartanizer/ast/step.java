@@ -54,17 +54,6 @@ public enum step {
     return ¢.catchClauses();
   }
 
-  @SuppressWarnings("rawtypes") public static List<ASTNode> marchingList(final ASTNode ¢) {
-    final List<ASTNode> $ = new ArrayList<>();
-    final List lst = ¢.structuralPropertiesForType();
-    for (final Object s : lst) {
-      final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
-      if (iz.astNode(child))
-        $.add(az.astNode(child));
-    }
-    return $;
-  }
-
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}
    * @param ¢ JD
    * @return else part of the parameter */
@@ -198,6 +187,17 @@ public enum step {
    * @return left operand of the parameter */
   public static Expression left(final InstanceofExpression ¢) {
     return ¢.getLeftOperand();
+  }
+
+  @SuppressWarnings("rawtypes") public static List<ASTNode> marchingList(final ASTNode ¢) {
+    final List<ASTNode> $ = new ArrayList<>();
+    final List lst = ¢.structuralPropertiesForType();
+    for (final Object s : lst) {
+      final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
+      if (iz.astNode(child))
+        $.add(az.astNode(child));
+    }
+    return $;
   }
 
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {

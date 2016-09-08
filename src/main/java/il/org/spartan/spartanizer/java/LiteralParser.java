@@ -4,6 +4,7 @@ package il.org.spartan.spartanizer.java;
  * literal.
  * @author Yossi Gil
  * @since 2015-08-30 */
+// TODO: Niv - consolidate with class {@link type}
 public class LiteralParser {
   /** An <code><b>enum</b></code> to give symbolic names to the literal types.
    * @author Yossi Gil

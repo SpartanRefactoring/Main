@@ -9,6 +9,11 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.*;
 
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
+ * @author Yossi Gil
+ * @since 2016 */
 public enum flatten {
   ;
   /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert

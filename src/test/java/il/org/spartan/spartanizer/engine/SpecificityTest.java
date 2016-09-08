@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
@@ -7,6 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
