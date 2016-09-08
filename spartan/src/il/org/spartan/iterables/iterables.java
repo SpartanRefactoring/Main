@@ -14,53 +14,8 @@ import il.org.spartan.*;
  * functions.
  * @author Yossi Gil <Yossi.Gil@GMail.COM> */
 public enum iterables {
+  ;
   //
-
-  /** Counts the number of items in an {@link Iterable}.
-   * @param <T> some arbitrary type
-   * @param ts some iterable over items whose type is the type parameter
-   * @return  number of items the given iterable yields. */
-  public static <T> int count(final @Nullable Iterable<T> ts) {
-    int $ = 0;
-    if (ts != null)
-      for (final @Nullable T t : ts)
-        $ += as.bit(t != null);
-    return $;
-  }
-
-  /** @param <T> JD
-   * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
-  public static <T> PureIterable.Sized<T> empty() {
-    return as.nonNullIterable();
-  }
-
-  /** @param os JD
-   * @return TODO document return type */
-  public static boolean isEmpty(final Iterable<?> os) {
-    for (final Object name2 : os)
-      if (name2 != null)
-        return false;
-    return true;
-  }
-
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>singleton</code>
-   * @param <T> JD
-   * @param t JD
-   * @return PureIterable.Sized<T> TODO Javadoc(2016) automatically generated
-   *         for returned value of method <code>singleton</code> */
-  public static <T> PureIterable.Sized<T> singleton(final T t) {
-    return as.nonNullIterable(t);
-  }
-
-  /** wraps a value in a singleton iterator form
-   * @param <T> JD
-   * @param $ JD
-   * @return  parameter, but in a singleton iterator form */
-  public static <T> PureIterator<T> singletonIterator(final T $) {
-    return singleton($).iterator();
-  }
-
   /** A static nested class hosting unit tests for the nesting class Unit test
    * for the containing class. Note the naming convention: a) names of test
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
@@ -105,5 +60,50 @@ public enum iterables {
     @Test public void countThree() {
       assertEquals(3, count(as.iterable("One", "Two", "Three")));
     }
+  }
+
+  /** Counts the number of items in an {@link Iterable}.
+   * @param <T> some arbitrary type
+   * @param ts some iterable over items whose type is the type parameter
+   * @return number of items the given iterable yields. */
+  public static <T> int count(final @Nullable Iterable<T> ts) {
+    int $ = 0;
+    if (ts != null)
+      for (final @Nullable T t : ts)
+        $ += as.bit(t != null);
+    return $;
+  }
+
+  /** @param <T> JD
+   * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
+  public static <T> PureIterable.Sized<T> empty() {
+    return as.nonNullIterable();
+  }
+
+  /** @param os JD
+   * @return TODO document return type */
+  public static boolean isEmpty(final Iterable<?> os) {
+    for (final Object name2 : os)
+      if (name2 != null)
+        return false;
+    return true;
+  }
+
+  /** TODO Javadoc(2016): automatically generated for method
+   * <code>singleton</code>
+   * @param <T> JD
+   * @param t JD
+   * @return PureIterable.Sized<T> TODO Javadoc(2016) automatically generated
+   *         for returned value of method <code>singleton</code> */
+  public static <T> PureIterable.Sized<T> singleton(final T t) {
+    return as.nonNullIterable(t);
+  }
+
+  /** wraps a value in a singleton iterator form
+   * @param <T> JD
+   * @param $ JD
+   * @return parameter, but in a singleton iterator form */
+  public static <T> PureIterator<T> singletonIterator(final T $) {
+    return singleton($).iterator();
   }
 }

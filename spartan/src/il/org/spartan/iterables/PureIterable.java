@@ -14,8 +14,6 @@ import org.eclipse.jdt.annotation.*;
  * @since 2014-06-03
  * @param <T> some arbitrary type */
 public interface PureIterable<@NonNull T> extends Iterable<T> {
-  @Override PureIterator<@NonNull T> iterator();
-
   /** A kind of {@link PureIterable} which provides an additional
    * {@link #size()} service.
    * <p>
@@ -47,4 +45,6 @@ public interface PureIterable<@NonNull T> extends Iterable<T> {
     /** @return how many elements are there in this instance */
     public abstract int size();
   }
+
+  @Override PureIterator<@NonNull T> iterator();
 }

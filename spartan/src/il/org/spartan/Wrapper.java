@@ -36,7 +36,7 @@ public class Wrapper<T> {
     return inner == null ? w.inner == null : inner.equals(w.inner);
   }
 
-  /** @return  value wrapped in this object. */
+  /** @return value wrapped in this object. */
   public T get() {
     return inner;
   }

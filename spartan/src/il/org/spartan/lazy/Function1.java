@@ -10,6 +10,6 @@ package il.org.spartan.lazy;
   /** Encapsulated function
    * @param ¢ JD
    * @throws Exception in case the function failed
-   * @return  result of applying the function to the argument */
+   * @return result of applying the function to the argument */
   T ϑ(A ¢) throws Exception;
 }

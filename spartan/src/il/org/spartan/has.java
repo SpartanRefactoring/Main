@@ -13,13 +13,25 @@ import org.junit.*;
  * @author Yossi Gil
  * @since Jul 8, 2014 */
 public enum has {
+  ;
+  @SuppressWarnings("javadoc") public static class TEST {
+    private final @Nullable String nul = null;
+
+    @Test public void seriesA01() {
+      azzert.aye(has.nulls(nul));
+    }
+
+    @SuppressWarnings("static-method") @Test public void seriesA02() {
+      azzert.nay(has.nulls("A"));
+    }
+  }
 
   /** Retrieve next item in a list
    * @param <T> JD
    * @param i an index of specific item in a list
    * @param ts the indexed list
-   * @return  following item in the list, if such such an item exists,
-   *         otherwise, the last node */
+   * @return following item in the list, if such such an item exists, otherwise,
+   *         the last node */
   public static <@Nullable T> @Nullable T next(final int i, final List<T> ts) {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
@@ -46,17 +58,5 @@ public enum has {
       if (o == null)
         return true;
     return false;
-  }
-
-  @SuppressWarnings("javadoc") public static class TEST {
-    private final @Nullable String nul = null;
-
-    @Test public void seriesA01() {
-      azzert.aye(has.nulls(nul));
-    }
-
-    @SuppressWarnings("static-method") @Test public void seriesA02() {
-      azzert.nay(has.nulls("A"));
-    }
   }
 }

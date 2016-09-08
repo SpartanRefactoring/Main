@@ -56,72 +56,6 @@ import il.org.spartan.reap.Cookbook.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 @SuppressWarnings("javadoc") public interface Environment {
-  /** A factory method of class {@link Property} of an {@link Integer} as in
-   * 
-   * <pre>
-   *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
-   * </pre>
-   * 
-   * @param i JD
-   * @return newly created instance of {@link Ingredient} */
-  static Property<@Nullable Integer> value(final int i) {
-    return new Property<>(Integer.valueOf(i));
-  }
-
-  /** A factory method of class {@link Property} of an {@link Integer} as in
-   * 
-   * <pre>
-   *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
-   * </pre>
-   * 
-   * @param i JD
-   * @return newly created instance of {@link Ingredient} */
-  static Property<@Nullable Boolean> value(final boolean ¢) {
-    return new Property<>(Boolean.valueOf(¢));
-  }
-
-  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
-    return new Property<T>().bind(f);
-  }
-
-  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
-    return new Property<T>().bind(f);
-  }
-
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
-    return new Property<T>().bind(f);
-  }
-
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
-    return new Property<T>().bind(f);
-  }
-
-  static <@Nullable T> Property<T> function(final Function0<T> ¢) {
-    return new Property<T>().ϑ(¢);
-  }
-
-  /** A factory method of class {@link Property} returning an undefined value
-   * for a cell
-   * @param < T > JD
-   * @return newly created instance of {@link Property} containing null value of
-   *         the type parameter */
-  static <@Nullable T> Property<T> undefined() {
-    return new Property<>();
-  }
-
-  /** A factory method for class {@link Ingredient} as in
-   *
-   * <pre>
-   * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
-   * </pre>
-   *
-   * @param < T > JD
-   * @param t JD
-   * @return newly created instance of {@link Property} */
-  static <@Nullable T> Property<@Nullable T> value(final T t) {
-    return new Property<>(t);
-  }
-
   @SuppressWarnings({ "static-method", "null" }) public interface __META {
     static class TEST {
       private static final String EMPTY = "";
@@ -442,6 +376,10 @@ import il.org.spartan.reap.Cookbook.*;
       return cache;
     }
 
+    @Nullable T cache(@SuppressWarnings("hiding") final T cache) {
+      return this.cache = cache;
+    }
+
     @Override @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
         return (Property<T>) super.clone();
@@ -485,6 +423,14 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
+    final long latestDependentVersion() {
+      return maxVersion(dependents);
+    }
+
+    long latestPrequisiteVersion() {
+      return maxVersion(prerequisites);
+    }
+
     public void melt() {
       frozen = false;
     }
@@ -519,7 +465,11 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
-    public Property<T> push(T t) {
+    public Property<T> push(final Function0<T> f) {
+      return this;
+    }
+
+    public Property<T> push(final T t) {
       return this;
     }
 
@@ -576,18 +526,6 @@ import il.org.spartan.reap.Cookbook.*;
       return version;
     }
 
-    @Nullable T cache(@SuppressWarnings("hiding") final T cache) {
-      return this.cache = cache;
-    }
-
-    final long latestDependentVersion() {
-      return maxVersion(dependents);
-    }
-
-    long latestPrequisiteVersion() {
-      return maxVersion(prerequisites);
-    }
-
     /** @param ϑ a no-arguments function that returns a value for this instance
      * @param cs instances on which the cell depends
      * @return <code><b>this</b></code> **/
@@ -598,9 +536,71 @@ import il.org.spartan.reap.Cookbook.*;
       version = 0;
       return this;
     }
+  }
 
-    public Property<T> push(Function0<T> f) {
-      return this;
-    }
+  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
+    return new Property<T>().bind(f);
+  }
+
+  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
+    return new Property<T>().bind(f);
+  }
+
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
+    return new Property<T>().bind(f);
+  }
+
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
+    return new Property<T>().bind(f);
+  }
+
+  static <@Nullable T> Property<T> function(final Function0<T> ¢) {
+    return new Property<T>().ϑ(¢);
+  }
+
+  /** A factory method of class {@link Property} returning an undefined value
+   * for a cell
+   * @param < T > JD
+   * @return newly created instance of {@link Property} containing null value of
+   *         the type parameter */
+  static <@Nullable T> Property<T> undefined() {
+    return new Property<>();
+  }
+
+  /** A factory method of class {@link Property} of an {@link Integer} as in
+   *
+   * <pre>
+   *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
+   * </pre>
+   *
+   * @param i JD
+   * @return newly created instance of {@link Ingredient} */
+  static Property<@Nullable Boolean> value(final boolean ¢) {
+    return new Property<>(Boolean.valueOf(¢));
+  }
+
+  /** A factory method of class {@link Property} of an {@link Integer} as in
+   *
+   * <pre>
+   *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
+   * </pre>
+   *
+   * @param i JD
+   * @return newly created instance of {@link Ingredient} */
+  static Property<@Nullable Integer> value(final int i) {
+    return new Property<>(Integer.valueOf(i));
+  }
+
+  /** A factory method for class {@link Ingredient} as in
+   *
+   * <pre>
+   * Property&lt;String&gt; genesis = Cookbook.value(&quot;&quot;);
+   * </pre>
+   *
+   * @param < T > JD
+   * @param t JD
+   * @return newly created instance of {@link Property} */
+  static <@Nullable T> Property<@Nullable T> value(final T t) {
+    return new Property<>(t);
   }
 }

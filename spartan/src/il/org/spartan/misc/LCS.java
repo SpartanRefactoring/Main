@@ -22,102 +22,6 @@ import il.org.spartan.text.*;
  * @author Yossi Gil
  * @since 2014-06-17 */
 public class LCS {
-  /** @param ia JD
-   * @param is2 JD
-   * @return TODO document return type */
-  public static int length(final int[] ia, final int[] is2) {
-    return new LCS(ia, is2).length();
-  }
-
-  static double distance(String s1, String s2) {
-    return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
-  }
-
-  /** @param a JD
-   * @param s2 JD
-   * @return TODO document return type */
-  public static int length(final String a, final String s2) {
-    return new LCS(a, s2).length();
-  }
-
-  /** @param ssa JD
-   * @param ssb JD
-   * @return TODO document return type */
-  public static int length(final String[] ssa, final String[] ssb) {
-    return new LCS(ssa, ssb).length();
-  }
-
-  /** @param s
-   * @return TODO document return type */
-  private static int hash(final String s) {
-    return s.replaceAll("\\s+", "").toLowerCase().hashCode();
-  }
-
-  private static int[] hash(final String[] ss) {
-    final int @NonNull [] $ = new int @NonNull [ss.length];
-    for (int i = 0; i < $.length; ++i) {
-      @SuppressWarnings("null") final @NonNull String s = ss[i];
-      $[i] = hash(s);
-    }
-    return $;
-  }
-
-  private final int[] A_s;
-  private final int[] B_s;
-  private final int[][] length;
-
-  /** Instantiates this class. TODO: Document this method
-   * @param as JD
-   * @param bs JD */
-  public LCS(final int[] as, final int[] bs) {
-    A_s = as;
-    B_s = bs;
-    length = new int @NonNull [as.length][];
-    for (int i = 0; i < as.length; ++i)
-      Arrays.fill(length[i] = new int[bs.length], -1);
-  }
-
-  /** Instantiates this class.
-   * @param a JD
-   * @param b JD */
-  public LCS(final String a, final String b) {
-    this(Lines.scatter(a), Lines.scatter(b));
-  }
-
-  /** TODO:Document this method Instantiates this class.
-   * @param as JD
-   * @param bs JD */
-  public LCS(final String[] as, final String[] bs) {
-    this(hash(as), hash(bs));
-  }
-
-  private int compute(final int i, final int j) {
-    return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
-  }
-
-  private int length() {
-    return A_s.length <= 0 || B_s.length <= 0 ? 0 : length(A_s.length - 1, B_s.length - 1); //
-  }
-
-  /** Returns the length of the LCS of two prefixes of the current strings,
-   * <code>as[0]...as[i]</code>, and <code>as[0]...as[i]</code>, i (respectively
-   * j) must be a valid index of array a (respectively b), or else, the
-   * substring of a (respectively b) are empty.
-   * @param i JD
-   * @param j
-   * @return TODO document return type */
-  private int length(final int i, final int j) {
-    return i < 0 || j < 0 ? 0 : obtainLength(i, j);
-  }
-
-  private int obtainLength(final int i, final int j) {
-    return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
-  }
-
-  private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
-  }
-
   @SuppressWarnings({ "static-method", "javadoc" }) //
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   public static class TEST {
@@ -438,5 +342,101 @@ public class LCS {
           chars2Lines(",,,,A,,,,,B,,,,,,,,,C,,,") //
       ), is(3));
     }
+  }
+
+  static double distance(final String s1, final String s2) {
+    return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
+  }
+
+  /** @param s
+   * @return TODO document return type */
+  private static int hash(final String s) {
+    return s.replaceAll("\\s+", "").toLowerCase().hashCode();
+  }
+
+  private static int[] hash(final String[] ss) {
+    final int @NonNull [] $ = new int @NonNull [ss.length];
+    for (int i = 0; i < $.length; ++i) {
+      @SuppressWarnings("null") final @NonNull String s = ss[i];
+      $[i] = hash(s);
+    }
+    return $;
+  }
+
+  /** @param ia JD
+   * @param is2 JD
+   * @return TODO document return type */
+  public static int length(final int[] ia, final int[] is2) {
+    return new LCS(ia, is2).length();
+  }
+
+  /** @param a JD
+   * @param s2 JD
+   * @return TODO document return type */
+  public static int length(final String a, final String s2) {
+    return new LCS(a, s2).length();
+  }
+
+  /** @param ssa JD
+   * @param ssb JD
+   * @return TODO document return type */
+  public static int length(final String[] ssa, final String[] ssb) {
+    return new LCS(ssa, ssb).length();
+  }
+
+  private final int[] A_s;
+  private final int[] B_s;
+  private final int[][] length;
+
+  /** Instantiates this class. TODO: Document this method
+   * @param as JD
+   * @param bs JD */
+  public LCS(final int[] as, final int[] bs) {
+    A_s = as;
+    B_s = bs;
+    length = new int @NonNull [as.length][];
+    for (int i = 0; i < as.length; ++i)
+      Arrays.fill(length[i] = new int[bs.length], -1);
+  }
+
+  /** Instantiates this class.
+   * @param a JD
+   * @param b JD */
+  public LCS(final String a, final String b) {
+    this(Lines.scatter(a), Lines.scatter(b));
+  }
+
+  /** TODO:Document this method Instantiates this class.
+   * @param as JD
+   * @param bs JD */
+  public LCS(final String[] as, final String[] bs) {
+    this(hash(as), hash(bs));
+  }
+
+  private int compute(final int i, final int j) {
+    return i < 0 || j < 0 ? 0 : threeWayDynamicProgramingStep(i, j);
+  }
+
+  private int length() {
+    return A_s.length <= 0 || B_s.length <= 0 ? 0 : length(A_s.length - 1, B_s.length - 1); //
+  }
+
+  /** Returns the length of the LCS of two prefixes of the current strings,
+   * <code>as[0]...as[i]</code>, and <code>as[0]...as[i]</code>, i (respectively
+   * j) must be a valid index of array a (respectively b), or else, the
+   * substring of a (respectively b) are empty.
+   * @param i JD
+   * @param j
+   * @return TODO document return type */
+  private int length(final int i, final int j) {
+    return i < 0 || j < 0 ? 0 : obtainLength(i, j);
+  }
+
+  private int obtainLength(final int i, final int j) {
+    return length[i][j] != -1 ? length[i][j] : (length[i][j] = compute(i, j));
+  }
+
+  private int threeWayDynamicProgramingStep(final int i, final int j) {
+    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
   }
 }

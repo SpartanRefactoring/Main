@@ -85,7 +85,7 @@ public class Integers {
   }
 
   /** What's the underlying table size?
-   * @return  hash table size (always a power of two) */
+   * @return hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
@@ -136,10 +136,54 @@ public class Integers {
     return $;
   }
 
+  /** Find the index in the hash table into which the parameter could be
+   * inserted.
+   * @param n some integer
+   * @return -1 if the parameter is in the table already, otherwise, the index
+   *         at which it could be safely inserted. */
+  protected int find(final int n) {
+    int $ = -1;
+    for (int i = hash(n), t = 0;; i += ++t) {
+      i &= data.length - 1;
+      if (placeholder[i] || !occupied[i])
+        $ = $ < 0 ? i : $;
+      if (!occupied[i])
+        return $;
+      if (n == data[i])
+        return -1;
+    }
+  }
+
+  /** Find the index in the hash table of the parameter
+   * @param i some integer
+   * @return index of the element if the parameter is in the table, otherwise,
+   *         -1; */
+  private int location(final int i) {
+    for (int $ = hash(i), t = 0;; $ += ++t) {
+      $ &= data.length - 1;
+      if (!occupied[$])
+        return -1;
+      if (placeholder[$])
+        continue;
+      if (i == data[$])
+        return $;
+    }
+  }
+
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b></code> */
   public Integers rehash() {
     return rehash(capacity());
+  }
+
+  /** resize internal storage to the specified capacity, which must be a power
+   * of two.
+   * @param newCapacity new initialCapacity for the internal array
+   * @return <code><b>this</b></code> */
+  protected Integers rehash(final int newCapacity) {
+    assert (newCapacity & newCapacity - 1) == 0;
+    assert newCapacity >= MIN_CAPACITY;
+    return reset(newCapacity).add(entries());
   }
 
   /** Remove an element from this set, it is in it
@@ -165,40 +209,6 @@ public class Integers {
     return this;
   }
 
-  /** How many elements are there in this set?
-   * @return  number of values in the set. */
-  public int size() {
-    return size;
-  }
-
-  /** Find the index in the hash table into which the parameter could be
-   * inserted.
-   * @param n some integer
-   * @return -1 if the parameter is in the table already, otherwise, the index
-   *         at which it could be safely inserted. */
-  protected int find(final int n) {
-    int $ = -1;
-    for (int i = hash(n), t = 0;; i += ++t) {
-      i &= data.length - 1;
-      if (placeholder[i] || !occupied[i])
-        $ = $ < 0 ? i : $;
-      if (!occupied[i])
-        return $;
-      if (n == data[i])
-        return -1;
-    }
-  }
-
-  /** resize internal storage to the specified capacity, which must be a power
-   * of two.
-   * @param newCapacity new initialCapacity for the internal array
-   * @return <code><b>this</b></code> */
-  protected Integers rehash(final int newCapacity) {
-    assert (newCapacity & newCapacity - 1) == 0;
-    assert newCapacity >= MIN_CAPACITY;
-    return reset(newCapacity).add(entries());
-  }
-
   final protected Integers reset(final int capacity) {
     data = new int @NonNull [capacity];
     occupied = new boolean @NonNull [capacity];
@@ -208,24 +218,14 @@ public class Integers {
     return this;
   }
 
+  /** How many elements are there in this set?
+   * @return number of values in the set. */
+  public int size() {
+    return size;
+  }
+
   /** @param capacity new hash table size */
   protected void subclassReset(final int capacity) {
     //
-  }
-
-  /** Find the index in the hash table of the parameter
-   * @param i some integer
-   * @return index of the element if the parameter is in the table, otherwise,
-   *         -1; */
-  private int location(final int i) {
-    for (int $ = hash(i), t = 0;; $ += ++t) {
-      $ &= data.length - 1;
-      if (!occupied[$])
-        return -1;
-      if (placeholder[$])
-        continue;
-      if (i == data[$])
-        return $;
-    }
   }
 }

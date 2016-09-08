@@ -13,7 +13,7 @@ import org.eclipse.jdt.annotation.*;
  * @since 2008/06/21 */
 public enum box {
   // A namespace: no values to this <code><b>enum</b></code>
-
+  ;
   /** Box a <code><b>boolean</b></code> into a {@link Boolean} object.
    * @param b some <code><b>boolean</b></code> value
    * @return a non-<code><b>null</b></code> {@link Boolean} with the value of

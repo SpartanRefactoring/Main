@@ -19,40 +19,7 @@ import il.org.spartan.*;
  * @since 2014-7-31 */
 public enum Lines {
   // No enum values in this fake module
-
-  /** The string which this module considers as line separator. */
-  public static final String END_OF_LINE_MARKER = "\n";
-  /** A longer and more meaningful name for the array of length zero with
-   * {@link String} elements. */
-  public static final String[] NO_LINES = new String @NonNull [0];
-
-  /** Counts the number of liens in a given text
-   * @param text count the number of lines in this parameter
-   * @return  number of lines in the parameter */
-  public static int count(final @Nullable String text) {
-    return Lines.scatter(text).length;
-  }
-
-  /** Builds text from an array of lines
-   * @param lines what needs to be concatenated
-   * @return  parameters, concatenated together, with
-   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments */
-  public static String gather(final String... lines) {
-    return separate.these(lines).by(END_OF_LINE_MARKER);
-  }
-
-  /** Breaks text into lines
-   * @param text some string of characters
-   * @return  parameter, split into an array if lines
-   * @see #gather */
-  public static String[] scatter(final @Nullable String text) {
-    return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
-  }
-
-  static void assertFalse(final String reason, final boolean b) {
-    azzert.nay(reason, b);
-  }
-
+  ;
   /** A static nested class hosting unit tests for the nesting class Unit test
    * for the containing class. Note the naming convention: a) names of test
    * methods do not use are not prefixed by "test". This prefix is redundant. b)
@@ -85,5 +52,38 @@ public enum Lines {
     @Test public void scatterSanity() {
       azzert.that(Lines.scatter("A").length, is(1));
     }
+  }
+
+  /** The string which this module considers as line separator. */
+  public static final String END_OF_LINE_MARKER = "\n";
+  /** A longer and more meaningful name for the array of length zero with
+   * {@link String} elements. */
+  public static final String[] NO_LINES = new String @NonNull [0];
+
+  static void assertFalse(final String reason, final boolean b) {
+    azzert.nay(reason, b);
+  }
+
+  /** Counts the number of liens in a given text
+   * @param text count the number of lines in this parameter
+   * @return number of lines in the parameter */
+  public static int count(final @Nullable String text) {
+    return Lines.scatter(text).length;
+  }
+
+  /** Builds text from an array of lines
+   * @param lines what needs to be concatenated
+   * @return parameters, concatenated together, with {@link #END_OF_LINE_MARKER}
+   *         separating consecutive arguments */
+  public static String gather(final String... lines) {
+    return separate.these(lines).by(END_OF_LINE_MARKER);
+  }
+
+  /** Breaks text into lines
+   * @param text some string of characters
+   * @return parameter, split into an array if lines
+   * @see #gather */
+  public static String[] scatter(final @Nullable String text) {
+    return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
 }
