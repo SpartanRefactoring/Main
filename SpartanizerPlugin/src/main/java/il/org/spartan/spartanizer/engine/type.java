@@ -280,10 +280,10 @@ public interface type {
       return lookDown(e.getOperand()).under(e.getOperator());
     }
 
-    private static implementation lookUp(final Expression e, final implementation i) {
+    private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (ASTNode context = parent(e); context != null; context = parent(context))
+      for (ASTNode context = parent(x); context != null; context = parent(context))
         switch (context.getNodeType()) {
           case INFIX_EXPRESSION:
             return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
