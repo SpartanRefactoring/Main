@@ -4164,5 +4164,10 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("for(int i=4 ; i<s.length() ; ++i)return xxx;return xxx;")
     .to("for(int i=4 ; i<s.length() ; ++i)break;return xxx;");
   }
-      
+  
+  @Test public void issue131_4() {
+    trimming("for(int i=4 ; i<s.length() ; ++i)if(t=4)return xxx;return xxx;")
+    .to("for(int i=4 ; i<s.length() ; ++i)if(t=4)break;return xxx;");
+  }
+        
 }
