@@ -36,12 +36,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "a*b + a*c => a * (b + c)";
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Apply the distributive rule to " + e;
+  @Override String description(final InfixExpression x) {
+    return "Apply the distributive rule to " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    return e.getOperator() != PLUS ? null : replacement(extract.allOperands(e));
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 
   @Override boolean scopeIncludes(final InfixExpression $) {
@@ -56,9 +56,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     addNewInList(op, different);
   }
 
-  private void addNewInList(final Expression item, final List<Expression> es) {
-    if (!isIn(item, es))
-      es.add(item);
+  private void addNewInList(final Expression item, final List<Expression> xs) {
+    if (!isIn(item, xs))
+      xs.add(item);
   }
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {

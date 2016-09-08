@@ -18,18 +18,18 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return a1.getRightHandSide();
   }
 
-  static Expression pushdown(final ConditionalExpression e) {
-    if (e == null)
+  static Expression pushdown(final ConditionalExpression x) {
+    if (x == null)
       return null;
-    final Expression then = core(e.getThenExpression());
-    final Expression elze = core(e.getElseExpression());
-    return wizard.same(then, elze) ? null : pushdown(e, then, elze);
+    final Expression then = core(x.getThenExpression());
+    final Expression elze = core(x.getElseExpression());
+    return wizard.same(then, elze) ? null : pushdown(x, then, elze);
   }
 
-  static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
+  static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return a1.getOperator() != a2.getOperator() || !wizard.same(step.left(a1), step.left(a2)) ? null
-        : plant(subject.pair(step.left(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
-            .into(e.getParent());
+        : plant(subject.pair(step.left(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator()))
+            .into(x.getParent());
   }
 
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -47,7 +47,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
-  private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
+  private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!wizard.same(e1.getType(), e2.getType()) || !wizard.same(e1.getExpression(), e2.getExpression()))
       return null;
     final List<Expression> es1 = arguments(e1);
@@ -59,7 +59,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
       return null;
     final ClassInstanceCreation $ = duplicate.of(e1);
     arguments($).remove(i);
-    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
     return $;
   }
 
@@ -92,7 +92,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression e, final InfixExpression e1, final InfixExpression e2) {
+  private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
     if (e1.getOperator() != e2.getOperator())
       return null;
     final List<Expression> es1 = hop.operands(e1);
@@ -105,8 +105,8 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     final InfixExpression $ = duplicate.of(e1);
     final List<Expression> operands = hop.operands($);
     operands.remove(i);
-    operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
-    return p(e, subject.operands(operands).to($.getOperator()));
+    operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression())));
+    return p(x, subject.operands(operands).to($.getOperator()));
   }
 
   private static Expression pushdown(final ConditionalExpression x, final MethodInvocation e1, final MethodInvocation e2) {
@@ -154,11 +154,11 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return "Pushdown ?: into expression";
   }
 
-  @Override Expression replacement(final ConditionalExpression e) {
-    return pushdown(e);
+  @Override Expression replacement(final ConditionalExpression x) {
+    return pushdown(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression e) {
-    return pushdown(e) != null;
+  @Override boolean scopeIncludes(final ConditionalExpression x) {
+    return pushdown(x) != null;
   }
 }

@@ -23,11 +23,11 @@ public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<Infi
     return "Remove 'false' argument to '||'";
   }
 
-  @Override Expression replacement(final InfixExpression e) {
-    return Wrings.eliminateLiteral(e, false);
+  @Override Expression replacement(final InfixExpression x) {
+    return Wrings.eliminateLiteral(x, false);
   }
 
-  @Override boolean scopeIncludes(final InfixExpression e) {
-    return iz.conditionalOr(e) && have.falseLiteral(extract.allOperands(e));
+  @Override boolean scopeIncludes(final InfixExpression x) {
+    return iz.conditionalOr(x) && have.falseLiteral(extract.allOperands(x));
   }
 }

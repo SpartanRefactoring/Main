@@ -19,17 +19,17 @@ import il.org.spartan.spartanizer.utils.*;
 public enum extract {
   ;
   /** Retrieve all operands, including parenthesized ones, under an expression
-   * @param e JD
+   * @param x JD
    * @return a {@link List} of all operands to the parameter */
-  public static List<Expression> allOperands(final InfixExpression e) {
-    assert e != null;
-    return hop.operands(flatten.of(e));
+  public static List<Expression> allOperands(final InfixExpression x) {
+    assert x != null;
+    return hop.operands(flatten.of(x));
   }
 
-  public static List<InfixExpression.Operator> allOperators(final InfixExpression e) {
-    assert e != null;
+  public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
+    assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
-    findOperators(e, $);
+    findOperators(x, $);
     return $;
   }
 
@@ -133,9 +133,9 @@ public enum extract {
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
     final Wrapper<PostfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression e) {
+      @Override public boolean visit(final PostfixExpression x) {
         if ($.get() == null)
-          $.set(e);
+          $.set(x);
         return false;
       }
     });
@@ -464,12 +464,12 @@ public enum extract {
     return az.throwStatement(extract.singleStatement(n));
   }
 
-  private static void findOperators(final InfixExpression e, final List<InfixExpression.Operator> $) {
-    if (e == null)
+  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+    if (x == null)
       return;
-    $.add(e.getOperator());
-    findOperators(az.infixExpression(e.getLeftOperand()), $);
-    findOperators(az.infixExpression(e.getRightOperand()), $);
+    $.add(x.getOperator());
+    findOperators(az.infixExpression(x.getLeftOperand()), $);
+    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {

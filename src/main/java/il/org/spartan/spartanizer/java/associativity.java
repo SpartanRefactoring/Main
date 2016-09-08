@@ -18,15 +18,15 @@ public enum associativity {
   }
 
   /** Determine whether associativity is right-to-left
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the associativity of parameter
    *         present on the parameter is right-to-left. */
-  public static boolean isRightToLeft(final Expression e) {
-    return isRightToLeft(precedence.of(e));
+  public static boolean isRightToLeft(final Expression x) {
+    return isRightToLeft(precedence.of(x));
   }
 
-  static boolean isLeftToRigh(final Expression e) {
-    return !isRightToLeft(precedence.of(e));
+  static boolean isLeftToRigh(final Expression x) {
+    return !isRightToLeft(precedence.of(x));
   }
 
   private static boolean isRightToLeft(final int precedence) {

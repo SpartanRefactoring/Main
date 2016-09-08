@@ -32,10 +32,10 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
 
   /** A utility function, which tries to simplify a boolean expression, whose
    * top most parameter is logical negation.
-   * @param e JD
+   * @param x JD
    * @return simplified parameter */
-  public static Expression simplifyNot(final PrefixExpression e) {
-    return pushdownNot(az.not(extract.core(e)));
+  public static Expression simplifyNot(final PrefixExpression x) {
+    return pushdownNot(az.not(extract.core(x)));
   }
 
   static Expression notOfLiteral(final BooleanLiteral l) {
@@ -64,16 +64,16 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return subject.operands(operands).to(conjugate(inner.getOperator()));
   }
 
-  private static Expression comparison(final InfixExpression e) {
-    return subject.pair(step.left(e), step.right(e)).to(conjugate(e.getOperator()));
+  private static Expression comparison(final InfixExpression x) {
+    return subject.pair(step.left(x), step.right(x)).to(conjugate(x.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {
     return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
   }
 
-  private static boolean hasOpportunity(final PrefixExpression e) {
-    return e != null && hasOpportunity(core(step.operand(e)));
+  private static boolean hasOpportunity(final PrefixExpression x) {
+    return x != null && hasOpportunity(core(step.operand(x)));
   }
 
   private static Expression perhapsComparison(final Expression inner) {
@@ -84,8 +84,8 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return inner == null ? null : comparison(inner);
   }
 
-  private static Expression perhapsDeMorgan(final Expression e) {
-    return perhapsDeMorgan(az.andOrOr(e));
+  private static Expression perhapsDeMorgan(final Expression x) {
+    return perhapsDeMorgan(az.andOrOr(x));
   }
 
   private static Expression perhapsDeMorgan(final InfixExpression x) {
@@ -109,15 +109,15 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return $ != null ? $ : x;
   }
 
-  @Override public boolean scopeIncludes(final PrefixExpression e) {
-    return e != null && az.not(e) != null && hasOpportunity(az.not(e));
+  @Override public boolean scopeIncludes(final PrefixExpression x) {
+    return x != null && az.not(x) != null && hasOpportunity(az.not(x));
   }
 
   @Override String description(@SuppressWarnings("unused") final PrefixExpression __) {
     return "Pushdown logical negation ('!')";
   }
 
-  @Override Expression replacement(final PrefixExpression e) {
-    return simplifyNot(e);
+  @Override Expression replacement(final PrefixExpression x) {
+    return simplifyNot(x);
   }
 }

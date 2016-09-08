@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
+import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.type.*;
@@ -243,7 +244,7 @@ public interface type {
 
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = x.getOperator();
-      final List<Expression> es = extract.allOperands(x);
+      final List<Expression> es = allOperands(x);
       assert es.size() >= 2;
       implementation $ = lookDown(lisp.first(es)).underBinaryOperator(o, lookDown(lisp.second(es)));
       lisp.chop(lisp.chop(es));
@@ -268,17 +269,17 @@ public interface type {
                   : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
     }
 
-    private static implementation lookDown(final ParenthesizedExpression e) {
-      return lookDown(extract.core(e));
+    private static implementation lookDown(final ParenthesizedExpression x) {
+      return lookDown(core(x));
     }
 
-    private static implementation lookDown(final PostfixExpression e) {
-      return lookDown(e.getOperand()).asNumeric(); // see
+    private static implementation lookDown(final PostfixExpression x) {
+      return lookDown(x.getOperand()).asNumeric(); // see
                                                    // testInDecreamentSemantics
     }
 
-    private static implementation lookDown(final PrefixExpression e) {
-      return lookDown(e.getOperand()).under(e.getOperator());
+    private static implementation lookDown(final PrefixExpression x) {
+      return lookDown(x.getOperand()).under(x.getOperator());
     }
 
     private static implementation lookUp(final Expression x, final implementation i) {
