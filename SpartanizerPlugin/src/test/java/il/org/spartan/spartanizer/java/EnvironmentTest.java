@@ -13,6 +13,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
@@ -343,7 +344,8 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void useTestUsesAndDefinitions2() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i < 10; ++i)x+=i").get()));
+    final Set<Map.Entry<String, Information>> $ = Environment
+        .uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i < 10; ++i)x+=i").get()));
     azzert.that($.contains("x"), is(true));
     azzert.that($.contains("i"), is(true));
   }
