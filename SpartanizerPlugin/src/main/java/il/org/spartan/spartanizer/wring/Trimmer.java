@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.spartanizations.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
@@ -53,11 +52,11 @@ public class Trimmer extends Spartanization {
   }
 
   @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
-    // TODO: Ori Roth, I cannot get this to run. final DisabledChecker dc = new
-    // DisabledChecker(u);
+    final DisabledChecker dc = new DisabledChecker(u);
     return new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        // if (dc.check(n)) return false;
+        if (dc.check(n))
+          return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
@@ -66,10 +65,11 @@ public class Trimmer extends Spartanization {
 
   @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     Toolbox.refresh();
+    final DisabledChecker dc = new DisabledChecker(u);
     u.accept(new DispatchingVisitor() {
       @Override <N extends ASTNode> boolean go(final N n) {
-        // if (dc.check(n))
-        // return false;
+        if (dc.check(n))
+          return true;
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);

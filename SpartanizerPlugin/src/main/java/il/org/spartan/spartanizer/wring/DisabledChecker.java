@@ -89,19 +89,17 @@ public class DisabledChecker {
     }
 
     public boolean go(final BodyDeclaration d, final String s) {
-      for (final String dsi : disablers)
-        if (s.contains(dsi)) {
-          dns.add(d);
-          return true;
-        }
-      // TODO: Ori, on the face of it, this is a bug.
-      // You do the same thing for both enablers and disablers
-      for (final String esi : enablers)
-        if (s.contains(esi)) {
-          ens.add(d);
-          return true;
-        }
+      insertAnnotated(d, s, dns, disablers);
+      insertAnnotated(d, s, ens, enablers);
       return true;
+    }
+    
+    private void insertAnnotated(BodyDeclaration d, String s, Set<ASTNode> g, String[] ids) {
+      for (final String id : ids)
+        if (s.contains(id)) {
+          g.add(d);
+          return;
+        }
     }
   }
 }
