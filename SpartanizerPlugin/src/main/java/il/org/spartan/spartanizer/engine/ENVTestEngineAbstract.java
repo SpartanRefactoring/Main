@@ -52,21 +52,22 @@ public abstract class ENVTestEngineAbstract {
 
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
-    String s = wizard.asString(ps.get(0).getValue());
-    /*
-     * A call to an inner function of PrudentType that calls typeSwitch(s,PrudentType.NOTHING) would be an
-     * improvement over the current situation, but not ideal.
-     * 
-     * An Ideal solution would be to add a "boolean contains(PrudentType t1,PrudentType t2)" function, that will
-     * return true iff type t1 is contained in type t2 - for example, PrudentType.NUMERIC is contained in 
-     * PrudentType.NOTNULL. 
-     * 
-     * Returning a direct comparison is far too error prone, and would be a bad idea for a debug tool.
-     */
-    //PrudentType t = PrudentType.typeSwitch(wizard.asString(ps.get(1).getValue()),PrudentType.NOTHING);
-    
-    //add returns true iff the element did not exist in the set already.
-    if(!testSet.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information())))
+    final String s = wizard.asString(ps.get(0).getValue());
+    /* A call to an inner function of PrudentType that calls
+     * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
+     * current situation, but not ideal.
+     *
+     * An Ideal solution would be to add a
+     * "boolean contains(PrudentType t1,PrudentType t2)" function, that will
+     * return true iff type t1 is contained in type t2 - for example,
+     * PrudentType.NUMERIC is contained in PrudentType.NOTNULL.
+     *
+     * Returning a direct comparison is far too error prone, and would be a bad
+     * idea for a debug tool. */
+    // PrudentType t =
+    // PrudentType.typeSwitch(wizard.asString(ps.get(1).getValue()),PrudentType.NOTHING);
+    // add returns true iff the element did not exist in the set already.
+    if (!testSet.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information())))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
@@ -84,19 +85,17 @@ public abstract class ENVTestEngineAbstract {
   // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
-
-  @SuppressWarnings("null")
-  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
+  @SuppressWarnings("null") public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
     final Iterator<Entry<String, Information>> i = testSet.iterator();
     final Iterator<Entry<String, Information>> j = $.iterator();
     boolean flag = true;
     while (i.hasNext()) {
-      Entry<String,Information> testEntry = i.next();
+      final Entry<String, Information> testEntry = i.next();
       flag = false;
       while (j.hasNext()) {
-        Entry<String,Information> comparedEntry = j.next();
+        final Entry<String, Information> comparedEntry = j.next();
         if (comparedEntry.equals(testEntry)) {
           flag = true;
           break;
@@ -105,7 +104,7 @@ public abstract class ENVTestEngineAbstract {
     }
     azzert.aye(flag);
   }
-  
+
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
@@ -115,20 +114,19 @@ public abstract class ENVTestEngineAbstract {
     azzert.aye(testSet != null);
     azzert.aye($ != null);
     boolean flag;
-    for(Entry<String,Information> e1 : testSet){
+    for (final Entry<String, Information> e1 : testSet) {
       flag = false;
-      for(Entry<String,Information> e2 : $){ 
-        if(e1.getKey().equals(e2.getKey()) && e1.getValue().equals(e2.getValue())){
+      for (final Entry<String, Information> e2 : $)
+        if (e1.getKey().equals(e2.getKey()) && e1.getValue().equals(e2.getValue())) {
           flag = true;
           break;
         }
-      }  
-      if(!flag)
+      if (!flag)
         azzert.fail("Some of the annotations are not contained in the result.");
     }
-      
-    //if(!$.containsAll(testSet)) thats the correct implementation of the method, that requires hashCode() function.
-      //azzert.fail("Some of the annotations are not contained in the result.");
+    // if(!$.containsAll(testSet)) thats the correct implementation of the
+    // method, that requires hashCode() function.
+    // azzert.fail("Some of the annotations are not contained in the result.");
   }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
@@ -197,7 +195,7 @@ public abstract class ENVTestEngineAbstract {
 
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
-        if (foundTestedAnnotation){
+        if (foundTestedAnnotation) {
           final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
           if (enviromentSet == null)
             return;
