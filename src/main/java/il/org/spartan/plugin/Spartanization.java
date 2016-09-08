@@ -1,6 +1,6 @@
-package il.org.spartan.spartanizer.spartanizations;
+package il.org.spartan.plugin;
 
-import static il.org.spartan.spartanizer.spartanizations.DialogBoxes.*;
+import static il.org.spartan.plugin.DialogBoxes.*;
 
 import java.util.*;
 import java.util.List;

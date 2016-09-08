@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.spartanizer.wring;
 
 import java.util.*;
 
@@ -94,7 +94,7 @@ public class DisabledChecker {
           dns.add(d);
           return true;
         }
-      // TODO: Or, on the face of it, this is a bug.
+      // TODO: Ori, on the face of it, this is a bug.
       // You do the same thing for both enablers and disablers
       for (final String esi : enablers)
         if (s.contains(esi)) {
