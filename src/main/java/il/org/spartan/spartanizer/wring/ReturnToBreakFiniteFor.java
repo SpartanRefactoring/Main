@@ -112,6 +112,6 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
     // null, you do not have to do anything.
     final List<Statement> ss = step.statements(b);
-    return b != null && ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
+    return ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
   }
 }
