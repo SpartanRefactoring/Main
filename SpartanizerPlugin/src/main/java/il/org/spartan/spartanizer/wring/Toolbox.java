@@ -97,6 +97,9 @@ public class Toolbox {
             new DeclarationInitializerReturnUpdateAssignment(), //
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
+        .add(Block.class, //
+            new ReturnToBreakFiniteFor(),//
+            null) //
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
