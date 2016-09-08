@@ -24,7 +24,8 @@ public final class AsSpartanization extends Spartanization {
     this.inner = (Wring<ASTNode>) inner;
   }
 
-  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
+  // TODO: Ori, how come we need this parameter?
+  @Override protected ASTVisitor collect(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new ASTVisitor() {
       @Override public boolean visit(final Block it) {
         return process(it);
