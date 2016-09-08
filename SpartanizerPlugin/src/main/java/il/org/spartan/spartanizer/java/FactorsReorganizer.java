@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public class FactorsReorganizer {
-  public static Expression simplify(final InfixExpression e) {
-    return build(new FactorsCollector(e));
+  public static Expression simplify(final InfixExpression x) {
+    return build(new FactorsCollector(x));
   }
 
   private static Expression build(final FactorsCollector c) {

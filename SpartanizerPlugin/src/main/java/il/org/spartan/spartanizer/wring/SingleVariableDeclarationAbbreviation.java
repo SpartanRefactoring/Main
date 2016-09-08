@@ -44,11 +44,11 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
   }
 
   private static boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser("" + d.getType()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 
   @Override String description(final SingleVariableDeclaration d) {
-    return "" + d.getName();
+    return d.getName() + "";
   }
 
   @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {

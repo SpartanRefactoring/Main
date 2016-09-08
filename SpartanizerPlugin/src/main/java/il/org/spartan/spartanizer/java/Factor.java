@@ -11,8 +11,8 @@ class Factor {
     return new Factor(true, x);
   }
 
-  static Factor times(final Expression e) {
-    return new Factor(false, e);
+  static Factor times(final Expression x) {
+    return new Factor(false, x);
   }
 
   private final boolean divider;

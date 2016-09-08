@@ -106,16 +106,16 @@ public interface hop {
 
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
-   * @param e JD
+   * @param x JD
    * @return a list of all operands of an expression */
-  static List<Expression> operands(final InfixExpression e) {
-    if (e == null)
+  static List<Expression> operands(final InfixExpression x) {
+    if (x == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
-    $.add(step.left(e));
-    $.add(step.right(e));
-    if (e.hasExtendedOperands())
-      $.addAll(step.extendedOperands(e));
+    $.add(step.left(x));
+    $.add(step.right(x));
+    if (x.hasExtendedOperands())
+      $.addAll(step.extendedOperands(x));
     return $;
   }
 }

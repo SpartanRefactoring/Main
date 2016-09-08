@@ -80,16 +80,16 @@ public enum make {
     ;
   }
 
-  static List<Expression> minus(final List<Expression> es) {
+  static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(es));
-    for (final Expression e : lisp.rest(es))
+    $.add(lisp.first(xs));
+    for (final Expression e : lisp.rest(xs))
       $.add(minusOf(e));
     return $;
   }
 
-  static Expression minusOf(final Expression e) {
-    return literal0(e) ? e : subject.operand(e).to(wizard.MINUS1);
+  static Expression minusOf(final Expression x) {
+    return literal0(x) ? x : subject.operand(x).to(wizard.MINUS1);
   }
 
   static NumberLiteral newLiteral(final ASTNode n, final String token) {
