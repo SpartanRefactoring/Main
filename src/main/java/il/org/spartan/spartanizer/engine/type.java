@@ -16,7 +16,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.type.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
@@ -519,9 +522,8 @@ public interface type {
    * @author Shalmon Niv
    * @year 2016 */
   interface Odd extends inner.implementation {
-    // Those anonymous characters that known little or nothing about
-    // themselves
-    /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
+    /** Those anonymous characters that know little or nothing about themselves
+     * TODO: Not sure we need all these {@link type.Odd.Types} values. */
     enum Types implements Odd {
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
@@ -535,6 +537,7 @@ public interface type {
       }
 
       @Override public String description() {
+        // TODO: Niv, why do we need this 'key' call?
         key();
         return description;
       }
@@ -549,6 +552,10 @@ public interface type {
    * @author Yossi Gil
    * @year 2016 */
   interface Primitive extends inner.implementation {
+    /** @return All {@link Certain} types that an expression of this type can
+     *         be **/
+    Iterable<Certain> options();
+
     /** Primitive types known for certain. {@link String} is also considered
      * {@link Primitive.Certain}
      * @author Yossi Gil
@@ -594,6 +601,10 @@ public interface type {
       @Override public String key() {
         return key;
       }
+
+      @Override public Iterable<Certain> options() {
+        return iterables.singleton(this);
+      }
     }
 
     /** Tells how much we know about the type of of a variable, function, or
@@ -620,19 +631,27 @@ public interface type {
     public enum Uncertain implements type.Primitive {
       // Doubtful types, from four fold uncertainty down to bilateral
       // schizophrenia" .
-      ALPHANUMERIC(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE, STRING), "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
-      BOOLEANINTEGRAL(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG), "only in x^y,x&y,x|y"), //
-      INTEGER(as.list(INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      INTEGRAL(as.list(BYTE, CHAR, SHORT, INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      NUMERIC(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE, STRING), "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
+      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), //
+      INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE), //
+      NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), //
+      ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, BOOLEAN
+      /** NIV???WHY */
+          , STRING), //
+      BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
-      final String description;
-      final List<Certain> represents;
+      @Override public boolean canB(Certain c) {
+        return options.contains(c);
+      }
 
-      private Uncertain(final Iterable<? extends Certain> ts, final String description) {
-        represents = new ArrayList<>();
-        add(represents, ts);
+      final String description;
+      final Set<Certain> options = new LinkedHashSet<>();
+
+      private Uncertain(final String description, final Primitive... ps) {
         this.description = description;
+        for (Primitive p : ps)
+          for (Certain c : p.options())
+            if (!options.contains(c))
+              options.add(c);
       }
 
       @Override public String description() {
@@ -640,13 +659,11 @@ public interface type {
       }
 
       @Override public String key() {
-        return represents + "";
+        return separate.these(options).by('|');
       }
 
-      /** @return A list of all Primitive.Certain types that an expression of
-       *         this type can be */
-      public List<Certain> possibleTypes() {
-        return represents;
+      @Override public Iterable<Certain> options() {
+        return options;
       }
     }
   }
