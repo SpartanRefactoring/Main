@@ -3,7 +3,6 @@ package il.org.spartan.fun.Dr.Seuss;
 import il.org.spartan.*;
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 
-
 /** Dr. Seuss Nonsense
  * @author Yossi Gil
  * @year 2016 */
