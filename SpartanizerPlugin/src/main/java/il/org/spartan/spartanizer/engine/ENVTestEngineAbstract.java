@@ -38,9 +38,9 @@ public abstract class ENVTestEngineAbstract {
    * @param n1
    * @return */
   public static boolean isNameId(final Name n1) {
-    assert !"@Id".equals("" + n1); // To find the bug, if it appears as @Id, and
+    assert !"@Id".equals(n1 + ""); // To find the bug, if it appears as @Id, and
                                    // not Id.
-    return "Id".equals("" + n1);
+    return "Id".equals(n1 + "");
   }
 
   protected boolean foundTestedAnnotation = false; // Global flag, used to

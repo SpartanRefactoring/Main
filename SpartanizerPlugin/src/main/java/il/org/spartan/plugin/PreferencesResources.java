@@ -67,7 +67,7 @@ public class PreferencesResources {
     private WringGroup(final Class<? extends Kind> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
-      label = "" + getLabel(clazz);
+      label = getLabel(clazz) + "";
     }
 
     public boolean isEnabled() {

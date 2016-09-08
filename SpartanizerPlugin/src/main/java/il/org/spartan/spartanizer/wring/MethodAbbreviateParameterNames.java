@@ -82,6 +82,6 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   private boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser("" + d.getType()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 }
