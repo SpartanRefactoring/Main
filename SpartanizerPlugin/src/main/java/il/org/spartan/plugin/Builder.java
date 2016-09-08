@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
+import il.org.spartan.spartanizer.wring.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> @since
@@ -87,6 +88,7 @@ public class Builder extends IncrementalProjectBuilder {
       throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
+    Toolbox.refresh();
     build(kind);
     if (m != null)
       m.done();
