@@ -56,14 +56,6 @@ public enum PrudentType {
   BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
   STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"),//
   ;
-  /** @param e JD
-   * @return The most specific Type information that can be deduced about the
-   *         expression, or {@link #NOTHING} if it cannot decide. Will never
-   *         return null */
-  public static PrudentType prudent(final Expression e) {
-    return prudent(e, null, null);
-  }
-
   @SuppressWarnings("unused") static PrudentType axiom(final boolean x) {
     return BOOLEAN;
   }
@@ -130,6 +122,14 @@ public enum PrudentType {
     }
   }
 
+  /** @param e JD
+   * @return The most specific Type information that can be deduced about the
+   *         expression, or {@link #NOTHING} if it cannot decide. Will never
+   *         return null */
+  public static PrudentType prudent(final Expression e) {
+    return prudent(e, null, null);
+  }
+
   /** A version of {@link #prudent(Expression)} that receives the a list of the
    * operands' type for all operands of an expression. To be used for
    * InfixExpression that has extended operand. The order of the type's should
@@ -193,6 +193,14 @@ public enum PrudentType {
     ¢.add(t1);
     ¢.add(t2);
     return prudent(e, ¢);
+  }
+
+  /** Generates a PrudentType from a String name, if the String name represents
+   * a concrete type identifiable by PrudentType.
+   * @param s
+   * @return The specified PrudentType, PrudentType.NOTHING as default. */
+  public static PrudentType prudentGenerateFromTypeName(final String s) {
+    return typeSwitch(s, PrudentType.NOTHING);
   }
 
   private static PrudentType prudentType(final Assignment x, final PrudentType t) {
@@ -307,32 +315,6 @@ public enum PrudentType {
     this.description = description;
   }
 
-  public final String fullName() {
-    return this + "=" + name + " (" + description + ")";
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  public boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
-   *         otherwise */
-  public boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
-  }
-
-  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
-   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
-   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
-  public boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
-  }
-
   /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR}, {@link BYTE},
    *         {@link SHORT} or {@link #INTEGRAL}, in case it cannot decide */
   private PrudentType asIntegral() {
@@ -359,6 +341,25 @@ public enum PrudentType {
     return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
   }
 
+  public final String fullName() {
+    return this + "=" + name + " (" + description + ")";
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL} or {@link #NUMERIC}, {@link #STRING},
+   *         {@link #ALPHANUMERIC} or false otherwise */
+  public boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link #INTEGRAL} or false
+   *         otherwise */
+  public boolean isIntegral() {
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+
   /** used to determine whether an integral type behaves as itself under
    * operations or as an INT.
    * @return true if one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or false
@@ -372,6 +373,13 @@ public enum PrudentType {
    *         otherwise */
   private boolean isNoInfo() {
     return in(this, NOTHING, BAPTIZED, NONNULL, VOID, NULL);
+  }
+
+  /** @return true if one of {@link #INT}, {@link #LONG}, {@link #CHAR},
+   *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
+   *         {@link #INTEGRAL}, {@link #NUMERIC} or false otherwise */
+  public boolean isNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
 
   /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
