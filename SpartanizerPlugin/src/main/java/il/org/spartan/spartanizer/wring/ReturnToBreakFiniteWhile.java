@@ -29,11 +29,11 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-09-07 */
 public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canonicalization {
   @Override public String description() {
-    return "Convert the Return inside the loop to break";
+    return "Convert the return inside the loop to break";
   }
 
-  @Override String description(final Block n) {
-    return "Convert the Return inside the loop to break";
+  @Override String description(final Block b) {
+    return "Convert the return inside " + b + " to break";
   }
 
   private static boolean isInfiniteLoop(final WhileStatement s) {
