@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Collects the {@link Term} found in an {@link InfixExpression}, organizing
- * them in three output fields: {@link #positive}, {@link #negative} and
+ * them in three output fields: {@link #plus}, {@link #minus} and
  * {@link #all}.
  * @author Yossi Gil
- * @year 2016 */
+ * @since 2016 */
 public class TermsCollector {
   public static boolean isLeafTerm(final Expression x) {
     return !iz.infixPlus(x) && !iz.infixMinus(x);

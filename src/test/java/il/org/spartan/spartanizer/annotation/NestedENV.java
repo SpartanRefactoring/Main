@@ -20,7 +20,7 @@ public @interface NestedENV {
 }
 
 /** @author Alex Kopakzon
- * @year 2016 */
+ * @since 2016 */
 @interface Entry {
   Class<?> clazz();
 
