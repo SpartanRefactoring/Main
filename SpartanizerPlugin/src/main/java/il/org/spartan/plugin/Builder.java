@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wring.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>

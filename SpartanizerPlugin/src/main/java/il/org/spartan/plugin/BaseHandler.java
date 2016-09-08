@@ -12,8 +12,6 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.handlers.*;
 
-import il.org.spartan.spartanizer.spartanizations.*;
-
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
