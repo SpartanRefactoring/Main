@@ -56,11 +56,11 @@ public enum have {
   }
 
   /** Determine whether a literal is present
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
-  public static boolean literal(final List<Expression> es) {
-    for (final Expression e : es)
+  public static boolean literal(final List<Expression> xs) {
+    for (final Expression e : xs)
       if (iz.literal(e))
         return true;
     return false;
