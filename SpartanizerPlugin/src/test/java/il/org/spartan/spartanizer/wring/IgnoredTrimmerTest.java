@@ -155,6 +155,8 @@ import org.junit.runners.*;
   @Test public void issue120_1() {
     trimming("\"a\"+\"b\"").to("\"ab\"");
   }
+  
+
 
   @Test public void issue120_2() {
     trimming("\"abc\"+\"de\"+\"fgh\"").to("\"abcdefgh\"");
