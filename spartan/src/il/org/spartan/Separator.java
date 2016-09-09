@@ -5,7 +5,7 @@ import il.org.spartan.iterables.*;
 
 /** A class representing a separator string, which can be used for separating
  * elements of a sequence while printing it, without special case treatment of
- * the first or las. element. For example, the following program prints a list
+ * the first and last element. For example, the following program prints a list
  * of its arguments separated by commas, without using any conditionals.
  *
  * <pre>
@@ -18,19 +18,15 @@ import il.org.spartan.iterables.*;
  *
  * @author Yossi Gil
  * @since 12/02/2006) */
-/** TODO(2016) Javadoc: automatically generated for type <code></code>
- * @author Yossi Gil <Yossi.Gil@GMail.COM> */
 public final class Separator {
-  /** TODO doc(2016): method main2016's automatically generated Javadoc
-   * @param args JD */
+  /** @param args JD */
   public static void main(final String[] args) {
     final Separator s = new Separator(", ");
     for (final String a : args)
       System.out.print(s + a);
   }
 
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>separateBy</code>
+  /** <code>separateBy</code>
    * @param is JD
    * @param between what to put between the items
    * @return String TODO Javadoc(2016) automatically generated for returned
@@ -45,13 +41,11 @@ public final class Separator {
     return $;
   }
 
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>separateBy</code> returning String
+  /** <code>separateBy</code> returning String
    * @param <T> JD
    * @param between what to put between the items
    * @param ts JD
-   * @return TODO document return type of this method * TODO document return
-   *         type of this method */
+   * @return the parameters separated */
   public static <T> String separateBy(final String between, final T[] ts) {
     return wrap("", "", ts, between);
   }
@@ -67,8 +61,7 @@ public final class Separator {
     return wrap(wrap, wrap, ts, between);
   }
 
-  /** TODO Javadoc(2016): automatically generated for method <code>wrap</code>
-   * @param <T> JD
+  /** @param <T> JD
    * @param begin what to place before the items
    * @param end what to place after the items
    * @param ts JD

@@ -18,51 +18,6 @@ import il.org.spartan.iterables.*;
  * @since Jul 8, 2014 */
 public enum as {
   ;
-  // No values in an 'enum' which serves as a name space for a collection of
-  // 'static' functions.
-  /** A static nested class hosting unit tests for the nesting class Unit test
-   * for the containing class. Note the naming convention: a) names of test
-   * methods do not use are not prefixed by "test". This prefix is redundant. b)
-   * test methods begin with the name of the method they check.
-   * @author Yossi Gil
-   * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc" }) //
-  public static class TEST {
-    @Test public void asBitOfFalse() {
-      azzert.that(as.bit(false), is(0));
-    }
-
-    @Test public void asBitOfTrue() {
-      azzert.that(as.bit(true), is(1));
-    }
-
-    @Test public void asIntArraySimple() {
-      final int @NonNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
-      assertArrayEquals(is, as.intArray(as.ingeterList(is)));
-    }
-
-    @Test public void asListSimple() {
-      final List<Integer> is = as.list(12, 13, 14);
-      azzert.that(is.get(0), is(box.it(12)));
-      azzert.that(is.get(1), is(box.it(13)));
-      azzert.that(is.get(2), is(box.it(14)));
-      azzert.that(is.size(), is(3));
-    }
-
-    @Test public void stringOfNull() {
-      azzert.that(as.string(null), is("null"));
-    }
-
-    @Test public void stringWhenToStringReturnsNull() {
-      azzert.that(as.string(new Object() {
-        @Override public @Nullable String toString() {
-          return null;
-        }
-      }), is("null"));
-    }
-  }
-
   /** Converts a sequence of values into an array.
    * @param <T> some arbitrary type
    * @param $ some sequence of values of the type parameter
@@ -89,20 +44,6 @@ public enum as {
   public static Iterable<Integer> asIterable(final Integer... is) {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}
-    return () -> new Iterator<Integer>() {
-      int current = 0;
-
-      @Override public boolean hasNext() {
-        return current < is.length;
-      }
-
-      @Override public Integer next() {
-        return is[current++];
-      }
-    };
-  }
-
-  static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current = 0;
 
@@ -300,5 +241,64 @@ public enum as {
       if (o != null)
         $.add("" + o);
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
+  }
+
+  static Iterable<Integer> asIterableEssence(final Integer... is) {
+    return () -> new Iterator<Integer>() {
+      int current = 0;
+
+      @Override public boolean hasNext() {
+        return current < is.length;
+      }
+
+      @Override public Integer next() {
+        return is[current++];
+      }
+    };
+  }
+
+  // No values in an 'enum' which serves as a name space for a collection of
+  // 'static' functions.
+  /** A static nested class hosting unit tests for the nesting class Unit test
+   * for the containing class. Note the naming convention: a) names of test
+   * methods do not use are not prefixed by "test". This prefix is redundant. b)
+   * test methods begin with the name of the method they check.
+   * @author Yossi Gil
+   * @since 2014-05-31 */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @SuppressWarnings({ "static-method", "javadoc" }) //
+  public static class TEST {
+    @Test public void asBitOfFalse() {
+      azzert.that(as.bit(false), is(0));
+    }
+
+    @Test public void asBitOfTrue() {
+      azzert.that(as.bit(true), is(1));
+    }
+
+    @Test public void asIntArraySimple() {
+      final int @NonNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
+      assertArrayEquals(is, as.intArray(as.ingeterList(is)));
+    }
+
+    @Test public void asListSimple() {
+      final List<Integer> is = as.list(12, 13, 14);
+      azzert.that(is.get(0), is(box.it(12)));
+      azzert.that(is.get(1), is(box.it(13)));
+      azzert.that(is.get(2), is(box.it(14)));
+      azzert.that(is.size(), is(3));
+    }
+
+    @Test public void stringOfNull() {
+      azzert.that(as.string(null), is("null"));
+    }
+
+    @Test public void stringWhenToStringReturnsNull() {
+      azzert.that(as.string(new Object() {
+        @Override public @Nullable String toString() {
+          return null;
+        }
+      }), is("null"));
+    }
   }
 }

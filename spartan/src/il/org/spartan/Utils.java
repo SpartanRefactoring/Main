@@ -19,185 +19,6 @@ import il.org.spartan.Utils.FoundHandleForT.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface Utils {
-  /** Reifies the notion of a function
-   * @author Yossi Gil
-   * @param <F> the type of the function's argument
-   * @param <T> the type of the function's result */
-  static class Applicator<F, T> {
-    private final Function<F, T> function;
-
-    /** Instantiates this class
-     * @param function which function to apply? */
-    Applicator(final Function<F, T> function) {
-      this.function = function;
-    }
-
-    /** @param fs JD
-     * @return TODO document return type of this function */
-    @SafeVarargs final Iterable<T> to(final F... fs) {
-      final List<T> $ = new ArrayList<>();
-      for (final F f : fs)
-        if (f != null)
-          $.add(function.apply(f));
-      return $;
-    }
-
-    /** @param <FS> JD
-     * @param s JD
-     * @return TODO document return type */
-    <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
-      final List<T> $ = new ArrayList<>();
-      for (final @Nullable F f : s)
-        if (f != null)
-          $.add(function.apply(f));
-      return $;
-    }
-  }
-
-  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @param <T> JD
-   * @since 2016 */
-  public static class FoundHandleForT<T> {
-    /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016 */
-    public static class FoundHandleForInt {
-      final int candidate;
-
-      /** Instantiates this class.
-       * @param candidate what to search for */
-      public FoundHandleForInt(final int candidate) {
-        this.candidate = candidate;
-      }
-
-      /** Determine if an integer can be found in a list of values
-       * @param is where to search
-       * @return true if the the item is found in the list */
-      @SafeVarargs public final boolean in(final int... is) {
-        for (final int i : is)
-          if (i == candidate)
-            return true;
-        return false;
-      }
-    }
-
-    final T candidate;
-
-    /** Instantiates this class. *
-     * @param candidate what to search for */
-    public FoundHandleForT(final T candidate) {
-      this.candidate = candidate;
-    }
-
-    /** Determine if an integer can be found in a list of values
-     * @param ts where to search
-     * @return true if the the item is found in the list */
-    @SafeVarargs public final boolean in(final T... ts) {
-      for (final T t : ts)
-        if (t != null && t.equals(candidate))
-          return true;
-      return false;
-    }
-  }
-
-  /** A static nested class hosting unit tests for the nesting class Unit test
-   * for the containing class. Note the naming convention: a) names of test
-   * methods do not use are not prefixed by "test". This prefix is redundant. b)
-   * test methods begin with the name of the method they check.
-   * @author Yossi Gil
-   * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc", }) //
-  public static class TEST {
-    public static Integer[] intToIntegers(final int... is) {
-      final Integer @NonNull [] $ = new Integer @NonNull [is.length];
-      for (int i = 0; i < is.length; ++i)
-        $[i] = box.it(is[i]);
-      return $;
-    }
-
-    @Test public void addAllTypical() {
-      final Set<String> ss = new HashSet<>();
-      accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
-      azzert.nay(ss.contains("E"));
-      azzert.nay(ss.contains(null));
-      azzert.that(ss.size(), is(4));
-      for (final String s : ss)
-        azzert.aye("", ss.contains(s));
-    }
-
-    @Test public void addTypical() {
-      final Set<String> ss = new HashSet<>();
-      accumulate.to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
-      azzert.nay(ss.contains("E"));
-      azzert.nay(ss.contains(null));
-      azzert.that(ss.size(), is(4));
-      for (final String s : ss)
-        azzert.aye("", ss.contains(s));
-      azzert.aye(ss.contains("A"));
-    }
-
-    @Test public void cantBeNullOfNull() {
-      try {
-        cantBeNull(null);
-        azzert.fail("AssertionError expected prior to this line.");
-      } catch (final AssertionError e) {
-        azzert.aye("", true);
-      }
-    }
-
-    @Test public void cantBeNullTypical() {
-      notNull(cantBeNull(new Object()));
-    }
-
-    @Test public void isNullTypical() {
-      try {
-        isNull(mustBeNull(null));
-        azzert.fail("AssertionError expected prior to this line.");
-      } catch (final AssertionError e) {
-        azzert.aye("", true);
-      }
-    }
-
-    @Test public void mustBeNullOfNonNull() {
-      try {
-        mustBeNull(new Object());
-        azzert.fail("AssertionError expected prior to this line.");
-      } catch (final AssertionError e) {
-        azzert.aye("", true);
-      }
-    }
-
-    @Test public void quoteEmptyString() {
-      azzert.that(idiomatic.quote(""), is("''"));
-    }
-
-    @Test public void quoteNull() {
-      azzert.that(idiomatic.quote(null), is("<null reference>"));
-    }
-
-    @Test public void quoteSimpleString() {
-      azzert.that(idiomatic.quote("A"), is("'A'"));
-    }
-
-    @Test public void swapDegenerate() {
-      final String @NonNull [] ss = as.array("A", "B", "C", "D");
-      swap(ss, 1, 1);
-      assertArrayEquals(as.array("A", "B", "C", "D"), ss);
-    }
-
-    @Test public void swapTypical() {
-      final String @NonNull [] ss = as.array("A", "B", "C", "D");
-      swap(ss, 1, 2);
-      assertArrayEquals(as.array("A", "C", "B", "D"), ss);
-    }
-
-    @Test public void swapTypicalCase() {
-      final Integer @NonNull [] $ = intToIntegers(29, 1, 60);
-      swap($, 0, 1);
-      assertArrayEquals(intToIntegers(1, 29, 60), $);
-    }
-  }
-
   static final String QUOTE = "'";
   static final String WHITES = "(?m)\\s+";
 
@@ -644,5 +465,184 @@ public interface Utils {
     final T t = ts[i];
     ts[i] = ts[j];
     ts[j] = t;
+  }
+
+  /** Reifies the notion of a function
+   * @author Yossi Gil
+   * @param <F> the type of the function's argument
+   * @param <T> the type of the function's result */
+  static class Applicator<F, T> {
+    private final Function<F, T> function;
+
+    /** Instantiates this class
+     * @param function which function to apply? */
+    Applicator(final Function<F, T> function) {
+      this.function = function;
+    }
+
+    /** @param fs JD
+     * @return TODO document return type of this function */
+    @SafeVarargs final Iterable<T> to(final F... fs) {
+      final List<T> $ = new ArrayList<>();
+      for (final F f : fs)
+        if (f != null)
+          $.add(function.apply(f));
+      return $;
+    }
+
+    /** @param <FS> JD
+     * @param s JD
+     * @return TODO document return type */
+    <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
+      final List<T> $ = new ArrayList<>();
+      for (final @Nullable F f : s)
+        if (f != null)
+          $.add(function.apply(f));
+      return $;
+    }
+  }
+
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @param <T> JD
+   * @since 2016 */
+  public static class FoundHandleForT<T> {
+    final T candidate;
+
+    /** Instantiates this class. *
+     * @param candidate what to search for */
+    public FoundHandleForT(final T candidate) {
+      this.candidate = candidate;
+    }
+
+    /** Determine if an integer can be found in a list of values
+     * @param ts where to search
+     * @return true if the the item is found in the list */
+    @SafeVarargs public final boolean in(final T... ts) {
+      for (final T t : ts)
+        if (t != null && t.equals(candidate))
+          return true;
+      return false;
+    }
+
+    /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+     * @since 2016 */
+    public static class FoundHandleForInt {
+      final int candidate;
+
+      /** Instantiates this class.
+       * @param candidate what to search for */
+      public FoundHandleForInt(final int candidate) {
+        this.candidate = candidate;
+      }
+
+      /** Determine if an integer can be found in a list of values
+       * @param is where to search
+       * @return true if the the item is found in the list */
+      @SafeVarargs public final boolean in(final int... is) {
+        for (final int i : is)
+          if (i == candidate)
+            return true;
+        return false;
+      }
+    }
+  }
+
+  /** A static nested class hosting unit tests for the nesting class Unit test
+   * for the containing class. Note the naming convention: a) names of test
+   * methods do not use are not prefixed by "test". This prefix is redundant. b)
+   * test methods begin with the name of the method they check.
+   * @author Yossi Gil
+   * @since 2014-05-31 */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+  @SuppressWarnings({ "static-method", "javadoc", }) //
+  public static class TEST {
+    public static Integer[] intToIntegers(final int... is) {
+      final Integer @NonNull [] $ = new Integer @NonNull [is.length];
+      for (int i = 0; i < is.length; ++i)
+        $[i] = box.it(is[i]);
+      return $;
+    }
+
+    @Test public void addAllTypical() {
+      final Set<String> ss = new HashSet<>();
+      accumulate.to(ss).addAll(as.set("A", "B"), null, as.set("B", "C", "D"));
+      azzert.nay(ss.contains("E"));
+      azzert.nay(ss.contains(null));
+      azzert.that(ss.size(), is(4));
+      for (final String s : ss)
+        azzert.aye("", ss.contains(s));
+    }
+
+    @Test public void addTypical() {
+      final Set<String> ss = new HashSet<>();
+      accumulate.to(ss).add(null, "A", null, "B", "B", null, "C", "D", null);
+      azzert.nay(ss.contains("E"));
+      azzert.nay(ss.contains(null));
+      azzert.that(ss.size(), is(4));
+      for (final String s : ss)
+        azzert.aye("", ss.contains(s));
+      azzert.aye(ss.contains("A"));
+    }
+
+    @Test public void cantBeNullOfNull() {
+      try {
+        cantBeNull(null);
+        azzert.fail("AssertionError expected prior to this line.");
+      } catch (final AssertionError e) {
+        azzert.aye("", true);
+      }
+    }
+
+    @Test public void cantBeNullTypical() {
+      notNull(cantBeNull(new Object()));
+    }
+
+    @Test public void isNullTypical() {
+      try {
+        isNull(mustBeNull(null));
+        azzert.fail("AssertionError expected prior to this line.");
+      } catch (final AssertionError e) {
+        azzert.aye("", true);
+      }
+    }
+
+    @Test public void mustBeNullOfNonNull() {
+      try {
+        mustBeNull(new Object());
+        azzert.fail("AssertionError expected prior to this line.");
+      } catch (final AssertionError e) {
+        azzert.aye("", true);
+      }
+    }
+
+    @Test public void quoteEmptyString() {
+      azzert.that(idiomatic.quote(""), is("''"));
+    }
+
+    @Test public void quoteNull() {
+      azzert.that(idiomatic.quote(null), is("<null reference>"));
+    }
+
+    @Test public void quoteSimpleString() {
+      azzert.that(idiomatic.quote("A"), is("'A'"));
+    }
+
+    @Test public void swapDegenerate() {
+      final String @NonNull [] ss = as.array("A", "B", "C", "D");
+      swap(ss, 1, 1);
+      assertArrayEquals(as.array("A", "B", "C", "D"), ss);
+    }
+
+    @Test public void swapTypical() {
+      final String @NonNull [] ss = as.array("A", "B", "C", "D");
+      swap(ss, 1, 2);
+      assertArrayEquals(as.array("A", "C", "B", "D"), ss);
+    }
+
+    @Test public void swapTypicalCase() {
+      final Integer @NonNull [] $ = intToIntegers(29, 1, 60);
+      swap($, 0, 1);
+      assertArrayEquals(intToIntegers(1, 29, 60), $);
+    }
   }
 }

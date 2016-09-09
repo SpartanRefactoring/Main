@@ -10,24 +10,6 @@ import il.org.spartan.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 public class Ingredient<@Nullable T> extends Cell<T> {
-  /** cell which does not depend on others
-   * @param <T> JD
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016 */
-  public static class NotNull<T> extends Ingredient<T> {
-    /** instantiates this class
-     * @param value JD */
-    public NotNull(final T value) {
-      super(value);
-    }
-
-    @Override void cache(@SuppressWarnings("hiding") @Nullable final T cache) {
-      super.cache(cache);
-      if (cache == null)
-        throw new NullPointerException();
-    }
-  }
-
   /** Instantiates this class.* */
   public Ingredient() {
     // Make sure we have a public constructor
@@ -49,5 +31,23 @@ public class Ingredient<@Nullable T> extends Cell<T> {
 
   @Override public final boolean updated() {
     return true;
+  }
+
+  /** cell which does not depend on others
+   * @param <T> JD
+   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016 */
+  public static class NotNull<T> extends Ingredient<T> {
+    /** instantiates this class
+     * @param value JD */
+    public NotNull(final T value) {
+      super(value);
+    }
+
+    @Override void cache(@SuppressWarnings("hiding") @Nullable final T cache) {
+      super.cache(cache);
+      if (cache == null)
+        throw new NullPointerException();
+    }
   }
 }

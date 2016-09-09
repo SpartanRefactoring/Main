@@ -13,6 +13,99 @@ import org.junit.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface idiomatic {
+  /** Single quote: */
+  static final String QUOTE = "'";
+  /** an evaluating trigger */
+  static final Trigger eval = new Trigger() {
+    @Override public <@Nullable T> T eval(final Supplier<T> s) {
+      return s.get();
+    }
+  };
+  /** an ignoring trigger */
+  static final Trigger ignore = new Trigger() {
+    @Override public <@Nullable T> T eval(final Supplier<T> __) {
+      return null;
+    }
+  };
+
+  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
+   * @param <T> JD
+   * @param $ result
+   * @return an identical supplier which is also a {@link Holder} */
+  static <T> Holder<T> eval(final Supplier<@Nullable T> $) {
+    return () -> $.get();
+  }
+
+  /** @param condition JD
+   * @return TODO document return type */
+  /** TODO Javadoc(2016): automatically generated for method <code>incase</code>
+   * @param <T> JD
+   * @param condition TODO
+   * @param t JD
+   * @return T TODO Javadoc(2016) automatically generated for returned value of
+   *         method <code>incase</code> */
+  static <T> @Nullable T incase(final boolean condition, final T t) {
+    return condition ? t : null;
+  }
+
+  /** A filter, which prints an appropriate log message and returns null in case
+   * of {@link Exception} thrown by {@link Producer#λ()}
+   * @param <T> JD
+   * @param $ JD
+   * @return result of invoking the parameter, or <code><b>null</b></code> if an
+   *         exception occurred. */
+  static <@Nullable T> T katching(final Producer<T> $) {
+    try {
+      return $.λ();
+    } catch (final Exception ¢) {
+      ¢.printStackTrace();
+      return null;
+    }
+  }
+
+  /** Quote a given {@link String}
+   * @param $ some {@link String} to be quoted
+   * @return parameter, quoted */
+  static String quote(final @Nullable String $) {
+    return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
+  }
+
+  /** @param r JD
+   * @return an identical runnable which is also a {@link Runner} */
+  static Runner run(final Runnable r) {
+    return new Runner(r);
+  }
+
+  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
+   * @param <T> JD
+   * @param t JD
+   * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
+   *         value of method <code>yield</code> */
+  static <T> Storer<T> take(final T t) {
+    return new Storer<>(t);
+  }
+
+  /** @param condition JD
+   * @return TODO document return type */
+  static Trigger unless(final boolean condition) {
+    return when(!condition);
+  }
+
+  /** @param <T> JD
+   * @param condition when should the action take place
+   * @param t JD
+   * @return non-boolean parameter, in case the boolean parameter is true, or
+   *         null, otherwise */
+  static <T> @Nullable T unless(final boolean condition, final T t) {
+    return incase(!condition, t);
+  }
+
+  /** @param condition JD
+   * @return TODO document return type */
+  static Trigger when(final boolean condition) {
+    return condition ? eval : ignore;
+  }
+
   /** Supplier with {@link #when(boolean)} method
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -165,98 +258,5 @@ public interface idiomatic {
     default <@Nullable T> T eval(final T $) {
       return eval(() -> $);
     }
-  }
-
-  /** Single quote: */
-  static final String QUOTE = "'";
-  /** an evaluating trigger */
-  static final Trigger eval = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> s) {
-      return s.get();
-    }
-  };
-  /** an ignoring trigger */
-  static final Trigger ignore = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> __) {
-      return null;
-    }
-  };
-
-  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   * @param <T> JD
-   * @param $ result
-   * @return an identical supplier which is also a {@link Holder} */
-  static <T> Holder<T> eval(final Supplier<@Nullable T> $) {
-    return () -> $.get();
-  }
-
-  /** @param condition JD
-   * @return TODO document return type */
-  /** TODO Javadoc(2016): automatically generated for method <code>incase</code>
-   * @param <T> JD
-   * @param condition TODO
-   * @param t JD
-   * @return T TODO Javadoc(2016) automatically generated for returned value of
-   *         method <code>incase</code> */
-  static <T> @Nullable T incase(final boolean condition, final T t) {
-    return condition ? t : null;
-  }
-
-  /** A filter, which prints an appropriate log message and returns null in case
-   * of {@link Exception} thrown by {@link Producer#λ()}
-   * @param <T> JD
-   * @param $ JD
-   * @return result of invoking the parameter, or <code><b>null</b></code> if an
-   *         exception occurred. */
-  static <@Nullable T> T katching(final Producer<T> $) {
-    try {
-      return $.λ();
-    } catch (final Exception ¢) {
-      ¢.printStackTrace();
-      return null;
-    }
-  }
-
-  /** Quote a given {@link String}
-   * @param $ some {@link String} to be quoted
-   * @return parameter, quoted */
-  static String quote(final @Nullable String $) {
-    return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
-  }
-
-  /** @param r JD
-   * @return an identical runnable which is also a {@link Runner} */
-  static Runner run(final Runnable r) {
-    return new Runner(r);
-  }
-
-  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   * @param <T> JD
-   * @param t JD
-   * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>yield</code> */
-  static <T> Storer<T> take(final T t) {
-    return new Storer<>(t);
-  }
-
-  /** @param condition JD
-   * @return TODO document return type */
-  static Trigger unless(final boolean condition) {
-    return when(!condition);
-  }
-
-  /** @param <T> JD
-   * @param condition when should the action take place
-   * @param t JD
-   * @return non-boolean parameter, in case the boolean parameter is true, or
-   *         null, otherwise */
-  static <T> @Nullable T unless(final boolean condition, final T t) {
-    return incase(!condition, t);
-  }
-
-  /** @param condition JD
-   * @return TODO document return type */
-  static Trigger when(final boolean condition) {
-    return condition ? eval : ignore;
   }
 }

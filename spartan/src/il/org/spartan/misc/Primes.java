@@ -11,6 +11,32 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2012-05-01 */
 public class Primes {
+  /** Tests for primality.
+   * @param ¢ candidate to be tested
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
+  public static boolean isPrime(final int ¢) {
+    return ¢ < -1 && isPrime(-¢) // deal with negative values
+        || ¢ > 1 && isPrime¢(¢); // any integer >- 2
+  }
+
+  private static boolean isPrime¢(final int ¢) {
+    for (int d = 2; d * d <= ¢; ++d)
+      if (¢ % d == 0)
+        return false;
+    return true;
+  }
+
+  private int current = 1;
+
+  /** A generator for the sequence of primes: 2, 3, 5, 7, 11, 13, 17, 19, 23,...
+   * @return next value in the sequence of primes; the first value returned is
+   *         2. */
+  public int next() {
+    for (;;)
+      if (isPrime¢(++current))
+        return current;
+  }
+
   @SuppressWarnings({ "static-method", "javadoc" }) //
   public static class TEST {
     static <T> void assertEquals(final String reason, final T t1, final T t2) {
@@ -92,31 +118,5 @@ public class Primes {
       p.next();
       azzert.that(p.next(), is(5));
     }
-  }
-
-  /** Tests for primality.
-   * @param ¢ candidate to be tested
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
-  public static boolean isPrime(final int ¢) {
-    return ¢ < -1 && isPrime(-¢) // deal with negative values
-        || ¢ > 1 && isPrime¢(¢); // any integer >- 2
-  }
-
-  private static boolean isPrime¢(final int ¢) {
-    for (int d = 2; d * d <= ¢; ++d)
-      if (¢ % d == 0)
-        return false;
-    return true;
-  }
-
-  private int current = 1;
-
-  /** A generator for the sequence of primes: 2, 3, 5, 7, 11, 13, 17, 19, 23,...
-   * @return next value in the sequence of primes; the first value returned is
-   *         2. */
-  public int next() {
-    for (;;)
-      if (isPrime¢(++current))
-        return current;
   }
 }
