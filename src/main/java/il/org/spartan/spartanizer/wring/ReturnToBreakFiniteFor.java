@@ -44,7 +44,6 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  // TODO: Dor Ma'ayan this needs spartanization
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
     final ForStatement forStatement = (ForStatement) statementList.get(0);
@@ -97,7 +96,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
 
-  private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
+  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
     Statement $=null;  
     final List<Statement> blockStatements = body.statements();
       for (final Statement s : blockStatements) {
