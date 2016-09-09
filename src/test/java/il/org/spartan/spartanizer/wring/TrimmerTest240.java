@@ -1335,31 +1335,31 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Ignore @Test public void inlineSingleUse06() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.out.println(coes.size()); ")
-       .stays();
+            .stays();
   }
 
   @Test public void inlineSingleUse07() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size()); ")
-       .stays();
+            .stays();
   }
 
   @Ignore @Test public void inlineSingleUse08() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size());     S.out.println(outdated.size()); ")
-       .stays();
+            .stays();
   }
 
   @Ignore @Test public void inlineSingleUse09() {
     trimming(
         " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;);   assertEquals(5, a.new Context().lineCount());   final PureIterable&lt;Mutant&gt; ms = a.generateMutants();   assertEquals(2, count(ms));   final PureIterator&lt;Mutant&gt; i = ms.iterator();   assertTrue(i.hasNext());   assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text);   assertTrue(i.hasNext());   assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text);   assertFalse(i.hasNext());  ")
-       .stays();
+            .stays();
   }
 
   @Ignore @Test public void inlineSingleUse10() {
     trimming(
         "      final A a = new A(\"{\nABRA\n{\nCADABRA\n{\");        assertEquals(5, a.new Context().lineCount());        final PureIterable<Mutant> ms = a.mutantsGenerator();        assertEquals(2, count(ms));        final PureIterator<Mutant> i = ms.iterator();        assertTrue(i.hasNext());        assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text);        assertTrue(i.hasNext());        assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text);        assertFalse(i.hasNext());")
-       .stays();
+            .stays();
   }
 
   @Test public void inlineSingleUseKillingVariable() {
@@ -1393,7 +1393,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void inlineSingleUseWithAssignment() {
     trimming("int a = 2; while (true) if (f()) f(a); else a = 2;")//
-   .stays();
+        .stays();
   }
 
   @Test public void inlineSingleVariableintoPlusPlus() {
@@ -1473,13 +1473,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void issue06F() {
     trimming("x*a*-b*-c*- - - d * d")//
         .to("-x*a*b*c*d*d")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue06G() {
     trimming("x*a*-b*-c*- - - d / d")//
         .to("-x*a*b*c*d/d")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue06H() {
@@ -1680,22 +1680,22 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue54DoNonSideEffectEmptyBody() {
     trimming("int a = f(); do ; while (a != 1);")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue54DoWhile() {
     trimming("int a  = f(); do { b[i] = 2; ++i; } while (b[i] != a);")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue54DoWithBlock() {
     trimming("int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue54doWithoutBlock() {
     trimming("int a  = f(); do b[i] = a; while (b[i] != a);")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue54ForEnhanced() {
@@ -1735,7 +1735,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue54While() {
     trimming("int a  = f(); while (c) b[i] = a;")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue54WhileNonSideEffect() {
@@ -1787,7 +1787,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void issue62a() {
     trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
         .to("int f(int i) { for(;;++i) {} return i; }")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue62c() {
@@ -1951,22 +1951,22 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void noinliningintoSynchronizedStatement() {
     trimming("int a  = f(); synchronized(this) { int b = a; }")//
-   .stays();
+        .stays();
   }
 
   @Test public void noinliningintoSynchronizedStatementEvenWithoutSideEffect() {
     trimming("int a  = f; synchronized(this) { int b = a; }")//
-   .stays();
+        .stays();
   }
 
   @Test public void noinliningintoTryStatement() {
     trimming("int a  = f(); try { int b = a; } catch (Exception E) {}")//
-   .stays();
+        .stays();
   }
 
   @Test public void noinliningintoTryStatementEvenWithoutSideEffect() {
     trimming("int a  = f; try { int b = a; } catch (Exception E) {}")//
-   .stays();
+        .stays();
   }
 
   @Test public void notOfAnd() {
@@ -2769,7 +2769,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Ignore @Test public void reanmeReturnVariableToDollar09() {
     trimming(
         " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.out.println($.j);   return null;")
-       .stays();
+            .stays();
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar10() {
@@ -3938,7 +3938,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("int a, b=0;   if (b==3){    a=4; } ")//
         .to("int a;if(0==3){a=4;}") //
         .to("int a;if(0==3)a=4;") //
-   .stays();
+        .stays();
   }
 
   @Test public void ternarize35() {
@@ -3966,7 +3966,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .to("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")//
         .to("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
-   .stays();
+        .stays();
   }
 
   @Test public void ternarize45() {
@@ -3997,7 +3997,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void ternarize52() {
     trimming("int a=0,b = 0,c,d = 0,e = 0;if (a < b) {c = d;c = e;} f();")//
-   .stays();
+        .stays();
   }
 
   @Test public void ternarize54() {

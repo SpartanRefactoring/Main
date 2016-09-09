@@ -273,7 +273,7 @@ public class TrimmerTest250 {
     trimming("protected public class A{volatile static int a;}") //
         .to("public protected class A{volatile static int a;}") //
         .to("public protected class A{static volatile int a;}") //
-   .stays();
+        .stays();
   }
 
   @Test public void issue111g() {
@@ -548,17 +548,17 @@ public class TrimmerTest250 {
 
   @Test public void issue50e() {
     trimming("enum a {a,b}")//
-   .stays();//
+        .stays();//
   }
 
   @Test public void issue50e1() {
     trimming("enum a {a}")//
-   .stays();//
+        .stays();//
   }
 
   @Test public void issue50e2() {
     trimming("enum a {}")//
-   .stays();//
+        .stays();//
   }
 
   @Test public void issue50f() {
@@ -783,7 +783,7 @@ public class TrimmerTest250 {
   @Test public void issue72md3() {
     trimming("0-x-0-y-0-z-0-0")//
         .to("-x-y-z")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue72me() {
@@ -818,14 +818,14 @@ public class TrimmerTest250 {
     trimming("0-(x-0)")//
         .to("-(x-0)")//
         .to("-(x)") //
-   .stays();
+        .stays();
   }
 
   @Test public void issue72mf1B() {
     assert iz.simple(into.e("x"));
     trimming("-(x-0)")//
         .to("-(x)")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue72mg() {
@@ -843,7 +843,7 @@ public class TrimmerTest250 {
   @Test public void issue72mi() {
     trimming("0-x-0-y-0-z-0")//
         .to("-x-y-z")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue72mj() {
@@ -886,7 +886,7 @@ public class TrimmerTest250 {
     trimming("0+((x+y)+0+(z+h))+0")//
         .to("0+x+y+0+z+h+0")//
         .to("x+y+z+h")//
-   .stays();
+        .stays();
   }
 
   @Test public void issue72pi() {
@@ -1102,7 +1102,7 @@ public class TrimmerTest250 {
         .to("if(false) ++a;a++;") //
         .to("{}++a;") //
         .to("++a;") //
-   .stays();
+        .stays();
   }
 
   @Test public void issue85_86a() {
@@ -1207,30 +1207,30 @@ public class TrimmerTest250 {
 
   @Test public void issue141_02() {
     trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").to(null);
+        + "out(\"elements\", os);   \n" + "}").stays();
   }
 
   @Test public void issue141_03() {
     trimming("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
-        + "out(\"elements\",abracadabra);   \n" + "}").to(null);
+        + "out(\"elements\",abracadabra);   \n" + "}").stays();
   }
 
   @Test public void issue141_04() {
     trimming("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .to(null);
+        .stays();
   }
 
   @Test public void issue141_05() {
     trimming("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .to(null);
+        .stays();
   }
 
   @Test public void issue141_06() {
     trimming("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
             + "}")
-        .to(null);
+        .stays();
   }
 
   @Test public void issue141_07() {
@@ -1238,13 +1238,13 @@ public class TrimmerTest250 {
         + "out(\"elements\");   \n" + "}")
             .to("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
                 + "out(\"elements\");   \n" + "}")
-            .to(null);
+            .stays();
   }
 
   @Test public void issue141_08() {
     trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .to(null);
+        .stays();
   }
 
   // @formatter:off

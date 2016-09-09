@@ -106,7 +106,8 @@ import il.org.spartan.spartanizer.wring.Wring.*;
     }
 
     @Override public boolean visit(final SimpleName n) {
-      // TODO: Ori, this looks like a bug to me. When shouldn't these two be equal?
+      // TODO: Ori, this looks like a bug to me. When shouldn't these two be
+      // equal?
       if (n.equals(n.getIdentifier()))
         c = false;
       return c;

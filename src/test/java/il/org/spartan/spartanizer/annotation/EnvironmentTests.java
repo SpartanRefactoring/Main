@@ -392,7 +392,7 @@ import java.util.*;
 
   public static class EX8 {
     class Arr {
-      String[] arr= new String[13];
+      String[] arr = new String[13];
 
       @NestedENV({ "EX8.Arr.arr#String[]" }) @OutOfOrderFlatENV({ "arr" }) void foo() {
         @Begin class m {
