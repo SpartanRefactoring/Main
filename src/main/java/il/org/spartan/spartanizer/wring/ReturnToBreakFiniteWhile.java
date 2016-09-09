@@ -51,7 +51,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     if (isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     final Statement change = toChange;
     return toChange == null ? null : new Rewrite(description(), change) {
@@ -62,16 +62,16 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
   }
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    IfStatement ifStatement = az.ifStatement(s);
+    final IfStatement ifStatement = az.ifStatement(s);
     if (ifStatement == null)
       return null;
-    Statement thenStatement = ifStatement.getThenStatement();
-    Statement elzeStatement = ifStatement.getElseStatement();
+    final Statement thenStatement = ifStatement.getThenStatement();
+    final Statement elzeStatement = ifStatement.getElseStatement();
     if (thenStatement != null) {
       if (compareReturnStatements(az.returnStatement(thenStatement), nextReturn))
         return thenStatement;
       if (iz.block(thenStatement)) {
-        Statement $ = handleBlock((Block) thenStatement, nextReturn);
+        final Statement $ = handleBlock((Block) thenStatement, nextReturn);
         if ($ != null)
           return $;
       }
@@ -81,7 +81,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
         if (compareReturnStatements(az.returnStatement(elzeStatement), nextReturn))
           return elzeStatement;
         if (iz.block(elzeStatement)) {
-          Statement $ = handleBlock((Block) elzeStatement, nextReturn);
+          final Statement $ = handleBlock((Block) elzeStatement, nextReturn);
           if ($ != null)
             return $;
         }
@@ -92,7 +92,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     return null;
   }
 
-  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body, final ReturnStatement nextReturn) {
+  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
     for (final Statement s : blockStatements) {
