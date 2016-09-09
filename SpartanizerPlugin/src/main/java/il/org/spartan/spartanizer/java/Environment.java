@@ -180,6 +180,7 @@ import org.eclipse.jdt.core.dom.*;
 
   // TODO: Dan - don't use abbreviation, use {@link Environment} or 'this
   // instance'
+  // Yossi, I could not understand your intention. Could you please elaborate further?
   /** @return null iff the name is not in use in the this instance. */
   default Information get(final String name) {
     return null;
