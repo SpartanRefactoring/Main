@@ -7,9 +7,10 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.wring.*;
-
+/** ??
+ * @author Daniel Mittelman
+ * @year 2016 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
@@ -22,7 +23,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     // Add the startup behavior combo box
-    addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PreferencesResources.PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
+    addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
         getFieldEditorParent()));
     // Add the enabled for new projects checkbox
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));

@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.engine.*;
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (int i = d.getExtraDimensions(); i > 0; --i)
-      $ = $ + "s";
+      $ += "s";
     return $;
   }
 

@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
   private static String description(final Expression x) {
-    return x == null ? "Use isEmpty()" : "Use " + x + ".isEmpty()";
+    return "Use " + (x != null ? x + "" : "isEmpty()");
   }
 
   private static NumberLiteral getNegativeNumber(final Expression ¢) {

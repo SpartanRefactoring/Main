@@ -44,7 +44,6 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  // TODO: Dor Ma'ayan this needs spartanization
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
     final ForStatement forStatement = (ForStatement) statementList.get(0);
@@ -52,21 +51,8 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     if (isInfiniteLoop(forStatement))
       return null;
     final Statement body = forStatement.getBody();
-    Statement toChange = az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    if (iz.block(body)) {
-      final List<Statement> blockStatements = ((Block) body).statements();
-      for (final Statement s : blockStatements) {
-        if (az.ifStatement(s) != null)
-          toChange = handleIf(s, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-          toChange = s;
-          break;
-        }
-      }
-    }
-    if (iz.returnStatement(body) && //
-        compareReturnStatements(nextReturn, az.returnStatement(body)))
-      toChange = body;
+    Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (toChange == null)
       return null;
     final Statement theChange = toChange;
@@ -77,41 +63,55 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     };
   }
 
-  // TODO Dor: I sprartanized a bit only to discover that this looks buggy! how
-  // can you assume it is an if without checking for it, and if you checked
-  // already, why do you check again?
-  private Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    // TODO: Dor Ma'ayan this needs spartanization
-    final Statement $ = az.ifStatement(s).getThenStatement();
-    final Statement elze = az.ifStatement(s).getElseStatement();
-    if (az.ifStatement($) != null)
-      return handleIf($, nextReturn);
-    if (az.ifStatement(elze) != null)
-      return handleIf(elze, nextReturn);
-    if (compareReturnStatements(nextReturn, az.returnStatement($)))
-      return $;
-    if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
-      return elze;
-    return handleIf(nextReturn, az.block($));
-  }
-
-  private Statement handleIf(final ReturnStatement nextReturn, final Block b) {
-    // TODO: Dor Ma'ayan this needs spartanization
-    if (b == null)
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    IfStatement ifStatement = az.ifStatement(s);
+    if (ifStatement == null)
       return null;
-    for (final Statement $ : step.statements(b)) {
-      if (az.ifStatement($) != null || az.ifStatement($) != null)
-        return handleIf($, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement($)))
-        return $;
+    Statement thenStatement = ifStatement.getThenStatement();
+    Statement elzeStatement = ifStatement.getElseStatement();
+    if (thenStatement != null) {
+      if (compareReturnStatements(az.returnStatement(thenStatement), nextReturn))
+        return thenStatement;
+      if (iz.block(thenStatement)) {
+        Statement $ = handleBlock((Block) thenStatement, nextReturn);
+        if ($ != null)
+          return $;
+      }
+      if (az.ifStatement(thenStatement) != null)
+        return handleIf(thenStatement, nextReturn);
+      if (elzeStatement != null) {
+        if (compareReturnStatements(az.returnStatement(elzeStatement), nextReturn))
+          return elzeStatement;
+        if (iz.block(elzeStatement)) {
+          Statement $ = handleBlock((Block) elzeStatement, nextReturn);
+          if ($ != null)
+            return $;
+        }
+        if (az.ifStatement(elzeStatement) != null)
+          return handleIf(elzeStatement, nextReturn);
+      }
     }
     return null;
+  }
+
+  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    final List<Statement> blockStatements = body.statements();
+    for (final Statement s : blockStatements) {
+      if (az.ifStatement(s) != null)
+        $ = handleIf(s, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
+        $ = s;
+        break;
+      }
+    }
+    return $;
   }
 
   @Override boolean scopeIncludes(final Block b) {
     // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
     // null, you do not have to do anything.
     final List<Statement> ss = step.statements(b);
-    return b != null && ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
+    return ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
   }
 }

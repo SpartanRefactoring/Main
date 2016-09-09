@@ -51,20 +51,8 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     if (isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    Statement toChange = az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    if (iz.block(body)) {
-      final List<Statement> statementList1 = ((Block) body).statements();
-      for (final Statement s : statementList1) {
-        if (az.ifStatement(s) != null)
-          toChange = handleIf(s, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-          toChange = s;
-          break;
-        }
-      }
-    }
-    if (iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)))
-      toChange = body;
+    Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     final Statement change = toChange;
     return toChange == null ? null : new Rewrite(description(), change) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -73,32 +61,53 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     };
   }
 
-  private Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final Statement $ = az.ifStatement(s).getThenStatement();
-    final Statement elze = az.ifStatement(s).getElseStatement();
-    if (az.ifStatement($) != null)
-      return handleIf($, nextReturn);
-    if (az.ifStatement(elze) != null)
-      return handleIf(elze, nextReturn);
-    if (compareReturnStatements(nextReturn, az.returnStatement($)))
-      return $;
-    if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
-      return elze;
-    final Block b = az.block($);
-    if (b != null) {
-      final List<Statement> statementList = step.statements(b);
-      for (final Statement sl : statementList) {
-        if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
-          return handleIf(sl, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
-          return sl;
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    IfStatement ifStatement = az.ifStatement(s);
+    if (ifStatement == null)
+      return null;
+    Statement thenStatement = ifStatement.getThenStatement();
+    Statement elzeStatement = ifStatement.getElseStatement();
+    if (thenStatement != null) {
+      if (compareReturnStatements(az.returnStatement(thenStatement), nextReturn))
+        return thenStatement;
+      if (iz.block(thenStatement)) {
+        Statement $ = handleBlock((Block) thenStatement, nextReturn);
+        if ($ != null)
+          return $;
+      }
+      if (az.ifStatement(thenStatement) != null)
+        return handleIf(thenStatement, nextReturn);
+      if (elzeStatement != null) {
+        if (compareReturnStatements(az.returnStatement(elzeStatement), nextReturn))
+          return elzeStatement;
+        if (iz.block(elzeStatement)) {
+          Statement $ = handleBlock((Block) elzeStatement, nextReturn);
+          if ($ != null)
+            return $;
+        }
+        if (az.ifStatement(elzeStatement) != null)
+          return handleIf(elzeStatement, nextReturn);
       }
     }
     return null;
   }
 
+  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    final List<Statement> blockStatements = body.statements();
+    for (final Statement s : blockStatements) {
+      if (az.ifStatement(s) != null)
+        $ = handleIf(s, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
+        $ = s;
+        break;
+      }
+    }
+    return $;
+  }
+
   @Override boolean scopeIncludes(final Block b) {
     final List<Statement> ss = step.statements(b);
-    return b != null && ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
+    return ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
   }
 }
