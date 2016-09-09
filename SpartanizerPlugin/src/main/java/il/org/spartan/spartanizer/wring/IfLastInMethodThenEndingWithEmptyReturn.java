@@ -52,7 +52,8 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     if (exclude != null)
-      exclude.equals(s);
+      if (exclude.equals(s))
+        return null;
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
