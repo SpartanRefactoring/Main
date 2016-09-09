@@ -61,10 +61,13 @@ public class TrimmerTestsUtils {
       super(inner);
     }
 
+    public void stays() {
+      checkSame();
+    }
+
     public Operand to(final String expected) {
-      if (expected == null || expected.isEmpty())
-        checkSame();
-      else {
+      assert expected != null;
+      {
         final Wrap w = Wrap.find(get());
         final String wrap = w.on(get());
         final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);

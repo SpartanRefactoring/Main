@@ -21,19 +21,19 @@ import il.org.spartan.plugin.*;
 */
 /** ??
  * @author Yossi Gil
- * @year 2016 */
+ * @since 2016 */
 public interface trim {
   static int countOpportunities(final Spartanization s, final CompilationUnit u) {
     return s.findOpportunities(u).size();
   }
 
-  static FluentTrimmerApplication of(final String codeFragment) {
-    return new FluentTrimmerApplication(new Trimmer(), codeFragment);
+  static fluentTrimmerApplication of(final String codeFragment) {
+    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
 
   @SafeVarargs //
-  static <N extends ASTNode> FluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-    return new FluentTrimmer(clazz, ws);
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
+    return new fluentTrimmer(clazz, ws);
   }
 
   /** Starting point of fluent API for @Testing:
@@ -44,9 +44,9 @@ public interface trim {
    * .of("a+(b-c)") //  See {@link #of(String)} <br/>
    * .gives("a+b-c")</code> */
   interface repeatedly {
-    static FluentTrimmerApplication of(final String codeFragment) {
-      return new FluentTrimmerApplication(new Trimmer(), codeFragment) {
-        @Override public FluentTrimmerApplication gives(final String expected) {
+    static fluentTrimmerApplication of(final String codeFragment) {
+      return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
+        @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(Trimmer.fixedPoint(expected));
         }
 
@@ -56,19 +56,16 @@ public interface trim {
       };
     }
 
-    @SafeVarargs static <N extends ASTNode> FluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-      return new FluentTrimmer(clazz, ws) {
+    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
+      return new fluentTrimmer(clazz, ws) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           // TODO Auto-generated method stub
           return super.checkAllConditions(pm);
         }
 
-        /*@Override public <T> T getAdapter(final Class<T> adapter) {
-          // TODO Auto-generated method stub
-          return (T) super.getAdapter(adapter);
-        }*/
-
-        @Override public FluentTrimmerApplication of(final String codeFragment) {
+        /* @Override public <T> T getAdapter(final Class<T> adapter) { // TODO
+         * Auto-generated method stub return (T) super.getAdapter(adapter); } */
+        @Override public fluentTrimmerApplication of(final String codeFragment) {
           // TODO Auto-generated method stub
           return super.of(codeFragment);
         }
@@ -83,7 +80,7 @@ public interface trim {
 
   /** Unit tests demonstrating the fluent API
    * @author Yossi Gil
-   * @year 2016 */
+   * @since 2016 */
   @SuppressWarnings("static-method") //
   @Ignore public static class TEST {
     @Test public void trimming_of_gives() {

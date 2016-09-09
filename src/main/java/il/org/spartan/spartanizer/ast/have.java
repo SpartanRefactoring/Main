@@ -23,22 +23,22 @@ public enum have {
   }
 
   /** Determine whether a boolean literal is present
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
-  public static boolean booleanLiteral(final Iterable<Expression> es) {
-    for (final Expression e : es)
+  public static boolean booleanLiteral(final Iterable<Expression> xs) {
+    for (final Expression e : xs)
       if (iz.booleanLiteral(e))
         return true;
     return false;
   }
 
   /** Determine whether the boolean literal <code><b>false</b></code> is present
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code> */
-  public static boolean falseLiteral(final List<Expression> es) {
-    for (final Expression e : es)
+  public static boolean falseLiteral(final List<Expression> xs) {
+    for (final Expression e : xs)
       if (iz.literalFalse(e))
         return true;
     return false;
@@ -56,11 +56,11 @@ public enum have {
   }
 
   /** Determine whether a literal is present
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
-  public static boolean literal(final List<Expression> es) {
-    for (final Expression e : es)
+  public static boolean literal(final List<Expression> xs) {
+    for (final Expression e : xs)
       if (iz.literal(e))
         return true;
     return false;
@@ -78,22 +78,22 @@ public enum have {
   }
 
   /** Determine whether a numerical literal is present
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal. */
-  public static boolean numericLiteral(final Iterable<Expression> es) {
-    for (final Expression e : es)
+  public static boolean numericLiteral(final Iterable<Expression> xs) {
+    for (final Expression e : xs)
       if (iz.numericLiteral(e))
         return true;
     return false;
   }
 
   /** Determine whether the boolean literal <code><b>true</b></code> is present
-   * @param es JD
+   * @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>true</b></code> */
-  public static boolean trueLiteral(final List<Expression> es) {
-    for (final Expression e : es)
+  public static boolean trueLiteral(final List<Expression> xs) {
+    for (final Expression e : xs)
       if (iz.literalTrue(e))
         return true;
     return false;

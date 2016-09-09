@@ -19,7 +19,7 @@ public enum Modifiers {
   ;
   public static Modifiers find(final String modifier) {
     for (final Modifiers $ : Modifiers.values())
-      if (modifier.equals(("" + $).toLowerCase()))
+      if (modifier.equals(($ + "").toLowerCase()))
         return $;
     return null;
   }
@@ -29,6 +29,6 @@ public enum Modifiers {
   }
 
   private static int gt(final Modifiers m1, final Modifiers m2) {
-    return m1.ordinal() > m2.ordinal() ? 1 : m1.ordinal() < m2.ordinal() ? -1 : 0;
+    return m1.ordinal() - m2.ordinal();
   }
 }

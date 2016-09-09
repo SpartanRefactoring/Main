@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.spartanizer.engine;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -12,11 +12,11 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2015-08-23 */
 public class specificity implements Comparator<Expression> {
   /** Determine
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
    *         level of specificity. */
-  public static boolean defined(final Expression e) {
-    return Level.defined(e);
+  public static boolean defined(final Expression x) {
+    return Level.defined(x);
   }
 
   /** A comparison of two {@link Expression} by their level of specificity.
@@ -97,8 +97,8 @@ public class specificity implements Comparator<Expression> {
         return iz.literalFalse(¢);
       }
     },;
-    static boolean defined(final Expression e) {
-      return of(e) != values().length;
+    static boolean defined(final Expression x) {
+      return of(x) != values().length;
     }
 
     static int of(final Expression ¢) {

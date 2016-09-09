@@ -15,20 +15,20 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static ASTNode replacement(final List<Expression> es) {
+  private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : es)
+    for (final Expression ¢ : xs)
       if (!iz.literal0(¢))
         $.add(¢);
-    return $.size() == es.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(es)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(PLUS);
+    return $.size() == xs.size() ? null
+        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(PLUS);
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Remove 0 from  " + e;
+  @Override String description(final InfixExpression x) {
+    return "Remove 0 from  " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    return e.getOperator() != PLUS ? null : replacement(extract.allOperands(e));
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 }

@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** Various methods for comparing
  * @author Yossi Gil
@@ -66,27 +65,29 @@ public enum ExpressionComparator implements Comparator<Expression> {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
-          f($, child);
+          addWeight($, child);
       }
 
-      void f(final Int $, final ASTNode ¢) {
+      /** @param a Accumulator
+       * @param ¢ Node to check */
+      void addWeight(final Int a, final ASTNode ¢) {
         if (iz.is(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)
-            ++$.inner;
+            ++a.inner;
           return;
         }
         if (iz.is(¢, EMPTY_STATEMENT))
           return;
         if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
-          $.inner += 4;
+          a.inner += 4;
           return;
         }
         if (!iz.is(¢, IF_STATEMENT))
-          $.inner += 3;
+          a.inner += 3;
         else {
-          $.inner += 4;
+          a.inner += 4;
           if (step.elze(az.ifStatement(¢)) != null)
-            ++$.inner;
+            ++a.inner;
         }
       }
     });
@@ -94,11 +95,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   /** Compare the length of the left and right arguments of an infix expression
-   * @param e JD
+   * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
    *         parameter is is longer than the second argument */
-  public static boolean longerFirst(final InfixExpression e) {
-    return isLonger(step.left(e), step.right(e));
+  public static boolean longerFirst(final InfixExpression x) {
+    return isLonger(step.left(x), step.right(x));
   }
 
   /** Compare method invocations by the number of arguments
@@ -179,21 +180,21 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   /** Sorts the {@link Expression} list
-   * @param es an {@link Expression} list to sort
+   * @param xs an {@link Expression} list to sort
    * @return True if the list was modified */
-  public boolean sort(final List<Expression> es) {
+  public boolean sort(final List<Expression> xs) {
     boolean $ = false;
     // Bubble sort
-    for (int i = 0, size = es.size(); i < size; ++i)
+    for (int i = 0, size = xs.size(); i < size; ++i)
       for (int j = 0; j < size - 1; ++j) {
-        final Expression e0 = es.get(j);
-        final Expression e1 = es.get(j + 1);
+        final Expression e0 = xs.get(j);
+        final Expression e1 = xs.get(j + 1);
         if (iz.negative(e0) || iz.negative(e1) || compare(e0, e1) <= 0)
           continue;
-        es.remove(j);
-        es.remove(j);
-        es.add(j, e0);
-        es.add(j, e1);
+        xs.remove(j);
+        xs.remove(j);
+        xs.add(j, e0);
+        xs.add(j, e1);
         $ = true;
       }
     return $;

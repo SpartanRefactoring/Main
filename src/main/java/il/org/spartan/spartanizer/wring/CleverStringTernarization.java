@@ -81,22 +81,22 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
         , getSuffix(then, then.length() - commonSuffixLength, condition)).to(PLUS2);
   }
 
-  private static InfixExpression replacePrefix(final InfixExpression e, final int i) {
-    assert e.getOperator() == PLUS2;
-    final List<Expression> es = extract.allOperands(e);
+  private static InfixExpression replacePrefix(final InfixExpression x, final int i) {
+    assert x.getOperator() == PLUS2;
+    final List<Expression> es = extract.allOperands(x);
     assert first(es).getNodeType() == STRING_LITERAL;
     final StringLiteral l = (StringLiteral) first(es);
-    final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, e);
+    final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, x);
     replaceFirst(es, suffix);
     return subject.operands(es).to(PLUS2);
   }
 
-  private static InfixExpression replaceSuffix(final InfixExpression e, final int i) {
-    assert e.getOperator() == PLUS2;
-    final List<Expression> es = extract.allOperands(e);
+  private static InfixExpression replaceSuffix(final InfixExpression x, final int i) {
+    assert x.getOperator() == PLUS2;
+    final List<Expression> es = extract.allOperands(x);
     assert last(es).getNodeType() == STRING_LITERAL;
     final StringLiteral l = (StringLiteral) last(es);
-    final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, e);
+    final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, x);
     replaceLast(es, prefix);
     return subject.operands(es).to(PLUS2);
   }
@@ -190,8 +190,8 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return "Replace ternarization with more clever one";
   }
 
-  @Override Expression replacement(final ConditionalExpression e) {
-    return replacement(expression(e), then(e), elze(e));
+  @Override Expression replacement(final ConditionalExpression x) {
+    return replacement(expression(x), then(x), elze(x));
   }
 
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {

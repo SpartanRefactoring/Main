@@ -98,7 +98,8 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
-            new ReturnToBreakFiniteFor(),//
+            new ReturnToBreakFiniteFor(), //
+            new ReturnToBreakFiniteWhile(), //
             null) //
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //

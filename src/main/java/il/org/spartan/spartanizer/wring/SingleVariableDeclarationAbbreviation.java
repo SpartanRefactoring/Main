@@ -21,6 +21,13 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
 public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> implements Kind.Abbreviation {
+  private static String getExtraDimensions(final SingleVariableDeclaration d) {
+    String $ = "";
+    for (int i = d.getExtraDimensions(); i > 0; --i)
+      $ += "s";
+    return $;
+  }
+
   private static boolean isShort(final SingleVariableDeclaration d) {
     final String n = spartan.shorten(d.getType());
     return n != null && (n + pluralVariadic(d)).equals(d.getName().getIdentifier());
@@ -31,24 +38,24 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
       return false;
     final MethodExplorer e = new MethodExplorer(m);
     for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(spartan.shorten(d.getType())))
+      if (n.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
     for (final SingleVariableDeclaration n : parameters(m))
-      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType())))
+      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
-    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()));
+    return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()) + pluralVariadic(d));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration d) {
-    return d.isVarargs() ? "s" : "";
+    return d.isVarargs() ? "s" : getExtraDimensions(d);
   }
 
   private static boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser("" + d.getType()).isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 
   @Override String description(final SingleVariableDeclaration d) {
-    return "" + d.getName();
+    return d.getName() + "";
   }
 
   @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {

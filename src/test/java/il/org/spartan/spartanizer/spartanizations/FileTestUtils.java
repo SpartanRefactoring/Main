@@ -152,7 +152,7 @@ import il.org.spartan.spartanizer.engine.*;
      * .util.List, java.io.File) */
     @Override public void go(final List<Object[]> $, final File d) {
       for (final File f : d.listFiles())
-        if (f.isFile() && f.exists()) {
+        if (f != null && f.isFile() && f.exists()) {
           final Object[] c = makeCase(makeSpartanizationObject(d), d, f, f.getName());
           if (c != null)
             $.add(c);

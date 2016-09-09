@@ -13,7 +13,7 @@ public class Recurser<T> {
   /** Get a list of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  public static List<ASTNode> getChildren(final ASTNode n) {
+  public static List<ASTNode> children(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     final InfixExpression ¢ = az.infixExpression(n);
@@ -62,64 +62,64 @@ public class Recurser<T> {
   }
 
   public void postVisit(final Consumer<Recurser<T>> f) {
-    final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty()) {
+    final List<ASTNode> children = children(this.root);
+    if (children == null || children.isEmpty()) {
       f.accept(this);
       return;
     }
-    final List<Recurser<T>> recurserList = new ArrayList<>();
-    for (final ASTNode child : childrenList)
-      recurserList.add(new Recurser<T>(child));
+    final List<Recurser<T>> rs = new ArrayList<>();
+    for (final ASTNode n : children)
+      rs.add(new Recurser<T>(n));
     int index = 0;
-    for (final Recurser<T> rec : recurserList) {
-      rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
+    for (final Recurser<T> r : rs) {
+      r.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
-    this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
+    this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
     f.accept(this);
   }
 
   public T postVisit(final Function<Recurser<T>, T> f) {
-    final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty())
+    final List<ASTNode> children = children(this.root);
+    if (children == null || children.isEmpty())
       return this.current = f.apply(this);
-    final List<Recurser<T>> recurserList = new ArrayList<>();
-    for (final ASTNode child : childrenList)
-      recurserList.add(new Recurser<T>(child));
+    final List<Recurser<T>> rs = new ArrayList<>();
+    for (final ASTNode n : children)
+      rs.add(new Recurser<T>(n));
     int index = 0;
-    for (final Recurser<T> rec : recurserList) {
-      this.current = rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).postVisit(f);
+    for (final Recurser<T> r : rs) {
+      this.current = r.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
-    this.current = index == 0 ? current : recurserList.get(index - 1).getCurrent();
+    this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
     return this.current = f.apply(this);
   }
 
   public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
-    final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty())
+    final List<ASTNode> children = children(this.root);
+    if (children == null || children.isEmpty())
       return;
-    final List<Recurser<T>> recurserList = new ArrayList<>();
-    for (final ASTNode child : childrenList)
-      recurserList.add(new Recurser<T>(child));
-    for (final Recurser<T> rec : recurserList)
+    final List<Recurser<T>> rs = new ArrayList<>();
+    for (final ASTNode child : children)
+      rs.add(new Recurser<T>(child));
+    for (final Recurser<T> rec : rs)
       rec.preVisit(f);
   }
 
   public T preVisit(final Function<Recurser<T>, T> f) {
     this.current = f.apply(this);
-    final List<ASTNode> childrenList = getChildren(this.root);
-    if (childrenList == null || childrenList.isEmpty())
+    final List<ASTNode> children = children(this.root);
+    if (children == null || children.isEmpty())
       return this.current;
-    final List<Recurser<T>> recurserList = new ArrayList<>();
-    for (final ASTNode child : childrenList)
-      recurserList.add(new Recurser<T>(child));
+    final List<Recurser<T>> rs = new ArrayList<>();
+    for (final ASTNode child : children)
+      rs.add(new Recurser<T>(child));
     int index = 0;
-    for (final Recurser<T> rec : recurserList) {
-      this.current = rec.from(index == 0 ? current : recurserList.get(index - 1).getCurrent()).preVisit(f);
+    for (final Recurser<T> rec : rs) {
+      this.current = rec.from(index == 0 ? current : rs.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
-    return recurserList.isEmpty() ? this.current : recurserList.get(index - 1).getCurrent();
+    return rs.isEmpty() ? this.current : rs.get(index - 1).getCurrent();
   }
 }

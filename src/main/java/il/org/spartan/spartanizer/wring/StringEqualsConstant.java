@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.wring.Wring.*;
 public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
-  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression e) {
+  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(duplicate.of(¢));
     $.setName(duplicate.of(n));
-    arguments($).add(duplicate.of(e));
+    arguments($).add(duplicate.of(x));
     return $;
   }
 
@@ -37,7 +37,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
    * eclipse.jdt.core.dom.ASTNode) */
   @Override ASTNode replacement(final MethodInvocation i) {
     final SimpleName n = step.name(i);
-    if (!mns.contains("" + n))
+    if (!mns.contains(n + ""))
       return null;
     final Expression ¢ = lisp.onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))

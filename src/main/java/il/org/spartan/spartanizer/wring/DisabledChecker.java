@@ -12,10 +12,10 @@ import org.eclipse.jdt.core.dom.*;
 public class DisabledChecker {
   /** Disable spartanization identifier, used by the programmer to indicate a
    * method/class not to be spartanized */
-  public final static String disablers[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
+  public static final String disablers[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
   /** Enable spartanization identifier, used by the programmer to indicate a
    * method/class to be spartanized */
-  public final static String enablers[] = { "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
+  public static final String enablers[] = { "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
   final Set<ASTNode> dns;
   final Set<ASTNode> ens;
 
@@ -28,7 +28,7 @@ public class DisabledChecker {
   }
 
   /** @param n node
-   * @return true iff spartanization is disabled for n */
+   * @return true iff spartanization is disabled for n [[Hedonistic] */
   public boolean check(final ASTNode n) {
     for (ASTNode p = n; p != null; p = p.getParent()) {
       if (dns.contains(p))
@@ -85,7 +85,7 @@ public class DisabledChecker {
     }
 
     public boolean go(final BodyDeclaration d, final Javadoc j) {
-      return j == null || go(d, j.toString());
+      return j == null || go(d, j + "");
     }
 
     public boolean go(final BodyDeclaration d, final String s) {
@@ -93,8 +93,8 @@ public class DisabledChecker {
       insertAnnotated(d, s, ens, enablers);
       return true;
     }
-    
-    private void insertAnnotated(BodyDeclaration d, String s, Set<ASTNode> g, String[] ids) {
+
+    private void insertAnnotated(final BodyDeclaration d, final String s, final Set<ASTNode> g, final String[] ids) {
       for (final String id : ids)
         if (s.contains(id)) {
           g.add(d);

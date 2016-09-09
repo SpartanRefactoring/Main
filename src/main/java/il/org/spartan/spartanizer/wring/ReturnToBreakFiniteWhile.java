@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonicalization {
+public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canonicalization {
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
@@ -36,7 +36,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return "Convert the return inside " + b + " to break";
   }
 
-  private static boolean isInfiniteLoop(final ForStatement s) {
+  private static boolean isInfiniteLoop(final WhileStatement s) {
     return az.booleanLiteral(s.getExpression()) != null;
   }
 
@@ -46,19 +46,17 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
-    final ForStatement forStatement = (ForStatement) statementList.get(0);
+    final WhileStatement whileStatement = (WhileStatement) statementList.get(0);
     final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
-    if (isInfiniteLoop(forStatement))
+    if (isInfiniteLoop(whileStatement))
       return null;
-    final Statement body = forStatement.getBody();
+    final Statement body = whileStatement.getBody();
     final Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    if (toChange == null)
-      return null;
-    final Statement theChange = toChange;
-    return new Rewrite(description(), theChange) {
+    final Statement change = toChange;
+    return toChange == null ? null : new Rewrite(description(), change) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(theChange, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
+        r.replace(change, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
       }
     };
   }
@@ -109,9 +107,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
   @Override boolean scopeIncludes(final Block b) {
-    // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
-    // null, you do not have to do anything.
     final List<Statement> ss = step.statements(b);
-    return ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
+    return ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
   }
 }

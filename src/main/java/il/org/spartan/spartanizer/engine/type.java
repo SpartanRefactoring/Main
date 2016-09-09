@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -14,6 +16,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -106,7 +109,7 @@ public interface type {
    * at compile time by using overloading. Only use for testing, mainly for
    * testing of type.
    * @author Shalmon Niv
-   * @year 2016 */
+   * @since 2016 */
   @SuppressWarnings("unused") interface Axiom {
     static type.Primitive.Certain type(final boolean x) {
       return type.Primitive.Certain.BOOLEAN;
@@ -179,17 +182,17 @@ public interface type {
       return !$.isNoInfo() ? $ : lookDown(x.getRightHandSide()).isNumeric() ? NUMERIC : lookDown(x.getRightHandSide());
     }
 
-    private static implementation lookDown(final CastExpression e) {
-      return typeSwitch("" + step.type(e));
+    private static implementation lookDown(final CastExpression x) {
+      return typeSwitch(step.type(x) + "");
     }
 
     private static implementation lookDown(final ClassInstanceCreation c) {
-      return typeSwitch("" + c.getType());
+      return typeSwitch(c.getType() + "");
     }
 
-    private static implementation lookDown(final ConditionalExpression e) {
-      final implementation $ = lookDown(e.getThenExpression());
-      final implementation ¢ = lookDown(e.getElseExpression());
+    private static implementation lookDown(final ConditionalExpression x) {
+      final implementation $ = lookDown(x.getThenExpression());
+      final implementation ¢ = lookDown(x.getElseExpression());
       // If we don't know much about one operand but do know enough about the
       // other, we can still learn something
       return $ == ¢ ? $
@@ -199,14 +202,14 @@ public interface type {
                       : NOTHING; //
     }
 
-    /** @param e JD
+    /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    private static implementation lookDown(final Expression e) {
-      if (hasType(e))
-        return getType(e);
-      switch (e.getNodeType()) {
+    private static implementation lookDown(final Expression x) {
+      if (hasType(x))
+        return getType(x);
+      switch (x.getNodeType()) {
         case NULL_LITERAL:
           return NULL;
         case CHARACTER_LITERAL:
@@ -216,33 +219,33 @@ public interface type {
         case BOOLEAN_LITERAL:
           return BOOLEAN;
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) e);
+          return lookDown((NumberLiteral) x);
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) e);
+          return lookDown((CastExpression) x);
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) e);
+          return lookDown((PrefixExpression) x);
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) e);
+          return lookDown((InfixExpression) x);
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) e);
+          return lookDown((PostfixExpression) x);
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) e);
+          return lookDown((ParenthesizedExpression) x);
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) e);
+          return lookDown((ClassInstanceCreation) x);
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) e);
+          return lookDown((MethodInvocation) x);
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) e);
+          return lookDown((ConditionalExpression) x);
         case ASSIGNMENT:
-          return lookDown((Assignment) e);
+          return lookDown((Assignment) x);
         default:
           return NOTHING;
       }
     }
 
-    private static implementation lookDown(final InfixExpression e) {
-      final InfixExpression.Operator o = e.getOperator();
-      final List<Expression> es = extract.allOperands(e);
+    private static implementation lookDown(final InfixExpression x) {
+      final InfixExpression.Operator o = x.getOperator();
+      final List<Expression> es = allOperands(x);
       assert es.size() >= 2;
       implementation $ = lookDown(lisp.first(es)).underBinaryOperator(o, lookDown(lisp.second(es)));
       lisp.chop(lisp.chop(es));
@@ -267,23 +270,23 @@ public interface type {
                   : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
     }
 
-    private static implementation lookDown(final ParenthesizedExpression e) {
-      return lookDown(extract.core(e));
+    private static implementation lookDown(final ParenthesizedExpression x) {
+      return lookDown(core(x));
     }
 
-    private static implementation lookDown(final PostfixExpression e) {
-      return lookDown(e.getOperand()).asNumeric(); // see
+    private static implementation lookDown(final PostfixExpression x) {
+      return lookDown(x.getOperand()).asNumeric(); // see
                                                    // testInDecreamentSemantics
     }
 
-    private static implementation lookDown(final PrefixExpression e) {
-      return lookDown(e.getOperand()).under(e.getOperator());
+    private static implementation lookDown(final PrefixExpression x) {
+      return lookDown(x.getOperand()).under(x.getOperator());
     }
 
-    private static implementation lookUp(final Expression e, final implementation i) {
+    private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (ASTNode context = parent(e); context != null; context = parent(context))
+      for (ASTNode context = parent(x); context != null; context = parent(context))
         switch (context.getNodeType()) {
           case INFIX_EXPRESSION:
             return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
@@ -515,11 +518,10 @@ public interface type {
   /** Types we do not full understand yet.
    * @author Yossi Gil
    * @author Shalmon Niv
-   * @year 2016 */
+   * @since 2016 */
   interface Odd extends inner.implementation {
-    // Those anonymous characters that known little or nothing about
-    // themselves
-    /** TODO: Not sure we need all these {@link type.Odd.Types} values. */
+    /** Those anonymous characters that know little or nothing about themselves
+     * TODO: Not sure we need all these {@link type.Odd.Types} values. */
     enum Types implements Odd {
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
@@ -533,6 +535,7 @@ public interface type {
       }
 
       @Override public String description() {
+        // TODO: Niv, why do we need this 'key' call?
         key();
         return description;
       }
@@ -545,8 +548,12 @@ public interface type {
 
   /** Primitive type or a set of primitive types
    * @author Yossi Gil
-   * @year 2016 */
+   * @since 2016 */
   interface Primitive extends inner.implementation {
+    /** @return All {@link Certain} types that an expression of this type can
+     *         be **/
+    Iterable<Certain> options();
+
     /** Primitive types known for certain. {@link String} is also considered
      * {@link Primitive.Certain}
      * @author Yossi Gil
@@ -592,10 +599,13 @@ public interface type {
       @Override public String key() {
         return key;
       }
+
+      @Override public Iterable<Certain> options() {
+        return iterables.singleton(this);
+      }
     }
 
-    /** <p>
-     * Tells how much we know about the type of of a variable, function, or
+    /** Tells how much we know about the type of of a variable, function, or
      * expression. This should be conservative approximation to the real type of
      * the entity, what a rational, but prudent programmer would case about the
      * type
@@ -619,19 +629,27 @@ public interface type {
     public enum Uncertain implements type.Primitive {
       // Doubtful types, from four fold uncertainty down to bilateral
       // schizophrenia" .
-      ALPHANUMERIC(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE, STRING), "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
-      BOOLEANINTEGRAL(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG), "only in x^y,x&y,x|y"), //
-      INTEGER(as.list(INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      INTEGRAL(as.list(BYTE, CHAR, SHORT, INT, LONG), "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() "), //
-      NUMERIC(as.list(BOOLEAN, BYTE, SHORT, CHAR, INT, LONG, FLOAT, DOUBLE, STRING), "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
+      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), //
+      INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE), //
+      NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), //
+      ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, BOOLEAN
+      /** NIV???WHY */
+          , STRING), //
+      BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
-      final String description;
-      final List<Certain> represents;
+      @Override public boolean canB(final Certain c) {
+        return options.contains(c);
+      }
 
-      private Uncertain(final Iterable<? extends Certain> ts, final String description) {
-        represents = new ArrayList<>();
-        add(represents, ts);
+      final String description;
+      final Set<Certain> options = new LinkedHashSet<>();
+
+      private Uncertain(final String description, final Primitive... ps) {
         this.description = description;
+        for (final Primitive p : ps)
+          for (final Certain c : p.options())
+            if (!options.contains(c))
+              options.add(c);
       }
 
       @Override public String description() {
@@ -639,13 +657,11 @@ public interface type {
       }
 
       @Override public String key() {
-        return "" + represents;
+        return separate.these(options).by('|');
       }
 
-      /** @return A list of all Primitive.Certain types that an expression of
-       *         this type can be */
-      public List<Certain> possibleTypes() {
-        return represents;
+      @Override public Iterable<Certain> options() {
+        return options;
       }
     }
   }

@@ -84,10 +84,10 @@ public class Range {
    * @param rs JD */
   public void pruneIncluders(final List<? extends Range> rs) {
     for (;;) {
-      final Range includesMe = findIncludedIn(rs);
-      if (includesMe == null)
+      final Range r = findIncludedIn(rs);
+      if (r == null)
         return;
-      rs.remove(includesMe);
+      rs.remove(r);
     }
   }
 

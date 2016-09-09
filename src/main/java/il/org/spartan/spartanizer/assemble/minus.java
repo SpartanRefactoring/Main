@@ -11,6 +11,13 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 
+/** takes care of of multiplicative terms with minus symbol in them.
+ * <p>
+ * An empty <code><b>enum</b></code> for fluent programming. The name should say
+ * it all: The name, followed by a dot, followed by a method name, should read
+ * like a sentence phrase.
+ * @author Yossi Gil
+ * @since 2016 */
 public enum minus {
   ;
   public static int level(final Expression ¢) {
@@ -21,13 +28,13 @@ public enum minus {
                     : 0;
   }
 
-  public static int level(final InfixExpression e) {
-    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(e));
+  public static int level(final InfixExpression x) {
+    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
   }
 
-  public static int level(final List<Expression> es) {
+  public static int level(final List<Expression> xs) {
     int $ = 0;
-    for (final Expression e : es)
+    for (final Expression e : xs)
       $ += minus.level(e);
     return $;
   }
@@ -40,8 +47,8 @@ public enum minus {
                     : $;
   }
 
-  public static Expression peel(final InfixExpression e) {
-    return lisp.out(e.getOperator(), TIMES, DIVIDE) ? e : subject.operands(peel(hop.operands(e))).to(e.getOperator());
+  public static Expression peel(final InfixExpression x) {
+    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
   }
 
   public static Expression peel(final NumberLiteral $) {
@@ -56,9 +63,9 @@ public enum minus {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
-  private static List<Expression> peel(final List<Expression> es) {
+  private static List<Expression> peel(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : es)
+    for (final Expression e : xs)
       $.add(peel(e));
     return $;
   }

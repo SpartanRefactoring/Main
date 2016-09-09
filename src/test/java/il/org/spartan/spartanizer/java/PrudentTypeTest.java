@@ -27,7 +27,7 @@ public class PrudentTypeTest {
     private int i = (int) d;
     private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
     private long l = (long) (++d * f--);
-    private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xFF) / d);
+    private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
 
     // basic tests for assignments
     @Test public void assingment1() {
