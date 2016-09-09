@@ -58,9 +58,9 @@ import org.eclipse.jdt.core.dom.*;
     }
   }
 
-  /** TODO: Alex: document properly, but essentially is a dictionary with a parent.
-   * Insertions go the current node, searches start at the current note and
-   * Delegate to the parent unless it is null. */
+  /** TODO: Alex: document properly, but essentially is a dictionary with a
+   * parent. Insertions go the current node, searches start at the current note
+   * and Delegate to the parent unless it is null. */
   /* Nested environment which has it's own Map of names 'flat', and an instance
    * to the parent scope 'nest'. */
   final class Nested implements Environment {
@@ -98,7 +98,8 @@ import org.eclipse.jdt.core.dom.*;
       return new LinkedHashSet<>(flat.keySet());
     }
 
-    /* One step up in the {@link Environment} tree. Funny but it even sounds like next(). */
+    /* One step up in the {@link Environment} tree. Funny but it even sounds
+     * like next(). */
     @Override public Environment nest() {
       return nest;
     }
@@ -126,8 +127,8 @@ import org.eclipse.jdt.core.dom.*;
     return new LinkedHashSet<>();
   }
 
-  /** Spawns the first Nested {@link Environment}. Should be used when the first block is
-   * opened. */
+  /** Spawns the first Nested {@link Environment}. Should be used when the first
+   * block is opened. */
   static Environment genesis() {
     return EMPTY.spawn();
   }
@@ -159,8 +160,8 @@ import org.eclipse.jdt.core.dom.*;
     return $;
   }
 
-  /** Get full path of the current {@link Environment} (all scope hierarchy). Used for full
-   * names of the variables. */
+  /** Get full path of the current {@link Environment} (all scope hierarchy).
+   * Used for full names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name();
@@ -183,7 +184,8 @@ import org.eclipse.jdt.core.dom.*;
     return null;
   }
 
-  /** Answer the question whether the name is in use in the current {@link Environment} */
+  /** Answer the question whether the name is in use in the current
+   * {@link Environment} */
   default boolean has(final String name) {
     return false;
   }
