@@ -12,23 +12,12 @@ import il.org.spartan.*;
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
     similar(
-        ""//
-            + "if (b) {\n"//
-            + " /* empty */"//
-            + "; \n"//
-            + "} { // no else \n"//
-            + " throw new Exception();\n"//
-            + "}", //
+        "if (b) {\n" + "", //
         "if (b) {;} { throw new Exception(); }");
   }
 
   @Test public void dealWithComment() {
-    azzert.that(Wrap.find(""//
-        + "if (b) {\n"//
-        + " /* empty */"//
-        + "} else {\n"//
-        + " throw new Exception();\n"//
-        + "}"), is(Wrap.Statement));
+    azzert.that(Wrap.find("if (b) {\n" + ""), is(Wrap.Statement));
   }
 
   @Test public void essenceTest() {
@@ -84,7 +73,7 @@ import il.org.spartan.*;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
-    azzert.that(w.off("" + u), containsString(codeFragment));
+    azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
@@ -104,7 +93,7 @@ import il.org.spartan.*;
   }
 
   @Test public void removeComments() {
-    similar(Wrap.removeComments("" + "if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
+    similar(Wrap.removeComments("if (b) {\n" + ""),
         "if (b) {} else { throw new Exception(); }");
   }
 

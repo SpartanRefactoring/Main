@@ -34,23 +34,7 @@ public enum GuessedContext {
           + "\n\t\t\t\t while (f4324()) {"//
           + "\n\t\t\t\t g3423436();"//
       ,
-      "" //
-          + "\n\t\t\t\t h6463634();"//
-          + "\n\t\t\t\t} " //
-          + "\n\t\t\t\t\t switch(f4324()) {" //
-          + "case 1:\n" //
-          + "return afasdf;\n" //
-          + "case 2:\n" //
-          + "return asfdasdfasdf; \n" + "case 3:\n" //
-          + "return asdf431;\n" + "default:\n" //
-          + "f(); break; \n" //
-          + "} \n" //
-          + "return super.z123();\n" //
-          + "} \n" //
-          + "\n\t\t\t\t\t if (s()) return f31284sb;  " //
-          + "\n\t\t\t\t\t z31284sb++;  " //
-          + "\n\t\t\t } /* END public function */\n" //
-          + METHOD_LOOKALIKE.after //
+      "\n\t\t\t\t h6463634();" + ""
   ), EXPRESSION_LOOK_ALIKE(//
       STATEMENTS_LOOK_ALIKE.before + //
           "\n\t\t\t\t if (foo("//
@@ -122,13 +106,13 @@ public enum GuessedContext {
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
       $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
           + " on (essentially) this bit of code");
-      $.append("\n\t\t\t```" + essence("" + u) + "'''");
+      $.append("\n\t\t\t```" + essence(u + "") + "'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
       $.append("\n\t\t\t```" + u + "'''");
       $.append("\n\t\t And the full list of problems was: ");
       $.append("\n\t\t\t```" + u.getProblems() + "'''");
     }
-    return "" + $;
+    return $ + "";
   }
 
   static String removeComments(final String codeFragment) {

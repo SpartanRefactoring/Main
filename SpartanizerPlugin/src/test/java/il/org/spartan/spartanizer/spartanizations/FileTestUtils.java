@@ -59,7 +59,7 @@ import il.org.spartan.spartanizer.engine.*;
    * @param f
    * @return */
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
-    return createTemporaryRandomAccessFile(createTempFile(d, f), "" + b);
+    return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
   static Spartanization makeSpartanizationObject(final File f) {

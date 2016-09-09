@@ -14,6 +14,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class stepTest {
   @Test public void chainComparison() {
-    assertEquals("c", "" + step.right(i("a == true == b == c")));
+    assertEquals("c", step.right(i("a == true == b == c")) + "");
   }
 }

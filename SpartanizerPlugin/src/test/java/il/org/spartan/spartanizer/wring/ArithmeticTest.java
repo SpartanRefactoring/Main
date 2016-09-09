@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 public class ArithmeticTest {
   public static class Working {
     @Test public void additionIsLong() {
-      assert atomic.isLong(1 + 1L);
+      assert atomic.isLong(2L);
     }
 
     @Test public void issue92_1() {

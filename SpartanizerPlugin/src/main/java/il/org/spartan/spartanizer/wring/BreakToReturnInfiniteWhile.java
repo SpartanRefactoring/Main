@@ -36,9 +36,7 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
   }
 
   private static boolean isInfiniteLoop(final ForStatement s) {
-    if (az.booleanLiteral(s.getExpression()) == null)
-      return false;
-    return az.booleanLiteral(s.getExpression()).booleanValue();
+    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
@@ -48,13 +46,8 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     if (!isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    Statement toChange = null;
-    if (body instanceof BreakStatement)
-      toChange = body;
-    if (iz.block(body))
-      toChange = handleBlock((Block) body, nextReturn);
-    if (az.ifStatement(body) == null)
-      toChange = handleIf(body, nextReturn);
+    Statement toChange = az.ifStatement(body) == null ? handleIf(body, nextReturn)
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
     if (toChange == null)
       return null;
     final Statement theChange = toChange;
