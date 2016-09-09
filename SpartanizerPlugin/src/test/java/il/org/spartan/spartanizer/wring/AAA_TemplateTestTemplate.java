@@ -34,7 +34,7 @@ public class AAA_TemplateTestTemplate {
   /** This is the incorrect way you should check for nulls, using {@link azzert}
    * makes sure we get more informative messages */
   @Test public void seriesZ_03() {
-    azzert.isNull(null);
+    azzert.isNull($null());
   }
 
   /** Correct way of checking for nulls. {@link azzert} cannot provide further
@@ -84,8 +84,19 @@ public class AAA_TemplateTestTemplate {
 
   /** Correct way of checking for equality of numbers */
   @Test public void seriesZ_11() {
-    azzert.that($0(), is($1()));
+    azzert.that($0(), is($0()));
+    azzert.that($0(), not(is($0())));
   }
+/** Correct ways of comparing numbers */
+  @Test public void seriesZ_12() {
+    azzert.that($0(), greaterThanOrEqualTo($0()));
+    azzert.that($1(), greaterThanOrEqualTo($0()));
+    azzert.that($1(), greaterThan($0()));
+    azzert.that($0(), lessThanOrEqualTo($1())); 
+    azzert.that($0(), lessThanOrEqualTo($0())); 
+    azzert.that($0(), lessThan($0())); 
+  }
+
 
   private final int $0() {
     return 0;
@@ -101,6 +112,10 @@ public class AAA_TemplateTestTemplate {
 
   private final boolean $true() {
     return true;
+  }
+
+  private final Object $null() {
+    return null;
   }
 
   private static final Object object() {
