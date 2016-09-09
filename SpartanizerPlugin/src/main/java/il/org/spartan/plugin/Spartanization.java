@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static il.org.spartan.plugin.eclipse.*;
 import java.util.*;
 import java.util.List;
 
@@ -197,7 +197,7 @@ public abstract class Spartanization extends Refactoring {
    *        <code><b>m</b></code>
    * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !eclipse.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
 
   /** Performs the current Spartanization on the provided compilation unit
@@ -209,7 +209,7 @@ public abstract class Spartanization extends Refactoring {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor spm = eclipse.newSubMonitor(pm);
+    final IProgressMonitor spm = newSubMonitor(pm);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
@@ -258,12 +258,12 @@ public abstract class Spartanization extends Refactoring {
   /** @param u JD
    * @throws CoreException */
   protected void scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
-    m.beginTask("Creating change for a single compilation unit...", 2);
+    m.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor subProgressMonitor = eclipse.newSubMonitor(m);
-    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(subProgressMonitor);
-    textChange.setEdit(createRewrite(cu, subProgressMonitor).rewriteAST());
+    final IProgressMonitor m1 = newSubMonitor(m);
+    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m1);
+    textChange.setEdit(createRewrite(cu, m1).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
     totalChanges += findOpportunities(cu).size();
@@ -275,7 +275,7 @@ public abstract class Spartanization extends Refactoring {
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    textChange.setEdit(createRewrite(eclipse.newSubMonitor(pm), m).rewriteAST());
+    textChange.setEdit(createRewrite(newSubMonitor(pm), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       if (!preview)
         textChange.perform(pm);
@@ -291,7 +291,7 @@ public abstract class Spartanization extends Refactoring {
   protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException, CoreException {
     pm.beginTask("Iterating over gathered compilation units...", cus.size());
     for (final ICompilationUnit cu : cus)
-      scanCompilationUnit(cu, eclipse.newSubMonitor(pm));
+      scanCompilationUnit(cu, newSubMonitor(pm));
     pm.done();
   }
 
@@ -317,7 +317,7 @@ public abstract class Spartanization extends Refactoring {
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return eclipse.compilationUnits(compilationUnit != null ? compilationUnit : eclipse.currentCompilationUnit(), eclipse.newSubMonitor(pm));
+      return compilationUnits(compilationUnit != null ? compilationUnit : currentCompilationUnit(), newSubMonitor(pm));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
@@ -342,6 +342,6 @@ public abstract class Spartanization extends Refactoring {
 
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
     pm.beginTask("Checking preconditions...", 2);
-    scanCompilationUnits(getUnits(pm), eclipse.newSubMonitor(pm));
+    scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
   }
 }
