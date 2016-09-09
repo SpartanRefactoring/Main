@@ -81,8 +81,8 @@
       </command>
       <command
             id="il.org.spartan.plugin.commands.ApplySpartanization"
-            name="Spartanize active window">
-            categoryId="il.org.spartan.plugin"
+            name="Spartanize active window"
+            categoryId="il.org.spartan.plugin">
       </command>
    </extension>
    <extension point="org.eclipse.ui.handlers">
