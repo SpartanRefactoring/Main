@@ -59,7 +59,7 @@ import il.org.spartan.utils.*;
           if (n == 0)
             break;
           s.addRoundStat(n);
-          SpartanizeCurrent.apply(u);
+          eclipse.apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)
