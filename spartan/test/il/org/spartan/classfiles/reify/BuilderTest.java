@@ -3,8 +3,6 @@
  */
 package il.org.spartan.classfiles.reify;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 
 import il.org.spartan.classfiles.*;
@@ -15,12 +13,12 @@ import il.org.spartan.classfiles.reify.ClassInfo.*;
 @SuppressWarnings("static-method") public class BuilderTest {
   @Test public void classInfoFromBuilder() {
     final Builder b = new Builder(CLASSFILES.open(ClassFileTest.class));
-    assertNotNull(new ClassInfo(b));
+    assert null != new ClassInfo(b);
   }
 
   @Test public void constantPoolEntityBuilder() {
     final Builder b = new Builder(CLASSFILES.open(ClassFileTest.class));
-    assertNotNull(new ConstantPoolEntity(b));
+    assert null != new ConstantPoolEntity(b);
   }
 
   @Test public void constantPoolEntityStrings() {
@@ -31,35 +29,35 @@ import il.org.spartan.classfiles.reify.ClassInfo.*;
 
   @Test public void constantPoolEntityUTF8() {
     final Builder b = new Builder(CLASSFILES.open(ClassFileTest.class));
-    assertNotNull(new ConstantPoolEntity(b));
+    assert null != new ConstantPoolEntity(b);
   }
 
   @Test public void other() {
-    assertNotNull(new ClassInfo.Builder(ClassFileTest.class));
+    assert null != new ClassInfo.Builder(ClassFileTest.class);
   }
 
   @Test public void otherBuilderNoErrors() {
-    assertFalse(new Builder(CLASSFILES.open(ClassFileTest.class)).hasErrors());
+    assert !new Builder(CLASSFILES.open(ClassFileTest.class)).hasErrors();
   }
 
   @Test public void otherBuilderNotNull() {
     final Builder b = new Builder(CLASSFILES.open(ClassFileTest.class));
-    assertNotNull(b.go());
+    assert null != b.go();
   }
 
   @Test public void otherMakeNotNull() {
-    assertNotNull(ClassInfo.make(ClassFileTest.class));
+    assert null != ClassInfo.make(ClassFileTest.class);
   }
 
   @Test public void self() {
-    assertNotNull(new ClassInfo.Builder(this.getClass()));
+    assert null != new ClassInfo.Builder(this.getClass());
   }
 
   @Test public void selfGo() {
-    assertNotNull(new ClassInfo.Builder(this.getClass()).go());
+    assert null != new ClassInfo.Builder(this.getClass()).go();
   }
 
   @Test public void selfMakeNotNull() {
-    assertNotNull(ClassInfo.make(this.getClass()));
+    assert null != ClassInfo.make(this.getClass());
   }
 }

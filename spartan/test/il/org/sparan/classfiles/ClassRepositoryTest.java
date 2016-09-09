@@ -1,7 +1,5 @@
 package il.org.sparan.classfiles;
 
-import static org.junit.Assert.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -28,7 +26,7 @@ public class ClassRepositoryTest {
     final Set<String> set = new HashSet<>();
     for (final File f : cr.getRoots()) {
       final String abs = f.getAbsolutePath();
-      assertFalse(abs, set.contains(abs));
+      assert set.contains(abs) : abs;
       set.add(abs);
     }
   }

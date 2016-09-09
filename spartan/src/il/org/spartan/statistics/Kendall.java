@@ -59,13 +59,6 @@ import il.org.spatan.iteration.*;
     return tauB_pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
   }
 
-  private static double tauB_pruned(final double[] xs, final double[] ys) {
-    ____.require(xs.length == ys.length);
-    final int n = xs.length;
-    final int pairs = pairs(n);
-    return computeS(xs, ys, n) / Math.sqrt((double) (pairs - sigma(xs)) * (pairs - sigma(ys)));
-  }
-
   static int compueS(final double[] xs, final double[] ys) {
     ____.require(xs.length == ys.length);
     int $ = 0;
@@ -135,6 +128,13 @@ import il.org.spatan.iteration.*;
         else if (xs[i] > xs[j] && ys[i] < ys[j] || xs[i] < xs[j] && ys[i] > ys[j])
           nd++;
     return nc - nd;
+  }
+
+  private static double tauB_pruned(final double[] xs, final double[] ys) {
+    ____.require(xs.length == ys.length);
+    final int n = xs.length;
+    final int pairs = pairs(n);
+    return computeS(xs, ys, n) / Math.sqrt((double) (pairs - sigma(xs)) * (pairs - sigma(ys)));
   }
 
   public static class Charectristics {

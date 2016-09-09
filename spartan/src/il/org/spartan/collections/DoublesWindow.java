@@ -103,19 +103,19 @@ public class DoublesWindow {
     }
 
     @Test public void create() {
-      assertNotNull(new DoublesWindow(10));
+      assert null != new DoublesWindow(10);
     }
 
     @Test(expected = IllegalArgumentException.class) public void createMinusOneSize() {
-      assertNotNull(new DoublesWindow(-1));
+      assert null != new DoublesWindow(-1);
     }
 
     @Test(expected = IllegalArgumentException.class) public void createNegativeSize() {
-      assertNotNull(new DoublesWindow(-10));
+      assert null != new DoublesWindow(-10);
     }
 
     @Test(expected = IllegalArgumentException.class) public void createZeroSize() {
-      assertNotNull(new DoublesWindow(0));
+      assert null != new DoublesWindow(0);
     }
 
     @Test public void hasAdd() {
@@ -155,14 +155,14 @@ public class DoublesWindow {
       for (int i = 0; i < 5; i++) {
         assertEquals(5, w.capacity());
         assertEquals(i, w.size());
-        assertFalse(w.full());
+        assert !w.full();
         w.add(i);
         assertEquals(i + 1, w.size());
         assertEquals(i, w.newest(), 1E-5);
         assertEquals(0, w.oldest(), 1E-5);
       }
       for (int i = 5; i < 100; i++) {
-        assertTrue(w.full());
+        assert w.full();
         assertEquals(5, w.capacity());
         assertEquals(5, w.size());
         w.add(i);

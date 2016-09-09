@@ -1,14 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import static il.org.spartan.utils.____.*;
-
 import java.io.*;
 
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.strings.*;
+import il.org.spartan.utils.*;
 
 /** A program to search for a ".class" file in the file system.
  * @author Yossi Gil Mar 29, 2007 */
@@ -80,12 +79,12 @@ import il.org.spartan.strings.*;
     }
 
     @Override public void visitZipDirectory(final String zipName, final String entryName, final InputStream stream) {
-      unused(stream);
+      ____.unused(stream);
       report("Archive directory: " + entryName + " in zip " + zipName);
     }
 
     @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream stream) throws StopTraversal {
-      unused(stream);
+      ____.unused(stream);
       entries++;
       report("Archive entry: " + entryName);
       check(entryName, zipName);

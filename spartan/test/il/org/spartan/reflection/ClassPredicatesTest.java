@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testBoxImmutable() {
-    assertFalse(isImmutable(Box.class));
+    assert !isImmutable(Box.class);
   }
 
   @Test public void testEmptyEnumFields() {
@@ -23,11 +23,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testEmptyEnumImmutable() {
-    assertFalse(isImmutable(EmptyEnum.class));
+    assert !isImmutable(EmptyEnum.class);
   }
 
   @Test public void testEmptyNonStaticClass() {
-    assertFalse(isImmutable(EmptyNonStaticClass.class));
+    assert !isImmutable(EmptyNonStaticClass.class);
   }
 
   @Test public void testEmptyNonStaticClassFields() {
@@ -35,15 +35,15 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testEmptyStaticClass() {
-    assertFalse(isImmutable(EmptyStaticClass.class));
+    assert !isImmutable(EmptyStaticClass.class);
   }
 
   @Test public void testImmmutableInhertingFromMmutable() {
-    assertFalse(isImmutable(ImmmutableInhertingFromMmutable.class));
+    assert !isImmutable(ImmmutableInhertingFromMmutable.class);
   }
 
   @Test public void testImmutableStatic() {
-    assertTrue(isImmutable(ImmutableStatic.class));
+    assert isImmutable(ImmutableStatic.class);
   }
 
   @Test public void testIsImmutableFalse() {
@@ -57,7 +57,7 @@ import il.org.spartan.utils.*;
       }
     }
     new A().b();
-    assertFalse(isImmutable(new A().getClass()));
+    assert !isImmutable(new A().getClass());
   }
 
   @Test public void testIsImmutableInheritingTrue() {
@@ -74,7 +74,7 @@ import il.org.spartan.utils.*;
     }
     new A().b(); // Use the class so that it does not eliminated by
     // Eclipse's "Save Actions".
-    assertTrue(isImmutable(new B().getClass()));
+    assert isImmutable(new B().getClass());
   }
 
   @Test public void testIsImmutableTrue() {
@@ -87,19 +87,19 @@ import il.org.spartan.utils.*;
       }
     }
     new A().b();
-    assertTrue(isImmutable(new A().getClass()));
+    assert isImmutable(new A().getClass());
   }
 
   @Test public void testMutableInhertingFromImmutable() {
-    assertFalse(isImmutable(MutableInhertingFromImmutable.class));
+    assert !isImmutable(MutableInhertingFromImmutable.class);
   }
 
   @Test public void testMutableStatic() {
-    assertFalse(isImmutable(MutableStatic.class));
+    assert !isImmutable(MutableStatic.class);
   }
 
   @Test public void testObject() {
-    assertFalse(isImmutable(Object.class));
+    assert !isImmutable(Object.class);
   }
 
   @Test public void testStaticUtilityClassFields() {
@@ -107,7 +107,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testStaticUtilityClassImmutable() {
-    assertFalse(isImmutable(StaticUtilityClass.class));
+    assert !isImmutable(StaticUtilityClass.class);
   }
 
   public static class ImmmutableInhertingFromMmutable extends MutableStatic {

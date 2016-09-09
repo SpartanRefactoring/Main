@@ -123,12 +123,12 @@ import il.org.spartan.streotypes.*;
     @Test public void emptyFalse() {
       final Tab t = new Tab("abc");
       t.more();
-      assertFalse(t.isEmpty());
+      assert !t.isEmpty();
     }
 
     @Test public void emtpyTrue() {
       final Tab t = new Tab();
-      assertTrue(t.isEmpty());
+      assert t.isEmpty();
     }
 
     @Test public void testBeginAtLevelOne() {
@@ -150,7 +150,7 @@ import il.org.spartan.streotypes.*;
 
     @Test public void testDone() {
       final Tab t = new Tab();
-      assertTrue(t.isEmpty());
+      assert t.isEmpty();
     }
 
     @Test public void testEndAtLevelOne() {

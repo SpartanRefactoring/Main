@@ -26,13 +26,13 @@ public class ClassProxyTest {
   @Test public void testClassFileOfStringBuilder() throws IOException, ClassNotFoundException {
     for (final String className : new ClassProxy<>(StringBuilder.class).getReferencedClasses())
       if (className != null)
-        assertNotNull(new ClassProxy<>(className));
+        assert null != new ClassProxy<>(className);
   }
 
   @Test public void testClassFileUsingMagic() throws IOException, ClassNotFoundException {
     final int[] intConstants = new ClassProxy<>(ClassInfo.Builder.class).getReferencedInts();
     Arrays.sort(intConstants);
-    assertTrue(Arrays.binarySearch(intConstants, 0xCAFEBABE) >= 0);
+    assert Arrays.binarySearch(intConstants, 0xCAFEBABE) >= 0;
   }
 
   @Test(expected = ClassNotFoundException.class) public void testClassForNameEntry() throws ClassNotFoundException {
@@ -55,7 +55,7 @@ public class ClassProxyTest {
   }
 
   @Test public void testClassNameConstructor() {
-    assertNotNull(new ClassProxy<>("java.lang.Object"));
+    assert null != new ClassProxy<>("java.lang.Object");
   }
 
   @Test public void testClassNameDoubleMemberCLass() {
@@ -88,11 +88,11 @@ public class ClassProxyTest {
   }
 
   @Test public void testFindClassForNameObject() throws ClassNotFoundException {
-    assertNotNull(ClassProxy.findClass("java.lang.Object"));
+    assert null != ClassProxy.findClass("java.lang.Object");
   }
 
   @Test public void testFindClassMapEntry() throws ClassNotFoundException {
-    assertNotNull(ClassProxy.findClass("java.util.Map.Entry"));
+    assert null != ClassProxy.findClass("java.util.Map.Entry");
   }
 
   @Test(expected = ClassNotFoundException.class) public void testFindSemicoloned() throws ClassNotFoundException {
@@ -100,33 +100,33 @@ public class ClassProxyTest {
   }
 
   @Test(expected = ClassNotFoundException.class) public void testForNameUnfound() throws ClassNotFoundException {
-    assertNotNull(Class.forName("java.util.Map.xxx"));
+    assert null != Class.forName("java.util.Map.xxx");
   }
 
   @Test(expected = ClassNotFoundException.class) public void testForNameUnfoundInProxy() throws ClassNotFoundException {
-    assertNotNull(ClassProxy.findClass("java.util.Map.xxx"));
+    assert null != ClassProxy.findClass("java.util.Map.xxx");
   }
 
   @Test public void testGetReferencedClasses() throws IOException, ClassNotFoundException {
-    assertNotNull(new ClassProxy<>(Object.class).getReferencedClasses());
+    assert null != new ClassProxy<>(Object.class).getReferencedClasses();
   }
 
   @Test public void testGetReferencedClassesAllValidArrayList() throws IOException, ClassNotFoundException {
     for (final String className : new ClassProxy<>(ArrayList.class).getReferencedClasses())
-      assertNotNull(new ClassProxy<>(className));
+      assert null != new ClassProxy<>(className);
   }
 
   @Test public void testGetReferencedClassesAllValidObject() throws IOException, ClassNotFoundException {
     for (final String className : new ClassProxy<>(Object.class).getReferencedClasses())
-      assertNotNull(new ClassProxy<>(className));
+      assert null != new ClassProxy<>(className);
   }
 
   @Test public void testGetReferencedStrings() throws IOException, ClassNotFoundException {
-    assertNotNull(new ClassProxy<>(Object.class).getReferencedStrings());
+    assert null != new ClassProxy<>(Object.class).getReferencedStrings();
   }
 
   @Test public void testInvalidClassNameConstructor() {
-    assertNotNull(new ClassProxy<>("Invalid Class Name!"));
+    assert null != new ClassProxy<>("Invalid Class Name!");
   }
 
   @Test(expected = ClassNotFoundException.class) public void testInvalidClassNameGetFields() throws SecurityException, ClassNotFoundException {
@@ -142,54 +142,54 @@ public class ClassProxyTest {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final String[] referenced = c.getReferencedClasses();
     Arrays.sort(referenced);
-    assertTrue(Arrays.binarySearch(referenced, ClassProxy.class.getName()) >= 0);
+    assert Arrays.binarySearch(referenced, ClassProxy.class.getName()) >= 0;
   }
 
   @Test public void testMeUsingADouble() throws IOException, ClassNotFoundException {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final double[] doubles = c.getReferencedDoubles();
     Arrays.sort(doubles);
-    assertTrue(Arrays.binarySearch(doubles, someDouble) >= 0);
+    assert Arrays.binarySearch(doubles, someDouble) >= 0;
   }
 
   @Test public void testMeUsingAFloat() throws IOException, ClassNotFoundException {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final float[] floats = c.getReferencedFloats();
     Arrays.sort(floats);
-    assertTrue(Arrays.binarySearch(floats, someFloat) >= 0);
+    assert Arrays.binarySearch(floats, someFloat) >= 0;
   }
 
   @Test public void testMeUsingDefaultLong() throws IOException, ClassNotFoundException {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final long[] longConstants = c.getReferencedLongs();
     Arrays.sort(longConstants);
-    assertTrue(Arrays.binarySearch(longConstants, defaultLong) >= 0);
+    assert Arrays.binarySearch(longConstants, defaultLong) >= 0;
   }
 
   @Test public void testMeUsingPublicInstanceLong() throws IOException, ClassNotFoundException {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final long[] longConstants = c.getReferencedLongs();
     Arrays.sort(longConstants);
-    assertTrue(Arrays.binarySearch(longConstants, publicInstanceLong) >= 0);
+    assert Arrays.binarySearch(longConstants, publicInstanceLong) >= 0;
   }
 
   @Test public void testMeUsingSerialVersionUID() throws IOException, ClassNotFoundException {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final long[] longConstants = c.getReferencedLongs();
     Arrays.sort(longConstants);
-    assertTrue(Arrays.binarySearch(longConstants, serialVersionUID) >= 0);
+    assert Arrays.binarySearch(longConstants, serialVersionUID) >= 0;
   }
 
   @Test public void testMeUsingString() throws IOException, ClassNotFoundException {
     final ClassProxy<ClassProxyTest> c = new ClassProxy<>(ClassProxyTest.class);
     final String[] stringConstants = c.getReferencedStrings();
     Arrays.sort(stringConstants);
-    assertTrue(Arrays.binarySearch(stringConstants, stringSignature) >= 0);
+    assert Arrays.binarySearch(stringConstants, stringSignature) >= 0;
   }
 
   @Test public void testNameFormat() throws ClassNotFoundException {
-    assertNotNull(ClassProxy.findClass("java.util.Map.Entry"));
-    assertNotNull(ClassProxy.findClass("java.util.Map$Entry"));
+    assert null != ClassProxy.findClass("java.util.Map.Entry");
+    assert null != ClassProxy.findClass("java.util.Map$Entry");
   }
 
   @Test public void testNormalizeNameObject() {
@@ -199,7 +199,7 @@ public class ClassProxyTest {
   }
 
   @Test public void testReflectiveConstructor() {
-    assertNotNull(new ClassProxy<>(Object.class));
+    assert null != new ClassProxy<>(Object.class);
   }
 
   private String myName() {

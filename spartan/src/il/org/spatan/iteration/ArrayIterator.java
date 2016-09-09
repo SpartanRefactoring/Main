@@ -40,5 +40,4 @@ public class ArrayIterator<T> implements Iterator<T> {
   @Override public T next() {
     return ts[index++];
   }
-
 }

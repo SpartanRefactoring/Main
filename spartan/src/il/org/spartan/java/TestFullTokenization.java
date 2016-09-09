@@ -87,6 +87,6 @@ public class TestFullTokenization {
   }
 
   @Test public void unicodeFileLenth() throws IOException {
-    assertTrue(fin.length() > TokenAsIs.fileToString(fin).length());
+    assert fin.length() > TokenAsIs.fileToString(fin).length();
   }
 }

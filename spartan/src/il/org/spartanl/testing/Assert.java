@@ -54,7 +54,7 @@ public class Assert extends org.junit.Assert {
   }
 
   public static <T> void assertContains(final String s, final Collection<T> ts, final T t) {
-    assertTrue(s + " t = " + t, ts.contains(t));
+    assert ts.contains(t) : s + " t = " + t;
   }
 
   public static void assertEquals(final boolean a, final boolean b) {
@@ -98,7 +98,7 @@ public class Assert extends org.junit.Assert {
   }
 
   public static void assertLE(final String s, final int n, final int m) {
-    assertTrue(s + " n=" + n + " m=" + m, n <= m);
+    assert n <= m : s + " n=" + n + " m=" + m;
   }
 
   public static <T> void assertNotContains(final Collection<T> ts, final T t) {
@@ -106,7 +106,7 @@ public class Assert extends org.junit.Assert {
   }
 
   public static <T> void assertNotContains(final String s, final Collection<T> c, final T t) {
-    assertFalse(s + " t = " + t, c.contains(t));
+    assert !c.contains(t) : s + " t = " + t;
   }
 
   public static void assertNotEquals(final Object o1, final Object o2) {
@@ -114,7 +114,7 @@ public class Assert extends org.junit.Assert {
   }
 
   public static void assertNotEquals(final String message, final Object o1, final Object o2) {
-    assertFalse(message, o1.equals(o2));
+    assert !o1.equals(o2);
   }
 
   public static void assertNotEquals(final String s1, final String s2) {
@@ -122,11 +122,11 @@ public class Assert extends org.junit.Assert {
   }
 
   public static void assertNotEquals(final String message, final String s1, final String s2) {
-    assertFalse(message, s1.equals(s2));
+    assert !s1.equals(s2) : message;
   }
 
   public static void assertNull(final Object o) {
-    assertEquals(null, o);
+    assert o == null;
   }
 
   public static void assertNull(final String message, final Object o) {
@@ -134,7 +134,7 @@ public class Assert extends org.junit.Assert {
   }
 
   public static void assertPositive(final int n) {
-    assertTrue("Expecting a positive value, but got " + n, n > 0);
+    assert n > 0 : "Expecting a positive value, but got " + n;
   }
 
   public static <T> void assertSubset(final Collection<T> c1, final Collection<T> c2) {
@@ -150,11 +150,11 @@ public class Assert extends org.junit.Assert {
     Set<T> temp = new HashSet<>();
     temp.addAll(set);
     temp.removeAll(list);
-    assertTrue(temp.toString(), temp.isEmpty());
+    assert temp.isEmpty() : temp;
     temp = new HashSet<>();
     temp.addAll(list);
     temp.removeAll(set);
-    assertTrue(prefix + " - " + temp.toString(), temp.isEmpty());
+    assert temp.isEmpty() : prefix + " - " + temp;
   }
 
   public static void xassertEquals(final int a, final int b) {

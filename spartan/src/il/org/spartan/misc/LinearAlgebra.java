@@ -610,15 +610,15 @@ public enum LinearAlgebra {
     }
 
     @Test public void isDefinedFalse() {
-      assertFalse(isReal(Double.POSITIVE_INFINITY));
-      assertFalse(isReal(Double.NEGATIVE_INFINITY));
-      assertFalse(isReal(Math.log(0)));
-      assertFalse(isReal(Double.NaN));
+      assert !isReal(Double.POSITIVE_INFINITY);
+      assert !isReal(Double.NEGATIVE_INFINITY);
+      assert !isReal(Math.log(0));
+      assert !isReal(Double.NaN);
     }
 
     @Test public void isDefinedTrue() {
-      assertTrue(isReal(1));
-      assertTrue(isReal(0));
+      assert isReal(1);
+      assert isReal(0);
     }
 
     @Test public void make() {

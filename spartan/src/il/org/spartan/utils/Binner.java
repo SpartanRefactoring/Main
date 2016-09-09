@@ -111,7 +111,7 @@ public class Binner {
         int s = 0;
         for (int j = b.from[i]; j < b.to[i]; j++)
           s += is[j];
-        assertTrue(i == 0 || s >= 4);
+        assert i == 0 || s >= 4;
       }
     }
 
@@ -269,8 +269,8 @@ public class Binner {
       for (int i = 0; i < b.from.length - 1; i++)
         for (int j = b.from[i]; j < b.to[i]; j++) {
           final double u = b.unbin(b.bin(j));
-          assertTrue(u >= b.from[i]);
-          assertTrue(u < b.to[i]);
+          assert u >= b.from[i];
+          assert u < b.to[i];
           assertEquals((b.to[i] + b.from[i] - 1) / 2., u, 1E-12);
         }
     }
@@ -288,23 +288,23 @@ public class Binner {
 
     private void endsAtEnd(final Binner b, final int n) {
       assertEquals(b.to.length, b.from.length);
-      assertTrue(n == 0 || b.to.length > 0);
+      assert n == 0 || b.to.length > 0;
       assertEquals(n, b.to[b.to.length - 1]);
     }
 
     private void nonZeroInterval(final Binner b) {
       for (int i = 0; i < b.to.length; i++)
-        assertTrue(b.to[i] > b.from[i]);
+        assert b.to[i] > b.from[i];
     }
 
     private void sortedFrom(final Binner b) {
       for (int i = 0; i < b.from.length - 1; i++)
-        assertTrue(b.from[i] < b.from[i + 1]);
+        assert b.from[i] < b.from[i + 1];
     }
 
     private void sortedTo(final Binner b) {
       for (int i = 0; i < b.to.length - 1; i++)
-        assertTrue(b.to[i] < b.to[i + 1]);
+        assert b.to[i] < b.to[i + 1];
     }
 
     private void startAtZero(final Binner b) {

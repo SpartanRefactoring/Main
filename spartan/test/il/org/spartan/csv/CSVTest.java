@@ -20,7 +20,7 @@ import il.org.spartan.streotypes.*;
     final String u = CSV.unescape(t);
     assertEquals("abc\\.def\\r\\n\\tg\\\\m", t);
     assertEquals(s, u);
-    assertFalse(s.equals(t));
+    assert !s.equals(t);
   }
 
   @Test public void testCombineSplit() {
@@ -28,15 +28,15 @@ import il.org.spartan.streotypes.*;
     final String combo = CSV.combine(parts);
     final String[] t = CSV.split(combo);
     assertEquals(parts.length, t.length);
-    assertTrue(Arrays.deepEquals(parts, t));
+    assert Arrays.deepEquals(parts, t);
   }
 
   @Test public void testCombineSplitEnum() {
-    assertTrue(Arrays.deepEquals(Rgb.values(), CSV.split(Rgb.class, CSV.combine(Rgb.values()))));
+    assert Arrays.deepEquals(Rgb.values(), CSV.split(Rgb.class, CSV.combine(Rgb.values())));
     final Rgb[] redNull = { Rgb.RED, null };
-    assertTrue(Arrays.deepEquals(redNull, CSV.split(Rgb.class, CSV.combine(redNull))));
+    assert Arrays.deepEquals(redNull, CSV.split(Rgb.class, CSV.combine(redNull)));
     final Rgb[] justNull = { null };
-    assertTrue(Arrays.deepEquals(justNull, CSV.split(Rgb.class, CSV.combine(justNull))));
+    assert Arrays.deepEquals(justNull, CSV.split(Rgb.class, CSV.combine(justNull)));
   }
 
   @Test public void testCombineSplitShort() {
@@ -44,7 +44,7 @@ import il.org.spartan.streotypes.*;
     final String combo = CSV.combine(parts);
     final String[] t = CSV.split(combo);
     assertEquals(parts.length, t.length);
-    assertTrue(Arrays.deepEquals(parts, t));
+    assert Arrays.deepEquals(parts, t);
   }
 
   @Test public void testCombineSplitSingleNullElement() {
@@ -52,7 +52,7 @@ import il.org.spartan.streotypes.*;
     final String combo = CSV.combine(parts);
     final String[] t = CSV.split(combo);
     assertEquals(parts.length, t.length);
-    assertTrue(Arrays.deepEquals(parts, t));
+    assert Arrays.deepEquals(parts, t);
   }
 
   @Test public void testNull() {
@@ -60,13 +60,13 @@ import il.org.spartan.streotypes.*;
     final String t = CSV.escape(s);
     final String u = CSV.unescape(t);
     assertNull(s);
-    assertNotNull(t);
+    assert null != t;
     assertNull(u);
   }
 
   @Test public void testSplitCombineClasses() {
     final Class<?>[] cs = { String.class, System.class, Object.class, null };
-    assertTrue(Arrays.deepEquals(cs, CSV.splitToClasses(CSV.combine(cs))));
+    assert Arrays.deepEquals(cs, CSV.splitToClasses(CSV.combine(cs)));
     final String s = "java.lang.String,java.lang.System,java.lang.Object,\\0";
     assertEquals(s, CSV.combine(CSV.splitToClasses(s)));
     assertEquals(s, CSV.combine(cs));
