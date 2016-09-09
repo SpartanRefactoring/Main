@@ -307,10 +307,10 @@ public interface wizard {
 
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
-   * @param es SimplesNames to compare by their string value to cmpTo
+   * @param xs SimplesNames to compare by their string value to cmpTo
    * @return true if all names are the same (string wise) or false otherwise */
-  static boolean same(final Expression x, final Expression... es) {
-    for (final Expression ¢ : es)
+  static boolean same(final Expression x, final Expression... xs) {
+    for (final Expression ¢ : xs)
       if (!same(¢, x))
         return false;
     return true;
