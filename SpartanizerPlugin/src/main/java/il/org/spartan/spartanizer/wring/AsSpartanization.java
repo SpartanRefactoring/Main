@@ -24,14 +24,15 @@ public final class AsSpartanization extends Spartanization {
     this.inner = (Wring<ASTNode>) inner;
   }
 
-  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
+  // TODO: Ori, how come we need this parameter?
+  @Override protected ASTVisitor collect(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new ASTVisitor() {
       @Override public boolean visit(final Block it) {
         return process(it);
       }
 
-      @Override public boolean visit(final ConditionalExpression e) {
-        return process(e);
+      @Override public boolean visit(final ConditionalExpression x) {
+        return process(x);
       }
 
       @Override public boolean visit(final IfStatement it) {
@@ -65,20 +66,20 @@ public final class AsSpartanization extends Spartanization {
         return go(e);
       }
 
-      @Override public boolean visit(final ConditionalExpression e) {
-        return go(e);
+      @Override public boolean visit(final ConditionalExpression x) {
+        return go(x);
       }
 
       @Override public boolean visit(final IfStatement s) {
         return go(s);
       }
 
-      @Override public boolean visit(final InfixExpression e) {
-        return go(e);
+      @Override public boolean visit(final InfixExpression x) {
+        return go(x);
       }
 
-      @Override public boolean visit(final PrefixExpression e) {
-        return go(e);
+      @Override public boolean visit(final PrefixExpression x) {
+        return go(x);
       }
 
       @Override public boolean visit(final VariableDeclarationFragment f) {

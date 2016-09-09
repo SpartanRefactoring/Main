@@ -121,7 +121,7 @@ import il.org.spartan.utils.*;
   }
 
   MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    // TODO: Dan
+    // TODO: Dan - Yossi, Could you please elaborate?
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {
@@ -252,7 +252,7 @@ import il.org.spartan.utils.*;
   private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration d) {
-        $.set("" + d.getName());
+        $.set(d.getName() + "");
         return false;
       }
     });

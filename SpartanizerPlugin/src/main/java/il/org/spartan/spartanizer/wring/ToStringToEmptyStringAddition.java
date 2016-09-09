@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
 public final class ToStringToEmptyStringAddition extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   @Override String description(final MethodInvocation i) {
     final Expression receiver = step.receiver(i);
-    return "Use \"\" + " + (receiver == null ? "x" : "" + receiver);
+    return "Use \"\" + " + (receiver == null ? "x" : receiver + "");
   }
 
   @Override ASTNode replacement(final MethodInvocation i) {

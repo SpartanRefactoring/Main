@@ -144,40 +144,8 @@
          <menu
                id="org.eclipse.jdt.ui.refactoring.menu"
                label="Refactor">
-            <menu
-                  label="Spartanization">
-
-               <command
-                     commandId="il.org.spartan.plugin.ShortestOperand"
-                     id="il.org.spartan.menus.ShortestOperandCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.ExtractMethod"
-                     id="il.org.spartan.menus.ExtractMethodCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.ForwardDeclaraion"
-                     id="il.org.spartan.menus.ForwardDeclarationCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.InlineSingleUse"
-                     id="il.org.spartan.menus.InlineSingleUseCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.RedundantEquality"
-                     id="il.org.spartan.menus.RedundantEqualityCommand"
-                     style="push">
-               </command>
-               <command
-                     commandId="il.org.spartan.plugin.ShortestBranchFirst"
-                     id="il.org.spartan.menus.ShortestBranchFirstCommand"
-                     style="push">
-               </command>
-               <command
+            <menu label="Spartanization">
+              <command
                      commandId="il.org.spartan.plugin.Cleanup"
                      id="il.org.spartan.menus.CleanupCommand"
                      style="push">

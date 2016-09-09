@@ -15,20 +15,20 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static ASTNode replacement(final List<Expression> es) {
+  private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : es)
+    for (final Expression ¢ : xs)
       if (!iz.literal1(¢))
         $.add(¢);
-    return $.size() == es.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(es)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(TIMES);
+    return $.size() == xs.size() ? null
+        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(TIMES);
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Remove all multiplications by 1 from " + e;
+  @Override String description(final InfixExpression x) {
+    return "Remove all multiplications by 1 from " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    return e.getOperator() != TIMES ? null : replacement(extract.allOperands(e));
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != TIMES ? null : replacement(extract.allOperands(x));
   }
 }

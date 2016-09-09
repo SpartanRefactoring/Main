@@ -128,7 +128,7 @@ public class GroupFieldEditor extends FieldEditor {
     parent.redraw();
   }
 
-  @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
+  @SuppressWarnings("unused") @Override protected void doFillIntoGrid(final Composite __parent, final int __numColumns) {
     // TODO Auto-generated method stub
   }
 

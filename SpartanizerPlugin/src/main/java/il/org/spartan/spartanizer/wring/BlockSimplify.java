@@ -61,8 +61,8 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
         return ¢(step.initializers(¢));
       }
 
-      boolean ¢(final List<Expression> es) {
-        for (final Expression e : es)
+      boolean ¢(final List<Expression> xs) {
+        for (final Expression e : xs)
           if (e instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) e))
             return true;
         return false;
@@ -112,8 +112,8 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
         return false;
       }
 
-      boolean ¢¢¢(final List<VariableDeclarationExpression> es) {
-        for (final VariableDeclarationExpression e : es)
+      boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
+        for (final VariableDeclarationExpression e : xs)
           if (¢(e))
             return true;
         return false;

@@ -59,23 +59,23 @@ public class ArithmeticTest {
           .to("5*5 -4*9")//
           .to("25-36")//
           .to("-11")//
-          .to(null);
+          .stays();
     }
 
     @Test public void issue92_19() {
       trimming("a*-q + s*s")//
           .to("s*s -a*q")//
-          .to(null);
+          .stays();
     }
 
     @Test public void issue92_2() {
-      trimming("1.").to(null);
+      trimming("1.").stays();
     }
 
     @Test public void issue92_20() {
       trimming("4*-9")//
           .to("-36")//
-          .to(null)//
+          .stays()//
       ;
     }
 
@@ -136,13 +136,13 @@ public class ArithmeticTest {
           .to("3-5*9.0")//
           .to("3-45.0")//
           .to("-42.0")//
-          .to(null);
+          .stays();
     }
 
     @Test public void issue92_34() {
       trimming("-a+5")//
           .to("5-a")//
-          .to(null);
+          .stays();
     }
 
     @Test public void issue92_35() {
@@ -258,7 +258,7 @@ public class ArithmeticTest {
     }
 
     @Test public void issue92_6() {
-      trimming("3./4").to("0.75").to(null);
+      trimming("3./4").to("0.75").stays();
     }
 
     @Test public void issue92_60() {
@@ -288,24 +288,23 @@ public class ArithmeticTest {
     @Test public void issue92_9() {
       trimming("3*4+2").to("12+2").to("14");
     }
-    
+
     @Test public void issue143_1() {
       trimming("1*31").to("31");
     }
-    
+
     @Test public void issue143_2() {
       trimming("@Override public int hashCode() { "//
           + "return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))"
           + "+(self == null ? 0 : self.hashCode());" //
-          +"}")
-      .to("@Override public int hashCode() { "//
-              + "return (self == null ? 0 : self.hashCode())"
-              + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
-              +"}")
-      .to("@Override public int hashCode() { "//
-              + "return (self == null ? 0 : self.hashCode())"
-              + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));"
-              + "}");
+          + "}")
+              .to("@Override public int hashCode() { "//
+                  + "return (self == null ? 0 : self.hashCode())"
+                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
+                  + "}")
+              .to("@Override public int hashCode() { "//
+                  + "return (self == null ? 0 : self.hashCode())"
+                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));" + "}");
     }
   }
 }

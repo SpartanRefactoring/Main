@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
-  private static NumberLiteral literal(final Expression e) {
-    final NumberLiteral $ = e.getAST().newNumberLiteral();
+  private static NumberLiteral literal(final Expression x) {
+    final NumberLiteral $ = x.getAST().newNumberLiteral();
     $.setToken("1L");
     return $;
   }
@@ -23,15 +23,15 @@ public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastEx
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @Override String description(final CastExpression e) {
-    return "Use 1L*" + step.expression(e) + " instead of (long)" + step.expression(e);
+  @Override String description(final CastExpression x) {
+    return "Use 1L*" + step.expression(x) + " instead of (long)" + step.expression(x);
   }
 
-  @Override ASTNode replacement(final CastExpression e) {
+  @Override ASTNode replacement(final CastExpression x) {
     return eval(//
-        () -> replacement(step.expression(e))//
+        () -> replacement(step.expression(x))//
     ).when(//
-        step.type(e).isPrimitiveType() && "long".equals("" + step.type(e)) //
+        step.type(x).isPrimitiveType() && "long".equals(step.type(x) + "") //
     );
   }
 }

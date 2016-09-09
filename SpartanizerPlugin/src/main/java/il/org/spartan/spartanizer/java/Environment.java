@@ -8,13 +8,13 @@ import org.eclipse.jdt.core.dom.*;
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 @SuppressWarnings({ "unused" }) public interface Environment {
-  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintaing
-   * it for now, this class is intentionally package level, and intenrationally
-   * defined locall. For now, cients should not be messing with it */
+  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
+   * for now, this class is intentionally package level, and intenationally
+   * defined local. For now, clients should not be messing with it */
   static class Information {
     /** The containing block, whose death marks the death of this entry; not
      * sure, but I think this entry can be shared by many nodes at the same
-     * leve */
+     * level */
     public final ASTNode blockScope;
     /** What do we know about an entry hidden by this one */
     public final Information hiding;
@@ -35,44 +35,30 @@ import org.eclipse.jdt.core.dom.*;
       prudentType = t;
       hiding = null;
     }
-    
-    static boolean prudentTypeComparison(PrudentType t1,PrudentType t2){
-      return t1 == null ? t2 == null : 
-        (t2 != null && (t1 == PrudentType.NOTHING || t2 == PrudentType.NOTHING || t1 == t2)); 
+
+    static boolean prudentTypeComparison(final PrudentType t1, final PrudentType t2) {
+      return t1 == null ? t2 == null : t2 != null && (t1 == PrudentType.NOTHING || t2 == PrudentType.NOTHING || t1 == t2);
     }
 
     @Override public boolean equals(final Object o) {
-      return o == this || o != null && getClass() == o.getClass() && equals(((Information) o));
+      return o == this || o != null && getClass() == o.getClass() && equals((Information) o);
     }
 
     public boolean equals(final Information i) {
-      if (blockScope == null) {
-        if (i.blockScope != null)
-          return false;
-      } else if (!blockScope.equals(i.blockScope))
-        return false;
-      if (hiding == null) {
-        if (i.hiding != null)
-          return false;
-      } else if (!hiding.equals(i.hiding))
-        return false;
-      if (prudentTypeComparison(prudentType,i.prudentType)) 
-        return false;
-      if (self == null) {
-        if (i.self != null)
-          return false;
-      } else if (!self.equals(i.self))
-        return false;
-      return true;
+      return eq(blockScope, i.blockScope) && eq(hiding, i.hiding) && eq(prudentType, i.prudentType) && eq(self, i.self);
+    }
+
+    public static boolean eq(final Object o1, final Object o2) {
+      return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
     }
 
     @Override public int hashCode() {
-      return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * (1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))
-          + (self == null ? 0 : self.hashCode());
+      return (self == null ? 0 : self.hashCode())
+          + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
     }
   }
 
-  /** TODO: document properly, but essentially is a dictionary with a parent.
+  /** TODO: Alex: document properly, but essentially is a dictionary with a parent.
    * Insertions go the current node, searches start at the current note and
    * Delegate to the parent unless it is null. */
   /* Nested environment which has it's own Map of names 'flat', and an instance
@@ -85,6 +71,7 @@ import org.eclipse.jdt.core.dom.*;
       nest = parent;
     }
 
+    // TODO: Alex: Convert this into JavaDoc
     /* @return true iff Env is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
@@ -191,7 +178,12 @@ import org.eclipse.jdt.core.dom.*;
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  /** @return null iff the name is not in use in the Env. */
+  // TODO: Dan - don't use abbreviation, use {@link Environment} or 'this
+  // instance'
+  // Yossi, I could not understand your intention. Could you please elaborate
+  // further?
+  // Dan: Here is an abbreviation "Env.". 
+  /** @return null iff the name is not in use in the this instance. */
   default Information get(final String name) {
     return null;
   }
@@ -201,7 +193,8 @@ import org.eclipse.jdt.core.dom.*;
     return false;
   }
 
-  /** @return null iff the name is not hiding anything from outer scopes. */
+  /** @return null iff the name is not hiding anything from outer scopes,
+   *         otherwise ?? TODO */
   default Information hiding(final String name) {
     return nest().get(name);
   }

@@ -38,9 +38,9 @@ public abstract class ENVTestEngineAbstract {
    * @param n1
    * @return */
   public static boolean isNameId(final Name n1) {
-    assert !"@Id".equals("" + n1); // To find the bug, if it appears as @Id, and
+    assert !"@Id".equals(n1 + ""); // To find the bug, if it appears as @Id, and
                                    // not Id.
-    return "Id".equals("" + n1);
+    return "Id".equals(n1 + "");
   }
 
   protected boolean foundTestedAnnotation = false; // Global flag, used to
@@ -67,7 +67,8 @@ public abstract class ENVTestEngineAbstract {
     // PrudentType t =
     // PrudentType.typeSwitch(wizard.asString(ps.get(1).getValue()),PrudentType.NOTHING);
     // add returns true iff the element did not exist in the set already.
-    if (!testSet.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(PrudentType.prudentGenerateFromTypeName(wizard.asString(ps.get(1).getValue()))))))
+    if (!testSet.add(new MapEntry<>(s.substring(1, s.length() - 1),
+        new Information(PrudentType.prudentGenerateFromTypeName(wizard.asString(ps.get(1).getValue()))))))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
@@ -81,8 +82,6 @@ public abstract class ENVTestEngineAbstract {
   // Also, check size, to avoid the case Set A is contained in B.
   // azzert.fail Otherwise.
   //
-  // TODO Implement method. Currently awaits Yossi's advice regarding
-  // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
   @SuppressWarnings("null") public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
@@ -195,14 +194,14 @@ public abstract class ENVTestEngineAbstract {
 
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
-        if (foundTestedAnnotation) {
-          final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
-          if (enviromentSet == null)
-            return;
-          compareOutOfOrder(enviromentSet);
-          compareInOrder(enviromentSet);
-          foundTestedAnnotation = false;
-        }
+        if (!foundTestedAnnotation)
+          return;
+        final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
+        if (enviromentSet == null)
+          return;
+        compareOutOfOrder(enviromentSet);
+        compareInOrder(enviromentSet);
+        foundTestedAnnotation = false;
       }
     });
   }

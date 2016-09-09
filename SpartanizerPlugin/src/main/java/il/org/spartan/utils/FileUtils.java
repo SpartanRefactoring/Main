@@ -40,7 +40,7 @@ public class FileUtils {
       while ((line = reader.readLine()) != null)
         $.append(line).append(ls);
     }
-    return "" + $;
+    return $ + "";
   }
 
   /** Returns the contents of a source file
