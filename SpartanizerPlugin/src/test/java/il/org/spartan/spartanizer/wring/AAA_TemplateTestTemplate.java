@@ -85,7 +85,7 @@ public class AAA_TemplateTestTemplate {
   /** Correct way of checking for equality of numbers */
   @Test public void seriesZ_11() {
     azzert.that($0(), is($0()));
-    azzert.that($0(), not(is($0())));
+    azzert.that($0(), not(is($1())));
   }
 
   /** Correct ways of comparing numbers */
@@ -95,7 +95,7 @@ public class AAA_TemplateTestTemplate {
     azzert.that($1(), greaterThan($0()));
     azzert.that($0(), lessThanOrEqualTo($1()));
     azzert.that($0(), lessThanOrEqualTo($0()));
-    azzert.that($0(), lessThan($0()));
+    azzert.that($0(), lessThan($1()));
   }
 
   private final int $0() {
@@ -103,7 +103,7 @@ public class AAA_TemplateTestTemplate {
   }
 
   private final int $1() {
-    return 0;
+    return 1;
   }
 
   private final boolean $false() {

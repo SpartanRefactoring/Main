@@ -74,11 +74,10 @@ public class Trimmer extends Spartanization {
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);
-          if (make != null){
-            if(LogManager.isActive())
-//          LogManager.initialize();
-            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), 
-              make.description, "" + make.lineNumber);         
+          if (make != null) {
+            if (LogManager.isActive())
+              // LogManager.initialize();
+              LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), make.description, "" + make.lineNumber);
             make.go(r, null);
           }
         }
