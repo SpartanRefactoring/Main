@@ -8,9 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)

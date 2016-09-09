@@ -9,7 +9,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
 
 public class fluentTrimmerApplication extends Trimmer.With {
   public final String codeFragment;
@@ -25,17 +24,17 @@ public class fluentTrimmerApplication extends Trimmer.With {
     t.super();
     this.codeFragment = codeFragment;
     assert codeFragment != null;
-    dump.data(codeFragment);
+    dump.go(codeFragment);
     guessedContext = GuessedContext.find(codeFragment);
     assert guessedContext != null;
-    dump.data(guessedContext);
+    dump.go(guessedContext);
     wrappedFragment = guessedContext.on(codeFragment);
-    dump.data(wrappedFragment, "wrappedFragment");
+    dump.go(wrappedFragment, "wrappedFragment");
     assert wrappedFragment != null;
     document = new Document(wrappedFragment);
     assert document != null;
-    dump.data(document, "This is the document");
-    dump.data(document.get(), "and this is its content");
+    dump.go(document, "This is the document");
+    dump.go(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
     createRewrite = trimmer().createRewrite(compilationUnit, new NullProgressMonitor());
@@ -45,7 +44,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     try {
       undoEdit = textEdit.apply(document);
       assert undoEdit != null;
-      dump.data(document.get(), "DOC Content now");
+      dump.go(document.get(), "DOC Content now");
     } catch (MalformedTreeException | BadLocationException x) {
       throw new AssertionError("BUG", x);
     }
@@ -68,7 +67,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
 
   public fluentTrimmerApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
-      dump.data(this);
+      dump.go(this);
       azzert.fail(//
           "no CHNAGE\n" //
               + "I guessed the context of " + guessedContext //
@@ -81,9 +80,9 @@ public class fluentTrimmerApplication extends Trimmer.With {
       );
     }
     if (common(codeFragment) != null) {
-      dump.data(codeFragment);
-      dump.data(compilationUnit);
-      dump.data(document);
+      dump.go(codeFragment);
+      dump.go(compilationUnit);
+      dump.go(document);
       azzert.fail(//
           "no CHNAGE\n" //
               + "\n Guessing the context of " + guessedContext //

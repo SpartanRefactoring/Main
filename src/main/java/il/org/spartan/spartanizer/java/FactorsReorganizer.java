@@ -6,8 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.utils.*;
 
 // TOOD Niv: Who wrote this class?
 public class FactorsReorganizer {

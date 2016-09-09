@@ -55,10 +55,6 @@ public abstract class searchAncestors {
           next = eval(() -> next.getParent()).unless(next == until);
           return $;
         }
-
-        @Override public void remove() {
-          throw new UnsupportedOperationException();
-        }
       };
     }
   }

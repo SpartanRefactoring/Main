@@ -9,8 +9,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Tells how much we know about the type of of a variable, function, or
  * expression. This should be conservative approximation to the real type of the

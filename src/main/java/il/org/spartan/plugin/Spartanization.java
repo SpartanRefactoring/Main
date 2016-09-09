@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
+
 import static il.org.spartan.plugin.eclipse.*;
+
 import java.util.*;
 import java.util.List;
 
@@ -133,7 +135,7 @@ public abstract class Spartanization extends Refactoring {
      * @since 2013/07/01 */
     return new IMarkerResolution() {
       @Override public String getLabel() {
-        return  s;
+        return s;
       }
 
       @Override public void run(final IMarker m) {
@@ -160,7 +162,7 @@ public abstract class Spartanization extends Refactoring {
         setMarker(m);
         try {
           new RefactoringWizardOpenOperation(new Wizard(Spartanization.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartan refactoring: " + s+ Spartanization.this);
+              "Spartan refactoring: " + s + Spartanization.this);
         } catch (final InterruptedException e) {
           e.printStackTrace();
         }
