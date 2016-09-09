@@ -50,7 +50,7 @@ public class SpartanizeCurrent extends BaseHandler {
   }
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    apply(currentCompilationUnit(), getSelectedText());
+    apply(retrieve.currentCompilationUnit(), getSelectedText());
     return null;
   }
 }

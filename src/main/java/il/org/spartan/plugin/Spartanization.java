@@ -366,7 +366,7 @@ import il.org.spartan.spartanizer.engine.*;
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : BaseHandler.currentCompilationUnit(), newSubMonitor(pm));
+      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : retrieve.currentCompilationUnit(), newSubMonitor(pm));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
