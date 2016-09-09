@@ -394,11 +394,6 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @Override public Type next() { return arrayList[currentIndex++]; }
    *
-   * @Override public void remove() { throw new UnsupportedOperationException();
-   * }
-   *
-   * };
-   *
    * @OutOfOrderFlatENV({@Id(name="arrayList",
    * clazz=SOList.__template__0.class),@Id(name="currentSize", clazz="int")})
    * final "int" q; // currentIndex // shouldn't be // recognized return $; } }

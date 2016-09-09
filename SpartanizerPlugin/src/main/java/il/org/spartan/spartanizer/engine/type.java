@@ -18,7 +18,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
  ** @author Dor Maayan

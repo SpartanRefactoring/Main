@@ -429,10 +429,6 @@ import java.util.*;
           @Override public Type next() {
             return arrayList[currentIndex++];
           }
-
-          @Override public void remove() {
-            throw new UnsupportedOperationException();
-          }
         };
         @OutOfOrderFlatENV({ "arrayList", "currentSize" }) final int q; // currentIndex
         // shouldn't be

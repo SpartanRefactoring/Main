@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
-import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.*;
 
 import org.junit.*;
 
@@ -42,7 +41,7 @@ import il.org.spartan.*;
   }
 
   @Test public void hasVisibleValue() {
-    azzert.that(new LiteralParser("2F").literal, equalToIgnoringWhiteSpace("2F"));
+    azzert.that(new LiteralParser("2F").literal, is("2F"));
   }
 
   @Test public void kindCharacter() {

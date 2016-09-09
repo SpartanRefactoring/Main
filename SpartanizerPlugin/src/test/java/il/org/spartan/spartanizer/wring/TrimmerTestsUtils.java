@@ -10,7 +10,6 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.utils.*;
 
 public class TrimmerTestsUtils {
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {

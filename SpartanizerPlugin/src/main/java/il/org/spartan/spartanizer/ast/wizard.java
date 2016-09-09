@@ -12,8 +12,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Collection of definitions and functions that capture some of the quircks of
  * the {@link ASTNode} hierarchy.

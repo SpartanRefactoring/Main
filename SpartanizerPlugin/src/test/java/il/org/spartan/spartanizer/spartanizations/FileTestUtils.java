@@ -147,8 +147,7 @@ import il.org.spartan.spartanizer.engine.*;
   public static abstract class Files extends FileTestUtils.Traverse {
     /* (non-Javadoc)
      *
-     * @see
-     * il.ac.technion.cs.ssdl.spartan.refactoring.TestSuite.Traverse#go(java
+     * @see il.org.spartan.spartan.refactoring.TestSuite.Traverse#go(java
      * .util.List, java.io.File) */
     @Override public void go(final List<Object[]> $, final File d) {
       for (final File f : d.listFiles())

@@ -7,8 +7,8 @@ import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
