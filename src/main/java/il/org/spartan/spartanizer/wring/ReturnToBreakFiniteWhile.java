@@ -88,6 +88,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     if (b != null) {
       final List<Statement> statementList = step.statements(b);
       for (final Statement sl : statementList) {
+        // TODO Dor; why the same test twice
         if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
           return handleIf(sl, nextReturn);
         if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
