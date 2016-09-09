@@ -39,9 +39,6 @@ import il.org.spartan.streotypes.*;
         return get(i++);
       }
 
-      @Override public void remove() {
-        throw new UnsupportedOperationException();
-      }
     };
   }
 

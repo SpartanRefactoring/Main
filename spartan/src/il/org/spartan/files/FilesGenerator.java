@@ -17,15 +17,22 @@ import il.org.spartan.iterables.PureIterable.*;
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}(".java").from("."))
  *     System.out.println(f);
  * </pre>
+ * <pre> <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}
+ * (".java").from(".")) System.out.println(f); </pre>
  *
  * to recursively iterate over all files whose extension is ".java" in the
  * current directory, or
+ * </code> to recursively iterate over all files whose extension is ".java" in
+ * the current directory, or <code>
  *
  * <pre>
  *   <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}().from("/bin", "/home"))
  *     System.out.println(f);
  * </pre>
+ * <pre> <b>for</b> ({@link File} f: <b>new</b> {@link FilesGenerator}
+ * ().from("/bin", "/home")) System.out.println(f); </pre>
  *
+ * to recursively iterate (over all files in the <code>/bin</code> and </code>
  * to recursively iterate (over all files in the <code>/bin</code> and
  * <code>/home</code> directories.
  * @author Yossi Gil
@@ -38,12 +45,12 @@ public class FilesGenerator {
   }
 
   /** @param directory should be a directory, but we still need to account for
-   *        weird creatures such az "System Volume Information" */
+   *        weird creatures such as "System Volume Information" */
   static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
     @NonNull final Sized<@Nullable String> iterable = as.iterable(directory.list());
-    final Iterator<String> generator = iterable.iterator();
+    final Iterator<String> generator = as.list(directory.list()).iterator();
     return new Iterator<File>() {
       File next;
 
@@ -61,6 +68,10 @@ public class FilesGenerator {
 
       @Override public File next() {
         return next;
+      }
+
+      @Override public void remove() {
+        throw new UnsupportedOperationException();
       }
     };
   }
@@ -86,7 +97,7 @@ public class FilesGenerator {
    *        in the scanned locations.
    * @see FilesGenerator#from */
   public FilesGenerator(final String... extensions) {
-    this.extensions = as.iterable(extensions);
+    this.extensions = as.list(extensions);
   }
 
   /** @param from an array of names of directories from which the traversal
@@ -152,10 +163,6 @@ public class FilesGenerator {
 
       @Override public File next() {
         return next;
-      }
-
-      @Override public void remove() {
-        throw new UnsupportedOperationException();
       }
 
       private boolean ofInterest() {
