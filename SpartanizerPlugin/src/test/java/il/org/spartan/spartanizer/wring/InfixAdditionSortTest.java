@@ -101,7 +101,7 @@ public class InfixAdditionSortTest {
   @Test public void test12() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
-    azzert.that(tide.clean("" + i), is(tide.clean("" + INPUT)));
+    azzert.that(tide.clean(i + ""), is(tide.clean(INPUT + "")));
   }
 
   @Test public void test13() {
@@ -116,11 +116,11 @@ public class InfixAdditionSortTest {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert i != INPUT;
-    azzert.that(i, iz("" + INPUT));
+    azzert.that(i, iz(INPUT + ""));
   }
 
   @Test public void test15() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.that("" + i, iz("" + INPUT));
+    azzert.that(i + "", iz(INPUT + ""));
   }
 }

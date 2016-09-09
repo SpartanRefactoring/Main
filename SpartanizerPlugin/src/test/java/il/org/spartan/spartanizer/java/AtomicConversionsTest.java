@@ -43,7 +43,7 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isBoolean(b1 & b2));
     azzert.aye(atomic.isBoolean(b1 | b2));
     azzert.aye(atomic.isBoolean(b1 ? b2 : !b2));
-    azzert.aye(atomic.isBoolean(b1 | b2 & (b2 ^ b1)));
+    azzert.aye(atomic.isBoolean(b1 | b2 & (b1 ^ b2)));
     azzert.aye(atomic.isBoolean(b1 ^ b2));
   }
 
@@ -140,10 +140,10 @@ public class AtomicConversionsTest {
   }
 
   @Test public void strings() {
-    azzert.aye(atomic.isString("" + d));
+    azzert.aye(atomic.isString(d + ""));
     azzert.aye(atomic.isDouble(d + f));
     azzert.nay(atomic.isString(d + f));
-    azzert.aye(atomic.isString("" + d + f));
+    azzert.aye(atomic.isString(d + ""));
     azzert.aye(atomic.isLong(l << s));
     azzert.aye(atomic.isLong(l << i));
     azzert.aye(atomic.isLong(l << l));

@@ -17,7 +17,7 @@ import il.org.spartan.*;
 public class AAA_TemplateTestTemplate {
   /** if fails, suite did not compile... */
   @Test public void seriesZ_00() {
-    new Object().toString();
+    new Object().hashCode();
   }
 
   /** if fails, assertions do not work */
@@ -98,31 +98,31 @@ public class AAA_TemplateTestTemplate {
     azzert.that($0(), lessThan($1()));
   }
 
-  private final int $0() {
+  private int $0() {
     return 0;
   }
 
-  private final int $1() {
+  private int $1() {
     return 1;
   }
 
-  private final boolean $false() {
+  private boolean $false() {
     return false;
   }
 
-  private final boolean $true() {
+  private boolean $true() {
     return true;
   }
 
-  private final Object $null() {
+  private Object $null() {
     return null;
   }
 
-  private static final Object object() {
+  private static Object object() {
     return new Object();
   }
 
-  private final Object sameSomeObject() {
+  private Object sameSomeObject() {
     return this;
   }
 }

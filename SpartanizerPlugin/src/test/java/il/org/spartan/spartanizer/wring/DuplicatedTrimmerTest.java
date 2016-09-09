@@ -136,124 +136,46 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void bugInLastIfInMethod() {
-    trimming("" + //
-        "        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n" + //
-        "          if (!isMessageSuppressed(myMessage)) {\n" + //
-        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + //
-        "            messages.add(myMessage);\n" + //
-        "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "            if (listener != null)\n" + //
-        "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n" + "").to(
             "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod1() {
-    trimming("" + //
-        "        @Override public void f() {\n" + //
-        "          if (!isMessageSuppressed(message)) {\n" + //
-        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + //
-        "            messages.add(message);\n" + //
-        "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "            if (listener != null)\n" + //
-        "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        @Override public void f() {\n" + "").to(
             "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod2() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (!g(message)) {\n" + //
-        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + //
-        "            messages.add(message);\n" + //
-        "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "            if (listener != null)\n" + //
-        "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        public void f() {\n" + "").to(
             "public void f(){if(g(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod3() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (!g(a)) {\n" + //
-        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + //
-        "            messages.add(message);\n" + //
-        "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "            if (listener != null)\n" + //
-        "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        public void f() {\n" + "").to(
             "public void f(){if(g(a))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod4() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (!g) {\n" + //
-        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + //
-        "            messages.add(message);\n" + //
-        "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "            if (listener != null)\n" + //
-        "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        public void f() {\n" + "").to(
             "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod5() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (!g) {\n" + //
-        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + //
-        "            messages.add(message);\n" + //
-        "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        public void f() {\n" + "").to(
             "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod6() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (!g) {\n" + //
-        "            final int messages = 3;\n" + //
-        "            messages.add(message);\n" + //
-        "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n" + //
-        "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + //
-        "          }\n" + //
-        "        }").to(
+    trimming("        public void f() {\n" + "").to(
             "public void f(){if(g)return;final int messages=3;messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod7() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (!g) {\n" + //
-        "            foo();\n" + //
-        "            bar();\n" + //
-        "          }\n" + //
-        "        }").to("public void f(){if(g)return;foo();bar();}");
+    trimming("        public void f() {\n" + "").to("public void f(){if(g)return;foo();bar();}");
   }
 
   @Test public void bugInLastIfInMethod8() {
-    trimming("" + //
-        "        public void f() {\n" + //
-        "          if (g) {\n" + //
-        "            foo();\n" + //
-        "            bar();\n" + //
-        "          }\n" + //
-        "        }").to("public void f(){if(!g)return;foo();bar();}");
+    trimming("        public void f() {\n" + "").to("public void f(){if(!g)return;foo();bar();}");
   }
 
   @Test public void bugIntroducingMISSINGWord1() {
@@ -376,7 +298,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    azzert.that("" + step.right(e), is("c"));
+    azzert.that(step.right(e) + "", is("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -639,13 +561,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void declarationIfAssignment() {
-    trimming("" + //
-        "    String res = s;\n" + //
-        "    if (s.equals(y))\n" + //
-        "      res = s + blah;\n" + //
-        "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + blah :s;\n" + //
-            "    S.out.println(res);");
+    trimming("    String res = s;\n" + "").to("    String res = s.equals(y) ? s + blah :s;\n" + "");
   }
 
   @Test public void declarationIfAssignment3() {
@@ -657,13 +573,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void declarationIfUpdateAssignment() {
-    trimming("" + //
-        "    String res = s;\n" + //
-        "    if (s.equals(y))\n" + //
-        "      res += s + blah;\n" + //
-        "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + s + blah :s;\n" + //
-            "    S.out.println(res);");
+    trimming("    String res = s;\n" + "").to("    String res = s.equals(y) ? s + s + blah :s;\n" + "");
   }
 
   @Test public void declarationIfUsesLaterVariable() {
@@ -685,9 +595,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void declarationInitializerReturnExpression() {
-    trimming("" //
-        + "String t = Bob + Wants + To + \"Sleep \"; "//
-        + "  return (right_now + t);    ").to("return(right_now+Bob+Wants+To+\"Sleep \");");
+    trimming("String t = Bob + Wants + To + \"Sleep \"; " + "").to("return(right_now+Bob+Wants+To+\"Sleep \");");
   }
 
   @Test public void declarationInitializesRotate() {
@@ -771,21 +679,15 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void doNotConsolidateNewArrayActual() {
-    trimming("" + //
-        "occupied = new boolean[capacity];\n" + //
-        "placeholder = new boolean[capacity];").stays();
+    trimming("occupied = new boolean[capacity];\n" + "").stays();
   }
 
   @Test public void doNotConsolidateNewArraySimplifiedl() {
-    trimming("" + //
-        "a = new int[1];\n" + //
-        "b = new int[1];").stays();
+    trimming("a = new int[1];\n" + "").stays();
   }
 
   @Test public void doNotConsolidatePlainNew() {
-    trimming("" + //
-        "a = new A();\n" + //
-        "b = new B();").stays();
+    trimming("a = new A();\n" + "").stays();
   }
 
   @Test public void doNotInlineWithDeclaration() {
@@ -815,22 +717,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void duplicatePartialIfBranches() {
-    trimming("" + //
-        "    if (a) {\n" + //
-        "      f();\n" + //
-        "      g();\n" + //
-        "      ++i;\n" + //
-        "    } else {\n" + //
-        "      f();\n" + //
-        "      g();\n" + //
-        "      --i;\n" + //
-        "    }").to("" + // //
-            "   f();\n" + //
-            "   g();\n" + //
-            "    if (a) \n" + //
-            "      ++i;\n" + //
-            "    else \n" + //
-            "      --i;");
+    trimming("    if (a) {\n" + "").to("   f();\n" + "");
   }
 
   @Test public void emptyElse() {
@@ -870,88 +757,22 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void forLoopBug() {
-    trimming("" + //
-        "      for (int i = 0;i < s.length();++i)\n" + //
-        "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
-        "        else "//
-        + "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
-        " if (b) i = 3;")//
-            .to("" + //
-                "      for (int i = 0;i < s.length();++i)\n" + //
-                "       if (s.charAt(i) == 'a')\n" + //
-                "          res += 2;\n" + //
-                "        else "//
-                + "       if (s.charAt(i) == 'd')\n" + //
-                "          res--;\n" + //
-                "      return res;\n" + //
-                " if (b) i = 3;")//
-            .to("" + //
-                "      for (int i = 0;i < s.length();++i)\n" + //
-                "       if (s.charAt(i) == 'a')\n" + //
-                "          res += 2;\n" + //
-                "        else "//
-                + "       if (s.charAt(i) == 'd')\n" + //
-                "          --res;\n" + //
-                "      return res;\n" + //
-                " if (b) i = 3;")//
+    trimming("      for (int i = 0;i < s.length();++i)\n" + "")//
+            .to("      for (int i = 0;i < s.length();++i)\n" + "")//
+            .to("      for (int i = 0;i < s.length();++i)\n" + "")//
             .stays();
   }
 
   @Test public void ifBugSecondTry() {
-    trimming("" + //
-        " final int c = 2;\n" + //
-        "    if (c == c + 1) {\n" + //
-        "      if (c == c + 2)\n" + //
-        "        return null;\n" + //
-        "      c = f().charAt(3);\n" + //
-        "    } else if (Character.digit(c, 16) == -1)\n" + //
-        "      return null;\n" + //
-        "    return null;").to("" + //
-            "    final int c = 2;\n" + //
-            "    if (c != c + 1) {\n" + //
-            "      if (Character.digit(c, 16) == -1)\n" + //
-            "        return null;\n" + //
-            "    } else {\n" + //
-            "      if (c == c + 2)\n" + //
-            "        return null;\n" + //
-            "      c = f().charAt(3);\n" + //
-            "    }\n" + //
-            "    return null;");//
+    trimming(" final int c = 2;\n" + "").to("    final int c = 2;\n" + "");//
   }
 
   @Test public void ifBugSimplified() {
-    trimming("" + //
-        "    if (x) {\n" + //
-        "      if (z)\n" + //
-        "        return null;\n" + //
-        "      c = f().charAt(3);\n" + //
-        "    } else if (y)\n" + //
-        "      return;\n" + //
-        "").to("" + //
-            "    if (!x) {\n" + //
-            "      if (y)\n" + //
-            "        return;\n" + //
-            "    } else {\n" + //
-            "      if (z)\n" + //
-            "        return null;\n" + //
-            "      c = f().charAt(3);\n" + //
-            "    }\n" + //
-            "");//
+    trimming("    if (x) {\n" + "").to("    if (!x) {\n" + "");//
   }
 
   @Test public void ifBugWithPlainEmptyElse() {
-    trimming("" + //
-        "      if (z)\n" + //
-        "        f();\n" + //
-        "      else\n" + //
-        "         ; \n" + //
-        "").to("" + //
-            "      if (z)\n" + //
-            "        f();\n" + //
-            "");//
+    trimming("      if (z)\n" + "").to("      if (z)\n" + "");//
   }
 
   @Test public void ifDegenerateThenInIf() {
@@ -965,42 +786,18 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void ifEmptyThenThrow() {
-    trimming("" //
-        + "if (b) {\n" //
-        + " /* empty */" //
-        + "} else {\n" //
-        + " throw new Excpetion();\n" //
-        + "}")
-            .to("" //
-                + "if (!b) " //
-                + "  throw new Excpetion();" //
-                + "");
+    trimming("if (b) {\n" + "")
+            .to("if (!b) " + "");
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimming("" //
-        + "if (b) {\n" //
-        + " /* empty */" //
-        + "; \n" //
-        + "} // no else \n" //
-        + " throw new Exception();\n" //
-        + "")
-            .to("" //
-                + "  throw new Exception();" //
-                + "");
+    trimming("if (b) {\n" + "")
+            .to("  throw new Exception();" + "");
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
-    trimming("" //
-        + "if (x) if (b) {\n" //
-        + " /* empty */" //
-        + "} else {\n" //
-        + " throw new Excpetion();\n" //
-        + "} else { f();f();f();f();f();f();f();f();}")
-            .to("" //
-                + "if (x) { if (!b) \n" //
-                + "  throw new Excpetion();" //
-                + "} else { f();f();f();f();f();f();f();f();}");
+    trimming("if (x) if (b) {\n" + "")
+            .to("if (x) { if (!b) \n" + "");
   }
 
   @Test public void ifFunctionCall() {
@@ -1100,10 +897,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void ifThrowNoElseThrow() {
-    trimming("" //
-        + "if (!(e.getCause() instanceof Error))\n" //
-        + "  throw e;\n" //
-        + "throw (Error) e.getCause();")//
+    trimming("if (!(e.getCause() instanceof Error))\n" + "")//
             .to(" throw !(e.getCause()instanceof Error)?e:(Error)e.getCause();");//
   }
 
@@ -1155,13 +949,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void inline01() {
-    trimming("" + //
-        "  public int y() {\n" + //
-        "    final Z res = new Z(6);\n" + //
-        "    S.out.println(res.j);\n" + //
-        "    return res;\n" + //
-        " }\n" + //
-        "").to(//
+    trimming("  public int y() {\n" + "").to(//
             "  public int y() {\n" + // //
                 "    final Z $ = new Z(6);\n" + // //
                 "    S.out.println($.j);\n" + // //
@@ -1238,8 +1026,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
-    azzert.that("" + step.right(e), is("f(a,b,c)"));
-    azzert.that("" + step.left(e), is("f(a,b,c,d,e)"));
+    azzert.that(step.right(e) + "", is("f(a,b,c)"));
+    azzert.that(step.left(e) + "", is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
@@ -1255,13 +1043,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
-    azzert.that("" + replacement, is("f(a,b,c) * f(a,b,c,d,e)"));
+    azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
-    azzert.that("" + step.right(e), is("f(a,b,c)"));
-    azzert.that("" + step.left(e), is("f(a,b,c,d)"));
+    azzert.that(step.right(e) + "", is("f(a,b,c)"));
+    azzert.that(step.left(e) + "", is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
@@ -1277,7 +1065,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert s.eligible(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
-    azzert.that("" + replacement, is("f(a,b,c) * f(a,b,c,d)"));
+    azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d)"));
   }
 
   @Test public void issue06() {
@@ -1334,16 +1122,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue37Simplified() {
-    trimming("" + //
-        "    int a = 3;\n" + //
-        "    a = 31 * a;" + //
-        "").to("int a = 31 * 3; ");
+    trimming("    int a = 3;\n" + "").to("int a = 31 * 3; ");
   }
 
   @Test public void issue37SimplifiedVariant() {
-    trimming("" + //
-        "    int a = 3;\n" + //
-        "    a += 31 * a;").to("int a=3+31*3;");
+    trimming("    int a = 3;\n" + "").to("int a=3+31*3;");
   }
 
   @Test public void issue37WithSimplifiedBlock() {
@@ -1366,13 +1149,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue39base() {
-    trimming("" + //
-        "if (name == null) {\n" + //
-        "    if (other.name != null)\n" + //
-        "        return false;\n" + //
-        "} else if (!name.equals(other.name))\n" + //
-        "    return false;\n" + //
-        "return true;").stays(); //
+    trimming("if (name == null) {\n" + "").stays(); //
   }
 
   public void issue39baseDual() {
@@ -1381,43 +1158,15 @@ import il.org.spartan.spartanizer.spartanizations.*;
         "        return false;\n" + //
         "} else if (other.name != null)\n" + //
         "    return false;\n" + //
-        "return true;").to("" + //
-            "if (name == null) {\n" + //
-            "    if (other.name != null)\n" + //
-            "        return false;\n" + //
-            "} else if (!name.equals(other.name))\n" + //
-            "    return false;\n" + //
-            "return true;");
+        "return true;").to("if (name == null) {\n" + "");
   }
 
   @Test(timeout = 100) public void issue39versionA() {
-    trimming("" + //
-        "if (varArgs) {\n" + //
-        "    if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
-        "        return false;\n" + //
-        "    }\n" + //
-        "} else if (parameterTypes.length != argumentTypes.length) {\n" + //
-        "    return false;\n" + //
-        "}").to("" + //
-            "if (!varArgs) {\n" + //
-            "    if (parameterTypes.length != argumentTypes.length) {\n" + //
-            "        return false;\n" + //
-            "    }\n" + //
-            "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
-            "    return false;\n" + //
-            "}");
+    trimming("if (varArgs) {\n" + "").to("if (!varArgs) {\n" + "");
   }
 
   public void issue39versionAdual() {
-    trimming("" + //
-        "if (!varArgs) {\n" + //
-        "    if (parameterTypes.length != argumentTypes.length) {\n" + //
-        "        return false;\n" + //
-        "    }\n" + //
-        "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
-        "    return false;\n" + //
-        "}" + //
-        "").stays();
+    trimming("if (!varArgs) {\n" + "").stays();
   }
 
   @Test public void issue41FunctionCall() {
@@ -1425,37 +1174,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue43() {
-    trimming("" //
-        + "String t = Z2;  "//
-        + " t = t.f(A).f(b) + t.f(c);   "//
-        + "return (t + 3);    ")
-            .to(""//
-                + "String t = Z2.f(A).f(b) + Z2.f(c);" //
-                + "return (t + 3);" //
-                + "");
+    trimming("String t = Z2;  " + "")
+            .to("String t = Z2.f(A).f(b) + Z2.f(c);" + "");
   }
 
   @Test public void issue46() {
-    trimming("" + //
-        "int f() {\n" + //
-        "  x++;\n" + //
-        "  y++;\n" + //
-        "  if (a) {\n" + //
-        "     i++; \n" + //
-        "     j++; \n" + //
-        "     k++;\n" + //
-        "  }\n" + //
-        "}")//
-            .to("" + //
-                "int f() {\n" + //
-                "  ++x;\n" + //
-                "  ++y;\n" + //
-                "  if (!a)\n" + //
-                "    return;\n" + //
-                "  ++i;\n" + //
-                "  ++j; \n" + //
-                "  ++k;\n" + //
-                "}");
+    trimming("int f() {\n" + "")//
+            .to("int f() {\n" + "");
   }
 
   @Test public void issue49() {
@@ -2167,38 +1892,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void pushdowConditionalActualExampleFirstPass() {
-    trimming("" //
-        + "return determineEncoding(bytes) == Encoding.B " //
-        + "? f((ENC_WORD_PREFIX + mimeCharset + B), text, charset, bytes)\n" //
-        + ": f((ENC_WORD_PREFIX + mimeCharset + Q), text, charset, bytes)\n" //
-        + ";")
-            .to("" //
-                + "return f("//
-                + "   determineEncoding(bytes)==Encoding.B" //
-                + "     ? ENC_WORD_PREFIX+mimeCharset+B" //
-                + "     : ENC_WORD_PREFIX+mimeCharset+Q," //
-                + "text,charset,bytes)" //
-                + ";" //
-                + "");
+    trimming("return determineEncoding(bytes) == Encoding.B " + "")
+            .to("return f(" + "");
   }
 
   @Test public void pushdowConditionalActualExampleSecondtest() {
-    trimming("" //
-        + "return f("//
-        + "   determineEncoding(bytes)==Encoding.B" //
-        + "     ? ENC_WORD_PREFIX+mimeCharset+B" //
-        + "     : ENC_WORD_PREFIX+mimeCharset+Q," //
-        + "text,charset,bytes)" //
-        + ";" //
-        + "")
-            .to("" //
-                + "return f("//
-                + "  ENC_WORD_PREFIX + mimeCharset + " //
-                + " (determineEncoding(bytes)==Encoding.B ?B : Q)," //
-                + "   text,charset,bytes" //
-                + ")" //
-                + ";" //
-                + "");
+    trimming("return f(" + "")
+            .to("return f(" + "");
   }
 
   @Test public void pushdownNot2LevelNotOfFalse() {
@@ -2583,7 +2283,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert w.eligible(e);
     final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     assert replacement != null;
-    azzert.that("" + replacement, is("a != null"));
+    azzert.that(replacement + "", is("a != null"));
   }
 
   @Test public void rightSipmlificatioForNulNNVariable() {
@@ -2668,70 +2368,17 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void shortestIfBranchFirst01() {
-    trimming(""//
-        + "if (s.equals(0xDEAD)) {\n"//
-        + " int res=0; "//
-        + " for (int i=0; i<s.length(); ++i)     "//
-        + " if (s.charAt(i)=='a')      "//
-        + "   res += 2;    "//
-        + "} else "//
-        + " if (s.charAt(i)=='d') "//
-        + "  res -= 1;  "//
-        + "return res;  ")
-            .to(""//
-                + "if (!s.equals(0xDEAD)) {"//
-                + " if(s.charAt(i)=='d')"//
-                + "  res-=1;"//
-                + "} else {"//
-                + "  int res=0;"//
-                + "  for(int i=0;i<s.length();++i)"//
-                + "   if(s.charAt(i)=='a')"//
-                + "     res+=2;"//
-                + " }"//
-                + " return res;");
+    trimming("if (s.equals(0xDEAD)) {\n" + "")
+            .to("if (!s.equals(0xDEAD)) {" + "");
   }
 
   @Test public void shortestIfBranchFirst02() {
-    trimming("" //
-        + "if (!s.equals(0xDEAD)) { "//
-        + " int res=0;"//
-        + " for (int i=0;i<s.length();++i)     "//
-        + "   if (s.charAt(i)=='a')      "//
-        + "     res += 2;"//
-        + "   else "//
-        + "  if (s.charAt(i)=='d')      "//
-        + "       res -= 1;"//
-        + "  return res;"//
-        + "} else {    "//
-        + " return 8;"//
-        + "}")
-            .to("" //
-                + " if (s.equals(0xDEAD)) \n" + //
-                "    return 8;" + //
-                "      int res = 0;\n" + //
-                "      for (int i = 0;i < s.length();++i)\n" + //
-                "       if (s.charAt(i) == 'a')\n" + //
-                "          res += 2;\n" + //
-                "        else " + //
-                "       if (s.charAt(i) == 'd')\n" + //
-                "          res -= 1;\n" + //
-                "      return res;\n");
+    trimming("if (!s.equals(0xDEAD)) { " + "")
+            .to(" if (s.equals(0xDEAD)) \n" + "");
   }
 
   @Test public void shortestIfBranchFirst02a() {
-    trimming("" + //
-        " if (!s.equals(0xDEAD)) {\n" + //
-        "      int res = 0;\n" + //
-        "      for (int i = 0;i < s.length();++i)\n" + //
-        "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
-        "        else " + //
-        "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
-        "    }\n" + //
-        "    return 8;" + //
-        "").to(" if (s.equals(0xDEAD)) "//
+    trimming(" if (!s.equals(0xDEAD)) {\n" + "").to(" if (s.equals(0xDEAD)) "//
             + "return 8; " + //
             "      int res = 0;\n" + //
             "      for (int i = 0;i < s.length();++i)\n" + //
@@ -2745,30 +2392,12 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void shortestIfBranchFirst02b() {
-    trimming("" + //
-        "      int res = 0;\n" + //
-        "      for (int i = 0;i < s.length();++i)\n" + //
-        "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
-        "        else " + //
-        "       if (s.charAt(i) == 'd')\n" + //
-        "          --res;\n" + //
-        "      return res;\n" + //
-        "")//
+    trimming("      int res = 0;\n" + "")//
             .stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("" + //
-        "      int res = 0;\n" + //
-        "      for (int i = 0;i < s.length();++i)\n" + //
-        "       if (s.charAt(i) == 'a')\n" + //
-        "          res += 2;\n" + //
-        "        else " + //
-        "       if (s.charAt(i) == 'd')\n" + //
-        "          res -= 1;\n" + //
-        "      return res;\n" + //
-        ""//
+    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("      int res = 0;\n" + ""
     );
     final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
     assert f != null;
@@ -2783,20 +2412,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
-    trimming("" + //
-        "if (a) {" + //
-        " f();" + //
-        " g();" + //
-        " h();" + //
-        " return a;" + //
-        "}\n" + //
-        "return c;").to("" + //
-            "if (!a) return c;" + //
-            "f();" + //
-            "g();" + //
-            "h();" + //
-            "return a;" + //
-            "");
+    trimming("if (a) {" + "").to("if (!a) return c;" + "");
   }
 
   @Test public void shortestOperand01() {
@@ -3090,11 +2706,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void synchronizedBraces() {
-    trimming("" //
-        + "    synchronized (variables) {\n" //
-        + "      for (final String key : variables.keySet())\n"//
-        + "        $.variables.put(key, variables.get(key));\n" //
-        + "    }").stays();
+    trimming("    synchronized (variables) {\n" + "").stays();
   }
 
   @Test public void ternarize05() {
@@ -3115,29 +2727,12 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void ternarize07() {
-    trimming("" //
-        + "String res;" //
-        + "res = s;   " //
-        + "if (res.equals(532)==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "S.out.println(res); " //
-        + "")
-            .to("" //
-                + "String res =s ;" //
-                + "if (res.equals(532))    " //
-                + "  res = s + 0xABBA;   " //
-                + "S.out.println(res); " //
-                + "");
+    trimming("String res;" + "")
+            .to("String res =s ;" + "");
   }
 
   @Test public void ternarize07a() {
-    trimming("" //
-        + "String res;" //
-        + "res = s;   " //
-        + "if (res==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "S.out.println(res); " //
-        + "").to("String res=s;if(res)res=s+0xABBA;S.out.println(res);");
+    trimming("String res;" + "").to("String res=s;if(res)res=s+0xABBA;S.out.println(res);");
   }
 
   @Test public void ternarize07aa() {
@@ -3145,13 +2740,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void ternarize07b() {
-    trimming("" //
-        + "String res =s ;" //
-        + "if (res.equals(532)==true)    " //
-        + "  res = s + 0xABBA;   " //
-        + "S.out.println(res); ")
-            .to("" //
-                + "String res=s.equals(532)==true?s+0xABBA:s;S.out.println(res);");
+    trimming("String res =s ;" + "")
+            .to("String res=s.equals(532)==true?s+0xABBA:s;S.out.println(res);" + "");
   }
 
   @Test public void ternarize09() {
@@ -3403,22 +2993,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Ignore @Test public void inline00() {
-    trimming("" + //
-        "  Object a() { " + //
-        "    class a {\n" + //
-        "      a a;\n" + //
-        "      Object a() {\n" + //
-        "        return a;\n" + // /
-        "      }" + //
-        "    }\n" + //
-        "    final Object a = new Object();\n" + //
-        "    if (a instanceof a)\n" + //
-        "      new Object();  \n" + //
-        "    final Object a = new Object();\n" + //
-        "    if (a instanceof a)\n" + //
-        "      new Object();" + //
-        "}\n" + //
-        "").to(//
+    trimming("  Object a() { " + "").to(//
             "  Object a() { " + //
                 "    class a {\n" + //
                 "      Object a() {\n" + //

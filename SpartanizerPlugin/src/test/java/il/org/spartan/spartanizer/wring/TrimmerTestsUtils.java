@@ -66,20 +66,17 @@ public class TrimmerTestsUtils {
 
     public Operand to(final String expected) {
       assert expected != null;
-      {
-        final Wrap w = Wrap.find(get());
-        final String wrap = w.on(get());
-        final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
-        // System.out.println(unpeeled);
-        if (wrap.equals(unpeeled))
-          azzert.fail("Nothing done on " + get());
-        final String peeled = w.off(unpeeled);
-        if (peeled.equals(get()))
-          azzert.that("No trimming of " + get(), peeled, is(not(get())));
-        if (tide.clean(peeled).equals(tide.clean(get())))
-          azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-        assertSimilar(expected, peeled);
-      }
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        azzert.fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
+      if (tide.clean(peeled).equals(tide.clean(get())))
+        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
+      assertSimilar(expected, peeled);
       return new Operand(expected);
     }
 

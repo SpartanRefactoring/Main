@@ -37,9 +37,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
   }
 
   private static boolean isInfiniteLoop(final WhileStatement s) {
-    if (az.booleanLiteral(s.getExpression()) == null)
-      return false;
-    return az.booleanLiteral(s.getExpression()).booleanValue();
+    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {

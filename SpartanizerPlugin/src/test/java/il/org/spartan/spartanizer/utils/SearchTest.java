@@ -289,31 +289,15 @@ import il.org.spartan.spartanizer.engine.Collect.*;
   }
 
   @Test public void fieldAccessDummy() {
-    azzert.that(searcher().in(d("" + //
-        "  public int y() {\n" + //
-        "    final Z res = new Z(6);\n" + //
-        "    S.out.println(res.j);\n" + //
-        "    return res;\n" + //
-        "  }\n" + //
-        "}\n" + //
-        "")).size(), is(0));
+    azzert.that(searcher().in(d("  public int y() {\n" + "")).size(), is(0));
   }
 
   @Test public void fieldAccessReal() {
-    azzert.that(searcher().in(d("" + //
-        "  public int y() {\n" + //
-        "    final Z n = new Z(6);\n" + //
-        "    S.out.println(n.j);\n" + //
-        "    return n;\n" + //
-        "  }\n" + //
-        "}\n" + //
-        "")).size(), is(0));
+    azzert.that(searcher().in(d("  public int y() {\n" + "")).size(), is(0));
   }
 
   @Test public void fieldAccessSimplified() {
-    azzert.that(nCount("" + //
-        "    S.out.println(n.j);\n" + //
-        ""), is(1));
+    azzert.that(nCount("    S.out.println(n.j);\n" + ""), is(1));
   }
 
   @Test public void forEnhancedAsParemeter() {

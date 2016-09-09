@@ -67,7 +67,7 @@ import il.org.spartan.spartanizer.wring.*;
 
   static void assertNoOpportunity(final Spartanization s, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    azzert.that("" + u, TrimmerTestsUtils.countOpportunities(s, u), is(0));
+    azzert.that(u + "", TrimmerTestsUtils.countOpportunities(s, u), is(0));
   }
 
   static void assertNotEvenSimilar(final String expected, final String actual) {

@@ -339,37 +339,37 @@ import il.org.spartan.spartanizer.ast.*;
 
   @Ignore("need to make a new complex for Factors") @Test public void test55() {
     c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("a"));
+    azzert.that(c.multipliers() + "", containsString("a"));
   }
 
   @Ignore("need to make a new complex for Factors") @Test public void test56() {
     c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("d"));
+    azzert.that(c.multipliers() + "", containsString("d"));
   }
 
   @Ignore("need to make a new complex for Factors") @Test public void test57() {
     c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("e"));
+    azzert.that(c.multipliers() + "", containsString("e"));
   }
 
   @Ignore("need to make a new complex for Factors") @Test public void test58() {
     c.collect(complex);
-    azzert.that("" + c.multipliers(), containsString("d * e"));
+    azzert.that(c.multipliers() + "", containsString("d * e"));
   }
 
   @Ignore("need to make a new complex for Factors") @Test public void test59() {
     c.collect(complex);
-    azzert.that("" + c.dividers(), containsString("b * c"));
+    azzert.that(c.dividers() + "", containsString("b * c"));
   }
 
   @Ignore("need to make a new complex for Factors") @Test public void test60() {
     c.collect(complex);
-    azzert.that("" + c.multipliers(), iz("[a,d*e]"));
+    azzert.that(c.multipliers() + "", iz("[a,d*e]"));
   }
 
   @Ignore("need to make a new complex for Factors") @Test public void test61() {
     c.collect(complex);
-    azzert.that("" + c.dividers(), iz("[b*c,x]"));
+    azzert.that(c.dividers() + "", iz("[b*c,x]"));
   }
 
   @Test public void test62() {
