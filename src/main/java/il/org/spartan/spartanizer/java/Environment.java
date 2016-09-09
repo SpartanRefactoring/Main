@@ -72,7 +72,7 @@ import org.eclipse.jdt.core.dom.*;
     }
 
     // TODO: Alex: Convert this into JavaDoc
-    /* @return true iff Env is empty. */
+    /* @return true iff {@link Environment} is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
@@ -82,28 +82,28 @@ import org.eclipse.jdt.core.dom.*;
       return new LinkedHashSet<>(flat.entrySet());
     }
 
-    /* @return The information about the name in current Env. */
+    /* @return The information about the name in current {@link Environment}. */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
 
-    /* Check whether the Env already has the name. */
+    /* Check whether the {@link Environment} already has the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
 
-    /* @return Names used in current scope. */
+    /* @return Names used the {@link Environment}. */
     @Override public LinkedHashSet<String> names() {
       return new LinkedHashSet<>(flat.keySet());
     }
 
-    /* One step up in the Env tree. Funny but it even sounds like next(). */
+    /* One step up in the {@link Environment} tree. Funny but it even sounds like next(). */
     @Override public Environment nest() {
       return nest;
     }
 
-    /** Add name to the current scope in the Env. */
+    /** Add name to the current scope in the {@link Environment}. */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
       assert !flat.isEmpty();
@@ -126,7 +126,7 @@ import org.eclipse.jdt.core.dom.*;
     return new LinkedHashSet<>();
   }
 
-  /** Spawns the first Nested Env. Should be used when the first block is
+  /** Spawns the first Nested {@link Environment}. Should be used when the first block is
    * opened. */
   static Environment genesis() {
     return EMPTY.spawn();
@@ -138,12 +138,12 @@ import org.eclipse.jdt.core.dom.*;
     return new LinkedHashSet<>();
   }
 
-  /** Return true iff Env doesn't have the name. */
+  /** Return true iff {@link Environment} doesn't have the name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
 
-  /** Return true iff Env is empty. */
+  /** Return true iff {@link Environment} is empty. */
   default boolean empty() {
     return true;
   }
@@ -159,14 +159,14 @@ import org.eclipse.jdt.core.dom.*;
     return $;
   }
 
-  /** Get full path of the current Env (all scope hierarchy). Used for full
+  /** Get full path of the current {@link Environment} (all scope hierarchy). Used for full
    * names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name();
   }
 
-  /** @return all the full names of the Env. */
+  /** @return all the full names of the {@link Environment}. */
   default LinkedHashSet<String> fullNames() {
     final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
     if (nest() != null)
@@ -178,17 +178,12 @@ import org.eclipse.jdt.core.dom.*;
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  // TODO: Dan - don't use abbreviation, use {@link Environment} or 'this
-  // instance'
-  // Yossi, I could not understand your intention. Could you please elaborate
-  // further?
-  // Dan: Here is an abbreviation "Env.". 
-  /** @return null iff the name is not in use in the this instance. */
+  /** @return null iff the name is not in use in the {@link Environment} */
   default Information get(final String name) {
     return null;
   }
 
-  /** Answer the question whether the name is in use in the current Env */
+  /** Answer the question whether the name is in use in the current {@link Environment} */
   default boolean has(final String name) {
     return false;
   }
