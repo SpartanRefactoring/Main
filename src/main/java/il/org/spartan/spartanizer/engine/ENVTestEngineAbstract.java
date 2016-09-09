@@ -82,8 +82,6 @@ public abstract class ENVTestEngineAbstract {
   // Also, check size, to avoid the case Set A is contained in B.
   // azzert.fail Otherwise.
   //
-  // TODO Implement method. Currently awaits Yossi's advice regarding
-  // LinkedHashSet unmodifiable issue.
   // TODO once the method is determined to be working, change to visibility to
   // protected.
   @SuppressWarnings("null") public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
