@@ -49,7 +49,7 @@ public class SpartanizeAll extends BaseHandler {
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
-    final ICompilationUnit currentCompilationUnit = currentCompilationUnit();
+    final ICompilationUnit currentCompilationUnit = retrieve.currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
     message.append("starting at " + currentCompilationUnit.getElementName() + "\n");
     final List<ICompilationUnit> us = getAllCompilationUnits(currentCompilationUnit);
