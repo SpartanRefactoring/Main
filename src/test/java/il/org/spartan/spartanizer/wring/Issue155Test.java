@@ -11,7 +11,18 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue155Test {
-  @Test public void InlineFinalIntoClassInstanceCreation() {
+  @Test public void inlineFinal() {
+    trimming("" //
+        + "for (int i = 0; i < versionNumbers.length; ++i) {\n" //
+        + "  final String nb = versionNumbers[i];\n" //
+        + "  $[i] = Integer.parseInt(nb);\n" //
+        + "}").to("" //
+            + "for (int i = 0; i < versionNumbers.length; ++i) {\n" //
+            + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" //
+            + "}");
+  }
+  
+  @Test public void inlineNonFinalIntoClassInstanceCreation() {
     trimming("" //
         + "void h(int x) {\n" //
         + "  ++x;\n" //
