@@ -66,9 +66,8 @@ public class TrimmerTestsUtils {
     }
 
     public Operand to(final String expected) {
-      if (expected.isEmpty())
-        checkSame();
-      else {
+      assert expected != null;
+ {
         final Wrap w = Wrap.find(get());
         final String wrap = w.on(get());
         final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
