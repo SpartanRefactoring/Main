@@ -6,11 +6,11 @@ import org.junit.*;
 
 @SuppressWarnings("static-method") public class FibonacciTest {
   @Test public void testCreate() {
-    assertTrue(new Fibonacci().more());
+    assert new Fibonacci().more();
   }
 
   @Test public void testCreateThreshold() {
-    assertTrue(new Fibonacci(1000).more());
+    assert new Fibonacci(1000).more();
   }
 
   @Test public void testFifth() {

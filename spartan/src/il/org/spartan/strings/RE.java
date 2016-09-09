@@ -1,7 +1,5 @@
 package il.org.spartan.strings;
 
-import static org.junit.Assert.*;
-
 import java.util.regex.*;
 
 import org.junit.*;
@@ -90,165 +88,165 @@ public class RE {
 
   @SuppressWarnings("static-method") public static class TestFullyQualifiedIdentifier {
     @Test public void testA() {
-      assertTrue("A1".matches(fulllyQualifiedIdentifier()));
+      assert "A1".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testDollar() {
-      assertTrue("$".matches(fulllyQualifiedIdentifier()));
+      assert "$".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testDollars() {
-      assertTrue("$.$".matches(fulllyQualifiedIdentifier()));
+      assert "$.$".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testDot() {
-      assertFalse(".".matches(fulllyQualifiedIdentifier()));
+      assert !".".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testEmpty() {
-      assertFalse("".matches(fulllyQualifiedIdentifier()));
+      assert !"".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObject() {
-      assertTrue("java.lang.Object".matches(fulllyQualifiedIdentifier()));
+      assert "java.lang.Object".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObjectSpaceBefore() {
-      assertFalse(" java.lang.Object".matches(fulllyQualifiedIdentifier()));
+      assert !" java.lang.Object".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObjectSpaces() {
-      assertTrue("java .  lang .    Object".matches(fulllyQualifiedIdentifier()));
+      assert "java .  lang .    Object".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObjectSpacesTabs() {
-      assertTrue("java \t.  lang\t . \t   Object".matches(fulllyQualifiedIdentifier()));
+      assert "java \t.  lang\t . \t   Object".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObjectSpacesTabsNewLines() {
-      assertTrue("java \t.  \nlang\t \r\n. \t   \nObject".matches(fulllyQualifiedIdentifier()));
+      assert "java \t.  \nlang\t \r\n. \t   \nObject".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObjectSpacesTabsNewLinesSlashes() {
-      assertFalse("java \t. \\ \nlang\t \r\n. \t   \nObject".matches(fulllyQualifiedIdentifier()));
+      assert !"java \t. \\ \nlang\t \r\n. \t   \nObject".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testJavaLangObjectSpacesTabsNewLinesSpaceAtEnd() {
-      assertFalse("java \t.  \nlang\t \r\n. \t   \nObject ".matches(fulllyQualifiedIdentifier()));
+      assert !"java \t.  \nlang\t \r\n. \t   \nObject ".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testNumber() {
-      assertFalse("1".matches(fulllyQualifiedIdentifier()));
+      assert !"1".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterLower() {
-      assertTrue("a".matches(fulllyQualifiedIdentifier()));
+      assert "a".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterLowerUnderscore() {
-      assertTrue("a_".matches(fulllyQualifiedIdentifier()));
+      assert "a_".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterUpper() {
-      assertTrue("A".matches(fulllyQualifiedIdentifier()));
+      assert "A".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterUpperDollar() {
-      assertTrue("A$".matches(fulllyQualifiedIdentifier()));
+      assert "A$".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterUpperDollarNumber() {
-      assertTrue("A$3".matches(fulllyQualifiedIdentifier()));
+      assert "A$3".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterUpperDollarNumberDot() {
-      assertFalse("A$3.".matches(fulllyQualifiedIdentifier()));
+      assert !"A$3.".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testSpace() {
-      assertFalse(" ".matches(fulllyQualifiedIdentifier()));
+      assert !" ".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscore1() {
-      assertTrue("_1".matches(fulllyQualifiedIdentifier()));
+      assert "_1".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscoredDollars() {
-      assertTrue("_._.__.$$._$._1".matches(fulllyQualifiedIdentifier()));
+      assert "_._.__.$$._$._1".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscores() {
-      assertTrue("_._".matches(fulllyQualifiedIdentifier()));
+      assert "_._".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscrore() {
-      assertTrue("_".matches(fulllyQualifiedIdentifier()));
+      assert "_".matches(fulllyQualifiedIdentifier());
     }
   }
 
   @SuppressWarnings("static-method") public static class TestIdentifier {
     @Test public void testDollar() {
-      assertTrue("$".matches(identifier()));
+      assert "$".matches(identifier());
     }
 
     @Test public void testDot() {
-      assertFalse(".".matches(identifier()));
+      assert !".".matches(identifier());
     }
 
     @Test public void testEmpty() {
-      assertFalse("".matches(identifier()));
+      assert !"".matches(identifier());
     }
 
     @Test public void testNumber() {
-      assertFalse("1".matches(identifier()));
+      assert !"1".matches(identifier());
     }
 
     @Test public void testOneLetterLower() {
-      assertTrue("a".matches(identifier()));
+      assert "a".matches(identifier());
     }
 
     @Test public void testOneLetterLowerDot() {
-      assertFalse("a.".matches(identifier()));
+      assert !"a.".matches(identifier());
     }
 
     @Test public void testOneLetterLowerUnderscore() {
-      assertTrue("a_".matches(identifier()));
+      assert "a_".matches(identifier());
     }
 
     @Test public void testOneLetterUpper() {
-      assertTrue("A".matches(identifier()));
+      assert "A".matches(identifier());
     }
 
     @Test public void testOneLetterUpperDollar() {
-      assertTrue("A$".matches(identifier()));
+      assert "A$".matches(identifier());
     }
 
     @Test public void testOneLetterUpperDollarNumber() {
-      assertTrue("A$3".matches(identifier()));
+      assert "A$3".matches(identifier());
     }
 
     @Test public void testOneLetterUpperDollarNumberDot() {
-      assertFalse("A$3.".matches(identifier()));
+      assert !"A$3.".matches(identifier());
     }
 
     @Test public void testSpace() {
-      assertFalse(" ".matches(identifier()));
+      assert !" ".matches(identifier());
     }
 
     @Test public void testTwoDollar() {
-      assertTrue("$$".matches(identifier()));
+      assert "$$".matches(identifier());
     }
 
     @Test public void testTwoUnderscrores() {
-      assertTrue("__".matches(identifier()));
+      assert "__".matches(identifier());
     }
 
     @Test public void testUnderscrore() {
-      assertTrue("_".matches(identifier()));
+      assert "_".matches(identifier());
     }
 
     @Test public void testUnderscrore1() {
-      assertTrue("_".matches(identifier()));
+      assert "_".matches(identifier());
     }
   }
 }

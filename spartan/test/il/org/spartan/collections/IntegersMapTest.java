@@ -14,20 +14,20 @@ public final class IntegersMapTest {
     for (int i = 0; i < 10000; i++)
       m.put(IntegersMap.hash(i), i);
     for (int i = 0; i < 10000; i++)
-      assertTrue(m.contains(IntegersMap.hash(i)));
+      assert m.contains(IntegersMap.hash(i));
   }
 
   @Test public void doesNotContain() {
     for (int i = 0; i < 10000; i++)
       m.put(i, i);
     for (int i = 10000; i < 100000; i++)
-      assertFalse(m.contains(i));
+      assert !m.contains(i);
   }
 
   @Test public void find() {
-    assertTrue(m.find(10) != -1);
+    assert m.find(10) != -1;
     m.put(10, 100);
-    assertTrue(m.find(10) == -1);
+    assert m.find(10) == -1;
   }
 
   @Test public void get1() {
@@ -205,23 +205,23 @@ public final class IntegersMapTest {
   }
 
   @Test public void location() {
-    assertTrue(m.location(10) == -1);
+    assert m.location(10) == -1;
     m.put(10, 100);
-    assertTrue(m.location(10) != -1);
+    assert m.location(10) != -1;
   }
 
   @Test public void location1() {
     final int h = IntegersMap.hash(0);
     m.put(h, h);
     assertEquals(h, m.get(h));
-    assertTrue(m.location(h) >= 0);
+    assert m.location(h) >= 0;
   }
 
   @Test public void location1_1() {
     final int h = IntegersMap.hash(1);
     m.put(h, h);
     assertEquals(h, m.get(h));
-    assertTrue(m.location(h) >= 0);
+    assert m.location(h) >= 0;
   }
 
   @Test public void location11() {
@@ -234,10 +234,10 @@ public final class IntegersMapTest {
     assertEquals(100, m.get(h0));
     final int h1 = IntegersMap.hash(1);
     m.put(h1, 1);
-    assertTrue(h1 != h0);
-    assertTrue(m.location(h0) >= 0);
-    assertTrue(m.location(h1) >= 0);
-    assertTrue(m.location(h1) != m.location(h0));
+    assert h1 != h0;
+    assert m.location(h0) >= 0;
+    assert m.location(h1) >= 0;
+    assert m.location(h1) != m.location(h0);
     assertEquals(1, m.get(h1));
     assertEquals(100, m.get(h0));
   }
@@ -265,16 +265,16 @@ public final class IntegersMapTest {
 
   @Test public void loczation4() {
     m.put(10, 100).put(20, 30).put(30, 40).put(50, 60);
-    assertTrue(m.location(10) >= 0);
-    assertTrue(m.location(20) >= 0);
-    assertTrue(m.location(30) >= 0);
-    assertTrue(m.location(50) >= 0);
+    assert m.location(10) >= 0;
+    assert m.location(20) >= 0;
+    assert m.location(30) >= 0;
+    assert m.location(50) >= 0;
   }
 
   private void location(final int n) {
     for (int i = 0; i < n; i++)
       m.put(IntegersMap.hash(i), 2 * i + 1);
     for (int i = 0; i < n; i++)
-      assertTrue(m.location(IntegersMap.hash(i)) >= 0);
+      assert m.location(IntegersMap.hash(i)) >= 0;
   }
 }

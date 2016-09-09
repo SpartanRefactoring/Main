@@ -144,7 +144,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testPrunNotNull() {
-      assertNotNull(nulls(sparseCollection));
+      assert null != nulls(sparseCollection);
     }
 
     @Test public void testShrink() {

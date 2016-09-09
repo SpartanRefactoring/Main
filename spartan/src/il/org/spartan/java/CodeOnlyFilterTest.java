@@ -3,8 +3,6 @@
  */
 package il.org.spartan.java;
 
-import static org.junit.Assert.*;
-
 import java.io.*;
 
 import org.junit.*;
@@ -17,10 +15,10 @@ import org.junit.*;
   }
 
   @Test public void content() {
-    assertNotNull("Hello,World!", makeFilter("Hello, World!\n").processor.toString());
+    assert null != makeFilter("Hello, World!\n").processor.toString();
   }
 
   @Test public void creater() {
-    assertNotNull(makeFilter("Hello, World!\n"));
+    assert null != makeFilter("Hello, World!\n");
   }
 }

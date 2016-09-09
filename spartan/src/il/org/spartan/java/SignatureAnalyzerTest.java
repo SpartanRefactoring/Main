@@ -13,7 +13,7 @@ import org.junit.*;
  * @since 19 November 2011 */
 @SuppressWarnings("static-method") public class SignatureAnalyzerTest {
   @Test public void createFile() {
-    assertNotNull(SignatureAnalyzer.ofFile("Data/file"));
+    assert null != SignatureAnalyzer.ofFile("Data/file");
   }
 
   @Test public void createFileStaticType() {
@@ -35,7 +35,7 @@ import org.junit.*;
   }
 
   @Test public void createString() {
-    assertNotNull(SignatureAnalyzer.ofString("Hello, World!\n"));
+    assert null != SignatureAnalyzer.ofString("Hello, World!\n");
   }
 
   @Test public void createStringStaticType() {

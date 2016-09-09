@@ -314,23 +314,23 @@ import il.org.spatan.iteration.*;
     }
 
     @Test public void testMakeBeginOption() {
-      assertNotNull(begin("("));
+      assert null != begin("(");
     }
 
     @Test public void testMakeEndOption() {
-      assertNotNull(end(")"));
+      assert null != end(")");
     }
 
     @Test public void testMakeFillerOption() {
-      assertNotNull(filler(")"));
+      assert null != filler(")");
     }
 
     @Test public void testMakeIgnoreNulls() {
-      assertNotNull(filler(")"));
+      assert null != filler(")");
     }
 
     @Test public void testMakeSeparatorOption() {
-      assertNotNull(separator(")"));
+      assert null != separator(")");
     }
 
     @Test public void testNulledList() {

@@ -22,7 +22,7 @@ import org.junit.*;
         0, 0, 0, 1, //
     });
     OpCode.read(b);
-    assertTrue(b.eof());
+    assert b.eof();
     b.close();
   }
 
@@ -39,7 +39,7 @@ import org.junit.*;
     assertEquals(OpCode.NOP, OpCode.read(b).opCode);
     assertEquals(OpCode.TABLESWITCH, OpCode.read(b).opCode);
     OpCode.read(b);
-    assertTrue(b.eof());
+    assert b.eof();
     b.close();
   }
 
@@ -56,7 +56,7 @@ import org.junit.*;
     assertEquals(OpCode.NOP, OpCode.read(b).opCode);
     assertEquals(OpCode.NOP, OpCode.read(b).opCode);
     assertEquals(OpCode.TABLESWITCH, OpCode.read(b).opCode);
-    assertTrue(b.eof());
+    assert b.eof();
     b.close();
   }
 
@@ -74,7 +74,7 @@ import org.junit.*;
     assertEquals(OpCode.NOP, OpCode.read(b).opCode);
     assertEquals(OpCode.NOP, OpCode.read(b).opCode);
     assertEquals(OpCode.TABLESWITCH, OpCode.read(b).opCode);
-    assertTrue(b.eof());
+    assert b.eof();
     b.close();
   }
 }

@@ -11,8 +11,8 @@ import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class PermutationTest {
   @Test public void gold() {
-    assertTrue(GOLD < 1);
-    assertTrue(GOLD > 0);
+    assert GOLD < 1;
+    assert GOLD > 0;
   }
 
   @Test public void s() {
@@ -49,7 +49,7 @@ import il.org.spartan.utils.*;
     for (int i = 0; i < a.length; i++)
       count += As.binary(i == a[i]);
     System.out.println(count);
-    assertFalse(count > a.length / 2);
+    assert !(count > a.length / 2);
   }
 
   @Test public void testPermutation0() {

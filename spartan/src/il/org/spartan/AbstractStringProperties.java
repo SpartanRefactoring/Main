@@ -5,9 +5,6 @@ package il.org.spartan;
 
 import java.util.*;
 
-import il.org.spartan.utils.*;
-import il.org.spartan.utils.Separator;
-
 /** @author Yossi Gil
  * @since Apr 8, 2012 */
 public abstract class AbstractStringProperties {

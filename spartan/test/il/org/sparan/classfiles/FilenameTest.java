@@ -47,62 +47,62 @@ import il.org.spartan.classfiles.*;
   }
 
   @Test public void IsAllInner() {
-    assertFalse(Filename.isAllInner("$1"));
-    assertFalse(Filename.isAllInner("a"));
-    assertTrue(Filename.isAllInner("mypackage.Myclass$A"));
-    assertFalse(Filename.isAllInner("a$1"));
-    assertTrue(Filename.isAllInner("a$b"));
-    assertFalse(Filename.isAllInner("b.a$1"));
-    assertTrue(Filename.isAllInner("b.a$b"));
-    assertTrue(Filename.isAllInner("b.a$c"));
-    assertFalse(Filename.isAllInner("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1"));
-    assertFalse(Filename.isAllInner("com.sun.security.auth.callback.DialogCallbackHandler$2"));
-    assertTrue(Filename.isAllInner("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"));
-    assertTrue(Filename.isAllInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream"));
-    assertFalse(Filename.isAllInner("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
+    assert !Filename.isAllInner("$1");
+    assert !Filename.isAllInner("a");
+    assert Filename.isAllInner("mypackage.Myclass$A");
+    assert !Filename.isAllInner("a$1");
+    assert Filename.isAllInner("a$b");
+    assert !Filename.isAllInner("b.a$1");
+    assert Filename.isAllInner("b.a$b");
+    assert Filename.isAllInner("b.a$c");
+    assert !Filename.isAllInner("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1");
+    assert !Filename.isAllInner("com.sun.security.auth.callback.DialogCallbackHandler$2");
+    assert Filename.isAllInner("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter");
+    assert Filename.isAllInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream");
+    assert !Filename.isAllInner("javax.swing.JSlider$1SmartHashtable$LabelUIResource");
   }
 
   @Test public void IsAnonymous() {
-    assertTrue(Filename.isAnonymous("A$1"));
-    assertFalse(Filename.isAnonymous("a"));
-    assertTrue(Filename.isAnonymous("mypackage.Myclass$1"));
-    assertTrue(Filename.isAnonymous("a$1"));
-    assertTrue(Filename.isAnonymous("b.a$1"));
-    assertFalse(Filename.isAnonymous("b.a$c"));
-    assertTrue(Filename.isAnonymous("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1"));
-    assertTrue(Filename.isAnonymous("com.sun.security.auth.callback.DialogCallbackHandler$2"));
-    assertFalse(Filename.isAnonymous("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
+    assert Filename.isAnonymous("A$1");
+    assert !Filename.isAnonymous("a");
+    assert Filename.isAnonymous("mypackage.Myclass$1");
+    assert Filename.isAnonymous("a$1");
+    assert Filename.isAnonymous("b.a$1");
+    assert !Filename.isAnonymous("b.a$c");
+    assert Filename.isAnonymous("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1");
+    assert Filename.isAnonymous("com.sun.security.auth.callback.DialogCallbackHandler$2");
+    assert !Filename.isAnonymous("javax.swing.JSlider$1SmartHashtable$LabelUIResource");
   }
 
   @Test public void IsInner() {
-    assertFalse(Filename.isInner("$1"));
-    assertFalse(Filename.isInner("a"));
-    assertTrue(Filename.isInner("mypackage.Myclass$A"));
-    assertFalse(Filename.isInner("a$1"));
-    assertTrue(Filename.isInner("a$b"));
-    assertFalse(Filename.isInner("b.a$1"));
-    assertTrue(Filename.isInner("b.a$b"));
-    assertTrue(Filename.isInner("b.a$c"));
-    assertFalse(Filename.isInner("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1"));
-    assertFalse(Filename.isInner("com.sun.security.auth.callback.DialogCallbackHandler$2"));
-    assertTrue(Filename.isInner("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"));
-    assertTrue(Filename.isInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream"));
-    assertTrue(Filename.isInner("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
+    assert !Filename.isInner("$1");
+    assert !Filename.isInner("a");
+    assert Filename.isInner("mypackage.Myclass$A");
+    assert !Filename.isInner("a$1");
+    assert Filename.isInner("a$b");
+    assert !Filename.isInner("b.a$1");
+    assert Filename.isInner("b.a$b");
+    assert Filename.isInner("b.a$c");
+    assert !Filename.isInner("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1");
+    assert !Filename.isInner("com.sun.security.auth.callback.DialogCallbackHandler$2");
+    assert Filename.isInner("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter");
+    assert Filename.isInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream");
+    assert Filename.isInner("javax.swing.JSlider$1SmartHashtable$LabelUIResource");
   }
 
   @Test public void IsLocal() {
-    assertFalse(Filename.isLocal("$1"));
-    assertFalse(Filename.isLocal("a"));
-    assertTrue(Filename.isLocal("mypackage.Myclass$2A"));
-    assertFalse(Filename.isLocal("a$1"));
-    assertFalse(Filename.isLocal("a$b"));
-    assertFalse(Filename.isLocal("b.a$1"));
-    assertFalse(Filename.isLocal("b.a$b"));
-    assertTrue(Filename.isLocal("b.a$2c"));
-    assertFalse(Filename.isLocal("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1"));
-    assertFalse(Filename.isLocal("com.sun.security.auth.callback.DialogCallbackHandler$2"));
-    assertFalse(Filename.isLocal("com.sun.corba.se.impl.activation.RepositoryImpl$DBServerDef"));
-    assertFalse(Filename.isLocal("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
+    assert !Filename.isLocal("$1");
+    assert !Filename.isLocal("a");
+    assert Filename.isLocal("mypackage.Myclass$2A");
+    assert !Filename.isLocal("a$1");
+    assert !Filename.isLocal("a$b");
+    assert !Filename.isLocal("b.a$1");
+    assert !Filename.isLocal("b.a$b");
+    assert Filename.isLocal("b.a$2c");
+    assert !Filename.isLocal("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1");
+    assert !Filename.isLocal("com.sun.security.auth.callback.DialogCallbackHandler$2");
+    assert !Filename.isLocal("com.sun.corba.se.impl.activation.RepositoryImpl$DBServerDef");
+    assert !Filename.isLocal("javax.swing.JSlider$1SmartHashtable$LabelUIResource");
   }
 
   @Test public void Name2Canonical() {

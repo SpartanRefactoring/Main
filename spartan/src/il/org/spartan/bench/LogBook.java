@@ -495,14 +495,14 @@ public abstract class LogBook implements Serializable {
         l.set("B", c.value());
         l.set("C", c.value());
         l.set("D", c.value());
-        assertTrue(l.find().containsKey("A"));
-        assertTrue(l.find().containsKey("B"));
-        assertTrue(l.find().containsKey("C"));
-        assertTrue(l.find().containsKey("D"));
+        assert l.find().containsKey("A");
+        assert l.find().containsKey("B");
+        assert l.find().containsKey("C");
+        assert l.find().containsKey("D");
       }
 
       @Test public final void create() {
-        assertNotNull(new Mutable(this));
+        assert null != new Mutable(this);
       }
 
       @Test public final void demoteCurrent() {
@@ -558,7 +558,7 @@ public abstract class LogBook implements Serializable {
 
       @Test public final void findNotNullEntry() {
         final Mutable l = new Mutable(this).set("day", "Tuesday").set("time", 12);
-        assertNotNull(l.find().records);
+        assert null != l.find().records;
       }
 
       @Test public final void keyOrder() {
@@ -578,8 +578,8 @@ public abstract class LogBook implements Serializable {
         final Set<String> ss = l.find().keySet();
         assertEquals(2, ss.size());
         assertEquals(2, ss.size());
-        assertTrue(ss.contains("day"));
-        assertTrue(ss.contains("time"));
+        assert ss.contains("day");
+        assert ss.contains("time");
       }
 
       @Test public final void readWrite() throws Exception {
@@ -720,12 +720,21 @@ public abstract class LogBook implements Serializable {
       return LogBook.this;
     }
 
-    private Collection<Entry> select(final Iterable<Entry> es, final String key, final String value) {
-      final List<Entry> $ = new ArrayList<>();
-      for (final Entry e : es)
-        if (equals(e.get(key), value))
-          $.add(e);
-      return $;
+    private String compare(final Entry e1, final Entry e2) {
+      return compare(e1.records, e2.records);
+    }
+
+    private String compare(final Statistics s1, final Statistics s2) {
+      final double p = new WelchT(s1, s2).p;
+      if (p < 0.001)
+        return "==";
+      if (p > 0.1)
+        return "~~";
+      return "~" + RELATIVE.format(p) + "~";
+    }
+
+    private boolean equals(final String s1, final String s2) {
+      return s1 == null ? s2 == null : s1.equals(s2);
     }
 
     private LogBook go(final Collection<Entry> es, final String key) {
@@ -740,22 +749,6 @@ public abstract class LogBook implements Serializable {
       exclude.remove(key);
       stagger.add(key);
       return LogBook.this;
-    }
-
-    private boolean equals(final String s1, final String s2) {
-      return s1 == null ? s2 == null : s1.equals(s2);
-    }
-    private String compare(final Entry e1, final Entry e2) {
-      return compare(e1.records, e2.records);
-    }
-
-    private String compare(final Statistics s1, final Statistics s2) {
-      final double p = new WelchT(s1, s2).p;
-      if (p < 0.001)
-        return "==";
-      if (p > 0.1)
-        return "~~";
-      return "~" + RELATIVE.format(p) + "~";
     }
 
     private Entry max(final Collection<Entry> es) {
@@ -782,16 +775,20 @@ public abstract class LogBook implements Serializable {
       return String.format("%.2f*", box(e1.records.median() / e2.records.median())).toString();
     }
 
+    private Collection<Entry> select(final Iterable<Entry> es, final String key, final String value) {
+      final List<Entry> $ = new ArrayList<>();
+      for (final Entry e : es)
+        if (equals(e.get(key), value))
+          $.add(e);
+      return $;
+    }
+
     private String shortForm(final Entry e) {
       return removeKeys(e, exclude).values() + e.format(" Jn");
     }
 
     private final LogBook summary(final Entry[] es) {
-      Arrays.sort(es, new Comparator<Entry>() {
-        @Override public final int compare(final Entry e1, final Entry e2) {
-          return signum(e1.records.median() - e2.records.median());
-        }
-      });
+      Arrays.sort(es, (e1, e2) -> signum(e1.records.median() - e2.records.median()));
       final StringBuilder s = new StringBuilder();
       for (int i = 0; i < es.length; i++) {
         if (i > 0) {

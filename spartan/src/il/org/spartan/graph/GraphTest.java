@@ -13,10 +13,10 @@ import il.org.spatan.iteration.*;
 
 @SuppressWarnings("static-method") public class GraphTest {
   static void verifyEdge(final Graph<String> g, final int from, final int to) {
-    assertNotNull(g.vertices().get(from));
-    assertNotNull(g.vertices().get(to));
-    assertNotNull(g.vertices().get(from).outgoing());
-    assertNotNull(g.vertices().get(to).incoming());
+    assert null != g.vertices().get(from);
+    assert null != g.vertices().get(to);
+    assert null != g.vertices().get(from).outgoing();
+    assert null != g.vertices().get(to).incoming();
     verifyFound(g.vertices().get(from).outgoing(), g.vertices().get(to));
     verifyFound(g.vertices().get(to).incoming(), g.vertices().get(from));
   }
@@ -68,7 +68,7 @@ import il.org.spatan.iteration.*;
   }
 
   static void verifySource(final Graph<String> g, final Vertex<String> v) {
-    assertTrue(g.isSource(v));
+    assert g.isSource(v);
     assertEquals(0, v.incoming().size());
   }
 
@@ -78,15 +78,15 @@ import il.org.spatan.iteration.*;
 
   static void verifyVertex(final Graph<String> g, final String... vertices) {
     for (final String vertex : vertices)
-      assertNotNull(vertex, g.vertex(vertex));
+      assert null != vertex : g.vertex(vertex);
     for (final String vertex : vertices)
       verifyVertex(g, g.vertex(vertex));
   }
 
   static void verifyVertex(final Graph<String> g, final Vertex<String> v) {
-    assertNotNull(v);
-    assertTrue(index(g, v) >= 0);
-    assertTrue(index(g, v) < g.size());
+    assert null != v;
+    assert index(g, v) >= 0;
+    assert index(g, v) < g.size();
     assertEquals(v, g.vertices().get(index(g, v)));
   }
 
@@ -116,25 +116,25 @@ import il.org.spatan.iteration.*;
   }
 
   private static void verifyCollection(final Graph<String> g, final ImmutableArrayList<Vertex<String>> vs, final int size, final Query q) {
-    assertNotNull(vs);
+    assert null != vs;
     for (final Vertex<String> v : vs)
       q.test(v);
     assertEquals(size, vs.size());
     final boolean[] seen = new boolean[g.size()];
     for (final Vertex<String> v : vs) {
-      assertFalse(seen[index(g, v)]);
+      assert !seen[index(g, v)];
       seen[index(g, v)] = true;
     }
   }
 
   private static void verifyCollection(final Graph<String> g, final Iterable<Vertex<String>> vs, final int length, final Query q) {
-    assertNotNull(vs);
+    assert null != vs;
     for (final Vertex<String> v : vs)
       q.test(v);
     assertEquals(length, Iterables.count(vs));
     final boolean[] seen = new boolean[g.size()];
     for (final Vertex<String> v : vs) {
-      assertFalse(seen[index(g, v)]);
+      assert !seen[index(g, v)];
       seen[index(g, v)] = true;
     }
   }
@@ -205,24 +205,24 @@ import il.org.spatan.iteration.*;
 
   @Test public void invertedTree() {
     final Graph<String> g = makeInvertedTree();
-    assertTrue(among(g.source(g.vertex("A")).e(), "A"));
-    assertTrue(among(g.source(g.vertex("B")).e(), "B"));
-    assertTrue(among(g.source(g.vertex("C")).e(), "C"));
-    assertTrue(among(g.source(g.vertex("D")).e(), "D"));
-    assertTrue(among(g.source(g.vertex("E")).e(), "A", "B"));
-    assertTrue(among(g.source(g.vertex("F")).e(), "C", "D"));
-    assertTrue(among(g.source(g.vertex("G")).e(), "A", "B", "C", "D"));
+    assert among(g.source(g.vertex("A")).e(), "A");
+    assert among(g.source(g.vertex("B")).e(), "B");
+    assert among(g.source(g.vertex("C")).e(), "C");
+    assert among(g.source(g.vertex("D")).e(), "D");
+    assert among(g.source(g.vertex("E")).e(), "A", "B");
+    assert among(g.source(g.vertex("F")).e(), "C", "D");
+    assert among(g.source(g.vertex("G")).e(), "A", "B", "C", "D");
   }
 
   @Test public void invertedTreeLoops() {
     final Graph<String> g = makeInvertedTreeWithLoops();
-    assertTrue(among(g.source(g.vertex("A")).e(), "A"));
-    assertTrue(among(g.source(g.vertex("B")).e(), "B"));
-    assertTrue(among(g.source(g.vertex("C")).e(), "C"));
-    assertTrue(among(g.source(g.vertex("D")).e(), "D"));
-    assertTrue(among(g.source(g.vertex("E")).e(), "A", "B"));
-    assertTrue(among(g.source(g.vertex("F")).e(), "C", "D"));
-    assertTrue(among(g.source(g.vertex("G")).e(), "A", "B", "C", "D"));
+    assert among(g.source(g.vertex("A")).e(), "A");
+    assert among(g.source(g.vertex("B")).e(), "B");
+    assert among(g.source(g.vertex("C")).e(), "C");
+    assert among(g.source(g.vertex("D")).e(), "D");
+    assert among(g.source(g.vertex("E")).e(), "A", "B");
+    assert among(g.source(g.vertex("F")).e(), "C", "D");
+    assert among(g.source(g.vertex("G")).e(), "A", "B", "C", "D");
   }
 
   @Test public void namedTriagle() {
@@ -270,11 +270,11 @@ import il.org.spatan.iteration.*;
   @Test public void singleEdgeGraphPreOrder() {
     final Graph<String> g = makeSingleEdge();
     final Iterator<? extends Vertex<String>> i = g.preOrder().iterator();
-    assertTrue(i.hasNext());
+    assert i.hasNext();
     assertEquals(i.next(), g.vertex("A"));
-    assertTrue(i.hasNext());
+    assert i.hasNext();
     assertEquals(i.next(), g.vertex("B"));
-    assertFalse(i.hasNext());
+    assert !i.hasNext();
     assertNull(i.next());
   }
 
@@ -369,10 +369,10 @@ import il.org.spatan.iteration.*;
     assertEquals(4, g.vertices().size());
     assertEquals(1, g.sourcesCount());
     assertEquals(1, g.sinksCount());
-    assertNotNull(g.vertex("D"));
-    assertNotNull(g.vertex("B1"));
-    assertNotNull(g.vertex("B2"));
-    assertNotNull(g.vertex("V"));
+    assert null != g.vertex("D");
+    assert null != g.vertex("B1");
+    assert null != g.vertex("B2");
+    assert null != g.vertex("V");
     assertEquals(1 + 2 + 3, index(g, "D") + index(g, "B1") + index(g, "B2") + index(g, "V"));
     verifySink(g, "V");
     verifySource(g, "D");
@@ -386,24 +386,24 @@ import il.org.spatan.iteration.*;
   @Test public void testInvertedTree() {
     final Graph<String> g = makeInvertedTree();
     assertEquals(7, Iterables.count(g.preOrder()));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("E")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("F")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("G")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
+    assert Iterables.contains(g.preOrder(), g.vertex("E"));
+    assert Iterables.contains(g.preOrder(), g.vertex("F"));
+    assert Iterables.contains(g.preOrder(), g.vertex("G"));
   }
 
   @Test public void testInvertedTreeLoops() {
     final Graph<String> g = makeInvertedTreeWithLoops();
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("E")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("F")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("G")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
+    assert Iterables.contains(g.preOrder(), g.vertex("E"));
+    assert Iterables.contains(g.preOrder(), g.vertex("F"));
+    assert Iterables.contains(g.preOrder(), g.vertex("G"));
   }
 
   @Test public void testLowerCaseTriagleExample() {
@@ -427,25 +427,25 @@ import il.org.spatan.iteration.*;
         .build();
     assertEquals(10, g.size());
     assertEquals(10, g.vertices().size());
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("E")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("F")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("G")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("J")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("I")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("H")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
+    assert Iterables.contains(g.preOrder(), g.vertex("E"));
+    assert Iterables.contains(g.preOrder(), g.vertex("F"));
+    assert Iterables.contains(g.preOrder(), g.vertex("G"));
+    assert Iterables.contains(g.preOrder(), g.vertex("J"));
+    assert Iterables.contains(g.preOrder(), g.vertex("I"));
+    assert Iterables.contains(g.preOrder(), g.vertex("H"));
     assertEquals(g.size(), Iterables.count(g.preOrder()));
   }
 
   @Test public void testPreOrderSmallIsolatedInnerCycle() {
     final Graph<String> g = makeAloofNodeAndAloofCycle();
     assertEquals(3, g.vertices().size());
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
     assertEquals(3, Iterables.count(g.preOrder()));
   }
 
@@ -512,9 +512,9 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A1"), g.source(g.vertex("A1")));
     assertEquals(g.vertex("A2"), g.source(g.vertex("A2")));
     assertEquals(g.vertex("A3"), g.source(g.vertex("A3")));
-    assertTrue(among(g.source(g.vertex("B1")).e(), "A1", "A2", "A3"));
-    assertTrue(among(g.source(g.vertex("B2")).e(), "A1", "A2", "A3"));
-    assertTrue(among(g.source(g.vertex("B3")).e(), "A1", "A2", "A3"));
+    assert among(g.source(g.vertex("B1")).e(), "A1", "A2", "A3");
+    assert among(g.source(g.vertex("B2")).e(), "A1", "A2", "A3");
+    assert among(g.source(g.vertex("B3")).e(), "A1", "A2", "A3");
   }
 
   @Test public void testThreeByThreeGraph() {
@@ -556,37 +556,37 @@ import il.org.spatan.iteration.*;
   @Test public void testTree() {
     final Graph<String> g = makeTree();
     assertEquals(g.size(), Iterables.count(g.preOrder()));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("E")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("F")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("G")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("F")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("E")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("A")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("B")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("C")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
+    assert Iterables.contains(g.preOrder(), g.vertex("E"));
+    assert Iterables.contains(g.preOrder(), g.vertex("F"));
+    assert Iterables.contains(g.preOrder(), g.vertex("G"));
+    assert Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("F"));
+    assert Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("E"));
+    assert Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("A"));
+    assert Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("B"));
+    assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("C"));
+    assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D"));
   }
 
   @Test public void testTreeWithLoops() {
     final Graph<String> g = makeTreeWithLoops();
     assertEquals(7, Iterables.count(g.preOrder()));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("E")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("F")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("G")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("F")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("E")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("A")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("B")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("C")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
+    assert Iterables.contains(g.preOrder(), g.vertex("E"));
+    assert Iterables.contains(g.preOrder(), g.vertex("F"));
+    assert Iterables.contains(g.preOrder(), g.vertex("G"));
+    assert Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("F"));
+    assert Iterables.before(g.preOrder(), g.vertex("G"), g.vertex("E"));
+    assert Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("A"));
+    assert Iterables.before(g.preOrder(), g.vertex("E"), g.vertex("B"));
+    assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("C"));
+    assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D"));
   }
 
   @Test public void testTwoAloofNodes() {
@@ -611,27 +611,27 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("P3"), g.source(g.vertex("P3")));
     assertEquals(g.vertex("P4"), g.source(g.vertex("P4")));
     assertEquals(g.vertex("P5"), g.source(g.vertex("P5")));
-    assertTrue(among(g.source(g.vertex("A")).e(), "P1", "P2", "P3", "P4", "P5"));
-    assertTrue(among(g.source(g.vertex("B")).e(), "P1", "P2", "P3", "P4", "P5"));
-    assertTrue(among(g.source(g.vertex("C")).e(), "P1", "P2", "P3", "P4", "P5"));
-    assertTrue(among(g.source(g.vertex("D")).e(), "P1", "P2", "P3", "P4", "P5"));
-    assertTrue(among(g.source(g.vertex("E")).e(), "P1", "P2", "P3", "P4", "P5"));
-    assertTrue(among(g.source(g.vertex("F")).e(), "P1", "P2", "P3", "P4", "P5"));
+    assert among(g.source(g.vertex("A")).e(), "P1", "P2", "P3", "P4", "P5");
+    assert among(g.source(g.vertex("B")).e(), "P1", "P2", "P3", "P4", "P5");
+    assert among(g.source(g.vertex("C")).e(), "P1", "P2", "P3", "P4", "P5");
+    assert among(g.source(g.vertex("D")).e(), "P1", "P2", "P3", "P4", "P5");
+    assert among(g.source(g.vertex("E")).e(), "P1", "P2", "P3", "P4", "P5");
+    assert among(g.source(g.vertex("F")).e(), "P1", "P2", "P3", "P4", "P5");
   }
 
   @Test public void testWikiPageRanksExampleContains() {
     final Graph<String> g = makeWikiExample();
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("E")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("F")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("P1")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("P2")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("P3")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("P4")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("P5")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
+    assert Iterables.contains(g.preOrder(), g.vertex("E"));
+    assert Iterables.contains(g.preOrder(), g.vertex("F"));
+    assert Iterables.contains(g.preOrder(), g.vertex("P1"));
+    assert Iterables.contains(g.preOrder(), g.vertex("P2"));
+    assert Iterables.contains(g.preOrder(), g.vertex("P3"));
+    assert Iterables.contains(g.preOrder(), g.vertex("P4"));
+    assert Iterables.contains(g.preOrder(), g.vertex("P5"));
   }
 
   @Test public void testWikiPageRanksExampleCount() {
@@ -701,15 +701,15 @@ import il.org.spatan.iteration.*;
   @Test public void twoConnectedPairs() {
     final Graph<String> g = makeTwoConnectedPairs();
     assertEquals(4, g.vertices().size());
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("A")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("B")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("C")));
-    assertTrue(Iterables.contains(g.preOrder(), g.vertex("D")));
+    assert Iterables.contains(g.preOrder(), g.vertex("A"));
+    assert Iterables.contains(g.preOrder(), g.vertex("B"));
+    assert Iterables.contains(g.preOrder(), g.vertex("C"));
+    assert Iterables.contains(g.preOrder(), g.vertex("D"));
     assertEquals(4, Iterables.count(g.preOrder()));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("A"), g.vertex("C")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("A"), g.vertex("D")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("C")));
-    assertTrue(Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("D")));
+    assert Iterables.before(g.preOrder(), g.vertex("A"), g.vertex("C"));
+    assert Iterables.before(g.preOrder(), g.vertex("A"), g.vertex("D"));
+    assert Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("C"));
+    assert Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("D"));
   }
 
   @Test public void wikiPageRanksExample() {

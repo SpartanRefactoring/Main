@@ -1,8 +1,7 @@
 package il.org.spartan.collections;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -283,7 +282,7 @@ public final class IntegersMap {
       assertThat(size, comparesEqualTo(count(occupied) - removed));
       for (int i = 0; i < capacity(); i++)
         if (placeholder[i])
-          assertTrue(occupied[i]);
+          assert occupied[i];
     }
 
     private int count(final boolean bs[]) {

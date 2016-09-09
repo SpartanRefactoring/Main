@@ -121,9 +121,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-          *
-          * &#64;param key
-          *          The key to be added; must not be <code><b>null</b></code>
+            *
+            * &#64;param key
+            *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public CSVLine put(final String key, final double value) {
@@ -131,9 +131,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-          *
-          * &#64;param key
-          *          The key to be added; must not be <code><b>null</b></code>
+            *
+            * &#64;param key
+            *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param as Which (if any) aggregate statistics should be produced for this
    *        column
@@ -144,9 +144,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a <code><b>double</b><code> value to this instance
-          *
-          * &#64;param key
-          *          The key to be added; must not be <code><b>null</b></code>
+            *
+            * &#64;param key
+            *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param format How should the value be formatted
    * @param as Which (if any) aggregate statistics should be produced for this
@@ -159,9 +159,9 @@ import il.org.spartan.utils.Separate.*;
   }
 
   /** Add a key and a general <code><b>float</b><code> value to this instance
-          *
-          * &#64;param key
-          *          The key to be added; must not be <code><b>null</b></code>
+            *
+            * &#64;param key
+            *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public final CSVLine put(final String key, final float value) {

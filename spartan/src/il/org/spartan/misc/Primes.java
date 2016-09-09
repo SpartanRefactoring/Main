@@ -39,38 +39,6 @@ public class Primes {
 
   @SuppressWarnings({ "static-method", "javadoc" }) //
   public static class TEST {
-    static <T> void assertEquals(final String reason, final T t1, final T t2) {
-      azzert.that(reason, t2, is(t1));
-    }
-
-    static <T> void assertEquals(final T t1, final T t2) {
-      azzert.that(t2, is(t1));
-    }
-
-    static void assertFalse(final boolean b) {
-      azzert.nay(b);
-    }
-
-    static void assertFalse(final String reason, final boolean b) {
-      azzert.nay(reason, b);
-    }
-
-    static <T> void assertNotEquals(final T t1, final T t2) {
-      azzert.that(t2, is(t1));
-    }
-
-    static <T> void assertNotNull(final T t) {
-      azzert.notNull(t);
-    }
-
-    static <T> void assertNull(final T t) {
-      azzert.isNull(t);
-    }
-
-    static void assertTrue(final boolean b) {
-      azzert.aye(b);
-    }
-
     @Test public void firstIsTwo() {
       azzert.that(new Primes().next(), is(2));
     }
@@ -84,19 +52,19 @@ public class Primes {
     }
 
     @Test public void isPrimeOf_3() {
-      assertTrue(isPrime(-3));
+      assert isPrime(-3);
     }
 
     @Test public void isPrimeOf_4() {
-      assertFalse(isPrime(-4));
+      assert !isPrime(-4);
     }
 
     @Test public void isPrimeOf0() {
-      assertFalse(isPrime(0));
+      assert !isPrime(0);
     }
 
     @Test public void isPrimeOf1() {
-      assertFalse(isPrime(1));
+      assert !isPrime(1);
     }
 
     @Test public void secondIsThree() {

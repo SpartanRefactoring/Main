@@ -98,8 +98,8 @@ public class Denser {
   @SuppressWarnings("static-method") //
   public static class TEST {
     @Test public void constructorExists() {
-      assertNotNull(new Denser(12, 13));
-      assertNotNull(new Denser(0, 12, 13));
+      assert null != new Denser(12, 13);
+      assert null != new Denser(0, 12, 13);
     }
 
     @Test public void gatherContent() {
@@ -145,7 +145,7 @@ public class Denser {
       final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
           ints(11, 12, 13, 14), //
           ints(15, 16, 17, 18)));
-      assertNotNull(g);
+      assert null != g;
       assertEquals(2, g.length);
     }
 

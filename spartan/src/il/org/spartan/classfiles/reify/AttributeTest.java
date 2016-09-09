@@ -71,6 +71,6 @@ import org.junit.*;
     class _ {
       // empty
     }
-    assertNotNull(Attribute.Extractor.attributes(new _()));
+    assert null != Attribute.Extractor.attributes(new _());
   }
 }

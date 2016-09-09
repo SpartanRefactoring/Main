@@ -1,4 +1,4 @@
-package il.org.spartan.files;
+package il.org.spartan.collections;
 
 import java.io.*;
 import java.util.*;
@@ -68,10 +68,6 @@ public class FilesGenerator {
 
       @Override public File next() {
         return next;
-      }
-
-      @Override public void remove() {
-        throw new UnsupportedOperationException();
       }
     };
   }

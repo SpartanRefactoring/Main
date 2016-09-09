@@ -38,7 +38,6 @@ import il.org.spartan.streotypes.*;
           throw new NoSuchElementException();
         return get(i++);
       }
-
     };
   }
 
