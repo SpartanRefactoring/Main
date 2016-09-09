@@ -11,23 +11,8 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "boxing", "javadoc", "null" }) //
 public class Hamlet implements Environment {
-  public static class Hamlet2 {
-    private final Function0<@Nullable Boolean> permanent1 = null;
-    private final Property<Boolean> $ = value(false).push(permanent1);
-    @SuppressWarnings("unused") private final Function0<@Nullable Boolean> permanent = () -> !$.get();
-  }
-
   private final Property<Boolean> $ = function(init());
   private final Function0<@Nullable Boolean> permanent = () -> !$.get();
-
-  private Boolean first() {
-    $.ϑ(permanent, $);
-    return Boolean.FALSE;
-  }
-
-  private Function0<@Nullable Boolean> init() {
-    return () -> first();
-  }
 
   @Test public void seriesA01() {
     @Nullable final Boolean first = $.¢();
@@ -40,5 +25,20 @@ public class Hamlet implements Environment {
     azzert.that("" + second, is("true"));
     azzert.that("" + third, is("false"));
     azzert.that("" + fourth, is("true"));
+  }
+
+  private Boolean first() {
+    $.ϑ(permanent, $);
+    return Boolean.FALSE;
+  }
+
+  private Function0<@Nullable Boolean> init() {
+    return () -> first();
+  }
+
+  public static class Hamlet2 {
+    private final Function0<@Nullable Boolean> permanent1 = null;
+    private final Property<Boolean> $ = value(false).push(permanent1);
+    @SuppressWarnings("unused") private final Function0<@Nullable Boolean> permanent = () -> !$.get();
   }
 }

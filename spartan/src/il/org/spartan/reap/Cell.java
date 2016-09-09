@@ -20,6 +20,76 @@ import org.eclipse.jdt.annotation.*;
  * @see Recipe */
 @SuppressWarnings("null") //
 public abstract class Cell<T> implements Supplier<T>, Cloneable {
+  /** TODO */
+  public static Set<Cell<?>> trace;
+  /** The last value computed for this cell */
+  @Nullable T cache;
+  /** other cells that depend on this cell */
+  final List<Cell<?>> dependents = new ArrayList<>();
+  long version = 0;
+
+  /** @return last value computed or set for this cell. */
+  public final T cache() {
+    return cache;
+  }
+
+  /** see @see java.util.function.Supplier#get() (auto-generated) */
+  @Override public abstract @Nullable T get();
+
+  /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
+   * value of this cell
+   * @param t JD
+   * @return <code><b>this</b></code>* */
+  public final Cell<T> of(final T t) {
+    return set(t);
+  }
+
+  /** sets the current value of this cell
+   * @param t JD
+   * @return <code><b>this</b></code> */
+  public final Cell<T> set(final T t) {
+    cache(t);
+    uponForcedSet();
+    version = oldestDependent() + 1; // Invalidate all dependents
+    return this;
+  }
+
+  /** template function to be implemented by clients; normally an ingredient is
+   * always updated and a dish is updated if all its ingredients are updated,
+   * and the recipe was applied <i>after</i> all the ingredients where updated.
+   * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
+   *         stored in this node is updated. */
+  public abstract boolean updated();
+
+  @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
+    try {
+      return (Cell<T>) super.clone();
+    } catch (final CloneNotSupportedException e) {
+      return null;
+    }
+  }
+
+  protected long version() {
+    return version;
+  }
+
+  void cache(@SuppressWarnings("hiding") final T cache) {
+    this.cache = cache;
+  }
+
+  /** by overriding this function, inheriting classes can ask to be notified
+   * when this cell was set. */
+  void uponForcedSet() {
+    // empty by default
+  }
+
+  private long oldestDependent() {
+    long $ = 0;
+    for (final Cell<?> c : dependents)
+      $ = max($, c.version);
+    return $;
+  }
+
   @FunctionalInterface interface Function2<T1, T2, R> {
     R apply(T1 ¢1, T2 ¢2);
   }
@@ -28,6 +98,16 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Internal {
+    /** @return never! The <code><b>none</b></code> type. There is no legal
+     *         value that this function can return, since the type
+     *         <code>@NonNull</code> {@link Void} is empty. (
+     *         <code><b>null</b></code> is the single vale of {@link Void}, but
+     *         it does not obey the {@link @NonNull} annotation. */
+    static @NonNull Void shouldNeverBeCalled() {
+      assert false;
+      throw new RuntimeException();
+    }
+
     interface $$Function<T, R> {
       Cell<R> from(Cell<T> ¢);
     }
@@ -52,85 +132,5 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     @FunctionalInterface interface Function3<T1, T2, T3, R> {
       R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
-
-    /** @return never! The <code><b>none</b></code> type. There is no legal
-     *         value that this function can return, since the type
-     *         <code>@NonNull</code> {@link Void} is empty. (
-     *         <code><b>null</b></code> is the single vale of {@link Void}, but
-     *         it does not obey the {@link @NonNull} annotation. */
-    static @NonNull Void shouldNeverBeCalled() {
-      assert false;
-      throw new RuntimeException();
-    }
-  }
-
-  /** TODO */
-  public static Set<Cell<?>> trace;
-  /** The last value computed for this cell */
-  @Nullable T cache;
-  /** other cells that depend on this cell */
-  final List<Cell<?>> dependents = new ArrayList<>();
-  long version = 0;
-
-  /** @return last value computed or set for this cell. */
-  public final T cache() {
-    return cache;
-  }
-
-  void cache(@SuppressWarnings("hiding") final T cache) {
-    this.cache = cache;
-  }
-
-  @SuppressWarnings("unchecked") @Override protected Cell<T> clone() {
-    try {
-      return (Cell<T>) super.clone();
-    } catch (final CloneNotSupportedException e) {
-      return null;
-    }
-  }
-
-  /** see @see java.util.function.Supplier#get() (auto-generated) */
-  @Override public abstract @Nullable T get();
-
-  /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
-   * value of this cell
-   * @param t JD
-   * @return <code><b>this</b></code>* */
-  public final Cell<T> of(final T t) {
-    return set(t);
-  }
-
-  private long oldestDependent() {
-    long $ = 0;
-    for (final Cell<?> c : dependents)
-      $ = max($, c.version);
-    return $;
-  }
-
-  /** sets the current value of this cell
-   * @param t JD
-   * @return <code><b>this</b></code> */
-  public final Cell<T> set(final T t) {
-    cache(t);
-    uponForcedSet();
-    version = oldestDependent() + 1; // Invalidate all dependents
-    return this;
-  }
-
-  /** template function to be implemented by clients; normally an ingredient is
-   * always updated and a dish is updated if all its ingredients are updated,
-   * and the recipe was applied <i>after</i> all the ingredients where updated.
-   * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
-   *         stored in this node is updated. */
-  public abstract boolean updated();
-
-  /** by overriding this function, inheriting classes can ask to be notified
-   * when this cell was set. */
-  void uponForcedSet() {
-    // empty by default
-  }
-
-  protected long version() {
-    return version;
   }
 }

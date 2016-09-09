@@ -21,6 +21,11 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>il.org.spartan.spartanizer.BuilderID</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
@@ -31,5 +36,6 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.spartan.refactoring.NatureID</nature>
 		<nature>il.org.spartan.refactoring.NatureID</nature>
+		<nature>il.org.spartan.spartanizer.NatureID</nature>
 	</natures>
 </projectDescription>
