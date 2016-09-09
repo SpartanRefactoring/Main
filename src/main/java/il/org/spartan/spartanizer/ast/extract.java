@@ -72,6 +72,10 @@ public enum extract {
     return asReturn(singleStatement(¢));
   }
 
+  public static ReturnStatement asReturn(final Statement ¢) {
+    return az.returnStatement(¢);
+  }
+
   /** @param n a statement or block to extract the assignment from
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */

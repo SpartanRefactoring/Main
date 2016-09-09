@@ -11,7 +11,7 @@ import il.org.spartan.*;
 @SuppressWarnings({ "javadoc" }) //
 public class AtomicConversionsTest {
   private byte b = (byte) hashCode();
-  private final boolean b1 = equals(getClass());
+  private final boolean b1 = getClass().equals(getClass());
   private final boolean b2 = !b1 | b << b == (b & 1);
   private char c = 'c';
   private double d = Math.sin(b * c);
@@ -43,7 +43,7 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isBoolean(b1 & b2));
     azzert.aye(atomic.isBoolean(b1 | b2));
     azzert.aye(atomic.isBoolean(b1 ? b2 : !b2));
-    azzert.aye(atomic.isBoolean(b1 | b2 & b2));
+    azzert.aye(atomic.isBoolean(b1 | b2 & (b2 ^ b1)));
     azzert.aye(atomic.isBoolean(b1 ^ b2));
   }
 

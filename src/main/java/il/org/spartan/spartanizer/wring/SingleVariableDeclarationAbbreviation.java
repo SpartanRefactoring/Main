@@ -24,7 +24,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (int i = d.getExtraDimensions(); i > 0; --i)
-      $ = $ + "s";
+      $ += "s";
     return $;
   }
 
