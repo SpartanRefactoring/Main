@@ -41,7 +41,4 @@ public class ArrayIterator<T> implements Iterator<T> {
     return ts[index++];
   }
 
-  @Override public void remove() {
-    throw new UnsupportedOperationException("ArrayIterator cannot remove " + "elements");
-  }
 }
