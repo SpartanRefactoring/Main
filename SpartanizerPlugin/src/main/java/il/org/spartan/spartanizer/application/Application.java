@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
@@ -35,10 +34,9 @@ import il.org.spartan.utils.*;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
   boolean optDoNotOverwrite = false, optIndividualStatistics = false, optVerbose = false;
-  boolean optStatsLines = false, optStatsChanges = false, printLog = false;
+  boolean optStatsLines = false, optStatsChanges = false;
   int optRounds = 20;
   String optPath;
-  private String logPath;
 
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
@@ -49,10 +47,6 @@ import il.org.spartan.utils.*;
     } catch (final CoreException e) {
       System.err.println(e.getMessage());
       return IApplication.EXIT_OK;
-    }
-    if(printLog){
-      LogManager.activateLog();
-      LogManager.initialize("/home/matteo/SpartanLog");
     }
     int done = 0, failed = 0;
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
@@ -121,7 +115,6 @@ import il.org.spartan.utils.*;
   }
 
   MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    // TODO: Dan - Yossi, Could you please elaborate?
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {
@@ -167,18 +160,8 @@ import il.org.spartan.utils.*;
         optStatsLines = true;
       if ("-r".equals(a))
         optStatsChanges = true;
-      if ("-L".equals(a)){
-        printLog  = true;
-      }
       if (!a.startsWith("-"))
         optPath = a;
-        try {
-          if (a.equals("-logoPath"))
-            if(printLog)
-              logPath = "~/SpartanLog"; //Integer.parseUnsignedInt(a.substring(2));
-        } catch (final NumberFormatException e) {
-          // Ignore
-        }
     }
     return optPath == null;
   }
@@ -215,15 +198,10 @@ import il.org.spartan.utils.*;
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
-    System.out.println("  -L       printout logs");
     System.out.println("");
     System.out.println("Print statistics:");
     System.out.println("  -l       Show the number of lines before and after Spartanization");
     System.out.println("  -r       Show the number of Spartanizaion made in each round");
-    System.out.println("");
-    System.out.println("Output:");
-    System.out.println("  -logPath Output dir for logs");
-    System.out.println("");
   }
 
   void printLineStatistics(final List<FileStats> ss) {
