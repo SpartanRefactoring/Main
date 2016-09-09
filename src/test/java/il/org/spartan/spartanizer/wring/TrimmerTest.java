@@ -1972,22 +1972,6 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").stays();
   }
 
-  @Test public void issue64a() {
-    trimming("void f() {" + //
-        "    final int a = f();\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").stays();
-  }
-
-  @Test public void issue64b() {
-    trimming("void f() {" + //
-        "    final int a = 3;\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").stays();
-  }
-
   @Test public void issue73a() {
     trimming("void foo(StringBuilder sb) {}").to("void foo(StringBuilder b) {}");
   }
@@ -4048,15 +4032,6 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue51() {
     trimming("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")//
         .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
-  }
-
-  @Test public void issue64c() {
-    trimming("void f(int x) {" + //
-        "    ++x;\n" + //
-        "    final int a = x;\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };" + "}").stays();
   }
 
   @Test public void removeSuperWithReceiver() {
