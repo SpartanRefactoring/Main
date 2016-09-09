@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public class FluentTrimmerApplication extends Trimmer.With {
+public class fluentTrimmerApplication extends Trimmer.With {
   public final String codeFragment;
   public final GuessedContext guessedContext;
   public final String wrappedFragment;
@@ -21,7 +21,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public FluentTrimmerApplication(final Trimmer t, final String codeFragment) {
+  public fluentTrimmerApplication(final Trimmer t, final String codeFragment) {
     t.super();
     this.codeFragment = codeFragment;
     assert codeFragment != null;
@@ -66,7 +66,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
     return createRewrite(m, (IMarker) null);
   }
 
-  public FluentTrimmerApplication gives(final String expected) {
+  public fluentTrimmerApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
       dump.data(this);
       azzert.fail(//
@@ -104,7 +104,7 @@ public class FluentTrimmerApplication extends Trimmer.With {
               + "\n   to '" + expected + "', but for it converted instead" //
               + "\n   to '" + difference + "'!" //
       );
-    return new FluentTrimmerApplication(trimmer(), document.get());
+    return new fluentTrimmerApplication(trimmer(), document.get());
   }
 
   public void stays() {
