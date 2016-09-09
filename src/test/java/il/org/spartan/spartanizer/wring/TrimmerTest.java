@@ -4173,4 +4173,37 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue131_8() {
     trimming("while(i>5)if(t=4)return xxx;return xxx;").to("while(i>5)if(t=4)break;return xxx;");
   }
+
+  @Test public void issue131_9() {
+    trimming("for(int i=4 ; i<s.length() ; ++i)if(i==5)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)if(i==5)break;return xxx;");
+  }
+
+  @Test public void issue131_10() {
+    trimming("while(i>9)if(i==5)return xxx;return xxx;").to("while(i>9)if(i==5)break;return xxx;");
+  }
+
+  @Test public void issue131_11() {
+    trimming("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;")
+        .to("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
+        .to("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
+  }
+
+  @Test public void issue131_12() {
+    trimming("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
+        .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
+        .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
+        .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
+  }
+
+  @Test public void issue131_13() {
+    trimming("while(i<7){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;").to("while(i<7){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
+        .to("while(i<7){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
+  }
+
+  @Test public void issue131_14() {
+    trimming("while(i<7){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
+        .to("while(i<7){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
+        .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
+        .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
+  }
 }

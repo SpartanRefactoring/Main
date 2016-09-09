@@ -63,49 +63,47 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     IfStatement ifStatement = az.ifStatement(s);
-    if(ifStatement==null)
+    if (ifStatement == null)
       return null;
     Statement thenStatement = ifStatement.getThenStatement();
     Statement elzeStatement = ifStatement.getElseStatement();
-    if(thenStatement!=null){
-      if(compareReturnStatements(az.returnStatement(thenStatement),nextReturn))
-          return thenStatement;
-      if(iz.block(thenStatement)){
-        Statement $ = handleBlock((Block)thenStatement,nextReturn);
-        if($!=null)
+    if (thenStatement != null) {
+      if (compareReturnStatements(az.returnStatement(thenStatement), nextReturn))
+        return thenStatement;
+      if (iz.block(thenStatement)) {
+        Statement $ = handleBlock((Block) thenStatement, nextReturn);
+        if ($ != null)
           return $;
       }
-      if(az.ifStatement(thenStatement)!=null)
+      if (az.ifStatement(thenStatement) != null)
         return handleIf(thenStatement, nextReturn);
-      if(elzeStatement!=null){
-        if(compareReturnStatements(az.returnStatement(elzeStatement),nextReturn))
+      if (elzeStatement != null) {
+        if (compareReturnStatements(az.returnStatement(elzeStatement), nextReturn))
           return elzeStatement;
-      if(iz.block(elzeStatement)){
-        Statement $ = handleBlock((Block)elzeStatement,nextReturn);
-        if($!=null)
-          return $;
+        if (iz.block(elzeStatement)) {
+          Statement $ = handleBlock((Block) elzeStatement, nextReturn);
+          if ($ != null)
+            return $;
+        }
+        if (az.ifStatement(elzeStatement) != null)
+          return handleIf(elzeStatement, nextReturn);
       }
-      if(az.ifStatement(elzeStatement)!=null)
-        return handleIf(elzeStatement, nextReturn);
-      }
-        
     }
     return null;
   }
 
-
-  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
-    Statement $=null;  
+  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
     final List<Statement> blockStatements = body.statements();
-      for (final Statement s : blockStatements) {
-        if (az.ifStatement(s) != null)
-          $ = handleIf(s, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-          $ = s;
-          break;
-        }
+    for (final Statement s : blockStatements) {
+      if (az.ifStatement(s) != null)
+        $ = handleIf(s, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
+        $ = s;
+        break;
       }
-      return $;
+    }
+    return $;
   }
 
   @Override boolean scopeIncludes(final Block b) {
