@@ -216,10 +216,15 @@ import il.org.spartan.utils.*;
     System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
+    System.out.println("  -L       printout logs");
     System.out.println("");
     System.out.println("Print statistics:");
     System.out.println("  -l       Show the number of lines before and after Spartanization");
     System.out.println("  -r       Show the number of Spartanizaion made in each round");
+    System.out.println("");
+    System.out.println("Output:");
+    System.out.println("  -logPath Output dir for logs");
+    System.out.println("");
   }
 
   void printLineStatistics(final List<FileStats> ss) {
