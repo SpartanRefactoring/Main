@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer;
 
 import static il.org.spartan.azzert.*;
 
