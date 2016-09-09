@@ -50,7 +50,7 @@ public abstract class Spartanization extends Refactoring {
     return new RefactoringStatus();
   }
 
-  @Override public RefactoringStatus checkInitialConditions(final IProgressMonitor __) {
+  @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
     if (compilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
@@ -91,7 +91,7 @@ public abstract class Spartanization extends Refactoring {
     return totalChanges;
   }
 
-  @Override public final Change createChange(final IProgressMonitor __) throws OperationCanceledException {
+  @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor __) throws OperationCanceledException {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
 
@@ -133,7 +133,7 @@ public abstract class Spartanization extends Refactoring {
      * @since 2013/07/01 */
     return new IMarkerResolution() {
       @Override public String getLabel() {
-        return "Spartanize!";
+        return  s;
       }
 
       @Override public void run(final IMarker m) {
@@ -160,7 +160,7 @@ public abstract class Spartanization extends Refactoring {
         setMarker(m);
         try {
           new RefactoringWizardOpenOperation(new Wizard(Spartanization.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartan refactoring: " + Spartanization.this);
+              "Spartan refactoring: " + s+ Spartanization.this);
         } catch (final InterruptedException e) {
           e.printStackTrace();
         }
