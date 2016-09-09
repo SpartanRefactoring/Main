@@ -24,7 +24,7 @@ public class BlockSimplifyTest {
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA01() {
@@ -43,7 +43,7 @@ public class BlockSimplifyTest {
         + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" //
         + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA02() {
@@ -62,7 +62,7 @@ public class BlockSimplifyTest {
         + "    azzert.assertequals(biginteger.ten, c.getnumerator());\n" //
         + "    azzert.assertequals(biginteger.one, c.getdenominator());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA03() {
@@ -79,7 +79,7 @@ public class BlockSimplifyTest {
         + "    azzert.assertequals(System.out.ten, c.g());\n" //
         + "    azzert.assertequals(System.out.one, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA04() {
@@ -96,7 +96,7 @@ public class BlockSimplifyTest {
         + "    azzert.h(System.out.ten, c.g());\n" //
         + "    azzert.h(System.out.one, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA05() {
@@ -113,7 +113,7 @@ public class BlockSimplifyTest {
         + "    azzert.h(System.out.ten, c.g());\n" //
         + "    azzert.h(System.out.one, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA06() {
@@ -130,7 +130,7 @@ public class BlockSimplifyTest {
         + "    Y(System.out.ten, c.g());\n" //
         + "    Y(System.out.one, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA07() {
@@ -147,7 +147,7 @@ public class BlockSimplifyTest {
         + "    Y(System.out.ten, c.g());\n" //
         + "    Y(System.out.one, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA08() {
@@ -164,7 +164,7 @@ public class BlockSimplifyTest {
         + "    Y(q, c.g());\n" //
         + "    Y(ne, c.g());\n" //
         + "  }\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void seriesA09() {
@@ -188,7 +188,7 @@ public class BlockSimplifyTest {
                 + "  X.parse(s);\n" //
                 + "  Y(q, c.g());\n" //
                 + "}\n" //
-            ).to(null);
+            ).stays();
   }
 
   @Test public void seriesA10() {
@@ -212,6 +212,6 @@ public class BlockSimplifyTest {
                 + "  X.parse(s);\n" //
                 + "  Y(q, c.g());\n" //
                 + "}\n" //
-            ).to(null);
+            ).stays();
   }
 }
