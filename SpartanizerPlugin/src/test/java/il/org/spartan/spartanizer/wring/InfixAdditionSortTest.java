@@ -27,13 +27,13 @@ public class InfixAdditionSortTest {
   @Test public void test00() {
     trimming(input)//
         .to(OUTPUT) //
-   .stays();
+        .stays();
   }
 
   @Test public void test01() {
     trimming("1 + a*b") //
         .to("a*b + 1") //
-   .stays();
+        .stays();
   }
 
   @Test public void test02() {

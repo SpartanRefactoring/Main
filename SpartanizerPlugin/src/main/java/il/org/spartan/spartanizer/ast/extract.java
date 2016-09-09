@@ -71,6 +71,7 @@ public enum extract {
   public static ReturnStatement asReturn(final ASTNode ¢) {
     return asReturn(singleStatement(¢));
   }
+
   public static ReturnStatement asReturn(final Statement ¢) {
     return az.returnStatement(¢);
   }
