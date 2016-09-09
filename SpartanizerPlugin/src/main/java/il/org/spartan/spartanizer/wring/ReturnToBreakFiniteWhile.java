@@ -94,7 +94,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
   }
 
 
-  private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
+  @SuppressWarnings("unchecked") private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
     Statement $=null;  
     final List<Statement> blockStatements = body.statements();
       for (final Statement s : blockStatements) {
