@@ -37,7 +37,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
   }
 
   private static boolean isInfiniteLoop(final ForStatement s) {
-    if(az.booleanLiteral(s.getExpression())==null)
+    if (az.booleanLiteral(s.getExpression()) == null)
       return false;
     return az.booleanLiteral(s.getExpression()).booleanValue();
   }
