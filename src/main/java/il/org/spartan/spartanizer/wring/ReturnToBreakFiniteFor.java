@@ -54,15 +54,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     final Statement body = forStatement.getBody();
     Statement toChange = az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (iz.block(body)) {
-      final List<Statement> blockStatements = ((Block) body).statements();
-      for (final Statement s : blockStatements) {
-        if (az.ifStatement(s) != null)
-          toChange = handleIf(s, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-          toChange = s;
-          break;
-        }
-      }
+      toChange = handleBlock((Block) body,nextReturn);
     }
     if (iz.returnStatement(body) && //
         compareReturnStatements(nextReturn, az.returnStatement(body)))
@@ -77,38 +69,53 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     };
   }
 
-  // TODO Dor: I sprartanized a bit only to discover that this looks buggy! how
-  // can you assume it is an if without checking for it, and if you checked
-  // already, why do you check again?
-  private Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    // TODO: Dor Ma'ayan this needs spartanization
-    final Statement $ = az.ifStatement(s).getThenStatement();
-    final Statement elze = az.ifStatement(s).getElseStatement();
-    if (az.ifStatement($) != null)
-      return handleIf($, nextReturn);
-    if (az.ifStatement(elze) != null)
-      return handleIf(elze, nextReturn);
-    if (compareReturnStatements(nextReturn, az.returnStatement($)))
-      return $;
-    if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
-      return elze;
-    return handleIf(nextReturn, az.block($));
-  }
-
-  private Statement handleIf(final ReturnStatement nextReturn, final Block b) {
-    // TODO: Dor Ma'ayan this needs spartanization
-    if (b == null)
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    IfStatement ifStatement = az.ifStatement(s);
+    if(ifStatement==null)
       return null;
-    for (final Statement $ : step.statements(b)) {
-      // TODO: DOr, why the same test twice?
-      if (az.ifStatement($) != null || az.ifStatement($) != null)
-        return handleIf($, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement($)))
-        return $;
+    Statement thenStatement = ifStatement.getThenStatement();
+    Statement elzeStatement = ifStatement.getElseStatement();
+    if(thenStatement!=null){
+      if(compareReturnStatements(az.returnStatement(thenStatement),nextReturn))
+          return thenStatement;
+      if(iz.block(thenStatement)){
+        Statement $ = handleBlock((Block)thenStatement,nextReturn);
+        if($!=null)
+          return $;
+      }
+      if(az.ifStatement(thenStatement)!=null)
+        return handleIf(thenStatement, nextReturn);
+      if(elzeStatement!=null){
+        if(compareReturnStatements(az.returnStatement(elzeStatement),nextReturn))
+          return elzeStatement;
+      if(iz.block(elzeStatement)){
+        Statement $ = handleBlock((Block)elzeStatement,nextReturn);
+        if($!=null)
+          return $;
+      }
+      if(az.ifStatement(elzeStatement)!=null)
+        return handleIf(elzeStatement, nextReturn);
+      }
+        
     }
     return null;
   }
 
+
+  private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
+    Statement $=null;  
+    final List<Statement> blockStatements = body.statements();
+      for (final Statement s : blockStatements) {
+        if (az.ifStatement(s) != null)
+          $ = handleIf(s, nextReturn);
+        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
+          $ = s;
+          break;
+        }
+      }
+      return $;
+  }
+  
   @Override boolean scopeIncludes(final Block b) {
     // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
     // null, you do not have to do anything.
