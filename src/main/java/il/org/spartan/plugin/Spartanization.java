@@ -317,8 +317,7 @@ public abstract class Spartanization extends Refactoring {
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return eclipse.compilationUnits(compilationUnit != null ? compilationUnit : eclipse.currentCompilationUnit(),
-          eclipse.newSubMonitor(pm));
+      return eclipse.compilationUnits(compilationUnit != null ? compilationUnit : eclipse.currentCompilationUnit(), eclipse.newSubMonitor(pm));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
