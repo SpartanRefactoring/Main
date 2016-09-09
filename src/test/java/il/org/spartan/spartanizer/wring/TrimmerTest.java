@@ -554,7 +554,7 @@ import il.org.spartan.spartanizer.utils.*;
     trimming("false == a").to("!a");
   }
 
-  @Test public void compareWithBoolean110() {
+  @Test public void compareWithBooleanxf() {
     trimming("true != a").to("!a");
   }
 
@@ -1573,7 +1573,7 @@ import il.org.spartan.spartanizer.utils.*;
         .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+ x +  \".isEmpty()\")")//
         .to("\"Use \" + ((x==null ? \"\" : \"\"+ x +  \".\")+\"isEmpty()\")");
   }
-
+  
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //

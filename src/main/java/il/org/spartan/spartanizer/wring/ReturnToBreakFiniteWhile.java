@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** Convert loops with return statements to shorter ones : </br>
+/** Convert Finite loops with return statements to shorter ones : </br>
  * Convert <br/>
  * <code>
  * for (..) { <br/>
@@ -37,7 +37,9 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
   }
 
   private static boolean isInfiniteLoop(final WhileStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null;
+    if(az.booleanLiteral(s.getExpression())==null)
+      return false;
+    return az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
