@@ -100,7 +100,7 @@ public class Toolbox {
         .add(Block.class, //
             new ReturnToBreakFiniteFor(), //
             new ReturnToBreakFiniteWhile(), //
-            new BreakToReturnInfiniteWhile(),//
+            new BreakToReturnInfiniteWhile(), //
             null) //
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //

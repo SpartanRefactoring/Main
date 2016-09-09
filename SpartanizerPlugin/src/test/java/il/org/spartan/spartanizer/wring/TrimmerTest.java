@@ -1532,7 +1532,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
         .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+ x +  \".isEmpty()\")")//
         .to("\"Use \" + ((x==null ? \"\" : \"\"+ x +  \".\")+\"isEmpty()\")");
   }
-  
+
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //

@@ -6,7 +6,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.collections.*;
-import il.org.spartan.files.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
