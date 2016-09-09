@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.files.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
@@ -34,7 +35,7 @@ import il.org.spartan.utils.*;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
   boolean optDoNotOverwrite = false, optIndividualStatistics = false, optVerbose = false;
-  boolean optStatsLines = false, optStatsChanges = false;
+  boolean optStatsLines = false, optStatsChanges = false, printLog = false;
   int optRounds = 20;
   String optPath;
 
@@ -47,6 +48,10 @@ import il.org.spartan.utils.*;
     } catch (final CoreException e) {
       System.err.println(e.getMessage());
       return IApplication.EXIT_OK;
+    }
+    if(printLog){
+      LogManager.activateLog();
+      LogManager.initialize("/home/matteo/SpartanLog");
     }
     int done = 0, failed = 0;
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
