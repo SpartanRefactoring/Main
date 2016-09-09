@@ -25,7 +25,7 @@ public interface spartan {
     return null;
   }
 
-  static String shorten(final List<? extends org.eclipse.jdt.core.dom.Type> ts) {
+  static String shorten(final List<? extends Type> ts) {
     return shorten(lisp.onlyOne(ts));
   }
 
@@ -58,6 +58,10 @@ public interface spartan {
       case "List":
       case "Queue":
       case "Set":
+      case "HashSet":
+      case "LinkedHashSet":
+      case "ArrayList":
+      case "TreeSet":
         final String $ = shorten(step.typeArguments(t));
         if ($ == null)
           return null;
