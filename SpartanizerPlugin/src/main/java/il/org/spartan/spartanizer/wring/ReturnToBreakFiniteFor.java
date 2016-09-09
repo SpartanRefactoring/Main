@@ -100,6 +100,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     if (b == null)
       return null;
     for (final Statement $ : step.statements(b)) {
+      // TODO: DOr, why the same test twice?
       if (az.ifStatement($) != null || az.ifStatement($) != null)
         return handleIf($, nextReturn);
       if (compareReturnStatements(nextReturn, az.returnStatement($)))
