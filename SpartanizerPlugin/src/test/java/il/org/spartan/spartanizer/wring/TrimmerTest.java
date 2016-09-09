@@ -6,30 +6,8 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.junit.*;
-import org.junit.runners.*;
+import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.utils.*;
-
-/** * Unit tests for the nesting class Unit test for the containing class. Note
- * our naming convention: a) test methods do not use the redundant "test"
- * prefix. b) test methods begin with the name of the method they check.
- * @author Yossi Gil
- * @since 2014-07-10 */
-
-
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
-import static il.org.spartan.spartanizer.engine.into.*;
-import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
-import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -3927,7 +3905,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void issue131_8() {
     trimming("while(i>5)if(t=4)return xxx;return xxx;").to("while(i>5)if(t=4)break;return xxx;");
   }
-  
+
   @Test public void issue131_9() {
     trimming("for(int i=4 ; i<s.length() ; ++i)if(i==5)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)if(i==5)break;return xxx;");
   }
@@ -4150,4 +4128,3 @@ import il.org.spartan.spartanizer.utils.*;
         + "}").stays();
   }
 }
-

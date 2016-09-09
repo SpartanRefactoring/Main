@@ -87,16 +87,16 @@ public class AAA_TemplateTestTemplate {
     azzert.that($0(), is($0()));
     azzert.that($0(), not(is($0())));
   }
-/** Correct ways of comparing numbers */
+
+  /** Correct ways of comparing numbers */
   @Test public void seriesZ_12() {
     azzert.that($0(), greaterThanOrEqualTo($0()));
     azzert.that($1(), greaterThanOrEqualTo($0()));
     azzert.that($1(), greaterThan($0()));
-    azzert.that($0(), lessThanOrEqualTo($1())); 
-    azzert.that($0(), lessThanOrEqualTo($0())); 
-    azzert.that($0(), lessThan($0())); 
+    azzert.that($0(), lessThanOrEqualTo($1()));
+    azzert.that($0(), lessThanOrEqualTo($0()));
+    azzert.that($0(), lessThan($0()));
   }
-
 
   private final int $0() {
     return 0;
