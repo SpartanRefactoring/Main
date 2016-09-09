@@ -86,18 +86,21 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
       return elze;
     final Block b = az.block($);
     if (b != null) {
-      final List<Statement> statementList = step.statements(b);
-      for (final Statement sl : statementList) {
-        if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
-          return handleIf(sl, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
-          return sl;
+      final List<Statement> ss = step.statements(b);
+      for (final Statement s : ss) {
+        // TODO: Dor, isn't this a bug? Why do you check the same condition
+        // twice?
+        if (az.ifStatement(s) != null || az.ifStatement(s) != null)
+          return handleIf(s, nextReturn);
+        if (compareReturnStatements(nextReturn, az.returnStatement(s)))
+          return s;
       }
     }
     return null;
   }
 
   @Override boolean scopeIncludes(final Block b) {
+    assert b != null;
     final List<Statement> ss = step.statements(b);
     return ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
   }
