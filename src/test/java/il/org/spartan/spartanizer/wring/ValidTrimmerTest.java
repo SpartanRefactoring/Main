@@ -1358,11 +1358,12 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
+    assert e != null;
     azzert.that("" + step.right(e), is("f(a,b,c)"));
     azzert.that("" + step.left(e), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
+    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
@@ -1379,11 +1380,12 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
+    assert e != null;
     azzert.that("" + step.right(e), is("f(a,b,c)"));
     azzert.that("" + step.left(e), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
-    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s != null;
+    azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
