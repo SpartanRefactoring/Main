@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Removes the "value" member from annotations that only have a single member,
  * converting <code>@SuppressWarnings(value = "unchecked")</code> to

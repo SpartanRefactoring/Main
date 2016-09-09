@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.files.*;
+import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 

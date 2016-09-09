@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {

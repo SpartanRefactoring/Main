@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.assemble.make.*;
 import static il.org.spartan.spartanizer.ast.hop.*;
 import static il.org.spartan.spartanizer.ast.iz.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
-import static il.org.spartan.spartanizer.utils.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
