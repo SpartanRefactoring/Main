@@ -1,7 +1,5 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.DialogBoxes.*;
-
 import java.util.*;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** the base class for all Spartanization Refactoring classes, contains common
@@ -26,49 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-@SuppressWarnings({ "unused" }) public abstract class Spartanization extends Refactoring {
-  /** @param u A compilation unit for reference - you give me an arbitrary
-   *        compilation unit from the project and I'll find the root of the
-   *        project and do my magic.
-   * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times put a "new NullProgressMonitor()"
-   * @return List of all compilation units in the current project
-   * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> getAllProjectCompilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
-    pm.beginTask("Gathering project information...", 1);
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    if (u == null) {
-      announce("Cannot find current compilation unit " + u);
-      return $;
-    }
-    final IJavaProject javaProject = u.getJavaProject();
-    if (javaProject == null) {
-      announce("Cannot find project of " + u);
-      return $;
-    }
-    final IPackageFragmentRoot[] packageFragmentRoots = javaProject.getPackageFragmentRoots();
-    if (packageFragmentRoots == null) {
-      announce("Cannot find roots of " + javaProject);
-      return $;
-    }
-    for (final IPackageFragmentRoot r : packageFragmentRoots)
-      if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
-        for (final IJavaElement e : r.getChildren())
-          if (e.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
-    pm.done();
-    return $;
-  }
-
-  protected static boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
-    try {
-      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException e) {
-      return true;
-    }
-  }
-
+public abstract class Spartanization extends Refactoring {
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
   private IMarker marker = null;
@@ -107,8 +62,8 @@ import il.org.spartan.spartanizer.engine.*;
    * This is an slow operation. Do not call light-headedly.
    * @return total number of files with suggestions */
   public int countFilesChanges() {
-    // TODO not sure if this function is necessary - if it is, it could be
-    // easily optimized when called after countSuggestions()
+    // TODO OriRoth: not sure if this function is necessary - if it is, it could
+    // be easily optimized when called after countSuggestions()
     setMarker(null);
     try {
       checkFinalConditions(new NullProgressMonitor());
@@ -230,9 +185,9 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** .
-   * @return True if there are Spartanizations which can be performed on the
+   * @return True if there are spartanizations which can be performed on the
    *         compilation unit. */
-  public boolean haveSuggestions() {
+  public final boolean haveSuggestions() {
     return countSuggestions() > 0;
   }
 
@@ -242,7 +197,7 @@ import il.org.spartan.spartanizer.engine.*;
    *        <code><b>m</b></code>
    * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+    return m != null ? !eclipse.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
 
   /** Performs the current Spartanization on the provided compilation unit
@@ -254,7 +209,7 @@ import il.org.spartan.spartanizer.engine.*;
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor spm = newSubMonitor(pm);
+    final IProgressMonitor spm = eclipse.newSubMonitor(pm);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
@@ -306,7 +261,7 @@ import il.org.spartan.spartanizer.engine.*;
     m.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor subProgressMonitor = newSubMonitor(m);
+    final IProgressMonitor subProgressMonitor = eclipse.newSubMonitor(m);
     final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(subProgressMonitor);
     textChange.setEdit(createRewrite(cu, subProgressMonitor).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
@@ -320,17 +275,13 @@ import il.org.spartan.spartanizer.engine.*;
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m).rewriteAST());
+    textChange.setEdit(createRewrite(eclipse.newSubMonitor(pm), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       if (!preview)
         textChange.perform(pm);
       else
         changes.add(textChange);
     pm.done();
-  }
-
-  private static IProgressMonitor newSubMonitor(final IProgressMonitor m) {
-    return new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
   }
 
   /** Creates a change from each compilation unit and stores it in the changes
@@ -340,7 +291,7 @@ import il.org.spartan.spartanizer.engine.*;
   protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException, CoreException {
     pm.beginTask("Iterating over gathered compilation units...", cus.size());
     for (final ICompilationUnit cu : cus)
-      scanCompilationUnit(cu, newSubMonitor(pm));
+      scanCompilationUnit(cu, eclipse.newSubMonitor(pm));
     pm.done();
   }
 
@@ -366,7 +317,8 @@ import il.org.spartan.spartanizer.engine.*;
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
     if (!isTextSelected())
-      return getAllProjectCompilationUnits(compilationUnit != null ? compilationUnit : retrieve.currentCompilationUnit(), newSubMonitor(pm));
+      return eclipse.compilationUnits(compilationUnit != null ? compilationUnit : eclipse.currentCompilationUnit(),
+          eclipse.newSubMonitor(pm));
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
@@ -391,6 +343,6 @@ import il.org.spartan.spartanizer.engine.*;
 
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
     pm.beginTask("Checking preconditions...", 2);
-    scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
+    scanCompilationUnits(getUnits(pm), eclipse.newSubMonitor(pm));
   }
 }

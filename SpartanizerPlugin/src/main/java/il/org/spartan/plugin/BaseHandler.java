@@ -47,11 +47,11 @@ public abstract class BaseHandler extends AbstractHandler {
   }
 
   private Void execute(final ITextSelection s) throws InterruptedException {
-    return execute(new RefactoringWizardOpenOperation(getWizard(s, retrieve.currentCompilationUnit())));
+    return execute(new RefactoringWizardOpenOperation(getWizard(s, eclipse.currentCompilationUnit())));
   }
 
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
-    wop.run(retrieve.getCurrentWorkbenchWindow().getShell(), getDialogTitle());
+    wop.run(eclipse.currentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
 
