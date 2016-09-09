@@ -53,15 +53,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     final Statement body = whileStatement.getBody();
     Statement toChange = az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (iz.block(body)) {
-      final List<Statement> statementList1 = ((Block) body).statements();
-      for (final Statement s : statementList1) {
-        if (az.ifStatement(s) != null)
-          toChange = handleIf(s, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-          toChange = s;
-          break;
-        }
-      }
+      toChange = handleBlock((Block)body,nextReturn);
     }
     if (iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)))
       toChange = body;
@@ -73,29 +65,51 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     };
   }
 
-  private Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final Statement $ = az.ifStatement(s).getThenStatement();
-    final Statement elze = az.ifStatement(s).getElseStatement();
-    if (az.ifStatement($) != null)
-      return handleIf($, nextReturn);
-    if (az.ifStatement(elze) != null)
-      return handleIf(elze, nextReturn);
-    if (compareReturnStatements(nextReturn, az.returnStatement($)))
-      return $;
-    if (compareReturnStatements(nextReturn, az.returnStatement(elze)))
-      return elze;
-    final Block b = az.block($);
-    if (b != null) {
-      final List<Statement> statementList = step.statements(b);
-      for (final Statement sl : statementList) {
-        // TODO Dor; why the same test twice
-        if (az.ifStatement(sl) != null || az.ifStatement(sl) != null)
-          return handleIf(sl, nextReturn);
-        if (compareReturnStatements(nextReturn, az.returnStatement(sl)))
-          return sl;
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    IfStatement ifStatement = az.ifStatement(s);
+    if(ifStatement==null)
+      return null;
+    Statement thenStatement = ifStatement.getThenStatement();
+    Statement elzeStatement = ifStatement.getElseStatement();
+    if(thenStatement!=null){
+      if(compareReturnStatements(az.returnStatement(thenStatement),nextReturn))
+          return thenStatement;
+      if(iz.block(thenStatement)){
+        Statement $ = handleBlock((Block)thenStatement,nextReturn);
+        if($!=null)
+          return $;
       }
+      if(az.ifStatement(thenStatement)!=null)
+        return handleIf(thenStatement, nextReturn);
+      if(elzeStatement!=null){
+        if(compareReturnStatements(az.returnStatement(elzeStatement),nextReturn))
+          return elzeStatement;
+      if(iz.block(elzeStatement)){
+        Statement $ = handleBlock((Block)elzeStatement,nextReturn);
+        if($!=null)
+          return $;
+      }
+      if(az.ifStatement(elzeStatement)!=null)
+        return handleIf(elzeStatement, nextReturn);
+      }
+        
     }
     return null;
+  }
+
+
+  private static Statement handleBlock(Block body,final ReturnStatement nextReturn){
+    Statement $=null;  
+    final List<Statement> blockStatements = body.statements();
+      for (final Statement s : blockStatements) {
+        if (az.ifStatement(s) != null)
+          $ = handleIf(s, nextReturn);
+        if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
+          $ = s;
+          break;
+        }
+      }
+      return $;
   }
 
   @Override boolean scopeIncludes(final Block b) {
