@@ -3938,6 +3938,54 @@ import il.org.spartan.spartanizer.utils.*;
         .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
         .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
   }
+  
+  @Test public void issue141_01() {
+    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
+        + "out(\"elements\", os);   \n" + "}").stays();
+  }
+
+  @Test public void issue141_02() {
+    trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
+        + "out(\"elements\", os);   \n" + "}").stays();
+  }
+
+  @Test public void issue141_03() {
+    trimming("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
+        + "out(\"elements\",abracadabra);   \n" + "}").stays();
+  }
+
+  @Test public void issue141_04() {
+    trimming("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .stays();
+  }
+
+  @Test public void issue141_05() {
+    trimming("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .to("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .stays();
+  }
+
+  @Test public void issue141_06() {
+    trimming("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .to("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
+            + "}")
+        .stays();
+  }
+
+  @Test public void issue141_07() {
+    trimming("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
+        + "out(\"elements\");   \n" + "}")
+            .to("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
+                + "out(\"elements\");   \n" + "}")
+            .stays();
+  }
+
+  @Test public void issue141_08() {
+    trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .stays();
+  }
+
 
   @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
     trimming("@SuppressWarnings(sky = \"blue\") void m() {}").stays();
