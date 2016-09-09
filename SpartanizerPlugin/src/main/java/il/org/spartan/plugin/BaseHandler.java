@@ -18,40 +18,6 @@ import org.eclipse.ui.handlers.*;
  *         2013/07/11
  * @since 2013/07/01 */
 public abstract class BaseHandler extends AbstractHandler {
-  /** @return List of all compilation units in the current project */
-  public static List<ICompilationUnit> compilationUnits() {
-    try {
-      return Spartanization.getAllProjectCompilationUnits(currentCompilationUnit(), new NullProgressMonitor());
-    } catch (final JavaModelException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
-  /** Retrieves the current {@link ICompilationUnit}
-   * @return current {@link ICompilationUnit} */
-  public static ICompilationUnit currentCompilationUnit() {
-    return getCompilationUnit(getCurrentWorkbenchWindow().getActivePage().getActiveEditor());
-  }
-
-  /** Retrieves the current {@link IWorkbenchWindow}
-   * @return current {@link IWorkbenchWindow} */
-  public static IWorkbenchWindow getCurrentWorkbenchWindow() {
-    return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-  }
-
-  static Object getResource(final IEditorPart ep) {
-    return ep.getEditorInput().getAdapter(IResource.class);
-  }
-
-  private static ICompilationUnit getCompilationUnit(final IEditorPart ep) {
-    return ep == null ? null : getCompilationUnit((IResource) getResource(ep));
-  }
-
-  private static ICompilationUnit getCompilationUnit(final IResource r) {
-    return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
-  }
-
   private final Spartanization inner;
 
   /** Instantiates this class
@@ -81,11 +47,11 @@ public abstract class BaseHandler extends AbstractHandler {
   }
 
   private Void execute(final ITextSelection s) throws InterruptedException {
-    return execute(new RefactoringWizardOpenOperation(getWizard(s, currentCompilationUnit())));
+    return execute(new RefactoringWizardOpenOperation(getWizard(s, retrieve.currentCompilationUnit())));
   }
 
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
-    wop.run(getCurrentWorkbenchWindow().getShell(), getDialogTitle());
+    wop.run(retrieve.getCurrentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
 
