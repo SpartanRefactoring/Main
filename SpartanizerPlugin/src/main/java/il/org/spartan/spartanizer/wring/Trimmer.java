@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
@@ -73,8 +74,13 @@ public class Trimmer extends Spartanization {
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w != null) {
           final Rewrite make = w.make(n, exclude);
-          if (make != null)
+          if (make != null){
+            if(LogManager.isActive())
+//          LogManager.initialize();
+            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), 
+              make.description, "" + make.lineNumber);         
             make.go(r, null);
+          }
         }
         return true;
       }
