@@ -1,8 +1,8 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.DialogBoxes.*;
-
 import java.util.*;
+
+import javax.swing.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -22,6 +22,10 @@ import il.org.spartan.utils.*;
 public interface eclipse {
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
+  static final String NAME = "Spartanization";
+  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
+  ImageIcon icon = new ImageIcon(new eclipse() {
+  }.getClass().getResource(ICON_PATH));
 
   public static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
@@ -32,7 +36,7 @@ public interface eclipse {
       try {
         s.setCompilationUnit(cu);
         s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
-      s.performRule(cu, new NullProgressMonitor());
+        s.performRule(cu, new NullProgressMonitor());
       } catch (final CoreException x) {
         x.printStackTrace();
       }
@@ -73,6 +77,13 @@ public interface eclipse {
             $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
     pm.done();
     return $;
+  }
+
+  /** @param message What to announce
+   * @return <code><b>null</b></code> */
+  static Void announce(final Object message) {
+    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    return null;
   }
 
   static ICompilationUnit compilationUnit(final IEditorPart ep) {

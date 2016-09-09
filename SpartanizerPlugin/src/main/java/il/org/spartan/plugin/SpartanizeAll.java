@@ -1,14 +1,10 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.DialogBoxes.*;
-import static il.org.spartan.plugin.SpartanizeCurrent.*;
-
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
@@ -49,7 +45,7 @@ public class SpartanizeAll extends BaseHandler {
     final int initialCount = countSuggestions(currentCompilationUnit);
     message.append("with " + initialCount + " suggestions");
     if (initialCount == 0)
-      return announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
+      return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
     for (int i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
@@ -72,7 +68,7 @@ public class SpartanizeAll extends BaseHandler {
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)
-        return announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + //
+        return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + //
             "Completed in " + (1 + i) + " passes. \n" + //
             "Total changes: " + (initialCount - finalCount) + "\n" + //
             "Suggestions before: " + initialCount + "\n" + //
