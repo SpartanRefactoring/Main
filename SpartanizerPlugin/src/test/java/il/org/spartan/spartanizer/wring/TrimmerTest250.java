@@ -382,7 +382,7 @@ public class TrimmerTest250 {
   @Test public void issue50_Constructors1() {
     trimming("public class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
-        + "}").to("");
+        + "}").stays();
   }
 
   @Test public void issue50_EnumInInterface1() {
@@ -513,7 +513,7 @@ public class TrimmerTest250 {
 
   @Test public void issue50_SimpleDontWorking() {
     trimming("interface a"//
-        + "{}").to("");
+        + "{}").stays();
   }
 
   @Test public void issue50_SimpleWorking1() {
@@ -747,7 +747,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue71r() {
-    trimming("1L*a").to("");
+    trimming("1L*a").stays();
   }
 
   @Test public void issue72ma() {
@@ -1169,11 +1169,11 @@ public class TrimmerTest250 {
   }
 
   @Ignore public void issue86_4() {
-    trimming("if(false) {c();\nb();\na();}").to("{}").to("");
+    trimming("if(false) {c();\nb();\na();}").to("{}").stays();
   }
 
   @Ignore public void issue86_5() {
-    trimming("if(false) {c();\nb();\na();}").to("{}").to("").stays();
+    trimming("if(false) {c();\nb();\na();}").to("{}").stays();
   }
 
   @Test public void issue87a() {
