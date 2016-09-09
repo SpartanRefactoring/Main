@@ -88,7 +88,7 @@
    <extension point="org.eclipse.ui.handlers">
       <handler
             class="il.org.spartan.plugin.Toggle"
-            commandId="il.org.spartan.plugin.Toggle">
+            commandId="il.org.spartan.commands.ToggleCommand">
       </handler>
       <handler
             class="il.org.spartan.plugin.SpartanizeCurrent"
@@ -122,7 +122,7 @@
                label="Spartanization"
                mnemonic="S">
             <command
-                  commandId="il.org.spartan.plugin.Toggle"
+                  commandId="il.org.spartan.commands.ToggleCommand"
                   id="il.org.spartan.menus.Toggle"
                   label="Enable spartan suggestions"
                   style="toggle"
@@ -156,6 +156,12 @@
                      commandId="il.org.spartan.plugin.ApplySpartanization"
                      id="il.org.spartan.plugin.menus.ApplySpartanizationCommand"
                      style="push">
+               </command>
+               <command
+                     label="toggle spartanizer"
+                     commandId="il.org.spartan.commands.ToggleCommand"
+                     id="il.org.spartan.plugin.menus.ToggleCommand"
+                     style="toggle">
                </command>
             </menu>
          </menu>
