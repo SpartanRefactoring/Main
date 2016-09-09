@@ -52,13 +52,8 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     if (isInfiniteLoop(forStatement))
       return null;
     final Statement body = forStatement.getBody();
-    Statement toChange = az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    if (iz.block(body)) {
-      toChange = handleBlock((Block) body,nextReturn);
-    }
-    if (iz.returnStatement(body) && //
-        compareReturnStatements(nextReturn, az.returnStatement(body)))
-      toChange = body;
+    Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (toChange == null)
       return null;
     final Statement theChange = toChange;
@@ -113,7 +108,9 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
           break;
         }
       }
+
       return $;
+
   }
   
   @Override boolean scopeIncludes(final Block b) {
