@@ -38,8 +38,7 @@ import il.org.spartan.utils.*;
   boolean optStatsLines = false, optStatsChanges = false, printLog = false;
   int optRounds = 20;
   String optPath;
-  private String logPath;
-  
+
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
@@ -50,7 +49,7 @@ import il.org.spartan.utils.*;
       System.err.println(e.getMessage());
       return IApplication.EXIT_OK;
     }
-    if(printLog){
+    if (printLog) {
       LogManager.activateLog();
       LogManager.initialize("/home/matteo/SpartanLog");
     }
@@ -168,15 +167,14 @@ import il.org.spartan.utils.*;
         optStatsLines = true;
       if ("-r".equals(a))
         optStatsChanges = true;
-      if ("-L".equals(a)){
-        printLog  = true;
-      }
+      if ("-L".equals(a))
+        printLog = true;
       if (!a.startsWith("-"))
         optPath = a;
       try {
         if (a.equals("-logoPath"))
-          if(printLog)
-            logPath = "~/SpartanLog"; //Integer.parseUnsignedInt(a.substring(2));
+          if (printLog) {
+          }
       } catch (final NumberFormatException e) {
         // Ignore
       }

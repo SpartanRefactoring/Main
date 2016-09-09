@@ -16,12 +16,13 @@ public class Issue155Test {
         + "for (int i = 0; i < versionNumbers.length; ++i) {\n" //
         + "  final String nb = versionNumbers[i];\n" //
         + "  $[i] = Integer.parseInt(nb);\n" //
-        + "}").to("" //
-            + "for (int i = 0; i < versionNumbers.length; ++i) {\n" //
-            + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" //
-            + "}");
+        + "}")
+            .to("" //
+                + "for (int i = 0; i < versionNumbers.length; ++i) {\n" //
+                + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" //
+                + "}");
   }
-  
+
   @Test public void inlineNonFinalIntoClassInstanceCreation() {
     trimming("" //
         + "void h(int x) {\n" //
@@ -35,7 +36,7 @@ public class Issue155Test {
         + "  };\n" //
         + "}").stays();
   }
-  
+
   @Test public void issue64a() {
     trimming("void f() {" + //
         "    final int a = f();\n" + //
@@ -43,7 +44,7 @@ public class Issue155Test {
         "      @Override public int hashCode() { return a; }\n" + //
         "    };" + "}").stays();
   }
-  
+
   @Test public void issue64b() {
     trimming("void f() {" + //
         "    final int a = 3;\n" + //
@@ -51,7 +52,7 @@ public class Issue155Test {
         "      @Override public int hashCode() { return a; }\n" + //
         "    };" + "}").stays();
   }
-  
+
   @Test public void issue64c() {
     trimming("void f(int x) {" + //
         "    ++x;\n" + //
