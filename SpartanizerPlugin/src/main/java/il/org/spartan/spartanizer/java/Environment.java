@@ -58,7 +58,7 @@ import org.eclipse.jdt.core.dom.*;
     }
   }
 
-  /** TODO: document properly, but essentially is a dictionary with a parent.
+  /** TODO: Alex: document properly, but essentially is a dictionary with a parent.
    * Insertions go the current node, searches start at the current note and
    * Delegate to the parent unless it is null. */
   /* Nested environment which has it's own Map of names 'flat', and an instance
@@ -182,6 +182,7 @@ import org.eclipse.jdt.core.dom.*;
   // instance'
   // Yossi, I could not understand your intention. Could you please elaborate
   // further?
+  // Dan: Here is an abbreviation "Env.". 
   /** @return null iff the name is not in use in the this instance. */
   default Information get(final String name) {
     return null;
