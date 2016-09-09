@@ -14,23 +14,12 @@ import il.org.spartan.*;
 public class GuessedContextTest {
   @Test public void dealWithBothKindsOfComment() {
     similar(
-        ""//
-            + "if (b) {\n"//
-            + " /* empty */"//
-            + "; \n"//
-            + "} { // no else \n"//
-            + " throw new Exception();\n"//
-            + "}", //
+        "if (b) {\n" + "", //
         "if (b) {;} { throw new Exception(); }");
   }
 
   @Test public void dealWithComment() {
-    azzert.that(find(""//
-        + "if (b) {\n"//
-        + " /* empty */"//
-        + "} else {\n"//
-        + " throw new Exception();\n"//
-        + "}"), is(STATEMENTS_LOOK_ALIKE));
+    azzert.that(find("if (b) {\n" + ""), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void essenceTest() {
@@ -144,12 +133,7 @@ public class GuessedContextTest {
 
   @Test public void removeCommentsTest() {
     similar(removeComments(//
-        "" //
-            + "if (b) {\n" //
-            + " /* empty */" //
-            + "} else {\n" //
-            + " throw new Exception();\n" //
-            + "}"),
+        "if (b) {\n" + ""),
         "if (b) {} else { throw new Exception(); }");
   }
 

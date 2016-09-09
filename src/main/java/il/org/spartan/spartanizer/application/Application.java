@@ -172,9 +172,6 @@ import il.org.spartan.utils.*;
       if (!a.startsWith("-"))
         optPath = a;
       try {
-        if (a.equals("-logoPath"))
-          if (printLog) {
-          }
       } catch (final NumberFormatException e) {
         // Ignore
       }

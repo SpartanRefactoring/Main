@@ -14,10 +14,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimming("" + //
-        "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
-        "    return $;\n" + //
-        "  }").stays();
+    trimming("    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + "").stays();
   }
 
   @Test public void forwardDeclaration1() {
@@ -59,22 +56,7 @@ import org.junit.runners.*;
   }
 
   @Test public void inline00() {
-    trimming("" + //
-        "  Object a() { " + //
-        "    class a {\n" + //
-        "      a a;\n" + //
-        "      Object a() {\n" + //
-        "        return a;\n" + // /
-        "      }" + //
-        "    }\n" + //
-        "    final Object a = new Object();\n" + //
-        "    if (a instanceof a)\n" + //
-        "      new Object();  \n" + //
-        "    final Object a = new Object();\n" + //
-        "    if (a instanceof a)\n" + //
-        "      new Object();" + //
-        "}\n" + //
-        "").to(//
+    trimming("  Object a() { " + "").to(//
             "  Object a() { " + //
                 "    class a {\n" + //
                 "      Object a() {\n" + //
@@ -268,13 +250,7 @@ import org.junit.runners.*;
   }
 
   @Test public void sameAssignmentDifferentTypes() {
-    trimming("" //
-        + "public void f() {\n" //
-        + "  double x;\n" //
-        + "  int y;\n" //
-        + "  x = 0;\n" //
-        + "  y = 0;\n" //
-        + "}").stays();
+    trimming("public void f() {\n" + "").stays();
   }
 
   @Test public void shortestOperand09() {
@@ -298,28 +274,8 @@ import org.junit.runners.*;
   }
 
   @Test public void ifToSwitch1() {
-    trimming("" //
-        + "if (\"1\".equals(s))\n" // ))
-        + "  System.out.println(s);\n" //
-        + "else if (\"2\".equals(s))\n" //
-        + "  System.out.println(s + \"!\");\n" //
-        + "else {\n" //
-        + "  s += \"@\";\n" //
-        + "  System.out.println(s);\n" //
-        + "}\n" //
-    ).to("" //
-        + "switch (s) {\n" //
-        + "  case \"1\":\n" //
-        + "    System.out.println(s);\n" //
-        + "    break;\n" //
-        + "  case \"2\":\n" //
-        + "    System.out.println(s + \"!\");\n" //
-        + "    break;\n" //
-        + "  default:\n" //
-        + "    s += \"@\";\n" //
-        + "    System.out.println(s);\n" //
-        + "    break;\n" //
-        + "  }\n");
+    trimming("if (\"1\".equals(s))\n" + ""
+    ).to("switch (s) {\n" + "");
   }
 
   @Test public void renameVariableUnderscore2() {
@@ -348,246 +304,48 @@ import org.junit.runners.*;
   }
 
   @Test public void switchBrakesToReturnCaseWithoutSequencer() {
-    trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 2;")
-            .to("" //
-                + " switch (x) {\n" //
-                + "     case 1:\n"//
-                + "         System.out.println(\"1\");\n" //
-                + "         return 2;\n" //
-                + "     case 2:\n"//
-                + "         System.out.println(\"2\");\n" //
-                + "         return 1;\n" //
-                + "     case 3:\n"//
-                + "         System.out.println(\"3\");\n" //
-                + " }\n"//
-                + " return 2;\n");
+    trimming(" switch (x) {\n" + "")
+            .to(" switch (x) {\n" + "");
   }
 
   @Test public void switchBrakesToReturnDefaultWithSequencer() {
-    trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + "     default:\n"//
-        + "         return 2;\n" //
-        + " }\n"//
-        + " return 3;")
-            .to("" //
-                + " switch (x) {\n" //
-                + "     case 1:\n"//
-                + "         System.out.println(\"1\");\n" //
-                + "         return 3;\n" //
-                + "     case 2:\n"//
-                + "         System.out.println(\"2\");\n" //
-                + "         return 1;\n" //
-                + "     case 3:\n"//
-                + "         System.out.println(\"3\");\n" //
-                + "     default:\n"//
-                + "         return 2;\n" //
-                + " }");
+    trimming(" switch (x) {\n" + "")
+            .to(" switch (x) {\n" + "");
   }
 
   @Test public void switchBreakesToReturnAllCases() {
-    trimming("" //
-        + " switch (x) {\n" //
-        + "     case 1:\n"//
-        + "         System.out.println(\"1\");\n" //
-        + "         break;\n" //
-        + "     case 2:\n"//
-        + "         System.out.println(\"2\");\n" //
-        + "         return 1;\n" //
-        + "     case 3:\n"//
-        + "         System.out.println(\"3\");\n" //
-        + " }\n"//
-        + " return 3;")
-            .to("" //
-                + " switch (x) {\n" //
-                + "     case 1:\n"//
-                + "         System.out.println(\"1\");\n" //
-                + "         return 3;\n" //
-                + "     case 2:\n"//
-                + "         System.out.println(\"2\");\n" //
-                + "         return 1;\n" //
-                + "     case 3:\n"//
-                + "         System.out.println(\"3\");\n" //
-                + " }\n"//
-                + " return 3;");
+    trimming(" switch (x) {\n" + "")
+            .to(" switch (x) {\n" + "");
   }
 
   @Test public void switchSimplifiyNoSequencer() {
-    trimming("" //
-        + "switch(x) {\n" //
-        + "case 1:\n" //
-        + "  System.out.println('!');\n" //
-        + "case 2:\n" //
-        + "  System.out.println('@');\n" //
-        + "}")
-            .to("" //
-                + "switch(x) {\n" //
-                + "case 1:\n" //
-                + "  System.out.println('!');\n" //
-                + "  System.out.println('@');\n" //
-                + "  break;\n" //
-                + "case 2:\n" //
-                + "  System.out.println('@');\n" //
-                + "}");
+    trimming("switch(x) {\n" + "")
+            .to("switch(x) {\n" + "");
   }
 
   @Test public void switchSimplifyCaseAfterDefault2() {
-    trimming("" //
-        + "switch (e.getNodeType()) {\n" //
-        + "default:\n" //
-        + "  break;\n" //
-        + "case CONDITIONAL_EXPRESSION:\n" //
-        + "  return true;\n" //
-        + "case PARENTHESIZED_EXPRESSION:\n" //
-        + "  if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)\n" //
-        + "    return true;\n" //
-        + "}")
-            .to("" //
-                + "switch (e.getNodeType()) {\n" //
-                + "case CONDITIONAL_EXPRESSION:\n" //
-                + "  return true;\n" //
-                + "default:\n" //
-                + "  break;\n" //
-                + "case PARENTHESIZED_EXPRESSION:\n" //
-                + "  if (((ParenthesizedExpression) e).getExpression().getNodeType() == CONDITIONAL_EXPRESSION)\n" //
-                + "    return true;\n" //
-                + "}");
+    trimming("switch (e.getNodeType()) {\n" + "")
+            .to("switch (e.getNodeType()) {\n" + "");
   }
 
   @Test public void switchSimplifyCaseAfterefault3() {
-    trimming("" //
-        + "switch (totalNegation) {\n" //
-        + "default:\n" //
-        + "  break;\n" //
-        + "  case 0:\n" //
-        + "  return null;\n" //
-        + "case 1:\n" //
-        + "  if (negationLevel(es.get(0)) == 1)\n" //
-        + "    return null;\n" //
-        + "}")
-            .to("" //
-                + "switch (totalNegation) {\n" //
-                + "  case 0:\n" //
-                + "  return null;\n" //
-                + "default:\n" //
-                + "  break;\n" //
-                + "case 1:\n" //
-                + "  if (negationLevel(es.get(0)) == 1)\n" //
-                + "    return null;\n" //
-                + "}");
+    trimming("switch (totalNegation) {\n" + "")
+            .to("switch (totalNegation) {\n" + "");
   }
 
   @Test public void switchSimplifyCasesMergeWithDefault() {
-    trimming("" //
-        + "switch (n.getNodeType()) {\n" //
-        + "default:\n" //
-        + "  return -1;\n" //
-        + "case BREAK_STATEMENT:\n" //
-        + "  return 0;\n" //
-        + "case CONTINUE_STATEMENT:\n" //
-        + "  return 1;\n" //
-        + "case RETURN_STATEMENT:\n" //
-        + "  return 2;\n" //
-        + "case THROW_STATEMENT:\n" //
-        + "  return -1;\n" //
-        + "}")
-            .to("" //
-                + "switch (n.getNodeType()) {\n" //
-                + "default:\n" //
-                + "  return -1;\n" //
-                + "case BREAK_STATEMENT:\n" //
-                + "  return 0;\n" //
-                + "case CONTINUE_STATEMENT:\n" //
-                + "  return 1;\n" //
-                + "case RETURN_STATEMENT:\n" //
-                + "  return 2;\n" //
-                + "}");
+    trimming("switch (n.getNodeType()) {\n" + "")
+            .to("switch (n.getNodeType()) {\n" + "");
   }
 
   @Test public void switchSimplifyNoDefault() {
-    trimming("" //
-        + "switch (x) {" //
-        + "  case 1:" //
-        + "    System.out.println('!');" //
-        + "  case 2:" //
-        + "    break;" //
-        + "  case 3:" //
-        + "    System.out.println('!');" //
-        + "    break;" //
-        + "   case 4:" //
-        + "    break;" //
-        + "  }")
-            .to("" //
-                + "switch (x) {" //
-                + "  case 1:" //
-                + "  case 3:" //
-                + "    System.out.println('!');" //
-                + "    break;" //
-                + "  case 2:" //
-                + "  case 4:" //
-                + "    break;" //
-                + "  }");
+    trimming("switch (x) {" + "")
+            .to("switch (x) {" + "");
   }
 
   @Test public void switchSimplifyParenthesizedCases() {
-    trimming("" //
-        + "switch (checkMatrix(A)) {\n" //
-        + "  case -1: {\n" //
-        + "    System.out.println(\"1\");\n" //
-        + "    System.exit(0);\n" //
-        + "  }\n" //
-        + "  case -2: {\n" //
-        + "    System.out.println(\"2\");\n" //
-        + "    System.exit(0);\n" //
-        + "  }\n" //
-        + "  case 0: {\n" //
-        + "    System.out.println(\"3\");\n" //
-        + "    break;\n" //
-        + "  }\n" //
-        + "}")
-            .to("" //
-                + "switch (checkMatrix(A)) {\n" //
-                + "case -1: {\n" //
-                + "  System.out.println(\"1\");\n" //
-                + "  System.exit(0);\n" //
-                + "} {\n" //
-                + "  System.out.println(\"2\");\n" //
-                + "  System.exit(0);\n" //
-                + "} {\n" //
-                + "  System.out.println(\"3\");\n" //
-                + "  break;\n" //
-                + "}\n" //
-                + "case -2: {\n" //
-                + "  System.out.println(\"2\");\n" //
-                + "  System.exit(0);\n" //
-                + "} {\n" //
-                + "  System.out.println(\"3\");\n" //
-                + "  break;\n" //
-                + "}\n" //
-                + "case 0: {\n" //
-                + "  System.out.println(\"3\");\n" //
-                + "  break;\n" //
-                + "}\n" //
-                + "}");
+    trimming("switch (checkMatrix(A)) {\n" + "")
+            .to("switch (checkMatrix(A)) {\n" + "");
     // switch (checkMatrix(A)) {
     // case -1: {
     // System.out.println("1");
@@ -605,43 +363,11 @@ import org.junit.runners.*;
   }
 
   @Test public void switchSimplifyWithDefault() {
-    trimming("" + "switch (internalDelta.getKind()) {" //
-        + "case IResourceDelta.ADDED:" //
-        + "case IResourceDelta.CHANGED:" //
-        + "  // handle added and changed resource" //
-        + "  // handle added and changed resource" //
-        + "  addMarkers(internalDelta.getResource());" //
-        + "  // return true to continue visiting children." //
-        + "  // return true to continue visiting children." //
-        + "  return true;" //
-        + "default:" //
-        + "  return true; // return true to continue visiting children." //
-        + "}").stays();
+    trimming("switch (internalDelta.getKind()) {" + "").stays();
   }
 
   @Test public void switchSimplifyWithDefault1() {
-    trimming("" //
-        + "switch (x) {" //
-        + "  case 1:" //
-        + "    System.out.println('!');" //
-        + "  case 2:" //
-        + "    break;" //
-        + "  case 3:" //
-        + "    System.out.println('!');" //
-        + "    break;" //
-        + "   default:" //
-        + "     break;" //
-        + "   case 4:" //
-        + "    break;" //
-        + "  }")
-            .to("" //
-                + "switch (x) {" //
-                + "  case 1:" //
-                + "  case 3:" //
-                + "    System.out.println('!');" //
-                + "    break;" //
-                + "  default:" //
-                + "    break;" //
-                + "  }");
+    trimming("switch (x) {" + "")
+            .to("switch (x) {" + "");
   }
 }

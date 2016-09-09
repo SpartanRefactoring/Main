@@ -27,11 +27,11 @@ public interface eclipse {
   ImageIcon icon = new ImageIcon(new eclipse() {
   }.getClass().getResource(ICON_PATH));
 
-  public static void apply(final ICompilationUnit cu) {
+  static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
   }
 
-  public static void apply(final ICompilationUnit cu, final ITextSelection t) {
+  static void apply(final ICompilationUnit cu, final ITextSelection t) {
     for (final Spartanization s : safeSpartanizations)
       try {
         s.setCompilationUnit(cu);
@@ -42,18 +42,17 @@ public interface eclipse {
       }
   }
 
-  public static void apply(final ICompilationUnit cu, final Range r) {
+  static void apply(final ICompilationUnit cu, final Range r) {
     apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
 
-  /** @param u A compilation unit for reference - you give me an arbitrary
-   *        compilation unit from the project and I'll find the root of the
-   *        project and do my magic.
-   * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times put a "new NullProgressMonitor()"
-   * @return List of all compilation units in the current project
-   * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
+  /**
+   * @param u  A compilation unit for reference - you give me an arbitrary compilation unit from the project and I'll find the root of the project and do my magic.
+   * @param pm  A standard  {@link IProgressMonitor}  - if you don't care about operation times put a "new NullProgressMonitor()"
+   * @return  List of all compilation units in the current project
+   * @throws JavaModelException  don't forget to catch 
+   */
+  static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
     pm.beginTask("Gathering project information...", 1);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {

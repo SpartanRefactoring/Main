@@ -40,6 +40,6 @@ import il.org.spartan.spartanizer.spartanizations.*;
     azzert.that(s, iz("{" + from + "}"));
     final PostfixExpression e = extract.findFirstPostfix(s);
     assert e != null;
-    azzert.that("" + e, is("i--"));
+    azzert.that(e + "", is("i--"));
   }
 }

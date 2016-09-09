@@ -42,7 +42,7 @@ public class typeTest {
     private double d = c1 / c2;
     private int i = (int) d;
     private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
-    private long l = (long) (++d * f--);
+    private long l = (long) (1L * ++d * f--);
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
 
     // basic tests for assignments
@@ -167,7 +167,7 @@ public class typeTest {
     }
 
     @Test public void axiomExpression15() {
-      azzert.that(Axiom.type((float) _12 + (char) _13), is(FLOAT));
+      azzert.that(Axiom.type((char) _13 + (float) _12), is(FLOAT));
     }
 
     @Test public void axiomExpression2() {
@@ -175,15 +175,15 @@ public class typeTest {
     }
 
     @Test public void axiomExpression3() {
-      azzert.that(Axiom.type(67 >> 2l), is(INT));
+      azzert.that(Axiom.type(16), is(INT));
     }
 
     @Test public void axiomExpression4() {
-      azzert.that(Axiom.type(67L >> 2l), is(LONG));
+      azzert.that(Axiom.type(16L), is(LONG));
     }
 
     @Test public void axiomExpression5() {
-      azzert.that(Axiom.type(2 * 3 / 4 + 1. - 5), is(DOUBLE));
+      azzert.that(Axiom.type(-3.0), is(DOUBLE));
     }
 
     @Test public void axiomExpression6() {
@@ -195,11 +195,11 @@ public class typeTest {
     }
 
     @Test public void axiomExpression8() {
-      azzert.that(Axiom.type((2 * 3 / 4 + 1L - 5) % 4), is(LONG));
+      azzert.that(Axiom.type((-3L) % 4), is(LONG));
     }
 
     @Test public void axiomExpression9() {
-      azzert.that(Axiom.type(-1.0 / 2 * 3 / 4 * 5 * 6 / 7 / 8 / 9), is(DOUBLE));
+      azzert.that(Axiom.type(-0.022321428571428572), is(DOUBLE));
     }
 
     @Test public void axiomFloat() {
@@ -891,7 +891,7 @@ public class typeTest {
     }
 
     @Test public void OnaryPlusMinusSemantics01() {
-      azzert.that(Axiom.type(+i), is(INT));
+      azzert.that(Axiom.type(i), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics02() {
@@ -900,11 +900,11 @@ public class typeTest {
 
     @Test public void OnaryPlusMinusSemantics03() {
       final short x = 0;
-      azzert.that(Axiom.type(+x), is(INT));
+      azzert.that(Axiom.type(x), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics04() {
-      azzert.that(Axiom.type(+d), is(DOUBLE));
+      azzert.that(Axiom.type(d), is(DOUBLE));
     }
 
     @Test public void OnaryPlusMinusSemantics05() {
@@ -912,7 +912,7 @@ public class typeTest {
     }
 
     @Test public void OnaryPlusMinusSemantics06() {
-      azzert.that(Axiom.type(+b), is(INT));
+      azzert.that(Axiom.type(b), is(INT));
     }
 
     @Test public void OnaryPlusMinusSemantics07() {

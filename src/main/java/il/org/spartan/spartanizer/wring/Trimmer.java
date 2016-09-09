@@ -38,7 +38,7 @@ public class Trimmer extends Spartanization {
   }
 
   public Trimmer(final Toolbox toolbox) {
-    super("Trimmer");
+    super("Spartanize");
     this.toolbox = toolbox;
   }
 
@@ -77,7 +77,7 @@ public class Trimmer extends Spartanization {
           if (make != null) {
             if (LogManager.isActive())
               // LogManager.initialize();
-              LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), make.description, "" + make.lineNumber);
+              LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), make.description, make.lineNumber + "");
             make.go(r, null);
           }
         }

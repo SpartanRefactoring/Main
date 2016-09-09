@@ -339,36 +339,36 @@ import il.org.spartan.spartanizer.ast.*;
 
   @Test public void test55() {
     c.collect(complex);
-    azzert.that("" + c.plus(), containsString("a"));
+    azzert.that(c.plus() + "", containsString("a"));
   }
 
   @Test public void test56() {
     c.collect(complex);
-    azzert.that("" + c.plus(), containsString("d"));
+    azzert.that(c.plus() + "", containsString("d"));
   }
 
   @Test public void test57() {
     c.collect(complex);
-    azzert.that("" + c.plus(), containsString("e"));
+    azzert.that(c.plus() + "", containsString("e"));
   }
 
   @Test public void test58() {
     c.collect(complex);
-    azzert.that("" + c.plus(), containsString("d * e"));
+    azzert.that(c.plus() + "", containsString("d * e"));
   }
 
   @Test public void test59() {
     c.collect(complex);
-    azzert.that("" + c.minus(), containsString("b * c"));
+    azzert.that(c.minus() + "", containsString("b * c"));
   }
 
   @Test public void test60() {
     c.collect(complex);
-    azzert.that("" + c.plus(), iz("[a,d*e]"));
+    azzert.that(c.plus() + "", iz("[a,d*e]"));
   }
 
   @Test public void test61() {
     c.collect(complex);
-    azzert.that("" + c.minus(), iz("[b*c,x]"));
+    azzert.that(c.minus() + "", iz("[b*c,x]"));
   }
 }

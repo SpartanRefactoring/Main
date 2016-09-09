@@ -111,21 +111,21 @@ import il.org.spartan.spartanizer.java.*;
     operands.add(duplicate.of(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
-    azzert.that("" + refit, is("3 * 4 + 5"));
+    azzert.that(refit + "", is("3 * 4 + 5"));
   }
 
   @Test @Ignore public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
-    azzert.that("" + operands.get(0), is("1"));
-    azzert.that("" + operands.get(1), is("2 * 3"));
+    azzert.that(operands.get(0) + "", is("1"));
+    azzert.that(operands.get(1) + "", is("2 * 3"));
     assert ExpressionComparator.ADDITION.sort(operands);
-    azzert.that("" + operands.get(0), is("2 * 3"));
-    azzert.that("" + operands.get(1), is("1"));
+    azzert.that(operands.get(0) + "", is("2 * 3"));
+    azzert.that(operands.get(1) + "", is("1"));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
-    azzert.that("" + refit, is("2 * 3 + 1"));
+    azzert.that(refit + "", is("2 * 3 + 1"));
   }
 
   @Test public void remainderDoesntAssociate() {
@@ -150,11 +150,11 @@ import il.org.spartan.spartanizer.java.*;
     final InfixExpression e = i("1+2");
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit.hasExtendedOperands(), is(false));
-    azzert.that("" + refit, is("a + b"));
+    azzert.that(refit + "", is("a + b"));
   }
 
   @Test public void subjectOperandsIsCorrect() {
-    azzert.that("" + subject.operands(hop.operands(duplicate.of(i("a*b*c")))).to(i("1+2+3").getOperator()), is("a + b + c"));
+    azzert.that(subject.operands(hop.operands(duplicate.of(i("a*b*c")))).to(i("1+2+3").getOperator()) + "", is("a + b + c"));
   }
 
   @Test public void subjectOperandsNotNull() {
