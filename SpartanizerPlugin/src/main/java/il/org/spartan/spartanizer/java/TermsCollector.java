@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Collects the {@link Term} found in an {@link InfixExpression}, organizing
- * them in three output fields: {@link #plus}, {@link #minus} and
- * {@link #all}.
+ * them in three output fields: {@link #plus}, {@link #minus} and {@link #all}.
  * @author Yossi Gil
  * @since 2016 */
 public class TermsCollector {

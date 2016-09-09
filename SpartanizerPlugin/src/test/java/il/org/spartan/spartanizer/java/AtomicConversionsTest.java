@@ -43,7 +43,7 @@ public class AtomicConversionsTest {
     azzert.aye(atomic.isBoolean(b1 & b2));
     azzert.aye(atomic.isBoolean(b1 | b2));
     azzert.aye(atomic.isBoolean(b1 ? b2 : !b2));
-    azzert.aye(atomic.isBoolean(b1 | b2 & (b2^b1)));
+    azzert.aye(atomic.isBoolean(b1 | b2 & (b2 ^ b1)));
     azzert.aye(atomic.isBoolean(b1 ^ b2));
   }
 

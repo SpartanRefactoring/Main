@@ -9,13 +9,14 @@ import org.junit.runners.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
+@Ignore //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) public class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimming("" + //
         "    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + //
         "    return $;\n" + //
-        "  }").to(null);
+        "  }").stays();
   }
 
   @Test public void forwardDeclaration1() {
@@ -116,39 +117,39 @@ import org.junit.runners.*;
   @Test public void inlineSingleUse06() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.out.println(coes.size()); ")
-            .to(null);
+            .stays();
   }
 
   @Test public void inlineSingleUse08() {
     trimming(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size());     S.out.println(outdated.size()); ")
-            .to(null);
+            .stays();
   }
 
   @Test public void inlineSingleUse09() {
     trimming(
         " final A a = new D().new A(V){\nABRA\n{\nCADABRA\n{V;);   assertEquals(5, a.new Context().lineCount());   final PureIterable&lt;Mutant&gt; ms = a.generateMutants();   assertEquals(2, count(ms));   final PureIterator&lt;Mutant&gt; i = ms.iterator();    azzert.aye(i.hasNext());   assertEquals(V;{\nABRA\nABRA\n{\nCADABRA\n{\nV;, i.next().text);    azzert.aye(i.hasNext());   assertEquals(V;{\nABRA\n{\nCADABRA\nCADABRA\n{\nV;, i.next().text);    azzert.nay(i.hasNext());  ")
-            .to(null);
+            .stays();
   }
 
   @Test public void inlineSingleUse10() {
     trimming(
         "      final A a = new A(\"{\nABRA\n{\nCADABRA\n{\");        assertEquals(5, a.new Context().lineCount());        final PureIterable<Mutant> ms = a.mutantsGenerator();        assertEquals(2, count(ms));        final PureIterator<Mutant> i = ms.iterator();         azzert.aye(i.hasNext());        assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text);         azzert.aye(i.hasNext());        assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text);         azzert.nay(i.hasNext());")
-            .to(null);
+            .stays();
   }
 
   @Test public void issue06A() {
     trimming("x/a*-b/-c*- - - d / d")//
         .to("-x/a * b/ c * d/d")//
-        .to(null);
+        .stays();
   }
 
   @Test public void issue06C2() {
-    trimming("-a * b/ c * d/d").to(null);
+    trimming("-a * b/ c * d/d").stays();
   }
 
   @Test public void issue06C3() {
-    trimming("-a * b/ c * d").to(null);
+    trimming("-a * b/ c * d").stays();
   }
 
   @Test public void issue120_1() {
@@ -170,7 +171,7 @@ import org.junit.runners.*;
 
   @Test public void issue54ForPlainUseInCondition() {
     trimming("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-        .to(null);
+        .stays();
   }
 
   @Test public void issue54ForPlainUseInInitializer() {
@@ -180,7 +181,7 @@ import org.junit.runners.*;
 
   @Test public void issue54ForPlainUseInUpdaters() {
     trimming("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-        .to(null);
+        .stays();
   }
 
   public void issue62b() {
@@ -188,7 +189,7 @@ import org.junit.runners.*;
         .to("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").to(null);
+        .to("int f(int i) { for(;i<100;++i){} return i; }").stays();
   }
 
   @Test public void issue74a() {
@@ -222,7 +223,7 @@ import org.junit.runners.*;
   }
 
   @Test public void reanmeReturnVariableToDollar04() {
-    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").to(null);
+    trimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();").stays();
   }
 
   @Test public void reanmeReturnVariableToDollar05() {
@@ -252,7 +253,7 @@ import org.junit.runners.*;
   @Test public void reanmeReturnVariableToDollar09() {
     trimming(
         " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.out.println(res.j);   return null;")
-            .to(null);
+            .stays();
   }
 
   @Test public void reanmeReturnVariableToDollar10() {
@@ -262,7 +263,7 @@ import org.junit.runners.*;
   }
 
   @Test public void reanmeReturnVariableToDollar11() {
-    trimming("").to(null);
+    trimming("").stays();
   }
 
   @Test public void sameAssignmentDifferentTypes() {
@@ -272,7 +273,7 @@ import org.junit.runners.*;
         + "  int y;\n" //
         + "  x = 0;\n" //
         + "  y = 0;\n" //
-        + "}").to(null);
+        + "}").stays();
   }
 
   @Test public void shortestOperand09() {
@@ -284,15 +285,15 @@ import org.junit.runners.*;
   }
 
   @Test public void dontELiminateSwitch() {
-    trimming("switch (a) { default: }").to(null);
+    trimming("switch (a) { default: }").stays();
   }
 
-  @Test   public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
-    trimming("if(a) { int i = 3; }").to(null);
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+    trimming("if(a) { int i = 3; }").stays();
   }
 
-  @Test   public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
-    trimming("if(a) { Object o; }").to(null);
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+    trimming("if(a) { Object o; }").stays();
   }
 
   @Test public void ifToSwitch1() {
@@ -320,7 +321,7 @@ import org.junit.runners.*;
         + "  }\n");
   }
 
-  @Test   public void renameVariableUnderscore2() {
+  @Test public void renameVariableUnderscore2() {
     trimming("class A {int _; int f(int _) {return _;}}").to("class A {int __; int f(int __) {return __;}}");
   }
 
@@ -328,24 +329,24 @@ import org.junit.runners.*;
     trimming("Character x = new Character(new Character(f()));").to("Character x = Character.valueOf(Character.valueOf(f()));");
   }
 
-  @Test   public void shortestOperand05() {
+  @Test public void shortestOperand05() {
     trimming("    final W s = new W(\"bob\");\n" + //
         "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
-  @Test   public void stringFromBuilderAddParenthesis() {
+  @Test public void stringFromBuilderAddParenthesis() {
     trimming("new StringBuilder(f()).append(1+1).toString()").to("\"\" + f() + (1+1)");
   }
 
-  @Test   public void stringFromBuilderGeneral() {
+  @Test public void stringFromBuilderGeneral() {
     trimming("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()").to("myName + \"\'s grade is \" + 100");
   }
 
-  @Test   public void stringFromBuilderNoStringComponents() {
+  @Test public void stringFromBuilderNoStringComponents() {
     trimming("new StringBuilder(0).append(1).toString()").to("\"\" + 0 + 1");
   }
 
-  @Test   public void switchBrakesToReturnCaseWithoutSequencer() {
+  @Test public void switchBrakesToReturnCaseWithoutSequencer() {
     trimming("" //
         + " switch (x) {\n" //
         + "     case 1:\n"//
@@ -372,7 +373,7 @@ import org.junit.runners.*;
                 + " return 2;\n");
   }
 
-  @Test   public void switchBrakesToReturnDefaultWithSequencer() {
+  @Test public void switchBrakesToReturnDefaultWithSequencer() {
     trimming("" //
         + " switch (x) {\n" //
         + "     case 1:\n"//
@@ -402,7 +403,7 @@ import org.junit.runners.*;
                 + " }");
   }
 
-  @Test   public void switchBreakesToReturnAllCases() {
+  @Test public void switchBreakesToReturnAllCases() {
     trimming("" //
         + " switch (x) {\n" //
         + "     case 1:\n"//
@@ -429,7 +430,7 @@ import org.junit.runners.*;
                 + " return 3;");
   }
 
-  @Test   public void switchSimplifiyNoSequencer() {
+  @Test public void switchSimplifiyNoSequencer() {
     trimming("" //
         + "switch(x) {\n" //
         + "case 1:\n" //
@@ -448,7 +449,7 @@ import org.junit.runners.*;
                 + "}");
   }
 
-  @Test   public void switchSimplifyCaseAfterDefault2() {
+  @Test public void switchSimplifyCaseAfterDefault2() {
     trimming("" //
         + "switch (e.getNodeType()) {\n" //
         + "default:\n" //
@@ -471,7 +472,7 @@ import org.junit.runners.*;
                 + "}");
   }
 
-  @Test   public void switchSimplifyCaseAfterefault3() {
+  @Test public void switchSimplifyCaseAfterefault3() {
     trimming("" //
         + "switch (totalNegation) {\n" //
         + "default:\n" //
@@ -494,7 +495,7 @@ import org.junit.runners.*;
                 + "}");
   }
 
-  @Test   public void switchSimplifyCasesMergeWithDefault() {
+  @Test public void switchSimplifyCasesMergeWithDefault() {
     trimming("" //
         + "switch (n.getNodeType()) {\n" //
         + "default:\n" //
@@ -521,7 +522,7 @@ import org.junit.runners.*;
                 + "}");
   }
 
-  @Test   public void switchSimplifyNoDefault() {
+  @Test public void switchSimplifyNoDefault() {
     trimming("" //
         + "switch (x) {" //
         + "  case 1:" //
@@ -546,7 +547,7 @@ import org.junit.runners.*;
                 + "  }");
   }
 
-  @Test   public void switchSimplifyParenthesizedCases() {
+  @Test public void switchSimplifyParenthesizedCases() {
     trimming("" //
         + "switch (checkMatrix(A)) {\n" //
         + "  case -1: {\n" //
@@ -602,7 +603,7 @@ import org.junit.runners.*;
     // }
   }
 
-  @Test   public void switchSimplifyWithDefault() {
+  @Test public void switchSimplifyWithDefault() {
     trimming("" + "switch (internalDelta.getKind()) {" //
         + "case IResourceDelta.ADDED:" //
         + "case IResourceDelta.CHANGED:" //
@@ -614,10 +615,10 @@ import org.junit.runners.*;
         + "  return true;" //
         + "default:" //
         + "  return true; // return true to continue visiting children." //
-        + "}").to(null);
+        + "}").stays();
   }
 
-  @Test   public void switchSimplifyWithDefault1() {
+  @Test public void switchSimplifyWithDefault1() {
     trimming("" //
         + "switch (x) {" //
         + "  case 1:" //

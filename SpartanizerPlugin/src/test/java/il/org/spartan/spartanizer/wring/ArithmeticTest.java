@@ -59,13 +59,13 @@ public class ArithmeticTest {
           .to("5*5 -4*9")//
           .to("25-36")//
           .to("-11")//
-     .stays();
+          .stays();
     }
 
     @Test public void issue92_19() {
       trimming("a*-q + s*s")//
           .to("s*s -a*q")//
-     .stays();
+          .stays();
     }
 
     @Test public void issue92_2() {
@@ -75,7 +75,7 @@ public class ArithmeticTest {
     @Test public void issue92_20() {
       trimming("4*-9")//
           .to("-36")//
-     .stays()//
+          .stays()//
       ;
     }
 
@@ -136,13 +136,13 @@ public class ArithmeticTest {
           .to("3-5*9.0")//
           .to("3-45.0")//
           .to("-42.0")//
-     .stays();
+          .stays();
     }
 
     @Test public void issue92_34() {
       trimming("-a+5")//
           .to("5-a")//
-     .stays();
+          .stays();
     }
 
     @Test public void issue92_35() {
