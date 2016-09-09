@@ -21,7 +21,7 @@ public class TypeNamesCollector {
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @SuppressWarnings("synthetic-access") @Override public boolean visit(final SimpleType t) {
-        basket.add("" + last(t.getName()));
+        basket.add(last(t.getName()) + "");
         return true;
       }
 

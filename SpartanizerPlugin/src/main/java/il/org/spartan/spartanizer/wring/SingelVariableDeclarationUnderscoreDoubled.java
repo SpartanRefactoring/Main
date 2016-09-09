@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
 
   public static boolean suppressedUnused(final SingleVariableDeclaration d) {
     for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
-      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals("" + ((SingleMemberAnnotation) m).getTypeName())) {
+      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName() + "")) {
         final Expression e = ((SingleMemberAnnotation) m).getValue();
         if (e instanceof StringLiteral)
           return "unused".equals(((StringLiteral) e).getLiteralValue());
@@ -106,6 +106,8 @@ import il.org.spartan.spartanizer.wring.Wring.*;
     }
 
     @Override public boolean visit(final SimpleName n) {
+      // TODO: Ori, this looks like a bug to me. When shouldn't these two be
+      // equal?
       if (n.equals(n.getIdentifier()))
         c = false;
       return c;

@@ -54,17 +54,6 @@ public enum step {
     return ¢.catchClauses();
   }
 
-  @SuppressWarnings("rawtypes") public static List<ASTNode> marchingList(final ASTNode ¢) {
-    final List<ASTNode> $ = new ArrayList<>();
-    final List lst = ¢.structuralPropertiesForType();
-    for (final Object s : lst) {
-      final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
-      if (iz.astNode(child))
-        $.add(az.astNode(child));
-    }
-    return $;
-  }
-
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}
    * @param ¢ JD
    * @return else part of the parameter */
@@ -115,8 +104,8 @@ public enum step {
     return extract.core($.getExpression());
   }
 
-  public static Expression expression(final ConditionalExpression e) {
-    return extract.core(e.getExpression());
+  public static Expression expression(final ConditionalExpression x) {
+    return extract.core(x.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
@@ -200,6 +189,17 @@ public enum step {
     return ¢.getLeftOperand();
   }
 
+  @SuppressWarnings("rawtypes") public static List<ASTNode> marchingList(final ASTNode ¢) {
+    final List<ASTNode> $ = new ArrayList<>();
+    final List lst = ¢.structuralPropertiesForType();
+    for (final Object s : lst) {
+      final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
+      if (iz.astNode(child))
+        $.add(az.astNode(child));
+    }
+    return $;
+  }
+
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
     return ¢.modifiers();
   }
@@ -232,16 +232,16 @@ public enum step {
     return a == null ? null : a.getOperator();
   }
 
-  public static InfixExpression.Operator operator(final InfixExpression e) {
-    return e == null ? null : e.getOperator();
+  public static InfixExpression.Operator operator(final InfixExpression x) {
+    return x == null ? null : x.getOperator();
   }
 
-  public static PostfixExpression.Operator operator(final PostfixExpression e) {
-    return e == null ? null : e.getOperator();
+  public static PostfixExpression.Operator operator(final PostfixExpression x) {
+    return x == null ? null : x.getOperator();
   }
 
-  public static PrefixExpression.Operator operator(final PrefixExpression e) {
-    return e == null ? null : e.getOperator();
+  public static PrefixExpression.Operator operator(final PrefixExpression x) {
+    return x == null ? null : x.getOperator();
   }
 
   /** Expose the list of parameters in a {@link MethodDeclaration}
@@ -316,8 +316,8 @@ public enum step {
     return ¢.getThenStatement();
   }
 
-  public static Type type(final CastExpression e) {
-    return e.getType();
+  public static Type type(final CastExpression x) {
+    return x.getType();
   }
 
   @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {

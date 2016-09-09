@@ -31,14 +31,15 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Yossi Gil
  * @author Niv Shalmon
- * @since 2016-08-XX */
+ * @since 2016-08 */
+// TODO: Niv, eliminate this class
 public enum PrudentType {
   // Those anonymous characters that known little or nothing about themselves
   NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
   NONNULL("!null", "e.g., new Object() and that's about it"), //
   BAPTIZED("!double&!long&!int", "an object of some type, for which we have a name only"), //
   VOID("void", "nothing at all"),
-  // Doubtful types, from four fold uncertainty down to bilalteral
+  // Doubtful types, from four fold uncertainty down to bilateral
   // schizophrenia" .
   ALPHANUMERIC("String|double|float|long|int|char|short|byte", "only in binary plus: f()+g(), 2 + f(), nor f() + null"), //
   NUMERIC("double|float|long|int|char|short|byte", "must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2"), //
@@ -122,12 +123,12 @@ public enum PrudentType {
     }
   }
 
-  /** @param e JD
+  /** @param x JD
    * @return The most specific Type information that can be deduced about the
    *         expression, or {@link #NOTHING} if it cannot decide. Will never
    *         return null */
-  public static PrudentType prudent(final Expression e) {
-    return prudent(e, null, null);
+  public static PrudentType prudent(final Expression x) {
+    return prudent(x, null, null);
   }
 
   /** A version of {@link #prudent(Expression)} that receives the a list of the
@@ -138,9 +139,9 @@ public enum PrudentType {
    * be used if the size of the list doesn't match that of
    * extract.allOperands().
    * @param ts list of types of operands. Must be at least of size 2 */
-  static PrudentType prudent(final Expression e, final List<PrudentType> ts) {
+  static PrudentType prudent(final Expression x, final List<PrudentType> ts) {
     assert ts.size() >= 2;
-    switch (e.getNodeType()) {
+    switch (x.getNodeType()) {
       case NULL_LITERAL:
         return NULL;
       case CHARACTER_LITERAL:
@@ -150,25 +151,25 @@ public enum PrudentType {
       case BOOLEAN_LITERAL:
         return BOOLEAN;
       case NUMBER_LITERAL:
-        return prudentType((NumberLiteral) e);
+        return prudentType((NumberLiteral) x);
       case CAST_EXPRESSION:
-        return prudentType((CastExpression) e);
+        return prudentType((CastExpression) x);
       case PREFIX_EXPRESSION:
-        return prudentType((PrefixExpression) e, lisp.first(ts));
+        return prudentType((PrefixExpression) x, lisp.first(ts));
       case INFIX_EXPRESSION:
-        return prudentType((InfixExpression) e, ts);
+        return prudentType((InfixExpression) x, ts);
       case POSTFIX_EXPRESSION:
-        return prudentType((PostfixExpression) e, lisp.first(ts));
+        return prudentType((PostfixExpression) x, lisp.first(ts));
       case PARENTHESIZED_EXPRESSION:
-        return prudentType((ParenthesizedExpression) e, lisp.first(ts));
+        return prudentType((ParenthesizedExpression) x, lisp.first(ts));
       case CLASS_INSTANCE_CREATION:
-        return prudentType((ClassInstanceCreation) e);
+        return prudentType((ClassInstanceCreation) x);
       case METHOD_INVOCATION:
-        return prudentType((MethodInvocation) e);
+        return prudentType((MethodInvocation) x);
       case CONDITIONAL_EXPRESSION:
-        return prudentType((ConditionalExpression) e, lisp.first(ts), lisp.second(ts));
+        return prudentType((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
       case ASSIGNMENT:
-        return prudentType((Assignment) e, lisp.first(ts));
+        return prudentType((Assignment) x, lisp.first(ts));
       default:
         return NOTHING;
     }
@@ -177,8 +178,8 @@ public enum PrudentType {
   /** A version of {@link #prudent(Expression)} that receives the operand's type
    * for a single operand expression. The call kind(e,null) is equivalent to
    * kind(e) */
-  static PrudentType prudent(final Expression e, final PrudentType t) {
-    return prudent(e, t, null);
+  static PrudentType prudent(final Expression x, final PrudentType t) {
+    return prudent(x, t, null);
   }
 
   /** A version of {@link #prudent(Expression)} that receives the operands' type
@@ -188,11 +189,11 @@ public enum PrudentType {
    *        the then expression of the conditional, or null if unknown
    * @param t2 the type of the left hand operand of the expression, the type of
    *        the else expression of the conditional, or null if unknown */
-  static PrudentType prudent(final Expression e, final PrudentType t1, final PrudentType t2) {
+  static PrudentType prudent(final Expression x, final PrudentType t1, final PrudentType t2) {
     final List<PrudentType> ¢ = new ArrayList<>();
     ¢.add(t1);
     ¢.add(t2);
-    return prudent(e, ¢);
+    return prudent(x, ¢);
   }
 
   /** Generates a PrudentType from a String name, if the String name represents
@@ -208,17 +209,17 @@ public enum PrudentType {
     return !$.isNoInfo() ? $ : prudent(x.getRightHandSide()).isNumeric() ? NUMERIC : prudent(x.getRightHandSide());
   }
 
-  private static PrudentType prudentType(final CastExpression e) {
-    return typeSwitch("" + step.type(e), BAPTIZED);
+  private static PrudentType prudentType(final CastExpression x) {
+    return typeSwitch(step.type(x) + "", BAPTIZED);
   }
 
   private static PrudentType prudentType(final ClassInstanceCreation c) {
-    return typeSwitch("" + c.getType(), NONNULL);
+    return typeSwitch(c.getType() + "", NONNULL);
   }
 
-  private static PrudentType prudentType(final ConditionalExpression e, final PrudentType t1, final PrudentType t2) {
-    final PrudentType $ = t1 != null ? t1 : prudent(e.getThenExpression());
-    final PrudentType ¢2 = t2 != null ? t2 : prudent(e.getElseExpression());
+  private static PrudentType prudentType(final ConditionalExpression x, final PrudentType t1, final PrudentType t2) {
+    final PrudentType $ = t1 != null ? t1 : prudent(x.getThenExpression());
+    final PrudentType ¢2 = t2 != null ? t2 : prudent(x.getElseExpression());
     // If we don't know much about one operand but do know enough about the
     // other, we can still learn something
     return $ == ¢2 ? $
@@ -228,9 +229,9 @@ public enum PrudentType {
                     : NOTHING; //
   }
 
-  private static PrudentType prudentType(final InfixExpression e, final List<PrudentType> ts) {
-    final InfixExpression.Operator o = e.getOperator();
-    final List<Expression> es = extract.allOperands(e);
+  private static PrudentType prudentType(final InfixExpression x, final List<PrudentType> ts) {
+    final InfixExpression.Operator o = x.getOperator();
+    final List<Expression> es = extract.allOperands(x);
     assert es.size() >= 2;
     final List<PrudentType> ¢ = new ArrayList<>();
     if (ts.size() != es.size())
@@ -261,17 +262,17 @@ public enum PrudentType {
                 : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
   }
 
-  private static PrudentType prudentType(final ParenthesizedExpression e, final PrudentType t) {
-    return t != null ? t : prudent(extract.core(e));
+  private static PrudentType prudentType(final ParenthesizedExpression x, final PrudentType t) {
+    return t != null ? t : prudent(extract.core(x));
   }
 
-  private static PrudentType prudentType(final PostfixExpression e, final PrudentType t1) {
-    return (t1 != null ? t1 : prudent(e.getOperand())).asNumeric(); // see
+  private static PrudentType prudentType(final PostfixExpression x, final PrudentType t1) {
+    return (t1 != null ? t1 : prudent(x.getOperand())).asNumeric(); // see
                                                                     // testInDecreamentSemantics
   }
 
-  private static PrudentType prudentType(final PrefixExpression e, final PrudentType t1) {
-    return (t1 != null ? t1 : prudent(e.getOperand())).under(e.getOperator());
+  private static PrudentType prudentType(final PrefixExpression x, final PrudentType t1) {
+    return (t1 != null ? t1 : prudent(x.getOperand())).under(x.getOperator());
   }
 
   private static PrudentType typeSwitch(final String s, final PrudentType $) {

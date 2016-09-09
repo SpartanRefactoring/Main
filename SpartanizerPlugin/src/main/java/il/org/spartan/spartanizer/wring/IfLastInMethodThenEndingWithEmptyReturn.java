@@ -49,11 +49,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(step.then(s)));
-    if (deleteMe == null || deleteMe.getExpression() != null)
-      return null;
-    if (exclude != null)
-      exclude.equals(s);
-    return new Rewrite(description(s), s) {
+    return deleteMe == null || deleteMe.getExpression() != null || exclude != null && exclude.equals(s) ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }

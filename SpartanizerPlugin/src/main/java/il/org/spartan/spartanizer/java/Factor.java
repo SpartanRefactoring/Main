@@ -5,14 +5,14 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-// TOOD: Who wrote this class?
+// TOOD Niv: Who wrote this class?
 class Factor {
-  static Factor divide(final Expression e) {
-    return new Factor(true, e);
+  static Factor divide(final Expression x) {
+    return new Factor(true, x);
   }
 
-  static Factor times(final Expression e) {
-    return new Factor(false, e);
+  static Factor times(final Expression x) {
+    return new Factor(false, x);
   }
 
   private final boolean divider;

@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
@@ -37,13 +38,19 @@ public enum sideEffects {
       TYPE_LITERAL, //
   };
   private static final int[] alwaysHave = { //
-      SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, ASSIGNMENT, POSTFIX_EXPRESSION, };
+      SUPER_CONSTRUCTOR_INVOCATION, //
+      SUPER_METHOD_INVOCATION, //
+      METHOD_INVOCATION, //
+      CLASS_INSTANCE_CREATION, //
+      ASSIGNMENT, //
+      POSTFIX_EXPRESSION, //
+  };
 
-  public static boolean deterministic(final Expression e) {
-    if (!free(e))
+  public static boolean deterministic(final Expression x) {
+    if (!free(x))
       return false;
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
-    e.accept(new ASTVisitor() {
+    x.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.set(Boolean.FALSE);
         return false;
@@ -52,47 +59,37 @@ public enum sideEffects {
     return $.get().booleanValue();
   }
 
-  public static boolean free(final Expression e) {
-    if (e == null || iz.is(e, alwaysFree))
+  public static boolean free(final ConditionalExpression x) {
+    return free(expression(x), then(x), elze(x));
+  }
+
+  public static boolean free(final Expression ¢) {
+    if (¢ == null || iz.is(¢, alwaysFree))
       return true;
-    if (iz.is(e, alwaysHave))
+    if (iz.is(¢, alwaysHave))
       return false;
-    switch (e.getNodeType()) {
+    switch (¢.getNodeType()) {
       case ARRAY_CREATION:
-        return free((ArrayCreation) e);
+        return free((ArrayCreation) ¢);
       case ARRAY_ACCESS:
-        return free(((ArrayAccess) e).getArray(), ((ArrayAccess) e).getIndex());
+        return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
       case CAST_EXPRESSION:
-        return free(step.expression(e));
+        return free(step.expression(¢));
       case INSTANCEOF_EXPRESSION:
-        return free(step.left((InstanceofExpression) e));
+        return free(step.left(az.instanceofExpression(¢)));
       case PREFIX_EXPRESSION:
-        return free((PrefixExpression) e);
+        return free(az.prefixExpression(¢));
       case PARENTHESIZED_EXPRESSION:
-        return free(core(e));
+        return free(core(¢));
       case INFIX_EXPRESSION:
-        return free(extract.allOperands((InfixExpression) e));
+        return free(extract.allOperands(az.infixExpression(¢)));
       case CONDITIONAL_EXPRESSION:
-        return freeConditionalExpression(az.conditionalExpression(e));
+        return free(az.conditionalExpression(¢));
       case ARRAY_INITIALIZER:
-        return free(((ArrayInitializer) e).expressions());
+        return free(step.expressions(az.arrayInitializer(¢)));
       default:
-        throw new RuntimeException("Missing handler for class: " + e.getClass().getSimpleName());
+        throw new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName());
     }
-  }
-
-  public static boolean freeConditionalExpression(final ConditionalExpression e) {
-    return free(expression(e), then(e), elze(e));
-  }
-
-  public static boolean sideEffectFreeArrayCreation(final ArrayCreation c) {
-    final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(i.expressions()));
-  }
-
-  public static boolean sideEffectFreePrefixExpression(final PrefixExpression e) {
-    return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && free(step.operand(e));
   }
 
   private static boolean free(final ArrayCreation c) {
@@ -114,8 +111,7 @@ public enum sideEffects {
     return true;
   }
 
-  private static boolean free(final PrefixExpression e) {
-    return in(e.getOperator(), PrefixExpression.Operator.PLUS, PrefixExpression.Operator.MINUS, PrefixExpression.Operator.COMPLEMENT,
-        PrefixExpression.Operator.NOT) && free(step.operand(e));
+  private static boolean free(final PrefixExpression x) {
+    return in(x.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && free(step.operand(x));
   }
 }

@@ -19,17 +19,17 @@ import il.org.spartan.spartanizer.utils.*;
 public enum extract {
   ;
   /** Retrieve all operands, including parenthesized ones, under an expression
-   * @param e JD
+   * @param x JD
    * @return a {@link List} of all operands to the parameter */
-  public static List<Expression> allOperands(final InfixExpression e) {
-    assert e != null;
-    return hop.operands(flatten.of(e));
+  public static List<Expression> allOperands(final InfixExpression x) {
+    assert x != null;
+    return hop.operands(flatten.of(x));
   }
 
-  public static List<InfixExpression.Operator> allOperators(final InfixExpression e) {
-    assert e != null;
+  public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
+    assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
-    findOperators(e, $);
+    findOperators(x, $);
     return $;
   }
 
@@ -70,6 +70,10 @@ public enum extract {
    *         <code><b>null</b></code> if no such value exists. */
   public static ReturnStatement asReturn(final ASTNode ¢) {
     return asReturn(singleStatement(¢));
+  }
+
+  public static ReturnStatement asReturn(final Statement ¢) {
+    return az.returnStatement(¢);
   }
 
   /** @param n a statement or block to extract the assignment from
@@ -133,26 +137,26 @@ public enum extract {
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
     final Wrapper<PostfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression e) {
+      @Override public boolean visit(final PostfixExpression x) {
         if ($.get() == null)
-          $.set(e);
+          $.set(x);
         return false;
       }
     });
     return $.get();
   }
 
-  /** Search for an {@link IfStatement} in the tree rooted at an
+  /** Search for an {@link AssertStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
-   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
+   * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  public static IfStatement firstIfStatement(final ASTNode n) {
+  public static AssertStatement firstAssertStatement(final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<IfStatement> $ = new Wrapper<>();
+    final Wrapper<AssertStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final IfStatement s) {
+      @Override public boolean visit(final AssertStatement s) {
         if ($.get() == null)
           $.set(s);
         return false;
@@ -180,36 +184,17 @@ public enum extract {
     return $.get();
   }
 
-  /** Search for an {@link WhileStatement} in the tree rooted at an
+  /** Search for an {@link IfStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
-   * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
+   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  public static WhileStatement firstWhileStatement(final ASTNode n) {
+  public static IfStatement firstIfStatement(final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<WhileStatement> $ = new Wrapper<>();
+    final Wrapper<IfStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final WhileStatement s) {
-        if ($.get() == null)
-          $.set(s);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Search for an {@link AssertStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static AssertStatement firstAssertStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<AssertStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final AssertStatement s) {
+      @Override public boolean visit(final IfStatement s) {
         if ($.get() == null)
           $.set(s);
         return false;
@@ -244,12 +229,12 @@ public enum extract {
   public static InfixExpression firstPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final InfixExpression e) {
+      @Override public boolean visit(final InfixExpression x) {
         if ($.get() != null)
           return false;
-        if (e.getOperator() != InfixExpression.Operator.PLUS)
+        if (x.getOperator() != InfixExpression.Operator.PLUS)
           return true;
-        $.set(e);
+        $.set(x);
         return false;
       }
     });
@@ -282,6 +267,25 @@ public enum extract {
       @Override public boolean visit(final VariableDeclarationFragment f) {
         if ($.get() == null)
           $.set(f);
+        return false;
+      }
+    });
+    return $.get();
+  }
+
+  /** Search for an {@link WhileStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  public static WhileStatement firstWhileStatement(final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<WhileStatement> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final WhileStatement s) {
+        if ($.get() == null)
+          $.set(s);
         return false;
       }
     });
@@ -464,12 +468,12 @@ public enum extract {
     return az.throwStatement(extract.singleStatement(n));
   }
 
-  private static void findOperators(final InfixExpression e, final List<InfixExpression.Operator> $) {
-    if (e == null)
+  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+    if (x == null)
       return;
-    $.add(e.getOperator());
-    findOperators(az.infixExpression(e.getLeftOperand()), $);
-    findOperators(az.infixExpression(e.getRightOperand()), $);
+    $.add(x.getOperator());
+    findOperators(az.infixExpression(x.getLeftOperand()), $);
+    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {

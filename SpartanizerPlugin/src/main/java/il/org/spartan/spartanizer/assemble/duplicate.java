@@ -46,11 +46,11 @@ public enum duplicate {
     return (¢) copySubtree(¢.getAST(), ¢);
   }
 
-  static List<Expression> adjust(final Operator o, final List<Expression> es) {
+  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
     if (o != wizard.MINUS2)
-      return es;
+      return xs;
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : es)
+    for (final Expression e : xs)
       $.add(subject.operand(e).to(wizard.MINUS1));
     return $;
   }

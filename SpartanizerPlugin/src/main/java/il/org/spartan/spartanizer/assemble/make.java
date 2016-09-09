@@ -11,6 +11,11 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.wring.*;
 
+/** An empty <code><b>enum</b></code> for fluent programming. The name should
+ * say it all: The name, followed by a dot, followed by a method name, should
+ * read like a sentence phrase.
+ * @author Yossi Gil
+ * @since 2016 */
 public enum make {
   ;
   /** Swap the order of the left and right operands to an expression, changing
@@ -38,12 +43,12 @@ public enum make {
     return $;
   }
 
-  public static Expression minus(final Expression e) {
-    final PrefixExpression ¢ = az.prefixExpression(e);
-    return ¢ == null ? minus(e, az.numberLiteral(e))
+  public static Expression minus(final Expression x) {
+    final PrefixExpression ¢ = az.prefixExpression(x);
+    return ¢ == null ? minus(x, az.numberLiteral(x))
         : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
             : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
-                : e;
+                : x;
   }
 
   /** Create a new {@link SimpleName} instance at the AST of the parameter
@@ -62,9 +67,9 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-  public static ParenthesizedExpression parethesized(final Expression e) {
-    final ParenthesizedExpression $ = e.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(e) == null ? e : duplicate.of(e));
+  public static ParenthesizedExpression parethesized(final Expression x) {
+    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
+    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
     return $;
   }
 
@@ -74,22 +79,22 @@ public enum make {
     return subject.operand(¢).toThrow();
   }
 
-  static Expression minus(final Expression e, final NumberLiteral l) {
-    return l == null ? minusOf(e) //
+  static Expression minus(final Expression x, final NumberLiteral l) {
+    return l == null ? minusOf(x) //
         : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
 
-  static List<Expression> minus(final List<Expression> es) {
+  static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(es));
-    for (final Expression e : lisp.rest(es))
+    $.add(lisp.first(xs));
+    for (final Expression e : lisp.rest(xs))
       $.add(minusOf(e));
     return $;
   }
 
-  static Expression minusOf(final Expression e) {
-    return literal0(e) ? e : subject.operand(e).to(wizard.MINUS1);
+  static Expression minusOf(final Expression x) {
+    return literal0(x) ? x : subject.operand(x).to(wizard.MINUS1);
   }
 
   static NumberLiteral newLiteral(final ASTNode n, final String token) {

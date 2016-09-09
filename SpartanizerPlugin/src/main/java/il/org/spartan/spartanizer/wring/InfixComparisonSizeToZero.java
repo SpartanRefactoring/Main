@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  private static String description(final Expression e) {
-    return e == null ? "Use isEmpty()" : "Use " + e + ".isEmpty()";
+  private static String description(final Expression x) {
+    return "Use " + (x != null ? x + "" : "isEmpty()");
   }
 
   private static NumberLiteral getNegativeNumber(final Expression ¢) {
@@ -59,15 +59,15 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     return replacement(o, sign * Integer.parseInt(l.getToken()), subject.operand(receiver).toMethod("isEmpty"));
   }
 
-  private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression e) {
+  private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
-    NumberLiteral l = getNegativeNumber(e);
+    NumberLiteral l = getNegativeNumber(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
        * NumberLiteral or an PrefixExpression which is a negative number */
-      l = az.numberLiteral(e);
+      l = az.numberLiteral(x);
       if (l == null)
         return null;
       sign = 1;
@@ -76,15 +76,15 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
     if (i.getAST().hasResolvedBindings()) {
-      final CompilationUnit u = hop.compilationUnit(e);
+      final CompilationUnit u = hop.compilationUnit(x);
       if (u == null)
         return null;
-      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(e) : receiver.resolveTypeBinding(), "isEmpty",
-          null, e, u);
+      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(x) : receiver.resolveTypeBinding(), "isEmpty",
+          null, x, u);
       if (b == null)
         return null;
       final ITypeBinding t = b.getReturnType();
-      if (!"boolean".equals("" + t) && !"java.lang.Boolean".equals(t.getBinaryName()))
+      if (!"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()))
         return null;
     }
     return replacement(o, sign, l, receiver);
@@ -95,18 +95,18 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         || isNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @Override String description(final InfixExpression e) {
-    final Expression right = step.right(e);
-    final Expression left = step.left(e);
+  @Override String description(final InfixExpression x) {
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
     return description(left instanceof MethodInvocation ? left : right);
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    final Operator o = e.getOperator();
+  @Override ASTNode replacement(final InfixExpression x) {
+    final Operator o = x.getOperator();
     if (!iz.comparison(o))
       return null;
-    final Expression right = step.right(e);
-    final Expression left = step.left(e);
+    final Expression right = step.right(x);
+    final Expression left = step.left(x);
     return !validTypes(right, left) ? null
         : iz.methodInvocation(left) ? //
             replacement(o, az.methodInvocation(left), right) //

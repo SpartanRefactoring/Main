@@ -21,12 +21,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  private static ASTNode replacementInt(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    int shifted = EvaluateAux.extractInt(es.get(0));
+    int shifted = EvaluateAux.extractInt(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
         return null;
       if (index != 0) {
@@ -37,15 +37,15 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
       }
       ++index;
     }
-    return e.getAST().newNumberLiteral(Integer.toString(shifted));
+    return x.getAST().newNumberLiteral(Integer.toString(shifted));
   }
 
-  private static ASTNode replacementLong(final List<Expression> es, final InfixExpression e) {
-    if (es.isEmpty() && !EvaluateAux.isCompitable(es.get(0)))
+  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
-    long shifted = EvaluateAux.extractLong(es.get(0));
+    long shifted = EvaluateAux.extractLong(xs.get(0));
     int index = 0;
-    for (final Expression ¢ : es) {
+    for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
         return null;
       if (index != 0) {
@@ -56,21 +56,21 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
       }
       ++index;
     }
-    return e.getAST().newNumberLiteral(Long.toString(shifted) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(shifted) + "L");
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate substraction of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    if (e.getOperator() != RIGHT_SHIFT_SIGNED)
+  @Override ASTNode replacement(final InfixExpression x) {
+    if (x.getOperator() != RIGHT_SHIFT_SIGNED)
       return null;
-    switch (EvaluateAux.getEvaluatedTypeForShift(e)) {
+    switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
       case INT:
-        return replacementInt(extract.allOperands(e), e);
+        return replacementInt(extract.allOperands(x), x);
       case LONG:
-        return replacementLong(extract.allOperands(e), e);
+        return replacementLong(extract.allOperands(x), x);
       default:
         return null;
     }

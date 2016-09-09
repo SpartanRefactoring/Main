@@ -3,6 +3,9 @@ package il.org.spartan.fun.Dr.Seuss;
 import il.org.spartan.*;
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 
+/** Dr. Seuss Nonsense
+ * @author Yossi Gil
+ * @since 2016 */
 public class Things {
   private static final Thing[] things = il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.things;
 
@@ -22,7 +25,9 @@ public class Things {
   }
 
   private static void nothing(final Object... os) {
-    /* Intentionally empty */
+    if (os.length >= 2)
+      for (final Object o : os)
+        nothing(o);
   }
 
   private static void nPattern1() {
@@ -33,7 +38,7 @@ public class Things {
   private static void nPattern2() {
     int i = 0;
     for (final Thing t : things)
-      doSomethingWithPair(i++, t);
+      doSomethingWithPair(Integer.valueOf(i++), t);
   }
 
   private static void nPattern3() {
