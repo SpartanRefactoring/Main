@@ -6,6 +6,8 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;

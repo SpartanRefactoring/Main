@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -155,8 +156,6 @@ import org.junit.runners.*;
   @Test public void issue120_1() {
     trimming("\"a\"+\"b\"").to("\"ab\"");
   }
-  
-
 
   @Test public void issue120_2() {
     trimming("\"abc\"+\"de\"+\"fgh\"").to("\"abcdefgh\"");

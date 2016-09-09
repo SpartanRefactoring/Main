@@ -13,19 +13,17 @@ public class PreferencesResources {
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
-  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = {
-      { "Remember individual project settings", "remember" },//
+  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { { "Remember individual project settings", "remember" }, //
       { "Enable for all projects", "always_on" }, //
       { "Disable for all projects", "always_off" }, //
-      };
+  };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "pref_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
 
   /** An enum holding together all the "enabled spartanizations" options, also
-   * allowing to get the set preference value for each of them 
+   * allowing to get the set preference value for each of them
    * @Author Daniel Mittelman
-   * @since 2016
-   * */
+   * @since 2016 */
   public enum WringGroup {
     Abbreviation(Kind.Abbreviation.class), //
     Canonicalization(Kind.Canonicalization.class), //
