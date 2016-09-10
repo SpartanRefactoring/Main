@@ -10,8 +10,8 @@ import org.eclipse.jdt.annotation.*;
  * @param <C> JD
  * @since 2016 */
 public interface accumulate<T, C extends Collection<T>> {
-  /** @param < T > JD
-   * @param < C > JD
+  /** @param <T> JD
+   * @param <C> JD
    * @param c JD
    * @return TODO document return type */
   static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
