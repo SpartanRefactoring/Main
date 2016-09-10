@@ -64,15 +64,15 @@ public class EvaluateAux {
   }
 
   public static boolean isDouble(final Expression x) {
-    return PrudentType.prudent(x) == PrudentType.DOUBLE;
+    return type.get(x) == type.Primitive.Certain.DOUBLE;
   }
 
   public static boolean isInt(final Expression x) {
-    return PrudentType.prudent(x) == PrudentType.INT;
+    return type.get(x) == type.Primitive.Certain.INT;
   }
 
   public static boolean isLong(final Expression x) {
-    return PrudentType.prudent(x) == PrudentType.LONG;
+    return type.get(x) == type.Primitive.Certain.LONG;
   }
 
   public static boolean isMinusDouble(final Expression x) {

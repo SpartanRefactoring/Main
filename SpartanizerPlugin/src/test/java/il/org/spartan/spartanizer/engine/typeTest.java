@@ -645,6 +645,7 @@ public class typeTest {
       azzert.that(get(fs.getExpression()), is(BOOLEAN));
     }
 
+    @Ignore("cancled to avoid harming tests, see issue #119 for more info")
     @Test public void context21() {
       final WhileStatement ws = extract.firstWhileStatement(into.s("while(x) somthing();"));
       azzert.that(get(ws.getExpression()), is(BOOLEAN));

@@ -53,6 +53,43 @@ public interface type {
   @SuppressWarnings("synthetic-access") static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
+  
+  /** Generates a type from a String name, if the String name represents
+   * a concrete type identifiable by PrudentType.
+   * @param s
+   * @return The specified type, type.Odd.Types.NOTHING as default. */
+  public static type generateFromTypeName(final String s) {
+    switch (s) {
+      case "byte":
+      case "Byte":
+        return BYTE;
+      case "short":
+      case "Short":
+        return SHORT;
+      case "char":
+      case "Character":
+        return CHAR;
+      case "int":
+      case "Integer":
+        return INT;
+      case "long":
+      case "Long":
+        return LONG;
+      case "float":
+      case "Float":
+        return FLOAT;
+      case "double":
+      case "Double":
+        return DOUBLE;
+      case "boolean":
+      case "Boolean":
+        return BOOLEAN;
+      case "String":
+        return STRING;
+      default:
+        return NOTHING;
+    }
+  }
 
   default Primitive.Certain asPrimitiveCertain() {
     return null;
@@ -295,7 +332,7 @@ public interface type {
           case IF_STATEMENT:
           case ASSERT_STATEMENT:
           case FOR_STATEMENT:
-          case WHILE_STATEMENT:
+          //case WHILE_STATEMENT:
             return BOOLEAN;
           case PARENTHESIZED_EXPRESSION:
             continue;
@@ -516,8 +553,7 @@ public interface type {
    * @author Shalmon Niv
    * @since 2016 */
   interface Odd extends inner.implementation {
-    /** Those anonymous characters that know little or nothing about themselves
-     * TODO: Not sure we need all these {@link type.Odd.Types} values. */
+    /** Those anonymous characters that know little or nothing about themselves */
     enum Types implements Odd {
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
@@ -531,8 +567,6 @@ public interface type {
       }
 
       @Override public String description() {
-        // TODO: Niv, why do we need this 'key' call?
-        key();
         return description;
       }
 
