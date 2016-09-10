@@ -344,11 +344,10 @@ import il.org.spartan.spartanizer.spartanizations.*;
         "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
 
-  //the 0 should probably be removed here, not sure if bug on t
   @Test(timeout = 2000) public void ternarize23() {
     assertConvertsTo(//
         "int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", //
-        "int a=0+(s.equals(532)?y(2)+10:r(3)-6);");
+        "int a=(s.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {
