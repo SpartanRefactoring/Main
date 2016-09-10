@@ -341,7 +341,17 @@ public class typeTest {
       azzert.that(get(e.getRightOperand()), is(INT));
       azzert.that(get(e), is(STRING));
     }
-
+    
+    @Test public void basicExpression30() {
+      azzert.that(get(into.e("+x")), is(NUMERIC));
+    }
+    
+    @Ignore("unkown bug, the infix expression's operands are simple names x instead of prefix expressions +x")
+    //this seems to be a bug in trimmer, where it drops the unnecessary prefix plus
+    @Test public void basicExpression31() {
+      azzert.that(get(into.e("+x + +x")), is(NUMERIC));
+    }
+    
     @Test public void BitwiseOperationsSemantics01() {
       azzert.that(Axiom.type(c1 | c2), is(INT));
     }
