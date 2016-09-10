@@ -3921,13 +3921,25 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("while(false){doSomething();if(done())break;}return something();").stays();
   }
   
+
   @Test public void issue130_3() {
-    trimming("while(i>5){doSomething();if(done())break;}return something();").stays();
+    trimming("while(true){doSomething();if(done()){t+=2;break;}}return something();")
+        .to("while(true){doSomething();if(done()){t+=2;return something();}}");
   }
   
   @Test public void issue130_4() {
-    trimming("while(true){doSomething();if(done()){t+=2;break;}}return something();")
-        .to("while(true){doSomething();if(done()){t+=2;return something();}}");
+    trimming("for(int i=4 ; true ; ++i){doSomething();if(done())break;}return something();")
+        .to("for(int i=4 ; true ; ++i){doSomething();if(done())return something();}");
+  }
+  
+  @Test public void issue130_5() {
+    trimming("for(int i=4 ; i<s.length() ; ++i){doSomething();if(done())break;}return something();").stays();
+  }
+  
+  
+  @Test public void issue130_6() {
+    trimming("for(int i=4 ; true ; ++i){doSomething();if(done()){t+=2;break;}}return something();")
+        .to("for(int i=4 ; true ; ++i){doSomething();if(done()){t+=2;return something();}}");
   }
   
   @Test public void issue131_1() {
