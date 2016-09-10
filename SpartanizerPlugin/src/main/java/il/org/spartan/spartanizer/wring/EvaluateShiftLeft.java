@@ -60,7 +60,7 @@ public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression>
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
-    return "Evaluate substraction of numbers";
+    return "Evaluate shift left of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
