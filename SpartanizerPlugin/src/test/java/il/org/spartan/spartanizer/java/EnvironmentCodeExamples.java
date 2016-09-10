@@ -215,8 +215,8 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * "int" currentSize;
    *
    * @FlatEnvUse({@Id(name="arrayList",
-   * clazz=____template____0.class),@Id(name="currentSize", clazz="int")}) public
-   * SOList(final Type[] newArray) {
+   * clazz=____template____0.class),@Id(name="currentSize", clazz="int")})
+   * public SOList(final Type[] newArray) {
    *
    * @Begin class opening { } this.arrayList = newArray; this.currentSize =
    * arrayList.length;
@@ -231,8 +231,8 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @FlatEnvUse({@Id(name="arrayList",
    * clazz=SOList.____template____0.class),@Id(name="currentSize",
    * clazz="int"),@Id(name="$",
-   * clazz=Iterator<SOList.____template____0>.class)}) @OutOfOrderFlatENV({ "it",
-   * "currentSize", "arrayList" }) "int" currentIndex = 0;
+   * clazz=Iterator<SOList.____template____0>.class)}) @OutOfOrderFlatENV({
+   * "it", "currentSize", "arrayList" }) "int" currentIndex = 0;
    *
    * @Override public boolean hasNext() { return currentIndex < currentSize &&
    * arrayList[currentIndex] != null; }
@@ -245,9 +245,9 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * };
    *
    * @OutOfOrderFlatENV({@Id(name="arrayList",
-   * clazz=SOList.____template____0.class),@Id(name="currentSize", clazz="int")})
-   * final "int" q; // currentIndex // shouldn't be // recognized return $; } }
-   * } */
+   * clazz=SOList.____template____0.class),@Id(name="currentSize",
+   * clazz="int")}) final "int" q; // currentIndex // shouldn't be // recognized
+   * return $; } } } */
   /* @FlatEnvUse({}) public static class EX05 {
    *
    * @FlatEnvUse({ @Id(name = "x", clazz = "int") }) class a { class b { class c
@@ -370,8 +370,8 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * "int" currentSize;
    *
    * @FlatEnvUse({@Id(name="arrayList",
-   * clazz=____template____0.class),@Id(name="currentSize", clazz="int")}) public
-   * SOList(final Type[] newArray) {
+   * clazz=____template____0.class),@Id(name="currentSize", clazz="int")})
+   * public SOList(final Type[] newArray) {
    *
    * @Begin class opening { } this.arrayList = newArray; this.currentSize =
    * arrayList.length;
@@ -386,8 +386,8 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @FlatEnvUse({@Id(name="arrayList",
    * clazz=SOList.____template____0.class),@Id(name="currentSize",
    * clazz="int"),@Id(name="$",
-   * clazz=Iterator<SOList.____template____0>.class)}) @OutOfOrderFlatENV({ "it",
-   * "currentSize", "arrayList" }) "int" currentIndex = 0;
+   * clazz=Iterator<SOList.____template____0>.class)}) @OutOfOrderFlatENV({
+   * "it", "currentSize", "arrayList" }) "int" currentIndex = 0;
    *
    * @Override public boolean hasNext() { return currentIndex < currentSize &&
    * arrayList[currentIndex] != null; }
@@ -395,9 +395,9 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @Override public Type next() { return arrayList[currentIndex++]; }
    *
    * @OutOfOrderFlatENV({@Id(name="arrayList",
-   * clazz=SOList.____template____0.class),@Id(name="currentSize", clazz="int")})
-   * final "int" q; // currentIndex // shouldn't be // recognized return $; } }
-   * } */
+   * clazz=SOList.____template____0.class),@Id(name="currentSize",
+   * clazz="int")}) final "int" q; // currentIndex // shouldn't be // recognized
+   * return $; } } } */
   /* public static class EX10 {
    *
    * @FlatEnvUse({}) class forTest { "int" x; "String" y;
@@ -507,8 +507,8 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @NestedENV({ @Id(name = "EX13.foo.n", clazz = "int"), @Id(name =
    * "EX13.foo.y", clazz = "int"),
    *
-   * @Id(name = "EX13.foo.____anon____Onoes____0.x", clazz = "int") }) @Override "int"
-   * giveMeANumber() { return n * x; } }; } }
+   * @Id(name = "EX13.foo.____anon____Onoes____0.x", clazz = "int") }) @Override
+   * "int" giveMeANumber() { return n * x; } }; } }
    *
    * static public class EX14 { class A { "int" x; }
    *

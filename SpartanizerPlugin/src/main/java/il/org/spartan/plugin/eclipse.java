@@ -25,7 +25,7 @@ public interface eclipse {
   static final String NAME = "Spartanization";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
   ImageIcon icon = new ImageIcon(new eclipse() {
-    //TODO: Ori, why do we need this kludge?
+    // TODO: Ori, why do we need this kludge?
   }.getClass().getResource(ICON_PATH));
 
   static void apply(final ICompilationUnit cu) {
@@ -47,12 +47,13 @@ public interface eclipse {
     apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
 
-  /**
-   * @param u  A compilation unit for reference - you give me an arbitrary compilation unit from the project and I'll find the root of the project and do my magic.
-   * @param pm  A standard  {@link IProgressMonitor}  - if you don't care about operation times put a "new NullProgressMonitor()"
-   * @return  List of all compilation units in the current project
-   * @throws JavaModelException  don't forget to catch 
-   */
+  /** @param u A compilation unit for reference - you give me an arbitrary
+   *        compilation unit from the project and I'll find the root of the
+   *        project and do my magic.
+   * @param pm A standard {@link IProgressMonitor} - if you don't care about
+   *        operation times put a "new NullProgressMonitor()"
+   * @return List of all compilation units in the current project
+   * @throws JavaModelException don't forget to catch */
   static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
     pm.beginTask("Gathering project information...", 1);
     final List<ICompilationUnit> $ = new ArrayList<>();

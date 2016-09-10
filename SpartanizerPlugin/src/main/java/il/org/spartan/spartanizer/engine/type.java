@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -52,9 +53,9 @@ public interface type {
   @SuppressWarnings("synthetic-access") static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
-  
-  /** Generates a type from a String name, if the String name represents
-   * a concrete type identifiable by PrudentType.
+
+  /** Generates a type from a String name, if the String name represents a
+   * concrete type identifiable by PrudentType.
    * @param s
    * @return The specified type, type.Odd.Types.NOTHING as default. */
   public static type generateFromTypeName(final String s) {
@@ -235,9 +236,7 @@ public interface type {
           : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
               : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
                   : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                      : $.isNumeric() && ¢ == ALPHANUMERIC ? $
-                          : ¢.isNumeric() && $ == ALPHANUMERIC ? ¢
-                              : NOTHING; //
+                      : $.isNumeric() && ¢ == ALPHANUMERIC ? $ : ¢.isNumeric() && $ == ALPHANUMERIC ? ¢ : NOTHING; //
     }
 
     /** @param x JD
@@ -331,7 +330,7 @@ public interface type {
           case IF_STATEMENT:
           case ASSERT_STATEMENT:
           case FOR_STATEMENT:
-          //case WHILE_STATEMENT:
+            // case WHILE_STATEMENT:
             return BOOLEAN;
           case PARENTHESIZED_EXPRESSION:
             continue;
@@ -552,7 +551,8 @@ public interface type {
    * @author Shalmon Niv
    * @since 2016 */
   interface Odd extends inner.implementation {
-    /** Those anonymous characters that know little or nothing about themselves */
+    /** Those anonymous characters that know little or nothing about
+     * themselves */
     enum Types implements Odd {
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //

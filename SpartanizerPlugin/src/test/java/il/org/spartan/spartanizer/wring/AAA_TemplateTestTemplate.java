@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
@@ -97,14 +98,17 @@ public class AAA_TemplateTestTemplate {
     azzert.that($0(), lessThanOrEqualTo($0()));
     azzert.that($0(), lessThan($1()));
   }
-  /** Correct way of trimming does not change*/
+
+  /** Correct way of trimming does not change */
   @Test public void seriesZ_13() {
     trimming("a").stays();
   }
-  /** Correct way of trimming does not change*/
+
+  /** Correct way of trimming does not change */
   @Test public void seriesZ_14() {
     trimming("a").stays();
   }
+
   private int $0() {
     return 0;
   }

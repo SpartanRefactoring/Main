@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
-import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
 import org.junit.*;
 import org.junit.runners.*;

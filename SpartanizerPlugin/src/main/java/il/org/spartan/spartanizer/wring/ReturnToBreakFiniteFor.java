@@ -47,8 +47,8 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
-    if(statementList.size() < 2 || !(statementList.get(0) instanceof ForStatement) //
-        ||!(statementList.get(1) instanceof ReturnStatement))
+    if (statementList.size() < 2 || !(statementList.get(0) instanceof ForStatement) //
+        || !(statementList.get(1) instanceof ReturnStatement))
       return null;
     final ForStatement forStatement = (ForStatement) statementList.get(0);
     final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);

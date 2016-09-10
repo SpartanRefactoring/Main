@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.spartanizer.engine.type.Primitive;
+import il.org.spartan.spartanizer.engine.type.*;
 
 /** A utility to determine the exact type of a Java character or numerical
  * literal.
