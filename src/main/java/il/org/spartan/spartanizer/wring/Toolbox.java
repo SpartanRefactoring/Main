@@ -98,6 +98,7 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
+            new BreakToReturnInfiniteFor(),//
             new BreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteFor(), //
             new ReturnToBreakFiniteWhile(), //
