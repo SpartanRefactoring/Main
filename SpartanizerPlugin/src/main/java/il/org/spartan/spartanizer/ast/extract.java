@@ -89,8 +89,8 @@ public enum extract {
    *         version of it */
   public static Expression core(final Expression $) {
     return $ == null ? $ //
-        : iz.is($, PARENTHESIZED__EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
-            : iz.is($, PREFIX__EXPRESSION) ? core(az.prefixExpression($)) //
+        : iz.is($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
+            : iz.is($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;
   }
 
@@ -490,7 +490,7 @@ public enum extract {
 
   private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
     switch (¢.getNodeType()) {
-      case EMPTY__STATEMENT:
+      case EMPTY_STATEMENT:
         return $;
       case BLOCK:
         return extract.statementsInto((Block) ¢, $);

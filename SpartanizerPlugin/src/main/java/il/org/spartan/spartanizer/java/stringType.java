@@ -24,15 +24,15 @@ public enum stringType {
   private static boolean isNotFromContext(final Expression x) {
     for (ASTNode context = parent(x); context != null; context = parent(context))
       switch (context.getNodeType()) {
-        case INFIX__EXPRESSION:
+        case INFIX_EXPRESSION:
           if (((InfixExpression) context).getOperator().equals(PLUS))
             continue;
           return true;
-        case ARRAY__ACCESS:
-        case PREFIX__EXPRESSION:
-        case POSTFIX__EXPRESSION:
+        case ARRAY_ACCESS:
+        case PREFIX_EXPRESSION:
+        case POSTFIX_EXPRESSION:
           return true;
-        case PARENTHESIZED__EXPRESSION:
+        case PARENTHESIZED_EXPRESSION:
           continue;
         default:
           return false;

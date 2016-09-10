@@ -116,7 +116,7 @@ import java.util.*;
       @InOrderFlatENV({ "x", "y", "c1" }) @NestedENV({ "EX2.C1.x#int", "EX2.C1.y#int", "EX2.C1.c1#C1" }) @OutOfOrderFlatENV({ "c1", "y",
           "x" }) public static int x;
 
-      public static void change__x() {
+      public static void change_x() {
         @Begin class A {
         }
         x = 3; // interesting... what does it do? lol
@@ -124,7 +124,7 @@ import java.util.*;
         }
       }
 
-      public static void change__y() {
+      public static void change_y() {
         @Begin class A {
         }
         y = 3;
@@ -145,10 +145,10 @@ import java.util.*;
       @Begin class Q {
       }
       final EX3 top = new EX3();
-      final x__hiding X = new x__hiding();
-      @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) final x__hiding.y__hiding Y = X.new y__hiding();
+      final x_hiding X = new x_hiding();
+      @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) final x_hiding.y_hiding Y = X.new y_hiding();
       top.x = 3;
-      x__hiding.x = 4;
+      x_hiding.x = 4;
       X.xsy.y = 5;
       Y.y = 6;
       @End({ "top", "X", "x", "xsy", "Y", "y" }) class QQ {
@@ -173,19 +173,19 @@ import java.util.*;
       }
     }
 
-    @NestedENV({ "EX3.x", "EX3.y" }) @OutOfOrderFlatENV({ "x", "y" }) static class x__hiding {
+    @NestedENV({ "EX3.x", "EX3.y" }) @OutOfOrderFlatENV({ "x", "y" }) static class x_hiding {
       @OutOfOrderFlatENV({}) public static int x;
-      @NestedENV({ "EX3.x__hiding.x#int" }) @OutOfOrderFlatENV({ "x" }) y__hiding xsy;
+      @NestedENV({ "EX3.x_hiding.x#int" }) @OutOfOrderFlatENV({ "x" }) y_hiding xsy;
 
-      x__hiding() {
+      x_hiding() {
         x = 2;
-        xsy = new y__hiding();
+        xsy = new y_hiding();
       }
 
-      @NestedENV({ "EX3.x__hiding.x#int", "EX3.x__hiding.xsy#y__hiding" }) @OutOfOrderFlatENV({ "x", "xsy" }) public class y__hiding { // purpose!
+      @NestedENV({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" }) @OutOfOrderFlatENV({ "x", "xsy" }) public class y_hiding { // purpose!
         @InOrderFlatENV({ "x", "xsy" }) @OutOfOrderFlatENV({ "xsy", "x" }) public int y;
 
-        y__hiding() {
+        y_hiding() {
           @Begin class E {
           }
           y = 2;
@@ -212,9 +212,9 @@ import java.util.*;
       @OutOfOrderFlatENV({ "x", "p" }) final Child1 c1 = new Child1();
       @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @InOrderFlatENV({ "x", "p", "c1" }) @OutOfOrderFlatENV({ "p", "c1",
           "x" }) final Child2 c2 = new Child2();
-      p.set__x();
-      c1.set__x();
-      c2.set__x();
+      p.set_x();
+      c1.set_x();
+      c2.set_x();
       @End({ "x" }) class QQ {
       }
     }
@@ -228,7 +228,7 @@ import java.util.*;
         }
       }
 
-      @Override void set__x() {
+      @Override void set_x() {
         @Begin class Q {
         }
         x = 3;
@@ -244,7 +244,7 @@ import java.util.*;
         x = 4;
       }
 
-      @Override void set__x() {
+      @Override void set_x() {
         @Begin class Q {
         }
         x = 5;
@@ -258,7 +258,7 @@ import java.util.*;
         x = 0;
       }
 
-      void set__x() {
+      void set_x() {
         @Begin class Q {
         }
         x = 1;
@@ -278,52 +278,52 @@ import java.util.*;
     static int x;
 
     @OutOfOrderFlatENV({ "x" }) class a {
-      int a__x;
+      int a_x;
 
-      @OutOfOrderFlatENV({ "x", "a__x", "b__x" }) void a__func() {
+      @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void a_func() {
         @Begin class opening {
           /**/}
-        ++a__x;
-        @End({ "a__x" }) class closing {
+        ++a_x;
+        @End({ "a_x" }) class closing {
           /**/}
       }
 
-      @InOrderFlatENV({ "x", "a__x" }) @OutOfOrderFlatENV({ "a__x", "x" }) class b {
-        int b__x;
+      @InOrderFlatENV({ "x", "a_x" }) @OutOfOrderFlatENV({ "a_x", "x" }) class b {
+        int b_x;
 
-        @OutOfOrderFlatENV({ "x", "a__x", "b__x" }) void b__func() {
+        @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void b_func() {
           @Begin class opening {
             /**/}
-          ++a__x;
-          ++b__x;
-          @End({ "a__x", "b__x" }) class closing {
+          ++a_x;
+          ++b_x;
+          @End({ "a_x", "b_x" }) class closing {
             /**/}
         }
 
-        @InOrderFlatENV({ "x", "a__x", "b__x" }) @OutOfOrderFlatENV({ "b__x", "a__x", "x" }) class c {
-          int c__x;
+        @InOrderFlatENV({ "x", "a_x", "b_x" }) @OutOfOrderFlatENV({ "b_x", "a_x", "x" }) class c {
+          int c_x;
 
-          @InOrderFlatENV({ "x", "a__x", "b__x", "c__x" }) @OutOfOrderFlatENV({ "c__x", "b__x", "a__x", "x" }) void c__func() {
+          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "c_x", "b_x", "a_x", "x" }) void c_func() {
             @Begin class opening {
               /**/}
-            ++a__x;
-            ++b__x;
-            ++c__x;
-            @End({ "a__x", "b__x", "c__x" }) class closing {
+            ++a_x;
+            ++b_x;
+            ++c_x;
+            @End({ "a_x", "b_x", "c_x" }) class closing {
               /**/}
           }
 
-          @InOrderFlatENV({ "x", "a__x", "b__x", "c__x" }) @OutOfOrderFlatENV({ "x", "a__x", "b__x", "c__x" }) class d {
-            int d__x;
+          @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) class d {
+            int d_x;
 
-            @OutOfOrderFlatENV({ "x", "a__x", "b__x", "c__x", "d__x" }) void d__func() {
+            @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x", "d_x" }) void d_func() {
               @Begin class opening {
                 /**/}
-              ++a__x;
-              ++b__x;
-              ++c__x;
-              ++d__x;
-              @End({ "a__x", "b__x", "c__x", "d__x" }) class closing {
+              ++a_x;
+              ++b_x;
+              ++c_x;
+              ++d_x;
+              @End({ "a_x", "b_x", "c_x", "d_x" }) class closing {
                 /**/}
             }
           }
@@ -375,7 +375,7 @@ import java.util.*;
     }
   }
 
-  public static class EX7 { // func__param__name__to__ENV
+  public static class EX7 { // func_param_name_to_ENV
     static Integer func(final Integer n1, final String n2, final Complex n3) {
       @InOrderFlatENV({ "n1", "n2", "n3" }) @OutOfOrderFlatENV({ "n2", "n3", "n1" }) final int q;
       return n1;
@@ -439,32 +439,32 @@ import java.util.*;
   }
 
   // for the end
-  public static class EX99 { // for__testing__the__use__of__names
-    class Oompa__Loompa {
-      Oompa__Loompa Oompa__Loompa; /* A */
+  public static class EX99 { // for_testing_the_use_of_names
+    class Oompa_Loompa {
+      Oompa_Loompa Oompa_Loompa; /* A */
 
-      <Oompa__Loompa> Oompa__Loompa() {
+      <Oompa_Loompa> Oompa_Loompa() {
       }
 
-      Oompa__Loompa(final Oompa__Loompa... Oompa__Loompa) {
-        this(Oompa__Loompa, Oompa__Loompa);
+      Oompa_Loompa(final Oompa_Loompa... Oompa_Loompa) {
+        this(Oompa_Loompa, Oompa_Loompa);
       }
 
-      Oompa__Loompa(final Oompa__Loompa[]... Oompa__Loompa) {
+      Oompa_Loompa(final Oompa_Loompa[]... Oompa_Loompa) {
         this();
       }
 
-      Oompa__Loompa Oompa__Loompa(final Oompa__Loompa l) {
+      Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
           for (;;) {
             /* D */
             /* C */
             /* B */
-            if (new Oompa__Loompa(l) {
-              @Override Oompa__Loompa Oompa__Loompa(final Oompa__Loompa l) {
-                return l != null ? super.Oompa__Loompa(l) : Oompa__Loompa.this.Oompa__Loompa(l);
+            if (new Oompa_Loompa(l) {
+              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
+                return l != null ? super.Oompa_Loompa(l) : Oompa_Loompa.this.Oompa_Loompa(l);
               }
-            }.Oompa__Loompa(l) == null)
+            }.Oompa_Loompa(l) == null)
               continue l;
             break l;
           }

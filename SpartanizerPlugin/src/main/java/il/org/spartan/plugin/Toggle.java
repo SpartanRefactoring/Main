@@ -19,7 +19,7 @@ public class Toggle extends AbstractHandler {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
     for (int i = 0; i < natures.length; ++i)
-      if (Nature.NATURE__ID.equals(natures[i])) {
+      if (Nature.NATURE_ID.equals(natures[i])) {
         description.setNatureIds(delete(natures, i));
         p.setDescription(description, null);
         p.accept(r -> {
@@ -33,7 +33,7 @@ public class Toggle extends AbstractHandler {
   private static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
-    description.setNatureIds(append(natures, Nature.NATURE__ID));
+    description.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(description, null);
   }
 

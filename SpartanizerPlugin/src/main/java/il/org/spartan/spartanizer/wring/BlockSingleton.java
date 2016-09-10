@@ -34,7 +34,7 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
 
   @Override Statement replacement(final Block b) {
     final ASTNode parent = step.parent(b);
-    return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY__STATEMENT, ASTNode.SYNCHRONIZED__STATEMENT) ? null
+    return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(lisp.onlyOne(statements(b)));
   }
 }

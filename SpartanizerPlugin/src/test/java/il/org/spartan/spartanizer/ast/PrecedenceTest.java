@@ -51,11 +51,11 @@ public class PrecedenceTest {
     azzert.that(precedence.of(e("(Object) a")), is(3));
   }
 
-  @Test public void conditional__and() {
+  @Test public void conditional_and() {
     azzert.that(precedence.of(e("a&&b")), is(12));
   }
 
-  @Test public void conditional__or() {
+  @Test public void conditional_or() {
     azzert.that(precedence.of(e("a||b")), is(13));
   }
 

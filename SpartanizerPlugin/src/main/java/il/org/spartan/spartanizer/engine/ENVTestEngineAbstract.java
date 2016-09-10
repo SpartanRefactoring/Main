@@ -28,7 +28,7 @@ public abstract class ENVTestEngineAbstract {
     assert from != null;
     assert f != null;
     azzert.aye(f.exists());
-    final ASTNode $ = makeAST.COMPILATION__UNIT.from(f);
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
     azzert.that($, instanceOf(CompilationUnit.class));
     return $;

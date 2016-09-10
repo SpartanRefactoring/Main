@@ -58,7 +58,7 @@ public enum Wrap {
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
       final String on = w.on(codeFragment);
-      final ASTNode n = makeAST.COMPILATION__UNIT.from(on);
+      final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
       $.append("\n* I = <").append(essence(on)).append(">;");
       $.append("\n* O = <").append(essence(n + "")).append(">;");
@@ -84,7 +84,7 @@ public enum Wrap {
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) makeAST.COMPILATION__UNIT.from(on(codeFragment));
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
 
   /** Wrap a given code fragment, and converts it into a {@link Document}

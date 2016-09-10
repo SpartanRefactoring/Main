@@ -48,7 +48,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   private static specificity specificity = new specificity();
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
-  public static final int NODES__THRESHOLD = 1;
+  public static final int NODES_THRESHOLD = 1;
 
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param n JD
@@ -76,13 +76,13 @@ public enum ExpressionComparator implements Comparator<Expression> {
             ++a.inner;
           return;
         }
-        if (iz.is(¢, EMPTY__STATEMENT))
+        if (iz.is(¢, EMPTY_STATEMENT))
           return;
-        if (iz.is(¢, FOR__STATEMENT, ENHANCED__FOR__STATEMENT, DO__STATEMENT)) {
+        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
           a.inner += 4;
           return;
         }
-        if (!iz.is(¢, IF__STATEMENT))
+        if (!iz.is(¢, IF_STATEMENT))
           a.inner += 3;
         else {
           a.inner += 4;
@@ -165,7 +165,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   static int nodesCompare(final Expression e1, final Expression e2) {
-    return round(nodesCount(e1) - nodesCount(e2), NODES__THRESHOLD);
+    return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
   }
 
   static int round(final int $, final int threshold) {
@@ -174,7 +174,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNull(e1, e2) && (//
-    nodesCount(e1) > nodesCount(e2) + NODES__THRESHOLD || //
+    nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
   }

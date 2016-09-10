@@ -38,13 +38,13 @@ public class FuncsTest {
 
   @Test public void asComparisonTypicalExpressionFalse() {
     final InfixExpression i = mock(InfixExpression.class);
-    doReturn(CONDITIONAL__OR).when(i).getOperator();
+    doReturn(CONDITIONAL_OR).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
 
   @Test public void asComparisonTypicalInfixFalse() {
     final InfixExpression i = mock(InfixExpression.class);
-    doReturn(CONDITIONAL__AND).when(i).getOperator();
+    doReturn(CONDITIONAL_AND).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
 
@@ -73,7 +73,7 @@ public class FuncsTest {
   }
 
   @Test public void isDeMorganAND() {
-    azzert.aye(iz.deMorgan(CONDITIONAL__AND));
+    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
   }
 
   @Test public void isDeMorganGreater() {
@@ -81,11 +81,11 @@ public class FuncsTest {
   }
 
   @Test public void isDeMorganGreaterEuals() {
-    azzert.nay(iz.deMorgan(GREATER__EQUALS));
+    azzert.nay(iz.deMorgan(GREATER_EQUALS));
   }
 
   @Test public void isDeMorganOR() {
-    azzert.aye(iz.deMorgan(CONDITIONAL__OR));
+    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
   }
 
   @Test public void listOfInts() {

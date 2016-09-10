@@ -9,7 +9,7 @@ import org.eclipse.core.runtime.*;
  * @since 2013/07/01 */
 public class Nature implements IProjectNature {
   /** ID of this project nature */
-  public static final String NATURE__ID = "il.org.spartan.spartanizer.NatureID";
+  public static final String NATURE_ID = "il.org.spartan.spartanizer.NatureID";
   /** The project to which we relate */
   private IProject project;
 
@@ -20,7 +20,7 @@ public class Nature implements IProjectNature {
     final IProjectDescription d = project.getDescription();
     final ICommand[] cs = d.getBuildSpec();
     for (final ICommand c : cs)
-      if (c.getBuilderName().equals(Builder.BUILDER__ID))
+      if (c.getBuilderName().equals(Builder.BUILDER_ID))
         return;
     set(d, cs);
   }
@@ -32,7 +32,7 @@ public class Nature implements IProjectNature {
     final IProjectDescription description = getProject().getDescription();
     final ICommand[] cs = description.getBuildSpec();
     for (int i = 0; i < cs.length; ++i)
-      if (cs[i].getBuilderName().equals(Builder.BUILDER__ID)) {
+      if (cs[i].getBuilderName().equals(Builder.BUILDER_ID)) {
         description.setBuildSpec(delete(cs, i));
         project.setDescription(description, null);
         return;
@@ -49,7 +49,7 @@ public class Nature implements IProjectNature {
 
   private void set(final IProjectDescription d, final ICommand[] cs) throws CoreException {
     final ICommand c = d.newCommand();
-    c.setBuilderName(Builder.BUILDER__ID);
+    c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(append(cs, c));
     project.setDescription(d, null);
   }

@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class JavaTypeNameParserTest {
   // some upper, some lower case characters - the upper are more representative.
-  @Test public void Alex__and__Dan__test() {
-    azzert.that(new JavaTypeNameParser("Alex__and__Dan").shortName(), is("d"));
+  @Test public void Alex_and_Dan_test() {
+    azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("d"));
   }
 
   @Test public void alphaNumericMid() {
@@ -65,8 +65,8 @@ public class JavaTypeNameParserTest {
   }
 
   // all lower case characters - not sure how you want to shorten it.
-  @Test public void some__name__an__electrical__engineer__can__give() {
-    azzert.that(new JavaTypeNameParser("very__low__voltage").shortName(), is("v"));
+  @Test public void some_name_an_electrical_engineer_can_give() {
+    azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("v"));
   }
 
   @Test public void stringBuilder() {

@@ -67,17 +67,17 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     if (e1.getNodeType() != e2.getNodeType())
       return null;
     switch (e1.getNodeType()) {
-      case SUPER__METHOD__INVOCATION:
+      case SUPER_METHOD_INVOCATION:
         return pushdown(x, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
-      case METHOD__INVOCATION:
+      case METHOD_INVOCATION:
         return pushdown(x, (MethodInvocation) e1, (MethodInvocation) e2);
-      case INFIX__EXPRESSION:
+      case INFIX_EXPRESSION:
         return pushdown(x, (InfixExpression) e1, (InfixExpression) e2);
       case ASSIGNMENT:
         return pushdown(x, (Assignment) e1, (Assignment) e2);
-      case FIELD__ACCESS:
+      case FIELD_ACCESS:
         return pushdown(x, (FieldAccess) e1, (FieldAccess) e2);
-      case CLASS__INSTANCE__CREATION:
+      case CLASS_INSTANCE_CREATION:
         return pushdown(x, (ClassInstanceCreation) e1, (ClassInstanceCreation) e2);
       default:
         return null;

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wring.*;
  * @author Daniel Mittelman
  * @year 2016 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  public static final String WRING__COMBO__OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
+  public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
   public PreferencesPage() {
@@ -25,20 +25,20 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     // Add the startup behavior combo box
-    addField(new ComboFieldEditor(PLUGIN__STARTUP__BEHAVIOR__ID, PLUGIN__STARTUP__BEHAVIOR__TEXT, PLUGIN__STARTUP__BEHAVIOR__OPTIONS, getFieldEditorParent()));
+    addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     // Add the enabled for new projects checkbox
-    addField(new BooleanFieldEditor(NEW__PROJECTS__ENABLE__BY__DEFAULT__ID, NEW__PROJECTS__ENABLE__BY__DEFAULT__TEXT, getFieldEditorParent()));
+    addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final WringGroup w : WringGroup.values())
-      g.add(new ComboFieldEditor(w.id, w.label, WRING__COMBO__OPTIONS, g.getFieldEditor()));
+      g.add(new ComboFieldEditor(w.id, w.label, WRING_COMBO_OPTIONS, g.getFieldEditor()));
     addField(g);
     g.init();
   }
 
   @Override public void init(@SuppressWarnings("unused") final IWorkbench ____) {
     setPreferenceStore(WringGroup.store());
-    setDescription(PAGE__DESCRIPTION);
+    setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
   }
 

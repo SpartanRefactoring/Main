@@ -41,7 +41,7 @@ public enum iz {
   /* public static boolean modifier(final IExtendedModifier ¢) { return ¢
    * instanceof Annotation; } */
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
-    return is(¢, ANONYMOUS__CLASS__DECLARATION);
+    return is(¢, ANONYMOUS_CLASS_DECLARATION);
   }
 
   /** @param n the statement or block to check if it is an assignment
@@ -90,25 +90,25 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
    *         literal */
   public static boolean booleanLiteral(final ASTNode n) {
-    return is(n, BOOLEAN__LITERAL);
+    return is(n, BOOLEAN_LITERAL);
   }
 
   /** @param ¢ node to check
    * @return true if the given node is a boolean or null literal or false
    *         otherwise */
   public static boolean booleanOrNullLiteral(final ASTNode ¢) {
-    return is(¢, BOOLEAN__LITERAL, NULL__LITERAL);
+    return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
 
   /** @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
    *         expression. */
   public static boolean comparison(final InfixExpression x) {
-    return in(x.getOperator(), EQUALS, GREATER, GREATER__EQUALS, LESS, LESS__EQUALS, NOT__EQUALS);
+    return in(x.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
 
   public static boolean comparison(final Operator o) {
-    return in(o, EQUALS, NOT__EQUALS, GREATER__EQUALS, GREATER, LESS, LESS__EQUALS);
+    return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
   /** @param xs JD
@@ -116,7 +116,7 @@ public enum iz {
    *         conditional or parenthesized conditional expression */
   public static boolean conditional(final Expression... xs) {
     for (final Expression e : xs)
-      if (is(extract.core(e), CONDITIONAL__EXPRESSION))
+      if (is(extract.core(e), CONDITIONAL_EXPRESSION))
         return true;
     return false;
   }
@@ -125,16 +125,16 @@ public enum iz {
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
-   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL__AND} */
+   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_AND} */
   public static boolean conditionalAnd(final InfixExpression x) {
-    return x.getOperator() == CONDITIONAL__AND;
+    return x.getOperator() == CONDITIONAL_AND;
   }
 
   /** Check whether an expression is a "conditional or" (||)
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
-   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL__OR} */
+   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
   public static boolean conditionalOr(final Expression x) {
     return conditionalOr(az.infixExpression(x));
   }
@@ -143,9 +143,9 @@ public enum iz {
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
-   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL__OR} */
+   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
   public static boolean conditionalOr(final InfixExpression x) {
-    return x != null && x.getOperator() == CONDITIONAL__OR;
+    return x != null && x.getOperator() == CONDITIONAL_OR;
   }
 
   /** Determine whether a node is a "specific", i.e., <code><b>null</b></code>
@@ -154,8 +154,8 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a
    *         "specific" */
   public static boolean constant(final Expression x) {
-    return is(x, CHARACTER__LITERAL, NUMBER__LITERAL, NULL__LITERAL, THIS__EXPRESSION)
-        || is(x, PREFIX__EXPRESSION) && iz.constant(extract.core(((PrefixExpression) x).getOperand()));
+    return is(x, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
+        || is(x, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) x).getOperand()));
   }
 
   /** Check whether the operator of an expression is susceptible for applying
@@ -173,7 +173,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
    *         which the de Morgan laws apply. */
   public static boolean deMorgan(final Operator o) {
-    return in(o, CONDITIONAL__AND, CONDITIONAL__OR);
+    return in(o, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
   /** Determine whether a node is an {@link EmptyStatement}
@@ -181,7 +181,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link EmptyStatement} */
   public static boolean emptyStatement(final ASTNode n) {
-    return is(n, EMPTY__STATEMENT);
+    return is(n, EMPTY_STATEMENT);
   }
 
   public static boolean emptyStringLiteral(final ASTNode ¢) {
@@ -189,11 +189,11 @@ public enum iz {
   }
 
   public static boolean enumConstantDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM__CONSTANT__DECLARATION);
+    return is(¢, ENUM_CONSTANT_DECLARATION);
   }
 
   public static boolean enumDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM__DECLARATION);
+    return is(¢, ENUM_DECLARATION);
   }
 
   /** Determine whether a node is an "expression statement"
@@ -209,7 +209,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link ExpressionStatement} statement */
   public static boolean expressionStatement(final ASTNode n) {
-    return is(n, EXPRESSION__STATEMENT);
+    return is(n, EXPRESSION_STATEMENT);
   }
 
   /** @param o The operator to check
@@ -220,10 +220,10 @@ public enum iz {
         AND, //
         EQUALS, //
         GREATER, //
-        GREATER__EQUALS, //
-        LESS__EQUALS, //
+        GREATER_EQUALS, //
+        LESS_EQUALS, //
         LESS, //
-        NOT__EQUALS, //
+        NOT_EQUALS, //
         OR, //
         PLUS, // Too risky
         TIMES, //
@@ -238,11 +238,11 @@ public enum iz {
    *         fix expression that its operator is not ++ or -- */
   public static boolean incrementOrDecrement(final ASTNode n) {
     switch (n.getNodeType()) {
-      case EXPRESSION__STATEMENT:
+      case EXPRESSION_STATEMENT:
         return incrementOrDecrement(step.expression(n));
-      case POSTFIX__EXPRESSION:
+      case POSTFIX_EXPRESSION:
         return in(((PostfixExpression) n).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
-      case PREFIX__EXPRESSION:
+      case PREFIX_EXPRESSION:
         return in(az.prefixExpression(n).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
       default:
         return false;
@@ -259,7 +259,7 @@ public enum iz {
   /** @param ¢ JD
    * @return true if the given node is an infix expression or false otherwise */
   public static boolean infix(final ASTNode ¢) {
-    return is(¢, INFIX__EXPRESSION);
+    return is(¢, INFIX_EXPRESSION);
   }
 
   public static boolean infixDivide(final Expression x) {
@@ -267,7 +267,7 @@ public enum iz {
   }
 
   public static boolean infixExpression(final ASTNode n) {
-    return is(n, INFIX__EXPRESSION);
+    return is(n, INFIX_EXPRESSION);
   }
 
   public static boolean infixMinus(final Expression x) {
@@ -303,20 +303,20 @@ public enum iz {
   /** @param ¢ JD
    * @return true if the given node is an interface or false otherwise */
   public static boolean isInterface(final ASTNode ¢) {
-    return is(¢, TYPE__DECLARATION) && ((TypeDeclaration) ¢).isInterface();
+    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
   /** @param ¢ JD
    * @return true if the given node is a method decleration or false
    *         otherwise */
   public static boolean isMethodDeclaration(final ASTNode ¢) {
-    return is(¢, METHOD__DECLARATION);
+    return is(¢, METHOD_DECLARATION);
   }
 
   /** @param ¢ node to check
    * @return true if the given node is a method invocation or false otherwise */
   public static boolean isMethodInvocation(final ASTNode ¢) {
-    return is(¢, METHOD__INVOCATION);
+    return is(¢, METHOD_INVOCATION);
   }
 
   /** @param a the assignment who'¢ operator we want to check
@@ -328,13 +328,13 @@ public enum iz {
   /** @param a the assignment who'¢ operator we want to check
    * @return true is the assignment'¢ operator is plus assign */
   public static boolean isOpMinusAssign(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.MINUS__ASSIGN;
+    return a != null && a.getOperator() == Assignment.Operator.MINUS_ASSIGN;
   }
 
   /** @param a the assignment who'¢ operator we want to check
    * @return true is the assignment'¢ operator is plus assign */
   public static boolean isOpPlusAssign(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.PLUS__ASSIGN;
+    return a != null && a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
 
   /** Determine whether a declaration is private
@@ -355,7 +355,7 @@ public enum iz {
    * @return true if the given node is a variable declaration statement or false
    *         otherwise */
   public static boolean isVariableDeclarationStatement(final ASTNode ¢) {
-    return is(¢, VARIABLE__DECLARATION__STATEMENT);
+    return is(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
   /** Determine whether an item is the last one in a list
@@ -370,7 +370,7 @@ public enum iz {
   /** @param n Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode n) {
-    return n != null && lisp.intIsIn(n.getNodeType(), NULL__LITERAL, CHARACTER__LITERAL, NUMBER__LITERAL, STRING__LITERAL, BOOLEAN__LITERAL);
+    return n != null && lisp.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   public static boolean literal(final ASTNode ¢, final double d) {
@@ -430,7 +430,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
    *         invocation. */
   public static boolean methodDeclaration(final ASTNode n) {
-    return is(n, METHOD__DECLARATION);
+    return is(n, METHOD_DECLARATION);
   }
 
   /** Determine whether a node is a {@link MethodInvocation}
@@ -438,7 +438,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
    *         invocation. */
   public static boolean methodInvocation(final ASTNode n) {
-    return is(n, METHOD__INVOCATION);
+    return is(n, METHOD_INVOCATION);
   }
 
   public static boolean modifier(final ASTNode ¢) {
@@ -488,7 +488,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i>is thee <code><b>null</b></code>
    *         literal */
   public static boolean nullLiteral(final ASTNode n) {
-    return is(n, NULL__LITERAL);
+    return is(n, NULL_LITERAL);
   }
 
   /** Determine whether a node is <code><b>this</b></code> or
@@ -497,7 +497,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   public static boolean numericLiteral(final Expression x) {
-    return iz.oneOf(x, CHARACTER__LITERAL, NUMBER__LITERAL);
+    return iz.oneOf(x, CHARACTER_LITERAL, NUMBER_LITERAL);
   }
 
   /** Determine whether the type of an {@link ASTNode} node is one of given list
@@ -510,7 +510,7 @@ public enum iz {
   }
 
   public static boolean parenthesizeExpression(final Expression ¢) {
-    return is(¢, PARENTHESIZED__EXPRESSION);
+    return is(¢, PARENTHESIZED_EXPRESSION);
   }
 
   /** @param a the assignment who's operator we want to check
@@ -523,7 +523,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a prefix
    *         expression. */
   public static boolean prefixExpression(final ASTNode n) {
-    return is(n, PREFIX__EXPRESSION);
+    return is(n, PREFIX_EXPRESSION);
   }
 
   /** Determine whether a node is a return statement
@@ -531,7 +531,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
    *         statement. */
   public static boolean returnStatement(final ASTNode n) {
-    return is(n, RETURN__STATEMENT);
+    return is(n, RETURN_STATEMENT);
   }
 
   /** Determine whether a node is a "sequencer", i.e.,
@@ -540,7 +540,7 @@ public enum iz {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   public static boolean sequencer(final ASTNode n) {
-    return iz.oneOf(n, RETURN__STATEMENT, BREAK__STATEMENT, CONTINUE__STATEMENT, THROW__STATEMENT);
+    return iz.oneOf(n, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
   }
 
   /** Checks if expression is simple.
@@ -548,15 +548,15 @@ public enum iz {
    * @return true iff argument is simple */
   public static boolean simple(final Expression x) {
     return is(x, //
-        BOOLEAN__LITERAL, //
-        CHARACTER__LITERAL, //
-        NULL__LITERAL, //
-        NUMBER__LITERAL, //
-        QUALIFIED__NAME, //
-        SIMPLE__NAME, //
-        STRING__LITERAL, //
-        THIS__EXPRESSION, //
-        TYPE__LITERAL //
+        BOOLEAN_LITERAL, //
+        CHARACTER_LITERAL, //
+        NULL_LITERAL, //
+        NUMBER_LITERAL, //
+        QUALIFIED_NAME, //
+        SIMPLE_NAME, //
+        STRING_LITERAL, //
+        THIS_EXPRESSION, //
+        TYPE_LITERAL //
     );
   }
 
@@ -565,7 +565,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple
    *         name */
   public static boolean simpleName(final ASTNode n) {
-    return is(n, SIMPLE__NAME);
+    return is(n, SIMPLE_NAME);
   }
 
   /** Determine whether a node is a singleton statement, i.e., not a block.
@@ -594,7 +594,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a string
    *         literal */
   public static boolean stringLiteral(final ASTNode n) {
-    return n != null && n.getNodeType() == STRING__LITERAL;
+    return n != null && n.getNodeType() == STRING_LITERAL;
   }
 
   /** Determine whether a node is the <code><b>this</b></code> keyword
@@ -602,7 +602,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
    *         keyword */
   public static boolean thisLiteral(final ASTNode n) {
-    return is(n, THIS__EXPRESSION);
+    return is(n, THIS_EXPRESSION);
   }
 
   /** Determine whether a node is <code><b>this</b></code> or
@@ -611,7 +611,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   public static boolean thisOrNull(final Expression x) {
-    return iz.oneOf(x, NULL__LITERAL, THIS__EXPRESSION);
+    return iz.oneOf(x, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
@@ -644,7 +644,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement. */
   public static boolean variableDeclarationStatement(final ASTNode n) {
-    return is(n, VARIABLE__DECLARATION__STATEMENT);
+    return is(n, VARIABLE_DECLARATION_STATEMENT);
   }
 
   /** Determine whether the curly brackets of an {@link IfStatement} are
@@ -664,7 +664,7 @@ public enum iz {
   }
 
   static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER__LITERAL);
+    return is(¢, NUMBER_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {

@@ -25,7 +25,7 @@ public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> imple
   }
 
   private Expression heart(final Expression x) {
-    if (iz.is(x, PARENTHESIZED__EXPRESSION))
+    if (iz.is(x, PARENTHESIZED_EXPRESSION))
       return heart(step.expression(x));
     final PrefixExpression p = az.prefixExpression(x);
     return p == null || p.getOperator() != PLUS ? x : heart(p.getOperand());

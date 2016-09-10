@@ -28,9 +28,9 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
     final Expression elseElse = core(elze.getElseExpression());
     return !wizard.same(then, elseElse) && !wizard.same(then, elseThen) ? null
         : wizard.same(then, elseElse)
-            ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), elze.getExpression()).to(CONDITIONAL__AND))
+            ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), elze.getExpression()).to(CONDITIONAL_AND))
             : subject.pair(elseElse, then)
-                .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf(elze.getExpression())).to(CONDITIONAL__AND));
+                .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf(elze.getExpression())).to(CONDITIONAL_AND));
   }
 
   private static Expression collaspeOnThen(final ConditionalExpression x) {
@@ -41,9 +41,9 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
     final Expression thenThen = core(then.getThenExpression());
     final Expression thenElse = core(then.getElseExpression());
     return wizard.same(thenElse, elze)
-        ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), then.getExpression()).to(CONDITIONAL__AND))
+        ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), then.getExpression()).to(CONDITIONAL_AND))
         : wizard.same(thenThen, elze)
-            ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL__AND)) : null;
+            ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
 
   @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2013/07/01 */
 public enum Collect {
   /** collects semantic (multiple uses for loops) uses of an variable */
-  USES__SEMANTIC {
+  USES_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n));
     }
@@ -30,14 +30,14 @@ public enum Collect {
   },
   /** collects assignments AND semantic (multiple uses for loops) uses of a
    * variable */
-  BOTH__SEMANTIC {
+  BOTH_SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   },
   /** collects assignments AND lexical (single use for loops) uses of an
    * expression */
-  BOTH__LEXICAL {
+  BOTH_LEXICAL {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
