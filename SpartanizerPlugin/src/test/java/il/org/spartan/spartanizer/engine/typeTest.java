@@ -509,6 +509,10 @@ public class typeTest {
     @Test public void conditional16() {
       azzert.that(get(into.e("f() ? \"a\" : h()")), is(STRING));
     }
+    
+    @Test public void conditional17() {
+      azzert.that(get(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(NUMERIC));
+    }
 
     // tests for constructors
     @Test public void constructors01() {

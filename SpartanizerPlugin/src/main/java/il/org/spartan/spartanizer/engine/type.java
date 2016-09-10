@@ -198,7 +198,9 @@ public interface type {
           : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
               : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
                   : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                      : NOTHING; //
+                      : $.isNumeric() && ¢ == ALPHANUMERIC ? $
+                          : ¢.isNumeric() && $ == ALPHANUMERIC ? ¢
+                              : NOTHING; //
     }
 
     /** @param x JD
