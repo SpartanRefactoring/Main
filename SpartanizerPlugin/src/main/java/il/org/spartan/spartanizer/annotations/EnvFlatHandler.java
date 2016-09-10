@@ -34,7 +34,7 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
    * @see
    * il.org.spartan.spartanizer.engine.ENVTestEngineAbstract#buildEnvironmentSet
    * (org.eclipse.jdt.core.dom.BodyDeclaration) */
-  @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration ____) {
+  @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
 

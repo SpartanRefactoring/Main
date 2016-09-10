@@ -36,7 +36,7 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     return compatible(e1, e2) || compatible(e1, make.notOf(e2));
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
 

@@ -19,7 +19,7 @@ public class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> {
     return null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove \"\" from \"\" + X if X is a String";
   }
 

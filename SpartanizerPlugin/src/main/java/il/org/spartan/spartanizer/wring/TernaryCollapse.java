@@ -46,7 +46,7 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
   }
 

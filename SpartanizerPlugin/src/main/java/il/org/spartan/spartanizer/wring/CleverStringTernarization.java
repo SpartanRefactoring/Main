@@ -186,7 +186,7 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Replace ternarization with more clever one";
   }
 

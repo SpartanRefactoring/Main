@@ -44,10 +44,10 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     for (int i = 0; i < es.size() - 1;)
       if (validTypes(es.get(i), es.get(i + 1)))
         es.remove(i + 1);
-      else if (validTypes(es.get(i + 1), es.get(i)))
-        es.remove(i);
-      else
+      else if (!validTypes(es.get(i + 1), es.get(i)))
         ++i;
+      else
+        es.remove(i);
     return es.size() == ¢ ? null : es.size() == 1 ? lisp.first(es) : subject.operands(es).to(wizard.PLUS2);
   }
 }

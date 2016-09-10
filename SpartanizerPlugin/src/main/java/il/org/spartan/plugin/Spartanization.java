@@ -52,7 +52,7 @@ public abstract class Spartanization extends Refactoring {
     return new RefactoringStatus();
   }
 
-  @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor ____) {
+  @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
     if (compilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
@@ -93,7 +93,7 @@ public abstract class Spartanization extends Refactoring {
     return totalChanges;
   }
 
-  @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor ____) throws OperationCanceledException {
+  @Override public final Change createChange(@SuppressWarnings("unused") final IProgressMonitor __) throws OperationCanceledException {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
 

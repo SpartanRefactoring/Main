@@ -28,7 +28,7 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
     return $ == null || iz.blockEssential($) ? null : duplicate.of($);
   }
 
-  @Override String description(@SuppressWarnings("unused") final Block ____) {
+  @Override String description(@SuppressWarnings("unused") final Block __) {
     return "Remove redundant curly braces.";
   }
 

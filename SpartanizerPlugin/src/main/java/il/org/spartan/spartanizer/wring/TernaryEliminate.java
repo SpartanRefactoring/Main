@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.NoImpact {
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate conditional exprssion with identical branches";
   }
 

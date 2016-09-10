@@ -34,7 +34,7 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return subject.operand(step.operand(x)).to(pre2post(x.getOperator()));
   }
 
-  @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression ____) {
+  @Override boolean scopeIncludes(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;
   }
 }
