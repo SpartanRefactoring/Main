@@ -878,10 +878,12 @@ public class TrimmerTest250 {
     trimming("x+0+x+0+0+y+0+0+0+0+z+0+h+0").to("x+x+y+z+h").stays();
   }
 
+  @Ignore("wrong removal, should be unchanged")
   @Test public void issue72pg() {
     trimming("0+(x+y)").to("0+x+y").to("x+y").stays();
   }
 
+  @Ignore("wrong removal, should be unchanged")
   @Test public void issue72ph() {
     trimming("0+((x+y)+0+(z+h))+0")//
         .to("0+x+y+0+z+h+0")//
@@ -889,6 +891,7 @@ public class TrimmerTest250 {
         .stays();
   }
 
+  @Ignore("wrong removal, should be unchanged aside for (4+0)")
   @Test public void issue72pi() {
     trimming("0+(0+x+y+(4+0))").to("0+0+x+y+4+0").to("x+y+4").stays();
   }
@@ -1185,7 +1188,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue87c() {
-    trimming("a + (b-c)").to("a + b -c");
+    trimming("a + (b-c)").stays();
   }
 
   @Test public void issue87d() {
@@ -1245,6 +1248,11 @@ public class TrimmerTest250 {
     trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .stays();
+  }
+  
+  @Test public void issue129_01() {
+    trimming("$ += s + (new Integer(i) + \"\")").stays();
+
   }
 
   // @formatter:off
