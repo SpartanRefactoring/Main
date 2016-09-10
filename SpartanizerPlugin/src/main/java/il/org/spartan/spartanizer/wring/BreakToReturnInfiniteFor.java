@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import java.util.*;
+import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -39,70 +41,76 @@ public class BreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canon
     return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("all") @Override Rewrite make(final Block n) {
-    final List<Statement> statementList = n.statements();
-    if (statementList.size() < 2 || !(statementList.get(0) instanceof ForStatement) //
-        || !(statementList.get(1) instanceof ReturnStatement))
+  // TODO: Dor, there are functions in extract that do much of this
+  // TODO: Dor, use lisp.first and lisp.second
+  // I will spartnize this for you. Implement in other classes
+  @Override Rewrite make(final Block n) {
+    return make(statements(n));
+  }
+
+  public Rewrite make(final List<Statement> ss) {
+    final ForStatement vor = az.forStatement(first(ss));
+    if (vor == null || !isInfiniteLoop(vor))
       return null;
-    final ForStatement ForStatement = (ForStatement) statementList.get(0);
-    final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
-    if (!isInfiniteLoop(ForStatement))
-      return null;
-    final Statement body = ForStatement.getBody();
-    final Statement toChange = az.ifStatement(body) != null ? handleIf(body, nextReturn)
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
-    if (toChange == null)
-      return null;
-    final Statement theChange = toChange;
-    return new Rewrite(description(), theChange) {
+    final ReturnStatement nextReturn = az.returnStatement(second(ss));
+    return nextReturn == null ? null : make(vor, nextReturn);
+  }
+
+  public Rewrite make(final ForStatement vor, final ReturnStatement nextReturn) {
+    final Statement $ = make(vor.getBody(), nextReturn);
+    return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(theChange, nextReturn, g);
+        r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }
     };
   }
 
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final IfStatement ifStatement = az.ifStatement(s);
-    if (ifStatement == null)
-      return null;
-    final Statement thenStatement = ifStatement.getThenStatement();
-    final Statement elzeStatement = ifStatement.getElseStatement();
-    if (thenStatement != null) {
-      if (thenStatement instanceof BreakStatement)
-        return thenStatement;
-      if (iz.block(thenStatement)) {
-        final Statement $ = handleBlock((Block) thenStatement, nextReturn);
-        if ($ != null)
-          return $;
-      }
-      if (az.ifStatement(thenStatement) != null)
-        return handleIf(thenStatement, nextReturn);
-      if (elzeStatement != null) {
-        if (elzeStatement instanceof BreakStatement)
-          return elzeStatement;
-        if (iz.block(elzeStatement)) {
-          final Statement $ = handleBlock((Block) elzeStatement, nextReturn);
-          if ($ != null)
-            return $;
-        }
-        if (az.ifStatement(elzeStatement) != null)
-          return handleIf(elzeStatement, nextReturn);
-      }
-    }
-    return null;
+  public static Statement make(final Statement body, final ReturnStatement nextReturn) {
+    return az.ifStatement(body) != null ? handleIf(body, nextReturn)
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
   }
 
-  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    return handleIf(az.ifStatement(s), nextReturn);
+  }
+
+  public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
+    return s == null ? null : handleIf(then(s), elze(s), nextReturn);
+  }
+
+  public static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
+    // TODO: Dor, I think you can both cases then/elze with one statement
+    if (then == null)
+      return null;
+    if (iz.breakStatement(then))
+      return then;
+    if (iz.block(then)) {
+      final Statement $ = handleBlock(az.block(then), nextReturn);
+      if ($ != null)
+        return $;
+    }
+    if (iz.ifStatement(then))
+      return handleIf(then, nextReturn);
+    if (elze == null)
+      return null;
+    if (iz.breakStatement(elze))
+      return elze;
+    if (iz.block(elze)) {
+      final Statement $ = handleBlock(az.block(elze), nextReturn);
+      if ($ != null)
+        return $;
+    }
+    return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
+  }
+
+  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
-    final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (s instanceof BreakStatement) {
-        $ = s;
-        break;
-      }
+    for (final Statement s : statements(b)) {
+      if (iz.ifStatement(s))
+        $ = handleIf(az.ifStatement(s), nextReturn);
+      if (iz.breakStatement(s))
+        return s;
     }
     return $;
   }

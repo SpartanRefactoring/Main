@@ -26,10 +26,6 @@ public enum iz {
     return (Modifier.FINAL & s.getModifiers()) != 0;
   }
 
-  public static boolean astNode(final Object ¢) {
-    return ¢ != null && ¢ instanceof ASTNode;
-  }
-
   public static boolean abstractTypeDeclaration(final ASTNode ¢) {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
@@ -50,6 +46,10 @@ public enum iz {
    *         statement */
   public static boolean assignment(final ASTNode n) {
     return is(n, ASSIGNMENT);
+  }
+
+  public static boolean astNode(final Object ¢) {
+    return ¢ != null && ¢ instanceof ASTNode;
   }
 
   /** Determine whether a node is a {@link Block}
@@ -98,6 +98,10 @@ public enum iz {
    *         otherwise */
   public static boolean booleanOrNullLiteral(final ASTNode ¢) {
     return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
+  }
+
+  public static boolean breakStatement(final Statement s) {
+    return is(s, BREAK_STATEMENT);
   }
 
   /** @param x JD
@@ -229,6 +233,10 @@ public enum iz {
         TIMES, //
         XOR, //
         null);
+  }
+
+  public static boolean ifStatement(final Statement s) {
+    return is(s, IF_STATEMENT);
   }
 
   /** @param n JD
@@ -691,7 +699,7 @@ public enum iz {
   static boolean literal(final String token, final int i) {
     try {
       return Integer.parseInt(token) == i;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException ____) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
   }
@@ -699,7 +707,7 @@ public enum iz {
   static boolean literal(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException ____) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
   }
