@@ -108,12 +108,8 @@ public abstract class AbstractStringProperties {
         return "";
       }
 
-      public @Override String makeField(final String s) {
-        if (s == null)
-          return "";
-        if (!s.contains(QUOTE) && !s.contains(delimiter()))
-          return s;
-        return QUOTE + s.replaceAll(QUOTE, QUOTE + QUOTE) + QUOTE;
+      @Override public String makeField(final String s) {
+        return s == null ? "" : !s.contains(QUOTE) && !s.contains(delimiter()) ? s : QUOTE + s.replaceAll(QUOTE, QUOTE + QUOTE) + QUOTE;
       }
 
       @Override String allBottom() {

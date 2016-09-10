@@ -20,7 +20,7 @@ public enum Log {
   private static PrintStream out = System.out;
   private static Tab tabber = new Tab("  ");
   private static int maxLevel = 100;
-  private final static Stack<StopWatch> stack = new Stack<>();
+  private static final Stack<StopWatch> stack = new Stack<>();
 
   public static void activate() {
     active = true;
