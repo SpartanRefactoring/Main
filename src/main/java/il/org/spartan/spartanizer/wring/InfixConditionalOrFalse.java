@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Remove 'false' argument to '||'";
   }
 

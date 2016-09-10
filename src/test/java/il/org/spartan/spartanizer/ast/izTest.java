@@ -48,7 +48,7 @@ public class izTest {
   }
 
   @Test public void isDeMorganAND() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
+    azzert.aye(iz.deMorgan(CONDITIONAL__AND));
   }
 
   @Test public void isDeMorganGreater() {
@@ -56,11 +56,11 @@ public class izTest {
   }
 
   @Test public void isDeMorganGreaterEuals() {
-    azzert.nay(iz.deMorgan(GREATER_EQUALS));
+    azzert.nay(iz.deMorgan(GREATER__EQUALS));
   }
 
   @Test public void isDeMorganOR() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
+    azzert.aye(iz.deMorgan(CONDITIONAL__OR));
   }
 
   @Test public void isNullFalse1() {
@@ -76,7 +76,7 @@ public class izTest {
   }
 
   @Test public void isOneOf() {
-    azzert.that(iz.oneOf(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION), is(true));
+    azzert.that(iz.oneOf(e("this"), CHARACTER__LITERAL, NUMBER__LITERAL, NULL__LITERAL, THIS__EXPRESSION), is(true));
   }
 
   @Test public void isThisFalse1() {
@@ -127,7 +127,7 @@ public class izTest {
     azzert.that(iz.numericLiteral(e("1")), is(true));
   }
 
-  @Test public void seriesA_3() {
+  @Test public void seriesA__3() {
     azzert.nay(iz.infixPlus(e("(i+j)")));
     azzert.aye(iz.infixPlus(core(e("(i+j)"))));
     azzert.nay(iz.infixMinus(e("(i-j)")));

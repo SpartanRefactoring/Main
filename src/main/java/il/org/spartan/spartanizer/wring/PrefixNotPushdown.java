@@ -20,14 +20,14 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
    * @return operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator o) {
     return o == null ? null
-        : o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
-            : o.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
-                : o.equals(EQUALS) ? NOT_EQUALS
-                    : o.equals(NOT_EQUALS) ? EQUALS
-                        : o.equals(LESS_EQUALS) ? GREATER
-                            : o.equals(GREATER) ? LESS_EQUALS //
-                                : o.equals(GREATER_EQUALS) ? LESS //
-                                    : o.equals(LESS) ? GREATER_EQUALS : null;
+        : o.equals(CONDITIONAL__AND) ? CONDITIONAL__OR //
+            : o.equals(CONDITIONAL__OR) ? CONDITIONAL__AND //
+                : o.equals(EQUALS) ? NOT__EQUALS
+                    : o.equals(NOT__EQUALS) ? EQUALS
+                        : o.equals(LESS__EQUALS) ? GREATER
+                            : o.equals(GREATER) ? LESS__EQUALS //
+                                : o.equals(GREATER__EQUALS) ? LESS //
+                                    : o.equals(LESS) ? GREATER__EQUALS : null;
   }
 
   /** A utility function, which tries to simplify a boolean expression, whose
@@ -113,7 +113,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return x != null && az.not(x) != null && hasOpportunity(az.not(x));
   }
 
-  @Override String description(@SuppressWarnings("unused") final PrefixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final PrefixExpression ____) {
     return "Pushdown logical negation ('!')";
   }
 

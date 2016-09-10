@@ -44,7 +44,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return iz.sequencer(hop.lastStatement(s));
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
     return "Remove redundant else (possibly after inverting if statement)";
   }
 

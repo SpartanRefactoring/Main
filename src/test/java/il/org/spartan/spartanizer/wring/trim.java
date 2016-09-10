@@ -83,11 +83,11 @@ public interface trim {
    * @since 2016 */
   @SuppressWarnings("static-method") //
   @Ignore public static class TEST {
-    @Test public void trimming_of_gives() {
+    @Test public void trimming__of__gives() {
       trim.of("a +=1;").gives("a++;");
     }
 
-    @Test public void trimming_of_gives_gives_gives_stays() {
+    @Test public void trimming__of__gives__gives__gives__stays() {
       trim//
           .of("int b = 3; int a = b; return  a;")//
           .gives("int b = 3; int a = b; return  a;")//
@@ -96,15 +96,15 @@ public interface trim {
           .stays();
     }
 
-    @Test public void trimming_of_gives_stays() {
+    @Test public void trimming__of__gives__stays() {
       trim.of("a +=1;").gives("a++;").stays();
     }
 
-    @Test public void trimming_of_stays() {
+    @Test public void trimming__of__stays() {
       trim.of("a").stays();
     }
 
-    @Test public void trimming_repeatedly_of_gives() {
+    @Test public void trimming__repeatedly__of__gives() {
       trim.repeatedly//
           .of("int b = 3; int a = b; return  a;")//
           .gives("return 3;");

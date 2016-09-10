@@ -54,7 +54,7 @@ public class EvaluateRemainder extends Wring.ReplaceCurrentNode<InfixExpression>
     return "Evaluate remainder of numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Evaluate remainder of numbers";
   }
 

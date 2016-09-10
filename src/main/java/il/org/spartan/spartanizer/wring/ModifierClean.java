@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
 public abstract class ModifierClean<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
-  @Override String description(@SuppressWarnings("unused") final N __) {
+  @Override String description(@SuppressWarnings("unused") final N ____) {
     return "remove redundant modifier";
   }
 

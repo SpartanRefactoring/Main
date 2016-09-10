@@ -56,7 +56,7 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
     return "Evaluate addition of int numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Evaluate addition of int numbers";
   }
 

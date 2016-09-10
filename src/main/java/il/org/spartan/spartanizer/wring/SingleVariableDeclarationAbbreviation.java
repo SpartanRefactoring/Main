@@ -79,7 +79,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
         if (ts == null)
           return;
         for (final TagElement t : ts) {
-          if (!TagElement.TAG_PARAM.equals(t.getTagName()))
+          if (!TagElement.TAG__PARAM.equals(t.getTagName()))
             continue;
           for (final Object o : t.fragments())
             if (o instanceof SimpleName && wizard.same((SimpleName) o, oldName)) {

@@ -35,9 +35,9 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
   private static boolean forbidden(final SimpleName n, final Statement s) {
     ASTNode child = null;
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
-      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
-          || iz.is(ancestor, FOR_STATEMENT) && step.initializers((ForStatement) ancestor).indexOf(child) != -1
-          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
+      if (iz.is(ancestor, WHILE__STATEMENT, DO__STATEMENT, ANONYMOUS__CLASS__DECLARATION)
+          || iz.is(ancestor, FOR__STATEMENT) && step.initializers((ForStatement) ancestor).indexOf(child) != -1
+          || iz.is(ancestor, ENHANCED__FOR__STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
         return true;
       child = ancestor;
     }
@@ -46,7 +46,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
 
   private static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
-      if (iz.is(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
+      if (iz.is(ancestor, TRY__STATEMENT, SYNCHRONIZED__STATEMENT))
         return true;
     return false;
   }

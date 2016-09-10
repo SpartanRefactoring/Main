@@ -28,7 +28,7 @@ public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement
     return step.elze(s) != null && iz.vacuousElse(s);
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
     return "Remove vacuous 'else' branch";
   }
 

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2013/07/01 */
 public enum Collect {
   /** collects semantic (multiple uses for loops) uses of an variable */
-  USES_SEMANTIC {
+  USES__SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n));
     }
@@ -30,14 +30,14 @@ public enum Collect {
   },
   /** collects assignments AND semantic (multiple uses for loops) uses of a
    * variable */
-  BOTH_SEMANTIC {
+  BOTH__SEMANTIC {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   },
   /** collects assignments AND lexical (single use for loops) uses of an
    * expression */
-  BOTH_LEXICAL {
+  BOTH__LEXICAL {
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
@@ -274,19 +274,19 @@ public enum Collect {
     return new ASTVisitor() {
       int loopDepth = 0;
 
-      @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
+      @Override public void endVisit(@SuppressWarnings("unused") final DoStatement ____) {
         --loopDepth;
       }
 
-      @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
+      @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement ____) {
         --loopDepth;
       }
 
-      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement __) {
+      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement ____) {
         --loopDepth;
       }
 
-      @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement __) {
+      @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement ____) {
         --loopDepth;
       }
 
@@ -315,7 +315,7 @@ public enum Collect {
         return collect(step.expression(s));
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement ____) {
         ++loopDepth;
         return true;
       }
@@ -325,7 +325,7 @@ public enum Collect {
         return false;
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement ____) {
         ++loopDepth;
         return true;
       }
@@ -360,7 +360,7 @@ public enum Collect {
         return collect(n);
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement ____) {
         ++loopDepth;
         return true;
       }

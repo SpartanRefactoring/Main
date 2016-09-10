@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.java.*;
 @SuppressWarnings({ "javadoc", "static-method" }) public class subjectTest {
   @Test public void assignment() {
     azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.ASSIGN), iz("a=b"));
-    azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.PLUS_ASSIGN), iz("a+=b"));
-    azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN), iz("a>>>=b"));
+    azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.PLUS__ASSIGN), iz("a+=b"));
+    azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.RIGHT__SHIFT__UNSIGNED__ASSIGN), iz("a>>>=b"));
   }
 
   @Test public void conditionalExtract() {

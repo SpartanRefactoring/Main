@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2015-07-16 */
 public enum Make {
   /** Strategy for conversion into a compilation unit */
-  COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
+  COMPILATION__UNIT(ASTParser.K__COMPILATION__UNIT), //
   /** Strategy for conversion into an expression */
-  EXPRESSION(ASTParser.K_EXPRESSION), //
+  EXPRESSION(ASTParser.K__EXPRESSION), //
   /** Strategy for conversion into an sequence of statements */
-  STATEMENTS(ASTParser.K_STATEMENTS), //
+  STATEMENTS(ASTParser.K__STATEMENTS), //
   /** Strategy for conversion into a class body */
-  CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
+  CLASS__BODY__DECLARATIONS(ASTParser.K__CLASS__BODY__DECLARATIONS); //
   /** Converts the {@link makeAST} value to its corresponding {@link Make} enum
    * value
    * @param t The {@link makeAST} type
@@ -31,10 +31,10 @@ public enum Make {
         return Make.STATEMENTS;
       case EXPRESSION:
         return Make.EXPRESSION;
-      case COMPILATION_UNIT:
-        return Make.COMPILATION_UNIT;
-      case CLASS_BODY_DECLARATIONS:
-        return Make.CLASS_BODY_DECLARATIONS;
+      case COMPILATION__UNIT:
+        return Make.COMPILATION__UNIT;
+      case CLASS__BODY__DECLARATIONS:
+        return Make.CLASS__BODY__DECLARATIONS;
       default:
         return null;
     }

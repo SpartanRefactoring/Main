@@ -6,14 +6,14 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
-/** A {@link Wring} to change name of unused variable to double underscore "__"
+/** A {@link Wring} to change name of unused variable to double underscore "____"
  * TODO Ori: (maybe) inherent VariableChangeName instead of
  * ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
 @SuppressWarnings({ "javadoc", "unused", "hiding", "unchecked" }) public final class SingelVariableDeclarationUnderscoreDoubled
     extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.UnusedArguments {
-  static final boolean BY_ANNOTATION = true;
+  static final boolean BY__ANNOTATION = true;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     final IsUsed u = new IsUsed(n);
@@ -50,11 +50,11 @@ import il.org.spartan.spartanizer.wring.Wring.*;
   }
 
   private static String unusedVariableName() {
-    return "__";
+    return "____";
   }
 
   @Override String description(final SingleVariableDeclaration d) {
-    return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
+    return "Change name of unused variable " + d.getName().getIdentifier() + " to ____";
   }
 
   @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
@@ -64,7 +64,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
     for (final SingleVariableDeclaration svd : step.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
+    if (BY__ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration svd : step.parameters(d))
@@ -89,19 +89,19 @@ import il.org.spartan.spartanizer.wring.Wring.*;
       return !c;
     }
 
-    @Override public boolean preVisit2(final ASTNode __) {
+    @Override public boolean preVisit2(final ASTNode ____) {
       return c;
     }
 
-    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
+    @Override public final boolean visit(final AnnotationTypeDeclaration ____) {
       return false;
     }
 
-    @Override public final boolean visit(final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(final AnonymousClassDeclaration ____) {
       return false;
     }
 
-    @Override public final boolean visit(final EnumDeclaration __) {
+    @Override public final boolean visit(final EnumDeclaration ____) {
       return false;
     }
 
@@ -113,7 +113,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
       return c;
     }
 
-    @Override public final boolean visit(final TypeDeclaration __) {
+    @Override public final boolean visit(final TypeDeclaration ____) {
       return false;
     }
   }

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
   }
 
