@@ -59,8 +59,8 @@ public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression>
     return x.getAST().newNumberLiteral(Long.toString(shifted) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
-    return "Evaluate substraction of numbers";
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Evaluate shift left of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {

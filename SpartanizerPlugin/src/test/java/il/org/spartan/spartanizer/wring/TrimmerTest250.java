@@ -310,6 +310,99 @@ public class TrimmerTest250 {
     trimming("volatile private int a;").to("private volatile int a;");
   }
 
+  @Test public void issue116_01() {
+    trimming("\"\" + x").to("x + \"\"");
+  }
+
+  @Test public void issue116_02() {
+    trimming("\"\" + x.foo()").to("x.foo() + \"\"");
+  }
+
+  @Test public void issue116_03() {
+    trimming("\"\" + (Integer)(\"\" + x).length()").to("(Integer)(\"\" + x).length() + \"\"").to("(Integer)(x +\"\").length() + \"\"");
+  }
+
+  @Test public void issue116_04() {
+    trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";");
+  }
+
+  @Test public void issue116_05() {
+    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"");
+  }
+
+  @Test public void issue116_06() {
+    trimming("\"\" + ((Integer)5).toString().indexOf(\"5\").toString().length()")
+        .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
+        .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"");
+  }
+
+  @Test public void issue129_01() {
+    trimming("$ += s + (new Integer(i) + \"\")").stays();
+  }
+
+  @Test public void issue129_02() {
+    trimming("1 + 2 - (x+1)").to("1+2-x-1").to("3-x-1").stays();
+  }
+
+  @Test public void issue129_03() {
+    trimming("1 + 2 + (x+1)").stays();
+  }
+
+  @Ignore() @Test public void issue129_04() {
+    trimming("\"\" + 0 + (x - 7)").stays();
+  }
+
+  @Ignore() @Test public void issue129_05() {
+    trimming("x + 5 + y + 7.0 +(double)f(3)").stays();
+  }
+
+  @Test public void issue141_01() {
+    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
+        + "out(\"elements\", os);   \n" + "}").stays();
+  }
+
+  @Test public void issue141_02() {
+    trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
+        + "out(\"elements\", os);   \n" + "}").stays();
+  }
+
+  @Test public void issue141_03() {
+    trimming("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
+        + "out(\"elements\",abracadabra);   \n" + "}").stays();
+  }
+
+  @Test public void issue141_04() {
+    trimming("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .stays();
+  }
+
+  @Test public void issue141_05() {
+    trimming("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .to("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .stays();
+  }
+
+  @Test public void issue141_06() {
+    trimming("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .to("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
+            + "}")
+        .stays();
+  }
+
+  @Test public void issue141_07() {
+    trimming("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
+        + "out(\"elements\");   \n" + "}")
+            .to("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
+                + "out(\"elements\");   \n" + "}")
+            .stays();
+  }
+
+  @Test public void issue141_08() {
+    trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+        .stays();
+  }
+
   @Test public void issue31a() {
     trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
         "      return hasAnnotation(n.modifiers());\n" + //
@@ -593,32 +686,6 @@ public class TrimmerTest250 {
         .to("switch(x + \"\"){ case \"1\": return; case \"2\": return; default: return; }");
   }
 
-  @Test public void issue116_01() {
-    trimming("\"\" + x").to("x + \"\"");
-  }
-
-  @Test public void issue116_02() {
-    trimming("\"\" + x.foo()").to("x.foo() + \"\"");
-  }
-
-  @Test public void issue116_03() {
-    trimming("\"\" + (Integer)(\"\" + x).length()").to("(Integer)(\"\" + x).length() + \"\"").to("(Integer)(x +\"\").length() + \"\"");
-  }
-
-  @Test public void issue116_04() {
-    trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";");
-  }
-
-  @Test public void issue116_05() {
-    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"");
-  }
-
-  @Test public void issue116_06() {
-    trimming("\"\" + ((Integer)5).toString().indexOf(\"5\").toString().length()")
-        .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
-        .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"");
-  }
-
   @Test public void issue54_05() {
     trimming("x.toString(5)").stays();
   }
@@ -855,42 +922,39 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue72pa() {
-    trimming("x+0").to("x");
+    trimming("(int)x+0").to("(int)x");
   }
 
   @Test public void issue72pb() {
-    trimming("0+x").to("x");
+    trimming("0+(int)x").to("(int)x");
   }
 
   @Test public void issue72pc() {
-    trimming("0+x").to("x");
+    trimming("0-x").to("-x");
   }
 
   @Test public void issue72pd() {
-    trimming("0+x+0").to("x").stays();
+    trimming("0+(int)x+0").to("(int)x").stays();
   }
 
   @Test public void issue72pe() {
-    trimming("x+0+x").to("x+x").stays();
+    trimming("(int)x+0-x").to("(int)x-x").stays();
   }
 
   @Test public void issue72pf() {
-    trimming("x+0+x+0+0+y+0+0+0+0+z+0+h+0").to("x+x+y+z+h").stays();
+    trimming("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0").to("(int)x+(int)x+(int)y+(int)z").stays();
   }
 
   @Test public void issue72pg() {
-    trimming("0+(x+y)").to("0+x+y").to("x+y").stays();
+    trimming("0+(x+y)").stays();
   }
 
   @Test public void issue72ph() {
-    trimming("0+((x+y)+0+(z+h))+0")//
-        .to("0+x+y+0+z+h+0")//
-        .to("x+y+z+h")//
-        .stays();
+    trimming("0+((x+y)+0+(z+h))+0").stays();
   }
 
   @Test public void issue72pi() {
-    trimming("0+(0+x+y+(4+0))").to("0+0+x+y+4+0").to("x+y+4").stays();
+    trimming("0+(0+x+y+(4+0))").to("0+(0+x+y+(4))").stays();
   }
 
   @Ignore @Test public void issue73_01() {
@@ -1185,7 +1249,7 @@ public class TrimmerTest250 {
   }
 
   @Test public void issue87c() {
-    trimming("a + (b-c)").to("a + b -c");
+    trimming("a + (b-c)").stays();
   }
 
   @Test public void issue87d() {
@@ -1198,53 +1262,6 @@ public class TrimmerTest250 {
 
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
-  }
-
-  @Test public void issue141_01() {
-    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
-  }
-
-  @Test public void issue141_02() {
-    trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
-  }
-
-  @Test public void issue141_03() {
-    trimming("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
-        + "out(\"elements\",abracadabra);   \n" + "}").stays();
-  }
-
-  @Test public void issue141_04() {
-    trimming("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .stays();
-  }
-
-  @Test public void issue141_05() {
-    trimming("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .to("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .stays();
-  }
-
-  @Test public void issue141_06() {
-    trimming("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .to("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
-            + "}")
-        .stays();
-  }
-
-  @Test public void issue141_07() {
-    trimming("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
-        + "out(\"elements\");   \n" + "}")
-            .to("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
-                + "out(\"elements\");   \n" + "}")
-            .stays();
-  }
-
-  @Test public void issue141_08() {
-    trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .stays();
   }
 
   // @formatter:off
@@ -1262,9 +1279,6 @@ public class TrimmerTest250 {
         f();
       }
     }, a2() {{ f(); }
-      public void i() {
-        f();
-      }
       void f() {
         g();
       }
@@ -1273,6 +1287,9 @@ public class TrimmerTest250 {
       }
       void h() {
         i();
+      }
+      public void i() {
+        f();
       }
     }
   }

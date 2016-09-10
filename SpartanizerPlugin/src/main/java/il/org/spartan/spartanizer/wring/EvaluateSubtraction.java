@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
       return null;
@@ -67,22 +67,30 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
-    return "Evaluate substraction of numbers";
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Evaluate subtraction of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    int sourceLength = (x + "").length();
+    ASTNode $;
     if (x.getOperator() != MINUS)
       return null;
     switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        return replacementInt(extract.allOperands(x), x);
+        $ = replacementInt(extract.allOperands(x), x);
+        break;
       case DOUBLE:
-        return replacementDouble(extract.allOperands(x), x);
+        $ = replacementDouble(extract.allOperands(x), x);
+        break;
       case LONG:
-        return replacementLong(extract.allOperands(x), x);
+        $ = replacementLong(extract.allOperands(x), x);
+        break;
       default:
         return null;
     }
+    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
-}
+  
+ }
+
