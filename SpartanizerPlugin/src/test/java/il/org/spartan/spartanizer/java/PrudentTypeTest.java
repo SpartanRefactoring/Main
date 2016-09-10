@@ -622,41 +622,41 @@ public class PrudentTypeTest {
       azzert.that(prudent(into.e("toString(x,y)")), is(NOTHING));
     }
 
-    @Test public void OnaryPlusMinusSemantics01() {
+    @Test public void UnaryPlusMinusSemantics01() {
       azzert.that(PrudentType.axiom(i), is(PrudentType.INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics02() {
+    @Test public void UnaryPlusMinusSemantics02() {
       azzert.that(PrudentType.axiom(-l), is(PrudentType.LONG));
     }
 
-    @Test public void OnaryPlusMinusSemantics03() {
+    @Test public void UnaryPlusMinusSemantics03() {
       final short x = 0;
       azzert.that(PrudentType.axiom(x), is(PrudentType.INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics04() {
+    @Test public void UnaryPlusMinusSemantics04() {
       azzert.that(PrudentType.axiom(d), is(PrudentType.DOUBLE));
     }
 
-    @Test public void OnaryPlusMinusSemantics05() {
+    @Test public void UnaryPlusMinusSemantics05() {
       azzert.that(PrudentType.axiom(-f), is(PrudentType.FLOAT));
     }
 
-    @Test public void OnaryPlusMinusSemantics06() {
+    @Test public void UnaryPlusMinusSemantics06() {
       azzert.that(PrudentType.axiom(b), is(PrudentType.INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics07() {
+    @Test public void UnaryPlusMinusSemantics07() {
       azzert.that(PrudentType.axiom(-b), is(PrudentType.INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics08() {
+    @Test public void UnaryPlusMinusSemantics08() {
       final char x = 0;
       azzert.that(PrudentType.axiom(-x), is(PrudentType.INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics09() {
+    @Test public void UnaryPlusMinusSemantics09() {
       azzert.that(PrudentType.axiom(-c1), is(PrudentType.INT));
     }
 
