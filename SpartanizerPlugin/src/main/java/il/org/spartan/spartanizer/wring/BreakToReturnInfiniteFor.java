@@ -66,9 +66,11 @@ public class BreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canon
     };
   }
 
-  public static Statement make(final Statement body, final ReturnStatement nextReturn) {
-    return az.ifStatement(body) != null ? handleIf(body, nextReturn)
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
+  public static Statement make(final Statement s, final ReturnStatement nextReturn) {
+    return iz.breakStatement(s) ? s //
+        : iz.ifStatement(s) ? handleIf(s, nextReturn) //
+            : iz.block(s) ? handleBlock(az.block(s), nextReturn) //
+                : null;
   }
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
