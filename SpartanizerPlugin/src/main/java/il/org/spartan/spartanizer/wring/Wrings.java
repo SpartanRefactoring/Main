@@ -59,14 +59,14 @@ public enum Wrings {
   }
 
   static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
-    final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS__PROPERTY);
+    final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int i = what.size() - 1; i >= 0; --i)
       $.insertAfter(what.get(i), where, g);
     return $;
   }
 
   static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
-    final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS__PROPERTY);
+    final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (final Statement s : what)
       $.insertBefore(s, where, g);
     return $;
@@ -172,6 +172,6 @@ public enum Wrings {
   }
 
   private static int sequencerRank(final ASTNode n) {
-    return iz.index(n.getNodeType(), BREAK__STATEMENT, CONTINUE__STATEMENT, RETURN__STATEMENT, THROW__STATEMENT);
+    return iz.index(n.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 }

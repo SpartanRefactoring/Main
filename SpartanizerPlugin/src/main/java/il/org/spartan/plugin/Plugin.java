@@ -31,7 +31,7 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       try {
         if (p.isOpen())
-          p.build(IncrementalProjectBuilder.FULL__BUILD, null);
+          p.build(IncrementalProjectBuilder.FULL_BUILD, null);
       } catch (final CoreException e) {
         log(e);
       }
@@ -41,9 +41,9 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
   private static void addNature(final IProject p) throws CoreException {
     final IProjectDescription d = p.getDescription();
     final String[] natures = d.getNatureIds();
-    if (as.list(natures).contains(Nature.NATURE__ID))
+    if (as.list(natures).contains(Nature.NATURE_ID))
       return; // Already got the nature
-    d.setNatureIds(append(natures, Nature.NATURE__ID));
+    d.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(d, null);
   }
 

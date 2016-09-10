@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.*;
  * @author Daniel Mittelman (fixed and revised)
  * @since 29/03/2016 */
 public class GroupFieldEditor extends FieldEditor {
-  private static final int GROUP__PADDING = 8;
+  private static final int GROUP_PADDING = 8;
   private final String title;
   private int numColumns;
   private final List<FieldEditor> members = new ArrayList<>();
@@ -41,7 +41,7 @@ public class GroupFieldEditor extends FieldEditor {
     title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
     numColumns = 0;
-    group = new Group(parent, SWT.SHADOW__OUT);
+    group = new Group(parent, SWT.SHADOW_OUT);
     group.setText(title);
   }
 
@@ -155,14 +155,14 @@ public class GroupFieldEditor extends FieldEditor {
   private void gridData(final int i) {
     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
-    data.verticalIndent = GROUP__PADDING;
+    data.verticalIndent = GROUP_PADDING;
     data.horizontalSpan = i;
     group.setLayoutData(data);
   }
 
   private void gridLayout(final int i) {
     final GridLayout groupLayout = new GridLayout();
-    groupLayout.marginWidth = groupLayout.marginHeight = GROUP__PADDING;
+    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
     groupLayout.numColumns = i;
     group.setLayout(groupLayout);
   }

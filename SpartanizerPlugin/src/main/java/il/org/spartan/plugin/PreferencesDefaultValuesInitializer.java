@@ -15,8 +15,8 @@ import il.org.spartan.plugin.PreferencesResources.*;
 public class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
     final IPreferenceStore s = store();
-    s.setDefault(PLUGIN__STARTUP__BEHAVIOR__ID, "remember");
-    s.setDefault(NEW__PROJECTS__ENABLE__BY__DEFAULT__ID, true);
+    s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
+    s.setDefault(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
     for (final WringGroup g : WringGroup.values())
       s.setDefault(g.id, "on");
   }

@@ -30,7 +30,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
                                        * @Id(name = "x", clazz = "int") })
                                        * public static "int" x;
                                        *
-                                       * public static void change__x() {
+                                       * public static void change_x() {
                                        *
                                        * @Begin class A {// } x = 3; //
                                        * "int"eresting... what does it do? lol
@@ -38,7 +38,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
                                        * @End({ @Id(name = "EX02.C1.x", clazz =
                                        * "int") }) class B {// } }
                                        *
-                                       * public static void change__y() {
+                                       * public static void change_y() {
                                        *
                                        * @Begin class A {// } y = 3;
                                        *
@@ -71,20 +71,20 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * clazz = "int") }) @FlatEnvUse({
    *
    * @Id(name = "x", clazz = "int"), @Id(name = "y", clazz = "int") }) static
-   * class x__hiding {
+   * class x_hiding {
    *
    * @NestedENV({ @Id(name = "EX03.x", clazz = "int"), @Id(name = "EX03.y",
-   * clazz = "int"), @Id(name = "EX03.x__hiding.x", clazz = "int"),
+   * clazz = "int"), @Id(name = "EX03.x_hiding.x", clazz = "int"),
    *
-   * @Id(name = "EX03.x__hiding.y__hiding.xsy", clazz = y__hiding.class)
+   * @Id(name = "EX03.x_hiding.y_hiding.xsy", clazz = y_hiding.class)
    * }) @FlatEnvUse({ @Id(name = "y", clazz = "int"),
    *
-   * @Id(name = "x", clazz = "int"), @Id(name = "xsy", clazz = y__hiding.class)
-   * }) public class y__hiding { // purpose!
+   * @Id(name = "x", clazz = "int"), @Id(name = "xsy", clazz = y_hiding.class)
+   * }) public class y_hiding { // purpose!
    *
    * @Begin class C {// }
    *
-   * @End({ @Id(name = "EX03.y__hiding.y", clazz = "int") }) class D {// }
+   * @End({ @Id(name = "EX03.y_hiding.y", clazz = "int") }) class D {// }
    *
    * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "xsy", clazz =
    * "int") }) @FlatEnvUse({
@@ -92,11 +92,11 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @Id(name = "xsy", clazz = "int"), @Id(name = "x", clazz = "int") }) public
    * "int" y;
    *
-   * y__hiding() {
+   * y_hiding() {
    *
    * @Begin class E {// } y = 2;
    *
-   * @End({ @Id(name = "EX03.y__hiding.y", clazz = "int") }) class F {// } } }
+   * @End({ @Id(name = "EX03.y_hiding.y", clazz = "int") }) class F {// } } }
    *
    * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "y", clazz =
    * "int") }) public static "int" x;
@@ -104,27 +104,27 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @NestedENV({ @Id(name = "EX03.x", clazz = "int"), @Id(name = "EX03.y",
    * clazz = "int"),
    *
-   * @Id(name = "EX03.x__hiding.x", clazz = "int") }) @FlatEnvUse({ @Id(name =
+   * @Id(name = "EX03.x_hiding.x", clazz = "int") }) @FlatEnvUse({ @Id(name =
    * "x", clazz = "int"),
    *
-   * @Id(name = "y", clazz = "int") }) y__hiding xsy;
+   * @Id(name = "y", clazz = "int") }) y_hiding xsy;
    *
-   * x__hiding() { x = 2; xsy = new y__hiding(); } }
+   * x_hiding() { x = 2; xsy = new y_hiding(); } }
    *
    * static void func() {
    *
-   * @Begin class Q {// } final EX03 top = new EX03(); final x__hiding X = new
-   * x__hiding();
+   * @Begin class Q {// } final EX03 top = new EX03(); final x_hiding X = new
+   * x_hiding();
    *
    * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "y", clazz =
    * "int") }) @FlatEnvUse({
    *
    * @Id(name = "y", clazz = "int"), @Id(name = "x", clazz = "int") }) final
-   * x__hiding.y__hiding Y = X.new y__hiding(); top.x = 3; x__hiding.x = 4; X.xsy.y
+   * x_hiding.y_hiding Y = X.new y_hiding(); top.x = 3; x_hiding.x = 4; X.xsy.y
    * = 5; Y.y = 6;
    *
    * @End({ @Id(name = "func.top", clazz = EX03.class), @Id(name = "func.X",
-   * clazz = x__hiding.class), @Id(name = "func.top.x", clazz = "int"),
+   * clazz = x_hiding.class), @Id(name = "func.top.x", clazz = "int"),
    *
    * @Id(name = "func.X.xsy.y", clazz = "int") }) class QQ {// } }
    *
@@ -157,7 +157,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @End({ @Id(name = "EX04.x", clazz = "int") }) class QQ {// } }
    *
-   * @Override void set__x() {
+   * @Override void set_x() {
    *
    * @Begin class Q {// } x = 3;
    *
@@ -167,7 +167,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * Child2() { x = 4; }
    *
-   * @Override void set__x() {
+   * @Override void set_x() {
    *
    * @Begin class Q {// } x = 5;
    *
@@ -181,7 +181,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * Parent() { x = 0; }
    *
-   * void set__x() {
+   * void set_x() {
    *
    * @Begin class Q {// } x = 1;
    *
@@ -203,7 +203,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @Id(name = "EX04.func.c1", clazz = Child1.class) }) final Child2 c2 = new
    * Child2();
    *
-   * @Begin class Q {// } p.set__x(); c1.set__x(); c2.set__x();
+   * @Begin class Q {// } p.set_x(); c1.set_x(); c2.set_x();
    *
    * @End({ @Id(name = "EX04.x", clazz = "int"), @Id(name = "EX04.c2.x", clazz =
    * "int") }) class QQ {// } } } */
@@ -253,43 +253,43 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @FlatEnvUse({ @Id(name = "x", clazz = "int") }) class a { class b { class c
    * {
    *
-   * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "a__x", clazz =
-   * "int"), @Id(name = "b__x", clazz = "int"),
+   * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "a_x", clazz =
+   * "int"), @Id(name = "b_x", clazz = "int"),
    *
-   * @Id(name = "c__x", clazz = "int") }) class d { "int" d__x;
+   * @Id(name = "c_x", clazz = "int") }) class d { "int" d_x;
    *
-   * @FlatEnvUse({ @Id(name = "d__x", clazz = "int"), @Id(name = "x", clazz =
-   * "int"), @Id(name = "c__x", clazz = "int"),
+   * @FlatEnvUse({ @Id(name = "d_x", clazz = "int"), @Id(name = "x", clazz =
+   * "int"), @Id(name = "c_x", clazz = "int"),
    *
-   * @Id(name = "b__x", clazz = "int"), @Id(name = "a__x", clazz = "int") }) void
-   * d__func() {
+   * @Id(name = "b_x", clazz = "int"), @Id(name = "a_x", clazz = "int") }) void
+   * d_func() {
    *
-   * @Begin class opening { } ++a__x; ++b__x; ++c__x; ++d__x;
+   * @Begin class opening { } ++a_x; ++b_x; ++c_x; ++d_x;
    *
-   * @End({ @Id(name = "EX05.a.a__x", clazz = "int"), @Id(name = "EX05.a.b.b__x",
+   * @End({ @Id(name = "EX05.a.a_x", clazz = "int"), @Id(name = "EX05.a.b.b_x",
    * clazz = "int"),
    *
-   * @Id(name = "EX05.a.b.c.c__x", clazz = "int"), @Id(name = "EX05.a.b.c.d.d__x",
+   * @Id(name = "EX05.a.b.c.c_x", clazz = "int"), @Id(name = "EX05.a.b.c.d.d_x",
    * clazz = "int") }) class closing {// } } }
    *
-   * "int" c__x;
+   * "int" c_x;
    *
-   * void c__func() { ++a__x; ++b__x; ++c__x; } }
+   * void c_func() { ++a_x; ++b_x; ++c_x; } }
    *
-   * "int" b__x;
+   * "int" b_x;
    *
-   * void b__func() { ++a__x; ++b__x; } }
+   * void b_func() { ++a_x; ++b_x; } }
    *
-   * "int" a__x;
+   * "int" a_x;
    *
-   * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "a__x", clazz =
+   * @FlatEnvUse({ @Id(name = "x", clazz = "int"), @Id(name = "a_x", clazz =
    * "int"),
    *
-   * @Id(name = "b__x", clazz = "int") }) void a__func() {
+   * @Id(name = "b_x", clazz = "int") }) void a_func() {
    *
-   * @Begin class opening {// } ++a__x;
+   * @Begin class opening {// } ++a_x;
    *
-   * @End({ @Id(name = "EX05.a.a__x", clazz = "int") }) class closing {// } } }
+   * @End({ @Id(name = "EX05.a.a_x", clazz = "int") }) class closing {// } } }
    *
    * static "int" x; }
    *
@@ -334,7 +334,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * "int" x; } }
    *
-   * public static class EX07 { // func__param__name__to__ENV class Complex { "int"
+   * public static class EX07 { // func_param_name_to_ENV class Complex { "int"
    * r; "int" i; }
    *
    * static Integer func(final Integer n1, final "String" n2,
@@ -536,22 +536,22 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @Id(name = "EX14.func.A.x", clazz = "int") }) class end { } } } }
    *
-   * public static class EX99 { // for__testing__the__use__of__names class
-   * Oompa__Loompa { Oompa__Loompa Oompa__Loompa; // A
+   * public static class EX99 { // for_testing_the_use_of_names class
+   * Oompa_Loompa { Oompa_Loompa Oompa_Loompa; // A
    *
-   * <Oompa__Loompa> Oompa__Loompa() { }
+   * <Oompa_Loompa> Oompa_Loompa() { }
    *
-   * Oompa__Loompa(final Oompa__Loompa... Oompa__Loompa) { this(Oompa__Loompa,
-   * Oompa__Loompa); }
+   * Oompa_Loompa(final Oompa_Loompa... Oompa_Loompa) { this(Oompa_Loompa,
+   * Oompa_Loompa); }
    *
-   * Oompa__Loompa(final Oompa__Loompa[]... Oompa__Loompa) { this(); }
+   * Oompa_Loompa(final Oompa_Loompa[]... Oompa_Loompa) { this(); }
    *
-   * Oompa__Loompa Oompa__Loompa(final Oompa__Loompa l) { l: for (;;) for (;;) { //
-   * D // C // B if (new Oompa__Loompa(l) {
+   * Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) { l: for (;;) for (;;) { //
+   * D // C // B if (new Oompa_Loompa(l) {
    *
-   * @Override Oompa__Loompa Oompa__Loompa(final Oompa__Loompa l) { return l !=
-   * null ? super.Oompa__Loompa(l) : Oompa__Loompa.this.Oompa__Loompa(l); }
-   * }.Oompa__Loompa(l) == null) continue l; break l; } return l; } } }
+   * @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) { return l !=
+   * null ? super.Oompa_Loompa(l) : Oompa_Loompa.this.Oompa_Loompa(l); }
+   * }.Oompa_Loompa(l) == null) continue l; break l; } return l; } } }
    *
    * {
    *

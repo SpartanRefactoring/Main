@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @since 2016-05-08 */
 @SuppressWarnings({ "javadoc", "unused", "hiding", "unchecked" }) public final class SingelVariableDeclarationUnderscoreDoubled
     extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.UnusedArguments {
-  static final boolean BY__ANNOTATION = true;
+  static final boolean BY_ANNOTATION = true;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     final IsUsed u = new IsUsed(n);
@@ -64,7 +64,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
     for (final SingleVariableDeclaration svd : step.parameters(d))
       if (unusedVariableName().equals(svd.getName().getIdentifier()))
         return null;
-    if (BY__ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
+    if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration svd : step.parameters(d))

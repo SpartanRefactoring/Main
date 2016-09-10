@@ -84,7 +84,7 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   private static InfixExpression replacePrefix(final InfixExpression x, final int i) {
     assert x.getOperator() == PLUS2;
     final List<Expression> es = extract.allOperands(x);
-    assert first(es).getNodeType() == STRING__LITERAL;
+    assert first(es).getNodeType() == STRING_LITERAL;
     final StringLiteral l = (StringLiteral) first(es);
     final StringLiteral suffix = getSuffix(l.getLiteralValue(), i, x);
     replaceFirst(es, suffix);
@@ -94,7 +94,7 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   private static InfixExpression replaceSuffix(final InfixExpression x, final int i) {
     assert x.getOperator() == PLUS2;
     final List<Expression> es = extract.allOperands(x);
-    assert last(es).getNodeType() == STRING__LITERAL;
+    assert last(es).getNodeType() == STRING_LITERAL;
     final StringLiteral l = (StringLiteral) last(es);
     final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, x);
     replaceLast(es, prefix);
@@ -113,14 +113,14 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     final String thenStr = then.getLiteralValue();
     assert elze.getOperator() == PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (as(elzeOperands).getNodeType() == STRING__LITERAL) {
+    if (as(elzeOperands).getNodeType() == STRING_LITERAL) {
       final String elzeStr = ((StringLiteral) as(elzeOperands)).getLiteralValue();
       final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
       if (commonPrefixIndex != 0)
         return subject.pair(getPrefix(thenStr, commonPrefixIndex, condition), subject.pair(getSuffix(thenStr, commonPrefixIndex, condition), //
             replacePrefix(elze, commonPrefixIndex)).toCondition(condition)).to(PLUS2);
     }
-    if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == STRING__LITERAL) {
+    if (elzeOperands.get(elzeOperands.size() - 1).getNodeType() == STRING_LITERAL) {
       final String elzeStr = ((StringLiteral) elzeOperands.get(elzeOperands.size() - 1)).getLiteralValue();
       final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
       if (commonSuffixIndex != 0) {
@@ -161,7 +161,7 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (first(thenOperands).getNodeType() == STRING__LITERAL && first(elzeOperands).getNodeType() == STRING__LITERAL) {
+    if (first(thenOperands).getNodeType() == STRING_LITERAL && first(elzeOperands).getNodeType() == STRING_LITERAL) {
       final String thenStr = ((StringLiteral) first(thenOperands)).getLiteralValue();
       final String elzeStr = ((StringLiteral) first(elzeOperands)).getLiteralValue();
       final int commonPrefixIndex = firstDifference(thenStr, elzeStr);
@@ -173,7 +173,7 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
                 .toCondition(condition))
             .to(PLUS2);
     }
-    if (last(thenOperands).getNodeType() == STRING__LITERAL && last(elzeOperands).getNodeType() == STRING__LITERAL) {
+    if (last(thenOperands).getNodeType() == STRING_LITERAL && last(elzeOperands).getNodeType() == STRING_LITERAL) {
       final String thenStr = ((StringLiteral) last(thenOperands)).getLiteralValue();
       final String elzeStr = ((StringLiteral) last(thenOperands)).getLiteralValue();
       final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
@@ -195,11 +195,11 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
   }
 
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
-    return iz.is(then, STRING__LITERAL) && iz.is(elze, STRING__LITERAL) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
-        : iz.is(then, STRING__LITERAL) && iz.is(elze, INFIX__EXPRESSION) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
-            : iz.is(then, INFIX__EXPRESSION) && iz.is(elze, STRING__LITERAL)
+    return iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
+        : iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
+            : iz.is(then, INFIX_EXPRESSION) && iz.is(elze, STRING_LITERAL)
                 ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
-                : iz.is(then, INFIX__EXPRESSION) && iz.is(elze, INFIX__EXPRESSION)
+                : iz.is(then, INFIX_EXPRESSION) && iz.is(elze, INFIX_EXPRESSION)
                     ? simplify(condition, az.infixExpression(then), az.infixExpression(elze)) : null; //
   }
 }

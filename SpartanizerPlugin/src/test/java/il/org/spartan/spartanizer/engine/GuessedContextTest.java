@@ -19,7 +19,7 @@ public class GuessedContextTest {
   }
 
   @Test public void dealWithComment() {
-    azzert.that(find("if (b) {\n" + ""), is(STATEMENTS__LOOK__ALIKE));
+    azzert.that(find("if (b) {\n" + ""), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void essenceTest() {
@@ -27,23 +27,23 @@ public class GuessedContextTest {
   }
 
   @Test public void expression() {
-    azzert.that(EXPRESSION__LOOK__ALIKE.off(EXPRESSION__LOOK__ALIKE.on("a+b")), is("a+b"));
+    azzert.that(EXPRESSION_LOOK_ALIKE.off(EXPRESSION_LOOK_ALIKE.on("a+b")), is("a+b"));
   }
 
   @Test public void findAddition() {
-    azzert.that(find("a+b"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("a+b"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findDivision() {
-    azzert.that(GuessedContext.find("a/b"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(GuessedContext.find("a/b"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findDivisionOfExpressions() {
-    azzert.that(find("(a+b)/++b"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("(a+b)/++b"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findEmptyBlock() {
-    azzert.that(find("{}"), is(STATEMENTS__LOOK__ALIKE));
+    azzert.that(find("{}"), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test(expected = AssertionError.class) public void findError() {
@@ -51,64 +51,64 @@ public class GuessedContextTest {
   }
 
   @Test public void findExpression() {
-    azzert.that(find("i++"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("i++"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findLiteral0() {
-    azzert.that(find("true"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("true"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findLiteral1() {
-    azzert.that(find("1"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("1"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findLiteral2() {
-    azzert.that(find("-0"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("-0"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findLiteral3() {
-    azzert.that(find("\"\""), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("\"\""), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findLiteral4() {
-    azzert.that(find("'\"'"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("'\"'"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findMethod() {
     azzert.that(find("f() { a(); b();}"), //
-        is(METHOD__LOOKALIKE));
+        is(METHOD_LOOKALIKE));
   }
 
   @Test public void findPlusPlus() {
-    azzert.that(find("a++"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("a++"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void findStatement() {
-    azzert.that(find("for(;;);"), is(STATEMENTS__LOOK__ALIKE));
+    azzert.that(find("for(;;);"), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void findTwoStatements() {
-    azzert.that(find("a(); b();"), is(STATEMENTS__LOOK__ALIKE));
+    azzert.that(find("a(); b();"), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void findVariable() {
-    azzert.that(find("i"), is(EXPRESSION__LOOK__ALIKE));
+    azzert.that(find("i"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void intMethod() {
-    azzert.that(find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(METHOD__LOOKALIKE));
+    azzert.that(find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(METHOD_LOOKALIKE));
   }
 
   @Test public void intMethod0() {
-    azzert.that(find("int f() { return s;}"), is(METHOD__LOOKALIKE));
+    azzert.that(find("int f() { return s;}"), is(METHOD_LOOKALIKE));
   }
 
   @Test public void intMethod1() {
-    azzert.that(find("void f(){}"), is(METHOD__LOOKALIKE));
+    azzert.that(find("void f(){}"), is(METHOD_LOOKALIKE));
   }
 
   @Test public void intoCompilationUnit() {
-    final GuessedContext w = EXPRESSION__LOOK__ALIKE;
+    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
@@ -116,7 +116,7 @@ public class GuessedContextTest {
   }
 
   @Test public void intoDocument() {
-    final GuessedContext w = EXPRESSION__LOOK__ALIKE;
+    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
     final String codeFragment = "a + b * c";
     final Document d = w.intoDocument(codeFragment);
     assert d != null;
@@ -124,11 +124,11 @@ public class GuessedContextTest {
   }
 
   @Test public void method() {
-    azzert.that(METHOD__LOOKALIKE.off(METHOD__LOOKALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
+    azzert.that(METHOD_LOOKALIKE.off(METHOD_LOOKALIKE.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
   @Test public void offDivision() {
-    azzert.that("a/b", is(EXPRESSION__LOOK__ALIKE.off(EXPRESSION__LOOK__ALIKE.on("a/b"))));
+    azzert.that("a/b", is(EXPRESSION_LOOK_ALIKE.off(EXPRESSION_LOOK_ALIKE.on("a/b"))));
   }
 
   @Test public void removeCommentsTest() {
@@ -138,7 +138,7 @@ public class GuessedContextTest {
   }
 
   @Test public void statement() {
-    azzert.that(STATEMENTS__LOOK__ALIKE.off(STATEMENTS__LOOK__ALIKE.on("int a;")), is("int a;"));
+    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
   }
 
   private void similar(final String s1, final String s2) {

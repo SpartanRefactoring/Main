@@ -35,7 +35,7 @@ public interface hop {
   }
 
   static CompilationUnit compilationUnit(final ASTNode ¢) {
-    return (CompilationUnit) searchAncestors.forType(COMPILATION__UNIT).from(¢);
+    return (CompilationUnit) searchAncestors.forType(COMPILATION_UNIT).from(¢);
   }
 
   /** @param ¢ JD
@@ -43,11 +43,11 @@ public interface hop {
    *         type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
-      if (iz.is($, ANONYMOUS__CLASS__DECLARATION //
-          , ANNOTATION__TYPE__DECLARATION //
-          , ENUM__DECLARATION //
-          , TYPE__DECLARATION //
-          , ENUM__CONSTANT__DECLARATION //
+      if (iz.is($, ANONYMOUS_CLASS_DECLARATION //
+          , ANNOTATION_TYPE_DECLARATION //
+          , ENUM_DECLARATION //
+          , TYPE_DECLARATION //
+          , ENUM_CONSTANT_DECLARATION //
       ))
         return $;
     return null;
@@ -85,7 +85,7 @@ public interface hop {
    *         if ¢ or name are null) */
   // TODO this seems a bug
   static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
-    return hasNull(n, x) || n.getNodeType() != VARIABLE__DECLARATION__STATEMENT || x.getNodeType() != SIMPLE__NAME ? null
+    return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
         : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
   }
 

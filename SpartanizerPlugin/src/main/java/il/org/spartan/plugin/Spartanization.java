@@ -212,7 +212,7 @@ public abstract class Spartanization extends Refactoring {
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
     final IProgressMonitor spm = newSubMonitor(pm);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION__UNIT.parser(cu).createAST(spm), spm).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
     pm.done();
@@ -264,7 +264,7 @@ public abstract class Spartanization extends Refactoring {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m1 = newSubMonitor(m);
-    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION__UNIT.parser(u).createAST(m1);
+    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m1);
     textChange.setEdit(createRewrite(cu, m1).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
@@ -314,7 +314,7 @@ public abstract class Spartanization extends Refactoring {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION__UNIT.from(m, pm), m);
+    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m);
   }
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {

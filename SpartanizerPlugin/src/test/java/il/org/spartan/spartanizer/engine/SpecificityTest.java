@@ -27,7 +27,7 @@ public class SpecificityTest {
   }
 
   @Test public void generalGreaterThanClassConstant() {
-    azzert.that(SPECIFICITY.compare(e("a+b"), e("AB__C")), greaterThan(0));
+    azzert.that(SPECIFICITY.compare(e("a+b"), e("AB_C")), greaterThan(0));
   }
 
   @Test public void generalGreaterThanInteger() {
@@ -47,7 +47,7 @@ public class SpecificityTest {
   }
 
   @Test public void generalGreaterThanParenthesizedClassConstant() {
-    azzert.that(SPECIFICITY.compare(e("a+b"), e("(AB__C)")), greaterThan(0));
+    azzert.that(SPECIFICITY.compare(e("a+b"), e("(AB_C)")), greaterThan(0));
   }
 
   @Test public void generalGreaterThanParenthesizedNegativeInteger() {
@@ -96,7 +96,7 @@ public class SpecificityTest {
   }
 
   @Test public void pseudoConstantGreaterThanInteger() {
-    azzert.that(SPECIFICITY.compare(e("AB__C"), e("(-(12))")), greaterThan(0));
+    azzert.that(SPECIFICITY.compare(e("AB_C"), e("(-(12))")), greaterThan(0));
   }
 
   @Test public void stringGreaterThanNull() {

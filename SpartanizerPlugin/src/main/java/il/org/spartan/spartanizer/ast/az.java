@@ -44,7 +44,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ArrayInitializer arrayInitializer(final Expression $) {
-    return !iz.is($, ARRAY__INITIALIZER) ? null : (ArrayInitializer) $;
+    return !iz.is($, ARRAY_INITIALIZER) ? null : (ArrayInitializer) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
@@ -92,7 +92,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
-    return !iz.is($, BOOLEAN__LITERAL) ? null : (BooleanLiteral) $;
+    return !iz.is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
@@ -139,7 +139,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ForStatement forStatement(final Statement $) {
-    return !iz.is($, FOR__STATEMENT) ? null : (ForStatement) $;
+    return !iz.is($, FOR_STATEMENT) ? null : (ForStatement) $;
   }
 
   /** Down-cast, if possible, to {@link IfStatement}
@@ -147,7 +147,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static IfStatement ifStatement(final ASTNode $) {
-    return !iz.is($, IF__STATEMENT) ? null : (IfStatement) $;
+    return !iz.is($, IF_STATEMENT) ? null : (IfStatement) $;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -163,7 +163,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static InstanceofExpression instanceofExpression(final Expression $) {
-    return !iz.is($, INSTANCEOF__EXPRESSION) ? null : (InstanceofExpression) $;
+    return !iz.is($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
@@ -224,7 +224,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ParenthesizedExpression parenthesizedExpression(final Expression $) {
-    return !iz.is($, PARENTHESIZED__EXPRESSION) ? null : (ParenthesizedExpression) $;
+    return !iz.is($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -248,7 +248,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement returnStatement(final ASTNode $) {
-    return !iz.is($, RETURN__STATEMENT) ? null : (ReturnStatement) $;
+    return !iz.is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
@@ -272,7 +272,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static StringLiteral stringLiteral(final ASTNode $) {
-    return !iz.is($, STRING__LITERAL) ? null : (StringLiteral) $;
+    return !iz.is($, STRING_LITERAL) ? null : (StringLiteral) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ThrowStatement}
@@ -280,7 +280,7 @@ public enum az {
    * @return argument, but down-casted to a {@link ConditionalExpression}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static ThrowStatement throwStatement(final ASTNode $) {
-    return !iz.is($, THROW__STATEMENT) ? null : (ThrowStatement) $;
+    return !iz.is($, THROW_STATEMENT) ? null : (ThrowStatement) $;
   }
 
   /** Convert, if possible, an {@link Expression} to a
@@ -290,6 +290,6 @@ public enum az {
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final Expression $) {
-    return !iz.is($, VARIABLE__DECLARATION__EXPRESSION) ? null : (VariableDeclarationExpression) $;
+    return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 }

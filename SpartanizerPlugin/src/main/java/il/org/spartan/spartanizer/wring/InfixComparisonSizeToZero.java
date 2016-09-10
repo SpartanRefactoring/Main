@@ -38,16 +38,16 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   }
 
   private static ASTNode replacement(final Operator o, final int threshold, final MethodInvocation $) {
-    if (o == Operator.GREATER__EQUALS)
+    if (o == Operator.GREATER_EQUALS)
       return replacement(GREATER, threshold - 1, $);
-    if (o == LESS__EQUALS)
+    if (o == LESS_EQUALS)
       return replacement(LESS, threshold + 1, $);
     final AST ast = $.getAST();
     if (threshold < 0)
       return ast.newBooleanLiteral(!in(o, EQUALS, LESS));
     if (o == EQUALS)
       return threshold == 0 ? $ : null;
-    if (o == NOT__EQUALS || o == GREATER)
+    if (o == NOT_EQUALS || o == GREATER)
       return threshold != 0 ? null : make.notOf($);
     if (o == LESS)
       return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;

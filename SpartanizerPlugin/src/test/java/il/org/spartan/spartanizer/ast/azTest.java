@@ -27,13 +27,13 @@ public class azTest {
 
   @Test public void asComparisonTypicalExpressionFalse() {
     final InfixExpression i = mock(InfixExpression.class);
-    doReturn(CONDITIONAL__OR).when(i).getOperator();
+    doReturn(CONDITIONAL_OR).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
 
   @Test public void asComparisonTypicalInfixFalse() {
     final InfixExpression i = mock(InfixExpression.class);
-    doReturn(CONDITIONAL__AND).when(i).getOperator();
+    doReturn(CONDITIONAL_AND).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
 

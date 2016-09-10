@@ -18,17 +18,17 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2015-07-16 */
 public enum makeAST {
   /** Converts file, string or marker to compilation unit. */
-  COMPILATION__UNIT(ASTParser.K__COMPILATION__UNIT) {
+  COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
     @Override public CompilationUnit from(final File f) {
       return from(string(f));
     }
 
     @Override public CompilationUnit from(final IFile f) {
-      return (CompilationUnit) Make.COMPILATION__UNIT.parser(f).createAST(null);
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(f).createAST(null);
     }
 
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
-      return (CompilationUnit) Make.COMPILATION__UNIT.parser(m).createAST(pm);
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
     @Override public CompilationUnit from(final String s) {
@@ -36,7 +36,7 @@ public enum makeAST {
     }
   },
   /** Converts file, string or marker to expression. */
-  EXPRESSION(ASTParser.K__EXPRESSION) {
+  EXPRESSION(ASTParser.K_EXPRESSION) {
     @Override public Expression from(final File f) {
       return from(string(f));
     }
@@ -54,10 +54,10 @@ public enum makeAST {
     }
   },
   /** Constant used in order to get the source as a sequence of statements. */
-  STATEMENTS(ASTParser.K__STATEMENTS), //
+  STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Constant used in order to get the source as a sequence of class body
    * declarations. */
-  CLASS__BODY__DECLARATIONS(ASTParser.K__CLASS__BODY__DECLARATIONS);
+  CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS);
   /** @param n The node from which to return statement.
    * @return null if it is not possible to extract the return statement. */
   public static ReturnStatement asReturn(final ASTNode n) {
@@ -66,7 +66,7 @@ public enum makeAST {
     switch (n.getNodeType()) {
       case ASTNode.BLOCK:
         return asReturn(n);
-      case ASTNode.RETURN__STATEMENT:
+      case ASTNode.RETURN_STATEMENT:
         return (ReturnStatement) n;
       default:
         return null;

@@ -22,28 +22,28 @@ public enum sideEffects {
    *         whose computation is guaranteed to be free of any side effects. */
   // VIM: /{/+,/}/-!sort -u
   private static final int[] alwaysFree = { //
-      BOOLEAN__LITERAL, //
-      CHARACTER__LITERAL, //
-      EMPTY__STATEMENT, //
-      FIELD__ACCESS, //
-      NULL__LITERAL, //
-      NUMBER__LITERAL, //
-      PRIMITIVE__TYPE, //
-      QUALIFIED__NAME, //
-      SIMPLE__NAME, //
-      SIMPLE__TYPE, //
-      STRING__LITERAL, //
-      SUPER__FIELD__ACCESS, //
-      THIS__EXPRESSION, //
-      TYPE__LITERAL, //
+      BOOLEAN_LITERAL, //
+      CHARACTER_LITERAL, //
+      EMPTY_STATEMENT, //
+      FIELD_ACCESS, //
+      NULL_LITERAL, //
+      NUMBER_LITERAL, //
+      PRIMITIVE_TYPE, //
+      QUALIFIED_NAME, //
+      SIMPLE_NAME, //
+      SIMPLE_TYPE, //
+      STRING_LITERAL, //
+      SUPER_FIELD_ACCESS, //
+      THIS_EXPRESSION, //
+      TYPE_LITERAL, //
   };
   private static final int[] alwaysHave = { //
-      SUPER__CONSTRUCTOR__INVOCATION, //
-      SUPER__METHOD__INVOCATION, //
-      METHOD__INVOCATION, //
-      CLASS__INSTANCE__CREATION, //
+      SUPER_CONSTRUCTOR_INVOCATION, //
+      SUPER_METHOD_INVOCATION, //
+      METHOD_INVOCATION, //
+      CLASS_INSTANCE_CREATION, //
       ASSIGNMENT, //
-      POSTFIX__EXPRESSION, //
+      POSTFIX_EXPRESSION, //
   };
 
   public static boolean deterministic(final Expression x) {
@@ -69,23 +69,23 @@ public enum sideEffects {
     if (iz.is(¢, alwaysHave))
       return false;
     switch (¢.getNodeType()) {
-      case ARRAY__CREATION:
+      case ARRAY_CREATION:
         return free((ArrayCreation) ¢);
-      case ARRAY__ACCESS:
+      case ARRAY_ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
-      case CAST__EXPRESSION:
+      case CAST_EXPRESSION:
         return free(step.expression(¢));
-      case INSTANCEOF__EXPRESSION:
+      case INSTANCEOF_EXPRESSION:
         return free(step.left(az.instanceofExpression(¢)));
-      case PREFIX__EXPRESSION:
+      case PREFIX_EXPRESSION:
         return free(az.prefixExpression(¢));
-      case PARENTHESIZED__EXPRESSION:
+      case PARENTHESIZED_EXPRESSION:
         return free(core(¢));
-      case INFIX__EXPRESSION:
+      case INFIX_EXPRESSION:
         return free(extract.allOperands(az.infixExpression(¢)));
-      case CONDITIONAL__EXPRESSION:
+      case CONDITIONAL_EXPRESSION:
         return free(az.conditionalExpression(¢));
-      case ARRAY__INITIALIZER:
+      case ARRAY_INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
       default:
         throw new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName());

@@ -188,17 +188,17 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
   static abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
     static InfixExpression.Operator asInfix(final Assignment.Operator o) {
-      return o == PLUS__ASSIGN ? InfixExpression.Operator.PLUS
-          : o == MINUS__ASSIGN ? MINUS
-              : o == TIMES__ASSIGN ? TIMES
-                  : o == DIVIDE__ASSIGN ? DIVIDE
-                      : o == BIT__AND__ASSIGN ? AND
-                          : o == BIT__OR__ASSIGN ? OR
-                              : o == BIT__XOR__ASSIGN ? XOR
-                                  : o == REMAINDER__ASSIGN ? REMAINDER
-                                      : o == LEFT__SHIFT__ASSIGN ? LEFT__SHIFT //
-                                          : o == RIGHT__SHIFT__SIGNED__ASSIGN ? RIGHT__SHIFT__SIGNED //
-                                              : o == RIGHT__SHIFT__UNSIGNED__ASSIGN ? RIGHT__SHIFT__UNSIGNED : null;
+      return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
+          : o == MINUS_ASSIGN ? MINUS
+              : o == TIMES_ASSIGN ? TIMES
+                  : o == DIVIDE_ASSIGN ? DIVIDE
+                      : o == BIT_AND_ASSIGN ? AND
+                          : o == BIT_OR_ASSIGN ? OR
+                              : o == BIT_XOR_ASSIGN ? XOR
+                                  : o == REMAINDER_ASSIGN ? REMAINDER
+                                      : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT //
+                                          : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED //
+                                              : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
     }
 
     static Expression assignmentAsExpression(final Assignment a) {
@@ -208,7 +208,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
       for (final VariableDeclarationFragment b : forbiddenSiblings(f))
-        if (Collect.BOTH__SEMANTIC.of(b).existIn(ns))
+        if (Collect.BOTH_SEMANTIC.of(b).existIn(ns))
           return true;
       return false;
     }
