@@ -12,7 +12,7 @@ import il.org.spartan.*;
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
     similar(
-        "if (b) {\n" + "", //
+        "if (b) {;}/* comment */ { throw new Exception(); }", //
         "if (b) {;} { throw new Exception(); }");
   }
 
@@ -93,7 +93,7 @@ import il.org.spartan.*;
   }
 
   @Test public void removeComments() {
-    similar(Wrap.removeComments("if (b) {\n" + ""),
+    similar(Wrap.removeComments("/** comment */ if (b) /* comment */{} else { throw new Exception(); // COmment}"),
         "if (b) {} else { throw new Exception(); }");
   }
 

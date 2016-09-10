@@ -7,6 +7,7 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -16,9 +17,18 @@ import il.org.spartan.spartanizer.engine.*;
 public enum Wrap {
   OUTER("package p; // BEGIN PACKAGE \n", "\n// END PACKAGE\n"),
   /** Algorithm for wrapping/unwrapping a method */
-  Method("package p;\n" + "", "} // END p\n" + ""), //
+  Method("" + //
+      "package p;\n" + //
+      "public class C {\n" + //
+      "", "" + //
+          "} // END p\n" + //
+          ""), //
   /** Algorithm for wrapping/unwrapping a statement */
-  Statement(Method.before + "", "} // END m \n" + "" + Method.after + //
+  Statement("" + Method.before + //
+      "public void m(){\n" + //
+      "", "" + //
+          "} // END m \n" + //
+          "" + Method.after + //
           ""), //
   /** Algorithm for wrapping/unwrapping an expression */
   Expression(//
@@ -41,7 +51,7 @@ public enum Wrap {
    *         parsed appropriately. */
   public static Wrap find(final String codeFragment) {
     for (final Wrap $ : WRAPS)
-      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
+      if ($.contains("" + $.intoCompilationUnit(codeFragment), codeFragment))
         return $;
     azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
@@ -61,13 +71,13 @@ public enum Wrap {
       final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
       $.append("\n* I = <").append(essence(on)).append(">;");
-      $.append("\n* O = <").append(essence(n + "")).append(">;");
-      $.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment) + "");
-      $.append("\n* AST=").append(essence(n.getAST() + ""));
+      $.append("\n* O = <").append(essence("" + n)).append(">;");
+      $.append("\n**** PARSED=\n").append("" + w.intoCompilationUnit(codeFragment));
+      $.append("\n* AST=").append(essence("" + n.getAST()));
       $.append("\n**** INPUT=\n").append(on);
-      $.append("\n**** OUTPUT=\n").append(n + "");
+      $.append("\n**** OUTPUT=\n").append("" + n);
     }
-    return $ + "";
+    return "" + $;
   }
 
   private final String before;
@@ -113,7 +123,7 @@ public enum Wrap {
     final String off = off(wrap);
     final String essence = essence(inner);
     final String essence2 = essence(off);
-    assert essence2 != null;
+    assert null != essence2;
     return essence2.contains(essence);
   }
 }

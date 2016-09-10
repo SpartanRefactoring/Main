@@ -899,8 +899,7 @@ public class typeTest {
     }
 
     @Test public void UnaryPlusMinusSemantics03() {
-      final short x = 0;
-      azzert.that(Axiom.type(x), is(INT));
+      azzert.that(Axiom.type(i), is(INT));
     }
 
     @Test public void UnaryPlusMinusSemantics04() {
@@ -912,7 +911,7 @@ public class typeTest {
     }
 
     @Test public void UnaryPlusMinusSemantics06() {
-      azzert.that(Axiom.type(b), is(INT));
+      azzert.that(Axiom.type(b), is(BYTE));
     }
 
     @Test public void UnaryPlusMinusSemantics07() {
