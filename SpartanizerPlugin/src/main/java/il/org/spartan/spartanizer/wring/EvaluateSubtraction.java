@@ -67,35 +67,29 @@ public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpressio
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate subtraction of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    int sourceLength = x.toString().length();
-    ASTNode resultExpression;
+    int sourceLength = (x + "").length();
+    ASTNode $;
     if (x.getOperator() != MINUS)
       return null;
     switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        resultExpression =  replacementInt(extract.allOperands(x), x);
+        $ = replacementInt(extract.allOperands(x), x);
         break;
       case DOUBLE:
-        resultExpression = replacementDouble(extract.allOperands(x), x);
+        $ = replacementDouble(extract.allOperands(x), x);
         break;
       case LONG:
-        resultExpression =  replacementLong(extract.allOperands(x), x);
+        $ = replacementLong(extract.allOperands(x), x);
         break;
-      default :
+      default:
         return null;
     }
-    if(resultExpression == null)
-      return null;
-    int resultLength = az.numberLiteral(resultExpression).getToken().length();
-    if(resultLength < sourceLength){
-      return resultExpression;
-    }
-    return null;
+    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
   
  }
