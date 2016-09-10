@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class TrimmerTest250 {
+public class Version250Test {
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
