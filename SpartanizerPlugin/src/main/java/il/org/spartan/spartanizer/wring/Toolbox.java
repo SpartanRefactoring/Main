@@ -49,6 +49,7 @@ public class Toolbox {
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
+            new InfixEmptyStringAdditionToString(),//
             new InfixEmptyStringAdditionReorder(), //
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //

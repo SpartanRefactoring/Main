@@ -1532,7 +1532,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
+        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)")//
+        .to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
   }
 
   @Test public void issue110_08() {
