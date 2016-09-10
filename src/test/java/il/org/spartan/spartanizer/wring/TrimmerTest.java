@@ -1522,7 +1522,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
         .to("!a ? \"abba\" : \"abracadabra\"")//
         .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
         .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").stays();
+        .stays();
   }
 
   @Test public void issue110_06() {
@@ -1532,7 +1532,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
+        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)")//
+        .to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
   }
 
   @Test public void issue110_08() {
@@ -3567,7 +3568,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void sortDivision() {
-    trimming("2.1/34.2/1.0").to("0.06140350877192982");
+    trimming("2.1/34.2/1.0").to("2.1/1.0/34.2");
   }
 
   @Test public void sortDivisionLetters() {
@@ -3575,7 +3576,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void sortDivisionNo() {
-    trimming("2.1/3").to("0.7000000000000001");
+    trimming("2.1/3").stays();
   }
 
   @Test public void sortThreeOperands1() {
@@ -3912,6 +3913,36 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("f(a,b,c,d) ^ BOB").stays();
   }
 
+  @Test public void issue130_1() {
+    trimming("while(true){doSomething();if(done())break;}return something();")
+        .to("while(true){doSomething();if(done())return something();}");
+  }
+  
+  @Test public void issue130_2() {
+    trimming("while(false){doSomething();if(done())break;}return something();").stays();
+  }
+  
+
+  @Test public void issue130_3() {
+    trimming("while(true){doSomething();if(done()){t+=2;break;}}return something();")
+        .to("while(true){doSomething();if(done()){t+=2;return something();}}");
+  }
+  
+  @Test public void issue130_4() {
+    trimming("for(int i=4 ; true ; ++i){doSomething();if(done())break;}return something();")
+        .to("for(int i=4 ; true ; ++i){doSomething();if(done())return something();}");
+  }
+  
+  @Test public void issue130_5() {
+    trimming("for(int i=4 ; i<s.length() ; ++i){doSomething();if(done())break;}return something();").stays();
+  }
+  
+  
+  @Test public void issue130_6() {
+    trimming("for(int i=4 ; true ; ++i){doSomething();if(done()){t+=2;break;}}return something();")
+        .to("for(int i=4 ; true ; ++i){doSomething();if(done()){t+=2;return something();}}");
+  }
+  
   @Test public void issue131_1() {
     trimming("for(int i=4 ; i<s.length() ; ++i){i+=9;i++;return xxx;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){i+=9;++i;break;}return xxx;");

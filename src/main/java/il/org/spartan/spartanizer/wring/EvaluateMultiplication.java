@@ -57,22 +57,28 @@ public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpres
     return "Evaluate multiplication of numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate multiplication numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    int sourceLength = (x + "").length();
+    ASTNode $;
     if (x.getOperator() != TIMES)
       return null;
     switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        return replacementInt(extract.allOperands(x), x);
+        $ = replacementInt(extract.allOperands(x), x);
+        break;
       case DOUBLE:
-        return replacementDouble(extract.allOperands(x), x);
+        $ = replacementDouble(extract.allOperands(x), x);
+        break;
       case LONG:
-        return replacementLong(extract.allOperands(x), x);
+        $ = replacementLong(extract.allOperands(x), x);
+        break;
       default:
         return null;
     }
+    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 }
