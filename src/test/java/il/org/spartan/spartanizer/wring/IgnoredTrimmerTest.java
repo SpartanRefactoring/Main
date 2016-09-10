@@ -57,19 +57,19 @@ import org.junit.runners.*;
 
   @Test public void inline00() {
     trimming("  Object a() { " + "").to(//
-            "  Object a() { " + //
-                "    class a {\n" + //
-                "      Object a() {\n" + //
-                "        return a;\n" + // /
-                "    }\n" + //
-                "    final Object a = new Object();\n" + //
-                "    if (a instanceof a)\n" + //
-                "      new Object();  \n" + //
-                "    final Object a = new Object();\n" + //
-                "    if (a instanceof a)\n" + //
-                "      new Object();" + //
-                "}\n" + //
-                "");
+        "  Object a() { " + //
+            "    class a {\n" + //
+            "      Object a() {\n" + //
+            "        return a;\n" + // /
+            "    }\n" + //
+            "    final Object a = new Object();\n" + //
+            "    if (a instanceof a)\n" + //
+            "      new Object();  \n" + //
+            "    final Object a = new Object();\n" + //
+            "    if (a instanceof a)\n" + //
+            "      new Object();" + //
+            "}\n" + //
+            "");
   }
 
   @Test public void inlineSingleUse01() {
@@ -274,8 +274,7 @@ import org.junit.runners.*;
   }
 
   @Test public void ifToSwitch1() {
-    trimming("if (\"1\".equals(s))\n" + ""
-    ).to("switch (s) {\n" + "");
+    trimming("if (\"1\".equals(s))\n" + "").to("switch (s) {\n" + "");
   }
 
   @Test public void renameVariableUnderscore2() {
@@ -304,48 +303,39 @@ import org.junit.runners.*;
   }
 
   @Test public void switchBrakesToReturnCaseWithoutSequencer() {
-    trimming(" switch (x) {\n" + "")
-            .to(" switch (x) {\n" + "");
+    trimming(" switch (x) {\n" + "").to(" switch (x) {\n" + "");
   }
 
   @Test public void switchBrakesToReturnDefaultWithSequencer() {
-    trimming(" switch (x) {\n" + "")
-            .to(" switch (x) {\n" + "");
+    trimming(" switch (x) {\n" + "").to(" switch (x) {\n" + "");
   }
 
   @Test public void switchBreakesToReturnAllCases() {
-    trimming(" switch (x) {\n" + "")
-            .to(" switch (x) {\n" + "");
+    trimming(" switch (x) {\n" + "").to(" switch (x) {\n" + "");
   }
 
   @Test public void switchSimplifiyNoSequencer() {
-    trimming("switch(x) {\n" + "")
-            .to("switch(x) {\n" + "");
+    trimming("switch(x) {\n" + "").to("switch(x) {\n" + "");
   }
 
   @Test public void switchSimplifyCaseAfterDefault2() {
-    trimming("switch (e.getNodeType()) {\n" + "")
-            .to("switch (e.getNodeType()) {\n" + "");
+    trimming("switch (e.getNodeType()) {\n" + "").to("switch (e.getNodeType()) {\n" + "");
   }
 
   @Test public void switchSimplifyCaseAfterefault3() {
-    trimming("switch (totalNegation) {\n" + "")
-            .to("switch (totalNegation) {\n" + "");
+    trimming("switch (totalNegation) {\n" + "").to("switch (totalNegation) {\n" + "");
   }
 
   @Test public void switchSimplifyCasesMergeWithDefault() {
-    trimming("switch (n.getNodeType()) {\n" + "")
-            .to("switch (n.getNodeType()) {\n" + "");
+    trimming("switch (n.getNodeType()) {\n" + "").to("switch (n.getNodeType()) {\n" + "");
   }
 
   @Test public void switchSimplifyNoDefault() {
-    trimming("switch (x) {" + "")
-            .to("switch (x) {" + "");
+    trimming("switch (x) {" + "").to("switch (x) {" + "");
   }
 
   @Test public void switchSimplifyParenthesizedCases() {
-    trimming("switch (checkMatrix(A)) {\n" + "")
-            .to("switch (checkMatrix(A)) {\n" + "");
+    trimming("switch (checkMatrix(A)) {\n" + "").to("switch (checkMatrix(A)) {\n" + "");
     // switch (checkMatrix(A)) {
     // case -1: {
     // System.out.println("1");
@@ -367,7 +357,6 @@ import org.junit.runners.*;
   }
 
   @Test public void switchSimplifyWithDefault1() {
-    trimming("switch (x) {" + "")
-            .to("switch (x) {" + "");
+    trimming("switch (x) {" + "").to("switch (x) {" + "");
   }
 }

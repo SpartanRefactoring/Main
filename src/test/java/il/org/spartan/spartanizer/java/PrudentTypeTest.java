@@ -171,15 +171,15 @@ public class PrudentTypeTest {
     }
 
     @Test public void axiomExpression6() {
-      azzert.that(axiom((-3.0) % 4), is(DOUBLE));
+      azzert.that(axiom(-3.0 % 4), is(DOUBLE));
     }
 
     @Test public void axiomExpression7() {
-      azzert.that(axiom((-3) % 4), is(INT));
+      azzert.that(axiom(-3 % 4), is(INT));
     }
 
     @Test public void axiomExpression8() {
-      azzert.that(axiom((-3L) % 4), is(LONG));
+      azzert.that(axiom(-3L % 4), is(LONG));
     }
 
     @Test public void axiomExpression9() {

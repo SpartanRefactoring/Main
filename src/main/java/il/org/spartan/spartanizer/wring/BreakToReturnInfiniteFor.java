@@ -41,15 +41,15 @@ public class BreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canon
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
-    if(statementList.size() < 2 || !(statementList.get(0) instanceof ForStatement) //
-        ||!(statementList.get(1) instanceof ReturnStatement))
+    if (statementList.size() < 2 || !(statementList.get(0) instanceof ForStatement) //
+        || !(statementList.get(1) instanceof ReturnStatement))
       return null;
     final ForStatement ForStatement = (ForStatement) statementList.get(0);
     final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
     if (!isInfiniteLoop(ForStatement))
       return null;
     final Statement body = ForStatement.getBody();
-    Statement toChange = az.ifStatement(body) != null ? handleIf(body, nextReturn)
+    final Statement toChange = az.ifStatement(body) != null ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
     if (toChange == null)
       return null;
@@ -106,5 +106,4 @@ public class BreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canon
     }
     return $;
   }
-
 }

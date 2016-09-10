@@ -75,9 +75,8 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
     return "Evaluate division of numbers";
   }
 
-  
   @Override ASTNode replacement(final InfixExpression x) {
-    int sourceLength = (x + "").length();
+    final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != DIVIDE)
       return null;
@@ -96,6 +95,4 @@ public class EvaluateDivision extends Wring.ReplaceCurrentNode<InfixExpression> 
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
-  
- }
-
+}

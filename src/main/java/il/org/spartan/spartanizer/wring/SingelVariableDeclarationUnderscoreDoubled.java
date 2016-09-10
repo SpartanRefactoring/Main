@@ -6,8 +6,8 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
-/** A {@link Wring} to change name of unused variable to double underscore "____"
- * TODO Ori: (maybe) inherent VariableChangeName instead of
+/** A {@link Wring} to change name of unused variable to double underscore
+ * "____" TODO Ori: (maybe) inherent VariableChangeName instead of
  * ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */

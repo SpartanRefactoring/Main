@@ -261,7 +261,7 @@ public class ArithmeticTest {
       trimming("3./4").to("0.75").stays();
     }
 
-    @Test  @Ignore("Do not compute shifts, they have a reason")public void issue92_60() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_60() {
       trimming("100L<<2L>>2L").to("400L>>2L").to("100L");
     }
 
@@ -306,19 +306,17 @@ public class ArithmeticTest {
                   + "return (self == null ? 0 : self.hashCode())"
                   + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));" + "}");
     }
-    
+
     @Test public void issue158_1() {
       trimming(" assertEquals(5 / 9.0, s_4x0_5x1.mean(), 1E-6);").stays();
     }
-    
+
     @Test public void issue158_2() {
-      trimming(" assertEquals(5 / 1, s_4x0_5x1.mean(), 1E-6);")
-      .to(" assertEquals(5, s_4x0_5x1.mean(), 1E-6);");
+      trimming(" assertEquals(5 / 1, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(5, s_4x0_5x1.mean(), 1E-6);");
     }
-    
+
     @Test public void issue158_3() {
       trimming(" assertEquals(99*2, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(198, s_4x0_5x1.mean(), 1E-6);");
     }
-
   }
 }
