@@ -59,11 +59,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
-	<dependency>
-			<groupId>il.org.spartan</groupId>
-			<artifactId>cli</artifactId>
-			<version>1.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>
