@@ -54,7 +54,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
         "      g();\n" + //
         "      --i;\n" + //
         "    }" + //
-        "}", "   f();\n" + ""
+        "}", "" + // //
+            "   f();\n" + //
+            "   g();\n" + //
+            "    if (a) \n" + //
+            "      ++i;\n" + //
+            "    else \n" + //
+            "      --i;" //
     );
   }
 
@@ -99,20 +105,33 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test(timeout = 2000) public void issue37() {
     assertConvertsTo(
-        "    int result = mockedType.hashCode();\n" + "", //
+        "" + //
+            "    int result = mockedType.hashCode();\n" + //
+            "    result = 31 * result + types.hashCode();\n" + //
+            "    return result;\n" + //
+            "", //
         "return 31*mockedType.hashCode()+types.hashCode();");
   }
 
   @Test(timeout = 2000) public void issue37abbreviated() {
     assertConvertsTo(
-        "    int a = 3;\n" + "", //
+        "" + //
+            "    int a = 3;\n" + //
+            "    a = 31 * a;\n" + //
+            "    return a;\n" + //
+            "", //
         "return 93;");
   }
 
   @Test public void issue43() {
     assertConvertsTo(
-        "String t = Z2;  " + "", //
-        "return(Z2.f(A).f(b)+Z2.f(c)+3);" + ""
+        "" //
+            + "String t = Z2;  "//
+            + " t = t.f(A).f(b) + t.f(c);   "//
+            + "return (t + 3);    ", //
+        ""//
+            + "return(Z2.f(A).f(b)+Z2.f(c)+3);" //
+            + "" //
     );
   }
 
@@ -128,8 +147,30 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test(timeout = 2000) public void shortestIfBranchFirst02() {
     assertConvertsTo(
-        "if (!s.equals(0xDEAD)) { " + "",
-        " if (s.equals(0xDEAD)) \n" + ""
+        "" //
+            + "if (!s.equals(0xDEAD)) { "//
+            + " int $=0;"//
+            + " for (int i=0;i<s.length();++i)     "//
+            + "   if (s.charAt(i)=='a')      "//
+            + "     $ += 2;"//
+            + "   else "//
+            + "  if (s.charAt(i)=='d')      "//
+            + "       $ -= 1;"//
+            + "  return $;"//
+            + "} else {    "//
+            + " return 8;"//
+            + "}",
+        "" //
+            + " if (s.equals(0xDEAD)) \n" + //
+            "    return 8;" + //
+            "   int $ = 0;\n" + //
+            "   for (int i = 0;i < s.length();++i)\n" + //
+            "     if (s.charAt(i) == 'a')\n" + //
+            "       $ += 2;\n" + //
+            "      else " + //
+            "       if (s.charAt(i) == 'd')\n" + //
+            "        --$;\n" + //
+            "  return $;\n" //
     );
   }
 
@@ -253,7 +294,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void ternarize07a() {
     assertConvertsTo(
-        "String $;" + ""
+        "" //
+            + "String $;" //
+            + "$ = s;   " //
+            + "if ($==true)    " //
+            + "  $ = s + 0xABBA;   " //
+            + "System.out.println($); " //
+            + "" //
         , "System.out.println((!s?s:s+0xABBA));" //
     );
   }
@@ -316,8 +363,23 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void ternarize49a() {
     assertConvertsTo(
-        "    int size = 17;\n" + "",
-        "if(m.equals(153))" + ""
+        ""//
+            + "    int size = 17;\n"//
+            + "   if (m.equals(153)==true)\n"//
+            + "     for (int i=0; i < size; i++){\n"//
+            + "       S.out.l(HH);\n"//
+            + "     }\n"//
+            + "   else\n"//
+            + "     for (int i=0; i < size; i++){\n"//
+            + "       S.out.l('f');\n"//
+            + "     }",
+        "" //
+            + "if(m.equals(153))"//
+            + "for(int i=0;i<17;++i)"//
+            + "  S.out.l(HH);"//
+            + "else "//
+            + "  for(int i=0;i<17;++i) "//
+            + "    S.out.l('f');"//
     );
   }
 
