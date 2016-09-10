@@ -1522,7 +1522,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
         .to("!a ? \"abba\" : \"abracadabra\"")//
         .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
         .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").stays();
+        .stays();
   }
 
   @Test public void issue110_06() {
