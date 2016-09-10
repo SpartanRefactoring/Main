@@ -19,7 +19,7 @@ public class CFG {
     return i & 0xffff;
   }
 
-  private static long unsigned2signed_w(final long i) {
+  private static long unsigned2signed__w(final long i) {
     return i & 0xfffffff;
   }
 
@@ -90,14 +90,14 @@ public class CFG {
         case IFGE:
         case IFGT:
         case IFLE:
-        case IF_ICMPEQ:
-        case IF_ICMPNE:
-        case IF_ICMPLT:
-        case IF_ICMPGE:
-        case IF_ICMPGT:
-        case IF_ICMPLE:
-        case IF_ACMPEQ:
-        case IF_ACMPNE:
+        case IF__ICMPEQ:
+        case IF__ICMPNE:
+        case IF__ICMPLT:
+        case IF__ICMPGE:
+        case IF__ICMPGT:
+        case IF__ICMPLE:
+        case IF__ACMPEQ:
+        case IF__ACMPNE:
         case IFNULL:
         case IFNONNULL:
           targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
@@ -120,12 +120,12 @@ public class CFG {
           }
           retsFromSubroutine.add(offset + i.size());
           break;
-        case GOTO_W:
-          targetOffset = unsigned2signed_w(offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
+        case GOTO__W:
+          targetOffset = unsigned2signed__w(offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
           jumps2targets.put(offset, targetOffset);
           break;
-        case JSR_W:
-          targetOffset = unsigned2signed_w(offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
+        case JSR__W:
+          targetOffset = unsigned2signed__w(offset + (i.args()[3] | i.args()[2] << 8 | i.args()[0] << 24 | i.args()[1] << 16));
           jumps2targets.put(offset, targetOffset);
           if (subroutine2rets.containsKey(targetOffset))
             retsFromSubroutine = subroutine2rets.get(targetOffset);
@@ -137,9 +137,9 @@ public class CFG {
           break;
         case TABLESWITCH:
         case LOOKUPSWITCH:
-          jumps2targets.put(offset, unsigned2signed_w(offset + i.defaultOffset));
+          jumps2targets.put(offset, unsigned2signed__w(offset + i.defaultOffset));
           for (final int o : i.offsets)
-            jumps2targets.put(offset, unsigned2signed_w(offset + o));
+            jumps2targets.put(offset, unsigned2signed__w(offset + o));
           break;
         case RETURN:
         case IRETURN:

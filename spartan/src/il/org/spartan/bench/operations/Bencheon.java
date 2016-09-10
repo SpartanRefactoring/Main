@@ -115,7 +115,7 @@ public abstract class Bencheon extends NamedOperation {
     /** @param beforeAllRuns2 */
     private static void sleep(final int sleep) {
       for (final long start = System.nanoTime(); System.nanoTime() - start < sleep;)
-        ____.nothing();
+        ___.nothing();
     }
 
     public final int beforeAllRuns;
@@ -127,7 +127,7 @@ public abstract class Bencheon extends NamedOperation {
      * @param beforeEachRun
      * @param run */
     public Exact(final int beforeAllRuns, final int beforeEachRun, final int run) {
-      super("Exact_" + beforeAllRuns + "_" + beforeEachRun + "_" + run, 1);
+      super("Exact__" + beforeAllRuns + "__" + beforeEachRun + "__" + run, 1);
       this.beforeAllRuns = beforeAllRuns;
       this.beforeEachRun = beforeEachRun;
       this.run = run;

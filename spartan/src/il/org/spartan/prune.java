@@ -95,7 +95,7 @@ public enum prune {
   @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
   public static class TEST {
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
-      @Override protected List<@Nullable String> __() {
+      @Override protected List<@Nullable String> ____() {
         final List<@Nullable String> $ = new ArrayList<>();
         $.add(null);
         $.add(null);

@@ -42,7 +42,7 @@ import il.org.spartan.classfiles.*;
     assertEquals("com.sun.security.auth.callback", Filename.headPart("com.sun.security.auth.callback.DialogCallbackHandler$2"));
     assertEquals("com.sun.corba.se.impl.encoding", Filename.headPart("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"));
     assertEquals("com.sun.corba.se.impl.encoding",
-        Filename.headPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream"));
+        Filename.headPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"));
     assertEquals("javax.swing", Filename.headPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
   }
 
@@ -58,7 +58,7 @@ import il.org.spartan.classfiles.*;
     assert !Filename.isAllInner("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1");
     assert !Filename.isAllInner("com.sun.security.auth.callback.DialogCallbackHandler$2");
     assert Filename.isAllInner("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter");
-    assert Filename.isAllInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream");
+    assert Filename.isAllInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream");
     assert !Filename.isAllInner("javax.swing.JSlider$1SmartHashtable$LabelUIResource");
   }
 
@@ -86,7 +86,7 @@ import il.org.spartan.classfiles.*;
     assert !Filename.isInner("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1");
     assert !Filename.isInner("com.sun.security.auth.callback.DialogCallbackHandler$2");
     assert Filename.isInner("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter");
-    assert Filename.isInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream");
+    assert Filename.isInner("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream");
     assert Filename.isInner("javax.swing.JSlider$1SmartHashtable$LabelUIResource");
   }
 
@@ -170,8 +170,8 @@ import il.org.spartan.classfiles.*;
     assertEquals("a$b", Filename.tailPart("b.a$b"));
     assertEquals("a$c", Filename.tailPart("b.a$c"));
     assertEquals("CodeSetConversion$UTF16BTCConverter", Filename.tailPart("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"));
-    assertEquals("IDLJavaSerializationInputStream$_ByteArrayInputStream",
-        Filename.tailPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream"));
+    assertEquals("IDLJavaSerializationInputStream$__ByteArrayInputStream",
+        Filename.tailPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"));
     assertEquals("JSlider$1SmartHashtable$LabelUIResource", Filename.tailPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
   }
 
@@ -216,8 +216,8 @@ import il.org.spartan.classfiles.*;
     assertEquals("b", Filename.trailerPart("b.a$b"));
     assertEquals("c", Filename.trailerPart("b.a$c"));
     assertEquals("UTF16BTCConverter", Filename.trailerPart("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"));
-    assertEquals("_ByteArrayInputStream",
-        Filename.trailerPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$_ByteArrayInputStream"));
+    assertEquals("__ByteArrayInputStream",
+        Filename.trailerPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"));
     assertEquals("LabelUIResource", Filename.trailerPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"));
   }
 }

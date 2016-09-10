@@ -14,7 +14,7 @@ import il.org.spatan.iteration.*;
   /** A class loader, which represents a */
   private static ClassLoader classLoader = null;
   /** Which system property contains the class path? */
-  private static final String JAVA_CLASS_PATH = "java.class.path";
+  private static final String JAVA__CLASS__PATH = "java.class.path";
   private static final String original = get();
 
   /** Append a location to the class path.
@@ -50,7 +50,7 @@ import il.org.spatan.iteration.*;
   /** Retrieves the system's CLASSPATH as a string
    * @return the current system CLASSPATH */
   public static String get() {
-    return System.getProperty(JAVA_CLASS_PATH);
+    return System.getProperty(JAVA__CLASS__PATH);
   }
 
   /** Mocks the system's {@link Class#forName} function, but using a
@@ -93,8 +93,8 @@ import il.org.spatan.iteration.*;
   }
 
   /** Exercise this class by printing the result of its principal function.
-   * @param _ unused */
-  public static void main(final String[] _) {
+   * @param __ unused */
+  public static void main(final String[] __) {
     System.out.println(Separate.by(asArray(), "\n"));
   }
 
@@ -112,7 +112,7 @@ import il.org.spatan.iteration.*;
   /** Sets the system's CLASSPATH
    * @param path the new value of the CLASSPATH */
   public static void set(final String path) {
-    System.setProperty(JAVA_CLASS_PATH, path);
+    System.setProperty(JAVA__CLASS__PATH, path);
     classLoader = null;
   }
 
@@ -122,7 +122,7 @@ import il.org.spatan.iteration.*;
     for (int i = 0; i < path.length; i++)
       try {
         urls[i] = new File(path[i]).toURI().toURL();
-      } catch (final MalformedURLException _) {
+      } catch (final MalformedURLException __) {
         // Ignore
       }
     return new URLClassLoader(urls);

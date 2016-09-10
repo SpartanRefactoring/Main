@@ -18,8 +18,8 @@ import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class ClassFileTest {
-  private static final String GOOD_FILE_PATH = "bin/il/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest.class";
-  private static final String BAD_FILE_PATH = "asdfasdfaafasdfas";
+  private static final String GOOD__FILE__PATH = "bin/il/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest.class";
+  private static final String BAD__FILE__PATH = "asdfasdfaafasdfas";
 
   @Test public void allAccessLevels() {
     final TypedEntity[] methods = ClassInfo.make(AllAccessLevels.class).methods;
@@ -89,11 +89,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void annotationCounts() {
-    final ClassInfo _ = ClassInfo.make(Annotation.class);
-    assertEquals(0, _.constructors.length);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(Annotation.class);
+    assertEquals(0, __.constructors.length);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void annotationFlags() {
@@ -124,31 +124,32 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void badFile() {
-    final File f = new File(BAD_FILE_PATH);
+    final File f = new File(BAD__FILE__PATH);
     assert null != f;
   }
 
   @Test(expected = FileNotFoundException.class) public void badFileInputStream() throws FileNotFoundException {
-    final File f = new File(BAD_FILE_PATH);
+    final File f = new File(BAD__FILE__PATH);
     assert null != new FileInputStream(f);
   }
 
   @Test public void badInputStream() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    assertNull(ClassInfo.make(BAD__FILE__PATH));
   }
 
   @Test public void byteCodeCount() {
-    class _ {
+    class __ {
+      // empty
     }
-    assert ClassInfo.make(_.class).methods[0].getCode().codes.length > 0;
+    assert ClassInfo.make(__.class).methods[0].getCode().codes.length > 0;
   }
 
   @Test public void classInfoFromBadPath() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    assertNull(ClassInfo.make(BAD__FILE__PATH));
   }
 
   @Test public void classInfoFromBadPathCLASSFILE() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    assertNull(ClassInfo.make(BAD__FILE__PATH));
   }
 
   @Test public void classWithCapitalL() {
@@ -159,21 +160,21 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void codeAttributeExists() {
-    class _ {
+    class __ {
     }
-    assert null != ClassInfo.make(_.class).methods[0].getCode();
+    assert null != ClassInfo.make(__.class).methods[0].getCode();
   }
 
   @Test public void codeAttributeMaxLocals() {
-    class _ {
+    class __ {
     }
-    assertEquals(1, ClassInfo.make(_.class).methods[0].getCode().maxLocals);
+    assertEquals(1, ClassInfo.make(__.class).methods[0].getCode().maxLocals);
   }
 
   @Test public void codeAttributeMaxStack() {
-    class _ {
+    class __ {
     }
-    assertEquals(0, ClassInfo.make(_.class).methods[0].getCode().maxStack);
+    assertEquals(0, ClassInfo.make(__.class).methods[0].getCode().maxStack);
   }
 
   @Test public void complexClassConstructorCounts() {
@@ -230,7 +231,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void dataInputStreamFromPath() throws FileNotFoundException {
-    assert null != new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
+    assert null != new DataInputStream(new FileInputStream(new File(GOOD__FILE__PATH)));
   }
 
   @Test public void deprecatedClassIsDeprecated() {
@@ -244,10 +245,10 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptlyClassInteface() {
-    final ClassInfo _ = ClassInfo.make(EmptyClass.class);
-    assert !_.isAbstract();
-    assert !_.isInterface();
-    assert _.isClass();
+    final ClassInfo __ = ClassInfo.make(EmptyClass.class);
+    assert !__.isAbstract();
+    assert !__.isInterface();
+    assert __.isClass();
   }
 
   @Test public void emptyClassConstructorExceptions() {
@@ -322,20 +323,20 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumClassFile() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assert !_.isAbstract();
-    assert !_.isInterface();
-    assert !_.isStatic();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assert !__.isAbstract();
+    assert !__.isInterface();
+    assert !__.isStatic();
   }
 
   @Test public void enumClassFileIsAnnotation() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assert !_.isAnnotation();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assert !__.isAnnotation();
   }
 
   @Test public void enumClassFileIsEnum() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assert _.isEnum();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assert __.isEnum();
   }
 
   @Test public void enumConstructorIsSynthetic() {
@@ -343,8 +344,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumConstructorsCounts() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals(1, _.constructors.length);
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals(1, __.constructors.length);
   }
 
   @Test public void enumIsDeprecated() {
@@ -357,29 +358,29 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumMethod() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.constructors.length);
-    assertEquals(0, _.initializers.length);
-    assert _.methods[0].isAbstract();
-    assert _.methods[0].isPublic();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.constructors.length);
+    assertEquals(0, __.initializers.length);
+    assert __.methods[0].isAbstract();
+    assert __.methods[0].isPublic();
   }
 
   @Test public void enumMethodCounts() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals(2, _.methods.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals(2, __.methods.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void enumMethodName() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals("myMethod", _.methods[0].name);
-    assertEquals("values", _.methods[1].name);
-    assert _.methods[1].isSynthetic();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals("myMethod", __.methods[0].name);
+    assertEquals("values", __.methods[1].name);
+    assert __.methods[1].isSynthetic();
   }
 
   @Test public void fileFromPath() {
-    assert null != new File(GOOD_FILE_PATH);
+    assert null != new File(GOOD__FILE__PATH);
   }
 
   @Test public void findSelf() {
@@ -394,13 +395,13 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void inputStreamFromPath() throws FileNotFoundException {
-    assert null != new FileInputStream(new File(GOOD_FILE_PATH));
+    assert null != new FileInputStream(new File(GOOD__FILE__PATH));
   }
 
   @Test public void interfaceClassFile() {
-    final ClassInfo _ = ClassInfo.make(Interface.class);
-    assert _.isAbstract();
-    assert _.isInterface();
+    final ClassInfo __ = ClassInfo.make(Interface.class);
+    assert __.isAbstract();
+    assert __.isInterface();
   }
 
   @Test public void interfaceIsDeprecated() {
@@ -412,12 +413,12 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void interfaceMethod() {
-    final ClassInfo _ = ClassInfo.make(Interface.class);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.constructors.length);
-    assertEquals(0, _.initializers.length);
-    assert _.methods[0].isAbstract();
-    assert _.methods[0].isPublic();
+    final ClassInfo __ = ClassInfo.make(Interface.class);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.constructors.length);
+    assertEquals(0, __.initializers.length);
+    assert __.methods[0].isAbstract();
+    assert __.methods[0].isPublic();
   }
 
   @Test public void interfaceSuperClassName() {
@@ -443,8 +444,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void meHasCorrectInteface() {
-    final ClassInfo _ = ClassInfo.make(this.getClass());
-    assertEquals(Serializable.class.getCanonicalName(), _.interfaces[0].toString());
+    final ClassInfo __ = ClassInfo.make(this.getClass());
+    assertEquals(Serializable.class.getCanonicalName(), __.interfaces[0].toString());
   }
 
   @Test public void meHasOneInteface() {
@@ -460,16 +461,16 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void methodExceptionsLength() {
-    class _ {
+    class __ {
     }
-    assertEquals(2, ClassInfo.make(_.class).methods[0].exceptions.length);
+    assertEquals(2, ClassInfo.make(__.class).methods[0].exceptions.length);
   }
 
   @Test public void methodExceptionsName() {
-    class _ {
+    class __ {
     }
-    assertEquals(IOException.class.getName(), ClassInfo.make(_.class).methods[0].exceptions[0].toString());
-    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), ClassInfo.make(_.class).methods[0].exceptions[1].toString());
+    assertEquals(IOException.class.getName(), ClassInfo.make(__.class).methods[0].exceptions[0].toString());
+    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), ClassInfo.make(__.class).methods[0].exceptions[1].toString());
   }
 
   @Test public void methodWithParameters() {
@@ -479,8 +480,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void nameOneField() {
-    final ClassInfo _ = ClassInfo.make(OneField.class);
-    assertEquals("fieldName", _.fields[0].name);
+    final ClassInfo __ = ClassInfo.make(OneField.class);
+    assertEquals("fieldName", __.fields[0].name);
   }
 
   @Test public void namesTwoAnnotatedFields() {
@@ -496,10 +497,10 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void nameTwoMethods() {
-    final ClassInfo _ = ClassInfo.make(TwoMethods.class);
-    assertEquals("", _.constructors[0].name);
-    assertEquals("firstMethod", _.methods[0].name);
-    assertEquals("secondMethod", _.methods[1].name);
+    final ClassInfo __ = ClassInfo.make(TwoMethods.class);
+    assertEquals("", __.constructors[0].name);
+    assertEquals("firstMethod", __.methods[0].name);
+    assertEquals("secondMethod", __.methods[1].name);
   }
 
   @Test public void noByteCodeEmptyClassConstructor() {
@@ -507,21 +508,21 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void noByteCodeEmptyConstructor() {
-    class _ {
+    class __ {
     }
-    assertNull(ClassInfo.make(_.class).constructors[0].code);
+    assertNull(ClassInfo.make(__.class).constructors[0].code);
   }
 
   @Test public void noByteCodeEmptyConstructorCallingSuper() {
-    class _ {
+    class __ {
     }
-    assertNull(ClassInfo.make(_.class).constructors[0].code);
+    assertNull(ClassInfo.make(__.class).constructors[0].code);
   }
 
   @Test public void noExceptionsCount() {
-    class _ {
+    class __ {
     }
-    assertEquals(2, ClassInfo.make(_.class).methods[0].exceptions.length);
+    assertEquals(2, ClassInfo.make(__.class).methods[0].exceptions.length);
   }
 
   @Test public void objecClassCreate() {
@@ -574,17 +575,17 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void oneMethodLengths() {
-    final ClassInfo _ = ClassInfo.make(OneMethod.class);
-    assertEquals(1, _.constructors.length);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    assertEquals(1, __.constructors.length);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void oneMethodName() {
-    final ClassInfo _ = ClassInfo.make(OneMethod.class);
-    assertEquals("", _.constructors[0].name);
-    assertEquals("methodName", _.methods[0].name);
+    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    assertEquals("", __.constructors[0].name);
+    assertEquals("methodName", __.methods[0].name);
   }
 
   @Test public void oneMethodSize() {
@@ -596,7 +597,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openBadPath() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    assertNull(ClassInfo.make(BAD__FILE__PATH));
   }
 
   @Test public void openEmptyClass() {
@@ -604,7 +605,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openPath() {
-    assert null != ClassInfo.make(GOOD_FILE_PATH);
+    assert null != ClassInfo.make(GOOD__FILE__PATH);
   }
 
   @Test public void openPathCLASSFILES() {
@@ -612,7 +613,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openPathCLASSFILESBadPath() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    assertNull(ClassInfo.make(BAD__FILE__PATH));
   }
 
   @Test public void openSelf() {
@@ -649,17 +650,17 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseByteCodesTwoMethods() {
-    class _ {
-      boolean __(final int _) {
-        return _ % 1 == 0 ? __(_ * _) : __(_ % 7) != ___(_ * _ % 3);
+    class __ {
+      boolean ____(final int __) {
+        return __ % 1 == 0 ? ____(__ * __) : ____(__ % 7) != ______(__ * __ % 3);
       }
 
-      boolean ___(final int _) {
-        return _ == 1 == __(_);
+      boolean ______(final int __) {
+        return __ == 1 == ____(__);
       }
     }
-    final CodeEntity c0 = ClassInfo.make(_.class).methods[0].getCode();
-    final CodeEntity c1 = ClassInfo.make(_.class).methods[1].getCode();
+    final CodeEntity c0 = ClassInfo.make(__.class).methods[0].getCode();
+    final CodeEntity c1 = ClassInfo.make(__.class).methods[1].getCode();
     assert c0.instructionsCount() > c1.instructionsCount();
   }
 
@@ -675,24 +676,24 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseTableSwitch() {
-    class _ {
+    class __ {
     }
-    assertEquals("tableSwitch", ClassInfo.make(_.class).methods[0].name);
-    assert ClassInfo.make(_.class).methods[0].getCode().instructionsCount() > 20;
+    assertEquals("tableSwitch", ClassInfo.make(__.class).methods[0].name);
+    assert ClassInfo.make(__.class).methods[0].getCode().instructionsCount() > 20;
   }
 
   @Test public void readFromDataInputStreamFromPath() throws IOException {
-    final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
+    final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD__FILE__PATH)));
     assertEquals(ClassInfo.Builder.MAGIC, f.readInt());
     f.close();
   }
 
   @Test public void readFromNoExceptionsReaderFromBadPath() {
-    assertEquals(0, new RobustReader(BAD_FILE_PATH).readInt());
+    assertEquals(0, new RobustReader(BAD__FILE__PATH).readInt());
   }
 
   @Test public void readFromNoExceptionsReaderFromGoodPath() {
-    assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD_FILE_PATH).readInt());
+    assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD__FILE__PATH).readInt());
   }
 
   @Test public void selfMakeNotNull() {
@@ -708,11 +709,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void singleStaticInitilizerLengths() {
-    final ClassInfo _ = ClassInfo.make(SingleStaticInitializer.class);
-    assertEquals(1, _.constructors.length);
-    assertEquals(0, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(1, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(SingleStaticInitializer.class);
+    assertEquals(1, __.constructors.length);
+    assertEquals(0, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(1, __.initializers.length);
   }
 
   @Test public void staticInitializerIsPrivate() {
@@ -726,11 +727,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void staticInitializerNames() {
-    final ClassInfo _ = ClassInfo.make(StaticInitializer.class);
-    assertEquals(0, _.methods.length);
-    assertEquals("", _.initializers[0].name);
-    assertEquals("", _.constructors[0].name);
-    assertEquals("", _.constructors[1].name);
+    final ClassInfo __ = ClassInfo.make(StaticInitializer.class);
+    assertEquals(0, __.methods.length);
+    assertEquals("", __.initializers[0].name);
+    assertEquals("", __.constructors[0].name);
+    assertEquals("", __.constructors[1].name);
   }
 
   @Test public void staticInitializerType() {
@@ -750,11 +751,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void twoMethodLengths() {
-    final ClassInfo _ = ClassInfo.make(OneMethod.class);
-    assertEquals(1, _.constructors.length);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    assertEquals(1, __.constructors.length);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void twoMethodsCount() {
@@ -806,7 +807,7 @@ import il.org.spartan.utils.*;
 
   public static class ComplexMethod {
     public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] d) {
-      ____.unused(v, a, Box.it(b), Box.it(c));
+      ___.unused(v, a, Box.it(b), Box.it(c));
       return new Object[d.length][][];
     }
   }

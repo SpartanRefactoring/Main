@@ -18,9 +18,9 @@ import org.junit.*;
     }
   }
 
-  @Test public void test_simple_literal() {
+  @Test public void test__simple__literal() {
     final String s = "\"abcd\"";
     final Token t = toToken(s);
-    assertEquals(Token.STRING_LITERAL, t);
+    assertEquals(Token.STRING__LITERAL, t);
   }
 }

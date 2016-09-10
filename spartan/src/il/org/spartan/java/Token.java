@@ -9,75 +9,77 @@ import il.org.spartan.utils.*;
 
 public enum Token {
   // Literals:
-  _true, _false, _null,
-  // Primitive_types:
-  _boolean, _byte, _short, _int, _long, _char, _float, _double, _void, _package, // package_declaration
-  _import, // import_declaration
+  __true, __false, __null,
+  // Primitive__types:
+  __boolean, __byte, __short, __int, __long, __char, __float, __double, __void, __package, // package__declaration
+  __import, // import__declaration
   // Modifiers:
-  _public, _protected, _private, _static, _abstract, _final, _native, _synchronized, _transient, _volatile, _strictfp,
+  __public, __protected, __private, __static, __abstract, __final, __native, __synchronized, __transient, __volatile, __strictfp,
   // Type generators:
-  _class, _interface, _enum, _extends, _implements, _throws, _this, _super, // explicit_constructor_invocation
+  __class, __interface, __enum, __extends, __implements, __throws, __this, __super, // explicit__constructor__invocation
   // Control flow:
-  _if, _else, _switch, _case, _default, _do, _while, _for, _break, _continue, _return, _throw, _try, _catch, _finally,
+  __if, __else, __switch, __case, __default, __do, __while, __for, __break, __continue, __return, __throw, __try, __catch, __finally,
   // Operators:
-  _instanceof, _new, _assert, _const, _goto, AT_INTERFACE(KEYWORD), ANNOTATION(ID),
+  __instanceof, __new, __assert, __const, __goto, AT__INTERFACE(KEYWORD), ANNOTATION(ID),
   // Other identifiers:
   IDENTIFIER(ID),
   // Punctuation:
   LBRACK(PUNCTUATION), RBRACK(PUNCTUATION), // Brackets
   LBRACE(PUNCTUATION), RBRACE(PUNCTUATION), // Braces
   LPAREN(PUNCTUATION), RPAREN(PUNCTUATION), // Parenthesis
-  DOT(PUNCTUATION), // qualified_name
+  DOT(PUNCTUATION), // qualified__name
   COLON(PUNCTUATION), // As in switch, loops and goto labels
   SEMICOLON(PUNCTUATION), // Terminator
   COMMA(PUNCTUATION), // Separators
   // Operators:
   MULT(OPERATOR), //
   EQ(OPERATOR), //
-  PLUSPLUS(OPERATOR), // postincrement_expression
-  MINUSMINUS(OPERATOR), // postdecrement_expression
+  PLUSPLUS(OPERATOR), // postincrement__expression
+  MINUSMINUS(OPERATOR), // postdecrement__expression
   COMP(OPERATOR), NOT(OPERATOR), // unary operators
   PLUS(OPERATOR), MINUS(OPERATOR), DIV(OPERATOR), MOD(OPERATOR), // arithmetical
   LSHIFT(OPERATOR), RSHIFT(OPERATOR), URSHIFT(OPERATOR), // shift
   LT(OPERATOR), GT(OPERATOR), LTEQ(OPERATOR), GTEQ(OPERATOR), INSTANCEOF(OPERATOR), // relational
-  EQEQ(OPERATOR), NOTEQ(OPERATOR), // equality_expression
-  AND(OPERATOR), // and_expression
-  XOR(OPERATOR), // exclusive_or_expression
-  OR(OPERATOR), // inclusive_or_expression
-  ANDAND(OPERATOR), // conditional_and_expression
-  OROR(OPERATOR), // conditional_or_expression
-  QUESTION(OPERATOR), // conditional_expression
+  EQEQ(OPERATOR), NOTEQ(OPERATOR), // equality__expression
+  AND(OPERATOR), // and__expression
+  XOR(OPERATOR), // exclusive__or__expression
+  OR(OPERATOR), // inclusive__or__expression
+  ANDAND(OPERATOR), // conditional__and__expression
+  OROR(OPERATOR), // conditional__or__expression
+  QUESTION(OPERATOR), // conditional__expression
   MULTEQ(OPERATOR), DIVEQ(OPERATOR), MODEQ(OPERATOR), PLUSEQ(OPERATOR), MINUSEQ(OPERATOR), // arithmetical
   // assignment operators
   LSHIFTEQ(OPERATOR), RSHIFTEQ(OPERATOR), URSHIFTEQ(OPERATOR), // shift
-  // assignment_operator
+  // assignment__operator
   ANDEQ(OPERATOR), XOREQ(OPERATOR), OREQ(OPERATOR), // bit operations
-  // assignment_operator
-  INTEGER_LITERAL(LITERAL), LONG_LITERAL(LITERAL), // Integral literals
-  DOUBLE_LITERAL(LITERAL), FLOAT_LITERAL(LITERAL), // Floating point
+  // assignment__operator
+  INTEGER__LITERAL(LITERAL), LONG__LITERAL(LITERAL), // Integral literals
+  DOUBLE__LITERAL(LITERAL), FLOAT__LITERAL(LITERAL), // Floating point
   // string literals
-  CHARACTER_LITERAL(LITERAL), //
-  UNTERMINATED_CHARACTER_LITERAL(LITERAL, true), //
-  STRING_LITERAL(LITERAL), //
-  UNTERMINATED_STRING_LITERAL(LITERAL, true), //
+  CHARACTER__LITERAL(LITERAL), //
+  UNTERMINATED__CHARACTER__LITERAL(LITERAL, true), //
+  STRING__LITERAL(LITERAL), //
+  UNTERMINATED__STRING__LITERAL(LITERAL, true), //
   // Ordinary comments
-  LINE_COMMENT(COMMENT), // Includes the entire comment.
-  EMPTY_BLOCK_COMMENT(COMMENT), // That is, the string "/**/"
-  BLOCK_COMMENT(COMMENT), // Includes just the last line of the block comment.
-  DOC_COMMENT(COMMENT), // Includes just the last line of the DOC comment.
-  PARTIAL_BLOCK_COMMENT(COMMENT), // Returned for each line, except the last in
-                                  // a block comment.
-  PARTIAL_DOC_COMMENT(COMMENT), // Returned for each line, except the last in a
-                                // doc comment.
+  LINE__COMMENT(COMMENT), // Includes the entire comment.
+  EMPTY__BLOCK__COMMENT(COMMENT), // That is, the string "/**/"
+  BLOCK__COMMENT(COMMENT), // Includes just the last line of the block comment.
+  DOC__COMMENT(COMMENT), // Includes just the last line of the DOC comment.
+  PARTIAL__BLOCK__COMMENT(COMMENT), // Returned for each line, except the last
+                                    // in
+  // a block comment.
+  PARTIAL__DOC__COMMENT(COMMENT), // Returned for each line, except the last in
+                                  // a
+  // doc comment.
   /** Returned for each new line occurring within a block comment: */
-  NL_BLOCK_COMMENT(COMMENT),
+  NL__BLOCK__COMMENT(COMMENT),
   /** Returned for each new line occurring within a doc comment. */
-  NL_DOC_COMMENT(COMMENT),
+  NL__DOC__COMMENT(COMMENT),
   // Error comments:
-  UNTERMINATED_BLOCK_COMMENT(COMMENT, true), //
-  UNTERMINATED_DOC_COMMENT(COMMENT, true), //
+  UNTERMINATED__BLOCK__COMMENT(COMMENT, true), //
+  UNTERMINATED__DOC__COMMENT(COMMENT, true), //
   // Specials:
-  UNKNOWN_CHARACTER(NONCODE, true), //
+  UNKNOWN__CHARACTER(NONCODE, true), //
   EOF(NONCODE), //
   NL(NONCODE), //
   SPACE(NONCODE),;
@@ -121,7 +123,7 @@ public enum Token {
   }
 
   public boolean isNL() {
-    return this == NL || this == NL_BLOCK_COMMENT || this == NL_DOC_COMMENT;
+    return this == NL || this == NL__BLOCK__COMMENT || this == NL__DOC__COMMENT;
   }
 
   public enum Category {

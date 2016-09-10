@@ -154,40 +154,40 @@ public final class ConstantPool {
    * @return the next constant pool entry found in the given stream */
   private Constant readConstant(final RobustReader reader) {
     final int//
-    CONSTANT_UTF8 = 1, //
-        CONSTANT_INTEGER = 3, //
-        CONSTANT_FLOAT = 4, //
-        CONSTANT_LONG = 5, //
-        CONSTANT_DOUBLE = 6, //
-        CONSTANT_CLASS = 7, //
-        CONSTANT_STRING = 8, //
-        CONSTANT_FIELDREF = 9, //
-        CONSTANT_METHODREF = 10, //
-        CONSTANT_INTERFACE_METHODREF = 11, //
-        CONSTANT_NAME_AND_TYPE = 12; //
+    CONSTANT__UTF8 = 1, //
+        CONSTANT__INTEGER = 3, //
+        CONSTANT__FLOAT = 4, //
+        CONSTANT__LONG = 5, //
+        CONSTANT__DOUBLE = 6, //
+        CONSTANT__CLASS = 7, //
+        CONSTANT__STRING = 8, //
+        CONSTANT__FIELDREF = 9, //
+        CONSTANT__METHODREF = 10, //
+        CONSTANT__INTERFACE__METHODREF = 11, //
+        CONSTANT__NAME__AND__TYPE = 12; //
     int b;
     switch (b = reader.readUnsignedByte()) {
-      case CONSTANT_CLASS:
+      case CONSTANT__CLASS:
         return new ClassConstant(reader.readUnsignedShort());
-      case CONSTANT_FIELDREF:
+      case CONSTANT__FIELDREF:
         return new FieldReference(reader.readUnsignedShort(), reader.readUnsignedShort());
-      case CONSTANT_METHODREF:
+      case CONSTANT__METHODREF:
         return new MethodReference(reader.readUnsignedShort(), reader.readUnsignedShort());
-      case CONSTANT_INTERFACE_METHODREF:
+      case CONSTANT__INTERFACE__METHODREF:
         return new InterfaceMethodReference(reader.readUnsignedShort(), reader.readUnsignedShort());
-      case CONSTANT_STRING:
+      case CONSTANT__STRING:
         return new StringConstant(reader.readUnsignedShort());
-      case CONSTANT_INTEGER:
+      case CONSTANT__INTEGER:
         return new IntLiteral(reader.readInt());
-      case CONSTANT_FLOAT:
+      case CONSTANT__FLOAT:
         return new FloatLiteral(reader.readFloat());
-      case CONSTANT_LONG:
+      case CONSTANT__LONG:
         return new LongLiteral(reader.readLong());
-      case CONSTANT_DOUBLE:
+      case CONSTANT__DOUBLE:
         return new DoubleLiteral(reader.readDouble());
-      case CONSTANT_NAME_AND_TYPE:
+      case CONSTANT__NAME__AND__TYPE:
         return new NameAndTypeConstant(reader.readUnsignedShort(), reader.readUnsignedShort());
-      case CONSTANT_UTF8:
+      case CONSTANT__UTF8:
         return new UTF8(reader.readUTF());
       default:
         System.out.print("Unfamiliar field identifier = " + b);
@@ -343,7 +343,7 @@ public final class ConstantPool {
     }
 
     @Override public String toString() {
-      return "CONSTANT_Float: " + value;
+      return "CONSTANT__Float: " + value;
     }
 
     @Override public String typeName() {

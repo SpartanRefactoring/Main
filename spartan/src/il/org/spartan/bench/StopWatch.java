@@ -54,7 +54,7 @@ public final class StopWatch {
 
   /** @return <code><b>this</b></code> */
   public StopWatch start() {
-    ____.require(!started);
+    ___.require(!started);
     begin = System.nanoTime();
     started = true;
     return this;
@@ -62,7 +62,7 @@ public final class StopWatch {
 
   /** @return <code><b>this</b></code> */
   public StopWatch stop() {
-    ____.require(started);
+    ___.require(started);
     time += System.nanoTime() - begin;
     runs++;
     started = false;

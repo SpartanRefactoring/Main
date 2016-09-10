@@ -47,7 +47,7 @@ import il.org.spartan.reap.Cookbook.Recipe.*;
  * <ol>
  * <li>Classes in this interface give several implementations of the cell
  * concept.
- * <li>Inner classes of {@link __META} provide examples and extensive unit
+ * <li>Inner classes of {@link ____META} provide examples and extensive unit
  * testing.
  * <li>There are no other members: A client class that
  * <code><b>implements</b></code> this interface should be ok.
@@ -159,7 +159,7 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  public enum __META {
+  public enum ____META {
     ;
     @SuppressWarnings("javadoc") public static class A {
       final Cell<String> begin = value("<");
@@ -309,20 +309,20 @@ public interface Cookbook {
     @SuppressWarnings({ "boxing" }) //
     public static class Z implements Cookbook {
       /** Must not be private; used for testing of proper lazy evaluation */
-      int _aPower02Calls;
+      int __aPower02Calls;
       /** Must not be private; used for testing of proper lazy evaluation */
-      int _aPower03Calls;
+      int __aPower03Calls;
       /** a^5 := a^2 * a^3 */
       /** Can, and often should be made private; package is OK */
       final Cell<@Nullable Integer> a = new Cookbook.Ingredient<>();
       /** Can, and often should be made private; package is OK */
       @SuppressWarnings("null") final Cell<@Nullable Integer> aPower02 = new Recipe<>(() -> {
-        ++_aPower02Calls;
+        ++__aPower02Calls;
         return a() * a();
       }).ingredients(a);
       /** Can, and often should be made private; package is OK */
       @SuppressWarnings("null") final Cell<@Nullable Integer> aPower03 = new Recipe<>(() -> {
-        ++_aPower03Calls;
+        ++__aPower03Calls;
         return a() * aPower02();
       }).ingredients(aPower02, a);
       /** the actual cell behind {@link #aPower05()} */
@@ -530,15 +530,15 @@ public interface Cookbook {
 
         @Test public void sessionC00() {
           a.set(-3);
-          azzert.that(_aPower03Calls, is(0));
-          azzert.that(_aPower02Calls, is(0));
+          azzert.that(__aPower03Calls, is(0));
+          azzert.that(__aPower02Calls, is(0));
         }
 
         @Test public void sessionC01() {
           a.set(-3);
           azzert.that(aPower03(), is(-27));
-          azzert.that(_aPower03Calls, is(1)); // Force invocation
-          azzert.that(_aPower02Calls, is(1));
+          azzert.that(__aPower03Calls, is(1)); // Force invocation
+          azzert.that(__aPower02Calls, is(1));
         }
 
         @Test public void sessionC02() {
@@ -555,17 +555,17 @@ public interface Cookbook {
           a.set(-2);
           azzert.that(a.version(), is(1L));
           azzert.that(aPower03.version(), is(0L));
-          azzert.that(_aPower03Calls, is(0));
+          azzert.that(__aPower03Calls, is(0));
           azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
-          azzert.that(_aPower02Calls, is(1));
-          azzert.that(_aPower03Calls, is(1));
+          azzert.that(__aPower02Calls, is(1));
+          azzert.that(__aPower03Calls, is(1));
         }
 
         @Test public void sessionC05() {
           a.set(-2);
           azzert.that(aPower17NullSafe(), is(-(1 << 17))); // Force invocation
-          azzert.that(_aPower02Calls, is(1));
-          azzert.that(_aPower03Calls, is(1));
+          azzert.that(__aPower02Calls, is(1));
+          azzert.that(__aPower03Calls, is(1));
         }
 
         @Test public void sessionD01() {
@@ -679,20 +679,20 @@ public interface Cookbook {
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(_aPower03Calls, is(1));
+          azzert.that(__aPower03Calls, is(1));
         }
 
         @Test public void sessionD17() {
           a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(_aPower02Calls, is(1));
+          azzert.that(__aPower02Calls, is(1));
           a.set(3);
           a.set(2);
           azzert.that(aPower17NullSafe(), is(1 << 17));
           azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(_aPower02Calls, is(2));
-          azzert.that(_aPower03Calls, is(2));
+          azzert.that(__aPower02Calls, is(2));
+          azzert.that(__aPower03Calls, is(2));
         }
 
         @Test public void sessionE01() {

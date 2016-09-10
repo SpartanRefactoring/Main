@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 import static org.junit.Assert.*;
 
 import org.junit.*;
@@ -39,7 +39,7 @@ public class Cartesian {
         sure(n < $.length);
         $[n++] = new Pair<>(rs[i - 1], ss[j - 1]);
       }
-    ____.sure(n == $.length);
+    ___.sure(n == $.length);
     return $;
   }
 
@@ -112,7 +112,7 @@ public class Cartesian {
       assertEquals(1, n);
     }
 
-    @Test public void makeArray3_13_19() {
+    @Test public void makeArray3__13__19() {
       final int n = makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length;
       assertEquals(702, n);
     }

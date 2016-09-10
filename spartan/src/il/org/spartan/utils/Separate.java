@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.Box.*;
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
@@ -125,7 +125,7 @@ import il.org.spatan.iteration.*;
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T t : ts)
-      $.append(s).append(f._(t));
+      $.append(s).append(f.__(t));
     return $.toString();
   }
 
@@ -174,7 +174,7 @@ import il.org.spatan.iteration.*;
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T t : ts)
-      $.append(s).append(f._(t));
+      $.append(s).append(f.__(t));
     return $.toString();
   }
 
@@ -404,8 +404,8 @@ import il.org.spatan.iteration.*;
   /** An interface supplying a function object pointer, where the function
    * return value is {@link String}. To create such a pointer, create a subclass
    * that implements this interface (typically as an anonymous class), giving an
-   * implementation to function {@link #_(Object)}, and then pass an instance of
-   * this subclass class.
+   * implementation to function {@link #__(Object)}, and then pass an instance
+   * of this subclass class.
    * @author Yossi Gil, the Technion.
    * @since 07/08/2008
    * @param <T> type of values that the function takes */
@@ -413,6 +413,6 @@ import il.org.spatan.iteration.*;
     /** Anonymous function for translating an object into text
      * @param t an object of type <code>T</code>
      * @return a textual */
-    String _(T t);
+    String __(T t);
   }
 }

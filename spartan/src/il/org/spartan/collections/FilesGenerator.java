@@ -38,8 +38,8 @@ import il.org.spartan.iterables.PureIterable.*;
  * @author Yossi Gil
  * @since 2015-09-23. */
 public class FilesGenerator {
-  /** @param __ ignored */
-  public static void main(final String[] __) {
+  /** @param ____ ignored */
+  public static void main(final String[] ____) {
     for (final File f : new FilesGenerator(".java").from("."))
       System.out.println(f);
   }

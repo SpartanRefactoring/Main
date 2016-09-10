@@ -1,6 +1,6 @@
 package il.org.spartan.strings;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.util.*;
@@ -13,8 +13,8 @@ import il.org.spartan.utils.*;
 @Antiexample @Utility public enum StringUtils {
   // No elements in this name space
   ;
-  static final int MAX_FIRST = 20;
-  static final int MAX_LAST = 10;
+  static final int MAX__FIRST = 20;
+  static final int MAX__LAST = 10;
 
   public static double atod(final String s) {
     return new Double(s).doubleValue();
@@ -127,36 +127,36 @@ import il.org.spartan.utils.*;
 
   public static boolean isDouble(final String s) {
     try {
-      @SuppressWarnings("unused") final Object _ = new Double(s);
+      @SuppressWarnings("unused") final Object __ = new Double(s);
       return true;
-    } catch (final NumberFormatException _) {
+    } catch (final NumberFormatException __) {
       return false;
     }
   }
 
   public static boolean isFloat(final String s) {
     try {
-      @SuppressWarnings("unused") final Object _ = new Float(s);
+      @SuppressWarnings("unused") final Object __ = new Float(s);
       return true;
-    } catch (final NumberFormatException _) {
+    } catch (final NumberFormatException __) {
       return false;
     }
   }
 
   public static boolean isInt(final String s) {
     try {
-      @SuppressWarnings("unused") final Object _ = new Integer(s);
+      @SuppressWarnings("unused") final Object __ = new Integer(s);
       return true;
-    } catch (final NumberFormatException _) {
+    } catch (final NumberFormatException __) {
       return false;
     }
   }
 
   public static boolean isLong(final String s) {
     try {
-      @SuppressWarnings("unused") final Object _ = new Long(s);
+      @SuppressWarnings("unused") final Object __ = new Long(s);
       return true;
-    } catch (final NumberFormatException _) {
+    } catch (final NumberFormatException __) {
       return false;
     }
   }
@@ -259,7 +259,7 @@ import il.org.spartan.utils.*;
     final Once ellipsis = new Once("\t...\n");
     for (final Object o : a) {
       ++n;
-      $ += n > MAX_FIRST && n <= a.size() - MAX_LAST ? ellipsis : "\t" + n + ") " + o + "\n";
+      $ += n > MAX__FIRST && n <= a.size() - MAX__LAST ? ellipsis : "\t" + n + ") " + o + "\n";
     }
     return $;
   }

@@ -1,6 +1,6 @@
 package il.org.spartan.collections;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.lang.reflect.*;

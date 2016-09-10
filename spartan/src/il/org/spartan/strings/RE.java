@@ -47,7 +47,7 @@ public class RE {
   }
 
   public static String identifier() {
-    return "(?:[a-zA-Z_$])[a-zA-Z_$0-9]*+";
+    return "(?:[a-zA-Z__$])[a-zA-Z__$0-9]*+";
   }
 
   public static String ignoreCase() {
@@ -144,7 +144,7 @@ public class RE {
     }
 
     @Test public void testOneLetterLowerUnderscore() {
-      assert "a_".matches(fulllyQualifiedIdentifier());
+      assert "a__".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testOneLetterUpper() {
@@ -168,19 +168,19 @@ public class RE {
     }
 
     @Test public void testUnderscore1() {
-      assert "_1".matches(fulllyQualifiedIdentifier());
+      assert "__1".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscoredDollars() {
-      assert "_._.__.$$._$._1".matches(fulllyQualifiedIdentifier());
+      assert "__.__.____.$$.__$.__1".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscores() {
-      assert "_._".matches(fulllyQualifiedIdentifier());
+      assert "__.__".matches(fulllyQualifiedIdentifier());
     }
 
     @Test public void testUnderscrore() {
-      assert "_".matches(fulllyQualifiedIdentifier());
+      assert "__".matches(fulllyQualifiedIdentifier());
     }
   }
 
@@ -210,7 +210,7 @@ public class RE {
     }
 
     @Test public void testOneLetterLowerUnderscore() {
-      assert "a_".matches(identifier());
+      assert "a__".matches(identifier());
     }
 
     @Test public void testOneLetterUpper() {
@@ -238,15 +238,15 @@ public class RE {
     }
 
     @Test public void testTwoUnderscrores() {
-      assert "__".matches(identifier());
+      assert "____".matches(identifier());
     }
 
     @Test public void testUnderscrore() {
-      assert "_".matches(identifier());
+      assert "__".matches(identifier());
     }
 
     @Test public void testUnderscrore1() {
-      assert "_".matches(identifier());
+      assert "__".matches(identifier());
     }
   }
 }

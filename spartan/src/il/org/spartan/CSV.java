@@ -1,10 +1,12 @@
 package il.org.spartan;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
+
+import org.eclipse.jdt.annotation.*;
 
 /** This class realize the CSV specification, by comprising methods for
  * manipulating CSV files. e.g. 1, 2, 3 4, 5, 6 The class supports string arrays
@@ -63,7 +65,7 @@ public enum CSV {
   /** Escape the given input
    * @param s Input string
    * @return Escaped form of the input */
-  public static String escape(final String s) {
+  public static String escape(final @Nullable String s) {
     if (s == null)
       return NULL;
     final int len = s.length();

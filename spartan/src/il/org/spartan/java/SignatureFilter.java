@@ -10,12 +10,12 @@ public class SignatureFilter extends CodeOnlyFilter {
     switch (t) {
       default:
         return false;
-      case _class:
-      case _interface:
-      case _enum:
-      case _new:
-      case _abstract:
-      case AT_INTERFACE:
+      case __class:
+      case __interface:
+      case __enum:
+      case __new:
+      case __abstract:
+      case AT__INTERFACE:
         return true;
     }
   }

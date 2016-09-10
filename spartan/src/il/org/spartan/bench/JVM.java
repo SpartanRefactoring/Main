@@ -98,9 +98,7 @@ public final class JVM {
     heapSize = TotalMemory.heapSize();
   }
 
-  /**
-   * Is this an object of the same type and with the same field contents? 
-   */
+  /** Is this an object of the same type and with the same field contents? */
   @Override public boolean equals(final Object o) {
     return o == this || o instanceof JVM && equals((JVM) o);
   }

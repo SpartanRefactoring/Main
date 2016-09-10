@@ -22,7 +22,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return new Sequence<>(ts, begin, end);
   }
 
-  public static <T> Sequence<T> upcast(@SuppressWarnings("unused") final Class<T> _, final Sequence<? extends T> src) {
+  public static <T> Sequence<T> upcast(@SuppressWarnings("unused") final Class<T> __, final Sequence<? extends T> src) {
     return make((T[]) src.es, src.begin, src.end);
   }
 

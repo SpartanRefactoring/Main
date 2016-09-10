@@ -1,14 +1,14 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.____.*;
+import il.org.spartan.utils.___.*;
 
 /** A general purpose implementation of the <b>Memento Design Pattern</b> using
  * object serialization

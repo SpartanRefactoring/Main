@@ -11,15 +11,15 @@ import org.junit.*;
  * @since 28 November 2011 */
 @SuppressWarnings("static-method") public class AttributeTest {
   @Test public void iterate() {
-    class _ {
+    class __ {
       // empty
     }
-    for (final Attribute.Content c : Attribute.Extractor.attributes(new _()))
+    for (final Attribute.Content c : Attribute.Extractor.attributes(new __()))
       c.hashCode();
   }
 
   @Test public void manyAttributeNames() {
-    class _ {
+    class __ {
       @Attribute public int anotherAttribute() {
         return 3;
       }
@@ -33,13 +33,13 @@ import org.junit.*;
         return 3;
       }
     }
-    assertEquals("hashCode", Attribute.Extractor.attributes(new _()).get(0).name);
-    assertEquals("intAttribute", Attribute.Extractor.attributes(new _()).get(1).name);
-    assertEquals("anotherAttribute", Attribute.Extractor.attributes(new _()).get(2).name);
+    assertEquals("hashCode", Attribute.Extractor.attributes(new __()).get(0).name);
+    assertEquals("intAttribute", Attribute.Extractor.attributes(new __()).get(1).name);
+    assertEquals("anotherAttribute", Attribute.Extractor.attributes(new __()).get(2).name);
   }
 
   @Test public void manyAttributeValues() {
-    class _ {
+    class __ {
       @Attribute public int anotherAttribute() {
         return 21;
       }
@@ -53,24 +53,24 @@ import org.junit.*;
         return 19;
       }
     }
-    assertEquals("3", Attribute.Extractor.attributes(new _()).get(0).value);
-    assertEquals("19", Attribute.Extractor.attributes(new _()).get(1).value);
-    assertEquals("21", Attribute.Extractor.attributes(new _()).get(2).value);
+    assertEquals("3", Attribute.Extractor.attributes(new __()).get(0).value);
+    assertEquals("19", Attribute.Extractor.attributes(new __()).get(1).value);
+    assertEquals("21", Attribute.Extractor.attributes(new __()).get(2).value);
   }
 
   @Test public void methodAttributeName() {
-    class _ {
+    class __ {
       @Attribute public int intAttribute() {
         return 3;
       }
     }
-    assertEquals("intAttribute", Attribute.Extractor.attributes(new _()).get(0).name);
+    assertEquals("intAttribute", Attribute.Extractor.attributes(new __()).get(0).name);
   }
 
   @Test public void nonNull() {
-    class _ {
+    class __ {
       // empty
     }
-    assert null != Attribute.Extractor.attributes(new _());
+    assert null != Attribute.Extractor.attributes(new __());
   }
 }

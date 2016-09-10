@@ -304,7 +304,7 @@ public interface Utils {
   }
 
   /** Convert variadic list of arguments into an array
-   * @param os JD _
+   * @param os JD __
    * @return parameter, as an array. */
   static Object[] objects(final Object... os) {
     return os;

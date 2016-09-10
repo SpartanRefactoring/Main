@@ -118,7 +118,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
-    private static final int PSEUDO_ZERO = 2 * Short.MAX_VALUE + 2;
+    private static final int PSEUDO__ZERO = 2 * Short.MAX_VALUE + 2;
 
     @Test public void arsInsertedInNoOrder() {
       final SmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
@@ -182,12 +182,12 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void containsArcSecondLargeValueAfterInsertion1() {
       final MatrixSmallIntegersGraph g = new Builder().connect(1, 0).go();
-      assert !g.has(1, PSEUDO_ZERO);
+      assert !g.has(1, PSEUDO__ZERO);
     }
 
     @Test public void containsArcSecondLargeValueAfterInsertion2() {
       final MatrixSmallIntegersGraph g = new Builder().connect(0, 1).go();
-      assert !g.has(PSEUDO_ZERO, 0);
+      assert !g.has(PSEUDO__ZERO, 0);
     }
 
     @Test public void containsArcSecondNegativeValue() {
@@ -212,7 +212,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void containsPseudoZero() {
       final MatrixSmallIntegersGraph g = new Builder().add(0).go();
-      assert !g.has(PSEUDO_ZERO);
+      assert !g.has(PSEUDO__ZERO);
     }
 
     @Test public void disconnectedComponentsBuilder() {

@@ -43,7 +43,7 @@ public class Binner {
         }
     from = reverse(fromStack.toArray());
     to = reverse(toStack.toArray());
-    ____.sure(from.length == to.length);
+    ___.sure(from.length == to.length);
     m = from.length;
     for (int i = 0; i < from.length; i++)
       for (int j = from[i]; j < to[i]; j++)
@@ -51,7 +51,7 @@ public class Binner {
   }
 
   public double[] bin(final double[] ds) {
-    ____.require(n == ds.length);
+    ___.require(n == ds.length);
     final double[] $ = new double[m];
     for (int i = 0; i < m; i++)
       for (int j = from[i]; j < to[i]; j++)
@@ -64,7 +64,7 @@ public class Binner {
   }
 
   public int[] bin(final int[] is) {
-    ____.require(n == is.length);
+    ___.require(n == is.length);
     final int[] $ = new int[m];
     for (int i = 0; i < m; i++)
       for (int j = from[i]; j < to[i]; j++)

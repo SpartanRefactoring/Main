@@ -41,13 +41,13 @@ import il.org.spartan.streotypes.*;
    *        zero
    * @param onPositive expression to evaluate and return if
    *        <code>selector</code> is positive
-   * @return one of <code>onNegative._()</code>, <code>onZero._()</code> or
-   *         <code>onPositive._()</code>, depending on the sign of
+   * @return one of <code>onNegative.__()</code>, <code>onZero.__()</code> or
+   *         <code>onPositive.__()</code>, depending on the sign of
    *         <code>selector</code> */
   public static <T> T sign(final int selector, final Function<T> onNegative, final Function<T> onZero, final Function<T> onPositive) {
     if (selector == 0)
-      return onZero._();
-    return selector < 0 ? onNegative._() : onPositive._();
+      return onZero.__();
+    return selector < 0 ? onNegative.__() : onPositive.__();
   }
 
   /** A non-lazy selection between three values depending on the sign of a given
@@ -78,16 +78,16 @@ import il.org.spartan.streotypes.*;
 
   private static Function<Void> asFunction(final Action a) {
     return () -> {
-      a._();
+      a.__();
       return null;
     };
   }
 
   public interface Action {
-    void _();
+    void __();
   }
 
   public interface Function<T> {
-    T _();
+    T __();
   }
 }

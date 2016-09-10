@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
@@ -76,7 +76,7 @@ public enum Filename {
    * @return <code><b>true</b></code> <em>iff</em>the class is an inner class,
    *         i.e., defined within another class. */
   public static boolean isInner(final String name) {
-    return trailerPart(name).matches("[A-Za-z_$].*");
+    return trailerPart(name).matches("[A-Za-z__$].*");
   }
 
   /** determine whether a class is local
@@ -84,12 +84,12 @@ public enum Filename {
    * @return <code><b>true</b></code> <em>iff</em>the class is a local one,
    *         i.e., defined within a function. */
   public static boolean isLocal(final String name) {
-    return trailerPart(name).matches("[0-9][A-Za-z_$].*");
+    return trailerPart(name).matches("[0-9][A-Za-z__$].*");
   }
 
   public static String name2Canonical(final String name) {
     for (String before = name, after;; before = after) {
-      after = before.replaceFirst("\\$([a-zA-Z_][a-zA-Z0-9_$]*)$", ".$1");
+      after = before.replaceFirst("\\$([a-zA-Z__][a-zA-Z0-9__$]*)$", ".$1");
       if (after.equals(before))
         return after;
     }

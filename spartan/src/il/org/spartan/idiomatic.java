@@ -23,7 +23,7 @@ public interface idiomatic {
   };
   /** an ignoring trigger */
   static final Trigger ignore = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> __) {
+    @Override public <@Nullable T> T eval(final Supplier<T> ____) {
       return null;
     }
   };

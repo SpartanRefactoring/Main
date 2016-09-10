@@ -217,7 +217,7 @@ public final class IntegersMapTest {
     assert m.location(h) >= 0;
   }
 
-  @Test public void location1_1() {
+  @Test public void location1__1() {
     final int h = IntegersMap.hash(1);
     m.put(h, h);
     assertEquals(h, m.get(h));

@@ -87,12 +87,12 @@ public interface XYProcessor {
   }
 
   public static class MaxErrorFilter extends Wrapper {
-    private static double DEFAULT_FACTOR = 2;
+    private static double DEFAULT__FACTOR = 2;
     private double maxError = Double.NaN;
     private final double factor;
 
     public MaxErrorFilter(final XYProcessor inner) {
-      this(inner, DEFAULT_FACTOR);
+      this(inner, DEFAULT__FACTOR);
     }
 
     public MaxErrorFilter(final XYProcessor inner, final double factor) {
@@ -197,7 +197,7 @@ public interface XYProcessor {
 
   public abstract static class Vacuous implements XYProcessor {
     @Override public void done() {
-      ____.nothing();
+      ___.nothing();
     }
 
     public Vacuous feed(final double xs[], final double ys[]) {
@@ -256,7 +256,7 @@ public interface XYProcessor {
 
     @Override public void p(@SuppressWarnings("unused") final double x, @SuppressWarnings("unused") final double y,
         @SuppressWarnings("unused") final double dy) {
-      ____.nothing();
+      ___.nothing();
     }
 
     @Override public void p(final int x, final int y) {

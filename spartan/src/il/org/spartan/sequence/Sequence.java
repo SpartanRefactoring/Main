@@ -35,11 +35,11 @@ public abstract class Sequence implements Cloneable {
   }
 
   public final int count() {
-    return clone()._count();
+    return clone().__count();
   }
 
   public final int count(final int from) {
-    return clone().startAt(from)._count();
+    return clone().startAt(from).__count();
   }
 
   public final int current() {
@@ -60,7 +60,7 @@ public abstract class Sequence implements Cloneable {
     return clone().fill(new int[count()]);
   }
 
-  private final int _count() {
+  private final int __count() {
     for (int $ = 0;; ++$) {
       if (!more())
         return $;
@@ -97,9 +97,9 @@ public abstract class Sequence implements Cloneable {
     final Sequence s1;
     final Sequence s2;
 
-    public Merged(final Sequence _s1, final Sequence _s2) {
-      s1 = _s1;
-      s2 = _s2;
+    public Merged(final Sequence __s1, final Sequence __s2) {
+      s1 = __s1;
+      s2 = __s2;
       current = Math.min(s1.current(), s2.current());
     }
 

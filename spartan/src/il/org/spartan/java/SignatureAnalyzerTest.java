@@ -17,8 +17,8 @@ import org.junit.*;
   }
 
   @Test public void createFileStaticType() {
-    final SignatureAnalyzer _ = SignatureAnalyzer.ofFile("Data/file");
-    assertEquals(SignatureAnalyzer.class, _.getClass());
+    final SignatureAnalyzer __ = SignatureAnalyzer.ofFile("Data/file");
+    assertEquals(SignatureAnalyzer.class, __.getClass());
   }
 
   @Test public void createFileType() {
@@ -26,8 +26,8 @@ import org.junit.*;
   }
 
   @Test public void createReaderStaticType() {
-    final SignatureAnalyzer _ = SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n"));
-    assertEquals(SignatureAnalyzer.class, _.getClass());
+    final SignatureAnalyzer __ = SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n"));
+    assertEquals(SignatureAnalyzer.class, __.getClass());
   }
 
   @Test public void createReaderType() {
@@ -39,8 +39,8 @@ import org.junit.*;
   }
 
   @Test public void createStringStaticType() {
-    final SignatureAnalyzer _ = SignatureAnalyzer.ofString("Hello, World!\n");
-    assertEquals(SignatureAnalyzer.class, _.getClass());
+    final SignatureAnalyzer __ = SignatureAnalyzer.ofString("Hello, World!\n");
+    assertEquals(SignatureAnalyzer.class, __.getClass());
   }
 
   @Test public void createStringType() {

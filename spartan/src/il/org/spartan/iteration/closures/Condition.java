@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 /** An interface representing a boolean function taking single argument boolean.
  * @param <Argument> Type of argument

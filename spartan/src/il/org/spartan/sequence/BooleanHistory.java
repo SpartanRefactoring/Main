@@ -13,7 +13,7 @@ public class BooleanHistory {
   private int last = 0;
 
   public BooleanHistory(final int n) {
-    ____.positive(n);
+    ___.positive(n);
     bs = new boolean[n];
     size = 0;
   }

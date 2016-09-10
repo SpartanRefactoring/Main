@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -49,7 +49,7 @@ import il.org.spatan.iteration.*;
   public static <T> ArrayList<String> apply(final F<T> f, final Iterable<? extends T> ts) {
     final ArrayList<String> $ = new ArrayList<>();
     for (final T t : ts)
-      $.add(f._(t));
+      $.add(f.__(t));
     return $;
   }
 
@@ -202,14 +202,14 @@ import il.org.spatan.iteration.*;
   public static class Option {
     public static final String COMMA = ", ";
     public static final String NL = "\n";
-    public static final String NULL_TEXT = "(null)";
-    public static final Option functionStyle = new Option("(", ")", "_", COMMA);
-    public static final Option statementStyle = new Option("{", "}", "_", NL);
-    public static final Option defaultStyle = new Option("[", "]", NULL_TEXT, ",");
-    private String _begin;
-    private String _end;
-    private String _filler;
-    private String _separator;
+    public static final String NULL__TEXT = "(null)";
+    public static final Option functionStyle = new Option("(", ")", "__", COMMA);
+    public static final Option statementStyle = new Option("{", "}", "__", NL);
+    public static final Option defaultStyle = new Option("[", "]", NULL__TEXT, ",");
+    private String __begin;
+    private String __end;
+    private String __filler;
+    private String __separator;
 
     /** Create a new instance, initialized with the default formatting style. */
     public Option() {
@@ -217,61 +217,61 @@ import il.org.spatan.iteration.*;
     }
 
     private Option(final Option o) {
-      _begin = o._begin;
-      _end = o._end;
-      _filler = o._filler;
-      _separator = o._separator;
+      __begin = o.__begin;
+      __end = o.__end;
+      __filler = o.__filler;
+      __separator = o.__separator;
     }
 
-    private Option(final String _begin, final String _end, final String _filler, final String _separator) {
-      this._begin = _begin;
-      this._end = _end;
-      this._filler = _filler;
-      this._separator = _separator;
+    private Option(final String __begin, final String __end, final String __filler, final String __separator) {
+      this.__begin = __begin;
+      this.__end = __end;
+      this.__filler = __filler;
+      this.__separator = __separator;
     }
 
     public String begin() {
-      return _begin;
+      return __begin;
     }
 
     public Option begin(final String begin) {
-      _begin = begin;
+      __begin = begin;
       return this;
     }
 
     public String end() {
-      return _end;
+      return __end;
     }
 
     public Option end(final String end) {
-      _end = end;
+      __end = end;
       return this;
     }
 
     public String filler() {
-      return _filler;
+      return __filler;
     }
 
     public Option filler(final String filler) {
-      _filler = filler;
+      __filler = filler;
       return this;
     }
 
     public boolean isOmittingNulls() {
-      return _filler == null;
+      return __filler == null;
     }
 
     public Option omitNulls() {
-      _filler = null;
+      __filler = null;
       return this;
     }
 
     public String separator() {
-      return _separator;
+      return __separator;
     }
 
     public Option separator(final String separator) {
-      _separator = separator;
+      __separator = separator;
       return this;
     }
   }
@@ -293,10 +293,10 @@ import il.org.spatan.iteration.*;
     }
 
     @Test public void testArrayFillerSeparatorBeginEnd() {
-      assertEquals("[[_:A:_:B:C:_]]", //
+      assertEquals("[[__:A:__:B:C:__]]", //
           it(//
               makeArray(null, "A", null, "B", "C", null), //
-              filler("_").begin("[[").end("]]").separator(":")//
+              filler("__").begin("[[").end("]]").separator(":")//
           )//
       );
     }

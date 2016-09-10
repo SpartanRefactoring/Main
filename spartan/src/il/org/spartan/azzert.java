@@ -601,7 +601,7 @@ public class azzert extends org.junit.Assert {
     assertEquals(0L, l);
   }
 
-  public static class __META {
+  public static class ____META {
     static class Inline {
       static <T> void assertEquals(final String reason, final T t1, final T t2) {
         azzert.that(reason, t2, is(t1));

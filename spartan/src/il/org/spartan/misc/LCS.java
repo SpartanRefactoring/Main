@@ -62,16 +62,16 @@ public class LCS {
     return $;
   }
 
-  private final int[] A_s;
-  private final int[] B_s;
+  private final int[] A__s;
+  private final int[] B__s;
   private final int[][] length;
 
   /** Instantiates this class. TODO: Document this method
    * @param as JD
    * @param bs JD */
   public LCS(final int[] as, final int[] bs) {
-    A_s = as;
-    B_s = bs;
+    A__s = as;
+    B__s = bs;
     length = new int @NonNull [as.length][];
     for (int i = 0; i < as.length; ++i)
       Arrays.fill(length[i] = new int[bs.length], -1);
@@ -96,7 +96,7 @@ public class LCS {
   }
 
   private int length() {
-    return A_s.length <= 0 || B_s.length <= 0 ? 0 : length(A_s.length - 1, B_s.length - 1); //
+    return A__s.length <= 0 || B__s.length <= 0 ? 0 : length(A__s.length - 1, B__s.length - 1); //
   }
 
   /** Returns the length of the LCS of two prefixes of the current strings,
@@ -115,7 +115,7 @@ public class LCS {
   }
 
   private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
+    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A__s[i] == B__s[j]));
   }
 
   @SuppressWarnings({ "static-method", "javadoc" }) //
@@ -207,8 +207,8 @@ public class LCS {
       // Common string is: "A"
       final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
       azzert.notNull(lcs);
-      azzert.that(lcs.A_s.length, is(1));
-      azzert.that(lcs.B_s.length, is(1));
+      azzert.that(lcs.A__s.length, is(1));
+      azzert.that(lcs.B__s.length, is(1));
       azzert.that(lcs.length(), is(1));
     }
 
@@ -216,7 +216,7 @@ public class LCS {
     @Test public void lengthStringSimpleB() {
       // Common string is: "A"
       final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
-      azzert.that(lcs.length(lcs.A_s.length - 1, lcs.B_s.length - 1), is(1));
+      azzert.that(lcs.length(lcs.A__s.length - 1, lcs.B__s.length - 1), is(1));
     }
 
     @SuppressWarnings("synthetic-access") //
@@ -271,7 +271,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_1() {
+    @Test public void lengthStringTypical__1() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B...C"), //
@@ -279,7 +279,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_2() {
+    @Test public void lengthStringTypical__2() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B...C"), //
@@ -287,7 +287,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_3() {
+    @Test public void lengthStringTypical__3() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B...C"), //
@@ -295,7 +295,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_4() {
+    @Test public void lengthStringTypical__4() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
@@ -303,7 +303,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_5() {
+    @Test public void lengthStringTypical__5() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
@@ -311,7 +311,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_6() {
+    @Test public void lengthStringTypical__6() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
@@ -319,7 +319,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_6A() {
+    @Test public void lengthStringTypical__6A() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A."), //
@@ -327,7 +327,7 @@ public class LCS {
       ), is(1));
     }
 
-    @Test public void lengthStringTypical_6B() {
+    @Test public void lengthStringTypical__6B() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A"), //
@@ -335,7 +335,7 @@ public class LCS {
       ), is(1));
     }
 
-    @Test public void lengthStringTypical_6C() {
+    @Test public void lengthStringTypical__6C() {
       // Common string is empty
       azzert.that(length(//
           chars2Lines("."), //
@@ -343,7 +343,7 @@ public class LCS {
       ), is(0));
     }
 
-    @Test public void lengthStringTypical_6D() {
+    @Test public void lengthStringTypical__6D() {
       // Common string is empty
       azzert.that(length(//
           chars2Lines("X"), //
@@ -351,7 +351,7 @@ public class LCS {
       ), is(0));
     }
 
-    @Test public void lengthStringTypical_6E() {
+    @Test public void lengthStringTypical__6E() {
       // Common string is: "X"
       azzert.that(length(//
           chars2Lines("X"), //
@@ -359,7 +359,7 @@ public class LCS {
       ), is(1));
     }
 
-    @Test public void lengthStringTypical_7() {
+    @Test public void lengthStringTypical__7() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("A.B.C"), //
@@ -367,7 +367,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_7A() {
+    @Test public void lengthStringTypical__7A() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("A.B.C"), //
@@ -375,7 +375,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_7B() {
+    @Test public void lengthStringTypical__7B() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("A.B.C"), //
@@ -383,7 +383,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_7C() {
+    @Test public void lengthStringTypical__7C() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines(".A.B.C"), //
@@ -391,7 +391,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_8() {
+    @Test public void lengthStringTypical__8() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("A.B.C"), //
@@ -399,7 +399,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_9() {
+    @Test public void lengthStringTypical__9() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("A.B.C"), //
@@ -407,7 +407,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_A() {
+    @Test public void lengthStringTypical__A() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("AB.C"), //
@@ -415,7 +415,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_B() {
+    @Test public void lengthStringTypical__B() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("AB.C"), //
@@ -423,7 +423,7 @@ public class LCS {
       ), is(3));
     }
 
-    @Test public void lengthStringTypical_C() {
+    @Test public void lengthStringTypical__C() {
       // Common string is: "ABC"
       azzert.that(length(//
           chars2Lines("ABC"), //

@@ -42,7 +42,6 @@ public abstract class Accumulator {
     value += weight * transform(v);
   }
 
-  /** @param s */
   public final void add(final String s) {
     add(asInteger(s));
   }
@@ -126,7 +125,7 @@ public abstract class Accumulator {
     }
 
     /** Instantiate {@link Last}.
-     * @param name */
+     * @param name JD */
     public Last(final String name) {
       super(name);
     }

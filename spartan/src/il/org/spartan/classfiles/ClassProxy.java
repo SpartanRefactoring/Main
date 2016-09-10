@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.lang.annotation.*;
@@ -67,13 +67,13 @@ public class ClassProxy<T> {
         CLASSPATH.load($);
         // If successful, we have a valid class name.
         return $;
-      } catch (final NoClassDefFoundError _) {
+      } catch (final NoClassDefFoundError __) {
         // This exceptions is thrown when the class file itself can be
         // opened but it refers to other classes which cannot be found
         // in the
         // class path.
         return $;
-      } catch (final ClassNotFoundException _) {
+      } catch (final ClassNotFoundException __) {
         // This exception is thrown when the class file could not be
         // found. Not much to do except carry on with fingers
         // crossed, hoping that the subsequent replacement of a dot by a
@@ -132,7 +132,7 @@ public class ClassProxy<T> {
   @Override public boolean equals(final Object obj) {
     try {
       return clazz().equals(obj);
-    } catch (final ClassNotFoundException _) {
+    } catch (final ClassNotFoundException __) {
       return false;
     }
   }
@@ -405,7 +405,7 @@ public class ClassProxy<T> {
   @Override public String toString() {
     try {
       return clazz().toString();
-    } catch (final ClassNotFoundException _) {
+    } catch (final ClassNotFoundException __) {
       return null;
     }
   }

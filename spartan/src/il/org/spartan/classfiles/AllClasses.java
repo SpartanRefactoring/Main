@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
@@ -15,8 +15,8 @@ public class AllClasses {
           System.out.println(Filename.path2class(f.getAbsolutePath(), root));
         }
 
-        @Override public void visitZipEntry(final String entryName, final InputStream _) {
-          unused(_);
+        @Override public void visitZipEntry(final String entryName, final InputStream __) {
+          unused(__);
           System.out.println(Filename.path2class(entryName, root));
         }
       }).go();

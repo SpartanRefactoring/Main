@@ -26,7 +26,7 @@ public class Iterables {
   public static <F, T> Iterable<T> apply(final Iterable<? extends F> fs, final Converter<F, T> c) {
     final ArrayList<T> $ = new ArrayList<>();
     for (final F f : fs)
-      $.add(c._(f));
+      $.add(c.__(f));
     return $;
   }
 
@@ -65,7 +65,7 @@ public class Iterables {
    * @return the number of elements in this iterable */
   public static <T> int count(final Iterable<? extends T> ts) {
     int $ = 0;
-    for (@SuppressWarnings("unused") final T _ : ts)
+    for (@SuppressWarnings("unused") final T __ : ts)
       ++$;
     return $;
   }
@@ -191,8 +191,8 @@ public class Iterables {
    *         or -1 if not found. */
   public static <T> int index(final T t, final Iterable<? extends T> ts) {
     int $ = 0;
-    for (final T _ : ts) {
-      if (t == _)
+    for (final T __ : ts) {
+      if (t == __)
         return $;
       ++$;
     }
@@ -258,7 +258,7 @@ public class Iterables {
       }
 
       @Override public T next() {
-        return c._(fs[current++]);
+        return c.__(fs[current++]);
       }
     };
   }
@@ -290,7 +290,7 @@ public class Iterables {
       }
 
       @Override public T next() {
-        return c._(inner.next());
+        return c.__(inner.next());
       }
     };
   }
@@ -375,8 +375,8 @@ public class Iterables {
 
   public static <E> E[] toArray(final Iterable<? extends E> in, final Class<E> clazz) {
     final List<E> es = toList(in);
-    @SuppressWarnings("unchecked") final E[] _ = (E[]) Array.newInstance(clazz, es.size());
-    return es.toArray(_);
+    @SuppressWarnings("unchecked") final E[] __ = (E[]) Array.newInstance(clazz, es.size());
+    return es.toArray(__);
   }
 
   public static double[] toArray(final Iterable<Double> ds) {
@@ -482,7 +482,7 @@ public class Iterables {
     }
   }
 
-  /** An {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern Adapter"} of
+  /** An {@linkplain "http://en.wikipedia.org/wiki/Adapter__pattern Adapter"} of
    * a scalar object, adapting it to the {@link Iterable} interface whereby
    * making it possible to iterate over this object in the following sense:. If
    * the object is non-null, then the iteration will return the object and

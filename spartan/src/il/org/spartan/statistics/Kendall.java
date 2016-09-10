@@ -30,7 +30,7 @@ import il.org.spatan.iteration.*;
   }
 
   public static double tau(final double[] xs, final double[] ys) {
-    ____.require(xs.length == ys.length);
+    ___.require(xs.length == ys.length);
     final int n = xs.length;
     return computeS(xs, ys, n) / (double) pairs(n);
   }
@@ -48,7 +48,7 @@ import il.org.spatan.iteration.*;
   }
 
   public static double tauB(final double[] xs, final double[] ys) {
-    ____.require(xs.length == ys.length);
+    ___.require(xs.length == ys.length);
     final List<Double> Xs = new ArrayList<>();
     final List<Double> Ys = new ArrayList<>();
     for (int i = 0; i < xs.length; i++)
@@ -56,11 +56,11 @@ import il.org.spatan.iteration.*;
         Xs.add(Box.it(xs[i]));
         Ys.add(Box.it(ys[i]));
       }
-    return tauB_pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
+    return tauB__pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
   }
 
   static int compueS(final double[] xs, final double[] ys) {
-    ____.require(xs.length == ys.length);
+    ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; i++)
       for (int j = i + 1; j < xs.length; j++) {
@@ -76,7 +76,7 @@ import il.org.spatan.iteration.*;
   }
 
   static int compueS(final int[] xs, final int[] ys) {
-    ____.require(xs.length == ys.length);
+    ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; i++)
       for (int j = i + 1; j < xs.length; j++) {
@@ -92,7 +92,7 @@ import il.org.spatan.iteration.*;
   }
 
   static int pairs(final int n) {
-    ____.nonnegative(n);
+    ___.nonnegative(n);
     return n * (n - 1) / 2;
   }
 
@@ -130,8 +130,8 @@ import il.org.spatan.iteration.*;
     return nc - nd;
   }
 
-  private static double tauB_pruned(final double[] xs, final double[] ys) {
-    ____.require(xs.length == ys.length);
+  private static double tauB__pruned(final double[] xs, final double[] ys) {
+    ___.require(xs.length == ys.length);
     final int n = xs.length;
     final int pairs = pairs(n);
     return computeS(xs, ys, n) / Math.sqrt((double) (pairs - sigma(xs)) * (pairs - sigma(ys)));
