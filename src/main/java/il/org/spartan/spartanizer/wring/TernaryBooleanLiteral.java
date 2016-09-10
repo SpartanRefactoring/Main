@@ -110,7 +110,7 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }
 

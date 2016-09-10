@@ -25,7 +25,7 @@ public abstract class BodyDeclarationSortModifiers<N extends BodyDeclaration> //
     return ms.equals(¢);
   }
 
-  @Override String description(@SuppressWarnings("unused") final N ____) {
+  @Override String description(@SuppressWarnings("unused") final N __) {
     return "Sort Modifiers as defined at Modifier.class";
   }
 

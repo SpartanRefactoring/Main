@@ -46,16 +46,16 @@ public class PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static WringGroup find(final Class<? extends Kind> c) {
+    private static WringGroup find(final Class<? extends Kind> k) {
       for (final WringGroup $ : WringGroup.values())
-        if ($.clazz.isAssignableFrom(c))
+        if ($.clazz.isAssignableFrom(k))
           return $;
       return null;
     }
 
-    private static Object getLabel(final Class<? extends Kind> c) {
+    private static Object getLabel(final Class<? extends Kind> k) {
       try {
-        return c.getField("label").get(null);
+        return k.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
         e.printStackTrace();
         return null;

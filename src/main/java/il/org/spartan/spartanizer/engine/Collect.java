@@ -274,19 +274,19 @@ public enum Collect {
     return new ASTVisitor() {
       int loopDepth = 0;
 
-      @Override public void endVisit(@SuppressWarnings("unused") final DoStatement ____) {
+      @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;
       }
 
-      @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement ____) {
+      @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         --loopDepth;
       }
 
-      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement ____) {
+      @Override public void endVisit(@SuppressWarnings("unused") final ForStatement __) {
         --loopDepth;
       }
 
-      @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement ____) {
+      @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement __) {
         --loopDepth;
       }
 
@@ -315,7 +315,7 @@ public enum Collect {
         return collect(step.expression(s));
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement ____) {
+      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         ++loopDepth;
         return true;
       }
@@ -325,7 +325,7 @@ public enum Collect {
         return false;
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement ____) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
         ++loopDepth;
         return true;
       }
@@ -360,7 +360,7 @@ public enum Collect {
         return collect(n);
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement ____) {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
         ++loopDepth;
         return true;
       }

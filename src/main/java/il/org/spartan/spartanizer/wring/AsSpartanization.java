@@ -25,7 +25,7 @@ public final class AsSpartanization extends Spartanization {
   }
 
   // TODO: Ori, how come we need this parameter?
-  @Override protected ASTVisitor collect(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit ____) {
+  @Override protected ASTVisitor collect(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new ASTVisitor() {
       @Override public boolean visit(final Block it) {
         return process(it);

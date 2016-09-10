@@ -11,11 +11,11 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-22 */
 public abstract class searchAncestors {
   /** Factory method, returning an instance which can search by a node class
-   * @param c JD
+   * @param n JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  public static <N extends ASTNode> searchAncestors forClass(final Class<N> c) {
-    return new ByNodeClass(c);
+  public static <N extends ASTNode> searchAncestors forClass(final Class<N> n) {
+    return new ByNodeClass(n);
   }
 
   /** Factory method, returning an instance which can search by the integer

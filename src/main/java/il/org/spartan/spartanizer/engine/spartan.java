@@ -21,7 +21,7 @@ public interface spartan {
     return shorten(t.getElementType()) + repeat(t.getDimensions(), 's');
   }
 
-  static String shorten(@SuppressWarnings("unused") final IntersectionType ____) {
+  static String shorten(@SuppressWarnings("unused") final IntersectionType __) {
     return null;
   }
 
@@ -91,7 +91,7 @@ public interface spartan {
     return new JavaTypeNameParser(s).shortName();
   }
 
-  static String shortName(@SuppressWarnings("unused") final UnionType ____) {
+  static String shortName(@SuppressWarnings("unused") final UnionType __) {
     return null;
   }
 

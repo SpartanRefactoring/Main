@@ -207,11 +207,11 @@ public class Toolbox {
   public static class Maker extends Toolbox {
     /** Associate a bunch of{@link Wring} with a given sub-class of
      * {@link ASTNode}.
-     * @param c JD
+     * @param n JD
      * @param ws JD
      * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> c, final Wring<N>... ws) {
-      final List<Wring<N>> l = get(c);
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ws) {
+      final List<Wring<N>> l = get(n);
       for (final Wring<N> w : ws) {
         if (w == null)
           break;

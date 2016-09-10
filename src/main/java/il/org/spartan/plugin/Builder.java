@@ -83,7 +83,7 @@ public class Builder extends IncrementalProjectBuilder {
     return SPARTANIZATION_SHORT_PREFIX;
   }
 
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map ____, final IProgressMonitor m)
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
