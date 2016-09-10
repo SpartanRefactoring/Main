@@ -3,8 +3,8 @@ package il.org.spartan;
 import java.util.*;
 
 public class Out {
-  static final int MAX__FIRST = 20;
-  static final int MAX__LAST = 10;
+  static final int MAX_FIRST = 20;
+  static final int MAX_LAST = 10;
 
   public static void out(final String s) {
     System.out.print(s);
@@ -27,7 +27,7 @@ public class Out {
     System.out.printf("Total of %d %s:\n", Integer.valueOf(os.size()), name);
     int n = 0;
     for (final Object o : os) {
-      if (++n > MAX__FIRST && n <= os.size() - MAX__LAST) {
+      if (++n > MAX_FIRST && n <= os.size() - MAX_LAST) {
         System.out.print("\t...\n");
         return;
       }

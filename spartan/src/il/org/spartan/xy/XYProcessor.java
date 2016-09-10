@@ -87,12 +87,12 @@ public interface XYProcessor {
   }
 
   public static class MaxErrorFilter extends Wrapper {
-    private static double DEFAULT__FACTOR = 2;
+    private static double DEFAULT_FACTOR = 2;
     private double maxError = Double.NaN;
     private final double factor;
 
     public MaxErrorFilter(final XYProcessor inner) {
-      this(inner, DEFAULT__FACTOR);
+      this(inner, DEFAULT_FACTOR);
     }
 
     public MaxErrorFilter(final XYProcessor inner, final double factor) {

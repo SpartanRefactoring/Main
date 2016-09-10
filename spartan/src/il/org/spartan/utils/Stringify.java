@@ -202,10 +202,10 @@ import il.org.spatan.iteration.*;
   public static class Option {
     public static final String COMMA = ", ";
     public static final String NL = "\n";
-    public static final String NULL__TEXT = "(null)";
+    public static final String NULL_TEXT = "(null)";
     public static final Option functionStyle = new Option("(", ")", "__", COMMA);
     public static final Option statementStyle = new Option("{", "}", "__", NL);
-    public static final Option defaultStyle = new Option("[", "]", NULL__TEXT, ",");
+    public static final Option defaultStyle = new Option("[", "]", NULL_TEXT, ",");
     private String __begin;
     private String __end;
     private String __filler;

@@ -125,9 +125,9 @@ import il.org.spartan.reap.Cookbook.*;
   @SuppressWarnings({ "static-method", "null" }) public interface ____META {
     static class TEST {
       private static final String EMPTY = "";
-      private static final int FIRST__MAGIC__NUMBER = 1729;
+      private static final int FIRST_MAGIC_NUMBER = 1729;
       private static final String HELLO = "Hello";
-      private static final int SECOND__MAGIC__NUMBER = FIRST__MAGIC__NUMBER << 1 ^ FIRST__MAGIC__NUMBER;
+      private static final int SECOND_MAGIC_NUMBER = FIRST_MAGIC_NUMBER << 1 ^ FIRST_MAGIC_NUMBER;
       private static final String SEPARATOR = ", ";
       private static final String WORLD = "World!";
       private Property<String> emptyString;
@@ -140,7 +140,7 @@ import il.org.spartan.reap.Cookbook.*;
       private Property<String> world;
       Property<Integer> integer = function(() -> {
         ++supplierCalls;
-        return Integer.valueOf(FIRST__MAGIC__NUMBER);
+        return Integer.valueOf(FIRST_MAGIC_NUMBER);
       });
 
       @Before public void init() {
@@ -184,25 +184,25 @@ import il.org.spartan.reap.Cookbook.*;
         azzert.that(supplierCalls, is(0));
         azzert.that(integer.version(), is(0L));
         azzert.nay(integer.updated());
-        azzert.that(integer.¢(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.get(), is(FIRST__MAGIC__NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
-        azzert.that(integer.¢(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.get(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.¢(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.get(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.¢(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.get(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.¢(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.get(), is(FIRST__MAGIC__NUMBER));
-        azzert.that(integer.¢(), is(FIRST__MAGIC__NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
-        azzert.that(integer.get(), is(FIRST__MAGIC__NUMBER));
-        integer.set(Integer.valueOf(SECOND__MAGIC__NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        integer.set(Integer.valueOf(SECOND_MAGIC_NUMBER));
         azzert.aye(integer.updated());
-        azzert.that(integer.get(), is(SECOND__MAGIC__NUMBER));
+        azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1L));
-        azzert.that(integer.get(), is(SECOND__MAGIC__NUMBER));
+        azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
       }
 

@@ -18,21 +18,21 @@ import java.util.*;
  * @author Yossi Gil
  * @since 11/07/2007 */
 public class ClassFilesVisitor extends FileSystemVisitor {
-  private static final String[] CLASS__FILE__EXTENSIONS = new String[] { ".class" };
+  private static final String[] CLASS_FILE_EXTENSIONS = new String[] { ".class" };
 
   public ClassFilesVisitor(final File[] from, final FileOnlyAction visitor) {
-    super(from, visitor, CLASS__FILE__EXTENSIONS);
+    super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
 
   public ClassFilesVisitor(final Iterable<String> from, final FileOnlyAction visitor) {
-    super(from, visitor, CLASS__FILE__EXTENSIONS);
+    super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
 
   public ClassFilesVisitor(final String from, final FileOnlyAction visitor) {
-    super(from, visitor, CLASS__FILE__EXTENSIONS);
+    super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
 
   public ClassFilesVisitor(final String[] from, final FileOnlyAction visitor) {
-    super(from, visitor, CLASS__FILE__EXTENSIONS);
+    super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
 }

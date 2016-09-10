@@ -8,15 +8,15 @@ import il.org.spartan.streotypes.*;
 /** A utility class with functions to escape special HTML characters in a
  * {@link String}, before including it in an HTML page.
  * <p>
- * The escaped characters are {@link #LESS__THAN}, {@link #GREATER__THAN},
+ * The escaped characters are {@link #LESS_THAN}, {@link #GREATER_THAN},
  * {@link #QUOTE} and {@link #AMPERSAND}.
  * @author Yossi Gil, the Technion. */
 @Utility public enum HTML {
   ;
   /** The '<' character. */
-  public static final char LESS__THAN = '<';
+  public static final char LESS_THAN = '<';
   /** The '>' character. */
-  public static final char GREATER__THAN = '>';
+  public static final char GREATER_THAN = '>';
   /** The '"' character. */
   public static final char QUOTE = '"';
   /** The '&' character. */
@@ -41,9 +41,9 @@ import il.org.spartan.streotypes.*;
         return "&nbsp;";
       case '\t':
         return "&09;";
-      case LESS__THAN:
+      case LESS_THAN:
         return "&lt;";
-      case GREATER__THAN:
+      case GREATER_THAN:
         return "&gt;";
       case QUOTE:
         return "&quot;";

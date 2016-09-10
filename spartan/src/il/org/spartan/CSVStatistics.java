@@ -15,7 +15,7 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil
  * @since Dec 25, 2009 */
 public class CSVStatistics extends CSVLine.Ordered {
-  private static final String SUMMARY__EXTENSION = ".summary";
+  private static final String SUMMARY_EXTENSION = ".summary";
 
   /** @param baseName
    * @return */
@@ -39,7 +39,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     nonnull(baseName);
     nonnull(keysHeader);
     inner = new CSVWriter(removeExtension(baseName));
-    summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY__EXTENSION);
+    summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;
   }
 

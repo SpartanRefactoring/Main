@@ -30,12 +30,12 @@ public class RunRecord extends AbstractRunRecord {
         Unit.formatNanoseconds(netTime), //
         Unit.formatRelative(netTime, BenchingPolicy.getBenchingTime()), //
         Unit.formatNanoseconds(grossTime), //
-        Unit.formatRelative(grossTime, BenchingPolicy.MAX__TIME) //
+        Unit.formatRelative(grossTime, BenchingPolicy.MAX_TIME) //
     );
-    if (runs > BenchingPolicy.MAX__RUNS)
+    if (runs > BenchingPolicy.MAX_RUNS)
       return true;
-    if (runs < BenchingPolicy.MIN__RUNS)
+    if (runs < BenchingPolicy.MIN_RUNS)
       return false;
-    return netTime > BenchingPolicy.getBenchingTime() || grossTime > BenchingPolicy.MAX__TIME;
+    return netTime > BenchingPolicy.getBenchingTime() || grossTime > BenchingPolicy.MAX_TIME;
   }
 }

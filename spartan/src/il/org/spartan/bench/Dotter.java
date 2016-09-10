@@ -8,7 +8,7 @@ import static il.org.spartan.utils.Box.*;
 /** @author Yossi Gil
  * @since 01/05/2011 */
 public class Dotter implements java.io.Serializable {
-  public static final int DOTS__IN__LINE = 60;
+  public static final int DOTS_IN_LINE = 60;
   private static final long serialVersionUID = 1L;
   private final long initTime;
   private int n = 0;
@@ -32,7 +32,7 @@ public class Dotter implements java.io.Serializable {
   public void click() {
     cleared = false;
     System.err.print(++n % 10 == 0 ? '*' : '.');
-    if (n % DOTS__IN__LINE != 0)
+    if (n % DOTS_IN_LINE != 0)
       return;
     nl();
     lineStart();

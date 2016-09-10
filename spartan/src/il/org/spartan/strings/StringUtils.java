@@ -13,8 +13,8 @@ import il.org.spartan.utils.*;
 @Antiexample @Utility public enum StringUtils {
   // No elements in this name space
   ;
-  static final int MAX__FIRST = 20;
-  static final int MAX__LAST = 10;
+  static final int MAX_FIRST = 20;
+  static final int MAX_LAST = 10;
 
   public static double atod(final String s) {
     return new Double(s).doubleValue();
@@ -259,7 +259,7 @@ import il.org.spartan.utils.*;
     final Once ellipsis = new Once("\t...\n");
     for (final Object o : a) {
       ++n;
-      $ += n > MAX__FIRST && n <= a.size() - MAX__LAST ? ellipsis : "\t" + n + ") " + o + "\n";
+      $ += n > MAX_FIRST && n <= a.size() - MAX_LAST ? ellipsis : "\t" + n + ") " + o + "\n";
     }
     return $;
   }

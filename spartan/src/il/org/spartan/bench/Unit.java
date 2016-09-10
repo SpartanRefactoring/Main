@@ -265,7 +265,7 @@ public enum Unit {
       assertEquals("304㎳", formatNanoseconds(304232501));
     }
 
-    @Test public void percent2__3() {
+    @Test public void percent2_3() {
       assertEquals("2.3%", formatRelative(0.02349));
     }
 
@@ -273,7 +273,7 @@ public enum Unit {
       assertEquals("200%", formatRelative(2));
     }
 
-    @Test public void percent3__765() {
+    @Test public void percent3_765() {
       assertEquals("3.8%", formatRelative(0.03765));
     }
 
@@ -318,7 +318,7 @@ public enum Unit {
       assertEquals("1.00", DOUBLE.format(0.9999));
     }
 
-    @Test public void under0__001() {
+    @Test public void under0_001() {
       assertEquals("0.001", DOUBLE.format(0.00099999999999));
     }
 

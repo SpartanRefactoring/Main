@@ -15,24 +15,24 @@ public class RawTokenizer {
   /** This character denotes the end of file */
   public static final int YYEOF = -1;
   /** initial size of the lookahead buffer */
-  private static final int ZZ__BUFFERSIZE = 16384;
+  private static final int ZZ_BUFFERSIZE = 16384;
   /** lexical states */
-  public static final int SCAN__LINE__COMMENT = 10;
-  public static final int BLOCK__EOLN = 16;
-  public static final int DOC__EOLN = 18;
+  public static final int SCAN_LINE_COMMENT = 10;
+  public static final int BLOCK_EOLN = 16;
+  public static final int DOC_EOLN = 18;
   public static final int RESET = 2;
-  public static final int SCAN__STRING__LITERAL = 6;
-  public static final int SCAN__BLOCK__COMMENT = 14;
+  public static final int SCAN_STRING_LITERAL = 6;
+  public static final int SCAN_BLOCK_COMMENT = 14;
   public static final int YYINITIAL = 0;
-  public static final int SCAN__DOC__COMMENT = 12;
-  public static final int SCAN__CHAR__LITERAL = 8;
-  public static final int SCAN__CODE = 4;
-  /** ZZ__LEXSTATE[l] is the state in the DFA for the lexical state l
-   * ZZ__LEXSTATE[l+1] is the state in the DFA for the lexical state l at the
+  public static final int SCAN_DOC_COMMENT = 12;
+  public static final int SCAN_CHAR_LITERAL = 8;
+  public static final int SCAN_CODE = 4;
+  /** ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
+   * ZZ_LEXSTATE[l+1] is the state in the DFA for the lexical state l at the
    * beginning of a line l is of the form l = 2*k, k a non negative integer */
-  private static final int ZZ__LEXSTATE[] = { 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8 };
+  private static final int ZZ_LEXSTATE[] = { 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8 };
   /** Translates characters to character classes */
-  private static final String ZZ__CMAP__PACKED = "\11\5\1\3\1\1\1\0\1\3\1\2\16\5\4\0\1\3\1\46" + "\1\20\1\0\1\4\1\56\1\52\1\21\1\33\1\34\1\17\1\54"
+  private static final String ZZ_CMAP_PACKED = "\11\5\1\3\1\1\1\0\1\3\1\2\16\5\4\0\1\3\1\46" + "\1\20\1\0\1\4\1\56\1\52\1\21\1\33\1\34\1\17\1\54"
       + "\1\42\1\15\1\13\1\16\1\6\7\12\2\7\1\51\1\41\1\45" + "\1\43\1\44\1\50\1\22\3\11\1\61\1\14\1\60\5\4\1\57"
       + "\13\4\1\10\2\4\1\37\1\62\1\40\1\55\1\4\1\0\1\31" + "\1\11\1\32\1\61\1\26\1\30\2\4\1\23\2\4\1\57\1\4"
       + "\1\24\3\4\1\27\1\4\1\25\3\4\1\10\2\4\1\35\1\53" + "\1\36\1\47\41\5\2\0\4\4\4\0\1\4\2\0\1\5\7\0"
@@ -70,17 +70,17 @@ public class RawTokenizer {
       + "\5\4\1\0\207\4\2\0\1\5\4\0\1\4\13\0\12\5\7\0" + "\32\4\4\0\1\4\1\0\32\4\12\0\132\4\3\0\6\4\2\0" + "\6\4\2\0\6\4\2\0\3\4\3\0\2\4\3\0\2\4\22\0"
       + "\3\5\4\0";
   /** Translates characters to character classes */
-  private static final char[] ZZ__CMAP = zzUnpackCMap(ZZ__CMAP__PACKED);
+  private static final char[] ZZ_CMAP = zzUnpackCMap(ZZ_CMAP_PACKED);
   /** Translates DFA states to action switch labels. */
-  private static final int[] ZZ__ACTION = zzUnpackAction();
-  private static final String ZZ__ACTION__PACKED__0 = "\11\0\2\1\1\2\2\3\1\4\1\5\2\6\1\7" + "\1\10\1\11\1\12\1\13\1\14\1\2\1\15\1\16"
+  private static final int[] ZZ_ACTION = zzUnpackAction();
+  private static final String ZZ_ACTION_PACKED_0 = "\11\0\2\1\1\2\2\3\1\4\1\5\2\6\1\7" + "\1\10\1\11\1\12\1\13\1\14\1\2\1\15\1\16"
       + "\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26" + "\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\36" + "\1\37\1\40\1\41\2\42\1\43\1\41\2\44\1\45"
       + "\1\41\2\46\2\47\1\41\2\50\1\41\2\51\2\52" + "\1\6\2\0\1\53\1\0\1\54\1\6\1\53\1\55" + "\1\56\1\57\1\60\1\61\1\62\2\63\1\64\1\65"
       + "\1\66\1\67\1\70\1\71\1\72\1\73\1\74\1\75" + "\1\76\1\77\1\100\1\101\1\102\1\103\1\6\1\53" + "\1\0\1\104\1\63\1\105\1\106\1\107\1\110\1\63"
       + "\1\111\5\63\1\112";
   /** Translates a state to a row index in the transition table */
-  private static final int[] ZZ__ROWMAP = zzUnpackRowMap();
-  private static final String ZZ__ROWMAP__PACKED__0 = "\0\0\0\63\0\146\0\231\0\314\0\377\0\u0132\0\u0165"
+  private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
+  private static final String ZZ_ROWMAP_PACKED_0 = "\0\0\0\63\0\146\0\231\0\314\0\377\0\u0132\0\u0165"
       + "\0\u0198\0\u01cb\0\u01fe\0\u01cb\0\u01cb\0\u0231\0\u01cb\0\u0264" + "\0\u0297\0\u02ca\0\u02fd\0\u0330\0\u0363\0\u0396\0\u01cb\0\u01cb"
       + "\0\u03c9\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb" + "\0\u01cb\0\u03fc\0\u042f\0\u0462\0\u0495\0\u01cb\0\u01cb\0\u01cb"
       + "\0\u04c8\0\u04fb\0\u052e\0\u0561\0\u0594\0\u01cb\0\u01cb\0\u05c7" + "\0\u01cb\0\u05fa\0\u01cb\0\u062d\0\u01cb\0\u0660\0\u01cb\0\u0693"
@@ -89,8 +89,8 @@ public class RawTokenizer {
       + "\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb\0\u01cb" + "\0\u01cb\0\u01cb\0\u09f6\0\u0a29\0\u0a5c\0\u0a8f\0\u0ac2\0\u01cb"
       + "\0\u0af5\0\u01cb\0\u01cb\0\u0b28\0\u01cb\0\u0b5b\0\u0b8e\0\u0bc1" + "\0\u0bf4\0\u0c27\0\u092a";
   /** The transition table of the DFA */
-  private static final int[] ZZ__TRANS = zzUnpackTrans();
-  private static final String ZZ__TRANS__PACKED__0 = "\2\12\1\13\60\12\1\14\1\15\1\16\1\17\1\20" + "\1\14\1\21\1\22\2\20\1\22\1\23\1\20\1\24"
+  private static final int[] ZZ_TRANS = zzUnpackTrans();
+  private static final String ZZ_TRANS_PACKED_0 = "\2\12\1\13\60\12\1\14\1\15\1\16\1\17\1\20" + "\1\14\1\21\1\22\2\20\1\22\1\23\1\20\1\24"
       + "\1\25\1\26\1\27\1\30\1\31\10\20\1\32\1\33" + "\1\34\1\35\1\36\1\37\1\40\1\41\1\42\1\43" + "\1\44\1\45\1\46\1\47\1\50\1\51\1\52\1\53"
       + "\1\54\1\55\3\20\1\14\1\56\1\57\1\60\15\56" + "\1\61\41\56\1\62\1\56\1\63\1\64\16\56\1\65" + "\40\56\1\66\1\56\1\67\1\70\61\56\1\71\1\72"
       + "\14\56\1\73\44\56\1\74\1\75\14\56\1\76\43\56" + "\1\0\1\77\1\100\61\0\1\101\1\102\144\0\1\12" + "\62\0\1\15\65\0\7\20\1\0\1\20\6\0\10\20"
@@ -107,23 +107,23 @@ public class RawTokenizer {
       + "\24\0\3\121\5\0\7\121\1\0\1\121\6\0\5\121" + "\1\160\2\121\24\0\3\121\5\0\7\121\1\0\1\121" + "\6\0\6\121\1\161\1\121\24\0\3\121\5\0\7\121"
       + "\1\0\1\121\6\0\7\121\1\162\24\0\3\121\5\0" + "\7\121\1\0\1\121\6\0\3\121\1\163\4\121\24\0" + "\3\121\1\0";
   /* error codes */
-  private static final int ZZ__UNKNOWN__ERROR = 0;
-  private static final int ZZ__NO__MATCH = 1;
-  private static final int ZZ__PUSHBACK__2BIG = 2;
+  private static final int ZZ_UNKNOWN_ERROR = 0;
+  private static final int ZZ_NO_MATCH = 1;
+  private static final int ZZ_PUSHBACK_2BIG = 2;
   /* error messages for the codes above */
-  private static final String ZZ__ERROR__MSG[] = { "Unkown internal scanner error", "Error: could not match input",
+  private static final String ZZ_ERROR_MSG[] = { "Unkown internal scanner error", "Error: could not match input",
       "Error: pushback value was too large" };
-  /** ZZ__ATTRIBUTE[aState] contains the attributes of state
+  /** ZZ_ATTRIBUTE[aState] contains the attributes of state
    * <code>aState</code> */
-  private static final int[] ZZ__ATTRIBUTE = zzUnpackAttribute();
-  private static final String ZZ__ATTRIBUTE__PACKED__0 = "\11\0\1\11\1\1\2\11\1\1\1\11\7\1\2\11" + "\1\1\10\11\4\1\3\11\5\1\2\11\1\1\1\11"
+  private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
+  private static final String ZZ_ATTRIBUTE_PACKED_0 = "\11\0\1\11\1\1\2\11\1\1\1\11\7\1\2\11" + "\1\1\10\11\4\1\3\11\5\1\2\11\1\1\1\11"
       + "\1\1\1\11\1\1\1\11\1\1\1\11\1\1\1\11" + "\2\1\1\11\2\1\1\11\1\1\1\11\2\1\2\0" + "\1\1\1\0\6\11\1\1\2\11\2\1\2\11\1\1"
       + "\1\11\1\1\13\11\2\1\1\0\2\1\1\11\1\1" + "\2\11\1\1\1\11\6\1";
 
   private static int[] zzUnpackAction() {
     final int[] result = new int[115];
     int offset = 0;
-    offset = zzUnpackAction(ZZ__ACTION__PACKED__0, offset, result);
+    offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
   }
 
@@ -144,7 +144,7 @@ public class RawTokenizer {
   private static int[] zzUnpackAttribute() {
     final int[] result = new int[115];
     int offset = 0;
-    offset = zzUnpackAttribute(ZZ__ATTRIBUTE__PACKED__0, offset, result);
+    offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
   }
 
@@ -182,7 +182,7 @@ public class RawTokenizer {
   private static int[] zzUnpackRowMap() {
     final int[] result = new int[115];
     int offset = 0;
-    offset = zzUnpackRowMap(ZZ__ROWMAP__PACKED__0, offset, result);
+    offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
   }
 
@@ -200,7 +200,7 @@ public class RawTokenizer {
   private static int[] zzUnpackTrans() {
     final int[] result = new int[3162];
     int offset = 0;
-    offset = zzUnpackTrans(ZZ__TRANS__PACKED__0, offset, result);
+    offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
   }
 
@@ -227,7 +227,7 @@ public class RawTokenizer {
   private int zzLexicalState = YYINITIAL;
   /** this buffer contains the current text to be matched and is the source of
    * the yytext() string */
-  private char zzBuffer[] = new char[ZZ__BUFFERSIZE];
+  private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
   /** the textposition at the last accepting state */
   private int zzMarkedPos;
   /** the current text position in the buffer */
@@ -296,10 +296,10 @@ public class RawTokenizer {
     int zzMarkedPosL;
     int zzEndReadL = zzEndRead;
     char[] zzBufferL = zzBuffer;
-    final char[] zzCMapL = ZZ__CMAP;
-    final int[] zzTransL = ZZ__TRANS;
-    final int[] zzRowMapL = ZZ__ROWMAP;
-    final int[] zzAttrL = ZZ__ATTRIBUTE;
+    final char[] zzCMapL = ZZ_CMAP;
+    final int[] zzTransL = ZZ_TRANS;
+    final int[] zzRowMapL = ZZ_ROWMAP;
+    final int[] zzAttrL = ZZ_ATTRIBUTE;
     while (true) {
       zzMarkedPosL = zzMarkedPos;
       yychar += zzMarkedPosL - zzStartRead;
@@ -355,7 +355,7 @@ public class RawTokenizer {
       }
       zzAction = -1;
       zzCurrentPosL = zzCurrentPos = zzStartRead = zzMarkedPosL;
-      zzState = ZZ__LEXSTATE[zzLexicalState];
+      zzState = ZZ_LEXSTATE[zzLexicalState];
       zzForAction: {
         while (true) {
           if (zzCurrentPosL < zzEndReadL)
@@ -394,20 +394,20 @@ public class RawTokenizer {
       }
       // store back cached position
       zzMarkedPos = zzMarkedPosL;
-      switch (zzAction < 0 ? zzAction : ZZ__ACTION[zzAction]) {
+      switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
         case 4: {
           return SPACE;
         }
         case 75:
           break;
         case 74: {
-          return AT__INTERFACE;
+          return AT_INTERFACE;
         }
         case 76:
           break;
         case 38: {
           endExcluding();
-          return LINE__COMMENT;
+          return LINE_COMMENT;
         }
         case 77:
           break;
@@ -443,7 +443,7 @@ public class RawTokenizer {
           break;
         case 37: {
           endIncluding();
-          return CHARACTER__LITERAL;
+          return CHARACTER_LITERAL;
         }
         case 84:
           break;
@@ -468,7 +468,7 @@ public class RawTokenizer {
         case 88:
           break;
         case 44: {
-          return FLOAT__LITERAL;
+          return FLOAT_LITERAL;
         }
         case 89:
           break;
@@ -490,13 +490,13 @@ public class RawTokenizer {
         case 92:
           break;
         case 39: {
-          gotoExcluding(DOC__EOLN);
-          return PARTIAL__DOC__COMMENT;
+          gotoExcluding(DOC_EOLN);
+          return PARTIAL_DOC_COMMENT;
         }
         case 93:
           break;
         case 48: {
-          begin(SCAN__BLOCK__COMMENT);
+          begin(SCAN_BLOCK_COMMENT);
           continue;
         }
         case 94:
@@ -513,8 +513,8 @@ public class RawTokenizer {
           break;
         case 42: {
           truncate();
-          goTo(SCAN__DOC__COMMENT);
-          return NL__DOC__COMMENT;
+          goTo(SCAN_DOC_COMMENT);
+          return NL_DOC_COMMENT;
         }
         case 97:
           break;
@@ -549,8 +549,8 @@ public class RawTokenizer {
           break;
         case 41: {
           truncate();
-          goTo(SCAN__BLOCK__COMMENT);
-          return NL__BLOCK__COMMENT;
+          goTo(SCAN_BLOCK_COMMENT);
+          return NL_BLOCK_COMMENT;
         }
         case 103:
           break;
@@ -560,7 +560,7 @@ public class RawTokenizer {
         case 104:
           break;
         case 43: {
-          return DOUBLE__LITERAL;
+          return DOUBLE_LITERAL;
         }
         case 105:
           break;
@@ -576,7 +576,7 @@ public class RawTokenizer {
           break;
         case 36: {
           endExcluding();
-          return UNTERMINATED__CHARACTER__LITERAL;
+          return UNTERMINATED_CHARACTER_LITERAL;
         }
         case 108:
           break;
@@ -586,8 +586,8 @@ public class RawTokenizer {
         case 109:
           break;
         case 40: {
-          gotoExcluding(BLOCK__EOLN);
-          return PARTIAL__BLOCK__COMMENT;
+          gotoExcluding(BLOCK_EOLN);
+          return PARTIAL_BLOCK_COMMENT;
         }
         case 110:
           break;
@@ -613,7 +613,7 @@ public class RawTokenizer {
           break;
         case 34: {
           endExcluding();
-          return UNTERMINATED__STRING__LITERAL;
+          return UNTERMINATED_STRING_LITERAL;
         }
         case 115:
           break;
@@ -623,7 +623,7 @@ public class RawTokenizer {
         case 116:
           break;
         case 68: {
-          begin(SCAN__DOC__COMMENT);
+          begin(SCAN_DOC_COMMENT);
           continue;
         }
         case 117:
@@ -634,7 +634,7 @@ public class RawTokenizer {
         case 118:
           break;
         case 12: {
-          begin(SCAN__CHAR__LITERAL);
+          begin(SCAN_CHAR_LITERAL);
           continue;
         }
         case 119:
@@ -650,7 +650,7 @@ public class RawTokenizer {
         case 121:
           break;
         case 2: {
-          return UNKNOWN__CHARACTER;
+          return UNKNOWN_CHARACTER;
         }
         case 122:
           break;
@@ -680,7 +680,7 @@ public class RawTokenizer {
         case 127:
           break;
         case 11: {
-          begin(SCAN__STRING__LITERAL);
+          begin(SCAN_STRING_LITERAL);
           continue;
         }
         case 128:
@@ -692,7 +692,7 @@ public class RawTokenizer {
           break;
         case 67: {
           endIncluding();
-          return BLOCK__COMMENT;
+          return BLOCK_COMMENT;
         }
         case 130:
           break;
@@ -712,13 +712,13 @@ public class RawTokenizer {
         case 133:
           break;
         case 6: {
-          return INTEGER__LITERAL;
+          return INTEGER_LITERAL;
         }
         case 134:
           break;
         case 66: {
           endIncluding();
-          return DOC__COMMENT;
+          return DOC_COMMENT;
         }
         case 135:
           break;
@@ -729,7 +729,7 @@ public class RawTokenizer {
           break;
         case 35: {
           endIncluding();
-          return STRING__LITERAL;
+          return STRING_LITERAL;
         }
         case 137:
           break;
@@ -750,7 +750,7 @@ public class RawTokenizer {
         case 140:
           break;
         case 72: {
-          return EMPTY__BLOCK__COMMENT;
+          return EMPTY_BLOCK_COMMENT;
         }
         case 141:
           break;
@@ -760,7 +760,7 @@ public class RawTokenizer {
         case 142:
           break;
         case 47: {
-          begin(SCAN__LINE__COMMENT);
+          begin(SCAN_LINE_COMMENT);
           continue;
         }
         case 143:
@@ -794,9 +794,9 @@ public class RawTokenizer {
           if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
             zzAtEOF = true;
             switch (zzLexicalState) {
-              case SCAN__LINE__COMMENT: {
+              case SCAN_LINE_COMMENT: {
                 endExcluding();
-                return LINE__COMMENT;
+                return LINE_COMMENT;
               }
               case 116:
                 break;
@@ -805,16 +805,16 @@ public class RawTokenizer {
               }
               case 117:
                 break;
-              case SCAN__STRING__LITERAL: {
+              case SCAN_STRING_LITERAL: {
                 regret();
                 end();
-                return UNTERMINATED__STRING__LITERAL;
+                return UNTERMINATED_STRING_LITERAL;
               }
               case 118:
                 break;
-              case SCAN__BLOCK__COMMENT: {
+              case SCAN_BLOCK_COMMENT: {
                 endExcluding();
-                return UNTERMINATED__BLOCK__COMMENT;
+                return UNTERMINATED_BLOCK_COMMENT;
               }
               case 119:
                 break;
@@ -823,19 +823,19 @@ public class RawTokenizer {
               }
               case 120:
                 break;
-              case SCAN__DOC__COMMENT: {
+              case SCAN_DOC_COMMENT: {
                 endExcluding();
-                return UNTERMINATED__DOC__COMMENT;
+                return UNTERMINATED_DOC_COMMENT;
               }
               case 121:
                 break;
-              case SCAN__CHAR__LITERAL: {
+              case SCAN_CHAR_LITERAL: {
                 endExcluding();
-                return UNTERMINATED__CHARACTER__LITERAL;
+                return UNTERMINATED_CHARACTER_LITERAL;
               }
               case 122:
                 break;
-              case SCAN__CODE: {
+              case SCAN_CODE: {
                 return EOF;
               }
               case 123:
@@ -844,7 +844,7 @@ public class RawTokenizer {
                 return null;
             }
           } else
-            zzScanError(ZZ__NO__MATCH);
+            zzScanError(ZZ_NO_MATCH);
       }
     }
   }
@@ -855,7 +855,7 @@ public class RawTokenizer {
 
   public void reset() {
     truncate();
-    yybegin(SCAN__CODE);
+    yybegin(SCAN_CODE);
   }
 
   /* user code: */
@@ -901,14 +901,14 @@ public class RawTokenizer {
    *        not be greater than yylength()! */
   public void yypushback(final int number) {
     if (number > yylength())
-      zzScanError(ZZ__PUSHBACK__2BIG);
+      zzScanError(ZZ_PUSHBACK_2BIG);
     zzMarkedPos -= number;
   }
 
   /** Resets the scanner to read from a new input stream. Does not close the old
    * reader. All internal variables are reset, the old input stream
    * <b>cannot</b> be reused (internal buffer is discarded and lost). Lexical
-   * state is set to <tt>ZZ__INITIAL</tt>.
+   * state is set to <tt>ZZ_INITIAL</tt>.
    * @param reader the new input stream */
   public final void yyreset(final java.io.Reader reader) {
     zzReader = reader;
@@ -1020,9 +1020,9 @@ public class RawTokenizer {
   private void zzScanError(final int errorCode) {
     String message;
     try {
-      message = ZZ__ERROR__MSG[errorCode];
+      message = ZZ_ERROR_MSG[errorCode];
     } catch (final ArrayIndexOutOfBoundsException e) {
-      message = ZZ__ERROR__MSG[ZZ__UNKNOWN__ERROR];
+      message = ZZ_ERROR_MSG[ZZ_UNKNOWN_ERROR];
     }
     throw new Error(message);
   }

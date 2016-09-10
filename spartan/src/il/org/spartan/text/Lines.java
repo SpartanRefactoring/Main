@@ -21,10 +21,10 @@ public enum Lines {
   // No enum values in this fake module
   ;
   /** The string which this module considers as line separator. */
-  public static final String END__OF__LINE__MARKER = "\n";
+  public static final String END_OF_LINE_MARKER = "\n";
   /** A longer and more meaningful name for the array of length zero with
    * {@link String} elements. */
-  public static final String[] NO__LINES = new String @NonNull [0];
+  public static final String[] NO_LINES = new String @NonNull [0];
 
   /** Counts the number of liens in a given text
    * @param text count the number of lines in this parameter
@@ -36,9 +36,9 @@ public enum Lines {
   /** Builds text from an array of lines
    * @param lines what needs to be concatenated
    * @return parameters, concatenated together, with
-   *         {@link #END__OF__LINE__MARKER} separating consecutive arguments */
+   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments */
   public static String gather(final String... lines) {
-    return separate.these(lines).by(END__OF__LINE__MARKER);
+    return separate.these(lines).by(END_OF_LINE_MARKER);
   }
 
   /** Breaks text into lines
@@ -46,7 +46,7 @@ public enum Lines {
    * @return parameter, split into an array if lines
    * @see #gather */
   public static String[] scatter(final @Nullable String text) {
-    return text == null || text.isEmpty() ? NO__LINES : cantBeNull(text.split(END__OF__LINE__MARKER));
+    return text == null || text.isEmpty() ? NO_LINES : cantBeNull(text.split(END_OF_LINE_MARKER));
   }
 
   static void assertFalse(final String reason, final boolean b) {

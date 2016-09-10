@@ -119,7 +119,7 @@ public final class IntegersTest extends integers {
     final Integers a = new Integers(1);
     assert null != a;
     assertEquals(0, size());
-    assertEquals(Integers.MIN__CAPACITY, capacity());
+    assertEquals(Integers.MIN_CAPACITY, capacity());
     assert !contains(0xDEAD);
     assert !contains(1);
     assert !contains(-1);
@@ -127,14 +127,14 @@ public final class IntegersTest extends integers {
   }
 
   @Test public void constructorNegativeInitialCapacity() {
-    assertEquals(Integers.MIN__CAPACITY, new Integers(-1).capacity());
+    assertEquals(Integers.MIN_CAPACITY, new Integers(-1).capacity());
   }
 
   @Test public void defaultConstructor() {
     final Integers a = new Integers();
     assert null != a;
     assertEquals(0, size());
-    assertEquals(Integers.MIN__CAPACITY, capacity());
+    assertEquals(Integers.MIN_CAPACITY, capacity());
     assert !contains(0xDEAD);
     assert !contains(1);
     assert !contains(-1);

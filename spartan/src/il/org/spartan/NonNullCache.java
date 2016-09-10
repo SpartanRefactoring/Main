@@ -31,22 +31,22 @@ public abstract class NonNullCache<T> {
 
   @SuppressWarnings("javadoc") //
   public static class TEST extends NonNullCache<String> {
-    private static final int SOME__OFFSET = 17;
+    private static final int SOME_OFFSET = 17;
     private int evaluations = 0;
 
     @Test public void firstReturnsFirstOffset() {
-      azzert.that(value(), is(SOME__OFFSET + "x0"));
+      azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 
     @Test public void restReturnsFirstOffset() {
       value();
-      azzert.that(value(), is(SOME__OFFSET + "x0"));
+      azzert.that(value(), is(SOME_OFFSET + "x0"));
       for (int i = 0; i < 10; ++i)
-        azzert.that(value(), is(SOME__OFFSET + "x0"));
+        azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 
     @Override protected String ____() {
-      return SOME__OFFSET + "x" + sqr(evaluations++);
+      return SOME_OFFSET + "x" + sqr(evaluations++);
     }
   }
 }

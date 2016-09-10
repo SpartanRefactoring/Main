@@ -45,7 +45,7 @@ public class TestFullTokenization {
 
   private final File fin = new File("test/data/UnicodeFile");
 
-  @Test public void brace__brace__newline() throws IOException {
+  @Test public void brace_brace_newline() throws IOException {
     final String s = "{}\n";
     assertEquals(s, TokenAsIs.stringToString(s));
   }
@@ -54,7 +54,7 @@ public class TestFullTokenization {
     assertEquals(read(f), TokenAsIs.fileToString(f));
   }
 
-  @Test public void some__method() throws IOException {
+  @Test public void some_method() throws IOException {
     final String s = Separate.nl(
         //
         "private static int circularSum(final int[] a, final int[] b, final int offset) {", //

@@ -28,22 +28,22 @@ public abstract class NonNegativeCache {
 
   @SuppressWarnings({ "javadoc" }) //
   public static class TEST extends NonNegativeCache {
-    private static final int SOME__OFFSET = 17;
+    private static final int SOME_OFFSET = 17;
     private int evaluations = 0;
 
     @Test public void firstReturnsFirstOffset() {
-      assertEquals(SOME__OFFSET, value());
+      assertEquals(SOME_OFFSET, value());
     }
 
     @Test public void restReturnsFirstOffset() {
       value();
-      assertEquals(SOME__OFFSET, value());
+      assertEquals(SOME_OFFSET, value());
       for (int i = 0; i < 10; ++i)
-        assertEquals(SOME__OFFSET, value());
+        assertEquals(SOME_OFFSET, value());
     }
 
     @Override protected int ____() {
-      return SOME__OFFSET + sqr(evaluations++);
+      return SOME_OFFSET + sqr(evaluations++);
     }
   }
 }

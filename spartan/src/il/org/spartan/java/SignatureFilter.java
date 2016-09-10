@@ -15,7 +15,7 @@ public class SignatureFilter extends CodeOnlyFilter {
       case __enum:
       case __new:
       case __abstract:
-      case AT__INTERFACE:
+      case AT_INTERFACE:
         return true;
     }
   }
