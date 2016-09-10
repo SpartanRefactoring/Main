@@ -79,12 +79,12 @@ import il.org.spartan.utils.*;
     }
 
     @Override public void visitZipDirectory(final String zipName, final String entryName, final InputStream stream) {
-      ____.unused(stream);
+      ___.unused(stream);
       report("Archive directory: " + entryName + " in zip " + zipName);
     }
 
     @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream stream) throws StopTraversal {
-      ____.unused(stream);
+      ___.unused(stream);
       entries++;
       report("Archive entry: " + entryName);
       check(entryName, zipName);

@@ -21,7 +21,7 @@ public class Minimizer<T> {
   }
 
   public Minimizer<T> next(final T t, final double next) {
-    ____.nonnull(t);
+    ___.nonnull(t);
     if (Double.isNaN(min) || next < min) {
       min = next;
       value = t;
@@ -32,7 +32,7 @@ public class Minimizer<T> {
   }
 
   public T value() {
-    ____.nonnull(value);
+    ___.nonnull(value);
     return value;
   }
 }

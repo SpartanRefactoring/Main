@@ -8,19 +8,19 @@ import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") //
 public class StringUtilsTest {
-  @Test(expected = ____.Bug.Contract.Precondition.class) public final void testStripLength0() {
+  @Test(expected = ___.Bug.Contract.Precondition.class) public final void testStripLength0() {
     StringUtils.strip(".");
   }
 
-  @Test(expected = ____.Bug.Contract.Precondition.class) public final void testStripLength1() {
+  @Test(expected = ___.Bug.Contract.Precondition.class) public final void testStripLength1() {
     StringUtils.strip(".");
   }
 
-  @Test(expected = ____.Bug.Contract.Precondition.class) public final void testStripLength1Alternate() {
+  @Test(expected = ___.Bug.Contract.Precondition.class) public final void testStripLength1Alternate() {
     StringUtils.strip("X");
   }
 
-  @Test(expected = ____.Bug.Assertion.Value.NonNull.class) public final void testStripNull() {
+  @Test(expected = ___.Bug.Assertion.Value.NonNull.class) public final void testStripNull() {
     StringUtils.strip(null);
   }
 

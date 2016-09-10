@@ -5,7 +5,7 @@ package il.org.spartan.bench;
 
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
@@ -25,8 +25,8 @@ import il.org.spartan.utils.*;
  * @since 2011-08-04 */
 public class TimingEstimator {
   private final static IdentityHashMap<Operation, TimingEstimator> estimators = new IdentityHashMap<>();
-  private final static double MAX_DEVIATION = 15 * PERCENT;
-  private final static int MIN_CONSECUTIVE_STABLE = 5;
+  private final static double MAX__DEVIATION = 15 * PERCENT;
+  private final static int MIN__CONSECUTIVE__STABLE = 5;
 
   /** Factory method retrieving the {@link TimingEstimator} associated with a
    * given {@link Operation}, creating a new such object when no association was
@@ -106,7 +106,7 @@ public class TimingEstimator {
       }
       usefulRuns.add($);
       positive($.estimate());
-      consecutiveStable += As.binary(delta(estimate, $.estimate()) < MAX_DEVIATION);
+      consecutiveStable += As.binary(delta(estimate, $.estimate()) < MAX__DEVIATION);
       final double previous = estimate;
       updateEstimate($.estimate());
       Log.f("time estimate=%s (current) %s (overall) %s (previous) %s", //
@@ -150,7 +150,7 @@ public class TimingEstimator {
   /** @return <code><b>true</b></code> <i>iff</i> recent runs indicate that the
    *         current estimate is stable. */
   public boolean steady() {
-    return consecutiveStable > MIN_CONSECUTIVE_STABLE;
+    return consecutiveStable > MIN__CONSECUTIVE__STABLE;
   }
 
   @Override public String toString() {

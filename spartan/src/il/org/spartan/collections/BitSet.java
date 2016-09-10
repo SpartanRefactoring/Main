@@ -1,6 +1,6 @@
 package il.org.spartan.collections;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 /** A collection of functions and data structures pertaining to the
  * representation of a set of small non-negative integers as a bit mask. Each
@@ -14,7 +14,7 @@ public enum BitSet {
   /** The maximal number in any set we may be able to encode efficiently. */
   public static final int MAX = 7;
   /** 2 raised to the power of {@link #MAX} */
-  public static final int EXP_MAX = 1 << MAX;
+  public static final int EXP__MAX = 1 << MAX;
   /** A bit representation of singleton sets. For each position <code>p</code>
    * where <code>0 <= p <= {@link BitSet#MAX}</code>, the value
    * <code>{@link #$$}[p]</code> is the bit encoding of the positions' set whose
@@ -33,9 +33,9 @@ public enum BitSet {
    * a <code><b>short</b></code> value whose bit representing encodes a set of
    * positions, then <code>positions[s]</code> is an array of the integers, in
    * an increasing order, that occur in this set. */
-  public static final short positions[][] = new short[EXP_MAX][];
+  public static final short positions[][] = new short[EXP__MAX][];
   static {
-    for (int set = 0; set < EXP_MAX; set++) {
+    for (int set = 0; set < EXP__MAX; set++) {
       positions[set] = new short[cardinality(set)];
       int j = 0;
       for (short b = 0; b < MAX; b++)
@@ -93,7 +93,7 @@ public enum BitSet {
     for (int i = 0; i < MAX; i++)
       System.out.printf("bits(%d) = %d\n", i, cardinality(i));
     System.out.printf("set: %o ", union(set(3), set(6)));
-    for (int i = 0; i < EXP_MAX; i++) {
+    for (int i = 0; i < EXP__MAX; i++) {
       System.out.print(i + ". [");
       for (final int j : positions[i])
         System.out.print(j + " ");
@@ -106,7 +106,7 @@ public enum BitSet {
    * @return an array containing all integers in the set represented by
    *         <code>mask</code>; these integers are found in ascending order */
   public static short[] positions(final short mask) {
-    require(mask < EXP_MAX);
+    require(mask < EXP__MAX);
     return positions[mask];
   }
 

@@ -3,7 +3,7 @@
  */
 package il.org.spartan;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
@@ -46,6 +46,10 @@ public class Aggregator {
     return allAggregations;
   }
 
+  public boolean isEmpty() {
+    return allAggregations.isEmpty();
+  }
+
   public void markColumn(final String key) {
     markColumn = key;
   }
@@ -65,9 +69,6 @@ public class Aggregator {
     return allAggregations.size();
   }
 
-  public boolean isEmpty() {
-    return allAggregations.isEmpty();
-  }
   protected void merge(final Map<Aggregation, String> as) {
     int lastFound = -1;
     for (final Aggregation a : as.keySet()) {

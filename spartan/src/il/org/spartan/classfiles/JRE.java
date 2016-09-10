@@ -29,7 +29,7 @@ import il.org.spartan.utils.*;
   public static List<File> asList() {
     try {
       return fromClass(Object.class);
-    } catch (final Throwable _) {
+    } catch (final Throwable __) {
       // Absorb this exception, let's try the other option...
       final List<File> $ = new ArrayList<>();
       final String cp = System.getProperty("sun.boot.class.path");
@@ -61,8 +61,8 @@ import il.org.spartan.utils.*;
   }
 
   /** Exercise this class, by printing the result of its principal function.
-   * @param _ unused */
-  public static void main(final String[] _) {
+   * @param __ unused */
+  public static void main(final String[] __) {
     System.out.println(Separate.by(asList(), "\n"));
   }
 }

@@ -6,17 +6,17 @@ public enum Significance {
       return "sig. < 95%";
     }
   },
-  FIVE_PERCENT {
+  FIVE__PERCENT {
     @Override public String toString() {
       return "sig. > 95%";
     }
   },
-  ONE_PERCENT {
+  ONE__PERCENT {
     @Override public String toString() {
       return "sig. > 99%";
     }
   },
-  ONE_PERMILLE {
+  ONE__PERMILLE {
     @Override public String toString() {
       return "sig. > 99.9%";
     }
@@ -25,10 +25,10 @@ public enum Significance {
     if (Math.abs(z) < 1.960)
       return INSIGNIFICANT;
     if (Math.abs(z) < 2.575)
-      return FIVE_PERCENT;
+      return FIVE__PERCENT;
     if (Math.abs(z) < 3.08)
-      return ONE_PERCENT;
-    return ONE_PERMILLE;
+      return ONE__PERCENT;
+    return ONE__PERMILLE;
   }
 
   public static Significance signifcance(final Kendall.Charectristics c) {
@@ -68,7 +68,7 @@ public enum Significance {
     if (Math.abs(c.tau) < thresholdB)
       return INSIGNIFICANT;
     if (Math.abs(c.tau) < thresholdA)
-      return FIVE_PERCENT;
-    return ONE_PERCENT;
+      return FIVE__PERCENT;
+    return ONE__PERCENT;
   }
 }

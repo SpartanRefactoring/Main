@@ -15,7 +15,7 @@ public class History<T> {
   private final List<T> inner = new ArrayList<>();
 
   public History(final int n) {
-    ____.positive(n);
+    ___.positive(n);
     this.n = n;
   }
 

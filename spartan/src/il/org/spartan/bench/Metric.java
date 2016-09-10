@@ -10,16 +10,16 @@ public class Metric {
     this(null);
   }
 
-  public Metric(final String _name) {
-    name = _name;
+  public Metric(final String __name) {
+    name = __name;
   }
 
   public String name() {
     return name;
   }
 
-  public Metric name(final String _name) {
-    name = _name;
+  public Metric name(final String __name) {
+    name = __name;
     return this;
   }
 
@@ -38,7 +38,7 @@ public class Metric {
     }
 
     /* @return the metric's value */
-    public abstract double _();
+    public abstract double __();
   }
 
   /* * An interface for a metric returning an <code><b>int</b></code> value.
@@ -52,7 +52,7 @@ public class Metric {
     }
 
     /* @return the metric's value */
-    public abstract int _();
+    public abstract int __();
   }
 
   /* * An interface for a metric returning a <code><b>long</b></code> value.
@@ -73,7 +73,7 @@ public class Metric {
     }
 
     /* @return the metric's value */
-    public abstract long _();
+    public abstract long __();
 
     @Override public Long name(final String name) {
       super.name(name);

@@ -1,6 +1,6 @@
 package il.org.spatan.iteration;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 import java.util.BitSet;

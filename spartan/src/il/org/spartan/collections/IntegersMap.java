@@ -6,22 +6,22 @@ import static org.hamcrest.Matchers.*;
 import java.util.*;
 
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.____.*;
+import il.org.spartan.utils.___.*;
 
 /** An unsorted map of integers.
  * <p>
  * Implementation employs a linear hash table s, with quadratic probes (i.e.,
  * +1, +3, +6, +10, ... modulo the table size). Array capacity is always a power
- * of two, and is doubled when the load goes above {@link #MAX_LOAD}; capacity
- * is halved when the load drops below {@value #MIN_LOAD}. When the fraction of
- * removed keys goes below {@link #REMOVE_LOAD}, the table is rehashed.
+ * of two, and is doubled when the load goes above {@link #MAX__LOAD}; capacity
+ * is halved when the load drops below {@value #MIN__LOAD}. When the fraction of
+ * removed keys goes below {@link #REMOVE__LOAD}, the table is rehashed.
  * @author Yossi Gil
  * @since December 2010 */
 public final class IntegersMap {
-  public static final float MAX_LOAD = 0.75f;
-  public static final float MIN_LOAD = 0.25f;
-  public static final float REMOVE_LOAD = 0.20f;
-  public static final int MIN_CAPACITY = 4;
+  public static final float MAX__LOAD = 0.75f;
+  public static final float MIN__LOAD = 0.25f;
+  public static final float REMOVE__LOAD = 0.20f;
+  public static final int MIN__CAPACITY = 4;
 
   static int hash(final int n) {
     int $ = n;
@@ -45,14 +45,14 @@ public final class IntegersMap {
 
   /** Instantiate this class */
   public IntegersMap() {
-    this(MIN_CAPACITY);
+    this(MIN__CAPACITY);
   }
 
   /** Instantiate this class, using a given size for the hash table.
    * @param initialCapacity suggests a hash table size, will be rounded up to
    *        the next power of two. */
   public IntegersMap(final int initialCapacity) {
-    reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
+    reset(Math.max(MIN__CAPACITY, roundUp(initialCapacity)));
   }
 
   /** What's the underlying table size?
@@ -116,7 +116,7 @@ public final class IntegersMap {
     data[find] = key;
     values[find] = 1;
     occupied[find] = true;
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > capacity() * MAX__LOAD)
       rehash(data.length << 1);
     return 1;
   }
@@ -133,7 +133,7 @@ public final class IntegersMap {
       values[find] = 0;
       occupied[find] = true;
     }
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > capacity() * MAX__LOAD)
       rehash(data.length << 1);
     return this;
   }
@@ -160,7 +160,7 @@ public final class IntegersMap {
       values[find] = value;
       occupied[find] = true;
     }
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > capacity() * MAX__LOAD)
       rehash(data.length << 1);
     return this;
   }
@@ -190,9 +190,9 @@ public final class IntegersMap {
       return this;
     assert occupied[i] && data[i] == n;
     placeholder[i] = true;
-    if (--size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY)
+    if (--size < capacity() * MIN__LOAD && capacity() > MIN__CAPACITY)
       return rehash(data.length >> 1);
-    if (++removed > capacity() * REMOVE_LOAD)
+    if (++removed > capacity() * REMOVE__LOAD)
       return rehash();
     return this;
   }
@@ -249,7 +249,7 @@ public final class IntegersMap {
    * @return <code><b>this</b>/code> */
   private IntegersMap rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
-    assert newCapacity >= MIN_CAPACITY;
+    assert newCapacity >= MIN__CAPACITY;
     final int[] keys = keys();
     final int[] oldValues = get(keys);
     reset(newCapacity);
@@ -271,13 +271,13 @@ public final class IntegersMap {
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
       assertThat(size, lessThanOrEqualTo(capacity()));
-      assertThat(capacity(), greaterThanOrEqualTo(MIN_CAPACITY));
+      assertThat(capacity(), greaterThanOrEqualTo(MIN__CAPACITY));
       assertThat(placeholder.length, lessThanOrEqualTo(capacity()));
       assertThat(occupied.length, lessThanOrEqualTo(capacity()));
       assertThat(data.length, lessThanOrEqualTo(capacity()));
-      assertThat(size, lessThanOrEqualTo((int) (capacity() * MAX_LOAD)));
-      assertThat(size, greaterThanOrEqualTo((int) (capacity() * MIN_LOAD)));
-      assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE_LOAD)));
+      assertThat(size, lessThanOrEqualTo((int) (capacity() * MAX__LOAD)));
+      assertThat(size, greaterThanOrEqualTo((int) (capacity() * MIN__LOAD)));
+      assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE__LOAD)));
       assertThat(removed, comparesEqualTo(count(placeholder)));
       assertThat(size, comparesEqualTo(count(occupied) - removed));
       for (int i = 0; i < capacity(); i++)

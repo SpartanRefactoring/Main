@@ -17,33 +17,33 @@ public abstract class NonNegativeCache {
    * computation
    * @return cached value */
   public int value() {
-    return value >= 0 ? value : (value = __());
+    return value >= 0 ? value : (value = ____());
   }
 
   /** This function is to be implemented by clients, giving a method for
    * computing the cached value. It is guaranteed that this function will only
    * be called once.
    * @return value to be cached */
-  protected abstract int __();
+  protected abstract int ____();
 
   @SuppressWarnings({ "javadoc" }) //
   public static class TEST extends NonNegativeCache {
-    private static final int SOME_OFFSET = 17;
+    private static final int SOME__OFFSET = 17;
     private int evaluations = 0;
 
     @Test public void firstReturnsFirstOffset() {
-      assertEquals(SOME_OFFSET, value());
+      assertEquals(SOME__OFFSET, value());
     }
 
     @Test public void restReturnsFirstOffset() {
       value();
-      assertEquals(SOME_OFFSET, value());
+      assertEquals(SOME__OFFSET, value());
       for (int i = 0; i < 10; ++i)
-        assertEquals(SOME_OFFSET, value());
+        assertEquals(SOME__OFFSET, value());
     }
 
-    @Override protected int __() {
-      return SOME_OFFSET + sqr(evaluations++);
+    @Override protected int ____() {
+      return SOME__OFFSET + sqr(evaluations++);
     }
   }
 }

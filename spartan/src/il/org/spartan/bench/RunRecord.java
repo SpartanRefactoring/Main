@@ -11,15 +11,15 @@ public class RunRecord extends AbstractRunRecord {
     this.runs = runs;
     this.grossTime = grossTime.time();
     this.netTime = netTime.time();
-    ____.positive(this.netTime);
-    ____.positive(this.grossTime);
-    ____.nonnegative(runs);
-    ____.positive(runs);
+    ___.positive(this.netTime);
+    ___.positive(this.grossTime);
+    ___.nonnegative(runs);
+    ___.positive(runs);
   }
 
   public double estimate() {
-    ____.positive(netTime);
-    ____.positive(runs);
+    ___.positive(netTime);
+    ___.positive(runs);
     return 1.0 * netTime / runs;
   }
 
@@ -30,12 +30,12 @@ public class RunRecord extends AbstractRunRecord {
         Unit.formatNanoseconds(netTime), //
         Unit.formatRelative(netTime, BenchingPolicy.getBenchingTime()), //
         Unit.formatNanoseconds(grossTime), //
-        Unit.formatRelative(grossTime, BenchingPolicy.MAX_TIME) //
+        Unit.formatRelative(grossTime, BenchingPolicy.MAX__TIME) //
     );
-    if (runs > BenchingPolicy.MAX_RUNS)
+    if (runs > BenchingPolicy.MAX__RUNS)
       return true;
-    if (runs < BenchingPolicy.MIN_RUNS)
+    if (runs < BenchingPolicy.MIN__RUNS)
       return false;
-    return netTime > BenchingPolicy.getBenchingTime() || grossTime > BenchingPolicy.MAX_TIME;
+    return netTime > BenchingPolicy.getBenchingTime() || grossTime > BenchingPolicy.MAX__TIME;
   }
 }

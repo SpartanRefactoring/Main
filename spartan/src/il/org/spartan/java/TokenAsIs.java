@@ -3,7 +3,7 @@
  */
 package il.org.spartan.java;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 import static il.org.spatan.iteration.Iterables.*;
 
 import java.io.*;

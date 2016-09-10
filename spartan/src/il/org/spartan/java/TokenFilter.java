@@ -6,7 +6,7 @@ package il.org.spartan.java;
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public abstract class TokenFilter extends TokenProcessor {
-  protected abstract void _process(Token t, String text);
+  protected abstract void __process(Token t, String text);
 
   /** Determine whether token should be processed. Subclasses wishing to
    * restrict processing to certain tokens only should override this method.
@@ -23,6 +23,6 @@ public abstract class TokenFilter extends TokenProcessor {
    * .java.Token) */
   @Override protected final void process(final Token t, final String text) {
     if (ok(t))
-      _process(t, text);
+      __process(t, text);
   }
 }

@@ -38,7 +38,7 @@ public class BufferInputStream extends InputStream {
   }
 
   @Override public void close() {
-    ____.nothing();
+    ___.nothing();
   }
 
   public boolean eof() {

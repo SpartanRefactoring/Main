@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
 public final class IntegersTest extends integers {
   private final INVARIANT invariant = new INVARIANT();
 
-  @Test public void _rehash() {
+  @Test public void __rehash() {
     add(0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 11, 12, 13, 14, 15, 16, 17);
     remove(2, 3, 5, 7, 11, 13, 17);
     assert contains(0, 1, 4, 6, 8, 9, 10, 12, 14, 14, 15, 16);
@@ -119,7 +119,7 @@ public final class IntegersTest extends integers {
     final Integers a = new Integers(1);
     assert null != a;
     assertEquals(0, size());
-    assertEquals(Integers.MIN_CAPACITY, capacity());
+    assertEquals(Integers.MIN__CAPACITY, capacity());
     assert !contains(0xDEAD);
     assert !contains(1);
     assert !contains(-1);
@@ -127,14 +127,14 @@ public final class IntegersTest extends integers {
   }
 
   @Test public void constructorNegativeInitialCapacity() {
-    assertEquals(Integers.MIN_CAPACITY, new Integers(-1).capacity());
+    assertEquals(Integers.MIN__CAPACITY, new Integers(-1).capacity());
   }
 
   @Test public void defaultConstructor() {
     final Integers a = new Integers();
     assert null != a;
     assertEquals(0, size());
-    assertEquals(Integers.MIN_CAPACITY, capacity());
+    assertEquals(Integers.MIN__CAPACITY, capacity());
     assert !contains(0xDEAD);
     assert !contains(1);
     assert !contains(-1);

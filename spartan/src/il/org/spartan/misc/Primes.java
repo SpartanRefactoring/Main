@@ -43,19 +43,19 @@ public class Primes {
       azzert.that(new Primes().next(), is(2));
     }
 
-    @Test public void isPrimeOf_1() {
+    @Test public void isPrimeOf__1() {
       azzert.nay(isPrime(-1));
     }
 
-    @Test public void isPrimeOf_2() {
+    @Test public void isPrimeOf__2() {
       azzert.aye(isPrime(-2));
     }
 
-    @Test public void isPrimeOf_3() {
+    @Test public void isPrimeOf__3() {
       assert isPrime(-3);
     }
 
-    @Test public void isPrimeOf_4() {
+    @Test public void isPrimeOf__4() {
       assert !isPrime(-4);
     }
 

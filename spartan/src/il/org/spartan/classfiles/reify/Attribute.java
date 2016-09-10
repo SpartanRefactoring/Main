@@ -17,7 +17,7 @@ import java.util.*;
     public final String value;
 
     /** Instantiate {@link Content}.
-     * @param value
+     * @param value JD
      * @param name */
     public Content(final String name, final String value) {
       this.name = name;

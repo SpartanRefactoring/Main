@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.util.*;
@@ -48,8 +48,8 @@ import il.org.spartan.utils.*;
   }
 
   /** Exercise this class by printing the result of its principal function.
-   * @param _ unused */
-  public static void main(final String[] _) {
+   * @param __ unused */
+  public static void main(final String[] __) {
     System.out.println(Separate.by(asFiles(), "\n"));
   }
 
@@ -102,9 +102,9 @@ import il.org.spartan.utils.*;
     for (final ZipFile z : zipsInUse)
       try {
         z.close();
-      } catch (final IOException _) {
+      } catch (final IOException __) {
         // Absorb (we do not care about errors)
-        _.printStackTrace();
+        __.printStackTrace();
       }
     zipsInUse.clear();
   }
@@ -140,7 +140,7 @@ import il.org.spartan.utils.*;
     final File $ = new File(where, canonicalFileName(className));
     try {
       return !$.exists() ? null : new FileInputStream($);
-    } catch (final FileNotFoundException _) {
+    } catch (final FileNotFoundException __) {
       return null;
     }
   }
@@ -158,7 +158,7 @@ import il.org.spartan.utils.*;
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
        * (e.getName().equals(fileName)) { zipsInUse.add(z); return
        * z.getInputStream(e); } z.close(); */
-    } catch (final IOException _) {
+    } catch (final IOException __) {
       // Absorb (we do not care about errors)
     }
     return null;

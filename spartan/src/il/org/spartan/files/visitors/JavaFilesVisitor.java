@@ -16,25 +16,25 @@ import java.util.*;
  * @author Yossi Gil
  * @since 11/07/2007 */
 public class JavaFilesVisitor extends NonStopVisitor {
-  private static final String[] JAVA_FILES_EXTENSION = new String[] { ".java" };
+  private static final String[] JAVA__FILES__EXTENSION = new String[] { ".java" };
 
   public JavaFilesVisitor(final Collection<String> from, final FileOnlyAction action) {
-    super(from, action, JAVA_FILES_EXTENSION);
+    super(from, action, JAVA__FILES__EXTENSION);
   }
 
   public JavaFilesVisitor(final File from, final FileOnlyAction action) {
-    super(from, action, JAVA_FILES_EXTENSION);
+    super(from, action, JAVA__FILES__EXTENSION);
   }
 
   public JavaFilesVisitor(final File[] from, final FileOnlyAction action) {
-    super(from, action, JAVA_FILES_EXTENSION);
+    super(from, action, JAVA__FILES__EXTENSION);
   }
 
   public JavaFilesVisitor(final String from, final FileOnlyAction action) {
-    super(from, action, JAVA_FILES_EXTENSION);
+    super(from, action, JAVA__FILES__EXTENSION);
   }
 
   public JavaFilesVisitor(final String[] from, final FileOnlyAction action) {
-    super(from, action, JAVA_FILES_EXTENSION);
+    super(from, action, JAVA__FILES__EXTENSION);
   }
 }

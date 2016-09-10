@@ -25,9 +25,9 @@ import il.org.spatan.iteration.*;
  * class, in the same format as required for {@link Class#forName(String)}.
  * @author Itay Maman July 6, 2006 */
 public class ClassRepository implements Iterable<String> {
-  private static final String DOT_CLASS = ".class";
-  private static final String DOT_JAR = ".jar";
-  private static final String DOT_ZIP = ".zip";
+  private static final String DOT__CLASS = ".class";
+  private static final String DOT__JAR = ".jar";
+  private static final String DOT__ZIP = ".zip";
 
   /** Obtain the CLASSPATH (as a list of files) from the class loaders of the
    * given classes.
@@ -41,7 +41,7 @@ public class ClassRepository implements Iterable<String> {
       final ClassLoader cl = c.getClassLoader();
       if (!(cl instanceof URLClassLoader))
         throw new IllegalArgumentException("Class loader is not a URLClassLoader. class=" + c.getName());
-      ____.sure(((URLClassLoader) cl).getURLs().length > 0);
+      ___.sure(((URLClassLoader) cl).getURLs().length > 0);
       for (final URL url : ((URLClassLoader) cl).getURLs())
         try {
           $.add(new File(url.toURI()));
@@ -50,7 +50,7 @@ public class ClassRepository implements Iterable<String> {
           // continue;
         }
     }
-    ____.sure($.size() > 0);
+    ___.sure($.size() > 0);
     return $;
   }
 
@@ -98,7 +98,7 @@ public class ClassRepository implements Iterable<String> {
       while (entries.hasMoreElements()) {
         final ZipEntry ze = entries.nextElement();
         final NameDotSuffix nds = new NameDotSuffix(ze);
-        if (!nds.suffixIs(DOT_CLASS))
+        if (!nds.suffixIs(DOT__CLASS))
           continue;
         result.add(nds.name);
       }
@@ -153,8 +153,8 @@ public class ClassRepository implements Iterable<String> {
 
   public ClassRepository(final Class<?> me) {
     this(fromClass(me));
-    ____.sure(files.length > 0);
-    ____.sure(size() > 0);
+    ___.sure(files.length > 0);
+    ___.sure(size() > 0);
   }
 
   /** Initialize a new instance
@@ -232,9 +232,9 @@ public class ClassRepository implements Iterable<String> {
       return;
     }
     final NameDotSuffix nds = new NameDotSuffix(dirOrFile);
-    if (nds.suffixIs(DOT_JAR) || nds.suffixIs(DOT_ZIP))
+    if (nds.suffixIs(DOT__JAR) || nds.suffixIs(DOT__ZIP))
       addFromArchive(dirOrFile.getPath(), result);
-    else if (nds.suffixIs(DOT_CLASS))
+    else if (nds.suffixIs(DOT__CLASS))
       result.add(concat(path, nds.name));
   }
 

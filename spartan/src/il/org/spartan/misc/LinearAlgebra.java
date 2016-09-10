@@ -624,10 +624,10 @@ public enum LinearAlgebra {
     @Test public void make() {
       final int rows = 10;
       final int columns = 20;
-      final double[][] _ = LinearAlgebra.make(rows, columns);
-      assertEquals(rows, _.length);
+      final double[][] __ = LinearAlgebra.make(rows, columns);
+      assertEquals(rows, __.length);
       for (int i = 0; i < rows; i++)
-        assertEquals("Inappropriate column length at row " + i, columns, _[i].length);
+        assertEquals("Inappropriate column length at row " + i, columns, __[i].length);
     }
 
     @Test public void sqr() {
@@ -641,10 +641,10 @@ public enum LinearAlgebra {
     @Test public void transpose() {
       final int rows = 10;
       final int columns = 20;
-      final double[][] _ = LinearAlgebra.transpose(LinearAlgebra.make(rows, columns));
-      assertEquals(columns, _.length);
+      final double[][] __ = LinearAlgebra.transpose(LinearAlgebra.make(rows, columns));
+      assertEquals(columns, __.length);
       for (int i = 0; i < rows; i++)
-        assertEquals("Inappropriate column length at row " + i, rows, _[i].length);
+        assertEquals("Inappropriate column length at row " + i, rows, __[i].length);
     }
   }
 }

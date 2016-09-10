@@ -45,10 +45,10 @@ public enum Log {
   }
 
   public static void decreaseLevel() {
-    ____.require(level > 0);
+    ___.require(level > 0);
     --level;
     tabber.less();
-    ____.sure(level >= 0);
+    ___.sure(level >= 0);
   }
 
   public static void endCompoundStage(final Object... ss) {

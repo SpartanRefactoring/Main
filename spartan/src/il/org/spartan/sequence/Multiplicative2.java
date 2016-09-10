@@ -4,11 +4,11 @@ import static java.lang.Integer.*;
 import static java.lang.Math.max;
 
 public class Multiplicative2 extends Sequence {
-  private static final double DEFAULT_STEP = 0.1;
+  private static final double DEFAULT__STEP = 0.1;
   private final double step;
 
   public Multiplicative2() {
-    this(Sequence.MAX_VALUE, DEFAULT_STEP);
+    this(Sequence.MAX_VALUE, DEFAULT__STEP);
   }
 
   public Multiplicative2(final double step) {

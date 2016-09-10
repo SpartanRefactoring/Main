@@ -5,7 +5,7 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
-/** A <href a=http://en.wikipedia.org/wiki/Dynamic_array>growable array</a> of
+/** A <href a=http://en.wikipedia.org/wiki/Dynamic__array>growable array</a> of
  * <code><b>double</b></code>s.
  * @author Yossi Gil
  * @since February 20, 2012 */

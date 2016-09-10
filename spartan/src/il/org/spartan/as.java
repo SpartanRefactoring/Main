@@ -220,7 +220,7 @@ public enum as {
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
   public static String string(@Nullable final Object $) {
-    return $ == null ? "null" : as.string(($ + ""));
+    return $ == null ? "null" : as.string($ + "");
   }
 
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>

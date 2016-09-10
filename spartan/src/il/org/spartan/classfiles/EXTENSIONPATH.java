@@ -8,15 +8,15 @@ import il.org.spartan.utils.*;
 
 @Utility public enum EXTENSIONPATH {
   ;
-  private static final String JAVA_EXTENSION_DIRECTORIES = "java.ext.dirs";
+  private static final String JAVA__EXTENSION__DIRECTORIES = "java.ext.dirs";
 
   public static String[] asArray() {
-    return System.getProperty(JAVA_EXTENSION_DIRECTORIES).split(File.pathSeparator);
+    return System.getProperty(JAVA__EXTENSION__DIRECTORIES).split(File.pathSeparator);
   }
 
   /** Exercise this class, by printing the result of its principal function.
-   * @param _ unused */
-  public static void main(final String[] _) {
+   * @param __ unused */
+  public static void main(final String[] __) {
     System.out.println(Separate.by(asArray(), "\n"));
   }
 }

@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.util.*;
@@ -240,7 +240,7 @@ public class FileSystemVisitor {
       for (final String name : d.list())
         if (name != null)
           recurse(new File(d, name));
-    } catch (final Action.StopTraversal _) {
+    } catch (final Action.StopTraversal __) {
       // do not visit children of this directory
     }
   }
@@ -369,45 +369,45 @@ public class FileSystemVisitor {
    * @since 18/06/2007 */
   public abstract static class EmptyAction implements NonStopAction {
     /** A do-nothing function, ignoring its arguments
-     * @param _ ignored
+     * @param __ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitDirectory(java.io.File) */
-    @Override public void visitDirectory(final File _) {
-      unused(_);
+    @Override public void visitDirectory(final File __) {
+      unused(__);
     }
 
     /** A do-nothing function, ignoring its arguments
-     * @param _ ignored
+     * @param __ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitFile(java.io.File) */
-    @Override public void visitFile(final File _) {
-      unused(_);
+    @Override public void visitFile(final File __) {
+      unused(__);
     }
 
     /** A do-nothing function, ignoring its arguments
-     * @param _ ignored
+     * @param __ ignored
      * @throws StopTraversal
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZip(java.io.File) */
-    @Override public void visitZip(final File _) throws StopTraversal {
-      unused(_);
+    @Override public void visitZip(final File __) throws StopTraversal {
+      unused(__);
     }
 
     /** A do-nothing function, ignoring its arguments
-     * @param _ ignored
      * @param __ ignored
-     * @param ___ ignored
+     * @param ____ ignored
+     * @param ______ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZipDirectory(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
-    @Override public void visitZipDirectory(final String _, final String __, final InputStream ___) {
-      unused(_, __, ___);
+    @Override public void visitZipDirectory(final String __, final String ____, final InputStream ______) {
+      unused(__, ____, ______);
     }
 
     /** A do-nothing function, ignoring its arguments
-     * @param _ ignored
      * @param __ ignored
-     * @param ___ ignored
+     * @param ____ ignored
+     * @param ______ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZipEntry(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
-    @Override public void visitZipEntry(final String _, final String __, final InputStream ___) {
-      unused(_, __, ___);
+    @Override public void visitZipEntry(final String __, final String ____, final InputStream ______) {
+      unused(__, ____, ______);
     }
   }
 

@@ -17,7 +17,7 @@ public class LightWeightParser {
   }
 
   public void clazz() {
-    final Token t = skipUntil(_class, _enum, _interface, AT_INTERFACE);
+    final Token t = skipUntil(__class, __enum, __interface, AT__INTERFACE);
     if (t == null)
       return;
     final String s = getIdentifier();

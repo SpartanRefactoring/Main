@@ -5,27 +5,27 @@ import java.util.*;
 import il.org.spartan.strings.*;
 
 public enum SystemProperty {
-  FILE_SEPARATOR, //
-  FILE_ENCODING, //
-  FILE_ENCODING_PKG, //
-  JAVA_COMPILER, //
-  JAVA_CLASS_PATH, //
-  JAVA_CLASS_VERSION, //
-  JAVA_HOME, //
-  JAVA_IO_TMPDIR, //
-  JAVA_VENDOR, //
-  JAVA_VENDOR_URL, //
-  JAVA_VERSION, //
-  LINE_SEPARATOR, //
-  OS_ARCH, //
-  OS_NAME, //
-  OS_VERSION, //
-  PATH_SEPARATOR, //
-  USER_DIR, //
-  USER_HOME, //
-  USER_NAME, //
-  USER_REGION, //
-  USER_TIMEZONE, //
+  FILE__SEPARATOR, //
+  FILE__ENCODING, //
+  FILE__ENCODING__PKG, //
+  JAVA__COMPILER, //
+  JAVA__CLASS__PATH, //
+  JAVA__CLASS__VERSION, //
+  JAVA__HOME, //
+  JAVA__IO__TMPDIR, //
+  JAVA__VENDOR, //
+  JAVA__VENDOR__URL, //
+  JAVA__VERSION, //
+  LINE__SEPARATOR, //
+  OS__ARCH, //
+  OS__NAME, //
+  OS__VERSION, //
+  PATH__SEPARATOR, //
+  USER__DIR, //
+  USER__HOME, //
+  USER__NAME, //
+  USER__REGION, //
+  USER__TIMEZONE, //
   ;
   public static void main(final String[] args) throws RuntimeException {
     for (final SystemProperty sp : values()) {

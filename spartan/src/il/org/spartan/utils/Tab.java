@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 import static org.junit.Assert.*;
 
 import java.io.*;
@@ -142,7 +142,7 @@ import il.org.spartan.streotypes.*;
       assertEquals(cat("", "abc"), cat(t.begin(), t.toString()));
     }
 
-    @Test(expected = ____.Bug.Contract.Precondition.class) //
+    @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testDecrementFailsWhenDone() {
       final Tab t = new Tab("abc");
       t.less();
@@ -166,7 +166,7 @@ import il.org.spartan.streotypes.*;
       assertEquals(cat("abc", "abc"), cat(t.end(), t.toString()));
     }
 
-    @Test(expected = ____.Bug.Contract.Precondition.class) //
+    @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testEndAtLevelZero() {
       final Tab t = new Tab("abc");
       assertEquals(cat("", ""), cat(t.end(), t.toString()));

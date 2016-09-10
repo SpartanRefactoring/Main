@@ -2,7 +2,7 @@
 package il.org.spartan.strings;
 
 import static il.org.spartan.strings.RE.*;
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 import static org.junit.Assert.*;
 
 import java.util.regex.*;

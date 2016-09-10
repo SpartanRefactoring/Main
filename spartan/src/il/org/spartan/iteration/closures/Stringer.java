@@ -1,22 +1,22 @@
 package il.org.spartan.iteration.closures;
 
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.____.*;
+import static il.org.spartan.utils.___.*;
 
 /** An interface supplying a function object pointer, where the function return
  * value is {@link String}. To create such a pointer, create a subclass that
  * implements this interface (typically as an anonymous class), giving an
- * implementation to function {@link #_}, and then pass an instance of this
+ * implementation to function {@link #__}, and then pass an instance of this
  * subclass class.
  * @author Yossi Gil.
  * @param <T> type of values that the function takes */
 public interface Stringer<T> extends Converter<T, String> {
   /** {@inheritDoc}
-   * @see Converter#_ */
-  @Override String _(T t);
+   * @see Converter#__ */
+  @Override String __(T t);
 
   public static class Default<T> implements Stringer<T> {
-    @Override public String _(final T t) {
+    @Override public String __(final T t) {
       return t.toString();
     }
   }
@@ -38,8 +38,8 @@ public interface Stringer<T> extends Converter<T, String> {
       this.quote = quote;
     }
 
-    @Override public final String _(final T t) {
-      return quote(t == null ? "" : super._(t));
+    @Override public final String __(final T t) {
+      return quote(t == null ? "" : super.__(t));
     }
 
     public final String quote(final String s) {

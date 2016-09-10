@@ -7,7 +7,7 @@ import java.util.*;
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class ShallowSizeTest {
-  @Test public void align_9() {
+  @Test public void align__9() {
     assertEquals(16, ShallowSize.align(9));
   }
 
@@ -23,7 +23,7 @@ import org.junit.*;
     assertEquals(8, ShallowSize.align(8));
   }
 
-  @Test public void intrinsic_ObjectObject() {
+  @Test public void intrinsic__ObjectObject() {
     assertEquals(4, ShallowSize.intrinsic(new ObjectObject()));
   }
 
@@ -31,15 +31,15 @@ import org.junit.*;
     assertEquals(1, ShallowSize.intrinsic(new ObjectBoolean()));
   }
 
-  @Test public void intrinsicSize_intrinsicBoolean() {
+  @Test public void intrinsicSize__intrinsicBoolean() {
     assertEquals(1, ShallowSize.intrinsic(new ObjectBoolean()));
   }
 
-  @Test public void intrinsicSize_ObjectObject_Object() {
+  @Test public void intrinsicSize__ObjectObject__Object() {
     assertEquals(0, ShallowSize.intrinsic(Object.class));
   }
 
-  @Test public void intrinsicSize_ObjectObject_ObjectObject() {
+  @Test public void intrinsicSize__ObjectObject__ObjectObject() {
     assertEquals(4, ShallowSize.intrinsic(ObjectObject.class));
   }
 
@@ -49,10 +49,10 @@ import org.junit.*;
 
   @Test public void objectByte() {
     assertEquals(16, ShallowSize.of(new Object() {
-      byte _;
+      byte __;
 
       @Override public int hashCode() {
-        return super.hashCode() ^ _;
+        return super.hashCode() ^ __;
       }
     }));
   }
@@ -61,16 +61,16 @@ import org.junit.*;
     assertEquals(16, ShallowSize.of(new ObjectChar()));
   }
 
-  @Test public void of_array_0_bytes() {
+  @Test public void of__array__0__bytes() {
     assertEquals(0, new byte[0].length);
     assertEquals(16, ShallowSize.of(new byte[0]));
   }
 
-  @Test public void of_array_4_bytes() {
+  @Test public void of__array__4__bytes() {
     assertEquals(16, ShallowSize.of(new byte[4]));
   }
 
-  @Test public void of_HashMap() {
+  @Test public void of__HashMap() {
     final HashMap<Object, Object> m = new HashMap<>();
     assertEquals(40, ShallowSize.of(m));
     m.put(new Object(), new Object());
@@ -79,7 +79,7 @@ import org.junit.*;
     assertEquals(40, ShallowSize.of(m));
   }
 
-  @Test public void of_Inner() {
+  @Test public void of__Inner() {
     assertEquals(16, ShallowSize.of(new Object() {
       @Override public int hashCode() {
         return 17;
@@ -87,7 +87,7 @@ import org.junit.*;
     }));
   }
 
-  @Test public void of_Interface() {
+  @Test public void of__Interface() {
     assertEquals(16, ShallowSize.of(new Cloneable() {
       @Override public int hashCode() {
         return 33;
@@ -95,67 +95,67 @@ import org.junit.*;
     }));
   }
 
-  @Test public void of_Null() {
+  @Test public void of__Null() {
     final Object o = null;
     assertEquals(0, ShallowSize.of(o));
   }
 
-  @Test public void of_object() {
+  @Test public void of__object() {
     assertEquals(8, ShallowSize.of(new Object()));
   }
 
-  @Test public void of_Object() {
+  @Test public void of__Object() {
     assertEquals(8, ShallowSize.of(new Object()));
   }
 
-  @Test public void of_objectBooleanO() {
+  @Test public void of__objectBooleanO() {
     assertEquals(16, ShallowSize.of(new ObjectBoolean()));
   }
 
-  @Test public void of_ObjectInt() {
+  @Test public void of__ObjectInt() {
     assertEquals(16, ShallowSize.of(new ObjectInt()));
   }
 
-  @Test public void of_ObjectInt_Inner() {
+  @Test public void of__ObjectInt__Inner() {
     assertEquals(16, ShallowSize.of(new Object() {
-      int _;
+      int __;
 
       @Override public int hashCode() {
-        return super.hashCode() ^ _;
+        return super.hashCode() ^ __;
       }
     }));
   }
 
-  @Test public void of_objectStaticChar() {
+  @Test public void of__objectStaticChar() {
     assertEquals(8, ShallowSize.of(new ObjectStaticChar()));
   }
 
-  @Test public void of_ObjectStaticInt() {
+  @Test public void of__ObjectStaticInt() {
     assertEquals(8, ShallowSize.of(new ObjectStaticInt()));
   }
 
-  @Test public void size_ObjectObject() {
+  @Test public void size__ObjectObject() {
     assertEquals(16, ShallowSize.of(new ObjectObject()));
   }
 
-  @Test public void size_ObjectObject_Object() {
+  @Test public void size__ObjectObject__Object() {
     assertEquals(8, ShallowSize.of(Object.class));
   }
 
-  @Test public void size_ObjectObject_ObjectObject() {
+  @Test public void size__ObjectObject__ObjectObject() {
     assertEquals(16, ShallowSize.of(ObjectObject.class));
   }
 
   static class ObjectBoolean {
-    boolean _;
+    boolean __;
   }
 
   static class ObjectChar {
-    char _;
+    char __;
   }
 
   static class ObjectInt {
-    int _;
+    int __;
   }
 
   static class ObjectObject {
@@ -163,10 +163,10 @@ import org.junit.*;
   }
 
   static class ObjectStaticChar {
-    static char _;
+    static char __;
   }
 
   static class ObjectStaticInt {
-    static int _;
+    static int __;
   }
 }

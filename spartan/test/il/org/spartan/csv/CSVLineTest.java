@@ -73,9 +73,9 @@ import il.org.spartan.streotypes.*;
     final String[] a = { "one", "two", "three", "four" };
     final CSVLine c = new CSVLine.Sorterd();
     for (final String s : a)
-      c.put(s + "_key", s + "_value");
-    assertEquals("four_key,one_key,three_key,two_key", c.header());
-    assertEquals("four_value,one_value,three_value,two_value", c.line());
+      c.put(s + "__key", s + "__value");
+    assertEquals("four__key,one__key,three__key,two__key", c.header());
+    assertEquals("four__value,one__value,three__value,two__value", c.line());
   }
 
   @Test public void emptyTest() {
@@ -170,9 +170,9 @@ import il.org.spartan.streotypes.*;
     final String[] a = { "one", "two", "three", "four" };
     final CSVLine c = new CSVLine.Ordered();
     for (final String s : a)
-      c.put(s + "_key", s + "_value");
-    assertEquals("one_key,two_key,three_key,four_key", c.header());
-    assertEquals("one_value,two_value,three_value,four_value", c.line());
+      c.put(s + "__key", s + "__value");
+    assertEquals("one__key,two__key,three__key,four__key", c.header());
+    assertEquals("one__value,two__value,three__value,four__value", c.line());
   }
 
   @Test public void testReplace() {
