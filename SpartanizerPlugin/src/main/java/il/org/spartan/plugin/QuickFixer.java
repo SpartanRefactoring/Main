@@ -10,10 +10,10 @@ import org.eclipse.ui.*;
 public class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker m) {
     try {
-      final Spartanization $ = Spartanizations.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
+      final Spartanization $ = Spartanizations.get((String) m.getAttribute(Builder.SPARTANIZATION__TYPE__KEY));
       assert $ != null;
       return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(), };
-    } catch (@SuppressWarnings("unused") final CoreException __) {
+    } catch (@SuppressWarnings("unused") final CoreException ____) {
       return new IMarkerResolution[] {};
     }
   }

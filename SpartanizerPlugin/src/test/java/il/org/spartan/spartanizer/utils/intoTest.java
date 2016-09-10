@@ -25,6 +25,6 @@ public class intoTest {
   }
 
   @Test public void findFirstType() {
-    assert t("int _;") != null;
+    assert t("int __;") != null;
   }
 }

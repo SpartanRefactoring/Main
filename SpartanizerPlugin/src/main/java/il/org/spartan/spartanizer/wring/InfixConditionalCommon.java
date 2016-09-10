@@ -37,18 +37,18 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
 
   private static Operator conjugate(final Operator o) {
     return o == null ? null
-        : o == CONDITIONAL_AND ? CONDITIONAL_OR //
-            : o == CONDITIONAL_OR ? CONDITIONAL_AND //
+        : o == CONDITIONAL__AND ? CONDITIONAL__OR //
+            : o == CONDITIONAL__OR ? CONDITIONAL__AND //
                 : null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Factor out common logical component of ||";
   }
 
   @Override Expression replacement(final InfixExpression x) {
     final Operator o = x.getOperator();
-    if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
+    if (!in(o, CONDITIONAL__AND, CONDITIONAL__OR))
       return null;
     final Operator conjugate = conjugate(o);
     final InfixExpression left = az.infixExpression(core(step.left(x)));

@@ -22,28 +22,28 @@ public enum sideEffects {
    *         whose computation is guaranteed to be free of any side effects. */
   // VIM: /{/+,/}/-!sort -u
   private static final int[] alwaysFree = { //
-      BOOLEAN_LITERAL, //
-      CHARACTER_LITERAL, //
-      EMPTY_STATEMENT, //
-      FIELD_ACCESS, //
-      NULL_LITERAL, //
-      NUMBER_LITERAL, //
-      PRIMITIVE_TYPE, //
-      QUALIFIED_NAME, //
-      SIMPLE_NAME, //
-      SIMPLE_TYPE, //
-      STRING_LITERAL, //
-      SUPER_FIELD_ACCESS, //
-      THIS_EXPRESSION, //
-      TYPE_LITERAL, //
+      BOOLEAN__LITERAL, //
+      CHARACTER__LITERAL, //
+      EMPTY__STATEMENT, //
+      FIELD__ACCESS, //
+      NULL__LITERAL, //
+      NUMBER__LITERAL, //
+      PRIMITIVE__TYPE, //
+      QUALIFIED__NAME, //
+      SIMPLE__NAME, //
+      SIMPLE__TYPE, //
+      STRING__LITERAL, //
+      SUPER__FIELD__ACCESS, //
+      THIS__EXPRESSION, //
+      TYPE__LITERAL, //
   };
   private static final int[] alwaysHave = { //
-      SUPER_CONSTRUCTOR_INVOCATION, //
-      SUPER_METHOD_INVOCATION, //
-      METHOD_INVOCATION, //
-      CLASS_INSTANCE_CREATION, //
+      SUPER__CONSTRUCTOR__INVOCATION, //
+      SUPER__METHOD__INVOCATION, //
+      METHOD__INVOCATION, //
+      CLASS__INSTANCE__CREATION, //
       ASSIGNMENT, //
-      POSTFIX_EXPRESSION, //
+      POSTFIX__EXPRESSION, //
   };
 
   public static boolean deterministic(final Expression x) {
@@ -51,7 +51,7 @@ public enum sideEffects {
       return false;
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
     x.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
+      @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation ____) {
         $.set(Boolean.FALSE);
         return false;
       }
@@ -69,23 +69,23 @@ public enum sideEffects {
     if (iz.is(¢, alwaysHave))
       return false;
     switch (¢.getNodeType()) {
-      case ARRAY_CREATION:
+      case ARRAY__CREATION:
         return free((ArrayCreation) ¢);
-      case ARRAY_ACCESS:
+      case ARRAY__ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
-      case CAST_EXPRESSION:
+      case CAST__EXPRESSION:
         return free(step.expression(¢));
-      case INSTANCEOF_EXPRESSION:
+      case INSTANCEOF__EXPRESSION:
         return free(step.left(az.instanceofExpression(¢)));
-      case PREFIX_EXPRESSION:
+      case PREFIX__EXPRESSION:
         return free(az.prefixExpression(¢));
-      case PARENTHESIZED_EXPRESSION:
+      case PARENTHESIZED__EXPRESSION:
         return free(core(¢));
-      case INFIX_EXPRESSION:
+      case INFIX__EXPRESSION:
         return free(extract.allOperands(az.infixExpression(¢)));
-      case CONDITIONAL_EXPRESSION:
+      case CONDITIONAL__EXPRESSION:
         return free(az.conditionalExpression(¢));
-      case ARRAY_INITIALIZER:
+      case ARRAY__INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
       default:
         throw new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName());

@@ -61,7 +61,7 @@ public interface type {
     return null;
   }
 
-  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
+  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain ____) {
     return false;
   }
 
@@ -209,31 +209,31 @@ public interface type {
       if (hasType(x))
         return getType(x);
       switch (x.getNodeType()) {
-        case NULL_LITERAL:
+        case NULL__LITERAL:
           return NULL;
-        case CHARACTER_LITERAL:
+        case CHARACTER__LITERAL:
           return CHAR;
-        case STRING_LITERAL:
+        case STRING__LITERAL:
           return STRING;
-        case BOOLEAN_LITERAL:
+        case BOOLEAN__LITERAL:
           return BOOLEAN;
-        case NUMBER_LITERAL:
+        case NUMBER__LITERAL:
           return lookDown((NumberLiteral) x);
-        case CAST_EXPRESSION:
+        case CAST__EXPRESSION:
           return lookDown((CastExpression) x);
-        case PREFIX_EXPRESSION:
+        case PREFIX__EXPRESSION:
           return lookDown((PrefixExpression) x);
-        case INFIX_EXPRESSION:
+        case INFIX__EXPRESSION:
           return lookDown((InfixExpression) x);
-        case POSTFIX_EXPRESSION:
+        case POSTFIX__EXPRESSION:
           return lookDown((PostfixExpression) x);
-        case PARENTHESIZED_EXPRESSION:
+        case PARENTHESIZED__EXPRESSION:
           return lookDown((ParenthesizedExpression) x);
-        case CLASS_INSTANCE_CREATION:
+        case CLASS__INSTANCE__CREATION:
           return lookDown((ClassInstanceCreation) x);
-        case METHOD_INVOCATION:
+        case METHOD__INVOCATION:
           return lookDown((MethodInvocation) x);
-        case CONDITIONAL_EXPRESSION:
+        case CONDITIONAL__EXPRESSION:
           return lookDown((ConditionalExpression) x);
         case ASSIGNMENT:
           return lookDown((Assignment) x);
@@ -287,20 +287,20 @@ public interface type {
         return i;
       for (ASTNode context = parent(x); context != null; context = parent(context))
         switch (context.getNodeType()) {
-          case INFIX_EXPRESSION:
+          case INFIX__EXPRESSION:
             return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
-          case ARRAY_ACCESS:
+          case ARRAY__ACCESS:
             return i.asIntegral();
-          case PREFIX_EXPRESSION:
+          case PREFIX__EXPRESSION:
             return i.above(az.prefixExpression(context).getOperator());
-          case POSTFIX_EXPRESSION:
+          case POSTFIX__EXPRESSION:
             return i.asNumeric();
-          case IF_STATEMENT:
-          case ASSERT_STATEMENT:
-          case FOR_STATEMENT:
-          case WHILE_STATEMENT:
+          case IF__STATEMENT:
+          case ASSERT__STATEMENT:
+          case FOR__STATEMENT:
+          case WHILE__STATEMENT:
             return BOOLEAN;
-          case PARENTHESIZED_EXPRESSION:
+          case PARENTHESIZED__EXPRESSION:
             continue;
           default:
             return i;
@@ -361,7 +361,7 @@ public interface type {
       }
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator o) {
-        return in(o, EQUALS, NOT_EQUALS) ? this
+        return in(o, EQUALS, NOT__EQUALS) ? this
             : o == wizard.PLUS2 ? asAlphaNumeric()
                 : wizard.isBitwiseOperator(o) ? asBooleanIntegral() : wizard.isShift(o) ? asIntegral() : asNumeric();
       }
@@ -447,7 +447,7 @@ public interface type {
           return underBitwiseOperation(k);
         if (o == REMAINDER)
           return underIntegersOnlyOperator(k);
-        if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
+        if (in(o, LEFT__SHIFT, RIGHT__SHIFT__SIGNED, RIGHT__SHIFT__UNSIGNED))
           return asIntegralUnderOperation();
         if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
           throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);

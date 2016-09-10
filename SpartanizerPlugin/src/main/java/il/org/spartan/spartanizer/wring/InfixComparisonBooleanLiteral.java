@@ -47,7 +47,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   }
 
   @Override public boolean scopeIncludes(final InfixExpression x) {
-    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
+    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT__EQUALS) && (literalOnLeft(x) || literalOnRight(x));
   }
 
   @Override String description(final InfixExpression x) {

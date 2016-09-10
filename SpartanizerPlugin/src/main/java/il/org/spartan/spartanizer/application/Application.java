@@ -40,14 +40,14 @@ import il.org.spartan.utils.*;
   String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {
-    if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
-      return IApplication.EXIT_OK;
+    if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION__ARGS))))
+      return IApplication.EXIT__OK;
     final List<FileStats> fileStats = new ArrayList<>();
     try {
       prepareTempIJavaProject();
     } catch (final CoreException e) {
       System.err.println(e.getMessage());
-      return IApplication.EXIT_OK;
+      return IApplication.EXIT__OK;
     }
     if (printLog) {
       LogManager.activateLog();
@@ -90,7 +90,7 @@ import il.org.spartan.utils.*;
       printLineStatistics(fileStats);
     if (printLog)
       LogManager.closeAllWriters();
-    return IApplication.EXIT_OK;
+    return IApplication.EXIT__OK;
   }
 
   @Override public void stop() {
@@ -98,7 +98,7 @@ import il.org.spartan.utils.*;
   }
 
   String determineOutputFilename(final String path) {
-    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "_new.java";
+    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   void discardCompilationUnit(final ICompilationUnit u) {
@@ -134,7 +134,7 @@ import il.org.spartan.utils.*;
   }
 
   String getPackageNameFromSource(final String source) {
-    final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    final ASTParser p = ASTParser.newParser(ASTParser.K__COMPILATION__UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
   }
@@ -187,7 +187,7 @@ import il.org.spartan.utils.*;
     p.create(null);
     p.open(null);
     final IProjectDescription d = p.getDescription();
-    d.setNatureIds(new String[] { JavaCore.NATURE_ID });
+    d.setNatureIds(new String[] { JavaCore.NATURE__ID });
     p.setDescription(d, null);
     javaProject = JavaCore.create(p);
     final IFolder binFolder = p.getFolder("bin");

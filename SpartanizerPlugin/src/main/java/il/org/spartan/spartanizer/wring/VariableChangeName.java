@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @since 2016/05/08
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment */
 abstract class VariableChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
-  @Override public ASTRewrite go(final ASTRewrite r, final N n, @SuppressWarnings("unused") final TextEditGroup __, final List<ASTNode> uses,
+  @Override public ASTRewrite go(final ASTRewrite r, final N n, @SuppressWarnings("unused") final TextEditGroup ____, final List<ASTNode> uses,
       final List<ASTNode> replacement) {
     if (!change(n))
       return null;

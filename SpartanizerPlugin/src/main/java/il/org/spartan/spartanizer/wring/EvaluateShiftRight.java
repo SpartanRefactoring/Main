@@ -59,12 +59,12 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
     return x.getAST().newNumberLiteral(Long.toString(shifted) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Evaluate substraction of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != RIGHT_SHIFT_SIGNED)
+    if (x.getOperator() != RIGHT__SHIFT__SIGNED)
       return null;
     switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
       case INT:

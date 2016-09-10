@@ -29,7 +29,7 @@ public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfSta
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
     return "Consolidate into a single 'throw'";
   }
 

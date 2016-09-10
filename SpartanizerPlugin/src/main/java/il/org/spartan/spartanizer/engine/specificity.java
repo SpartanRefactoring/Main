@@ -47,12 +47,12 @@ public class specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return iz.is(n, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) n).getOperand()));
+        return iz.is(n, PREFIX__EXPRESSION) && iz.literal(extract.core(((PrefixExpression) n).getOperand()));
       }
     },
-    CLASS_CONSTANT {
+    CLASS__CONSTANT {
       @Override boolean includes(final ASTNode n) {
-        return iz.is(n, SIMPLE_NAME) && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
+        return iz.is(n, SIMPLE__NAME) && ((SimpleName) n).getIdentifier().matches("[A-Z__0-9]+");
       }
     },
     THIS {
@@ -60,39 +60,39 @@ public class specificity implements Comparator<Expression> {
         return iz.thisLiteral(n);
       }
     },
-    ZERO_LITERAL {
+    ZERO__LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         final NumberLiteral ¢1 = az.numberLiteral(¢);
         return ¢1 != null && iz.literal(¢1.getToken(), 0);
       }
     },
-    ONE_LITERAL {
+    ONE__LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         final NumberLiteral ¢1 = az.numberLiteral(¢);
         return ¢1 != null && iz.literal(¢1.getToken(), 1);
       }
     },
-    ZERO_DOUBLE_LITERAL {
+    ZERO__DOUBLE__LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal(¢, 0.0);
       }
     },
-    ONE_DOUBLE_LITERAL {
+    ONE__DOUBLE__LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal(¢, 1.0);
       }
     },
-    EMPTY_STRING {
+    EMPTY__STRING {
       @Override boolean includes(final ASTNode ¢) {
         return iz.emptyStringLiteral(¢);
       }
     },
-    TRUE_LITERAL {
+    TRUE__LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return iz.literalTrue(¢);
       }
     },
-    FALSE_LITERAL {
+    FALSE__LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         return iz.literalFalse(¢);
       }

@@ -23,10 +23,10 @@ public interface eclipse {
   static final Spartanization[] safeSpartanizations = { //
       new Trimmer() };
   static final String NAME = "Spartanization";
-  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
+  static final String ICON__PATH = "/src/main/icons/spartan-warrior64.gif";
   ImageIcon icon = new ImageIcon(new eclipse() {
     //TODO: Ori, why do we need this kludge?
-  }.getClass().getResource(ICON_PATH));
+  }.getClass().getResource(ICON__PATH));
 
   static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
@@ -71,9 +71,9 @@ public interface eclipse {
       return $;
     }
     for (final IPackageFragmentRoot r : packageFragmentRoots)
-      if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
+      if (r.getKind() == IPackageFragmentRoot.K__SOURCE)
         for (final IJavaElement e : r.getChildren())
-          if (e.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+          if (e.getElementType() == IJavaElement.PACKAGE__FRAGMENT)
             $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
     pm.done();
     return $;
@@ -82,7 +82,7 @@ public interface eclipse {
   /** @param message What to announce
    * @return <code><b>null</b></code> */
   static Void announce(final Object message) {
-    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION__MESSAGE, icon);
     return null;
   }
 
@@ -127,15 +127,15 @@ public interface eclipse {
 
   static boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
     try {
-      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR__START)).intValue()
+          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR__END)).intValue();
     } catch (final CoreException e) {
       return true;
     }
   }
 
   static IProgressMonitor newSubMonitor(final IProgressMonitor m) {
-    return new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    return new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS__SUBTASK__LABEL);
   }
 
   static Object resources(final IEditorPart ep) {

@@ -156,7 +156,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final Block __) {
+  @Override String description(@SuppressWarnings("unused") final Block ____) {
     return "Simplify block";
   }
 

@@ -14,47 +14,47 @@ import il.org.spartan.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class AAA_TemplateTestTemplate {
+public class AAA__TemplateTestTemplate {
   /** if fails, suite did not compile... */
-  @Test public void seriesZ_00() {
+  @Test public void seriesZ__00() {
     new Object().hashCode();
   }
 
   /** if fails, assertions do not work */
-  @Test public void seriesZ_01() {
+  @Test public void seriesZ__01() {
     assert null == null;
   }
 
   /** if fails, enable assertions (flag '-va') to the JVM */
   @Test(expected = AssertionError.class) //
-  public void seriesZ_02() {
+  public void seriesZ__02() {
     assert null != null;
   }
 
   /** This is the incorrect way you should check for nulls, using {@link azzert}
    * makes sure we get more informative messages */
-  @Test public void seriesZ_03() {
+  @Test public void seriesZ__03() {
     azzert.isNull($null());
   }
 
   /** Correct way of checking for nulls. {@link azzert} cannot provide further
    * information if the test fails, since failures give null which carries no
    * information informative messages */
-  @Test public void seriesZ_04() {
+  @Test public void seriesZ__04() {
     assert new Object() != null;
   }
 
   /** Correct way of checking for nulls. {@link azzert} cannot provide further
    * information if the test fails, since failures give null which carries no
    * information informative messages */
-  @Test public void seriesZ_05() {
+  @Test public void seriesZ__05() {
     assert new Object() != null;
   }
 
   /** Correct way of checking for true value. {@link azzert} cannot provide
    * further information if the test fails, since failures give nothing but
    * boolean value. */
-  @Test public void seriesZ_06() {
+  @Test public void seriesZ__06() {
     assert $true();
     assert $true() : "Failure in " + object();
   }
@@ -62,34 +62,34 @@ public class AAA_TemplateTestTemplate {
   /** Correct way of checking for false value. {@link azzert} cannot provide
    * further information if the test fails, since failures give nothing but
    * boolean value. */
-  @Test public void seriesZ_07() {
+  @Test public void seriesZ__07() {
     assert !$false();
     assert !$false() : "Failure in " + object();
   }
 
   /** Correct way of checking types */
-  @Test public void seriesZ_08() {
+  @Test public void seriesZ__08() {
     azzert.that(new ArrayList<>(), instanceOf(List.class));
   }
 
   /** Correct way of checking for inequality of values */
-  @Test public void seriesZ_09() {
+  @Test public void seriesZ__09() {
     azzert.that(object(), not(object()));
   }
 
   /** Correct way of checking for equality of values */
-  @Test public void seriesZ_10() {
+  @Test public void seriesZ__10() {
     azzert.that(sameSomeObject(), is(sameSomeObject()));
   }
 
   /** Correct way of checking for equality of numbers */
-  @Test public void seriesZ_11() {
+  @Test public void seriesZ__11() {
     azzert.that($0(), is($0()));
     azzert.that($0(), not(is($1())));
   }
 
   /** Correct ways of comparing numbers */
-  @Test public void seriesZ_12() {
+  @Test public void seriesZ__12() {
     azzert.that($0(), greaterThanOrEqualTo($0()));
     azzert.that($1(), greaterThanOrEqualTo($0()));
     azzert.that($1(), greaterThan($0()));

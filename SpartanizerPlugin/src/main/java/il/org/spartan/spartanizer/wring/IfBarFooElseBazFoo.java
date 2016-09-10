@@ -51,7 +51,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 

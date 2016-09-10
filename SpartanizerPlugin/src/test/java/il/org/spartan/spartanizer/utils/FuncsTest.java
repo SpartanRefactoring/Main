@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class FuncsTest {
   @Test public void arrayOfInts() {
-    azzert.that(spartan.shorten(t("int[][] _;")), equalTo("iss"));
+    azzert.that(spartan.shorten(t("int[][] __;")), equalTo("iss"));
   }
 
   @Test public void asComparisonPrefixlExpression() {
@@ -38,13 +38,13 @@ public class FuncsTest {
 
   @Test public void asComparisonTypicalExpressionFalse() {
     final InfixExpression i = mock(InfixExpression.class);
-    doReturn(CONDITIONAL_OR).when(i).getOperator();
+    doReturn(CONDITIONAL__OR).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
 
   @Test public void asComparisonTypicalInfixFalse() {
     final InfixExpression i = mock(InfixExpression.class);
-    doReturn(CONDITIONAL_AND).when(i).getOperator();
+    doReturn(CONDITIONAL__AND).when(i).getOperator();
     azzert.isNull(az.comparison(i));
   }
 
@@ -69,11 +69,11 @@ public class FuncsTest {
   }
 
   @Test public void findFirstType() {
-    assert t("int _;") != null;
+    assert t("int __;") != null;
   }
 
   @Test public void isDeMorganAND() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
+    azzert.aye(iz.deMorgan(CONDITIONAL__AND));
   }
 
   @Test public void isDeMorganGreater() {
@@ -81,15 +81,15 @@ public class FuncsTest {
   }
 
   @Test public void isDeMorganGreaterEuals() {
-    azzert.nay(iz.deMorgan(GREATER_EQUALS));
+    azzert.nay(iz.deMorgan(GREATER__EQUALS));
   }
 
   @Test public void isDeMorganOR() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
+    azzert.aye(iz.deMorgan(CONDITIONAL__OR));
   }
 
   @Test public void listOfInts() {
-    azzert.that(spartan.shorten(t("List<Set<Integer>> _;")), equalTo("iss"));
+    azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }
 
   @Test public void sameOfNullAndSomething() {
@@ -113,31 +113,31 @@ public class FuncsTest {
   }
 
   @Test public void shortNameASTRewriter() {
-    azzert.that(spartan.shorten(t("ASTRewriter _;")), equalTo("r"));
+    azzert.that(spartan.shorten(t("ASTRewriter __;")), equalTo("r"));
   }
 
   @Test public void shortNameDouble() {
-    azzert.that(spartan.shorten(t("double _;")), equalTo("d"));
+    azzert.that(spartan.shorten(t("double __;")), equalTo("d"));
   }
 
   @Test public void shortNameExpression() {
-    azzert.that(spartan.shorten(t("Expression _;")), equalTo("x"));
+    azzert.that(spartan.shorten(t("Expression __;")), equalTo("x"));
   }
 
   @Test public void shortNameExpressions() {
-    azzert.that(spartan.shorten(t("Expression[] _;")), equalTo("xs"));
+    azzert.that(spartan.shorten(t("Expression[] __;")), equalTo("xs"));
   }
 
   @Test public void shortNameExpressionsList() {
-    azzert.that(spartan.shorten(t("List<Expression> _;")), equalTo("xs"));
+    azzert.that(spartan.shorten(t("List<Expression> __;")), equalTo("xs"));
   }
 
   @Test public void shortNameInfrastructure() {
-    azzert.that(spartan.shorten(t("int _;")), equalTo("i"));
+    azzert.that(spartan.shorten(t("int __;")), equalTo("i"));
   }
 
   @Test public void shortNameQualifiedType() {
-    azzert.that(spartan.shorten(t("org.eclipse.jdt.core.dom.InfixExpression _;")), equalTo("x"));
+    azzert.that(spartan.shorten(t("org.eclipse.jdt.core.dom.InfixExpression __;")), equalTo("x"));
   }
 
   private Type t(final String codeFragment) {

@@ -9,16 +9,16 @@ import il.org.spartan.spartanizer.wring.*;
  * @since 2016 */
 public class PreferencesResources {
   /** Page description **/
-  public static final String PAGE_DESCRIPTION = "Preferences for the spartanizer plug-in";
+  public static final String PAGE__DESCRIPTION = "Preferences for the spartanizer plug-in";
   /** General preferences **/
-  public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
-  public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
-  public static final String[][] PLUGIN_STARTUP_BEHAVIOR_OPTIONS = { { "Remember individual project settings", "remember" }, //
-      { "Enable for all projects", "always_on" }, //
-      { "Disable for all projects", "always_off" }, //
+  public static final String PLUGIN__STARTUP__BEHAVIOR__ID = "pref__startup__behavior";
+  public static final String PLUGIN__STARTUP__BEHAVIOR__TEXT = "Plugin startup behavior:";
+  public static final String[][] PLUGIN__STARTUP__BEHAVIOR__OPTIONS = { { "Remember individual project settings", "remember" }, //
+      { "Enable for all projects", "always__on" }, //
+      { "Disable for all projects", "always__off" }, //
   };
-  public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "pref_enable_by_default_for_new_projects";
-  public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
+  public static final String NEW__PROJECTS__ENABLE__BY__DEFAULT__ID = "pref__enable__by__default__for__new__projects";
+  public static final String NEW__PROJECTS__ENABLE__BY__DEFAULT__TEXT = "Enable by default for newly created projects";
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them

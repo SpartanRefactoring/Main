@@ -67,7 +67,7 @@ public class EvaluateSubstraction extends Wring.ReplaceCurrentNode<InfixExpressi
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Evaluate substraction of numbers";
   }
 
