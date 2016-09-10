@@ -12,12 +12,13 @@ import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
-    azzert.that(new MethodExplorer(into.d("  void f() {\n" + "")).localVariables().size(), is(1));
+    azzert.that(new MethodExplorer(into.d("" + "  void f() {\n" + "    try {\n" + "      f();\n"
+        + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(), is(1));
   }
 
   @Test public void localVariablesExtendedForLoop() {
     azzert.that(new MethodExplorer(into.d(
-        "  int sum(final int is[]) {\n" + ""))
+        "" + "  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n" + "      $ += i;\n" + "    return $;\n" + "  } "))
             .localVariables().size(),
         is(2));
   }
@@ -55,7 +56,10 @@ import il.org.spartan.spartanizer.engine.*;
   @Test public void localVariablesTryClause() {
     azzert
         .that(
-            new MethodExplorer(into.d("  void f() {\n" + "")).localVariables().size(),
+            new MethodExplorer(into.d("" + "  void f() {\n" + "    final File f = new File(\"f\");\n"
+                + "    try (final InputStream s = new FileInputStream(f); final InputStreamReader is = new InputStreamReader(s)) {\n" + "      f();\n"
+                + "    } catch (final FileNotFoundException e) {\n" + "      e.printStackTrace();\n" + "    } catch (final IOException e) {\n"
+                + "      e.printStackTrace();\n" + "    } finally {\n" + "      f();\n" + "    }\n" + "  }\n")).localVariables().size(),
             is(5));
   }
 
