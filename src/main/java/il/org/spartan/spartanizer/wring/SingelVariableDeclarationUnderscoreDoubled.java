@@ -50,7 +50,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
   }
 
   private static String unusedVariableName() {
-    return "____";
+    return "__";
   }
 
   @Override String description(final SingleVariableDeclaration d) {
