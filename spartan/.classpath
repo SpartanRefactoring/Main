@@ -17,6 +17,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cli"/>
+	<classpathentry kind="lib" path="lib/cli-1.01.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
