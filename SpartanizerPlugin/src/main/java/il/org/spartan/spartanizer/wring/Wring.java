@@ -31,7 +31,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  boolean eligible(@SuppressWarnings("unused") final N ____) {
+  boolean eligible(@SuppressWarnings("unused") final N __) {
     return true;
   }
 

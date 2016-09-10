@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
-  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";
   }
 

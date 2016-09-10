@@ -33,27 +33,27 @@ abstract class HidingDepth extends ScopeManager {
 }
 
 abstract class ScopeManager extends ASTVisitor {
-  @Override public final void endVisit(@SuppressWarnings("unused") final AnnotationTypeDeclaration ____) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
     pop();
   }
 
-  @Override public final void endVisit(@SuppressWarnings("unused") final AnonymousClassDeclaration ____) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
     pop();
   }
 
-  @Override public final void endVisit(@SuppressWarnings("unused") final Block ____) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final Block __) {
     pop();
   }
 
-  @Override public final void endVisit(@SuppressWarnings("unused") final EnhancedForStatement ____) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
     pop();
   }
 
-  @Override public final void endVisit(@SuppressWarnings("unused") final ForStatement ____) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final ForStatement __) {
     pop();
   }
 
-  @Override public final void endVisit(@SuppressWarnings("unused") final TypeDeclaration ____) {
+  @Override public final void endVisit(@SuppressWarnings("unused") final TypeDeclaration __) {
     pop();
   }
 
@@ -67,7 +67,7 @@ abstract class ScopeManager extends ASTVisitor {
     return go(d);
   }
 
-  @Override public final boolean visit(@SuppressWarnings("unused") final Block ____) {
+  @Override public final boolean visit(@SuppressWarnings("unused") final Block __) {
     return push();
   }
 
@@ -81,7 +81,7 @@ abstract class ScopeManager extends ASTVisitor {
     return go(d);
   }
 
-  @Override public final boolean visit(@SuppressWarnings("unused") final ForStatement ____) {
+  @Override public final boolean visit(@SuppressWarnings("unused") final ForStatement __) {
     return push();
   }
 
@@ -270,7 +270,7 @@ class UsesCollector extends HidingDepth {
   /** This is where we ignore all occurrences of {@link SimpleName} which are
    * not variable names, e.g., class name, function name, field name, etc.
    * @param __ JD */
-  private void ingore(@SuppressWarnings("unused") final SimpleName ____) {
+  private void ingore(@SuppressWarnings("unused") final SimpleName __) {
     // We simply ignore the parameter
   }
 
@@ -311,7 +311,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   }
 
   // changed Prefix and Postfix on the two next visitors.
-  @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression ____) {
+  @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression __) {
     return false;
   }
 

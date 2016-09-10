@@ -39,12 +39,12 @@ public class Spartanizations {
     return map.keySet();
   }
 
-  /** @param c Spartanization rule
+  /** @param t Spartanization rule
    * @return Spartanization class rule instance */
   @SuppressWarnings("unchecked") //
-  public static <T extends Spartanization> T findInstance(final Class<? extends T> c) {
+  public static <T extends Spartanization> T findInstance(final Class<? extends T> t) {
     for (final Spartanization $ : all)
-      if ($.getClass().equals(c))
+      if ($.getClass().equals(t))
         return (T) $;
     return null;
   }

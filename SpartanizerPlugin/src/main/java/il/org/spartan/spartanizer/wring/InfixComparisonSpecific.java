@@ -29,7 +29,7 @@ public final class InfixComparisonSpecific extends Wring.ReplaceCurrentNode<Infi
     return !x.hasExtendedOperands() && iz.comparison(x) && (specificity.defined(step.left(x)) || specificity.defined(step.right(x)));
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
   }
 

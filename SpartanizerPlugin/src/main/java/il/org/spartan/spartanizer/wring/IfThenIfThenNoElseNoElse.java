@@ -35,7 +35,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     r.replace(then, duplicate.of(step.then(then)), g);
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merge conditionals of nested if staement";
   }
 

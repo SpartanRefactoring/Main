@@ -52,7 +52,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
 

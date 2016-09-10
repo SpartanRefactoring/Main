@@ -42,7 +42,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
                 : null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
 

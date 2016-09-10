@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class IfTrueOrFalse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Canonicalization {
-  @Override String description(@SuppressWarnings("unused") final IfStatement ____) {
+  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }
 

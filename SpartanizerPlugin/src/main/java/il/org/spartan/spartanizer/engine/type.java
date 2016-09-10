@@ -54,11 +54,12 @@ public interface type {
     return inner.types.containsKey(name);
   }
 
-  /** Generates a type from a String name, if the String name represents a
-   * concrete type identifiable by PrudentType.
+  /**
+   * Generates a type from a String name, if the String name represents a concrete type identifiable by PrudentType.
    * @param s
-   * @return The specified type, type.Odd.Types.NOTHING as default. */
-  public static type generateFromTypeName(final String s) {
+   * @return  The specified type, type.Odd.Types.NOTHING as default. 
+   */
+  static type generateFromTypeName(final String s) {
     switch (s) {
       case "byte":
       case "Byte":

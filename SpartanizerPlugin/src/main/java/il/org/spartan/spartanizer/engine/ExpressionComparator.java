@@ -120,7 +120,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
     final Integer $ = new Integer();
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode ____) {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         ++$.inner;
       }
     });
