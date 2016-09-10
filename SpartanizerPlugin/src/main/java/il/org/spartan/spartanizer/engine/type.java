@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
  ** @author Dor Maayan
@@ -262,13 +263,7 @@ public interface type {
     }
 
     private static implementation lookDown(final NumberLiteral l) {
-      // TODO: Dor use TypeLiteral instead. It is thoroughly tested and very
-      // accurate.
-      final String ¢ = l.getToken();
-      return ¢.matches("[0-9]+") ? INT
-          : ¢.matches("[0-9]+[l,L]") ? LONG
-              : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
-                  : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
+      return new LiteralParser(l.getToken()).type();
     }
 
     private static implementation lookDown(final ParenthesizedExpression x) {
