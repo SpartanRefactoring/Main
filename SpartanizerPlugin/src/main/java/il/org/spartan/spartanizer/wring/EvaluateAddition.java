@@ -61,17 +61,29 @@ public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> 
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    int sourceLength = x.toString().length();
+    ASTNode resultExpression;
     if (x.getOperator() != PLUS)
       return null;
     switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
-        return replacementInt(extract.allOperands(x), x);
+        resultExpression =  replacementInt(extract.allOperands(x), x);
+        break;
       case DOUBLE:
-        return replacementDouble(extract.allOperands(x), x);
+        resultExpression = replacementDouble(extract.allOperands(x), x);
+        break;
       case LONG:
-        return replacementLong(extract.allOperands(x), x);
-      default:
+        resultExpression =  replacementLong(extract.allOperands(x), x);
+        break;
+      default :
         return null;
     }
+    if(resultExpression == null)
+      return null;
+    int resultLength = az.numberLiteral(resultExpression).getToken().length();
+    if(resultLength < sourceLength){
+      return resultExpression;
+    }
+    return null;
   }
 }
