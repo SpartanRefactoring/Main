@@ -221,7 +221,7 @@ public class ArithmeticTest {
       trimming("100%3L%1").to("0L");
     }
 
-    @Test public void issue92_52() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_52() {
       trimming("100>>2").to("25");
     }
 
@@ -233,27 +233,27 @@ public class ArithmeticTest {
           .to("-90/2/4/7/8/9").to("0");
     }
 
-    @Test public void issue92_54() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_54() {
       trimming("100L>>2").to("25L");
     }
 
-    @Test public void issue92_55() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_55() {
       trimming("100>>2L").to("25");
     }
 
-    @Test public void issue92_56() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_56() {
       trimming("100<<2").to("400");
     }
 
-    @Test public void issue92_57() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_57() {
       trimming("100L<<2").to("400L");
     }
 
-    @Test public void issue92_58() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_58() {
       trimming("100<<2L").to("400");
     }
 
-    @Test public void issue92_59() {
+    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_59() {
       trimming("100L<<2L").to("400L");
     }
 
@@ -261,7 +261,7 @@ public class ArithmeticTest {
       trimming("3./4").to("0.75").stays();
     }
 
-    @Test public void issue92_60() {
+    @Test  @Ignore("Do not compute shifts, they have a reason")public void issue92_60() {
       trimming("100L<<2L>>2L").to("400L>>2L").to("100L");
     }
 

@@ -55,8 +55,8 @@ public class Toolbox {
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
             new EvaluateSubstraction(), //
-            new EvaluateShiftRight(), //
-            new EvaluateShiftLeft(), //
+            //new EvaluateShiftRight(), //
+            //new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
