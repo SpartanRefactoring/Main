@@ -41,12 +41,15 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
+    if(statementList.size() < 2 || !(statementList.get(0) instanceof WhileStatement) //
+        ||!(statementList.get(1) instanceof ReturnStatement))
+      return null;
     final WhileStatement whileStatement = (WhileStatement) statementList.get(0);
     final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
     if (!isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    Statement toChange = az.ifStatement(body) == null ? handleIf(body, nextReturn)
+    Statement toChange = az.ifStatement(body) != null ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
     if (toChange == null)
       return null;
@@ -104,10 +107,4 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     return $;
   }
 
-  @Override boolean scopeIncludes(final Block b) {
-    // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
-    // null, you do not have to do anything.
-    final List<Statement> ss = step.statements(b);
-    return ss.size() > 1 && ss.get(0) instanceof WhileStatement && ss.get(1) instanceof ReturnStatement;
-  }
 }
