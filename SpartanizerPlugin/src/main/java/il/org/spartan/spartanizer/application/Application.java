@@ -172,6 +172,7 @@ import il.org.spartan.utils.*;
       if (!a.startsWith("-"))
         optPath = a;
       try {
+        // TODO: Matteo, please check. 
       } catch (final NumberFormatException e) {
         // Ignore
       }
