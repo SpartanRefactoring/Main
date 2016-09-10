@@ -3567,7 +3567,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void sortDivision() {
-    trimming("2.1/34.2/1.0").to("0.06140350877192982");
+    trimming("2.1/34.2/1.0").to("2.1/1.0/34.2");
   }
 
   @Test public void sortDivisionLetters() {
@@ -3575,7 +3575,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void sortDivisionNo() {
-    trimming("2.1/3").to("0.7000000000000001");
+    trimming("2.1/3").stays();
   }
 
   @Test public void sortThreeOperands1() {
