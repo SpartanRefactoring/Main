@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.java.PrudentType.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -18,7 +18,7 @@ public enum stringType {
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
   public static boolean isNot(final Expression x) {
-    return stringType.isNotFromContext(x) || !in(prudent(x), STRING, ALPHANUMERIC);
+    return stringType.isNotFromContext(x) || !in(get(x), Primitive.Certain.STRING, Primitive.Uncertain.ALPHANUMERIC);
   }
 
   private static boolean isNotFromContext(final Expression x) {

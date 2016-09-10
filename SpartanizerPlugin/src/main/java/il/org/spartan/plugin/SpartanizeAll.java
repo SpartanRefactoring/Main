@@ -34,7 +34,7 @@ public class SpartanizeAll extends BaseHandler {
     super(null);
   }
 
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent ____) throws ExecutionException {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();

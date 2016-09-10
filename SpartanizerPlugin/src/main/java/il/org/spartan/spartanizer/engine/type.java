@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -18,6 +17,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
  ** @author Dor Maayan
@@ -52,6 +52,43 @@ public interface type {
   @SuppressWarnings("synthetic-access") static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
+  
+  /** Generates a type from a String name, if the String name represents
+   * a concrete type identifiable by PrudentType.
+   * @param s
+   * @return The specified type, type.Odd.Types.NOTHING as default. */
+  public static type generateFromTypeName(final String s) {
+    switch (s) {
+      case "byte":
+      case "Byte":
+        return BYTE;
+      case "short":
+      case "Short":
+        return SHORT;
+      case "char":
+      case "Character":
+        return CHAR;
+      case "int":
+      case "Integer":
+        return INT;
+      case "long":
+      case "Long":
+        return LONG;
+      case "float":
+      case "Float":
+        return FLOAT;
+      case "double":
+      case "Double":
+        return DOUBLE;
+      case "boolean":
+      case "Boolean":
+        return BOOLEAN;
+      case "String":
+        return STRING;
+      default:
+        return NOTHING;
+    }
+  }
 
   default Primitive.Certain asPrimitiveCertain() {
     return null;
@@ -61,7 +98,7 @@ public interface type {
     return null;
   }
 
-  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain ____) {
+  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
     return false;
   }
 
@@ -198,7 +235,9 @@ public interface type {
           : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
               : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
                   : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                      : NOTHING; //
+                      : $.isNumeric() && ¢ == ALPHANUMERIC ? $
+                          : ¢.isNumeric() && $ == ALPHANUMERIC ? ¢
+                              : NOTHING; //
     }
 
     /** @param x JD
@@ -260,13 +299,7 @@ public interface type {
     }
 
     private static implementation lookDown(final NumberLiteral l) {
-      // TODO: Dor use TypeLiteral instead. It is thoroughly tested and very
-      // accurate.
-      final String ¢ = l.getToken();
-      return ¢.matches("[0-9]+") ? INT
-          : ¢.matches("[0-9]+[l,L]") ? LONG
-              : ¢.matches("[0-9]+\\.[0-9]*[f,F]") || ¢.matches("[0-9]+[f,F]") ? FLOAT
-                  : ¢.matches("[0-9]+\\.[0-9]*[d,D]?") || ¢.matches("[0-9]+[d,D]") ? DOUBLE : NUMERIC;
+      return new LiteralParser(l.getToken()).type();
     }
 
     private static implementation lookDown(final ParenthesizedExpression x) {
@@ -298,7 +331,7 @@ public interface type {
           case IF_STATEMENT:
           case ASSERT_STATEMENT:
           case FOR_STATEMENT:
-          case WHILE_STATEMENT:
+          //case WHILE_STATEMENT:
             return BOOLEAN;
           case PARENTHESIZED_EXPRESSION:
             continue;
@@ -519,8 +552,7 @@ public interface type {
    * @author Shalmon Niv
    * @since 2016 */
   interface Odd extends inner.implementation {
-    /** Those anonymous characters that know little or nothing about themselves
-     * TODO: Not sure we need all these {@link type.Odd.Types} values. */
+    /** Those anonymous characters that know little or nothing about themselves */
     enum Types implements Odd {
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
@@ -534,8 +566,6 @@ public interface type {
       }
 
       @Override public String description() {
-        // TODO: Niv, why do we need this 'key' call?
-        key();
         return description;
       }
 

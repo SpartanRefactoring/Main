@@ -59,7 +59,7 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
     return x.getAST().newNumberLiteral(Long.toString(shifted) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate shift right of numbers";
   }
 

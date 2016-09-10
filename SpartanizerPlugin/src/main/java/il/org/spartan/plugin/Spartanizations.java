@@ -20,7 +20,7 @@ public class Spartanizations {
     static final long serialVersionUID = -8921699276699040030L;
     {
       for (final Spartanization s : all)
-        put(s.getClass().getSimpleName(), s);
+        put(s.getName(), s);
     }
   };
 
@@ -62,7 +62,7 @@ public class Spartanizations {
   public static void reset() {
     map.clear();
     for (final Spartanization s : all)
-      map.put(s.getClass().getSimpleName(), s);
+      map.put(s.getName(), s);
   }
 
   private final Spartanization value;

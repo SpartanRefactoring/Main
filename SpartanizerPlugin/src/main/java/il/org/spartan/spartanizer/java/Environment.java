@@ -5,6 +5,8 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.engine.*;
+
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 @SuppressWarnings({ "unused" }) public interface Environment {
@@ -21,7 +23,7 @@ import org.eclipse.jdt.core.dom.*;
     /** The node at which this entry was created */
     public final ASTNode self;
     /** What do we know about the type of this definition */
-    public final PrudentType prudentType;
+    public final type prudentType;
 
     // For now, nothing is known, we only maintain lists
     public Information() {
@@ -30,14 +32,14 @@ import org.eclipse.jdt.core.dom.*;
       hiding = null;
     }
 
-    public Information(final PrudentType t) {
+    public Information(final type t) {
       blockScope = self = null;
       prudentType = t;
       hiding = null;
     }
 
-    static boolean prudentTypeComparison(final PrudentType t1, final PrudentType t2) {
-      return t1 == null ? t2 == null : t2 != null && (t1 == PrudentType.NOTHING || t2 == PrudentType.NOTHING || t1 == t2);
+    static boolean prudentTypeComparison(final type t1, final type t2) {
+      return t1 == null ? t2 == null : t2 != null && (t1 == type.Odd.Types.NOTHING || t2 == type.Odd.Types.NOTHING || t1 == t2);
     }
 
     @Override public boolean equals(final Object o) {
