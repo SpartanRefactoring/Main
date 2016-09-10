@@ -106,6 +106,6 @@ public enum Log {
   }
 
   private static String prefix() {
-    return now() + tabber.toString();
+    return now() + tabber + "";
   }
 }

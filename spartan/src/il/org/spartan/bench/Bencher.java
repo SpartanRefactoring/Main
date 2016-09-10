@@ -31,8 +31,8 @@ public class Bencher extends LogBook.Mutable {
     BenchingPolicy.after(after);
   }
 
-  public void go(final String name, final long n, final Operation o) {
-    BenchingPolicy.go(this, name, n, o);
+  public void go(final String name, final long l, final Operation o) {
+    BenchingPolicy.go(this, name, l, o);
     BenchingPolicy.after(after);
   }
 }

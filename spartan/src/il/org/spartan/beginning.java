@@ -28,7 +28,7 @@ import il.org.spartan.iterables.*;
   }
 
   static with with(final char c) {
-    return with("" + c);
+    return with(c + "");
   }
 
   static with with(final String s) {
@@ -39,13 +39,13 @@ import il.org.spartan.iterables.*;
   @SuppressWarnings({ "static-method" }) //
   public static class TEST {
     @Test public void with() {
-      azzert.that("" + beginning.with("a").separate("x", "y").by(",").endingWith("c"), is("ax,yc"));
+      azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
 
     @Test public void withType() {
       final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
       azzert.notNull(endingWith);
-      azzert.that("" + endingWith, is("ax,yc"));
+      azzert.that(endingWith + "", is("ax,yc"));
     }
   }
 
@@ -132,7 +132,7 @@ import il.org.spartan.iterables.*;
           }
 
           @Override public String toString() {
-            return D.this.toString();
+            return D.this + "";
           }
 
           public class I {
@@ -141,7 +141,7 @@ import il.org.spartan.iterables.*;
             }
 
             @Override public String toString() {
-              return E.this.toString();
+              return E.this + "";
             }
           }
         }

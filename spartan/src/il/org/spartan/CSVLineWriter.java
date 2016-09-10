@@ -60,7 +60,7 @@ public class CSVLineWriter extends CSVLine.Ordered {
 
   public void nl() {
     writer.writeFlush(this);
-    count++;
+    ++count;
   }
 
   @SuppressWarnings("static-method") protected String extension() {

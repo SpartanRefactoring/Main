@@ -415,7 +415,7 @@ public class azzert extends org.junit.Assert {
     return nay("", claim);
   }
 
-  public static @NonNull Asserter nay(final String reason, final boolean claim) {
+  @NonNull public static Asserter nay(final String reason, final boolean claim) {
     return new Asserter().andNay(reason, claim);
   }
 
@@ -423,7 +423,7 @@ public class azzert extends org.junit.Assert {
     azzert.notNull(os);
     assert os != null;
     for (final @Nullable Object o : os)
-      azzert.notNull("" + os, o);
+      azzert.notNull(os + "", o);
   }
 
   public static Matcher<Boolean> not(final boolean b) {
@@ -486,7 +486,7 @@ public class azzert extends org.junit.Assert {
     assert os != null;
     notNull(os);
     for (final @Nullable Object o : os)
-      notNull("" + os, o);
+      notNull(os + "", o);
   }
 
   public static Matcher<@Nullable Object> nullValue() {

@@ -74,9 +74,9 @@ public class CSVStatistics extends CSVLine.Ordered {
     inner.writeFlush(this);
   }
 
-  @Override public CSVLine put(final String key, final double value, final FormatSpecifier... as) {
+  @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
     getStatistics(key).record(value);
-    return super.put(key, value, as);
+    return super.put(key, value, ss);
   }
 
   @Override public CSVLine put(final String key, final int value) {
@@ -104,9 +104,9 @@ public class CSVStatistics extends CSVLine.Ordered {
       inner.writeFlush(this);
     }
 
-    @Override public CSVLine put(final String key, final double value, final FormatSpecifier... as) {
+    @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
       getStatistics(key).record(value);
-      return super.put(key, value, as);
+      return super.put(key, value, ss);
     }
 
     @Override public CSVLine put(final String key, final long value) {

@@ -62,7 +62,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
   }
 
   public CSVLine in(final Object innerTableName) {
-    return in(innerTableName.toString());
+    return in((innerTableName + ""));
   }
 
   public CSVLine in(final String innerTableName) {
