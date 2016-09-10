@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 public final class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends VariableChangeName<N> implements Kind.UnusedArguments {
   @Override boolean change(final N n) {
-    return "_".equals(n.getName());
+    return "_".equals(n.getName() + "");
   }
 
   @Override String description(@SuppressWarnings("unused") final N __) {
