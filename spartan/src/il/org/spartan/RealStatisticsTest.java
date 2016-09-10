@@ -65,7 +65,7 @@ import il.org.spartan.statistics.*;
     assertEquals(12, s.mean(), 1E-6);
     assertEquals(3, s15.mean(), 1E-6);
     assertEquals(3.5, s07.mean(), 1E-6);
-    assertEquals(0.5555555555555556, s_4x0_5x1.mean(), 1E-6);
+    assertEquals(5/9.0, s_4x0_5x1.mean(), 1E-6);
   }
 
   @Test public void testMedian() {
