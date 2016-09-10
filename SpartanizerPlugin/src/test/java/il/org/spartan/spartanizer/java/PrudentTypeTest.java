@@ -631,8 +631,7 @@ public class PrudentTypeTest {
     }
 
     @Test public void UnaryPlusMinusSemantics03() {
-      final short x = 0;
-      azzert.that(PrudentType.axiom(x), is(PrudentType.INT));
+      azzert.that(PrudentType.axiom(i), is(PrudentType.INT));
     }
 
     @Test public void UnaryPlusMinusSemantics04() {
