@@ -75,21 +75,21 @@ public enum step {
     if (n == null)
       return null;
     switch (n.getNodeType()) {
-      case ASTNode.EXPRESSION_STATEMENT:
+      case ASTNode.EXPRESSION__STATEMENT:
         return expression((ExpressionStatement) n);
-      case ASTNode.RETURN_STATEMENT:
+      case ASTNode.RETURN__STATEMENT:
         return expression((ReturnStatement) n);
-      case ASTNode.THROW_STATEMENT:
+      case ASTNode.THROW__STATEMENT:
         return expression((ThrowStatement) n);
-      case ASTNode.CLASS_INSTANCE_CREATION:
+      case ASTNode.CLASS__INSTANCE__CREATION:
         return expression((ClassInstanceCreation) n);
-      case ASTNode.CAST_EXPRESSION:
+      case ASTNode.CAST__EXPRESSION:
         return expression((CastExpression) n);
-      case ASTNode.METHOD_INVOCATION:
+      case ASTNode.METHOD__INVOCATION:
         return step.receiver((MethodInvocation) n);
-      case ASTNode.PARENTHESIZED_EXPRESSION:
+      case ASTNode.PARENTHESIZED__EXPRESSION:
         return expression((ParenthesizedExpression) n);
-      case ASTNode.DO_STATEMENT:
+      case ASTNode.DO__STATEMENT:
         return expression((DoStatement) n);
       default:
         return null;

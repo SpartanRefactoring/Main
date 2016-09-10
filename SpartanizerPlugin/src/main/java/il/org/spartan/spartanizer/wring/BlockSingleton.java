@@ -28,13 +28,13 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
     return $ == null || iz.blockEssential($) ? null : duplicate.of($);
   }
 
-  @Override String description(@SuppressWarnings("unused") final Block __) {
+  @Override String description(@SuppressWarnings("unused") final Block ____) {
     return "Remove redundant curly braces.";
   }
 
   @Override Statement replacement(final Block b) {
     final ASTNode parent = step.parent(b);
-    return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
+    return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY__STATEMENT, ASTNode.SYNCHRONIZED__STATEMENT) ? null
         : replacement(lisp.onlyOne(statements(b)));
   }
 }

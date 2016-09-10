@@ -14,7 +14,7 @@ import org.eclipse.ui.progress.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public class SpartanizeAll extends BaseHandler {
-  static final int MAX_PASSES = 20;
+  static final int MAX__PASSES = 20;
 
   /** Returns the number of spartanization suggestions for a compilation unit
    * @param u JD
@@ -34,7 +34,7 @@ public class SpartanizeAll extends BaseHandler {
     super(null);
   }
 
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent ____) throws ExecutionException {
     final StringBuilder message = new StringBuilder();
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
@@ -46,13 +46,13 @@ public class SpartanizeAll extends BaseHandler {
     message.append("with " + initialCount + " suggestions");
     if (initialCount == 0)
       return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
-    for (int i = 0; i < MAX_PASSES; ++i) {
+    for (int i = 0; i < MAX__PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
         ps.busyCursorWhile(pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-          "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+          "Pass " + passNum.get() + " out of maximum of " + MAX__PASSES, us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
             eclipse.apply(u);

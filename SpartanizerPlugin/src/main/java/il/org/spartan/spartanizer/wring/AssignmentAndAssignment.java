@@ -45,7 +45,7 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     if (!(parent instanceof Statement))
       return null;
     final Expression right = getRight(a);
-    if (right == null || right.getNodeType() == NULL_LITERAL)
+    if (right == null || right.getNodeType() == NULL__LITERAL)
       return null;
     final Assignment a1 = extract.assignment(nextStatement);
     if (a1 == null)

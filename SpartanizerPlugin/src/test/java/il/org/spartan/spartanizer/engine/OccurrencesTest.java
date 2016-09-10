@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 public class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
-  private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+  private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION__UNIT.from(wrap);
   private final SimpleName a = extract.firstVariableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();
@@ -46,7 +46,7 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinAL() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(a).size(), is(1));
+    azzert.that(Collect.BOTH__SEMANTIC.of(a).in(a).size(), is(1));
   }
 
   @Test public void occurencesAinAsame() {
@@ -54,11 +54,11 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(e).size(), is(1));
+    azzert.that(Collect.BOTH__SEMANTIC.of(a).in(e).size(), is(1));
   }
 
   @Test public void occurencesAinLeftOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(step.left(e)).size(), is(1));
+    azzert.that(Collect.BOTH__SEMANTIC.of(a).in(step.left(e)).size(), is(1));
   }
 
   @Test public void occurencesAinLeftOfEsame() {
@@ -66,15 +66,15 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(step.right(e)).size(), is(0));
+    azzert.that(Collect.BOTH__SEMANTIC.of(a).in(step.right(e)).size(), is(0));
   }
 
   @Test public void occurencesBinE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(e).size(), is(1));
+    azzert.that(Collect.BOTH__SEMANTIC.of(b).in(e).size(), is(1));
   }
 
   @Test public void occurencesBinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(step.right(e)).size(), is(1));
+    azzert.that(Collect.BOTH__SEMANTIC.of(b).in(step.right(e)).size(), is(1));
   }
 
   @Test public void sameAandLeftOfE() {

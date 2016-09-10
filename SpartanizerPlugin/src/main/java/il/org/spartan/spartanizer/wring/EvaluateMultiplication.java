@@ -57,7 +57,7 @@ public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpres
     return "Evaluate multiplication of numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override String description(@SuppressWarnings("unused") final InfixExpression ____) {
     return "Evaluate multiplication numbers";
   }
 

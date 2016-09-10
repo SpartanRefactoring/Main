@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class ReturnLastInMethod extends Wring<ReturnStatement> implements Kind.SyntacticBaggage {
-  @Override String description(@SuppressWarnings("unused") final ReturnStatement __) {
+  @Override String description(@SuppressWarnings("unused") final ReturnStatement ____) {
     return "Remove redundant return statement";
   }
 

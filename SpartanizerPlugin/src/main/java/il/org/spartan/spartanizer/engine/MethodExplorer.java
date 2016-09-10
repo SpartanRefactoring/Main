@@ -87,19 +87,19 @@ public class MethodExplorer {
   }
 
   @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
+    @Override public final boolean visit(final AnnotationTypeDeclaration ____) {
       return false;
     }
 
-    @Override public final boolean visit(final AnonymousClassDeclaration __) {
+    @Override public final boolean visit(final AnonymousClassDeclaration ____) {
       return false;
     }
 
-    @Override public final boolean visit(final EnumDeclaration __) {
+    @Override public final boolean visit(final EnumDeclaration ____) {
       return false;
     }
 
-    @Override public final boolean visit(final TypeDeclaration __) {
+    @Override public final boolean visit(final TypeDeclaration ____) {
       return false;
     }
   }

@@ -17,17 +17,17 @@ import il.org.spartan.spartanizer.wring.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code> */
 public class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all suggestions */
-  public static final String SPARTANIZATION_LONG_PREFIX = "Spartanization suggestion: ";
+  public static final String SPARTANIZATION__LONG__PREFIX = "Spartanization suggestion: ";
   /** Short prefix to be used in front of all suggestions */
-  public static final String SPARTANIZATION_SHORT_PREFIX = "Spartanize: ";
+  public static final String SPARTANIZATION__SHORT__PREFIX = "Spartanize: ";
   /** Empty prefix for brevity */
-  public static final String EMPTY_PREFIX = "";
+  public static final String EMPTY__PREFIX = "";
   /** the ID under which this builder is registered */
-  public static final String BUILDER_ID = "il.org.spartan.spartanizer.BuilderID";
-  private static final String MARKER_TYPE = "il.org.spartan.spartanizer.spartanizationSuggestion";
+  public static final String BUILDER__ID = "il.org.spartan.spartanizer.BuilderID";
+  private static final String MARKER__TYPE = "il.org.spartan.spartanizer.spartanizationSuggestion";
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
-  public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
+  public static final String SPARTANIZATION__TYPE__KEY = "il.org.spartan.spartanizer.spartanizationType";
 
   /** deletes all spartanization suggestion markers
    * @param f the file from which to delete the markers
@@ -37,7 +37,7 @@ public class Builder extends IncrementalProjectBuilder {
    *         change event notification. See {@link IResourceChangeEvent} for
    *         more details. */
   public static void deleteMarkers(final IFile f) throws CoreException {
-    f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
+    f.deleteMarkers(MARKER__TYPE, false, IResource.DEPTH__ONE);
   }
 
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
@@ -57,33 +57,33 @@ public class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
-    m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
-    m.setAttribute(SPARTANIZATION_TYPE_KEY, s + "");
+    m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY__INFO);
+    m.setAttribute(SPARTANIZATION__TYPE__KEY, s + "");
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
-    m.setAttribute(IMarker.CHAR_START, r.from);
-    m.setAttribute(IMarker.CHAR_END, r.to);
+    m.setAttribute(IMarker.CHAR__START, r.from);
+    m.setAttribute(IMarker.CHAR__END, r.to);
     m.setAttribute(IMarker.TRANSIENT, false);
-    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
+    m.setAttribute(IMarker.LINE__NUMBER, r.lineNumber);
   }
 
   private static void addMarkers(final IFile f) throws CoreException {
     Spartanizations.reset();
     deleteMarkers(f);
-    addMarkers(f, (CompilationUnit) makeAST.COMPILATION_UNIT.from(f));
+    addMarkers(f, (CompilationUnit) makeAST.COMPILATION__UNIT.from(f));
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final Spartanization s : Spartanizations.all())
       for (final Rewrite r : s.findOpportunities(u))
         if (r != null)
-          addMarker(s, r, f.createMarker(MARKER_TYPE));
+          addMarker(s, r, f.createMarker(MARKER__TYPE));
   }
 
   private static String prefix() {
-    return SPARTANIZATION_SHORT_PREFIX;
+    return SPARTANIZATION__SHORT__PREFIX;
   }
 
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map ____, final IProgressMonitor m)
       throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
@@ -114,7 +114,7 @@ public class Builder extends IncrementalProjectBuilder {
   }
 
   private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
+    if (kind == FULL__BUILD) {
       fullBuild();
       return;
     }

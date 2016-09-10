@@ -43,9 +43,9 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assertSimilar(expected, peeled);
   }
 
-  @Test public void andWithCLASS_CONSTANT() {
-    trimming("(x >> 18) & MASK_BITS").stays();
-    trimming("(x >> 18) & MASK_6BITS").stays();
+  @Test public void andWithCLASS__CONSTANT() {
+    trimming("(x >> 18) & MASK__BITS").stays();
+    trimming("(x >> 18) & MASK__6BITS").stays();
   }
 
   @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
@@ -302,8 +302,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void bugIntroducingMISSINGWordTry2() {
-    trimming("!(intent.getBooleanExtra(EXTRA_FROM_SHORTCUT, false) && !K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName()))")
-        .to("!intent.getBooleanExtra(EXTRA_FROM_SHORTCUT,false)||K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName())");
+    trimming("!(intent.getBooleanExtra(EXTRA__FROM__SHORTCUT, false) && !K9.FOLDER__NONE.equals(mAccount.getAutoExpandFolderName()))")
+        .to("!intent.getBooleanExtra(EXTRA__FROM__SHORTCUT,false)||K9.FOLDER__NONE.equals(mAccount.getAutoExpandFolderName())");
   }
 
   @Test public void bugIntroducingMISSINGWordTry3() {
@@ -355,10 +355,10 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
-    that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
+    that(in(e.getOperator(), Operator.EQUALS, Operator.NOT__EQUALS), is(true));
     that(iz.booleanLiteral(step.right(e)), is(false));
     that(iz.booleanLiteral(step.left(e)), is(false));
-    that(in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS), is(true));
+    that(in(e.getOperator(), Operator.EQUALS, Operator.NOT__EQUALS), is(true));
   }
 
   @Test public void comaprisonWithSpecific1() {
@@ -626,7 +626,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void declarationInitializerReturnExpression() {
-    trimming("String t = Bob + Wants + To + \"Sleep \"; " + "").to("return (right_now+Bob+Wants+To+\"Sleep \");");
+    trimming("String t = Bob + Wants + To + \"Sleep \"; " + "").to("return (right__now+Bob+Wants+To+\"Sleep \");");
   }
 
   @Test public void declarationInitializesRotate() {
@@ -1182,7 +1182,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
     that(has.nulls(e1, e2), is(false));
-    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
+    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES__THRESHOLD;
     that(tokenWiseGreater, is(true));
     that(ExpressionComparator.moreArguments(e1, e2), is(true));
     that(ExpressionComparator.longerFirst(e), is(true));
@@ -1203,7 +1203,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
     that(has.nulls(e1, e2), is(false));
-    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
+    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES__THRESHOLD;
     that(tokenWiseGreater, is(false));
     that(ExpressionComparator.moreArguments(e1, e2), is(true));
     that(ExpressionComparator.longerFirst(e), is(true));
@@ -1297,15 +1297,15 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue38() {
     trimming("    return o == null ? null\n" + //
-        "        : o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
-        "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
+        "        : o == CONDITIONAL__AND ? CONDITIONAL__OR \n" + //
+        "            : o == CONDITIONAL__OR ? CONDITIONAL__AND \n" + //
         "                : null;").stays();
   }
 
   @Test public void issue38Simplfiied() {
     trimming(//
-        "         o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
-            "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
+        "         o == CONDITIONAL__AND ? CONDITIONAL__OR \n" + //
+            "            : o == CONDITIONAL__OR ? CONDITIONAL__AND \n" + //
             "                : null").stays();
   }
 
@@ -2301,8 +2301,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void pushdownTernaryLongFieldRefernece() {
-    trimming("externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action")
-        .to("!externalImage ? R.string.webview_contextmenu_image_save_action : R.string.webview_contextmenu_image_download_action");
+    trimming("externalImage ? R.string.webview__contextmenu__image__download__action : R.string.webview__contextmenu__image__save__action")
+        .to("!externalImage ? R.string.webview__contextmenu__image__save__action : R.string.webview__contextmenu__image__download__action");
   }
 
   @Test public void pushdownTernaryMethodInvocationFirst() {
@@ -2451,8 +2451,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Ignore @Test public void reanmeReturnVariableToDollar10() {
     trimming(
-        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ")
-            .to("@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ");
+        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION__TYPE__KEY)); ")
+            .to("@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION__TYPE__KEY)); ");
   }
 
   @Ignore @Test public void reanmeReturnVariableToDollar11() {
@@ -2509,19 +2509,19 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    trimming("void f(@SuppressWarnings({\"unused\"}) int x) {}").to("void f(@SuppressWarnings({\"unused\"}) int __) {}");
+    trimming("void f(@SuppressWarnings({\"unused\"}) int x) {}").to("void f(@SuppressWarnings({\"unused\"}) int ____) {}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
+    trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, @SuppressWarnings(\"unused\") int ____) {}");
   }
 
   @Test public void renameVariableUnderscore1() {
-    trimming("void f(int _) {System.out.println(_);}").to("void f(int __) {System.out.println(__);}");
+    trimming("void f(int __) {System.out.println(__);}").to("void f(int ____) {System.out.println(____);}");
   }
 
   @Ignore("bug") public void renameVariableUnderscore2() {
-    trimming("class A {int _; int f(int _) {return _;}}").to("class A {int __; int f(int __) {return __;}}");
+    trimming("class A {int __; int f(int __) {return __;}}").to("class A {int ____; int f(int ____) {return ____;}}");
   }
 
   @Ignore @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
@@ -2920,11 +2920,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("1+2+'a'").stays();
   }
 
-  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
+  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength__a() {
     trimming("1111+211").to("1322");
   }
 
-  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
+  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength__b() {
     trimming("211+1111").to("1322").stays();
   }
 
@@ -2972,11 +2972,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("1.0*2222*3").to("6666.0");
   }
 
-  @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
+  @Test public void sortTwoOperands0CheckThatWeSortByLength__a() {
     trimming("1111*211").to("234421");
   }
 
-  @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
+  @Test public void sortTwoOperands0CheckThatWeSortByLength__b() {
     trimming("211*1111").to("234421");
   }
 
@@ -3309,9 +3309,9 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void twoOpportunityExample() {
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION__UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION__UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {
@@ -3319,7 +3319,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
-    trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").stays();
+    trimming("literal ? CONDITIONAL__OR : CONDITIONAL__AND").stays();
   }
 
   @Test public void xorSortClassConstantsAtEnd() {

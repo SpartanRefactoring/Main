@@ -77,7 +77,7 @@ public class izTest {
   }
 
   @Test public void isOneOf() {
-    azzert.that(iz.oneOf(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION), is(true));
+    azzert.that(iz.oneOf(e("this"), CHARACTER__LITERAL, NUMBER__LITERAL, NULL__LITERAL, THIS__EXPRESSION), is(true));
   }
 
   @Test public void isThisFalse1() {
@@ -139,7 +139,7 @@ public class izTest {
     azzert.that(iz.numericLiteral(e("1")), is(true));
   }
 
-  @Test public void seriesA_3() {
+  @Test public void seriesA__3() {
     azzert.nay(iz.infixPlus(e("(i+j)")));
     azzert.aye(iz.infixPlus(core(e("(i+j)"))));
     azzert.nay(iz.infixMinus(e("(i-j)")));

@@ -13,7 +13,7 @@ public class SpartanizeCurrent extends BaseHandler {
     super(null);
   }
 
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent ____) {
     eclipse.apply(eclipse.currentCompilationUnit(), eclipse.selectedText());
     return null;
   }

@@ -13,57 +13,57 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public enum GuessedContext {
-  COMPILATION_UNIT_LOOK_ALIKE(//
+  COMPILATION__UNIT__LOOK__ALIKE(//
       "/* BEGIN Compilation unit */\n", //
       "\n /* END compilation unit */\n"//
-  ), OUTER_TYPE_LOOKALIKE(//
-      COMPILATION_UNIT_LOOK_ALIKE.before + //
+  ), OUTER__TYPE__LOOKALIKE(//
+      COMPILATION__UNIT__LOOK__ALIKE.before + //
           "\n\t package p; /* BEGIN Outer type in a compilation unit */\n"//
       , //
       "\n\t /* END outer type in a compilation unit */\n" + //
-          COMPILATION_UNIT_LOOK_ALIKE.after //
-  ), METHOD_LOOKALIKE( //
-      OUTER_TYPE_LOOKALIKE.before + //
+          COMPILATION__UNIT__LOOK__ALIKE.after //
+  ), METHOD__LOOKALIKE( //
+      OUTER__TYPE__LOOKALIKE.before + //
           "\n\t\t public class C {/* BEGIN Class C*/\n" //
       , //
       "\n\t\t } /* END class C */\n" + //
-          OUTER_TYPE_LOOKALIKE.after //
-  ), STATEMENTS_LOOK_ALIKE(//
-      METHOD_LOOKALIKE.before //
+          OUTER__TYPE__LOOKALIKE.after //
+  ), STATEMENTS__LOOK__ALIKE(//
+      METHOD__LOOKALIKE.before //
           + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
           + "\n\t\t\t\t while (f4324()) {"//
           + "\n\t\t\t\t g3423436();"//
       ,
       "\n\t\t\t\t h6463634();" + ""
-  ), EXPRESSION_LOOK_ALIKE(//
-      STATEMENTS_LOOK_ALIKE.before + //
+  ), EXPRESSION__LOOK__ALIKE(//
+      STATEMENTS__LOOK__ALIKE.before + //
           "\n\t\t\t\t if (foo("//
       , //
       ",0)) return g();\n" //
-          + STATEMENTS_LOOK_ALIKE.after //
-  ), not_statment_may_occur_in_initializer_block(//
-      METHOD_LOOKALIKE.before + //
+          + STATEMENTS__LOOK__ALIKE.after //
+  ), not__statment__may__occur__in__initializer__block(//
+      METHOD__LOOKALIKE.before + //
           "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
       , //
       "\n\t\t\t } /* END instance initializer block */\n" + //
-          METHOD_LOOKALIKE.after //
-  ), not_statment_may_occur_in_static_initializer_block(//
-      METHOD_LOOKALIKE.before + //
+          METHOD__LOOKALIKE.after //
+  ), not__statment__may__occur__in__static__initializer__block(//
+      METHOD__LOOKALIKE.before + //
           "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
       , //
       "\n\t\t\t } /* END instance initializer block */\n" + //
-          METHOD_LOOKALIKE.after //
+          METHOD__LOOKALIKE.after //
   ), //
   //
   ;
   public static final GuessedContext[] AlternativeContextToConsiderInOrder = new GuessedContext[] { //
-      COMPILATION_UNIT_LOOK_ALIKE, //
-      OUTER_TYPE_LOOKALIKE, //
-      STATEMENTS_LOOK_ALIKE, //
-      METHOD_LOOKALIKE, //
-      EXPRESSION_LOOK_ALIKE, //
-      not_statment_may_occur_in_initializer_block, //
-      not_statment_may_occur_in_static_initializer_block, };
+      COMPILATION__UNIT__LOOK__ALIKE, //
+      OUTER__TYPE__LOOKALIKE, //
+      STATEMENTS__LOOK__ALIKE, //
+      METHOD__LOOKALIKE, //
+      EXPRESSION__LOOK__ALIKE, //
+      not__statment__may__occur__in__initializer__block, //
+      not__statment__may__occur__in__static__initializer__block, };
 
   public static String essence(final String codeFragment) {
     return tide.clean(removeComments(codeFragment));
@@ -81,8 +81,8 @@ public enum GuessedContext {
         "Nota!\n" + //
         "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
         "at a string literal somewhere \n " + //
-        "\t\t =>  in *your* _sbצלך_ @Test related Java code  <== \n" + //
-        "To fix this problem, copy this trace window (try right clicking _here_). Then,\n" + //
+        "\t\t =>  in *your* __sbצלך__ @Test related Java code  <== \n" + //
+        "To fix this problem, copy this trace window (try right clicking __here__). Then,\n" + //
         "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
         "It sure does not look like a correct Java code to me.\n" + //
@@ -143,7 +143,7 @@ public enum GuessedContext {
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
+    return (CompilationUnit) makeAST.COMPILATION__UNIT.from(on(codeFragment));
   }
 
   /** Guess a given code fragment, and converts it into a {@link Document}
