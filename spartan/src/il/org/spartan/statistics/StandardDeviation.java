@@ -29,7 +29,7 @@ import il.org.spartan.streotypes.*;
   }
 
   /** Compute a <a href=
-   * "http://en.wikipedia.org/wiki/Variance#Population__variance__and__sample__variance"
+   * "http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance"
    * >sample variance</a>
    * @param ds the sample
    * @return the sample variance of the parameter */

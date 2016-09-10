@@ -11,16 +11,16 @@ import il.org.spartan.utils.___.*;
  * <p>
  * Implementation is using a linear hash table s, with quardratic probes (i.e.,
  * +1, +3, +6, +10, ... modulo the table size). Array capacity is always a power
- * of two, and is doubled when the load goes above {@link #MAX__LOAD}; capacity
- * is halved when the load drops below {@value #MIN__LOAD}. When the fraction of
- * removed keys goes below {@link #REMOVE__LOAD}, the table is rehashed.
+ * of two, and is doubled when the load goes above {@link #MAX_LOAD}; capacity
+ * is halved when the load drops below {@value #MIN_LOAD}. When the fraction of
+ * removed keys goes below {@link #REMOVE_LOAD}, the table is rehashed.
  * @author Yossi Gil
  * @since December 2010 */
 public class integers {
-  public static final float MAX__LOAD = 0.75f;
-  public static final float MIN__LOAD = 0.25f;
-  public static final float REMOVE__LOAD = 0.20f;
-  public static final int MIN__CAPACITY = 4;
+  public static final float MAX_LOAD = 0.75f;
+  public static final float MIN_LOAD = 0.25f;
+  public static final float REMOVE_LOAD = 0.20f;
+  public static final int MIN_CAPACITY = 4;
 
   static int hash(final int n) {
     int $ = n;
@@ -43,14 +43,14 @@ public class integers {
 
   /** Instantiate this class */
   public integers() {
-    this(MIN__CAPACITY);
+    this(MIN_CAPACITY);
   }
 
   /** Instantiate this class, using a given size for the hash table.
    * @param initialCapacity suggests a hash table size, will be rounded up to
    *        the next power of two. */
   public integers(final int initialCapacity) {
-    reset(Math.max(MIN__CAPACITY, roundUp(initialCapacity)));
+    reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
   }
 
   /** Add an integer to the set, if it is not already there.
@@ -63,7 +63,7 @@ public class integers {
       return this;
     data[i] = n;
     occupied[i] = true;
-    if (++size > capacity() * MAX__LOAD)
+    if (++size > capacity() * MAX_LOAD)
       rehash(data.length << 1);
     return this;
   }
@@ -146,9 +146,9 @@ public class integers {
       return this;
     assert occupied[i] && data[i] == n;
     placeholder[i] = true;
-    if (--size < MIN__LOAD * capacity() && capacity() > MIN__CAPACITY)
+    if (--size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY)
       return rehash(data.length >> 1);
-    if (++removed > capacity() * REMOVE__LOAD)
+    if (++removed > capacity() * REMOVE_LOAD)
       return rehash();
     return this;
   }
@@ -192,7 +192,7 @@ public class integers {
    * @return <code><b>this</b>/code> */
   protected integers rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
-    assert newCapacity >= MIN__CAPACITY;
+    assert newCapacity >= MIN_CAPACITY;
     final int[] entries = entries();
     return reset(newCapacity).add(entries);
   }
@@ -231,13 +231,13 @@ public class integers {
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
       assertThat(size, lessThanOrEqualTo(capacity()));
-      assertThat(capacity(), greaterThanOrEqualTo(MIN__CAPACITY));
+      assertThat(capacity(), greaterThanOrEqualTo(MIN_CAPACITY));
       assertThat(placeholder.length, lessThanOrEqualTo(capacity()));
       assertThat(occupied.length, lessThanOrEqualTo(capacity()));
       assertThat(data.length, lessThanOrEqualTo(capacity()));
-      assertThat(size, lessThanOrEqualTo((int) (capacity() * MAX__LOAD)));
-      assertThat(size, greaterThanOrEqualTo((int) (capacity() * MIN__LOAD)));
-      assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE__LOAD)));
+      assertThat(size, lessThanOrEqualTo((int) (capacity() * MAX_LOAD)));
+      assertThat(size, greaterThanOrEqualTo((int) (capacity() * MIN_LOAD)));
+      assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE_LOAD)));
       assertThat(removed, comparesEqualTo(count(placeholder)));
       assertThat(size, comparesEqualTo(count(occupied) - removed));
       for (int i = 0; i < capacity(); i++)

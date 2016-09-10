@@ -112,7 +112,7 @@ public class Cartesian {
       assertEquals(1, n);
     }
 
-    @Test public void makeArray3__13__19() {
+    @Test public void makeArray3_13_19() {
       final int n = makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length;
       assertEquals(702, n);
     }

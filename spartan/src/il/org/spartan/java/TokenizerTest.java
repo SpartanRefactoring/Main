@@ -51,64 +51,64 @@ public class TokenizerTest {
     assertThat(firstToken("@__interface__"), is(ANNOTATION));
   }
 
-  @Test public void at__intreface() throws IOException {
+  @Test public void at_intreface() throws IOException {
     final String text = "@interface";
-    assertThat(firstToken(text), is(AT__INTERFACE));
+    assertThat(firstToken(text), is(AT_INTERFACE));
     assertEquals(text, firstTokenText(text));
   }
 
-  @Test public void block__comment__empty() throws IOException {
-    assertThat(firstToken("/**/"), is(EMPTY__BLOCK__COMMENT));
+  @Test public void block_comment_empty() throws IOException {
+    assertThat(firstToken("/**/"), is(EMPTY_BLOCK_COMMENT));
   }
 
-  @Test public void block__comment__keyword() throws IOException {
+  @Test public void block_comment_keyword() throws IOException {
     final String text = "/* a */ public\n" + //
         "public";
     reset(text);
-    assertThat(t.next(), is(BLOCK__COMMENT));
+    assertThat(t.next(), is(BLOCK_COMMENT));
     assertThat(t.next(), is(SPACE));
     assertThat(t.next(), is(__public));
   }
 
-  @Test public void block__comment__single__line() throws IOException {
-    assertThat(firstToken("/* block Comment */"), is(BLOCK__COMMENT));
+  @Test public void block_comment_single_line() throws IOException {
+    assertThat(firstToken("/* block Comment */"), is(BLOCK_COMMENT));
   }
 
-  @Test public void block__comment__two__lines() throws IOException {
+  @Test public void block_comment_two_lines() throws IOException {
     final String text = "/* first Line \n Second Line */";
-    assertThat(getToken(text, 1), is(PARTIAL__BLOCK__COMMENT));
-    assertThat(getToken(text, 2), is(NL__BLOCK__COMMENT));
-    assertThat(getToken(text, 3), is(BLOCK__COMMENT));
+    assertThat(getToken(text, 1), is(PARTIAL_BLOCK_COMMENT));
+    assertThat(getToken(text, 2), is(NL_BLOCK_COMMENT));
+    assertThat(getToken(text, 3), is(BLOCK_COMMENT));
     assertEquals("/* first Line ", getTokenText(text, 1));
     assertEquals("\n", getTokenText(text, 2));
     assertEquals(" Second Line */", getTokenText(text, 3));
   }
 
-  @Test public void character__literal__of__quote() throws IOException {
+  @Test public void character_literal_of_quote() throws IOException {
     assertEquals("'\\''", firstTokenText("'\\''"));
   }
 
-  @Test public void character__literal__of__quote__kind() throws IOException {
-    assertThat(firstToken("'\''"), is(CHARACTER__LITERAL));
+  @Test public void character_literal_of_quote_kind() throws IOException {
+    assertThat(firstToken("'\''"), is(CHARACTER_LITERAL));
   }
 
-  @Test public void character__literal__with__double__backslash() throws IOException {
+  @Test public void character_literal_with_double_backslash() throws IOException {
     assertEquals("'\\\\'", firstTokenText("'\\\\'"));
   }
 
-  @Test public void character__literal__with__quote__text() throws IOException {
+  @Test public void character_literal_with_quote_text() throws IOException {
     assertEquals("'\\a'", firstTokenText("'\\a'"));
   }
 
-  @Test public void character__literal__with__tab() throws IOException {
+  @Test public void character_literal_with_tab() throws IOException {
     assertEquals("'\t'", firstTokenText("'\t'"));
   }
 
-  @Test public void character__literal__with__triple__backslash() throws IOException {
+  @Test public void character_literal_with_triple_backslash() throws IOException {
     assertEquals("'\\\\\\''", firstTokenText("'\\\\\\''"));
   }
 
-  @Test public void doc__comment__keyword() throws IOException {
+  @Test public void doc_comment_keyword() throws IOException {
     final String text = "/**\n" + //
         "* A suite of metrics over Java code.\n" + //
         "* \n" + //
@@ -116,54 +116,54 @@ public class TokenizerTest {
         "*/\n" + //
         "public";
     reset(text);
-    assertThat(t.next(), is(PARTIAL__DOC__COMMENT));
-    assertThat(t.next(), is(NL__DOC__COMMENT));
-    assertThat(t.next(), is(PARTIAL__DOC__COMMENT));
-    assertThat(t.next(), is(NL__DOC__COMMENT));
-    assertThat(t.next(), is(PARTIAL__DOC__COMMENT));
-    assertThat(t.next(), is(NL__DOC__COMMENT));
-    assertThat(t.next(), is(PARTIAL__DOC__COMMENT));
-    assertThat(t.next(), is(NL__DOC__COMMENT));
-    assertThat(t.next(), is(DOC__COMMENT));
+    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
+    assertThat(t.next(), is(NL_DOC_COMMENT));
+    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
+    assertThat(t.next(), is(NL_DOC_COMMENT));
+    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
+    assertThat(t.next(), is(NL_DOC_COMMENT));
+    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
+    assertThat(t.next(), is(NL_DOC_COMMENT));
+    assertThat(t.next(), is(DOC_COMMENT));
     assertThat(t.next(), is(NL));
     assertThat(t.next(), is(__public));
   }
 
-  @Test public void doc__comment__single__line() throws IOException {
-    assertThat(firstToken("/* block Comment */"), is(BLOCK__COMMENT));
+  @Test public void doc_comment_single_line() throws IOException {
+    assertThat(firstToken("/* block Comment */"), is(BLOCK_COMMENT));
   }
 
-  @Test public void doc__comment__two__lines() throws IOException {
+  @Test public void doc_comment_two_lines() throws IOException {
     final String text = "/** first Line \n Second Line */";
-    assertThat(getToken(text, 1), is(PARTIAL__DOC__COMMENT));
-    assertThat(getToken(text, 2), is(NL__DOC__COMMENT));
-    assertThat(getToken(text, 3), is(DOC__COMMENT));
+    assertThat(getToken(text, 1), is(PARTIAL_DOC_COMMENT));
+    assertThat(getToken(text, 2), is(NL_DOC_COMMENT));
+    assertThat(getToken(text, 3), is(DOC_COMMENT));
     assertEquals("/** first Line ", getTokenText(text, 1));
     assertEquals("\n", getTokenText(text, 2));
     assertEquals(" Second Line */", getTokenText(text, 3));
   }
 
-  @Test public void empty__character__literal() throws IOException {
+  @Test public void empty_character_literal() throws IOException {
     assertEquals("''", firstTokenText("''"));
   }
 
-  @Test public void empty__string__empty__string() throws IOException {
+  @Test public void empty_string_empty_string() throws IOException {
     final String text = "\"\"\"\"";
-    assertThat(getToken(text, 1), is(STRING__LITERAL));
-    assertThat(getToken(text, 2), is(STRING__LITERAL));
+    assertThat(getToken(text, 1), is(STRING_LITERAL));
+    assertThat(getToken(text, 2), is(STRING_LITERAL));
     assertEquals("\"\"", getTokenText(text, 1));
     assertEquals("\"\"", getTokenText(text, 2));
   }
 
-  @Test public void empty__string__id() throws IOException {
+  @Test public void empty_string_id() throws IOException {
     final String text = "\"\"abcd";
-    assertThat(getToken(text, 1), is(STRING__LITERAL));
+    assertThat(getToken(text, 1), is(STRING_LITERAL));
     assertThat(getToken(text, 2), is(IDENTIFIER));
     assertEquals("\"\"", getTokenText(text, 1));
     assertEquals("abcd", getTokenText(text, 2));
   }
 
-  @Test public void empty__string__literal() throws IOException {
+  @Test public void empty_string_literal() throws IOException {
     assertEquals("''", firstTokenText("''"));
   }
 
@@ -171,31 +171,31 @@ public class TokenizerTest {
     assertThat(firstToken(""), is(EOF));
   }
 
-  @Test public void eof__terminated__character__literal() throws IOException {
-    assertThat(firstToken("'m"), is(UNTERMINATED__CHARACTER__LITERAL));
+  @Test public void eof_terminated_character_literal() throws IOException {
+    assertThat(firstToken("'m"), is(UNTERMINATED_CHARACTER_LITERAL));
   }
 
-  @Test public void eof__terminated__string__literal() throws IOException {
-    assertThat(firstToken("\"m"), is(UNTERMINATED__STRING__LITERAL));
+  @Test public void eof_terminated_string_literal() throws IOException {
+    assertThat(firstToken("\"m"), is(UNTERMINATED_STRING_LITERAL));
   }
 
-  @Test public void eof__terminated__string__literal__empty() throws IOException {
-    assertThat(firstToken("\""), is(UNTERMINATED__STRING__LITERAL));
+  @Test public void eof_terminated_string_literal_empty() throws IOException {
+    assertThat(firstToken("\""), is(UNTERMINATED_STRING_LITERAL));
   }
 
-  @Test public void eof__terminated__string__literal__text() throws IOException {
-    assertThat(firstToken("\"m"), is(UNTERMINATED__STRING__LITERAL));
+  @Test public void eof_terminated_string_literal_text() throws IOException {
+    assertThat(firstToken("\"m"), is(UNTERMINATED_STRING_LITERAL));
   }
 
   @Test public void id() throws IOException {
     assertThat(firstToken("m"), is(IDENTIFIER));
   }
 
-  @Test public void id__space() throws IOException {
+  @Test public void id_space() throws IOException {
     assertThat(firstToken("m "), is(IDENTIFIER));
   }
 
-  @Test public void id__space__id() throws IOException {
+  @Test public void id_space_id() throws IOException {
     final String text = "id1 id2";
     assertThat(getToken(text, 1), is(IDENTIFIER));
     assertThat(getToken(text, 2), is(SPACE));
@@ -205,178 +205,178 @@ public class TokenizerTest {
     assertEquals("id2", getTokenText(text, 3));
   }
 
-  @Test public void line__comment() throws IOException {
-    assertThat(firstToken("// Comment\n"), is(LINE__COMMENT));
+  @Test public void line_comment() throws IOException {
+    assertThat(firstToken("// Comment\n"), is(LINE_COMMENT));
   }
 
-  @Test public void line__comment__eof() throws IOException {
-    assertThat(firstToken("// Comment"), is(LINE__COMMENT));
+  @Test public void line_comment_eof() throws IOException {
+    assertThat(firstToken("// Comment"), is(LINE_COMMENT));
   }
 
-  @Test public void long__character__literal() throws IOException {
-    assertThat(firstToken("'masfasdfasdfas'"), is(CHARACTER__LITERAL));
+  @Test public void long_character_literal() throws IOException {
+    assertThat(firstToken("'masfasdfasdfas'"), is(CHARACTER_LITERAL));
   }
 
-  @Test public void long__character__literal__text() throws IOException {
+  @Test public void long_character_literal_text() throws IOException {
     assertEquals("'masfasdfasdfas'", firstTokenText("'masfasdfasdfas'"));
   }
 
-  @Test public void long__string__literal() throws IOException {
-    assertThat(firstToken("\"masfasdfasdfas\""), is(STRING__LITERAL));
+  @Test public void long_string_literal() throws IOException {
+    assertThat(firstToken("\"masfasdfasdfas\""), is(STRING_LITERAL));
   }
 
-  @Test public void long__string__literal__text() throws IOException {
+  @Test public void long_string_literal_text() throws IOException {
     assertEquals("'masfasdfasdfas'", firstTokenText("'masfasdfasdfas'"));
   }
 
-  @Test public void nl__string__space__id__popen__integer() throws IOException {
+  @Test public void nl_string_space_id_popen_integer() throws IOException {
     final String text = "\n\"\" abcd(12";
     assertThat(getToken(text, 1), is(NL));
-    assertThat(getToken(text, 2), is(STRING__LITERAL));
+    assertThat(getToken(text, 2), is(STRING_LITERAL));
     assertThat(getToken(text, 3), is(SPACE));
     assertThat(getToken(text, 4), is(IDENTIFIER));
   }
 
   /* escaped \ */
-  @Test public void no__esc__block__comment() throws IOException {
-    assertThat(firstToken("/* block Comment \\*/"), is(BLOCK__COMMENT));
+  @Test public void no_esc_block_comment() throws IOException {
+    assertThat(firstToken("/* block Comment \\*/"), is(BLOCK_COMMENT));
   }
 
   /* /* No nested comment */
-  @Test public void no__nested__block__comment() throws IOException {
-    assertThat(firstToken("/*/* block Comment */"), is(BLOCK__COMMENT));
+  @Test public void no_nested_block_comment() throws IOException {
+    assertThat(firstToken("/*/* block Comment */"), is(BLOCK_COMMENT));
   }
 
-  @Test public void no__nested__block__comment__text() throws IOException {
+  @Test public void no_nested_block_comment_text() throws IOException {
     assertEquals("/*/* block Comment */", firstTokenText("/*/* block Comment */"));
   }
 
-  @Test public void no__nested__doc__comment__text__firstToken() throws IOException {
+  @Test public void no_nested_doc_comment_text_firstToken() throws IOException {
     assertEquals("/**/", firstTokenText("/**/** doc Comment */"));
   }
 
-  @Test public void no__nested__doc__comment__text__secondToken() throws IOException {
+  @Test public void no_nested_doc_comment_text_secondToken() throws IOException {
     assertEquals("/** doc Comment */", secondTokenText("/**//** doc Comment */"));
   }
 
-  @Test public void no__nested__doc__commentFirstToken() throws IOException {
-    assertThat(firstToken("/**/** doc Comment */"), is(EMPTY__BLOCK__COMMENT));
+  @Test public void no_nested_doc_commentFirstToken() throws IOException {
+    assertThat(firstToken("/**/** doc Comment */"), is(EMPTY_BLOCK_COMMENT));
   }
 
-  @Test public void no__nested__doc__commentSecondToken() throws IOException {
+  @Test public void no_nested_doc_commentSecondToken() throws IOException {
     assertThat(secondToken("/**/** doc Comment */"), is(MULT));
   }
 
   // ===================================
-  @Test public void one__char__string__literal() throws IOException {
-    assertThat(firstToken("\"m\""), is(STRING__LITERAL));
+  @Test public void one_char_string_literal() throws IOException {
+    assertThat(firstToken("\"m\""), is(STRING_LITERAL));
   }
 
-  @Test public void short__doc__comment__keyword() throws IOException {
+  @Test public void short_doc_comment_keyword() throws IOException {
     final String text = "/** a */ public\n" + //
         "public";
     reset(text);
-    assertThat(t.next(), is(DOC__COMMENT));
+    assertThat(t.next(), is(DOC_COMMENT));
     assertThat(t.next(), is(SPACE));
     assertThat(t.next(), is(__public));
   }
 
-  @Test public void simple__character__literal() throws IOException {
-    assertThat(firstToken("'m'"), is(CHARACTER__LITERAL));
+  @Test public void simple_character_literal() throws IOException {
+    assertThat(firstToken("'m'"), is(CHARACTER_LITERAL));
   }
 
-  @Test public void simple__character__literal__text() throws IOException {
+  @Test public void simple_character_literal_text() throws IOException {
     assertEquals("'m'", firstTokenText("'m'"));
   }
 
-  @Test public void simple__string__literal__text() throws IOException {
+  @Test public void simple_string_literal_text() throws IOException {
     assertEquals("\"abc m'\"", firstTokenText("\"abc m'\""));
   }
 
-  @Test public void something__after__emtpy__comment() throws IOException {
+  @Test public void something_after_emtpy_comment() throws IOException {
     assertThat(secondToken("/**/something"), is(IDENTIFIER));
   }
 
-  @Test public void space__id__space() throws IOException {
+  @Test public void space_id_space() throws IOException {
     assertThat(getToken(" m ", 2), is(IDENTIFIER));
   }
 
-  @Test public void string__id__string() throws IOException {
+  @Test public void string_id_string() throws IOException {
     final String text = "\"str1\"xid\"str2\"";
-    assertThat(getToken(text, 1), is(STRING__LITERAL));
+    assertThat(getToken(text, 1), is(STRING_LITERAL));
     assertThat(getToken(text, 2), is(IDENTIFIER));
-    assertThat(getToken(text, 3), is(STRING__LITERAL));
+    assertThat(getToken(text, 3), is(STRING_LITERAL));
     assertEquals("\"str1\"", getTokenText(text, 1));
     assertEquals("xid", getTokenText(text, 2));
     assertEquals("\"str2\"", getTokenText(text, 3));
   }
 
-  @Test public void string__keyword() throws IOException {
+  @Test public void string_keyword() throws IOException {
     final String text = "\" \"public";
     reset(text);
-    assertThat(t.next(), is(STRING__LITERAL));
+    assertThat(t.next(), is(STRING_LITERAL));
     assertEquals("\" \"", t.text());
     assertThat(t.next(), is(__public));
     assertEquals("public", t.text());
   }
 
-  @Test public void string__literal__of__quote() throws IOException {
+  @Test public void string_literal_of_quote() throws IOException {
     assertEquals("'\\''", firstTokenText("'\\''"));
   }
 
-  @Test public void string__literal__of__quote__kind() throws IOException {
-    assertThat(firstToken("\"\\\"\""), is(STRING__LITERAL));
+  @Test public void string_literal_of_quote_kind() throws IOException {
+    assertThat(firstToken("\"\\\"\""), is(STRING_LITERAL));
   }
 
-  @Test public void string__literal__with__double__backslash() throws IOException {
+  @Test public void string_literal_with_double_backslash() throws IOException {
     assertEquals("'\\\\'", firstTokenText("'\\\\'"));
   }
 
-  @Test public void string__literal__with__quote__text() throws IOException {
+  @Test public void string_literal_with_quote_text() throws IOException {
     assertEquals("\"\\\"\"", firstTokenText("\"\\\"\""));
   }
 
-  @Test public void string__literal__with__tab() throws IOException {
+  @Test public void string_literal_with_tab() throws IOException {
     assertEquals("'\t'", firstTokenText("'\t'"));
   }
 
-  @Test public void string__literal__with__triple__backslash() throws IOException {
+  @Test public void string_literal_with_triple_backslash() throws IOException {
     assertEquals("'\\\\\\''", firstTokenText("'\\\\\\''"));
   }
 
-  @Test public void string__space__keyword() throws IOException {
+  @Test public void string_space_keyword() throws IOException {
     final String text = "\" \" public\n";
     reset(text);
-    assertThat(t.next(), is(STRING__LITERAL));
+    assertThat(t.next(), is(STRING_LITERAL));
     assertThat(t.next(), is(SPACE));
     assertThat(t.next(), is(__public));
   }
 
-  @Test public void unterminated__block__comment() throws IOException {
-    assertThat(firstToken("/*/* block Comment"), is(UNTERMINATED__BLOCK__COMMENT));
+  @Test public void unterminated_block_comment() throws IOException {
+    assertThat(firstToken("/*/* block Comment"), is(UNTERMINATED_BLOCK_COMMENT));
   }
 
-  @Test public void unterminated__block__comment__text() throws IOException {
+  @Test public void unterminated_block_comment_text() throws IOException {
     assertEquals("/*/* block Comment", firstTokenText("/*/* block Comment"));
   }
 
-  @Test public void unterminated__character__literal() throws IOException {
-    assertEquals(firstToken("'m\n"), UNTERMINATED__CHARACTER__LITERAL);
+  @Test public void unterminated_character_literal() throws IOException {
+    assertEquals(firstToken("'m\n"), UNTERMINATED_CHARACTER_LITERAL);
   }
 
-  @Test public void unterminated__doc__comment() throws IOException {
-    assertThat(firstToken("/** doc Comment"), is(UNTERMINATED__DOC__COMMENT));
+  @Test public void unterminated_doc_comment() throws IOException {
+    assertThat(firstToken("/** doc Comment"), is(UNTERMINATED_DOC_COMMENT));
   }
 
-  @Test public void unterminated__doc__comment__text() throws IOException {
+  @Test public void unterminated_doc_comment_text() throws IOException {
     assertEquals("/*/* block Comment", firstTokenText("/*/* block Comment"));
   }
 
-  @Test public void unterminated__string__literal() throws IOException {
-    assertThat(firstToken("\"masfasdfasdf\n"), is(UNTERMINATED__STRING__LITERAL));
+  @Test public void unterminated_string_literal() throws IOException {
+    assertThat(firstToken("\"masfasdfasdf\n"), is(UNTERMINATED_STRING_LITERAL));
   }
 
-  @Test public void unterminated__string__literal__text() throws IOException {
+  @Test public void unterminated_string_literal_text() throws IOException {
     assertEquals("\"mabc", firstTokenText("\"mabc\n"));
   }
 

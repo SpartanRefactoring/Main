@@ -8,8 +8,8 @@ import java.util.*;
 import il.org.spartan.utils.*;
 
 public class Out {
-  static final int MAX__FIRST = 20;
-  static final int MAX__LAST = 10;
+  static final int MAX_FIRST = 20;
+  static final int MAX_LAST = 10;
 
   public static void out(final String s) {
     System.out.print(s);
@@ -30,7 +30,7 @@ public class Out {
       int n = 0;
       final Once ellipsis = new Once("\t...\n");
       for (final Object o : a)
-        if (++n > MAX__FIRST && n <= a.size() - MAX__LAST)
+        if (++n > MAX_FIRST && n <= a.size() - MAX_LAST)
           System.out.print(ellipsis);
         else
           System.out.printf("\t%2d) %s\n", box(n), o);

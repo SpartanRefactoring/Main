@@ -26,7 +26,7 @@ import il.org.spartan.utils.Separate.*;
 @Instantiable public abstract class CSVLine extends AbstractStringProperties implements Cloneable {
   /** Separator of multi-values, i.e., array elements stored in a single
    * field */
-  public static final String ARRAY__SEPARATOR = ";";
+  public static final String ARRAY_SEPARATOR = ";";
   final Map<String, String> map;
   protected final Aggregator aggregator = new Aggregator();
 
@@ -220,7 +220,7 @@ import il.org.spartan.utils.Separate.*;
   }
 
   public final CSVLine put(final String key, final Object[] os) {
-    return put(key, os == null ? null : Separate.by(os, ARRAY__SEPARATOR));
+    return put(key, os == null ? null : Separate.by(os, ARRAY_SEPARATOR));
   }
 
   /** Add a key and a <code><b>short</b></code> value to this instance

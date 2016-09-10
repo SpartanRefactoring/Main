@@ -482,7 +482,7 @@ public class Iterables {
     }
   }
 
-  /** An {@linkplain "http://en.wikipedia.org/wiki/Adapter__pattern Adapter"} of
+  /** An {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern Adapter"} of
    * a scalar object, adapting it to the {@link Iterable} interface whereby
    * making it possible to iterate over this object in the following sense:. If
    * the object is non-null, then the iteration will return the object and

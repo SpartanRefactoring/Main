@@ -13,12 +13,12 @@ import il.org.spartan.strings.*;
 @Utility public enum Zip {
   ;
   /** A list of all recognized extensions of archive file names. */
-  private static final String[] ZIP__FILE__EXTENSIONS = { ".ZIP", ".jar", ".war", ".ear" };
+  private static final String[] ZIP_FILE_EXTENSIONS = { ".ZIP", ".jar", ".war", ".ear" };
 
   /** @param file a file to examine
    * @return <code><b>true</b></code> <em>iff</em>the file is appears to be a
    *         ZIP file. */
   public static boolean isZipFile(final File file) {
-    return Suffixed.by(file, ZIP__FILE__EXTENSIONS);
+    return Suffixed.by(file, ZIP_FILE_EXTENSIONS);
   }
 }

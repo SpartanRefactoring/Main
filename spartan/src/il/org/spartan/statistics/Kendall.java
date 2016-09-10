@@ -56,7 +56,7 @@ import il.org.spatan.iteration.*;
         Xs.add(Box.it(xs[i]));
         Ys.add(Box.it(ys[i]));
       }
-    return tauB__pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
+    return tauB_pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
   }
 
   static int compueS(final double[] xs, final double[] ys) {
@@ -130,7 +130,7 @@ import il.org.spatan.iteration.*;
     return nc - nd;
   }
 
-  private static double tauB__pruned(final double[] xs, final double[] ys) {
+  private static double tauB_pruned(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     final int n = xs.length;
     final int pairs = pairs(n);

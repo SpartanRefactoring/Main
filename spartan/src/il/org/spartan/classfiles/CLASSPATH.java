@@ -14,7 +14,7 @@ import il.org.spatan.iteration.*;
   /** A class loader, which represents a */
   private static ClassLoader classLoader = null;
   /** Which system property contains the class path? */
-  private static final String JAVA__CLASS__PATH = "java.class.path";
+  private static final String JAVA_CLASS_PATH = "java.class.path";
   private static final String original = get();
 
   /** Append a location to the class path.
@@ -50,7 +50,7 @@ import il.org.spatan.iteration.*;
   /** Retrieves the system's CLASSPATH as a string
    * @return the current system CLASSPATH */
   public static String get() {
-    return System.getProperty(JAVA__CLASS__PATH);
+    return System.getProperty(JAVA_CLASS_PATH);
   }
 
   /** Mocks the system's {@link Class#forName} function, but using a
@@ -112,7 +112,7 @@ import il.org.spatan.iteration.*;
   /** Sets the system's CLASSPATH
    * @param path the new value of the CLASSPATH */
   public static void set(final String path) {
-    System.setProperty(JAVA__CLASS__PATH, path);
+    System.setProperty(JAVA_CLASS_PATH, path);
     classLoader = null;
   }
 

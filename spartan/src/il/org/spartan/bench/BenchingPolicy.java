@@ -20,9 +20,9 @@ public enum BenchingPolicy {
   ;
   public static long minWarmup = SECOND / 2;
   private static long benchingTime = SECOND / 10;
-  public static final long MAX__TIME = MINUTE;
-  public static final int MIN__RUNS = 17;
-  public final static int MAX__RUNS = 1 << 30;
+  public static final long MAX_TIME = MINUTE;
+  public static final int MIN_RUNS = 17;
+  public final static int MAX_RUNS = 1 << 30;
 
   public static void after(final Operation after) {
     if (after != null)
@@ -111,11 +111,11 @@ public enum BenchingPolicy {
     BenchingPolicy.benchingTime = benchingTime;
   }
 
-  public static void setMIN__WARMUP(final float minWarmup) {
-    setMIN__WARMUP(1L * minWarmup);
+  public static void setMIN_WARMUP(final float minWarmup) {
+    setMIN_WARMUP(1L * minWarmup);
   }
 
-  public static void setMIN__WARMUP(final long minWarmup) {
+  public static void setMIN_WARMUP(final long minWarmup) {
     BenchingPolicy.minWarmup = minWarmup;
   }
 
@@ -131,7 +131,7 @@ public enum BenchingPolicy {
       final RunRecord r = e.run($);
       if (r == null) {
         ++failures;
-        $ = Math.max(MIN__RUNS, 9 * $ / 10);
+        $ = Math.max(MIN_RUNS, 9 * $ / 10);
         Log.ln("Selecing new warmup run value: " + thousands($));
         continue;
       }
@@ -164,7 +164,7 @@ public enum BenchingPolicy {
         Log.ln("JIT changed.. retrying");
         continue;
       }
-      runs = Math.max(MIN__RUNS, 9 * runs / 10);
+      runs = Math.max(MIN_RUNS, 9 * runs / 10);
       Log.ln("Probably GC change, using new run", thousands(runs));
       Log.ln("Before JVM was: " + before);
       Log.ln("After JVM was: " + after);
@@ -193,14 +193,14 @@ public enum BenchingPolicy {
   }
 
   public static class TEST {
-    @Test public void benchBencheon0__0__10() {
+    @Test public void benchBencheon0_0__10() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       for (int i = 0; i < 20; ++i)
         go(l, new Bencheon.Exact(0, 0, 10));
       l.printBy(Consolidation.LIST);
     }
 
-    @Test public void benchBencheon0__0__1000() {
+    @Test public void benchBencheon0_0__1000() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       final Bencheon b = new Bencheon.Exact(0, 0, 1000);
       for (int i = 0; i < 1000; ++i)
@@ -219,7 +219,7 @@ public enum BenchingPolicy {
       pure(new Bencheon.Hash());
     }
 
-    @Test public void measureBencheon0__0__10() {
+    @Test public void measureBencheon0_0__10() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       final Bencheon b = new Bencheon.Exact(0, 0, 10);
       for (int i = 0; i < 20; ++i) {
@@ -273,7 +273,7 @@ public enum BenchingPolicy {
         l.recordNanoseconds(s.time() / runs);
         l.set("Mode", "Error");
         l.recordRelative(s.time(), b.run);
-        // if (s.time() > 10 * MAX__TIME)
+        // if (s.time() > 10 * MAX_TIME)
         // break;
       }
       l.printBy(Consolidation.LIST);
@@ -304,7 +304,7 @@ public enum BenchingPolicy {
         l.set("Mode", "Average time");
         l.recordNanoseconds(s.time() / runs);
         l.set("Mode", "Error");
-        // if (s.time() > 10 * MAX__TIME)
+        // if (s.time() > 10 * MAX_TIME)
         // break;
       }
       l.printBy(Consolidation.LIST, "Mode");

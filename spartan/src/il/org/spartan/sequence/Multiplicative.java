@@ -1,7 +1,7 @@
 package il.org.spartan.sequence;
 
 public class Multiplicative extends Sequence {
-  private static final double DEFAULT__STEP = 0.1;
+  private static final double DEFAULT_STEP = 0.1;
 
   public static void main(final String[] args) {
     for (final Sequence s = new Multiplicative(0.16); s.current < 150; s.advance())
@@ -12,7 +12,7 @@ public class Multiplicative extends Sequence {
   private final double step;
 
   public Multiplicative() {
-    this(Sequence.MAX_VALUE, DEFAULT__STEP);
+    this(Sequence.MAX_VALUE, DEFAULT_STEP);
   }
 
   public Multiplicative(final double step) {

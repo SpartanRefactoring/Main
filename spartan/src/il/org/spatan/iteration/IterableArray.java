@@ -3,7 +3,7 @@ package il.org.spatan.iteration;
 
 import il.org.spatan.iteration.Iterables.*;
 
-/** An array {@linkplain "http://en.wikipedia.org/wiki/Adapter__pattern
+/** An array {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern
  * Adapter"} adjusting it to the {@link Iterable} interface.
  * @author Yossi Gil
  * @since Oct 19, 2009

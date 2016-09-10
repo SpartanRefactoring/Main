@@ -8,13 +8,13 @@ import java.util.*;
 @SuppressWarnings({ "unchecked", "static-method" }) //
 public final class MyHashMap<K, V> implements Map<K, V> {
   /** The default initial capacity - MUST be a power of two. */
-  static final int DEFAULT__INITIAL__CAPACITY = 16;// ProbesTest.HASH__MAP__SIZE;
+  static final int DEFAULT_INITIAL_CAPACITY = 16;// ProbesTest.HASH_MAP_SIZE;
   /** The maximum capacity, used if a higher value is implicitly specified by
    * either of the constructors with arguments. MUST be a power of two <=
    * 1<<30. */
-  static final int MAXIMUM__CAPACITY = 1 << 30;
+  static final int MAXIMUM_CAPACITY = 1 << 30;
   /** The load factor used when none specified in constructor. */
-  static final float DEFAULT__LOAD__FACTOR = 0.75f;
+  static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
   /** Applies a supplemental hash function to a given hashCode, which defends
    * against poor quality hash functions. This is critical because HashMap uses
@@ -58,9 +58,9 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   /** Constructs an empty <tt>HashMap</tt> with the default initial capacity
    * (16) and the default load factor (0.75). */
   public MyHashMap() {
-    this.loadFactor = DEFAULT__LOAD__FACTOR;
-    threshold = (int) (DEFAULT__INITIAL__CAPACITY * DEFAULT__LOAD__FACTOR);
-    table = new Entry[DEFAULT__INITIAL__CAPACITY];
+    this.loadFactor = DEFAULT_LOAD_FACTOR;
+    threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
+    table = new Entry[DEFAULT_INITIAL_CAPACITY];
   }
 
   /** Constructs an empty <tt>HashMap</tt> with the specified initial capacity
@@ -68,7 +68,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * @param initialCapacity the initial capacity.
    * @throws IllegalArgumentException if the initial capacity is negative. */
   public MyHashMap(final int initialCapacity) {
-    this(initialCapacity, DEFAULT__LOAD__FACTOR);
+    this(initialCapacity, DEFAULT_LOAD_FACTOR);
   }
 
   /** Constructs an empty <tt>HashMap</tt> with the specified initial capacity
@@ -84,7 +84,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
     // Find a power of 2 >= initialCapacity
     int capacity = 1;
-    while (capacity < Math.min(initialCapacity, MAXIMUM__CAPACITY))
+    while (capacity < Math.min(initialCapacity, MAXIMUM_CAPACITY))
       capacity <<= 1;
     this.loadFactor = loadFactor;
     threshold = (int) (capacity * loadFactor);
@@ -98,7 +98,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * @param m the map whose mappings are to be placed in this map
    * @throws NullPointerException if the specified map is null */
   public MyHashMap(final Map<? extends K, ? extends V> m) {
-    this(Math.max((int) (m.size() / DEFAULT__LOAD__FACTOR) + 1, DEFAULT__INITIAL__CAPACITY), DEFAULT__LOAD__FACTOR);
+    this(Math.max((int) (m.size() / DEFAULT_LOAD_FACTOR) + 1, DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);
     putAllForCreate(m);
   }
 
@@ -263,8 +263,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
      * resize. */
     if (numKeysToBeAdded > threshold) {
       int targetCapacity = (int) (numKeysToBeAdded / loadFactor + 1);
-      if (targetCapacity > MAXIMUM__CAPACITY)
-        targetCapacity = MAXIMUM__CAPACITY;
+      if (targetCapacity > MAXIMUM_CAPACITY)
+        targetCapacity = MAXIMUM_CAPACITY;
       int newCapacity = table.length;
       while (newCapacity < targetCapacity)
         newCapacity <<= 1;
@@ -439,16 +439,16 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Rehashes the contents of this map into a new array with a larger capacity.
    * This method is called automatically when the number of keys in this map
-   * reaches its threshold. If current capacity is MAXIMUM__CAPACITY, this
+   * reaches its threshold. If current capacity is MAXIMUM_CAPACITY, this
    * method does not resize the map, but sets threshold to Integer.MAX_VALUE.
    * This has the effect of preventing future calls.
    * @param newCapacity the new capacity, MUST be a power of two; must be
    *        greater than current capacity unless current capacity is
-   *        MAXIMUM__CAPACITY (in which case value is irrelevant). */
+   *        MAXIMUM_CAPACITY (in which case value is irrelevant). */
   void resize(final int newCapacity) {
     @SuppressWarnings("rawtypes") final Entry[] oldTable = table;
     final int oldCapacity = oldTable.length;
-    if (oldCapacity == MAXIMUM__CAPACITY) {
+    if (oldCapacity == MAXIMUM_CAPACITY) {
       threshold = Integer.MAX_VALUE;
       return;
     }

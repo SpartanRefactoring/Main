@@ -18,8 +18,8 @@ import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class ClassFileTest {
-  private static final String GOOD__FILE__PATH = "bin/il/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest.class";
-  private static final String BAD__FILE__PATH = "asdfasdfaafasdfas";
+  private static final String GOOD_FILE_PATH = "bin/il/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest.class";
+  private static final String BAD_FILE_PATH = "asdfasdfaafasdfas";
 
   @Test public void allAccessLevels() {
     final TypedEntity[] methods = ClassInfo.make(AllAccessLevels.class).methods;
@@ -124,17 +124,17 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void badFile() {
-    final File f = new File(BAD__FILE__PATH);
+    final File f = new File(BAD_FILE_PATH);
     assert null != f;
   }
 
   @Test(expected = FileNotFoundException.class) public void badFileInputStream() throws FileNotFoundException {
-    final File f = new File(BAD__FILE__PATH);
+    final File f = new File(BAD_FILE_PATH);
     assert null != new FileInputStream(f);
   }
 
   @Test public void badInputStream() {
-    assertNull(ClassInfo.make(BAD__FILE__PATH));
+    assertNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void byteCodeCount() {
@@ -145,11 +145,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void classInfoFromBadPath() {
-    assertNull(ClassInfo.make(BAD__FILE__PATH));
+    assertNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void classInfoFromBadPathCLASSFILE() {
-    assertNull(ClassInfo.make(BAD__FILE__PATH));
+    assertNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void classWithCapitalL() {
@@ -231,7 +231,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void dataInputStreamFromPath() throws FileNotFoundException {
-    assert null != new DataInputStream(new FileInputStream(new File(GOOD__FILE__PATH)));
+    assert null != new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
   }
 
   @Test public void deprecatedClassIsDeprecated() {
@@ -380,7 +380,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void fileFromPath() {
-    assert null != new File(GOOD__FILE__PATH);
+    assert null != new File(GOOD_FILE_PATH);
   }
 
   @Test public void findSelf() {
@@ -395,7 +395,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void inputStreamFromPath() throws FileNotFoundException {
-    assert null != new FileInputStream(new File(GOOD__FILE__PATH));
+    assert null != new FileInputStream(new File(GOOD_FILE_PATH));
   }
 
   @Test public void interfaceClassFile() {
@@ -597,7 +597,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openBadPath() {
-    assertNull(ClassInfo.make(BAD__FILE__PATH));
+    assertNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void openEmptyClass() {
@@ -605,7 +605,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openPath() {
-    assert null != ClassInfo.make(GOOD__FILE__PATH);
+    assert null != ClassInfo.make(GOOD_FILE_PATH);
   }
 
   @Test public void openPathCLASSFILES() {
@@ -613,7 +613,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openPathCLASSFILESBadPath() {
-    assertNull(ClassInfo.make(BAD__FILE__PATH));
+    assertNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void openSelf() {
@@ -683,17 +683,17 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void readFromDataInputStreamFromPath() throws IOException {
-    final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD__FILE__PATH)));
+    final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
     assertEquals(ClassInfo.Builder.MAGIC, f.readInt());
     f.close();
   }
 
   @Test public void readFromNoExceptionsReaderFromBadPath() {
-    assertEquals(0, new RobustReader(BAD__FILE__PATH).readInt());
+    assertEquals(0, new RobustReader(BAD_FILE_PATH).readInt());
   }
 
   @Test public void readFromNoExceptionsReaderFromGoodPath() {
-    assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD__FILE__PATH).readInt());
+    assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD_FILE_PATH).readInt());
   }
 
   @Test public void selfMakeNotNull() {

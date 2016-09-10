@@ -14,7 +14,7 @@ import il.org.spatan.iteration.*;
  * @since 30/04/2011 */
 public abstract class Statistics {
   protected static final int MOMENTS = 4;
-  protected static final String EMPTY__SEQUENCE = "No elements yet in sequene.";
+  protected static final String EMPTY_SEQUENCE = "No elements yet in sequene.";
 
   public static double mad(final double[] ds) {
     final int n = ds.length;
@@ -49,7 +49,7 @@ public abstract class Statistics {
   }
 
   /** Compute a <a href=
-   * "http://en.wikipedia.org/wiki/Variance#Population__variance__and__sample__variance"
+   * "http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance"
    * >sample variance</a>
    * @param ds the sample
    * @return the sample variance of the parameter */
@@ -139,7 +139,7 @@ public abstract class Statistics {
   }
 
   /** @return the <a href=
-   *         "http://en.wikipedia.org/wiki/Variance#Population__variance__and__sample__variance"
+   *         "http://en.wikipedia.org/wiki/Variance#Population_variance_and_sample_variance"
    *         >sample variance</a> f the elements in the sequence
    * @throws ArithmeticException in case this function was called prior to
    *         recording any elements in the sequence */
@@ -161,6 +161,6 @@ public abstract class Statistics {
 
   protected void checkEmpty() throws ArithmeticException {
     if (isEmpty())
-      throw new ArithmeticException(EMPTY__SEQUENCE);
+      throw new ArithmeticException(EMPTY_SEQUENCE);
   }
 }
