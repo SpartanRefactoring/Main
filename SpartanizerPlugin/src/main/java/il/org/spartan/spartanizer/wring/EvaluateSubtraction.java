@@ -72,7 +72,7 @@ public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpressio
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    int sourceLength = (x + "").length();
+    final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != MINUS)
       return null;
@@ -91,6 +91,4 @@ public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpressio
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
-  
- }
-
+}

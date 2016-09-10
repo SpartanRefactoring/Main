@@ -59,7 +59,7 @@ public class EvaluateRemainder extends Wring.ReplaceCurrentNode<InfixExpression>
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    int sourceLength = (x + "").length();
+    final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != REMAINDER)
       return null;

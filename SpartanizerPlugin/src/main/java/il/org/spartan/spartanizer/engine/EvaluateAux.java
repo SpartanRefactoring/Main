@@ -5,7 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.java.*;
 
 public class EvaluateAux {
   public static double extractDouble(final Expression x) {

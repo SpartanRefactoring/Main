@@ -62,7 +62,7 @@ public class EvaluateMultiplication extends Wring.ReplaceCurrentNode<InfixExpres
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    int sourceLength = (x + "").length();
+    final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != TIMES)
       return null;

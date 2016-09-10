@@ -13,8 +13,7 @@ import il.org.spartan.*;
 @Ignore //
 public class GuessedContextTest {
   @Test public void dealWithBothKindsOfComment() {
-    similar(
-        "if (b) {\n" + "", //
+    similar("if (b) {\n" + "", //
         "if (b) {;} { throw new Exception(); }");
   }
 
@@ -133,8 +132,7 @@ public class GuessedContextTest {
 
   @Test public void removeCommentsTest() {
     similar(removeComments(//
-        "if (b) {\n" + ""),
-        "if (b) {} else { throw new Exception(); }");
+        "if (b) {\n" + ""), "if (b) {} else { throw new Exception(); }");
   }
 
   @Test public void statement() {

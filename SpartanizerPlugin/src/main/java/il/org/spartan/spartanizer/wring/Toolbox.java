@@ -49,15 +49,15 @@ public class Toolbox {
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
-            new InfixEmptyStringAdditionToString(),//
+            new InfixEmptyStringAdditionToString(), //
             new InfixEmptyStringAdditionReorder(), //
             new InfixFactorNegatives(), //
             new EvaluateAddition(), //
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
             new EvaluateSubtraction(), //
-            //new EvaluateShiftRight(), //
-            //new EvaluateShiftLeft(), //
+            // new EvaluateShiftRight(), //
+            // new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
@@ -99,7 +99,7 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
-            new BreakToReturnInfiniteFor(),//
+            new BreakToReturnInfiniteFor(), //
             new BreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteFor(), //
             new ReturnToBreakFiniteWhile(), //

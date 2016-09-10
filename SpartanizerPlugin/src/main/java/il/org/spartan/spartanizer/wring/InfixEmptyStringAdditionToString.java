@@ -18,15 +18,15 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   private static boolean isEmptyStringLiteral(final Expression x) {
     return wizard.same(x, x.getAST().newStringLiteral());
   }
-  
+
   private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return (type.get(¢1) == type.Primitive.Certain.STRING && isEmptyStringLiteral(¢2));
+    return type.get(¢1) == type.Primitive.Certain.STRING && isEmptyStringLiteral(¢2);
   }
 
   private static String descriptionAux(final Expression x) {
     return "Use " + (x != null ? x + "" : "the variable alone");
   }
-  
+
   @Override public String description() {
     return descriptionAux(null);
   }
@@ -41,14 +41,13 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     final List<Expression> es = extract.allOperands(x);
     assert es.size() > 1;
     final int ¢ = es.size();
-    for(int i = 0; i < es.size()-1 ;){
-      if (validTypes(es.get(i),es.get(i+1)))
-        es.remove(i+1);
-      else if (validTypes(es.get(i+1),es.get(i)))
+    for (int i = 0; i < es.size() - 1;)
+      if (validTypes(es.get(i), es.get(i + 1)))
+        es.remove(i + 1);
+      else if (validTypes(es.get(i + 1), es.get(i)))
         es.remove(i);
       else
         ++i;
-    }
     return es.size() == ¢ ? null : es.size() == 1 ? lisp.first(es) : subject.operands(es).to(wizard.PLUS2);
   }
 }

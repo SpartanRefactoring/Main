@@ -33,14 +33,12 @@ public enum GuessedContext {
           + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
           + "\n\t\t\t\t while (f4324()) {"//
           + "\n\t\t\t\t g3423436();"//
-      ,
-      "\n\t\t\t\t h6463634();" + ""
-  ), EXPRESSION_LOOK_ALIKE(//
-      STATEMENTS_LOOK_ALIKE.before + //
-          "\n\t\t\t\t if (foo("//
-      , //
-      ",0)) return g();\n" //
-          + STATEMENTS_LOOK_ALIKE.after //
+      , "\n\t\t\t\t h6463634();" + ""), EXPRESSION_LOOK_ALIKE(//
+          STATEMENTS_LOOK_ALIKE.before + //
+              "\n\t\t\t\t if (foo("//
+          , //
+          ",0)) return g();\n" //
+              + STATEMENTS_LOOK_ALIKE.after //
   ), not_statment_may_occur_in_initializer_block(//
       METHOD_LOOKALIKE.before + //
           "\n\t\t\t { /* BEGIN Instance initializer block */\n" //

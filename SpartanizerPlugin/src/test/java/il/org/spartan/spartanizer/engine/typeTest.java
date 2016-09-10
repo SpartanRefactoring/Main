@@ -195,7 +195,7 @@ public class typeTest {
     }
 
     @Test public void axiomExpression8() {
-      azzert.that(Axiom.type((-3L) % 4), is(LONG));
+      azzert.that(Axiom.type(-3L % 4), is(LONG));
     }
 
     @Test public void axiomExpression9() {
@@ -341,17 +341,18 @@ public class typeTest {
       azzert.that(get(e.getRightOperand()), is(INT));
       azzert.that(get(e), is(STRING));
     }
-    
+
     @Test public void basicExpression30() {
       azzert.that(get(into.e("+x")), is(NUMERIC));
     }
-    
+
     @Ignore("unkown bug, the infix expression's operands are simple names x instead of prefix expressions +x")
-    //this seems to be a bug in trimmer, where it drops the unnecessary prefix plus
+    // this seems to be a bug in trimmer, where it drops the unnecessary prefix
+    // plus
     @Test public void basicExpression31() {
       azzert.that(get(into.e("+x + +x")), is(NUMERIC));
     }
-    
+
     @Test public void BitwiseOperationsSemantics01() {
       azzert.that(Axiom.type(c1 | c2), is(INT));
     }
@@ -509,7 +510,7 @@ public class typeTest {
     @Test public void conditional16() {
       azzert.that(get(into.e("f() ? \"a\" : h()")), is(STRING));
     }
-    
+
     @Test public void conditional17() {
       azzert.that(get(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(NUMERIC));
     }
@@ -645,8 +646,7 @@ public class typeTest {
       azzert.that(get(fs.getExpression()), is(BOOLEAN));
     }
 
-    @Ignore("cancled to avoid harming tests, see issue #119 for more info")
-    @Test public void context21() {
+    @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
       final WhileStatement ws = extract.firstWhileStatement(into.s("while(x) somthing();"));
       azzert.that(get(ws.getExpression()), is(BOOLEAN));
     }

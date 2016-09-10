@@ -22,16 +22,17 @@ public class Issue142Test {
         + "    int $ = 2;\n" //
         + "    return $;\n" //
         + "  }\n" //
-        + "}").to("" //
-            + "/***/ class A {\n" //
-            + "  /**@DisableSpartan*/ int f() {\n" //
-            + "    int $ = 1;\n" //
-            + "    return $;\n" //
-            + "  }\n" //
-            + "  /***/ int g() {\n" //
-            + "    return 2;\n" //
-            + "  }\n" //
-            + "}");
+        + "}")
+            .to("" //
+                + "/***/ class A {\n" //
+                + "  /**@DisableSpartan*/ int f() {\n" //
+                + "    int $ = 1;\n" //
+                + "    return $;\n" //
+                + "  }\n" //
+                + "  /***/ int g() {\n" //
+                + "    return 2;\n" //
+                + "  }\n" //
+                + "}");
   }
 
   @Test public void disableSpartanizaionInClass() {
@@ -55,7 +56,8 @@ public class Issue142Test {
         + "    int $ = 2;\n" //
         + "    return $;\n" //
         + "  }\n" //
-        + "}").to("" //
+        + "}")
+            .to("" //
                 + "/**@DisableSpartan*/ class A {\n" //
                 + "  /***/ int f() {\n" //
                 + "    int $ = 1;\n" //
@@ -88,7 +90,8 @@ public class Issue142Test {
         + "      return $;\n" //
         + "    }\n" //
         + "  }\n" //
-        + "}").to("" //
+        + "}")
+            .to("" //
                 + "/**@DisableSpartan*/ class A {\n" //
                 + "  /***/ int f() {\n" //
                 + "    int $ = 1;\n" //
@@ -97,8 +100,7 @@ public class Issue142Test {
                 + "  /**@EnableSpartan*/ int g() {\n" //
                 + "    return 2;\n" //
                 + "  }\n" + "  /***/ class B {\n" //
-                + "    /***/ int f() {\n"
-                + "      int $ = 1;\n" //
+                + "    /***/ int f() {\n" + "      int $ = 1;\n" //
                 + "      return $;\n" //
                 + "    }\n" //
                 + "    /**@EnableSpartan*/ int g() {\n" //
@@ -125,11 +127,11 @@ public class Issue142Test {
         + "      return $;\n" //
         + "    }\n" //
         + "    /***/ int g() {\n" //
-        + "      int $ = 2;\n"
-        + "      return $;\n" //
+        + "      int $ = 2;\n" + "      return $;\n" //
         + "    }\n" //
         + "  }\n" //
-        + "}").to("" + "/**@DisableSpartan*/ class A {\n" //
+        + "}")
+            .to("" + "/**@DisableSpartan*/ class A {\n" //
                 + "  /***/ int f() {\n" //
                 + "    int $ = 1;\n" //
                 + "    return $;\n" //
@@ -138,8 +140,7 @@ public class Issue142Test {
                 + "    return 2;\n" //
                 + "  }\n" //
                 + "  /**@EnableSpartan*/ class B {\n" //
-                + "    /***/ int f() {\n"
-                + "      return 1;\n" //
+                + "    /***/ int f() {\n" + "      return 1;\n" //
                 + "    }\n" //
                 + "    /***/ int g() {\n" //
                 + "      return 2;\n" //
