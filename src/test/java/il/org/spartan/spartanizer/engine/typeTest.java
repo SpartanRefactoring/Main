@@ -890,41 +890,41 @@ public class typeTest {
       azzert.that(get(into.e("toString(x,y)")), is(NOTHING));
     }
 
-    @Test public void OnaryPlusMinusSemantics01() {
+    @Test public void UnaryPlusMinusSemantics01() {
       azzert.that(Axiom.type(i), is(INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics02() {
+    @Test public void UnaryPlusMinusSemantics02() {
       azzert.that(Axiom.type(-l), is(LONG));
     }
 
-    @Test public void OnaryPlusMinusSemantics03() {
+    @Test public void UnaryPlusMinusSemantics03() {
       final short x = 0;
       azzert.that(Axiom.type(x), is(INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics04() {
+    @Test public void UnaryPlusMinusSemantics04() {
       azzert.that(Axiom.type(d), is(DOUBLE));
     }
 
-    @Test public void OnaryPlusMinusSemantics05() {
+    @Test public void UnaryPlusMinusSemantics05() {
       azzert.that(Axiom.type(-f), is(FLOAT));
     }
 
-    @Test public void OnaryPlusMinusSemantics06() {
+    @Test public void UnaryPlusMinusSemantics06() {
       azzert.that(Axiom.type(b), is(INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics07() {
+    @Test public void UnaryPlusMinusSemantics07() {
       azzert.that(Axiom.type(-b), is(INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics08() {
+    @Test public void UnaryPlusMinusSemantics08() {
       final char x = 0;
       azzert.that(Axiom.type(-x), is(INT));
     }
 
-    @Test public void OnaryPlusMinusSemantics09() {
+    @Test public void UnaryPlusMinusSemantics09() {
       azzert.that(Axiom.type(-c1), is(INT));
     }
   }
