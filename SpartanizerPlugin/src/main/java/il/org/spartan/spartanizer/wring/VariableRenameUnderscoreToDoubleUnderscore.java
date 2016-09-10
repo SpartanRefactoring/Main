@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** Replaces name of variables named "__" into "____"
+/** Replaces name of variables named "_" into "__"
  * @author Ori Roth
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */

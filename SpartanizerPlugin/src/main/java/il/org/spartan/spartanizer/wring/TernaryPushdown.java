@@ -150,7 +150,7 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression ____) {
+  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";
   }
 

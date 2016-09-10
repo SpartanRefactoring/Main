@@ -6,6 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc" }) //
@@ -73,12 +74,12 @@ public class AtomicConversionsTest {
   }
 
   @Test public void preIncrement() {
-    azzert.that(PrudentType.axiom(++d), is(PrudentType.DOUBLE));
-    azzert.that(PrudentType.axiom(++f), is(PrudentType.FLOAT));
-    azzert.that(PrudentType.axiom(++b), is(PrudentType.BYTE));
-    azzert.that(PrudentType.axiom(++c), is(PrudentType.CHAR));
-    azzert.that(PrudentType.axiom(++s), is(PrudentType.SHORT));
-    azzert.that(PrudentType.axiom(++i), is(PrudentType.INT));
+    azzert.that(type.Axiom.type(++d), is(type.Primitive.Certain.DOUBLE));
+    azzert.that(type.Axiom.type(++f), is(type.Primitive.Certain.FLOAT));
+    azzert.that(type.Axiom.type(++b), is(type.Primitive.Certain.BYTE));
+    azzert.that(type.Axiom.type(++c), is(type.Primitive.Certain.CHAR));
+    azzert.that(type.Axiom.type(++s), is(type.Primitive.Certain.SHORT));
+    azzert.that(type.Axiom.type(++i), is(type.Primitive.Certain.INT));
   }
 
   @Test public void shift2() {
