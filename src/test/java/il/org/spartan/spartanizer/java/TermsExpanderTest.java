@@ -9,41 +9,42 @@ import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class TermsExpanderTest {
   @Test public void test00() {
-    azzert.that(TermsExpander.simplify(i("a-b")), iz("a-b"));
+    azzert.that(TermsExpander.simplify(i("7-3")), iz("7-3"));
   }
 
   @Test public void test01() {
-    azzert.that(TermsExpander.simplify(i("a+b+c")), iz("a + b + c"));
+    azzert.that(TermsExpander.simplify(i("7+3+2")), iz("7 + 3 + 2"));
   }
 
   @Test public void test02() {
-    azzert.that(TermsExpander.simplify(i("a-c")), iz("a-c"));
+    azzert.that(TermsExpander.simplify(i("7-2")), iz("7-2"));
   }
 
   @Test public void test03() {
-    azzert.that(TermsExpander.simplify(i("a + (b+c)")), iz("a + b+c"));
+    azzert.that(TermsExpander.simplify(i("7 + (3+2)")), iz("7 + 3+2"));
   }
 
   @Test public void test04() {
-    azzert.that(TermsExpander.simplify(i("a + (b-c)")), iz("a + b-c"));
+    azzert.that(TermsExpander.simplify(i("7 + (b-c)")), iz("7 + b-c"));
   }
 
   @Test public void test05() {
-    azzert.that(TermsExpander.simplify(i("a + b -c + d -e + f")), iz("a + b -c + d -e + f"));
+    azzert.that(TermsExpander.simplify(i("7 + 3 -c + 4 -e + 6")), iz("7 + 3 -c + 4 -e + 6"));
   }
 
   @Test public void test06() {
-    azzert.that(TermsExpander.simplify(i("a + (b + c + d)")), iz("a + b + c + d"));
+    azzert.that(TermsExpander.simplify(i("7 + (5 + 6 + 7)")), iz("7 + 5 + 6 + 7"));
   }
 
   @Test public void test07() {
-    azzert.that(TermsExpander.simplify(i("a - (c -d)")), iz("a - c + d"));
+    azzert.that(TermsExpander.simplify(i("7 - (c -d)")), iz("7 - c + d"));
   }
 
   @Test public void test08() {
-    azzert.that(TermsExpander.simplify(i("a + -a")), iz("a - a"));
+    azzert.that(TermsExpander.simplify(i("7 + -a")), iz("7 - a"));
   }
 
+  @Ignore("see typeTest.basicExpression31")
   @Test public void test09() {
     azzert.that(TermsExpander.simplify(i("+a + +a")), iz("a + a"));
   }
@@ -53,11 +54,11 @@ import il.org.spartan.*;
   }
 
   @Test public void test11() {
-    azzert.that(TermsExpander.simplify(i("a + - - (b + c)")), iz("a + b + c"));
+    azzert.that(TermsExpander.simplify(i("7 + - - (b + c)")), iz("7 + b + c"));
   }
 
   @Test public void test12() {
-    azzert.that(TermsExpander.simplify(i("a + + - - - (b -c)")), iz("a -b +c"));
+    azzert.that(TermsExpander.simplify(i("7 + + - - - (b -c)")), iz("7 -b +c"));
   }
 
   @Test public void test13() {
@@ -94,7 +95,7 @@ import il.org.spartan.*;
   }
 
   @Test public void test21() {
-    azzert.that(TermsExpander.simplify(i("-a+b")), iz("b-a"));
+    azzert.that(TermsExpander.simplify(i("-a+7")), iz("7-a"));
   }
 
   @Test public void test22() {
@@ -103,15 +104,15 @@ import il.org.spartan.*;
 
   String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +" + "\"Total changes: \" + (initialCount - finalCount)";
 
-  @Ignore("issue 129") @Test public void test23() {
+  @Test public void test23() {
     azzert.that(TermsExpander.simplify(i(complexStringCase)), iz(complexStringCase));
   }
 
-  @Ignore("issue 129") @Test public void test24() {
+  @Test public void test24() {
     azzert.that(TermsExpander.simplify(i("\"\" + (x-y)")), iz("\"\" + (x-y)"));
   }
 
-  @Ignore("issue 129") @Test public void test25() {
+  @Test public void test25() {
     azzert.that(TermsExpander.simplify(i("\"\" + (x+y)")), iz("\"\" + (x+y)"));
   }
 

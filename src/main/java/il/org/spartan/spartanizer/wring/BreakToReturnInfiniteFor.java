@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.engine.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Canonicalization {
+public class BreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canonicalization {
   @Override public String description() {
     return "Convert the break inside the loop to return";
   }
@@ -35,20 +35,20 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     return "Convert the break inside " + b + " to return";
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement s) {
+  private static boolean isInfiniteLoop(final ForStatement s) {
     return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
-    if(statementList.size() < 2 || !(statementList.get(0) instanceof WhileStatement) //
+    if(statementList.size() < 2 || !(statementList.get(0) instanceof ForStatement) //
         ||!(statementList.get(1) instanceof ReturnStatement))
       return null;
-    final WhileStatement whileStatement = (WhileStatement) statementList.get(0);
+    final ForStatement ForStatement = (ForStatement) statementList.get(0);
     final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
-    if (!isInfiniteLoop(whileStatement))
+    if (!isInfiniteLoop(ForStatement))
       return null;
-    final Statement body = whileStatement.getBody();
+    final Statement body = ForStatement.getBody();
     Statement toChange = az.ifStatement(body) != null ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
     if (toChange == null)
