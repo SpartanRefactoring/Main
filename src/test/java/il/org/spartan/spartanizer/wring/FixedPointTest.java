@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
+import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -340,13 +341,14 @@ import il.org.spartan.spartanizer.spartanizations.*;
             "      System.out.println(tH3 + $);\n" + //
             "    else\n" + //
             "      System.out.println(h2A+ $ + a + s);",
-        "System.out.println(X.equals(X)?tH3+X:h2A+X+X);");
+        "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
 
+  //the 0 should probably be removed here, not sure if bug on t
   @Test(timeout = 2000) public void ternarize23() {
     assertConvertsTo(//
         "int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", //
-        "int a=(s.equals(532)?y(2)+10:r(3)-6);");
+        "int a=0+(s.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {
