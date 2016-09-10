@@ -24,8 +24,8 @@ public class Cartesian {
   public static <R, S> Pair<R, S>[] makeObliqueProduct(final R[] rs, final S[] ss) {
     final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
     int n = 0;
-    for (int sum = 2; sum < rs.length + ss.length; sum++)
-      for (int i = 1; i <= Math.min(sum, rs.length); i++) {
+    for (int sum = 2; sum < rs.length + ss.length; ++sum)
+      for (int i = 1; i <= Math.min(sum, rs.length); ++i) {
         final int j = sum - i;
         if (j < 1 || j > ss.length)
           continue;
@@ -46,9 +46,9 @@ public class Cartesian {
   public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(final R[] rs, final S[] ss, final T[] ts) {
     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
-    for (int sum = 3; sum <= rs.length + ss.length + ts.length; sum++)
-      for (int i = 1; i <= Math.min(sum, rs.length); i++)
-        for (int j = sum - i - 1; j >= 1; j--) {
+    for (int sum = 3; sum <= rs.length + ss.length + ts.length; ++sum)
+      for (int i = 1; i <= Math.min(sum, rs.length); ++i)
+        for (int j = sum - i - 1; j >= 1; --j) {
           if (j > ss.length)
             continue;
           final int k = sum - i - j;
@@ -114,7 +114,7 @@ public class Cartesian {
 
     @Test public void makeArray3_13_19() {
       final int n = makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length;
-      assertEquals(3 * 13 * 18, n);
+      assertEquals(702, n);
     }
   }
 }

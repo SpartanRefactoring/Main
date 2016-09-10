@@ -50,8 +50,8 @@ public class Aggregator {
     markColumn = key;
   }
 
-  public void record(final String key, final double value, final FormatSpecifier... as) {
-    record(key, value, toMap(as));
+  public void record(final String key, final double value, final FormatSpecifier... ss) {
+    record(key, value, toMap(ss));
   }
 
   public void record(final String key, final double value, final Map<Aggregation, String> as) {
@@ -65,6 +65,9 @@ public class Aggregator {
     return allAggregations.size();
   }
 
+  public boolean isEmpty() {
+    return allAggregations.isEmpty();
+  }
   protected void merge(final Map<Aggregation, String> as) {
     int lastFound = -1;
     for (final Aggregation a : as.keySet()) {
@@ -79,7 +82,7 @@ public class Aggregator {
   }
 
   private void addAggregate(final String key, final AbstractStringProperties to, final Aggregation a) {
-    to.put(key, key.equals(markColumn) ? a.toString() : !missing(key, a) ? get(key, a) : "");
+    to.put(key, key.equals(markColumn) ? a + "" : missing(key, a) ? "" : get(key, a));
   }
 
   private String get(final String key, final Aggregation a) {
@@ -92,13 +95,13 @@ public class Aggregator {
 
   public enum Aggregation {
     COUNT {
-      @Override public double retreive(final RealStatistics r) {
-        return r.n();
+      @Override public double retreive(final RealStatistics s) {
+        return s.n();
       }
     },
     MIN {
-      @Override public double retreive(final RealStatistics r) {
-        return r.min();
+      @Override public double retreive(final RealStatistics s) {
+        return s.min();
       }
 
       @Override public String toString() {
@@ -106,8 +109,8 @@ public class Aggregator {
       }
     },
     MAX {
-      @Override public double retreive(final RealStatistics r) {
-        return r.max();
+      @Override public double retreive(final RealStatistics s) {
+        return s.max();
       }
 
       @Override public String toString() {
@@ -115,8 +118,8 @@ public class Aggregator {
       }
     },
     MEAN {
-      @Override public double retreive(final RealStatistics r) {
-        return r.mean();
+      @Override public double retreive(final RealStatistics s) {
+        return s.mean();
       }
 
       @Override public String toString() {
@@ -124,8 +127,8 @@ public class Aggregator {
       }
     },
     MEDIAN {
-      @Override public double retreive(final RealStatistics r) {
-        return r.median();
+      @Override public double retreive(final RealStatistics s) {
+        return s.median();
       }
 
       @Override public String toString() {
@@ -133,8 +136,8 @@ public class Aggregator {
       }
     },
     SD {
-      @Override public double retreive(final RealStatistics r) {
-        return r.sd();
+      @Override public double retreive(final RealStatistics s) {
+        return s.sd();
       }
 
       @Override public String toString() {
@@ -142,8 +145,8 @@ public class Aggregator {
       }
     },
     TOTAL {
-      @Override public double retreive(final RealStatistics r) {
-        return r.sum();
+      @Override public double retreive(final RealStatistics s) {
+        return s.sum();
       }
 
       @Override public String toString() {
@@ -151,8 +154,8 @@ public class Aggregator {
       }
     },
     MAD {
-      @Override public double retreive(final RealStatistics r) {
-        return r.mad();
+      @Override public double retreive(final RealStatistics s) {
+        return s.mad();
       }
 
       @Override public String toString() {
@@ -204,11 +207,11 @@ public class Aggregator {
       };
     }
 
-    public abstract double retreive(RealStatistics r);
+    public abstract double retreive(RealStatistics s);
 
-    public String retreive(final RealStatistics r, final String format) {
+    public String retreive(final RealStatistics s, final String format) {
       try {
-        return String.format(format, Box.it(retreive(r)));
+        return String.format(format, Box.it(retreive(s)));
       } catch (final ArithmeticException e) {
         return ""; //
       }

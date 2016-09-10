@@ -42,8 +42,8 @@ public enum CSV {
     final StringBuilder $ = new StringBuilder(10 * parts.length);
     final Separator sep = new Separator(",");
     for (final T t : parts)
-      $.append(sep + escape(t == null ? null : t.toString()));
-    return $.toString();
+      $.append(sep + escape(t == null ? null : t + ""));
+    return $ + "";
   }
 
   /** Combine the given array of enum values into a comma separated string. Each
@@ -61,37 +61,24 @@ public enum CSV {
   }
 
   /** Escape the given input
-   * @param in Input string
+   * @param s Input string
    * @return Escaped form of the input */
-  public static String escape(final String in) {
-    if (in == null)
+  public static String escape(final String s) {
+    if (s == null)
       return NULL;
-    final int len = in.length();
+    final int len = s.length();
     final StringBuilder out = new StringBuilder(len);
-    for (int i = 0; i < len; ++i) {
-      final char c = in.charAt(i);
-      if (c == '\\')
-        out.append("\\\\");
-      else if (c == '\n')
-        out.append("\\n");
-      else if (c == '\r')
-        out.append("\\r");
-      else if (c == '\t')
-        out.append("\\t");
-      else if (c == ',')
-        out.append("\\.");
-      else
-        out.append(c);
-    }
-    return out.toString();
+    for (final char c : s.toCharArray())
+      out.append(c == '\\' ? "\\\\" : c == '\n' ? "\\n" : c == '\r' ? "\\r" : c == '\t' ? "\\t" : c == ',' ? "\\." : c);
+    return out + "";
   }
 
   /** Read a CSV file.
-   * @param file Input file
+   * @param f Input file
    * @return A two dimensional array of strings
    * @throws IOException some problem with file 'filename' */
-  public static String[][] load(final File file) throws IOException {
-    return load(new FileReader(file));
+  public static String[][] load(final File f) throws IOException {
+    return load(new FileReader(f));
   }
 
   /** Read a CSV file from the given Reader object.
@@ -104,8 +91,8 @@ public enum CSV {
     return $.toArray(new String[$.size()][]);
   }
 
-  public static void save(final File file, final String[][] data) throws IOException {
-    final PrintWriter pw = new PrintWriter(new FileWriter(file));
+  public static void save(final File f, final String[][] data) throws IOException {
+    final PrintWriter pw = new PrintWriter(new FileWriter(f));
     pw.print(toCsv(data));
     pw.close();
   }
@@ -170,25 +157,25 @@ public enum CSV {
       pw.println();
     }
     pw.flush();
-    return sw.toString();
+    return sw + "";
   }
 
   /** Unescape the given input
-   * @param in Input string
+   * @param s Input string
    * @return Unescaped string */
-  public static String unescape(final String in) {
-    if (NULL.equals(in))
+  public static String unescape(final String s) {
+    if (NULL.equals(s))
       return null;
     boolean esc = false;
-    final int length = in.length();
+    final int length = s.length();
     final StringBuilder out = new StringBuilder(length);
     for (int i = 0; i < length; ++i) {
-      final char c = in.charAt(i);
+      final char c = s.charAt(i);
       if (!esc) {
-        if (c != '\\')
-          out.append(c);
-        else
+        if (c == '\\')
           esc = true;
+        else
+          out.append(c);
         continue;
       }
       esc = false;
@@ -211,6 +198,6 @@ public enum CSV {
         default:
       }
     }
-    return out.toString();
+    return out + "";
   }
 }

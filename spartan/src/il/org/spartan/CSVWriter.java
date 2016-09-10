@@ -66,8 +66,8 @@ import il.org.spartan.streotypes.*;
     return header;
   }
 
-  public void write(final AbstractStringProperties c) {
-    writeln(c.line());
+  public void write(final AbstractStringProperties p) {
+    writeln(p.line());
   }
 
   /** Write a new CSV line into the file. All CSV lines written into the file

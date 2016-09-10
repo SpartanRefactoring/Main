@@ -101,7 +101,7 @@ public abstract class AbstractStringProperties {
     CSV {
       /** Wraps values in a CSV line. Occurrences of this character in field
        * content are escaped by typing it twice. */
-      public static final String QUOTE = "" + '"';
+      public static final String QUOTE = '"' + "";
       public static final String DELIMETER = ",";
 
       @Override public String headerEnd() {
@@ -190,11 +190,7 @@ public abstract class AbstractStringProperties {
       }
 
       @Override String makeField(final String s) {
-        if (s == null)
-          return "";
-        if (!s.contains(delimiter()))
-          return s;
-        return s.replaceAll(delimiter(), "\\" + delimiter());
+        return s == null ? "" : !s.contains(delimiter()) ? s : s.replaceAll(delimiter(), "\\" + delimiter());
       }
     };
     public String makeLine(final Iterable<String> ss) {

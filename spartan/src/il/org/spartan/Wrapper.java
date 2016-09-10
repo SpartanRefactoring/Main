@@ -51,6 +51,6 @@ public class Wrapper<T> {
   }
 
   @Override public String toString() {
-    return inner == null ? "null" : Utils.cantBeNull(inner.toString());
+    return inner == null ? "null" : Utils.cantBeNull((inner + ""));
   }
 }

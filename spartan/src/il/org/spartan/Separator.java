@@ -37,7 +37,7 @@ public final class Separator {
     String $ = "";
     final Separator s = new Separator(between);
     for (final int i : is)
-      $ += s + new Integer(i).toString();
+      $ += s + (new Integer(i) + "");
     return $;
   }
 
@@ -100,7 +100,7 @@ public final class Separator {
   /** Instantiates this class.
    * @param c JD */
   public Separator(final char c) {
-    this("" + c);
+    this(c + "");
   }
 
   /** Instantiates this class.

@@ -220,7 +220,7 @@ public enum as {
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
   public static String string(@Nullable final Object $) {
-    return $ == null ? "null" : as.string($.toString());
+    return $ == null ? "null" : as.string(($ + ""));
   }
 
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>
@@ -239,7 +239,7 @@ public enum as {
     final List<@NonNull String> $ = new ArrayList<>();
     for (final @Nullable Object o : os)
       if (o != null)
-        $.add("" + o);
+        $.add(o + "");
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
   }
 
