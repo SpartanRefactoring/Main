@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -112,6 +113,6 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
     // null, you do not have to do anything.
     final List<Statement> ss = step.statements(b);
-    return ss.size() > 1 && ss.get(0) instanceof ForStatement && ss.get(1) instanceof ReturnStatement;
+    return ss.size() > 1 && lisp.first(ss) instanceof ForStatement && lisp.second(ss) instanceof ReturnStatement;
   }
 }

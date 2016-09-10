@@ -433,7 +433,7 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT
         .from(new Document("class A { String s; @FlatEnvUse({ @Id(name = \"str\", clazz = \"String\") }) int x;}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("str", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -441,7 +441,7 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = \"str\", clazz = \"String\") }) void foo()}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
     ENVTestEngineAbstract.getCompilationUnit("EnvironmentCodeExamples.java");
-    s.add(new MapEntry<>("str", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -449,7 +449,7 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT
         .from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"int\") })" + "void foo()}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("a", new Information(PrudentType.INT)));
+    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
     e.compareOutOfOrder(s);
   }
 
@@ -457,8 +457,8 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"String\") }) \n"
         + "void foo(); \n" + "@FlatEnvUse({ @Id(name = " + "\"k\", clazz = \"int\") }) \n" + "void f();}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("a", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("k", new Information(PrudentType.INT)));
+    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("k", new Information(type.Primitive.Certain.INT)));
     e.compareOutOfOrder(s);
   }
 
@@ -466,8 +466,8 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("a", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -475,7 +475,7 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"String\") }) \n"
         + "void foo(); \n" + "@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"int\") }) \n" + "void f();}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("a", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -483,7 +483,7 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"s\", clazz = \"String\") }) \n" + "void f();}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -491,8 +491,8 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
         "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("ss", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -500,9 +500,9 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("ss", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("i", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -510,8 +510,8 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
         "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("i", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -522,8 +522,8 @@ import il.org.spartan.spartanizer.utils.*;
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
         + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("x", new Information(PrudentType.INT)));
-    s.add(new MapEntry<>("y", new Information(PrudentType.DOUBLE)));
+    s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.INT)));
+    s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.DOUBLE)));
     e.compareOutOfOrder(s);
   }
 
@@ -534,8 +534,8 @@ import il.org.spartan.spartanizer.utils.*;
         + "@Id(name = \"y\", clazz = \"String\")," + "@Id(name = \"z\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
         + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("x", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("y", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -543,9 +543,9 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("i", new Information(PrudentType.INT)));
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("ss", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 
@@ -563,15 +563,15 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("i", new Information(PrudentType.INT)));
-    s.add(new MapEntry<>("ss", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
+    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     e.compareInOrder(s);
   }
 
   @Test public void EngineTestFromFile() {
     final EnvFlatHandler e = new EnvFlatHandler("EnvironmentTestMoreCodeExamples.java");
-    s.add(new MapEntry<>("str", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     e.compareInOrder(s);
   }
 
@@ -579,9 +579,9 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@NestedENV({ @Id(name = " + "\"EX.s\", clazz = \"String\"), "
         + "@Id(name = \"EX.ss\", clazz = \"String\")," + "@Id(name = \"EX.C1.i\", clazz = \"int\")})" + "void foo();\n}"));
     final EnvNestedHandler e = new EnvNestedHandler($);
-    s.add(new MapEntry<>("EX.s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("EX.ss", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("EX.C1.i", new Information(PrudentType.INT)));
+    s.add(new MapEntry<>("EX.s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("EX.C1.i", new Information(type.Primitive.Certain.INT)));
     e.compareOutOfOrder(s);
   }
 
@@ -589,9 +589,9 @@ import il.org.spartan.spartanizer.utils.*;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@NestedENV({ @Id(name = " + "\"EX.s\", clazz = \"String\"), "
         + "@Id(name = \"EX.s\", clazz = \"String\")," + "@Id(name = \"EX.C1.s\", clazz = \"String\")})" + "void foo();\n}"));
     final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("EX.s", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("EX.ss", new Information(PrudentType.STRING)));
-    s.add(new MapEntry<>("EX.C1.s", new Information(PrudentType.STRING)));
+    s.add(new MapEntry<>("EX.s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("EX.C1.s", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
   }
 }
