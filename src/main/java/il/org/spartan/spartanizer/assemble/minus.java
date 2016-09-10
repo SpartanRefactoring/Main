@@ -21,10 +21,10 @@ import il.org.spartan.spartanizer.ast.*;
 public enum minus {
   ;
   public static int level(final Expression ¢) {
-    return iz.is(¢, PREFIX__EXPRESSION) ? level((PrefixExpression) ¢)
-        : iz.is(¢, PARENTHESIZED__EXPRESSION) ? level(core(¢)) //
-            : iz.is(¢, INFIX__EXPRESSION) ? level((InfixExpression) ¢) //
-                : iz.is(¢, NUMBER__LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
+    return iz.is(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
+        : iz.is(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
+            : iz.is(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
+                : iz.is(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
                     : 0;
   }
 
@@ -40,10 +40,10 @@ public enum minus {
   }
 
   public static Expression peel(final Expression $) {
-    return iz.is($, PREFIX__EXPRESSION) ? peel((PrefixExpression) $)
-        : iz.is($, PARENTHESIZED__EXPRESSION) ? peel(core($)) //
-            : iz.is($, INFIX__EXPRESSION) ? peel((InfixExpression) $) //
-                : iz.is($, NUMBER__LITERAL) ? peel((NumberLiteral) $) //
+    return iz.is($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
+        : iz.is($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
+            : iz.is($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
+                : iz.is($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
                     : $;
   }
 

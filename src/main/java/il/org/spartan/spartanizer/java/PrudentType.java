@@ -142,31 +142,31 @@ public enum PrudentType {
   static PrudentType prudent(final Expression x, final List<PrudentType> ts) {
     assert ts.size() >= 2;
     switch (x.getNodeType()) {
-      case NULL__LITERAL:
+      case NULL_LITERAL:
         return NULL;
-      case CHARACTER__LITERAL:
+      case CHARACTER_LITERAL:
         return CHAR;
-      case STRING__LITERAL:
+      case STRING_LITERAL:
         return STRING;
-      case BOOLEAN__LITERAL:
+      case BOOLEAN_LITERAL:
         return BOOLEAN;
-      case NUMBER__LITERAL:
+      case NUMBER_LITERAL:
         return prudentType((NumberLiteral) x);
-      case CAST__EXPRESSION:
+      case CAST_EXPRESSION:
         return prudentType((CastExpression) x);
-      case PREFIX__EXPRESSION:
+      case PREFIX_EXPRESSION:
         return prudentType((PrefixExpression) x, lisp.first(ts));
-      case INFIX__EXPRESSION:
+      case INFIX_EXPRESSION:
         return prudentType((InfixExpression) x, ts);
-      case POSTFIX__EXPRESSION:
+      case POSTFIX_EXPRESSION:
         return prudentType((PostfixExpression) x, lisp.first(ts));
-      case PARENTHESIZED__EXPRESSION:
+      case PARENTHESIZED_EXPRESSION:
         return prudentType((ParenthesizedExpression) x, lisp.first(ts));
-      case CLASS__INSTANCE__CREATION:
+      case CLASS_INSTANCE_CREATION:
         return prudentType((ClassInstanceCreation) x);
-      case METHOD__INVOCATION:
+      case METHOD_INVOCATION:
         return prudentType((MethodInvocation) x);
-      case CONDITIONAL__EXPRESSION:
+      case CONDITIONAL_EXPRESSION:
         return prudentType((ConditionalExpression) x, lisp.first(ts), lisp.second(ts));
       case ASSIGNMENT:
         return prudentType((Assignment) x, lisp.first(ts));
@@ -404,7 +404,7 @@ public enum PrudentType {
       return underBitwiseOperation(k);
     if (o == REMAINDER)
       return underIntegersOnlyOperator(k);
-    if (in(o, LEFT__SHIFT, RIGHT__SHIFT__SIGNED, RIGHT__SHIFT__UNSIGNED))
+    if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
       return asIntegralUnderOperation();
     if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
       throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);

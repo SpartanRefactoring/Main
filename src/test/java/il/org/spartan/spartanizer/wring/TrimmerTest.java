@@ -48,9 +48,9 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assertSimilar(expected, peeled);
   }
 
-  @Test public void andWithCLASS__CONSTANT() {
-    trimming("(x >> 18) & MASK__BITS").stays();
-    trimming("(x >> 18) & MASK__6BITS").stays();
+  @Test public void andWithCLASS_CONSTANT() {
+    trimming("(x >> 18) & MASK_BITS").stays();
+    trimming("(x >> 18) & MASK_6BITS").stays();
   }
 
   @Test public void assignmentAssignmentChain1() {
@@ -271,8 +271,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void bugIntroducingMISSINGWordTry2() {
-    trimming("!(intent.getBooleanExtra(EXTRA__FROM__SHORTCUT, false) && !K9.FOLDER__NONE.equals(mAccount.getAutoExpandFolderName()))")
-        .to("!intent.getBooleanExtra(EXTRA__FROM__SHORTCUT,false)||K9.FOLDER__NONE.equals(mAccount.getAutoExpandFolderName())");
+    trimming("!(intent.getBooleanExtra(EXTRA_FROM_SHORTCUT, false) && !K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName()))")
+        .to("!intent.getBooleanExtra(EXTRA_FROM_SHORTCUT,false)||K9.FOLDER_NONE.equals(mAccount.getAutoExpandFolderName())");
   }
 
   @Test public void bugIntroducingMISSINGWordTry3() {
@@ -352,10 +352,10 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
-    assert in(e.getOperator(), Operator.EQUALS, Operator.NOT__EQUALS);
+    assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
     assert !iz.booleanLiteral(step.right(e));
     assert !iz.booleanLiteral(step.left(e));
-    assert in(e.getOperator(), Operator.EQUALS, Operator.NOT__EQUALS);
+    assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
   }
 
   @Test public void comaprisonWithSpecific1() {
@@ -623,7 +623,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void declarationInitializerReturnExpression() {
-    trimming("String t = Bob + Wants + To + \"Sleep \"; " + "").to("return(right__now+Bob+Wants+To+\"Sleep \");");
+    trimming("String t = Bob + Wants + To + \"Sleep \"; " + "").to("return(right_now+Bob+Wants+To+\"Sleep \");");
   }
 
   @Test public void declarationInitializesRotate() {
@@ -1090,7 +1090,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES__THRESHOLD;
+    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assert tokenWiseGreater;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
@@ -1112,7 +1112,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final Expression e1 = step.left(e);
     final Expression e2 = step.right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES__THRESHOLD;
+    final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assert !tokenWiseGreater;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
@@ -1179,28 +1179,28 @@ import il.org.spartan.spartanizer.spartanizations.*;
     ;
   }
 
-  @Test public void issue110__01() {
+  @Test public void issue110_01() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \", please\")");
   }
 
-  @Test public void issue110__02() {
+  @Test public void issue110_02() {
     trimming("polite ? \"Eat your meal.\" :  \"Eat your meal\"") //
         .to("\"Eat your meal\" + (polite ? \".\" : \"\")");
   }
 
-  @Test public void issue110__03() {
+  @Test public void issue110_03() {
     trimming("polite ? \"thanks for the meal\" :  \"I hated the meal\"") //
         .to("!polite ? \"I hated the meal\": \"thanks for the meal\"") //
         .to("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
   }
 
-  @Test public void issue110__04() {
+  @Test public void issue110_04() {
     trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
         .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
   }
 
-  @Test public void issue110__05() {
+  @Test public void issue110_05() {
     trimming("a ? \"abracadabra\" : \"abba\"") //
         .to("!a ? \"abba\" : \"abracadabra\"")//
         .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
@@ -1208,49 +1208,49 @@ import il.org.spartan.spartanizer.spartanizations.*;
         .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"").stays();
   }
 
-  @Test public void issue110__06() {
+  @Test public void issue110_06() {
     trimming("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
         .to("\"Use \"+(receiver==null ? \"x\" : receiver)").stays();
   }
 
-  @Test public void issue110__07() {
+  @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
         .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)").to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
   }
 
-  @Test public void issue110__08() {
+  @Test public void issue110_08() {
     trimming("receiver ==null ? \"Use\" : receiver + \"Use\"")//
         .to("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").stays();
   }
 
-  @Test public void issue110__09() {
+  @Test public void issue110_09() {
     trimming("receiver ==null ? \"user a\" : receiver + \"something a\"")//
         .to("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").stays();
   }
 
-  @Test public void issue110__10() {
+  @Test public void issue110_10() {
     trimming("receiver ==null ? \"Something Use\" : \"Something\" + receiver + \"Use\"")//
         .to("\"Something\"+ (receiver==null ? \" Use\" : \"\"+receiver + \"Use\")")//
         .to("\"Something\"+ ((receiver==null ? \" \" : \"\"+receiver+\"\") + \"Use\")");
   }
 
-  @Test public void issue110__11() {
+  @Test public void issue110_11() {
     trimming("f() ? \"first\" + d() + \"second\" : \"first\" + g() + \"third\"")//
         .to("\"first\" + (f() ? \"\" + d()  + \"second\" : \"\" + g()  + \"third\")");
   }
 
-  @Test public void issue110__12() {
+  @Test public void issue110_12() {
     trimming("f() ? \"first\" + d() + \"second\" : \"third\" + g() + \"second\"")//
         .to("(f() ? \"first\" +  d() + \"\": \"third\" + g()+\"\") + \"second\"");
   }
 
-  @Test public void issue110__13() {
+  @Test public void issue110_13() {
     trimming("f() ? \"first is:\" + d() + \"second\" : \"first are:\" + g() + \"and second\"")//
         .to("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//
         .to("\"first \" + ((f() ? \"is:\" + d() + \"\": \"are:\" + g() + \"and \") + \"second\")");
   }
 
-  @Test public void issue110__14() {
+  @Test public void issue110_14() {
     trimming("x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\"")//
         .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+ x +  \".isEmpty()\")")//
         .to("\"Use \" + ((x==null ? \"\" : \"\"+ x +  \".\")+\"isEmpty()\")");
@@ -1271,15 +1271,15 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue38() {
     trimming("    return o == null ? null\n" + //
-        "        : o == CONDITIONAL__AND ? CONDITIONAL__OR \n" + //
-        "            : o == CONDITIONAL__OR ? CONDITIONAL__AND \n" + //
+        "        : o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
+        "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
         "                : null;").stays();
   }
 
   @Test public void issue38Simplfiied() {
     trimming(//
-        "         o == CONDITIONAL__AND ? CONDITIONAL__OR \n" + //
-            "            : o == CONDITIONAL__OR ? CONDITIONAL__AND \n" + //
+        "         o == CONDITIONAL_AND ? CONDITIONAL_OR \n" + //
+            "            : o == CONDITIONAL_OR ? CONDITIONAL_AND \n" + //
             "                : null").stays();
   }
 
@@ -1616,7 +1616,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
         .stays();
   }
 
-  @Test public void issue62b__1() {
+  @Test public void issue62b_1() {
     trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
         .to("int f(int i) { for(;i<100;i++){} return i; }")//
@@ -2421,8 +2421,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void pushdownTernaryLongFieldRefernece() {
-    trimming("externalImage ? R.string.webview__contextmenu__image__download__action : R.string.webview__contextmenu__image__save__action")
-        .to("!externalImage ? R.string.webview__contextmenu__image__save__action : R.string.webview__contextmenu__image__download__action");
+    trimming("externalImage ? R.string.webview_contextmenu_image_download_action : R.string.webview_contextmenu_image_save_action")
+        .to("!externalImage ? R.string.webview_contextmenu_image_save_action : R.string.webview_contextmenu_image_download_action");
   }
 
   @Test public void pushdownTernaryMethodInvocationFirst() {
@@ -2518,11 +2518,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void redundantButNecessaryBrackets1() {
-    trimming("if (windowSize != INFINITE__WINDOW) {\n" + "").stays();
+    trimming("if (windowSize != INFINITE_WINDOW) {\n" + "").stays();
   }
 
   @Test public void redundantButNecessaryBrackets2() {
-    trimming("if (windowSize != INFINITE__WINDOW) {\n" + "").stays();
+    trimming("if (windowSize != INFINITE_WINDOW) {\n" + "").stays();
   }
 
   @Test public void redundantButNecessaryBrackets3() {
@@ -2973,11 +2973,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("1+2+'a'").stays();
   }
 
-  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength__a() {
+  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
     trimming("1111+211").to("1322");
   }
 
-  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength__b() {
+  @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
     trimming("211+1111").to("1322").stays();
   }
 
@@ -3037,11 +3037,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("2*3*'a'").stays();
   }
 
-  @Test public void sortTwoOperands0CheckThatWeSortByLength__a() {
+  @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
     trimming("1111*211").to("234421");
   }
 
-  @Test public void sortTwoOperands0CheckThatWeSortByLength__b() {
+  @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
     trimming("211*1111").to("234421");
   }
 
@@ -3293,9 +3293,9 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION__UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION__UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(2));
   }
 
   @Test public void unsafeBlockSimlify() {
@@ -3307,113 +3307,113 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
-    trimming("literal ? CONDITIONAL__OR : CONDITIONAL__AND").stays();
+    trimming("literal ? CONDITIONAL_OR : CONDITIONAL_AND").stays();
   }
 
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").stays();
   }
 
-  @Test public void issue131__1() {
+  @Test public void issue131_1() {
     trimming("for(int i=4 ; i<s.length() ; ++i){i+=9;i++;return xxx;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){i+=9;++i;break;}return xxx;");
   }
 
-  @Test public void issue131__2() {
+  @Test public void issue131_2() {
     trimming("for(int i=4 ; i<s.length() ; ++i){i+=9;return xxx;}return xxx;").to("for(int i=4 ; i<s.length() ; ++i){i+=9;break;}return xxx;");
   }
 
-  @Test public void issue131__3() {
+  @Test public void issue131_3() {
     trimming("for(int i=4 ; i<s.length() ; ++i)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)break;return xxx;");
   }
 
-  @Test public void issue131__4() {
+  @Test public void issue131_4() {
     trimming("for(int i=4 ; i<s.length() ; ++i)if(t=4)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)if(t=4)break;return xxx;");
   }
 
-  @Test public void issue131__5() {
+  @Test public void issue131_5() {
     trimming("while(i>5){i+=9;i++;return xxx;}return xxx;").to("while(i>5){i+=9;++i;break;}return xxx;");
   }
 
-  @Test public void issue131__6() {
+  @Test public void issue131_6() {
     trimming("while(i>5){i+=9;return xxx;}return xxx;").to("while(i>5){i+=9;break;}return xxx;");
   }
 
-  @Test public void issue131__7() {
+  @Test public void issue131_7() {
     trimming("while(i>5)return xxx;return xxx;").to("while(i>5)break;return xxx;");
   }
 
-  @Test public void issue131__8() {
+  @Test public void issue131_8() {
     trimming("while(i>5)if(t=4)return xxx;return xxx;").to("while(i>5)if(t=4)break;return xxx;");
   }
 
-  @Test public void issue131__9() {
+  @Test public void issue131_9() {
     trimming("for(int i=4 ; i<s.length() ; ++i)if(i==5)return xxx;return xxx;").to("for(int i=4 ; i<s.length() ; ++i)if(i==5)break;return xxx;");
   }
 
-  @Test public void issue131__10() {
+  @Test public void issue131_10() {
     trimming("while(i>9)if(i==5)return xxx;return xxx;").to("while(i>9)if(i==5)break;return xxx;");
   }
 
-  @Test public void issue131__11() {
+  @Test public void issue131_11() {
     trimming("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
   }
 
-  @Test public void issue131__12() {
+  @Test public void issue131_12() {
     trimming("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
         .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
   }
 
-  @Test public void issue131__13() {
+  @Test public void issue131_13() {
     trimming("while(i<7){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;").to("while(i<7){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
         .to("while(i<7){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
   }
 
-  @Test public void issue131__14() {
+  @Test public void issue131_14() {
     trimming("while(i<7){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
         .to("while(i<7){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
         .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
         .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
   }
 
-  @Test public void issue141__01() {
+  @Test public void issue141_01() {
     trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
         + "out(\"elements\", os);   \n" + "}").stays();
   }
 
-  @Test public void issue141__02() {
+  @Test public void issue141_02() {
     trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
         + "out(\"elements\", os);   \n" + "}").stays();
   }
 
-  @Test public void issue141__03() {
+  @Test public void issue141_03() {
     trimming("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
         + "out(\"elements\",abracadabra);   \n" + "}").stays();
   }
 
-  @Test public void issue141__04() {
+  @Test public void issue141_04() {
     trimming("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .stays();
   }
 
-  @Test public void issue141__05() {
+  @Test public void issue141_05() {
     trimming("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .stays();
   }
 
-  @Test public void issue141__06() {
+  @Test public void issue141_06() {
     trimming("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
             + "}")
         .stays();
   }
 
-  @Test public void issue141__07() {
+  @Test public void issue141_07() {
     trimming("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
             .to("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
@@ -3421,7 +3421,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
             .stays();
   }
 
-  @Test public void issue141__08() {
+  @Test public void issue141_08() {
     trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .stays();

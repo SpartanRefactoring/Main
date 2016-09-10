@@ -64,7 +64,7 @@ public class EvaluateShiftLeft extends Wring.ReplaceCurrentNode<InfixExpression>
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != LEFT__SHIFT)
+    if (x.getOperator() != LEFT_SHIFT)
       return null;
     switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
       case INT:

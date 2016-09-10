@@ -135,19 +135,19 @@ import org.junit.runners.*;
     trimming("-a * b/ c * d").stays();
   }
 
-  @Test public void issue120__1() {
+  @Test public void issue120_1() {
     trimming("\"a\"+\"b\"").to("\"ab\"");
   }
 
-  @Test public void issue120__2() {
+  @Test public void issue120_2() {
     trimming("\"abc\"+\"de\"+\"fgh\"").to("\"abcdefgh\"");
   }
 
-  @Test public void issue120__3() {
+  @Test public void issue120_3() {
     trimming("\"abc\"+a.toString()+\"de\"+\"fgh\"").to("\"abc\"+a.toString()+\"defgh\"");
   }
 
-  @Test public void issue120__4() {
+  @Test public void issue120_4() {
     trimming("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"") //
         .to("c.toString()+\"abc\"+a.toString()+\"defgh\"");
   }
@@ -241,8 +241,8 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar10() {
     trimming(
-        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION__TYPE__KEY)); ")
-            .to("@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION__TYPE__KEY)); ");
+        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ")
+            .to("@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ");
   }
 
   @Test public void reanmeReturnVariableToDollar11() {

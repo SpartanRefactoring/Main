@@ -80,7 +80,7 @@ public enum precedence {
     if (x == null)
       return UNDEFINED;
     switch (x.getNodeType()) {
-      case INFIX__EXPRESSION:
+      case INFIX_EXPRESSION:
         return of((InfixExpression) x);
       case ASSIGNMENT:
         return of((Assignment) x);

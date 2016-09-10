@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.*;
 public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = az.ifStatement(extract.singleThen(s));
-    final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL__AND);
+    final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
     r.replace(s.getExpression(), e, g);
     r.replace(then, duplicate.of(step.then(then)), g);
   }

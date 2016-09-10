@@ -40,7 +40,7 @@ public class ConcatStrings extends Wring.ReplaceCurrentNode<InfixExpression> imp
     // TODO: NIV Convert into a for(;;) loop
     int i = 0;
     while (i < operands.size() - 1)
-      if (operands.get(i).getNodeType() != ASTNode.STRING__LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING__LITERAL)
+      if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)
         ++i;
       else {
         isChanged = true;
