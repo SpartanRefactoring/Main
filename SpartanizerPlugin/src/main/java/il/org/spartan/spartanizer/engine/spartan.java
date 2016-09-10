@@ -52,6 +52,11 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
+    String $;
+    List<?> l = t.typeArguments(); //the type is not ParameterizedType, hence step.typeArguments cannot be used
+    $ = l.get(0) instanceof WildcardType && ((WildcardType)l.get(0)).getBound() == null ? shorten(t.getType()) : shorten(step.typeArguments(t)); 
+    if ($ == null)
+      return null;
     switch (t.getType() + "") {
       case "Collection":
       case "Iterable":
@@ -62,12 +67,9 @@ public interface spartan {
       case "LinkedHashSet":
       case "ArrayList":
       case "TreeSet":
-        final String $ = shorten(step.typeArguments(t));
-        if ($ == null)
-          return null;
         return $ + "s";
       default:
-        return null;
+        return $;
     }
   }
 
