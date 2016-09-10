@@ -61,7 +61,7 @@ public interface type {
     return null;
   }
 
-  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain ____) {
+  default boolean canB(@SuppressWarnings("unused") final Primitive.Certain __) {
     return false;
   }
 

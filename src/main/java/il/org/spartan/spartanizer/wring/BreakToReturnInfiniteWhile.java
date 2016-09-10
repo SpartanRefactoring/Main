@@ -35,13 +35,13 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     return "Convert the break inside " + b + " to return";
   }
 
-  private static boolean isInfiniteLoop(final ForStatement s) {
+  private static boolean isInfiniteLoop(final WhileStatement s) {
     return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> statementList = n.statements();
-    final ForStatement whileStatement = (ForStatement) statementList.get(0);
+    final WhileStatement whileStatement = (WhileStatement) statementList.get(0);
     final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
     if (!isInfiniteLoop(whileStatement))
       return null;
