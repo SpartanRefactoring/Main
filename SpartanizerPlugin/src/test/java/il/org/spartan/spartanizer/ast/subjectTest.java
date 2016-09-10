@@ -172,7 +172,7 @@ import il.org.spartan.spartanizer.java.*;
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 
-  @Test public void substractionsDoesntAssociate() {
+  @Test public void subtractionsDoesntAssociate() {
     azzert.that(subject.pair(e("a-B"), e("c-d")).to(InfixExpression.Operator.MINUS), iz("a - B - (c - d)"));
   }
 
