@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-
+// TODO: Niv, add header.
 public class EvaluateAux {
   public static double extractDouble(final Expression x) {
     if (!isLong(x))
