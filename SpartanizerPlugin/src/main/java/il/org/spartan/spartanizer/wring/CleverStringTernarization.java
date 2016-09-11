@@ -31,11 +31,15 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
-    int $ = 0;
-    for (; $ < s1.length(); ++$)
-      if (first(s1, $) != first(s2, $))
-        break;
-    return $;
+    int lastSeperator = 0;
+    for (int i = 0; i < s1.length(); ++i){
+      if((!Character.isAlphabetic(s1.charAt(i)) && !Character.isAlphabetic(s2.charAt(i)))//
+          ||(i==s1.length()-1 && !Character.isAlphabetic(s2.charAt(i))))
+        lastSeperator=i;
+      if (first(s1, i) != first(s2, i))
+        return lastSeperator;
+    }
+    return s1.length();
   }
 
   /** @param s JD
@@ -62,11 +66,21 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
     assert s1.length() <= s2.length();
-    int $ = 0;
-    for (; $ < s1.length(); ++$)
-      if (last(s1, $) != last(s2, $))
+    int i=0;
+    for (; i < s1.length(); ++i){
+      if (last(s1, i) != last(s2, i))
         break;
-    return $;
+    }
+    if(i==0)
+      return 0;
+    if((i==s1.length() && s2.length()==s1.length())||(i==s1.length() && !Character.isAlphabetic(s2.charAt(s2.length()-1-i))))
+      return i;
+    for(int j=s1.length()-i;j<s1.length();j++){
+       
+      if(!Character.isAlphabetic(s1.charAt(j)))
+        return s1.length()-j;
+    }
+    return 0;
   }
 
   private static Expression replacementPrefix(final String then, final String elze, final int commonPrefixIndex, final Expression condition) {
