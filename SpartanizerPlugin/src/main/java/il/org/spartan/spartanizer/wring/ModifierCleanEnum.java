@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierCleanEnum extends ModifierClean<EnumDeclaration> implements Kind.SyntacticBaggage {
+public final class ModifierCleanEnum extends AbstractModifierClean<EnumDeclaration> implements Kind.SyntacticBaggage {
   @Override String description(final EnumDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }

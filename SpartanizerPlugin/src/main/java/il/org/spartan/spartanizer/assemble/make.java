@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.assemble;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -91,8 +91,8 @@ public enum make {
 
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(xs));
-    for (final Expression e : lisp.rest(xs))
+    $.add(first(xs));
+    for (final Expression e : rest(xs))
       $.add(minusOf(e));
     return $;
   }
