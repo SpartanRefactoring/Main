@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.lisp.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -115,9 +116,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   private ASTNode replacement(final List<Expression> xs) {
     if (xs.size() == 1)
-      return az.infixExpression(xs.get(0)).getOperator() != TIMES ? null : xs.get(0);
+      return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)
-      return replacement(az.infixExpression(xs.get(0)), az.infixExpression(xs.get(1)));
+      return replacement(az.infixExpression(first(xs)), az.infixExpression(xs.get(1)));
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
