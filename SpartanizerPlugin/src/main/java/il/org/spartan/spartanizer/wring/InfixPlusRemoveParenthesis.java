@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
-/** Removes unnecessary parenthesis in infixPlus expression, mostly used for
- * String concating. <br/>
+/** Removes unnecessary parenthesis in infixPlus expression, that may be string
+ * concating <br/>
  * <code> x+\"\"+(4) </code> goes to <code> x+\"\"+4 </code>
  * @author Niv Shalmon
  * @since 2016-09-11 */
@@ -28,7 +28,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
    * #PLUS2, both addition and concating. The wring using TermExpander should
    * handle the case where we know it's an addition of numbers. */
   /** Determines whether the parenthesis around an InfixExpression can be
-   * removed in an InfixExpression that may be String concating.
+   * removed in an InfixExpression that is String concating.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return True if the parenthesis can be removed and false otherwise */
   private static boolean canRemove(final InfixExpression ¢) {
@@ -68,12 +68,17 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     final List<Expression> es = hop.operands(n);
     boolean changed = false;
     for (int i = 0; i < es.size(); ++i)
-      if (iz.is(es.get(i), ASTNode.PARENTHESIZED_EXPRESSION)) {
-        final Expression ¢ = extract.core(es.get(i));
-        if (iz.is(¢, ASTNode.INFIX_EXPRESSION)) {
+      if (iz.parenthesizeExpression(es.get(i))) {
+        Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
+        while(iz.parenthesizeExpression(¢)){
+          lisp.replace(es, ¢, i);
+          changed = true;
+          ¢ = az.parenthesizedExpression(¢).getExpression();
+        }
+        if (iz.infixExpression(¢)) {
           if (!canRemove((InfixExpression) ¢))
             continue;
-        } else if (iz.is(¢, ASTNode.CONDITIONAL_EXPRESSION))
+        } else if (iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
         lisp.replace(es, ¢, i);
         changed = true;
