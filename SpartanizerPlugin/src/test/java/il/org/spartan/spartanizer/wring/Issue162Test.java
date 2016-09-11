@@ -30,4 +30,8 @@ public class Issue162Test {
   @Ignore("under construction") @Test public void issue162_05() {
     trimming("\"a\"+((x-2))").to("\"a\"+(x-2)").stays();
   }
+  
+  @Test public void issue162_06() {
+    trimming("(\"a\")+(x-2)").to("\"a\"+(x-2)").stays();
+  }
 }
