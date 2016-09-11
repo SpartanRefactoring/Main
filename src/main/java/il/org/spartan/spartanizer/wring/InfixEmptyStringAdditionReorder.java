@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -25,7 +26,7 @@ public class InfixEmptyStringAdditionReorder extends Wring.ReplaceCurrentNode<In
   }
 
   private static InfixExpression replace(final InfixExpression x) {
-    return subject.pair(duplicate.of(step.right(x)), duplicate.of(step.left(x))).to(wizard.PLUS2);
+    return subject.pair(duplicate.of(right(x)), duplicate.of(left(x))).to(wizard.PLUS2);
   }
 
   @SuppressWarnings("unused") @Override String description(final InfixExpression x) {
@@ -33,6 +34,6 @@ public class InfixEmptyStringAdditionReorder extends Wring.ReplaceCurrentNode<In
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    return !isEmptyStringLiteral(step.left(x)) || !iz.infixPlus(x) ? null : replace(x);
+    return !isEmptyStringLiteral(left(x)) || !iz.infixPlus(x) ? null : replace(x);
   }
 }

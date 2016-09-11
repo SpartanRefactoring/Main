@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.lisp.*;
 
@@ -33,7 +34,7 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   }
 
   @Override String description(final InfixExpression x) {
-    return descriptionAux(isEmptyStringLiteral(step.right(x)) ? step.left(x) : step.right(x));
+    return descriptionAux(isEmptyStringLiteral(right(x)) ? left(x) : right(x));
   }
 
   @Override Expression replacement(final InfixExpression x) {

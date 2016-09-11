@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.utils;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
@@ -61,7 +62,7 @@ public class FuncsTest {
   }
 
   @Test public void chainComparison() {
-    assertEquals("c", step.right(i("a == true == b == c")) + "");
+    assertEquals("c", right(i("a == true == b == c")) + "");
   }
 
   @Test public void countNonWhiteCharacters() {

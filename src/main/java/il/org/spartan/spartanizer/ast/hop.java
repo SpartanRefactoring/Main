@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -117,8 +118,8 @@ public interface hop {
     if (x == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
-    $.add(step.left(x));
-    $.add(step.right(x));
+    $.add(left(x));
+    $.add(right(x));
     if (x.hasExtendedOperands())
       $.addAll(step.extendedOperands(x));
     return $;

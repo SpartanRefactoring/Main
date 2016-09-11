@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -178,7 +179,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(step.left(a1), step.left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(left(a1), left(a2));
   }
 
   // TODO: Alex: please convert this code into table driven. It is much easier

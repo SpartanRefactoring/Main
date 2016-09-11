@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -56,7 +57,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression comparison(final InfixExpression x) {
-    return subject.pair(step.left(x), step.right(x)).to(conjugate(x.getOperator()));
+    return subject.pair(left(x), right(x)).to(conjugate(x.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {

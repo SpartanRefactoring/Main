@@ -99,7 +99,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
    *         parameter is is longer than the second argument */
   public static boolean longerFirst(final InfixExpression x) {
-    return isLonger(step.left(x), step.right(x));
+    return isLonger(left(x), right(x));
   }
 
   /** Compare method invocations by the number of arguments

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -11,6 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.LocalInliner.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 /** convert
  *
@@ -37,12 +39,12 @@ public final class DeclarationInitialiazelUpdateAssignment extends Wring.Variabl
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, step.left(a)) || doesUseForbiddenSiblings(f, step.right(a)))
+    if (a == null || !wizard.same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(step.left(a), step.right(a)).to(asInfix(o));
+    final InfixExpression newInitializer = subject.pair(left(a), right(a)).to(asInfix(o));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;

@@ -68,8 +68,8 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
       $.add(x);
       return $;
     }
-    gather(core(step.left(x)), $);
-    gather(core(step.right(x)), $);
+    gather(core(left(x)), $);
+    gather(core(right(x)), $);
     if (x.hasExtendedOperands())
       gather(extendedOperands(x), $);
     return $;

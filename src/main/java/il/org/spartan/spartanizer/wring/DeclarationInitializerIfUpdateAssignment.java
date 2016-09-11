@@ -43,7 +43,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(step.left(a), n) || doesUseForbiddenSiblings(f, condition, step.right(a)))
+    if (a == null || !wizard.same(left(a), n) || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == Assignment.Operator.ASSIGN)

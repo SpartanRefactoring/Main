@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.lisp.*;
 
@@ -37,9 +38,9 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   }
 
   private static ASTNode replace(final Assignment a) {
-    final InfixExpression ¢ = az.infixExpression(step.right(a));
+    final InfixExpression ¢ = az.infixExpression(right(a));
     final Expression newRightExpr = az.expression(rightInfixReplacement(¢, a.getLeftHandSide()));
-    return newRightExpr == null ? null : subject.pair(step.left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
+    return newRightExpr == null ? null : subject.pair(left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
   }
 
   private static ASTNode rightInfixReplacement(final InfixExpression x, final Expression left) {
@@ -54,6 +55,6 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   }
 
   @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpAssign(a) || !iz.infixExpression(step.right(a)) ? null : replace(a);
+    return !iz.isOpAssign(a) || !iz.infixExpression(right(a)) ? null : replace(a);
   }
 }

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
@@ -440,7 +441,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
-    azzert.that("" + step.right(e), is("c"));
+    azzert.that("" + right(e), is("c"));
     trimming("a == true == b == c").to("a == b == c");
   }
 
@@ -467,8 +468,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void comaprisonWithSpecific0Legibiliy00() {
     final InfixExpression e = i("this != a");
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
-    assert !iz.booleanLiteral(step.right(e));
-    assert !iz.booleanLiteral(step.left(e));
+    assert !iz.booleanLiteral(right(e));
+    assert !iz.booleanLiteral(left(e));
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
   }
 
@@ -1441,14 +1442,14 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void isGreaterTrue() {
     final InfixExpression e = i("f(a,b,c,d,e) * f(a,b,c)");
     assert e != null;
-    azzert.that("" + step.right(e), is("f(a,b,c)"));
-    azzert.that("" + step.left(e), is("f(a,b,c,d,e)"));
+    azzert.that("" + right(e), is("f(a,b,c)"));
+    azzert.that("" + left(e), is("f(a,b,c,d,e)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
-    final Expression e1 = step.left(e);
-    final Expression e2 = step.right(e);
+    final Expression e1 = left(e);
+    final Expression e2 = right(e);
     assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assert tokenWiseGreater;
@@ -1463,14 +1464,14 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void isGreaterTrueButAlmostNot() {
     final InfixExpression e = i("f(a,b,c,d) * f(a,b,c)");
     assert e != null;
-    azzert.that("" + step.right(e), is("f(a,b,c)"));
-    azzert.that("" + step.left(e), is("f(a,b,c,d)"));
+    azzert.that("" + right(e), is("f(a,b,c)"));
+    azzert.that("" + left(e), is("f(a,b,c,d)"));
     final Wring<InfixExpression> s = Toolbox.instance.find(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
-    final Expression e1 = step.left(e);
-    final Expression e2 = step.right(e);
+    final Expression e1 = left(e);
+    final Expression e2 = right(e);
     assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD;
     assert !tokenWiseGreater;
