@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine;
-
+import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -52,7 +52,7 @@ public class EvaluateAux {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
     // TODO: Niv, no spelling errors please
-    isLong = isCompitable(operands.get(0)) && (isLong(operands.get(0)) || isMinusLong(operands.get(0)));
+    isLong = isCompitable(first(operands)) && (isLong(first(operands)) || isMinusLong(first(operands)));
     for (final Expression ¢ : operands)
       if (!isCompitable(¢) || !isCompitable(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
         return EvaluateAux.Type.BAD;
