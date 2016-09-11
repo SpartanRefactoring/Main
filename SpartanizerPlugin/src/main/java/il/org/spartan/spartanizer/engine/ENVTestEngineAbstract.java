@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.azzert.*;
 
 import java.io.*;
@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
+// TODO: Dan, header for this class.
 public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
     return new LinkedHashSet<>();
@@ -52,7 +53,7 @@ public abstract class ENVTestEngineAbstract {
 
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
-    final String s = wizard.asString(ps.get(0).getValue());
+    final String s = wizard.asString(first(ps).getValue());
     /* A call to an inner function of PrudentType that calls
      * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
      * current situation, but not ideal.
