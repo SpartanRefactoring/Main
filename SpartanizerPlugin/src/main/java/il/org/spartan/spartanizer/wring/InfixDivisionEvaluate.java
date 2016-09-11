@@ -24,12 +24,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;
     double divide = EvaluateAux.extractDouble(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
+      if (!EvaluateAux.isCompatible(¢))
         return null;
       if (index != 0)
         divide /= EvaluateAux.extractDouble(¢);
@@ -39,12 +39,12 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;
     int divide = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
+      if (!EvaluateAux.isCompatible(¢))
         return null;
       if (index != 0)
         divide /= EvaluateAux.extractInt(¢);
@@ -54,12 +54,12 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;
     long divide = EvaluateAux.extractLong(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
+      if (!EvaluateAux.isCompatible(¢))
         return null;
       if (index != 0)
         divide /= EvaluateAux.extractLong(¢);

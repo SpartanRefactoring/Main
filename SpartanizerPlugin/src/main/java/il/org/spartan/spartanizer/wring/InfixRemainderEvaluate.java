@@ -22,12 +22,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;
     int remainder = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
+      if (!EvaluateAux.isCompatible(¢))
         return null;
       if (index != 0)
         remainder %= EvaluateAux.extractInt(¢);
@@ -37,12 +37,12 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;
     long remainder = EvaluateAux.extractLong(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompitable(¢))
+      if (!EvaluateAux.isCompatible(¢))
         return null;
       if (index != 0)
         remainder %= EvaluateAux.extractLong(¢);
