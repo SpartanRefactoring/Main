@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -9,6 +10,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.lisp.*;
 
 /** Convert Finite loops with return statements to shorter ones : </br>
  * Convert <br/>
@@ -47,10 +50,10 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
-    if (ss.size() < 2 || !(ss.get(0) instanceof ForStatement) //
+    if (ss.size() < 2 || !(first(ss) instanceof ForStatement) //
         || !(ss.get(1) instanceof ReturnStatement))
       return null;
-    final ForStatement forStatement = (ForStatement) ss.get(0);
+    final ForStatement forStatement = (ForStatement) first(ss);
     final ReturnStatement nextReturn = (ReturnStatement) ss.get(1);
     if (isInfiniteLoop(forStatement))
       return null;

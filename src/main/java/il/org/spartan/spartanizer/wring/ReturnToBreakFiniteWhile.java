@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wring;
-
+import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -46,10 +46,10 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
-    if (ss.size() < 2 || !(ss.get(0) instanceof WhileStatement) //
+    if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(ss.get(1) instanceof ReturnStatement))
       return null;
-    final WhileStatement whileStatement = (WhileStatement) ss.get(0);
+    final WhileStatement whileStatement = (WhileStatement) first(ss);
     final ReturnStatement nextReturn = (ReturnStatement) ss.get(1);
     if (isInfiniteLoop(whileStatement))
       return null;
