@@ -41,8 +41,7 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
-  // TODO: DOR, Do not suppress all warnings, spartanize.
-  @SuppressWarnings("all") @Override Rewrite make(final Block n) {
+ @Override Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
     if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(second(ss) instanceof ReturnStatement))
