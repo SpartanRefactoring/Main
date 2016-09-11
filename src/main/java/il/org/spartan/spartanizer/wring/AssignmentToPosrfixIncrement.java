@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
 /** Replace <code>x += 1 </code> by <code> x++ </code> and also
@@ -27,6 +28,10 @@ public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assig
   }
 
   @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) ? null : replace(a);
+    return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) || !provablyNotString(a) ? null : replace(a);
+  }
+
+  private static boolean provablyNotString(final Assignment a) {
+    return stringType.isNot(subject.pair(a.getLeftHandSide(), a.getRightHandSide()).to(wizard.assignmentToInfix(a.getOperator())));
   }
 }
