@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 // TODO: Niv, what's going on here?
+// I think we never managed to get this to work. Stav was the one working on it
 /** Remove unnecessary ',' from array initialization list
  * <code>"int[] a = new int[] {..,..,..,};"</code> to :
  *
