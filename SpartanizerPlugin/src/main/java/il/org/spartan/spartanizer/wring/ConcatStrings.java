@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import java.util.*;
+import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -51,6 +52,6 @@ public class ConcatStrings extends Wring.ReplaceCurrentNode<InfixExpression> imp
     if (!isChanged)
       return null;
     assert !operands.isEmpty();
-    return operands.size() <= 1 ? operands.get(0) : subject.operands(operands).to(wizard.PLUS2);
+    return operands.size() <= 1 ? first(operands) : subject.operands(operands).to(wizard.PLUS2);
   }
 }

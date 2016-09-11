@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -117,10 +118,10 @@ import il.org.spartan.spartanizer.java.*;
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
-    azzert.that(operands.get(0) + "", is("1"));
+    azzert.that(first(operands) + "", is("1"));
     azzert.that(operands.get(1) + "", is("2 * 3"));
     assert ExpressionComparator.ADDITION.sort(operands);
-    azzert.that(operands.get(0) + "", is("2 * 3"));
+    azzert.that(first(operands) + "", is("2 * 3"));
     azzert.that(operands.get(1) + "", is("1"));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
