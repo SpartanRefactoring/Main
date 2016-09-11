@@ -14,7 +14,6 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
