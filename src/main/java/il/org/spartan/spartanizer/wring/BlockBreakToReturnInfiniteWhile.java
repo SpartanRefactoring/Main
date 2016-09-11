@@ -86,19 +86,23 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     return "Convert the break inside " + b + " to return";
   }
 
-  @Override Rewrite make(final Block n) {
-    final List<Statement> ss = n.statements();
+  @Override Rewrite make(final Block b) {
+    // TODO: Niv. To avoid warning, use step.statements(n)
+    final List<Statement> ss = b.statements();
+    // TODO: Dor, use iz.returnStatement, etc. If no such function, create one.
     if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(second(ss) instanceof ReturnStatement))
       return null;
+    // TODO: Niv, Ditto 
     final WhileStatement whileStatement = (WhileStatement) first(ss);
     final ReturnStatement nextReturn = (ReturnStatement) second(ss);
     if (!isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
+    // TODO: Niv, instead of using az.x(y) == null, use iz.x(y)
     final Statement $ = az.ifStatement(body) != null ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
-    return $ == null ? null : new Rewrite(description(), $) {
+    return $ == null ? null : new Rewrite(description(b), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
