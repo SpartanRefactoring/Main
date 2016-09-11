@@ -3,6 +3,9 @@ package il.org.spartan.misc;
 
 import static il.org.spartan.azzert.*;
 
+import java.io.*;
+import java.util.*;
+
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -11,6 +14,17 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2012-05-01 */
 public class Primes {
+  public static void main(String[] args) throws IOException {
+    CSVStatistics w = new CSVStatistics("primes.csv", "Property");
+    Random r = new Random();
+    for (Primes p = new Primes(); p.current < 100; w.nl()) {
+      w.put("Value", p.next());
+      w.put("Bad Random", new Random().nextDouble());
+      w.put("Good Random", r.nextDouble());
+    }
+    System.err.println("Your output should be here: " + w.close());
+    
+  }
   /** Tests for primality.
    * @param ¢ candidate to be tested
    * @return <code><b>true</b></code> <i>iff</i> the parameter is prime. */
@@ -44,11 +58,11 @@ public class Primes {
     }
 
     @Test public void isPrimeOf_1() {
-      azzert.nay(isPrime(-1));
+       assert !(isPrime(-1));
     }
 
     @Test public void isPrimeOf_2() {
-      azzert.aye(isPrime(-2));
+       assert (isPrime(-2));
     }
 
     @Test public void isPrimeOf_3() {
