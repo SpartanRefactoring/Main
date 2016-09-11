@@ -14,16 +14,16 @@ import il.org.spartan.spartanizer.engine.*;
  * <code>
  * for (..) { <br/>
  *  asdfasdfasdf <br/>
- *   return XXX; <br/>
+ *   return XX; <br/>
  * } <br/>
- *return XXX; <br/>
+ *return XX; <br/>
  * </code> to : <br/>
  * <code>
  * for (..) { <br/>
  *  asdfasdfasdf <br/>
  *   break; <br/>
  * } <br/>
- *return XXX; <br/>
+ *return XX; <br/>
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
