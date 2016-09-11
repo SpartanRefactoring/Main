@@ -37,8 +37,20 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
   @Override String description(@SuppressWarnings("unused") final InfixExpression n) {
     return description();
   }
+  
+  private Expression makeInfix(final List<Expression> es, AST ast){
+    if (es.size() == 1)
+      return lisp.first(es);
+    InfixExpression $ = ast.newInfixExpression();
+    $.setOperator(wizard.PLUS2);
+    $.setLeftOperand(duplicate.of(lisp.first(es)));
+    $.setRightOperand(duplicate.of(lisp.second(es)));
+    for (int i = 2; i < es.size() ; ++i)
+      step.extendedOperands($).add(duplicate.of(es.get(i)));
+    return $;
+  }
 
-  @Override ASTNode replacement(final InfixExpression n) {
+  @Override Expression replacement(final InfixExpression n) {
     if (n.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(n);
@@ -54,6 +66,6 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
         lisp.replace(es, ¢, i);
         changed = true;
       }
-    return changed ? subject.operands(es).to(wizard.PLUS2) : null;
+    return changed ? makeInfix(es,n.getAST()) : null;
   }
 }
