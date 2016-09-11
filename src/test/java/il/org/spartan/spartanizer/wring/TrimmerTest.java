@@ -2222,8 +2222,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void issue62b_1() {
     trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
         .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
-        .to("int f(int i) { for(;i<100;i++){} return i; }")//
-        .to("int f(int i) { for(;i<100;++i){} return i; }").stays();//
+        .stays();// i is not provably not String.
   }
 
   @Test public void issue62c() {
