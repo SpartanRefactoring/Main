@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wring;
-
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -43,7 +43,7 @@ public final class DeclarationInitializerIfAssignment //
     final Expression condition = s.getExpression();
     if (condition == null)
       return null;
-    final Assignment a = extract.assignment(step.then(s));
+    final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(step.left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
         || doesUseForbiddenSiblings(f, condition, step.right(a)))
       return null;
@@ -56,7 +56,7 @@ public final class DeclarationInitializerIfAssignment //
     if (spending > savings)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineinto(step.then(newInitializer), newInitializer.getExpression());
+    i.inlineinto(then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 
@@ -44,18 +45,18 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends Wring.Rep
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(step.then(s)))
+    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;
-    final IfStatement asVirtualIf = subject.pair(step.then(s), nextStatement).toIf(s.getExpression());
-    if (wizard.same(step.then(asVirtualIf), step.elze(asVirtualIf))) {
-      r.replace(s, step.then(asVirtualIf), g);
+    final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
+    if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
+      r.replace(s, then(asVirtualIf), g);
       r.remove(nextStatement, g);
       return r;
     }
     if (!shoudlInvert(asVirtualIf))
       return null;
     final IfStatement canonicalIf = invert(asVirtualIf);
-    final List<Statement> ss = extract.statements(step.elze(canonicalIf));
+    final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {
       ss.add(0, canonicalIf);

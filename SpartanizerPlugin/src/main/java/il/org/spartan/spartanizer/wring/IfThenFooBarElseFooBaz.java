@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
@@ -57,10 +58,10 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   }
 
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = extract.statements(step.then(s));
+    final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(step.elze(s));
+    final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);
