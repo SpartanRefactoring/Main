@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.ast.step.*;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 

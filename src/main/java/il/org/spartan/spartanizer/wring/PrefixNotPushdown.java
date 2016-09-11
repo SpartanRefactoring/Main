@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -15,6 +15,10 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> implements Kind.Canonicalization {
+  private static Expression comparison(final InfixExpression x) {
+    return subject.pair(left(x), right(x)).to(conjugate(x.getOperator()));
+  }
+
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator o) {
@@ -29,43 +33,18 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
                                     : o.equals(LESS) ? GREATER_EQUALS : null;
   }
 
-  /** A utility function, which tries to simplify a boolean expression, whose
-   * top most parameter is logical negation.
-   * @param x JD
-   * @return simplified parameter */
-  public static Expression simplifyNot(final PrefixExpression x) {
-    return pushdownNot(az.not(extract.core(x)));
-  }
-
-  static Expression notOfLiteral(final BooleanLiteral l) {
-    final BooleanLiteral $ = duplicate.of(l);
-    $.setBooleanValue(!l.booleanValue());
-    return $;
-  }
-
-  static Expression perhapsNotOfLiteral(final Expression x) {
-    return !iz.booleanLiteral(x) ? null : notOfLiteral(az.booleanLiteral(x));
-  }
-
-  static Expression pushdownNot(final Expression x) {
-    Expression $;
-    return ($ = perhapsNotOfLiteral(x)) != null//
-        || ($ = perhapsDoubleNegation(x)) != null//
-        || ($ = perhapsDeMorgan(x)) != null//
-        || ($ = perhapsComparison(x)) != null //
-            ? $ : null;
-  }
-
-  private static Expression comparison(final InfixExpression x) {
-    return subject.pair(left(x), right(x)).to(conjugate(x.getOperator()));
-  }
-
   private static boolean hasOpportunity(final Expression inner) {
     return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
   }
 
   private static boolean hasOpportunity(final PrefixExpression x) {
     return x != null && hasOpportunity(core(step.operand(x)));
+  }
+
+  static Expression notOfLiteral(final BooleanLiteral l) {
+    final BooleanLiteral $ = duplicate.of(l);
+    $.setBooleanValue(!l.booleanValue());
+    return $;
   }
 
   private static Expression perhapsComparison(final Expression inner) {
@@ -92,17 +71,34 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return x == null ? null : tryToSimplify(step.operand(x));
   }
 
+  static Expression perhapsNotOfLiteral(final Expression x) {
+    return !iz.booleanLiteral(x) ? null : notOfLiteral(az.booleanLiteral(x));
+  }
+
+  static Expression pushdownNot(final Expression x) {
+    Expression $;
+    return ($ = perhapsNotOfLiteral(x)) != null//
+        || ($ = perhapsDoubleNegation(x)) != null//
+        || ($ = perhapsDeMorgan(x)) != null//
+        || ($ = perhapsComparison(x)) != null //
+            ? $ : null;
+  }
+
   private static Expression pushdownNot(final PrefixExpression x) {
     return x == null ? null : pushdownNot(step.operand(x));
+  }
+
+  /** A utility function, which tries to simplify a boolean expression, whose
+   * top most parameter is logical negation.
+   * @param x JD
+   * @return simplified parameter */
+  public static Expression simplifyNot(final PrefixExpression x) {
+    return pushdownNot(az.not(extract.core(x)));
   }
 
   private static Expression tryToSimplify(final Expression x) {
     final Expression $ = pushdownNot(az.not(x));
     return $ != null ? $ : x;
-  }
-
-  @Override public boolean scopeIncludes(final PrefixExpression x) {
-    return x != null && az.not(x) != null && hasOpportunity(az.not(x));
   }
 
   @Override String description(@SuppressWarnings("unused") final PrefixExpression __) {
@@ -111,5 +107,9 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
 
   @Override Expression replacement(final PrefixExpression x) {
     return simplifyNot(x);
+  }
+
+  @Override public boolean scopeIncludes(final PrefixExpression x) {
+    return x != null && az.not(x) != null && hasOpportunity(az.not(x));
   }
 }

@@ -42,80 +42,48 @@ public enum Collect {
       return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   };
+  /** An abstract class to carry out the collection process. Should not be
+   * instantiated or used directly by clients, other than the use as part of
+   * fluent API.
+   * @author Yossi Gil
+   * @since 2015-09-06 */
+  public abstract static class Collector {
+    protected final SimpleName name;
+
+    Collector(final SimpleName name) {
+      this.name = name;
+    }
+
+    public abstract List<SimpleName> in(final ASTNode... ns);
+  }
+
+  /** An auxiliary class which makes it possible to use an easy invocation
+   * sequence for the various offerings of the containing class. This class
+   * should never be instantiated or inherited by clients.
+   * <p>
+   * This class realizes the function object concept; an instance of it records
+   * the value we search for; it represents the function that, given a location
+   * for the search, will carry out the search for the captured value in its
+   * location parameter.
+   * @see Collect#of
+   * @author Yossi Gil <yossi.gil @ gmail.com>
+   * @since 2013/14/07 */
+  public static abstract class Of {
+    /** Determine whether this instance occurs in a bunch of expressions
+     * @param ns JD
+     * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
+     *         Parameter. */
+    public boolean existIn(final ASTNode... ns) {
+      return !in(ns).isEmpty();
+    }
+
+    /** the method that will carry out the search
+     * @param ns where to search
+     * @return a list of occurrences of the captured value in the parameter. */
+    public abstract List<SimpleName> in(ASTNode... ns);
+  }
+
   static final ASTMatcher matcher = new ASTMatcher();
-
-  /** Creates a new Collector which holds the occurrences of the provided name
-   * in declarations.
-   * @param n JD
-   * @return A {@link Collector}, with the uses of the provided identifier
-   *         within declarations. */
-  public static Collector declarationsOf(final SimpleName n) {
-    return new Collector(n) {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode ¢ : ns)
-          ¢.accept(declarationsCollector($, name));
-        return $;
-      }
-    };
-  }
-
-  /** @see declarationsOf */
-  public static Collector definitionsOf(final SimpleName n) {
-    return new Collector(n) {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode ¢ : ns)
-          ¢.accept(definitionsCollector($, name));
-        return $;
-      }
-    };
-  }
-
-  /** Finds all the rest (not declarations or definitions) identifier (n) uses.
-   * @param n same as "name"
-   * @return {@link Collector} of all occurrences which are not definitions. */
-  public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
-    return new Collector(n) {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode ¢ : ns)
-          ¢.accept(new UsesCollectorIgnoreDefinitions($, name));
-        return $;
-      }
-    };
-  }
-
-  /** finds all the occurrences of the given name (n) in which it is a
-   * {@link ClassInstanceCreation}
-   * @param n JD
-   * @return a Collector with all unsafe uses of the identifier (n) */
-  public static Collector unsafeUsesOf(final SimpleName n) {
-    return new Collector(n) {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode ¢ : ns)
-          ¢.accept(new UnsafeUsesCollector($, name));
-        return $;
-      }
-    };
-  }
-
-  /** Creates a new Collector which holds all the occurrences of the provided
-   * name.
-   * @param n JD
-   * @return A {@link Collector}, with the uses of the provided identifier
-   *         within the provided {@link ASTNode}s array to the in function.. */
-  public static Collector usesOf(final SimpleName n) {
-    return new Collector(n) {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
-        for (final ASTNode ¢ : ns)
-          ¢.accept(new UsesCollector($, name));
-        return $;
-      }
-    };
-  }
 
   /** Creates an ASTVisitor that adds to the provided SimpleName list all the
    * identifiers of variable declarations expressions, which are identical the
@@ -125,23 +93,6 @@ public enum Collect {
    * @return <b>ASTVisitor</b> as described above. */
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
-      @Override public boolean visit(final ForStatement s) {
-        return consider(initializers(s));
-      }
-
-      @Override public boolean visit(final TryStatement s) {
-        return consider(resources(s));
-      }
-
-      @Override public boolean visit(final VariableDeclarationFragment f) {
-        return add(f.getName());
-      }
-
-      @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(fragments(s));
-        return true;
-      }
-
       /** Adds to the list provided by the closure (into) the name of the given
        * candidate.
        * @param candidate to be inserter to the list provided by the closure
@@ -176,6 +127,39 @@ public enum Collect {
           addFragments(fragments(az.variableDeclarationExpression(e)));
         return true;
       }
+
+      @Override public boolean visit(final ForStatement s) {
+        return consider(initializers(s));
+      }
+
+      @Override public boolean visit(final TryStatement s) {
+        return consider(resources(s));
+      }
+
+      @Override public boolean visit(final VariableDeclarationFragment f) {
+        return add(f.getName());
+      }
+
+      @Override public boolean visit(final VariableDeclarationStatement s) {
+        addFragments(fragments(s));
+        return true;
+      }
+    };
+  }
+
+  /** Creates a new Collector which holds the occurrences of the provided name
+   * in declarations.
+   * @param n JD
+   * @return A {@link Collector}, with the uses of the provided identifier
+   *         within declarations. */
+  public static Collector declarationsOf(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode ¢ : ns)
+          ¢.accept(declarationsCollector($, name));
+        return $;
+      }
     };
   }
 
@@ -184,6 +168,33 @@ public enum Collect {
    *      {@link declarationsCollector}. */
   static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
+      boolean add(final SimpleName candidate) {
+        if (wizard.same(candidate, n))
+          into.add(candidate);
+        return true;
+      }
+
+      void addFragments(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment f : fs)
+          add(f.getName());
+      }
+
+      /** ThiWs function is needed cause a definition can be not in a
+       * declaration form, and then #asVariableDeclarationExpression() will fail
+       * @param x JD
+       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
+       *         {@link Expression} is equal to the ASTnode's provided by the
+       *         closure (n) */
+      boolean consider(final Expression x) {
+        return add(az.simpleName(x));
+      }
+
+      boolean consider(final List<? extends Expression> initializers) {
+        for (final Expression e : initializers)
+          addFragments(fragments(az.variableDeclarationExpression(e)));
+        return true;
+      }
+
       @Override public boolean visit(final Assignment a) {
         return consider(left(a));
       }
@@ -222,32 +233,31 @@ public enum Collect {
         addFragments(fragments(s));
         return true;
       }
+    };
+  }
 
-      boolean add(final SimpleName candidate) {
-        if (wizard.same(candidate, n))
-          into.add(candidate);
-        return true;
+  /** @see declarationsOf */
+  public static Collector definitionsOf(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode ¢ : ns)
+          ¢.accept(definitionsCollector($, name));
+        return $;
       }
+    };
+  }
 
-      void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment f : fs)
-          add(f.getName());
-      }
-
-      /** ThiWs function is needed cause a definition can be not in a
-       * declaration form, and then #asVariableDeclarationExpression() will fail
-       * @param x JD
-       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
-       *         {@link Expression} is equal to the ASTnode's provided by the
-       *         closure (n) */
-      boolean consider(final Expression x) {
-        return add(az.simpleName(x));
-      }
-
-      boolean consider(final List<? extends Expression> initializers) {
-        for (final Expression e : initializers)
-          addFragments(fragments(az.variableDeclarationExpression(e)));
-        return true;
+  /** Finds all the rest (not declarations or definitions) identifier (n) uses.
+   * @param n same as "name"
+   * @return {@link Collector} of all occurrences which are not definitions. */
+  public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode ¢ : ns)
+          ¢.accept(new UsesCollectorIgnoreDefinitions($, name));
+        return $;
       }
     };
   }
@@ -263,6 +273,21 @@ public enum Collect {
     return usesCollector(what, into, true);
   }
 
+  /** finds all the occurrences of the given name (n) in which it is a
+   * {@link ClassInstanceCreation}
+   * @param n JD
+   * @return a Collector with all unsafe uses of the identifier (n) */
+  public static Collector unsafeUsesOf(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode ¢ : ns)
+          ¢.accept(new UnsafeUsesCollector($, name));
+        return $;
+      }
+    };
+  }
+
   /** Creates an ASTVisitor that returns all the instances in which the provided
    * SimpleName was used. The instances will be inserted into the provided list.
    * @param what JD
@@ -273,6 +298,34 @@ public enum Collect {
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       int loopDepth = 0;
+
+      boolean add(final Object o) {
+        return collect((Expression) o);
+      }
+
+      boolean collect(final Expression x) {
+        collectExpression(x);
+        return true;
+      }
+
+      boolean collect(@SuppressWarnings("rawtypes") final List os) {
+        for (final Object o : os)
+          add(o);
+        return true;
+      }
+
+      void collectExpression(final Expression x) {
+        if (x instanceof SimpleName)
+          collectExpression((SimpleName) x);
+      }
+
+      void collectExpression(final SimpleName n) {
+        if (!wizard.same(what, n))
+          return;
+        into.add(n);
+        if (repeated())
+          into.add(n);
+      }
 
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;
@@ -288,6 +341,21 @@ public enum Collect {
 
       @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement __) {
         --loopDepth;
+      }
+
+      List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
+        final List<VariableDeclarationFragment> $ = new ArrayList<>();
+        classNode.accept(new ASTVisitor() {
+          @Override public boolean visit(final FieldDeclaration d) {
+            $.addAll(fragments(d));
+            return false;
+          }
+        });
+        return $;
+      }
+
+      boolean repeated() {
+        return !lexicalOnly && loopDepth > 0;
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration d) {
@@ -364,51 +432,40 @@ public enum Collect {
         ++loopDepth;
         return true;
       }
+    };
+  }
 
-      boolean add(final Object o) {
-        return collect((Expression) o);
-      }
-
-      boolean collect(final Expression x) {
-        collectExpression(x);
-        return true;
-      }
-
-      boolean collect(@SuppressWarnings("rawtypes") final List os) {
-        for (final Object o : os)
-          add(o);
-        return true;
-      }
-
-      void collectExpression(final Expression x) {
-        if (x instanceof SimpleName)
-          collectExpression((SimpleName) x);
-      }
-
-      void collectExpression(final SimpleName n) {
-        if (!wizard.same(what, n))
-          return;
-        into.add(n);
-        if (repeated())
-          into.add(n);
-      }
-
-      List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
-        final List<VariableDeclarationFragment> $ = new ArrayList<>();
-        classNode.accept(new ASTVisitor() {
-          @Override public boolean visit(final FieldDeclaration d) {
-            $.addAll(fragments(d));
-            return false;
-          }
-        });
+  /** Creates a new Collector which holds all the occurrences of the provided
+   * name.
+   * @param n JD
+   * @return A {@link Collector}, with the uses of the provided identifier
+   *         within the provided {@link ASTNode}s array to the in function.. */
+  public static Collector usesOf(final SimpleName n) {
+    return new Collector(n) {
+      @Override public List<SimpleName> in(final ASTNode... ns) {
+        final List<SimpleName> $ = new ArrayList<>();
+        for (final ASTNode ¢ : ns)
+          ¢.accept(new UsesCollector($, name));
         return $;
-      }
-
-      boolean repeated() {
-        return !lexicalOnly && loopDepth > 0;
       }
     };
   }
+
+  /** Lists the required occurrences
+   * @param what the expression to search for
+   * @param ns the n in which to counted
+   * @return list of uses */
+  final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
+    final List<SimpleName> $ = new ArrayList<>();
+    for (final ASTNode n : ns)
+      for (final ASTVisitor v : collectors(what, $))
+        n.accept(v);
+    removeDuplicates($);
+    Collections.sort($, (e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
+    return $;
+  }
+
+  abstract ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into);
 
   /** Creates a function object for searching for a given value.
    * @param n what to search for
@@ -429,62 +486,5 @@ public enum Collect {
    *         {@link SimpleName} embedded in the parameter. */
   public Of of(final VariableDeclarationFragment f) {
     return of(f.getName());
-  }
-
-  /** Lists the required occurrences
-   * @param what the expression to search for
-   * @param ns the n in which to counted
-   * @return list of uses */
-  final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
-    final List<SimpleName> $ = new ArrayList<>();
-    for (final ASTNode n : ns)
-      for (final ASTVisitor v : collectors(what, $))
-        n.accept(v);
-    removeDuplicates($);
-    Collections.sort($, (e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
-    return $;
-  }
-
-  abstract ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into);
-
-  /** An abstract class to carry out the collection process. Should not be
-   * instantiated or used directly by clients, other than the use as part of
-   * fluent API.
-   * @author Yossi Gil
-   * @since 2015-09-06 */
-  public abstract static class Collector {
-    protected final SimpleName name;
-
-    Collector(final SimpleName name) {
-      this.name = name;
-    }
-
-    public abstract List<SimpleName> in(final ASTNode... ns);
-  }
-
-  /** An auxiliary class which makes it possible to use an easy invocation
-   * sequence for the various offerings of the containing class. This class
-   * should never be instantiated or inherited by clients.
-   * <p>
-   * This class realizes the function object concept; an instance of it records
-   * the value we search for; it represents the function that, given a location
-   * for the search, will carry out the search for the captured value in its
-   * location parameter.
-   * @see Collect#of
-   * @author Yossi Gil <yossi.gil @ gmail.com>
-   * @since 2013/14/07 */
-  public static abstract class Of {
-    /** Determine whether this instance occurs in a bunch of expressions
-     * @param ns JD
-     * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
-     *         Parameter. */
-    public boolean existIn(final ASTNode... ns) {
-      return !in(ns).isEmpty();
-    }
-
-    /** the method that will carry out the search
-     * @param ns where to search
-     * @return a list of occurrences of the captured value in the parameter. */
-    public abstract List<SimpleName> in(ASTNode... ns);
   }
 }

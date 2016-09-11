@@ -13,66 +13,6 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @since 2016-05-08 */
 @SuppressWarnings({ "javadoc", "unused", "hiding", "unchecked" }) public final class SingelVariableDeclarationUnderscoreDoubled
     extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.UnusedArguments {
-  static final boolean BY_ANNOTATION = true;
-
-  public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
-    final IsUsed u = new IsUsed(n);
-    d.getBody().accept(u);
-    return u.conclusion();
-  }
-
-  public static boolean suppressedUnused(final SingleVariableDeclaration d) {
-    for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
-      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName() + "")) {
-        final Expression e = ((SingleMemberAnnotation) m).getValue();
-        if (e instanceof StringLiteral)
-          return "unused".equals(((StringLiteral) e).getLiteralValue());
-        for (final Expression x : (Iterable<Expression>) ((ArrayInitializer) ((SingleMemberAnnotation) m).getValue()).expressions())
-          return x instanceof StringLiteral && "unused".equals(((StringLiteral) x).getLiteralValue());
-        break;
-      }
-    return false;
-  }
-
-  static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
-    final ASTNode $ = d.getParent();
-    return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
-  }
-
-  private static ASTNode replacement(final SingleVariableDeclaration ¢) {
-    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
-    $.setName(¢.getAST().newSimpleName(unusedVariableName()));
-    $.setFlags($.getFlags());
-    $.setInitializer($.getInitializer());
-    $.setType(duplicate.of(¢.getType()));
-    duplicate.modifiers(step.modifiers(¢), step.modifiers($));
-    return $;
-  }
-
-  private static String unusedVariableName() {
-    return "__";
-  }
-
-  @Override String description(final SingleVariableDeclaration d) {
-    return "Change name of unused variable " + d.getName().getIdentifier() + " to ____";
-  }
-
-  @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
-    final MethodDeclaration d = getMethod(n);
-    if (d == null)
-      return null;
-    for (final SingleVariableDeclaration svd : step.parameters(d))
-      if (unusedVariableName().equals(svd.getName().getIdentifier()))
-        return null;
-    if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
-      return null;
-    if (m != null)
-      for (final SingleVariableDeclaration svd : step.parameters(d))
-        if (!n.equals(svd))
-          m.exclude(svd);
-    return replacement(n);
-  }
-
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
     String n;
@@ -116,5 +56,65 @@ import il.org.spartan.spartanizer.wring.Wring.*;
     @Override public final boolean visit(final TypeDeclaration ____) {
       return false;
     }
+  }
+
+  static final boolean BY_ANNOTATION = true;
+
+  static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
+    final ASTNode $ = d.getParent();
+    return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
+  }
+
+  public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
+    final IsUsed u = new IsUsed(n);
+    d.getBody().accept(u);
+    return u.conclusion();
+  }
+
+  private static ASTNode replacement(final SingleVariableDeclaration ¢) {
+    final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
+    $.setName(¢.getAST().newSimpleName(unusedVariableName()));
+    $.setFlags($.getFlags());
+    $.setInitializer($.getInitializer());
+    $.setType(duplicate.of(¢.getType()));
+    duplicate.modifiers(step.modifiers(¢), step.modifiers($));
+    return $;
+  }
+
+  public static boolean suppressedUnused(final SingleVariableDeclaration d) {
+    for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
+      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName() + "")) {
+        final Expression e = ((SingleMemberAnnotation) m).getValue();
+        if (e instanceof StringLiteral)
+          return "unused".equals(((StringLiteral) e).getLiteralValue());
+        for (final Expression x : (Iterable<Expression>) ((ArrayInitializer) ((SingleMemberAnnotation) m).getValue()).expressions())
+          return x instanceof StringLiteral && "unused".equals(((StringLiteral) x).getLiteralValue());
+        break;
+      }
+    return false;
+  }
+
+  private static String unusedVariableName() {
+    return "__";
+  }
+
+  @Override String description(final SingleVariableDeclaration d) {
+    return "Change name of unused variable " + d.getName().getIdentifier() + " to ____";
+  }
+
+  @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
+    final MethodDeclaration d = getMethod(n);
+    if (d == null)
+      return null;
+    for (final SingleVariableDeclaration svd : step.parameters(d))
+      if (unusedVariableName().equals(svd.getName().getIdentifier()))
+        return null;
+    if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
+      return null;
+    if (m != null)
+      for (final SingleVariableDeclaration svd : step.parameters(d))
+        if (!n.equals(svd))
+          m.exclude(svd);
+    return replacement(n);
   }
 }
