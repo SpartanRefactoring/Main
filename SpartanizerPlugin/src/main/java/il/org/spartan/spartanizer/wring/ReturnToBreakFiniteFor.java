@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -10,8 +11,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import static il.org.spartan.lisp.*;
-import static il.org.spartan.lisp.*;
 
 /** Convert Finite loops with return statements to shorter ones : </br>
  * Convert <br/>
