@@ -19,10 +19,18 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Niv Shalmon
  * @since 2016-09-11 */
 public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
-  /** TODO: Niv, document this function, but I think it is buggy. If you have
-   * #MINUS2 you can do all openings you like.
-   * @param ¢
-   * @return */
+  /* TODO: Niv, document this function, but I think it is buggy. If you have
+   * #MINUS2 you can do all openings you like.TODO: Yossi, about #MINUS2. We
+   * can't remove parenthesis around it, since this works on InfixExpressions
+   * that may be String concating. removing parenthesis around #MINUS2 in this
+   * case would cause compilation error, and is the reason we stopped using
+   * TermExpander for this is the first place. This wring should work for any
+   * #PLUS2, both addition and concating. The wring using TermExpander should
+   * handle the case where we know it's an addition of numbers. */
+  /** Determines whether the parenthesis around an InfixExpression can be
+   * removed in an InfixExpression that may be String concating.
+   * @param ¢ an InfixExpression that's inside parenthesis
+   * @return True if the parenthesis can be removed and false otherwise */
   private static boolean canRemove(final InfixExpression ¢) {
     if (in(¢.getOperator(), TIMES, DIVIDE))
       return true;
