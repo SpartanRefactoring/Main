@@ -5,7 +5,6 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
@@ -15,14 +14,14 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
   public EnvFlatHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
-    azzert.nay(testSet == null);
+    assert !(testSet == null);
     runTest();
   }
 
   public EnvFlatHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
-    azzert.nay(testSet == null);
+    assert !(testSet == null);
     runTest();
   }
 
