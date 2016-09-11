@@ -83,8 +83,8 @@ public class Toolbox {
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
-            new BooleanConstants(), //
-            new ToStringToEmptyStringAddition(), //
+            new MethodInvocationValueOfBooleanConstant(), //
+            new MethodInvocationToStringToEmptyStringAddition(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
@@ -104,8 +104,8 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
-            new BreakToReturnInfiniteFor(), //
-            new BreakToReturnInfiniteWhile(), //
+            new BlockBreakToReturnInfiniteFor(), //
+            new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteFor(), //
             new ReturnToBreakFiniteWhile(), //
             null) //
@@ -142,7 +142,7 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            new CleverStringTernarization(), null) //
+            new TernaryPusdownStrings(), null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
             new BodyDeclarationSortModifiers.ofType(), //

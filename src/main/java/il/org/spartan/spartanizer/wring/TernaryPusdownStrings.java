@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
-public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
+public final class TernaryPusdownStrings extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
     return iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
         : iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
