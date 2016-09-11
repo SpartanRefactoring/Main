@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.*;
 /** Transforms x.toString() to "" + x
  * @author Stav Namir
  * @since 2016-8-31 */
-public final class ToStringToEmptyStringAddition extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
+public final class MethodInvocationToStringToEmptyStringAddition extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   @Override String description(final MethodInvocation i) {
     final Expression receiver = step.receiver(i);
     return "Use \"\" + " + (receiver == null ? "x" : receiver + "");
