@@ -307,7 +307,7 @@ public enum iz {
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
-    return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
+    return ¢ != null && intIsIn(¢.getNodeType(), types);
   }
 
   private static boolean is(final ASTNode n, final int type) {
@@ -409,7 +409,7 @@ public enum iz {
   /** @param n Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode n) {
-    return n != null && lisp.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return n != null && intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {

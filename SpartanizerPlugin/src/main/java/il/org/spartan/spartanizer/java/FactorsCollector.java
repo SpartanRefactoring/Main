@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.java;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 
 import java.util.*;
@@ -59,8 +59,8 @@ public class FactorsCollector {
     assert !isLeafFactor(x);
     assert iz.infixDivide(x);
     final List<Expression> es = hop.operands(x);
-    addMultiplierFactor(core(lisp.first(es)));
-    return collectDividersFactors(lisp.rest(es));
+    addMultiplierFactor(core(first(es)));
+    return collectDividersFactors(rest(es));
   }
 
   private Void addDivide(final Expression x) {
@@ -107,8 +107,8 @@ public class FactorsCollector {
   private Void collectDividePrefixDivideExprssion(final InfixExpression x) {
     assert x != null;
     final List<Expression> es = hop.operands(x);
-    collectDividerFactor(core(lisp.first(es)));
-    return collectMultiplierFactors(lisp.rest(es));
+    collectDividerFactor(core(first(es)));
+    return collectMultiplierFactors(rest(es));
   }
 
   private Void collectDividePrefixTimesExpression(final InfixExpression x) {

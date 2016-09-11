@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */
 public final class VariableRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
-    extends VariableDeclarationChangeName<N> implements Kind.UnusedArguments {
+    extends AbstractVariableDeclarationChangeName<N> implements Kind.UnusedArguments {
   @Override boolean change(final N n) {
     return "_".equals(n.getName() + "");
   }

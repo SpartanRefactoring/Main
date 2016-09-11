@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
@@ -307,11 +307,11 @@ public interface type {
       final InfixExpression.Operator o = x.getOperator();
       final List<Expression> es = allOperands(x);
       assert es.size() >= 2;
-      implementation $ = lookDown(lisp.first(es)).underBinaryOperator(o, lookDown(lisp.second(es)));
-      lisp.chop(lisp.chop(es));
+      implementation $ = lookDown(first(es)).underBinaryOperator(o, lookDown(second(es)));
+      chop(chop(es));
       while (!es.isEmpty()) {
-        $ = $.underBinaryOperator(o, lookDown(lisp.first(es)));
-        lisp.chop(es);
+        $ = $.underBinaryOperator(o, lookDown(first(es)));
+        chop(es);
       }
       return $;
     }
