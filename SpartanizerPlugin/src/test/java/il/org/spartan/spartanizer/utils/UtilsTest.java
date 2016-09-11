@@ -28,11 +28,11 @@ public class UtilsTest {
   }
 
   @Test public void inTypicalFalse() {
-    azzert.nay(in("X", "A", "B", "C"));
+    assert !in("X", "A", "B", "C");
   }
 
   @Test public void inTypicalTrue() {
-    azzert.aye(in("A", "A", "B", "C"));
+    assert in("A", "A", "B", "C");
   }
 
   @Test public void removePrefiEmpty() {

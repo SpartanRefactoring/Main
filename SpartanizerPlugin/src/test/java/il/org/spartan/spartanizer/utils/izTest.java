@@ -140,9 +140,9 @@ public class izTest {
   }
 
   @Test public void seriesA_3() {
-    azzert.nay(iz.infixPlus(e("(i+j)")));
-    azzert.aye(iz.infixPlus(core(e("(i+j)"))));
-    azzert.nay(iz.infixMinus(e("(i-j)")));
-    azzert.aye(iz.infixMinus(core(e("(i-j)"))));
+    assert !iz.infixPlus(e("(i+j)"));
+    assert iz.infixPlus(core(e("(i+j)")));
+    assert !iz.infixMinus(e("(i-j)"));
+    assert iz.infixMinus(core(e("(i-j)")));
   }
 }
