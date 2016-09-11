@@ -13,69 +13,73 @@ import il.org.spartan.spartanizer.engine.*;
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
  * <code>
- * int - int --> int <br/>
- * double - double --> double <br/>
- * long - long --> long <br/>
- * int - double --> double <br/>
- * int - long --> long <br/>
- * long - double --> double <br/>
+ * int / int --> int <br/>
+ * double / double --> double <br/>
+ * long / long --> long <br/>
+ * int / double --> double <br/>
+ * int / long --> long <br/>
+ * long / double --> double <br/>
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
       return null;
-    double sub = EvaluateAux.extractDouble(first(xs));
+    double divide = EvaluateAux.extractDouble(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
-        sub -= EvaluateAux.extractDouble(¢);
+        divide /= EvaluateAux.extractDouble(¢);
       ++index;
     }
-    return x.getAST().newNumberLiteral(Double.toString(sub));
+    return x.getAST().newNumberLiteral(Double.toString(divide));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
       return null;
-    int sub = EvaluateAux.extractInt(first(xs));
+    int divide = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
+      if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
-        sub -= EvaluateAux.extractInt(¢);
+        divide /= EvaluateAux.extractInt(¢);
       ++index;
     }
-    return x.getAST().newNumberLiteral(Integer.toString(sub));
+    return x.getAST().newNumberLiteral(Integer.toString(divide));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() || !EvaluateAux.isCompitable(first(xs)))
       return null;
-    long sub = EvaluateAux.extractLong(first(xs));
+    long divide = EvaluateAux.extractLong(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!EvaluateAux.isCompitable(¢))
         return null;
       if (index != 0)
-        sub -= EvaluateAux.extractLong(¢);
+        divide /= EvaluateAux.extractLong(¢);
       ++index;
     }
-    return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
+  }
+
+  @Override public String description() {
+    return "Evaluate division of numbers";
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate subtraction of numbers";
+    return "Evaluate division of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != MINUS)
+    if (x.getOperator() != DIVIDE)
       return null;
     switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:

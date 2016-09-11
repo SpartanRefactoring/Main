@@ -49,7 +49,7 @@ import il.org.spartan.spartanizer.engine.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixZeroAddition extends Wring<InfixExpression> {
+public final class InfixAdditionZero extends Wring<InfixExpression> {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);

@@ -9,61 +9,62 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** Evaluate the addition of numbers according to the following rules <br/>
- * <br/>
+/** Evaluate the multiplication of numbers according to the following rules :
+ * </br>
+ * </br>
  * <code>
- * int + int --> int <br/>
- * double + double --> double <br/>
- * long + long --> long <br/>
- * int + double --> double <br/>
- * int + long --> long <br/>
- * long + double --> double <br/>
+ * int * int --> int <br/>
+ * double * double --> double <br/>
+ * long * long --> long <br/>
+ * int * double --> double <br/>
+ * int * long --> long <br/>
+ * long * double --> double <br/>
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class EvaluateAddition extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    double sum = 0;
+    double mul = 1;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!EvaluateAux.isCompitable(¢))
         return null;
-      sum += EvaluateAux.extractDouble(¢);
+      mul *= EvaluateAux.extractDouble(¢);
     }
-    return x.getAST().newNumberLiteral(Double.toString(sum));
+    return x.getAST().newNumberLiteral(Double.toString(mul));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    int sum = 0;
+    int mul = 1;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
+      if (!EvaluateAux.isCompitable(¢))
         return null;
-      sum += EvaluateAux.extractInt(¢);
+      mul *= EvaluateAux.extractInt(¢);
     }
-    return x.getAST().newNumberLiteral(Integer.toString(sum));
+    return x.getAST().newNumberLiteral(Integer.toString(mul));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    long sum = 0;
+    long mul = 1;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!EvaluateAux.isCompitable(¢))
         return null;
-      sum += EvaluateAux.extractLong(¢);
+      mul *= EvaluateAux.extractLong(¢);
     }
-    return x.getAST().newNumberLiteral(Long.toString(sum) + "L");
+    return x.getAST().newNumberLiteral(Long.toString(mul) + "L");
   }
 
   @Override public String description() {
-    return "Evaluate addition of int numbers";
+    return "Evaluate multiplication of numbers";
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate addition of int numbers";
+    return "Evaluate multiplication numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != PLUS)
+    if (x.getOperator() != TIMES)
       return null;
     switch (EvaluateAux.getEvaluatedType(x)) {
       case INT:
