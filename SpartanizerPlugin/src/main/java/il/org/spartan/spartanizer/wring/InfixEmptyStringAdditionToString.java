@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** transforms "" + x to x when x is of type String
  * @author Stav Namir
- * @author Shalmon Niv
+ * @author Niv Shalmon
  * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.spartanizer.wring.Kind.NoImpact {

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
 /** Removes unnecessary parenthesis in infixPlus expression, mostly used for
  * String concating. <br/>
  * <code> x+\"\"+(4) </code> goes to <code> x+\"\"+4 </code>
- * @author Shalmon Niv
+ * @author Niv Shalmon
  * @since 2016-09-11 */
 public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
   private static boolean canRemove(final InfixExpression ¢) {
