@@ -48,7 +48,7 @@ public enum Wrings {
       case 0:
         return x.getAST().newBooleanLiteral(b);
       case 1:
-        return duplicate.of(operands.get(0));
+        return duplicate.of(lisp.first(operands));
       default:
         return subject.operands(operands).to(x.getOperator());
     }
