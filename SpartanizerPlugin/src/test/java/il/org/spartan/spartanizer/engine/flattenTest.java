@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.engine;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
@@ -34,7 +35,7 @@ public class flattenTest {
   }
 
   @Test public void flattenLeftArgument() {
-    azzert.that(step.left(flatten.of(i("1+2"))) + "", is("1"));
+    azzert.that(left(flatten.of(i("1+2"))) + "", is("1"));
   }
 
   @Test public void flattenOfDeepParenthesisIsCorrect() {
@@ -70,22 +71,22 @@ public class flattenTest {
   }
 
   @Test public void leftOperandIsNotString() {
-    assert stringType.isNot(step.left(i("1+2")));
+    assert stringType.isNot(left(i("1+2")));
   }
 
   @Test public void leftOperandIsNumeric() {
-    assert iz.numericLiteral(step.left(i("1+2")));
+    assert iz.numericLiteral(left(i("1+2")));
   }
 
   @Test public void leftOperandIsOne() {
-    azzert.that(step.left(i("1+2")) + "", is("1"));
+    azzert.that(left(i("1+2")) + "", is("1"));
   }
 
   @Test public void leftOperandNotNull() {
-    assert step.left(i("1+2")) != null;
+    assert left(i("1+2")) != null;
   }
 
   @Test public void rightOperandNotNull() {
-    assert step.right(i("1+2")) != null;
+    assert right(i("1+2")) != null;
   }
 }

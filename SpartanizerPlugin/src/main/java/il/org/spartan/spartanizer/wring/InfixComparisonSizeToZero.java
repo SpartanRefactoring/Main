@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -96,8 +97,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
   }
 
   @Override String description(final InfixExpression x) {
-    final Expression right = step.right(x);
-    final Expression left = step.left(x);
+    final Expression right = right(x);
+    final Expression left = left(x);
     return description(left instanceof MethodInvocation ? left : right);
   }
 
@@ -105,8 +106,8 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
     final Operator o = x.getOperator();
     if (!iz.comparison(o))
       return null;
-    final Expression right = step.right(x);
-    final Expression left = step.left(x);
+    final Expression right = right(x);
+    final Expression left = left(x);
     return !validTypes(right, left) ? null
         : iz.methodInvocation(left) ? //
             replacement(o, az.methodInvocation(left), right) //

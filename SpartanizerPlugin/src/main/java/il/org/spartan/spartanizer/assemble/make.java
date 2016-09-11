@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.assemble;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -27,7 +28,7 @@ public enum make {
   public static InfixExpression conjugate(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
+    return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
   public static ASTHolder from(final ASTNode ¢) {

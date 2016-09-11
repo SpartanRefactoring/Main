@@ -66,8 +66,8 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
       $.add(x);
       return $;
     }
-    gather(core(step.left(x)), $);
-    gather(core(step.right(x)), $);
+    gather(core(left(x)), $);
+    gather(core(right(x)), $);
     if (x.hasExtendedOperands())
       gather(extendedOperands(x), $);
     return $;
@@ -88,7 +88,7 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     if (es.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
-    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(x)) == 1)
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(x);

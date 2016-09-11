@@ -44,13 +44,13 @@ public final class DeclarationInitializerIfAssignment //
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(step.left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
-        || doesUseForbiddenSiblings(f, condition, step.right(a)))
+    if (a == null || !wizard.same(left(a), n) || a.getOperator() != Assignment.Operator.ASSIGN
+        || doesUseForbiddenSiblings(f, condition, right(a)))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
-    if (!i.canInlineinto(condition, step.right(a)))
+    if (!i.canInlineinto(condition, right(a)))
       return null;
-    final ConditionalExpression newInitializer = subject.pair(step.right(a), initializer).toCondition(condition);
+    final ConditionalExpression newInitializer = subject.pair(right(a), initializer).toCondition(condition);
     final int spending = i.replacedSize(newInitializer);
     final int savings = size(nextStatement, initializer);
     if (spending > savings)

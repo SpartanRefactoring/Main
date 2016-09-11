@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -28,7 +29,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> implements Kind.DistributiveRefactoring {
   static Expression extractRight(final Assignment a) {
-    final Expression $ = extract.core(step.right(a));
+    final Expression $ = extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
 
@@ -37,7 +38,7 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
   }
 
   @Override String description(final Assignment a) {
-    return "Consolidate assignment to " + step.left(a) + " with subsequent similar assignment";
+    return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {

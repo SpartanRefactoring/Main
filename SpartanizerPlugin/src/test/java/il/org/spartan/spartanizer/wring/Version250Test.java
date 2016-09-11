@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
@@ -826,13 +827,13 @@ public class Version250Test {
     final String s = "0-x";
     final InfixExpression i = into.i(s);
     azzert.that(i, iz(s));
-    azzert.that(step.left(i), iz("0"));
-    azzert.that(step.right(i), iz("x"));
+    azzert.that(left(i), iz("0"));
+    azzert.that(right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert iz.literal0(step.left(i));
-    assert !iz.literal0(step.right(i));
-    azzert.that(make.minus(step.left(i)), iz("0"));
-    azzert.that(make.minus(step.right(i)), iz("-x"));
+    assert iz.literal0(left(i));
+    assert !iz.literal0(right(i));
+    azzert.that(make.minus(left(i)), iz("0"));
+    azzert.that(make.minus(right(i)), iz("-x"));
     trimming(s).to("-x");
   }
 
