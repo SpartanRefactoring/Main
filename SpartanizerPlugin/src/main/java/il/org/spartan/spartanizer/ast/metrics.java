@@ -6,8 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
-/** Use {@link il.org.spartan.spartanizer.engine.Recurser Recurser} to measure
- * things over an AST
+/** Use {@link Recurser} to measure things over an AST
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
@@ -44,5 +43,9 @@ public interface metrics {
    * @return The total number of nodes in the AST */
   @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
+  }
+
+  static int vocabulary(CompilationUnit u) {
+    return u.hashCode();
   }
 }
