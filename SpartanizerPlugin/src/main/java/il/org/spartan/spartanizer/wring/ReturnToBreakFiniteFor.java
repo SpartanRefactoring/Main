@@ -94,13 +94,12 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
 
   // TODO: Niv, fully spartanize this one. Remove @SuppressWarnings("all"), use
   // az.forstatement, iz.forstatemnt, step.statements(etc), etc.
-  @SuppressWarnings("all") @Override Rewrite make(final Block n) {
-    final List<Statement> ss = n.statements();
-    if (ss.size() < 2 || !(first(ss) instanceof ForStatement) //
-        || !(second(ss) instanceof ReturnStatement))
+  @Override Rewrite make(final Block n) {
+    final List<Statement> ss = step.statements(n);
+    if (!iz.is(first(ss), ASTNode.FOR_STATEMENT) || !iz.returnStatement(second(ss)))
       return null;
-    final ForStatement forStatement = (ForStatement) first(ss);
-    final ReturnStatement nextReturn = (ReturnStatement) second(ss);
+    final ForStatement forStatement = az.forStatement(first(ss));
+    final ReturnStatement nextReturn = az.returnStatement(second(ss));
     if (isInfiniteLoop(forStatement))
       return null;
     final Statement body = forStatement.getBody();
@@ -117,6 +116,6 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
     // null, you do not have to do anything.
     final List<Statement> ss = step.statements(b);
-    return ss.size() > 1 && lisp.first(ss) instanceof ForStatement && lisp.second(ss) instanceof ReturnStatement;
+    return iz.is(lisp.first(ss), ASTNode.FOR_STATEMENT) && iz.returnStatement(lisp.second(ss));
   }
 }
