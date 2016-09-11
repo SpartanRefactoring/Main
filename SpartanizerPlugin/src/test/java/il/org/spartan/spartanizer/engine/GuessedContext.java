@@ -63,6 +63,28 @@ public enum GuessedContext {
       not_statment_may_occur_in_initializer_block, //
       not_statment_may_occur_in_static_initializer_block, };
 
+  static String enumerateFailingAttempts(final String codeFragment) {
+    final StringBuilder $ = new StringBuilder();
+    int i = 0;
+    for (final GuessedContext w : GuessedContext.AlternativeContextToConsiderInOrder) {
+      final String on = w.on(codeFragment);
+      $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.AlternativeContextToConsiderInOrder.length + "):");
+      $.append("\n\t\t Is it a " + w + "?");
+      $.append("\n\t Let's see...");
+      $.append("\n\t\t What I tried as input was (essentially) this literal:");
+      $.append("\n\t```" + essence(on) + "'''");
+      final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+      $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
+          + " on (essentially) this bit of code");
+      $.append("\n\t\t\t```" + essence(u + "") + "'''");
+      $.append("\n\t\t Properly formatted, this bit should look like so: ");
+      $.append("\n\t\t\t```" + u + "'''");
+      $.append("\n\t\t And the full list of problems was: ");
+      $.append("\n\t\t\t```" + u.getProblems() + "'''");
+    }
+    return $ + "";
+  }
+
   public static String essence(final String codeFragment) {
     return tide.clean(removeComments(codeFragment));
   }
@@ -91,28 +113,6 @@ public enum GuessedContext {
     throw new RuntimeException();
   }
 
-  static String enumerateFailingAttempts(final String codeFragment) {
-    final StringBuilder $ = new StringBuilder();
-    int i = 0;
-    for (final GuessedContext w : GuessedContext.AlternativeContextToConsiderInOrder) {
-      final String on = w.on(codeFragment);
-      $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.AlternativeContextToConsiderInOrder.length + "):");
-      $.append("\n\t\t Is it a " + w + "?");
-      $.append("\n\t Let's see...");
-      $.append("\n\t\t What I tried as input was (essentially) this literal:");
-      $.append("\n\t```" + essence(on) + "'''");
-      final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-      $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
-          + " on (essentially) this bit of code");
-      $.append("\n\t\t\t```" + essence(u + "") + "'''");
-      $.append("\n\t\t Properly formatted, this bit should look like so: ");
-      $.append("\n\t\t\t```" + u + "'''");
-      $.append("\n\t\t And the full list of problems was: ");
-      $.append("\n\t\t\t```" + u.getProblems() + "'''");
-    }
-    return $ + "";
-  }
-
   static String removeComments(final String codeFragment) {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
@@ -125,6 +125,14 @@ public enum GuessedContext {
   GuessedContext(final String before, final String after) {
     this.before = before;
     this.after = after;
+  }
+
+  private boolean contains(final String wrap, final String inner) {
+    final String off = off(wrap);
+    final String essence = essence(inner);
+    final String essence2 = essence(off);
+    assert essence2 != null;
+    return essence2.contains(essence);
   }
 
   /** Guess a given code fragment, and then parse it, converting it into a
@@ -160,13 +168,5 @@ public enum GuessedContext {
 
   public void stays() {
     // TODO Auto-generated method stub
-  }
-
-  private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String essence = essence(inner);
-    final String essence2 = essence(off);
-    assert essence2 != null;
-    return essence2.contains(essence);
   }
 }

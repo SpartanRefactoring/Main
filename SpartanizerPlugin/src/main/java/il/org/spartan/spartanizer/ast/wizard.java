@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.ast;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -56,7 +56,7 @@ public interface wizard {
     }
   };
 
-  public static Expression applyDeMorgan(final InfixExpression inner) {
+  static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
     for (final Expression e : hop.operands(flatten.of(inner)))
       operands.add(make.notOf(e));
@@ -278,8 +278,8 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link elze(ConditionalExpression)} but returns the last else
-   * statement in "if - else if - ... - else" statement
+  /** As {@link elze(ConditionalExpression)} but returns the last else statement
+   * in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */
   static Statement recursiveElze(final IfStatement ¢) {

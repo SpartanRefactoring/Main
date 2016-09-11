@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.ast;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;

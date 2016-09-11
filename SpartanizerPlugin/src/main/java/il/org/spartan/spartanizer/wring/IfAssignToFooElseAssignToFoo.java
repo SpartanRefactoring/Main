@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -32,8 +33,7 @@ public final class IfAssignToFooElseAssignToFoo extends Wring.ReplaceCurrentNode
     final Assignment then = extract.assignment(then(s));
     final Assignment elze = extract.assignment(elze(s));
     return !wizard.compatible(then, elze) ? null
-        : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression()))
-            .toStatement(then.getOperator());
+        : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {

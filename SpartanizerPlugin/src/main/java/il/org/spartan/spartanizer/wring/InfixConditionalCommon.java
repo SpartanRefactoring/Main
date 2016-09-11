@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;

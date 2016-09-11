@@ -30,8 +30,23 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canonicalization {
+  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    for (final Statement s : statements(b)) {
+      if (iz.ifStatement(s))
+        $ = handleIf(az.ifStatement(s), nextReturn);
+      if (iz.breakStatement(s))
+        return s;
+    }
+    return $;
+  }
+
   public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
+  }
+
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    return handleIf(az.ifStatement(s), nextReturn);
   }
 
   public static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
@@ -59,6 +74,10 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
     return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
   }
 
+  private static boolean isInfiniteLoop(final ForStatement s) {
+    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  }
+
   public static Statement make(final Statement s, final ReturnStatement nextReturn) {
     return iz.breakStatement(s) ? s //
         : iz.ifStatement(s) ? handleIf(s, nextReturn) //
@@ -66,27 +85,19 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
                 : null;
   }
 
-  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
-    Statement $ = null;
-    for (final Statement s : statements(b)) {
-      if (iz.ifStatement(s))
-        $ = handleIf(az.ifStatement(s), nextReturn);
-      if (iz.breakStatement(s))
-        return s;
-    }
-    return $;
-  }
-
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    return handleIf(az.ifStatement(s), nextReturn);
-  }
-
-  private static boolean isInfiniteLoop(final ForStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
-  }
-
   @Override public String description() {
     return "Convert the break inside the loop to return";
+  }
+
+  @Override String description(final Block b) {
+    return "Convert the break inside " + b + " to return";
+  }
+
+  // TODO: Dor, there are functions in extract that do much of this
+  // TODO: Dor, use lisp.first and lisp.second
+  // I will spartnize this for you. Implement in other classes
+  @Override Rewrite make(final Block n) {
+    return make(statements(n));
   }
 
   public Rewrite make(final ForStatement vor, final ReturnStatement nextReturn) {
@@ -105,16 +116,5 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
       return null;
     final ReturnStatement nextReturn = az.returnStatement(second(ss));
     return nextReturn == null ? null : make(vor, nextReturn);
-  }
-
-  @Override String description(final Block b) {
-    return "Convert the break inside " + b + " to return";
-  }
-
-  // TODO: Dor, there are functions in extract that do much of this
-  // TODO: Dor, use lisp.first and lisp.second
-  // I will spartnize this for you. Implement in other classes
-  @Override Rewrite make(final Block n) {
-    return make(statements(n));
   }
 }
