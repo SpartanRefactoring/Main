@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.engine;
+
 import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -52,10 +54,10 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-     // the type is not ParameterizedType,
-                                         // hence step.typeArguments cannot be
-                                         // used
-    Type first = first((List<Type>) t.typeArguments()); 
+    // the type is not ParameterizedType,
+    // hence step.typeArguments cannot be
+    // used
+    final Type first = first((List<Type>) t.typeArguments());
     final String $ = first instanceof WildcardType && ((WildcardType) first).getBound() == null ? shorten(t.getType())
         : shorten(step.typeArguments(t));
     if ($ == null)
