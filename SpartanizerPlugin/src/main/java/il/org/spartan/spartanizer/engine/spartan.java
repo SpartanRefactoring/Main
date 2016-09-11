@@ -41,7 +41,7 @@ public interface spartan {
     return shorten(t.getName());
   }
 
-  static String shorten(final org.eclipse.jdt.core.dom.Type t) {
+  static String shorten(final Type t) {
     return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
         : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
             : t instanceof QualifiedType ? shorten((QualifiedType) t)
@@ -57,9 +57,9 @@ public interface spartan {
     // the type is not ParameterizedType,
     // hence step.typeArguments cannot be
     // used
-    final Type first = first((List<Type>) t.typeArguments());
-    final String $ = first instanceof WildcardType && ((WildcardType) first).getBound() == null ? shorten(t.getType())
-        : shorten(step.typeArguments(t));
+    List<Type> ts = step.typeArguments(t);
+    final Type first = first(ts);
+    final String $ = !iz.wildcardType(first) || az.wildcardType(first).getBound() != null ? shorten(ts) : shorten(t.getType());
     if ($ == null)
       return null;
     switch (t.getType() + "") {
