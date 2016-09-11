@@ -30,24 +30,24 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     return true;
   }
 
+  private static Expression makeInfix(final List<Expression> es, final AST ast) {
+    if (es.size() == 1)
+      return lisp.first(es);
+    final InfixExpression $ = ast.newInfixExpression();
+    $.setOperator(wizard.PLUS2);
+    $.setLeftOperand(duplicate.of(lisp.first(es)));
+    $.setRightOperand(duplicate.of(lisp.second(es)));
+    for (int i = 2; i < es.size(); ++i)
+      step.extendedOperands($).add(duplicate.of(es.get(i)));
+    return $;
+  }
+
   @Override public String description() {
     return "remove uneccecary parenthesis";
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression n) {
     return description();
-  }
-  
-  private Expression makeInfix(final List<Expression> es, AST ast){
-    if (es.size() == 1)
-      return lisp.first(es);
-    InfixExpression $ = ast.newInfixExpression();
-    $.setOperator(wizard.PLUS2);
-    $.setLeftOperand(duplicate.of(lisp.first(es)));
-    $.setRightOperand(duplicate.of(lisp.second(es)));
-    for (int i = 2; i < es.size() ; ++i)
-      step.extendedOperands($).add(duplicate.of(es.get(i)));
-    return $;
   }
 
   @Override Expression replacement(final InfixExpression n) {
@@ -57,7 +57,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean changed = false;
     for (int i = 0; i < es.size(); ++i)
       if (iz.is(es.get(i), ASTNode.PARENTHESIZED_EXPRESSION)) {
-        Expression ¢ = extract.core(es.get(i));
+        final Expression ¢ = extract.core(es.get(i));
         if (iz.is(¢, ASTNode.INFIX_EXPRESSION)) {
           if (!canRemove((InfixExpression) ¢))
             continue;
@@ -66,6 +66,6 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
         lisp.replace(es, ¢, i);
         changed = true;
       }
-    return changed ? makeInfix(es,n.getAST()) : null;
+    return changed ? makeInfix(es, n.getAST()) : null;
   }
 }
