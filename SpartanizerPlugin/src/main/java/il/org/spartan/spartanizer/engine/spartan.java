@@ -52,10 +52,10 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-    final List<Type> l = t.typeArguments(); // the type is not ParameterizedType,
+     // the type is not ParameterizedType,
                                          // hence step.typeArguments cannot be
                                          // used
-    Type first = first(l); 
+    Type first = first((List<Type>) t.typeArguments()); 
     final String $ = first instanceof WildcardType && ((WildcardType) first).getBound() == null ? shorten(t.getType())
         : shorten(step.typeArguments(t));
     if ($ == null)

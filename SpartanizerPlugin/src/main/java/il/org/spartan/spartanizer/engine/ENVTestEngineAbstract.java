@@ -71,7 +71,7 @@ public abstract class ENVTestEngineAbstract {
     // PrudentType.typeSwitch(wizard.asString(ps.get(1).getValue()),PrudentType.NOTHING);
     // add returns true iff the element did not exist in the set already.
     if (!testSet
-        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.asString(ps.get(1).getValue()))))))
+        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.asString(second(ps).getValue()))))))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
