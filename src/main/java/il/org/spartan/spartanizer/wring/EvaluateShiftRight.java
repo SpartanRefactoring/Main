@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.lisp.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -22,9 +23,9 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
       return null;
-    int shifted = EvaluateAux.extractInt(xs.get(0));
+    int shifted = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
@@ -41,9 +42,9 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
       return null;
-    long shifted = EvaluateAux.extractLong(xs.get(0));
+    long shifted = EvaluateAux.extractLong(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))

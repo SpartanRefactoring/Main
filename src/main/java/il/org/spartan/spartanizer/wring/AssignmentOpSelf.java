@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wring;
-
+import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -30,7 +30,7 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
 
   private static List<Expression> nonAssociativeReplace(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
-    if (asLeft(xs.get(0), left))
+    if (asLeft(first(xs), left))
       $.remove(0);
     return $;
   }
