@@ -55,14 +55,11 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     if (isInfiniteLoop(forStatement))
       return null;
     final Statement body = forStatement.getBody();
-    final Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    if (toChange == null)
-      return null;
-    final Statement theChange = toChange;
-    return new Rewrite(description(), theChange) {
+    return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(theChange, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
+        r.replace($, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
       }
     };
   }
