@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * <code>x -= 1 </code> by <code> x-- </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
+public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
   private static boolean isIncrement(final Assignment a) {
     return a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
