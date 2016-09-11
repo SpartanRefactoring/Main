@@ -73,19 +73,19 @@ public class FuncsTest {
   }
 
   @Test public void isDeMorganAND() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_AND));
+    assert iz.deMorgan(CONDITIONAL_AND);
   }
 
   @Test public void isDeMorganGreater() {
-    azzert.nay(iz.deMorgan(GREATER));
+    assert !iz.deMorgan(GREATER);
   }
 
   @Test public void isDeMorganGreaterEuals() {
-    azzert.nay(iz.deMorgan(GREATER_EQUALS));
+    assert !iz.deMorgan(GREATER_EQUALS);
   }
 
   @Test public void isDeMorganOR() {
-    azzert.aye(iz.deMorgan(CONDITIONAL_OR));
+    assert iz.deMorgan(CONDITIONAL_OR);
   }
 
   @Test public void listOfInts() {
@@ -93,23 +93,23 @@ public class FuncsTest {
   }
 
   @Test public void sameOfNullAndSomething() {
-    azzert.nay(wizard.same(null, e("a")));
+    assert !wizard.same(null, e("a"));
   }
 
   @Test public void sameOfNulls() {
-    azzert.aye(wizard.same((ASTNode) null, (ASTNode) null));
+    assert wizard.same((ASTNode) null, (ASTNode) null);
   }
 
   @Test public void sameOfSomethingAndNull() {
-    azzert.nay(wizard.same(e("a"), (Expression) null));
+    assert !wizard.same(e("a"), (Expression) null);
   }
 
   @Test public void sameOfTwoExpressionsIdentical() {
-    azzert.aye(wizard.same(e("a+b"), e("a+b")));
+    assert wizard.same(e("a+b"), e("a+b"));
   }
 
   @Test public void sameOfTwoExpressionsNotSame() {
-    azzert.nay(wizard.same(e("a+b+c"), e("a+b")));
+    assert !wizard.same(e("a+b+c"), e("a+b"));
   }
 
   @Test public void shortNameASTRewriter() {
