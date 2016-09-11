@@ -144,7 +144,7 @@ public interface type {
    * parameter types. Can be used to find the type of an expression thats known
    * at compile time by using overloading. Only use for testing, mainly for
    * testing of type.
-   * @author Shalmon Niv
+   * @author Niv Shalmon
    * @since 2016 */
   @SuppressWarnings("unused") interface Axiom {
     static type.Primitive.Certain type(final boolean x) {
@@ -547,7 +547,7 @@ public interface type {
 
   /** Types we do not full understand yet.
    * @author Yossi Gil
-   * @author Shalmon Niv
+   * @author Niv Shalmon
    * @since 2016 */
   interface Odd extends inner.implementation {
     /** Those anonymous characters that know little or nothing about
