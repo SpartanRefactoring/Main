@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -44,11 +44,11 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
 
   private static Expression makeInfix(final List<Expression> xs, final AST t) {
     if (xs.size() == 1)
-      return lisp.first(xs);
+      return first(xs);
     final InfixExpression $ = t.newInfixExpression();
     $.setOperator(wizard.PLUS2);
-    $.setLeftOperand(duplicate.of(lisp.first(xs)));
-    $.setRightOperand(duplicate.of(lisp.second(xs)));
+    $.setLeftOperand(duplicate.of(first(xs)));
+    $.setRightOperand(duplicate.of(second(xs)));
     for (int i = 2; i < xs.size(); ++i)
       step.extendedOperands($).add(duplicate.of(xs.get(i)));
     return $;
@@ -70,8 +70,8 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     for (int i = 0; i < es.size(); ++i)
       if (iz.parenthesizeExpression(es.get(i))) {
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
-        while(iz.parenthesizeExpression(¢)){
-          lisp.replace(es, ¢, i);
+        while (iz.parenthesizeExpression(¢)) {
+          replace(es, ¢, i);
           changed = true;
           ¢ = az.parenthesizedExpression(¢).getExpression();
         }
@@ -80,7 +80,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
             continue;
         } else if (iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
-        lisp.replace(es, ¢, i);
+        replace(es, ¢, i);
         changed = true;
       }
     return !changed ? null : makeInfix(es, x.getAST());

@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
@@ -7,7 +8,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
@@ -134,7 +134,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       case 0:
         return s.getAST().newEmptyStatement();
       case 1:
-        return duplicate.of(lisp.first(ss));
+        return duplicate.of(first(ss));
       default:
         return reorganizeStatement(s);
     }
@@ -171,7 +171,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       case 0:
         return b.getAST().newEmptyStatement();
       case 1:
-        final Statement s = lisp.first(ss);
+        final Statement s = first(ss);
         if (iz.blockEssential(s))
           return subject.statement(s).toBlock();
         return duplicate.of(s);

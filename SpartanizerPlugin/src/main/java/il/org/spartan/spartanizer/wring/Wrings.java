@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -38,7 +38,7 @@ public enum Wrings {
       return s;
     final Block b = subject.statement(s).toBlock();
     r.replace(s, b, g);
-    return (IfStatement) lisp.first(statements(b));
+    return (IfStatement) first(statements(b));
   }
 
   static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
@@ -48,7 +48,7 @@ public enum Wrings {
       case 0:
         return x.getAST().newBooleanLiteral(b);
       case 1:
-        return duplicate.of(lisp.first(operands));
+        return duplicate.of(first(operands));
       default:
         return subject.operands(operands).to(x.getOperator());
     }
@@ -92,8 +92,8 @@ public enum Wrings {
     final IfStatement main = duplicate.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Wrings.sequencerRank(last(then));
-    final int rankElse = Wrings.sequencerRank(last(elze));
+    final int rankThen = Wrings.sequencerRank(lisp.last(then));
+    final int rankElse = Wrings.sequencerRank(lisp.last(elze));
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s) ? $ : main;
   }
 
