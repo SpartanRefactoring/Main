@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.engine;
-import static il.org.spartan.lisp.*;
+
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 
 import java.io.*;
 import java.util.*;
@@ -28,7 +29,7 @@ public abstract class ENVTestEngineAbstract {
     assert ROOT != null;
     assert from != null;
     assert f != null;
-    assert(f.exists());
+    assert f.exists();
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
     azzert.that($, instanceOf(CompilationUnit.class));
@@ -78,16 +79,9 @@ public abstract class ENVTestEngineAbstract {
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
-  // Go over both sets in serial manner, and make sure every two members are
-  // equal.
-  // Also, check size, to avoid the case Set A is contained in B.
-  // azzert.fail Otherwise.
-  //
-  // TODO once the method is determined to be working, change to visibility to
-  // protected.
-  @SuppressWarnings("null") public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert(testSet != null);
-    assert($ != null);
+  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
+    assert testSet != null;
+    assert $ != null;
     final Iterator<Entry<String, Information>> i = testSet.iterator();
     final Iterator<Entry<String, Information>> j = $.iterator();
     boolean flag = true;
@@ -102,17 +96,18 @@ public abstract class ENVTestEngineAbstract {
         }
       }
     }
-    assert(flag);
+    assert flag;
   }
 
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
-  // TODO: Dan once the method is determined to be working, change to visibility to
+  // TODO: Dan once the method is determined to be working, change to visibility
+  // to
   // protected.
   public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert(testSet != null);
-    assert($ != null);
+    assert testSet != null;
+    assert $ != null;
     boolean flag;
     for (final Entry<String, Information> e1 : testSet) {
       flag = false;
