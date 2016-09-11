@@ -51,6 +51,7 @@ public class EvaluateAux {
   public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression x) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
+    // TODO: Niv, no spelling errors please
     isLong = isCompitable(operands.get(0)) && (isLong(operands.get(0)) || isMinusLong(operands.get(0)));
     for (final Expression ¢ : operands)
       if (!isCompitable(¢) || !isCompitable(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
