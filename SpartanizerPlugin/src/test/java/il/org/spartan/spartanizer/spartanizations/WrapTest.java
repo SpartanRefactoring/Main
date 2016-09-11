@@ -108,11 +108,11 @@ import il.org.spartan.*;
         "if (b) {} else { throw new Exception(); }");
   }
 
-  @Test public void statement() {
-    azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
-  }
-
   private void similar(final String s1, final String s2) {
     azzert.that(essence(s2), is(essence(s1)));
+  }
+
+  @Test public void statement() {
+    azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
   }
 }

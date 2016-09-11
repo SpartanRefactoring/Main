@@ -16,20 +16,6 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2016 */
 public enum flatten {
   ;
-  /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
-   * an expression such as <code>(a + b) + c</code> whose inner form is roughly
-   * "+(+(a,b),c)", into <code>a + b + c</code>, whose inner form is (roughly)
-   * "+(a,b,c)".
-   * @param $ JD
-   * @return a duplicate of the argument, with the a flattened list of
-   *         operands. */
-  public static InfixExpression of(final InfixExpression $) {
-    assert $ != null;
-    final Operator o = $.getOperator();
-    assert o != null;
-    return subject.operands(flatten.into(o, hop.operands($), new ArrayList<Expression>())).to(duplicate.of($).getOperator());
-  }
-
   private static List<Expression> add(final Expression x, final List<Expression> $) {
     $.add(x);
     return $;
@@ -46,5 +32,19 @@ public enum flatten {
     for (final Expression e : xs)
       into(o, e, $);
     return $;
+  }
+
+  /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
+   * an expression such as <code>(a + b) + c</code> whose inner form is roughly
+   * "+(+(a,b),c)", into <code>a + b + c</code>, whose inner form is (roughly)
+   * "+(a,b,c)".
+   * @param $ JD
+   * @return a duplicate of the argument, with the a flattened list of
+   *         operands. */
+  public static InfixExpression of(final InfixExpression $) {
+    assert $ != null;
+    final Operator o = $.getOperator();
+    assert o != null;
+    return subject.operands(flatten.into(o, hop.operands($), new ArrayList<Expression>())).to(duplicate.of($).getOperator());
   }
 }

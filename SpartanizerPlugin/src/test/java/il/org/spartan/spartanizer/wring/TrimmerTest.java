@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
