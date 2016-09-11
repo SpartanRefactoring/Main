@@ -15,16 +15,16 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.spartanizer.wring.Kind.NoImpact {
+  private static String descriptionAux(final Expression x) {
+    return "Use " + (x != null ? x + "" : "the variable alone");
+  }
+
   private static boolean isEmptyStringLiteral(final Expression x) {
     return wizard.same(x, x.getAST().newStringLiteral());
   }
 
   private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
     return type.get(¢1) == type.Primitive.Certain.STRING && isEmptyStringLiteral(¢2);
-  }
-
-  private static String descriptionAux(final Expression x) {
-    return "Use " + (x != null ? x + "" : "the variable alone");
   }
 
   @Override public String description() {

@@ -48,15 +48,17 @@ public class DisabledChecker {
       this.ens = ens;
     }
 
+    public boolean go(final BodyDeclaration d, final Javadoc j) {
+      return j == null || go(d, j + "");
+    }
+
+    public boolean go(final BodyDeclaration d, final String s) {
+      insertAnnotated(d, s, dns, disablers);
+      insertAnnotated(d, s, ens, enablers);
+      return true;
+    }
+
     @Override public boolean visit(final AnnotationTypeDeclaration d) {
-      return go(d);
-    }
-
-    @Override public boolean visit(final EnumDeclaration d) {
-      return go(d);
-    }
-
-    @Override public boolean visit(final TypeDeclaration d) {
       return go(d);
     }
 
@@ -65,6 +67,10 @@ public class DisabledChecker {
     }
 
     @Override public boolean visit(final EnumConstantDeclaration d) {
+      return go(d);
+    }
+
+    @Override public boolean visit(final EnumDeclaration d) {
       return go(d);
     }
 
@@ -80,18 +86,12 @@ public class DisabledChecker {
       return go(d);
     }
 
+    @Override public boolean visit(final TypeDeclaration d) {
+      return go(d);
+    }
+
     private boolean go(final BodyDeclaration d) {
       return go(d, d.getJavadoc());
-    }
-
-    public boolean go(final BodyDeclaration d, final Javadoc j) {
-      return j == null || go(d, j + "");
-    }
-
-    public boolean go(final BodyDeclaration d, final String s) {
-      insertAnnotated(d, s, dns, disablers);
-      insertAnnotated(d, s, ens, enablers);
-      return true;
     }
 
     private void insertAnnotated(final BodyDeclaration d, final String s, final Set<ASTNode> g, final String[] ids) {

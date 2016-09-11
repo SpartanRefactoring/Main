@@ -16,6 +16,10 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class AAA_TemplateTestTemplate {
+  private static Object object() {
+    return new Object();
+  }
+
   /** if fails, suite did not compile... */
   @Test public void seriesZ_00() {
     new Object().hashCode();
@@ -121,16 +125,12 @@ public class AAA_TemplateTestTemplate {
     return false;
   }
 
-  private boolean $true() {
-    return true;
-  }
-
   private Object $null() {
     return null;
   }
 
-  private static Object object() {
-    return new Object();
+  private boolean $true() {
+    return true;
   }
 
   private Object sameSomeObject() {

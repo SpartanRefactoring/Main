@@ -33,6 +33,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
+  private static List<Expression> removeFirstEl(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    $.remove($.get(0));// remove first
+    return $;
+  }
+
   @Override public String description() {
     return "a*b + a*c => a * (b + c)";
   }
@@ -72,12 +78,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
     for (final Expression item : items)
       from.remove(item);
-  }
-
-  private static List<Expression> removeFirstEl(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    $.remove($.get(0));// remove first
-    return $;
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
