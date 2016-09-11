@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -8,6 +9,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.lisp.*;
 
 /** Convert Infinite loops with return statements to shorter ones : </br>
  * Convert <br/>
@@ -42,10 +44,10 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
   // TODO: DOR, Do not suppress all warnings, spartanize.
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
-    if (ss.size() < 2 || !(ss.get(0) instanceof WhileStatement) //
+    if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(ss.get(1) instanceof ReturnStatement))
       return null;
-    final WhileStatement whileStatement = (WhileStatement) ss.get(0);
+    final WhileStatement whileStatement = (WhileStatement) first(ss);
     final ReturnStatement nextReturn = (ReturnStatement) ss.get(1);
     if (!isInfiniteLoop(whileStatement))
       return null;
