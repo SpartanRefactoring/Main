@@ -199,8 +199,4 @@ public enum ExpressionComparator implements Comparator<Expression> {
       }
     return $;
   }
-
-  static class Int {
-    int inner = 0;
-  }
 }
