@@ -18,6 +18,36 @@ public class ArithmeticTest {
       assert atomic.isLong(2L);
     }
 
+    @Test public void issue143_1() {
+      trimming("1*31").to("31");
+    }
+
+    @Test public void issue143_2() {
+      trimming("@Override public int hashCode() { "//
+          + "return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))"
+          + "+(self == null ? 0 : self.hashCode());" //
+          + "}")
+              .to("@Override public int hashCode() { "//
+                  + "return (self == null ? 0 : self.hashCode())"
+                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
+                  + "}")
+              .to("@Override public int hashCode() { "//
+                  + "return (self == null ? 0 : self.hashCode())"
+                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));" + "}");
+    }
+
+    @Test public void issue158_1() {
+      trimming(" assertEquals(5 / 9.0, s_4x0_5x1.mean(), 1E-6);").stays();
+    }
+
+    @Test public void issue158_2() {
+      trimming(" assertEquals(5 / 1, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(5, s_4x0_5x1.mean(), 1E-6);");
+    }
+
+    @Test public void issue158_3() {
+      trimming(" assertEquals(99*2, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(198, s_4x0_5x1.mean(), 1E-6);");
+    }
+
     @Test public void issue92_1() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
     }
@@ -287,36 +317,6 @@ public class ArithmeticTest {
 
     @Test public void issue92_9() {
       trimming("3*4+2").to("12+2").to("14");
-    }
-
-    @Test public void issue143_1() {
-      trimming("1*31").to("31");
-    }
-
-    @Test public void issue143_2() {
-      trimming("@Override public int hashCode() { "//
-          + "return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))"
-          + "+(self == null ? 0 : self.hashCode());" //
-          + "}")
-              .to("@Override public int hashCode() { "//
-                  + "return (self == null ? 0 : self.hashCode())"
-                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
-                  + "}")
-              .to("@Override public int hashCode() { "//
-                  + "return (self == null ? 0 : self.hashCode())"
-                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));" + "}");
-    }
-
-    @Test public void issue158_1() {
-      trimming(" assertEquals(5 / 9.0, s_4x0_5x1.mean(), 1E-6);").stays();
-    }
-
-    @Test public void issue158_2() {
-      trimming(" assertEquals(5 / 1, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(5, s_4x0_5x1.mean(), 1E-6);");
-    }
-
-    @Test public void issue158_3() {
-      trimming(" assertEquals(99*2, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(198, s_4x0_5x1.mean(), 1E-6);");
     }
   }
 }

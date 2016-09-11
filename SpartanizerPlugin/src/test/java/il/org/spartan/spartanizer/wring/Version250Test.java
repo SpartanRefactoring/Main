@@ -1279,6 +1279,9 @@ public class Version250Test {
         f();
       }
     }, a2() {{ f(); }
+      public void i() {
+        f();
+      }
       void f() {
         g();
       }
@@ -1287,9 +1290,6 @@ public class Version250Test {
       }
       void h() {
         i();
-      }
-      public void i() {
-        f();
       }
     }
   }

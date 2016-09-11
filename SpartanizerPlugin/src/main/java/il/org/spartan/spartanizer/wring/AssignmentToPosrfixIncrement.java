@@ -19,6 +19,10 @@ public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assig
     return a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
 
+  private static boolean provablyNotString(final Assignment a) {
+    return stringType.isNot(subject.pair(a.getLeftHandSide(), a.getRightHandSide()).to(wizard.assignmentToInfix(a.getOperator())));
+  }
+
   private static ASTNode replace(final Assignment a) {
     return subject.operand(a.getLeftHandSide()).to(isIncrement(a) ? INCREMENT : DECREMENT);
   }
@@ -29,9 +33,5 @@ public final class AssignmentToPosrfixIncrement extends ReplaceCurrentNode<Assig
 
   @Override ASTNode replacement(final Assignment a) {
     return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) || !provablyNotString(a) ? null : replace(a);
-  }
-
-  private static boolean provablyNotString(final Assignment a) {
-    return stringType.isNot(subject.pair(a.getLeftHandSide(), a.getRightHandSide()).to(wizard.assignmentToInfix(a.getOperator())));
   }
 }

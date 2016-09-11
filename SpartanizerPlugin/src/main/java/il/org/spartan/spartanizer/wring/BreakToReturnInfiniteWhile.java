@@ -29,6 +29,55 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Canonicalization {
+  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    final List<Statement> blockStatements = body.statements();
+    for (final Statement s : blockStatements) {
+      if (az.ifStatement(s) != null)
+        $ = handleIf(s, nextReturn);
+      if (s instanceof BreakStatement) {
+        $ = s;
+        break;
+      }
+    }
+    return $;
+  }
+
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    final IfStatement ifStatement = az.ifStatement(s);
+    if (ifStatement == null)
+      return null;
+    final Statement then = ifStatement.getThenStatement();
+    final Statement elze = ifStatement.getElseStatement();
+    if (then != null) {
+      if (then instanceof BreakStatement)
+        return then;
+      if (iz.block(then)) {
+        final Statement $ = handleBlock((Block) then, nextReturn);
+        if ($ != null)
+          return $;
+      }
+      if (az.ifStatement(then) != null)
+        return handleIf(then, nextReturn);
+      if (elze != null) {
+        if (elze instanceof BreakStatement)
+          return elze;
+        if (iz.block(elze)) {
+          final Statement $ = handleBlock((Block) elze, nextReturn);
+          if ($ != null)
+            return $;
+        }
+        if (az.ifStatement(elze) != null)
+          return handleIf(elze, nextReturn);
+      }
+    }
+    return null;
+  }
+
+  private static boolean isInfiniteLoop(final WhileStatement s) {
+    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  }
+
   @Override public String description() {
     return "Convert the break inside the loop to return";
   }
@@ -37,11 +86,7 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     return "Convert the break inside " + b + " to return";
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
-  }
-
- @Override Rewrite make(final Block n) {
+  @Override Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
     if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(second(ss) instanceof ReturnStatement))
@@ -59,50 +104,5 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
         r.remove(nextReturn, g);
       }
     };
-  }
-
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final IfStatement ifStatement = az.ifStatement(s);
-    if (ifStatement == null)
-      return null;
-    final Statement thenStatement = ifStatement.getThenStatement();
-    final Statement elzeStatement = ifStatement.getElseStatement();
-    if (thenStatement != null) {
-      if (thenStatement instanceof BreakStatement)
-        return thenStatement;
-      if (iz.block(thenStatement)) {
-        final Statement $ = handleBlock((Block) thenStatement, nextReturn);
-        if ($ != null)
-          return $;
-      }
-      if (az.ifStatement(thenStatement) != null)
-        return handleIf(thenStatement, nextReturn);
-      if (elzeStatement != null) {
-        if (elzeStatement instanceof BreakStatement)
-          return elzeStatement;
-        if (iz.block(elzeStatement)) {
-          final Statement $ = handleBlock((Block) elzeStatement, nextReturn);
-          if ($ != null)
-            return $;
-        }
-        if (az.ifStatement(elzeStatement) != null)
-          return handleIf(elzeStatement, nextReturn);
-      }
-    }
-    return null;
-  }
-
-  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
-    Statement $ = null;
-    final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (s instanceof BreakStatement) {
-        $ = s;
-        break;
-      }
-    }
-    return $;
   }
 }
