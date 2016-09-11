@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixShiftRightEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() && !EvaluateAux.isCompatible(first(xs)))
       return null;
     int shifted = EvaluateAux.extractInt(first(xs));
     int index = 0;
@@ -42,7 +42,7 @@ public class InfixShiftRightEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
+    if (xs.isEmpty() && !EvaluateAux.isCompatible(first(xs)))
       return null;
     long shifted = EvaluateAux.extractLong(first(xs));
     int index = 0;

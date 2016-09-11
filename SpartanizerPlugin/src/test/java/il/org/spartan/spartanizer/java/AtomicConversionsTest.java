@@ -24,53 +24,53 @@ public class AtomicConversionsTest {
   private final String S = toString();
 
   @Test public void booleans() {
-    azzert.aye(atomic.isBoolean(b1));
-    azzert.aye(atomic.isBoolean(b2));
-    azzert.nay(atomic.isBoolean(c));
-    azzert.nay(atomic.isBoolean(d));
-    azzert.nay(atomic.isBoolean(s));
-    azzert.nay(atomic.isBoolean(b));
-    azzert.nay(atomic.isBoolean(i));
-    azzert.nay(atomic.isBoolean(d));
-    azzert.nay(atomic.isBoolean(f));
-    azzert.nay(atomic.isBoolean(S));
-    azzert.nay(atomic.isBoolean(o));
-    azzert.aye(atomic.isBoolean(b1 && b2));
-    azzert.aye(atomic.isBoolean(b1 != b2));
-    azzert.aye(atomic.isBoolean(b1 || b2));
+    assert atomic.isBoolean(b1);
+    assert atomic.isBoolean(b2);
+    assert !atomic.isBoolean(c);
+    assert !atomic.isBoolean(d);
+    assert !atomic.isBoolean(s);
+    assert !atomic.isBoolean(b);
+    assert !atomic.isBoolean(i);
+    assert !atomic.isBoolean(d);
+    assert !atomic.isBoolean(f);
+    assert !atomic.isBoolean(S);
+    assert !atomic.isBoolean(o);
+    assert atomic.isBoolean(b1 && b2);
+    assert atomic.isBoolean(b1 != b2);
+    assert atomic.isBoolean(b1 || b2);
   }
 
   @Test public void booleansAsSemiIntegers() {
-    azzert.aye(atomic.isBoolean(b1 & b2));
-    azzert.aye(atomic.isBoolean(b1 | b2));
-    azzert.aye(atomic.isBoolean(b1 ? b2 : !b2));
-    azzert.aye(atomic.isBoolean(b1 | b2 & (b1 ^ b2)));
-    azzert.aye(atomic.isBoolean(b1 ^ b2));
+    assert atomic.isBoolean(b1 & b2);
+    assert atomic.isBoolean(b1 | b2);
+    assert atomic.isBoolean(b1 ? b2 : !b2);
+    assert atomic.isBoolean(b1 | b2 & (b1 ^ b2));
+    assert atomic.isBoolean(b1 ^ b2);
   }
 
   @Test public void charAndChar() {
-    azzert.nay(atomic.isDouble(c));
-    azzert.nay(atomic.isLong(c));
-    azzert.nay(atomic.isFloat(c));
-    azzert.nay(atomic.isInt(c));
-    azzert.aye(atomic.isChar(c));
-    azzert.nay(atomic.isChar(c + 'b'));
-    azzert.nay(atomic.isFloat(c + "a"));
+    assert !atomic.isDouble(c);
+    assert !atomic.isLong(c);
+    assert !atomic.isFloat(c);
+    assert !atomic.isInt(c);
+    assert atomic.isChar(c);
+    assert !atomic.isChar(c + 'b');
+    assert !atomic.isFloat(c + "a");
   }
 
   @Test public void floatAndFloat() {
-    azzert.nay(atomic.isDouble(1L));
-    azzert.aye(atomic.isLong(1L));
-    azzert.aye(atomic.isFloat(2F));
-    azzert.aye(atomic.isFloat(2F + f));
-    azzert.aye(atomic.isFloat(1L + 2F));
+    assert !atomic.isDouble(1L);
+    assert atomic.isLong(1L);
+    assert atomic.isFloat(2F);
+    assert atomic.isFloat(2F + f);
+    assert atomic.isFloat(1L + 2F);
   }
 
   @Test public void mod() {
-    azzert.aye(atomic.isLong(l / i));
-    azzert.aye(atomic.isLong(l + i));
-    azzert.aye(atomic.isLong(l % i));
-    azzert.aye(atomic.isLong(i % l));
+    assert atomic.isLong(l / i);
+    assert atomic.isLong(l + i);
+    assert atomic.isLong(l % i);
+    assert atomic.isLong(i % l);
   }
 
   @Test public void preIncrement() {
@@ -83,70 +83,70 @@ public class AtomicConversionsTest {
   }
 
   @Test public void shift2() {
-    azzert.aye(atomic.isByte(b));
-    azzert.nay(atomic.isByte(b << l));
-    azzert.nay(atomic.isShort(b << l));
-    azzert.aye(atomic.isShort(s));
-    azzert.aye(atomic.isInt(b << l));
-    azzert.nay(atomic.isChar(c << l));
-    azzert.nay(atomic.isShort(c << l));
-    azzert.aye(atomic.isInt(c << i));
-    azzert.aye(atomic.isLong(c << l));
-    azzert.aye(atomic.isInt(c << i));
-    azzert.aye(atomic.isInt(i << l));
-    azzert.aye(atomic.isLong(l << l));
+    assert atomic.isByte(b);
+    assert !atomic.isByte(b << l);
+    assert !atomic.isShort(b << l);
+    assert atomic.isShort(s);
+    assert atomic.isInt(b << l);
+    assert !atomic.isChar(c << l);
+    assert !atomic.isShort(c << l);
+    assert atomic.isInt(c << i);
+    assert atomic.isLong(c << l);
+    assert atomic.isInt(c << i);
+    assert atomic.isInt(i << l);
+    assert atomic.isLong(l << l);
   }
 
   @Test public void shiftByByte() {
-    azzert.aye(atomic.isInt(b << b));
-    azzert.aye(atomic.isInt(s << b));
-    azzert.aye(atomic.isInt(c << b));
-    azzert.aye(atomic.isInt(i << b));
+    assert atomic.isInt(b << b);
+    assert atomic.isInt(s << b);
+    assert atomic.isInt(c << b);
+    assert atomic.isInt(i << b);
   }
 
   @Test public void shiftByChar() {
-    azzert.aye(atomic.isInt(b << c));
-    azzert.aye(atomic.isInt(s << c));
-    azzert.aye(atomic.isInt(c << c));
-    azzert.aye(atomic.isInt(i << c));
+    assert atomic.isInt(b << c);
+    assert atomic.isInt(s << c);
+    assert atomic.isInt(c << c);
+    assert atomic.isInt(i << c);
   }
 
   @Test public void shiftByInt() {
-    azzert.aye(atomic.isInt(b << i));
-    azzert.aye(atomic.isInt(s << i));
-    azzert.aye(atomic.isInt(c << i));
-    azzert.aye(atomic.isInt(i << i));
+    assert atomic.isInt(b << i);
+    assert atomic.isInt(s << i);
+    assert atomic.isInt(c << i);
+    assert atomic.isInt(i << i);
   }
 
   @Test public void shiftByLong() {
-    azzert.aye(atomic.isInt(b << l));
-    azzert.aye(atomic.isInt(s << l));
-    azzert.aye(atomic.isInt(c << l));
-    azzert.aye(atomic.isInt(i << l));
+    assert atomic.isInt(b << l);
+    assert atomic.isInt(s << l);
+    assert atomic.isInt(c << l);
+    assert atomic.isInt(i << l);
   }
 
   @Test public void shiftByShort() {
-    azzert.aye(atomic.isInt(b << s));
-    azzert.aye(atomic.isInt(s << s));
-    azzert.aye(atomic.isInt(c << s));
-    azzert.aye(atomic.isInt(i << s));
+    assert atomic.isInt(b << s);
+    assert atomic.isInt(s << s);
+    assert atomic.isInt(c << s);
+    assert atomic.isInt(i << s);
   }
 
   @Test public void shiftOfLong() {
-    azzert.aye(atomic.isLong(l << b));
-    azzert.aye(atomic.isLong(l << c));
-    azzert.aye(atomic.isLong(l << s));
-    azzert.aye(atomic.isLong(l << i));
-    azzert.aye(atomic.isLong(l << l));
+    assert atomic.isLong(l << b);
+    assert atomic.isLong(l << c);
+    assert atomic.isLong(l << s);
+    assert atomic.isLong(l << i);
+    assert atomic.isLong(l << l);
   }
 
   @Test public void strings() {
-    azzert.aye(atomic.isString(d + ""));
-    azzert.aye(atomic.isDouble(d + f));
-    azzert.nay(atomic.isString(d + f));
-    azzert.aye(atomic.isString(d + ""));
-    azzert.aye(atomic.isLong(l << s));
-    azzert.aye(atomic.isLong(l << i));
-    azzert.aye(atomic.isLong(l << l));
+    assert atomic.isString(d + "");
+    assert atomic.isDouble(d + f);
+    assert !atomic.isString(d + f);
+    assert atomic.isString(d + "");
+    assert atomic.isLong(l << s);
+    assert atomic.isLong(l << i);
+    assert atomic.isLong(l << l);
   }
 }

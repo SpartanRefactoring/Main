@@ -83,10 +83,10 @@ final class LocalInliner {
         inlineintoSingleton(get(), n);
     }
 
-    private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> ns) {
-      final ASTNode oldExpression = ns.get();
-      final ASTNode newExpression = duplicate.of(ns.get());
-      ns.set(newExpression);
+    private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {
+      final ASTNode oldExpression = n.get();
+      final ASTNode newExpression = duplicate.of(n.get());
+      n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.usesOf(name).in(newExpression))
         rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);

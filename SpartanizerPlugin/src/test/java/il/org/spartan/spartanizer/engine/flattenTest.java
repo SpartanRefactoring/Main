@@ -62,19 +62,19 @@ public class flattenTest {
   }
 
   @Test public void isNotStringInfixFalse() {
-    azzert.nay(stringType.isNot(i("1+f")));
+    assert !stringType.isNot(i("1+f"));
   }
 
   @Test public void isNotStringInfixPlain() {
-    azzert.nay(stringType.isNot(e("1+f")));
+    assert !stringType.isNot(e("1+f"));
   }
 
   @Test public void leftOperandIsNotString() {
-    azzert.aye(stringType.isNot(step.left(i("1+2"))));
+    assert stringType.isNot(step.left(i("1+2")));
   }
 
   @Test public void leftOperandIsNumeric() {
-    azzert.aye(iz.numericLiteral(step.left(i("1+2"))));
+    assert iz.numericLiteral(step.left(i("1+2")));
   }
 
   @Test public void leftOperandIsOne() {
