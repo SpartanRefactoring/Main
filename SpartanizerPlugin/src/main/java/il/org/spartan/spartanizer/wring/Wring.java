@@ -203,7 +203,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
     static Expression assignmentAsExpression(final Assignment a) {
       final Operator o = a.getOperator();
-      return o == ASSIGN ? duplicate.of(step.right(a)) : subject.pair(step.left(a), step.right(a)).to(asInfix(o));
+      return o == ASSIGN ? duplicate.of(right(a)) : subject.pair(left(a), right(a)).to(asInfix(o));
     }
 
     static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {

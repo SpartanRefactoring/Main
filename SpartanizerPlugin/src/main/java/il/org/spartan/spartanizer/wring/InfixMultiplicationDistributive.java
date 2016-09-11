@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -51,7 +52,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override boolean scopeIncludes(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(step.left($)) && IsSimpleMultiplication(step.right($)); // super.scopeIncludes($);
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 
   private void addCommon(final Expression op, final List<Expression> common) {
