@@ -28,7 +28,7 @@ public interface spartan {
   }
 
   static String shorten(final List<? extends Type> ts) {
-    return shorten(lisp.onlyOne(ts));
+    return shorten(onlyOne(ts));
   }
 
   static String shorten(final Name n) {

@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.wring.*;
 
 /** Collection of definitions and functions that capture some of the quircks of
  * the {@link ASTNode} hierarchy.
@@ -330,5 +331,12 @@ public interface wizard {
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
+  }
+
+  public static Expression applyDeMorgan(final InfixExpression inner) {
+    final List<Expression> operands = new ArrayList<>();
+    for (final Expression e : hop.operands(flatten.of(inner)))
+      operands.add(make.notOf(e));
+    return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
 }

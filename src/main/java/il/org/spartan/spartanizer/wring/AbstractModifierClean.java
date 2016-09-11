@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-public abstract class ModifierClean<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
+public abstract class AbstractModifierClean<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
   @Override String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
   }
