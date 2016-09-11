@@ -32,7 +32,7 @@ public class MetricsCollector {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  private static void go(final CompilationUnit u) {
+  private static void collect(final CompilationUnit u) {
     output.put("Dexterity", metrics.dexterity(u));
     output.put("Leaves", metrics.leaves(u));
     output.put("Nodes", metrics.nodes(u));
@@ -52,7 +52,7 @@ public class MetricsCollector {
 
   private static void collect(final String javaCode) {
     output.put("Characters", javaCode.length());
-    go((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   private static void collect(final String[] where) {
