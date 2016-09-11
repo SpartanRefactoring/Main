@@ -21,16 +21,16 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void test01() {
-    azzert.aye(FactorsCollector.isLeafFactor(e("i")))//
-        .andAye(FactorsCollector.isLeafFactor(e("i+j"))) //
-        .andAye(FactorsCollector.isLeafFactor(e("(x)")));
+    assert FactorsCollector.isLeafFactor(e("i"));
+    assert FactorsCollector.isLeafFactor(e("i+j")); //
+    assert FactorsCollector.isLeafFactor(e("(x)"));
   }
 
   @Test public void test02() {
-    azzert.aye(FactorsCollector.isLeafFactor(e("(i+j)")));
-    azzert.aye(FactorsCollector.isLeafFactor(e("(i*j)")));
-    azzert.nay(FactorsCollector.isLeafFactor(e("i*j")));
-    azzert.nay(FactorsCollector.isLeafFactor(e("i/j")));
+    assert FactorsCollector.isLeafFactor(e("(i+j)"));
+    assert FactorsCollector.isLeafFactor(e("(i*j)"));
+    assert !FactorsCollector.isLeafFactor(e("i*j"));
+    assert !FactorsCollector.isLeafFactor(e("i/j"));
   }
 
   @Test public void test03() {
@@ -160,14 +160,14 @@ import il.org.spartan.spartanizer.ast.*;
 
   @Test public void test21() {
     c.collect(null);
-    azzert.aye(c.dividers().isEmpty());
-    azzert.aye(c.multipliers().isEmpty());
+    assert c.dividers().isEmpty();
+    assert c.multipliers().isEmpty();
   }
 
   @Test public void test22() {
     c.collect(i("i+j"));
-    azzert.aye(c.dividers().isEmpty());
-    azzert.aye(c.multipliers().isEmpty());
+    assert c.dividers().isEmpty();
+    assert c.multipliers().isEmpty();
   }
 
   @Ignore("no similar case fo multification") @Test public void test23() {
@@ -379,36 +379,36 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void test63() {
-    azzert.aye(wizard.same(new Factor(false, e("x")).asExpression(), e("x")));
+    assert wizard.same(new Factor(false, e("x")).asExpression(), e("x"));
   }
 
   @Test public void test64() {
-    azzert.aye(wizard.same(new Factor(false, e("x*3+5")).asExpression(), e("x*3+5")));
+    assert wizard.same(new Factor(false, e("x*3+5")).asExpression(), e("x*3+5"));
   }
 
   @Test public void test65() {
-    azzert.aye(wizard.same(new Factor(false, e("1/x")).asExpression(), e("1/x")));
+    assert wizard.same(new Factor(false, e("1/x")).asExpression(), e("1/x"));
   }
 
   @Test public void test66() {
-    azzert.aye(wizard.same(new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("17.5-x/2-3/2*(17/3/y/z)*k")));
+    assert wizard.same(new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("17.5-x/2-3/2*(17/3/y/z)*k"));
   }
 
   @Test public void test67() {
-    azzert.aye(wizard.same(new Factor(true, e("x")).asExpression(), e("1/x")));
+    assert wizard.same(new Factor(true, e("x")).asExpression(), e("1/x"));
   }
 
   @Test public void test68() {
-    azzert.aye(wizard.same(new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("1/(17.5-x/2-3/2*(17/3/y/z)*k)")));
+    assert wizard.same(new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("1/(17.5-x/2-3/2*(17/3/y/z)*k)"));
   }
 
   @Test public void test69() {
-    azzert.aye(wizard.same(new Factor(true, e("u/w/x/y/z")).asExpression(), e("1/(u/w/x/y/z)")));
+    assert wizard.same(new Factor(true, e("u/w/x/y/z")).asExpression(), e("1/(u/w/x/y/z)"));
   }
 
   @Test public void test70() {
-    azzert.aye(FactorsCollector.isLeafFactor(e("3+5+7+9")));
-    azzert.aye(FactorsCollector.isLeafFactor(e("(5/6/7/8/9/10)")));
+    assert FactorsCollector.isLeafFactor(e("3+5+7+9"));
+    assert FactorsCollector.isLeafFactor(e("(5/6/7/8/9/10)"));
   }
 
   @Test public void test71() {

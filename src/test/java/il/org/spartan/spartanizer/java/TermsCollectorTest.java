@@ -20,16 +20,16 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void test01() {
-    azzert.aye(TermsCollector.isLeafTerm(e("i")))//
-        .andAye(TermsCollector.isLeafTerm(e("i*j"))) //
-        .andAye(TermsCollector.isLeafTerm(e("(x)")));
+    assert TermsCollector.isLeafTerm(e("i"));//
+    assert TermsCollector.isLeafTerm(e("i*j")); //
+    assert TermsCollector.isLeafTerm(e("(x)"));
   }
 
   @Test public void test02() {
-    azzert.aye(TermsCollector.isLeafTerm(e("(i*j)")));
-    azzert.aye(TermsCollector.isLeafTerm(e("(i+j)")));
-    azzert.nay(TermsCollector.isLeafTerm(e("i+j")));
-    azzert.nay(TermsCollector.isLeafTerm(e("i-j")));
+    assert TermsCollector.isLeafTerm(e("(i*j)"));
+    assert TermsCollector.isLeafTerm(e("(i+j)"));
+    assert !TermsCollector.isLeafTerm(e("i+j"));
+    assert !TermsCollector.isLeafTerm(e("i-j"));
   }
 
   @Test public void test03() {
@@ -160,14 +160,14 @@ import il.org.spartan.spartanizer.ast.*;
 
   @Test public void test21() {
     c.collect(null);
-    azzert.aye(c.minus().isEmpty());
-    azzert.aye(c.plus().isEmpty());
+    assert c.minus().isEmpty();
+    assert c.plus().isEmpty();
   }
 
   @Test public void test22() {
     c.collect(i("i*j"));
-    azzert.aye(c.minus().isEmpty());
-    azzert.aye(c.plus().isEmpty());
+    assert c.minus().isEmpty();
+    assert c.plus().isEmpty();
   }
 
   @Test public void test23() {

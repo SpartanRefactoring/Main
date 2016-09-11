@@ -8,7 +8,10 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 
-// TODO: Niv, add header.
+/** A class containing auxiliary functions used by the arithmetic evaluation
+ * wrings
+ * @author Dor Ma'ayan
+ * @since 2016 */
 public class EvaluateAux {
   public static double extractDouble(final Expression x) {
     if (!isLong(x))
@@ -40,7 +43,7 @@ public class EvaluateAux {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
     for (final Expression ¢ : operands) {
-      if (!isCompitable(¢))
+      if (!isCompatible(¢))
         return EvaluateAux.Type.BAD;
       if (EvaluateAux.isDouble(¢) || isMinusDouble(¢))
         return EvaluateAux.Type.DOUBLE;
@@ -53,15 +56,14 @@ public class EvaluateAux {
   public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression x) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
-    // TODO: Niv, no spelling errors please
-    isLong = isCompitable(first(operands)) && (isLong(first(operands)) || isMinusLong(first(operands)));
+    isLong = isCompatible(first(operands)) && (isLong(first(operands)) || isMinusLong(first(operands)));
     for (final Expression ¢ : operands)
-      if (!isCompitable(¢) || !isCompitable(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
+      if (!isCompatible(¢) || !isCompatible(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
         return EvaluateAux.Type.BAD;
     return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
   }
 
-  public static boolean isCompitable(final Expression x) {
+  public static boolean isCompatible(final Expression x) {
     return x instanceof NumberLiteral && isNumber(x) || x instanceof PrefixExpression
         && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS && ((PrefixExpression) x).getOperand() instanceof NumberLiteral;
   }

@@ -37,15 +37,15 @@ public class sideEffectsTest {
   }
 
   @Test public void castExpression1() {
-    azzert.nay(sideEffects.free(e("(A) f()")));
+    assert !sideEffects.free(e("(A) f()"));
   }
 
   @Test public void castExpression2() {
-    azzert.nay(sideEffects.free(e("(A) i++")));
+    assert !sideEffects.free(e("(A) i++"));
   }
 
   @Test public void castExpression3() {
-    azzert.nay(sideEffects.free(e("(A) (j++*i++)")));
+    assert !sideEffects.free(e("(A) (j++*i++)"));
   }
 
   @Test public void conditional1() {
