@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.*;
 
 public class ToggleSpartanization {
   public enum Type {
-    CLASS, FILE
+    DECLARATION, CLASS, FILE
   }
   static final String disabler = DisabledChecker.disablers[0];
   public static void diactivate(IProgressMonitor pm, IMarker m, Type t) throws IllegalArgumentException, CoreException {
@@ -123,6 +123,9 @@ public class ToggleSpartanization {
           return true;
         ASTNode c;
         switch (t) {
+          case DECLARATION:
+            c = getDeclaringDeclaration(n);
+            break;
           case CLASS:
             c = getDeclaringClass(n);
             break;
@@ -157,14 +160,20 @@ public class ToggleSpartanization {
     });
   }
   
-  static ASTNode getDeclaringClass(ASTNode n) {
+  static ASTNode getDeclaringDeclaration(ASTNode n) {
     ASTNode $ = n;
     for (; $ != null && !($ instanceof BodyDeclaration) ; $ = $.getParent());
     return $;
   }
   
+  static ASTNode getDeclaringClass(ASTNode n) {
+    ASTNode $ = n;
+    for (; $ != null && !($ instanceof AbstractTypeDeclaration) ; $ = $.getParent());
+    return $;
+  }
+  
   static ASTNode getDeclaringFile(ASTNode n) {
-    ASTNode $ = getDeclaringClass(n);
+    ASTNode $ = getDeclaringDeclaration(n);
     if ($ == null)
       return $;
     for (ASTNode p = $.getParent(); p != null ; p = p.getParent())
