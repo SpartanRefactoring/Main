@@ -8,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
@@ -101,12 +100,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert common != null;
     if (!common.isEmpty())
       different.remove(common);
-    assert lisp.first(common) != null;
-    assert lisp.first(different) != null;
-    assert lisp.second(different) != null;
-    return subject.pair(lisp.first(common), //
+    assert first(common) != null;
+    assert first(different) != null;
+    assert second(different) != null;
+    return subject.pair(first(common), //
         subject.pair(//
-            lisp.first(different), lisp.second(different)//
+            first(different), second(different)//
         ).to(//
             Operator.PLUS)//
     ).to(//

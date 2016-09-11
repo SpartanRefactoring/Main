@@ -55,6 +55,13 @@ public interface wizard {
     }
   };
 
+  public static Expression applyDeMorgan(final InfixExpression inner) {
+    final List<Expression> operands = new ArrayList<>();
+    for (final Expression e : hop.operands(flatten.of(inner)))
+      operands.add(make.notOf(e));
+    return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
+  }
+
   // TODO: Alex, how come we still have this function? We should be using a
   // Table.
   static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
@@ -331,12 +338,5 @@ public interface wizard {
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
-  }
-
-  public static Expression applyDeMorgan(final InfixExpression inner) {
-    final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : hop.operands(flatten.of(inner)))
-      operands.add(make.notOf(e));
-    return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
 }

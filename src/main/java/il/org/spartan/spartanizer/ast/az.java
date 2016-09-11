@@ -297,7 +297,7 @@ public enum az {
    * @param $ result
    * @return argument, but down-casted to a {@link WildcardType}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
- public static WildcardType wildcardType(ASTNode $) {
+  public static WildcardType wildcardType(final ASTNode $) {
     return !iz.is($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 }

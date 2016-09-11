@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.assemble;
+
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.iz.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -7,7 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.*;
 

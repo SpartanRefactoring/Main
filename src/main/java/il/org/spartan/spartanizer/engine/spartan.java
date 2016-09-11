@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -41,23 +40,11 @@ public interface spartan {
     return shorten(t.getName());
   }
 
-  static String shorten(final Type t) {
-    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
-            : t instanceof QualifiedType ? shorten((QualifiedType) t)
-                : t instanceof SimpleType ? shorten((SimpleType) t)
-                    : t instanceof WildcardType ? shortName((WildcardType) t)
-                        : t instanceof ArrayType ? shorten((ArrayType) t)
-                            : t instanceof IntersectionType ? shorten((IntersectionType) t) //
-                                : t instanceof ParameterizedType ? shorten((ParameterizedType) t)//
-                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
-  }
-
   static String shorten(final ParameterizedType t) {
     // the type is not ParameterizedType,
     // hence step.typeArguments cannot be
     // used
-    List<Type> ts = step.typeArguments(t);
+    final List<Type> ts = step.typeArguments(t);
     final Type first = first(ts);
     final String $ = !iz.wildcardType(first) || az.wildcardType(first).getBound() != null ? shorten(ts) : shorten(t.getType());
     if ($ == null)
@@ -93,6 +80,18 @@ public interface spartan {
 
   static String shorten(final String s) {
     return new JavaTypeNameParser(s).shortName();
+  }
+
+  static String shorten(final Type t) {
+    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
+        : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
+            : t instanceof QualifiedType ? shorten((QualifiedType) t)
+                : t instanceof SimpleType ? shorten((SimpleType) t)
+                    : t instanceof WildcardType ? shortName((WildcardType) t)
+                        : t instanceof ArrayType ? shorten((ArrayType) t)
+                            : t instanceof IntersectionType ? shorten((IntersectionType) t) //
+                                : t instanceof ParameterizedType ? shorten((ParameterizedType) t)//
+                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
   }
 
   static String shortName(@SuppressWarnings("unused") final UnionType __) {
