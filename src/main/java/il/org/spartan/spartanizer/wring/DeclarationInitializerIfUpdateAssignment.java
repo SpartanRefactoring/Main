@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 
@@ -41,7 +42,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
-    final Assignment a = extract.assignment(step.then(s));
+    final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(step.left(a), n) || doesUseForbiddenSiblings(f, condition, step.right(a)))
       return null;
     final Operator o = a.getOperator();
@@ -52,7 +53,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends Wring.Variab
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineinto(step.then(newInitializer), newInitializer.getExpression());
+    i.inlineinto(then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

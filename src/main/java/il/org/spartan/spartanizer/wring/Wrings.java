@@ -73,7 +73,7 @@ public enum Wrings {
   }
 
   static IfStatement invert(final IfStatement s) {
-    return subject.pair(step.elze(s), step.then(s)).toNot(s.getExpression());
+    return subject.pair(elze(s), then(s)).toNot(s.getExpression());
   }
 
   static int length(final ASTNode... ns) {
@@ -84,8 +84,8 @@ public enum Wrings {
   }
 
   static IfStatement makeShorterIf(final IfStatement s) {
-    final List<Statement> then = extract.statements(step.then(s));
-    final List<Statement> elze = extract.statements(step.elze(s));
+    final List<Statement> then = extract.statements(then(s));
+    final List<Statement> elze = extract.statements(elze(s));
     final IfStatement $ = invert(s);
     if (then.isEmpty())
       return $;
@@ -132,8 +132,8 @@ public enum Wrings {
   }
 
   static boolean shoudlInvert(final IfStatement s) {
-    final int rankThen = sequencerRank(hop.lastStatement(step.then(s)));
-    final int rankElse = sequencerRank(hop.lastStatement(step.elze(s)));
+    final int rankThen = sequencerRank(hop.lastStatement(then(s)));
+    final int rankElse = sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s);
   }
 
@@ -145,8 +145,8 @@ public enum Wrings {
   }
 
   static boolean thenIsShorter(final IfStatement s) {
-    final Statement then = step.then(s);
-    final Statement elze = step.elze(s);
+    final Statement then = then(s);
+    final Statement elze = elze(s);
     if (elze == null)
       return true;
     final int s1 = ExpressionComparator.lineCount(then);
@@ -168,7 +168,7 @@ public enum Wrings {
   }
 
   private static int positivePrefixLength(final IfStatement $) {
-    return Wrings.length($.getExpression(), step.then($));
+    return Wrings.length($.getExpression(), then($));
   }
 
   private static int sequencerRank(final ASTNode n) {

@@ -86,7 +86,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
           a.inner += 3;
         else {
           a.inner += 4;
-          if (step.elze(az.ifStatement(¢)) != null)
+          if (elze(az.ifStatement(¢)) != null)
             ++a.inner;
         }
       }

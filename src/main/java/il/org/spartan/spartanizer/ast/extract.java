@@ -413,7 +413,7 @@ public enum extract {
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists. */
   public static Statement singleElse(final IfStatement s) {
-    return extract.singleStatement(step.elze(s));
+    return extract.singleStatement(elze(s));
   }
 
   /** @param n JD
@@ -428,7 +428,7 @@ public enum extract {
    * @return single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement singleThen(final IfStatement s) {
-    return extract.singleStatement(step.then(s));
+    return extract.singleStatement(then(s));
   }
 
   /** Extract the {@link Statement} that contains a given node.
