@@ -8,6 +8,8 @@ import org.junit.*;
 import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class TermsExpanderTest {
+  String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +" + "\"Total changes: \" + (initialCount - finalCount)";
+
   @Test public void test00() {
     azzert.that(TermsExpander.simplify(i("7-3")), iz("7-3"));
   }
@@ -100,8 +102,6 @@ import il.org.spartan.*;
   @Test public void test22() {
     azzert.that(TermsExpander.simplify(i("-a-b")), iz("-a-b"));
   }
-
-  String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +" + "\"Total changes: \" + (initialCount - finalCount)";
 
   @Test public void test23() {
     azzert.that(TermsExpander.simplify(i(complexStringCase)), iz(complexStringCase));

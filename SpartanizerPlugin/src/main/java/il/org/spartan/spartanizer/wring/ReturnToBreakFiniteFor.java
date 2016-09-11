@@ -16,14 +16,14 @@ import il.org.spartan.spartanizer.engine.*;
  * Convert <br/>
  * <code>
  * for (..) { <br/>
- *  asdfasdfasdf <br/>
+ *  does(something); <br/>
  *   return XX; <br/>
  * } <br/>
  *return XX; <br/>
  * </code> to : <br/>
  * <code>
  * for (..) { <br/>
- *  asdfasdfasdf <br/>
+ *  does(something); <br/>
  *   break; <br/>
  * } <br/>
  *return XX; <br/>
@@ -31,6 +31,59 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
 public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonicalization {
+  private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
+    return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
+  }
+
+  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    final List<Statement> blockStatements = body.statements();
+    for (final Statement s : blockStatements) {
+      if (az.ifStatement(s) != null)
+        $ = handleIf(s, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
+        $ = s;
+        break;
+      }
+    }
+    return $;
+  }
+
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    final IfStatement ifStatement = az.ifStatement(s);
+    if (ifStatement == null)
+      return null;
+    final Statement then = ifStatement.getThenStatement();
+    final Statement elze = ifStatement.getElseStatement();
+    if (then != null) {
+      if (compareReturnStatements(az.returnStatement(then), nextReturn))
+        return then;
+      if (iz.block(then)) {
+        final Statement $ = handleBlock((Block) then, nextReturn);
+        if ($ != null)
+          return $;
+      }
+      if (az.ifStatement(then) != null)
+        return handleIf(then, nextReturn);
+      if (elze != null) {
+        if (compareReturnStatements(az.returnStatement(elze), nextReturn))
+          return elze;
+        if (iz.block(elze)) {
+          final Statement $ = handleBlock((Block) elze, nextReturn);
+          if ($ != null)
+            return $;
+        }
+        if (az.ifStatement(elze) != null)
+          return handleIf(elze, nextReturn);
+      }
+    }
+    return null;
+  }
+
+  private static boolean isInfiniteLoop(final ForStatement s) {
+    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  }
+
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
@@ -39,14 +92,8 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
     return "Convert the return inside " + b + " to break";
   }
 
-  private static boolean isInfiniteLoop(final ForStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
-  }
-
-  private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
-    return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
-  }
-
+  // TODO: Niv, fully spartanize this one. Remove @SuppressWarnings("all"), use
+  // az.forstatement, iz.forstatemnt, step.statements(etc), etc.
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
     if (ss.size() < 2 || !(first(ss) instanceof ForStatement) //
@@ -64,51 +111,6 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonic
         r.replace($, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
       }
     };
-  }
-
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final IfStatement ifStatement = az.ifStatement(s);
-    if (ifStatement == null)
-      return null;
-    final Statement thenStatement = ifStatement.getThenStatement();
-    final Statement elzeStatement = ifStatement.getElseStatement();
-    if (thenStatement != null) {
-      if (compareReturnStatements(az.returnStatement(thenStatement), nextReturn))
-        return thenStatement;
-      if (iz.block(thenStatement)) {
-        final Statement $ = handleBlock((Block) thenStatement, nextReturn);
-        if ($ != null)
-          return $;
-      }
-      if (az.ifStatement(thenStatement) != null)
-        return handleIf(thenStatement, nextReturn);
-      if (elzeStatement != null) {
-        if (compareReturnStatements(az.returnStatement(elzeStatement), nextReturn))
-          return elzeStatement;
-        if (iz.block(elzeStatement)) {
-          final Statement $ = handleBlock((Block) elzeStatement, nextReturn);
-          if ($ != null)
-            return $;
-        }
-        if (az.ifStatement(elzeStatement) != null)
-          return handleIf(elzeStatement, nextReturn);
-      }
-    }
-    return null;
-  }
-
-  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
-    Statement $ = null;
-    final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-        $ = s;
-        break;
-      }
-    }
-    return $;
   }
 
   @Override boolean scopeIncludes(final Block b) {

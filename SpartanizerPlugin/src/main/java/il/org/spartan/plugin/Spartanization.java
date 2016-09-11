@@ -158,6 +158,13 @@ public abstract class Spartanization extends Refactoring {
    *         spartanization */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
+      /** a quickfix which opens a refactoring wizard with the spartanization
+       * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
+       *         (v2) */
+      @Override public String getLabel() {
+        return "Show spartanization preview";
+      }
+
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
@@ -166,13 +173,6 @@ public abstract class Spartanization extends Refactoring {
         } catch (final InterruptedException e) {
           e.printStackTrace();
         }
-      }
-
-      /** a quickfix which opens a refactoring wizard with the spartanization
-       * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-       *         (v2) */
-      @Override public String getLabel() {
-        return "Show spartanization preview";
       }
     };
   }

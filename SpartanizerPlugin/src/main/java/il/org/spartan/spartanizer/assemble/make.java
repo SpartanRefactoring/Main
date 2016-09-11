@@ -43,6 +43,10 @@ public enum make {
     return $;
   }
 
+  public static StringLiteral makeStringLiteral(final ASTNode ¢) {
+    return make.from(¢).literal("");
+  }
+
   public static Expression minus(final Expression x) {
     final PrefixExpression ¢ = az.prefixExpression(x);
     return ¢ == null ? minus(x, az.numberLiteral(x))
@@ -108,10 +112,6 @@ public enum make {
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
 
-  public static StringLiteral makeStringLiteral(final ASTNode ¢) {
-    return make.from(¢).literal("");
-  }
-
   public static class ASTHolder {
     private final AST ast;
 
@@ -119,14 +119,14 @@ public enum make {
       this.ast = ast;
     }
 
+    public NumberLiteral literal(final int i) {
+      return ast.newNumberLiteral(i + "");
+    }
+
     public StringLiteral literal(final String s) {
       final StringLiteral $ = ast.newStringLiteral();
       $.setLiteralValue(s);
       return $;
-    }
-
-    public NumberLiteral literal(final int i) {
-      return ast.newNumberLiteral(i + "");
     }
   }
 }

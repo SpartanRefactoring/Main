@@ -6,6 +6,10 @@ public class Writer {
   protected PrintWriter writer = null;
   protected String outputPath = null;
 
+  public void close() {
+    writer.close();
+  }
+
   protected void initializeWriter(final String outputFileName) {
     final File outputDir = new File(outputPath);
     if (!outputDir.exists())
@@ -15,9 +19,5 @@ public class Writer {
     } catch (final IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public void close() {
-    writer.close();
   }
 }
