@@ -3,6 +3,7 @@ package il.org.spartan.plugin;
 import static il.org.spartan.plugin.eclipse.*;
 
 import java.util.*;
+import java.util.regex.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -45,81 +46,10 @@ public class ToggleSpartanization {
   }
 
   private static void fillRewrite(ASTRewrite $, CompilationUnit u, IMarker m, Type t) {
-    u.accept(new ASTVisitor() {
-      @Override public final boolean visit(final Assignment ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final Block ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final CastExpression ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final ConditionalExpression x) {
-        return go(x);
-      }
-
-      @Override public final boolean visit(final EnumDeclaration ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final FieldDeclaration ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final IfStatement ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final InfixExpression ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final MethodDeclaration ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final MethodInvocation ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final NormalAnnotation ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final PostfixExpression ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final PrefixExpression ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final ReturnStatement ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final SingleVariableDeclaration d) {
-        return go(d);
-      }
-
-      @Override public final boolean visit(final SuperConstructorInvocation ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final TypeDeclaration ¢) {
-        return go(¢);
-      }
-
-      @Override public final boolean visit(final VariableDeclarationFragment ¢) {
-        return go(¢);
-      }
-
-      <N extends ASTNode> boolean go(final N n) {
-        if (isNodeOutsideMarker(n, m))
+    u.accept(new DeclarationVisitor() {
+      boolean b = false;
+      @Override <N extends ASTNode> boolean go(final N n) {
+        if (b || isNodeOutsideMarker(n, m))
           return true;
         ASTNode c;
         switch (t) {
@@ -137,27 +67,64 @@ public class ToggleSpartanization {
         }
         if (c == null)
           return false;
-        final BodyDeclaration d = (BodyDeclaration) c;
-        Javadoc j = d.getJavadoc();
-        String s;
-        if (j == null)
-          s = "/***/";
+        BodyDeclaration d = (BodyDeclaration) c;
+        boolean da = disabledByAncestor(d);
+        if (!da) {
+          recursiveUnEnable($, d);
+          disable($, d);
+        } else if (Type.CLASS.equals(t) || Type.FILE.equals(t))
+          recursiveUnEnable($, d);
         else
-          s = j.toString().trim();
-        Set<String> es = getEnablers(s);
-        for (String e : es)
-          s.replaceAll(e, "");
-        if (s.matches("(?s).*\n\\s*\\*\\/$"))
-          s = s.replaceFirst("\\*\\/$", "* " + disabler + "\n */");
-        else
-          s = s.replaceFirst("\\*\\/$", "\n * " + disabler + "\n */");
-        if (j != null)
-          $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
-        else
-          $.replace(d, $.createStringPlaceholder(s + "\n" + d.toString().trim(), d.getNodeType()), null);
+          unEnable($, d);
+        b = true;
         return false;
       }
     });
+  }
+  
+  static String enablersRemoved(final Javadoc j) {
+    String s;
+    if (j == null)
+      s = "/***/";
+    else
+      s = j.toString().trim();
+    Set<String> es = getEnablers(s);
+    for (String e : es) {
+      String qe = Pattern.quote(e);
+      s = s.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
+    }
+    return s;
+  }
+  
+  static void unEnable(final ASTRewrite $, final BodyDeclaration d) {
+    final Javadoc j = d.getJavadoc();
+    if (j != null)
+      $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);
+  }
+  
+  static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
+    d.accept(new DeclarationVisitor() {
+      @Override <N extends ASTNode> boolean go(N n) {
+        if (!(n instanceof BodyDeclaration))
+          return true;
+        unEnable($, (BodyDeclaration) n);
+        return true;
+      }
+    });
+  }
+  
+  static void disable(final ASTRewrite $, final BodyDeclaration d) {
+    Javadoc j = d.getJavadoc();
+    String s = enablersRemoved(j);
+    if (getDisablers(s).isEmpty())
+      if (s.matches("(?s).*\n\\s*\\*\\/$"))
+        s = s.replaceFirst("\\*\\/$", "* " + disabler + "\n */");
+      else
+        s = s.replaceFirst("\\*\\/$", "\n * " + disabler + "\n */");
+    if (j != null)
+      $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
+    else
+      $.replace(d, $.createStringPlaceholder(s + "\n" + d.toString().trim(), d.getNodeType()), null);
   }
   
   static ASTNode getDeclaringDeclaration(ASTNode n) {
@@ -196,5 +163,95 @@ public class ToggleSpartanization {
       if (c.contains(kw))
         $.add(kw);
     return $;
+  }
+  
+  static boolean disabledByAncestor(ASTNode n) {
+    for (ASTNode p = n.getParent() ; p != null ; p = p.getParent())
+      if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
+        String s = ((BodyDeclaration) p).getJavadoc().toString();
+        for (String e : DisabledChecker.enablers)
+          if (s.contains(e))
+            return false;
+        for (String d : DisabledChecker.disablers)
+          if (s.contains(d))
+            return true;
+      }
+    return false;
+  }
+  
+  abstract static class DeclarationVisitor extends ASTVisitor {
+    @Override public final boolean visit(final Assignment ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final Block ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final CastExpression ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final ConditionalExpression x) {
+      return go(x);
+    }
+
+    @Override public final boolean visit(final EnumDeclaration ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final FieldDeclaration ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final IfStatement ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final InfixExpression ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final MethodDeclaration ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final MethodInvocation ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final NormalAnnotation ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final PostfixExpression ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final PrefixExpression ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final ReturnStatement ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final SingleVariableDeclaration d) {
+      return go(d);
+    }
+
+    @Override public final boolean visit(final SuperConstructorInvocation ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final TypeDeclaration ¢) {
+      return go(¢);
+    }
+
+    @Override public final boolean visit(final VariableDeclarationFragment ¢) {
+      return go(¢);
+    }
+
+    abstract <N extends ASTNode> boolean go(final N n);
   }
 }
