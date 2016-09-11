@@ -17,12 +17,12 @@ import il.org.spartan.spartanizer.engine.*;
  * if(done()) <br/>
  * break; <br/>
  * } <br/>
- *return XXX; <br/>
+ *return XX; <br/>
  * </code> to : <br/>
  * <code> while (true) { <br/>
  * doSomething(); <br/>
  * if(done()) <br/>
- * return XXX; <br/>
+ * return XX; <br/>
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
