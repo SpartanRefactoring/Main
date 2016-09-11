@@ -16,8 +16,8 @@ public class Toolbox {
    * @param clazz JD
    * @param w JS
    * @return a new instance containing only the wrings passed as parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Wring<N>... ws) {
-    return new Maker().add(clazz, ws);
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Wring<N>... ns) {
+    return new Maker().add(clazz, ns);
   }
 
   /** Initialize this class' internal instance object */
@@ -59,6 +59,7 @@ public class Toolbox {
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
+            new InfixPlusRemoveParenthesis(),//
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -69,7 +70,7 @@ public class Toolbox {
             new InfixPseudoAdditionSort(), //
             new InfixSubtractionSort(), //
             new InfixDivisonSort(), //
-            new InfixConditionalCommon(), //
+            new InfixConditionalCommon(),//
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
@@ -174,8 +175,8 @@ public class Toolbox {
     return instance;
   }
 
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ws) {
-    for (final Wring<N> $ : ws)
+  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
+    for (final Wring<N> $ : ns)
       if ($.scopeIncludes(n))
         return $;
     return null;
@@ -208,11 +209,11 @@ public class Toolbox {
     /** Associate a bunch of{@link Wring} with a given sub-class of
      * {@link ASTNode}.
      * @param n JD
-     * @param ws JD
+     * @param ns JD
      * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ws) {
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
       final List<Wring<N>> l = get(n);
-      for (final Wring<N> w : ws) {
+      for (final Wring<N> w : ns) {
         if (w == null)
           break;
         if (!w.wringGroup().isEnabled())

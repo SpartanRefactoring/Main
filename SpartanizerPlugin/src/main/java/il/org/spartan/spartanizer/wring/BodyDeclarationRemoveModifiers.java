@@ -26,10 +26,10 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
-  private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
+  private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : modifiers(¢))
-      if (test(m, ps))
+      if (test(m, ms))
         $.add((Modifier) m);
     return $;
   }
@@ -42,13 +42,13 @@ public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     return $;
   }
 
-  private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ps) {
-    return matches(modifiers(¢), ps);
+  private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
+    return matches(modifiers(¢), ms);
   }
 
-  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ps) {
+  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
-      if (test(¢.next(), ps))
+      if (test(¢.next(), ms))
         ¢.remove();
     return $;
   }
@@ -93,12 +93,12 @@ public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
     return matches(¢, redundancies(¢));
   }
 
-  private static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ps) {
-    return m instanceof Modifier && test((Modifier) m, ps);
+  private static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
+    return m instanceof Modifier && test((Modifier) m, ms);
   }
 
-  private static boolean test(final Modifier m, final Set<Predicate<Modifier>> ps) {
-    for (final Predicate<Modifier> p : ps)
+  private static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
+    for (final Predicate<Modifier> p : ms)
       if (p.test(m))
         return true;
     return false;
