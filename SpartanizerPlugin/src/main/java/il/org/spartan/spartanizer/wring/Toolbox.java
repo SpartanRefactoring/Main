@@ -59,6 +59,7 @@ public class Toolbox {
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
+            new InfixPlusRemoveParenthesis(),//
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -69,7 +70,7 @@ public class Toolbox {
             new InfixPseudoAdditionSort(), //
             new InfixSubtractionSort(), //
             new InfixDivisonSort(), //
-            new InfixConditionalCommon(), //
+            new InfixConditionalCommon(),//
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
