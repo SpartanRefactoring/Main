@@ -12,6 +12,10 @@ public class Toolbox {
   /** The default instance of this class */
   static Toolbox instance;
 
+  public static Toolbox defaultInstance() {
+    return instance;
+  }
+
   /** Make a {@link Toolbox} for a specific kind of wrings
    * @param clazz JD
    * @param w JS
@@ -59,7 +63,7 @@ public class Toolbox {
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
-            new InfixPlusRemoveParenthesis(),//
+            new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -70,7 +74,7 @@ public class Toolbox {
             new InfixPseudoAdditionSort(), //
             new InfixSubtractionSort(), //
             new InfixDivisonSort(), //
-            new InfixConditionalCommon(),//
+            new InfixConditionalCommon(), //
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
@@ -169,10 +173,6 @@ public class Toolbox {
         .add(AnnotationTypeDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotation(), null) //
         // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
-  }
-
-  public static Toolbox defaultInstance() {
-    return instance;
   }
 
   private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {

@@ -28,6 +28,13 @@ public interface eclipse {
     // TODO: Ori, why do we need this kludge?
   }.getClass().getResource(ICON_PATH));
 
+  /** @param message What to announce
+   * @return <code><b>null</b></code> */
+  static Void announce(final Object message) {
+    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    return null;
+  }
+
   static void apply(final ICompilationUnit cu) {
     apply(cu, new Range(0, 0));
   }
@@ -45,6 +52,33 @@ public interface eclipse {
 
   static void apply(final ICompilationUnit cu, final Range r) {
     apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
+  }
+
+  static ICompilationUnit compilationUnit(final IEditorPart ep) {
+    return ep == null ? null : compilationUnit((IResource) resources(ep));
+  }
+
+  static ICompilationUnit compilationUnit(final IResource r) {
+    return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
+  }
+
+  /** @return List of all compilation units in the current project */
+  static List<ICompilationUnit> compilationUnits() {
+    try {
+      return compilationUnits(currentCompilationUnit(), new NullProgressMonitor());
+    } catch (final JavaModelException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  static List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
+    try {
+      return compilationUnits(u, new NullProgressMonitor());
+    } catch (final JavaModelException x) {
+      x.printStackTrace();
+      return null;
+    }
   }
 
   /** @param u A compilation unit for reference - you give me an arbitrary
@@ -78,40 +112,6 @@ public interface eclipse {
             $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
     pm.done();
     return $;
-  }
-
-  /** @param message What to announce
-   * @return <code><b>null</b></code> */
-  static Void announce(final Object message) {
-    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
-    return null;
-  }
-
-  static ICompilationUnit compilationUnit(final IEditorPart ep) {
-    return ep == null ? null : compilationUnit((IResource) resources(ep));
-  }
-
-  static ICompilationUnit compilationUnit(final IResource r) {
-    return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
-  }
-
-  /** @return List of all compilation units in the current project */
-  static List<ICompilationUnit> compilationUnits() {
-    try {
-      return compilationUnits(currentCompilationUnit(), new NullProgressMonitor());
-    } catch (final JavaModelException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
-  static List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
-    try {
-      return compilationUnits(u, new NullProgressMonitor());
-    } catch (final JavaModelException x) {
-      x.printStackTrace();
-      return null;
-    }
   }
 
   /** Retrieves the current {@link ICompilationUnit}

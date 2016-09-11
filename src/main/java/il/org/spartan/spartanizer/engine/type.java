@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -44,15 +45,6 @@ public interface type {
     return inner.types.get(name);
   }
 
-  // TODO: Matteo. Nano-pattern of values: not implemented
-  @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
-    return inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
-  }
-
-  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
-    return inner.types.containsKey(name);
-  }
-
   /** Generates a type from a String name, if the String name represents a
    * concrete type identifiable by PrudentType.
    * @param s
@@ -88,6 +80,15 @@ public interface type {
       default:
         return NOTHING;
     }
+  }
+
+  // TODO: Matteo. Nano-pattern of values: not implemented
+  @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
+    return inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
+  }
+
+  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
+    return inner.types.containsKey(name);
   }
 
   default Primitive.Certain asPrimitiveCertain() {
@@ -348,10 +349,10 @@ public interface type {
       return i;
     }
 
-    /** TODO: Niv, convert this into a table, something like {@link wizard#conjugate}
+    /** TODO: Niv, convert this into a table, something like
+     * {@link wizard#conjugate}
      * @param s
-     * @return
-     */
+     * @return */
     private static implementation typeSwitch(final String s) {
       switch (s) {
         case "byte":
@@ -669,10 +670,6 @@ public interface type {
           , STRING), //
       BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
-      @Override public boolean canB(final Certain c) {
-        return options.contains(c);
-      }
-
       final String description;
       final Set<Certain> options = new LinkedHashSet<>();
 
@@ -682,6 +679,10 @@ public interface type {
           for (final Certain c : p.options())
             if (!options.contains(c))
               options.add(c);
+      }
+
+      @Override public boolean canB(final Certain c) {
+        return options.contains(c);
       }
 
       @Override public String description() {

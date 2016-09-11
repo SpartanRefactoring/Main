@@ -23,8 +23,21 @@ import il.org.spartan.spartanizer.java.*;
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
+  public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
+    return iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
+        : iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
+            : iz.is(then, INFIX_EXPRESSION) && iz.is(elze, STRING_LITERAL)
+                ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
+                : iz.is(then, INFIX_EXPRESSION) && iz.is(elze, INFIX_EXPRESSION)
+                    ? simplify(condition, az.infixExpression(then), az.infixExpression(elze)) : null; //
+  }
+
   static String longer(final String s1, final String s2) {
     return s1 == shorter(s1, s2) ? s2 : s1;
+  }
+
+  private static Expression as(final List<Expression> elzeOperands) {
+    return first(elzeOperands);
   }
 
   private static int firstDifference(final String s1, final String s2) {
@@ -32,10 +45,10 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
     int $ = 0;
-    for (int i = 0; i < s1.length(); ++i){
-      if((!Character.isAlphabetic(s1.charAt(i)) && !Character.isAlphabetic(s2.charAt(i)))//
-          ||(i==s1.length()-1 && !Character.isAlphabetic(s2.charAt(i))))
-        $=i;
+    for (int i = 0; i < s1.length(); ++i) {
+      if (!Character.isAlphabetic(s1.charAt(i)) && !Character.isAlphabetic(s2.charAt(i))//
+          || i == s1.length() - 1 && !Character.isAlphabetic(s2.charAt(i)))
+        $ = i;
       if (first(s1, i) != first(s2, i))
         return $;
     }
@@ -66,15 +79,15 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
     assert s1.length() <= s2.length();
-    int $=0;
+    int $ = 0;
     for (; $ < s1.length(); ++$)
       if (last(s1, $) != last(s2, $))
         break;
-    if($==0)
+    if ($ == 0)
       return 0;
-    if(($==s1.length() && s2.length()==s1.length())||($==s1.length() && !Character.isAlphabetic(s2.charAt(s2.length() - $ - 1))))
+    if ($ == s1.length() && s2.length() == s1.length() || $ == s1.length() && !Character.isAlphabetic(s2.charAt(s2.length() - $ - 1)))
       return $;
-    for(int j=s1.length()-$;j<s1.length();++j)
+    for (int j = s1.length() - $; j < s1.length(); ++j)
       if (!Character.isAlphabetic(s1.charAt(j)))
         return s1.length() - j;
     return 0;
@@ -120,6 +133,17 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return stringType.isNot(then) || stringType.isNot(elze) ? null : simplifyStrings(then, elze, condition);
   }
 
+  private static Expression simplify(final Expression condition, final String then, final String elze) {
+    return simplify(condition, then, elze, firstDifference(then, elze));
+  }
+
+  private static Expression simplify(final Expression condition, final String then, final String elze, final int commonPrefixIndex) {
+    if (commonPrefixIndex != 0)
+      return replacementPrefix(then, elze, commonPrefixIndex, condition);
+    final int commonSuffixLength = lastDifference(then, elze);
+    return commonSuffixLength == 0 ? null : replacementSuffix(then, elze, commonSuffixLength, condition);
+  }
+
   private static Expression simplify(final Expression condition, final StringLiteral then, final InfixExpression elze) {
     final String thenStr = then.getLiteralValue();
     assert elze.getOperator() == PLUS2;
@@ -148,23 +172,8 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     return null;
   }
 
-  private static Expression as(final List<Expression> elzeOperands) {
-    return first(elzeOperands);
-  }
-
   private static Expression simplify(final Expression condition, final StringLiteral then, final StringLiteral elze) {
     return simplify(condition, then.getLiteralValue(), elze.getLiteralValue());
-  }
-
-  private static Expression simplify(final Expression condition, final String then, final String elze) {
-    return simplify(condition, then, elze, firstDifference(then, elze));
-  }
-
-  private static Expression simplify(final Expression condition, final String then, final String elze, final int commonPrefixIndex) {
-    if (commonPrefixIndex != 0)
-      return replacementPrefix(then, elze, commonPrefixIndex, condition);
-    final int commonSuffixLength = lastDifference(then, elze);
-    return commonSuffixLength == 0 ? null : replacementSuffix(then, elze, commonSuffixLength, condition);
   }
 
   private static Expression simplifyStrings(final InfixExpression then, final InfixExpression elze, final Expression condition) {
@@ -203,14 +212,5 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
 
   @Override Expression replacement(final ConditionalExpression x) {
     return replacement(expression(x), then(x), elze(x));
-  }
-
-  public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
-    return iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
-        : iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
-            : iz.is(then, INFIX_EXPRESSION) && iz.is(elze, STRING_LITERAL)
-                ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
-                : iz.is(then, INFIX_EXPRESSION) && iz.is(elze, INFIX_EXPRESSION)
-                    ? simplify(condition, az.infixExpression(then), az.infixExpression(elze)) : null; //
   }
 }

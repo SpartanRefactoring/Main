@@ -49,7 +49,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean changed = false;
     for (int i = 0; i < es.size(); ++i)
       if (iz.is(es.get(i), ASTNode.PARENTHESIZED_EXPRESSION)) {
-        Expression ¢ = extract.core(es.get(i));
+        final Expression ¢ = extract.core(es.get(i));
         if (iz.is(¢, ASTNode.INFIX_EXPRESSION)) {
           if (!canRemove((InfixExpression) ¢))
             continue;

@@ -14,21 +14,20 @@ public class Issue162Test {
   @Test public void issue162_01() {
     trimming("0+(0+x+y+(4))").to("0+(0+x+y+4)").stays();
   }
-  
+
   @Test public void issue162_02() {
     trimming("\"I ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }
-  
-  @Test public void issue162_03(){
+
+  @Test public void issue162_03() {
     trimming("(2*3)+\"\"").to("2*3+\"\"").to("6+\"\"").stays();
   }
-  
-  @Test public void issue162_04(){
+
+  @Test public void issue162_04() {
     trimming("\"a\"+(x-2)").stays();
   }
-  
-  @Ignore("under construction")
-  @Test public void issue162_05(){
+
+  @Ignore("under construction") @Test public void issue162_05() {
     trimming("\"a\"+((x-2))").to("\"a\"+(x-2)").stays();
   }
 }
