@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -113,7 +113,7 @@ public enum extract {
       case 0:
         return null;
       case 1:
-        return ss.get(0);
+        return first(ss); 
       default:
         return s;
     }
