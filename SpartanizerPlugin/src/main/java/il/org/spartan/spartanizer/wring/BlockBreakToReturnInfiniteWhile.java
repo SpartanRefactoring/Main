@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.engine.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Canonicalization {
+public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Canonicalization {
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
