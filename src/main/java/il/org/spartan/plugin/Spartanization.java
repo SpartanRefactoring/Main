@@ -176,6 +176,34 @@ public abstract class Spartanization extends Refactoring {
       }
     };
   }
+  
+  public IMarkerResolution getToggleDeclaration() {
+    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization");
+  }
+  
+  public IMarkerResolution getToggleClass() {
+    return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
+  }
+  
+  public IMarkerResolution getToggleFile() {
+    return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
+  }
+  
+  @SuppressWarnings("static-method") private IMarkerResolution getToggle(ToggleSpartanization.Type t, String l) {
+    return new IMarkerResolution() {
+      @Override public void run(IMarker m) {
+        try {
+          ToggleSpartanization.diactivate(new NullProgressMonitor(), m, t);
+        } catch (IllegalArgumentException | CoreException e) {
+          e.printStackTrace();
+        }
+      }
+      
+      @Override public String getLabel() {
+        return l;
+      }
+    };
+  }
 
   @Override public final String getName() {
     return name;
