@@ -19,8 +19,8 @@ public class makeASTTest {
   @Test public void test() {
     assert ROOT != null;
     assert f != null;
-    azzert.aye(f.exists());
-    azzert.aye(f.exists());
+    assert f.exists();
+    assert f.exists();
     final ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
     assert ast != null;
     azzert.that(ast, instanceOf(CompilationUnit.class));
