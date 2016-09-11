@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.engine.*;
  * rules <br/>
  * <br/>
  * <code>
- * int >> int --> int <br/>
- * long >> long --> long <br/>
- * long >> int --> long <br/>
- * int >> long --> int <br/>
+ * int << int --> int <br/>
+ * long << long --> long <br/>
+ * long << int --> long <br/>
+ * int << long --> int <br/>
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixShiftLeftEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
       return null;
@@ -32,9 +32,9 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
         return null;
       if (index != 0) {
         if (EvaluateAux.isInt(¢))
-          shifted >>= EvaluateAux.extractInt(¢);
+          shifted <<= EvaluateAux.extractInt(¢);
         if (EvaluateAux.isLong(¢))
-          shifted >>= EvaluateAux.extractLong(¢);
+          shifted <<= EvaluateAux.extractLong(¢);
       }
       ++index;
     }
@@ -51,9 +51,9 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
         return null;
       if (index != 0) {
         if (EvaluateAux.isInt(¢))
-          shifted >>= EvaluateAux.extractInt(¢);
+          shifted <<= EvaluateAux.extractInt(¢);
         if (EvaluateAux.isLong(¢))
-          shifted >>= EvaluateAux.extractLong(¢);
+          shifted <<= EvaluateAux.extractLong(¢);
       }
       ++index;
     }
@@ -61,11 +61,11 @@ public class EvaluateShiftRight extends Wring.ReplaceCurrentNode<InfixExpression
   }
 
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate shift right of numbers";
+    return "Evaluate shift left of numbers";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != RIGHT_SHIFT_SIGNED)
+    if (x.getOperator() != LEFT_SHIFT)
       return null;
     switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
       case INT:

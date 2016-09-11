@@ -42,9 +42,9 @@ public class Toolbox {
              * per request. Waiting for the enhancement (Term, Factor, etc.) --
              * mo */
             // new InfixMultiplicationDistributive(), //
-            new EvaluateMultiplication(), //
-            new EvaluateDivision(), //
-            new EvaluateRemainder(), //
+            new InfixMultiplicationEvaluate(), //
+            new InfixDivisionEvaluate(), //
+            new InfixRemainderEvaluate(), //
             // new InfixEmptyStringAdditionToString(), //under construction
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
@@ -52,10 +52,10 @@ public class Toolbox {
             new InfixEmptyStringAdditionToString(), //
             new InfixEmptyStringAdditionReorder(), //
             new InfixFactorNegatives(), //
-            new EvaluateAddition(), //
+            new InfixAdditionEvaluate(), //
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
-            new EvaluateSubtraction(), //
+            new InfixSubractionEvaluate(), //
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
