@@ -277,7 +277,7 @@ public enum az {
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ThrowStatement}
    * @param $ result
-   * @return argument, but down-casted to a {@link ConditionalExpression}, or
+   * @return argument, but down-casted to a {@link ThrowStatement}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static ThrowStatement throwStatement(final ASTNode $) {
     return !iz.is($, THROW_STATEMENT) ? null : (ThrowStatement) $;
@@ -291,5 +291,13 @@ public enum az {
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final Expression $) {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
+  }
+
+  /** Convert, is possible, an {@link ASTNode} to a {@link WildcardType}
+   * @param $ result
+   * @return argument, but down-casted to a {@link WildcardType}, or
+   *         <code><b>null</b></code> if no such down-cast is possible.. */
+ public static WildcardType wildcardType(ASTNode $) {
+    return !iz.is($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 }

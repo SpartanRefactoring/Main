@@ -52,7 +52,7 @@ public interface metrics {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
-        $.inner++;
+        ++$.inner;
       }
     });
     return $.inner;

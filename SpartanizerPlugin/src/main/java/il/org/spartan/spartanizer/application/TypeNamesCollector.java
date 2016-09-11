@@ -41,13 +41,13 @@ public class TypeNamesCollector {
         return true;
       }
 
-      private void record(String longName) {
+      void record(String longName) {
         if (!count.containsKey(longName))
           count.put(longName, Integer.valueOf(0));
         count.put(longName, box.it(count.get(longName).intValue() + 1));
         String shortName = spartan.shorten(longName);
         if (!shortToFull.containsKey(shortName))
-          shortToFull.put(shortName, new HashSet<String>()); 
+          shortToFull.put(shortName, new HashSet<String>());
         shortToFull.get(shortName).add(longName);
       }
 
