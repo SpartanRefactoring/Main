@@ -28,7 +28,7 @@ public abstract class ENVTestEngineAbstract {
     assert ROOT != null;
     assert from != null;
     assert f != null;
-    azzert.aye(f.exists());
+    assert(f.exists());
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
     azzert.that($, instanceOf(CompilationUnit.class));
@@ -86,8 +86,8 @@ public abstract class ENVTestEngineAbstract {
   // TODO once the method is determined to be working, change to visibility to
   // protected.
   @SuppressWarnings("null") public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    azzert.aye(testSet != null);
-    azzert.aye($ != null);
+    assert(testSet != null);
+    assert($ != null);
     final Iterator<Entry<String, Information>> i = testSet.iterator();
     final Iterator<Entry<String, Information>> j = $.iterator();
     boolean flag = true;
@@ -102,17 +102,17 @@ public abstract class ENVTestEngineAbstract {
         }
       }
     }
-    azzert.aye(flag);
+    assert(flag);
   }
 
   /** Compares the set from the annotation with the set that the checked
    * function generates.
    * @param $ */
-  // TODO once the method is determined to be working, change to visibility to
+  // TODO: Dan once the method is determined to be working, change to visibility to
   // protected.
   @SuppressWarnings("null") public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    azzert.aye(testSet != null);
-    azzert.aye($ != null);
+    assert(testSet != null);
+    assert($ != null);
     boolean flag;
     for (final Entry<String, Information> e1 : testSet) {
       flag = false;
