@@ -1519,7 +1519,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue110_05() {
     trimming("a ? \"abracadabra\" : \"abba\"") //
-        .to("!a ? \"abba\" : \"abracadabra\"").stays();
+        .to("!a ? \"abba\" : \"abracadabra\"")//
+        .stays();
   }
 
   @Test public void issue110_06() {
