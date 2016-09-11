@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.into.*;
 
 import java.util.*;
 
