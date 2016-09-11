@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.azzert.*;
 
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.*;
 
 // Todo: move me to the test folder
 public class makeASTTest {
