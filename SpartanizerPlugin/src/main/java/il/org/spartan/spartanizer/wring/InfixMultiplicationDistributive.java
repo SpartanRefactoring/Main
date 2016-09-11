@@ -74,7 +74,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       from.remove(item);
   }
 
-  @SuppressWarnings("static-method") private List<Expression> removeFirstEl(final List<Expression> xs) {
+  
+  private static List<Expression> removeFirstEl(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>(xs);
     $.remove($.get(0));// remove first
     return $;
