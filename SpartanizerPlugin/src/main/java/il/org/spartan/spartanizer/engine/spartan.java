@@ -55,7 +55,8 @@ public interface spartan {
     final List<?> l = t.typeArguments(); // the type is not ParameterizedType,
                                          // hence step.typeArguments cannot be
                                          // used
-    String $ =  l.get(0) instanceof WildcardType && ((WildcardType) l.get(0)).getBound() == null ? shorten(t.getType()) : shorten(step.typeArguments(t));
+    final String $ = l.get(0) instanceof WildcardType && ((WildcardType) l.get(0)).getBound() == null ? shorten(t.getType())
+        : shorten(step.typeArguments(t));
     if ($ == null)
       return null;
     switch (t.getType() + "") {
