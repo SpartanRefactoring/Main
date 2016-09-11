@@ -50,14 +50,11 @@ public class BreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Can
     if (!isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    final Statement toChange = az.ifStatement(body) != null ? handleIf(body, nextReturn)
+    final Statement $ = az.ifStatement(body) != null ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
-    if (toChange == null)
-      return null;
-    final Statement theChange = toChange;
-    return new Rewrite(description(), theChange) {
+    return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(theChange, nextReturn, g);
+        r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }
     };
