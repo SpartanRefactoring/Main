@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.assemble;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
@@ -338,7 +339,7 @@ public class subject {
         case 0:
           return ast.newEmptyStatement();
         case 1:
-          return inner.get(0);
+          return first(inner);
         default:
           return toBlock();
       }
