@@ -14,14 +14,14 @@ public class EnvFlatHandler extends ENVTestEngineAbstract {
   public EnvFlatHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();
-    assert !(testSet == null);
+    assert testSet != null;
     runTest();
   }
 
   public EnvFlatHandler(final String ¢) {
     n = getCompilationUnit(¢);
     testSet = generateSet();
-    assert !(testSet == null);
+    assert testSet != null;
     runTest();
   }
 
