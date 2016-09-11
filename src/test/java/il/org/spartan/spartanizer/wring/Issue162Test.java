@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests for {@link NameYourClassHere}
- * @author TODO // Write your name here
+ * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
@@ -27,10 +27,10 @@ public class Issue162Test {
     trimming("\"a\"+(x-2)").stays();
   }
 
-  @Ignore("under construction") @Test public void issue162_05() {
+  @Test public void issue162_05() {
     trimming("\"a\"+((x-2))").to("\"a\"+(x-2)").stays();
   }
-  
+
   @Test public void issue162_06() {
     trimming("(\"a\")+(x-2)").to("\"a\"+(x-2)").stays();
   }
