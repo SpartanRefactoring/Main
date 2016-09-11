@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.assemble;
-import static il.org.spartan.lisp.*;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -9,7 +9,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.

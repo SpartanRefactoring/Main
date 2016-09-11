@@ -25,7 +25,8 @@ public enum stringType {
 
   private static boolean isNotFromContext(final Expression x) {
     for (ASTNode context = parent(x); context != null; context = parent(context))
-      // TODO: Dor, you can make this switch simpler by using function {@link iz.is}
+      // TODO: Dor, you can make this switch simpler by using function {@link
+      // iz.is}
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
           if (((InfixExpression) context).getOperator().equals(PLUS))

@@ -19,13 +19,13 @@ public class TypeNamesCollector {
 
   public static void main(final String[] where) throws IOException {
     collect(where.length != 0 ? where : new String[] { "." });
-    CSVStatistics w = new CSVStatistics("types.csv", "property"); 
+    final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : count.keySet()) {
-      String shortName = spartan.shorten(s);
+      final String shortName = spartan.shorten(s);
       w.put("Count", count.get(s).intValue());
       w.put("Log(Count)", Math.log(count.get(s).intValue()));
       w.put("Sqrt(Count)", Math.sqrt(count.get(s).intValue()));
-      w.put("Collisions",  shortToFull.get(shortName).size()); 
+      w.put("Collisions", shortToFull.get(shortName).size());
       w.put("Short", spartan.shorten(s));
       w.put("Original", s);
       w.nl();
@@ -40,18 +40,18 @@ public class TypeNamesCollector {
         return true;
       }
 
-      void record(String longName) {
+      SimpleName last(final Name n) {
+        return n.isSimpleName() ? (SimpleName) n : n.isQualifiedName() ? ((QualifiedName) n).getName() : null;
+      }
+
+      void record(final String longName) {
         if (!count.containsKey(longName))
           count.put(longName, Integer.valueOf(0));
         count.put(longName, box.it(count.get(longName).intValue() + 1));
-        String shortName = spartan.shorten(longName);
+        final String shortName = spartan.shorten(longName);
         if (!shortToFull.containsKey(shortName))
           shortToFull.put(shortName, new HashSet<String>());
         shortToFull.get(shortName).add(longName);
-      }
-
-      SimpleName last(final Name n) {
-        return n.isSimpleName() ? (SimpleName) n : n.isQualifiedName() ? ((QualifiedName) n).getName() : null;
       }
     });
   }

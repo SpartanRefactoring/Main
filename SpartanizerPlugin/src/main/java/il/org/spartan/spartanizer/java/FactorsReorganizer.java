@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java;
+
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -6,7 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 // TOOD Niv: Who wrote this class?

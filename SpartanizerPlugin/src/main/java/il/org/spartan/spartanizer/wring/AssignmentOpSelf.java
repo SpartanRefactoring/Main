@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
@@ -47,7 +46,7 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     final List<Expression> es = extract.allOperands(x);
     final InfixExpression.Operator o = step.operator(x);
     final List<Expression> $ = !wizard.nonAssociative(x) ? associativeReplace(es, left) : nonAssociativeReplace(es, left);
-    return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
+    return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(o);
   }
 
   @Override String description(final Assignment a) {

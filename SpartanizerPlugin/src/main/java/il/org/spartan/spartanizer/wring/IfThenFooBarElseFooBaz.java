@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 
 import java.util.*;
@@ -8,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -41,8 +41,8 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
-      final Statement s1 = lisp.first(ss1);
-      final Statement s2 = lisp.first(ss2);
+      final Statement s1 = first(ss1);
+      final Statement s2 = first(ss2);
       if (!wizard.same(s1, s2))
         break;
       $.add(s1);
