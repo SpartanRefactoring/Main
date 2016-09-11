@@ -348,6 +348,10 @@ public interface type {
       return i;
     }
 
+    /** TODO: Niv, convert this into a table, something like {@link wizard#conjugate}
+     * @param s
+     * @return
+     */
     private static implementation typeSwitch(final String s) {
       switch (s) {
         case "byte":
