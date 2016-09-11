@@ -62,6 +62,7 @@ public interface spartan {
     final String $ = !iz.wildcardType(first) || az.wildcardType(first).getBound() != null ? shorten(ts) : shorten(t.getType());
     if ($ == null)
       return null;
+    // TODO: Dan, you can use iz.in to simplify the switch
     switch (t.getType() + "") {
       case "Collection":
       case "Iterable":
