@@ -48,4 +48,13 @@ public interface metrics {
   static int vocabulary(CompilationUnit u) {
     return u.hashCode();
   }
+  static int count(final ASTNode root) {
+    final Int $ = new Int();
+    root.accept(new ASTVisitor() {
+      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
+        $.inner++;
+      }
+    });
+    return $.inner;
+  }
 }
