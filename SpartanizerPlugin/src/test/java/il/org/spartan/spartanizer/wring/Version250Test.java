@@ -954,7 +954,7 @@ public class Version250Test {
   }
 
   @Test public void issue72pi() {
-    trimming("0+(0+x+y+(4+0))").to("0+(0+x+y+(4))").stays();
+    trimming("0+(0+x+y+((int)x+0))").to("0+(0+x+y+((int)x))").to("0+(0+x+y+(int)x)").stays();
   }
 
   @Ignore @Test public void issue73_01() {
