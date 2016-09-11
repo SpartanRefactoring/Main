@@ -177,6 +177,10 @@ public abstract class Spartanization extends Refactoring {
     };
   }
   
+  public IMarkerResolution getToggleDeclaration() {
+    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization");
+  }
+  
   public IMarkerResolution getToggleClass() {
     return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
   }
