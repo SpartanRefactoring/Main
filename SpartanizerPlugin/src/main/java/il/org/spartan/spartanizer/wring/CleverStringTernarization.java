@@ -31,13 +31,13 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
-    int lastSeperator = 0;
+    int $ = 0;
     for (int i = 0; i < s1.length(); ++i){
       if((!Character.isAlphabetic(s1.charAt(i)) && !Character.isAlphabetic(s2.charAt(i)))//
           ||(i==s1.length()-1 && !Character.isAlphabetic(s2.charAt(i))))
-        lastSeperator=i;
+        $=i;
       if (first(s1, i) != first(s2, i))
-        return lastSeperator;
+        return $;
     }
     return s1.length();
   }
@@ -66,20 +66,17 @@ public final class CleverStringTernarization extends Wring.ReplaceCurrentNode<Co
     if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
     assert s1.length() <= s2.length();
-    int i=0;
-    for (; i < s1.length(); ++i){
-      if (last(s1, i) != last(s2, i))
+    int $=0;
+    for (; $ < s1.length(); ++$)
+      if (last(s1, $) != last(s2, $))
         break;
-    }
-    if(i==0)
+    if($==0)
       return 0;
-    if((i==s1.length() && s2.length()==s1.length())||(i==s1.length() && !Character.isAlphabetic(s2.charAt(s2.length()-1-i))))
-      return i;
-    for(int j=s1.length()-i;j<s1.length();j++){
-       
-      if(!Character.isAlphabetic(s1.charAt(j)))
-        return s1.length()-j;
-    }
+    if(($==s1.length() && s2.length()==s1.length())||($==s1.length() && !Character.isAlphabetic(s2.charAt(s2.length() - $ - 1))))
+      return $;
+    for(int j=s1.length()-$;j<s1.length();++j)
+      if (!Character.isAlphabetic(s1.charAt(j)))
+        return s1.length() - j;
     return 0;
   }
 

@@ -13,15 +13,15 @@ public abstract class ModifierClean<N extends BodyDeclaration> extends Wring.Rep
     return "remove redundant modifier";
   }
 
-  IExtendedModifier firstThat(final N n, final Predicate<Modifier> f) {
+  IExtendedModifier firstThat(final N n, final Predicate<Modifier> m) {
     for (final IExtendedModifier $ : step.modifiers(n))
-      if ($.isModifier() && f.test((Modifier) $))
+      if ($.isModifier() && m.test((Modifier) $))
         return $;
     return null;
   }
 
-  boolean has(final N ¢, final Predicate<Modifier> p) {
-    return firstThat(¢, p) != null;
+  boolean has(final N ¢, final Predicate<Modifier> m) {
+    return firstThat(¢, m) != null;
   }
 
   abstract boolean redundant(Modifier m);

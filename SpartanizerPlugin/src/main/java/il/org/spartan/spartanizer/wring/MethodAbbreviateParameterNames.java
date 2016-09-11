@@ -84,7 +84,7 @@ import il.org.spartan.spartanizer.engine.*;
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Abbreviate parameters in method " + "" + d.getName(), d) {
+    return new Rewrite("Abbreviate parameters in method " + d.getName(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SimpleName key : renameMap.keySet())
           rename(key, renameMap.get(key), d, r, g);
