@@ -45,12 +45,12 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
   }
 
   @SuppressWarnings("all") @Override Rewrite make(final Block n) {
-    final List<Statement> statementList = n.statements();
-    if (statementList.size() < 2 || !(statementList.get(0) instanceof WhileStatement) //
-        || !(statementList.get(1) instanceof ReturnStatement))
+    final List<Statement> ss = n.statements();
+    if (ss.size() < 2 || !(ss.get(0) instanceof WhileStatement) //
+        || !(ss.get(1) instanceof ReturnStatement))
       return null;
-    final WhileStatement whileStatement = (WhileStatement) statementList.get(0);
-    final ReturnStatement nextReturn = (ReturnStatement) statementList.get(1);
+    final WhileStatement whileStatement = (WhileStatement) ss.get(0);
+    final ReturnStatement nextReturn = (ReturnStatement) ss.get(1);
     if (isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
