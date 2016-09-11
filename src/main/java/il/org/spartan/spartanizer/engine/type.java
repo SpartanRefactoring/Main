@@ -13,6 +13,7 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
@@ -56,7 +57,9 @@ public interface type {
   /** Generates a type from a String name, if the String name represents a
    * concrete type identifiable by PrudentType.
    * @param s
-   * @return The specified type, type.Odd.Types.NOTHING as default. */
+   * @return The specified type*/
+  //TODO: Niv, should be table driven. need to decide default return value.
+  //perhaps simply replace with baptize
   static type generateFromTypeName(final String s) {
     switch (s) {
       case "byte":
@@ -190,9 +193,30 @@ public interface type {
 
   static class inner {
     private static String propertyName = "spartan type";
-    /** All type that were ever born */
-    private static Map<String, implementation> types = new LinkedHashMap<>();
+    /** All type that were ever born , as well as all primitive types*/
+    @SuppressWarnings("serial") private static Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
+      {
+        put("Byte",BYTE);
+        put("byte",BYTE);
+        put("Short",SHORT);
+        put("short",SHORT);
+        put("Character",CHAR);
+        put("char",CHAR);
+        put("Integer",INT);
+        put("int",INT);
+        put("Long",LONG);
+        put("long",LONG);
+        put("Float",FLOAT);
+        put("float",FLOAT);
+        put("Double",DOUBLE);
+        put("double",DOUBLE);
+        put("boolean",BOOLEAN);
+        put("Boolean",BOOLEAN);
+        put("String",STRING);
+      }
+    };
 
+    
     private static implementation conditionalWithNoInfo(final implementation i) {
       return in(i, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
           ? NUMERIC //
@@ -219,11 +243,11 @@ public interface type {
     }
 
     private static implementation lookDown(final CastExpression x) {
-      return typeSwitch(step.type(x) + "");
+      return baptize(step.type(x) + "");
     }
 
     private static implementation lookDown(final ClassInstanceCreation c) {
-      return typeSwitch(c.getType() + "");
+      return baptize(c.getType() + "");
     }
 
     private static implementation lookDown(final ConditionalExpression x) {
@@ -346,43 +370,6 @@ public interface type {
     private static implementation setType(final ASTNode n, final implementation i) {
       n.setProperty(propertyName, i);
       return i;
-    }
-
-    /** TODO: Niv, convert this into a table, something like {@link wizard#conjugate}
-     * @param s
-     * @return
-     */
-    private static implementation typeSwitch(final String s) {
-      switch (s) {
-        case "byte":
-        case "Byte":
-          return BYTE;
-        case "short":
-        case "Short":
-          return SHORT;
-        case "char":
-        case "Character":
-          return CHAR;
-        case "int":
-        case "Integer":
-          return INT;
-        case "long":
-        case "Long":
-          return LONG;
-        case "float":
-        case "Float":
-          return FLOAT;
-        case "double":
-        case "Double":
-          return DOUBLE;
-        case "boolean":
-        case "Boolean":
-          return BOOLEAN;
-        case "String":
-          return STRING;
-        default:
-          return baptize(s);
-      }
     }
 
     // an interface for inner methods that shouldn't be public
