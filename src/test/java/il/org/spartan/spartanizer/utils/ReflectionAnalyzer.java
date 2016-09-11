@@ -17,12 +17,12 @@ public enum ReflectionAnalyzer {
     dump.go(StaticInnerClass.class);
     dump.go(LocalClass.class);
     dump.go(new Object() {
-      @Override public int hashCode() {
-        return super.hashCode();
-      }
-
       @Override public boolean equals(final Object other) {
         return super.equals(other);
+      }
+
+      @Override public int hashCode() {
+        return super.hashCode();
       }
     }.getClass());
   }

@@ -128,28 +128,27 @@ public class Version250Test {
     trimming("x=x*y").to("x*=y");
   }
 
+  //Not provably-not-string.
   @Test public void issue107a() {
-    trimming("a+=1;").to("a++;").to("++a;").stays();
+    trimming("a+=1;").stays();
   }
 
   @Test public void issue107b() {
-    trimming("c+=1; int nice;").to("c++; int nice;");
+    trimming("for(int c = 0; c < 5; c-=1)\n"
+        + "c*=2;").to("for(int c = 0; c < 5; c--)"
+            + "c*=2;");
   }
 
   @Test public void issue107c() {
     trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
   }
-
+  
   @Test public void issue107d() {
-    trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
+    trimming("for(int a ; a<10 ; (--a)+=1){}").to("for(int a ; a<10 ; (--a)++){}");
   }
-
-  @Ignore public void issue107e() {
-    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").stays();
-  }
-
-  @Test public void issue107e_1() {
-    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
+  
+  @Test public void issue107e() {
+    trimming("for(String a ; a.length()<3 ; (a = \"\")+=1){}").stays();
   }
 
   @Test public void issue107f() {
@@ -164,24 +163,33 @@ public class Version250Test {
     trimming("a-+=1;").to("a-++;");
   }
 
-  @Ignore public void issue107i() {
-    trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
-  }
-
-  @Test public void issue107j() {
+  @Test public void issue107i() {
     trimming("a-=1;").to("a--;").to("--a;").stays();
   }
 
-  @Test public void issue107k() {
+  @Test public void issue107j() {
     trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
   }
 
-  @Test public void issue107l() {
+  @Test public void issue107k() {
     trimming("a-=2;").stays();
   }
 
-  @Test public void issue107m() {
+  @Test public void issue107l() {
     trimming("while(x-=1){}").to("while(x--){}");
+  }
+  
+  @Test public void issue107m(){
+    trimming("s = \"hello\"; \n"
+        + "s += 1;").stays();
+  }
+  
+  @Test public void issue107n() {
+    trimming("for(;; (a = 3)+=1){}").to("for(;; (a = 3)++){}");
+  }
+  
+  @Test public void issue107o(){
+    trimming("for(int a ; a<3 ; a+=1){}").stays();
   }
 
   @Test public void issue108a() {
@@ -1163,9 +1171,9 @@ public class Version250Test {
 
   @Test public void issue83n() {
     trimming("if(a.size() <= -9) ++a;a+=1;")//
-        .to("if(false) ++a;a++;") //
-        .to("{}++a;") //
-        .to("++a;") //
+        .to("if(false) ++a;a+=1;") //
+        .to("{}a+=1;") //
+        .to("a+=1;") //
         .stays();
   }
 
@@ -1279,6 +1287,9 @@ public class Version250Test {
         f();
       }
     }, a2() {{ f(); }
+      public void i() {
+        f();
+      }
       void f() {
         g();
       }
@@ -1287,9 +1298,6 @@ public class Version250Test {
       }
       void h() {
         i();
-      }
-      public void i() {
-        f();
       }
     }
   }
