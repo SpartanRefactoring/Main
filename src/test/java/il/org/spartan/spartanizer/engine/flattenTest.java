@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.java.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class ExpressionFlatten {
+public class flattenTest {
   @Test public void flattenExists() {
     flatten.of(i("1+2"));
   }
