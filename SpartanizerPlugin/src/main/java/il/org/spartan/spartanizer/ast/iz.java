@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -76,11 +77,11 @@ public enum iz {
   }
 
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
-    if (newIf == null || old != newIf && step.elze(old) == null == (step.elze(newIf) == null))
+    if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
     final IfStatement parent = az.ifStatement(step.parent(old));
-    return parent != null && step.then(parent) == old && (step.elze(parent) == null || step.elze(newIf) == null)
-        && (step.elze(parent) != null || step.elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
+    return parent != null && then(parent) == old && (elze(parent) == null || elze(newIf) == null)
+        && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
   }
 
   /** Determine whether a node is a boolean literal
@@ -587,7 +588,7 @@ public enum iz {
    * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   public static boolean singletonThen(final IfStatement s) {
-    return iz.singletonStatement(step.then(s));
+    return iz.singletonStatement(then(s));
   }
 
   /** @param ¢ JD
@@ -634,7 +635,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the 'else' part of the parameter */
   public static boolean vacuousElse(final IfStatement s) {
-    return vacuous(step.elze(s));
+    return vacuous(elze(s));
   }
 
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
@@ -643,7 +644,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
   public static boolean vacuousThen(final IfStatement s) {
-    return vacuous(step.then(s));
+    return vacuous(then(s));
   }
 
   /** @param n JD
@@ -669,8 +670,8 @@ public enum iz {
     if (b == null)
       return false;
     final IfStatement parent = az.ifStatement(step.parent(b));
-    return parent != null && (step.elze(parent) == null || wizard.recursiveElze(s) == null)
-        && (step.elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
+    return parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
+        && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
   static boolean isNumberLiteral(final ASTNode ¢) {

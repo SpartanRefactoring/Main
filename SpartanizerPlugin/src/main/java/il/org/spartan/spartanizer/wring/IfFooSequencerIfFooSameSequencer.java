@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -41,9 +42,9 @@ public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextS
     final IfStatement s2 = az.ifStatement(nextStatement);
     if (s2 == null || !iz.vacuousElse(s2))
       return null;
-    final Statement then = step.then(s);
+    final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
-    return !wizard.same(ss1, extract.statements(step.then(s2))) || !iz.sequencer(last(ss1)) ? null
+    return !wizard.same(ss1, extract.statements(then(s2))) || !iz.sequencer(last(ss1)) ? null
         : Wrings.replaceTwoStatements(r, s,
             make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
             g);

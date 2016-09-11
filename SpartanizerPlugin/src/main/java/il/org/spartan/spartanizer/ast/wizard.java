@@ -277,7 +277,7 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link step#elze(ConditionalExpression)} but returns the last else
+  /** As {@link elze(ConditionalExpression)} but returns the last else
    * statement in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */

@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.wring.TernaryPushdown.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,10 +32,10 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends W
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final Expression then = step.expression(extract.expressionStatement(step.then(s)));
+    final Expression then = step.expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    final Expression elze = step.expression(extract.expressionStatement(step.elze(s)));
+    final Expression elze = step.expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
