@@ -1513,16 +1513,13 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue110_04() {
-    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"") //
-        .to("(polite ? \"thanks\" :\"I hated the meal\")+ \".\"");
+    trimming("polite ? \"thanks.\" :  \"I hated the meal.\"")//
+    .to("(polite ? \"thanks\" :  \"I hated the meal\")+\".\"");
   }
 
   @Test public void issue110_05() {
     trimming("a ? \"abracadabra\" : \"abba\"") //
         .to("!a ? \"abba\" : \"abracadabra\"")//
-        .to("\"ab\" +(!a ? \"ba\" : \"racadabra\")")//
-        .to("\"ab\" +((!a ? \"b\" : \"racadabr\")+ \"a\")")//
-        .to("\"ab\" +(!a ? \"b\" : \"racadabr\")+ \"a\"")
         .stays();
   }
 
@@ -1533,8 +1530,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue110_07() {
     trimming("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
-        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)")//
-        .to("\"Use \"+(receiver==null ? \"x\" : receiver+\"\")").stays();
+        .to("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)");
   }
 
   @Test public void issue110_08() {
@@ -1565,16 +1561,32 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void issue110_13() {
     trimming("f() ? \"first is:\" + d() + \"second\" : \"first are:\" + g() + \"and second\"")//
-        .to("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//
-        .to("\"first \" + ((f() ? \"is:\" + d() + \"\": \"are:\" + g() + \"and \") + \"second\")");
+        .to("\"first\" + (f() ? \" is:\" + d() + \"second\": \" are:\" + g() + \"and second\")")//
+        .to("\"first\" + ((f() ? \" is:\" + d() + \"\": \" are:\" + g() + \"and \") + \"second\")");
   }
 
   @Test public void issue110_14() {
     trimming("x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\"")//
-        .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+ x +  \".isEmpty()\")")//
+        .to("\"Use \" + (x==null ? \"isEmpty()\" : \"\"+x +  \".isEmpty()\")")//
         .to("\"Use \" + ((x==null ? \"\" : \"\"+ x +  \".\")+\"isEmpty()\")");
   }
+  
+  @Test public void issue110_15() {
+    trimming("$.setName(b.simpleName(booleanLiteral ? \"TRU\" : \"TALS\"));").stays();
+  }
 
+  @Test public void issue110_16() {
+    trimming("$.setName(b.simpleName(booleanLiteral ? \"TRUE\" : \"FALSE\"));").stays();
+  }
+  
+  @Test public void issue110_17() {
+    trimming("$.setName(b.simpleName(booleanLiteral ? \"TRUE Story\" : \"FALSE Story\"));")
+    .to("$.setName(b.simpleName((booleanLiteral ? \"TRUE\" : \"FALSE\")+\" Story\"));");
+  }
+  
+  @Test public void issue110_18() {
+    trimming("booleanLiteral==0 ? \"asss\" : \"assfad\"").stays();
+  }
   @Test public void issue37Simplified() {
     trimming("" + //
         "    int a = 3;\n" + //
