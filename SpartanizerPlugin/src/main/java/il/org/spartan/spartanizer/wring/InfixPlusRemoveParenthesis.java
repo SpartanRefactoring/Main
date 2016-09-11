@@ -19,6 +19,10 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Niv Shalmon
  * @since 2016-09-11 */
 public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
+  /** TODO: Niv, document this function, but I think it is buggy. If you have
+   * #MINUS2 you can do all openings you like.
+   * @param ¢
+   * @return */
   private static boolean canRemove(final InfixExpression ¢) {
     if (in(¢.getOperator(), TIMES, DIVIDE))
       return true;

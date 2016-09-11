@@ -127,14 +127,6 @@ public enum GuessedContext {
     this.after = after;
   }
 
-  private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String essence = essence(inner);
-    final String essence2 = essence(off);
-    assert essence2 != null;
-    return essence2.contains(essence);
-  }
-
   /** Guess a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    * @param codeFragment JD
@@ -168,5 +160,13 @@ public enum GuessedContext {
 
   public void stays() {
     // TODO Auto-generated method stub
+  }
+
+  private boolean contains(final String wrap, final String inner) {
+    final String off = off(wrap);
+    final String essence = essence(inner);
+    final String essence2 = essence(off);
+    assert essence2 != null;
+    return essence2.contains(essence);
   }
 }

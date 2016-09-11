@@ -12,6 +12,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.type.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
@@ -237,6 +238,17 @@ public class typeTest {
       azzert.that(Axiom.type(Integer.toString(15)), is(STRING));
     }
 
+    @Test public void basicExpression30() {
+      azzert.that(get(into.e("+x")), is(NUMERIC));
+    }
+
+    @Ignore("unkown bug, the infix expression's operands are simple names x instead of prefix expressions +x")
+    // this seems to be a bug in trimmer, where it drops the unnecessary prefix
+    // plus
+    @Test public void basicExpression31() {
+      azzert.that(get(into.e("+x + +x")), is(NUMERIC));
+    }
+
     // basic tests for pre/in/postfix expression
     @Test public void basicExpressions01() {
       azzert.that(get(into.e("2 + (2.0)*1L")), is(DOUBLE));
@@ -339,17 +351,6 @@ public class typeTest {
       azzert.that(get(e.getLeftOperand()), is(NULL));
       azzert.that(get(e.getRightOperand()), is(INT));
       azzert.that(get(e), is(STRING));
-    }
-
-    @Test public void basicExpression30() {
-      azzert.that(get(into.e("+x")), is(NUMERIC));
-    }
-
-    @Ignore("unkown bug, the infix expression's operands are simple names x instead of prefix expressions +x")
-    // this seems to be a bug in trimmer, where it drops the unnecessary prefix
-    // plus
-    @Test public void basicExpression31() {
-      azzert.that(get(into.e("+x + +x")), is(NUMERIC));
     }
 
     @Test public void BitwiseOperationsSemantics01() {
