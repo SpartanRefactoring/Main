@@ -110,7 +110,7 @@ public abstract class ENVTestEngineAbstract {
    * @param $ */
   // TODO: Dan once the method is determined to be working, change to visibility to
   // protected.
-  @SuppressWarnings("null") public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
+  public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
     assert(testSet != null);
     assert($ != null);
     boolean flag;
