@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.lisp.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -23,9 +24,9 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
       return null;
-    double sub = EvaluateAux.extractDouble(xs.get(0));
+    double sub = EvaluateAux.extractDouble(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
@@ -38,9 +39,9 @@ public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpressio
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
       return null;
-    int sub = EvaluateAux.extractInt(xs.get(0));
+    int sub = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
@@ -53,9 +54,9 @@ public class EvaluateSubtraction extends Wring.ReplaceCurrentNode<InfixExpressio
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompitable(xs.get(0)))
+    if (xs.isEmpty() && !EvaluateAux.isCompitable(first(xs)))
       return null;
-    long sub = EvaluateAux.extractLong(xs.get(0));
+    long sub = EvaluateAux.extractLong(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
