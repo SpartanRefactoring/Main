@@ -54,12 +54,11 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Canon
     if (isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    final Statement toChange = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    final Statement change = toChange;
-    return toChange == null ? null : new Rewrite(description(), change) {
+    return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(change, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
+        r.replace($, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
       }
     };
   }
