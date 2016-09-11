@@ -119,7 +119,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     if (xs.size() == 1)
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)
-      return replacement(az.infixExpression(first(xs)), az.infixExpression(xs.get(1)));
+      return replacement(az.infixExpression(first(xs)), az.infixExpression(second(xs)));
     final List<Expression> common = new ArrayList<>();
     final List<Expression> different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
