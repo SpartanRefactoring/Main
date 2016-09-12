@@ -44,7 +44,7 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     int sub = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
+      if (!(¢ instanceof NumberLiteral) || !type.isInt(¢))
         return null;
       if (index != 0)
         sub -= EvaluateAux.extractInt(¢);
@@ -77,7 +77,9 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     ASTNode $;
     if (x.getOperator() != MINUS)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    if(EvaluateAux.getEvaluatedType(x)== null)
+      return null;
+    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;

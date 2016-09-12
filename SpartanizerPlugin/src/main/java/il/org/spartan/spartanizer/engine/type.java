@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
@@ -87,11 +88,23 @@ public interface type {
 
   // TODO: Matteo. Nano-pattern of values: not implemented
   @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
-    return inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
+    return inner.get(¢);
   }
 
   @SuppressWarnings("synthetic-access") static boolean have(final String name) {
     return inner.types.containsKey(name);
+  }
+
+  static boolean isDouble(final Expression x) {
+    return get(x) == Certain.DOUBLE;
+  }
+
+  static boolean isInt(final Expression ¢) {
+    return type.get(¢) == Certain.INT;
+  }
+
+  static boolean isLong(final Expression x) {
+    return get(x) == Certain.LONG;
   }
 
   default Primitive.Certain asPrimitiveCertain() {
@@ -224,6 +237,10 @@ public interface type {
               ? NOTHING : i;
     }
 
+    private static implementation get(final Expression ¢) {
+      return inner.hasType(¢) ? inner.getType(¢) : inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
+    }
+
     /** @param n JD/
      * @return the type information stored inside the node n, or null if there
      *         is none */
@@ -238,8 +255,8 @@ public interface type {
     }
 
     private static implementation lookDown(final Assignment x) {
-      final implementation $ = lookDown(x.getLeftHandSide());
-      return !$.isNoInfo() ? $ : lookDown(x.getRightHandSide()).isNumeric() ? NUMERIC : lookDown(x.getRightHandSide());
+      final implementation $ = get(x.getLeftHandSide());
+      return !$.isNoInfo() ? $ : get(x.getRightHandSide()).isNumeric() ? NUMERIC : get(x.getRightHandSide());
     }
 
     private static implementation lookDown(final CastExpression x) {
@@ -251,8 +268,8 @@ public interface type {
     }
 
     private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = lookDown(x.getThenExpression());
-      final implementation ¢ = lookDown(x.getElseExpression());
+      final implementation $ = get(x.getThenExpression());
+      final implementation ¢ = get(x.getElseExpression());
       // If we don't know much about one operand but do know enough about the
       // other, we can still learn something
       return $ == ¢ ? $
@@ -267,8 +284,6 @@ public interface type {
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
     private static implementation lookDown(final Expression x) {
-      if (hasType(x))
-        return getType(x);
       switch (x.getNodeType()) {
         case NULL_LITERAL:
           return NULL;
@@ -307,10 +322,10 @@ public interface type {
       final InfixExpression.Operator o = x.getOperator();
       final List<Expression> es = allOperands(x);
       assert es.size() >= 2;
-      implementation $ = lookDown(first(es)).underBinaryOperator(o, lookDown(second(es)));
+      implementation $ = get(first(es)).underBinaryOperator(o, get(second(es)));
       chop(chop(es));
       while (!es.isEmpty()) {
-        $ = $.underBinaryOperator(o, lookDown(first(es)));
+        $ = $.underBinaryOperator(o, get(first(es)));
         chop(es);
       }
       return $;
@@ -325,16 +340,16 @@ public interface type {
     }
 
     private static implementation lookDown(final ParenthesizedExpression x) {
-      return lookDown(core(x));
+      return get(core(x));
     }
 
     private static implementation lookDown(final PostfixExpression x) {
-      return lookDown(x.getOperand()).asNumeric(); // see
-                                                   // testInDecreamentSemantics
+      return get(x.getOperand()).asNumeric(); // see
+                                              // testInDecreamentSemantics
     }
 
     private static implementation lookDown(final PrefixExpression x) {
-      return lookDown(x.getOperand()).under(x.getOperator());
+      return get(x.getOperand()).under(x.getOperator());
     }
 
     private static implementation lookUp(final Expression x, final implementation i) {

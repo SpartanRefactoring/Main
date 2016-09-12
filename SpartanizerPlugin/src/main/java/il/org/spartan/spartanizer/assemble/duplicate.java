@@ -43,7 +43,7 @@ public enum duplicate {
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ of(final ¢ ¢) {
-    return (¢) copySubtree(¢.getAST(), ¢);
+    return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
   }
 
   static List<Expression> adjust(final Operator o, final List<Expression> xs) {

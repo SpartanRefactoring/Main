@@ -28,12 +28,12 @@ public class InfixShiftRightEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     int shifted = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
+      if (!(¢ instanceof NumberLiteral) && !type.isInt(¢) && !type.isLong(¢))
         return null;
       if (index != 0) {
-        if (EvaluateAux.isInt(¢))
+        if (type.isInt(¢))
           shifted >>= EvaluateAux.extractInt(¢);
-        if (EvaluateAux.isLong(¢))
+        if (type.isLong(¢))
           shifted >>= EvaluateAux.extractLong(¢);
       }
       ++index;
@@ -47,12 +47,12 @@ public class InfixShiftRightEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     long shifted = EvaluateAux.extractLong(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) && !EvaluateAux.isInt(¢) && !EvaluateAux.isLong(¢))
+      if (!(¢ instanceof NumberLiteral) && !type.isInt(¢) && !type.isLong(¢))
         return null;
       if (index != 0) {
-        if (EvaluateAux.isInt(¢))
+        if (type.isInt(¢))
           shifted >>= EvaluateAux.extractInt(¢);
-        if (EvaluateAux.isLong(¢))
+        if (type.isLong(¢))
           shifted >>= EvaluateAux.extractLong(¢);
       }
       ++index;
@@ -67,7 +67,7 @@ public class InfixShiftRightEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   @Override ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != RIGHT_SHIFT_SIGNED)
       return null;
-    switch (EvaluateAux.getEvaluatedTypeForShift(x)) {
+    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:
         return replacementInt(extract.allOperands(x), x);
       case LONG:

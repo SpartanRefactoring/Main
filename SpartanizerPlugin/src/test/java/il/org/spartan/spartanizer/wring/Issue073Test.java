@@ -16,11 +16,11 @@ public class Issue073Test {
   }
 
   @Test public void issue73_02() {
-    trimming("\"abc\" + \"\"").to("\"abc\"");
+    trimming("\"abc\" + \"\"").to("\"abc\"").stays();
   }
 
   @Test public void issue73_03() {
-    trimming("\"\"+\"abc\"").to("\"abc\"");
+    trimming("\"\"+\"abc\"").to("\"abc\"").stays();
   }
 
   @Test public void issue73_04() {
@@ -28,10 +28,10 @@ public class Issue073Test {
   }
 
   @Test public void issue73_05() {
-    trimming("x + \"\"+\"abc\"").to("x + \"abc\"");
+    trimming("x + \"\"+\"abc\"").to("x + \"abc\"").stays();
   }
 
   @Test public void issue73_06() {
-    trimming("((String)x) + \"\"").to("(String)x");
+    trimming("((String)x) + \"\"").to("((String)x)");
   }
 }
