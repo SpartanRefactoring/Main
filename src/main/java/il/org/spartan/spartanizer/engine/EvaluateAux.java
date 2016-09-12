@@ -1,14 +1,13 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 
 /** A class containing auxiliary functions used by the arithmetic evaluation
  * wrings
@@ -48,7 +47,7 @@ public interface EvaluateAux {
       return Long.parseLong(token);
     if (!iz.prefixExpression(x))
       return Long.parseLong(token.substring(0, token.length() - 1));
-    final String negToken = az.numberLiteral((az.prefixExpression(x).getOperand())).getToken();
+    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
     return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
   }
 
@@ -73,17 +72,17 @@ public interface EvaluateAux {
   static type getEvaluatedTypeForShift(final InfixExpression x) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
-    isLong = isCompatible(first(operands)) && (iz.longType(first(operands)));
+    isLong = isCompatible(first(operands)) && iz.longType(first(operands));
     for (final Expression ¢ : operands)
-      if (!isCompatible(¢) || !isCompatible(¢) && (iz.doubleType(¢)))
+      if (!isCompatible(¢) || !isCompatible(¢) && iz.doubleType(¢))
         return null;
     return isLong ? LONG : INT;
   }
 
   static boolean isCompatible(final Expression x) {
     // TODO: Dor, one of the following two check may re redundant
-    return iz.numberLiteral(x) && isNumber(x) || iz.prefixExpression(x)
-        && (az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS && iz.numberLiteral(az.prefixExpression(x).getOperand()));
+    return iz.numberLiteral(x) && isNumber(x) || iz.prefixExpression(x) && az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS
+        && iz.numberLiteral(az.prefixExpression(x).getOperand());
   }
 
   static boolean isNumber(final Expression x) {
