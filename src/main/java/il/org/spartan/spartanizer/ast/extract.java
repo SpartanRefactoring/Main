@@ -21,18 +21,16 @@ public enum extract {
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
-  public static List<Expression> allOperands(final InfixExpression x) {
-    assert x != null;
-    return hop.operands(flatten.of(x));
+  public static List<Expression> allOperands(final InfixExpression ¢) {
+    assert ¢ != null;
+    return hop.operands(flatten.of(¢));
   }
-
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
     assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
     findOperators(x, $);
     return $;
   }
-
   public static List<Annotation> annotations(final BodyDeclaration d) {
     final ArrayList<Annotation> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : step.modifiers(d)) {
@@ -42,7 +40,6 @@ public enum extract {
     }
     return $;
   }
-
   public static List<Annotation> annotations(final SingleVariableDeclaration d) {
     final ArrayList<Annotation> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : step.modifiers(d)) {
@@ -52,7 +49,6 @@ public enum extract {
     }
     return $;
   }
-
   public static List<Annotation> annotations(final VariableDeclarationStatement s) {
     final ArrayList<Annotation> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : step.modifiers(s)) {
@@ -119,6 +115,17 @@ public enum extract {
         return s;
     }
   }
+
+  public static double doubleNumber(final Expression x) {
+    if (!iz.longType(x))
+      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
+          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+    final String token = az.numberLiteral(x).getToken();
+    if (!iz.prefixExpression(x))
+      return Double.parseDouble(token.substring(0, token.length() - 1));
+    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
+    return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
+   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
@@ -306,6 +313,21 @@ public enum extract {
    *         <code><b>null</b></code> if not such statements exists. */
   public static IfStatement ifStatement(final ASTNode n) {
     return az.ifStatement(extract.singleStatement(n));
+  }
+
+  public static int intNumber(final Expression ¢) {
+    return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
+        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
+  }
+
+  public static long longNumber(final Expression x) {
+    final String token = az.numberLiteral(x).getToken();
+    if (iz.intType(x))
+      return Long.parseLong(token);
+    if (!(x instanceof PrefixExpression))
+      return Long.parseLong(token.substring(0, token.length() - 1));
+    final String negToken = az.numberLiteral((az.prefixExpression(x).getOperand())).getToken();
+    return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
   }
 
   /** @param n JD

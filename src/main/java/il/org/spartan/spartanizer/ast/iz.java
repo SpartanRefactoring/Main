@@ -20,16 +20,20 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-16 */
 public enum iz {
   ;
-  public static boolean __abstract(final BodyDeclaration d) {
-    return (Modifier.ABSTRACT & d.getModifiers()) != 0;
+  public static boolean __abstract(final BodyDeclaration ¢) {
+    return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
+  }
+
+  public static boolean __final(final BodyDeclaration ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
   /** Determine whether a variable declaration is final or not
    * @param s some declaration
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
    *         final */
-  public static boolean __final(final VariableDeclarationStatement s) {
-    return (Modifier.FINAL & s.getModifiers()) != 0;
+  public static boolean __final(final VariableDeclarationStatement ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
   public static boolean abstractTypeDeclaration(final ASTNode ¢) {
@@ -40,8 +44,6 @@ public enum iz {
     return ¢ instanceof Annotation;
   }
 
-  /* public static boolean modifier(final IExtendedModifier ¢) { return ¢
-   * instanceof Annotation; } */
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);
   }
@@ -50,8 +52,8 @@ public enum iz {
    * @return <code><b>true</b></code> if the parameter an assignment or false if
    *         the parameter not or if the block Contains more than one
    *         statement */
-  public static boolean assignment(final ASTNode n) {
-    return is(n, ASSIGNMENT);
+  public static boolean assignment(final ASTNode ¢) {
+    return is(¢, ASSIGNMENT);
   }
 
   public static boolean astNode(final Object ¢) {
@@ -135,6 +137,17 @@ public enum iz {
 
   public static boolean comparison(final Operator o) {
     return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
+  }
+
+  public static boolean computable(final Expression ¢) {
+    // TODO: Dor, one of the following two check may re redundant
+    // TODO: Yossi, I don't see any redundancy here
+    // TODO: Dor you check that it is a number and then it is anumber literal,
+    // what's the difference? Why do y ou it for one case, and not not for the
+    // case it is a prefix.
+    // This is code smell...
+    return iz.numberLiteral(¢) && number(¢) //
+        || iz.prefixMinus(¢) && iz.numberLiteral(az.prefixExpression(¢).getOperand());
   }
 
   /** @param xs JD
@@ -265,8 +278,8 @@ public enum iz {
    * @return <code><b>true</b></code> if the parameter an for statement or false
    *         if the parameter not or if the block Contains more than one
    *         statement */
-  public static boolean forStatement(final ASTNode n) {
-    return is(n, FOR_STATEMENT);
+  public static boolean forStatement(final ASTNode ¢) {
+    return is(¢, FOR_STATEMENT);
   }
 
   public static boolean ifStatement(final Statement s) {
@@ -593,6 +606,12 @@ public enum iz {
     return is(n, NULL_LITERAL);
   }
 
+  // TODO: Dor, what kind of other number literals are there? It is not so clear
+  // from the code
+  public static boolean number(final Expression ¢) {
+    return type.isInt(¢) || type.isDouble(¢) || type.isLong(¢);
+  }
+
   public static boolean numberLiteral(final ASTNode ¢) {
     return is(¢, NUMBER_LITERAL);
   }
@@ -630,6 +649,10 @@ public enum iz {
    *         expression. */
   public static boolean prefixExpression(final ASTNode n) {
     return is(n, PREFIX_EXPRESSION);
+  }
+
+  private static boolean prefixMinus(final Expression ¢) {
+    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
   }
 
   /** Determine whether a node is a return statement
@@ -744,6 +767,14 @@ public enum iz {
    *         statements in the parameter */
   public static boolean vacuousThen(final IfStatement s) {
     return vacuous(then(s));
+  }
+
+  public static boolean validForEvaluation(final InfixExpression x) {
+    final List<Expression> lst = extract.allOperands(x);
+    for (final Expression e : lst)
+      if (!iz.computable(e))
+        return false;
+    return true;
   }
 
   /** @param n JD
