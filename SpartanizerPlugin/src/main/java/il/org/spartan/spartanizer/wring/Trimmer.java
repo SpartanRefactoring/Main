@@ -39,7 +39,7 @@ public class Trimmer extends Spartanization {
   }
 
   public Trimmer(final Toolbox toolbox) {
-    super("Spartanize");
+    super("  Spartanize");
     this.toolbox = toolbox;
   }
 

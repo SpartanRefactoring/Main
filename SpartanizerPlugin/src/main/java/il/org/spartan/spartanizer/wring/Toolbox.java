@@ -78,7 +78,8 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
-            new BodyDeclarationRemoveModifiers.OfMethod(), //
+            new MethodDeclarationRenameSingleParameterToCent(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfMethod(), //
             new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
@@ -154,7 +155,7 @@ public class Toolbox {
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfField(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfField(), //
             new AbstractBodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
@@ -162,7 +163,7 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfEnumConstant(), //
             new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
