@@ -15,7 +15,7 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue165Test {
-  @Test public void seriesA_01() {
+  @Ignore @Test public void seriesA_01() {
     trimming(//
         " public static boolean __final(final VariableDeclarationStatement s) {\n" //
             + "return (Modifier.FINAL & s.getModifiers()) != 0;}").to(//
