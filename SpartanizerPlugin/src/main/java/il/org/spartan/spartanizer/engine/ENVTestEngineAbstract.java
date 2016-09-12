@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 // TODO: Dan, header for this class.
+// TODO: ALex, do not place test classes in the main folder.
 public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
     return new LinkedHashSet<>();
@@ -24,10 +25,10 @@ public abstract class ENVTestEngineAbstract {
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
-    final String ROOT = "./src/test/java/il/org/spartan/spartanizer/java/";
-    final File f = new File(ROOT + from);
-    assert ROOT != null;
     assert from != null;
+    final String ROOT = "./src/test/java/il/org/spartan/spartanizer/java/";
+    assert ROOT != null;
+    final File f = new File(ROOT + from);
     assert f != null;
     assert f.exists();
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
@@ -107,8 +108,10 @@ public abstract class ENVTestEngineAbstract {
   // to
   // protected.
   public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert testSet != null;
     assert $ != null;
+    assert testSet != null;
+    // TODO: Dan, it is a bit naive, childish programming to use "flag"... any
+    // chance you can make this more meaningful?
     boolean flag;
     for (final Entry<String, Information> e1 : testSet) {
       flag = false;

@@ -320,7 +320,7 @@ public enum step {
     return x.getType();
   }
 
-  @SuppressWarnings("unchecked") public static List<ParameterizedType> typeArguments(final ParameterizedType ¢) {
+  @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
   }
 

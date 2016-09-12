@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -7,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 /** Expands terms of * or / expressions without reordering.
@@ -17,10 +17,6 @@ import il.org.spartan.spartanizer.assemble.*;
  * @author Niv Shalmon
  * @since 2016-08 */
 public class FactorsExpander {
-  public static Expression simplify(final InfixExpression x) {
-    return base(new FactorsCollector(x));
-  }
-
   /** @see #recurse(InfixExpression, List) */
   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
@@ -52,13 +48,13 @@ public class FactorsExpander {
   private static Expression base(final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
-    final Factor first = lisp.first(fs);
+    final Factor first = first(fs);
     assert first != null;
-    final Factor second = lisp.second(fs);
+    final Factor second = second(fs);
     assert second != null;
     final Expression $ = base(first, second);
     assert $ != null;
-    return step($, lisp.chop(lisp.chop(fs)));
+    return step($, chop(chop(fs)));
   }
 
   /** @param $ The accumulator, to which one more {@link Factor} should be added
@@ -84,9 +80,13 @@ public class FactorsExpander {
     final Operator o = $.getOperator();
     assert o != null;
     assert o == TIMES || o == DIVIDE;
-    final Factor first = lisp.first(fs);
+    final Factor first = first(fs);
     assert first != null;
-    return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), lisp.chop(fs));
+    return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
+  }
+
+  public static Expression simplify(final InfixExpression x) {
+    return base(new FactorsCollector(x));
   }
 
   private static Expression step(final Expression $, final List<Factor> ¢) {

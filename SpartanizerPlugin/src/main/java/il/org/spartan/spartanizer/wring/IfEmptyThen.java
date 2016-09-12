@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
@@ -27,11 +29,11 @@ public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> imp
   }
 
   @Override Statement replacement(final IfStatement s) {
-    final IfStatement $ = subject.pair(step.elze(s), null).toNot(s.getExpression());
+    final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return s != null && iz.vacuousThen(s) && !iz.vacuousElse(s);
+    return iz.vacuousThen(s) && !iz.vacuousElse(s);
   }
 }

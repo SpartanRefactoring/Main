@@ -10,18 +10,11 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
- * class, for example: <code>
+ * class, e.g., <code>@Override void foo(){super.foo();}</code>
  *
- * <pre>
- * &#64;Override void foo() {
- *   super.foo();
- * }
- * </pre>
- *
- * </code> will be completely removed.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
-public final class MethodRemoveDegenerateOverride extends Wring<MethodDeclaration> implements Kind.Canonicalization {
+public final class MethodDeclarationDegenerateOverrideRemove extends Wring<MethodDeclaration> implements Kind.Canonicalization {
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
       if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))
@@ -30,7 +23,7 @@ public final class MethodRemoveDegenerateOverride extends Wring<MethodDeclaratio
   }
 
   @Override String description(final MethodDeclaration d) {
-    return "Remove useless '" + d.getName() + "' overriding method";
+    return "Remove vacous '" + d.getName() + "' overriding method";
   }
 
   @Override Rewrite make(final MethodDeclaration d) {

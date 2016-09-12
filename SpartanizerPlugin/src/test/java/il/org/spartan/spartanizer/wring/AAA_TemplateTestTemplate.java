@@ -16,6 +16,34 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class AAA_TemplateTestTemplate {
+  private static Object object() {
+    return new Object();
+  }
+
+  private int $0() {
+    return 0;
+  }
+
+  private int $1() {
+    return 1;
+  }
+
+  private boolean $false() {
+    return false;
+  }
+
+  private Object $null() {
+    return null;
+  }
+
+  private boolean $true() {
+    return true;
+  }
+
+  private Object sameSomeObject() {
+    return this;
+  }
+
   /** if fails, suite did not compile... */
   @Test public void seriesZ_00() {
     new Object().hashCode();
@@ -107,33 +135,5 @@ public class AAA_TemplateTestTemplate {
   /** Correct way of trimming does not change */
   @Test public void seriesZ_14() {
     trimming("a").stays();
-  }
-
-  private int $0() {
-    return 0;
-  }
-
-  private int $1() {
-    return 1;
-  }
-
-  private boolean $false() {
-    return false;
-  }
-
-  private boolean $true() {
-    return true;
-  }
-
-  private Object $null() {
-    return null;
-  }
-
-  private static Object object() {
-    return new Object();
-  }
-
-  private Object sameSomeObject() {
-    return this;
   }
 }

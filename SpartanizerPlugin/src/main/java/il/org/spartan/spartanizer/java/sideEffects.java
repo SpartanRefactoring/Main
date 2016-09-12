@@ -59,6 +59,11 @@ public enum sideEffects {
     return $.get().booleanValue();
   }
 
+  private static boolean free(final ArrayCreation c) {
+    final ArrayInitializer i = c.getInitializer();
+    return free(c.dimensions()) && (i == null || free(step.expressions(i)));
+  }
+
   public static boolean free(final ConditionalExpression x) {
     return free(expression(x), then(x), elze(x));
   }
@@ -76,7 +81,7 @@ public enum sideEffects {
       case CAST_EXPRESSION:
         return free(step.expression(¢));
       case INSTANCEOF_EXPRESSION:
-        return free(step.left(az.instanceofExpression(¢)));
+        return free(left(az.instanceofExpression(¢)));
       case PREFIX_EXPRESSION:
         return free(az.prefixExpression(¢));
       case PARENTHESIZED_EXPRESSION:
@@ -90,11 +95,6 @@ public enum sideEffects {
       default:
         throw new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName());
     }
-  }
-
-  private static boolean free(final ArrayCreation c) {
-    final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(step.expressions(i)));
   }
 
   private static boolean free(final Expression... xs) {

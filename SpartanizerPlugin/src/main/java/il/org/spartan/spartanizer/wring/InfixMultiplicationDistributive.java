@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -8,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
@@ -33,20 +33,10 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-  @Override public String description() {
-    return "a*b + a*c => a * (b + c)";
-  }
-
-  @Override String description(final InfixExpression x) {
-    return "Apply the distributive rule to " + x;
-  }
-
-  @Override ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
-  }
-
-  @Override boolean scopeIncludes(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(step.left($)) && IsSimpleMultiplication(step.right($)); // super.scopeIncludes($);
+  private static List<Expression> removeFirstEl(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>(xs);
+    $.remove($.get(0));// remove first
+    return $;
   }
 
   private void addCommon(final Expression op, final List<Expression> common) {
@@ -62,6 +52,14 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       xs.add(item);
   }
 
+  @Override public String description() {
+    return "a*b + a*c => a * (b + c)";
+  }
+
+  @Override String description(final InfixExpression x) {
+    return "Apply the distributive rule to " + x;
+  }
+
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
     for (final Expression $ : allOperands)
       if (wizard.same(op, $))
@@ -74,10 +72,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       from.remove(item);
   }
 
-  private static List<Expression> removeFirstEl(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    $.remove($.get(0));// remove first
-    return $;
+  @Override ASTNode replacement(final InfixExpression x) {
+    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
@@ -101,12 +97,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert common != null;
     if (!common.isEmpty())
       different.remove(common);
-    assert lisp.first(common) != null;
-    assert lisp.first(different) != null;
-    assert lisp.second(different) != null;
-    return subject.pair(lisp.first(common), //
+    assert first(common) != null;
+    assert first(different) != null;
+    assert second(different) != null;
+    return subject.pair(first(common), //
         subject.pair(//
-            lisp.first(different), lisp.second(different)//
+            first(different), second(different)//
         ).to(//
             Operator.PLUS)//
     ).to(//
@@ -152,5 +148,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       multiplication = (multiplication == null ? subject.pair(common.get(i), common.get(i + 1)) : subject.pair(multiplication, different.get(i + 1)))
           .to(Operator.TIMES);
     return subject.pair(multiplication, addition).to(Operator.TIMES);
+  }
+
+  @Override boolean scopeIncludes(final InfixExpression $) {
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 }

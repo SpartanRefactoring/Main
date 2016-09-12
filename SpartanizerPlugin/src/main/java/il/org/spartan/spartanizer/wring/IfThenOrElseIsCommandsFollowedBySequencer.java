@@ -52,7 +52,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
-        final List<Statement> remainder = extract.statements(step.elze(shorterIf));
+        final List<Statement> remainder = extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);
         final Block parent = az.block(s.getParent());
         final Block newParent = s.getAST().newBlock();
@@ -69,6 +69,6 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return step.elze(s) != null && (endsWithSequencer(step.then(s)) || endsWithSequencer(step.elze(s)));
+    return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
   }
 }

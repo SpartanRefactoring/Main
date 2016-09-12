@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
@@ -38,16 +38,16 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   }
 
   private static ASTNode replace(final Assignment a) {
-    final InfixExpression ¢ = az.infixExpression(step.right(a));
+    final InfixExpression ¢ = az.infixExpression(right(a));
     final Expression newRightExpr = az.expression(rightInfixReplacement(¢, a.getLeftHandSide()));
-    return newRightExpr == null ? null : subject.pair(step.left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
+    return newRightExpr == null ? null : subject.pair(left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
   }
 
   private static ASTNode rightInfixReplacement(final InfixExpression x, final Expression left) {
     final List<Expression> es = extract.allOperands(x);
     final InfixExpression.Operator o = step.operator(x);
     final List<Expression> $ = !wizard.nonAssociative(x) ? associativeReplace(es, left) : nonAssociativeReplace(es, left);
-    return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(o);
+    return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(o);
   }
 
   @Override String description(final Assignment a) {
@@ -55,6 +55,6 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   }
 
   @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpAssign(a) || !iz.infixExpression(step.right(a)) ? null : replace(a);
+    return !iz.isOpAssign(a) || !iz.infixExpression(right(a)) ? null : replace(a);
   }
 }

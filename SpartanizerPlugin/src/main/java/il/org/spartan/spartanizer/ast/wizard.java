@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.wring.*;
 
 /** Collection of definitions and functions that capture some of the quircks of
  * the {@link ASTNode} hierarchy.
@@ -53,6 +55,13 @@ public interface wizard {
       put(RIGHT_SHIFT_UNSIGNED, RIGHT_SHIFT_UNSIGNED_ASSIGN);
     }
   };
+
+  static Expression applyDeMorgan(final InfixExpression inner) {
+    final List<Expression> operands = new ArrayList<>();
+    for (final Expression e : hop.operands(flatten.of(inner)))
+      operands.add(make.notOf(e));
+    return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
+  }
 
   // TODO: Alex, how come we still have this function? We should be using a
   // Table.
@@ -170,7 +179,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(step.left(a1), step.left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(left(a1), left(a2));
   }
 
   // TODO: Alex: please convert this code into table driven. It is much easier
@@ -269,8 +278,8 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link step#elze(ConditionalExpression)} but returns the last else
-   * statement in "if - else if - ... - else" statement
+  /** As {@link elze(ConditionalExpression)} but returns the last else statement
+   * in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */
   static Statement recursiveElze(final IfStatement ¢) {

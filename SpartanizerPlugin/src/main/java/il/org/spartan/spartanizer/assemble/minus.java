@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.assemble;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -8,7 +9,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
@@ -29,7 +29,7 @@ public enum minus {
   }
 
   public static int level(final InfixExpression x) {
-    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
+    return out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
   }
 
   public static int level(final List<Expression> xs) {
@@ -37,6 +37,10 @@ public enum minus {
     for (final Expression e : xs)
       $ += minus.level(e);
     return $;
+  }
+
+  private static int level(final PrefixExpression ¢) {
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
   public static Expression peel(final Expression $) {
@@ -48,19 +52,7 @@ public enum minus {
   }
 
   public static Expression peel(final InfixExpression x) {
-    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
-  }
-
-  public static Expression peel(final NumberLiteral $) {
-    return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
-  }
-
-  public static Expression peel(final PrefixExpression $) {
-    return lisp.out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
-  }
-
-  private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+    return out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
   }
 
   private static List<Expression> peel(final List<Expression> xs) {
@@ -68,5 +60,13 @@ public enum minus {
     for (final Expression e : xs)
       $.add(peel(e));
     return $;
+  }
+
+  public static Expression peel(final NumberLiteral $) {
+    return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
+  }
+
+  public static Expression peel(final PrefixExpression $) {
+    return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 }

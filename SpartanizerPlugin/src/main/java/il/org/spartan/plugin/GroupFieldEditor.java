@@ -53,60 +53,6 @@ public class GroupFieldEditor extends FieldEditor {
     members.add(e);
   }
 
-  /** Returns the parent for all the FieldEditors inside of this group. In this
-   * class, the actual {@link Group} object is returned
-   * @return parent {@link Composite} object */
-  public Composite getFieldEditor() {
-    return group;
-  }
-
-  /* (non-Javadoc) Method declared on FieldEditor. */
-  @Override public int getNumberOfControls() {
-    return members.size();
-  }
-
-  /** Initializes using the currently added field editors. */
-  public void init() {
-    if (initialized)
-      return;
-    doFillintoGrid(getFieldEditor(), numColumns);
-    initialized = true;
-  }
-
-  @Override public boolean isValid() {
-    for (final FieldEditor ¢ : members)
-      if (!¢.isValid())
-        return false;
-    return true;
-  }
-
-  /* @see FieldEditor.setEnabled */
-  @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
-    for (final FieldEditor ¢ : members)
-      ¢.setEnabled(enabled, parentParam);
-  }
-
-  /* (non-Javadoc) Method declared on FieldEditor. */
-  @Override public void setFocus() {
-    if (members != null && !members.isEmpty())
-      members.iterator().next().setFocus();
-  }
-
-  @Override public void setPage(final DialogPage p) {
-    for (final FieldEditor ¢ : members)
-      ¢.setPage(p);
-  }
-
-  @Override public void setPreferenceStore(final IPreferenceStore s) {
-    super.setPreferenceStore(s);
-    for (final FieldEditor ¢ : members)
-      ¢.setPreferenceStore(s);
-  }
-
-  @Override public void store() {
-    doStore();
-  }
-
   /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
     this.numColumns = numColumns;
@@ -152,6 +98,18 @@ public class GroupFieldEditor extends FieldEditor {
       ¢.store();
   }
 
+  /** Returns the parent for all the FieldEditors inside of this group. In this
+   * class, the actual {@link Group} object is returned
+   * @return parent {@link Composite} object */
+  public Composite getFieldEditor() {
+    return group;
+  }
+
+  /* (non-Javadoc) Method declared on FieldEditor. */
+  @Override public int getNumberOfControls() {
+    return members.size();
+  }
+
   private void gridData(final int i) {
     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
@@ -165,5 +123,47 @@ public class GroupFieldEditor extends FieldEditor {
     groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
     groupLayout.numColumns = i;
     group.setLayout(groupLayout);
+  }
+
+  /** Initializes using the currently added field editors. */
+  public void init() {
+    if (initialized)
+      return;
+    doFillintoGrid(getFieldEditor(), numColumns);
+    initialized = true;
+  }
+
+  @Override public boolean isValid() {
+    for (final FieldEditor ¢ : members)
+      if (!¢.isValid())
+        return false;
+    return true;
+  }
+
+  /* @see FieldEditor.setEnabled */
+  @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
+    for (final FieldEditor ¢ : members)
+      ¢.setEnabled(enabled, parentParam);
+  }
+
+  /* (non-Javadoc) Method declared on FieldEditor. */
+  @Override public void setFocus() {
+    if (members != null && !members.isEmpty())
+      members.iterator().next().setFocus();
+  }
+
+  @Override public void setPage(final DialogPage p) {
+    for (final FieldEditor ¢ : members)
+      ¢.setPage(p);
+  }
+
+  @Override public void setPreferenceStore(final IPreferenceStore s) {
+    super.setPreferenceStore(s);
+    for (final FieldEditor ¢ : members)
+      ¢.setPreferenceStore(s);
+  }
+
+  @Override public void store() {
+    doStore();
   }
 }

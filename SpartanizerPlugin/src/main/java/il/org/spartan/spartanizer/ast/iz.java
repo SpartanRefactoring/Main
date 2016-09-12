@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -8,8 +9,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-
-import il.org.spartan.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -60,6 +59,22 @@ public enum iz {
     return is(n, BLOCK);
   }
 
+  /** Determine whether the curly brackets of an {@link IfStatement} are
+   * vacuous.
+   * @param s JD
+   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
+   *         essential */
+  static boolean blockEssential(final IfStatement s) {
+    if (s == null)
+      return false;
+    final Block b = az.block(step.parent(s));
+    if (b == null)
+      return false;
+    final IfStatement parent = az.ifStatement(step.parent(b));
+    return parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
+        && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
+  }
+
   /** @param s JD
    * @return true if the parameter is an essential block or false otherwise */
   public static boolean blockEssential(final Statement s) {
@@ -78,11 +93,11 @@ public enum iz {
   }
 
   public static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
-    if (newIf == null || old != newIf && step.elze(old) == null == (step.elze(newIf) == null))
+    if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
     final IfStatement parent = az.ifStatement(step.parent(old));
-    return parent != null && step.then(parent) == old && (step.elze(parent) == null || step.elze(newIf) == null)
-        && (step.elze(parent) != null || step.elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
+    return parent != null && then(parent) == old && (elze(parent) == null || elze(newIf) == null)
+        && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
   }
 
   /** Determine whether a node is a boolean literal
@@ -291,7 +306,11 @@ public enum iz {
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
-    return ¢ != null && lisp.intIsIn(¢.getNodeType(), types);
+    return ¢ != null && intIsIn(¢.getNodeType(), types);
+  }
+
+  private static boolean is(final ASTNode n, final int type) {
+    return n != null && type == n.getNodeType();
   }
 
   /** Determine whether a declaration is final or not
@@ -325,6 +344,17 @@ public enum iz {
    * @return true if the given node is a method invocation or false otherwise */
   public static boolean isMethodInvocation(final ASTNode ¢) {
     return is(¢, METHOD_INVOCATION);
+  }
+
+  static boolean isNumberLiteral(final ASTNode ¢) {
+    return is(¢, NUMBER_LITERAL);
+  }
+
+  private static boolean isOneOf(final int i, final int... is) {
+    for (final int j : is)
+      if (i == j)
+        return true;
+    return false;
   }
 
   /** @param a the assignment who'¢ operator we want to check
@@ -378,12 +408,33 @@ public enum iz {
   /** @param n Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode n) {
-    return n != null && lisp.intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return n != null && intIsIn(n.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+  }
+
+  static boolean literal(final ASTNode ¢, final boolean b) {
+    return literal(az.booleanLiteral(¢), b);
   }
 
   public static boolean literal(final ASTNode ¢, final double d) {
     final NumberLiteral ¢1 = az.numberLiteral(¢);
     return ¢1 != null && literal(¢1.getToken(), d);
+  }
+
+  static boolean literal(final ASTNode ¢, final int i) {
+    final NumberLiteral ¢1 = az.numberLiteral(¢);
+    return ¢1 != null && literal(¢1.getToken(), i);
+  }
+
+  static boolean literal(final ASTNode ¢, final long l) {
+    return literal(az.numberLiteral(¢).getToken(), l);
+  }
+
+  static boolean literal(final ASTNode ¢, final String s) {
+    return literal(az.stringLiteral(¢), s);
+  }
+
+  static boolean literal(final BooleanLiteral ¢, final boolean b) {
+    return ¢ != null && ¢.booleanValue() == b;
   }
 
   /** @param s JD
@@ -401,6 +452,26 @@ public enum iz {
     } catch (@SuppressWarnings("unused") final IllegalArgumentException ____) {
       return false;
     }
+  }
+
+  static boolean literal(final String token, final int i) {
+    try {
+      return Integer.parseInt(token) == i;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  static boolean literal(final String token, final long l) {
+    try {
+      return Long.parseLong(token) == l;
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return false;
+    }
+  }
+
+  static boolean literal(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.getLiteralValue().equals(s);
   }
 
   /** @param ¢ JD
@@ -589,7 +660,7 @@ public enum iz {
    * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   public static boolean singletonThen(final IfStatement s) {
-    return iz.singletonStatement(step.then(s));
+    return iz.singletonStatement(then(s));
   }
 
   /** @param ¢ JD
@@ -636,7 +707,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the 'else' part of the parameter */
   public static boolean vacuousElse(final IfStatement s) {
-    return vacuous(step.elze(s));
+    return vacuous(elze(s));
   }
 
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
@@ -645,7 +716,7 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
   public static boolean vacuousThen(final IfStatement s) {
-    return vacuous(step.then(s));
+    return vacuous(then(s));
   }
 
   /** @param n JD
@@ -655,75 +726,7 @@ public enum iz {
     return is(n, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  /** Determine whether the curly brackets of an {@link IfStatement} are
-   * vacuous.
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
-   *         essential */
-  static boolean blockEssential(final IfStatement s) {
-    if (s == null)
-      return false;
-    final Block b = az.block(step.parent(s));
-    if (b == null)
-      return false;
-    final IfStatement parent = az.ifStatement(step.parent(b));
-    return parent != null && (step.elze(parent) == null || wizard.recursiveElze(s) == null)
-        && (step.elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
-  }
-
-  static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
-  }
-
-  static boolean literal(final ASTNode ¢, final boolean b) {
-    return literal(az.booleanLiteral(¢), b);
-  }
-
-  static boolean literal(final ASTNode ¢, final int i) {
-    final NumberLiteral ¢1 = az.numberLiteral(¢);
-    return ¢1 != null && literal(¢1.getToken(), i);
-  }
-
-  static boolean literal(final ASTNode ¢, final long l) {
-    return literal(az.numberLiteral(¢).getToken(), l);
-  }
-
-  static boolean literal(final ASTNode ¢, final String s) {
-    return literal(az.stringLiteral(¢), s);
-  }
-
-  static boolean literal(final BooleanLiteral ¢, final boolean b) {
-    return ¢ != null && ¢.booleanValue() == b;
-  }
-
-  static boolean literal(final String token, final int i) {
-    try {
-      return Integer.parseInt(token) == i;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  static boolean literal(final String token, final long l) {
-    try {
-      return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return false;
-    }
-  }
-
-  static boolean literal(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.equals(s);
-  }
-
-  private static boolean is(final ASTNode n, final int type) {
-    return n != null && type == n.getNodeType();
-  }
-
-  private static boolean isOneOf(final int i, final int... is) {
-    for (final int j : is)
-      if (i == j)
-        return true;
-    return false;
+  public static boolean wildcardType(final ASTNode ¢) {
+    return is(¢, WILDCARD_TYPE);
   }
 }

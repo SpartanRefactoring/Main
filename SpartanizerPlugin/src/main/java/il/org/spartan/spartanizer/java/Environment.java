@@ -9,11 +9,21 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
+/* TODO Wrings to improve once Environment is complete:
+ * AssignmentToPostfixIncrement (Issue 107). */
 @SuppressWarnings({ "unused" }) public interface Environment {
   /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
    * for now, this class is intentionally package level, and intenationally
    * defined local. For now, clients should not be messing with it */
   static class Information {
+    public static boolean eq(final Object o1, final Object o2) {
+      return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
+    }
+
+    static boolean prudentTypeComparison(final type t1, final type t2) {
+      return t1 == null ? t2 == null : t2 != null && (t1 == type.Odd.Types.NOTHING || t2 == type.Odd.Types.NOTHING || t1 == t2);
+    }
+
     /** The containing block, whose death marks the death of this entry; not
      * sure, but I think this entry can be shared by many nodes at the same
      * level */
@@ -38,20 +48,12 @@ import il.org.spartan.spartanizer.engine.*;
       hiding = null;
     }
 
-    static boolean prudentTypeComparison(final type t1, final type t2) {
-      return t1 == null ? t2 == null : t2 != null && (t1 == type.Odd.Types.NOTHING || t2 == type.Odd.Types.NOTHING || t1 == t2);
-    }
-
-    @Override public boolean equals(final Object o) {
-      return o == this || o != null && getClass() == o.getClass() && equals((Information) o);
-    }
-
     public boolean equals(final Information i) {
       return eq(blockScope, i.blockScope) && eq(hiding, i.hiding) && eq(prudentType, i.prudentType) && eq(self, i.self);
     }
 
-    public static boolean eq(final Object o1, final Object o2) {
-      return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
+    @Override public boolean equals(final Object o) {
+      return o == this || o != null && getClass() == o.getClass() && equals((Information) o);
     }
 
     @Override public int hashCode() {
