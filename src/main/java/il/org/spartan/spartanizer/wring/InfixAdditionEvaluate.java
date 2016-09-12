@@ -36,7 +36,7 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int sum = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
+      if (!(¢ instanceof NumberLiteral) || !type.isInt(¢))
         return null;
       sum += EvaluateAux.extractInt(¢);
     }

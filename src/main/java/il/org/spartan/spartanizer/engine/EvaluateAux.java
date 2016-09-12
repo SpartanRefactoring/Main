@@ -14,14 +14,17 @@ import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
  * wrings
  * @author Dor Ma'ayan
  * @since 2016 */
-public class EvaluateAux {
-  
-  public static double extractDouble(final Expression x) {
-    if (!isLong(x))
-      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
-          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
-    final String token = az.numberLiteral(x).getToken();
-    if (!iz.prefixExpression(x))
+
+public interface EvaluateAux {
+  // TODO: Dor, I get Null Pointer Exceptions in this code.
+  // Try to merge it with our services, so we can pinpoint the problem.
+  // We have many iz.literal functions. Try to use them.
+      public static double extractDouble(final Expression x) {
+        if (!isLong(x))
+          return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
+              : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+        final String token = az.numberLiteral(x).getToken();
+        if (!iz.prefixExpression(x))
       return Double.parseDouble(token.substring(0, token.length() - 1));
     final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
     return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
@@ -32,7 +35,9 @@ public class EvaluateAux {
         : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
   }
 
-  public static long extractLong(final Expression x) {
+//TODO: Dor, we have something that says whether a literal is negative.
+// You may want to search for '-' or "-" in the entire code base.  
+public static long extractLong(final Expression x) {
     final String token = az.numberLiteral(x).getToken();
     if (isInt(x) || isMinusInt(x))
       return Long.parseLong(token);
@@ -67,8 +72,8 @@ public class EvaluateAux {
   }
 
   public static boolean isCompatible(final Expression x) {
-    return x instanceof NumberLiteral && isNumber(x) || x instanceof PrefixExpression
-        && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS && ((PrefixExpression) x).getOperand() instanceof NumberLiteral;
+    return x instanceof NumberLiteral && isNumber(x) || iz.prefixExpression(x)
+        && (az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS && iz.numericLiteral(az.prefixExpression(x).getOperand()));
   }
 
   public static boolean isDouble(final Expression x) {
@@ -98,8 +103,9 @@ public class EvaluateAux {
         && isLong(az.prefixExpression(x).getOperand());
   }
 
-  public static boolean isNumber(final Expression x) {
-    return isInt(x) || isDouble(x) || isMinusDouble(x) || isMinusInt(x) || isLong(x) || isMinusLong(x);
+
+  static boolean isNumber(final Expression x) {
+    return type.isInt(x) || type.isDouble(x) || isMinusDouble(x) || isMinusInt(x) || type.isLong(x) || isMinusLong(x);
   }
-  
+
 }

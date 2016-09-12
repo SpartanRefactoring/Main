@@ -20,13 +20,18 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @since 2016-09-11 */
 public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
   /* TODO: Niv, document this function, but I think it is buggy. If you have
-   * #MINUS2 you can do all openings you like.TODO: Yossi, about #MINUS2. We
-   * can't remove parenthesis around it, since this works on InfixExpressions
-   * that may be String concating. removing parenthesis around #MINUS2 in this
-   * case would cause compilation error, and is the reason we stopped using
-   * TermExpander for this is the first place. This wring should work for any
-   * #PLUS2, both addition and concating. The wring using TermExpander should
-   * handle the case where we know it's an addition of numbers. */
+   * #MINUS2 you can do all openings you like. */
+  /* TODO: Yossi, about #MINUS2. We can't remove parenthesis around it, since
+   * this works on InfixExpressions that may be String concating. removing
+   * parenthesis around #MINUS2 in this case would cause compilation error, and
+   * is the reason we stopped using TermExpander for this is the first place.
+   *
+   * This wring should work for any #PLUS2, both addition and concating. The
+   * wring using TermExpander should handle the case where we know it's an
+   * addition of numbers. */
+  /* TODO: Niv. It would be easy to fix, just let TermExpander do its work, only
+   * after it consulted `type` to see that it is sure it is arithmetics. Further
+   * more, I add an issue for class ConcatenationExpander */
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concating.
    * @param ¢ an InfixExpression that's inside parenthesis
