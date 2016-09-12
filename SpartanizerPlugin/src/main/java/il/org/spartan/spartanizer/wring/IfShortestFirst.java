@@ -18,7 +18,7 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Yossi Gil
  * @since 2015-08-15 */
-public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
+public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Sorting {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
