@@ -74,7 +74,7 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if(!iz.validForEvaluation(x))
+    if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();
     ASTNode $;

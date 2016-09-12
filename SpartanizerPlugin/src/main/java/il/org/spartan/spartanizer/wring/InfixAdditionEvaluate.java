@@ -62,7 +62,7 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if(!iz.validForEvaluation(x))
+    if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
@@ -77,6 +77,6 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
         return null;
       $ = replacementLong(extract.allOperands(x), x);
     }
-    return $!=null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 }

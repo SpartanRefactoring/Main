@@ -17,8 +17,29 @@ public class TypeNamesCollector {
   static Map<String, Integer> count = new TreeMap<>();
   static Map<String, Set<String>> shortToFull = new TreeMap<>();
 
+  public static void main(final String[] where) throws IOException {
+    collect(where.length != 0 ? where : new String[] { "." });
+    final CSVStatistics w = new CSVStatistics("types.csv", "property");
+    for (final String s : count.keySet()) {
+      final String shortName = spartan.shorten(s);
+      w.put("Count", count.get(s).intValue());
+      w.put("Log(Count)", Math.log(count.get(s).intValue()));
+      w.put("Sqrt(Count)", Math.sqrt(count.get(s).intValue()));
+      w.put("Collisions", shortToFull.get(shortName).size());
+      w.put("Short", spartan.shorten(s));
+      w.put("Original", s);
+      w.nl();
+    }
+    System.err.println("Look for your output here: " + w.close());
+  }
+
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
+      @Override public boolean visit(final SimpleType ¢) {
+        record(last(¢.getName()) + "");
+        return true;
+      }
+
       SimpleName last(final Name ¢) {
         return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
       }
@@ -31,11 +52,6 @@ public class TypeNamesCollector {
         if (!shortToFull.containsKey(shortName))
           shortToFull.put(shortName, new HashSet<String>());
         shortToFull.get(shortName).add(longName);
-      }
-
-      @Override public boolean visit(final SimpleType ¢) {
-        record(last(¢.getName()) + "");
-        return true;
       }
     });
   }
@@ -55,21 +71,5 @@ public class TypeNamesCollector {
   private static void collect(final String[] where) {
     for (final File f : new FilesGenerator(".java").from(where))
       collect(f);
-  }
-
-  public static void main(final String[] where) throws IOException {
-    collect(where.length != 0 ? where : new String[] { "." });
-    final CSVStatistics w = new CSVStatistics("types.csv", "property");
-    for (final String s : count.keySet()) {
-      final String shortName = spartan.shorten(s);
-      w.put("Count", count.get(s).intValue());
-      w.put("Log(Count)", Math.log(count.get(s).intValue()));
-      w.put("Sqrt(Count)", Math.sqrt(count.get(s).intValue()));
-      w.put("Collisions", shortToFull.get(shortName).size());
-      w.put("Short", spartan.shorten(s));
-      w.put("Original", s);
-      w.nl();
-    }
-    System.err.println("Look for your output here: " + w.close());
   }
 }
