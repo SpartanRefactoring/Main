@@ -20,7 +20,9 @@ public class PreferencesResources {
     Sorting(Kind.Sorting.class), //
     SyntacticBaggage(Kind.SyntacticBaggage.class), //
     Ternarization(Kind.Ternarization.class), //
-    UnusedArguments(Kind.UnusedArguments.class),//
+    UnusedArguments(Kind.UnusedArguments.class),
+    Idiomatic(Kind.Idiomatic.class),
+    EarlyReturn(Kind.EarlyReturn.class)//
     ;
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
