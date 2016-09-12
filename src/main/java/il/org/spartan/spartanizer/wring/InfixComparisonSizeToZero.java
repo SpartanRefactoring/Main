@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
-public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
+public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
   private static String description(final Expression x) {
     return "Use " + (x != null ? x + "" : "isEmpty()");
   }
