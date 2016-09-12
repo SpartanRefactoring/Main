@@ -1,5 +1,5 @@
-package il.org.spartan.spartanizer.utils;
-
+package il.org.spartan.spartanizer.engine;
+import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
@@ -71,5 +71,9 @@ public class JavaTypeNameParserTest {
 
   @Test public void stringBuilder() {
     azzert.that(new JavaTypeNameParser("StringBuilder").shortName(), is("b"));
+  }
+
+  @Test public void johnDoe() {
+    assert isJohnDoe("Type", "t");
   }
 }

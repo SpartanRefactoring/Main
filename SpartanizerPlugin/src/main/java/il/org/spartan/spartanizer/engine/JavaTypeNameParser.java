@@ -2,21 +2,16 @@ package il.org.spartan.spartanizer.engine;
 
 import java.util.regex.*;
 
+import org.eclipse.jdt.core.dom.*;
+
 /** A utility parser that resolves a variable's short name, and determines
- * whether a pre-existing name is a generic variation of the type's name. <br>
+ * whether a pre-existing name is a generic variation of the type's name.
+ * <p>
  * A variable's short name is a single-character name, determined by the first
  * character in the last word of the type's name.<br>
- * For example: <code>
- *
- * <pre> public void execute(HTTPSecureConnection httpSecureConnection) {...}
- * </pre>
- *
- * </code> would become<br>
- * <code>
- *
- * <pre> public void execute(HTTPSecureConnection c) {...} </pre>
- *
- * </code>
+ * For example:
+ * <code>public void execute(HTTPSecureConnection httpSecureConnection) {...}</code>
+ * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */
 @SuppressWarnings("static-method") public class JavaTypeNameParser {
@@ -31,6 +26,14 @@ import java.util.regex.*;
     this.typeName = typeName;
   }
 
+  public JavaTypeNameParser(SingleVariableDeclaration ¢) {
+    this(¢.getName());
+  }
+
+  public JavaTypeNameParser(SimpleName ¢) {
+    this(¢.getIdentifier());
+  }
+
   /** @return an abbreviation of the type name */
   public String abbreviate() {
     String a = "";
@@ -38,6 +41,14 @@ import java.util.regex.*;
     while (m.find())
       a += m.group();
     return a.toLowerCase();
+  }
+
+  private boolean isGenericVariation(SimpleName ¢) {
+    return isGenericVariation(¢.getIdentifier());
+  }
+
+  public boolean isGenericVariation(SingleVariableDeclaration ¢) {
+    return isGenericVariation(¢.getName());
   }
 
   /** Returns whether a variable name is a generic variation of its type name. A
@@ -53,6 +64,10 @@ import java.util.regex.*;
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
 
+  private boolean isLower(final int i) {
+    return Character.isLowerCase(typeName.charAt(i));
+  }
+
   /** Shorthand for n.equals(this.shortName())
    * @param s JD
    * @return true if the provided name equals the type's short name */
@@ -60,14 +75,16 @@ import java.util.regex.*;
     return s.equals(shortName());
   }
 
-  /** Returns the calculated short name for the type
-   * @return type's short name */
-  public String shortName() {
-    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
+  private boolean isUpper(final int i) {
+    return Character.isUpperCase(typeName.charAt(i));
   }
 
   String lastName() {
     return typeName.substring(lastNameIndex());
+  }
+
+  private String lastNameCharIndex(final int i) {
+    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
   }
 
   int lastNameIndex() {
@@ -82,25 +99,38 @@ import java.util.regex.*;
     return 0;
   }
 
-  private boolean isLower(final int i) {
-    return Character.isLowerCase(typeName.charAt(i));
-  }
-
-  private boolean isUpper(final int i) {
-    return Character.isUpperCase(typeName.charAt(i));
-  }
-
-  private String lastNameCharIndex(final int i) {
-    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
-  }
-
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
   }
 
-  private String toSingular(final String s) {
-    return s == null ? null
-        : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y"
-            : s.endsWith("es") ? s.substring(0, s.length() - 2) : s.endsWith("s") ? s.substring(0, s.length() - 1) : s;
+  // TODO: Dan, is this a hack? You were supposed to look at the way
+  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
+  /** Returns the calculated short name for the type
+   * @return type's short name */
+  public String shortName() {
+    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
+  }
+
+  // TODO: Alex, here is a nice exercise; try to find a function that would
+  // simplify the following code? Is it in the library, please add a TODO to me
+  // when you are done; leave this comment so that I would know what's going on.
+  // Actually, you can use a library function that would simplify the code
+  // greatly.
+  private String toSingular(final String word) {
+    return word == null ? null
+        : word.endsWith("ies") ? word.substring(0, word.length() - 3) + "y"
+            : word.endsWith("es") ? word.substring(0, word.length() - 2) : word.endsWith("s") ? word.substring(0, word.length() - 1) : word;
+  }
+
+  public static boolean isJohnDoe(SingleVariableDeclaration ¢) {
+    return isJohnDoe(¢.getType(), ¢.getName());
+  }
+
+  static boolean isJohnDoe(Type t, SimpleName n) {
+    return isJohnDoe(t + "", n.getIdentifier());
+  }
+
+  public static boolean isJohnDoe(String typeName, String variableName) {
+    return new JavaTypeNameParser(typeName).isGenericVariation(variableName);
   }
 }

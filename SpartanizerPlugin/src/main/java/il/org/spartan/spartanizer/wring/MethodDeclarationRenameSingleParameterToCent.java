@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import java.util.*;
 
@@ -32,7 +33,10 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
     final List<SingleVariableDeclaration> ps = parameters(d);
     if (ps.size() != 1)
       return null;
-    final SimpleName n = first(ps).getName();
+    final SingleVariableDeclaration parameter = first(ps);
+    if (!isJohnDoe(parameter))
+      return null;
+    final SimpleName n = parameter.getName();
     assert n != null;
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(d.getBody()) || Collect.usesOf(n).in(b).isEmpty())
       return null;
