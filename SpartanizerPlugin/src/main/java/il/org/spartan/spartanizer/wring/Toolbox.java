@@ -102,11 +102,7 @@ public class Toolbox {
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
             new InfixSubractionEvaluate(), //
-            // new EvaluateShiftRight(), //
-            // new EvaluateShiftLeft(), //
             new InfixTermsZero(), //
-            // TODO: Dor, should this class be killed?
-            // new InfixAdditionZero(), //
             new InfixAdditionNeutralElement(), //
             new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
