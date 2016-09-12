@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 // TODO: Dan, header for this class.
-// TODO: ALex, do not place test classes in the main folder.
 public abstract class ENVTestEngineAbstract {
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
@@ -56,7 +55,6 @@ public abstract class ENVTestEngineAbstract {
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
     final String s = wizard.asString(first(ps).getValue());
-    // TODO: ALex, do not leave code in comments.
     /* A call to an inner function of PrudentType that calls
      * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
      * current situation, but not ideal.
@@ -68,8 +66,6 @@ public abstract class ENVTestEngineAbstract {
      *
      * Returning a direct comparison is far too error prone, and would be a bad
      * idea for a debug tool. */
-    // PrudentT0ype t =
-    // PrudentType.typeSwitch(wizard.asString(ps.get(1).getValue()),PrudentType.NOTHING);
     // add returns true iff the element did not exist in the set already.
     if (!testSet
         .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.asString(second(ps).getValue()))))))
@@ -121,9 +117,6 @@ public abstract class ENVTestEngineAbstract {
       if (!flag)
         azzert.fail("Some of the annotations are not contained in the result.");
     }
-    // if(!$.containsAll(testSet)) thats the correct implementation of the
-    // method, that requires hashCode() function.
-    // azzert.fail("Some of the annotations are not contained in the result.");
   }
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
