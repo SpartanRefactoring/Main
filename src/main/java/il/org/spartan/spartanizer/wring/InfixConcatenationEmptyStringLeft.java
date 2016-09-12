@@ -16,8 +16,8 @@ public class InfixConcatenationEmptyStringLeft extends Wring.ReplaceCurrentNode<
     return subject.pair(duplicate.of(right(x)), duplicate.of(left(x))).to(wizard.PLUS2);
   }
 
-  @SuppressWarnings("unused") @Override String description(final InfixExpression x) {
-    return "Switches the empty string in empty string addition from the left operand to the right";
+  @Override String description(final InfixExpression x) {
+    return "Append, rather than prepend, \"\", to " + left(x);
   }
 
   @Override ASTNode replacement(final InfixExpression x) {

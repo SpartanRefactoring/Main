@@ -37,7 +37,7 @@ public class izTest {
 
   @Test public void emptyStringLiteral3() {
     final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
-    assert ¢ != null && ¢.getLiteralValue().equals("");
+    assert ¢ != null && "".equals(¢.getLiteralValue());
   }
 
   @Test public void emptyStringLiteral4() {
@@ -47,7 +47,7 @@ public class izTest {
 
   @Test public void emptyStringLiteral5() {
     final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
-    assert ¢.getLiteralValue().equals("");
+    assert "".equals(¢.getLiteralValue());
   }
 
   @Test public void booleanLiteralFalseOnNumeric() {
