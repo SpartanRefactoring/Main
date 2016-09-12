@@ -46,16 +46,16 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
     return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()) + pluralVariadic(d));
   }
 
-  private static String pluralVariadic(final SingleVariableDeclaration d) {
-    return d.isVarargs() ? "s" : getExtraDimensions(d);
+  private static String pluralVariadic(final SingleVariableDeclaration ¢) {
+    return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
-  private static boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+  private static boolean suitable(final SingleVariableDeclaration ¢) {
+    return new JavaTypeNameParser(¢).isGenericVariation(¢) && !isShort(¢);
   }
 
-  @Override String description(final SingleVariableDeclaration d) {
-    return d.getName() + "";
+  @Override String description(final SingleVariableDeclaration ¢) {
+    return ¢.getName() + "";
   }
 
   @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
