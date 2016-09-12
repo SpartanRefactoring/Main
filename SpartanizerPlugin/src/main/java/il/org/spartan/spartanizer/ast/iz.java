@@ -745,4 +745,8 @@ public enum iz {
     return type.get(x) == LONG;
   }
   
+  public static boolean whileStatement(final ASTNode x) {
+    return x instanceof WhileStatement;
+  }
+  
 }
