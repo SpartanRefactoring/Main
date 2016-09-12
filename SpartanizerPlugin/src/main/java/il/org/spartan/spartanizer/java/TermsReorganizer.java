@@ -13,6 +13,10 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2016 */
 public class TermsReorganizer {
+  public static Expression simplify(final InfixExpression x) {
+    return build(new TermsCollector(x));
+  }
+
   private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
@@ -50,9 +54,5 @@ public class TermsReorganizer {
       default:
         return subject.operands(xs).to(wizard.PLUS2);
     }
-  }
-
-  public static Expression simplify(final InfixExpression x) {
-    return build(new TermsCollector(x));
   }
 }

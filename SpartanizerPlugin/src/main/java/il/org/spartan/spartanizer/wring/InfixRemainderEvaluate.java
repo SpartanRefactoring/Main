@@ -25,7 +25,7 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.computable(first(xs)))
       return null;
-    int remainder =extract.intNumber(first(xs));
+    int remainder = extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!iz.computable(¢))
@@ -61,7 +61,7 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if(!iz.validForEvaluation(x))
+    if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
@@ -74,6 +74,6 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
         return null;
       $ = replacementLong(extract.allOperands(x), x);
     }
-    return $!=null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 }

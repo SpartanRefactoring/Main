@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -49,7 +49,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
     for (final Expression ¢ : xs) {
       if (!iz.computable(¢))
         return null;
-      mul *=extract.longNumber(¢);
+      mul *= extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(mul) + "L");
   }
@@ -63,7 +63,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if(!iz.validForEvaluation(x))
+    if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();
     ASTNode $;

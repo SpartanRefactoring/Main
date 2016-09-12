@@ -63,7 +63,7 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
       if (!iz.computable(¢))
         return null;
       if (index != 0)
-        divide /=extract.longNumber(¢);
+        divide /= extract.longNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
@@ -78,7 +78,7 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    if(!iz.validForEvaluation(x))
+    if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
@@ -93,6 +93,6 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
         return null;
       $ = replacementLong(extract.allOperands(x), x);
     }
-    return $!=null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 }

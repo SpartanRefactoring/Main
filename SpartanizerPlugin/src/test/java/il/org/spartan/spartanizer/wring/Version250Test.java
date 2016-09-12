@@ -21,36 +21,6 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-      public void i() {
-        f();
-      }
-    }
-  }
-
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").to("b = a;");
   }
@@ -402,18 +372,16 @@ public class Version250Test {
 
   @Test public void issue141_01() {
     trimming("public static void go(final Object os[], final String... ss) {  \n"//
-         + "for (final String saa : ss) \n"//
-         + "out(saa);  \n"
-        + "out(\"elements\", os);   \n"//
-         + "}").stays();
+        + "for (final String saa : ss) \n"//
+        + "out(saa);  \n" + "out(\"elements\", os);   \n"//
+        + "}").stays();
   }
 
   @Test public void issue141_02() {
     trimming("public static void go(final List<Object> os, final String... ss) {  \n"//
         + "for (final String saa : ss) \n"//
-         + "out(saa);  \n"
-        + "out(\"elements\", os);   \n"//
-          + "}").stays();
+        + "out(saa);  \n" + "out(\"elements\", os);   \n"//
+        + "}").stays();
   }
 
   @Test public void issue141_03() {
@@ -1312,6 +1280,36 @@ public class Version250Test {
 
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
+  }
+
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      public void i() {
+        f();
+      }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+    }
   }
 
  // @formatter:on

@@ -13,10 +13,6 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends W
     return "remove redundant modifier";
   }
 
-  private IExtendedModifier firstBad(final N n) {
-    return firstThat(n, (final Modifier ¢) -> redundant(¢));
-  }
-
   IExtendedModifier firstThat(final N n, final Predicate<Modifier> m) {
     for (final IExtendedModifier $ : step.modifiers(n))
       if ($.isModifier() && m.test((Modifier) $))
@@ -24,19 +20,8 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends W
     return null;
   }
 
-  private N go(final N $) {
-    for (final Iterator<IExtendedModifier> ¢ = step.modifiers($).iterator(); ¢.hasNext();)
-      if (redundant(¢.next()))
-        ¢.remove();
-    return $;
-  }
-
   boolean has(final N ¢, final Predicate<Modifier> m) {
     return firstThat(¢, m) != null;
-  }
-
-  private boolean redundant(final IExtendedModifier m) {
-    return redundant((Modifier) m);
   }
 
   abstract boolean redundant(Modifier m);
@@ -47,5 +32,20 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends W
 
   @Override boolean scopeIncludes(final N ¢) {
     return firstBad(¢) != null;
+  }
+
+  private IExtendedModifier firstBad(final N n) {
+    return firstThat(n, (final Modifier ¢) -> redundant(¢));
+  }
+
+  private N go(final N $) {
+    for (final Iterator<IExtendedModifier> ¢ = step.modifiers($).iterator(); ¢.hasNext();)
+      if (redundant(¢.next()))
+        ¢.remove();
+    return $;
+  }
+
+  private boolean redundant(final IExtendedModifier ¢) {
+    return redundant((Modifier) ¢);
   }
 }
