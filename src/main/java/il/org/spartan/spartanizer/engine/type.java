@@ -95,6 +95,18 @@ public interface type {
     return inner.types.containsKey(name);
   }
 
+  static boolean isDouble(final Expression x) {
+    return get(x) == Certain.DOUBLE;
+  }
+
+  static boolean isInt(final Expression ¢) {
+    return type.get(¢) == Certain.INT;
+  }
+
+  static boolean isLong(final Expression x) {
+    return get(x) == Certain.LONG;
+  }
+
   default Primitive.Certain asPrimitiveCertain() {
     return null;
   }
@@ -144,15 +156,6 @@ public interface type {
   /** @return the formal name of this type, the key under which it is stored in
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
-
-
-  static boolean isDouble(Expression x) {
-    return get(x) == Certain.DOUBLE;
-  }
-
-  static boolean isLong(Expression x) {
-    return get(x) == Certain.LONG;
-  }
 
   /** An interface with one method- type, overloaded for many different
    * parameter types. Can be used to find the type of an expression thats known
@@ -695,9 +698,5 @@ public interface type {
         return options;
       }
     }
-  }
-
-  static boolean isInt(Expression ¢) {
-    return type.get(¢) == Certain.INT;
   }
 } // end of interface type

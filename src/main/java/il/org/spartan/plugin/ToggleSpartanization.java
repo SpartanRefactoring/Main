@@ -18,24 +18,7 @@ import il.org.spartan.spartanizer.wring.*;
 // TODO: Ori, why no header here?
 // TODO: Ori, the name toggle is confusing
 public class ToggleSpartanization {
-  public enum Type {
-    DECLARATION, CLASS, FILE
-  }
-
   static final String disabler = DisabledChecker.disablers[0];
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
-    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
-    pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t);
-    pm.done();
-    return $;
-  }
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
-  }
 
   // TODO: Ori, spelling error...
   public static void diactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
@@ -83,40 +66,6 @@ public class ToggleSpartanization {
       $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }
     return $;
-  }
-
-  private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
-    u.accept(new ASTVisitor() {
-      boolean b = false;
-
-      @Override public void preVisit(final ASTNode n) {
-        if (b || isNodeOutsideMarker(n, m))
-          return;
-        BodyDeclaration d;
-        switch (t) {
-          case DECLARATION:
-            d = getDeclaringDeclaration(n);
-            break;
-          case CLASS:
-            d = getDeclaringClass(n);
-            break;
-          case FILE:
-            d = getDeclaringFile(n);
-            break;
-          default:
-            return;
-        }
-        final boolean da = disabledByAncestor(d);
-        if (!da) {
-          recursiveUnEnable($, d);
-          disable($, d);
-        } else if (!Type.CLASS.equals(t) && !Type.FILE.equals(t))
-          unEnable($, d);
-        else
-          recursiveUnEnable($, d);
-        b = true;
-      }
-    });
   }
 
   static BodyDeclaration getDeclaringClass(final ASTNode n) {
@@ -178,8 +127,59 @@ public class ToggleSpartanization {
     unEnable($, d.getJavadoc());
   }
 
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
+    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
+    pm.beginTask("Creating rewrite operation...", 1);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m, t);
+    pm.done();
+    return $;
+  }
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
+    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
+  }
+
+  private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
+    u.accept(new ASTVisitor() {
+      boolean b = false;
+
+      @Override public void preVisit(final ASTNode n) {
+        if (b || isNodeOutsideMarker(n, m))
+          return;
+        BodyDeclaration d;
+        switch (t) {
+          case DECLARATION:
+            d = getDeclaringDeclaration(n);
+            break;
+          case CLASS:
+            d = getDeclaringClass(n);
+            break;
+          case FILE:
+            d = getDeclaringFile(n);
+            break;
+          default:
+            return;
+        }
+        final boolean da = disabledByAncestor(d);
+        if (!da) {
+          recursiveUnEnable($, d);
+          disable($, d);
+        } else if (!Type.CLASS.equals(t) && !Type.FILE.equals(t))
+          unEnable($, d);
+        else
+          recursiveUnEnable($, d);
+        b = true;
+      }
+    });
+  }
+
   private static void unEnable(final ASTRewrite $, final Javadoc j) {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);
+  }
+
+  public enum Type {
+    DECLARATION, CLASS, FILE
   }
 }
