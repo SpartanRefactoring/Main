@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.java.*;
  * of {@link String}s.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Canonicalization {
+public final class InfixAdditionSort extends Wring.InfixSorting implements Kind.Collapse {
   @Override boolean eligible(final InfixExpression x) {
     return stringType.isNot(x) && super.eligible(x);
   }

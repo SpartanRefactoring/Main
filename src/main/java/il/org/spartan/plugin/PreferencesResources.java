@@ -14,12 +14,12 @@ public class PreferencesResources {
    * @since 2016 */
   public enum WringGroup {
     Abbreviation(Kind.Abbreviation.class), //
-    Canonicalization(Kind.Canonicalization.class), //
+    Canonicalization(Kind.Collapse.class), //
     Centification(Kind.Centification.class), //
     DistributiveRefactoring(Kind.DistributiveRefactoring.class), //
     Dollarization(Kind.Dollarization.class), //
     Inlining(Kind.Inlining.class), //
-    NoImpact(Kind.NoImpact.class), //
+    NoImpact(Kind.NOP.class), //
     ScopeReduction(Kind.ScopeReduction.class), //
     Sorting(Kind.Sorting.class), //
     SyntacticBaggage(Kind.SyntacticBaggage.class), //

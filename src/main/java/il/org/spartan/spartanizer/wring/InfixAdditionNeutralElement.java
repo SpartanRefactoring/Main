@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @since 2015-09-05 */
 // TODO: Alex, this seems to be a duplicate of {@link InfixAdditionZero}, check
 // which one is active, and if there is anything useful in the other, steal it.
-public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)

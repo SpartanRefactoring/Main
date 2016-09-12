@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements Kind.Canonicalization {
+public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements Kind.Collapse {
   @Override String description(final PrefixExpression x) {
     return "Consolidate " + x + " with subsequent 'return' of " + step.operand(x);
   }

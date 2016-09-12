@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;

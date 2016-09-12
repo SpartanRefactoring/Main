@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * with <code>int i = a</code>, etc.
  * @author Matteo Orru'
  * @since 2016 */
-public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NoImpact {
+public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NOP {
   @Override String description(final PrefixExpression x) {
     return "Remove unary + in " + x;
   }

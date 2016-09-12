@@ -57,7 +57,7 @@ import il.org.spartan.spartanizer.ast.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.NoImpact {
+public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression x) {
     return x != null && have.booleanLiteral(core(x.getThenExpression()), core(x.getElseExpression()));
   }
