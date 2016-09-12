@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * <code> {int a=0;} </code> </br>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public class RemoveVariableDefinitionsBlocks extends Wring<Block> implements Kind.Canonicalization {
+public class RemoveVariableDefinitionsBlocks extends Wring<Block> implements Kind.Collapse {
   @Override public String description() {
     return "remove the block";
   }

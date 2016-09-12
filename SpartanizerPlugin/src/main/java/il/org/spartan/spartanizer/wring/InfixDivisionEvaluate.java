@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
       return null;
