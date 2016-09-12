@@ -166,10 +166,10 @@ public class ToggleSpartanization {
   // TODO: Ori, why not use the word disable instead of "UnEnable"?
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
     d.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode n) {
-        if (!(n instanceof BodyDeclaration))
+      @Override public void preVisit(final ASTNode ¢) {
+        if (!(¢ instanceof BodyDeclaration))
           return;
-        unEnable($, (BodyDeclaration) n);
+        unEnable($, (BodyDeclaration) ¢);
       }
     });
   }
