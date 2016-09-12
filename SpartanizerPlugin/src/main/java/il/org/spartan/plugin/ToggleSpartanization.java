@@ -46,28 +46,25 @@ public class ToggleSpartanization {
   }
 
   private static void fillRewrite(ASTRewrite $, CompilationUnit u, IMarker m, Type t) {
-    u.accept(new DeclarationVisitor() {
+    u.accept(new ASTVisitor() {
       boolean b = false;
-      @Override <N extends ASTNode> boolean go(final N n) {
+      @Override public void preVisit(ASTNode n) {
         if (b || isNodeOutsideMarker(n, m))
-          return true;
-        ASTNode c;
+          return;
+        BodyDeclaration d;
         switch (t) {
           case DECLARATION:
-            c = getDeclaringDeclaration(n);
+            d = getDeclaringDeclaration(n);
             break;
           case CLASS:
-            c = getDeclaringClass(n);
+            d = getDeclaringClass(n);
             break;
           case FILE:
-            c = getDeclaringFile(n);
+            d = getDeclaringFile(n);
             break;
           default:
-            c = null;
+            return;
         }
-        if (c == null)
-          return false;
-        BodyDeclaration d = (BodyDeclaration) c;
         boolean da = disabledByAncestor(d);
         if (!da) {
           recursiveUnEnable($, d);
@@ -77,7 +74,6 @@ public class ToggleSpartanization {
         else
           unEnable($, d);
         b = true;
-        return false;
       }
     });
   }
@@ -103,12 +99,11 @@ public class ToggleSpartanization {
   }
   
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
-    d.accept(new DeclarationVisitor() {
-      @Override <N extends ASTNode> boolean go(N n) {
+    d.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode n) {
         if (!(n instanceof BodyDeclaration))
-          return true;
+          return;
         unEnable($, (BodyDeclaration) n);
-        return true;
       }
     });
   }
@@ -127,26 +122,26 @@ public class ToggleSpartanization {
       $.replace(d, $.createStringPlaceholder(s + "\n" + d.toString().trim(), d.getNodeType()), null);
   }
   
-  static ASTNode getDeclaringDeclaration(ASTNode n) {
+  static BodyDeclaration getDeclaringDeclaration(ASTNode n) {
     ASTNode $ = n;
     for (; $ != null && !($ instanceof BodyDeclaration) ; $ = $.getParent());
-    return $;
+    return (BodyDeclaration) $;
   }
   
-  static ASTNode getDeclaringClass(ASTNode n) {
+  static BodyDeclaration getDeclaringClass(ASTNode n) {
     ASTNode $ = n;
     for (; $ != null && !($ instanceof AbstractTypeDeclaration) ; $ = $.getParent());
-    return $;
+    return (BodyDeclaration) $;
   }
   
-  static ASTNode getDeclaringFile(ASTNode n) {
+  static BodyDeclaration getDeclaringFile(ASTNode n) {
     ASTNode $ = getDeclaringDeclaration(n);
     if ($ == null)
-      return $;
+      return null;
     for (ASTNode p = $.getParent(); p != null ; p = p.getParent())
       if (p instanceof BodyDeclaration)
         $ = p;
-    return $;
+    return (BodyDeclaration) $;
   }
   
   static Set<String> getEnablers(String s) {
@@ -177,81 +172,5 @@ public class ToggleSpartanization {
             return true;
       }
     return false;
-  }
-  
-  abstract static class DeclarationVisitor extends ASTVisitor {
-    @Override public final boolean visit(final Assignment ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final Block ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final CastExpression ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final ConditionalExpression x) {
-      return go(x);
-    }
-
-    @Override public final boolean visit(final EnumDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final FieldDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final IfStatement ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final InfixExpression ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final MethodDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final MethodInvocation ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final NormalAnnotation ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final PostfixExpression ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final PrefixExpression ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final ReturnStatement ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final SingleVariableDeclaration d) {
-      return go(d);
-    }
-
-    @Override public final boolean visit(final SuperConstructorInvocation ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final TypeDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public final boolean visit(final VariableDeclarationFragment ¢) {
-      return go(¢);
-    }
-
-    abstract <N extends ASTNode> boolean go(final N n);
   }
 }
