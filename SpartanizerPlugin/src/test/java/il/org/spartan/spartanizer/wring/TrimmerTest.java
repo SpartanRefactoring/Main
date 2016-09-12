@@ -2091,6 +2091,14 @@ import il.org.spartan.spartanizer.spartanizations.*;
             .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
 
+  @Test public void issue54_1() {
+    trimming("x.toString()").to("x+\"\"");
+  }
+  
+  @Test public void issue54_2() {
+    trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
+  }
+  
   @Test public void issue54DoNonSideEffect() {
     trimming( //
         "int a  = f; do { b[i] = a; } while (b[i] != a);")//
@@ -4253,4 +4261,5 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").stays();
   }
+  
 }
