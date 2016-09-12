@@ -16,6 +16,20 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2015-07-29 */
 public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N>
     implements Kind.SyntacticBaggage {
+  // @formatter:off
+  public static class OfAnnotation extends AbstractBodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
+
+  public static class OfEnum extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+
+  public static class OfEnumConstant extends AbstractBodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
+
+  public static class OfField extends AbstractBodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
+
+  public static class OfMethod extends AbstractBodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
+
+  public static class OfType extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+  // @formatter:on
+
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : modifiers(¢))
@@ -106,18 +120,4 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }
-
-  // @formatter:off
-  public static class OfAnnotation extends AbstractBodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
-
-  public static class OfEnum extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-
-  public static class OfEnumConstant extends AbstractBodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
-
-  public static class OfField extends AbstractBodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
-
-  public static class OfMethod extends AbstractBodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
-
-  public static class OfType extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-  // @formatter:on
 }

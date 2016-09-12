@@ -1,11 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
-
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -27,7 +23,7 @@ public final class EnhancedForRenameSingleParameterToCent extends Wring<Enhanced
     final Statement body = s.getBody();
     if (body == null)
       return null;
-    SingleVariableDeclaration d = s.getParameter();
+    final SingleVariableDeclaration d = s.getParameter();
     if (!isJohnDoe(d))
       return null;
     final SimpleName n = d.getName();
