@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
@@ -92,6 +93,18 @@ public interface type {
 
   @SuppressWarnings("synthetic-access") static boolean have(final String name) {
     return inner.types.containsKey(name);
+  }
+
+  static boolean isDouble(final Expression x) {
+    return get(x) == Certain.DOUBLE;
+  }
+
+  static boolean isInt(final Expression ¢) {
+    return type.get(¢) == Certain.INT;
+  }
+
+  static boolean isLong(final Expression x) {
+    return get(x) == Certain.LONG;
   }
 
   default Primitive.Certain asPrimitiveCertain() {
