@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
   private static Expression chopHead(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     es.remove(0);
