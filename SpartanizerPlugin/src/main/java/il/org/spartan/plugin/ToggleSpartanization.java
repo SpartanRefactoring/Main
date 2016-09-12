@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.wring.*;
 
 public class ToggleSpartanization {
   static final String disabler = DisabledChecker.disablers[0];
-
+// TODO: Ori, spelling error...
   public static void diactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
@@ -31,22 +31,20 @@ public class ToggleSpartanization {
 
   static void disable(final ASTRewrite $, final BodyDeclaration d) {
     final Javadoc j = d.getJavadoc();
+    // TOOD: Ori, spartanize the following using the plugin.
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
-      if (s.matches("(?s).*\n\\s*\\*\\/$"))
-        s = s.replaceFirst("\\*\\/$", "* " + disabler + "\n */");
-      else
-        s = s.replaceFirst("\\*\\/$", "\n * " + disabler + "\n */");
+      s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else
-      $.replace(d, $.createStringPlaceholder(s + "\n" + d.toString().trim(), d.getNodeType()), null);
+      $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(), d.getNodeType()), null);
   }
 
   static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
-        final String s = ((BodyDeclaration) p).getJavadoc().toString();
+        final String s = ((BodyDeclaration) p).getJavadoc() + "";
         for (final String e : DisabledChecker.enablers)
           if (s.contains(e))
             return false;
@@ -58,17 +56,13 @@ public class ToggleSpartanization {
   }
 
   static String enablersRemoved(final Javadoc j) {
-    String s;
-    if (j == null)
-      s = "/***/";
-    else
-      s = j.toString().trim();
-    final Set<String> es = getEnablers(s);
+    String $ = j == null ? "/***/" : (j + "").trim();
+    final Set<String> es = getEnablers($);
     for (final String e : es) {
       final String qe = Pattern.quote(e);
-      s = s.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
+      $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }
-    return s;
+    return $;
   }
 
   static BodyDeclaration getDeclaringClass(final ASTNode n) {
@@ -168,10 +162,10 @@ public class ToggleSpartanization {
         if (!da) {
           recursiveUnEnable($, d);
           disable($, d);
-        } else if (Type.CLASS.equals(t) || Type.FILE.equals(t))
-          recursiveUnEnable($, d);
-        else
+        } else if (!Type.CLASS.equals(t) && !Type.FILE.equals(t))
           unEnable($, d);
+        else
+          recursiveUnEnable($, d);
         b = true;
       }
     });
