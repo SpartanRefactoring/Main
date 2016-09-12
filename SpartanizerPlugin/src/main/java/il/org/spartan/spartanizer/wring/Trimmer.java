@@ -19,8 +19,8 @@ public class Trimmer extends Spartanization {
   abstract class DispatchingVisitor extends ASTVisitor {
     final ExclusionManager exclude = makeExcluder();
 
-    private boolean cautiousGo(final ASTNode n) {
-      return !exclude.isExcluded(n) && go(n);
+    private boolean cautiousGo(final ASTNode ¢) {
+      return !exclude.isExcluded(¢) && go(¢);
     }
 
     abstract <N extends ASTNode> boolean go(final N n);
@@ -37,8 +37,12 @@ public class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final ConditionalExpression x) {
-      return cautiousGo(x);
+    @Override public final boolean visit(final EnhancedForStatement ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final ConditionalExpression ¢) {
+      return cautiousGo(¢);
     }
 
     @Override public final boolean visit(final EnumDeclaration ¢) {
@@ -81,8 +85,8 @@ public class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final SingleVariableDeclaration d) {
-      return cautiousGo(d);
+    @Override public final boolean visit(final SingleVariableDeclaration ¢) {
+      return cautiousGo(¢);
     }
 
     @Override public final boolean visit(final SuperConstructorInvocation ¢) {

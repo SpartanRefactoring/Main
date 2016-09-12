@@ -13,12 +13,11 @@ import il.org.spartan.spartanizer.engine.*;
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class EnhancedForRenameSingleParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
+public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
   @Override String description(final EnhancedForStatement ¢) {
-    return ¢.getName() + "";
+    return ¢.getParameter() + "";
   }
 
-  // TODO: Alex and Dan. Here you may want to test your environment on this one.
   @Override Rewrite make(final EnhancedForStatement s, final ExclusionManager m) {
     final Statement body = s.getBody();
     if (body == null)
@@ -35,7 +34,7 @@ public final class EnhancedForRenameSingleParameterToCent extends Wring<Enhanced
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Rewrite("Rename paraemter " + n + " to ¢ ", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.rename(n, ¢, d, r, g);
+        Wrings.rename(n, ¢, s, r, g);
       }
     };
   }
