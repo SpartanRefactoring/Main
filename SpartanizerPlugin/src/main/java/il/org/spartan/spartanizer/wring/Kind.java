@@ -3,16 +3,6 @@ package il.org.spartan.spartanizer.wring;
 import il.org.spartan.plugin.PreferencesResources.*;
 
 public interface Kind {
-  /** Use alphabetical, or some other ordering, when order does not matter */
-  interface Sorting extends Idiomatic {
-    static final String label = "Sorting";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-  
-
   String description();
 
   /** Returns the preference group to which the wring belongs to. This method
@@ -23,14 +13,6 @@ public interface Kind {
     return WringGroup.find(this);
   }
 
-  public interface EarlyReturn extends Structural {
-    static final String label = "Early return";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
   interface Abbreviation extends Nominal {
     static final String label = "Abbreviation";
 
@@ -39,19 +21,8 @@ public interface Kind {
     }
   }
 
-  /** Merge two syntactical elements into one, whereby achieving shorter core */
-  interface Collapse extends Structural {
-    static final String label = "Collapse";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  /** Change expression to a more familiar structure, which is not necessarily
-   * shorter */
-  interface Idiomatic extends Structural {
-    static final String label = "Idiomatic";
+  interface Canonicalization extends Structural { // S4
+    static final String label = "Canonicalization";
 
     @Override default String description() {
       return label;
@@ -66,9 +37,7 @@ public interface Kind {
     }
   }
 
-  /** A specialized {@link Collapse} carried out, by factoring out some common
-   * element */
-  interface DistributiveRefactoring extends Collapse { // S2
+  interface DistributiveRefactoring extends Structural { // S2
     static String label = "Distributive refactoring";
 
     @Override default String description() {
@@ -85,14 +54,14 @@ public interface Kind {
   }
 
   interface Inlining extends Structural { // S5
-    static final String label = "Eliminates a variable by inlining";
+    static final String label = "Inlining";
 
     @Override default String description() {
       return label;
     }
   }
 
-  interface NOP extends Structural { // S0
+  interface NoImpact extends Structural { // S0
     static final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
 
     @Override default String description() {
@@ -108,7 +77,14 @@ public interface Kind {
     }
   }
 
-  /** Remove syntactical elements that do not change the code semantics */
+  interface Sorting extends Structural {
+    static final String label = "Sorting";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
   interface SyntacticBaggage extends Structural {// S1
     static final String label = "Syntactic baggage";
 
@@ -117,7 +93,6 @@ public interface Kind {
     }
   }
 
-  /** Replace conditional statement with the conditional operator */
   interface Ternarization extends Structural { // S3
     static String label = "Ternarization";
 
