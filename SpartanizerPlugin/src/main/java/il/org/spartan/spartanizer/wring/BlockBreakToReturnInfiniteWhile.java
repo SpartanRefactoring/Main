@@ -35,7 +35,7 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     for (final Statement s : blockStatements) {
       if (az.ifStatement(s) != null)
         $ = handleIf(s, nextReturn);
-      if (s instanceof BreakStatement) {
+      if (iz.breakStatement(s)) {
         $ = s;
         break;
       }
@@ -50,7 +50,7 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     final Statement then = ifStatement.getThenStatement();
     final Statement elze = ifStatement.getElseStatement();
     if (then != null) {
-      if (then instanceof BreakStatement)
+      if (iz.breakStatement(then))
         return then;
       if (iz.block(then)) {
         final Statement $ = handleBlock((Block) then, nextReturn);
@@ -60,7 +60,7 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
       if (az.ifStatement(then) != null)
         return handleIf(then, nextReturn);
       if (elze != null) {
-        if (elze instanceof BreakStatement)
+        if (iz.breakStatement(elze))
           return elze;
         if (iz.block(elze)) {
           final Statement $ = handleBlock((Block) elze, nextReturn);
@@ -87,11 +87,8 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
   }
 
   @Override Rewrite make(final Block b) {
-    // TODO: Niv. To avoid warning, use step.statements(n)
-    final List<Statement> ss = b.statements();
-    // TODO: Dor, use iz.returnStatement, etc. If no such function, create one.
-    if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
-        || !(second(ss) instanceof ReturnStatement))
+    final List<Statement> ss = step.statements(b);
+    if (ss.size() < 2 || !iz.whileStatement(first(ss)) || !iz.returnStatement(second(ss)))
       return null;
     // TODO: Niv, Ditto
     final WhileStatement whileStatement = (WhileStatement) first(ss);
@@ -99,9 +96,8 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     if (!isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();
-    // TODO: Niv, instead of using az.x(y) == null, use iz.x(y)
-    final Statement $ = az.ifStatement(body) != null ? handleIf(body, nextReturn)
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : body instanceof BreakStatement ? body : null;
+    final Statement $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
     return $ == null ? null : new Rewrite(description(b), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
