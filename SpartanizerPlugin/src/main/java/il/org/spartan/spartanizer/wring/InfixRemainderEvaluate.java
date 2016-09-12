@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;

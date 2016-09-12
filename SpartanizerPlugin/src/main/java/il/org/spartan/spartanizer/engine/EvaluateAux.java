@@ -1,47 +1,18 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.type.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
 /** A class containing auxiliary functions used by the arithmetic evaluation
  * wrings
  * @author Dor Ma'ayan
  * @since 2016 */
 public interface EvaluateAux {
-  // TODO: Dor, why do we need another type system?
-  @Deprecated public enum Type {
-    INT, LONG, DOUBLE, BAD;
-    public static EvaluateAux.Type getEvaluatedType(final InfixExpression x) {
-      final List<Expression> operands = extract.allOperands(x);
-      boolean isLong = false;
-      for (final Expression ¢ : operands) {
-        if (!isCompatible(¢))
-          return EvaluateAux.Type.BAD;
-        if (type.isDouble(¢) || isMinusDouble(¢))
-          return EvaluateAux.Type.DOUBLE;
-        if (type.isLong(¢) || isMinusLong(¢))
-          isLong = true;
-      }
-      return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
-    }
-
-    public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression x) {
-      final List<Expression> operands = extract.allOperands(x);
-      final boolean isLong = isCompatible(first(operands)) && (type.isLong(first(operands)) || isMinusLong(first(operands)));
-      for (final Expression ¢ : operands)
-        if (!isCompatible(¢) || !isCompatible(¢) && (type.isDouble(¢) || isMinusDouble(¢)))
-          return EvaluateAux.Type.BAD;
-      return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
-    }
-  }
-
   // TODO: Dor, I get Null Pointer Exceptions in this code.
   // Try to merge it with our services, so we can pinpoint the problem.
   // We have many iz.literal functions. Try to use them.
@@ -83,7 +54,6 @@ public interface EvaluateAux {
         && type.isDouble(((PrefixExpression) x).getOperand());
   }
 
-
   static boolean isMinusInt(final Expression x) {
     return iz.prefixExpression(x) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
         && type.isInt(((PrefixExpression) x).getOperand());
@@ -96,5 +66,32 @@ public interface EvaluateAux {
 
   static boolean isNumber(final Expression x) {
     return type.isInt(x) || type.isDouble(x) || isMinusDouble(x) || isMinusInt(x) || type.isLong(x) || isMinusLong(x);
+  }
+
+  // TODO: Dor, why do we need another type system?
+  @Deprecated public enum Type {
+    INT, LONG, DOUBLE, BAD;
+    public static EvaluateAux.Type getEvaluatedType(final InfixExpression x) {
+      final List<Expression> operands = extract.allOperands(x);
+      boolean isLong = false;
+      for (final Expression ¢ : operands) {
+        if (!isCompatible(¢))
+          return EvaluateAux.Type.BAD;
+        if (type.isDouble(¢) || isMinusDouble(¢))
+          return EvaluateAux.Type.DOUBLE;
+        if (type.isLong(¢) || isMinusLong(¢))
+          isLong = true;
+      }
+      return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
+    }
+
+    public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression x) {
+      final List<Expression> operands = extract.allOperands(x);
+      final boolean isLong = isCompatible(first(operands)) && (type.isLong(first(operands)) || isMinusLong(first(operands)));
+      for (final Expression ¢ : operands)
+        if (!isCompatible(¢) || !isCompatible(¢) && (type.isDouble(¢) || isMinusDouble(¢)))
+          return EvaluateAux.Type.BAD;
+      return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
+    }
   }
 }
