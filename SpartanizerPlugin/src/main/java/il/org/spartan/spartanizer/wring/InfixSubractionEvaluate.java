@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -44,7 +45,7 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     int sub = EvaluateAux.extractInt(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isInt(¢))
+      if (!(¢ instanceof NumberLiteral) || !type.isInt(¢))
         return null;
       if (index != 0)
         sub -= EvaluateAux.extractInt(¢);
@@ -77,7 +78,7 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     ASTNode $;
     if (x.getOperator() != MINUS)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    switch (getEvaluatedType(x)) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;

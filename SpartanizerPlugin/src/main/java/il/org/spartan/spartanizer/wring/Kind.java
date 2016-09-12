@@ -3,16 +3,6 @@ package il.org.spartan.spartanizer.wring;
 import il.org.spartan.plugin.PreferencesResources.*;
 
 public interface Kind {
-  /** Use alphabetical, or some other ordering, when order does not matter */
-  interface Sorting extends Idiomatic {
-    static final String label = "Sorting";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-  
-
   String description();
 
   /** Returns the preference group to which the wring belongs to. This method
@@ -23,16 +13,16 @@ public interface Kind {
     return WringGroup.find(this);
   }
 
-  public interface EarlyReturn extends Structural {
-    static final String label = "Early return";
+  interface Abbreviation extends Nominal {
+    static final String label = "Abbreviation";
 
     @Override default String description() {
       return label;
     }
   }
 
-  interface Abbreviation extends Nominal {
-    static final String label = "Abbreviation";
+  interface Centification extends Nominal {
+    String label = "Centification";
 
     @Override default String description() {
       return label;
@@ -42,24 +32,6 @@ public interface Kind {
   /** Merge two syntactical elements into one, whereby achieving shorter core */
   interface Collapse extends Structural {
     static final String label = "Collapse";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  /** Change expression to a more familiar structure, which is not necessarily
-   * shorter */
-  interface Idiomatic extends Structural {
-    static final String label = "Idiomatic";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  interface Centification extends Nominal {
-    String label = "Centification";
 
     @Override default String description() {
       return label;
@@ -84,6 +56,24 @@ public interface Kind {
     }
   }
 
+  public interface EarlyReturn extends Structural {
+    static final String label = "Early return";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
+  /** Change expression to a more familiar structure, which is not necessarily
+   * shorter */
+  interface Idiomatic extends Structural {
+    static final String label = "Idiomatic";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
   interface Inlining extends Structural { // S5
     static final String label = "Eliminates a variable by inlining";
 
@@ -102,6 +92,15 @@ public interface Kind {
 
   interface ScopeReduction extends Structural { // S6
     static final String label = "Scope reduction";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
+  /** Use alphabetical, or some other ordering, when order does not matter */
+  interface Sorting extends Idiomatic {
+    static final String label = "Sorting";
 
     @Override default String description() {
       return label;
