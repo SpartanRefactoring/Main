@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -64,7 +65,7 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
     ASTNode $;
     if (x.getOperator() != REMAINDER)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    switch (getEvaluatedType(x)) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;
