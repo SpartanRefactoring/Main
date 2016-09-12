@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
@@ -34,7 +35,7 @@ public class TermsReorganizer {
   }
 
   private static Expression buildMinus(final List<Expression> xs) {
-    final Expression $ = subject.operand(lisp.first(xs)).to(wizard.MINUS1);
+    final Expression $ = subject.operand(first(xs)).to(wizard.MINUS1);
     if (xs.size() == 1)
       return $;
     xs.remove(0);
@@ -47,9 +48,9 @@ public class TermsReorganizer {
       case 0:
         return null;
       case 1:
-        return lisp.first(xs);
+        return first(xs);
       case 2:
-        return subject.pair(lisp.first(xs), lisp.second(xs)).to(wizard.PLUS2);
+        return subject.pair(first(xs), second(xs)).to(wizard.PLUS2);
       default:
         return subject.operands(xs).to(wizard.PLUS2);
     }

@@ -27,9 +27,8 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
   }
 
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !wizard.same(step.left(a1), step.left(a2)) ? null
-        : plant(subject.pair(step.left(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator()))
-            .into(x.getParent());
+    return a1.getOperator() != a2.getOperator() || !wizard.same(left(a1), left(a2)) ? null
+        : plant(subject.pair(left(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator())).into(x.getParent());
   }
 
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {

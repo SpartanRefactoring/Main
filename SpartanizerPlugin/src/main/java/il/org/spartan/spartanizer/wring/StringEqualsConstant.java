@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
@@ -26,7 +27,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
   }
 
   @Override String description(final MethodInvocation i) {
-    return "Write " + lisp.first(arguments(i)) + "." + step.name(i) + "(" + step.receiver(i) + ") instead of " + i;
+    return "Write " + first(arguments(i)) + "." + step.name(i) + "(" + step.receiver(i) + ") instead of " + i;
   }
 
   /* (non-Javadoc)
@@ -38,7 +39,7 @@ public final class StringEqualsConstant extends ReplaceCurrentNode<MethodInvocat
     final SimpleName n = step.name(i);
     if (!mns.contains(n + ""))
       return null;
-    final Expression ¢ = lisp.onlyOne(arguments(i));
+    final Expression ¢ = onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))
       return null;
     final Expression e = step.receiver(i);

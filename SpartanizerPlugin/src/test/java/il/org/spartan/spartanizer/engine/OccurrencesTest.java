@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
 
@@ -35,7 +36,7 @@ public class OccurrencesTest {
   }
 
   @Test public void exploreLeftOfE() {
-    azzert.that(step.left(e), iz("a"));
+    azzert.that(left(e), iz("a"));
   }
 
   @Test public void lexicalUsesCollector() {
@@ -58,15 +59,15 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesAinLeftOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(step.left(e)).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
   }
 
   @Test public void occurencesAinLeftOfEsame() {
-    azzert.that(wizard.same(step.left(e), a), is(true));
+    azzert.that(wizard.same(left(e), a), is(true));
   }
 
   @Test public void occurencesAinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(step.right(e)).size(), is(0));
+    azzert.that(Collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
   }
 
   @Test public void occurencesBinE() {
@@ -74,14 +75,14 @@ public class OccurrencesTest {
   }
 
   @Test public void occurencesBinRightOfE() {
-    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(step.right(e)).size(), is(1));
+    azzert.that(Collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
   }
 
   @Test public void sameAandLeftOfE() {
-    azzert.that(wizard.same(a, step.left(e)), is(true));
+    azzert.that(wizard.same(a, left(e)), is(true));
   }
 
   @Test public void sameTypeAandLeftOfE() {
-    azzert.that(a, instanceOf(step.left(e).getClass()));
+    azzert.that(a, instanceOf(left(e).getClass()));
   }
 }

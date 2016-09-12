@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.wring;
 import java.util.*;
 
 import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -89,7 +90,7 @@ public class Trimmer extends Spartanization {
     final Document $ = new Document(from);
     for (;;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u, null);
+      final ASTRewrite r = createRewrite(u, new NullProgressMonitor());
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);

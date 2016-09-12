@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.assemble;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.iz.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.*;
 
@@ -27,7 +28,7 @@ public enum make {
   public static InfixExpression conjugate(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return subject.pair(step.right(¢), step.left(¢)).to(wizard.conjugate(¢.getOperator()));
+    return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
   public static ASTHolder from(final ASTNode ¢) {
@@ -91,8 +92,8 @@ public enum make {
 
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(lisp.first(xs));
-    for (final Expression e : lisp.rest(xs))
+    $.add(first(xs));
+    for (final Expression e : rest(xs))
       $.add(minusOf(e));
     return $;
   }

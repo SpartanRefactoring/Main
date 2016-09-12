@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -128,25 +129,23 @@ public class Version250Test {
     trimming("x=x*y").to("x*=y");
   }
 
-  //Not provably-not-string.
+  // Not provably-not-string.
   @Test public void issue107a() {
     trimming("a+=1;").stays();
   }
 
   @Test public void issue107b() {
-    trimming("for(int c = 0; c < 5; c-=1)\n"
-        + "c*=2;").to("for(int c = 0; c < 5; c--)"
-            + "c*=2;");
+    trimming("for(int c = 0; c < 5; c-=1)\n" + "c*=2;").to("for(int c = 0; c < 5; c--)" + "c*=2;");
   }
 
   @Test public void issue107c() {
     trimming("java_is_even_nice+=1+=1;").to("java_is_even_nice+=1++;");
   }
-  
+
   @Test public void issue107d() {
     trimming("for(int a ; a<10 ; (--a)+=1){}").to("for(int a ; a<10 ; (--a)++){}");
   }
-  
+
   @Test public void issue107e() {
     trimming("for(String a ; a.length()<3 ; (a = \"\")+=1){}").stays();
   }
@@ -178,17 +177,16 @@ public class Version250Test {
   @Test public void issue107l() {
     trimming("while(x-=1){}").to("while(x--){}");
   }
-  
-  @Test public void issue107m(){
-    trimming("s = \"hello\"; \n"
-        + "s += 1;").stays();
+
+  @Test public void issue107m() {
+    trimming("s = \"hello\"; \n" + "s += 1;").stays();
   }
-  
+
   @Test public void issue107n() {
     trimming("for(;; (a = 3)+=1){}").to("for(;; (a = 3)++){}");
   }
-  
-  @Test public void issue107o(){
+
+  @Test public void issue107o() {
     trimming("for(int a ; a<3 ; a+=1){}").stays();
   }
 
@@ -356,11 +354,11 @@ public class Version250Test {
     trimming("1 + 2 + (x+1)").stays();
   }
 
-  @Ignore() @Test public void issue129_04() {
+  @Ignore @Test public void issue129_04() {
     trimming("\"\" + 0 + (x - 7)").stays();
   }
 
-  @Ignore() @Test public void issue129_05() {
+  @Ignore @Test public void issue129_05() {
     trimming("x + 5 + y + 7.0 +(double)f(3)").stays();
   }
 
@@ -829,13 +827,13 @@ public class Version250Test {
     final String s = "0-x";
     final InfixExpression i = into.i(s);
     azzert.that(i, iz(s));
-    azzert.that(step.left(i), iz("0"));
-    azzert.that(step.right(i), iz("x"));
+    azzert.that(left(i), iz("0"));
+    azzert.that(right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert iz.literal0(step.left(i));
-    assert !iz.literal0(step.right(i));
-    azzert.that(make.minus(step.left(i)), iz("0"));
-    azzert.that(make.minus(step.right(i)), iz("-x"));
+    assert iz.literal0(left(i));
+    assert !iz.literal0(right(i));
+    azzert.that(make.minus(left(i)), iz("0"));
+    azzert.that(make.minus(right(i)), iz("-x"));
     trimming(s).to("-x");
   }
 

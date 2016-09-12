@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -8,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
@@ -52,7 +52,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override boolean scopeIncludes(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(step.left($)) && IsSimpleMultiplication(step.right($)); // super.scopeIncludes($);
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 
   private void addCommon(final Expression op, final List<Expression> common) {
@@ -101,12 +101,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert common != null;
     if (!common.isEmpty())
       different.remove(common);
-    assert lisp.first(common) != null;
-    assert lisp.first(different) != null;
-    assert lisp.second(different) != null;
-    return subject.pair(lisp.first(common), //
+    assert first(common) != null;
+    assert first(different) != null;
+    assert second(different) != null;
+    return subject.pair(first(common), //
         subject.pair(//
-            lisp.first(different), lisp.second(different)//
+            first(different), second(different)//
         ).to(//
             Operator.PLUS)//
     ).to(//

@@ -276,7 +276,7 @@ public class subject {
      * is the owner
      * @param operands a list of expression, these are the operands */
     public Several(final List<Expression> operands) {
-      super(lisp.first(operands));
+      super(first(operands));
       this.operands = new ArrayList<>();
       for (final Expression e : operands)
         this.operands.add(claim(e));
@@ -289,7 +289,7 @@ public class subject {
       assert !operands.isEmpty();
       assert operands.size() != 1;
       assert operands.size() >= 2;
-      final InfixExpression $ = subject.pair(lisp.first(operands), lisp.second(operands)).to(o);
+      final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
       for (int i = 2; i < operands.size(); ++i)
         extendedOperands($).add(plant(operands.get(i)).into($));
       return $;
@@ -305,7 +305,7 @@ public class subject {
      * the owner
      * @param inner a list of statements */
     public SeveralStatements(final List<Statement> inner) {
-      super(lisp.first(inner));
+      super(first(inner));
       this.inner = new ArrayList<>();
       for (final Statement s : inner)
         this.inner.add(claim(s));

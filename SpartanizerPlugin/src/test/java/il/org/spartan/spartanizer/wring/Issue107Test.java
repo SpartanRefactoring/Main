@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** Unit tests for {@link AssignmentToPosrfixIncrement}
+/** Unit tests for {@link AssignmentToPostfixIncrement}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */

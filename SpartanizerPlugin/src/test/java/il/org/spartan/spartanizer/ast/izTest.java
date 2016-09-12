@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -15,6 +16,8 @@ import il.org.spartan.*;
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class izTest {
+  private static final String EMPTY_STRING = "\"\"";
+
   @Test public void booleanLiteralFalseOnNull() {
     azzert.that(iz.booleanLiteral(e("null")), is(false));
   }
@@ -41,6 +44,33 @@ public class izTest {
 
   @Test public void canMakeExpression() {
     e("2+2");
+  }
+
+  @Test public void emptyStringLiteral0() {
+    assert iz.emptyStringLiteral(e(EMPTY_STRING));
+  }
+
+  @Test public void emptyStringLiteral1() {
+    assert iz.literal(e(EMPTY_STRING), "");
+  }
+
+  @Test public void emptyStringLiteral2() {
+    assert iz.literal(az.stringLiteral(e(EMPTY_STRING)), "");
+  }
+
+  @Test public void emptyStringLiteral3() {
+    final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
+    assert ¢ != null && "".equals(¢.getLiteralValue());
+  }
+
+  @Test public void emptyStringLiteral4() {
+    final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
+    assert ¢ != null;
+  }
+
+  @Test public void emptyStringLiteral5() {
+    final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
+    assert "".equals(¢.getLiteralValue());
   }
 
   @Test public void isConstantFalse() {

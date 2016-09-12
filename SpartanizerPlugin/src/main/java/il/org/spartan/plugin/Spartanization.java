@@ -25,6 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
+// TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class Spartanization extends Refactoring {
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
@@ -176,34 +177,6 @@ public abstract class Spartanization extends Refactoring {
       }
     };
   }
-  
-  public IMarkerResolution getToggleDeclaration() {
-    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization");
-  }
-  
-  public IMarkerResolution getToggleClass() {
-    return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
-  }
-  
-  public IMarkerResolution getToggleFile() {
-    return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
-  }
-  
-  @SuppressWarnings("static-method") private IMarkerResolution getToggle(ToggleSpartanization.Type t, String l) {
-    return new IMarkerResolution() {
-      @Override public void run(IMarker m) {
-        try {
-          ToggleSpartanization.diactivate(new NullProgressMonitor(), m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
-        }
-      }
-      
-      @Override public String getLabel() {
-        return l;
-      }
-    };
-  }
 
   @Override public final String getName() {
     return name;
@@ -212,6 +185,18 @@ public abstract class Spartanization extends Refactoring {
   /** @return selection */
   public ITextSelection getSelection() {
     return selection;
+  }
+
+  public IMarkerResolution getToggleClass() {
+    return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
+  }
+
+  public IMarkerResolution getToggleDeclaration() {
+    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization");
+  }
+
+  public IMarkerResolution getToggleFile() {
+    return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
   }
 
   /** .
@@ -239,8 +224,8 @@ public abstract class Spartanization extends Refactoring {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor spm = newSubMonitor(pm);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
+    final IProgressMonitor m = newSubMonitor(pm);
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(m), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
     pm.done();
@@ -326,12 +311,10 @@ public abstract class Spartanization extends Refactoring {
   }
 
   private ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m) {
-    if (pm != null)
-      pm.beginTask("Creating rewrite operation...", 1);
+    pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m);
-    if (pm != null)
-      pm.done();
+    pm.done();
     return $;
   }
 
@@ -343,6 +326,22 @@ public abstract class Spartanization extends Refactoring {
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
     return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m);
+  }
+
+  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final ToggleSpartanization.Type t, final String l) {
+    return new IMarkerResolution() {
+      @Override public String getLabel() {
+        return l;
+      }
+
+      @Override public void run(final IMarker m) {
+        try {
+          ToggleSpartanization.diactivate(new NullProgressMonitor(), m, t);
+        } catch (IllegalArgumentException | CoreException e) {
+          e.printStackTrace();
+        }
+      }
+    };
   }
 
   private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
