@@ -8,59 +8,62 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
+
 /** A class containing auxiliary functions used by the arithmetic evaluation
  * wrings
  * @author Dor Ma'ayan
  * @since 2016 */
 public class EvaluateAux {
+  
   public static double extractDouble(final Expression x) {
     if (!isLong(x))
-      return !(x instanceof PrefixExpression) ? Double.parseDouble(((NumberLiteral) x).getToken())
-          : -1 * Double.parseDouble(((NumberLiteral) ((PrefixExpression) x).getOperand()).getToken());
-    final String token = ((NumberLiteral) x).getToken();
-    if (!(x instanceof PrefixExpression))
+      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
+          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+    final String token = az.numberLiteral(x).getToken();
+    if (!iz.prefixExpression(x))
       return Double.parseDouble(token.substring(0, token.length() - 1));
-    final String negToken = ((NumberLiteral) ((PrefixExpression) x).getOperand()).getToken();
+    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
     return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
   }
 
   public static int extractInt(final Expression x) {
-    return !(x instanceof PrefixExpression) ? Integer.parseInt(((NumberLiteral) x).getToken())
-        : -1 * Integer.parseInt(((NumberLiteral) ((PrefixExpression) x).getOperand()).getToken());
+    return !iz.prefixExpression(x) ? Integer.parseInt(az.numberLiteral(x).getToken())
+        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
   }
 
   public static long extractLong(final Expression x) {
-    final String token = ((NumberLiteral) x).getToken();
+    final String token = az.numberLiteral(x).getToken();
     if (isInt(x) || isMinusInt(x))
       return Long.parseLong(token);
     if (!(x instanceof PrefixExpression))
       return Long.parseLong(token.substring(0, token.length() - 1));
-    final String negToken = ((NumberLiteral) ((PrefixExpression) x).getOperand()).getToken();
+    final String negToken = az.numberLiteral((az.prefixExpression(x).getOperand())).getToken();
     return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
   }
 
-  public static EvaluateAux.Type getEvaluatedType(final InfixExpression x) {
+  public static type getEvaluatedType(final InfixExpression x) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
     for (final Expression ¢ : operands) {
       if (!isCompatible(¢))
-        return EvaluateAux.Type.BAD;
+        return null;
       if (EvaluateAux.isDouble(¢) || isMinusDouble(¢))
-        return EvaluateAux.Type.DOUBLE;
+        return DOUBLE;
       if (isLong(¢) || isMinusLong(¢))
         isLong = true;
     }
-    return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
+    return isLong ? LONG : INT;
   }
 
-  public static EvaluateAux.Type getEvaluatedTypeForShift(final InfixExpression x) {
+  public static type getEvaluatedTypeForShift(final InfixExpression x) {
     boolean isLong = false;
     final List<Expression> operands = extract.allOperands(x);
     isLong = isCompatible(first(operands)) && (isLong(first(operands)) || isMinusLong(first(operands)));
     for (final Expression ¢ : operands)
       if (!isCompatible(¢) || !isCompatible(¢) && (EvaluateAux.isDouble(¢) || isMinusDouble(¢)))
-        return EvaluateAux.Type.BAD;
-    return isLong ? EvaluateAux.Type.LONG : EvaluateAux.Type.INT;
+        return null;
+    return isLong ? LONG : INT;
   }
 
   public static boolean isCompatible(final Expression x) {
@@ -69,37 +72,34 @@ public class EvaluateAux {
   }
 
   public static boolean isDouble(final Expression x) {
-    return type.get(x) == type.Primitive.Certain.DOUBLE;
+    return type.get(x) == DOUBLE;
   }
 
   public static boolean isInt(final Expression x) {
-    return type.get(x) == type.Primitive.Certain.INT;
+    return type.get(x) == INT;
   }
 
   public static boolean isLong(final Expression x) {
-    return type.get(x) == type.Primitive.Certain.LONG;
+    return type.get(x) == LONG;
   }
 
   public static boolean isMinusDouble(final Expression x) {
-    return iz.prefixExpression(x) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
-        && isDouble(((PrefixExpression) x).getOperand());
+    return iz.prefixExpression(x) && az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS
+        && isDouble(az.prefixExpression(x).getOperand());
   }
 
   public static boolean isMinusInt(final Expression x) {
-    return iz.prefixExpression(x) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
-        && isInt(((PrefixExpression) x).getOperand());
+    return iz.prefixExpression(x) && az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS
+        && isInt(az.prefixExpression(x).getOperand());
   }
 
   public static boolean isMinusLong(final Expression x) {
-    return x instanceof PrefixExpression && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
-        && isLong(((PrefixExpression) x).getOperand());
+    return  iz.prefixExpression(x) && ((PrefixExpression) x).getOperator() == PrefixExpression.Operator.MINUS
+        && isLong(az.prefixExpression(x).getOperand());
   }
 
   public static boolean isNumber(final Expression x) {
     return isInt(x) || isDouble(x) || isMinusDouble(x) || isMinusInt(x) || isLong(x) || isMinusLong(x);
   }
-
-  public enum Type {
-    INT, LONG, DOUBLE, BAD
-  }
+  
 }
