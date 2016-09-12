@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Use {@link Recurser} to measure things over an AST
  * @author Dor Ma'ayan
