@@ -25,45 +25,45 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.computable(first(xs)))
       return null;
-    double divide = EvaluateAux.extractDouble(first(xs));
+    double divide = extract.doubleNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
       if (index != 0)
-        divide /= EvaluateAux.extractDouble(¢);
+        divide /= extract.doubleNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Double.toString(divide));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.computable(first(xs)))
       return null;
-    int divide = EvaluateAux.extractInt(first(xs));
+    int divide = extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
       if (index != 0)
-        divide /= EvaluateAux.extractInt(¢);
+        divide /= extract.intNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Integer.toString(divide));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.computable(first(xs)))
       return null;
-    long divide = EvaluateAux.extractLong(first(xs));
+    long divide = extract.longNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
       if (index != 0)
-        divide /= EvaluateAux.extractLong(¢);
+        divide /=extract.longNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
@@ -78,6 +78,8 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    if(!iz.validForEvaluation(x))
+      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != DIVIDE)

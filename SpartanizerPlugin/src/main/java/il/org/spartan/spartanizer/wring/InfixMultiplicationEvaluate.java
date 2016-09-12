@@ -26,9 +26,9 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double mul = 1;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
-      mul *= EvaluateAux.extractDouble(¢);
+      mul *= extract.doubleNumber(¢);
     }
     return x.getAST().newNumberLiteral(Double.toString(mul));
   }
@@ -36,9 +36,9 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int mul = 1;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
-      mul *= EvaluateAux.extractInt(¢);
+      mul *= extract.intNumber(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(mul));
   }
@@ -46,9 +46,9 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long mul = 1;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
-      mul *= EvaluateAux.extractLong(¢);
+      mul *=extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(mul) + "L");
   }
@@ -62,6 +62,8 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    if(!iz.validForEvaluation(x))
+      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != TIMES)
