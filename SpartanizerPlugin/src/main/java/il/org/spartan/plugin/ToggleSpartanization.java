@@ -198,7 +198,8 @@ public class ToggleSpartanization {
 
   static ASTNode getDeclaringClass(final ASTNode n) {
     ASTNode $ = n;
-    // Ori: Use a builtin class for this, we have done this so many times.
+    // TODO: Ori: Use one of our library class for this, we have done this so
+    // many times.
     for (; $ != null && !($ instanceof AbstractTypeDeclaration); $ = $.getParent())
       ;
     return $;
