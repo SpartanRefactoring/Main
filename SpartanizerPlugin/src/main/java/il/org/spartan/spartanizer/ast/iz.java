@@ -749,4 +749,23 @@ public enum iz {
     return false;
   }
   
+  public static boolean computable(final Expression x) {
+    // TODO: Dor, one of the following two check may re redundant
+    // TODO: Yossi, I don't see any redundency here
+    return iz.numberLiteral(x) && number(x) || iz.prefixExpression(x)
+        && (az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS && iz.numberLiteral(az.prefixExpression(x).getOperand()));
+  }
+  
+  public static boolean number(final Expression x) {
+    return type.isInt(x) || type.isDouble(x) || type.isLong(x);
+  }
+  
+  public static boolean validForEvaluation(InfixExpression x){
+    List<Expression> lst = extract.allOperands(x);
+    for(Expression e : lst)
+      if(!iz.computable(e))
+        return false;
+    return true;
+  }
+  
 }

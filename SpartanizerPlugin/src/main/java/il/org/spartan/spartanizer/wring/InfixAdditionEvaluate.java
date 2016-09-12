@@ -27,9 +27,9 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double sum = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!iz.computable(¢))
         return null;
-      sum += EvaluateAux.extractDouble(¢);
+      sum += extract.doubleNumber(¢);
     }
     return x.getAST().newNumberLiteral(Double.toString(sum));
   }
@@ -37,9 +37,9 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int sum = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !type.isInt(¢))
+      if (!iz.computable(¢))
         return null;
-      sum += EvaluateAux.extractInt(¢);
+      sum += extract.intNumber(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(sum));
   }
@@ -47,9 +47,9 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long sum = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!iz.computable(¢))
         return null;
-      sum += EvaluateAux.extractLong(¢);
+      sum += extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(sum) + "L");
   }
@@ -63,6 +63,8 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    if(!iz.validForEvaluation(x))
+      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != PLUS)

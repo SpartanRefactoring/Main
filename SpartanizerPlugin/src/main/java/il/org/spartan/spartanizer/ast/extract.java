@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.ast;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 
 import java.util.*;
 
@@ -10,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -500,4 +502,30 @@ public enum extract {
         return $;
     }
   }
+  
+  public static double doubleNumber(final Expression x) {
+    if (!iz.longType(x))
+      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
+          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+    final String token = az.numberLiteral(x).getToken();
+    if (!iz.prefixExpression(x))
+      return Double.parseDouble(token.substring(0, token.length() - 1));
+    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
+    return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
+   }
+
+   public static int intNumber(final Expression x) {
+     return !iz.prefixExpression(x) ? Integer.parseInt(az.numberLiteral(x).getToken())
+         : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+   }
+
+   public static long longNumber(final Expression x) {
+     final String token = az.numberLiteral(x).getToken();
+     if (iz.intType(x))
+       return Long.parseLong(token);
+     if (!(x instanceof PrefixExpression))
+       return Long.parseLong(token.substring(0, token.length() - 1));
+     final String negToken = az.numberLiteral((az.prefixExpression(x).getOperand())).getToken();
+     return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
+   }
 }
