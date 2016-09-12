@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.assemble.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationRemoveEmptyParentheses extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
-  @Override String description(final NormalAnnotation a) {
-    return "Remove redundant parentheses from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
+  @Override String description(final NormalAnnotation ¢) {
+    return "Remove redundant parentheses from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
   @Override ASTNode replacement(final NormalAnnotation a) {
