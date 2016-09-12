@@ -27,6 +27,10 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -49,6 +53,7 @@ public class Toolbox {
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
+            // TODO: Niv, should this class be killed?
             // new InfixEmptyStringAdditionToString(), //under construction
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
@@ -63,6 +68,7 @@ public class Toolbox {
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
             new InfixTermsZero(), //
+            // TODO: Dor, should this class be killed?
             // new InfixAdditionZero(), //
             new InfixAdditionNeutralElement(), //
             new InfixPlusRemoveParenthesis(), //
@@ -154,8 +160,6 @@ public class Toolbox {
             new ModifierCleanEnum(), //
             new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
             new AbstractBodyDeclarationRemoveModifiers.OfField(), //
             new AbstractBodyDeclarationSortModifiers.ofField(), //
@@ -172,8 +176,7 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
-        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation(), null) //
+        // TODO: Alex, shouldn't we remove this line?
         // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
   }
