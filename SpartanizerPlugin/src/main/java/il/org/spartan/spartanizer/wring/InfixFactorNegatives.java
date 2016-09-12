@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
@@ -12,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -66,8 +66,8 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
       $.add(x);
       return $;
     }
-    gather(core(step.left(x)), $);
-    gather(core(step.right(x)), $);
+    gather(core(left(x)), $);
+    gather(core(right(x)), $);
     if (x.hasExtendedOperands())
       gather(extendedOperands(x), $);
     return $;
@@ -88,13 +88,13 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     if (es.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
-    if (totalNegation == 0 || totalNegation == 1 && minus.level(step.left(x)) == 1)
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(x);
     return new Rewrite(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = totalNegation % 2 == 0 ? null : lisp.first(es);
+        final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)
           if (¢ != first && minus.level(¢) > 0)
             r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);

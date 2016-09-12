@@ -76,7 +76,7 @@ public enum sideEffects {
       case CAST_EXPRESSION:
         return free(step.expression(¢));
       case INSTANCEOF_EXPRESSION:
-        return free(step.left(az.instanceofExpression(¢)));
+        return free(left(az.instanceofExpression(¢)));
       case PREFIX_EXPRESSION:
         return free(az.prefixExpression(¢));
       case PARENTHESIZED_EXPRESSION:

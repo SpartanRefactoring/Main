@@ -140,7 +140,7 @@ class UsesCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final CastExpression x) {
-    return recurse(step.right(x));
+    return recurse(right(x));
   }
 
   @Override public boolean visit(final FieldAccess n) {
@@ -303,7 +303,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   }
 
   @Override public boolean visit(final Assignment a) {
-    return recurse(step.right(a));
+    return recurse(right(a));
   }
 
   @Override public boolean visit(final PostfixExpression it) {

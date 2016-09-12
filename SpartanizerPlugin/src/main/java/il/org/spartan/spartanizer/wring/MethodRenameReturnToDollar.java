@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 
 import java.util.*;
@@ -8,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -131,7 +131,7 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> i = localVariables.iterator(); i.hasNext();)
       if (unused(i.next()))
         i.remove();
-    return lisp.first(localVariables);
+    return first(localVariables);
   }
 
   private boolean unused(final SimpleName n) {

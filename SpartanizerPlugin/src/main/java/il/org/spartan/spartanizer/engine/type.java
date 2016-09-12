@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.type.*;
@@ -14,7 +15,6 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
@@ -49,9 +49,9 @@ public interface type {
   /** Generates a type from a String name, if the String name represents a
    * concrete type identifiable by PrudentType.
    * @param s
-   * @return The specified type*/
-  //TODO: Niv, should be table driven. need to decide default return value.
-  //perhaps simply replace with baptize
+   * @return The specified type */
+  // TODO: Niv, should be table driven. need to decide default return value.
+  // perhaps simply replace with baptize
   static type generateFromTypeName(final String s) {
     switch (s) {
       case "byte":
@@ -194,30 +194,29 @@ public interface type {
 
   static class inner {
     private static String propertyName = "spartan type";
-    /** All type that were ever born , as well as all primitive types*/
+    /** All type that were ever born , as well as all primitive types */
     @SuppressWarnings("serial") private static Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
       {
-        put("Byte",BYTE);
-        put("byte",BYTE);
-        put("Short",SHORT);
-        put("short",SHORT);
-        put("Character",CHAR);
-        put("char",CHAR);
-        put("Integer",INT);
-        put("int",INT);
-        put("Long",LONG);
-        put("long",LONG);
-        put("Float",FLOAT);
-        put("float",FLOAT);
-        put("Double",DOUBLE);
-        put("double",DOUBLE);
-        put("boolean",BOOLEAN);
-        put("Boolean",BOOLEAN);
-        put("String",STRING);
+        put("Byte", BYTE);
+        put("byte", BYTE);
+        put("Short", SHORT);
+        put("short", SHORT);
+        put("Character", CHAR);
+        put("char", CHAR);
+        put("Integer", INT);
+        put("int", INT);
+        put("Long", LONG);
+        put("long", LONG);
+        put("Float", FLOAT);
+        put("float", FLOAT);
+        put("Double", DOUBLE);
+        put("double", DOUBLE);
+        put("boolean", BOOLEAN);
+        put("Boolean", BOOLEAN);
+        put("String", STRING);
       }
     };
 
-    
     private static implementation conditionalWithNoInfo(final implementation i) {
       return in(i, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
           ? NUMERIC //
@@ -308,11 +307,11 @@ public interface type {
       final InfixExpression.Operator o = x.getOperator();
       final List<Expression> es = allOperands(x);
       assert es.size() >= 2;
-      implementation $ = lookDown(lisp.first(es)).underBinaryOperator(o, lookDown(lisp.second(es)));
-      lisp.chop(lisp.chop(es));
+      implementation $ = lookDown(first(es)).underBinaryOperator(o, lookDown(second(es)));
+      chop(chop(es));
       while (!es.isEmpty()) {
-        $ = $.underBinaryOperator(o, lookDown(lisp.first(es)));
-        lisp.chop(es);
+        $ = $.underBinaryOperator(o, lookDown(first(es)));
+        chop(es);
       }
       return $;
     }

@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
+
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
@@ -18,7 +19,7 @@ public final class AnnotationDiscardValueName //
   }
 
   @Override ASTNode replacement(final NormalAnnotation a) {
-    final MemberValuePair p = lisp.onlyOne(step.values(a));
+    final MemberValuePair p = onlyOne(step.values(a));
     if (p == null || !"value".equals(p.getName() + ""))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();

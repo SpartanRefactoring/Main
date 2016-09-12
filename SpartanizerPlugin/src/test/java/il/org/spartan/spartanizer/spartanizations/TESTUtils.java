@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.spartanizations;
 
 import static il.org.spartan.azzert.*;
 
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
@@ -50,7 +51,7 @@ import il.org.spartan.spartanizer.wring.*;
 
   public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
     try {
-      s.createRewrite(u, null).rewriteAST($, null).apply($);
+      s.createRewrite(u, new NullProgressMonitor()).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);

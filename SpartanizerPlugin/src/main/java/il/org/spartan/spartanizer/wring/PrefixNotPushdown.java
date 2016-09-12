@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -57,15 +56,8 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
             ? $ : null;
   }
 
-  private static Expression applyDeMorgan(final InfixExpression inner) {
-    final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : hop.operands(flatten.of(inner)))
-      operands.add(make.notOf(e));
-    return subject.operands(operands).to(conjugate(inner.getOperator()));
-  }
-
   private static Expression comparison(final InfixExpression x) {
-    return subject.pair(step.left(x), step.right(x)).to(conjugate(x.getOperator()));
+    return subject.pair(left(x), right(x)).to(conjugate(x.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {
@@ -89,7 +81,7 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
   }
 
   private static Expression perhapsDeMorgan(final InfixExpression x) {
-    return x == null ? null : applyDeMorgan(x);
+    return x == null ? null : wizard.applyDeMorgan(x);
   }
 
   private static Expression perhapsDoubleNegation(final Expression x) {

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
@@ -14,6 +15,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class stepTest {
   @Test public void chainComparison() {
-    assertEquals("c", step.right(i("a == true == b == c")) + "");
+    assertEquals("c", right(i("a == true == b == c")) + "");
   }
 }

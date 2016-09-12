@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Various methods for comparing
  * @author Yossi Gil
@@ -86,7 +87,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
           a.inner += 3;
         else {
           a.inner += 4;
-          if (step.elze(az.ifStatement(¢)) != null)
+          if (elze(az.ifStatement(¢)) != null)
             ++a.inner;
         }
       }
@@ -99,7 +100,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
    *         parameter is is longer than the second argument */
   public static boolean longerFirst(final InfixExpression x) {
-    return isLonger(step.left(x), step.right(x));
+    return isLonger(left(x), right(x));
   }
 
   /** Compare method invocations by the number of arguments
