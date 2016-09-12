@@ -64,6 +64,7 @@ public class Toolbox {
   public static void refresh() {
     instance = new Maker()//
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(EnhancedForStatement.class, new EnhancedForRenameParameterToCent()) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
         .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
