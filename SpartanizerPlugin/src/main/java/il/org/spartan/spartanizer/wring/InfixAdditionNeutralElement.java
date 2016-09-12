@@ -31,11 +31,11 @@ public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixE
         : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(PLUS);
   }
 
-  @Override String description(final InfixExpression e) {
-    return "Remove 0 from  " + e;
+  @Override String description(final InfixExpression ¢) {
+    return "Remove 0 from  " + ¢;
   }
 
-  @Override ASTNode replacement(final InfixExpression e) {
-    return e.getOperator() != PLUS ? null : replacement(extract.allOperands(e));
+  @Override ASTNode replacement(final InfixExpression ¢) {
+    return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 }
