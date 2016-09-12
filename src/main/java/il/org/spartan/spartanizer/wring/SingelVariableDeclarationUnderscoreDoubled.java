@@ -7,11 +7,11 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
 /** A {@link Wring} to change name of unused variable to double underscore
- * "____" TODO Ori: (maybe) inherent VariableChangeName instead of
+ * "__" TODO Ori: (maybe) inherent VariableChangeName instead of
  * ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-@SuppressWarnings({ "javadoc", "unused", "hiding", "unchecked" }) public final class SingelVariableDeclarationUnderscoreDoubled
+@SuppressWarnings({ "javadoc", "unused", "unchecked" }) public final class SingelVariableDeclarationUnderscoreDoubled
     extends ReplaceCurrentNodeExclude<SingleVariableDeclaration> implements Kind.UnusedArguments {
   static final boolean BY_ANNOTATION = true;
 
@@ -54,7 +54,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
   }
 
   @Override String description(final SingleVariableDeclaration d) {
-    return "Change name of unused variable " + d.getName().getIdentifier() + " to ____";
+    return "Change name of unused variable " + d.getName().getIdentifier() + " to __";
   }
 
   @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
@@ -89,31 +89,29 @@ import il.org.spartan.spartanizer.wring.Wring.*;
       return !c;
     }
 
-    @Override public boolean preVisit2(final ASTNode ____) {
+    @Override public boolean preVisit2(final ASTNode __) {
       return c;
     }
 
-    @Override public final boolean visit(final AnnotationTypeDeclaration ____) {
+    @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
 
-    @Override public final boolean visit(final AnonymousClassDeclaration ____) {
+    @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
 
-    @Override public final boolean visit(final EnumDeclaration ____) {
+    @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
 
-    @Override public boolean visit(final SimpleName n) {
-      // TODO: Ori, this looks like a bug to me. When shouldn't these two be
-      // equal?
-      if (n.equals(n.getIdentifier()))
+    @Override public boolean visit(final SimpleName sn) {
+      if (n.equals(sn.getIdentifier()))
         c = false;
       return c;
     }
 
-    @Override public final boolean visit(final TypeDeclaration ____) {
+    @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }
   }
