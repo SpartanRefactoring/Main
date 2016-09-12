@@ -216,7 +216,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static NumberLiteral numberLiteral(final ASTNode $) {
-    return !iz.isNumberLiteral($) ? null : (NumberLiteral) $;
+    return !iz.numberLiteral($) ? null : (NumberLiteral) $;
   }
 
   /** Down-cast, if possible, to {@link ParenthesizedExpression}
