@@ -1346,7 +1346,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("" //
         + "public double[] solve() {\n" //
         + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
-        + "  for (double[] d : points)\n" //
+        + "  for (double[] dxx : points)\n" //
         + "    regress.addData(d[0], d[1]);\n" //
         + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
         + "  return $;\n" //
@@ -1726,13 +1726,17 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue141_01() {
-    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+    trimming("public static void go(final Object os[], final String... ss) {  \n"//
+        + "for (final String saa : ss) \n"//
+        + "out(saa);  \n" + "out(\"elements\", os);   \n"//
+        + "}").stays();
   }
 
   @Test public void issue141_02() {
-    trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+    trimming("public static void go(final List<Object> os, final String... ss) {  \n"//
+        + "for (final String saa : ss) \n"//
+        + "out(saa);  \n" + "out(\"elements\", os);   \n" //
+        + "}").stays();
   }
 
   @Test public void issue141_03() {

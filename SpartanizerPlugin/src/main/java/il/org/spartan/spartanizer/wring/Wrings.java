@@ -117,9 +117,9 @@ public enum Wrings {
     return Wrings.length($.getExpression(), then($));
   }
 
-  static void rename(final SimpleName oldName, final SimpleName newName, final MethodDeclaration d, final ASTRewrite r, final TextEditGroup g) {
+  static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode n, final ASTRewrite r, final TextEditGroup g) {
     new LocalInliner(oldName, r, g).byValue(newName)//
-        .inlineinto(Collect.usesOf(oldName).in(d).toArray(new Expression[] {}));
+        .inlineinto(Collect.usesOf(oldName).in(n).toArray(new Expression[] {}));
   }
 
   static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {

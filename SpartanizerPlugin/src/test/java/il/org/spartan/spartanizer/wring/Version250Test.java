@@ -401,13 +401,19 @@ public class Version250Test {
   }
 
   @Test public void issue141_01() {
-    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+    trimming("public static void go(final Object os[], final String... ss) {  \n"//
+         + "for (final String saa : ss) \n"//
+         + "out(saa);  \n"
+        + "out(\"elements\", os);   \n"//
+         + "}").stays();
   }
 
   @Test public void issue141_02() {
-    trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+    trimming("public static void go(final List<Object> os, final String... ss) {  \n"//
+        + "for (final String saa : ss) \n"//
+         + "out(saa);  \n"
+        + "out(\"elements\", os);   \n"//
+          + "}").stays();
   }
 
   @Test public void issue141_03() {
