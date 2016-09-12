@@ -123,15 +123,15 @@ public enum makeAST {
   /** Parses a given {@link Document}.
    * @param d JD
    * @return {@link ASTNode} obtained by parsing */
-  public final ASTNode from(final Document d) {
-    return from(d.get());
+  public final ASTNode from(final Document ¢) {
+    return from(¢.get());
   }
 
   /** File -> ASTNode converter
    * @param f File
    * @return ASTNode */
-  public ASTNode from(final File f) {
-    return from(string(f));
+  public ASTNode from(final File ¢) {
+    return from(string(¢));
   }
 
   /** @param f IFile

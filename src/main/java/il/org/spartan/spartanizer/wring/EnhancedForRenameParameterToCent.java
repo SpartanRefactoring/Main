@@ -30,9 +30,9 @@ public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForSta
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body) || Collect.usesOf(n).in(body).isEmpty())
       return null;
     if (m != null)
-      m.exclude(d);
+      m.exclude(body);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Rewrite("Rename enhance for parameter '" + n + "' to ¢ ", d) {
+    return new Rewrite("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, s, r, g);
       }
