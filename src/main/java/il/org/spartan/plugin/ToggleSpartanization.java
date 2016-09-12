@@ -23,12 +23,11 @@ public class ToggleSpartanization {
   static final String disabler = DisabledChecker.disablers[0];
 
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
-    if (pm != null)
-      pm.beginTask("Creating rewrite operation...", 1);
+    assert pm != null: "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
+    pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m, t);
-    if (pm != null)
-      pm.done();
+    pm.done();
     return $;
   }
 
