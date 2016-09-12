@@ -64,9 +64,7 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if(EvaluateAux.getEvaluatedType(x)== null)
-      return null;
-    if (x.getOperator() != PLUS)
+    if (EvaluateAux.getEvaluatedType(x) == null || x.getOperator() != PLUS)
       return null;
     switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:

@@ -75,9 +75,7 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != MINUS)
-      return null;
-    if(EvaluateAux.getEvaluatedType(x)== null)
+    if (x.getOperator() != MINUS || EvaluateAux.getEvaluatedType(x) == null)
       return null;
     switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:
