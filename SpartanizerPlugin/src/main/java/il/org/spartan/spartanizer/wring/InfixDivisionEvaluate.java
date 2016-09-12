@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -10,8 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
