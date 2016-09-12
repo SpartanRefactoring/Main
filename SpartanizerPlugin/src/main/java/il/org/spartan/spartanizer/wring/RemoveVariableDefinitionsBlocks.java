@@ -21,7 +21,7 @@ public class RemoveVariableDefinitionsBlocks extends Wring<Block> implements Kin
   }
 
   @Override String description(final Block n) {
-    return "remove the block: " + n.toString();
+    return "remove the block: " + n + "";
   }
 
   @Override Rewrite make(final Block n) {
