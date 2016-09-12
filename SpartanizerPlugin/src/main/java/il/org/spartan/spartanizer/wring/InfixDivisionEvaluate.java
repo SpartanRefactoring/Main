@@ -25,12 +25,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     double divide = extract.doubleNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       if (index != 0)
         divide /= extract.doubleNumber(¢);
@@ -40,12 +40,12 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     int divide = extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       if (index != 0)
         divide /= extract.intNumber(¢);
@@ -55,12 +55,12 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     long divide = extract.longNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       if (index != 0)
         divide /= extract.longNumber(¢);

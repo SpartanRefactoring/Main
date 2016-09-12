@@ -27,7 +27,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double mul = 1;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       mul *= extract.doubleNumber(¢);
     }
@@ -37,7 +37,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int mul = 1;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       mul *= extract.intNumber(¢);
     }
@@ -47,7 +47,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long mul = 1;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       mul *= extract.longNumber(¢);
     }
