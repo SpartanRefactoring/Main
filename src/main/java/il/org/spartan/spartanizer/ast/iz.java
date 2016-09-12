@@ -677,7 +677,7 @@ public enum iz {
         && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
-  static boolean isNumberLiteral(final ASTNode ¢) {
+  public static boolean isNumberLiteral(final ASTNode ¢) {
     return is(¢, NUMBER_LITERAL);
   }
 
@@ -744,4 +744,5 @@ public enum iz {
   public static boolean longType(final Expression x) {
     return type.get(x) == LONG;
   }
+  
 }

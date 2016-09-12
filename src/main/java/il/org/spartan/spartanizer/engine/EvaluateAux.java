@@ -36,7 +36,7 @@ static long extractLong(final Expression x) {
   final String token = az.numberLiteral(x).getToken();
   if (iz.intType(x))
     return Long.parseLong(token);
-  if (!(x instanceof PrefixExpression))
+  if (!iz.prefixExpression(x))
     return Long.parseLong(token.substring(0, token.length() - 1));
   final String negToken = az.numberLiteral((az.prefixExpression(x).getOperand())).getToken();
   return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
@@ -67,8 +67,8 @@ static long extractLong(final Expression x) {
   }
 
   static boolean isCompatible(final Expression x) {
-    return x instanceof NumberLiteral && isNumber(x) || iz.prefixExpression(x)
-        && (az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS && iz.numericLiteral(az.prefixExpression(x).getOperand()));
+    return iz.isNumberLiteral(x) && isNumber(x) || iz.prefixExpression(x)
+        && (az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS && iz.isNumberLiteral(az.prefixExpression(x).getOperand()));
   }
 
   static boolean isNumber(final Expression x) {
