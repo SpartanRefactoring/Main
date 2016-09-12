@@ -410,21 +410,21 @@ public class Version250Test {
   }
 
   @Test public void issue31a() {
-    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
-        "      return hasAnnotation(n.modifiers());\n" + //
-        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
-            "      return hasAnnotation(s.modifiers());\n" + //
+    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
+        "      return hasAnnotation(now.modifiers());\n" + //
+        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n" + //
+            "      return hasAnnotation(now.modifiers());\n" + //
             "    }");
   }
 
   @Test public void issue31b() {
-    trimming(" void f(final VariableDeclarationStatement n) {}") //
-        .to("void f(final VariableDeclarationStatement s) {}");
+    trimming(" void f(final VariableDeclarationStatement n, int abc) {}") //
+        .to("void f(final VariableDeclarationStatement s, int abc) {}");
   }
 
   @Test public void issue31c() {
-    trimming(" void f(final VariableDeclarationAtatement n) {}") //
-        .to("void f(final VariableDeclarationAtatement a) {}");
+    trimming(" void f(final VariableDeclarationAtatement n, int abc) {}") //
+        .to("void f(final VariableDeclarationAtatement a, int abc) {}");
   }
 
   @Test public void issue31d() {
