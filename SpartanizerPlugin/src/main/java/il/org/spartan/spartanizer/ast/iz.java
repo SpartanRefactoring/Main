@@ -471,7 +471,7 @@ public enum iz {
   }
 
   static boolean literal(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.equals(s);
+    return ¢ != null && ¢.getLiteralValue().equals(s);
   }
 
   /** @param ¢ JD

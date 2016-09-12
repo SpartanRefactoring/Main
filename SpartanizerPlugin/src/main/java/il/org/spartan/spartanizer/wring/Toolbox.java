@@ -89,7 +89,7 @@ public class Toolbox {
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixEmptyStringAdditionToString(), //
-            new InfixEmptyStringAdditionReorder(), //
+            new InfixConcatenationEmptyStringLeft(), //
             new InfixFactorNegatives(), //
             new InfixAdditionEvaluate(), //
             // new ConcatStrings(), //removed for now so it won't break tests,
