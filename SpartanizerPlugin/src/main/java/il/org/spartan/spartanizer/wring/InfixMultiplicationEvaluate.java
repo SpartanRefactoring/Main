@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -8,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 
 /** Evaluate the multiplication of numbers according to the following rules :
  * </br>
@@ -66,7 +68,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
     ASTNode $;
     if (x.getOperator() != TIMES)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    switch (getEvaluatedType(x)) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;
