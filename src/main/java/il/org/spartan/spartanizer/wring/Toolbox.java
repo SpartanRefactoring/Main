@@ -77,7 +77,7 @@ public class Toolbox {
             new InfixConditionalCommon(), //
             null)
         .add(MethodDeclaration.class, //
-            new MethodRenameReturnToDollar(), //
+            new MethodDeclarationRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
             new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
@@ -216,6 +216,7 @@ public class Toolbox {
       for (final Wring<N> w : ns) {
         if (w == null)
           break;
+        assert w.wringGroup() != null: "Did you forget to use a specific kind for " + w.getClass().getSimpleName();
         if (!w.wringGroup().isEnabled())
           continue;
         l.add(w);
