@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 
@@ -64,21 +65,20 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (EvaluateAux.getEvaluatedType(x) == null || x.getOperator() != PLUS)
+    if (x.getOperator() != PLUS)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
-      case INT:
-        $ = replacementInt(extract.allOperands(x), x);
-        break;
-      case DOUBLE:
+    if (type.get(x) == INT)
+      $ = replacementInt(extract.allOperands(x), x);
+    else {
+      if (type.get(x) == DOUBLE)
         $ = replacementDouble(extract.allOperands(x), x);
-        break;
-      case LONG:
-        $ = replacementLong(extract.allOperands(x), x);
-        break;
-      default:
-        return null;
+      else {
+        if (type.get(x) == LONG)
+          $ = replacementLong(extract.allOperands(x), x);
+        else
+          return null;
+      }
     }
-    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+    return $!=null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 }
