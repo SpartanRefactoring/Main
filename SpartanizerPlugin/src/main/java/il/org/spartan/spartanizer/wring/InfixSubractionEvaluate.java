@@ -25,9 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty())
-      return null;
-    if (!iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
       return null;
     double sub = extract.doubleNumber(first(xs));
     int index = 0;
@@ -42,14 +40,12 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty())
-      return null;
-    if (!iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
       return null;
     int sub = extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.numberLiteral(¢)|| !type.isInt(¢))
+      if (!iz.numberLiteral(¢) || !type.isInt(¢))
         return null;
       if (index != 0)
         sub -= extract.intNumber(¢);
@@ -59,14 +55,12 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty())
-      return null;
-    if (!iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
       return null;
     long sub = extract.longNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.numberLiteral(¢)|| !iz.computable(¢))
+      if (!iz.numberLiteral(¢) || !iz.computable(¢))
         return null;
       if (index != 0)
         sub -= extract.longNumber(¢);
@@ -88,15 +82,12 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
       return null;
     if (type.get(x) == INT)
       $ = replacementInt(extract.allOperands(x), x);
+    else if (type.get(x) == DOUBLE)
+      $ = replacementDouble(extract.allOperands(x), x);
     else {
-      if (type.get(x) == DOUBLE)
-        $ = replacementDouble(extract.allOperands(x), x);
-      else {
-        if (type.get(x) == LONG)
-          $ = replacementLong(extract.allOperands(x), x);
-        else
-          return null;
-      }
+      if (type.get(x) != LONG)
+        return null;
+      $ = replacementLong(extract.allOperands(x), x);
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
