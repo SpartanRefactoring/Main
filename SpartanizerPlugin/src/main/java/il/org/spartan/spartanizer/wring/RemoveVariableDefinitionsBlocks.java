@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wring;
-
+import static il.org.spartan.spartanizer.ast.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -25,15 +25,15 @@ public class RemoveVariableDefinitionsBlocks extends Wring<Block> implements Kin
   }
 
   @Override Rewrite make(final Block n) {
-    final List<Statement> statementsList = n.statements();
-    if (statementsList.isEmpty())
+    final List<Statement> ss = statements(n);
+    if (ss.isEmpty())
       return null;
-    for (final Statement s : statementsList)
+    for (final Statement s : ss)
       if (!iz.variableDeclarationStatement(s))
         return null;
     return new Rewrite(description(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final Statement s : statementsList)
+        for (final Statement s : ss)
           r.remove(s, g);
       }
     };
