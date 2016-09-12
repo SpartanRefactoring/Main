@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.ast.*;
  * <code><b>interface</b> a {}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
+public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N>
+    implements Kind.SyntacticBaggage {
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : modifiers(¢))

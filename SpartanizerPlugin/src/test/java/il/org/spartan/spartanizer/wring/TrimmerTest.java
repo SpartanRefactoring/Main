@@ -7,6 +7,8 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -2094,11 +2096,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void issue54_1() {
     trimming("x.toString()").to("x+\"\"");
   }
-  
+
   @Test public void issue54_2() {
     trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
   }
-  
+
   @Test public void issue54DoNonSideEffect() {
     trimming( //
         "int a  = f; do { b[i] = a; } while (b[i] != a);")//
@@ -4259,5 +4261,4 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").stays();
   }
-  
 }

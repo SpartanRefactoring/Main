@@ -39,6 +39,7 @@ public class Issue165Test {
   @Test public void seriesA_06_abstract() {
     trimming("abstract void f(int a);").stays();
   }
+
   @Test public void seriesA_06_meaningfulName() {
     trimming("void f(String fileName) {f(fileName);}").stays();
   }
