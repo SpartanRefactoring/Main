@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.*;
  * using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> implements Kind.Collapse {
+public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> implements Kind.Idiomatic {
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator o) {
