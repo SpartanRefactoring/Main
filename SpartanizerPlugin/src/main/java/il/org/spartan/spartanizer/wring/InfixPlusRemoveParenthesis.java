@@ -19,25 +19,8 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Niv Shalmon
  * @since 2016-09-11 */
 public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
-  /* TODO: Niv, document this function, but I think it is buggy. If you have
-   * #MINUS2 you can do all openings you like. */
-  /* TODO: Yossi, about #MINUS2. We can't remove parenthesis around it, since
-   * this works on InfixExpressions that may be String concating. removing
-   * parenthesis around #MINUS2 in this case would cause compilation error, and
-   * is the reason we stopped using TermExpander for this is the first place.
-   *
-   * This wring should work for any #PLUS2, both addition and concating. The
-   * wring using TermExpander should handle the case where we know it's an
-   * addition of numbers. */
-  /* TODO: Niv. It would be easy to fix, just let TermExpander do its work, only
-   * after it consulted `type` to see that it is sure it is arithmetics. Further
-   * more, I add an issue for class ConcatenationExpander */
-  /* TODO: Yossi, this is what already happens. I don't see any issue about
-   * ConcatenationExpander when I'm writing this, but we already have wrings
-   * that do that. The code currently works as expected, aside for the bug with
-   * plant. */
-  /** Determines whether the parenthesis around an InfixExpression can be
-   * removed in an InfixExpression that is String concating.
+ /** Determines whether the parenthesis around an InfixExpression can be
+   * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return True if the parenthesis can be removed and false otherwise */
   private static boolean canRemove(final InfixExpression ¢) {
@@ -78,6 +61,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean changed = false;
     for (int i = 0; i < es.size(); ++i)
       if (iz.parenthesizeExpression(es.get(i))) {
+        // TODO: Niv, convert this into a for loop manually, or resolve issues:#145, #144
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
         while (iz.parenthesizeExpression(¢)) {
           replace(es, ¢, i);
