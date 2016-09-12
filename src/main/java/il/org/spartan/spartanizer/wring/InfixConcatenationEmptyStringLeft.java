@@ -7,24 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-/** transforms
- *
- * <pre>
- * "" + x
- * </pre>
- *
- * to
- *
- * <pre>
- * x + ""
- * </pre>
- *
+/** Convert <code>""+x</code> to <code>x+""</code>
  * @author Dan Greenstein
  * @since 2016 */
-public class InfixEmptyStringAdditionReorder extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-  private static boolean isEmptyStringLiteral(final Expression x) {
-    return wizard.same(x, x.getAST().newStringLiteral());
-  }
+public class InfixConcatenationEmptyStringLeft extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
 
   private static InfixExpression replace(final InfixExpression x) {
     return subject.pair(duplicate.of(right(x)), duplicate.of(left(x))).to(wizard.PLUS2);
@@ -35,6 +21,6 @@ public class InfixEmptyStringAdditionReorder extends Wring.ReplaceCurrentNode<In
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
-    return !isEmptyStringLiteral(left(x)) || !iz.infixPlus(x) ? null : replace(x);
+    return !iz.emptyStringLiteral(left(x)) || !iz.infixPlus(x) ? null : replace(x);
   }
 }
