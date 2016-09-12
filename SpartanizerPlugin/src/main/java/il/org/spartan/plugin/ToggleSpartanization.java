@@ -23,7 +23,7 @@ public class ToggleSpartanization {
   static final String disabler = DisabledChecker.disablers[0];
 
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
-    assert pm != null: "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
+    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m, t);
@@ -124,6 +124,8 @@ public class ToggleSpartanization {
 
   static BodyDeclaration getDeclaringClass(final ASTNode n) {
     ASTNode $ = n;
+    // TODO: Ori, please use ancestor search, we have good services. Do not
+    // invent the wheel.
     for (; $ != null && !($ instanceof AbstractTypeDeclaration); $ = $.getParent())
       ;
     return (BodyDeclaration) $;
@@ -131,6 +133,8 @@ public class ToggleSpartanization {
 
   static BodyDeclaration getDeclaringDeclaration(final ASTNode n) {
     ASTNode $ = n;
+    // TODO: Ori, please use ancestor search, we have good services. Do not
+    // invent the wheel. This will also get two warnings off our head.
     for (; $ != null && !($ instanceof BodyDeclaration); $ = $.getParent())
       ;
     return (BodyDeclaration) $;
@@ -162,6 +166,7 @@ public class ToggleSpartanization {
     return $;
   }
 
+  // TODO: Ori, why not use the word disable instead of "UnEnable"?
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode n) {
@@ -173,7 +178,10 @@ public class ToggleSpartanization {
   }
 
   static void unEnable(final ASTRewrite $, final BodyDeclaration d) {
-    final Javadoc j = d.getJavadoc();
+    unEnable($, d.getJavadoc());
+  }
+
+  private static void unEnable(final ASTRewrite $, final Javadoc j) {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);
   }
