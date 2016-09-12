@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.wring;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -63,9 +64,11 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
+    if(EvaluateAux.getEvaluatedType(x)== null)
+      return null;
     if (x.getOperator() != PLUS)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;
