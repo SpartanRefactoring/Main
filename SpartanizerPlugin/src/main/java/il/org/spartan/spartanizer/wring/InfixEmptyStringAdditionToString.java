@@ -18,9 +18,6 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
  * @author Niv Shalmon
  * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
-  private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return type.get(¢1) == Certain.STRING && iz.emptyStringLiteral(¢2);
-  }
 
   @Override public String description() {
     return "[\"\"+foo]->foo";
