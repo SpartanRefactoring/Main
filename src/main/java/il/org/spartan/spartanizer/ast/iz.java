@@ -53,6 +53,14 @@ public enum iz {
   public static boolean assignment(final ASTNode n) {
     return is(n, ASSIGNMENT);
   }
+  
+  /** @param n the statement or block to check if it is an for statement
+   * @return <code><b>true</b></code> if the parameter an for statement or false if
+   *         the parameter not or if the block Contains more than one
+   *         statement */
+  public static boolean forStatement(final ASTNode n){
+    return is(n, FOR_STATEMENT);
+  }
 
   public static boolean astNode(final Object ¢) {
     return ¢ != null && ¢ instanceof ASTNode;
