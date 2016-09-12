@@ -19,8 +19,8 @@ public class TypeNamesCollector {
 
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      SimpleName last(final Name n) {
-        return n.isSimpleName() ? (SimpleName) n : n.isQualifiedName() ? ((QualifiedName) n).getName() : null;
+      SimpleName last(final Name ¢) {
+        return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
       }
 
       void record(final String longName) {
@@ -33,8 +33,8 @@ public class TypeNamesCollector {
         shortToFull.get(shortName).add(longName);
       }
 
-      @Override public boolean visit(final SimpleType t) {
-        record(last(t.getName()) + "");
+      @Override public boolean visit(final SimpleType ¢) {
+        record(last(¢.getName()) + "");
         return true;
       }
     });

@@ -270,9 +270,11 @@ public abstract class Spartanization extends Refactoring {
     return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
 
-  /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false. */
+  /** 
+   * Determines if the node is outside of the selected text.
+   * @return true if the node is not inside selection. If there is no selectionat all will return false. 
+   * @DisableSpartan
+   */
   protected boolean isNodeOutsideSelection(final ASTNode n) {
     return !isSelected(n.getStartPosition());
   }
