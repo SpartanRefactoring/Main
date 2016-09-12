@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -62,18 +63,16 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != REMAINDER || EvaluateAux.getEvaluatedType(x) == null)
+    if (x.getOperator() != REMAINDER)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
-      case INT:
-        $ = replacementInt(extract.allOperands(x), x);
-        break;
-      case LONG:
-        $ = replacementLong(extract.allOperands(x), x);
-        break;
-      default:
-        return null;
-    }
-    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+    if (type.get(x) == INT)
+      $ = replacementInt(extract.allOperands(x), x);
+    else {
+        if (type.get(x) == LONG)
+          $ = replacementLong(extract.allOperands(x), x);
+        else
+          return null;
+      }
+    return $!=null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 }

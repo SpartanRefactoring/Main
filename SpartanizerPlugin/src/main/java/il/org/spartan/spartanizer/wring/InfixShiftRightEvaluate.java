@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -67,13 +68,11 @@ public class InfixShiftRightEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   @Override ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != RIGHT_SHIFT_SIGNED)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
-      case INT:
-        return replacementInt(extract.allOperands(x), x);
-      case LONG:
-        return replacementLong(extract.allOperands(x), x);
-      default:
-        return null;
-    }
+    if (type.get(x) == INT)
+      return replacementInt(extract.allOperands(x), x);
+    if (type.get(x) == LONG)
+          return replacementLong(extract.allOperands(x), x);
+    return null;
+
   }
 }
