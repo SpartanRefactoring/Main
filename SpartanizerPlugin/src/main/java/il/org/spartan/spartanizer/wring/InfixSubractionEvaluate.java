@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -24,45 +25,45 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
       return null;
-    double sub = EvaluateAux.extractDouble(first(xs));
+    double sub = extract.doubleNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!iz.numberLiteral(¢) || !iz.computable(¢))
         return null;
       if (index != 0)
-        sub -= EvaluateAux.extractDouble(¢);
+        sub -= extract.doubleNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Double.toString(sub));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
       return null;
-    int sub = EvaluateAux.extractInt(first(xs));
+    int sub = extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !type.isInt(¢))
+      if (!iz.numberLiteral(¢) || !type.isInt(¢))
         return null;
       if (index != 0)
-        sub -= EvaluateAux.extractInt(¢);
+        sub -= extract.intNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Integer.toString(sub));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() && !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.computable(first(xs)))
       return null;
-    long sub = EvaluateAux.extractLong(first(xs));
+    long sub = extract.longNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!(¢ instanceof NumberLiteral) || !EvaluateAux.isNumber(¢))
+      if (!iz.numberLiteral(¢) || !iz.computable(¢))
         return null;
       if (index != 0)
-        sub -= EvaluateAux.extractLong(¢);
+        sub -= extract.longNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
@@ -73,22 +74,20 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    if(!iz.validForEvaluation(x))
+      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != MINUS || EvaluateAux.getEvaluatedType(x) == null)
+    if (x.getOperator() != MINUS)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
-      case INT:
-        $ = replacementInt(extract.allOperands(x), x);
-        break;
-      case DOUBLE:
-        $ = replacementDouble(extract.allOperands(x), x);
-        break;
-      case LONG:
-        $ = replacementLong(extract.allOperands(x), x);
-        break;
-      default:
+    if (type.get(x) == INT)
+      $ = replacementInt(extract.allOperands(x), x);
+    else if (type.get(x) == DOUBLE)
+      $ = replacementDouble(extract.allOperands(x), x);
+    else {
+      if (type.get(x) != LONG)
         return null;
+      $ = replacementLong(extract.allOperands(x), x);
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
