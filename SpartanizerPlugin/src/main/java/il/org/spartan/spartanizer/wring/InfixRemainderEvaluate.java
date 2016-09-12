@@ -64,7 +64,9 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
     ASTNode $;
     if (x.getOperator() != REMAINDER)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    if(EvaluateAux.getEvaluatedType(x)== null)
+      return null;
+    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;
