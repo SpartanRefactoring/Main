@@ -3,6 +3,16 @@ package il.org.spartan.spartanizer.wring;
 import il.org.spartan.plugin.PreferencesResources.*;
 
 public interface Kind {
+  String description();
+
+  /** Returns the preference group to which the wring belongs to. This method
+   * should be overridden for each wring and should return one of the values of
+   * {@link WringGroup}
+   * @return preference group this wring belongs to */
+  default WringGroup wringGroup() {
+    return WringGroup.find(this);
+  }
+
   interface Abbreviation extends Nominal {
     static final String label = "Abbreviation";
 
@@ -97,16 +107,6 @@ public interface Kind {
     @Override default String description() {
       return label;
     }
-  }
-
-  String description();
-
-  /** Returns the preference group to which the wring belongs to. This method
-   * should be overridden for each wring and should return one of the values of
-   * {@link WringGroup}
-   * @return preference group this wring belongs to */
-  default WringGroup wringGroup() {
-    return WringGroup.find(this);
   }
 }
 

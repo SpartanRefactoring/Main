@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dan Greenstein
  * @since 2016 */
 public class InfixConcatenationEmptyStringLeft extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
-
   private static InfixExpression replace(final InfixExpression x) {
     return subject.pair(duplicate.of(right(x)), duplicate.of(left(x))).to(wizard.PLUS2);
   }
