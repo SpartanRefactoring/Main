@@ -32,25 +32,30 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   }
 
   @Override Expression replacement(final InfixExpression x) {
-    if (!iz.infixPlus(x))
+    if (type.get(x) != Certain.STRING)
       return null;
-    // TODO: Niv, I believe this is one of the problems here. Extract all
-    // operands opens parenthesis. Maybe use hop.operands?
-    final List<Expression> es = extract.allOperands(x);
+    final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    final int ¢ = es.size();
-    // TODO: Niv, I am pretty sure the following is buggy. It is too complex to
-    // be correct. In fact, if you apply the plugin to itself, you will find the
-    // bug... I believe that it is in Wrapping. The right way to do this is to
-    // create a new list, and move to it only what's left. Please open an issue,
-    // create test cases to demonstrate the problem, and then fix it.
-    for (int i = 0; i < es.size() - 1;)
-      if (validTypes(es.get(i), es.get(i + 1)))
-        es.remove(i + 1);
-      else if (!validTypes(es.get(i + 1), es.get(i)))
-        ++i;
-      else
-        es.remove(i);
-    return es.size() == ¢ ? null : es.size() == 1 ? first(es) : subject.operands(es).to(PLUS2);
+    final List<Expression> ¢ = new ArrayList<>();
+    boolean isString = false;
+    for (int i = 0; i < es.size() ; ++i){
+      Expression e = es.get(i);
+      if(!iz.emptyStringLiteral(e)){
+        ¢.add(e);
+        if(type.get(e) == Certain.STRING)
+          isString = true;
+      }
+      else {
+        if (i < es.size() - 1)
+          if (type.get(es.get(i+1)) == Certain.STRING)
+            continue;
+        if (!isString){
+          ¢.add(e);
+          isString = true;
+        }
+      }
+    }
+    return ¢.size() == es.size() ? null 
+        : ¢.size() == 1 ? ¢.get(0) : subject.operands(¢).to(PLUS2);
   }
 }
