@@ -32,22 +32,17 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   }
 
   @Override Expression replacement(final InfixExpression x) {
-    if (!iz.infixPlus(x))
+    if (type.get(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    // TODO: Niv, I am pretty sure the following is buggy. It is too complex to
-    // be correct. In fact, if you apply the plugin to itself, you will find the
-    // bug... I believe that it is in Wrapping. The right way to do this is to
-    // create a new list, and move to it only what's left. Please open an issue,
-    // create test cases to demonstrate the problem, and then fix it.
     final List<Expression> ¢ = new ArrayList<>();
     boolean isString = false;
     for (int i = 0; i < es.size() ; ++i){
       Expression e = es.get(i);
       if(!iz.emptyStringLiteral(e)){
         ¢.add(e);
-        if(!isString && type.get(e) == Certain.STRING)
+        if(type.get(e) == Certain.STRING)
           isString = true;
       }
       else {
