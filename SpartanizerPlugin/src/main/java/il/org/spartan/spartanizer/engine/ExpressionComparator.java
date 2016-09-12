@@ -51,83 +51,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
 
-  /** Counts the number of non-space characters in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  public static int countNonWhites(final ASTNode n) {
-    return removeWhites(wizard.body(n)).length();
-  }
-
-  /** Counts the number of statements in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  public static int lineCount(final ASTNode n) {
-    final Int $ = new Int();
-    n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass()))
-          addWeight($, child);
-      }
-
-      /** @param a Accumulator
-       * @param ¢ Node to check */
-      void addWeight(final Int a, final ASTNode ¢) {
-        if (iz.is(¢, BLOCK)) {
-          if (extract.statements(¢).size() > 1)
-            ++a.inner;
-          return;
-        }
-        if (iz.is(¢, EMPTY_STATEMENT))
-          return;
-        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
-          a.inner += 4;
-          return;
-        }
-        if (!iz.is(¢, IF_STATEMENT))
-          a.inner += 3;
-        else {
-          a.inner += 4;
-          if (elze(az.ifStatement(¢)) != null)
-            ++a.inner;
-        }
-      }
-    });
-    return $.inner;
-  }
-
-  /** Compare the length of the left and right arguments of an infix expression
-   * @param x JD
-   * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
-   *         parameter is is longer than the second argument */
-  public static boolean longerFirst(final InfixExpression x) {
-    return isLonger(left(x), right(x));
-  }
-
-  /** Compare method invocations by the number of arguments
-   * @param e1 JD
-   * @param e2 JD
-   * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
-   *         invocation with more arguments that the second argument */
-  public static boolean moreArguments(final Expression e1, final Expression e2) {
-    return argumentsCompare(e1, e2) > 0;
-  }
-
-  /** Counts the number of nodes in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  public static int nodesCount(final ASTNode n) {
-    class Integer {
-      int inner = 0;
-    }
-    final Integer $ = new Integer();
-    n.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        ++$.inner;
-      }
-    });
-    return $.inner;
-  }
-
   /** Lexicographical comparison expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
@@ -161,16 +84,11 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return countNonWhites(e1) - countNonWhites(e2);
   }
 
-  static int literalCompare(final Expression e1, final Expression e2) {
-    return -specificity.compare(e1, e2);
-  }
-
-  static int nodesCompare(final Expression e1, final Expression e2) {
-    return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
-  }
-
-  static int round(final int $, final int threshold) {
-    return Math.abs($) > threshold ? $ : 0;
+  /** Counts the number of non-space characters in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  public static int countNonWhites(final ASTNode n) {
+    return removeWhites(wizard.body(n)).length();
   }
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
@@ -178,6 +96,88 @@ public enum ExpressionComparator implements Comparator<Expression> {
     nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
         nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
     );
+  }
+
+  /** Counts the number of statements in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  public static int lineCount(final ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      /** @param a Accumulator
+       * @param ¢ Node to check */
+      void addWeight(final Int a, final ASTNode ¢) {
+        if (iz.is(¢, BLOCK)) {
+          if (extract.statements(¢).size() > 1)
+            ++a.inner;
+          return;
+        }
+        if (iz.is(¢, EMPTY_STATEMENT))
+          return;
+        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
+          a.inner += 4;
+          return;
+        }
+        if (!iz.is(¢, IF_STATEMENT))
+          a.inner += 3;
+        else {
+          a.inner += 4;
+          if (elze(az.ifStatement(¢)) != null)
+            ++a.inner;
+        }
+      }
+
+      @Override public void preVisit(final ASTNode child) {
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          addWeight($, child);
+      }
+    });
+    return $.inner;
+  }
+
+  static int literalCompare(final Expression e1, final Expression e2) {
+    return -specificity.compare(e1, e2);
+  }
+
+  /** Compare the length of the left and right arguments of an infix expression
+   * @param x JD
+   * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
+   *         parameter is is longer than the second argument */
+  public static boolean longerFirst(final InfixExpression x) {
+    return isLonger(left(x), right(x));
+  }
+
+  /** Compare method invocations by the number of arguments
+   * @param e1 JD
+   * @param e2 JD
+   * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
+   *         invocation with more arguments that the second argument */
+  public static boolean moreArguments(final Expression e1, final Expression e2) {
+    return argumentsCompare(e1, e2) > 0;
+  }
+
+  static int nodesCompare(final Expression e1, final Expression e2) {
+    return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
+  }
+
+  /** Counts the number of nodes in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  public static int nodesCount(final ASTNode n) {
+    class Integer {
+      int inner = 0;
+    }
+    final Integer $ = new Integer();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+        ++$.inner;
+      }
+    });
+    return $.inner;
+  }
+
+  static int round(final int $, final int threshold) {
+    return Math.abs($) > threshold ? $ : 0;
   }
 
   /** Sorts the {@link Expression} list
