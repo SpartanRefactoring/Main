@@ -8,12 +8,15 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.omg.Messaging.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+
+import static java.nio.file.StandardCopyOption.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
  * plug-in from the command line.
@@ -38,11 +41,14 @@ import il.org.spartan.utils.*;
   boolean optStatsLines = false, optStatsChanges = false, printLog = false;
   int optRounds = 20;
   String optPath;
+  private boolean backupProjects = false;
+  private boolean develop = false;
 
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     final List<FileStats> fileStats = new ArrayList<>();
+   
     try {
       prepareTempIJavaProject();
     } catch (final CoreException e) {
@@ -53,8 +59,60 @@ import il.org.spartan.utils.*;
       LogManager.activateLog();
       LogManager.initialize("/home/matteo/SpartanLog");
     }
+    
+    List<String> destDirList = createDirs();
+    
+    // copy the base directory on the first round one
+    try {
+      org.apache.commons.io.FileUtils.copyDirectory(new File(optPath), new File(destDirList.get(0)));
+    } catch (IOException e1) {
+      e1.printStackTrace();
+    }
+    
+    for(int j = 1; j <= optRounds; j++){
+      String srcDir = destDirList.get((j-1));
+      String destDir = destDirList.get(j);
+      System.out.println("--->> now processing: " + srcDir);
+      // process the srcDir
+      processRound(fileStats, srcDir);
+      // copy the processed files on the new directory (associated to the next round)
+      try {
+        org.apache.commons.io.FileUtils.copyDirectory(new File(srcDir), new File(destDir));
+      } catch (IOException e1) {
+        e1.printStackTrace();
+      }
+    }
+      if (optStatsChanges)
+        printChangeStatistics(fileStats);
+      if (optStatsLines)
+        printLineStatistics(fileStats);
+      if (printLog)
+        LogManager.closeAllWriters();
+      return IApplication.EXIT_OK;
+    }
+
+  private List<String> createDirs() {
+    List<String> destDirList = new ArrayList<String>();
+    
+    for(int round = 1; round <= optRounds; round++){
+      File srcDir = new File(optPath);
+  //    System.out.println("File(optPath).getName(): " + new File(optPath).getName());
+      String destDirName = new File(optPath).getName() + "_" + round;
+  //    System.out.println("destDirName: " + destDirName);
+  //    System.out.println(new File(optPath).getParent());
+      String destDirFullPath = new File(optPath).getParent() + "/" + destDirName;
+      destDirList.add(destDirFullPath);
+  //    System.out.println(destDirFullPath);
+      File destDir = new File(destDirFullPath);
+      if(!destDir.exists())
+        destDir.mkdir();
+    }
+    return destDirList;
+  }
+
+  private void processRound(final List<FileStats> fileStats, String copyDir) {
     int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(copyDir)) {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
@@ -84,14 +142,8 @@ import il.org.spartan.utils.*;
       }
     }
     System.out.println(done + " files processed. " + (failed == 0 ? "" : failed + " failed."));
-    if (optStatsChanges)
-      printChangeStatistics(fileStats);
-    if (optStatsLines)
-      printLineStatistics(fileStats);
-    if (printLog)
-      LogManager.closeAllWriters();
-    return IApplication.EXIT_OK;
   }
+  
 
   @Override public void stop() {
     // Unused
@@ -169,6 +221,10 @@ import il.org.spartan.utils.*;
         optStatsChanges = true;
       if ("-L".equals(a))
         printLog = true;
+      if ("-B".equals(a))
+        backupProjects = true;
+      if ("-p".equals(a))
+        develop = true;    
       if (!a.startsWith("-"))
         optPath = a;
       try {
@@ -182,6 +238,7 @@ import il.org.spartan.utils.*;
 
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
+    System.out.println("root: " + ResourcesPlugin.getWorkspace().getRoot().getName());
     if (p.exists())
       p.delete(true, null);
     p.create(null);
@@ -193,12 +250,17 @@ import il.org.spartan.utils.*;
     final IFolder binFolder = p.getFolder("bin");
     final IFolder sourceFolder = p.getFolder("src");
     srcRoot = javaProject.getPackageFragmentRoot(sourceFolder);
+    System.out.println("srcRoot: " + srcRoot.toString());
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
+    System.out.println("binFolder.getFullPath: " + binFolder.getFullPath());
+    System.out.println("javaProject.getOutputLocation(): " + javaProject.getOutputLocation().toString());
+    System.out.println("javaProject.getOutputLocation().toOSString()" + javaProject.getOutputLocation().toOSString());
     final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
+    
   }
 
   void printHelpPrompt() {
@@ -213,6 +275,7 @@ import il.org.spartan.utils.*;
     System.out.println("  -E       Display statistics for each file separately");
     System.out.println("  -V       Be verbose");
     System.out.println("  -L       printout logs");
+    System.out.println("  -B       backup projects");
     System.out.println("");
     System.out.println("Print statistics:");
     System.out.println("  -l       Show the number of lines before and after Spartanization");
