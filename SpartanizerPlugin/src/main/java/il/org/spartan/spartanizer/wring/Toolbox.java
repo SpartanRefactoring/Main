@@ -27,6 +27,10 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -49,6 +53,7 @@ public class Toolbox {
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
+            // TODO: Niv, should this class be killed?
             // new InfixEmptyStringAdditionToString(), //under construction
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
@@ -62,7 +67,10 @@ public class Toolbox {
             new InfixSubractionEvaluate(), //
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
-            new InfixTermsZero(), // must be before InfixAdditionSort
+            new InfixTermsZero(), //
+            // TODO: Dor, should this class be killed?
+            // new InfixAdditionZero(), //
+            new InfixAdditionNeutralElement(), //
             new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
@@ -78,7 +86,8 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
-            new BodyDeclarationRemoveModifiers.OfMethod(), //
+            new MethodDeclarationRenameSingleParameterToCent(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfMethod(), //
             new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
@@ -151,10 +160,8 @@ public class Toolbox {
             new ModifierCleanEnum(), //
             new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfField(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfField(), //
             new AbstractBodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
@@ -162,15 +169,14 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfEnumConstant(), //
             new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
-        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation(), null) //
+        // TODO: Alex, shouldn't we remove this line?
         // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
   }
@@ -216,7 +222,7 @@ public class Toolbox {
       for (final Wring<N> w : ns) {
         if (w == null)
           break;
-        assert w.wringGroup() != null: "Did you forget to use a specific kind for " + w.getClass().getSimpleName();
+        assert w.wringGroup() != null : "Did you forget to use a specific kind for " + w.getClass().getSimpleName();
         if (!w.wringGroup().isEnabled())
           continue;
         l.add(w);

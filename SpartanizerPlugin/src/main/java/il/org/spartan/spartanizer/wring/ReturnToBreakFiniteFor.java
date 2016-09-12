@@ -49,9 +49,9 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
   }
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final IfStatement ifStatement = az.ifStatement(s);
-    if (ifStatement == null)
+    if (!iz.ifStatement(s))
       return null;
+    final IfStatement ifStatement = az.ifStatement(s);
     final Statement then = ifStatement.getThenStatement();
     final Statement elze = ifStatement.getElseStatement();
     if (then != null) {
@@ -80,7 +80,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
   }
 
   private static boolean isInfiniteLoop(final ForStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+    return iz.booleanLiteral(s) && az.booleanLiteral(s.getExpression()).booleanValue();
   }
 
   @Override public String description() {
@@ -91,30 +91,24 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
     return "Convert the return inside " + b + " to break";
   }
 
-  // TODO: Niv, fully spartanize this one. Remove @SuppressWarnings("all"), use
-  // az.forstatement, iz.forstatemnt, step.statements(etc), etc.
   @Override Rewrite make(final Block n) {
     final List<Statement> ss = step.statements(n);
-    if (!iz.is(first(ss), ASTNode.FOR_STATEMENT) || !iz.returnStatement(second(ss)))
-      return null;
     final ForStatement forStatement = az.forStatement(first(ss));
     final ReturnStatement nextReturn = az.returnStatement(second(ss));
     if (isInfiniteLoop(forStatement))
       return null;
     final Statement body = forStatement.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : !iz.ifStatement(body) ? null : handleIf(body, nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
+        r.replace($, (ASTNode) az.block(into.s("break;")).statements().get(0), g);
       }
     };
   }
 
   @Override boolean scopeIncludes(final Block b) {
-    // TODO: Niv: Use lisp.first and lisp.second, in fact, if second returns
-    // null, you do not have to do anything.
     final List<Statement> ss = step.statements(b);
-    return iz.is(first(ss), ASTNode.FOR_STATEMENT) && iz.returnStatement(second(ss));
+    return iz.forStatement(first(ss)) && iz.returnStatement(second(ss));
   }
 }

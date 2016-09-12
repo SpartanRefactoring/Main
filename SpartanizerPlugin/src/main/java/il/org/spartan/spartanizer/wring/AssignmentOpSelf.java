@@ -38,9 +38,8 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   }
 
   private static ASTNode replace(final Assignment a) {
-    // TODO: Alex use step.left, step right, instead of getLeftHandSide
     final InfixExpression ¢ = az.infixExpression(right(a));
-    final Expression newRightExpr = az.expression(rightInfixReplacement(¢, a.getLeftHandSide()));
+    final Expression newRightExpr = az.expression(rightInfixReplacement(¢, step.left(a)));
     return newRightExpr == null ? null : subject.pair(left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
   }
 
@@ -51,11 +50,11 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(o);
   }
 
-  @Override String description(final Assignment a) {
-    return "Replace x = x " + step.operator(a) + "a; to x " + step.operator(a) + "= a;";
+  @Override String description(final Assignment ¢) {
+    return "Replace x = x " + step.operator(¢) + "a; to x " + step.operator(¢) + "= a;";
   }
 
-  @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpAssign(a) || !iz.infixExpression(right(a)) ? null : replace(a);
+  @Override ASTNode replacement(final Assignment ¢) {
+    return !iz.isOpAssign(¢) || !iz.infixExpression(right(¢)) ? null : replace(¢);
   }
 }

@@ -18,10 +18,6 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
  * @author Niv Shalmon
  * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
-  private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return type.get(¢1) == Certain.STRING && iz.emptyStringLiteral(¢2);
-  }
-
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }
@@ -37,23 +33,21 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     assert es.size() > 1;
     final List<Expression> ¢ = new ArrayList<>();
     boolean isString = false;
-    for (int i = 0; i < es.size() ; ++i){
-      Expression e = es.get(i);
-      if(!iz.emptyStringLiteral(e)){
+    for (int i = 0; i < es.size(); ++i) {
+      final Expression e = es.get(i);
+      if (!iz.emptyStringLiteral(e)) {
         ¢.add(e);
-        if(type.get(e) == Certain.STRING)
+        if (type.get(e) == Certain.STRING)
           isString = true;
-      }
-      else {
+      } else {
         if (i < es.size() - 1 && type.get(es.get(i + 1)) == Certain.STRING)
           continue;
-        if (!isString){
+        if (!isString) {
           ¢.add(e);
           isString = true;
         }
       }
     }
-    return ¢.size() == es.size() ? null 
-        : ¢.size() == 1 ? ¢.get(0) : subject.operands(¢).to(PLUS2);
+    return ¢.size() == es.size() ? null : ¢.size() == 1 ? ¢.get(0) : subject.operands(¢).to(PLUS2);
   }
 }
