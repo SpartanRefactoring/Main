@@ -63,9 +63,7 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != TIMES)
-      return null;
-    if(EvaluateAux.getEvaluatedType(x)== null)
+    if (x.getOperator() != TIMES || EvaluateAux.getEvaluatedType(x) == null)
       return null;
     switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:

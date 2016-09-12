@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
@@ -46,9 +45,8 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
           isString = true;
       }
       else {
-        if (i < es.size() - 1)
-          if (type.get(es.get(i+1)) == Certain.STRING)
-            continue;
+        if (i < es.size() - 1 && type.get(es.get(i + 1)) == Certain.STRING)
+          continue;
         if (!isString){
           ¢.add(e);
           isString = true;
