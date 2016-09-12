@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.engine.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.Canonicalization {
+public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.Collapse {
   public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }

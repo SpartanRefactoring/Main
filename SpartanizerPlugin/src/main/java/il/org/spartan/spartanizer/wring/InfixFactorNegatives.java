@@ -47,7 +47,7 @@ import il.org.spartan.spartanizer.engine.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixFactorNegatives extends Wring<InfixExpression> implements Kind.NoImpact {
+public final class InfixFactorNegatives extends Wring<InfixExpression> implements Kind.NOP {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
