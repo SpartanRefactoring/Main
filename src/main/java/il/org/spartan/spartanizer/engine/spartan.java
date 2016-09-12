@@ -18,26 +18,26 @@ public interface spartan {
     return String.valueOf(new char[i]).replace('\0', c);
   }
 
-  static String shorten(final ArrayType t) {
-    return shorten(t.getElementType()) + repeat(t.getDimensions(), 's');
+  static String shorten(final ArrayType ¢) {
+    return shorten(¢.getElementType()) + repeat(¢.getDimensions(), 's');
   }
 
   static String shorten(@SuppressWarnings("unused") final IntersectionType __) {
     return null;
   }
 
-  static String shorten(final List<? extends Type> ts) {
-    return shorten(onlyOne(ts));
+  static String shorten(final List<? extends Type> ¢) {
+    return shorten(onlyOne(¢));
   }
 
-  static String shorten(final Name n) {
-    return n instanceof SimpleName ? shorten(n + "") //
-        : n instanceof QualifiedName ? shorten(((QualifiedName) n).getName()) //
+  static String shorten(final Name ¢) {
+    return ¢ instanceof SimpleName ? shorten(¢ + "") //
+        : ¢ instanceof QualifiedName ? shorten(((QualifiedName) ¢).getName()) //
             : null;
   }
 
-  static String shorten(final NameQualifiedType t) {
-    return shorten(t.getName());
+  static String shorten(final NameQualifiedType ¢) {
+    return shorten(¢.getName());
   }
 
   static String shorten(final ParameterizedType t) {
@@ -66,39 +66,39 @@ public interface spartan {
     }
   }
 
-  static String shorten(final PrimitiveType t) {
-    return (t.getPrimitiveTypeCode() + "").substring(0, 1);
+  static String shorten(final PrimitiveType ¢) {
+    return (¢.getPrimitiveTypeCode() + "").substring(0, 1);
   }
 
-  static String shorten(final QualifiedType t) {
-    return shorten(t.getName());
+  static String shorten(final QualifiedType ¢) {
+    return shorten(¢.getName());
   }
 
-  static String shorten(final SimpleType t) {
-    return shorten(t.getName());
+  static String shorten(final SimpleType ¢) {
+    return shorten(¢.getName());
   }
 
-  static String shorten(final String s) {
-    return new JavaTypeNameParser(s).shortName();
+  static String shorten(final String ¢) {
+    return new JavaTypeNameParser(¢).shortName();
   }
 
-  static String shorten(final Type t) {
-    return t instanceof NameQualifiedType ? shorten((NameQualifiedType) t)
-        : t instanceof PrimitiveType ? shorten((PrimitiveType) t)
-            : t instanceof QualifiedType ? shorten((QualifiedType) t)
-                : t instanceof SimpleType ? shorten((SimpleType) t)
-                    : t instanceof WildcardType ? shortName((WildcardType) t)
-                        : t instanceof ArrayType ? shorten((ArrayType) t)
-                            : t instanceof IntersectionType ? shorten((IntersectionType) t) //
-                                : t instanceof ParameterizedType ? shorten((ParameterizedType) t)//
-                                    : t instanceof UnionType ? shortName((UnionType) t) : null;
+  static String shorten(final Type ¢) {
+    return ¢ instanceof NameQualifiedType ? shorten((NameQualifiedType) ¢)
+        : ¢ instanceof PrimitiveType ? shorten((PrimitiveType) ¢)
+            : ¢ instanceof QualifiedType ? shorten((QualifiedType) ¢)
+                : ¢ instanceof SimpleType ? shorten((SimpleType) ¢)
+                    : ¢ instanceof WildcardType ? shortName((WildcardType) ¢)
+                        : ¢ instanceof ArrayType ? shorten((ArrayType) ¢)
+                            : ¢ instanceof IntersectionType ? shorten((IntersectionType) ¢) //
+                                : ¢ instanceof ParameterizedType ? shorten((ParameterizedType) ¢)//
+                                    : ¢ instanceof UnionType ? shortName((UnionType) ¢) : null;
   }
 
   static String shortName(@SuppressWarnings("unused") final UnionType __) {
     return null;
   }
 
-  static String shortName(final WildcardType t) {
-    return shorten(t.getBound());
+  static String shortName(final WildcardType ¢) {
+    return shorten(¢.getBound());
   }
 }

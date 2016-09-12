@@ -20,6 +20,10 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-16 */
 public enum iz {
   ;
+  public static boolean __abstract(final BodyDeclaration d) {
+    return (Modifier.ABSTRACT & d.getModifiers()) != 0;
+  }
+
   /** Determine whether a variable declaration is final or not
    * @param s some declaration
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
@@ -239,6 +243,14 @@ public enum iz {
         TIMES, //
         XOR, //
         null);
+  }
+
+  /** @param n the statement or block to check if it is an for statement
+   * @return <code><b>true</b></code> if the parameter an for statement or false
+   *         if the parameter not or if the block Contains more than one
+   *         statement */
+  public static boolean forStatement(final ASTNode n) {
+    return is(n, FOR_STATEMENT);
   }
 
   public static boolean ifStatement(final Statement s) {
@@ -725,7 +737,7 @@ public enum iz {
       return false;
     }
   }
-  
+
   static boolean literal(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
@@ -741,7 +753,7 @@ public enum iz {
   private static boolean is(final ASTNode n, final int type) {
     return n != null && type == n.getNodeType();
   }
-  
+
   private static boolean isOneOf(final int i, final int... is) {
     for (final int j : is)
       if (i == j)
@@ -767,5 +779,5 @@ public enum iz {
         return false;
     return true;
   }
-  
+
 }
