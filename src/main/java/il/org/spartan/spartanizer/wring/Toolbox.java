@@ -9,8 +9,47 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Wring} with a given sub-class of
+     * {@link ASTNode}.
+     * @param n JD
+     * @param ns JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
+      final List<Wring<N>> l = get(n);
+      for (final Wring<N> w : ns) {
+        if (w == null)
+          break;
+        if (!w.wringGroup().isEnabled())
+          continue;
+        l.add(w);
+      }
+      return this;
+    }
+
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
+    }
+  }
+
   /** The default instance of this class */
   static Toolbox instance;
+
+  public static Toolbox defaultInstance() {
+    return instance;
+  }
+
+  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
+    for (final Wring<N> $ : ns)
+      if ($.scopeIncludes(n))
+        return $;
+    return null;
+  }
 
   /** Make a {@link Toolbox} for a specific kind of wrings
    * @param clazz JD
@@ -27,7 +66,7 @@ public class Toolbox {
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
             new AssignmentOpSelf(), //
-            new AssignmentToPosrfixIncrement(), //
+            new AssignmentToPostfixIncrement(), //
             null) //
         .add(Block.class, //
             new BlockSimplify(), //
@@ -50,7 +89,7 @@ public class Toolbox {
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixEmptyStringAdditionToString(), //
-            new InfixEmptyStringAdditionReorder(), //
+            new InfixConcatenationEmptyStringLeft(), //
             new InfixFactorNegatives(), //
             new InfixAdditionEvaluate(), //
             // new ConcatStrings(), //removed for now so it won't break tests,
@@ -59,7 +98,7 @@ public class Toolbox {
             // new EvaluateShiftRight(), //
             // new EvaluateShiftLeft(), //
             new InfixTermsZero(), // must be before InfixAdditionSort
-            new InfixPlusRemoveParenthesis(),//
+            new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
             new InfixConditionalAndTrue(), //
@@ -70,17 +109,17 @@ public class Toolbox {
             new InfixPseudoAdditionSort(), //
             new InfixSubtractionSort(), //
             new InfixDivisonSort(), //
-            new InfixConditionalCommon(),//
+            new InfixConditionalCommon(), //
             null)
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
-            new BodyDeclarationSortModifiers.ofMethod(), //
+            new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
-            new BooleanConstants(), //
-            new ToStringToEmptyStringAddition(), //
+            new MethodInvocationValueOfBooleanConstant(), //
+            new MethodInvocationToStringToEmptyStringAddition(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
@@ -100,8 +139,8 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
-            new BreakToReturnInfiniteFor(), //
-            new BreakToReturnInfiniteWhile(), //
+            new BlockBreakToReturnInfiniteFor(), //
+            new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteFor(), //
             new ReturnToBreakFiniteWhile(), //
             null) //
@@ -138,20 +177,20 @@ public class Toolbox {
             new TernaryEliminate(), //
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
-            new CleverStringTernarization(), null) //
+            new TernaryPusdownStrings(), null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
-            new BodyDeclarationSortModifiers.ofType(), //
+            new AbstractBodyDeclarationSortModifiers.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new ModifierCleanEnum(), //
-            new BodyDeclarationSortModifiers.ofEnum(), //
+            new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
             new BodyDeclarationRemoveModifiers.OfField(), //
-            new BodyDeclarationSortModifiers.ofField(), //
+            new AbstractBodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -159,27 +198,16 @@ public class Toolbox {
             null) //
         .add(EnumConstantDeclaration.class, //
             new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
-            new BodyDeclarationSortModifiers.ofEnumConstant(), //
+            new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
-        .add(AnnotationTypeDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotation(), null) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation(), null) //
         // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
-  }
-
-  public static Toolbox defaultInstance() {
-    return instance;
-  }
-
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
-    for (final Wring<N> $ : ns)
-      if ($.scopeIncludes(n))
-        return $;
-    return null;
   }
 
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
@@ -200,33 +228,5 @@ public class Toolbox {
 
   <N extends ASTNode> List<Wring<N>> get(final N n) {
     return get(n.getClass());
-  }
-
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Wring} with a given sub-class of
-     * {@link ASTNode}.
-     * @param n JD
-     * @param ns JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
-      final List<Wring<N>> l = get(n);
-      for (final Wring<N> w : ns) {
-        if (w == null)
-          break;
-        if (!w.wringGroup().isEnabled())
-          continue;
-        l.add(w);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
   }
 }

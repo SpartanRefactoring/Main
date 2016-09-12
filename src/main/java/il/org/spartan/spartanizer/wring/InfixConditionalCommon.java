@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -9,7 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
@@ -32,7 +33,7 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
   private static Expression chopHead(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     es.remove(0);
-    return es.size() < 2 ? duplicate.of(lisp.first(es)) : subject.operands(es).to(x.getOperator());
+    return es.size() < 2 ? duplicate.of(first(es)) : subject.operands(es).to(x.getOperator());
   }
 
   private static Operator conjugate(final Operator o) {
@@ -51,14 +52,14 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
     final Operator conjugate = conjugate(o);
-    final InfixExpression left = az.infixExpression(core(step.left(x)));
+    final InfixExpression left = az.infixExpression(core(left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = az.infixExpression(core(step.right(x)));
+    final InfixExpression right = az.infixExpression(core(right(x)));
     if (right == null || right.getOperator() != conjugate)
       return null;
-    final Expression leftLeft = step.left(left);
-    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, step.left(right)) ? null
+    final Expression leftLeft = left(left);
+    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to(o)).to(conjugate);
   }
 }

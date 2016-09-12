@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
@@ -30,7 +31,7 @@ public class WringsTest {
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) lisp.first(statements(b));
+    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
     assert p != null;
     final SimpleName a = p.getName();
@@ -90,7 +91,7 @@ public class WringsTest {
     final MethodDeclaration m = extract.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
-    final EnhancedForStatement s = (EnhancedForStatement) lisp.first(statements(b));
+    final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
     final SingleVariableDeclaration p = s.getParameter();
     assert p != null;
     final SimpleName n = p.getName();

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -303,7 +304,7 @@ import il.org.spartan.spartanizer.engine.Collect.*;
   @Test public void forEnhancedAsParemeter() {
     final Statement s = s("for (int a: as) return a; ");
     final Block b = (Block) s;
-    final EnhancedForStatement s2 = (EnhancedForStatement) lisp.first(statements(b));
+    final EnhancedForStatement s2 = (EnhancedForStatement) first(statements(b));
     final SimpleName a = s2.getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(Collect.usesOf(a).in(s).size(), is(2));
@@ -398,12 +399,20 @@ import il.org.spartan.spartanizer.engine.Collect.*;
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
   }
 
+  private int nCount(final String statement) {
+    return searcher().in(s(statement)).size();
+  }
+
   @Test public void plusPlus() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("n++;")).size(), is(0));
   }
 
   @Test public void plusPlusPre() {
     azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
+  }
+
+  private Collector searcher() {
+    return Collect.usesOf(n);
   }
 
   @Test public void superMethodInocation() {
@@ -430,13 +439,5 @@ import il.org.spartan.spartanizer.engine.Collect.*;
 
   @Test public void vanillaShortVersion() {
     azzert.that(nCount("b = n;"), is(1));
-  }
-
-  private int nCount(final String statement) {
-    return searcher().in(s(statement)).size();
-  }
-
-  private Collector searcher() {
-    return Collect.usesOf(n);
   }
 }

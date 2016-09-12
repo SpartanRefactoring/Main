@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
@@ -21,7 +21,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
       if (!iz.literal1(¢))
         $.add(¢);
     return $.size() == xs.size() ? null
-        : $.isEmpty() ? duplicate.of(lisp.first(xs)) : $.size() == 1 ? duplicate.of(lisp.first($)) : subject.operands($).to(TIMES);
+        : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(TIMES);
   }
 
   @Override String description(final InfixExpression x) {

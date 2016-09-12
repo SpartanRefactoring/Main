@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -27,15 +28,15 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
   private static BooleanLiteral literal(final InfixExpression x) {
-    return az.booleanLiteral(core(literalOnLeft(x) ? step.left(x) : step.right(x)));
+    return az.booleanLiteral(core(literalOnLeft(x) ? left(x) : right(x)));
   }
 
   private static boolean literalOnLeft(final InfixExpression x) {
-    return iz.booleanLiteral(core(step.left(x)));
+    return iz.booleanLiteral(core(left(x)));
   }
 
   private static boolean literalOnRight(final InfixExpression x) {
-    return iz.booleanLiteral(core(step.right(x)));
+    return iz.booleanLiteral(core(right(x)));
   }
 
   private static boolean negating(final InfixExpression x, final BooleanLiteral l) {
@@ -43,11 +44,7 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
   }
 
   private static Expression nonLiteral(final InfixExpression x) {
-    return literalOnLeft(x) ? step.right(x) : step.left(x);
-  }
-
-  @Override public boolean scopeIncludes(final InfixExpression x) {
-    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
+    return literalOnLeft(x) ? right(x) : left(x);
   }
 
   @Override String description(final InfixExpression x) {
@@ -58,5 +55,9 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     final BooleanLiteral literal = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
     return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
+  }
+
+  @Override public boolean scopeIncludes(final InfixExpression x) {
+    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
   }
 }

@@ -1,20 +1,26 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** transforms "" + x to x when x is of type String
  * @author Stav Namir
- * @author Shalmon Niv
+ * @author Niv Shalmon
  * @since 2016-08-29 */
 public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression>
     implements il.org.spartan.spartanizer.wring.Kind.NoImpact {
+  private static String descriptionAux(final Expression x) {
+    return "Use " + (x != null ? x + "" : "the variable alone");
+  }
+
   private static boolean isEmptyStringLiteral(final Expression x) {
     return wizard.same(x, x.getAST().newStringLiteral());
   }
@@ -23,16 +29,12 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
     return type.get(¢1) == type.Primitive.Certain.STRING && isEmptyStringLiteral(¢2);
   }
 
-  private static String descriptionAux(final Expression x) {
-    return "Use " + (x != null ? x + "" : "the variable alone");
-  }
-
   @Override public String description() {
     return descriptionAux(null);
   }
 
   @Override String description(final InfixExpression x) {
-    return descriptionAux(isEmptyStringLiteral(step.right(x)) ? step.left(x) : step.right(x));
+    return descriptionAux(isEmptyStringLiteral(right(x)) ? left(x) : right(x));
   }
 
   @Override Expression replacement(final InfixExpression x) {
@@ -48,6 +50,6 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
         ++i;
       else
         es.remove(i);
-    return es.size() == ¢ ? null : es.size() == 1 ? lisp.first(es) : subject.operands(es).to(wizard.PLUS2);
+    return es.size() == ¢ ? null : es.size() == 1 ? first(es) : subject.operands(es).to(wizard.PLUS2);
   }
 }

@@ -38,12 +38,12 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Can
   }
 
   @Override Rewrite make(final IfStatement s) {
-    if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(step.then(s)).size() < 2)
+    if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = az.block(s.getParent());
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.insertAfter(s, extract.statements(step.then(s)), r, g);
+        Wrings.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = duplicate.of(s);
         newIf.setExpression(duplicate.of(make.notOf(s.getExpression())));
         newIf.setThenStatement(s.getAST().newReturnStatement());

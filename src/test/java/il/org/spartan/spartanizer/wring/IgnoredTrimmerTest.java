@@ -17,6 +17,10 @@ import org.junit.runners.*;
     trimming("    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n" + "").stays();
   }
 
+  @Test public void dontELiminateSwitch() {
+    trimming("switch (a) { default: }").stays();
+  }
+
   @Test public void forwardDeclaration1() {
     trimming("/*    * This is a comment    */      int i = 6;   int j = 2;   int k = i+2;   S.out.println(i-j+k); ")
         .to(" /*    * This is a comment    */      int j = 2;   int i = 6;   int k = i+2;   S.out.println(i-j+k); ");
@@ -53,6 +57,18 @@ import org.junit.runners.*;
     trimming(
         "  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   S.out.println(res.j);   return res; ")
             .to("  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.out.println(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.out.println(res2.j);        private BlahClass res;   final BlahClass res = new BlahClass(6);   S.out.println(res.j);   return res; ");
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+    trimming("if(a) { int i = 3; }").stays();
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+    trimming("if(a) { Object o; }").stays();
+  }
+
+  @Test public void ifToSwitch1() {
+    trimming("if (\"1\".equals(s))\n" + "").to("switch (s) {\n" + "");
   }
 
   @Test public void inline00() {
@@ -249,34 +265,6 @@ import org.junit.runners.*;
     trimming("").stays();
   }
 
-  @Test public void sameAssignmentDifferentTypes() {
-    trimming("public void f() {\n" + "").stays();
-  }
-
-  @Test public void shortestOperand09() {
-    trimming("return 2 - 4 < 50 - 20 - 10 - 5;").to("return 2 - 4 < 50 - 5 - 10 - 20 ;");
-  }
-
-  @Test public void sortSubstraction() {
-    trimming("1-c-b").to("1-b-c");
-  }
-
-  @Test public void dontELiminateSwitch() {
-    trimming("switch (a) { default: }").stays();
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
-    trimming("if(a) { int i = 3; }").stays();
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
-    trimming("if(a) { Object o; }").stays();
-  }
-
-  @Test public void ifToSwitch1() {
-    trimming("if (\"1\".equals(s))\n" + "").to("switch (s) {\n" + "");
-  }
-
   @Test public void renameVariableUnderscore2() {
     trimming("class A {int __; int f(int __) {return __;}}").to("class A {int ____; int f(int ____) {return ____;}}");
   }
@@ -285,9 +273,21 @@ import org.junit.runners.*;
     trimming("Character x = new Character(new Character(f()));").to("Character x = Character.valueOf(Character.valueOf(f()));");
   }
 
+  @Test public void sameAssignmentDifferentTypes() {
+    trimming("public void f() {\n" + "").stays();
+  }
+
   @Test public void shortestOperand05() {
     trimming("    final W s = new W(\"bob\");\n" + //
         "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";").to("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
+  }
+
+  @Test public void shortestOperand09() {
+    trimming("return 2 - 4 < 50 - 20 - 10 - 5;").to("return 2 - 4 < 50 - 5 - 10 - 20 ;");
+  }
+
+  @Test public void sortSubstraction() {
+    trimming("1-c-b").to("1-b-c");
   }
 
   @Test public void stringFromBuilderAddParenthesis() {

@@ -8,6 +8,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.engine.type.*;
+
 /** @author Yossi Gil
  * @since 2016 */
 public enum stringType {
@@ -23,6 +25,8 @@ public enum stringType {
 
   private static boolean isNotFromContext(final Expression x) {
     for (ASTNode context = parent(x); context != null; context = parent(context))
+      // TODO: Dor, you can make this switch simpler by using function {@link
+      // iz.is}
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
           if (((InfixExpression) context).getOperator().equals(PLUS))

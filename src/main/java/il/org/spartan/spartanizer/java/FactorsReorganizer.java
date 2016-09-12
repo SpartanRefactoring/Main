@@ -1,20 +1,16 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 // TOOD Niv: Who wrote this class?
 public class FactorsReorganizer {
-  public static Expression simplify(final InfixExpression x) {
-    return build(new FactorsCollector(x));
-  }
-
   private static Expression build(final FactorsCollector c) {
     return build(c.multipliers(), c.dividers());
   }
@@ -33,8 +29,8 @@ public class FactorsReorganizer {
   }
 
   private static Expression buildDividers(final List<Expression> xs) {
-    final Expression one = lisp.first(xs).getAST().newNumberLiteral("1");
-    final Expression $ = subject.pair(one, lisp.first(xs)).to(DIVIDE);
+    final Expression one = first(xs).getAST().newNumberLiteral("1");
+    final Expression $ = subject.pair(one, first(xs)).to(DIVIDE);
     if (xs.size() == 1)
       return $;
     xs.remove(0);
@@ -47,11 +43,15 @@ public class FactorsReorganizer {
       case 0:
         return null;
       case 1:
-        return lisp.first(xs);
+        return first(xs);
       case 2:
-        return subject.pair(lisp.first(xs), lisp.second(xs)).to(TIMES);
+        return subject.pair(first(xs), second(xs)).to(TIMES);
       default:
         return subject.operands(xs).to(TIMES);
     }
+  }
+
+  public static Expression simplify(final InfixExpression x) {
+    return build(new FactorsCollector(x));
   }
 }
