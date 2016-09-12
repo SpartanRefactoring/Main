@@ -638,23 +638,23 @@ public interface type {
     return inner.types.containsKey(name);
   }
 
-  static boolean isDouble(final Expression x) {
-    return get(x) == Certain.DOUBLE;
+  static boolean isDouble(final Expression ¢) {
+    return get(¢) == Certain.DOUBLE;
   }
 
   static boolean isInt(final Expression ¢) {
     return type.get(¢) == Certain.INT;
   }
 
-  static boolean isLong(final Expression x) {
-    return get(x) == Certain.LONG;
+  static boolean isLong(final Expression ¢) {
+    return get(¢) == Certain.LONG;
   }
 
-  default Primitive.Certain asPrimitiveCertain() {
+  default Certain asPrimitiveCertain() {
     return null;
   }
 
-  default type.Primitive.Uncertain asPrimitiveUncertain() {
+  default Uncertain asPrimitiveUncertain() {
     return null;
   }
 

@@ -51,8 +51,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
       return notAllDefined;
     }
 
-    @Override public boolean visit(final SimpleName n) {
-      if (!Collect.declarationsOf(n).in(l).isEmpty())
+    @Override public boolean visit(final SimpleName ¢) {
+      if (!Collect.declarationsOf(¢).in(l).isEmpty())
         notAllDefined = true;
       return false;
     }
