@@ -25,6 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
+// TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class Spartanization extends Refactoring {
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
@@ -109,11 +110,9 @@ public abstract class Spartanization extends Refactoring {
   }
 
   private ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m) {
-    if (pm != null)
       pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m);
-    if (pm != null)
       pm.done();
     return $;
   }
@@ -295,8 +294,8 @@ public abstract class Spartanization extends Refactoring {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor spm = newSubMonitor(pm);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(spm), spm).rewriteAST());
+    final IProgressMonitor m = newSubMonitor(pm);
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(m), m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
     pm.done();
