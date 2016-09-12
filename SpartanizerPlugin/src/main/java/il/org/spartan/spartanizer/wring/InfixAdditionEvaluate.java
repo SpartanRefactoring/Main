@@ -26,7 +26,7 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double sum = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       sum += extract.doubleNumber(¢);
     }
@@ -36,7 +36,7 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int sum = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       sum += extract.intNumber(¢);
     }
@@ -46,7 +46,7 @@ public class InfixAdditionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long sum = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       sum += extract.longNumber(¢);
     }

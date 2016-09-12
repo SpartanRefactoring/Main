@@ -23,12 +23,12 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     int remainder = extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       if (index != 0)
         remainder %= extract.intNumber(¢);
@@ -38,12 +38,12 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.computable(first(xs)))
+    if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     long remainder = extract.longNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.computable(¢))
+      if (!iz.compileTime(¢))
         return null;
       if (index != 0)
         remainder %= extract.longNumber(¢);

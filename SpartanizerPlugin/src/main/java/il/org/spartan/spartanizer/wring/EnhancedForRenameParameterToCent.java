@@ -10,7 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
+/** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
 public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
@@ -29,8 +29,8 @@ public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForSta
     assert n != null;
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body) || Collect.usesOf(n).in(body).isEmpty())
       return null;
-    if (m != null)
-      m.exclude(body);
+    //if (m != null)
+      //m.exclude(body);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Rewrite("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
