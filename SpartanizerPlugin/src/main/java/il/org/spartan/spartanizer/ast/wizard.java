@@ -63,20 +63,14 @@ public interface wizard {
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
 
-  // TODO: Alex, how come we still have this function? We should be using a
-  // Table.
+  // TODO: $ is initialized because otherwise complaining that variable may be not
+  // initialized from the reason it is initialized in an if statement.
   static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
-    return o == PLUS_ASSIGN ? InfixExpression.Operator.PLUS
-        : o == MINUS_ASSIGN ? MINUS
-            : o == TIMES_ASSIGN ? TIMES
-                : o == DIVIDE_ASSIGN ? DIVIDE
-                    : o == BIT_AND_ASSIGN ? AND
-                        : o == BIT_OR_ASSIGN ? OR
-                            : o == BIT_XOR_ASSIGN ? XOR
-                                : o == REMAINDER_ASSIGN ? REMAINDER
-                                    : o == LEFT_SHIFT_ASSIGN ? LEFT_SHIFT
-                                        : o == RIGHT_SHIFT_SIGNED_ASSIGN ? RIGHT_SHIFT_SIGNED
-                                            : o == RIGHT_SHIFT_UNSIGNED_ASSIGN ? RIGHT_SHIFT_UNSIGNED : null;
+    InfixExpression.Operator $ = NOT_EQUALS;
+    for (Map.Entry<Operator,Assignment.Operator> ¢ : infix.entrySet()) {
+      if (¢.getValue() == o) $ = ¢.getKey();
+    }
+    return $;
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
@@ -182,20 +176,14 @@ public interface wizard {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(left(a1), left(a2));
   }
 
-  // TODO: Alex: please convert this code into table driven. It is much easier
-  // to maintain. The table is already in this file.
+  // TODO: $ is initialized because otherwise complaining that variable may be not
+  // initialized from the reason it is initialized in an if statement.
   static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
-    return o == PLUS ? Assignment.Operator.PLUS_ASSIGN
-        : o == MINUS ? MINUS_ASSIGN
-            : o == TIMES ? TIMES_ASSIGN
-                : o == DIVIDE ? DIVIDE_ASSIGN
-                    : o == AND ? BIT_AND_ASSIGN
-                        : o == OR ? BIT_OR_ASSIGN
-                            : o == XOR ? BIT_XOR_ASSIGN
-                                : o == REMAINDER ? REMAINDER_ASSIGN
-                                    : o == LEFT_SHIFT ? LEFT_SHIFT_ASSIGN
-                                        : o == RIGHT_SHIFT_SIGNED ? RIGHT_SHIFT_SIGNED_ASSIGN
-                                            : o == RIGHT_SHIFT_UNSIGNED ? RIGHT_SHIFT_UNSIGNED_ASSIGN : null;
+    Assignment.Operator $ = REMAINDER_ASSIGN;
+    for (Map.Entry<Operator,Assignment.Operator> ¢ : infix.entrySet()) {
+      if (¢.getKey() == o) $ = ¢.getValue();
+    }
+    return $;
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or
