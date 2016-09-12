@@ -123,7 +123,7 @@ public enum iz {
     return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  public static boolean computable(final Expression ¢) {
+  public static boolean compileTime(final Expression ¢) {
     // TODO: Dor, one of the following two check may re redundant
     // TODO: Yossi, I don't see any redundancy here
     // TODO: Dor you check that it is a number and then it is anumber literal,
@@ -700,7 +700,7 @@ public enum iz {
   public static boolean validForEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
     for (final Expression e : lst)
-      if (!iz.computable(e))
+      if (!iz.compileTime(e))
         return false;
     return true;
   }
