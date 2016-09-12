@@ -19,7 +19,8 @@ import il.org.spartan.spartanizer.wring.*;
 // TODO: Ori, the name toggle is confusing
 public class ToggleSpartanization {
   static final String disabler = DisabledChecker.disablers[0];
-// TODO: Ori, spelling error...
+
+  // TODO: Ori, spelling error...
   public static void diactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
