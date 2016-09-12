@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Niv Shalmon
  * @since 2016-09-11 */
 public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
- /** Determines whether the parenthesis around an InfixExpression can be
+  /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return True if the parenthesis can be removed and false otherwise */
@@ -61,7 +61,8 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean changed = false;
     for (int i = 0; i < es.size(); ++i)
       if (iz.parenthesizeExpression(es.get(i))) {
-        // TODO: Niv, convert this into a for loop manually, or resolve issues:#145, #144
+        // TODO: Niv, convert this into a for loop manually, or resolve
+        // issues:#145, #144
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
         while (iz.parenthesizeExpression(¢)) {
           replace(es, ¢, i);
