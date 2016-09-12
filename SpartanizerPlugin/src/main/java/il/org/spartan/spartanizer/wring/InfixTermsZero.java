@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)

@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-08-01 */
-public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Canonicalization {
+public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
   static boolean degenerateElse(final IfStatement s) {
     return elze(s) != null && iz.vacuousElse(s);
   }

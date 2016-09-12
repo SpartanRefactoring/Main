@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.ast.*;
  * .
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Canonicalization {
+public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }

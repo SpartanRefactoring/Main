@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Canonicalization {
+public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collapse {
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }

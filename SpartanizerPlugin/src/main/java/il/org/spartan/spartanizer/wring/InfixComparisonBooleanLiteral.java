@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.ast.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static BooleanLiteral literal(final InfixExpression x) {
     return az.booleanLiteral(core(literalOnLeft(x) ? left(x) : right(x)));
   }
