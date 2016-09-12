@@ -14,6 +14,11 @@ public enum haz {
   @SuppressWarnings("unused") public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
+      boolean found() {
+        $.set(Boolean.TRUE);
+        return false;
+      }
+
       @Override public boolean visit(final EnumConstantDeclaration __) {
         return found();
       }
@@ -36,11 +41,6 @@ public enum haz {
 
       @Override public boolean visit(final VariableDeclarationStatement __) {
         return found();
-      }
-
-      boolean found() {
-        $.set(Boolean.TRUE);
-        return false;
       }
     });
     return $.get().booleanValue();

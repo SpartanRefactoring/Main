@@ -17,11 +17,6 @@ public class MetricsCollector {
   private static final String OUTPUT = "halstead.csv";
   private static CSVStatistics output = init();
 
-  public static void main(final String[] where) {
-    collect(where.length != 0 ? where : new String[] { "." });
-    System.err.println("Your output should be here: " + output.close());
-  }
-
   private static void collect(final CompilationUnit u) {
     output.put("Dexterity", metrics.dexterity(u));
     output.put("Leaves", metrics.leaves(u));
@@ -56,5 +51,10 @@ public class MetricsCollector {
     } catch (final IOException e) {
       throw new RuntimeException(OUTPUT, e);
     }
+  }
+
+  public static void main(final String[] where) {
+    collect(where.length != 0 ? where : new String[] { "." });
+    System.err.println("Your output should be here: " + output.close());
   }
 }

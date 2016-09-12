@@ -55,6 +55,10 @@ import org.eclipse.jdt.core.dom.*;
     return a.toLowerCase();
   }
 
+  private boolean isGenericVariation(final SimpleName ¢) {
+    return isGenericVariation(¢.getIdentifier());
+  }
+
   public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
     return isGenericVariation(¢.getName());
   }
@@ -72,6 +76,10 @@ import org.eclipse.jdt.core.dom.*;
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
 
+  private boolean isLower(final int i) {
+    return Character.isLowerCase(typeName.charAt(i));
+  }
+
   /** Shorthand for n.equals(this.shortName())
    * @param s JD
    * @return true if the provided name equals the type's short name */
@@ -79,16 +87,16 @@ import org.eclipse.jdt.core.dom.*;
     return s.equals(shortName());
   }
 
-  // TODO: Dan, is this a hack? You were supposed to look at the way
-  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
-  /** Returns the calculated short name for the type
-   * @return type's short name */
-  public String shortName() {
-    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
+  private boolean isUpper(final int i) {
+    return Character.isUpperCase(typeName.charAt(i));
   }
 
   String lastName() {
     return typeName.substring(lastNameIndex());
+  }
+
+  private String lastNameCharIndex(final int i) {
+    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
   }
 
   int lastNameIndex() {
@@ -103,24 +111,16 @@ import org.eclipse.jdt.core.dom.*;
     return 0;
   }
 
-  private boolean isGenericVariation(final SimpleName ¢) {
-    return isGenericVariation(¢.getIdentifier());
-  }
-
-  private boolean isLower(final int i) {
-    return Character.isLowerCase(typeName.charAt(i));
-  }
-
-  private boolean isUpper(final int i) {
-    return Character.isUpperCase(typeName.charAt(i));
-  }
-
-  private String lastNameCharIndex(final int i) {
-    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
-  }
-
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
+  }
+
+  // TODO: Dan, is this a hack? You were supposed to look at the way
+  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
+  /** Returns the calculated short name for the type
+   * @return type's short name */
+  public String shortName() {
+    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
   // TODO: Alex, here is a nice exercise; try to find a function that would
