@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.*;
 /** Convert <code>""+x</code> to <code>x+""</code>
  * @author Dan Greenstein
  * @since 2016 */
-public class InfixConcatenationEmptyStringLeft extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Canonicalization {
+public class InfixConcatenationEmptyStringLeft extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
   private static InfixExpression replace(final InfixExpression x) {
     return subject.pair(duplicate.of(right(x)), duplicate.of(left(x))).to(wizard.PLUS2);
   }

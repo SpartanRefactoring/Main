@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NoImpact {
+public final class CastToLong2Multiply1L extends Wring.ReplaceCurrentNode<CastExpression> implements Kind.NOP {
   private static NumberLiteral literal(final Expression x) {
     final NumberLiteral $ = x.getAST().newNumberLiteral();
     $.setToken("1L");
