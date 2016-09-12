@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.engine.*;
  *
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.Collapse {
+public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.NOP {
   @Override String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
