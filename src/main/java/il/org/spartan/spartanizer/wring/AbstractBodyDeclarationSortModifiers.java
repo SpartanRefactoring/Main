@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Alex Kopzon
  * @since 2016 */
 public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclaration> //
-    extends Wring.ReplaceCurrentNode<N> implements Kind.Canonicalization {
+    extends Wring.ReplaceCurrentNode<N> implements Kind.Collapse {
   static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> {
     return m1.isAnnotation() && m2.isAnnotation() ? 0
         : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m1.isModifier() ? 1 : Modifiers.gt(m1 + "", m2 + "");

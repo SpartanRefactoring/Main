@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double mul = 1;
     for (final Expression ¢ : xs) {

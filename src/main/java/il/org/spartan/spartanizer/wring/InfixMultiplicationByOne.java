@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wring.Wring.*;
 /** Replace <code>1*X</code> by <code>X</code>
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements Kind.NoImpact {
+public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
