@@ -38,6 +38,7 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
   }
 
   private static ASTNode replace(final Assignment a) {
+    // TODO: Alex use step.left, step right, instead of getLeftHandSide
     final InfixExpression ¢ = az.infixExpression(right(a));
     final Expression newRightExpr = az.expression(rightInfixReplacement(¢, a.getLeftHandSide()));
     return newRightExpr == null ? null : subject.pair(left(a), newRightExpr).to(wizard.infix.get(step.operator(¢)));
