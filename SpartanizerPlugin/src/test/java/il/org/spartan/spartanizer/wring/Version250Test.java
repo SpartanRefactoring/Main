@@ -21,6 +21,44 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+      public void i() {
+        f();
+      }
+    }
+  }
+  
+  @Test public void additionZeroTest_a() {
+    trimming("b = a + 0;").to("b = a;");
+  }
+  
+  @Test public void additionZeroTest_b() {
+    trimming("b=0+a;").to("b=a;");
+  }
+
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
@@ -952,15 +990,15 @@ public class Version250Test {
   }
 
   @Test public void issue72pg() {
-    trimming("0+(x+y)").stays();
+    trimming("0+(x+y)").to("x+y").stays();
   }
 
   @Test public void issue72ph() {
-    trimming("0+((x+y)+0+(z+h))+0").stays();
+    trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
   @Test public void issue72pi() {
-    trimming("0+(0+x+y+((int)x+0))").to("0+(0+x+y+((int)x))").to("0+(0+x+y+(int)x)").stays();
+    trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 
   @Ignore @Test public void issue73_01() {
@@ -1268,36 +1306,6 @@ public class Version250Test {
 
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
-  }
-
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      public void i() {
-        f();
-      }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-    }
   }
 
  // @formatter:on
