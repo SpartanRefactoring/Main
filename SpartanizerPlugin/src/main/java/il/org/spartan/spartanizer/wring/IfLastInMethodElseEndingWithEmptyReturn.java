@@ -38,7 +38,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015-09-09 */
-public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.Collapse {
+public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.EarlyReturn {
   @SuppressWarnings("unused") @Override String description(final IfStatement ____) {
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
