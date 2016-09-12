@@ -32,10 +32,8 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
       return null;
     final SimpleName n = first(ps).getName();
     assert n != null;
-    if (in(n.getIdentifier(), "$", "¢"))
+    if (in(n.getIdentifier(), "$", "¢") || haz.variableDefinition(d.getBody()))
       return null;
-    if (haz.variableDefinition(d.getBody())) 
-        return null;
     if (m != null)
       m.exclude(d);
     return new Rewrite("Rename paraemter " + n + " to ¢ ", d) {
