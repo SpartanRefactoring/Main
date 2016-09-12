@@ -13,6 +13,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
@@ -35,6 +36,7 @@ import il.org.spartan.spartanizer.utils.*;
   // =================== Empty Tests - Require Genesis ===================
   Environment ee0 = Environment.genesis();
   Environment ee1 = ee0.spawn();
+  private LinkedHashSet<Entry<String, Information>> s;
 
   @Test public void defaultDoesntHave() {
     azzert.that(e0.nest().doesntHave("Alex"), is(true));
@@ -240,186 +242,17 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that(ee1.empty(), is(false));
   }
 
-  @Test public void get() {
-    e0.put("Alex", new Information());
-    assert e0.get("Alex") != null;
+  // Handler for out of order and in order should be the same. Comparison
+  // function should be different.
+  @Ignore public void EngineTestFlatOrdered01() {
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
+    final EnvFlatHandler e = new EnvFlatHandler($);
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
+    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
+    e.compareInOrder(s);
   }
-
-  @Test public void getFromParent() {
-    assert e1.get("Alex") != null;
-    assert e1.get("Alex").blockScope == null;
-  }
-
-  @Test public void getOne() {
-    assert e1.get("Kopzon") != null;
-    assert e1.get("Kopzon").blockScope == null;
-  }
-
-  @Test public void has() {
-    e0.put("Alex", new Information());
-    azzert.that(e0.has("Alex"), is(true));
-  }
-
-  @Test public void hasInBoth() {
-    e1.put("Yossi", new Information());
-    azzert.that(e1.has("Yossi"), is(true));
-  }
-
-  @Test public void hasInParent() {
-    azzert.that(e1.has("Dan"), is(true));
-  }
-
-  @Test public void hasNowhere() {
-    azzert.that(e1.has("Onoes"), is(false));
-  }
-
-  @Test public void hasOne() {
-    azzert.that(e1.has("Kopzon"), is(true));
-    azzert.that(e1.has("Dan"), is(true));
-    azzert.that(e1.has("Yossi"), is(true));
-    azzert.that(e1.has("Alex"), is(true));
-  }
-
-  @Test public void hidingOne() {
-    assert e1.hiding("Alex") != null;
-  }
-
-  @Before public void init_one_level() {
-    e0.put("Alex", new Information());
-    e0.put("Dan", new Information());
-    e0.put("Yossi", new Information());
-    e1.put("Kopzon", new Information());
-    e1.put("Greenstein", new Information());
-    e1.put("Gill", new Information());
-  }
-
-  @Test public void names() {
-    e0.put("Alex", new Information());
-    azzert.that(e0.names().contains("Alex"), is(true));
-  }
-
-  @Test public void namesOne() {
-    azzert.that(e1.names().contains("Kopzon"), is(true));
-    azzert.that(e1.names().contains("Alex"), is(false));
-  }
-
-  // =================== basic ===================
-  @Test public void Nest() {
-    azzert.that(e0.nest(), is(EMPTY));
-  }
-
-  @Test public void NestOne() {
-    azzert.that(e1.nest(), is(e0));
-  }
-
-  @Test public void put() {
-    assert e0.put("Alex", new Information()) == null;
-  }
-
-  @Test public void putOne() {
-    assert e1.put("Kopzon1", new Information()) == null;
-  }
-
-  @Test public void putOneAndHide() {
-    assert e1.put("Alex", new Information()) != null;
-  }
-
-  @SuppressWarnings("unused") @Test public void putTest() {
-    try {
-      e0.nest().put("Dan", new Information());
-    } catch (final IllegalArgumentException e) {
-      /**/}
-  }
-
-  // ========================= use & define tests ===========================
-  @Test public void useTestMethodDefinition() {
-    Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
-  }
-
-  @Ignore public void useTestUsesAndDefinitions() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("i"), is(true));
-  }
-
-  @Ignore public void useTestUsesAndDefinitions2() {
-    final Set<Map.Entry<String, Information>> $ = Environment
-        .uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i < 10; ++i)x+=i").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("i"), is(true));
-  }
-
-  @Ignore public void useTestUsesAndDefinitions3() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + //
-        "catch(final UnsupportedOperationException e)" + //
-        "{z=3;}").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-    azzert.that($.contains("z"), is(true));
-  }
-
-  // Simple definitions
-  @Ignore public void useTestWithDefinitionsOnly() {
-    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get())).contains("x"), is(true));
-  }
-
-  @Ignore public void useTestWithDefinitionsOnly2() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-    azzert.that($.contains("z"), is(true));
-  }
-
-  @Ignore public void useTestWithDefinitionsOnly3() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-    azzert.that($.contains("z"), is(true));
-  }
-
-  @Ignore public void useTestWithDefinitionsOnly4() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-    azzert.that($.contains("z"), is(true));
-    azzert.that($.contains("k"), is(true));
-  }
-
-  // Simple uses.
-  @Ignore public void useTestWithUsesOnly() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-  }
-
-  @Ignore public void useTestWithUsesOnly2() {
-    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x)").get())).contains("x"), is(true));
-  }
-
-  @Ignore public void useTestWithUsesOnly3() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-  }
-
-  @Ignore public void useTestWithUsesOnly4() {
-    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
-    azzert.that($.contains("q"), is(true));
-    azzert.that($.contains("x"), is(true));
-    azzert.that($.contains("y"), is(true));
-    azzert.that($.contains("z"), is(true));
-  }
-
-  @Ignore public void useTestWithUsesOnly5() {
-    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
-  }
-
-  // ============================TestEngine Test================================
-  @Before public void initTestEngineTest() {
-    s = new LinkedHashSet<>();
-  }
-
-  private LinkedHashSet<Entry<String, Information>> s;
 
   @Test public void EngineTestFlatUnordered000() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;"));
@@ -556,18 +389,6 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($);
   }
 
-  // Handler for out of order and in order should be the same. Comparison
-  // function should be different.
-  @Ignore public void EngineTestFlatOrdered01() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
-    final EnvFlatHandler e = new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
-    e.compareInOrder(s);
-  }
-
   @Test public void EngineTestFromFile() {
     final EnvFlatHandler e = new EnvFlatHandler("EnvironmentTestMoreCodeExamples.java");
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
@@ -592,5 +413,184 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.C1.s", new Information(type.Primitive.Certain.STRING)));
     e.compareOutOfOrder(s);
+  }
+
+  @Test public void get() {
+    e0.put("Alex", new Information());
+    assert e0.get("Alex") != null;
+  }
+
+  @Test public void getFromParent() {
+    assert e1.get("Alex") != null;
+    assert e1.get("Alex").blockScope == null;
+  }
+
+  @Test public void getOne() {
+    assert e1.get("Kopzon") != null;
+    assert e1.get("Kopzon").blockScope == null;
+  }
+
+  @Test public void has() {
+    e0.put("Alex", new Information());
+    azzert.that(e0.has("Alex"), is(true));
+  }
+
+  @Test public void hasInBoth() {
+    e1.put("Yossi", new Information());
+    azzert.that(e1.has("Yossi"), is(true));
+  }
+
+  @Test public void hasInParent() {
+    azzert.that(e1.has("Dan"), is(true));
+  }
+
+  @Test public void hasNowhere() {
+    azzert.that(e1.has("Onoes"), is(false));
+  }
+
+  @Test public void hasOne() {
+    azzert.that(e1.has("Kopzon"), is(true));
+    azzert.that(e1.has("Dan"), is(true));
+    azzert.that(e1.has("Yossi"), is(true));
+    azzert.that(e1.has("Alex"), is(true));
+  }
+
+  @Test public void hidingOne() {
+    assert e1.hiding("Alex") != null;
+  }
+
+  @Before public void init_one_level() {
+    e0.put("Alex", new Information());
+    e0.put("Dan", new Information());
+    e0.put("Yossi", new Information());
+    e1.put("Kopzon", new Information());
+    e1.put("Greenstein", new Information());
+    e1.put("Gill", new Information());
+  }
+
+  // ============================TestEngine Test================================
+  @Before public void initTestEngineTest() {
+    s = new LinkedHashSet<>();
+  }
+
+  @Test public void names() {
+    e0.put("Alex", new Information());
+    azzert.that(e0.names().contains("Alex"), is(true));
+  }
+
+  @Test public void namesOne() {
+    azzert.that(e1.names().contains("Kopzon"), is(true));
+    azzert.that(e1.names().contains("Alex"), is(false));
+  }
+
+  // =================== basic ===================
+  @Test public void Nest() {
+    azzert.that(e0.nest(), is(EMPTY));
+  }
+
+  @Test public void NestOne() {
+    azzert.that(e1.nest(), is(e0));
+  }
+
+  @Test public void put() {
+    assert e0.put("Alex", new Information()) == null;
+  }
+
+  @Test public void putOne() {
+    assert e1.put("Kopzon1", new Information()) == null;
+  }
+
+  @Test public void putOneAndHide() {
+    assert e1.put("Alex", new Information()) != null;
+  }
+
+  @SuppressWarnings("unused") @Test public void putTest() {
+    try {
+      e0.nest().put("Dan", new Information());
+    } catch (final IllegalArgumentException e) {
+      /**/}
+  }
+
+  // ========================= use & define tests ===========================
+  @Test public void useTestMethodDefinition() {
+    Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
+  }
+
+  @Ignore public void useTestUsesAndDefinitions() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("i"), is(true));
+  }
+
+  @Ignore public void useTestUsesAndDefinitions2() {
+    final Set<Map.Entry<String, Information>> $ = Environment
+        .uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i < 10; ++i)x+=i").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("i"), is(true));
+  }
+
+  @Ignore public void useTestUsesAndDefinitions3() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + //
+        "catch(final UnsupportedOperationException e)" + //
+        "{z=3;}").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+    azzert.that($.contains("z"), is(true));
+  }
+
+  // Simple definitions
+  @Ignore public void useTestWithDefinitionsOnly() {
+    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get())).contains("x"), is(true));
+  }
+
+  @Ignore public void useTestWithDefinitionsOnly2() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+    azzert.that($.contains("z"), is(true));
+  }
+
+  @Ignore public void useTestWithDefinitionsOnly3() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+    azzert.that($.contains("z"), is(true));
+  }
+
+  @Ignore public void useTestWithDefinitionsOnly4() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+    azzert.that($.contains("z"), is(true));
+    azzert.that($.contains("k"), is(true));
+  }
+
+  // Simple uses.
+  @Ignore public void useTestWithUsesOnly() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+  }
+
+  @Ignore public void useTestWithUsesOnly2() {
+    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x)").get())).contains("x"), is(true));
+  }
+
+  @Ignore public void useTestWithUsesOnly3() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+  }
+
+  @Ignore public void useTestWithUsesOnly4() {
+    final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
+    azzert.that($.contains("q"), is(true));
+    azzert.that($.contains("x"), is(true));
+    azzert.that($.contains("y"), is(true));
+    azzert.that($.contains("z"), is(true));
+  }
+
+  @Ignore public void useTestWithUsesOnly5() {
+    azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
   }
 }

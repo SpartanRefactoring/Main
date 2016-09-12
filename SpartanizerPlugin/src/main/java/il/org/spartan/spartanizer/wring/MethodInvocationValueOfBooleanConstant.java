@@ -11,9 +11,9 @@ import il.org.spartan.spartanizer.ast.*;
  * <code>Boolean.valueOf(true) </code> into <code>Boolean.TRUE</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
-public final class BooleanConstants extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
+public final class MethodInvocationValueOfBooleanConstant extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   private static String asString(final BooleanLiteral l) {
-    return (l.booleanValue() ? "TRU" : "FALS") + "E";
+    return l.booleanValue() ? "TRUE" : "FALSE";
   }
 
   private static Expression replacement(final Expression x, final BooleanLiteral l) {

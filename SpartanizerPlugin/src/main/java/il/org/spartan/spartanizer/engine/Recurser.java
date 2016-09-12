@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -21,8 +23,8 @@ public class Recurser<T> {
       // We must have this weird special case of adding right before left
       // for some mysterious reason.
       final List<ASTNode> $ = new ArrayList<>();
-      $.add(step.left(¢));
-      $.add(step.right(¢));
+      $.add(left(¢));
+      $.add(right(¢));
       $.addAll(step.extendedOperands(¢));
       return $;
     }

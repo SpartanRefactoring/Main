@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -20,6 +21,36 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+      public void i() {
+        f();
+      }
+    }
+  }
+
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
@@ -128,12 +159,13 @@ public class Version250Test {
     trimming("x=x*y").to("x*=y");
   }
 
+  // Not provably-not-string.
   @Test public void issue107a() {
-    trimming("a+=1;").to("a++;").to("++a;").stays();
+    trimming("a+=1;").stays();
   }
 
   @Test public void issue107b() {
-    trimming("c+=1; int nice;").to("c++; int nice;");
+    trimming("for(int c = 0; c < 5; c-=1)\n" + "c*=2;").to("for(int c = 0; c < 5; c--)" + "c*=2;");
   }
 
   @Test public void issue107c() {
@@ -141,15 +173,11 @@ public class Version250Test {
   }
 
   @Test public void issue107d() {
-    trimming("for(int a ; a<10 ; a+=1){}").to("for(int a ; a<10 ; a++){}");
+    trimming("for(int a ; a<10 ; (--a)+=1){}").to("for(int a ; a<10 ; (--a)++){}");
   }
 
-  @Ignore public void issue107e() {
-    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;").to("a+=1+=1++++;").to("a+=1++++++;").to("a++++++++").stays();
-  }
-
-  @Test public void issue107e_1() {
-    trimming("a+=1+=1+=1+=1;").to("a+=1+=1+=1++;");
+  @Test public void issue107e() {
+    trimming("for(String a ; a.length()<3 ; (a = \"\")+=1){}").stays();
   }
 
   @Test public void issue107f() {
@@ -164,24 +192,32 @@ public class Version250Test {
     trimming("a-+=1;").to("a-++;");
   }
 
-  @Ignore public void issue107i() {
-    trimming("a+=1 and b+=1;").to("a++ and b+=1;").to("a++ and b++;");
-  }
-
-  @Test public void issue107j() {
+  @Test public void issue107i() {
     trimming("a-=1;").to("a--;").to("--a;").stays();
   }
 
-  @Test public void issue107k() {
+  @Test public void issue107j() {
     trimming("for(int a ; a<10 ; a-=1){}").to("for(int a ; a<10 ; a--){}");
   }
 
-  @Test public void issue107l() {
+  @Test public void issue107k() {
     trimming("a-=2;").stays();
   }
 
-  @Test public void issue107m() {
+  @Test public void issue107l() {
     trimming("while(x-=1){}").to("while(x--){}");
+  }
+
+  @Test public void issue107m() {
+    trimming("s = \"hello\"; \n" + "s += 1;").stays();
+  }
+
+  @Test public void issue107n() {
+    trimming("for(;; (a = 3)+=1){}").to("for(;; (a = 3)++){}");
+  }
+
+  @Test public void issue107o() {
+    trimming("for(int a ; a<3 ; a+=1){}").stays();
   }
 
   @Test public void issue108a() {
@@ -348,11 +384,11 @@ public class Version250Test {
     trimming("1 + 2 + (x+1)").stays();
   }
 
-  @Ignore() @Test public void issue129_04() {
+  @Ignore @Test public void issue129_04() {
     trimming("\"\" + 0 + (x - 7)").stays();
   }
 
-  @Ignore() @Test public void issue129_05() {
+  @Ignore @Test public void issue129_05() {
     trimming("x + 5 + y + 7.0 +(double)f(3)").stays();
   }
 
@@ -821,13 +857,13 @@ public class Version250Test {
     final String s = "0-x";
     final InfixExpression i = into.i(s);
     azzert.that(i, iz(s));
-    azzert.that(step.left(i), iz("0"));
-    azzert.that(step.right(i), iz("x"));
+    azzert.that(left(i), iz("0"));
+    azzert.that(right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert iz.literal0(step.left(i));
-    assert !iz.literal0(step.right(i));
-    azzert.that(make.minus(step.left(i)), iz("0"));
-    azzert.that(make.minus(step.right(i)), iz("-x"));
+    assert iz.literal0(left(i));
+    assert !iz.literal0(right(i));
+    azzert.that(make.minus(left(i)), iz("0"));
+    azzert.that(make.minus(right(i)), iz("-x"));
     trimming(s).to("-x");
   }
 
@@ -1163,9 +1199,9 @@ public class Version250Test {
 
   @Test public void issue83n() {
     trimming("if(a.size() <= -9) ++a;a+=1;")//
-        .to("if(false) ++a;a++;") //
-        .to("{}++a;") //
-        .to("++a;") //
+        .to("if(false) ++a;a+=1;") //
+        .to("{}a+=1;") //
+        .to("a+=1;") //
         .stays();
   }
 
@@ -1262,36 +1298,6 @@ public class Version250Test {
 
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
-  }
-
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-      public void i() {
-        f();
-      }
-    }
   }
 
  // @formatter:on

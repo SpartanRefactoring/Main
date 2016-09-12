@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
@@ -7,7 +8,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
@@ -45,13 +45,6 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
 
       boolean ¢(final CatchClause c) {
         return ¢(c.getException());
@@ -125,19 +118,14 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
             return true;
         return false;
       }
-    }.test(ss);
-  }
 
-  static Statement reorganizeNestedStatement(final Statement s) {
-    final List<Statement> ss = extract.statements(s);
-    switch (ss.size()) {
-      case 0:
-        return s.getAST().newEmptyStatement();
-      case 1:
-        return duplicate.of(lisp.first(ss));
-      default:
-        return reorganizeStatement(s);
-    }
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
+    }.test(ss);
   }
 
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
@@ -147,6 +135,18 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       if (os1.get(i) != os2.get(i))
         return false;
     return true;
+  }
+
+  static Statement reorganizeNestedStatement(final Statement s) {
+    final List<Statement> ss = extract.statements(s);
+    switch (ss.size()) {
+      case 0:
+        return s.getAST().newEmptyStatement();
+      case 1:
+        return duplicate.of(first(ss));
+      default:
+        return reorganizeStatement(s);
+    }
   }
 
   private static Block reorganizeStatement(final Statement s) {
@@ -171,7 +171,7 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
       case 0:
         return b.getAST().newEmptyStatement();
       case 1:
-        final Statement s = lisp.first(ss);
+        final Statement s = first(ss);
         if (iz.blockEssential(s))
           return subject.statement(s).toBlock();
         return duplicate.of(s);

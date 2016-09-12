@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
@@ -13,7 +14,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -68,8 +68,8 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
       $.add(x);
       return $;
     }
-    gather(core(step.left(x)), $);
-    gather(core(step.right(x)), $);
+    gather(core(left(x)), $);
+    gather(core(right(x)), $);
     if (x.hasExtendedOperands())
       gather(extendedOperands(x), $);
     return $;
@@ -86,10 +86,6 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
     return null;
   }
 
-  @Override public WringGroup wringGroup() {
-    return WringGroup.Abbreviation;
-  }
-
   @Override String description(final InfixExpression x) {
     return "remove 0 in X + 0 expressions from " + x;
   }
@@ -99,7 +95,7 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
     if (es.size() < 2)
       return null;
     final int n = minus.level(es);
-    if (n == 0 || n == 1 && minus.level(lisp.first(es)) == 1)
+    if (n == 0 || n == 1 && minus.level(first(es)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(x);
@@ -113,5 +109,9 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
+  }
+
+  @Override public WringGroup wringGroup() {
+    return WringGroup.Abbreviation;
   }
 }

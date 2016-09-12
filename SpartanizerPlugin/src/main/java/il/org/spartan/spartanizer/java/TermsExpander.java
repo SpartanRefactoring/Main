@@ -10,16 +10,13 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 
-/** Expands terms of +/- expressions without reordering.
+/** Expands terms of +/- expressions without reordering, e.g., convert
+ * <code>a + (b+c+(d-e))</code> into <code>a+b+c+d-e</code>
  * <p>
  * Functions named {@link #base} are non-recursive
  * @author Yossi Gil
  * @since 2016-08 */
 public class TermsExpander {
-  public static Expression simplify(final InfixExpression x) {
-    return !stringType.isNot(x) ? x : base(new TermsCollector(x));
-  }
-
   /** @see #recurse(List, InfixExpression) */
   private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
     return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
@@ -83,6 +80,10 @@ public class TermsExpander {
     final Term first = first(ts);
     assert first != null;
     return recurse(chop(ts), o == PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
+  }
+
+  public static Expression simplify(final InfixExpression x) {
+    return !stringType.isNot(x) ? x : base(new TermsCollector(x));
   }
 
   private static Expression step(final List<Term> ¢, final Expression $) {
