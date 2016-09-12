@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
  * class, e.g., <code>@Override void foo(){super.foo();}</code>
- *
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class MethodDeclarationDegenerateOverrideRemove extends Wring<MethodDeclaration> implements Kind.Canonicalization {
