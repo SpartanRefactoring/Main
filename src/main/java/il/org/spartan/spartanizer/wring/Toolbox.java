@@ -31,7 +31,7 @@ public class Toolbox {
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
             new AssignmentOpSelf(), //
-            new AssignmentToPosrfixIncrement(), //
+            new AssignmentToPostfixIncrement(), //
             null) //
         .add(Block.class, //
             new BlockSimplify(), //
@@ -54,7 +54,7 @@ public class Toolbox {
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
             new InfixEmptyStringAdditionToString(), //
-            new InfixEmptyStringAdditionReorder(), //
+            new InfixConcatenationEmptyStringLeft(), //
             new InfixFactorNegatives(), //
             new InfixAdditionEvaluate(), //
             // new ConcatStrings(), //removed for now so it won't break tests,
@@ -79,7 +79,7 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodRenameReturnToDollar(), //
             new BodyDeclarationRemoveModifiers.OfMethod(), //
-            new BodyDeclarationSortModifiers.ofMethod(), //
+            new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
             new StringEqualsConstant(), //
@@ -145,17 +145,17 @@ public class Toolbox {
             new TernaryPusdownStrings(), null) //
         .add(TypeDeclaration.class, //
             new ModifierCleanInterface(), //
-            new BodyDeclarationSortModifiers.ofType(), //
+            new AbstractBodyDeclarationSortModifiers.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new ModifierCleanEnum(), //
-            new BodyDeclarationSortModifiers.ofEnum(), //
+            new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
             new BodyDeclarationRemoveModifiers.OfField(), //
-            new BodyDeclarationSortModifiers.ofField(), //
+            new AbstractBodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -163,14 +163,14 @@ public class Toolbox {
             null) //
         .add(EnumConstantDeclaration.class, //
             new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
-            new BodyDeclarationSortModifiers.ofEnumConstant(), //
+            new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
-        .add(AnnotationTypeDeclaration.class, new BodyDeclarationSortModifiers.ofAnnotation(), null) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation(), null) //
         // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
   }

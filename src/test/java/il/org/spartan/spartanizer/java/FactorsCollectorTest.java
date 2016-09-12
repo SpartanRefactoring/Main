@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -43,8 +44,8 @@ import il.org.spartan.spartanizer.ast.*;
   @Test public void test04() {
     final InfixExpression i = i("a/c");
     azzert.that(i.getOperator(), is(DIVIDE));
-    azzert.that(step.left(i), iz("a"));
-    azzert.that(step.right(i), iz("c"));
+    azzert.that(left(i), iz("a"));
+    azzert.that(right(i), iz("c"));
     c.collect(i);
     azzert.that(c.multipliers().size(), is(1));
     azzert.that(c.dividers().size(), is(1));
@@ -53,8 +54,8 @@ import il.org.spartan.spartanizer.ast.*;
   @Test public void test05() {
     final InfixExpression i = i("a/c");
     azzert.that(i.getOperator(), is(DIVIDE));
-    azzert.that(step.left(i), iz("a"));
-    azzert.that(step.right(i), iz("c"));
+    azzert.that(left(i), iz("a"));
+    azzert.that(right(i), iz("c"));
     c.collectTimesNonLeaf(i);
     azzert.that(c.multipliers().size(), is(1));
     azzert.that(c.dividers().size(), is(1));
@@ -63,7 +64,7 @@ import il.org.spartan.spartanizer.ast.*;
   @Test public void test06() {
     final InfixExpression i = i("a * b / c");
     azzert.that(i.getOperator(), is(DIVIDE));
-    azzert.that(az.infixExpression(step.left(i)).getOperator(), is(TIMES));
+    azzert.that(az.infixExpression(left(i)).getOperator(), is(TIMES));
     c.collect(i);
     azzert.that(c.multipliers().size(), is(2));
     azzert.that(c.dividers().size(), is(1));

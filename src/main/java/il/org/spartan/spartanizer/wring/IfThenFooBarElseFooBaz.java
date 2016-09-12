@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.wring.Wrings.*;
 
 import java.util.*;
@@ -8,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -41,8 +42,8 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
-      final Statement s1 = lisp.first(ss1);
-      final Statement s2 = lisp.first(ss2);
+      final Statement s1 = first(ss1);
+      final Statement s2 = first(ss2);
       if (!wizard.same(s1, s2))
         break;
       $.add(s1);
@@ -57,10 +58,10 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
   }
 
   @Override Rewrite make(final IfStatement s) {
-    final List<Statement> then = extract.statements(step.then(s));
+    final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(step.elze(s));
+    final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);

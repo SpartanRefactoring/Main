@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -32,7 +34,7 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
   }
 
   @Override String description(final InfixExpression x) {
-    return descriptionAux(isEmptyStringLiteral(step.right(x)) ? step.left(x) : step.right(x));
+    return descriptionAux(isEmptyStringLiteral(right(x)) ? left(x) : right(x));
   }
 
   @Override Expression replacement(final InfixExpression x) {
@@ -48,6 +50,6 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
         ++i;
       else
         es.remove(i);
-    return es.size() == ¢ ? null : es.size() == 1 ? lisp.first(es) : subject.operands(es).to(wizard.PLUS2);
+    return es.size() == ¢ ? null : es.size() == 1 ? first(es) : subject.operands(es).to(wizard.PLUS2);
   }
 }

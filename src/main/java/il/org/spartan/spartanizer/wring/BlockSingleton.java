@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
@@ -35,6 +35,6 @@ public final class BlockSingleton extends Wring.ReplaceCurrentNode<Block> implem
   @Override Statement replacement(final Block b) {
     final ASTNode parent = step.parent(b);
     return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
-        : replacement(lisp.onlyOne(statements(b)));
+        : replacement(onlyOne(statements(b)));
   }
 }

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2016-04-04 */
 public final class MethodInvocationValueOfBooleanConstant extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Canonicalization {
   private static String asString(final BooleanLiteral l) {
-    return (l.booleanValue() ? "TRUE" : "FALSE") ;
+    return l.booleanValue() ? "TRUE" : "FALSE";
   }
 
   private static Expression replacement(final Expression x, final BooleanLiteral l) {

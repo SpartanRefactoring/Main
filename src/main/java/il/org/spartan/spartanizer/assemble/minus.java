@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.assemble;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -8,7 +9,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
@@ -29,7 +29,7 @@ public enum minus {
   }
 
   public static int level(final InfixExpression x) {
-    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
+    return out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
   }
 
   public static int level(final List<Expression> xs) {
@@ -48,7 +48,7 @@ public enum minus {
   }
 
   public static Expression peel(final InfixExpression x) {
-    return lisp.out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
+    return out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
   }
 
   public static Expression peel(final NumberLiteral $) {
@@ -56,7 +56,7 @@ public enum minus {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return lisp.out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
+    return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 
   private static int level(final PrefixExpression ¢) {

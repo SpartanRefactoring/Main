@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -33,7 +35,7 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    final ReturnStatement r1 = extract.returnStatement(step.then(s));
+    final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
       return null;
     final Expression e1 = extract.core(r1.getExpression());
@@ -47,6 +49,6 @@ public final class IfReturnNoElseReturn extends Wring.ReplaceToNextStatement<IfS
   }
 
   @Override boolean scopeIncludes(final IfStatement s) {
-    return iz.vacuousElse(s) && extract.returnStatement(step.then(s)) != null && extract.nextReturn(s) != null;
+    return iz.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
   }
 }

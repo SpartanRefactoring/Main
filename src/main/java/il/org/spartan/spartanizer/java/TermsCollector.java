@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
@@ -62,8 +62,8 @@ public class TermsCollector {
     assert !isLeafTerm(x);
     assert iz.infixMinus(x);
     final List<Expression> es = hop.operands(x);
-    addPositiveTerm(core(lisp.first(es)));
-    return collectNegativeTerms(lisp.rest(es));
+    addPositiveTerm(core(first(es)));
+    return collectNegativeTerms(rest(es));
   }
 
   private Void addMinus(final Expression x) {
@@ -110,8 +110,8 @@ public class TermsCollector {
   private Void collectMinusPrefixMinusExprssion(final InfixExpression x) {
     assert x != null;
     final List<Expression> es = hop.operands(x);
-    collectNegativeTerm(core(lisp.first(es)));
-    return collectPositiveTerms(lisp.rest(es));
+    collectNegativeTerm(core(first(es)));
+    return collectPositiveTerms(rest(es));
   }
 
   private Void collectMinusPrefixPlusExpression(final InfixExpression x) {
