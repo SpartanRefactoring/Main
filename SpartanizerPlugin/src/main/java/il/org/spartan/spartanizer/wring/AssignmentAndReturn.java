@@ -25,6 +25,10 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
+// TODO: Dan/Alex: add an issue for the following: if a is a local variable, you
+// convert to simply a=3. Assignment to local variables should not be preserved.
+// To make this happen, we need a wring that removes dead assignments to local
+// variables. Attach the "new-wring" label to this one.
 public final class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> implements Kind.Canonicalization {
   @Override String description(final Assignment a) {
     return "Inline assignment to " + left(a) + " with its subsequent 'return'";
