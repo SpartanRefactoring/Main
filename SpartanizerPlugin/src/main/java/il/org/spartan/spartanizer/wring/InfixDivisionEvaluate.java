@@ -79,9 +79,7 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != DIVIDE)
-      return null;
-    if(EvaluateAux.getEvaluatedType(x)== null)
+    if (x.getOperator() != DIVIDE || EvaluateAux.getEvaluatedType(x) == null)
       return null;
     switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:

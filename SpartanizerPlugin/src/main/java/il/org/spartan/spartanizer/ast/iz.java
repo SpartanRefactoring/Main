@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -9,6 +10,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -285,8 +288,8 @@ public enum iz {
     return step.operator(az.infixExpression(n)) == wizard.PLUS2;
   }
 
-  public static boolean infixTimes(final Expression n) {
-    return step.operator(az.infixExpression(n)) == TIMES;
+  public static boolean infixTimes(final Expression x) {
+    return step.operator(az.infixExpression(x)) == TIMES;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
@@ -728,5 +731,17 @@ public enum iz {
       if (i == j)
         return true;
     return false;
+  }
+  
+  public static boolean doubleType(final Expression x) {
+    return type.get(x) == DOUBLE;
+  }
+
+  public static boolean intType(final Expression x) {
+    return type.get(x) == INT;
+  }
+
+  public static boolean longType(final Expression x) {
+    return type.get(x) == LONG;
   }
 }

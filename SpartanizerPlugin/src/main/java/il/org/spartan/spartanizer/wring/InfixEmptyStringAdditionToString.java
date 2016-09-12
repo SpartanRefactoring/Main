@@ -46,9 +46,8 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
           isString = true;
       }
       else {
-        if (i < es.size() - 1)
-          if (type.get(es.get(i+1)) == Certain.STRING)
-            continue;
+        if (i < es.size() - 1 && type.get(es.get(i + 1)) == Certain.STRING)
+          continue;
         if (!isString){
           ¢.add(e);
           isString = true;
