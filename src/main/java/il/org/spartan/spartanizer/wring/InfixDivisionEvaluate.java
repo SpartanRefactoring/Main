@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -80,9 +79,9 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
   @Override ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != DIVIDE)
+    if (x.getOperator() != DIVIDE || EvaluateAux.getEvaluatedType(x) == null)
       return null;
-    switch (getEvaluatedType(x)) {
+    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;
