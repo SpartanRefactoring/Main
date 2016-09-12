@@ -23,30 +23,30 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.computable(first(xs)))
       return null;
-    int remainder = EvaluateAux.extractInt(first(xs));
+    int remainder =extract.intNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
       if (index != 0)
-        remainder %= EvaluateAux.extractInt(¢);
+        remainder %= extract.intNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Integer.toString(remainder));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !EvaluateAux.isCompatible(first(xs)))
+    if (xs.isEmpty() || !iz.computable(first(xs)))
       return null;
-    long remainder = EvaluateAux.extractLong(first(xs));
+    long remainder = extract.longNumber(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.computable(¢))
         return null;
       if (index != 0)
-        remainder %= EvaluateAux.extractLong(¢);
+        remainder %= extract.longNumber(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(remainder) + "L");
@@ -61,6 +61,8 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    if(!iz.validForEvaluation(x))
+      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
     if (x.getOperator() != REMAINDER)
