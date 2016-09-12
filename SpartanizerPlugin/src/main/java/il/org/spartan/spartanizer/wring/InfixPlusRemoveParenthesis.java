@@ -32,6 +32,11 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
   /* TODO: Niv. It would be easy to fix, just let TermExpander do its work, only
    * after it consulted `type` to see that it is sure it is arithmetics. Further
    * more, I add an issue for class ConcatenationExpander */
+  /* TODO: Yossi, this is what already happens. I don't see any issue about
+   * ConcatenationExpander when I'm writing this, but we already have wrings
+   * that do that. The code currently works as expected, aside for the bug
+   * with plant.
+   */
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concating.
    * @param ¢ an InfixExpression that's inside parenthesis
