@@ -137,8 +137,8 @@ public enum Collect {
         return add(f.getName());
       }
 
-      @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(fragments(s));
+      @Override public boolean visit(final VariableDeclarationStatement ¢) {
+        addFragments(fragments(¢));
         return true;
       }
 
@@ -149,9 +149,9 @@ public enum Collect {
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
        *         {@SimpleName} is equal to the ASTnode's provided by the closure
        *         (n) */
-      boolean add(final SimpleName candidate) {
-        if (wizard.same(candidate, n))
-          into.add(candidate);
+      boolean add(final SimpleName ¢) {
+        if (wizard.same(¢, n))
+          into.add(¢);
         return true;
       }
 

@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class MethodDeclarationRenameSingleParameterToCent extends Wring<MethodDeclaration> implements Kind.Centification {
-  @Override String description(final MethodDeclaration d) {
-    return d.getName() + "";
+  @Override String description(final MethodDeclaration ¢) {
+    return ¢.getName() + "";
   }
 
   // TODO: Alex and Dan. Here you may want to test your environment on this one.

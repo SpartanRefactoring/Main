@@ -51,11 +51,11 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(o);
   }
 
-  @Override String description(final Assignment a) {
-    return "Replace x = x " + step.operator(a) + "a; to x " + step.operator(a) + "= a;";
+  @Override String description(final Assignment ¢) {
+    return "Replace x = x " + step.operator(¢) + "a; to x " + step.operator(¢) + "= a;";
   }
 
-  @Override ASTNode replacement(final Assignment a) {
-    return !iz.isOpAssign(a) || !iz.infixExpression(right(a)) ? null : replace(a);
+  @Override ASTNode replacement(final Assignment ¢) {
+    return !iz.isOpAssign(¢) || !iz.infixExpression(right(¢)) ? null : replace(¢);
   }
 }
