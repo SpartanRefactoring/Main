@@ -41,7 +41,7 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Kind.SyntacticBaggage {
+public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Kind.NOP {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
