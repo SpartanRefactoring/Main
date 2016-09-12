@@ -86,6 +86,10 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
     return null;
   }
 
+  @Override public WringGroup wringGroup() {
+    return WringGroup.Abbreviation;
+  }
+
   @Override String description(final InfixExpression x) {
     return "remove 0 in X + 0 expressions from " + x;
   }
@@ -109,9 +113,5 @@ public final class InfixAdditionZero extends Wring<InfixExpression> {
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
-  }
-
-  @Override public WringGroup wringGroup() {
-    return WringGroup.Abbreviation;
   }
 }

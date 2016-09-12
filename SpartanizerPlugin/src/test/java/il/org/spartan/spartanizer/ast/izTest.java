@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.ast;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.engine.into.*;
-import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -21,6 +20,30 @@ public class izTest {
 
   @Test public void booleanLiteralFalseOnNull() {
     azzert.that(iz.booleanLiteral(e("null")), is(false));
+  }
+
+  @Test public void booleanLiteralFalseOnNumeric() {
+    azzert.that(iz.booleanLiteral(e("12")), is(false));
+  }
+
+  @Test public void booleanLiteralFalseOnThis() {
+    azzert.that(iz.booleanLiteral(e("this")), is(false));
+  }
+
+  @Test public void booleanLiteralTrueOnFalse() {
+    azzert.that(iz.booleanLiteral(e("false")), is(true));
+  }
+
+  @Test public void booleanLiteralTrueOnTrue() {
+    azzert.that(iz.booleanLiteral(e("true")), is(true));
+  }
+
+  @Test public void callIsSpecificTrue() {
+    azzert.that(iz.constant(e("this")), is(true));
+  }
+
+  @Test public void canMakeExpression() {
+    e("2+2");
   }
 
   @Test public void emptyStringLiteral0() {
@@ -48,30 +71,6 @@ public class izTest {
   @Test public void emptyStringLiteral5() {
     final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
     assert "".equals(¢.getLiteralValue());
-  }
-
-  @Test public void booleanLiteralFalseOnNumeric() {
-    azzert.that(iz.booleanLiteral(e("12")), is(false));
-  }
-
-  @Test public void booleanLiteralFalseOnThis() {
-    azzert.that(iz.booleanLiteral(e("this")), is(false));
-  }
-
-  @Test public void booleanLiteralTrueOnFalse() {
-    azzert.that(iz.booleanLiteral(e("false")), is(true));
-  }
-
-  @Test public void booleanLiteralTrueOnTrue() {
-    azzert.that(iz.booleanLiteral(e("true")), is(true));
-  }
-
-  @Test public void callIsSpecificTrue() {
-    azzert.that(iz.constant(e("this")), is(true));
-  }
-
-  @Test public void canMakeExpression() {
-    e("2+2");
   }
 
   @Test public void isConstantFalse() {
