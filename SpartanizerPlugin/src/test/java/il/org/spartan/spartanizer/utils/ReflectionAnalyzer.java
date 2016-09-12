@@ -2,24 +2,8 @@ package il.org.spartan.spartanizer.utils;
 
 import il.org.spartan.*;
 
-class A {
-  class B {
-    A f() {
-      return A.this;
-    }
-  }
-}
-
 public enum ReflectionAnalyzer {
   ;
-  class InnerClass {
-    // Nothing here.
-  }
-
-  class StaticInnerClass {
-    // Nothing here.
-  }
-
   /** @param args command line arguments */
   public static void main(final String[] args) {
     class LocalClass {
@@ -48,5 +32,21 @@ public enum ReflectionAnalyzer {
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;
     return $;
+  }
+
+  class InnerClass {
+    // Nothing here.
+  }
+
+  class StaticInnerClass {
+    // Nothing here.
+  }
+}
+
+class A {
+  class B {
+    A f() {
+      return A.this;
+    }
   }
 }

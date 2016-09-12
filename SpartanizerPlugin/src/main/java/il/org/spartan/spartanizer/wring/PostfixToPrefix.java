@@ -19,15 +19,15 @@ public final class PostfixToPrefix extends Wring.ReplaceCurrentNode<PostfixExpre
     return o == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
 
-  @Override String description(final PostfixExpression x) {
-    return "Convert post-" + description(x.getOperator()) + " of " + step.operand(x) + " to pre-" + description(x.getOperator());
-  }
-
   @Override protected boolean eligible(final PostfixExpression x) {
     return !(x.getParent() instanceof Expression) //
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(x) == null //
         && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(x) == null //
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(x) == null;
+  }
+
+  @Override String description(final PostfixExpression x) {
+    return "Convert post-" + description(x.getOperator()) + " of " + step.operand(x) + " to pre-" + description(x.getOperator());
   }
 
   @Override PrefixExpression replacement(final PostfixExpression x) {

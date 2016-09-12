@@ -46,15 +46,15 @@ public class EnvNestedHandler extends ENVTestEngineAbstract {
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
-        return ¢.values();
-      }
-
       // runs on the Ids
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(values(¢));
         return true;
+      }
+
+      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
+        return ¢.values();
       }
     });
   }
