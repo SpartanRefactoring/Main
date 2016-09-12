@@ -42,10 +42,14 @@ public class hazTest {
   }
 
   @Test public void seriesA_08() {
-    assert haz.variableDefinition(s("try (O a = new O()) {}"));
+    assert haz.variableDefinition(s("class C {void f(int a){return a;}}"));
   }
 
   @Test public void seriesA_09() {
+    assert haz.variableDefinition(s("try (O a = new O()) {}"));
+  }
+
+  @Test public void seriesA_10() {
     assert haz.variableDefinition(s("try {} catch (Exception x) {}"));
   }
 }
