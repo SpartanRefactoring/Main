@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.java.*;
  * code>a-b-c</code>
  * @author Yossi Gil
  * @since 2016 */
-public final class InfixAdditionSubtractionExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
+public final class InfixAdditionSubtractionExpand extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
   @Override String description(final InfixExpression x) {
     return "Expand additive terms in " + x;
   }
