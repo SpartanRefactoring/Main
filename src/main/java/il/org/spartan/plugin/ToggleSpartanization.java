@@ -15,6 +15,8 @@ import org.eclipse.ltk.core.refactoring.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.*;
 
+// TODO: Ori, why no header here?
+// TODO: Ori, the name toggle is confusing
 public class ToggleSpartanization {
   static final String disabler = DisabledChecker.disablers[0];
 // TODO: Ori, spelling error...
