@@ -19,7 +19,7 @@ public class LiteralParser {
     this.literal = literal;
   }
 
-  /** @return an the type of this literal.
+  /** @return the type of this literal.
    * @see PrudentType */
   public Primitive.Certain type() {
     if (literal.charAt(0) == '\'')
