@@ -20,6 +20,48 @@ import il.org.spartan.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
 @SuppressWarnings({ "static-method", "unused" }) public class Application implements IApplication {
+  /** Data structure designed to hold and compute information about a single
+   * file, in order to produce statistics when completed execution */
+  private class FileStats {
+    final File file;
+    final int linesBefore;
+    int linesAfter;
+    final List<Integer> roundStats = new ArrayList<>();
+
+    public FileStats(final File file) throws IOException {
+      linesBefore = countLines(this.file = file);
+    }
+
+    public void addRoundStat(final int i) {
+      roundStats.add(Integer.valueOf(i));
+    }
+
+    public void countLinesAfter() throws IOException {
+      linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
+    }
+
+    public String fileName() {
+      return file.getName();
+    }
+
+    public int getLinesAfter() {
+      return linesAfter;
+    }
+
+    public int getLinesBefore() {
+      return linesBefore;
+    }
+
+    public int getRoundStat(final int r) {
+      try {
+        return roundStats.get(r).intValue();
+      } catch (final IndexOutOfBoundsException x) {
+        x.printStackTrace();
+        return 0;
+      }
+    }
+  }
+
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
@@ -38,64 +80,6 @@ import il.org.spartan.utils.*;
   boolean optStatsLines = false, optStatsChanges = false, printLog = false;
   int optRounds = 20;
   String optPath;
-
-  @Override public Object start(final IApplicationContext arg0) {
-    if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
-      return IApplication.EXIT_OK;
-    final List<FileStats> fileStats = new ArrayList<>();
-    try {
-      prepareTempIJavaProject();
-    } catch (final CoreException e) {
-      System.err.println(e.getMessage());
-      return IApplication.EXIT_OK;
-    }
-    if (printLog) {
-      LogManager.activateLog();
-      LogManager.initialize("/home/matteo/SpartanLog");
-    }
-    int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
-      ICompilationUnit u = null;
-      try {
-        u = openCompilationUnit(f);
-        final FileStats s = new FileStats(f);
-        for (int i = 0; i < optRounds; ++i) {
-          final int n = SpartanizeAll.countSuggestions(u);
-          if (n == 0)
-            break;
-          s.addRoundStat(n);
-          eclipse.apply(u);
-        }
-        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-        if (optVerbose)
-          System.out.println("Spartanized file " + f.getAbsolutePath());
-        s.countLinesAfter();
-        fileStats.add(s);
-        ++done;
-      } catch (final JavaModelException | IOException e) {
-        System.err.println(f + ": " + e.getMessage());
-        ++failed;
-      } catch (final Exception e) {
-        System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
-        e.printStackTrace();
-        ++failed;
-      } finally {
-        discardCompilationUnit(u);
-      }
-    }
-    System.out.println(done + " files processed. " + (failed == 0 ? "" : failed + " failed."));
-    if (optStatsChanges)
-      printChangeStatistics(fileStats);
-    if (optStatsLines)
-      printLineStatistics(fileStats);
-    if (printLog)
-      LogManager.closeAllWriters();
-    return IApplication.EXIT_OK;
-  }
-
-  @Override public void stop() {
-    // Unused
-  }
 
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
@@ -137,6 +121,16 @@ import il.org.spartan.utils.*;
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
+  }
+
+  private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final PackageDeclaration d) {
+        $.set(d.getName() + "");
+        return false;
+      }
+    });
+    return $.get();
   }
 
   ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
@@ -201,6 +195,23 @@ import il.org.spartan.utils.*;
     javaProject.setRawClasspath(buildPath, null);
   }
 
+  private void printChangeStatistics(final List<FileStats> ss) {
+    System.out.println("\nTotal changes made: ");
+    if (optIndividualStatistics)
+      for (final FileStats f : ss) {
+        System.out.println("\n  " + f.fileName());
+        for (int i = 0; i < optRounds; ++i)
+          System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
+      }
+    else
+      for (int i = 0; i < optRounds; ++i) {
+        int roundSum = 0;
+        for (final FileStats f : ss)
+          roundSum += f.getRoundStat(i);
+        System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
+      }
+  }
+
   void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
@@ -246,72 +257,61 @@ import il.org.spartan.utils.*;
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PackageDeclaration d) {
-        $.set(d.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  private void printChangeStatistics(final List<FileStats> ss) {
-    System.out.println("\nTotal changes made: ");
-    if (optIndividualStatistics)
-      for (final FileStats f : ss) {
-        System.out.println("\n  " + f.fileName());
-        for (int i = 0; i < optRounds; ++i)
-          System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
-      }
-    else
-      for (int i = 0; i < optRounds; ++i) {
-        int roundSum = 0;
-        for (final FileStats f : ss)
-          roundSum += f.getRoundStat(i);
-        System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
-      }
-  }
-
-  /** Data structure designed to hold and compute information about a single
-   * file, in order to produce statistics when completed execution */
-  private class FileStats {
-    final File file;
-    final int linesBefore;
-    int linesAfter;
-    final List<Integer> roundStats = new ArrayList<>();
-
-    public FileStats(final File file) throws IOException {
-      linesBefore = countLines(this.file = file);
+  @Override public Object start(final IApplicationContext arg0) {
+    if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
+      return IApplication.EXIT_OK;
+    final List<FileStats> fileStats = new ArrayList<>();
+    try {
+      prepareTempIJavaProject();
+    } catch (final CoreException e) {
+      System.err.println(e.getMessage());
+      return IApplication.EXIT_OK;
     }
-
-    public void addRoundStat(final int i) {
-      roundStats.add(Integer.valueOf(i));
+    if (printLog) {
+      LogManager.activateLog();
+      LogManager.initialize("/home/matteo/SpartanLog");
     }
-
-    public void countLinesAfter() throws IOException {
-      linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
-    }
-
-    public String fileName() {
-      return file.getName();
-    }
-
-    public int getLinesAfter() {
-      return linesAfter;
-    }
-
-    public int getLinesBefore() {
-      return linesBefore;
-    }
-
-    public int getRoundStat(final int r) {
+    int done = 0, failed = 0;
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
+      ICompilationUnit u = null;
       try {
-        return roundStats.get(r).intValue();
-      } catch (final IndexOutOfBoundsException x) {
-        x.printStackTrace();
-        return 0;
+        u = openCompilationUnit(f);
+        final FileStats s = new FileStats(f);
+        for (int i = 0; i < optRounds; ++i) {
+          final int n = SpartanizeAll.countSuggestions(u);
+          if (n == 0)
+            break;
+          s.addRoundStat(n);
+          eclipse.apply(u);
+        }
+        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
+        if (optVerbose)
+          System.out.println("Spartanized file " + f.getAbsolutePath());
+        s.countLinesAfter();
+        fileStats.add(s);
+        ++done;
+      } catch (final JavaModelException | IOException e) {
+        System.err.println(f + ": " + e.getMessage());
+        ++failed;
+      } catch (final Exception e) {
+        System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
+        e.printStackTrace();
+        ++failed;
+      } finally {
+        discardCompilationUnit(u);
       }
     }
+    System.out.println(done + " files processed. " + (failed == 0 ? "" : failed + " failed."));
+    if (optStatsChanges)
+      printChangeStatistics(fileStats);
+    if (optStatsLines)
+      printLineStatistics(fileStats);
+    if (printLog)
+      LogManager.closeAllWriters();
+    return IApplication.EXIT_OK;
+  }
+
+  @Override public void stop() {
+    // Unused
   }
 }

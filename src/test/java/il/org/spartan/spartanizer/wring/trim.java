@@ -23,19 +23,6 @@ import il.org.spartan.plugin.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.findOpportunities(u).size();
-  }
-
-  static fluentTrimmerApplication of(final String codeFragment) {
-    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
-  }
-
-  @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-    return new fluentTrimmer(clazz, ws);
-  }
-
   /** Starting point of fluent API for @Testing:
    * <code>trimming.repeatedly.of("a+(b-c)").gives("a+b-c")</code>, or <br/>
    * <code>trimming // See {@link trim} <br/>
@@ -63,16 +50,16 @@ public interface trim {
           return super.checkAllConditions(pm);
         }
 
+        @Override protected RefactoringTickProvider doGetRefactoringTickProvider() {
+          // TODO Auto-generated method stub
+          return super.doGetRefactoringTickProvider();
+        }
+
         /* @Override public <T> T getAdapter(final Class<T> adapter) { // TODO
          * Auto-generated method stub return (T) super.getAdapter(adapter); } */
         @Override public fluentTrimmerApplication of(final String codeFragment) {
           // TODO Auto-generated method stub
           return super.of(codeFragment);
-        }
-
-        @Override protected RefactoringTickProvider doGetRefactoringTickProvider() {
-          // TODO Auto-generated method stub
-          return super.doGetRefactoringTickProvider();
         }
       };
     }
@@ -109,5 +96,18 @@ public interface trim {
           .of("int b = 3; int a = b; return  a;")//
           .gives("return 3;");
     }
+  }
+
+  static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+    return s.findOpportunities(u).size();
+  }
+
+  static fluentTrimmerApplication of(final String codeFragment) {
+    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
+  }
+
+  @SafeVarargs //
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
+    return new fluentTrimmer(clazz, ws);
   }
 }

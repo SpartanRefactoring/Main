@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
 
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -9,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.spartanizer.engine.EvaluateAux.Type.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
@@ -81,7 +84,7 @@ public class InfixDivisionEvaluate extends Wring.ReplaceCurrentNode<InfixExpress
     ASTNode $;
     if (x.getOperator() != DIVIDE)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x)) {
+    switch (getEvaluatedType(x)) {
       case INT:
         $ = replacementInt(extract.allOperands(x), x);
         break;
