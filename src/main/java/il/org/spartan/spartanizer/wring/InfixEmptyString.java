@@ -15,15 +15,15 @@ public class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> {
     return null;
   }
 
-  @Override public WringGroup wringGroup() {
-    return null;
-  }
-
   @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove \"\" from \"\" + X if X is a String";
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
     return Wrings.eliminateLiteral(x, true);
+  }
+
+  @Override public WringGroup wringGroup() {
+    return null;
   }
 }

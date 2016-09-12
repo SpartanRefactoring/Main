@@ -53,6 +53,10 @@ import java.util.regex.*;
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
 
+  private boolean isLower(final int i) {
+    return Character.isLowerCase(typeName.charAt(i));
+  }
+
   /** Shorthand for n.equals(this.shortName())
    * @param s JD
    * @return true if the provided name equals the type's short name */
@@ -60,14 +64,16 @@ import java.util.regex.*;
     return s.equals(shortName());
   }
 
-  /** Returns the calculated short name for the type
-   * @return type's short name */
-  public String shortName() {
-    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
+  private boolean isUpper(final int i) {
+    return Character.isUpperCase(typeName.charAt(i));
   }
 
   String lastName() {
     return typeName.substring(lastNameIndex());
+  }
+
+  private String lastNameCharIndex(final int i) {
+    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
   }
 
   int lastNameIndex() {
@@ -82,20 +88,14 @@ import java.util.regex.*;
     return 0;
   }
 
-  private boolean isLower(final int i) {
-    return Character.isLowerCase(typeName.charAt(i));
-  }
-
-  private boolean isUpper(final int i) {
-    return Character.isUpperCase(typeName.charAt(i));
-  }
-
-  private String lastNameCharIndex(final int i) {
-    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
-  }
-
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
+  }
+
+  /** Returns the calculated short name for the type
+   * @return type's short name */
+  public String shortName() {
+    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
   private String toSingular(final String s) {
