@@ -71,15 +71,12 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
       return null;
     if (type.get(x) == INT)
       $ = replacementInt(extract.allOperands(x), x);
+    else if (type.get(x) == DOUBLE)
+      $ = replacementDouble(extract.allOperands(x), x);
     else {
-      if (type.get(x) == DOUBLE)
-        $ = replacementDouble(extract.allOperands(x), x);
-      else {
-        if (type.get(x) == LONG)
-          $ = replacementLong(extract.allOperands(x), x);
-        else
-          return null;
-      }
+      if (type.get(x) != LONG)
+        return null;
+      $ = replacementLong(extract.allOperands(x), x);
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }

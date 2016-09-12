@@ -20,16 +20,16 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-16 */
 public enum iz {
   ;
-  public static boolean __abstract(final BodyDeclaration d) {
-    return (Modifier.ABSTRACT & d.getModifiers()) != 0;
+  public static boolean __abstract(final BodyDeclaration ¢) {
+    return (Modifier.ABSTRACT & ¢.getModifiers()) != 0;
   }
 
   /** Determine whether a variable declaration is final or not
    * @param s some declaration
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
    *         final */
-  public static boolean __final(final VariableDeclarationStatement s) {
-    return (Modifier.FINAL & s.getModifiers()) != 0;
+  public static boolean __final(final VariableDeclarationStatement ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
   public static boolean abstractTypeDeclaration(final ASTNode ¢) {
@@ -761,15 +761,15 @@ public enum iz {
     return false;
   }
   
-  public static boolean computable(final Expression x) {
+  public static boolean computable(final Expression ¢) {
     // TODO: Dor, one of the following two check may re redundant
     // TODO: Yossi, I don't see any redundency here
-    return iz.numberLiteral(x) && number(x) || iz.prefixExpression(x)
-        && (az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS && iz.numberLiteral(az.prefixExpression(x).getOperand()));
+    return iz.numberLiteral(¢) && number(¢) || iz.prefixExpression(¢)
+        && (az.prefixExpression(¢).getOperator() == PrefixExpression.Operator.MINUS && iz.numberLiteral(az.prefixExpression(¢).getOperand()));
   }
   
-  public static boolean number(final Expression x) {
-    return type.isInt(x) || type.isDouble(x) || type.isLong(x);
+  public static boolean number(final Expression ¢) {
+    return type.isInt(¢) || type.isDouble(¢) || type.isLong(¢);
   }
   
   public static boolean validForEvaluation(InfixExpression x){

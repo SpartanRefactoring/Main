@@ -125,16 +125,16 @@ public enum Collect {
    * @return <b>ASTVisitor</b> as described above. */
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
-      @Override public boolean visit(final ForStatement s) {
-        return consider(initializers(s));
+      @Override public boolean visit(final ForStatement ¢) {
+        return consider(initializers(¢));
       }
 
       @Override public boolean visit(final TryStatement s) {
         return consider(resources(s));
       }
 
-      @Override public boolean visit(final VariableDeclarationFragment f) {
-        return add(f.getName());
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+        return add(¢.getName());
       }
 
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
