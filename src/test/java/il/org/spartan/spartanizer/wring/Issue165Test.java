@@ -12,9 +12,9 @@ import org.junit.runners.*;
 public class Issue165Test {
   @Test public void seriesA_01_vanilla() {
     trimming(//
-        " public static boolean __final(final VariableDeclarationStatement s) {\n" //
+        " public static boolean f(final VariableDeclarationStatement s) {\n" //
             + "return (Modifier.FINAL & s.getModifiers()) != 0;}").to(//
-                " public static boolean __final(final VariableDeclarationStatement ¢) {\n" //
+                " public static boolean f(final VariableDeclarationStatement ¢) {\n" //
                     + "return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
   }
 
