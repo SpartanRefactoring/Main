@@ -384,11 +384,11 @@ public class Version250Test {
     trimming("1 + 2 + (x+1)").stays();
   }
 
-  @Ignore() @Test public void issue129_04() {
+  @Ignore @Test public void issue129_04() {
     trimming("\"\" + 0 + (x - 7)").stays();
   }
 
-  @Ignore() @Test public void issue129_05() {
+  @Ignore @Test public void issue129_05() {
     trimming("x + 5 + y + 7.0 +(double)f(3)").stays();
   }
 
