@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue162Test {
   @Test public void issue162_01() {
-    trimming("0+(0+x+y+(4))").to("0+(0+x+y+4)").stays();
+    trimming("0+(0+x+y+(4))").to("x+y+4").stays();
   }
 
   @Test public void issue162_02() {

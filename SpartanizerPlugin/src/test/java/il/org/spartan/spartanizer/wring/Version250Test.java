@@ -21,6 +21,14 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
+  @Test public void additionZeroTest_a() {
+    trimming("b = a + 0;").to("b = a;");
+  }
+
+  @Test public void additionZeroTest_b() {
+    trimming("b=0+a;").to("b=a;");
+  }
+
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
@@ -410,21 +418,21 @@ public class Version250Test {
   }
 
   @Test public void issue31a() {
-    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
-        "      return hasAnnotation(n.modifiers());\n" + //
-        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
-            "      return hasAnnotation(s.modifiers());\n" + //
+    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
+        "      return hasAnnotation(now.modifiers());\n" + //
+        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n" + //
+            "      return hasAnnotation(now.modifiers());\n" + //
             "    }");
   }
 
   @Test public void issue31b() {
-    trimming(" void f(final VariableDeclarationStatement n) {}") //
-        .to("void f(final VariableDeclarationStatement s) {}");
+    trimming(" void f(final VariableDeclarationStatement n, int abc) {}") //
+        .to("void f(final VariableDeclarationStatement s, int abc) {}");
   }
 
   @Test public void issue31c() {
-    trimming(" void f(final VariableDeclarationAtatement n) {}") //
-        .to("void f(final VariableDeclarationAtatement a) {}");
+    trimming(" void f(final VariableDeclarationAtatement n, int abc) {}") //
+        .to("void f(final VariableDeclarationAtatement a, int abc) {}");
   }
 
   @Test public void issue31d() {
@@ -952,15 +960,15 @@ public class Version250Test {
   }
 
   @Test public void issue72pg() {
-    trimming("0+(x+y)").stays();
+    trimming("0+(x+y)").to("x+y").stays();
   }
 
   @Test public void issue72ph() {
-    trimming("0+((x+y)+0+(z+h))+0").stays();
+    trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
   @Test public void issue72pi() {
-    trimming("0+(0+x+y+((int)x+0))").to("0+(0+x+y+((int)x))").to("0+(0+x+y+(int)x)").stays();
+    trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 
   @Ignore @Test public void issue73_01() {

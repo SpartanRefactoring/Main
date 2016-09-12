@@ -30,8 +30,8 @@ import il.org.spartan.spartanizer.ast.*;
 // To make this happen, we need a wring that removes dead assignments to local
 // variables. Attach the "new-wring" label to this one.
 public final class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> implements Kind.Collapse {
-  @Override String description(final Assignment a) {
-    return "Inline assignment to " + left(a) + " with its subsequent 'return'";
+  @Override String description(final Assignment ¢) {
+    return "Inline assignment to " + left(¢) + " with its subsequent 'return'";
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {

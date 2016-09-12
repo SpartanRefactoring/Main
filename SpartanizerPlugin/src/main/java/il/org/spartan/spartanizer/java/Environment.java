@@ -123,7 +123,7 @@ import il.org.spartan.spartanizer.engine.*;
     return 0;
   }
 
-  /* Used when new block (scope) is opened. */
+  /** Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);
   }
@@ -178,11 +178,8 @@ import il.org.spartan.spartanizer.engine.*;
     }
   }
 
-  /** TODO: Alex: document properly, but essentially is a dictionary with a
-   * parent. Insertions go the current node, searches start at the current note
-   * and Delegate to the parent unless it is null. */
-  /* Nested environment which has it's own Map of names 'flat', and an instance
-   * to the parent scope 'nest'. */
+  /** Dictionary with a parent. Insertions go the current node, searches start
+   * at the current note and Delegate to the parent unless it is null. */
   final class Nested implements Environment {
     public final Map<String, Information> flat = new LinkedHashMap<>();
     public final Environment nest;
@@ -191,34 +188,34 @@ import il.org.spartan.spartanizer.engine.*;
       nest = parent;
     }
 
-    // TODO: Alex: Convert this into JavaDoc
-    /* @return true iff {@link Environment} is empty. */
+    /** @return true iff {@link Environment} is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
 
-    /* @return Map entries used in the current scope. */
+    /** @return Map entries used in the current scope. */
     @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
       return new LinkedHashSet<>(flat.entrySet());
     }
 
-    /* @return The information about the name in current {@link Environment}. */
+    /** @return The information about the name in current
+     *         {@link Environment}. */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
 
-    /* Check whether the {@link Environment} already has the name. */
+    /** Check whether the {@link Environment} already has the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
 
-    /* @return Names used the {@link Environment}. */
+    /** @return Names used the {@link Environment}. */
     @Override public LinkedHashSet<String> names() {
       return new LinkedHashSet<>(flat.keySet());
     }
 
-    /* One step up in the {@link Environment} tree. Funny but it even sounds
+    /** One step up in the {@link Environment} tree. Funny but it even sounds
      * like next(). */
     @Override public Environment nest() {
       return nest;
