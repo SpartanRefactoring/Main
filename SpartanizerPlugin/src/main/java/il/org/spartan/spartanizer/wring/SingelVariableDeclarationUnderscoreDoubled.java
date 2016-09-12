@@ -105,8 +105,8 @@ import il.org.spartan.spartanizer.wring.Wring.*;
       return false;
     }
 
-    @Override public boolean visit(final SimpleName sn) {
-      if (n.equals(sn.getIdentifier()))
+    @Override public boolean visit(final SimpleName n) {
+      if (n.equals(n.getIdentifier()))
         c = false;
       return c;
     }
