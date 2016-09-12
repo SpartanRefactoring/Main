@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wring;
+
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;

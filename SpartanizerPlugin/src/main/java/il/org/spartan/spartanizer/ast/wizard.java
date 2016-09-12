@@ -63,13 +63,14 @@ public interface wizard {
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
 
-  // TODO: $ is initialized because otherwise complaining that variable may be not
+  // TODO: $ is initialized because otherwise complaining that variable may be
+  // not
   // initialized from the reason it is initialized in an if statement.
   static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
     InfixExpression.Operator $ = NOT_EQUALS;
-    for (Map.Entry<Operator,Assignment.Operator> ¢ : infix.entrySet()) {
-      if (¢.getValue() == o) $ = ¢.getKey();
-    }
+    for (final Map.Entry<Operator, Assignment.Operator> ¢ : infix.entrySet())
+      if (¢.getValue() == o)
+        $ = ¢.getKey();
     return $;
   }
 
@@ -176,13 +177,14 @@ public interface wizard {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(left(a1), left(a2));
   }
 
-  // TODO: $ is initialized because otherwise complaining that variable may be not
+  // TODO: $ is initialized because otherwise complaining that variable may be
+  // not
   // initialized from the reason it is initialized in an if statement.
   static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
     Assignment.Operator $ = REMAINDER_ASSIGN;
-    for (Map.Entry<Operator,Assignment.Operator> ¢ : infix.entrySet()) {
-      if (¢.getKey() == o) $ = ¢.getValue();
-    }
+    for (final Map.Entry<Operator, Assignment.Operator> ¢ : infix.entrySet())
+      if (¢.getKey() == o)
+        $ = ¢.getValue();
     return $;
   }
 

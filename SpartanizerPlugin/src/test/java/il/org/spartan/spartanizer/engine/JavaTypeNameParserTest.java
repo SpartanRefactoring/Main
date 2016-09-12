@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.engine;
-import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
+
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
@@ -48,6 +48,26 @@ public class JavaTypeNameParserTest {
     azzert.that(new JavaTypeNameParser("InfixExpression").shortName(), is("x"));
   }
 
+  @Test public void johnDoe01() {
+    assert isJohnDoe("Type", "t");
+  }
+
+  @Test public void johnDoe02() {
+    assert isJohnDoe("VariableDeclarationStatement", "s");
+  }
+
+  @Test public void johnDoe03() {
+    assert !isJohnDoe("VariableDeclarationStatement", "x");
+  }
+
+  @Test public void johnDoe04() {
+    assert !isJohnDoe("String", "word");
+  }
+
+  @Test public void johnDoe05() {
+    assert isJohnDoe("String", "s");
+  }
+
   @Test public void jUnit() {
     azzert.that(new JavaTypeNameParser("JUnit").shortName(), is("u"));
   }
@@ -71,21 +91,5 @@ public class JavaTypeNameParserTest {
 
   @Test public void stringBuilder() {
     azzert.that(new JavaTypeNameParser("StringBuilder").shortName(), is("b"));
-  }
-
-  @Test public void johnDoe01() {
-    assert isJohnDoe("Type", "t");
-  }
-  @Test public void johnDoe02() {
-    assert isJohnDoe("VariableDeclarationStatement", "s");
-  }
-  @Test public void johnDoe03() {
-    assert !isJohnDoe("VariableDeclarationStatement", "x");
-  }
-  @Test public void johnDoe04() {
-    assert !isJohnDoe("String", "word");
-  }
-  @Test public void johnDoe05() {
-    assert isJohnDoe("String", "s");
   }
 }

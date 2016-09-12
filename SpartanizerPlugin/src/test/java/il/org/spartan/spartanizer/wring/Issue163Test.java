@@ -18,13 +18,12 @@ public class Issue163Test {
   @Test public void issue163_02() {
     trimming("x + \"\" + f() + \"\" + g() + \"abc\"").to("x + \"\" + f() + g() + \"abc\"").stays();
   }
-  
+
   @Test public void issue163_03() {
     trimming("x + \"\" + \"\"").to("x+\"\"").stays();
   }
-  
+
   @Test public void issue163_04() {
     trimming("\"\"+\"\"+x +\"\"").to("\"\"+\"\"+x").to("\"\"+x").to("x+\"\"").stays();
   }
-  
 }

@@ -49,7 +49,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
   }
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    if(!iz.ifStatement(s))
+    if (!iz.ifStatement(s))
       return null;
     final IfStatement ifStatement = az.ifStatement(s);
     final Statement then = ifStatement.getThenStatement();
@@ -102,7 +102,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : !iz.ifStatement(body) ? null : handleIf(body, nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, (ASTNode) (az.block(into.s("break;"))).statements().get(0), g);
+        r.replace($, (ASTNode) az.block(into.s("break;")).statements().get(0), g);
       }
     };
   }
