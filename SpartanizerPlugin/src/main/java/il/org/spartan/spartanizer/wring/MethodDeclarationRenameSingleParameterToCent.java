@@ -26,12 +26,15 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
     assert d != null;
     if (d.isConstructor() || iz.__abstract(d))
       return null;
+    final Block b = d.getBody();
+    if (b == null)
+      return null;
     final List<SingleVariableDeclaration> ps = parameters(d);
     if (ps.size() != 1)
       return null;
     final SimpleName n = first(ps).getName();
     assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(d.getBody()) || Collect.usesOf(n).in(d.getBody()).isEmpty())
+    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(d.getBody()) || Collect.usesOf(n).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(d);
