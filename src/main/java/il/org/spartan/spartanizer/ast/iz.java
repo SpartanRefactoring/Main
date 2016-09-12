@@ -182,6 +182,10 @@ public enum iz {
     return in(o, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
+  public static boolean doubleType(final Expression x) {
+    return type.get(x) == DOUBLE;
+  }
+
   /** Determine whether a node is an {@link EmptyStatement}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
@@ -290,6 +294,10 @@ public enum iz {
 
   public static boolean infixTimes(final Expression x) {
     return step.operator(az.infixExpression(x)) == TIMES;
+  }
+
+  public static boolean intType(final Expression x) {
+    return type.get(x) == INT;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
@@ -435,6 +443,10 @@ public enum iz {
     return iz.literal(¢, 0);
   }
 
+  public static boolean longType(final Expression x) {
+    return type.get(x) == LONG;
+  }
+
   /** Determine whether a node is a {@link MethodDeclaration}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
@@ -499,6 +511,10 @@ public enum iz {
    *         literal */
   public static boolean nullLiteral(final ASTNode n) {
     return is(n, NULL_LITERAL);
+  }
+
+  public static boolean numberLiteral(final ASTNode ¢) {
+    return is(¢, NUMBER_LITERAL);
   }
 
   /** Determine whether a node is <code><b>this</b></code> or
@@ -657,6 +673,10 @@ public enum iz {
     return is(n, VARIABLE_DECLARATION_STATEMENT);
   }
 
+  public static boolean whileStatement(final ASTNode x) {
+    return x instanceof WhileStatement;
+  }
+
   public static boolean wildcardType(final ASTNode ¢) {
     return is(¢, WILDCARD_TYPE);
   }
@@ -675,10 +695,6 @@ public enum iz {
     final IfStatement parent = az.ifStatement(step.parent(b));
     return parent != null && (elze(parent) == null || wizard.recursiveElze(s) == null)
         && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
-  }
-
-  public static boolean isNumberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {
@@ -709,7 +725,7 @@ public enum iz {
       return false;
     }
   }
-
+  
   static boolean literal(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
@@ -725,28 +741,12 @@ public enum iz {
   private static boolean is(final ASTNode n, final int type) {
     return n != null && type == n.getNodeType();
   }
-
+  
   private static boolean isOneOf(final int i, final int... is) {
     for (final int j : is)
       if (i == j)
         return true;
     return false;
-  }
-  
-  public static boolean doubleType(final Expression x) {
-    return type.get(x) == DOUBLE;
-  }
-
-  public static boolean intType(final Expression x) {
-    return type.get(x) == INT;
-  }
-
-  public static boolean longType(final Expression x) {
-    return type.get(x) == LONG;
-  }
-  
-  public static boolean whileStatement(final ASTNode x) {
-    return x instanceof WhileStatement;
   }
   
 }
