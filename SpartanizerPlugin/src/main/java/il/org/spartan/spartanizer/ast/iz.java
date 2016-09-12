@@ -277,16 +277,16 @@ public enum iz {
     return is(n, INFIX_EXPRESSION);
   }
 
-  public static boolean infixMinus(final Expression x) {
-    return step.operator(az.infixExpression(x)) == wizard.MINUS2;
+  public static boolean infixMinus(final ASTNode n) {
+    return step.operator(az.infixExpression(n)) == wizard.MINUS2;
   }
 
-  public static boolean infixPlus(final Expression x) {
-    return step.operator(az.infixExpression(x)) == wizard.PLUS2;
+  public static boolean infixPlus(final ASTNode n) {
+    return step.operator(az.infixExpression(n)) == wizard.PLUS2;
   }
 
-  public static boolean infixTimes(final Expression x) {
-    return step.operator(az.infixExpression(x)) == TIMES;
+  public static boolean infixTimes(final Expression n) {
+    return step.operator(az.infixExpression(n)) == TIMES;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
