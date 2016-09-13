@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.*;
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
 
-  /** @param u current compilation unit
+  /** @param compilationUnit current compilation unit
    * @return current package */
   public static IPackageBinding getPackage(final CompilationUnit ¢) {
     return ¢.getPackage().resolveBinding();
