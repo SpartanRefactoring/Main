@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.wring;
-import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import java.util.*;
@@ -20,39 +21,33 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
-  private static boolean asLeft(final Expression ¢, final Expression left) {
-    return same(¢, left);
-  }
-
-  private static List<Expression> associativeReplace(final List<Expression> xs, final Expression left) {
+  private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)
-      if (asLeft(¢, left)) {
+      if (same(¢, left)) {
         $.remove(¢);
-        break;
+        return $;
       }
-    return $;
+    return null;
   }
 
-  private static List<Expression> nonAssociativeReplace(final List<Expression> xs, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    if (asLeft(first(xs), left))
-      $.remove(0);
-    return $;
-  }
-
-  private static ASTNode replace(final Assignment a, final InfixExpression x) {
-    final Expression left = left(a);
-    if (!sideEffects.free(left))
+  private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> es) {
+    if (!same(¢, first(es)))
       return null;
-    final Expression $ = eliminate(x, left);
-    return $ == null ? null : subject.pair(left, $).to(infix2assign(operator(x)));
+    return chop(new ArrayList<>(es));
   }
-  private static Expression eliminate(final InfixExpression x, final Expression left) {
-    final List<Expression> es = extract.allOperands(x);
-    final InfixExpression.Operator o = operator(x);
-    final List<Expression> $ = !nonAssociative(x) ? associativeReplace(es, left) : nonAssociativeReplace(es, left);
-    return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(o);
+
+  private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
+    final List<Expression> es = hop.operands(x);
+    final List<Expression> $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
+    return $ == null ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(operator(x));
+  }
+
+  private static ASTNode replacement(final Expression to, final InfixExpression from) {
+    if (!sideEffects.free(to))
+      return null;
+    final Expression $ = reduce(from, to);
+    return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
   }
 
   @Override public String description(final Assignment ¢) {
@@ -65,7 +60,6 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     assert o != null;
     if (o != ASSIGN)
       return null;
-    final InfixExpression right = az.infixExpression(right(a));
-    return right == null ? null : replace(a, right);
+    return az.infixExpression(from(a)) == null ? null : replacement(to(a), az.infixExpression(from(a)));
   }
 }

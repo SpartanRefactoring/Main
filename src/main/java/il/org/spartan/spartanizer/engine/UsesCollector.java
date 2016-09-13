@@ -303,7 +303,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   }
 
   @Override public boolean visit(final Assignment ¢) {
-    return recurse(right(¢));
+    return recurse(from(¢));
   }
 
   @Override public boolean visit(final PostfixExpression it) {

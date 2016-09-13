@@ -171,7 +171,7 @@ public enum step {
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param a JD
    * @return left operand of the parameter */
-  public static Expression left(final Assignment a) {
+  public static Expression to(final Assignment a) {
     return a.getLeftHandSide();
   }
 
@@ -273,7 +273,7 @@ public enum step {
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return left operand of the parameter */
-  public static Expression right(final Assignment ¢) {
+  public static Expression from(final Assignment ¢) {
     return ¢.getRightHandSide();
   }
 
