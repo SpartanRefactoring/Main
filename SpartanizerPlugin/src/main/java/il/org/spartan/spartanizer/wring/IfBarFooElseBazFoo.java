@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
+import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import java.util.*;
 
@@ -12,6 +12,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -52,11 +54,11 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override Rewrite make(final IfStatement s) {
+  @Override public Rewrite make(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -95,7 +97,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     };
   }
 
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
   }
 

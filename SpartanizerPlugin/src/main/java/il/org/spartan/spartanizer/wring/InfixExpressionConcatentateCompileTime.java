@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Concat some strings to one string
  *
@@ -24,16 +26,12 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dor Ma'ayan
  * @author Nov Shalmon
  * @since 2016-09-04 */
-public class InfixExpressionConcatentateCompileTime extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   @Override public String description() {
     return "Concat the strings to a one string";
   }
 
-  @SuppressWarnings("unused") @Override String description(final InfixExpression x) {
-    return "Concat the string literals to a single string";
-  }
-
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> operands = extract.allOperands(x);
@@ -54,5 +52,9 @@ public class InfixExpressionConcatentateCompileTime extends Wring.ReplaceCurrent
       return null;
     assert !operands.isEmpty();
     return operands.size() <= 1 ? first(operands) : subject.operands(operands).to(wizard.PLUS2);
+  }
+
+  @Override protected String description(final InfixExpression x) {
+    return "Concat the string literals to a single string";
   }
 }

@@ -13,17 +13,19 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
  * @author Yossi Gil
  * @since 2016-09 */
 public final class MethodDeclarationRenameSingleParameterToCent extends Wring<MethodDeclaration> implements Kind.Centification {
-  @Override String description(final MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
   // TODO: Alex and Dan. Here you may want to test your environment on this one.
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Rewrite make(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.__abstract(d))
       return null;

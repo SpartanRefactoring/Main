@@ -9,10 +9,14 @@ import org.junit.*;
 import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class metricsTest {
-  private String helloWorldQuoted = "\"Hello, World!\\n\"";
-  private Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
-  private Expression booleans = e("true||false||true");
-  private Expression helloWorld = e("f(" + helloWorldQuoted + ")");
+  private final String helloWorldQuoted = "\"Hello, World!\\n\"";
+  private final Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
+  private final Expression booleans = e("true||false||true");
+  private final Expression helloWorld = e("f(" + helloWorldQuoted + ")");
+
+  @Test public void accurateLiterals() {
+    azzert.that(metrics.literals(helloWorld), hasItem("Hello, World!\n"));
+  }
 
   @Test public void dictionary() {
     azzert.that(metrics.dictionary(x1), hasItem("a"));
@@ -20,49 +24,9 @@ import il.org.spartan.*;
     azzert.that(metrics.dictionary(x2), hasItem("sqrt"));
   }
 
-  @Test public void vocabulary() {
-    azzert.that(metrics.vocabulary(x1), is(4));
-    azzert.that(metrics.vocabulary(x2), is(4));
-    azzert.that(metrics.vocabulary(booleans), is(0));
-  }
-
-  @Test public void literacy() {
-    azzert.that(metrics.literacy(x1), is(2));
-    azzert.that(metrics.literacy(x2), is(2));
-    azzert.that(metrics.literacy(i("3+4+5+6")), is(4));
-  }
-
-  @Test public void literals() {
-    azzert.that(metrics.literals(x1), hasItem("2"));
-    azzert.that(metrics.literals(x2), hasItem("4"));
-    azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
-  }
-
-  @Test public void literalsBoolean() {
-    azzert.that(metrics.literals(booleans), hasItem("true"));
-    azzert.that(metrics.literals(booleans), hasItem("false"));
-    azzert.that(metrics.vocabulary(booleans), is(0));
-  }
-
-  @Test public void nullIsLiteral() {
-    azzert.that(metrics.literals(e("null")), hasItem("null"));
-  }
-
-  @Test public void stringAreLiterals() {
-    azzert.that(metrics.literacy(helloWorld), is(1)); 
-  }
-  @Test public void accurateLiterals() {
-    azzert.that(metrics.literals(helloWorld), hasItem("Hello, World!\n"));
-  }
-
   @Test public void issue101_5() {
     final Expression ¢ = i("3+4+5+6");
     azzert.that(metrics.nodes(¢), is(5));
-  }
-
-  @Test public void issue128_4() {
-    final Expression ¢ = i("3+4*4+6*7+8");
-    azzert.that(metrics.nodes(¢), is(11));
   }
 
   @Test public void issue128_1() {
@@ -120,6 +84,11 @@ import il.org.spartan.*;
     azzert.that(metrics.nodes(¢), is(7));
   }
 
+  @Test public void issue128_4() {
+    final Expression ¢ = i("3+4*4+6*7+8");
+    azzert.that(metrics.nodes(¢), is(11));
+  }
+
   @Test public void issue128_6() {
     final Expression ¢ = e("a==4 ? 34 : 56");
     azzert.that(metrics.nodes(¢), is(6));
@@ -143,5 +112,37 @@ import il.org.spartan.*;
   @Test public void issue129_10() {
     final Expression ¢ = e("g(false)||a(h())");
     azzert.that(metrics.nodes(¢), is(5));
+  }
+
+  @Test public void literacy() {
+    azzert.that(metrics.literacy(x1), is(2));
+    azzert.that(metrics.literacy(x2), is(2));
+    azzert.that(metrics.literacy(i("3+4+5+6")), is(4));
+  }
+
+  @Test public void literals() {
+    azzert.that(metrics.literals(x1), hasItem("2"));
+    azzert.that(metrics.literals(x2), hasItem("4"));
+    azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
+  }
+
+  @Test public void literalsBoolean() {
+    azzert.that(metrics.literals(booleans), hasItem("true"));
+    azzert.that(metrics.literals(booleans), hasItem("false"));
+    azzert.that(metrics.vocabulary(booleans), is(0));
+  }
+
+  @Test public void nullIsLiteral() {
+    azzert.that(metrics.literals(e("null")), hasItem("null"));
+  }
+
+  @Test public void stringAreLiterals() {
+    azzert.that(metrics.literacy(helloWorld), is(1));
+  }
+
+  @Test public void vocabulary() {
+    azzert.that(metrics.vocabulary(x1), is(4));
+    azzert.that(metrics.vocabulary(x2), is(4));
+    azzert.that(metrics.vocabulary(booleans), is(0));
   }
 }

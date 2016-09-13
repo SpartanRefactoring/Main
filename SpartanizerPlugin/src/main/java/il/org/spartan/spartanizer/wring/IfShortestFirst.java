@@ -1,8 +1,11 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.spartanizer.wring.Wrings.*;
+import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -18,12 +21,12 @@ import org.eclipse.jdt.core.dom.*;
  *
  * @author Yossi Gil
  * @since 2015-08-15 */
-public final class IfShortestFirst extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Sorting {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement> implements Kind.Sorting {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
 
-  @Override Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     return Wrings.thenIsShorter(s) ? null : invert(s);
   }
 }

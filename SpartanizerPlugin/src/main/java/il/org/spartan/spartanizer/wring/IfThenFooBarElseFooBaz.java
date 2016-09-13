@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
+import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import java.util.*;
 
@@ -13,6 +13,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -53,11 +55,11 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
 
-  @Override Rewrite make(final IfStatement s) {
+  @Override public Rewrite make(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -91,11 +93,11 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     };
   }
 
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean scopeIncludes(final IfStatement s) {
     return make(s) != null;
   }
 }

@@ -7,11 +7,13 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Converts <code>a?b?x:z:z</code>into <code>a&&b?x:z</code>
  * @author Yossi Gil
  * @since 2015-9-19 */
-public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
+public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
   private static Expression collapse(final ConditionalExpression x) {
     if (x == null)
       return null;
@@ -46,15 +48,15 @@ public final class TernaryCollapse extends Wring.ReplaceCurrentNode<ConditionalE
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
   }
 
-  @Override Expression replacement(final ConditionalExpression x) {
+  @Override public Expression replacement(final ConditionalExpression x) {
     return collapse(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean scopeIncludes(final ConditionalExpression x) {
     return collapse(x) != null;
   }
 }

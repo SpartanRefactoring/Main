@@ -13,8 +13,10 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.LocalInliner.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.LocalInliner.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -31,7 +33,7 @@ import il.org.spartan.spartanizer.wring.LocalInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerStatementTerminatingScope extends Wring.VariableDeclarationFragementAndStatement implements Kind.Inlining {
+public final class DeclarationInitializerStatementTerminatingScope extends VariableDeclarationFragementAndStatement implements Kind.Inlining {
   private static boolean forbidden(final SimpleName n, final Statement s) {
     ASTNode child = null;
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
@@ -51,11 +53,11 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     return false;
   }
 
-  @Override String description(final VariableDeclarationFragment f) {
+  @Override public String description(final VariableDeclarationFragment f) {
     return "Inline local " + f.getName() + " into subsequent statement";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
@@ -89,7 +91,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Wring
     if (addedSize - removalSaving > 0)
       return null;
     r.replace(nextStatement, newStatement, g);
-    i.inlineinto(newStatement);
+    i.inlineInto(newStatement);
     remove(f, r, g);
     return r;
   }

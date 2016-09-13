@@ -5,6 +5,8 @@ import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.spartanizer.wring.dispatch.*;
+
 /** Unit tests for {@link DisabledChecker}
  * @author Ori Roth
  * @since 2016 */

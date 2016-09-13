@@ -9,6 +9,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -40,11 +42,11 @@ import il.org.spartan.spartanizer.engine.*;
  *
  * @since 2015-09-09 */
 public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.EarlyReturn {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }
 
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;

@@ -10,6 +10,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -36,15 +38,15 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     r.replace(then, duplicate.of(then(then)), g);
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merge conditionals of nested if staement";
   }
 
-  @Override Rewrite make(final IfStatement s) {
+  @Override public Rewrite make(final IfStatement s) {
     return make(s, null);
   }
 
-  @Override Rewrite make(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     if (!iz.vacuousElse(s))
       return null;
     final IfStatement then = az.ifStatement(extract.singleThen(s));

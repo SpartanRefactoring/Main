@@ -18,6 +18,8 @@ import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** A {@link Wring} to convert an expression such as
  *
@@ -86,15 +88,11 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
     return null;
   }
 
-  @Override public WringGroup wringGroup() {
-    return WringGroup.Abbreviation;
-  }
-
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "remove 0 in X + 0 expressions from " + x;
   }
 
-  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
@@ -113,5 +111,9 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
+  }
+
+  @Override public WringGroup wringGroup() {
+    return WringGroup.Abbreviation;
   }
 }

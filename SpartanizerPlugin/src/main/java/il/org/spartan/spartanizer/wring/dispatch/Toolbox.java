@@ -1,8 +1,11 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.dispatch;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Singleton containing all {@link Wring}s which are active, allowing selecting
  * and applying the most appropriate such object for a given {@link ASTNode}.
@@ -84,18 +87,18 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new AbstractBodyDeclarationRemoveModifiers.OfMethod(), //
+            new MethodDeclarationRedundantModifiers(), //
             new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
-            new StringEqualsConstant(), //
+            new MethodInvocationEqualsWithLiteralString(), //
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             null)
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new VariableRenameUnderscoreToDoubleUnderscore<>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             null)//
         .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
@@ -108,7 +111,7 @@ public class Toolbox {
             new DeclarationInitializerReturnAssignment(), //
             new DeclarationInitializerReturnUpdateAssignment(), //
             new DeclarationInitializerStatementTerminatingScope(), //
-            new VariableRenameUnderscoreToDoubleUnderscore<>(), null) //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), null) //
         .add(Block.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new BlockBreakToReturnInfiniteWhile(), //
@@ -158,7 +161,7 @@ public class Toolbox {
             new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
-            new AbstractBodyDeclarationRemoveModifiers.OfField(), //
+            new FieldRedundantModifiers(), //
             new AbstractBodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
@@ -166,7 +169,7 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new AbstractBodyDeclarationRemoveModifiers.OfEnumConstant(), //
+            new EnumConstantRedundantModifiers(), //
             new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //

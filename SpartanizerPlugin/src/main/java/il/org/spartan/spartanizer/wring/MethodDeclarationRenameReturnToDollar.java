@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
+import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import java.util.*;
 
@@ -11,17 +11,19 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
  * @author Yossi Gil (v3)
  * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
-  @Override String description(final MethodDeclaration d) {
+  @Override public String description(final MethodDeclaration d) {
     return d.getName() + "";
   }
 
-  @Override Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override public Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;

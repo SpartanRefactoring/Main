@@ -12,6 +12,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert <code>polite?"Eat your meal.":"Eat your meal, please"
  * </code>, <code>polite?"thanks for the meal":"I hated the meal"</code>, and
@@ -22,7 +24,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
-public final class TernaryPusdownStrings extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
+public final class TernaryPusdownStrings extends ReplaceCurrentNode<ConditionalExpression> implements Kind.Ternarization {
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
     return iz.is(then, STRING_LITERAL) && iz.is(elze, STRING_LITERAL) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
         : iz.is(then, STRING_LITERAL) && iz.is(elze, INFIX_EXPRESSION) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
@@ -206,11 +208,11 @@ public final class TernaryPusdownStrings extends Wring.ReplaceCurrentNode<Condit
     return null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Replace ternarization with more clever one";
   }
 
-  @Override Expression replacement(final ConditionalExpression x) {
+  @Override public Expression replacement(final ConditionalExpression x) {
     return replacement(expression(x), then(x), elze(x));
   }
 }

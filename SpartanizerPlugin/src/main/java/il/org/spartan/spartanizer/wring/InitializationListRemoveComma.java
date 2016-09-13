@@ -13,7 +13,7 @@ package il.org.spartan.spartanizer.wring;
  * @author Niv Shalmon<code><shalmon.niv [at] gmail.com></code>
  * @since 2016-8-27 */
 /* public class InitializationListRemoveComma extends
- * Wring.ReplaceCurrentNode<ArrayInitializer> implements Kind.SyntacticBaggage {
+ * ReplaceCurrentNode<ArrayInitializer> implements Kind.SyntacticBaggage {
  *
  * @Override public String description() { return "Remove Unecessary ','"; }
  *
@@ -24,6 +24,6 @@ package il.org.spartan.spartanizer.wring;
  * = $.expressions(); if(!expressions.isEmpty())
  * expressions.remove(expressions.size()-1); return $; }
  *
- * @Override boolean scopeIncludes(final ArrayInitializer n){ List<?>
+ * @Override public boolean scopeIncludes(final ArrayInitializer n){ List<?>
  * expressions = n.expressions(); return expressions.isEmpty() ? false :
  * expressions.get(expressions.size()-1) == null; } } */

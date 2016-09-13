@@ -12,8 +12,13 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
-public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
+/** Pushdown a ternary as far down as possible 
+ * @author Yossi Gil
+ * @year 2015 */
+public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
   public static Expression right(final Assignment a1) {
     return a1.getRightHandSide();
   }
@@ -149,15 +154,15 @@ public final class TernaryPushdown extends Wring.ReplaceCurrentNode<ConditionalE
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";
   }
 
-  @Override Expression replacement(final ConditionalExpression x) {
+  @Override public Expression replacement(final ConditionalExpression x) {
     return pushdown(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean scopeIncludes(final ConditionalExpression x) {
     return pushdown(x) != null;
   }
 }

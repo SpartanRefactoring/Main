@@ -13,7 +13,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Fluent API services for plugin
@@ -130,7 +130,8 @@ public interface eclipse {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException e) {
+    } catch (final CoreException x) {
+      x.printStackTrace();
       return true;
     }
   }
