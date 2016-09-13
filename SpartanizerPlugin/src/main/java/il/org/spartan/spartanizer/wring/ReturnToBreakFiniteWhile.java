@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -36,47 +37,50 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
-    final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
+    for (final Statement s : statements(b)) {
+      // TODO: Dor, I spartanized the code.
       if (az.ifStatement(s) != null)
         $ = handleIf(s, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-        $ = s;
-        break;
-      }
+      if (compareReturnStatements(nextReturn, az.returnStatement(s)))
+        return s;
     }
     return $;
   }
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    final IfStatement ifStatement = az.ifStatement(s);
-    if (ifStatement == null)
+    return handleIf(az.ifStatement(s), nextReturn);
+  }
+
+  private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
+    if (s == null)
       return null;
-    final Statement then = ifStatement.getThenStatement();
-    final Statement elze = ifStatement.getElseStatement();
-    if (then != null) {
-      if (compareReturnStatements(az.returnStatement(then), nextReturn))
-        return then;
-      if (iz.block(then)) {
-        final Statement $ = handleBlock((Block) then, nextReturn);
+    return handleIf(then(s), elze(s), nextReturn);
+  }
+
+  private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
+    if (then == null)
+      return null;
+    if (compareReturnStatements(az.returnStatement(then), nextReturn))
+      return then;
+    if (iz.block(then)) {
+      final Statement $ = handleBlock((Block) then, nextReturn);
+      if ($ != null)
+        return $;
+    }
+    if (az.ifStatement(then) != null)
+      return handleIf(then, nextReturn);
+    if (elze != null) {
+      if (compareReturnStatements(az.returnStatement(elze), nextReturn))
+        return elze;
+      if (iz.block(elze)) {
+        final Statement $ = handleBlock((Block) elze, nextReturn);
         if ($ != null)
           return $;
       }
-      if (az.ifStatement(then) != null)
-        return handleIf(then, nextReturn);
-      if (elze != null) {
-        if (compareReturnStatements(az.returnStatement(elze), nextReturn))
-          return elze;
-        if (iz.block(elze)) {
-          final Statement $ = handleBlock((Block) elze, nextReturn);
-          if ($ != null)
-            return $;
-        }
-        if (az.ifStatement(elze) != null)
-          return handleIf(elze, nextReturn);
-      }
+      if (az.ifStatement(elze) != null)
+        return handleIf(elze, nextReturn);
     }
     return null;
   }
@@ -93,15 +97,16 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
     return "Convert the return inside " + b + " to break";
   }
 
-  @SuppressWarnings("all") @Override public Rewrite make(final Block n) {
-    final List<Statement> ss = n.statements();
+  @Override public Rewrite make(final Block b) {
+    final List<Statement> ss = statements(b);
     if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(second(ss) instanceof ReturnStatement))
       return null;
+    // TODO: Dor, please use functions in az,
     final WhileStatement whileStatement = (WhileStatement) first(ss);
-    final ReturnStatement nextReturn = (ReturnStatement) second(ss);
     if (isInfiniteLoop(whileStatement))
       return null;
+    final ReturnStatement nextReturn = (ReturnStatement) second(ss);
     final Statement body = whileStatement.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
