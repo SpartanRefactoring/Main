@@ -26,17 +26,17 @@ import il.org.spartan.spartanizer.ast.*;
 
   /** Finds visible method in hierarchy.
    * @param b base type
-   * @param mn method name
+   * @param methodName method name
    * @param bs method parameters
    * @param n original {@link ASTNode} containing the method invocation. Used in
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
    * @return method's binding if it is visible from context, else null */
-  public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String mn, final ITypeBinding[] bs, final ASTNode n,
+  public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String methodName, final ITypeBinding[] bs, final ASTNode n,
       final CompilationUnit u) {
     if (b == null)
       return null;
-    final IMethodBinding $ = Bindings.findMethodInHierarchy(b, mn, bs);
+    final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
     return take($).when(isVisible($, n, u));
   }
 
