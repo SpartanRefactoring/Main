@@ -23,7 +23,11 @@ public class CollectMetrics {
   }
 
   private static void collect(final CompilationUnit ¢) {
+    output.put("Length", ¢.getLength());
     output.put("Count", metrics.count(¢));
+    output.put("Non whites", metrics.countNonWhites(¢));
+    output.put("Condensed size", metrics.condensedSize(¢));
+    output.put("Lines", metrics.lineCount(¢));
     output.put("Dexterity", metrics.dexterity(¢));
     output.put("Leaves", metrics.leaves(¢));
     output.put("Nodes", metrics.nodes(¢));
