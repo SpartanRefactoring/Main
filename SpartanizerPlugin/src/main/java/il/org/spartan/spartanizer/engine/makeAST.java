@@ -81,7 +81,7 @@ public enum makeAST {
   }
 
   /** IMarker -> ICompilationUnit converter
-   * @param m IMarker
+   * @param marker IMarker
    * @return CompilationUnit */
   public static ICompilationUnit iCompilationUnit(final IMarker ¢) {
     return iCompilationUnit((IFile) ¢.getResource());
