@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierCleanInterface extends AbstractModifierClean<TypeDeclaration> implements Kind.SyntacticBaggage {
+public final class TypeModifierCleanInterface extends AbstractModifierClean<TypeDeclaration> implements Kind.SyntacticBaggage {
   @Override public String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }

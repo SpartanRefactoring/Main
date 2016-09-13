@@ -154,11 +154,11 @@ public class Toolbox {
             new TernaryPushdown(), //
             new TernaryPusdownStrings(), null) //
         .add(TypeDeclaration.class, //
-            new ModifierCleanInterface(), //
+            new TypeModifierCleanInterface(), //
             new AbstractBodyDeclarationSortModifiers.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
-            new ModifierCleanEnum(), //
+            new EnumDeclarationModifierCleanEnum(), //
             new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
@@ -197,6 +197,13 @@ public class Toolbox {
    *         <code><b>null</b></code> if no such {@link Wring} is found. @ */
   public <N extends ASTNode> Wring<N> find(final N n) {
     return find(n, get(n));
+  }
+  
+  public <N extends ASTNode> Wring<N> findWring(final N n, final Wring<N>... ws) {
+    for (Wring<N> $ : get(n))
+      if ($.claims(n) && Arrays.asList(ws).contains($))
+        return $;
+    return null;
   }
 
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Wring<N>> get(final Class<? extends ASTNode> n) {
