@@ -9,6 +9,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -25,12 +27,12 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class PrefixIncrementDecrementReturn extends Wring.ReplaceToNextStatement<PrefixExpression> implements Kind.Collapse {
-  @Override String description(final PrefixExpression x) {
+public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression> implements Kind.Collapse {
+  @Override public String description(final PrefixExpression x) {
     return "Consolidate " + x + " with subsequent 'return' of " + step.operand(x);
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
     final Statement parent = az.asStatement(x.getParent());

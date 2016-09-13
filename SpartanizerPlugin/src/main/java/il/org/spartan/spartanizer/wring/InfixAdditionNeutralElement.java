@@ -9,7 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>a+0</code> by <code>a</code>
  * @author Yossi Gil
@@ -31,11 +32,11 @@ public final class InfixAdditionNeutralElement extends ReplaceCurrentNode<InfixE
         : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(PLUS);
   }
 
-  @Override String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Remove 0 from  " + ¢;
   }
 
-  @Override ASTNode replacement(final InfixExpression ¢) {
+  @Override public ASTNode replacement(final InfixExpression ¢) {
     return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 }

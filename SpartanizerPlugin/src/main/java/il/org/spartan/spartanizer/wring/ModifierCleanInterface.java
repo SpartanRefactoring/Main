@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
+
 /** convert
  *
  * <pre>
@@ -18,15 +21,15 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class ModifierCleanInterface extends AbstractModifierClean<TypeDeclaration> implements Kind.SyntacticBaggage {
-  @Override String description(final TypeDeclaration ¢) {
+  @Override public String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
 
-  @Override boolean eligible(final TypeDeclaration ¢) {
+  @Override public boolean eligible(final TypeDeclaration ¢) {
     return ¢.isInterface();
   }
 
-  @Override boolean redundant(final Modifier ¢) {
+  @Override protected boolean redundant(final Modifier ¢) {
     return ¢.isAbstract() || ¢.isStatic();
   }
 }

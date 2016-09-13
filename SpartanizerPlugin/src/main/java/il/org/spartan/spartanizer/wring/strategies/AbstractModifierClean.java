@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.strategies;
 
 import java.util.*;
 import java.util.function.*;
@@ -8,10 +8,20 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-public abstract class AbstractModifierClean<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> {
-  @Override String description(@SuppressWarnings("unused") final N __) {
+public abstract class AbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N> {
+  @Override public String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
   }
+
+  @Override public N replacement(final N $) {
+    return go(duplicate.of($));
+  }
+
+  @Override public boolean scopeIncludes(final N ¢) {
+    return firstBad(¢) != null;
+  }
+
+  protected abstract boolean redundant(Modifier m);
 
   IExtendedModifier firstThat(final N n, final Predicate<Modifier> m) {
     for (final IExtendedModifier $ : step.modifiers(n))
@@ -22,16 +32,6 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends W
 
   boolean has(final N ¢, final Predicate<Modifier> m) {
     return firstThat(¢, m) != null;
-  }
-
-  abstract boolean redundant(Modifier m);
-
-  @Override N replacement(final N $) {
-    return go(duplicate.of($));
-  }
-
-  @Override boolean scopeIncludes(final N ¢) {
-    return firstBad(¢) != null;
   }
 
   private IExtendedModifier firstBad(final N n) {

@@ -11,16 +11,18 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
 public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
-  @Override String description(final EnhancedForStatement ¢) {
+  @Override public String description(final EnhancedForStatement ¢) {
     return ¢.getParameter() + "";
   }
 
-  @Override Rewrite make(final EnhancedForStatement s, final ExclusionManager m) {
+  @Override public Rewrite make(final EnhancedForStatement s, final ExclusionManager m) {
     final Statement body = s.getBody();
     if (body == null)
       return null;

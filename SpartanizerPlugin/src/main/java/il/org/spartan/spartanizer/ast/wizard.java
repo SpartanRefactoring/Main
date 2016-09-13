@@ -64,9 +64,9 @@ public interface wizard {
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
 
+  // TODO: Dan, why use a loop, when you have a lookup table? Seems wrong to me.
   // TODO: $ is initialized because otherwise complaining that variable may be
-  // not
-  // initialized from the reason it is initialized in an if statement.
+  // not initialized from the reason it is initialized in an if statement.
   static InfixExpression.Operator assignmentToInfix(final Assignment.Operator o) {
     InfixExpression.Operator $ = NOT_EQUALS;
     for (final Map.Entry<Operator, Assignment.Operator> ¢ : infix.entrySet())

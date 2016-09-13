@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -23,17 +25,17 @@ import il.org.spartan.spartanizer.ast.*;
  * .
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThen extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }
 
-  @Override Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean scopeIncludes(final IfStatement s) {
     return iz.vacuousThen(s) && !iz.vacuousElse(s);
   }
 }

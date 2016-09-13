@@ -11,7 +11,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Apply the distributive rule to multiplication:
  *
@@ -43,15 +44,15 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "a*b + a*c => a * (b + c)";
   }
 
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "Apply the distributive rule to " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 
-  @Override boolean scopeIncludes(final InfixExpression $) {
+  @Override public boolean scopeIncludes(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 

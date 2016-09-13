@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
@@ -23,7 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.compileTime(first(xs)))
       return null;
@@ -69,11 +71,11 @@ public class InfixSubractionEvaluate extends Wring.ReplaceCurrentNode<InfixExpre
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate subtraction of numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();

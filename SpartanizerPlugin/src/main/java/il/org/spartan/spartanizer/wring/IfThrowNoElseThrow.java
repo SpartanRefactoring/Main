@@ -8,6 +8,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -25,17 +27,17 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfThrowNoElseThrow extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
+public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
   static Expression getThrowExpression(final Statement s) {
     final ThrowStatement $ = extract.throwStatement(s);
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     final Expression e1 = getThrowExpression(then(s));

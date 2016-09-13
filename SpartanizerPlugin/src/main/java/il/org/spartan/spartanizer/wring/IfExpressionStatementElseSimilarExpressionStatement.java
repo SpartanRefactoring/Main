@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -25,12 +27,12 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfExpressionStatementElseSimilarExpressionStatement extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class IfExpressionStatementElseSimilarExpressionStatement extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two branches of an 'if' into a single ";
   }
 
-  @Override Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     final Expression then = step.expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;

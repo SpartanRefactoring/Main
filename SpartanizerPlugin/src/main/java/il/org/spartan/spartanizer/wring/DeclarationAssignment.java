@@ -8,6 +8,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -24,18 +26,18 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationAssignment extends Wring.VariableDeclarationFragementAndStatement implements Kind.Collapse {
+public final class DeclarationAssignment extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
     final VariableDeclarationFragment $ = duplicate.of(f);
     $.setInitializer(duplicate.of(x));
     return $;
   }
 
-  @Override String description(final VariableDeclarationFragment f) {
+  @Override public String description(final VariableDeclarationFragment f) {
     return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;

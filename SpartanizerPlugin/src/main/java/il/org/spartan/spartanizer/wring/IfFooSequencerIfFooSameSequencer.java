@@ -12,6 +12,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -31,12 +33,12 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfFooSequencerIfFooSameSequencer extends Wring.ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class IfFooSequencerIfFooSameSequencer extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     final IfStatement s2 = az.ifStatement(nextStatement);

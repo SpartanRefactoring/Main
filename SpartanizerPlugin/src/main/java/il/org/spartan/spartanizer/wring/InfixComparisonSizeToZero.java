@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Converts <code>x.size()==0</code> to <code>x.isEmpty()</code>,
  * <code>x.size()!=0 </code> and <code>x.size()>=1</code>
@@ -21,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
-public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
+public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
   private static String description(final Expression x) {
     return "Use " + (x != null ? x + "" : "isEmpty()");
   }
@@ -96,13 +98,13 @@ public final class InfixComparisonSizeToZero extends Wring.ReplaceCurrentNode<In
         || isNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     final Expression right = right(x);
     final Expression left = left(x);
     return description(left instanceof MethodInvocation ? left : right);
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     final Operator o = x.getOperator();
     if (!iz.comparison(o))
       return null;

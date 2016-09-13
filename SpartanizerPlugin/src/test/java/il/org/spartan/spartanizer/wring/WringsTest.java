@@ -4,7 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
+import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.spartanizations.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
@@ -61,7 +62,7 @@ public class WringsTest {
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     azzert.that(o, iz("+="));
-    final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(Wring.VariableDeclarationFragementAndStatement.asInfix(o));
+    final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(wizard.assignmentToInfix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
