@@ -10,7 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -51,7 +51,7 @@ public final class DeclarationInitializerIfUpdateAssignment extends VariableDecl
     if (o == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(assignmentAsExpression(a), initializer).toCondition(condition);
-    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);
