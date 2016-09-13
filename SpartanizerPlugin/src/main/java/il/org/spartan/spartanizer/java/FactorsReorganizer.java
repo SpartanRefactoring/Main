@@ -42,16 +42,16 @@ public class FactorsReorganizer {
     return subject.operands(xs).to(DIVIDE);
   }
 
-  private static Expression buildMultipliers(final List<Expression> xs) {
-    switch (xs.size()) {
+  private static Expression buildMultipliers(final List<Expression> ¢) {
+    switch (¢.size()) {
       case 0:
         return null;
       case 1:
-        return first(xs);
+        return first(¢);
       case 2:
-        return subject.pair(first(xs), second(xs)).to(TIMES);
+        return subject.pair(first(¢), second(¢)).to(TIMES);
       default:
-        return subject.operands(xs).to(TIMES);
+        return subject.operands(¢).to(TIMES);
     }
   }
 }

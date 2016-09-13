@@ -148,9 +148,9 @@ public enum extract {
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
     final Wrapper<PostfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression x) {
+      @Override public boolean visit(final PostfixExpression ¢) {
         if ($.get() == null)
-          $.set(x);
+          $.set(¢);
         return false;
       }
     });
@@ -167,9 +167,9 @@ public enum extract {
       return null;
     final Wrapper<AssertStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final AssertStatement s) {
+      @Override public boolean visit(final AssertStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -186,9 +186,9 @@ public enum extract {
       return null;
     final Wrapper<ForStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final ForStatement s) {
+      @Override public boolean visit(final ForStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -205,9 +205,9 @@ public enum extract {
       return null;
     final Wrapper<IfStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final IfStatement s) {
+      @Override public boolean visit(final IfStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -240,12 +240,12 @@ public enum extract {
   public static InfixExpression firstPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final InfixExpression x) {
+      @Override public boolean visit(final InfixExpression ¢) {
         if ($.get() != null)
           return false;
-        if (x.getOperator() != InfixExpression.Operator.PLUS)
+        if (¢.getOperator() != InfixExpression.Operator.PLUS)
           return true;
-        $.set(x);
+        $.set(¢);
         return false;
       }
     });
@@ -294,9 +294,9 @@ public enum extract {
       return null;
     final Wrapper<WhileStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final WhileStatement s) {
+      @Override public boolean visit(final WhileStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -329,8 +329,8 @@ public enum extract {
   /** @param n JD
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
-  public static MethodInvocation methodInvocation(final ASTNode n) {
-    return az.methodInvocation(extract.expressionStatement(n).getExpression());
+  public static MethodInvocation methodInvocation(final ASTNode ¢) {
+    return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
 
   public static List<Modifier> modifiers(final BodyDeclaration d) {
@@ -490,8 +490,8 @@ public enum extract {
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; <code><b>null</b></code> if not such statements exists. */
-  public static ThrowStatement throwStatement(final ASTNode n) {
-    return az.throwStatement(extract.singleStatement(n));
+  public static ThrowStatement throwStatement(final ASTNode ¢) {
+    return az.throwStatement(extract.singleStatement(¢));
   }
 
   private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {

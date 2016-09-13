@@ -59,8 +59,8 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
     return $;
   }
 
-  private static List<Expression> gather(final InfixExpression x) {
-    return gather(x, new ArrayList<Expression>());
+  private static List<Expression> gather(final InfixExpression ¢) {
+    return gather(¢, new ArrayList<Expression>());
   }
 
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
@@ -88,8 +88,8 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
     return null;
   }
 
-  @Override public String description(final InfixExpression x) {
-    return "remove 0 in X + 0 expressions from " + x;
+  @Override public String description(final InfixExpression ¢) {
+    return "remove 0 in X + 0 expressions from " + ¢;
   }
 
   @Override public Rewrite make(final InfixExpression x, final ExclusionManager exclude) {

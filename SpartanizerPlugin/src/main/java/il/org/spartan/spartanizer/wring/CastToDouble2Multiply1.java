@@ -25,15 +25,15 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @Override public String description(final CastExpression x) {
-    return "Use 1.*" + step.expression(x) + " instead of (double)" + step.expression(x);
+  @Override public String description(final CastExpression ¢) {
+    return "Use 1.*" + step.expression(¢) + " instead of (double)" + step.expression(¢);
   }
 
-  @Override public ASTNode replacement(final CastExpression x) {
+  @Override public ASTNode replacement(final CastExpression ¢) {
     return eval(//
-        () -> replacement(step.expression(x))//
+        () -> replacement(step.expression(¢))//
     ).when(//
-        step.type(x).isPrimitiveType() && "double".equals(step.type(x) + "") //
+        step.type(¢).isPrimitiveType() && "double".equals(step.type(¢) + "") //
     );
   }
 }

@@ -28,8 +28,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
-  static boolean degenerateElse(final IfStatement s) {
-    return elze(s) != null && iz.vacuousElse(s);
+  static boolean degenerateElse(final IfStatement ¢) {
+    return elze(¢) != null && iz.vacuousElse(¢);
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -42,7 +42,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> impl
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
-  @Override public boolean claims(final IfStatement s) {
-    return s != null && then(s) != null && degenerateElse(s);
+  @Override public boolean claims(final IfStatement ¢) {
+    return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
 }

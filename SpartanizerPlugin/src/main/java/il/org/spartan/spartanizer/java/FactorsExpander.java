@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.assemble.*;
  * @author Niv Shalmon
  * @since 2016-08 */
 public class FactorsExpander {
-  public static Expression simplify(final InfixExpression x) {
-    return base(new FactorsCollector(x));
+  public static Expression simplify(final InfixExpression ¢) {
+    return base(new FactorsCollector(¢));
   }
 
   /** @see #recurse(InfixExpression, List) */

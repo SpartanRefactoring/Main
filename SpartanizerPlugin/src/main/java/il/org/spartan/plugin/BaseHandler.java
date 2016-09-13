@@ -37,12 +37,12 @@ public abstract class BaseHandler extends AbstractHandler {
     return inner;
   }
 
-  private Void execute(final ISelection s) throws InterruptedException {
-    return !(s instanceof ITextSelection) ? null : execute((ITextSelection) s);
+  private Void execute(final ISelection ¢) throws InterruptedException {
+    return !(¢ instanceof ITextSelection) ? null : execute((ITextSelection) ¢);
   }
 
-  private Void execute(final ITextSelection s) throws InterruptedException {
-    return execute(new RefactoringWizardOpenOperation(getWizard(s, eclipse.currentCompilationUnit())));
+  private Void execute(final ITextSelection ¢) throws InterruptedException {
+    return execute(new RefactoringWizardOpenOperation(getWizard(¢, eclipse.currentCompilationUnit())));
   }
 
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {

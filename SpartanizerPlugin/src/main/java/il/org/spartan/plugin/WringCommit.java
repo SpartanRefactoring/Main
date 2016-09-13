@@ -117,9 +117,9 @@ public class WringCommit {
       commitLocal(w, ToggleSpartanization.getDeclaringFile(n));
     }
     
-    protected void commitLocal(@SuppressWarnings("rawtypes") Wring w, final ASTNode d) {
+    protected void commitLocal(@SuppressWarnings("rawtypes") Wring w, final ASTNode n) {
       final DisabledChecker dc = new DisabledChecker(u);
-      d.accept(new Trimmer.DispatchingVisitor() {
+      n.accept(new Trimmer.DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(N n) {
           if (dc.check(n))
             return true;

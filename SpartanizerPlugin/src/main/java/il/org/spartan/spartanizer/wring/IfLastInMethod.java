@@ -35,8 +35,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfLastInMethod extends Wring<IfStatement> implements Kind.EarlyReturn {
-  @Override public String description(final IfStatement s) {
-    return "Invert conditional " + s.getExpression() + " for early return";
+  @Override public String description(final IfStatement ¢) {
+    return "Invert conditional " + ¢.getExpression() + " for early return";
   }
 
   @Override public Rewrite make(final IfStatement s) {

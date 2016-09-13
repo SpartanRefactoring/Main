@@ -42,8 +42,8 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     return "Merge conditionals of nested if staement";
   }
 
-  @Override public Rewrite make(final IfStatement s) {
-    return make(s, null);
+  @Override public Rewrite make(final IfStatement ¢) {
+    return make(¢, null);
   }
 
   @Override public Rewrite make(final IfStatement s, final ExclusionManager exclude) {

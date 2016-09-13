@@ -24,15 +24,15 @@ public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assig
     return stringType.isNot(subject.pair(¢.getLeftHandSide(), ¢.getRightHandSide()).to(wizard.assign2infix(¢.getOperator())));
   }
 
-  private static ASTNode replace(final Assignment a) {
-    return subject.operand(a.getLeftHandSide()).to(isIncrement(a) ? INCREMENT : DECREMENT);
+  private static ASTNode replace(final Assignment ¢) {
+    return subject.operand(¢.getLeftHandSide()).to(isIncrement(¢) ? INCREMENT : DECREMENT);
   }
 
-  @Override public String description(final Assignment a) {
-    return "Replace " + a + " to " + a.getRightHandSide() + (isIncrement(a) ? "++" : "--");
+  @Override public String description(final Assignment ¢) {
+    return "Replace " + ¢ + " to " + ¢.getRightHandSide() + (isIncrement(¢) ? "++" : "--");
   }
 
-  @Override public ASTNode replacement(final Assignment a) {
-    return !iz.isPlusAssignment(a) && !iz.isMinusAssignment(a) || !iz.literal1(a.getRightHandSide()) || !provablyNotString(a) ? null : replace(a);
+  @Override public ASTNode replacement(final Assignment ¢) {
+    return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(¢.getRightHandSide()) || !provablyNotString(¢) ? null : replace(¢);
   }
 }
