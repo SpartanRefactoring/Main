@@ -2,14 +2,12 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Various methods for comparing
  * @author Yossi Gil

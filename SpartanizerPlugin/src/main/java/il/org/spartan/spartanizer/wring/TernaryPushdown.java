@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
-/** Pushdown a ternary as far down as possible 
+/** Pushdown a ternary as far down as possible
  * @author Yossi Gil
  * @year 2015 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
