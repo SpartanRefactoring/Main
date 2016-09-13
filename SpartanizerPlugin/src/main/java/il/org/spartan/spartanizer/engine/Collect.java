@@ -297,8 +297,8 @@ public enum Collect {
         return true;
       }
 
-      @Override public boolean visit(final Assignment a) {
-        return collect(from(a));
+      @Override public boolean visit(final Assignment ¢) {
+        return collect(from(¢));
       }
 
       @Override public boolean visit(final CastExpression ¢) {
