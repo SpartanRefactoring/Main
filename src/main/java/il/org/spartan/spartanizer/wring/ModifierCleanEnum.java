@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.wring;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
+
 /** convert
  *
  * <pre>
@@ -18,11 +21,11 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class ModifierCleanEnum extends AbstractModifierClean<EnumDeclaration> implements Kind.SyntacticBaggage {
-  @Override String description(final EnumDeclaration ¢) {
+  @Override public String description(final EnumDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
 
-  @Override boolean redundant(final Modifier ¢) {
+  @Override protected boolean redundant(final Modifier ¢) {
     return ¢.isStatic() || ¢.isAbstract() || ¢.isFinal();
   }
 }

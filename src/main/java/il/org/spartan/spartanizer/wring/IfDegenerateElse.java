@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** /** convert
  *
@@ -25,22 +27,22 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-08-01 */
-public final class IfDegenerateElse extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.NOP {
+public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
   static boolean degenerateElse(final IfStatement s) {
     return elze(s) != null && iz.vacuousElse(s);
   }
 
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove vacuous 'else' branch";
   }
 
-  @Override Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     final IfStatement $ = duplicate.of(s);
     $.setElseStatement(null);
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean scopeIncludes(final IfStatement s) {
     return s != null && then(s) != null && degenerateElse(s);
   }
 }

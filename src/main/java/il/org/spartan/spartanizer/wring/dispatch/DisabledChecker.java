@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.dispatch;
 
 import java.util.*;
 
@@ -40,7 +40,7 @@ public class DisabledChecker {
   }
 
   private class BodyDeclarationVisitor extends ASTVisitor {
-    // TODO: Ori Roth: Don't use short names for global things. 
+    // TODO: Ori Roth: Don't use short names for global things.
     @SuppressWarnings("hiding") final Set<ASTNode> dns;
     @SuppressWarnings("hiding") final Set<ASTNode> ens;
 

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.strategies;
 
 import java.util.*;
 
@@ -7,13 +7,14 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.
  * @author Alex Kopzon
  * @since 2016 */
 public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclaration> //
-    extends Wring.ReplaceCurrentNode<N> implements Kind.Collapse {
+    extends ReplaceCurrentNode<N> implements Kind.Collapse {
   static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> {
     return m1.isAnnotation() && m2.isAnnotation() ? 0
         : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m1.isModifier() ? 1 : Modifiers.gt(m1 + "", m2 + "");
@@ -25,8 +26,12 @@ public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclara
     return ms.equals(¢);
   }
 
-  @Override String description(@SuppressWarnings("unused") final N __) {
+  @Override public String description(@SuppressWarnings("unused") final N __) {
     return "Sort Modifiers as defined at Modifier.class";
+  }
+
+  @Override public N replacement(final N $) {
+    return Sorted(step.modifiers($)) ? null : go(duplicate.of($));
   }
 
   N go(final N $) {
@@ -35,10 +40,6 @@ public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclara
     step.modifiers($).clear();
     step.modifiers($).addAll(ms);
     return $;
-  }
-
-  @Override N replacement(final N $) {
-    return Sorted(step.modifiers($)) ? null : go(duplicate.of($));
   }
 
   public static final class ofAnnotation extends AbstractBodyDeclarationSortModifiers<AnnotationTypeDeclaration> { //

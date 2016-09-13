@@ -10,6 +10,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Convert Finite loops with return statements to shorter ones : </br>
  * Convert <br/>
@@ -87,11 +89,11 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
     return "Convert the return inside the loop to break";
   }
 
-  @Override String description(final Block b) {
+  @Override public String description(final Block b) {
     return "Convert the return inside " + b + " to break";
   }
 
-  @SuppressWarnings("all") @Override Rewrite make(final Block n) {
+  @SuppressWarnings("all") @Override public Rewrite make(final Block n) {
     final List<Statement> ss = n.statements();
     if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
         || !(second(ss) instanceof ReturnStatement))

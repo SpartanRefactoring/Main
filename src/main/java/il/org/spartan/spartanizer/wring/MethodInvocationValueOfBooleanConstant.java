@@ -6,12 +6,14 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Removes unnecessary uses of Boolean.valueOf, e.g.,
  * <code>Boolean.valueOf(true) </code> into <code>Boolean.TRUE</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
-public final class MethodInvocationValueOfBooleanConstant extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
+public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
   private static String asString(final BooleanLiteral l) {
     return l.booleanValue() ? "TRUE" : "FALSE";
   }
@@ -24,11 +26,11 @@ public final class MethodInvocationValueOfBooleanConstant extends Wring.ReplaceC
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 
-  @Override String description(final MethodInvocation i) {
+  @Override public String description(final MethodInvocation i) {
     return "Replace valueOf (" + onlyArgument(i) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(i)));
   }
 
-  @Override Expression replacement(final MethodInvocation i) {
+  @Override public Expression replacement(final MethodInvocation i) {
     return !"valueOf".equals(step.name(i).getIdentifier()) ? null : replacement(step.receiver(i), onlyArgument(i));
   }
 }

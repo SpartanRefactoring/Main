@@ -11,22 +11,24 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Converts <code>""+"foo"</code> to <code>"foo"</code> when x is of type
  * String
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */
-public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }
 
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "Eliminate concatentation of \"\" to" + (iz.emptyStringLiteral(right(x)) ? left(x) : right(x));
   }
 
-  @Override Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     if (type.get(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);

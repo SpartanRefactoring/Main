@@ -14,6 +14,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -29,7 +31,7 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
+public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
   private static Expression chopHead(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     es.remove(0);
@@ -43,11 +45,11 @@ public final class InfixConditionalCommon extends Wring.ReplaceCurrentNode<Infix
                 : null;
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
 
-  @Override Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     final Operator o = x.getOperator();
     if (!in(o, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;

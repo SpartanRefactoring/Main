@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** eliminates redundant comparison with the two boolean literals:
  *
@@ -26,7 +28,7 @@ import il.org.spartan.spartanizer.ast.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
+public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
   private static BooleanLiteral literal(final InfixExpression x) {
     return az.booleanLiteral(core(literalOnLeft(x) ? left(x) : right(x)));
   }
@@ -47,17 +49,17 @@ public final class InfixComparisonBooleanLiteral extends Wring.ReplaceCurrentNod
     return literalOnLeft(x) ? right(x) : left(x);
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression x) {
-    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
-  }
-
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "Eliminate redundant comparison with '" + literal(x) + "'";
   }
 
-  @Override Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     final BooleanLiteral literal = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
     return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
+  }
+
+  @Override public boolean scopeIncludes(final InfixExpression x) {
+    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
   }
 }

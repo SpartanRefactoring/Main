@@ -9,7 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>1*X</code> by <code>X</code>
  * @author Yossi Gil
@@ -24,11 +25,11 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
         : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(TIMES);
   }
 
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "Remove all multiplications by 1 from " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     return x.getOperator() != TIMES ? null : replacement(extract.allOperands(x));
   }
 }

@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 import il.org.spartan.utils.*;
 
 /** convert
@@ -22,7 +24,7 @@ import il.org.spartan.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-14 */
-public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.Sorting {
+public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression> implements Kind.Sorting {
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1 + "", e2 + "").similarity();
   }
@@ -36,11 +38,11 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
     return compatible(e1, e2) || compatible(e1, make.notOf(e2));
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
 
-  @Override ConditionalExpression replacement(final ConditionalExpression x) {
+  @Override public ConditionalExpression replacement(final ConditionalExpression x) {
     final ConditionalExpression $ = subject.pair(core(x.getElseExpression()), core(x.getThenExpression())).toCondition(make.notOf(x.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
@@ -57,6 +59,6 @@ public final class TernaryShortestFirst extends Wring.ReplaceCurrentNode<Conditi
         return a1 > a2 ? $ : null;
     }
     final Expression condition = make.notOf($.getExpression());
-    return Wrings.length(condition, then) > Wrings.length(make.notOf(condition), elze) ? $ : null;
+    return metrics.length(condition, then) > metrics.length(make.notOf(condition), elze) ? $ : null;
   }
 }

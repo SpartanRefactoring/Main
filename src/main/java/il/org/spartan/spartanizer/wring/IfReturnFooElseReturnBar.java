@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -24,19 +26,19 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfReturnFooElseReturnBar extends Wring.ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }
 
-  @Override Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     final Expression condition = s.getExpression();
     final Expression then = extract.returnExpression(then(s));
     final Expression elze = extract.returnExpression(elze(s));
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(condition)).toReturn();
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean scopeIncludes(final IfStatement s) {
     return s != null && extract.returnExpression(then(s)) != null && extract.returnExpression(elze(s)) != null;
   }
 }

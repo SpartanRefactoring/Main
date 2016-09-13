@@ -12,7 +12,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>X-0</code> by <code>X</code> and <code>0-X</code> by
  * <code>-X<code>
@@ -47,11 +48,11 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return subject.operands(!literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
   }
 
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "Remove subtraction of 0 in " + x;
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     return x.getOperator() != MINUS ? null : replacement(operands(x));
   }
 }
