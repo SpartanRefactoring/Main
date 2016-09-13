@@ -73,6 +73,7 @@ public class WringCommit {
         e.printStackTrace();
       }
     }
+    pm.done();
   }
 
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
