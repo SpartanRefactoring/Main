@@ -63,8 +63,7 @@ public class WringCommit {
 
   private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
     Toolbox.refresh();
-    WringCommitVisitor f = new WringCommitVisitor($, m, t, u);
-    u.accept(f);
+    u.accept((new WringCommitVisitor($, m, t, u)));
   }
 
   public enum Type {

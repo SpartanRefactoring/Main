@@ -161,18 +161,18 @@ class UsesCollector extends HidingDepth {
     return recurse(¢.getQualifier());
   }
 
-  @Override public boolean visit(final SimpleName n) {
-    consider(n);
+  @Override public boolean visit(final SimpleName ¢) {
+    consider(¢);
     return false;
   }
 
-  @Override public boolean visit(final SuperMethodInvocation i) {
-    ingore(step.name(i));
-    return recurse(arguments(i));
+  @Override public boolean visit(final SuperMethodInvocation ¢) {
+    ingore(step.name(¢));
+    return recurse(arguments(¢));
   }
 
-  @Override public boolean visit(final VariableDeclarationFragment f) {
-    return !declaredIn(f) && recurse(f.getInitializer());
+  @Override public boolean visit(final VariableDeclarationFragment ¢) {
+    return !declaredIn(¢) && recurse(¢.getInitializer());
   }
 
   @Override protected UsesCollector clone() {
@@ -219,12 +219,12 @@ class UsesCollector extends HidingDepth {
     return false;
   }
 
-  private boolean declaredBy(final SimpleName n) {
-    if (n == focus) {
-      result.add(n);
+  private boolean declaredBy(final SimpleName ¢) {
+    if (¢ == focus) {
+      result.add(¢);
       return false;
     }
-    if (!hit(n))
+    if (!hit(¢))
       return false;
     hide();
     return true;

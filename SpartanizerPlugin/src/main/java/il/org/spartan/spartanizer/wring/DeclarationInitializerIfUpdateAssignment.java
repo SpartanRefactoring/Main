@@ -31,8 +31,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerIfUpdateAssignment extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
-  @Override public String description(final VariableDeclarationFragment f) {
-    return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
+  @Override public String description(final VariableDeclarationFragment ¢) {
+    return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

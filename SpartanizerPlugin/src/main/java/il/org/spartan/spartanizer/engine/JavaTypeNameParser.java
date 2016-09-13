@@ -107,16 +107,16 @@ import org.eclipse.jdt.core.dom.*;
     return isGenericVariation(¢.getIdentifier());
   }
 
-  private boolean isLower(final int i) {
-    return Character.isLowerCase(typeName.charAt(i));
+  private boolean isLower(final int ¢) {
+    return Character.isLowerCase(typeName.charAt(¢));
   }
 
-  private boolean isUpper(final int i) {
-    return Character.isUpperCase(typeName.charAt(i));
+  private boolean isUpper(final int ¢) {
+    return Character.isUpperCase(typeName.charAt(¢));
   }
 
-  private String lastNameCharIndex(final int i) {
-    return lastName().length() < i + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(i)));
+  private String lastNameCharIndex(final int ¢) {
+    return lastName().length() < ¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
 
   private boolean lowerCaseContains(final String s, final String substring) {

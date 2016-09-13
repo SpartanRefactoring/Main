@@ -76,15 +76,15 @@ public enum Make {
   /** Creates a parser for a given {@link IFile}
    * @param f JD
    * @return created parser */
-  public ASTParser parser(final IFile f) {
-    return parser(JavaCore.createCompilationUnitFrom(f));
+  public ASTParser parser(final IFile ¢) {
+    return parser(JavaCore.createCompilationUnitFrom(¢));
   }
 
   /** Creates a parser for a given marked text.
    * @param m JD
    * @return created parser */
-  public ASTParser parser(final IMarker m) {
-    return parser(makeAST.iCompilationUnit(m));
+  public ASTParser parser(final IMarker ¢) {
+    return parser(makeAST.iCompilationUnit(¢));
   }
 
   /** Creates a no-binding parser for a given text

@@ -40,7 +40,6 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement s : statements(b)) {
-      // TODO: Dor, I spartanized the code.
       if (az.ifStatement(s) != null)
         $ = handleIf(s, nextReturn);
       if (compareReturnStatements(nextReturn, az.returnStatement(s)))
@@ -99,20 +98,18 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
 
   @Override public Rewrite make(final Block b) {
     final List<Statement> ss = statements(b);
-    if (ss.size() < 2 || !(first(ss) instanceof WhileStatement) //
-        || !(second(ss) instanceof ReturnStatement))
+    if (ss.size() < 2 || !iz.whileStatement(first(ss)) || !iz.returnStatement(second(ss)))
       return null;
-    // TODO: Dor, please use functions in az,
-    final WhileStatement whileStatement = (WhileStatement) first(ss);
+    final WhileStatement whileStatement = az.whileStatement(first(ss));
     if (isInfiniteLoop(whileStatement))
       return null;
-    final ReturnStatement nextReturn = (ReturnStatement) second(ss);
+    final ReturnStatement nextReturn = az.returnStatement(second(ss));
     final Statement body = whileStatement.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
+        : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, (ASTNode) ((Block) into.s("break;")).statements().get(0), g);
+        r.replace($, az.astNode((az.block(into.s("break;")).statements().get(0))), g);
       }
     };
   }

@@ -125,16 +125,16 @@ public enum Collect {
    * @return <b>ASTVisitor</b> as described above. */
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
-      @Override public boolean visit(final ForStatement s) {
-        return consider(initializers(s));
+      @Override public boolean visit(final ForStatement ¢) {
+        return consider(initializers(¢));
       }
 
-      @Override public boolean visit(final TryStatement s) {
-        return consider(resources(s));
+      @Override public boolean visit(final TryStatement ¢) {
+        return consider(resources(¢));
       }
 
-      @Override public boolean visit(final VariableDeclarationFragment f) {
-        return add(f.getName());
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+        return add(¢.getName());
       }
 
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
@@ -210,16 +210,16 @@ public enum Collect {
         return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
 
-      @Override public boolean visit(final TryStatement s) {
-        return consider(resources(s));
+      @Override public boolean visit(final TryStatement ¢) {
+        return consider(resources(¢));
       }
 
-      @Override public boolean visit(final VariableDeclarationFragment f) {
-        return add(f.getName());
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+        return add(¢.getName());
       }
 
-      @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(fragments(s));
+      @Override public boolean visit(final VariableDeclarationStatement ¢) {
+        addFragments(fragments(¢));
         return true;
       }
 
@@ -240,8 +240,8 @@ public enum Collect {
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
        *         {@link Expression} is equal to the ASTnode's provided by the
        *         closure (n) */
-      boolean consider(final Expression x) {
-        return add(az.simpleName(x));
+      boolean consider(final Expression ¢) {
+        return add(az.simpleName(¢));
       }
 
       boolean consider(final List<? extends Expression> initializers) {
@@ -297,22 +297,22 @@ public enum Collect {
         return true;
       }
 
-      @Override public boolean visit(final Assignment a) {
-        return collect(right(a));
+      @Override public boolean visit(final Assignment ¢) {
+        return collect(right(¢));
       }
 
-      @Override public boolean visit(final CastExpression x) {
-        return collect(step.expression(x));
+      @Override public boolean visit(final CastExpression ¢) {
+        return collect(step.expression(¢));
       }
 
-      @Override public boolean visit(final ClassInstanceCreation c) {
-        collect(step.expression(c));
-        return collect(arguments(c));
+      @Override public boolean visit(final ClassInstanceCreation ¢) {
+        collect(step.expression(¢));
+        return collect(arguments(¢));
       }
 
-      @Override public boolean visit(final DoStatement s) {
+      @Override public boolean visit(final DoStatement ¢) {
         ++loopDepth;
-        return collect(step.expression(s));
+        return collect(step.expression(¢));
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -330,8 +330,8 @@ public enum Collect {
         return true;
       }
 
-      @Override public boolean visit(final InstanceofExpression x) {
-        return collect(left(x));
+      @Override public boolean visit(final InstanceofExpression ¢) {
+        return collect(left(¢));
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
@@ -345,19 +345,19 @@ public enum Collect {
         return true;
       }
 
-      @Override public boolean visit(final MethodInvocation i) {
-        collect(step.receiver(i));
-        collect(arguments(i));
+      @Override public boolean visit(final MethodInvocation ¢) {
+        collect(step.receiver(¢));
+        collect(arguments(¢));
         return false;
       }
 
-      @Override public boolean visit(final QualifiedName n) {
-        collectExpression(n.getName());
+      @Override public boolean visit(final QualifiedName ¢) {
+        collectExpression(¢.getName());
         return false;
       }
 
-      @Override public boolean visit(final SimpleName n) {
-        return collect(n);
+      @Override public boolean visit(final SimpleName ¢) {
+        return collect(¢);
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
@@ -365,12 +365,12 @@ public enum Collect {
         return true;
       }
 
-      boolean add(final Object o) {
-        return collect((Expression) o);
+      boolean add(final Object ¢) {
+        return collect((Expression) ¢);
       }
 
-      boolean collect(final Expression x) {
-        collectExpression(x);
+      boolean collect(final Expression ¢) {
+        collectExpression(¢);
         return true;
       }
 
@@ -380,17 +380,17 @@ public enum Collect {
         return true;
       }
 
-      void collectExpression(final Expression x) {
-        if (x instanceof SimpleName)
-          collectExpression((SimpleName) x);
+      void collectExpression(final Expression ¢) {
+        if (¢ instanceof SimpleName)
+          collectExpression((SimpleName) ¢);
       }
 
-      void collectExpression(final SimpleName n) {
-        if (!wizard.same(what, n))
+      void collectExpression(final SimpleName ¢) {
+        if (!wizard.same(what, ¢))
           return;
-        into.add(n);
+        into.add(¢);
         if (repeated())
-          into.add(n);
+          into.add(¢);
       }
 
       List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
@@ -416,8 +416,8 @@ public enum Collect {
    *         given location */
   public Of of(final SimpleName n) {
     return new Of() {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
-        return collect(n, ns);
+      @Override public List<SimpleName> in(final ASTNode... ¢) {
+        return collect(n, ¢);
       }
     };
   }
@@ -427,8 +427,8 @@ public enum Collect {
    * @param f JD
    * @return a function object to be used for searching for the
    *         {@link SimpleName} embedded in the parameter. */
-  public Of of(final VariableDeclarationFragment f) {
-    return of(f.getName());
+  public Of of(final VariableDeclarationFragment ¢) {
+    return of(¢.getName());
   }
 
   /** Lists the required occurrences
@@ -478,8 +478,8 @@ public enum Collect {
      * @param ns JD
      * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
      *         Parameter. */
-    public boolean existIn(final ASTNode... ns) {
-      return !in(ns).isEmpty();
+    public boolean existIn(final ASTNode... ¢) {
+      return !in(¢).isEmpty();
     }
 
     /** the method that will carry out the search

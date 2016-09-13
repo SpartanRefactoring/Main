@@ -76,16 +76,16 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     return null;
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  private static boolean isInfiniteLoop(final WhileStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
     return "Convert the break inside the loop to return";
   }
 
-  @Override public String description(final Block b) {
-    return "Convert the break inside " + b + " to return";
+  @Override public String description(final Block ¢) {
+    return "Convert the break inside " + ¢ + " to return";
   }
 
   @Override public Rewrite make(final Block b) {
