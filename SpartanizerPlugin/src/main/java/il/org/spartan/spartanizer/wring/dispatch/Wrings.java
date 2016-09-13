@@ -106,7 +106,7 @@ public enum Wrings {
   }
 
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
-    new LocalInliner(oldName, r, g).byValue(newName)//
+    new Inliner(oldName, r, g).byValue(newName)//
         .inlineInto(Collect.usesOf(oldName).in(region).toArray(new Expression[] {}));
   }
 

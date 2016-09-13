@@ -11,7 +11,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -31,8 +31,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitialiazelUpdateAssignment extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
-  @Override public String description(final VariableDeclarationFragment f) {
-    return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
+  @Override public String description(final VariableDeclarationFragment ¢) {
+    return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
@@ -40,13 +40,13 @@ public final class DeclarationInitialiazelUpdateAssignment extends VariableDecla
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(left(a), right(a)).to(wizard.assign2infix(o));
-    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     r.replace(initializer, newInitializer, g);

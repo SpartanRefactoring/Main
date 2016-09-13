@@ -75,8 +75,8 @@ import org.eclipse.jdt.core.dom.*;
   /** Shorthand for n.equals(this.shortName())
    * @param s JD
    * @return true if the provided name equals the type's short name */
-  public boolean isShort(final String s) {
-    return s.equals(shortName());
+  public boolean isShort(final String ¢) {
+    return ¢.equals(shortName());
   }
 
   // TODO: Dan, is this a hack? You were supposed to look at the way

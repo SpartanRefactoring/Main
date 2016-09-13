@@ -47,8 +47,8 @@ public enum minus {
                     : $;
   }
 
-  public static Expression peel(final InfixExpression x) {
-    return out(x.getOperator(), TIMES, DIVIDE) ? x : subject.operands(peel(hop.operands(x))).to(x.getOperator());
+  public static Expression peel(final InfixExpression ¢) {
+    return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
   public static Expression peel(final NumberLiteral $) {

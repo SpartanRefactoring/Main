@@ -25,11 +25,11 @@ public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpre
     return "Remove 'true' argument to '&&'";
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
-    return Wrings.eliminateLiteral(x, true);
+  @Override public Expression replacement(final InfixExpression ¢) {
+    return Wrings.eliminateLiteral(¢, true);
   }
 
-  @Override public boolean claims(final InfixExpression x) {
-    return iz.conditionalAnd(x) && have.trueLiteral(extract.allOperands(x));
+  @Override public boolean claims(final InfixExpression ¢) {
+    return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
   }
 }

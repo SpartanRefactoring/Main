@@ -287,8 +287,8 @@ class UsesCollector extends HidingDepth {
       this.parent = parent;
     }
 
-    @Override public boolean visit(final FieldDeclaration d) {
-      return d.getParent() == parent && !hidden() && !declaredIn(d);
+    @Override public boolean visit(final FieldDeclaration ¢) {
+      return ¢.getParent() == parent && !hidden() && !declaredIn(¢);
     }
   }
 }
@@ -303,7 +303,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   }
 
   @Override public boolean visit(final Assignment ¢) {
-    return recurse(right(¢));
+    return recurse(from(¢));
   }
 
   @Override public boolean visit(final PostfixExpression it) {
