@@ -55,8 +55,8 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
         return false;
       }
 
-      boolean ¢(final CatchClause c) {
-        return ¢(c.getException());
+      boolean ¢(final CatchClause ¢) {
+        return ¢(¢.getException());
       }
 
       boolean ¢(final ForStatement ¢) {
@@ -74,8 +74,8 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
         return ¢(¢.getIdentifier());
       }
 
-      boolean ¢(final SingleVariableDeclaration d) {
-        return ¢(d.getName());
+      boolean ¢(final SingleVariableDeclaration ¢) {
+        return ¢(¢.getName());
       }
 
       boolean ¢(final Statement ¢) {
@@ -91,20 +91,20 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
         return false;
       }
 
-      boolean ¢(final TryStatement s) {
-        return ¢¢¢(step.resources(s)) || ¢¢(step.catchClauses(s));
+      boolean ¢(final TryStatement ¢) {
+        return ¢¢¢(step.resources(¢)) || ¢¢(step.catchClauses(¢));
       }
 
       boolean ¢(final VariableDeclarationExpression ¢) {
         return ¢¢¢¢(step.fragments(¢));
       }
 
-      boolean ¢(final VariableDeclarationFragment f) {
-        return ¢(f.getName());
+      boolean ¢(final VariableDeclarationFragment ¢) {
+        return ¢(¢.getName());
       }
 
-      boolean ¢(final VariableDeclarationStatement s) {
-        return ¢¢¢¢(fragments(s));
+      boolean ¢(final VariableDeclarationStatement ¢) {
+        return ¢¢¢¢(fragments(¢));
       }
 
       boolean ¢¢(final List<CatchClause> cs) {

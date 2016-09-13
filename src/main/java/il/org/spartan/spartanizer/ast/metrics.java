@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
-  public static int condensedSize(final ASTNode ¢) {
+  static int condensedSize(final ASTNode ¢) {
     return wizard.condense(¢).length();
   }
 
