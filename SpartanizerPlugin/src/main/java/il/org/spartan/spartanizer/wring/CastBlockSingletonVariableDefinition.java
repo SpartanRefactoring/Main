@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * <code> {int a=0;} </code> </br>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public class BlockSingletonVariableDefinition extends Wring<Block> implements Kind.Collapse {
+public class CastBlockSingletonVariableDefinition extends Wring<Block> implements Kind.Collapse {
   @Override public String description() {
     return "remove the block";
   }
