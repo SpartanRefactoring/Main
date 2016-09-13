@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Contains subclasses and tools to build expressions and statements */
 public class subject {
@@ -242,7 +244,12 @@ public class subject {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
       $.setLeftOperand(plant(left).intoLeft($));
-      $.setRightOperand(plant(right).into($));
+      if (o != wizard.PLUS2)
+        $.setRightOperand(plant(right).into($));
+      else if (precedence.greater($, right) || (precedence.equal($, right) && stringType.isNot(left)) || iz.simple(right))
+        $.setRightOperand(right);
+      else
+        $.setRightOperand(subject.operand(right).parenthesis());
       return $;
     }
 

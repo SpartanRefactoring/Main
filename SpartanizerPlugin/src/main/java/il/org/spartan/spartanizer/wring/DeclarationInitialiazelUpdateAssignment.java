@@ -45,7 +45,7 @@ public final class DeclarationInitialiazelUpdateAssignment extends VariableDecla
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(left(a), right(a)).to(wizard.asInfix(o));
+    final InfixExpression newInitializer = subject.pair(left(a), right(a)).to(wizard.assignmentToInfix(o));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
