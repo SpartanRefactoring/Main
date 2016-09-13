@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Replace a variable with an expression
  * @author Yossi Gil
  * @year 2015 */
-public final class LocalInliner {
+public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     int i = 0;
@@ -29,22 +29,22 @@ public final class LocalInliner {
   final ASTRewrite rewriter;
   final TextEditGroup editGroup;
 
-  public LocalInliner(final SimpleName n) {
+  public Inliner(final SimpleName n) {
     this(n, null, null);
   }
 
-  public LocalInliner(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
+  public Inliner(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
     this.name = name;
     this.rewriter = rewriter;
     this.editGroup = editGroup;
   }
 
-  public LocalInlineWithValue byValue(final Expression replacement) {
-    return new LocalInlineWithValue(replacement);
+  public InlinerWithValue byValue(final Expression replacement) {
+    return new InlinerWithValue(replacement);
   }
 
-  public class LocalInlineWithValue extends Wrapper<Expression> {
-    LocalInlineWithValue(final Expression replacement) {
+  public class InlinerWithValue extends Wrapper<Expression> {
+    InlinerWithValue(final Expression replacement) {
       super(extract.core(replacement));
     }
 
