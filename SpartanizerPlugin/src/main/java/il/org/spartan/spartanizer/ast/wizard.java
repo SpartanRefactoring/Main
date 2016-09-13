@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.*;
 
-/** Collection of definitions and functions that capture some of the quircks of
+/** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
  * @author Yossi Gil
  * @since 2014 */
