@@ -11,7 +11,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -40,7 +40,7 @@ public final class DeclarationInitializerReturnAssignment extends VariableDeclar
     if (o != ASSIGN)
       return null;
     final Expression newReturnValue = duplicate.of(from(a));
-    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     r.replace(a, newReturnValue, g);
