@@ -316,8 +316,8 @@ public enum step {
     return ¢.getThenStatement();
   }
 
-  public static Type type(final CastExpression x) {
-    return x.getType();
+  public static Type type(final CastExpression ¢) {
+    return ¢.getType();
   }
 
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {

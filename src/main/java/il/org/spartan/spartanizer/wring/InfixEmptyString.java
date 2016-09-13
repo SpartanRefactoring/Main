@@ -20,8 +20,8 @@ public class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> implem
     return "Remove \"\" from \"\" + X if X is a String";
   }
 
-  @Override public ASTNode replacement(final InfixExpression x) {
-    return Wrings.eliminateLiteral(x, true);
+  @Override public ASTNode replacement(final InfixExpression ¢) {
+    return Wrings.eliminateLiteral(¢, true);
   }
 
   @Override public WringGroup wringGroup() {

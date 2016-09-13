@@ -54,20 +54,20 @@ public final class LocalInliner {
      * @return A non-negative integer, computed from the number of occurrences
      *         of {@link #name} in the operands, and the size of the
      *         replacement. */
-    public int addedSize(final ASTNode... ns) {
-      return uses(ns).size() * (metrics.size(get()) - 1);
+    public int addedSize(final ASTNode... ¢) {
+      return uses(¢).size() * (metrics.size(get()) - 1);
     }
 
-    public boolean canInlineinto(final ASTNode... ns) {
-      return Collect.definitionsOf(name).in(ns).isEmpty() && (sideEffects.free(get()) || uses(ns).size() <= 1);
+    public boolean canInlineinto(final ASTNode... ¢) {
+      return Collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
     }
 
-    public boolean canSafelyInlineinto(final ASTNode... ns) {
-      return canInlineinto(ns) && unsafeUses(ns).isEmpty();
+    public boolean canSafelyInlineinto(final ASTNode... ¢) {
+      return canInlineinto(¢) && unsafeUses(¢).isEmpty();
     }
 
-    @SafeVarargs public final void inlineInto(final ASTNode... ns) {
-      inlineinto(wrap(ns));
+    @SafeVarargs public final void inlineInto(final ASTNode... ¢) {
+      inlineinto(wrap(¢));
     }
 
     /** Computes the total number of AST nodes in the replaced parameters
@@ -75,8 +75,8 @@ public final class LocalInliner {
      * @return A non-negative integer, computed from original size of the
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement. */
-    public int replacedSize(final ASTNode... ns) {
-      return metrics.size(ns) + uses(ns).size() * (metrics.size(get()) - 1);
+    public int replacedSize(final ASTNode... ¢) {
+      return metrics.size(¢) + uses(¢).size() * (metrics.size(get()) - 1);
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
@@ -93,12 +93,12 @@ public final class LocalInliner {
         rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);
     }
 
-    private List<SimpleName> unsafeUses(final ASTNode... ns) {
-      return Collect.unsafeUsesOf(name).in(ns);
+    private List<SimpleName> unsafeUses(final ASTNode... ¢) {
+      return Collect.unsafeUsesOf(name).in(¢);
     }
 
-    private List<SimpleName> uses(final ASTNode... ns) {
-      return Collect.usesOf(name).in(ns);
+    private List<SimpleName> uses(final ASTNode... ¢) {
+      return Collect.usesOf(name).in(¢);
     }
   }
 }

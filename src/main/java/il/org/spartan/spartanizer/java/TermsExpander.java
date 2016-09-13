@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.assemble.*;
  * @author Yossi Gil
  * @since 2016-08 */
 public class TermsExpander {
-  public static Expression simplify(final InfixExpression x) {
-    return !stringType.isNot(x) ? x : base(new TermsCollector(x));
+  public static Expression simplify(final InfixExpression ¢) {
+    return !stringType.isNot(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
   /** @see #recurse(List, InfixExpression) */

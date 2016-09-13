@@ -8,12 +8,12 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2016 */
 class Term {
-  static Term minus(final Expression x) {
-    return new Term(true, x);
+  static Term minus(final Expression ¢) {
+    return new Term(true, ¢);
   }
 
-  static Term plus(final Expression x) {
-    return new Term(false, x);
+  static Term plus(final Expression ¢) {
+    return new Term(false, ¢);
   }
 
   private final boolean negative;
