@@ -51,9 +51,6 @@ public interface plant {
     }
 
     private boolean noParenthesisRequiredIn(final ASTNode host) {
-      // TODO: Niv, this is where you should make the change. Check the type of
-      // the host. The call to wizard assumes it is infix, but there could be
-      // other options as you noticed.
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 

@@ -75,7 +75,7 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void operandsNoParenthesisRest() {
-    azzert.that(subject.operands(e("((a))"), e("b+c"), e("c+d")).to(InfixExpression.Operator.PLUS), iz("a+b+c+c+d"));
+    azzert.that(subject.operands(e("((a-b))"), e("b-c"), e("c+d")).to(InfixExpression.Operator.PLUS), iz("a-b+b-c+c+d"));
   }
 
   @Test public void operandsParenthesisLeft() {
