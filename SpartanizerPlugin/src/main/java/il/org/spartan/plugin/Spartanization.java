@@ -264,8 +264,9 @@ public abstract class Spartanization extends Refactoring {
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
 
   /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false. */
+   * @return true if the node is not inside selection. If there is no
+   *         selectionat all will return false.
+   * @DisableSpartan */
   protected boolean isNodeOutsideSelection(final ASTNode n) {
     return !isSelected(n.getStartPosition());
   }

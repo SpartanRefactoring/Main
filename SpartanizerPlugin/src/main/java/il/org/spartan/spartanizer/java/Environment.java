@@ -178,8 +178,8 @@ import il.org.spartan.spartanizer.engine.*;
     }
   }
 
-  /** Dictionary with a parent. Insertions go the current node, searches start at the current note
-   * and Delegate to the parent unless it is null. */
+  /** Dictionary with a parent. Insertions go the current node, searches start
+   * at the current note and Delegate to the parent unless it is null. */
   final class Nested implements Environment {
     public final Map<String, Information> flat = new LinkedHashMap<>();
     public final Environment nest;
@@ -198,7 +198,8 @@ import il.org.spartan.spartanizer.engine.*;
       return new LinkedHashSet<>(flat.entrySet());
     }
 
-    /** @return The information about the name in current {@link Environment}. */
+    /** @return The information about the name in current
+     *         {@link Environment}. */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);

@@ -45,7 +45,7 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends W
     return $;
   }
 
-  private boolean redundant(final IExtendedModifier m) {
-    return redundant((Modifier) m);
+  private boolean redundant(final IExtendedModifier ¢) {
+    return redundant((Modifier) ¢);
   }
 }

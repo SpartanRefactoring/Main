@@ -19,12 +19,12 @@ import il.org.spartan.spartanizer.ast.*;
 public enum makeAST {
   /** Converts file, string or marker to compilation unit. */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
-    @Override public CompilationUnit from(final File f) {
-      return from(string(f));
+    @Override public CompilationUnit from(final File ¢) {
+      return from(string(¢));
     }
 
-    @Override public CompilationUnit from(final IFile f) {
-      return (CompilationUnit) Make.COMPILATION_UNIT.parser(f).createAST(null);
+    @Override public CompilationUnit from(final IFile ¢) {
+      return (CompilationUnit) Make.COMPILATION_UNIT.parser(¢).createAST(null);
     }
 
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
@@ -123,15 +123,15 @@ public enum makeAST {
   /** Parses a given {@link Document}.
    * @param d JD
    * @return {@link ASTNode} obtained by parsing */
-  public final ASTNode from(final Document d) {
-    return from(d.get());
+  public final ASTNode from(final Document ¢) {
+    return from(¢.get());
   }
 
   /** File -> ASTNode converter
    * @param f File
    * @return ASTNode */
-  public ASTNode from(final File f) {
-    return from(string(f));
+  public ASTNode from(final File ¢) {
+    return from(string(¢));
   }
 
   /** @param f IFile

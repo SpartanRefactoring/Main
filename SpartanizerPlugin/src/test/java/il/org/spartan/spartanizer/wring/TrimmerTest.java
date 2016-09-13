@@ -7,6 +7,8 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
@@ -1289,15 +1291,15 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void infiniteLoopBug1() {
-    trimming("static boolean hasAnnotation(final VariableDeclarationFragment f) {\n" + //
+    trimming("static boolean hasAnnotation(final VariableDeclarationFragment zet) {\n" + //
         "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + //
         "    }").stays();
   }
 
   @Test public void infiniteLoopBug2() {
-    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n) {\n" + //
+    trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(n.modifiers());\n" + //
-        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s) {\n" + //
+        "    }").to(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n" + //
             "      return hasAnnotation(s.modifiers());\n" + //
             "    }");
   }
@@ -1344,7 +1346,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("" //
         + "public double[] solve() {\n" //
         + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
-        + "  for (double[] d : points)\n" //
+        + "  for (double[] dxx : points)\n" //
         + "    regress.addData(d[0], d[1]);\n" //
         + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
         + "  return $;\n" //
@@ -1724,13 +1726,17 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue141_01() {
-    trimming("public static void go(final Object os[], final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+    trimming("public static void go(final Object os[], final String... ss) {  \n"//
+        + "for (final String saa : ss) \n"//
+        + "out(saa);  \n" + "out(\"elements\", os);   \n"//
+        + "}").stays();
   }
 
   @Test public void issue141_02() {
-    trimming("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String s : ss) \n" + "out(s);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
+    trimming("public static void go(final List<Object> os, final String... ss) {  \n"//
+        + "for (final String saa : ss) \n"//
+        + "out(saa);  \n" + "out(\"elements\", os);   \n" //
+        + "}").stays();
   }
 
   @Test public void issue141_03() {
@@ -2094,11 +2100,11 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void issue54_1() {
     trimming("x.toString()").to("x+\"\"");
   }
-  
+
   @Test public void issue54_2() {
     trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
   }
-  
+
   @Test public void issue54DoNonSideEffect() {
     trimming( //
         "int a  = f; do { b[i] = a; } while (b[i] != a);")//
@@ -2221,19 +2227,19 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue62a() {
-    trimming("int f(int i) { for(;;++i) if(false) break; return i; }")//
-        .to("int f(int i) { for(;;++i){} return i; }")//
+    trimming("int f(int ixx) { for(;;++ixx) if(false) break; return ixx; }")//
+        .to("int f(int ixx) { for(;;++ixx){} return ixx; }")//
         .stays();
   }
 
   @Test public void issue62b_1() {
-    trimming("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .to("int f(int i) { for(;i<100;i+=1){} return i; }")//
-        .stays();// i is not provably not String.
+    trimming("int f(int ixx) { for(;ixx<100;ixx=ixx+1) if(false) break; return ixx; }")//
+        .to("int f(int ixx) { for(;ixx<100;ixx+=1){} return ixx; }")//
+        .stays();// ixx is not provably not String.
   }
 
   @Test public void issue62c() {
-    trimming("int f(int i) { while(++i > 999) if(i>99) break; return i;}").stays();
+    trimming("int f(int ixx) { while(++ixx > 999) if(ixx>99) break; return ixx;}").stays();
   }
 
   @Test public void issue64a() {
@@ -2662,15 +2668,15 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void paramAbbreviateBasic1() {
-    trimming("void m(XMLDocument xmlDocument) {" + //
-        "xmlDocument.exec(p);}").to("void m(XMLDocument d) {" + //
+    trimming("void m(XMLDocument xmlDocument, int abcd) {" + //
+        "xmlDocument.exec(p);}").to("void m(XMLDocument d, int abcd) {" + //
             "d.exec(p);}");
   }
 
   @Test public void paramAbbreviateBasic2() {
-    trimming("int m(StringBuilder builder) {" + //
+    trimming("int m(StringBuilder builder, int abcd) {" + //
         "if(builder.exec())" + //
-        "builder.clear();").to("int m(StringBuilder b) {" + //
+        "builder.clear();").to("int m(StringBuilder b, int abcd) {" + //
             "if(b.exec())" + //
             "b.clear();");
   }
@@ -2708,7 +2714,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void paramAbbreviateConflictingWithMethodName() {
-    trimming("void m(BitmapManipulator bitmapManipulator) {" + //
+    trimming("void m(BitmapManipulator bitmapManipulator, int abcd) {" + //
         "bitmapManipulator.x().y();").stays();
   }
 
@@ -3297,12 +3303,10 @@ import il.org.spartan.spartanizer.spartanizations.*;
     trimming("void f(int _) {System.out.println(_);}").to("void f(int __) {System.out.println(__);}");
   }
 
-  // TODO Ori: add binding in tests
   @Ignore @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimming("Integer x = new Integer(1 + 9);").to("Integer x = Integer.valueOf(1 + 9);");
   }
 
-  // TODO Ori: add binding in tests
   @Ignore @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
     trimming("String x = new String(f());").to("String x = String.valueOf(f());");
   }
@@ -4261,5 +4265,4 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").stays();
   }
-  
 }

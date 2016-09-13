@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -18,6 +19,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
@@ -93,23 +95,23 @@ public interface type {
     return inner.types.containsKey(name);
   }
 
-  static boolean isDouble(final Expression x) {
-    return get(x) == Certain.DOUBLE;
+  static boolean isDouble(final Expression ¢) {
+    return get(¢) == Certain.DOUBLE;
   }
 
   static boolean isInt(final Expression ¢) {
     return type.get(¢) == Certain.INT;
   }
 
-  static boolean isLong(final Expression x) {
-    return get(x) == Certain.LONG;
+  static boolean isLong(final Expression ¢) {
+    return get(¢) == Certain.LONG;
   }
 
-  default Primitive.Certain asPrimitiveCertain() {
+  default Certain asPrimitiveCertain() {
     return null;
   }
 
-  default type.Primitive.Uncertain asPrimitiveUncertain() {
+  default Uncertain asPrimitiveUncertain() {
     return null;
   }
 

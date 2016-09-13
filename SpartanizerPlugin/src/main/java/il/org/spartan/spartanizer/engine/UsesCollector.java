@@ -71,14 +71,14 @@ abstract class ScopeManager extends ASTVisitor {
     return push();
   }
 
-  @Override public final boolean visit(final EnhancedForStatement s) {
+  @Override public final boolean visit(final EnhancedForStatement ¢) {
     push();
-    return go(s);
+    return go(¢);
   }
 
-  @Override public final boolean visit(final EnumDeclaration d) {
+  @Override public final boolean visit(final EnumDeclaration ¢) {
     push();
-    return go(d);
+    return go(¢);
   }
 
   @Override public final boolean visit(@SuppressWarnings("unused") final ForStatement __) {
