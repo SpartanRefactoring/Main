@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierCleanEnum extends AbstractModifierClean<EnumDeclaration> implements Kind.SyntacticBaggage {
+public final class EnumDeclarationModifierCleanEnum extends AbstractModifierClean<EnumDeclaration> implements Kind.SyntacticBaggage {
   @Override public String description(final EnumDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
