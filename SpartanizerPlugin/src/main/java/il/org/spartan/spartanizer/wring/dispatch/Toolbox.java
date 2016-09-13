@@ -198,6 +198,13 @@ public class Toolbox {
   public <N extends ASTNode> Wring<N> find(final N n) {
     return find(n, get(n));
   }
+  
+  public <N extends ASTNode> Wring<N> findWring(final N n, final Wring<N>... ws) {
+    for (Wring<N> $ : get(n))
+      if ($.claims(n) && Arrays.asList(ws).contains($))
+        return $;
+    return null;
+  }
 
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Wring<N>> get(final Class<? extends ASTNode> n) {
     if (!inner.containsKey(n))
