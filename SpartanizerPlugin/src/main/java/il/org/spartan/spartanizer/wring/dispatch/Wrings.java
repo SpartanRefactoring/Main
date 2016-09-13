@@ -53,8 +53,8 @@ public enum Wrings {
     }
   }
 
-  public static boolean endsWithSequencer(final Statement s) {
-    return iz.sequencer(hop.lastStatement(s));
+  public static boolean endsWithSequencer(final Statement ¢) {
+    return iz.sequencer(hop.lastStatement(¢));
   }
 
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
@@ -71,8 +71,8 @@ public enum Wrings {
     return $;
   }
 
-  public static IfStatement invert(final IfStatement s) {
-    return subject.pair(elze(s), then(s)).toNot(s.getExpression());
+  public static IfStatement invert(final IfStatement ¢) {
+    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
   }
 
   public static IfStatement makeShorterIf(final IfStatement s) {
@@ -156,7 +156,7 @@ public enum Wrings {
     return metrics.length($.getExpression(), then($));
   }
 
-  private static int sequencerRank(final ASTNode n) {
-    return iz.index(n.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+  private static int sequencerRank(final ASTNode ¢) {
+    return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 }
