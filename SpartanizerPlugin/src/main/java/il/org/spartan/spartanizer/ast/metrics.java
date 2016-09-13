@@ -1,8 +1,11 @@
 package il.org.spartan.spartanizer.ast;
 
+import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.lang.Integer;
+import java.lang.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -14,10 +17,14 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
+  public static int condensedSize(ASTNode ¢) {
+    return wizard.condense(¢).length();
+  }
+
   public static int size(final ASTNode... ns) {
     int $ = 0;
     for (final ASTNode n : ns)
-      $ += nodesCount(n);
+      $ += metrics.nodesCount(n);
     return $;
   }
 
@@ -29,6 +36,13 @@ public interface metrics {
       }
     });
     return $.inner;
+  }
+
+  /** Counts the number of non-space characters in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  static int countNonWhites(final ASTNode n) {
+    return removeWhites(wizard.body(n)).length();
   }
 
   /** @param n JD
@@ -79,6 +93,43 @@ public interface metrics {
     return $;
   }
 
+  /** Counts the number of statements in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  static int lineCount(final ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode child) {
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          addWeight($, child);
+      }
+
+      /** @param a Accumulator
+       * @param ¢ Node to check */
+      void addWeight(final Int a, final ASTNode ¢) {
+        if (iz.is(¢, BLOCK)) {
+          if (extract.statements(¢).size() > 1)
+            ++a.inner;
+          return;
+        }
+        if (iz.is(¢, EMPTY_STATEMENT))
+          return;
+        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
+          a.inner += 4;
+          return;
+        }
+        if (!iz.is(¢, IF_STATEMENT))
+          a.inner += 3;
+        else {
+          a.inner += 4;
+          if (elze(az.ifStatement(¢)) != null)
+            ++a.inner;
+        }
+      }
+    });
+    return $.inner;
+  }
+
   static int literacy(final ASTNode ¢) {
     return literals(¢).size();
   }
@@ -109,6 +160,22 @@ public interface metrics {
    * @return The total number of nodes in the AST */
   @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
+  }
+
+  /** Counts the number of nodes in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  static int nodesCount(final ASTNode n) {
+    class Integer {
+      int inner = 0;
+    }
+    final Integer $ = new Integer();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+        ++$.inner;
+      }
+    });
+    return $.inner;
   }
 
   static int vocabulary(final ASTNode u) {

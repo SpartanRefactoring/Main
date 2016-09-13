@@ -54,7 +54,7 @@ public abstract class ENVTestEngineAbstract {
 
   /* Add new Entry to testSet from the inner annotation. */
   public void addTestSet(final List<MemberValuePair> ps) {
-    final String s = wizard.asString(first(ps).getValue());
+    final String s = wizard.condense(first(ps).getValue());
     /* A call to an inner function of PrudentType that calls
      * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
      * current situation, but not ideal.
@@ -68,7 +68,7 @@ public abstract class ENVTestEngineAbstract {
      * idea for a debug tool. */
     // add returns true iff the element did not exist in the set already.
     if (!testSet
-        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.asString(second(ps).getValue()))))))
+        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.condense(second(ps).getValue()))))))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
