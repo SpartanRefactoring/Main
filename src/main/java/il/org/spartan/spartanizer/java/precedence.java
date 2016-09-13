@@ -62,30 +62,30 @@ public enum precedence {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter a legal
    *         precedence of Java. */
-  public static boolean known(final ASTNode n) {
-    return is.legal(precedence.of(n));
+  public static boolean known(final ASTNode ¢) {
+    return is.legal(precedence.of(¢));
   }
 
   /** Determine the precedence of an arbitrary {@link ASTNode}
    * @param n JD
    * @return precedence of the parameter */
-  public static int of(final ASTNode n) {
-    return !iz.expression(n) ? UNDEFINED : precedence.of(az.expression(n));
+  public static int of(final ASTNode ¢) {
+    return !iz.expression(¢) ? UNDEFINED : precedence.of(az.expression(¢));
   }
 
   /** Determine the precedence of the operator present on an {@link Expression}
    * @param x JD
    * @return precedence of the parameter */
-  public static int of(final Expression x) {
-    if (x == null)
+  public static int of(final Expression ¢) {
+    if (¢ == null)
       return UNDEFINED;
-    switch (x.getNodeType()) {
+    switch (¢.getNodeType()) {
       case INFIX_EXPRESSION:
-        return of((InfixExpression) x);
+        return of((InfixExpression) ¢);
       case ASSIGNMENT:
-        return of((Assignment) x);
+        return of((Assignment) ¢);
       default:
-        return of(x.getClass().getSimpleName());
+        return of(¢.getClass().getSimpleName());
     }
   }
 
@@ -93,8 +93,8 @@ public enum precedence {
    * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator}
    * @param o JD
    * @return precedence of the parameter */
-  public static int of(final InfixExpression.Operator o) {
-    return of(o + "");
+  public static int of(final InfixExpression.Operator ¢) {
+    return of(¢ + "");
   }
 
   /** Determine the precedence of two expressions is the same.
@@ -115,20 +115,20 @@ public enum precedence {
     return precedence.of(o) == precedence.of(x);
   }
 
-  private static int of(final Assignment a) {
-    return of(a.getOperator());
+  private static int of(final Assignment ¢) {
+    return of(¢.getOperator());
   }
 
   /** Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
    * @param o JD
    * @return precedence of the parameter */
-  private static int of(final Assignment.Operator o) {
-    return of(o + "");
+  private static int of(final Assignment.Operator ¢) {
+    return of(¢ + "");
   }
 
-  private static int of(final InfixExpression x) {
-    return of(x.getOperator());
+  private static int of(final InfixExpression ¢) {
+    return of(¢.getOperator());
   }
 
   private static int of(final String key) {

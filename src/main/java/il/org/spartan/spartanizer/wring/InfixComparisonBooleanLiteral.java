@@ -29,28 +29,28 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
-  private static BooleanLiteral literal(final InfixExpression x) {
-    return az.booleanLiteral(core(literalOnLeft(x) ? left(x) : right(x)));
+  private static BooleanLiteral literal(final InfixExpression ¢) {
+    return az.booleanLiteral(core(literalOnLeft(¢) ? left(¢) : right(¢)));
   }
 
-  private static boolean literalOnLeft(final InfixExpression x) {
-    return iz.booleanLiteral(core(left(x)));
+  private static boolean literalOnLeft(final InfixExpression ¢) {
+    return iz.booleanLiteral(core(left(¢)));
   }
 
-  private static boolean literalOnRight(final InfixExpression x) {
-    return iz.booleanLiteral(core(right(x)));
+  private static boolean literalOnRight(final InfixExpression ¢) {
+    return iz.booleanLiteral(core(right(¢)));
   }
 
   private static boolean negating(final InfixExpression x, final BooleanLiteral l) {
     return l.booleanValue() != (x.getOperator() == EQUALS);
   }
 
-  private static Expression nonLiteral(final InfixExpression x) {
-    return literalOnLeft(x) ? right(x) : left(x);
+  private static Expression nonLiteral(final InfixExpression ¢) {
+    return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @Override public String description(final InfixExpression x) {
-    return "Eliminate redundant comparison with '" + literal(x) + "'";
+  @Override public String description(final InfixExpression ¢) {
+    return "Eliminate redundant comparison with '" + literal(¢) + "'";
   }
 
   @Override public Expression replacement(final InfixExpression x) {
@@ -59,7 +59,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 
-  @Override public boolean claims(final InfixExpression x) {
-    return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
+  @Override public boolean claims(final InfixExpression ¢) {
+    return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 }

@@ -25,15 +25,15 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @Override public String description(final CastExpression x) {
-    return "Use 1L*" + step.expression(x) + " instead of (long)" + step.expression(x);
+  @Override public String description(final CastExpression ¢) {
+    return "Use 1L*" + step.expression(¢) + " instead of (long)" + step.expression(¢);
   }
 
-  @Override public ASTNode replacement(final CastExpression x) {
+  @Override public ASTNode replacement(final CastExpression ¢) {
     return eval(//
-        () -> replacement(step.expression(x))//
+        () -> replacement(step.expression(¢))//
     ).when(//
-        step.type(x).isPrimitiveType() && "long".equals(step.type(x) + "") //
+        step.type(¢).isPrimitiveType() && "long".equals(step.type(¢) + "") //
     );
   }
 }

@@ -45,12 +45,12 @@ public interface plant {
      * @return true if e is an infix expression and if it's first operand 
      * is of type String and false otherwise
      */
-    static boolean isStringConactingSafe(final Expression e){
-      return !iz.infixExpression(e) ? false : isStringConcatingSafe(az.infixExpression(e));
+    static boolean isStringConactingSafe(final Expression ¢){
+      return iz.infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }
     
-    private static boolean isStringConcatingSafe(final InfixExpression e){
-      return type.get(e.getLeftOperand()) == Certain.STRING;
+    private static boolean isStringConcatingSafe(final InfixExpression ¢){
+      return type.get(¢.getLeftOperand()) == Certain.STRING;
     }
     
     /**Determines whether inner can be added to host without parenthesis because
@@ -63,7 +63,7 @@ public interface plant {
       if (!iz.infixExpression(host))
         return false;
       InfixExpression e = az.infixExpression(host);
-      return e.getOperator() != wizard.PLUS2 || !stringType.isNot(e) ? isStringConactingSafe(inner) : false;
+      return (e.getOperator() != wizard.PLUS2 || !stringType.isNot(e)) && isStringConactingSafe(inner);
     }
 
     /** Executes conditional wrapping in parenthesis.

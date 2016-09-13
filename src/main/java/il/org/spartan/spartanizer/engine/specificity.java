@@ -15,8 +15,8 @@ public class specificity implements Comparator<Expression> {
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
    *         level of specificity. */
-  public static boolean defined(final Expression x) {
-    return Level.defined(x);
+  public static boolean defined(final Expression ¢) {
+    return Level.defined(¢);
   }
 
   /** A comparison of two {@link Expression} by their level of specificity.
@@ -31,33 +31,33 @@ public class specificity implements Comparator<Expression> {
 
   enum Level {
     NULL {
-      @Override boolean includes(final ASTNode n) {
-        return iz.nullLiteral(n);
+      @Override boolean includes(final ASTNode ¢) {
+        return iz.nullLiteral(¢);
       }
     },
     BOOLEAN {
-      @Override boolean includes(final ASTNode n) {
-        return iz.booleanLiteral(n);
+      @Override boolean includes(final ASTNode ¢) {
+        return iz.booleanLiteral(¢);
       }
     },
     LITERAL {
-      @Override boolean includes(final ASTNode n) {
-        return iz.literal(n);
+      @Override boolean includes(final ASTNode ¢) {
+        return iz.literal(¢);
       }
     },
     CONSTANT {
-      @Override boolean includes(final ASTNode n) {
-        return iz.is(n, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) n).getOperand()));
+      @Override boolean includes(final ASTNode ¢) {
+        return iz.is(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
-      @Override boolean includes(final ASTNode n) {
-        return iz.is(n, SIMPLE_NAME) && ((SimpleName) n).getIdentifier().matches("[A-Z_0-9]+");
+      @Override boolean includes(final ASTNode ¢) {
+        return iz.is(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
     THIS {
-      @Override boolean includes(final ASTNode n) {
-        return iz.thisLiteral(n);
+      @Override boolean includes(final ASTNode ¢) {
+        return iz.thisLiteral(¢);
       }
     },
     ZERO_LITERAL {
@@ -97,8 +97,8 @@ public class specificity implements Comparator<Expression> {
         return iz.literalFalse(¢);
       }
     },;
-    static boolean defined(final Expression x) {
-      return of(x) != values().length;
+    static boolean defined(final Expression ¢) {
+      return of(¢) != values().length;
     }
 
     static int of(final Expression ¢) {

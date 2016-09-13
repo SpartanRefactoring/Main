@@ -20,8 +20,8 @@ public enum stringType {
    *         whose type is provably not of type {@link String}, in the sense
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
-  public static boolean isNot(final Expression x) {
-    return stringType.isNotFromContext(x) || !in(get(x), STRING, ALPHANUMERIC);
+  public static boolean isNot(final Expression ¢) {
+    return stringType.isNotFromContext(¢) || !in(get(¢), STRING, ALPHANUMERIC);
   }
 
   private static boolean isNotFromContext(final Expression x) {

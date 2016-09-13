@@ -22,7 +22,7 @@ public class Builder extends IncrementalProjectBuilder {
   public static final String SPARTANIZATION_SHORT_PREFIX = "Spartanize: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
-  /** the ID under which this builder is registered */
+ /** the ID under which this builder is registered */
   public static final String BUILDER_ID = "il.org.spartan.spartanizer.BuilderID";
   private static final String MARKER_TYPE = "il.org.spartan.spartanizer.spartanizationSuggestion";
   /** the key in the marker's properties map under which the type of the
@@ -34,10 +34,10 @@ public class Builder extends IncrementalProjectBuilder {
    * @throws CoreException if this method fails. Reasons include: This resource
    *         does not exist. This resource is a project that is not open.
    *         Resource changes are disallowed during certain types of resource
-   *         change event notification. See {@link IResourceChangeEvent} for
+   *         change event notification¢ See {@link IResourceChangeEvent}¢for
    *         more details. */
-  public static void deleteMarkers(final IFile f) throws CoreException {
-    f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
+  public static void deleteMarkers(final IFile ¢) throws CoreException {
+    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
 
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
@@ -51,9 +51,9 @@ public class Builder extends IncrementalProjectBuilder {
     });
   }
 
-  static void addMarkers(final IResource r) throws CoreException {
-    if (r instanceof IFile && r.getName().endsWith(".java"))
-      addMarkers((IFile) r);
+  static void addMarkers(final IResource ¢) throws CoreException {
+    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
+      addMarkers((IFile) ¢);
   }
 
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
@@ -66,10 +66,10 @@ public class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
 
-  private static void addMarkers(final IFile f) throws CoreException {
+  private static void addMarkers(final IFile ¢) throws CoreException {
     Spartanizations.reset();
-    deleteMarkers(f);
-    addMarkers(f, (CompilationUnit) makeAST.COMPILATION_UNIT.from(f));
+    deleteMarkers(¢);
+    addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {

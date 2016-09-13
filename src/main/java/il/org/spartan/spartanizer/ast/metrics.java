@@ -39,8 +39,8 @@ public interface metrics {
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
-  static int countNonWhites(final ASTNode n) {
-    return removeWhites(wizard.body(n)).length();
+  static int countNonWhites(final ASTNode ¢) {
+    return removeWhites(wizard.body(¢)).length();
   }
 
   /** @param n JD
