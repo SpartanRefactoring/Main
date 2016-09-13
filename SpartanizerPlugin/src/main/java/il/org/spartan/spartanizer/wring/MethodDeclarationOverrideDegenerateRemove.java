@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * class, e.g., <code>@Override void foo(){super.foo();}</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
-public final class MethodDeclarationDegenerateOverrideRemove extends Wring<MethodDeclaration> implements Kind.Collapse {
+public final class MethodDeclarationOverrideDegenerateRemove extends Wring<MethodDeclaration> implements Kind.Collapse {
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
       if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))
