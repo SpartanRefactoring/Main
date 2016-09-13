@@ -7,12 +7,12 @@ import il.org.spartan.spartanizer.ast.*;
 
 // TOOD Niv: Who wrote this class?
 class Factor {
-  static Factor divide(final Expression x) {
-    return new Factor(true, x);
+  static Factor divide(final Expression ¢) {
+    return new Factor(true, ¢);
   }
 
-  static Factor times(final Expression x) {
-    return new Factor(false, x);
+  static Factor times(final Expression ¢) {
+    return new Factor(false, ¢);
   }
 
   private final boolean divider;

@@ -25,11 +25,11 @@ public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpre
     return "Remove 'false' argument to '||'";
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
-    return Wrings.eliminateLiteral(x, false);
+  @Override public Expression replacement(final InfixExpression ¢) {
+    return Wrings.eliminateLiteral(¢, false);
   }
 
-  @Override public boolean claims(final InfixExpression x) {
-    return iz.conditionalOr(x) && have.falseLiteral(extract.allOperands(x));
+  @Override public boolean claims(final InfixExpression ¢) {
+    return iz.conditionalOr(¢) && have.falseLiteral(extract.allOperands(¢));
   }
 }

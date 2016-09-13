@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2016 */
 public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
-  @Override public String description(final InfixExpression x) {
-    return "Expand additive terms in " + x;
+  @Override public String description(final InfixExpression ¢) {
+    return "Expand additive terms in " + ¢;
   }
 
   @Override public Expression replacement(final InfixExpression x) {

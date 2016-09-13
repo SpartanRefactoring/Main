@@ -47,8 +47,8 @@ public class Toggle extends AbstractHandler {
     return null;
   }
 
-  private static IProject extractProject(final Object o) {
-    return o instanceof IProject ? (IProject) o : o instanceof IAdaptable ? (IProject) ((IAdaptable) o).getAdapter(IProject.class) : null;
+  private static IProject extractProject(final Object ¢) {
+    return ¢ instanceof IProject ? (IProject) ¢ : ¢ instanceof IAdaptable ? (IProject) ((IAdaptable) ¢).getAdapter(IProject.class) : null;
   }
 
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {

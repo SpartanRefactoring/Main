@@ -185,7 +185,7 @@ public enum Collect {
   static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment ¢) {
-        return consider(left(¢));
+        return consider(to(¢));
       }
 
       @Override public boolean visit(final ForStatement ¢) {
@@ -297,8 +297,8 @@ public enum Collect {
         return true;
       }
 
-      @Override public boolean visit(final Assignment ¢) {
-        return collect(right(¢));
+      @Override public boolean visit(final Assignment a) {
+        return collect(from(a));
       }
 
       @Override public boolean visit(final CastExpression ¢) {

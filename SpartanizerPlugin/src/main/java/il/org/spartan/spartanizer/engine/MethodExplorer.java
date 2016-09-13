@@ -30,24 +30,24 @@ public class MethodExplorer {
   public List<SimpleName> localVariables() {
     final List<SimpleName> $ = new ArrayList<>();
     inner.accept(new IgnoreNestedMethods() {
-      @Override public boolean visit(final CatchClause c) {
-        return add(c.getException());
+      @Override public boolean visit(final CatchClause ¢) {
+        return add(¢.getException());
       }
 
-      @Override public boolean visit(final EnhancedForStatement s) {
-        return add(s.getParameter());
+      @Override public boolean visit(final EnhancedForStatement ¢) {
+        return add(¢.getParameter());
       }
 
-      @Override public boolean visit(final ForStatement s) {
-        return add(initializers(s));
+      @Override public boolean visit(final ForStatement ¢) {
+        return add(initializers(¢));
       }
 
-      @Override public boolean visit(final TryStatement s) {
-        return add(resources(s));
+      @Override public boolean visit(final TryStatement ¢) {
+        return add(resources(¢));
       }
 
-      @Override public boolean visit(final VariableDeclarationStatement s) {
-        addFragments(fragments(s));
+      @Override public boolean visit(final VariableDeclarationStatement ¢) {
+        addFragments(fragments(¢));
         return true;
       }
 
@@ -78,8 +78,8 @@ public class MethodExplorer {
   public List<ReturnStatement> returnStatements() {
     final List<ReturnStatement> $ = new ArrayList<>();
     inner.accept(new IgnoreNestedMethods() {
-      @Override public boolean visit(final ReturnStatement s) {
-        $.add(s);
+      @Override public boolean visit(final ReturnStatement ¢) {
+        $.add(¢);
         return true;
       }
     });

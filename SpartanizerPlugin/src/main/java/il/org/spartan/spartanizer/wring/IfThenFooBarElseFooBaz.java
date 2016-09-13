@@ -97,7 +97,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return super.make(s, exclude);
   }
 
-  @Override public final boolean claims(final IfStatement s) {
-    return make(s) != null;
+  @Override public boolean claims(final IfStatement ¢) {
+    return make(¢) != null;
   }
 }

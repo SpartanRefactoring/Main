@@ -19,8 +19,8 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
 
   /** logs an error in the plugin
    * @param t an error */
-  public static void log(final Throwable t) {
-    plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.spartanizer", 0, t.getMessage(), t));
+  public static void log(final Throwable ¢) {
+    plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.spartanizer", 0, ¢.getMessage(), ¢));
   }
 
   public static AbstractUIPlugin plugin() {

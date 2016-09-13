@@ -24,8 +24,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
-  private static String description(final Expression x) {
-    return "Use " + (x != null ? x + "" : "isEmpty()");
+  private static String description(final Expression ¢) {
+    return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
 
   private static NumberLiteral getNegativeNumber(final Expression ¢) {

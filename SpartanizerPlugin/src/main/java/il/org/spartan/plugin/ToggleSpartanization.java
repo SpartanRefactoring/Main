@@ -95,12 +95,12 @@ public class ToggleSpartanization {
     return (BodyDeclaration) $;
   }
 
-  static Set<String> getDisablers(final String s) {
-    return getKeywords(s, DisabledChecker.disablers);
+  static Set<String> getDisablers(final String ¢) {
+    return getKeywords(¢, DisabledChecker.disablers);
   }
 
-  static Set<String> getEnablers(final String s) {
-    return getKeywords(s, DisabledChecker.enablers);
+  static Set<String> getEnablers(final String ¢) {
+    return getKeywords(¢, DisabledChecker.enablers);
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {

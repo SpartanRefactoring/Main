@@ -11,7 +11,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -34,13 +34,13 @@ public final class DeclarationInitializerReturnAssignment extends VariableDeclar
     if (s == null)
       return null;
     final Assignment a = az.assignment(step.expression(s));
-    if (a == null || !wizard.same(n, left(a)))
+    if (a == null || !wizard.same(n, to(a)))
       return null;
     final Operator o = a.getOperator();
     if (o != ASSIGN)
       return null;
-    final Expression newReturnValue = duplicate.of(right(a));
-    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final Expression newReturnValue = duplicate.of(from(a));
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     r.replace(a, newReturnValue, g);

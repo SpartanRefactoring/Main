@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements Kind.DistributiveRefactoring {
   static Expression extractRight(final Assignment a) {
-    final Expression $ = extract.core(right(a));
+    final Expression $ = extract.core(from(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
 
@@ -40,7 +40,7 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
   }
 
   @Override public String description(final Assignment ¢) {
-    return "Consolidate assignment to " + left(¢) + " with subsequent similar assignment";
+    return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {

@@ -28,14 +28,14 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
   @Override public String description(final IfStatement ¢) {
-    return "Consolidate assignments to " + left(extract.assignment(then(¢)));
+    return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
 
   @Override public Statement replacement(final IfStatement s) {
     final Assignment then = extract.assignment(then(s));
     final Assignment elze = extract.assignment(elze(s));
     return !wizard.compatible(then, elze) ? null
-        : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
+        : subject.pair(to(then), subject.pair(from(then), from(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
 
   @Override public boolean claims(final IfStatement ¢) {
