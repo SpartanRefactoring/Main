@@ -7,6 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.*;
 
 /** Test class for {@link ExpressionComparator}
  * @author Yossi Gil
@@ -131,6 +132,6 @@ public class ExpressionComparatorTest {
   }
 
   private int cs(final String statement) {
-    return ExpressionComparator.lineCount(s(statement));
+    return metrics.lineCount(s(statement));
   }
 }

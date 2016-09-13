@@ -134,8 +134,8 @@ public enum Wrings {
     final Statement elze = elze(s);
     if (elze == null)
       return true;
-    final int s1 = ExpressionComparator.lineCount(then);
-    final int s2 = ExpressionComparator.lineCount(elze);
+    final int s1 = metrics.lineCount(then);
+    final int s2 = metrics.lineCount(elze);
     if (s1 < s2)
       return true;
     if (s1 > s2)

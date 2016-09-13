@@ -51,50 +51,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
 
-  /** Counts the number of non-space characters in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  public static int countNonWhites(final ASTNode n) {
-    return removeWhites(wizard.body(n)).length();
-  }
-
-  /** Counts the number of statements in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  public static int lineCount(final ASTNode n) {
-    final Int $ = new Int();
-    n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass()))
-          addWeight($, child);
-      }
-
-      /** @param a Accumulator
-       * @param ¢ Node to check */
-      void addWeight(final Int a, final ASTNode ¢) {
-        if (iz.is(¢, BLOCK)) {
-          if (extract.statements(¢).size() > 1)
-            ++a.inner;
-          return;
-        }
-        if (iz.is(¢, EMPTY_STATEMENT))
-          return;
-        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
-          a.inner += 4;
-          return;
-        }
-        if (!iz.is(¢, IF_STATEMENT))
-          a.inner += 3;
-        else {
-          a.inner += 4;
-          if (elze(az.ifStatement(¢)) != null)
-            ++a.inner;
-        }
-      }
-    });
-    return $.inner;
-  }
-
   /** Compare the length of the left and right arguments of an infix expression
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
@@ -110,22 +66,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         invocation with more arguments that the second argument */
   public static boolean moreArguments(final Expression e1, final Expression e2) {
     return argumentsCompare(e1, e2) > 0;
-  }
-
-  /** Counts the number of nodes in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  public static int nodesCount(final ASTNode n) {
-    class Integer {
-      int inner = 0;
-    }
-    final Integer $ = new Integer();
-    n.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        ++$.inner;
-      }
-    });
-    return $.inner;
   }
 
   /** Lexicographical comparison expressions by their number of characters
@@ -147,10 +87,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return arguments(i1).size() - arguments(i2).size();
   }
 
-  static int asBit(final boolean b) {
-    return b ? 1 : 0;
-  }
-
   /** Compare expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
@@ -158,7 +94,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         number of characters in the first argument is less than, equal to,
    *         or greater than the number of characters in the second argument. */
   static int characterCompare(final Expression e1, final Expression e2) {
-    return countNonWhites(e1) - countNonWhites(e2);
+    return metrics.countNonWhites(e1) - metrics.countNonWhites(e2);
   }
 
   static int literalCompare(final Expression e1, final Expression e2) {
@@ -166,7 +102,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   static int nodesCompare(final Expression e1, final Expression e2) {
-    return round(nodesCount(e1) - nodesCount(e2), NODES_THRESHOLD);
+    return round(metrics.nodesCount(e1) - metrics.nodesCount(e2), NODES_THRESHOLD);
   }
 
   static int round(final int $, final int threshold) {
@@ -175,8 +111,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNull(e1, e2) && (//
-    nodesCount(e1) > nodesCount(e2) + NODES_THRESHOLD || //
-        nodesCount(e1) >= nodesCount(e2) && moreArguments(e1, e2)//
+    metrics.nodesCount(e1) > metrics.nodesCount(e2) + NODES_THRESHOLD || //
+        metrics.nodesCount(e1) >= metrics.nodesCount(e2) && moreArguments(e1, e2)//
     );
   }
 
