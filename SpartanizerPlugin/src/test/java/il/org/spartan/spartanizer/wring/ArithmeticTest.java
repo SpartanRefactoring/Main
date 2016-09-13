@@ -318,5 +318,29 @@ public class ArithmeticTest {
     @Test public void issue92_9() {
       trimming("3*4+2").to("12+2").to("14");
     }
+    
+    @Test public void issue171_1() {
+      trimming("3*a+2").stays();
+    }
+    
+    @Test public void issue171_2() {
+      trimming("3+p").stays();
+    }
+    
+    @Test public void issue171_3() {
+      trimming("p%3%r").stays();
+    }
+    
+    @Test public void issue171_4() {
+      trimming("p+q+w-9*4").to("p+q+w-36").stays();
+    }
+    
+    @Test public void issue171_5() {
+      trimming("5L%p+q+w-9*4").to("q+w+5L%p-36").stays();
+    }
+    
+    @Test public void issue171_6() {
+      trimming("5L%6.").to("5L").stays();
+    }
   }
 }

@@ -96,7 +96,6 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
   }
 
   // TODO: Dor, there are functions in extract that do much of this
-  // TODO: Dor, use lisp.first and lisp.second
   // I will spartnize this for you. Implement in other classes
   @Override public Rewrite make(final Block n) {
     return make(statements(n));

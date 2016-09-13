@@ -31,10 +31,8 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     return null;
   }
 
-  private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> es) {
-    if (!same(¢, first(es)))
-      return null;
-    return chop(new ArrayList<>(es));
+  private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
+    return !same(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
   }
 
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
@@ -58,8 +56,6 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     assert a != null;
     final Operator o = a.getOperator();
     assert o != null;
-    if (o != ASSIGN)
-      return null;
-    return az.infixExpression(from(a)) == null ? null : replacement(to(a), az.infixExpression(from(a)));
+    return o != ASSIGN || az.infixExpression(from(a)) == null ? null : replacement(to(a), az.infixExpression(from(a)));
   }
 }
