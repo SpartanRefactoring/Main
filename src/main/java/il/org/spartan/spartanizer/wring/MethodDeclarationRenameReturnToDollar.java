@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil (v3)
  * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
-  @Override public String description(final MethodDeclaration d) {
-    return d.getName() + "";
+  @Override public String description(final MethodDeclaration ¢) {
+    return ¢.getName() + "";
   }
 
   @Override public Rewrite make(final MethodDeclaration d, final ExclusionManager exclude) {
@@ -32,7 +32,7 @@ public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDec
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Rename variable " + n + " to $ (main variable returned by " + description(d) + ")", d) {
+    return new Rewrite("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(n, $(), d, r, g);
       }
@@ -45,13 +45,6 @@ public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDec
 }
 
 abstract class AbstractRenamePolicy {
-  private static boolean hasDollar(final List<SimpleName> ns) {
-    for (final SimpleName n : ns)
-      if ("$".equals(n.getIdentifier()))
-        return true;
-    return false;
-  }
-
   private static List<ReturnStatement> prune(final List<ReturnStatement> $) {
     if ($ == null || $.isEmpty())
       return null;
@@ -79,7 +72,7 @@ abstract class AbstractRenamePolicy {
   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || hasDollar(localVariables) ? null
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(localVariables) ? null
         : innerSelectReturnVariable();
   }
 }

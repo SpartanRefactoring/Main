@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -49,7 +49,7 @@ public final class DeclarationInitializerIfAssignment //
     final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
-    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);

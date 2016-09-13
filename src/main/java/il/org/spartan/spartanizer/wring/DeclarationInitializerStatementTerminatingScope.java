@@ -13,7 +13,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -84,7 +84,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
     for (final SimpleName use : uses)
       if (never(use, nextStatement))
         return null;
-    final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);

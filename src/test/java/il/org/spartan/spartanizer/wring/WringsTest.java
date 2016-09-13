@@ -66,7 +66,7 @@ public class WringsTest {
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
-    azzert.that(new LocalInliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
+    azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }
 
   @Test public void mixedLiteralKindEmptyList() {
