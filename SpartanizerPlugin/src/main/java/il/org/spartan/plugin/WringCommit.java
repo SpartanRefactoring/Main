@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
-
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
@@ -14,9 +13,15 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
 import static il.org.spartan.plugin.eclipse.*;
 
+import java.util.*;
+
 public class WringCommit {
 
   public static void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+    if (Type.PROJECT.equals(t)) {
+      goProject(pm, m);
+      return;
+    }
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -24,6 +29,22 @@ public class WringCommit {
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
+    pm.done();
+  }
+  
+  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
+    final List<ICompilationUnit> us = eclipse.compilationUnits();
+    pm.beginTask("Spartanizing project", us.size());
+    int n = 0;
+    for (final ICompilationUnit u : us) {
+      final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+      textChange.setTextType("java");
+      textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.FILE).rewriteAST());
+      if (textChange.getEdit().getLength() != 0)
+        textChange.perform(pm);
+      pm.worked(1);
+      pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+    }
     pm.done();
   }
   
@@ -42,7 +63,8 @@ public class WringCommit {
 
   private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
     Toolbox.refresh();
-    u.accept((new WringCommitVisitor($, m, t, u)));
+    WringCommitVisitor f = new WringCommitVisitor($, m, t, u);
+    u.accept(f);
   }
 
   public enum Type {
@@ -83,9 +105,6 @@ public class WringCommit {
         case FILE:
           commitFile(w, n);
           break;
-        case PROJECT:
-          commitProject(w, n);
-          break;
         default:
           break;
       }
@@ -99,11 +118,7 @@ public class WringCommit {
       commitLocal(w, ToggleSpartanization.getDeclaringFile(n));
     }
     
-    @SuppressWarnings("unused") protected void commitProject(@SuppressWarnings("rawtypes") Wring w, ASTNode n) {
-      //
-    }
-    
-    protected void commitLocal(@SuppressWarnings("rawtypes") Wring w, final BodyDeclaration d) {
+    protected void commitLocal(@SuppressWarnings("rawtypes") Wring w, final ASTNode d) {
       final DisabledChecker dc = new DisabledChecker(u);
       d.accept(new Trimmer.DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(N n) {
