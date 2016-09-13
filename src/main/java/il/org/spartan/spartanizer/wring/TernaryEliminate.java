@@ -20,7 +20,7 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
     return plant(extract.core(x.getThenExpression())).into(x.getParent());
   }
 
-  @Override public boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean claims(final ConditionalExpression x) {
     return x != null && wizard.same(x.getThenExpression(), x.getElseExpression());
   }
 }

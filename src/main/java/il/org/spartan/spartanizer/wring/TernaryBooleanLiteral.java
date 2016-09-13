@@ -120,7 +120,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return simplifyTernary(x);
   }
 
-  @Override public boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean claims(final ConditionalExpression x) {
     return isTernaryOfBooleanLitreral(x);
   }
 }

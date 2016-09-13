@@ -17,7 +17,7 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends R
     return go(duplicate.of($));
   }
 
-  @Override public boolean scopeIncludes(final N ¢) {
+  @Override public boolean claims(final N ¢) {
     return firstBad(¢) != null;
   }
 

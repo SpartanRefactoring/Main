@@ -70,7 +70,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     };
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean claims(final IfStatement s) {
     return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
   }
 }

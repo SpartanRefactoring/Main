@@ -53,7 +53,7 @@ public final class AsSpartanization extends Spartanization {
       }
 
       <N extends ASTNode> boolean process(final N n) {
-        if (!inner.scopeIncludes(n) || inner.nonEligible(n))
+        if (!inner.claims(n) || inner.cantWring(n))
           return true;
         $.add(inner.make(n));
         return true;

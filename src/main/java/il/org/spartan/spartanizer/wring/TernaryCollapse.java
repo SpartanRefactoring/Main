@@ -56,7 +56,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     return collapse(x);
   }
 
-  @Override public boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean claims(final ConditionalExpression x) {
     return collapse(x) != null;
   }
 }

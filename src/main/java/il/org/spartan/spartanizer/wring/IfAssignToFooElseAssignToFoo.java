@@ -38,7 +38,7 @@ public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfSta
         : subject.pair(left(then), subject.pair(right(then), right(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
   }
 
-  @Override public boolean scopeIncludes(final IfStatement ¢) {
+  @Override public boolean claims(final IfStatement ¢) {
     return ¢ != null && wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
   }
 }

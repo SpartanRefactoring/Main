@@ -184,7 +184,7 @@ public class Toolbox {
 
   private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
     for (final Wring<N> $ : ns)
-      if ($.scopeIncludes(n))
+      if ($.claims(n))
         return $;
     return null;
   }
