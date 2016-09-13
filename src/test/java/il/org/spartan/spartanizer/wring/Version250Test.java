@@ -339,7 +339,7 @@ public class Version250Test {
   }
 
   @Test public void issue129_04() {
-    trimming("\"\" + 0 + (x - 7)").stays();
+    trimming("\"\" + 0 + (x - 7)").to("0 + \"\" + (x - 7)").stays();
   }
 
   @Test public void issue129_05() {
