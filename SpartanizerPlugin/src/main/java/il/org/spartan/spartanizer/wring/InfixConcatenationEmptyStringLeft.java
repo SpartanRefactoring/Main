@@ -17,27 +17,26 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Niv Shalmon
  * @since 2016 */
 public class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
-  
-  //TODO: Yossi, this should probably be in lisp, but I can't access its source anymore
-  /**swaps two elements in an indexed list in given indexes, if they are legal
+  private static InfixExpression replace(final InfixExpression x) {
+    final List<Expression> es = extract.allOperands(x);
+    swap(es, 0, 1);
+    return subject.operands(es).to(wizard.PLUS2);
+  }
+
+  // TODO: Yossi, this should probably be in lisp, but I can't access its source
+  // anymore
+  /** swaps two elements in an indexed list in given indexes, if they are legal
    * @param ts the indexed list
    * @param i1 the index of the first element
    * @param i2 the index of the second element
-   * @return the list after swapping the elements
-   */
-  private static <T> List<T> swap(List<T> ts,int i1, int i2){
+   * @return the list after swapping the elements */
+  private static <T> List<T> swap(final List<T> ts, final int i1, final int i2) {
     if (i1 < ts.size() && i2 < ts.size()) {
-      T t = ts.get(i1);
+      final T t = ts.get(i1);
       lisp.replace(ts, ts.get(i2), i1);
       lisp.replace(ts, t, i2);
     }
     return ts;
-  }
-  
-  private static InfixExpression replace(final InfixExpression x) {
-    List<Expression> es = extract.allOperands(x);
-    swap(es,0,1);
-    return subject.operands(es).to(wizard.PLUS2);
   }
 
   @Override public String description(final InfixExpression x) {
