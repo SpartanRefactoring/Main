@@ -21,12 +21,12 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
-  //can be String concating, so can't remove 0
+  // can be String concating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
   }
 
-  //can be String concating, so can't remove 0
+  // can be String concating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimming("b=0+a;").stays();
   }
@@ -326,38 +326,6 @@ public class Version250Test {
     trimming("volatile private int a;").to("private volatile int a;");
   }
 
-  @Ignore("under construction")
-  @Test public void issue116_01() {
-    trimming("\"\" + x").to("x + \"\"");
-  }
-
-  @Ignore("under construction")
-  @Test public void issue116_02() {
-    trimming("\"\" + x.foo()").to("x.foo() + \"\"");
-  }
-
-  @Ignore("under construction")
-  @Test public void issue116_03() {
-    trimming("\"\" + (Integer)(\"\" + x).length()").to("(Integer)(\"\" + x).length() + \"\"").to("(Integer)(x +\"\").length() + \"\"");
-  }
-
-  @Ignore("under construction")
-  @Test public void issue116_04() {
-    trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";");
-  }
-
-  @Ignore("under construction")
-  @Test public void issue116_05() {
-    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"");
-  }
-
-  @Ignore("under construction")
-  @Test public void issue116_06() {
-    trimming("\"\" + ((Integer)5).toString().indexOf(\"5\").toString().length()")
-        .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
-        .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"");
-  }
-
   @Test public void issue129_01() {
     trimming("$ += s + (new Integer(i) + \"\")").stays();
   }
@@ -371,7 +339,7 @@ public class Version250Test {
   }
 
   @Test public void issue129_04() {
-    trimming("\"\" + 0 + (x - 7)").stays();
+    trimming("\"\" + 0 + (x - 7)").to("0 + \"\" + (x - 7)").stays();
   }
 
   @Test public void issue129_05() {
@@ -975,14 +943,12 @@ public class Version250Test {
     trimming("0+(x+y)").to("0+x+y").stays();
   }
 
-  //TODO: Niv, rewrite these two tests
-  @Ignore("can be string concating")
-  @Test public void issue72ph() {
+  // TODO: Niv, rewrite these two tests
+  @Ignore("can be string concating") @Test public void issue72ph() {
     trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
-  @Ignore("can be string concating")
-  @Test public void issue72pi() {
+  @Ignore("can be string concating") @Test public void issue72pi() {
     trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 
@@ -1308,9 +1274,6 @@ public class Version250Test {
         f();
       }
     }, a2() {{ f(); }
-      public void i() {
-        f();
-      }
       void f() {
         g();
       }
@@ -1319,6 +1282,9 @@ public class Version250Test {
       }
       void h() {
         i();
+      }
+      public void i() {
+        f();
       }
     }
   }
