@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Removes the "value" member from annotations that only have a single member,
  * converting <code>@SuppressWarnings(value = "unchecked")</code> to
@@ -13,12 +15,12 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName //
-    extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
-  @Override String description(final NormalAnnotation ¢) {
+    extends ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
+  @Override public String description(final NormalAnnotation ¢) {
     return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @Override ASTNode replacement(final NormalAnnotation a) {
+  @Override public ASTNode replacement(final NormalAnnotation a) {
     final MemberValuePair p = onlyOne(step.values(a));
     if (p == null || !"value".equals(p.getName() + ""))
       return null;

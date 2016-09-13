@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Evaluate the multiplication of numbers according to the following rules :
  * </br>
@@ -23,7 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double mul = 1;
     for (final Expression ¢ : xs) {
@@ -58,11 +60,11 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
     return "Evaluate multiplication of numbers";
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate multiplication numbers";
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();

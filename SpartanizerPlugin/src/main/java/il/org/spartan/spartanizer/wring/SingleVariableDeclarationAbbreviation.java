@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
+import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import java.util.*;
 
@@ -11,6 +11,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** abbreviates the name of a method parameter that is a viable candidate for
  * abbreviation (meaning that its name is suitable for renaming, and isn't the
@@ -54,11 +56,11 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
     return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
   }
 
-  @Override String description(final SingleVariableDeclaration d) {
+  @Override public String description(final SingleVariableDeclaration d) {
     return d.getName() + "";
   }
 
-  @Override Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;

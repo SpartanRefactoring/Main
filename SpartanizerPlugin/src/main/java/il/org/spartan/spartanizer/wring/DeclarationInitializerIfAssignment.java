@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -9,7 +8,10 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.LocalInliner.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.LocalInliner.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -28,12 +30,12 @@ import il.org.spartan.spartanizer.wring.LocalInliner.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerIfAssignment //
-    extends Wring.VariableDeclarationFragementAndStatement implements Kind.Collapse {
+    extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
   @Override public String description(final VariableDeclarationFragment f) {
     return "Consolidate initialization of " + f.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -52,11 +54,11 @@ public final class DeclarationInitializerIfAssignment //
       return null;
     final ConditionalExpression newInitializer = subject.pair(right(a), initializer).toCondition(condition);
     final int spending = i.replacedSize(newInitializer);
-    final int savings = size(nextStatement, initializer);
+    final int savings = metrics.size(nextStatement, initializer);
     if (spending > savings)
       return null;
     r.replace(initializer, newInitializer, g);
-    i.inlineinto(then(newInitializer), newInitializer.getExpression());
+    i.inlineInto(then(newInitializer), newInitializer.getExpression());
     r.remove(nextStatement, g);
     return r;
   }

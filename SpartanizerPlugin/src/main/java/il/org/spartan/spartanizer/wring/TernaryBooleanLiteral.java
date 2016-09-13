@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** <pre>
  * a ? b : c
@@ -57,7 +59,7 @@ import il.org.spartan.spartanizer.ast.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
+public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression x) {
     return x != null && have.booleanLiteral(core(x.getThenExpression()), core(x.getElseExpression()));
   }
@@ -110,15 +112,15 @@ public final class TernaryBooleanLiteral extends Wring.ReplaceCurrentNode<Condit
     return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
-  @Override String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }
 
-  @Override Expression replacement(final ConditionalExpression x) {
+  @Override public Expression replacement(final ConditionalExpression x) {
     return simplifyTernary(x);
   }
 
-  @Override boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean scopeIncludes(final ConditionalExpression x) {
     return isTernaryOfBooleanLitreral(x);
   }
 }

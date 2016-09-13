@@ -8,6 +8,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
  * class, e.g., <code>@Override void foo(){super.foo();}</code>
@@ -21,11 +23,11 @@ public final class MethodDeclarationDegenerateOverrideRemove extends Wring<Metho
     return (i.getName() + "").equals(d.getName() + "") && arguments(i).size() == parameters(d).size();
   }
 
-  @Override String description(final MethodDeclaration d) {
+  @Override public String description(final MethodDeclaration d) {
     return "Remove vacous '" + d.getName() + "' overriding method";
   }
 
-  @Override Rewrite make(final MethodDeclaration d) {
+  @Override public Rewrite make(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
         : new Rewrite(description(d), d) {

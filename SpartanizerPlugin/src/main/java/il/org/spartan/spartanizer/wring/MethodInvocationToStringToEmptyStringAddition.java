@@ -6,17 +6,19 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Transforms x.toString() to "" + x
  * @author Stav Namir
  * @since 2016-8-31 */
-public final class MethodInvocationToStringToEmptyStringAddition extends Wring.ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
-  @Override String description(final MethodInvocation i) {
+public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
+  @Override public String description(final MethodInvocation i) {
     final Expression receiver = step.receiver(i);
     return "Use \"\" + " + (receiver == null ? "x" : receiver + "");
   }
 
-  @Override ASTNode replacement(final MethodInvocation i) {
+  @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(step.name(i).getIdentifier()) || !i.arguments().isEmpty())
       return null;
     final Expression receiver = step.receiver(i);

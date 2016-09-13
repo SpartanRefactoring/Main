@@ -9,6 +9,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -29,12 +31,12 @@ import il.org.spartan.spartanizer.ast.*;
 // convert to simply a=3. Assignment to local variables should not be preserved.
 // To make this happen, we need a wring that removes dead assignments to local
 // variables. Attach the "new-wring" label to this one.
-public final class AssignmentAndReturn extends Wring.ReplaceToNextStatement<Assignment> implements Kind.Collapse {
-  @Override String description(final Assignment ¢) {
+public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment> implements Kind.Collapse {
+  @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + left(¢) + " with its subsequent 'return'";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.asStatement(a.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;

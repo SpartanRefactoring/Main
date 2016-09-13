@@ -9,6 +9,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 public class fluentTrimmerApplication extends Trimmer.With {
   public final String codeFragment;
@@ -120,7 +122,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
 
   protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
     compilationUnit.accept(trimmer().new DispatchingVisitor() {
-      @Override <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
         if (!trimmer().inRange(m, n))
           return true;
         final Wring<N> w = trimmer().toolbox.find(n);

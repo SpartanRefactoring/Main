@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating <br/>
@@ -51,11 +52,11 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     return "remove uneccecary parenthesis";
   }
 
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return description();
   }
 
-  @Override Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
