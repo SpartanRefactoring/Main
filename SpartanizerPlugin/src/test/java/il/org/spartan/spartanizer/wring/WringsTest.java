@@ -62,7 +62,7 @@ public class WringsTest {
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     azzert.that(o, iz("+="));
-    final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(wizard.assignmentToInfix(o));
+    final InfixExpression alternateInitializer = subject.pair(left(a), right(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(sideEffects.free(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
