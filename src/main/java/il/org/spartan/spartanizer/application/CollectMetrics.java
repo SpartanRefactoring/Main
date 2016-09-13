@@ -13,8 +13,8 @@ import il.org.spartan.utils.*;
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
  * @year 2016 */
-public class MetricsCollector {
-  private static final String OUTPUT = "halstead.csv";
+public class CollectMetrics {
+  private static final String OUTPUT = "/tmp/halstead.CSV";
   private static CSVStatistics output = init();
 
   public static void main(final String[] where) {
@@ -22,13 +22,14 @@ public class MetricsCollector {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  private static void collect(final CompilationUnit u) {
-    output.put("Count", metrics.count(u));
-    output.put("Dexterity", metrics.dexterity(u));
-    output.put("Leaves", metrics.leaves(u));
-    output.put("Nodes", metrics.nodes(u));
-    output.put("Internals", metrics.internals(u));
-    output.put("Vocabulary?", metrics.vocabulary(u));
+  private static void collect(final CompilationUnit ¢) {
+    output.put("Count", metrics.count(¢));
+    output.put("Dexterity", metrics.dexterity(¢));
+    output.put("Leaves", metrics.leaves(¢));
+    output.put("Nodes", metrics.nodes(¢));
+    output.put("Internals", metrics.internals(¢));
+    output.put("Vocabulary", metrics.vocabulary(¢));
+    output.put("Literacy", metrics.literacy(¢));
     output.nl();
   }
 

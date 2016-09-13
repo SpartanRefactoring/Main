@@ -56,16 +56,13 @@ public interface metrics {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
   }
 
-  /**
-   * @param u
-   * @return
-   */
+  /** @param n JD
+   * @return */
   static Set<String> dictionary(final ASTNode u) {
     final Set<String> $ = new LinkedHashSet<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(SimpleName node) {
+      @Override public void endVisit(SimpleName node) {
         $.add(node.getIdentifier());
-        return true;
       }
     });
     return $;
@@ -73,5 +70,29 @@ public interface metrics {
 
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
+  }
+
+  static Set<String> literals(ASTNode n) {
+    final Set<String> $ = new LinkedHashSet<>();
+    n.accept(new ASTVisitor() {
+      @Override public void endVisit(NumberLiteral node) {
+        $.add(node.getToken());
+      }
+
+      @Override public void endVisit(BooleanLiteral node) {
+        $.add(node + "");
+      }
+      @Override public void endVisit(NullLiteral node) {
+        $.add(node + "");
+      }
+      @Override public void endVisit(StringLiteral node) {
+        $.add(node.getLiteralValue());
+      }
+    });
+    return $;
+  }
+
+  static int literacy(ASTNode ¢) {
+    return literals(¢).size();
   }
 }
