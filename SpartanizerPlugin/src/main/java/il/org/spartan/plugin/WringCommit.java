@@ -26,20 +26,22 @@ public class WringCommit {
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
+    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
     pm.done();
   }
   
   public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
+    final ICompilationUnit cu = eclipse.currentCompilationUnit();
     final List<ICompilationUnit> us = eclipse.compilationUnits();
     pm.beginTask("Spartanizing project", us.size());
     int n = 0;
+    Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     for (final ICompilationUnit u : us) {
       final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
       textChange.setTextType("java");
-      textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.FILE).rewriteAST());
+      textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(pm);
       pm.worked(1);
@@ -48,22 +50,29 @@ public class WringCommit {
     pm.done();
   }
   
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, Wring w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t);
+    fillRewrite($, u, m, t, w);
     pm.done();
     return $;
   }
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
+  
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, Wring w, IFile f) {
+    if (f == null)
+      return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t, w);
+    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(f), m, t, w);
   }
 
-  private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
+  private static Wring fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, Wring w) {
     Toolbox.refresh();
-    u.accept((new WringCommitVisitor($, m, t, u)));
+    WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
+    if (w == null)
+      u.accept(v);
+    else
+      v.commitLocal(w, u);
+    return v.wring;
   }
 
   public enum Type {
@@ -75,6 +84,7 @@ public class WringCommit {
     ASTRewrite r;
     Type t;
     CompilationUnit u;
+    Wring wring;
     boolean b;
     
     public WringCommitVisitor(ASTRewrite r, IMarker m, Type t, CompilationUnit u) {
@@ -84,6 +94,16 @@ public class WringCommit {
       this.u = u;
       b = false;
     }
+    
+    public WringCommitVisitor(ASTRewrite r, IMarker m, Type t, CompilationUnit u, Wring w) {
+      this.r = r;
+      this.m = m;
+      this.t = t;
+      this.u = u;
+      this.wring = w;
+      b = false;
+    }
+    
     @Override protected <N extends ASTNode> boolean go(final N n) {
       if (b)
         return false;
@@ -97,6 +117,7 @@ public class WringCommit {
     }
     
     protected void commit(@SuppressWarnings("rawtypes") Wring w, ASTNode n) {
+      wring = w;
       switch (t) {
         case DECLARATION:
           commitDeclaration(w, n);
@@ -104,6 +125,7 @@ public class WringCommit {
         case FILE:
           commitFile(w, n);
           break;
+        case PROJECT:
         default:
           break;
       }
