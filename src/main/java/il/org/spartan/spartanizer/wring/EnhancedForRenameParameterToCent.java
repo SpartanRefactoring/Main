@@ -37,8 +37,8 @@ public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForSta
     assert uses != null;
     if (uses.isEmpty())
       return null;
-    if (m != null)
-      m.exclude(body);
+//    if (m != null)
+//      m.exclude(body);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Rewrite("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
