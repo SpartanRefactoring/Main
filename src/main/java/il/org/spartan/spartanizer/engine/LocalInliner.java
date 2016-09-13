@@ -1,7 +1,6 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.spartanizer.assemble.plant.*;
-import static il.org.spartan.spartanizer.wring.Wrings.*;
 
 import java.util.*;
 
@@ -12,13 +11,12 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Replace a variable with an expression
  * @author Yossi Gil
  * @year 2015 */
-final class LocalInliner {
+public final class LocalInliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     int i = 0;
@@ -31,27 +29,23 @@ final class LocalInliner {
   final ASTRewrite rewriter;
   final TextEditGroup editGroup;
 
-  LocalInliner(final SimpleName n) {
+  public LocalInliner(final SimpleName n) {
     this(n, null, null);
   }
 
-  LocalInliner(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
+  public LocalInliner(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
     this.name = name;
     this.rewriter = rewriter;
     this.editGroup = editGroup;
   }
 
-  LocalInlineWithValue byValue(final Expression replacement) {
+  public LocalInlineWithValue byValue(final Expression replacement) {
     return new LocalInlineWithValue(replacement);
   }
 
-  class LocalInlineWithValue extends Wrapper<Expression> {
+  public class LocalInlineWithValue extends Wrapper<Expression> {
     LocalInlineWithValue(final Expression replacement) {
       super(extract.core(replacement));
-    }
-
-    @SafeVarargs protected final void inlineinto(final ASTNode... ns) {
-      inlineinto(wrap(ns));
     }
 
     /** Computes the number of AST nodes added as a result of the replacement
@@ -60,16 +54,20 @@ final class LocalInliner {
      * @return A non-negative integer, computed from the number of occurrences
      *         of {@link #name} in the operands, and the size of the
      *         replacement. */
-    int addedSize(final ASTNode... ns) {
-      return uses(ns).size() * (size(get()) - 1);
+    public int addedSize(final ASTNode... ns) {
+      return uses(ns).size() * (metrics.size(get()) - 1);
     }
 
-    boolean canInlineinto(final ASTNode... ns) {
+    public boolean canInlineinto(final ASTNode... ns) {
       return Collect.definitionsOf(name).in(ns).isEmpty() && (sideEffects.free(get()) || uses(ns).size() <= 1);
     }
 
-    boolean canSafelyInlineinto(final ASTNode... ns) {
+    public boolean canSafelyInlineinto(final ASTNode... ns) {
       return canInlineinto(ns) && unsafeUses(ns).isEmpty();
+    }
+
+    @SafeVarargs public final void inlineInto(final ASTNode... ns) {
+      inlineinto(wrap(ns));
     }
 
     /** Computes the total number of AST nodes in the replaced parameters
@@ -77,8 +75,8 @@ final class LocalInliner {
      * @return A non-negative integer, computed from original size of the
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement. */
-    int replacedSize(final ASTNode... ns) {
-      return size(ns) + uses(ns).size() * (size(get()) - 1);
+    public int replacedSize(final ASTNode... ns) {
+      return metrics.size(ns) + uses(ns).size() * (metrics.size(get()) - 1);
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {

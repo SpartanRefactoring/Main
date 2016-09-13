@@ -53,8 +53,8 @@ public interface type {
    * @return The specified type */
   // TODO: Niv, should be table driven. need to decide default return value.
   // perhaps simply replace with baptize
-  static type generateFromTypeName(final String s) {
-    switch (s) {
+  static type generateFromTypeName(final String ¢) {
+    switch (¢) {
       case "byte":
       case "Byte":
         return BYTE;
@@ -230,11 +230,11 @@ public interface type {
       }
     };
 
-    private static implementation conditionalWithNoInfo(final implementation i) {
-      return in(i, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
+    private static implementation conditionalWithNoInfo(final implementation ¢) {
+      return in(¢, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
           ? NUMERIC //
-          : !in(i, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
-              ? NOTHING : i;
+          : !in(¢, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
+              ? NOTHING : ¢;
     }
 
     private static implementation get(final Expression ¢) {
@@ -244,14 +244,14 @@ public interface type {
     /** @param n JD/
      * @return the type information stored inside the node n, or null if there
      *         is none */
-    private static implementation getType(final ASTNode n) {
-      return (implementation) n.getProperty(propertyName);
+    private static implementation getType(final ASTNode ¢) {
+      return (implementation) ¢.getProperty(propertyName);
     }
 
-    /** @param n JD
+    /** @param ¢ JD
      * @return true if n has a type property and false otherwise */
-    private static boolean hasType(final ASTNode n) {
-      return getType(n) != null;
+    private static boolean hasType(final ASTNode ¢) {
+      return getType(¢) != null;
     }
 
     private static implementation lookDown(final Assignment x) {
@@ -259,12 +259,12 @@ public interface type {
       return !$.isNoInfo() ? $ : get(x.getRightHandSide()).isNumeric() ? NUMERIC : get(x.getRightHandSide());
     }
 
-    private static implementation lookDown(final CastExpression x) {
-      return baptize(step.type(x) + "");
+    private static implementation lookDown(final CastExpression ¢) {
+      return baptize(step.type(¢) + "");
     }
 
-    private static implementation lookDown(final ClassInstanceCreation c) {
-      return baptize(c.getType() + "");
+    private static implementation lookDown(final ClassInstanceCreation ¢) {
+      return baptize(¢.getType() + "");
     }
 
     private static implementation lookDown(final ConditionalExpression x) {
@@ -333,21 +333,21 @@ public interface type {
       return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
     }
 
-    private static implementation lookDown(final NumberLiteral l) {
-      return new LiteralParser(l.getToken()).type();
+    private static implementation lookDown(final NumberLiteral ¢) {
+      return new LiteralParser(¢.getToken()).type();
     }
 
-    private static implementation lookDown(final ParenthesizedExpression x) {
-      return get(core(x));
+    private static implementation lookDown(final ParenthesizedExpression ¢) {
+      return get(core(¢));
     }
 
-    private static implementation lookDown(final PostfixExpression x) {
-      return get(x.getOperand()).asNumeric(); // see
+    private static implementation lookDown(final PostfixExpression ¢) {
+      return get(¢.getOperand()).asNumeric(); // see
                                               // testInDecreamentSemantics
     }
 
-    private static implementation lookDown(final PrefixExpression x) {
-      return get(x.getOperand()).under(x.getOperator());
+    private static implementation lookDown(final PrefixExpression ¢) {
+      return get(¢.getOperand()).under(¢.getOperator());
     }
 
     private static implementation lookUp(final Expression x, final implementation i) {
@@ -680,8 +680,8 @@ public interface type {
               options.add(c);
       }
 
-      @Override public boolean canB(final Certain c) {
-        return options.contains(c);
+      @Override public boolean canB(final Certain ¢) {
+        return options.contains(¢);
       }
 
       @Override public String description() {

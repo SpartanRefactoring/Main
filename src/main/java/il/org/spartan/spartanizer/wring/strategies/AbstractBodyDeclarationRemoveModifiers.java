@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.strategies;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
@@ -9,12 +9,13 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
 
-/** convert <code><b>abstract</b> <b>interface</b>a {}</code> to
- * <code><b>interface</b> a {}</code>, etc.
+/** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
+ * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N>
+public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
     implements Kind.SyntacticBaggage {
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
@@ -94,30 +95,16 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     return false;
   }
 
-  @Override String description(final BodyDeclaration ¢) {
+  @Override public String description(final BodyDeclaration ¢) {
     return "Remove redundant " + redundants(¢) + " modifier(s) from declaration";
   }
 
-  @Override BodyDeclaration replacement(final BodyDeclaration $) {
+  @Override public BodyDeclaration replacement(final BodyDeclaration $) {
     return prune(duplicate.of($), redundancies($));
   }
 
-  @Override boolean scopeIncludes(final BodyDeclaration ¢) {
+  @Override public boolean scopeIncludes(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }
-
-  // @formatter:off
-  public static class OfAnnotation extends AbstractBodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
-
-  public static class OfEnum extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-
-  public static class OfEnumConstant extends AbstractBodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
-
-  public static class OfField extends AbstractBodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
-
-  public static class OfMethod extends AbstractBodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
-
-  public static class OfType extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
-  // @formatter:on
 }

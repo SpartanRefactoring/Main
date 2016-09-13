@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.dispatch;
 
 import java.util.*;
 
@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** An adapter that converts the @{link Wring} protocol into that of
  * {@link Spartanization}

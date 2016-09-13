@@ -11,6 +11,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Convert Infinite loops with return statements to shorter ones : </br>
  * Convert <br/>
@@ -89,6 +91,17 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
     return "Convert the break inside the loop to return";
   }
 
+  @Override public String description(final Block b) {
+    return "Convert the break inside " + b + " to return";
+  }
+
+  // TODO: Dor, there are functions in extract that do much of this
+  // TODO: Dor, use lisp.first and lisp.second
+  // I will spartnize this for you. Implement in other classes
+  @Override public Rewrite make(final Block n) {
+    return make(statements(n));
+  }
+
   public Rewrite make(final ForStatement vor, final ReturnStatement nextReturn) {
     final Statement $ = make(vor.getBody(), nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
@@ -105,16 +118,5 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
       return null;
     final ReturnStatement nextReturn = az.returnStatement(second(ss));
     return nextReturn == null ? null : make(vor, nextReturn);
-  }
-
-  @Override String description(final Block b) {
-    return "Convert the break inside " + b + " to return";
-  }
-
-  // TODO: Dor, there are functions in extract that do much of this
-  // TODO: Dor, use lisp.first and lisp.second
-  // I will spartnize this for you. Implement in other classes
-  @Override Rewrite make(final Block n) {
-    return make(statements(n));
   }
 }

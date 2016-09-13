@@ -10,6 +10,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Remove blocks that include only variable declerations: <br/>
  * For example, remove the block : </br>
@@ -17,16 +19,16 @@ import il.org.spartan.spartanizer.engine.*;
  * <code> {int a=0;} </code> </br>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public class RemoveVariableDefinitionsBlocks extends Wring<Block> implements Kind.Collapse {
+public class BlockSingletonVariableDefinition extends Wring<Block> implements Kind.Collapse {
   @Override public String description() {
     return "remove the block";
   }
 
-  @Override String description(final Block n) {
+  @Override public String description(final Block n) {
     return "remove the block: " + n;
   }
 
-  @Override Rewrite make(final Block n) {
+  @Override public Rewrite make(final Block n) {
     final List<Statement> ss = statements(n);
     if (ss.isEmpty())
       return null;

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.dispatch;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
@@ -46,7 +47,7 @@ public class Trimmer extends Spartanization {
   protected ASTVisitor collect(final List<Rewrite> $) {
     Toolbox.refresh();
     return new DispatchingVisitor() {
-      @Override <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
       }
@@ -55,7 +56,7 @@ public class Trimmer extends Spartanization {
 
   @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
     return new DispatchingVisitor() {
-      @Override <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
         if (new DisabledChecker(u).check(n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
@@ -68,7 +69,7 @@ public class Trimmer extends Spartanization {
     Toolbox.refresh();
     final DisabledChecker dc = new DisabledChecker(u);
     u.accept(new DispatchingVisitor() {
-      @Override <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
         if (dc.check(n) || !inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
@@ -107,14 +108,8 @@ public class Trimmer extends Spartanization {
     return new ExclusionManager();
   }
 
-  public class With {
-    public Trimmer trimmer() {
-      return Trimmer.this;
-    }
-  }
-
-  abstract class DispatchingVisitor extends ASTVisitor {
-    final ExclusionManager exclude = makeExcluder();
+  public abstract class DispatchingVisitor extends ASTVisitor {
+    protected final ExclusionManager exclude = makeExcluder();
 
     @Override public final boolean visit(final Assignment ¢) {
       return cautiousGo(¢);
@@ -192,10 +187,16 @@ public class Trimmer extends Spartanization {
       return cautiousGo(¢);
     }
 
-    abstract <N extends ASTNode> boolean go(final N n);
+    protected abstract <N extends ASTNode> boolean go(final N n);
 
     private boolean cautiousGo(final ASTNode ¢) {
       return !exclude.isExcluded(¢) && go(¢);
+    }
+  }
+
+  public class With {
+    public Trimmer trimmer() {
+      return Trimmer.this;
     }
   }
 }

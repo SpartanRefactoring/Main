@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring;
+package il.org.spartan.spartanizer.wring.dispatch;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 

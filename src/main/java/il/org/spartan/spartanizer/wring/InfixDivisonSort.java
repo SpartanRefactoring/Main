@@ -9,16 +9,18 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class InfixDivisonSort extends Wring.InfixSortingOfCDR implements Kind.Sorting {
-  @Override boolean scopeIncludes(final InfixExpression x) {
+public final class InfixDivisonSort extends InfixSortingOfCDR implements Kind.Sorting {
+  @Override public boolean scopeIncludes(final InfixExpression x) {
     return in(x.getOperator(), DIVIDE);
   }
 
-  @Override boolean sort(final List<Expression> xs) {
+  @Override protected boolean sort(final List<Expression> xs) {
     return ExpressionComparator.MULTIPLICATION.sort(xs);
   }
 }

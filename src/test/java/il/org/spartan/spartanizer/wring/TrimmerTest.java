@@ -18,6 +18,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -1444,7 +1446,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert e != null;
     azzert.that("" + right(e), is("f(a,b,c)"));
     azzert.that("" + left(e), is("f(a,b,c,d,e)"));
-    final Wring<InfixExpression> s = Toolbox.instance.find(e);
+    final Wring<InfixExpression> s = Toolbox.defaultInstance().find(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
@@ -1456,7 +1458,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
     assert s.eligible(e) : "e=" + e + " s=" + s;
-    final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that("" + replacement, is("f(a,b,c) * f(a,b,c,d,e)"));
   }
@@ -1466,7 +1468,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert e != null;
     azzert.that("" + right(e), is("f(a,b,c)"));
     azzert.that("" + left(e), is("f(a,b,c,d)"));
-    final Wring<InfixExpression> s = Toolbox.instance.find(e);
+    final Wring<InfixExpression> s = Toolbox.defaultInstance().find(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.scopeIncludes(e);
@@ -1478,7 +1480,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
     assert s.eligible(e) : "e=" + e + " s=" + s;
-    final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that("" + replacement, is("f(a,b,c) * f(a,b,c,d)"));
   }
@@ -3321,17 +3323,17 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null != a");
-    final Wring<InfixExpression> w = Toolbox.instance.find(e);
+    final Wring<InfixExpression> w = Toolbox.defaultInstance().find(e);
     assert w != null;
     assert w.scopeIncludes(e);
     assert w.eligible(e);
-    final ASTNode replacement = ((Wring.ReplaceCurrentNode<InfixExpression>) w).replacement(e);
+    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     assert replacement != null;
     azzert.that("" + replacement, is("a != null"));
   }
 
   @Test public void rightSipmlificatioForNulNNVariable() {
-    azzert.that(Toolbox.instance.find(i("null != a")), instanceOf(InfixComparisonSpecific.class));
+    azzert.that(Toolbox.defaultInstance().find(i("null != a")), instanceOf(InfixComparisonSpecific.class));
   }
 
   @Test public void sequencerFirstInElse() {

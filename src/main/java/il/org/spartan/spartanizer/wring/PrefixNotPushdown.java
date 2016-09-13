@@ -9,12 +9,14 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** pushes down "<code>!</code>", the negation operator as much as possible,
  * using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpression> implements Kind.Idiomatic {
+public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression> implements Kind.Idiomatic {
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator o) {
@@ -101,15 +103,15 @@ public final class PrefixNotPushdown extends Wring.ReplaceCurrentNode<PrefixExpr
     return $ != null ? $ : x;
   }
 
-  @Override public boolean scopeIncludes(final PrefixExpression x) {
-    return x != null && az.not(x) != null && hasOpportunity(az.not(x));
-  }
-
-  @Override String description(@SuppressWarnings("unused") final PrefixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final PrefixExpression __) {
     return "Pushdown logical negation ('!')";
   }
 
-  @Override Expression replacement(final PrefixExpression x) {
+  @Override public Expression replacement(final PrefixExpression x) {
     return simplifyNot(x);
+  }
+
+  @Override public boolean scopeIncludes(final PrefixExpression x) {
+    return x != null && az.not(x) != null && hasOpportunity(az.not(x));
   }
 }

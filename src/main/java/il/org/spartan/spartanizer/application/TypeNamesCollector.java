@@ -14,17 +14,17 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2015 */
 public class TypeNamesCollector {
-  static Map<String, Integer> count = new TreeMap<>();
+  static Map<String, Integer> longNames = new TreeMap<>();
   static Map<String, Set<String>> shortToFull = new TreeMap<>();
 
   public static void main(final String[] where) throws IOException {
     collect(where.length != 0 ? where : new String[] { "." });
     final CSVStatistics w = new CSVStatistics("types.csv", "property");
-    for (final String s : count.keySet()) {
+    for (final String s : longNames.keySet()) {
       final String shortName = spartan.shorten(s);
-      w.put("Count", count.get(s).intValue());
-      w.put("Log(Count)", Math.log(count.get(s).intValue()));
-      w.put("Sqrt(Count)", Math.sqrt(count.get(s).intValue()));
+      w.put("Count", longNames.get(s).intValue());
+      w.put("Log(Count)", Math.log(longNames.get(s).intValue()));
+      w.put("Sqrt(Count)", Math.sqrt(longNames.get(s).intValue()));
       w.put("Collisions", shortToFull.get(shortName).size());
       w.put("Short", spartan.shorten(s));
       w.put("Original", s);
@@ -45,9 +45,9 @@ public class TypeNamesCollector {
       }
 
       void record(final String longName) {
-        if (!count.containsKey(longName))
-          count.put(longName, Integer.valueOf(0));
-        count.put(longName, box.it(count.get(longName).intValue() + 1));
+        if (!longNames.containsKey(longName))
+          longNames.put(longName, Integer.valueOf(0));
+        longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
         final String shortName = spartan.shorten(longName);
         if (!shortToFull.containsKey(shortName))
           shortToFull.put(shortName, new HashSet<String>());

@@ -6,6 +6,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** A {@link Wring} to eliminate degenerate if statements such as
  *
@@ -19,11 +21,11 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.NOP {
-  @Override String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
 
-  @Override Rewrite make(final IfStatement s) {
+  @Override public Rewrite make(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);
@@ -32,7 +34,7 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
     };
   }
 
-  @Override boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean scopeIncludes(final IfStatement s) {
     return s != null && iz.vacuousThen(s) && iz.vacuousElse(s);
   }
 }

@@ -9,6 +9,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -39,11 +41,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015-09-09 */
 public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.EarlyReturn {
-  @SuppressWarnings("unused") @Override String description(final IfStatement ____) {
-    return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
-  }
-
-  @Override Rewrite make(final IfStatement s) {
+  @Override public Rewrite make(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
@@ -53,5 +51,9 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfState
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }
     };
+  }
+
+  @SuppressWarnings("unused") @Override protected String description(final IfStatement ____) {
+    return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 }

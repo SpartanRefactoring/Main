@@ -98,8 +98,8 @@ public enum make {
     return $;
   }
 
-  static Expression minusOf(final Expression x) {
-    return literal0(x) ? x : subject.operand(x).to(wizard.MINUS1);
+  static Expression minusOf(final Expression ¢) {
+    return literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
   }
 
   static NumberLiteral newLiteral(final ASTNode n, final String token) {

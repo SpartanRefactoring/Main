@@ -3,7 +3,8 @@ package il.org.spartan.spartanizer.wring;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** A {@link Wring} to remove the empty String "" in String conversion
  * expression like <code> "" + X </code> but ONLY if X is a String.
@@ -15,15 +16,15 @@ public class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> implem
     return null;
   }
 
-  @Override public WringGroup wringGroup() {
-    return null;
-  }
-
-  @Override String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove \"\" from \"\" + X if X is a String";
   }
 
-  @Override ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     return Wrings.eliminateLiteral(x, true);
+  }
+
+  @Override public WringGroup wringGroup() {
+    return null;
   }
 }
