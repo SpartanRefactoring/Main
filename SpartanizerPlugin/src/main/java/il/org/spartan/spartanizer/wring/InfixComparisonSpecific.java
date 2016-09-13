@@ -33,15 +33,15 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
     return "Exchange left and right operands of comparison";
   }
 
-  @Override public boolean canWring(final InfixExpression x) {
-    return specifity.compare(left(x), right(x)) < 0;
+  @Override public boolean canWring(final InfixExpression ¢) {
+    return specifity.compare(left(¢), right(¢)) < 0;
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
-    return make.conjugate(x);
+  @Override public Expression replacement(final InfixExpression ¢) {
+    return make.conjugate(¢);
   }
 
-  @Override public boolean claims(final InfixExpression x) {
-    return !x.hasExtendedOperands() && iz.comparison(x) && (specificity.defined(left(x)) || specificity.defined(right(x)));
+  @Override public boolean claims(final InfixExpression ¢) {
+    return !¢.hasExtendedOperands() && iz.comparison(¢) && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
 }

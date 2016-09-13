@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixDivisonSort extends InfixSortingOfCDR implements Kind.Sorting {
-  @Override public boolean claims(final InfixExpression x) {
-    return in(x.getOperator(), DIVIDE);
+  @Override public boolean claims(final InfixExpression ¢) {
+    return in(¢.getOperator(), DIVIDE);
   }
 
-  @Override protected boolean sort(final List<Expression> xs) {
-    return ExpressionComparator.MULTIPLICATION.sort(xs);
+  @Override protected boolean sort(final List<Expression> ¢) {
+    return ExpressionComparator.MULTIPLICATION.sort(¢);
   }
 }

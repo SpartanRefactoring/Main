@@ -20,14 +20,14 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }
 
-  @Override public Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(final IfStatement ¢) {
     // Prior test in scopeIncludes makes sure that only IfStatements containing
     // a 'true' or 'false'
     // get into the replace.
-    return iz.literalTrue(s.getExpression()) ? then(s) : elze(s) != null ? elze(s) : s.getAST().newBlock();
+    return iz.literalTrue(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
   }
 
-  @Override public boolean claims(final IfStatement s) {
-    return s != null && (iz.literalTrue(s.getExpression()) || iz.literalFalse(s.getExpression()));
+  @Override public boolean claims(final IfStatement ¢) {
+    return ¢ != null && (iz.literalTrue(¢.getExpression()) || iz.literalFalse(¢.getExpression()));
   }
 }

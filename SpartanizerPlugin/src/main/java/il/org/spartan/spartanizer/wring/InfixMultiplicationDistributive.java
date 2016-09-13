@@ -44,12 +44,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "a*b + a*c => a * (b + c)";
   }
 
-  @Override public String description(final InfixExpression x) {
-    return "Apply the distributive rule to " + x;
+  @Override public String description(final InfixExpression ¢) {
+    return "Apply the distributive rule to " + ¢;
   }
 
-  @Override public ASTNode replacement(final InfixExpression x) {
-    return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
+  @Override public ASTNode replacement(final InfixExpression ¢) {
+    return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
   @Override public boolean claims(final InfixExpression $) {

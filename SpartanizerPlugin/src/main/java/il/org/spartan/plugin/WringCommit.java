@@ -63,8 +63,7 @@ public class WringCommit {
 
   private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
     Toolbox.refresh();
-    WringCommitVisitor f = new WringCommitVisitor($, m, t, u);
-    u.accept(f);
+    u.accept((new WringCommitVisitor($, m, t, u)));
   }
 
   public enum Type {
@@ -118,9 +117,9 @@ public class WringCommit {
       commitLocal(w, ToggleSpartanization.getDeclaringFile(n));
     }
     
-    protected void commitLocal(@SuppressWarnings("rawtypes") Wring w, final ASTNode d) {
+    protected void commitLocal(@SuppressWarnings("rawtypes") Wring w, final ASTNode n) {
       final DisabledChecker dc = new DisabledChecker(u);
-      d.accept(new Trimmer.DispatchingVisitor() {
+      n.accept(new Trimmer.DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(N n) {
           if (dc.check(n))
             return true;

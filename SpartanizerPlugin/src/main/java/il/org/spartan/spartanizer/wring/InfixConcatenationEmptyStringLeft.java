@@ -39,11 +39,11 @@ public class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixE
     return ts;
   }
 
-  @Override public String description(final InfixExpression x) {
-    return "Append, rather than prepend, \"\", to " + left(x);
+  @Override public String description(final InfixExpression ¢) {
+    return "Append, rather than prepend, \"\", to " + left(¢);
   }
 
-  @Override public ASTNode replacement(final InfixExpression x) {
-    return !iz.emptyStringLiteral(left(x)) || !iz.infixPlus(x) ? null : replace(x);
+  @Override public ASTNode replacement(final InfixExpression ¢) {
+    return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) ? null : replace(¢);
   }
 }

@@ -148,9 +148,9 @@ public enum extract {
   public static PostfixExpression findFirstPostfix(final ASTNode n) {
     final Wrapper<PostfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression x) {
+      @Override public boolean visit(final PostfixExpression ¢) {
         if ($.get() == null)
-          $.set(x);
+          $.set(¢);
         return false;
       }
     });
@@ -167,9 +167,9 @@ public enum extract {
       return null;
     final Wrapper<AssertStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final AssertStatement s) {
+      @Override public boolean visit(final AssertStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -186,9 +186,9 @@ public enum extract {
       return null;
     final Wrapper<ForStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final ForStatement s) {
+      @Override public boolean visit(final ForStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -205,9 +205,9 @@ public enum extract {
       return null;
     final Wrapper<IfStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final IfStatement s) {
+      @Override public boolean visit(final IfStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -240,12 +240,12 @@ public enum extract {
   public static InfixExpression firstPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final InfixExpression x) {
+      @Override public boolean visit(final InfixExpression ¢) {
         if ($.get() != null)
           return false;
-        if (x.getOperator() != InfixExpression.Operator.PLUS)
+        if (¢.getOperator() != InfixExpression.Operator.PLUS)
           return true;
-        $.set(x);
+        $.set(¢);
         return false;
       }
     });
@@ -294,9 +294,9 @@ public enum extract {
       return null;
     final Wrapper<WhileStatement> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final WhileStatement s) {
+      @Override public boolean visit(final WhileStatement ¢) {
         if ($.get() == null)
-          $.set(s);
+          $.set(¢);
         return false;
       }
     });
@@ -329,8 +329,8 @@ public enum extract {
   /** @param n JD
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
-  public static MethodInvocation methodInvocation(final ASTNode n) {
-    return az.methodInvocation(extract.expressionStatement(n).getExpression());
+  public static MethodInvocation methodInvocation(final ASTNode ¢) {
+    return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
 
   public static List<Modifier> modifiers(final BodyDeclaration d) {
@@ -367,32 +367,32 @@ public enum extract {
    * @param n JD
    * @return {@link Assignment} that follows the parameter, or
    *         <code><b>null</b></code> if not such value exists. */
-  public static Assignment nextAssignment(final ASTNode n) {
-    return extract.assignment(nextStatement(n));
+  public static Assignment nextAssignment(final ASTNode ¢) {
+    return extract.assignment(nextStatement(¢));
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
    * @param n JD
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static IfStatement nextIfStatement(final ASTNode n) {
-    return az.ifStatement(nextStatement(n));
+  public static IfStatement nextIfStatement(final ASTNode ¢) {
+    return az.ifStatement(nextStatement(¢));
   }
 
   /** Extract the {@link ReturnStatement} that immediately follows a given node
    * @param n JD
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static ReturnStatement nextReturn(final ASTNode n) {
-    return az.returnStatement(nextStatement(n));
+  public static ReturnStatement nextReturn(final ASTNode ¢) {
+    return az.returnStatement(nextStatement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given node.
    * @param n JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement nextStatement(final ASTNode n) {
-    return nextStatement(extract.statement(n));
+  public static Statement nextStatement(final ASTNode ¢) {
+    return nextStatement(extract.statement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement
@@ -406,8 +406,8 @@ public enum extract {
     return b == null ? null : next(s, extract.statements(b));
   }
 
-  public static Expression onlyArgument(final MethodInvocation i) {
-    return onlyExpression(arguments(i));
+  public static Expression onlyArgument(final MethodInvocation ¢) {
+    return onlyExpression(arguments(¢));
   }
 
   public static Expression onlyExpression(final List<Expression> $) {
@@ -428,8 +428,8 @@ public enum extract {
    * @return single {@link ReturnStatement} embedded in the parameter, and
    *         return it; <code><b>null</b></code> if not such statements
    *         exists. */
-  public static ReturnStatement returnStatement(final ASTNode n) {
-    return az.returnStatement(extract.singleStatement(n));
+  public static ReturnStatement returnStatement(final ASTNode ¢) {
+    return az.returnStatement(extract.singleStatement(¢));
   }
 
   /** Finds the single statement in the <code><b>else</b></code> branch of an
@@ -438,23 +438,23 @@ public enum extract {
    * @return single statement in the <code><b>else</b></code> branch of the
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists. */
-  public static Statement singleElse(final IfStatement s) {
-    return extract.singleStatement(elze(s));
+  public static Statement singleElse(final IfStatement ¢) {
+    return extract.singleStatement(elze(¢));
   }
 
   /** @param n JD
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
-  public static Statement singleStatement(final ASTNode n) {
-    return onlyOne(extract.statements(n));
+  public static Statement singleStatement(final ASTNode ¢) {
+    return onlyOne(extract.statements(¢));
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}
    * @param s JD
    * @return single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement singleThen(final IfStatement s) {
-    return extract.singleStatement(then(s));
+  public static Statement singleThen(final IfStatement ¢) {
+    return extract.singleStatement(then(¢));
   }
 
   /** Extract the {@link Statement} that contains a given node.
@@ -490,8 +490,8 @@ public enum extract {
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; <code><b>null</b></code> if not such statements exists. */
-  public static ThrowStatement throwStatement(final ASTNode n) {
-    return az.throwStatement(extract.singleStatement(n));
+  public static ThrowStatement throwStatement(final ASTNode ¢) {
+    return az.throwStatement(extract.singleStatement(¢));
   }
 
   private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
