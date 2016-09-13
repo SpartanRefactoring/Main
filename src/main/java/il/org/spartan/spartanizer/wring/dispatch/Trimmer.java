@@ -104,11 +104,11 @@ public class Trimmer extends Spartanization {
     }
   }
 
-  @SuppressWarnings("static-method") ExclusionManager makeExcluder() {
+  static ExclusionManager makeExcluder() {
     return new ExclusionManager();
   }
 
-  public abstract class DispatchingVisitor extends ASTVisitor {
+  public static abstract class DispatchingVisitor extends ASTVisitor {
     protected final ExclusionManager exclude = makeExcluder();
 
     @Override public final boolean visit(final Assignment ¢) {
