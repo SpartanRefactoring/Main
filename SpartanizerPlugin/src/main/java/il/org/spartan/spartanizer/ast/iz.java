@@ -124,15 +124,7 @@ public enum iz {
   }
 
   public static boolean compileTime(final Expression ¢) {
-    // TODO: Dor, one of the following two check may re redundant
-    // TODO: Yossi, I don't see any redundancy here
-    // TODO: Dor you check that it is a number and then it is a number literal,
-    // what's the difference? Why do you it for one case, and not not for the
-    // case it is a prefix.
-    // This is code smell...
-    return iz.numberLiteral(¢) && number(¢) //
-        || iz.prefixMinus(¢) && iz.numberLiteral(az.prefixExpression(¢).getOperand()) //
-        && iz.number(¢);
+    return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
   /** @param xs JD
@@ -539,10 +531,9 @@ public enum iz {
     return is(¢, NULL_LITERAL);
   }
 
-  // TODO: Dor, what kind of other number literals are there? It is not so clear
-  // from the code
   public static boolean number(final Expression ¢) {
-    return type.isInt(¢) || type.isDouble(¢) || type.isLong(¢);
+    return iz.numberLiteral(¢) && //
+        (type.isInt(¢) || type.isDouble(¢) || type.isLong(¢));
   }
 
   public static boolean numberLiteral(final ASTNode ¢) {
