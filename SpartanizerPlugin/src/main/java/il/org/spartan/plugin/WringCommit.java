@@ -157,6 +157,7 @@ public class WringCommit {
     }
 
     protected void commitLocal( final Wring w, final ASTNode n) {
+      Toolbox.refresh();
       final DisabledChecker dc = new DisabledChecker(compilationUnit);
       n.accept(new Trimmer.DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
