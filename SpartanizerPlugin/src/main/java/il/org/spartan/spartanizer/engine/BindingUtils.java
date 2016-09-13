@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.ast.*;
 
   /** @param u current compilation unit
    * @return current package */
-  public static IPackageBinding getPackage(final CompilationUnit u) {
-    return u.getPackage().resolveBinding();
+  public static IPackageBinding getPackage(final CompilationUnit ¢) {
+    return ¢.getPackage().resolveBinding();
   }
 
   /** Finds visible method in hierarchy.

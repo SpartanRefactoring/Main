@@ -286,8 +286,8 @@ public interface type {
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    private static implementation lookDown(final Expression x) {
-      switch (x.getNodeType()) {
+    private static implementation lookDown(final Expression ¢) {
+      switch (¢.getNodeType()) {
         case NULL_LITERAL:
           return NULL;
         case CHARACTER_LITERAL:
@@ -297,25 +297,25 @@ public interface type {
         case BOOLEAN_LITERAL:
           return BOOLEAN;
         case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) x);
+          return lookDown((NumberLiteral) ¢);
         case CAST_EXPRESSION:
-          return lookDown((CastExpression) x);
+          return lookDown((CastExpression) ¢);
         case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) x);
+          return lookDown((PrefixExpression) ¢);
         case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) x);
+          return lookDown((InfixExpression) ¢);
         case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) x);
+          return lookDown((PostfixExpression) ¢);
         case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) x);
+          return lookDown((ParenthesizedExpression) ¢);
         case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) x);
+          return lookDown((ClassInstanceCreation) ¢);
         case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) x);
+          return lookDown((MethodInvocation) ¢);
         case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) x);
+          return lookDown((ConditionalExpression) ¢);
         case ASSIGNMENT:
-          return lookDown((Assignment) x);
+          return lookDown((Assignment) ¢);
         default:
           return NOTHING;
       }
@@ -332,8 +332,8 @@ public interface type {
       return $;
     }
 
-    private static implementation lookDown(final MethodInvocation i) {
-      return "toString".equals(i.getName() + "") && i.arguments().isEmpty() ? STRING : NOTHING;
+    private static implementation lookDown(final MethodInvocation ¢) {
+      return "toString".equals(¢.getName() + "") && ¢.arguments().isEmpty() ? STRING : NOTHING;
     }
 
     private static implementation lookDown(final NumberLiteral ¢) {
@@ -394,14 +394,14 @@ public interface type {
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
-      default implementation above(final PrefixExpression.Operator o) {
-        return o == NOT ? BOOLEAN : o != COMPLEMENT ? asNumeric() : asIntegral();
+      default implementation above(final PrefixExpression.Operator ¢) {
+        return ¢ == NOT ? BOOLEAN : ¢ != COMPLEMENT ? asNumeric() : asIntegral();
       }
 
-      default implementation aboveBinaryOperator(final InfixExpression.Operator o) {
-        return in(o, EQUALS, NOT_EQUALS) ? this
-            : o == wizard.PLUS2 ? asAlphaNumeric()
-                : wizard.isBitwiseOperator(o) ? asBooleanIntegral() : wizard.isShift(o) ? asIntegral() : asNumeric();
+      default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
+        return in(¢, EQUALS, NOT_EQUALS) ? this
+            : ¢ == wizard.PLUS2 ? asAlphaNumeric()
+                : wizard.isBitwiseOperator(¢) ? asBooleanIntegral() : wizard.isShift(¢) ? asIntegral() : asNumeric();
       }
 
       default implementation asAlphaNumeric() {
@@ -466,10 +466,10 @@ public interface type {
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
-      default implementation under(final PrefixExpression.Operator o) {
-        assert o != null;
-        return o == NOT ? BOOLEAN
-            : in(o, DECREMENT, INCREMENT) ? asNumeric() : o != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
+      default implementation under(final PrefixExpression.Operator ¢) {
+        assert ¢ != null;
+        return ¢ == NOT ? BOOLEAN
+            : in(¢, DECREMENT, INCREMENT) ? asNumeric() : ¢ != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
       }
 
       /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,

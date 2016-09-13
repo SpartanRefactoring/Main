@@ -38,10 +38,10 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     return es.size() < 2 ? duplicate.of(first(es)) : subject.operands(es).to(x.getOperator());
   }
 
-  private static Operator conjugate(final Operator o) {
-    return o == null ? null
-        : o == CONDITIONAL_AND ? CONDITIONAL_OR //
-            : o == CONDITIONAL_OR ? CONDITIONAL_AND //
+  private static Operator conjugate(final Operator ¢) {
+    return ¢ == null ? null
+        : ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
+            : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
                 : null;
   }
 

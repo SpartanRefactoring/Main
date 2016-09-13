@@ -53,8 +53,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
     return false;
   }
 
-  @Override public String description(final VariableDeclarationFragment f) {
-    return "Inline local " + f.getName() + " into subsequent statement";
+  @Override public String description(final VariableDeclarationFragment ¢) {
+    return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

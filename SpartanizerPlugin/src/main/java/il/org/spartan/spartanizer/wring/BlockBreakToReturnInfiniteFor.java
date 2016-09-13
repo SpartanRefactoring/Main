@@ -83,16 +83,16 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
-  private static boolean isInfiniteLoop(final ForStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  private static boolean isInfiniteLoop(final ForStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
     return "Convert the break inside the loop to return";
   }
 
-  @Override public String description(final Block b) {
-    return "Convert the break inside " + b + " to return";
+  @Override public String description(final Block ¢) {
+    return "Convert the break inside " + ¢ + " to return";
   }
 
   // TODO: Dor, there are functions in extract that do much of this

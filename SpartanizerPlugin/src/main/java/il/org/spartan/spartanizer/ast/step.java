@@ -71,26 +71,26 @@ public enum step {
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
-  public static Expression expression(final ASTNode n) {
-    if (n == null)
+  public static Expression expression(final ASTNode ¢) {
+    if (¢ == null)
       return null;
-    switch (n.getNodeType()) {
+    switch (¢.getNodeType()) {
       case ASTNode.EXPRESSION_STATEMENT:
-        return expression((ExpressionStatement) n);
+        return expression((ExpressionStatement) ¢);
       case ASTNode.RETURN_STATEMENT:
-        return expression((ReturnStatement) n);
+        return expression((ReturnStatement) ¢);
       case ASTNode.THROW_STATEMENT:
-        return expression((ThrowStatement) n);
+        return expression((ThrowStatement) ¢);
       case ASTNode.CLASS_INSTANCE_CREATION:
-        return expression((ClassInstanceCreation) n);
+        return expression((ClassInstanceCreation) ¢);
       case ASTNode.CAST_EXPRESSION:
-        return expression((CastExpression) n);
+        return expression((CastExpression) ¢);
       case ASTNode.METHOD_INVOCATION:
-        return step.receiver((MethodInvocation) n);
+        return step.receiver((MethodInvocation) ¢);
       case ASTNode.PARENTHESIZED_EXPRESSION:
-        return expression((ParenthesizedExpression) n);
+        return expression((ParenthesizedExpression) ¢);
       case ASTNode.DO_STATEMENT:
-        return expression((DoStatement) n);
+        return expression((DoStatement) ¢);
       default:
         return null;
     }
@@ -104,8 +104,8 @@ public enum step {
     return extract.core($.getExpression());
   }
 
-  public static Expression expression(final ConditionalExpression x) {
-    return extract.core(x.getExpression());
+  public static Expression expression(final ConditionalExpression ¢) {
+    return extract.core(¢.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
@@ -212,12 +212,12 @@ public enum step {
     return ¢.modifiers();
   }
 
-  public static SimpleName name(final MethodInvocation i) {
-    return i.getName();
+  public static SimpleName name(final MethodInvocation ¢) {
+    return ¢.getName();
   }
 
-  public static SimpleName name(final SuperMethodInvocation i) {
-    return i.getName();
+  public static SimpleName name(final SuperMethodInvocation ¢) {
+    return ¢.getName();
   }
 
   public static Expression operand(final PostfixExpression ¢) {
@@ -228,20 +228,20 @@ public enum step {
     return ¢ == null ? null : extract.core(¢.getOperand());
   }
 
-  public static Assignment.Operator operator(final Assignment a) {
-    return a == null ? null : a.getOperator();
+  public static Assignment.Operator operator(final Assignment ¢) {
+    return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static InfixExpression.Operator operator(final InfixExpression x) {
-    return x == null ? null : x.getOperator();
+  public static InfixExpression.Operator operator(final InfixExpression ¢) {
+    return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static PostfixExpression.Operator operator(final PostfixExpression x) {
-    return x == null ? null : x.getOperator();
+  public static PostfixExpression.Operator operator(final PostfixExpression ¢) {
+    return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static PrefixExpression.Operator operator(final PrefixExpression x) {
-    return x == null ? null : x.getOperator();
+  public static PrefixExpression.Operator operator(final PrefixExpression ¢) {
+    return ¢ == null ? null : ¢.getOperator();
   }
 
   /** Expose the list of parameters in a {@link MethodDeclaration}
@@ -316,8 +316,8 @@ public enum step {
     return ¢.getThenStatement();
   }
 
-  public static Type type(final CastExpression x) {
-    return x.getType();
+  public static Type type(final CastExpression ¢) {
+    return ¢.getType();
   }
 
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {

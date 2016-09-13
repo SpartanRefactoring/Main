@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixMultiplicationSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean claims(final InfixExpression x) {
-    return in(x.getOperator(), TIMES);
+  @Override public boolean claims(final InfixExpression ¢) {
+    return in(¢.getOperator(), TIMES);
   }
 
-  @Override protected boolean sort(final List<Expression> xs) {
-    return ExpressionComparator.MULTIPLICATION.sort(xs);
+  @Override protected boolean sort(final List<Expression> ¢) {
+    return ExpressionComparator.MULTIPLICATION.sort(¢);
   }
 }

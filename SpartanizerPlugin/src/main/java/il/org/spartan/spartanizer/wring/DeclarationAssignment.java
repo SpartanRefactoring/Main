@@ -33,8 +33,8 @@ public final class DeclarationAssignment extends VariableDeclarationFragementAnd
     return $;
   }
 
-  @Override public String description(final VariableDeclarationFragment f) {
-    return "Consolidate declaration of " + f.getName() + " with its subsequent initialization";
+  @Override public String description(final VariableDeclarationFragment ¢) {
+    return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

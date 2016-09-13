@@ -26,7 +26,7 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement> imple
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
 
-  @Override public Statement replacement(final IfStatement s) {
-    return Wrings.thenIsShorter(s) ? null : invert(s);
+  @Override public Statement replacement(final IfStatement ¢) {
+    return Wrings.thenIsShorter(¢) ? null : invert(¢);
   }
 }

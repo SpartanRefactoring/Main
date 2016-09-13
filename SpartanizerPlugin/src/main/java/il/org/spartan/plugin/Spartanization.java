@@ -253,18 +253,18 @@ public abstract class Spartanization extends Refactoring {
   }
 
   /** @param u the compilationUnit to set */
-  public void setCompilationUnit(final ICompilationUnit u) {
-    compilationUnit = u;
+  public void setCompilationUnit(final ICompilationUnit ¢) {
+    compilationUnit = ¢;
   }
 
   /** @param m the marker to set for the refactoring */
-  public final void setMarker(final IMarker m) {
-    marker = m;
+  public final void setMarker(final IMarker ¢) {
+    marker = ¢;
   }
 
   /** @param s the selection to set */
-  public void setSelection(final ITextSelection s) {
-    selection = s;
+  public void setSelection(final ITextSelection ¢) {
+    selection = ¢;
   }
 
   @Override public String toString() {

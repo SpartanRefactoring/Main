@@ -31,12 +31,12 @@ public interface EvaluateAux {
     return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
   }
 
-  static int extractInt(final Expression x) {
+  static int extractInt(final Expression ¢) {
     // Again, extract method to deal with the case it is a literal, will clarify
     // the logic. Would it make sense to add here something like `assert
     // type.get(x) == LONG)` or something similar
-    return !iz.prefixExpression(x) ? Integer.parseInt(az.numberLiteral(x).getToken())
-        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+    return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
+        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
   }
 
   static long extractLong(final Expression x) {
@@ -79,13 +79,13 @@ public interface EvaluateAux {
     return isLong ? LONG : INT;
   }
 
-  static boolean isCompatible(final Expression x) {
+  static boolean isCompatible(final Expression ¢) {
     // TODO: Dor, one of the following two check may re redundant
-    return iz.numberLiteral(x) && isNumber(x) || iz.prefixExpression(x) && az.prefixExpression(x).getOperator() == PrefixExpression.Operator.MINUS
-        && iz.numberLiteral(az.prefixExpression(x).getOperand());
+    return iz.numberLiteral(¢) && isNumber(¢) || iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == PrefixExpression.Operator.MINUS
+        && iz.numberLiteral(az.prefixExpression(¢).getOperand());
   }
 
-  static boolean isNumber(final Expression x) {
-    return type.isInt(x) || type.isDouble(x) || type.isLong(x);
+  static boolean isNumber(final Expression ¢) {
+    return type.isInt(¢) || type.isDouble(¢) || type.isLong(¢);
   }
 }
