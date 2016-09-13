@@ -10,8 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-/** convert <code><b>abstract</b> <b>interface</b>a {}</code> to
- * <code><b>interface</b> a {}</code>, etc.
+/** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
+ * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
 public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N>
