@@ -33,7 +33,7 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
     return "Exchange left and right operands of comparison";
   }
 
-  @Override public boolean eligible(final InfixExpression x) {
+  @Override public boolean canWring(final InfixExpression x) {
     return specifity.compare(left(x), right(x)) < 0;
   }
 
@@ -41,7 +41,7 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
     return make.conjugate(x);
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression x) {
+  @Override public boolean claims(final InfixExpression x) {
     return !x.hasExtendedOperands() && iz.comparison(x) && (specificity.defined(left(x)) || specificity.defined(right(x)));
   }
 }

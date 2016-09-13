@@ -29,7 +29,7 @@ public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpre
     return Wrings.eliminateLiteral(x, true);
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression x) {
+  @Override public boolean claims(final InfixExpression x) {
     return iz.conditionalAnd(x) && have.trueLiteral(extract.allOperands(x));
   }
 }

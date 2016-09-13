@@ -111,7 +111,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return simplifyNot(x);
   }
 
-  @Override public boolean scopeIncludes(final PrefixExpression x) {
+  @Override public boolean claims(final PrefixExpression x) {
     return x != null && az.not(x) != null && hasOpportunity(az.not(x));
   }
 }

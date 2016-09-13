@@ -103,7 +103,7 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     return prune(duplicate.of($), redundancies($));
   }
 
-  @Override public boolean scopeIncludes(final BodyDeclaration ¢) {
+  @Override public boolean claims(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }

@@ -31,7 +31,7 @@ public final class SuperConstructorInvocationRemover extends Wring<SuperConstruc
     };
   }
 
-  @Override public boolean scopeIncludes(final SuperConstructorInvocation i) {
+  @Override public boolean claims(final SuperConstructorInvocation i) {
     return i.getExpression() == null && i.arguments().isEmpty();
   }
 }

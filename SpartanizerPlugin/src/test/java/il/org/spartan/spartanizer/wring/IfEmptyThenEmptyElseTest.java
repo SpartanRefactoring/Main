@@ -22,7 +22,7 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
 
   @Test public void eligible() {
-    assert WRING.eligible(IF);
+    assert WRING.canWring(IF);
   }
 
   @Test public void emptyElse() {
@@ -58,6 +58,6 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.scopeIncludes(IF);
+    assert WRING.claims(IF);
   }
 }

@@ -18,7 +18,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  public boolean eligible(@SuppressWarnings("unused") final N __) {
+  public boolean canWring(@SuppressWarnings("unused") final N __) {
     return true;
   }
 
@@ -37,19 +37,21 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
-   * @see #eligible(InfixExpression) */
-  public final boolean nonEligible(final N n) {
-    return !eligible(n);
+   * @see #canWring(InfixExpression) */
+  public final boolean cantWring(final N n) {
+    return !canWring(n);
   }
 
   /** Determines whether this {@link Wring} object is applicable for a given
    * {@link InfixExpression} is within the "scope" of this . Note that it could
    * be the case that a {@link Wring} is applicable in principle to an object,
-   * but that actual application will be vacuous.
+   * but that actual application will be vacuous. If a wring claims a node, it
+   * may be the case that the node would not be seen at all by other wrings
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
-  public boolean scopeIncludes(final N n) {
+  @Deprecated
+  public boolean claims(final N n) {
     return make(n, null) != null;
   }
 

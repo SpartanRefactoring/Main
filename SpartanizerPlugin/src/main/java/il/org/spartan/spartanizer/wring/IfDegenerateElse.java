@@ -42,7 +42,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> impl
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean claims(final IfStatement s) {
     return s != null && then(s) != null && degenerateElse(s);
   }
 }

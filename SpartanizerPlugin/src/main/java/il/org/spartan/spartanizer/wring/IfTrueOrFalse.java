@@ -27,7 +27,7 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
     return iz.literalTrue(s.getExpression()) ? then(s) : elze(s) != null ? elze(s) : s.getAST().newBlock();
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean claims(final IfStatement s) {
     return s != null && (iz.literalTrue(s.getExpression()) || iz.literalFalse(s.getExpression()));
   }
 }

@@ -97,7 +97,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return super.make(s, exclude);
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public final boolean claims(final IfStatement s) {
     return make(s) != null;
   }
 }

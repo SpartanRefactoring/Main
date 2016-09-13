@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean eligible(final InfixExpression x) {
-    return stringType.isNot(x) && super.eligible(x);
+  @Override public boolean canWring(final InfixExpression x) {
+    return stringType.isNot(x) && super.canWring(x);
   }
 
   @Override public Expression replacement(final InfixExpression x) {
@@ -29,7 +29,7 @@ public final class InfixAdditionSort extends InfixSorting implements Kind.Sortin
     return !stringType.isNot(x) || !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression x) {
+  @Override public boolean claims(final InfixExpression x) {
     return x.getOperator() == PLUS;
   }
 

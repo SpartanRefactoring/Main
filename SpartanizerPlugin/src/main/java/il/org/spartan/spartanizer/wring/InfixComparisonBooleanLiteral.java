@@ -59,7 +59,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression x) {
+  @Override public boolean claims(final InfixExpression x) {
     return !x.hasExtendedOperands() && in(x.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(x) || literalOnRight(x));
   }
 }
