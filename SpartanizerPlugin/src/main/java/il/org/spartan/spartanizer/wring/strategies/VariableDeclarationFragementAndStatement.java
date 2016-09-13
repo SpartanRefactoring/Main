@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 public abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   protected static Expression assignmentAsExpression(final Assignment a) {
     final Operator o = a.getOperator();
-    return o == ASSIGN ? duplicate.of(right(a)) : subject.pair(left(a), right(a)).to(wizard.assignmentToInfix(o));
+    return o == ASSIGN ? duplicate.of(right(a)) : subject.pair(left(a), right(a)).to(wizard.assign2infix(o));
   }
 
   protected static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {

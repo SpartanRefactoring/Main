@@ -21,7 +21,7 @@ public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assig
   }
 
   private static boolean provablyNotString(final Assignment ¢) {
-    return stringType.isNot(subject.pair(¢.getLeftHandSide(), ¢.getRightHandSide()).to(wizard.assignmentToInfix(¢.getOperator())));
+    return stringType.isNot(subject.pair(¢.getLeftHandSide(), ¢.getRightHandSide()).to(wizard.assign2infix(¢.getOperator())));
   }
 
   private static ASTNode replace(final Assignment a) {
@@ -33,6 +33,6 @@ public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assig
   }
 
   @Override public ASTNode replacement(final Assignment a) {
-    return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) || !provablyNotString(a) ? null : replace(a);
+    return !iz.isPlusAssignment(a) && !iz.isMinusAssignment(a) || !iz.literal1(a.getRightHandSide()) || !provablyNotString(a) ? null : replace(a);
   }
 }

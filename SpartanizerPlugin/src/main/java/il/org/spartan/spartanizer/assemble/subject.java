@@ -228,6 +228,7 @@ public class subject {
      * @param o an assignment operator
      * @return an assignment expression with operator o */
     public Assignment to(final Assignment.Operator o) {
+      assert o != null;
       final Assignment $ = ast.newAssignment();
       $.setOperator(o);
       $.setLeftHandSide(plant(left).into($));
