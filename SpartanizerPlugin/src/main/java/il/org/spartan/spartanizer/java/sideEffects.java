@@ -59,8 +59,8 @@ public enum sideEffects {
     return $.get().booleanValue();
   }
 
-  public static boolean free(final ConditionalExpression x) {
-    return free(expression(x), then(x), elze(x));
+  public static boolean free(final ConditionalExpression ¢) {
+    return free(expression(¢), then(¢), elze(¢));
   }
 
   public static boolean free(final Expression ¢) {
@@ -111,7 +111,7 @@ public enum sideEffects {
     return true;
   }
 
-  private static boolean free(final PrefixExpression x) {
-    return in(x.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && free(step.operand(x));
+  private static boolean free(final PrefixExpression ¢) {
+    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && free(step.operand(¢));
   }
 }

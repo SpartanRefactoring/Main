@@ -42,8 +42,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
-  static boolean endsWithSequencer(final Statement s) {
-    return iz.sequencer(hop.lastStatement(s));
+  static boolean endsWithSequencer(final Statement ¢) {
+    return iz.sequencer(hop.lastStatement(¢));
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -70,7 +70,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     };
   }
 
-  @Override public boolean claims(final IfStatement s) {
-    return elze(s) != null && (endsWithSequencer(then(s)) || endsWithSequencer(elze(s)));
+  @Override public boolean claims(final IfStatement ¢) {
+    return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 }

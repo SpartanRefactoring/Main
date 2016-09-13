@@ -80,8 +80,8 @@ public interface wizard {
       operands.add(make.notOf(e));
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
-  static InfixExpression.Operator assign2infix(final Assignment.Operator o) {
-    return assign2infix.get(o);
+  static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
+    return assign2infix.get(¢);
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
@@ -165,8 +165,8 @@ public interface wizard {
    *         {@link Operator#CONDITIONAL_OR} if this operator is
    *         {@link Operator#CONDITIONAL_AND}
    * @see duplicate#deMorgan(Operator) */
-  static InfixExpression.Operator deMorgan(final InfixExpression x) {
-    return wizard.deMorgan(x.getOperator());
+  static InfixExpression.Operator deMorgan(final InfixExpression ¢) {
+    return wizard.deMorgan(¢.getOperator());
   }
 
   /** Compute the "de Morgan" conjugate of an operator.
@@ -177,9 +177,9 @@ public interface wizard {
    *         {@link Operator#CONDITIONAL_OR} if the parameter is
    *         {@link Operator#CONDITIONAL_AND}
    * @see wizard#deMorgan(InfixExpression) */
-  static InfixExpression.Operator deMorgan(final InfixExpression.Operator o) {
-    assert iz.deMorgan(o);
-    return o.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
+  static InfixExpression.Operator deMorgan(final InfixExpression.Operator ¢) {
+    assert iz.deMorgan(¢);
+    return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
   /** Find the first matching expression to the given boolean (b).
@@ -198,8 +198,8 @@ public interface wizard {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(left(a1), left(a2));
   }
 
-  static Operator infix2assign(InfixExpression.Operator o) {
-     return infix2assign.get(o);
+  static Operator infix2assign(InfixExpression.Operator ¢) {
+     return infix2assign.get(¢);
   }
 
   // TODO: $ is initialized because otherwise complaining that variable may be
@@ -221,8 +221,8 @@ public interface wizard {
    * @return true if one of {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
-  static boolean isBitwiseOperator(final InfixExpression.Operator o) {
-    return in(o, XOR, OR, AND);
+  static boolean isBitwiseOperator(final InfixExpression.Operator ¢) {
+    return in(¢, XOR, OR, AND);
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or
@@ -237,8 +237,8 @@ public interface wizard {
    *         {@link #InfixExpression.Operator.CONDITIONAL_OR},
    *         {@link #InfixExpression.Operator.CONDITIONAL_AND} and false
    *         otherwise */
-  static boolean isComparison(final InfixExpression.Operator o) {
-    return in(o, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
+  static boolean isComparison(final InfixExpression.Operator ¢) {
+    return in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
 
@@ -248,8 +248,8 @@ public interface wizard {
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_SIGNED},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false
    *         otherwise */
-  static boolean isShift(final InfixExpression.Operator o) {
-    return in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+  static boolean isShift(final InfixExpression.Operator ¢) {
+    return in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   /** Determine whether a node is an infix expression whose operator is
@@ -257,13 +257,13 @@ public interface wizard {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
    *         is an infix expression whose operator is */
-  static boolean nonAssociative(final ASTNode n) {
-    return nonAssociative(az.infixExpression(n));
+  static boolean nonAssociative(final ASTNode ¢) {
+    return nonAssociative(az.infixExpression(¢));
   }
 
-  static boolean nonAssociative(final InfixExpression x) {
-    return x != null && (in(x.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
-        || (iz.infixPlus(x) && !stringType.isNot(x)));
+  static boolean nonAssociative(final InfixExpression ¢) {
+    return ¢ != null && (in(¢.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
+        || (iz.infixPlus(¢) && !stringType.isNot(¢)));
   }
 
   /** Parenthesize an expression (if necessary).
@@ -271,8 +271,8 @@ public interface wizard {
    * @return a
    *         {@link il.org.spartan.spartanizer.assemble.duplicate#duplicate(Expression)}
    *         of the parameter wrapped in parenthesis. */
-  static Expression parenthesize(final Expression x) {
-    return iz.noParenthesisRequired(x) ? duplicate.of(x) : make.parethesized(x);
+  static Expression parenthesize(final Expression ¢) {
+    return iz.noParenthesisRequired(¢) ? duplicate.of(¢) : make.parethesized(¢);
   }
 
   static ASTParser parser(final int kind) {

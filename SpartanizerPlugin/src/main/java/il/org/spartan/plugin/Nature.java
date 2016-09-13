@@ -43,8 +43,8 @@ public class Nature implements IProjectNature {
     return project;
   }
 
-  @Override public void setProject(final IProject p) {
-    project = p;
+  @Override public void setProject(final IProject ¢) {
+    project = ¢;
   }
 
   private void set(final IProjectDescription d, final ICommand[] cs) throws CoreException {

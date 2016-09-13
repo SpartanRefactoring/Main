@@ -11,10 +11,10 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     this.value = value;
   }
 
-  @Override public boolean equals(final Object o) {
-    return o != null && o.getClass() == getClass()
-        && (((MapEntry<?, ?>) o).getKey() == null && key == null || key.equals(((MapEntry<?, ?>) o).getKey()))
-        && (((MapEntry<?, ?>) o).getValue() == null && value == null || value.equals(((MapEntry<?, ?>) o).getValue()));
+  @Override public boolean equals(final Object ¢) {
+    return ¢ != null && ¢.getClass() == getClass()
+        && (((MapEntry<?, ?>) ¢).getKey() == null && key == null || key.equals(((MapEntry<?, ?>) ¢).getKey()))
+        && (((MapEntry<?, ?>) ¢).getValue() == null && value == null || value.equals(((MapEntry<?, ?>) ¢).getValue()));
   }
 
   @Override public K getKey() {

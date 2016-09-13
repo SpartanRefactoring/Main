@@ -14,8 +14,8 @@ public abstract class searchAncestors {
    * @param n JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  public static <N extends ASTNode> searchAncestors forClass(final Class<N> n) {
-    return new ByNodeClass(n);
+  public static <N extends ASTNode> searchAncestors forClass(final Class<N> ¢) {
+    return new ByNodeClass(¢);
   }
 
   /** Factory method, returning an instance which can search by the integer
@@ -27,8 +27,8 @@ public abstract class searchAncestors {
     return new ByNodeType(type);
   }
 
-  public static Until until(final ASTNode n) {
-    return new Until(n);
+  public static Until until(final ASTNode ¢) {
+    return new Until(¢);
   }
 
   /** @param n JD

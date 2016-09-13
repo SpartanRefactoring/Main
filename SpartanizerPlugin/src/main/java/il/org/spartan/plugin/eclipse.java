@@ -58,8 +58,8 @@ public interface eclipse {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
 
-  static ICompilationUnit compilationUnit(final IResource r) {
-    return r == null ? null : JavaCore.createCompilationUnitFrom((IFile) r);
+  static ICompilationUnit compilationUnit(final IResource ¢) {
+    return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
   }
 
   /** @return List of all compilation units in the current project */
@@ -136,8 +136,8 @@ public interface eclipse {
     }
   }
 
-  static IProgressMonitor newSubMonitor(final IProgressMonitor m) {
-    return new SubProgressMonitor(m, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+  static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+    return new SubProgressMonitor(¢, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
   }
 
   static Object resources(final IEditorPart ep) {

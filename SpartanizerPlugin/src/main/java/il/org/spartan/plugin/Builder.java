@@ -36,8 +36,8 @@ public class Builder extends IncrementalProjectBuilder {
    *         Resource changes are disallowed during certain types of resource
    *         change event notification¢ See {@link IResourceChangeEvent}¢for
    *         more details. */
-  public static void deleteMarkers(final IFile f) throws CoreException {
-    f.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
+  public static void deleteMarkers(final IFile ¢) throws CoreException {
+    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
   }
 
   public static void incrementalBuild(final IResourceDelta d) throws CoreException {
@@ -51,9 +51,9 @@ public class Builder extends IncrementalProjectBuilder {
     });
   }
 
-  static void addMarkers(final IResource r) throws CoreException {
-    if (r instanceof IFile && r.getName().endsWith(".java"))
-      addMarkers((IFile) r);
+  static void addMarkers(final IResource ¢) throws CoreException {
+    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
+      addMarkers((IFile) ¢);
   }
 
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
