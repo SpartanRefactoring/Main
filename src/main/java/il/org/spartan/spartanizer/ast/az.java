@@ -94,6 +94,14 @@ public enum az {
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
     return !iz.is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
+  
+  /** Down-cast, if possible, to {@link WhileStatement}
+   * @param $ result
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static WhileStatement whileStatement(final ASTNode $) {
+    return !iz.whileStatement($) ? null : (WhileStatement) $;
+  }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
    * is one of the six comparison operators: <code><</code>, <code><=</code>,

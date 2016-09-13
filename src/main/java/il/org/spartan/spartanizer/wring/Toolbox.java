@@ -54,8 +54,6 @@ public class Toolbox {
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
-            // TODO: Niv, should this class be killed?
-            // new InfixEmptyStringAdditionToString(), //under construction
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
