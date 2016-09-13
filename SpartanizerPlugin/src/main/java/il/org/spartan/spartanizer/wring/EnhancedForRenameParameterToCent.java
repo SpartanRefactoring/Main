@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.wring;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -27,10 +29,14 @@ public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForSta
       return null;
     final SimpleName n = d.getName();
     assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body) || Collect.usesOf(n).in(body).isEmpty())
+    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body))
       return null;
-    //if (m != null)
-      //m.exclude(body);
+    final List<SimpleName> uses = Collect.usesOf(n).in(body);
+    assert uses != null;
+    if (uses.isEmpty())
+      return null;
+    if (m != null)
+      m.exclude(body);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Rewrite("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
