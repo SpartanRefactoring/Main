@@ -121,6 +121,7 @@ public enum extract {
   }
 
   public static double doubleNumber(final Expression x) {
+    assert iz.numberLiteral(x)||iz.prefixExpression(x);
     if (!iz.longType(x))
       return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
           : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
@@ -313,6 +314,7 @@ public enum extract {
   }
 
   public static int intNumber(final Expression ¢) {
+    assert iz.numberLiteral(¢)||iz.prefixExpression(¢);
     return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
         : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
   }
