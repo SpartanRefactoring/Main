@@ -63,6 +63,12 @@ public interface wizard {
       operands.add(make.notOf(e));
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
+  /** Obtain a condensed textual representation of an {@link ASTNode}
+   * @param ¢ JD
+   * @return textual representation of the parameter, */
+  static String condense(final ASTNode ¢) {
+    return removeWhites(wizard.body(¢));
+  }
 
   // TODO: Dan, why use a loop, when you have a lookup table? Seems wrong to me.
   // TODO: $ is initialized because otherwise complaining that variable may be
