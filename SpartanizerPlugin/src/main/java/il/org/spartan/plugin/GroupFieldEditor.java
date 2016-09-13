@@ -47,10 +47,10 @@ public class GroupFieldEditor extends FieldEditor {
 
   /** Adds a new {@link FieldEditor} object to the group. Controls must be added
    * before the group is drawn to the parent. */
-  public void add(final FieldEditor e) {
+  public void add(final FieldEditor ¢) {
     if (initialized)
       throw new RuntimeException("The GroupFieldEditor has already been drawn, new fields cannot be added at this time");
-    members.add(e);
+    members.add(¢);
   }
 
   /** Returns the parent for all the FieldEditors inside of this group. In this

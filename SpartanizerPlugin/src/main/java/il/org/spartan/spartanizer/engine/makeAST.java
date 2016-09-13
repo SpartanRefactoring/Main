@@ -31,26 +31,26 @@ public enum makeAST {
       return (CompilationUnit) Make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
-    @Override public CompilationUnit from(final String s) {
-      return (CompilationUnit) makeParser(s).createAST(null);
+    @Override public CompilationUnit from(final String ¢) {
+      return (CompilationUnit) makeParser(¢).createAST(null);
     }
   },
   /** Converts file, string or marker to expression. */
   EXPRESSION(ASTParser.K_EXPRESSION) {
-    @Override public Expression from(final File f) {
-      return from(string(f));
+    @Override public Expression from(final File ¢) {
+      return from(string(¢));
     }
 
-    @Override public Expression from(final IFile f) {
-      return (Expression) Make.EXPRESSION.parser(f).createAST(null);
+    @Override public Expression from(final IFile ¢) {
+      return (Expression) Make.EXPRESSION.parser(¢).createAST(null);
     }
 
     @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
       return (Expression) Make.EXPRESSION.parser(m).createAST(pm);
     }
 
-    @Override public Expression from(final String s) {
-      return (Expression) makeParser(s).createAST(null);
+    @Override public Expression from(final String ¢) {
+      return (Expression) makeParser(¢).createAST(null);
     }
   },
   /** Constant used in order to get the source as a sequence of statements. */
@@ -60,14 +60,14 @@ public enum makeAST {
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS);
   /** @param n The node from which to return statement.
    * @return null if it is not possible to extract the return statement. */
-  public static ReturnStatement asReturn(final ASTNode n) {
-    if (n == null)
+  public static ReturnStatement asReturn(final ASTNode ¢) {
+    if (¢ == null)
       return null;
-    switch (n.getNodeType()) {
+    switch (¢.getNodeType()) {
       case ASTNode.BLOCK:
-        return asReturn(n);
+        return asReturn(¢);
       case ASTNode.RETURN_STATEMENT:
-        return (ReturnStatement) n;
+        return (ReturnStatement) ¢;
       default:
         return null;
     }
