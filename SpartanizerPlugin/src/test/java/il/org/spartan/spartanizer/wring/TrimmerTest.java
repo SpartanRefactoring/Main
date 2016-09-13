@@ -729,7 +729,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
         "    if (s.equals(y))\n" + //
         "      res += s + blah;\n" + //
         "    S.out.println(res);").to("" + //
-            "    String res = s.equals(y) ? s + s + blah :s;\n" + //
+            "    String res = s.equals(y) ? s + (s + blah) :s;\n" + //
             "    S.out.println(res);");
   }
 
@@ -754,7 +754,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   @Test public void declarationInitializerReturnExpression() {
     trimming("" //
         + "String t = Bob + Wants + To + \"Sleep \"; "//
-        + "  return (right_now + t);    ").to("return(right_now+Bob+Wants+To+\"Sleep \");");
+        + "  return (right_now + t);    ").to("return(right_now+(Bob+Wants+To+\"Sleep \"));");
   }
 
   @Test public void declarationInitializesRotate() {
@@ -774,7 +774,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void declarationInitializeUpdateAssignmentFunctionCallWIthReuse() {
-    trimming("int a = x;a += a + 2*f();").to("int a=x+x+2*f();");
+    trimming("int a = x;a += a + 2*f();").to("int a=x+(x+2*f());");
   }
 
   @Test public void declarationInitializeUpdateAssignmentIncrement() {
