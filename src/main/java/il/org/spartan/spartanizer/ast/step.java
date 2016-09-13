@@ -171,8 +171,8 @@ public enum step {
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param a JD
    * @return left operand of the parameter */
-  public static Expression to(final Assignment a) {
-    return a.getLeftHandSide();
+  public static Expression to(final Assignment ¢) {
+    return ¢.getLeftHandSide();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
