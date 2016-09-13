@@ -76,15 +76,15 @@ public enum makeAST {
   /** IFile -> ICompilationUnit converter
    * @param f File
    * @return ICompilationUnit */
-  public static ICompilationUnit iCompilationUnit(final IFile f) {
-    return JavaCore.createCompilationUnitFrom(f);
+  public static ICompilationUnit iCompilationUnit(final IFile ¢) {
+    return JavaCore.createCompilationUnitFrom(¢);
   }
 
   /** IMarker -> ICompilationUnit converter
    * @param m IMarker
    * @return CompilationUnit */
-  public static ICompilationUnit iCompilationUnit(final IMarker m) {
-    return iCompilationUnit((IFile) m.getResource());
+  public static ICompilationUnit iCompilationUnit(final IMarker ¢) {
+    return iCompilationUnit((IFile) ¢.getResource());
   }
 
   /** Convert file contents into a {@link String}
@@ -136,8 +136,8 @@ public enum makeAST {
 
   /** @param f IFile
    * @return ASTNode */
-  public ASTNode from(final IFile f) {
-    return Make.of(this).parser(f).createAST(null);
+  public ASTNode from(final IFile ¢) {
+    return Make.of(this).parser(¢).createAST(null);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -151,8 +151,8 @@ public enum makeAST {
   /** String -> ASTNode converter
    * @param s String
    * @return ASTNode */
-  public ASTNode from(final String s) {
-    return makeParser(s).createAST(null);
+  public ASTNode from(final String ¢) {
+    return makeParser(¢).createAST(null);
   }
 
   /** Creates a no-binding parser for a given text
