@@ -38,7 +38,7 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
     return then == null || elze == null ? null : make.throwOf(subject.pair(then, elze).toCondition(condition));
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean claims(final IfStatement s) {
     return s != null && extract.throwExpression(then(s)) != null && extract.throwExpression(elze(s)) != null;
   }
 }

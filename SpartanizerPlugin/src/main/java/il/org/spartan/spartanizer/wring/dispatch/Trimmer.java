@@ -49,7 +49,7 @@ public class Trimmer extends Spartanization {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Wring<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
+        return w == null || w.cantWring(n) || prune(w.make(n, exclude), $);
       }
     };
   }
@@ -60,7 +60,7 @@ public class Trimmer extends Spartanization {
         if (new DisabledChecker(u).check(n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.nonEligible(n) || prune(w.make(n, exclude), $);
+        return w == null || w.cantWring(n) || prune(w.make(n, exclude), $);
       }
     };
   }

@@ -25,7 +25,7 @@ public final class ModifierCleanInterface extends AbstractModifierClean<TypeDecl
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }
 
-  @Override public boolean eligible(final TypeDeclaration ¢) {
+  @Override public boolean canWring(final TypeDeclaration ¢) {
     return ¢.isInterface();
   }
 

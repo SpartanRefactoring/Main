@@ -38,7 +38,7 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(condition)).toReturn();
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean claims(final IfStatement s) {
     return s != null && extract.returnExpression(then(s)) != null && extract.returnExpression(elze(s)) != null;
   }
 }

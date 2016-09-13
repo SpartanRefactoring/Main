@@ -113,6 +113,18 @@ public enum make {
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
 
+  static Expression makeInfix(final List<Expression> xs, final AST t) {
+    if (xs.size() == 1)
+      return first(xs);
+    final InfixExpression $ = t.newInfixExpression();
+    $.setOperator(wizard.PLUS2);
+    $.setLeftOperand(duplicate.of(first(xs)));
+    $.setRightOperand(duplicate.of(second(xs)));
+    for (int i = 2; i < xs.size(); ++i)
+      step.extendedOperands($).add(duplicate.of(xs.get(i)));
+    return $;
+  }
+
   public static class ASTHolder {
     private final AST ast;
 

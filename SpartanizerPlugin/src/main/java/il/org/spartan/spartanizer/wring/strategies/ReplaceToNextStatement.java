@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
   @Override public Rewrite make(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
-    if (nextStatement == null || !eligible(n))
+    if (nextStatement == null || cantWring(n))
       return null;
     exclude.exclude(nextStatement);
     return new Rewrite(description(n), n, nextStatement) {
@@ -21,7 +21,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
     };
   }
 
-  @Override public boolean scopeIncludes(final N n) {
+  @Override public boolean claims(final N n) {
     final Statement nextStatement = extract.nextStatement(n);
     return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
   }

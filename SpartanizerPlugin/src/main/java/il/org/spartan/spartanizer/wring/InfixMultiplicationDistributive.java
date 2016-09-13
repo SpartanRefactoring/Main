@@ -52,7 +52,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return x.getOperator() != PLUS ? null : replacement(extract.allOperands(x));
   }
 
-  @Override public boolean scopeIncludes(final InfixExpression $) {
+  @Override public boolean claims(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 

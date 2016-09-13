@@ -34,7 +34,7 @@ public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStateme
     return "Consolidate into a single 'return'";
   }
 
-  @Override public boolean scopeIncludes(final IfStatement s) {
+  @Override public boolean claims(final IfStatement s) {
     return iz.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
   }
 

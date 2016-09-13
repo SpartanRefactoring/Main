@@ -29,7 +29,7 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     };
   }
 
-  @Override public boolean scopeIncludes(final N n) {
+  @Override public boolean claims(final N n) {
     return go(ASTRewrite.create(n.getAST()), n, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
 

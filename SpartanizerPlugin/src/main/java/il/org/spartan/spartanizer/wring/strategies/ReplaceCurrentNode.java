@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
   @Override public final Rewrite make(final N n) {
-    return !eligible(n) ? null : new Rewrite(description(n), n) {
+    return cantWring(n) ? null : new Rewrite(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, replacement(n), g);
       }
@@ -17,7 +17,7 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
 
   public abstract ASTNode replacement(N n);
 
-  @Override public boolean scopeIncludes(final N n) {
+  @Override public boolean claims(final N n) {
     return replacement(n) != null;
   }
 }

@@ -162,7 +162,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return pushdown(x);
   }
 
-  @Override public boolean scopeIncludes(final ConditionalExpression x) {
+  @Override public boolean claims(final ConditionalExpression x) {
     return pushdown(x) != null;
   }
 }

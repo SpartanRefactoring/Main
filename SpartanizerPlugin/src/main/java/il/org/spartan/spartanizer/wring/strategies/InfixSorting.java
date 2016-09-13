@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 
 public abstract class InfixSorting extends AbstractSorting {
-  @Override public boolean eligible(final InfixExpression x) {
+  @Override public boolean canWring(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     return !Wrings.mixedLiteralKind(es) && sort(es);
   }

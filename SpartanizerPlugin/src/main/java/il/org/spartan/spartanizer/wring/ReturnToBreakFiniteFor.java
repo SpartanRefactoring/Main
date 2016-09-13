@@ -109,7 +109,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
     };
   }
 
-  @Override public boolean scopeIncludes(final Block b) {
+  @Override public boolean claims(final Block b) {
     final List<Statement> ss = step.statements(b);
     return iz.forStatement(first(ss)) && iz.returnStatement(second(ss));
   }
