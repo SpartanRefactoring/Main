@@ -92,9 +92,8 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     final List<Statement> ss = step.statements(b);
     if (ss.size() < 2 || !iz.whileStatement(first(ss)) || !iz.returnStatement(second(ss)))
       return null;
-    // TODO: Niv, Ditto
-    final WhileStatement whileStatement = (WhileStatement) first(ss);
-    final ReturnStatement nextReturn = (ReturnStatement) second(ss);
+    final WhileStatement whileStatement = az.whileStatement(first(ss));
+    final ReturnStatement nextReturn = az.returnStatement(second(ss));
     if (!isInfiniteLoop(whileStatement))
       return null;
     final Statement body = whileStatement.getBody();

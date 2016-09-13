@@ -24,6 +24,6 @@ public class Issue163Test {
   }
 
   @Test public void issue163_04() {
-    trimming("\"\"+\"\"+x +\"\"").to("\"\"+\"\"+x").to("\"\"+x").to("x+\"\"").stays();
+    trimming("\"\"+\"\"+x +\"\"").to("\"\"+\"\"+x").to("\"\"+x").stays();
   }
 }
