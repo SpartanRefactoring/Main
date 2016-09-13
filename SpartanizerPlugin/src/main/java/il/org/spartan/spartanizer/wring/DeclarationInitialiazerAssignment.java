@@ -39,9 +39,9 @@ public final class DeclarationInitialiazerAssignment extends VariableDeclaration
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, left(a)) || a.getOperator() != ASSIGN)
+    if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newInitializer = duplicate.of(right(a));
+    final Expression newInitializer = duplicate.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);

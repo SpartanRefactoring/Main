@@ -195,7 +195,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(left(a1), left(a2));
+    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
   }
 
   static Operator infix2assign(InfixExpression.Operator o) {
