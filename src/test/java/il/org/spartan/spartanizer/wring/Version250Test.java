@@ -63,37 +63,127 @@ public class Version250Test {
 
   @Test public void issue_177_bitWiseOr_noSideEffects() {
     int a = 1;
-    int b = 2;
-    a = a|b; 
+    final int b = 2;
+    a = a|b;
     azzert.aye(a == 3);
     trimming("a=a|b").to("a|=b");
   }
 
-  @Test public void issue_177_bitWiseOr_withSideEffects() {
+  @SuppressWarnings("unused") @Test public void issue_177_bitWiseOr_withSideEffects() {
     class Class {
       Class() {
         int x = 1;
         x |= f(x);
         azzert.aye(x == 3);
       }
-      int f(int $) {
+      int f(final int $) {
         azzert.aye($ == 1);
         return $ + 1;
       }
     }
-    @SuppressWarnings("unused") Class c = new Class();
+    new Class();
     trimming("a=a|b").to("a|=b");
   }
 
-  @Test public void issue_177_conditionalOr_noSideEffects() {
-    boolean a = false;
-    boolean b = true;
-    a |= b; 
-    azzert.aye(a);
-    //trimming("a=a||b").to("a|=b");
+  @Test public void issue_177_logicalAnd_noSideEffects() {
+    boolean a = true;
+    final boolean b = false;
+    a &= b;
+    azzert.nay(a);
+    trimming("a=a && b").to("a&=b");
   }
 
-  @Test public void issue_177_conditionalOr_withSideEffects() {
+  @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffects() {
+    class Class {
+      int a;
+      Class() {
+        a = 0;
+        boolean x = true;
+        x &= f(x);
+        azzert.nay(x);
+        azzert.aye(a == 1);
+      }
+      boolean f(final boolean $) {
+        azzert.aye($);
+        ++a;
+        return false;
+      }
+    }
+    new Class();
+    trimming("a=a && b").to("a&=b");
+  }
+
+  @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEX() {
+    class Class {
+      class Inner {
+        int a;
+        Inner(final int i) {
+          a = i;
+        }
+        boolean f(final boolean $) {
+          azzert.aye($);
+          ++a;
+          return false;
+        }
+      }
+      Inner in = new Inner(0);
+      Class() {
+        boolean x = true;
+        x &= in.f(x);
+        azzert.nay(x);
+        azzert.aye(in.a == 1);
+      }
+    }
+    new Class();
+    trimming("a=a && b").to("a&=b");
+  }
+
+
+  @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEXT() {
+    class Class {
+      class Inner {
+        int a;
+        Inner(final int i) {
+          a = i;
+        }
+        boolean f(final boolean $) {
+          azzert.aye($);
+          return g();
+        }
+        boolean g() {
+          class C {
+            C() {
+              h();
+              ++a;
+            }
+            boolean h() {
+              return false;
+            }
+          }
+          return new C().h();
+        }
+      }
+      Inner in = new Inner(0);
+      Class() {
+        boolean x = true;
+        x &= in.f(x);
+        azzert.nay(x);
+        azzert.aye(in.a == 1);
+      }
+    }
+    new Class();
+    trimming("a=a && b").to("a&=b");
+  }
+
+  @Test public void issue_177_logicalOr_noSideEffects() {
+    boolean a = false;
+    final boolean b = true;
+    a |= b;
+    azzert.aye(a);
+    trimming("a=a||b").to("a|=b");
+  }
+
+  @SuppressWarnings("unused") @Test public void issue_177_logicalOr_withSideEffects() {
     class Class {
       int a;
       Class() {
@@ -103,14 +193,39 @@ public class Version250Test {
         azzert.aye(x);
         azzert.aye(a == 1);
       }
-      boolean f(boolean $) {
+      boolean f(final boolean $) {
         azzert.nay($);
         ++a;
         return true;
       }
     }
-    @SuppressWarnings("unused") Class c = new Class();
-    //trimming("a=a||b").to("a|=b");
+    new Class();
+    trimming("a=a||b").to("a|=b");
+  }
+
+  @SuppressWarnings("unused") @Test public void issue_177_logicalOr_withSideEffectsEX() {
+    class Class {
+      class Inner {
+        int a;
+        Inner(final int i) {
+          a = i;
+        }
+        boolean f(final boolean $) {
+          azzert.nay($);
+          ++a;
+          return true;
+        }
+      }
+      Inner in = new Inner(0);
+      Class() {
+        boolean x = false;
+        x |= in.f(x);
+        azzert.aye(x);
+        azzert.aye(in.a == 1);
+      }
+    }
+    new Class();
+    trimming("a=a||b").to("a|=b");
   }
 
   @Test public void issue103_AND1() {
@@ -1320,15 +1435,15 @@ public class Version250Test {
   @Test public void issue87a() {
     trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
   }
-  
+
   @Test public void issue87b() {
     trimming("a-b*c").stays();
   }
-  
+
   @Test public void issue87c() {
     trimming("a + (b-c)").stays();
   }
-  
+
   @Test public void issue87d() {
     trimming("a - (b-c)").to("a - b + c");
   }
@@ -1336,7 +1451,7 @@ public class Version250Test {
   @Ignore public void trimmerBugXOR() {
     trimming("j=j^k").to("j^=k");
   }
-  
+
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
   }
