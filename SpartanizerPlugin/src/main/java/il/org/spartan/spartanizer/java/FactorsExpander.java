@@ -45,8 +45,8 @@ public class FactorsExpander {
     ).to(DIVIDE);
   }
 
-  private static Expression base(final FactorsCollector c) {
-    return base(c.all());
+  private static Expression base(final FactorsCollector ¢) {
+    return base(¢.all());
   }
 
   private static Expression base(final List<Factor> fs) {

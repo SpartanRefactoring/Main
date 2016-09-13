@@ -396,8 +396,8 @@ public enum Collect {
       List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
         final List<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
-          @Override public boolean visit(final FieldDeclaration d) {
-            $.addAll(fragments(d));
+          @Override public boolean visit(final FieldDeclaration ¢) {
+            $.addAll(fragments(¢));
             return false;
           }
         });

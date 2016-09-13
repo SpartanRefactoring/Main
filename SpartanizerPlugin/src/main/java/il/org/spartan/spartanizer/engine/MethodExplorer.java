@@ -57,8 +57,8 @@ public class MethodExplorer {
         return true;
       }
 
-      boolean add(final SingleVariableDeclaration d) {
-        $.add(d.getName());
+      boolean add(final SingleVariableDeclaration ¢) {
+        $.add(¢.getName());
         return true;
       }
 
