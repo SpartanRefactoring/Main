@@ -192,11 +192,23 @@ public abstract class Spartanization extends Refactoring {
   }
 
   public IMarkerResolution getToggleDeclaration() {
-    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization");
+    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization for scope");
   }
 
   public IMarkerResolution getToggleFile() {
     return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
+  }
+  
+  public IMarkerResolution getWringCommitDeclaration() {
+    return getWringCommit(WringCommit.Type.DECLARATION, "Commit change for scope");
+  }
+
+  public IMarkerResolution getWringCommitFile() {
+    return getWringCommit(WringCommit.Type.FILE, "Commit change for file");
+  }
+
+  public IMarkerResolution getWringCommitProject() {
+    return getWringCommit(WringCommit.Type.PROJECT, "Commit change for project");
   }
 
   /** .
@@ -337,7 +349,23 @@ public abstract class Spartanization extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          ToggleSpartanization.diactivate(new NullProgressMonitor(), m, t);
+          ToggleSpartanization.deactivate(new NullProgressMonitor(), m, t);
+        } catch (IllegalArgumentException | CoreException e) {
+          e.printStackTrace();
+        }
+      }
+    };
+  }
+  
+  @SuppressWarnings("static-method") private IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
+    return new IMarkerResolution() {
+      @Override public String getLabel() {
+        return l;
+      }
+
+      @Override public void run(final IMarker m) {
+        try {
+          WringCommit.go(new NullProgressMonitor(), m, t);
         } catch (IllegalArgumentException | CoreException e) {
           e.printStackTrace();
         }
