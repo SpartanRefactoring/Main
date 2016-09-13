@@ -320,14 +320,12 @@ public interface type {
 
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = x.getOperator();
-      final List<Expression> es = allOperands(x);
+      final List<Expression> es = hop.operands(x);
       assert es.size() >= 2;
-      implementation $ = get(first(es)).underBinaryOperator(o, get(second(es)));
-      chop(chop(es));
-      while (!es.isEmpty()) {
-        $ = $.underBinaryOperator(o, get(first(es)));
-        chop(es);
-      }
+      implementation $ = get(first(es));
+      chop(es);
+      for(Expression e : es)
+        $ = $.underBinaryOperator(o, get(e));
       return $;
     }
 
@@ -355,7 +353,7 @@ public interface type {
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (ASTNode context = parent(x); context != null; context = parent(context))
+      for (ASTNode context : hop.ancestors(x.getParent()))
         switch (context.getNodeType()) {
           case INFIX_EXPRESSION:
             return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
