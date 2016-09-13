@@ -48,12 +48,13 @@ public interface type {
 
   /** Generates a type from a String name, if the String name represents a
    * concrete type identifiable by PrudentType.
-   * @param s
+   * @param typeName
    * @return The specified type */
   // TODO: Niv, should be table driven. need to decide default return value.
-  // perhaps simply replace with baptize
-  static type generateFromTypeName(final String ¢) {
-    switch (¢) {
+  // perhaps simply replace with baptize. Or, better yet, you can do a search in
+  // the dictionary
+  static type generateFromTypeName(final String typeName) {
+    switch (typeName) {
       case "byte":
       case "Byte":
         return BYTE;
@@ -106,10 +107,10 @@ public interface type {
     return get(¢) == Certain.LONG;
   }
 
-  static boolean isString(final Expression ¢){
+  static boolean isString(final Expression ¢) {
     return get(¢) == Certain.STRING;
   }
-  
+
   default Certain asPrimitiveCertain() {
     return null;
   }
@@ -160,6 +161,7 @@ public interface type {
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
 
+  // TOOD: Ori, types are deterministic, everything is known at compile time. See here.
   /** An interface with one method- type, overloaded for many different
    * parameter types. Can be used to find the type of an expression thats known
    * at compile time by using overloading. Only use for testing, mainly for
@@ -209,6 +211,9 @@ public interface type {
   }
 
   static class inner {
+    // TODO: Dor, do you suppose you can make this cleaner? I think that the
+    // ctor of all types, certain and uncertain, can insert themselves to the
+    // dictionary.
     private static String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
     @SuppressWarnings("serial") private static Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
@@ -367,7 +372,14 @@ public interface type {
           case POSTFIX_EXPRESSION:
             return i.asNumeric();
           case IF_STATEMENT:
+            // TODO: DOR. This is a bug, you have two parts to an assert. If you
+            // come from the message part, it could be anything. Add testing to
+            // make sure this is right.
           case ASSERT_STATEMENT:
+            // TODO: DOR. This is a bug, you have three parts of a for,
+            // initialization, condition, and step. You can only infer anything
+            // if you hit the the condition part. Add testing to make sure this
+            // is right.
           case FOR_STATEMENT:
             // case WHILE_STATEMENT:
             return BOOLEAN;
@@ -384,6 +396,8 @@ public interface type {
      * @param i the node's type property
      * @return the type property t */
     private static implementation setType(final ASTNode n, final implementation i) {
+      // TODO: Alex and Dan: Take a look here to see how you store information
+      // within a node
       n.setProperty(propertyName, i);
       return i;
     }
@@ -560,6 +574,8 @@ public interface type {
     /** Those anonymous characters that know little or nothing about
      * themselves */
     enum Types implements Odd {
+      /** TOOD: Dor, take note that in certain situations, null could be a
+       * {@link Boolean} type */
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       ;
@@ -608,6 +624,8 @@ public interface type {
       final String key;
 
       Certain(final String key, final String description) {
+        // TODO: Niv, here is where you should insert yourself into the
+        // dictionary.
         this.key = key;
         this.description = description;
       }
@@ -668,7 +686,7 @@ public interface type {
       INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE), //
       NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), //
       ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, BOOLEAN
-      /** NIV???WHY */
+      /** TOOD: NIV???WHY */
           , STRING), //
       BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
@@ -681,6 +699,8 @@ public interface type {
           for (final Certain c : p.options())
             if (!options.contains(c))
               options.add(c);
+        // TODO: Niv, here is where you should insert yourself into the
+        // dictionary.
       }
 
       @Override public boolean canB(final Certain ¢) {
