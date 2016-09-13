@@ -9,8 +9,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.assemble.plant.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Contains subclasses and tools to build expressions and statements */
@@ -246,7 +246,8 @@ public class subject {
       $.setLeftOperand(plant(left).intoLeft($));
       if (o != wizard.PLUS2)
         $.setRightOperand(plant(right).into($));
-      else if (precedence.greater($, right) || (precedence.equal($, right) && stringType.isNot(left)) || iz.simple(right))
+      else if (precedence.greater($, right)
+          || precedence.equal($, right) && (stringType.isNot(left) || PlantingExpression.isStringConactingSafe(right)) || iz.simple(right))
         $.setRightOperand(right);
       else
         $.setRightOperand(subject.operand(right).parenthesis());

@@ -49,14 +49,14 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
       return null;
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for (int i = 0; i < es.size(); ++i){
-      boolean b = isString;
+    for (int i = 0; i < es.size(); ++i) {
+      final boolean b = isString;
       isString = isString || !stringType.isNot(es.get(i));
       if (iz.parenthesizeExpression(es.get(i))) {
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
-        for(;iz.parenthesizeExpression(¢);¢ = az.parenthesizedExpression(¢).getExpression()) 
+        for (; iz.parenthesizeExpression(¢); ¢ = az.parenthesizedExpression(¢).getExpression())
           replace(es, ¢, i);
-        if (iz.infixExpression(¢)) 
+        if (iz.infixExpression(¢))
           if (i != 0 && b && !canRemove((InfixExpression) ¢))
             continue;
         if (iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
@@ -64,7 +64,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
         replace(es, ¢, i);
       }
     }
-    Expression $ = subject.operands(es).to(wizard.PLUS2)/* makeInfix(es, x.getAST())*/;
-    return !wizard.same($,x) ? $ : null;
+    final Expression $ = subject.operands(es).to(wizard.PLUS2);
+    return !wizard.same($, x) ? $ : null;
   }
 }
