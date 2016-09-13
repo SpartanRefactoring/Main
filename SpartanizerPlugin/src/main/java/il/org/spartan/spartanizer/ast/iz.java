@@ -131,7 +131,8 @@ public enum iz {
     // case it is a prefix.
     // This is code smell...
     return iz.numberLiteral(¢) && number(¢) //
-        || iz.prefixMinus(¢) && iz.numberLiteral(az.prefixExpression(¢).getOperand());
+        || iz.prefixMinus(¢) && iz.numberLiteral(az.prefixExpression(¢).getOperand()) //
+        && iz.number(¢);
   }
 
   /** @param xs JD
