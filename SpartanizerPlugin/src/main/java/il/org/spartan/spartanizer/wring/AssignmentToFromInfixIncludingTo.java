@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * operator.
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
+public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)

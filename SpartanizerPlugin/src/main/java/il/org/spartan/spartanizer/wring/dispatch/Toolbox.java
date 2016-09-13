@@ -38,7 +38,7 @@ public class Toolbox {
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
-            new AssignmentOpSelf(), //
+            new AssignmentToFromInfixIncludingTo(), //
             new AssignmentToPostfixIncrement(), //
             null) //
         .add(Block.class, //
