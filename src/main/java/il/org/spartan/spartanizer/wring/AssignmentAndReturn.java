@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 // variables. Attach the "new-wring" label to this one.
 public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment> implements Kind.Collapse {
   @Override public String description(final Assignment ¢) {
-    return "Inline assignment to " + left(¢) + " with its subsequent 'return'";
+    return "Inline assignment to " + to(¢) + " with its subsequent 'return'";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
@@ -41,7 +41,7 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null || !wizard.same(left(a), core(s.getExpression())))
+    if (s == null || !wizard.same(to(a), core(s.getExpression())))
       return null;
     r.remove(parent, g);
     r.replace(s, subject.operand(a).toReturn(), g);

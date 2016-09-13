@@ -34,8 +34,8 @@ public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStateme
     return "Consolidate into a single 'return'";
   }
 
-  @Override public boolean claims(final IfStatement s) {
-    return iz.vacuousElse(s) && extract.returnStatement(then(s)) != null && extract.nextReturn(s) != null;
+  @Override public boolean claims(final IfStatement ¢) {
+    return iz.vacuousElse(¢) && extract.returnStatement(then(¢)) != null && extract.nextReturn(¢) != null;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {

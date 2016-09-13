@@ -35,7 +35,7 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implement
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
   }
 
-  @Override public boolean claims(final IfStatement s) {
-    return iz.vacuousThen(s) && !iz.vacuousElse(s);
+  @Override public boolean claims(final IfStatement ¢) {
+    return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 }

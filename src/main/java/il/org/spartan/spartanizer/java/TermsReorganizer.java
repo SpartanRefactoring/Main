@@ -43,16 +43,16 @@ public class TermsReorganizer {
     return subject.operands(xs).to(wizard.MINUS2);
   }
 
-  private static Expression buildPlus(final List<Expression> xs) {
-    switch (xs.size()) {
+  private static Expression buildPlus(final List<Expression> ¢) {
+    switch (¢.size()) {
       case 0:
         return null;
       case 1:
-        return first(xs);
+        return first(¢);
       case 2:
-        return subject.pair(first(xs), second(xs)).to(wizard.PLUS2);
+        return subject.pair(first(¢), second(¢)).to(wizard.PLUS2);
       default:
-        return subject.operands(xs).to(wizard.PLUS2);
+        return subject.operands(¢).to(wizard.PLUS2);
     }
   }
 }

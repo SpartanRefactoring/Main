@@ -171,8 +171,8 @@ public enum step {
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param a JD
    * @return left operand of the parameter */
-  public static Expression left(final Assignment ¢) {
-    return ¢.getLeftHandSide();
+  public static Expression to(final Assignment a) {
+    return a.getLeftHandSide();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
@@ -273,7 +273,7 @@ public enum step {
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return left operand of the parameter */
-  public static Expression right(final Assignment ¢) {
+  public static Expression from(final Assignment ¢) {
     return ¢.getRightHandSide();
   }
 
@@ -316,8 +316,8 @@ public enum step {
     return ¢.getThenStatement();
   }
 
-  public static Type type(final CastExpression x) {
-    return x.getType();
+  public static Type type(final CastExpression ¢) {
+    return ¢.getType();
   }
 
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {

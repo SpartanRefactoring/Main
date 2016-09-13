@@ -164,12 +164,12 @@ import il.org.spartan.spartanizer.engine.*;
       hiding = null;
     }
 
-    public boolean equals(final Information i) {
-      return eq(blockScope, i.blockScope) && eq(hiding, i.hiding) && eq(prudentType, i.prudentType) && eq(self, i.self);
+    public boolean equals(final Information ¢) {
+      return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
     }
 
-    @Override public boolean equals(final Object o) {
-      return o == this || o != null && getClass() == o.getClass() && equals((Information) o);
+    @Override public boolean equals(final Object ¢) {
+      return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Information) ¢);
     }
 
     @Override public int hashCode() {

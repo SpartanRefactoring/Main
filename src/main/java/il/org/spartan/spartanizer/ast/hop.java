@@ -94,8 +94,8 @@ public interface hop {
    * @param s JD
    * @return last statement residing under a given {@link Statement}, or
    *         <code><b>null</b></code> if not such statements exists. */
-  static ASTNode lastStatement(final Statement s) {
-    return last(extract.statements(s));
+  static ASTNode lastStatement(final Statement ¢) {
+    return last(extract.statements(¢));
   }
 
   /** Extract the {@link MethodDeclaration} that contains a given node.

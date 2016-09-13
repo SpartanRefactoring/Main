@@ -32,16 +32,16 @@ public class subject {
    * expressions in separate and not as a list
    * @param xs JD
    * @return a new instance using the given expressions */
-  public static Several operands(final Expression... xs) {
-    return new Several(as.list(xs));
+  public static Several operands(final Expression... ¢) {
+    return new Several(as.list(¢));
   }
 
   /** Create an instance of several operands together here we get the
    * expressions as a list
    * @param xs a list of expressions
    * @return a new Several instance using the given list of expressions */
-  public static Several operands(final List<Expression> xs) {
-    return new Several(xs);
+  public static Several operands(final List<Expression> ¢) {
+    return new Several(¢);
   }
 
   /** Create an instance of 2 expressions together
@@ -64,24 +64,24 @@ public class subject {
    * statements as a list
    * @param ss a list of statements
    * @return a new instance using the given statements */
-  public static SeveralStatements ss(final List<Statement> ss) {
-    return new SeveralStatements(ss);
+  public static SeveralStatements ss(final List<Statement> ¢) {
+    return new SeveralStatements(¢);
   }
 
   /** Create an instance of several statements together here we get only one
    * statement
    * @param s JD
    * @return a new instance using the given statement */
-  public static SeveralStatements statement(final Statement s) {
-    return statements(s);
+  public static SeveralStatements statement(final Statement ¢) {
+    return statements(¢);
   }
 
   /** Create an instance of several statements together here we get the
    * statements in separate and not as a list
    * @param ss JD
    * @return a new instance using the given statements */
-  public static SeveralStatements statements(final Statement... ss) {
-    return ss(as.list(ss));
+  public static SeveralStatements statements(final Statement... ¢) {
+    return ss(as.list(¢));
   }
 
   public static class Claimer {
@@ -98,8 +98,8 @@ public class subject {
      * @return a copy of the expression e
      * @see #rebase
      * @see duplicate#duplicate */
-    Expression claim(final Expression x) {
-      return wizard.rebase(duplicate.of(extract.core(x)), ast);
+    Expression claim(final Expression ¢) {
+      return wizard.rebase(duplicate.of(extract.core(¢)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
