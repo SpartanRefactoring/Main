@@ -16,7 +16,6 @@ public class Issue162Test {
     trimming("0+(0+x+y+(4))").to("x+y+4").stays();
   }
 
-  @Ignore("under construction")
   @Test public void issue162_02() {
     trimming("\"I ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }
@@ -43,5 +42,9 @@ public class Issue162Test {
 
   @Test public void issue162_08() {
     trimming("(f() ? x : y) + \".toString\"").stays();
+  }
+  
+  @Test public void issue162_09() {
+    trimming("\"I \" + \"ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I \" + \"ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }
 }

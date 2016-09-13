@@ -5,6 +5,8 @@ import static il.org.spartan.spartanizer.ast.iz.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** A fluent API class that wraps an {@link Expression} with parenthesis, if the
@@ -36,6 +38,33 @@ public interface plant {
     PlantingExpression(final Expression inner) {
       this.inner = inner;
     }
+    
+    /**Determines whether an infix expression can be added to String concating
+     * without parenthesis type wise.
+     * @param Expression
+     * @return true if e is an infix expression and if it's first operand 
+     * is of type String and false otherwise
+     */
+    static boolean isStringConactingSafe(final Expression e){
+      return !iz.infixExpression(e) ? false : isStringConcatingSafe(az.infixExpression(e));
+    }
+    
+    private static boolean isStringConcatingSafe(final InfixExpression e){
+      return type.get(e.getLeftOperand()) == Certain.STRING;
+    }
+    
+    /**Determines whether inner can be added to host without parenthesis because
+     * host is a String concating InfixExpression and host is an infix expression
+     * starting with a String
+     * @param host
+     * @return
+     */
+    private boolean stringConcatingSafeIn(final ASTNode host){
+      if (!iz.infixExpression(host))
+        return false;
+      InfixExpression e = az.infixExpression(host);
+      return e.getOperator() != wizard.PLUS2 || !stringType.isNot(e) ? isStringConactingSafe(inner) : false;
+    }
 
     /** Executes conditional wrapping in parenthesis.
      * @param host the destined parent
@@ -43,7 +72,7 @@ public interface plant {
      *         parenthesis, depending on the relative precedences of the
      *         expression and its host. */
     public Expression into(final ASTNode host) {
-      return noParenthesisRequiredIn(host) || simple(inner) ? inner : parenthesize(inner);
+      return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
     }
 
     public Expression intoLeft(final InfixExpression host) {
@@ -51,7 +80,7 @@ public interface plant {
     }
 
     private boolean noParenthesisRequiredIn(final ASTNode host) {
-      return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
+      return precedence.greater(host, inner) || precedence.equal(host, inner) && (!wizard.nonAssociative(host));
     }
 
     private ParenthesizedExpression parenthesize(final Expression x) {
