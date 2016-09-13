@@ -61,6 +61,42 @@ public class Version250Test {
     trimming("b=0+a;").stays();
   }
 
+  @SuppressWarnings("unused") @Test public void issue_177_BitWiseAnd_withSideEffectsEXT() {
+    class Class {
+      class Inner {
+        int a;
+        Inner(final int i) {
+          a = i;
+        }
+        int f(final int $) {
+          azzert.that($, is(1));
+          return g();
+        }
+        int g() {
+          class C {
+            C() {
+              h();
+              ++a;
+            }
+            int h() {
+              return 2;
+            }
+          }
+          return new C().h();
+        }
+      }
+      Inner in = new Inner(0);
+      Class() {
+        int x = 1;
+        x &= in.f(x);
+        azzert.that(x, is(0));
+        azzert.that(in.a, is(1));
+      }
+    }
+    new Class();
+    trimming("a=a & b").to("a&=b");
+  }
+
   @Test public void issue_177_bitWiseOr_noSideEffects() {
     int a = 1;
     final int b = 2;
@@ -84,6 +120,79 @@ public class Version250Test {
     new Class();
     trimming("a=a|b").to("a|=b");
   }
+
+  @SuppressWarnings("unused") @Test public void issue_177_BitWiseOr_withSideEffectsEXT() {
+    class Class {
+      class Inner {
+        int a;
+        Inner(final int i) {
+          a = i;
+        }
+        int f(final int $) {
+          azzert.that($, is(1));
+          return g();
+        }
+        int g() {
+          class C {
+            C() {
+              h();
+              ++a;
+            }
+            int h() {
+              return 2;
+            }
+          }
+          return new C().h();
+        }
+      }
+      Inner in = new Inner(0);
+      Class() {
+        int x = 1;
+        x |= in.f(x);
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+    }
+    new Class();
+    trimming("a=a | b").to("a|=b");
+  }
+
+  @SuppressWarnings("unused") @Test public void issue_177_BitWiseXor_withSideEffectsEXT() {
+    class Class {
+      class Inner {
+        int a;
+        Inner(final int i) {
+          a = i;
+        }
+        int f(final int $) {
+          azzert.that($, is(1));
+          return g();
+        }
+        int g() {
+          class C {
+            C() {
+              h();
+              ++a;
+            }
+            int h() {
+              return 2;
+            }
+          }
+          return new C().h();
+        }
+      }
+      Inner in = new Inner(0);
+      Class() {
+        int x = 1;
+        x ^= in.f(x);
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+    }
+    new Class();
+    trimming("a=a ^ b").to("a^=b");
+  }
+
 
   @Test public void issue_177_logicalAnd_noSideEffects() {
     boolean a = true;
@@ -137,7 +246,6 @@ public class Version250Test {
     new Class();
     trimming("a=a && b").to("a&=b");
   }
-
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEXT() {
     class Class {
