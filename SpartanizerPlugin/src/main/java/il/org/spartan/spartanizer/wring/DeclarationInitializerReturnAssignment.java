@@ -43,12 +43,12 @@ public final class DeclarationInitializerReturnAssignment extends VariableDeclar
     if (s == null)
       return null;
     final Assignment a = az.assignment(step.expression(s));
-    if (a == null || !wizard.same(n, left(a)))
+    if (a == null || !wizard.same(n, to(a)))
       return null;
     final Operator o = a.getOperator();
     if (o != ASSIGN)
       return null;
-    final Expression newReturnValue = duplicate.of(right(a));
+    final Expression newReturnValue = duplicate.of(from(a));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;

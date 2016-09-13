@@ -42,7 +42,7 @@ public final class DeclarationInitializerReturnUpdateAssignment extends Variable
     if (s == null)
       return null;
     final Assignment a = az.assignment(step.expression(s));
-    if (a == null || !wizard.same(n, left(a)))
+    if (a == null || !wizard.same(n, to(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

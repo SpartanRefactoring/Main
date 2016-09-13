@@ -40,12 +40,12 @@ public final class DeclarationInitialiazelUpdateAssignment extends VariableDecla
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(left(a), right(a)).to(wizard.assign2infix(o));
+    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     final LocalInlineWithValue i = new LocalInliner(n, r, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;

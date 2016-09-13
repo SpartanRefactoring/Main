@@ -42,9 +42,9 @@ public final class DeclarationAssignment extends VariableDeclarationFragementAnd
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, left(a)) || doesUseForbiddenSiblings(f, right(a)))
+    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
-    r.replace(f, makeVariableDeclarationFragement(f, right(a)), g);
+    r.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
     r.remove(extract.statement(a), g);
     return r;
   }
