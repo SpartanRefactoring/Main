@@ -42,6 +42,8 @@ public class InfixRemainderEvaluate extends Wring.ReplaceCurrentNode<InfixExpres
       return null;
     long remainder = extract.longNumber(first(xs));
     int index = 0;
+    // TODO: Dor, wouldn't it be simpler to iterate over lisp.rest(xs)?, we do
+    // not want an extra index variable. Take a look also at class Once
     for (final Expression ¢ : xs) {
       if (!iz.compileTime(¢))
         return null;
