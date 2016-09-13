@@ -106,6 +106,10 @@ public interface type {
     return get(¢) == Certain.LONG;
   }
 
+  static boolean isString(final Expression ¢){
+    return get(¢) == Certain.STRING;
+  }
+  
   default Certain asPrimitiveCertain() {
     return null;
   }
