@@ -2,7 +2,9 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.eclipse.*;
 
+import java.lang.reflect.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -10,6 +12,8 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
+import org.eclipse.ui.*;
+import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -36,18 +40,39 @@ public class WringCommit {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     final List<ICompilationUnit> us = eclipse.compilationUnits();
     pm.beginTask("Spartanizing project", us.size());
-    int n = 0;
+    final IJavaProject jp = cu.getJavaProject();
     final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    for (final ICompilationUnit u : us) {
-      final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-      textChange.setTextType("java");
-      textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-      if (textChange.getEdit().getLength() != 0)
-        textChange.perform(pm);
-      pm.worked(1);
-      pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+    for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      final IProgressService ps = wb.getProgressService();
+      final AtomicInteger pn = new AtomicInteger(i + 1);
+      try {
+        ps.busyCursorWhile(px -> {
+          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          int n = 0;
+          for (final ICompilationUnit u : us) {
+            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+            textChange.setTextType("java");
+            try {
+              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
+            } catch (JavaModelException | IllegalArgumentException e1) {
+              e1.printStackTrace();
+            }
+            if (textChange.getEdit().getLength() != 0)
+              try {
+                textChange.perform(pm);
+              } catch (CoreException e) {
+                e.printStackTrace();
+              }
+            px.worked(1);
+            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+          }
+          px.done();
+        });
+      } catch (InvocationTargetException | InterruptedException e) {
+        e.printStackTrace();
+      }
     }
-    pm.done();
   }
 
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
