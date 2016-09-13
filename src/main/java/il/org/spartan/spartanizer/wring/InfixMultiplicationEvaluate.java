@@ -1,4 +1,6 @@
 package il.org.spartan.spartanizer.wring;
+
+import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -25,9 +27,9 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double mul = 1;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.compileTime(¢))
         return null;
-      mul *= EvaluateAux.extractDouble(¢);
+      mul *= extract.doubleNumber(¢);
     }
     return x.getAST().newNumberLiteral(Double.toString(mul));
   }
@@ -35,9 +37,9 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int mul = 1;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.compileTime(¢))
         return null;
-      mul *= EvaluateAux.extractInt(¢);
+      mul *= extract.intNumber(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(mul));
   }
@@ -45,9 +47,9 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long mul = 1;
     for (final Expression ¢ : xs) {
-      if (!EvaluateAux.isCompatible(¢))
+      if (!iz.compileTime(¢))
         return null;
-      mul *= EvaluateAux.extractLong(¢);
+      mul *= extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(mul) + "L");
   }
@@ -61,22 +63,20 @@ public class InfixMultiplicationEvaluate extends Wring.ReplaceCurrentNode<InfixE
   }
 
   @Override ASTNode replacement(final InfixExpression x) {
+    if (!iz.validForEvaluation(x))
+      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != TIMES || EvaluateAux.getEvaluatedType(x) == null)
+    if (x.getOperator() != TIMES)
       return null;
-    switch (EvaluateAux.getEvaluatedType(x).asPrimitiveCertain()) {
-      case INT:
-        $ = replacementInt(extract.allOperands(x), x);
-        break;
-      case DOUBLE:
-        $ = replacementDouble(extract.allOperands(x), x);
-        break;
-      case LONG:
-        $ = replacementLong(extract.allOperands(x), x);
-        break;
-      default:
+    if (type.get(x) == INT)
+      $ = replacementInt(extract.allOperands(x), x);
+    else if (type.get(x) == DOUBLE)
+      $ = replacementDouble(extract.allOperands(x), x);
+    else {
+      if (type.get(x) != LONG)
         return null;
+      $ = replacementLong(extract.allOperands(x), x);
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }

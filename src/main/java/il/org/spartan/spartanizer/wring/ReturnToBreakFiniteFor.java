@@ -49,7 +49,7 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
   }
 
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    if(!iz.ifStatement(s))
+    if (!iz.ifStatement(s))
       return null;
     final IfStatement ifStatement = az.ifStatement(s);
     final Statement then = ifStatement.getThenStatement();
@@ -79,16 +79,16 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
     return null;
   }
 
-  private static boolean isInfiniteLoop(final ForStatement s) {
-    return iz.booleanLiteral(s) && az.booleanLiteral(s.getExpression()).booleanValue();
+  private static boolean isInfiniteLoop(final ForStatement ¢) {
+    return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
 
-  @Override String description(final Block b) {
-    return "Convert the return inside " + b + " to break";
+  @Override String description(final Block ¢) {
+    return "Convert the return inside " + ¢ + " to break";
   }
 
   @Override Rewrite make(final Block n) {
@@ -99,10 +99,10 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
       return null;
     final Statement body = forStatement.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : !iz.ifStatement(body) ? null : handleIf(body, nextReturn);
+        : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, (ASTNode) (az.block(into.s("break;"))).statements().get(0), g);
+        r.replace($, (ASTNode) az.block(into.s("break;")).statements().get(0), g);
       }
     };
   }

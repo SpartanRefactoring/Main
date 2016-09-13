@@ -2,26 +2,41 @@ package il.org.spartan.spartanizer.engine;
 
 import java.util.regex.*;
 
+import org.eclipse.jdt.core.dom.*;
+
 /** A utility parser that resolves a variable's short name, and determines
- * whether a pre-existing name is a generic variation of the type's name. <br>
+ * whether a pre-existing name is a generic variation of the type's name.
+ * <p>
  * A variable's short name is a single-character name, determined by the first
  * character in the last word of the type's name.<br>
- * For example: <code>
- *
- * <pre> public void execute(HTTPSecureConnection httpSecureConnection) {...}
- * </pre>
- *
- * </code> would become<br>
- * <code>
- *
- * <pre> public void execute(HTTPSecureConnection c) {...} </pre>
- *
- * </code>
+ * For example:
+ * <code>public void execute(HTTPSecureConnection httpSecureConnection) {...}</code>
+ * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */
 @SuppressWarnings("static-method") public class JavaTypeNameParser {
+  public static boolean isJohnDoe(final SingleVariableDeclaration ¢) {
+    return isJohnDoe(¢.getType(), ¢.getName());
+  }
+
+  public static boolean isJohnDoe(final String typeName, final String variableName) {
+    return new JavaTypeNameParser(typeName).isGenericVariation(variableName);
+  }
+
+  static boolean isJohnDoe(final Type t, final SimpleName n) {
+    return isJohnDoe(t + "", n.getIdentifier());
+  }
+
   /** The type name managed by this instance */
   public final String typeName;
+
+  public JavaTypeNameParser(final SimpleName ¢) {
+    this(¢.getIdentifier());
+  }
+
+  public JavaTypeNameParser(final SingleVariableDeclaration ¢) {
+    this(¢.getName());
+  }
 
   /** Instantiates this class
    * @param typeName the Java type name to parse
@@ -38,6 +53,10 @@ import java.util.regex.*;
     while (m.find())
       a += m.group();
     return a.toLowerCase();
+  }
+
+  public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
+    return isGenericVariation(¢.getName());
   }
 
   /** Returns whether a variable name is a generic variation of its type name. A
@@ -60,6 +79,8 @@ import java.util.regex.*;
     return s.equals(shortName());
   }
 
+  // TODO: Dan, is this a hack? You were supposed to look at the way
+  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
   /** Returns the calculated short name for the type
    * @return type's short name */
   public String shortName() {
@@ -82,6 +103,10 @@ import java.util.regex.*;
     return 0;
   }
 
+  private boolean isGenericVariation(final SimpleName ¢) {
+    return isGenericVariation(¢.getIdentifier());
+  }
+
   private boolean isLower(final int i) {
     return Character.isLowerCase(typeName.charAt(i));
   }
@@ -98,9 +123,14 @@ import java.util.regex.*;
     return s.toLowerCase().contains(substring.toLowerCase());
   }
 
-  private String toSingular(final String s) {
-    return s == null ? null
-        : s.endsWith("ies") ? s.substring(0, s.length() - 3) + "y"
-            : s.endsWith("es") ? s.substring(0, s.length() - 2) : s.endsWith("s") ? s.substring(0, s.length() - 1) : s;
+  // TODO: Alex, here is a nice exercise; try to find a function that would
+  // simplify the following code? Is it in the library, please add a TODO to me
+  // when you are done; leave this comment so that I would know what's going on.
+  // Actually, you can use a library function that would simplify the code
+  // greatly.
+  private String toSingular(final String word) {
+    return word == null ? null
+        : word.endsWith("ies") ? word.substring(0, word.length() - 3) + "y"
+            : word.endsWith("es") ? word.substring(0, word.length() - 2) : word.endsWith("s") ? word.substring(0, word.length() - 1) : word;
   }
 }

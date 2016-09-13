@@ -74,13 +74,13 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
     startSpartan();
   }
 
-  @Override public void start(final BundleContext c) throws Exception {
-    super.start(c);
+  @Override public void start(final BundleContext ¢) throws Exception {
+    super.start(¢);
     startSpartan();
   }
 
-  @Override public void stop(final BundleContext c) throws Exception {
+  @Override public void stop(final BundleContext ¢) throws Exception {
     plugin = null;
-    super.stop(c);
+    super.stop(¢);
   }
 }

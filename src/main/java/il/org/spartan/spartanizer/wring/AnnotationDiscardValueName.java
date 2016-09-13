@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName //
     extends Wring.ReplaceCurrentNode<NormalAnnotation> implements Kind.SyntacticBaggage {
-  @Override String description(final NormalAnnotation a) {
-    return "Remove the \"value\" member from the @" + a.getTypeName().getFullyQualifiedName() + " annotation";
+  @Override String description(final NormalAnnotation ¢) {
+    return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
   @Override ASTNode replacement(final NormalAnnotation a) {

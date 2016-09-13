@@ -7,6 +7,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.wring.*;
 
 /** ??

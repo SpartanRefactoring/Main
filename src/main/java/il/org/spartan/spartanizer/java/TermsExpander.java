@@ -54,8 +54,8 @@ public class TermsExpander {
     ).to(MINUS2);
   }
 
-  private static Expression base(final TermsCollector c) {
-    return base(c.all());
+  private static Expression base(final TermsCollector ¢) {
+    return base(¢.all());
   }
 
   /** @param ts a list

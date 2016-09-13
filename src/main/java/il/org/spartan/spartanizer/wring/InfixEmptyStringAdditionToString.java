@@ -32,25 +32,29 @@ public class InfixEmptyStringAdditionToString extends Wring.ReplaceCurrentNode<I
       return null;
     final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    final List<Expression> ¢ = new ArrayList<>();
+    final List<Expression> $ = new ArrayList<>();
     boolean isString = false;
-    for (int i = 0; i < es.size() ; ++i){
-      Expression e = es.get(i);
-      if(!iz.emptyStringLiteral(e)){
-        ¢.add(e);
-        if(type.get(e) == Certain.STRING)
+    // TODO: Niv, I am a bit confused about this loop. There are cases in which
+    // you do not add the current expression to '$'. How could that be? If you
+    // do not add expression you might be ruining the code?
+    /* TODO: Yossi, the only case where the current expression is not added to $
+     * it when it is an "" that isn't needed in the code. This is exactly what
+     * this wring is meant to do*/
+    for (int i = 0; i < es.size(); ++i) {
+      final Expression e = es.get(i);
+      if (!iz.emptyStringLiteral(e)) {
+        $.add(e);
+        if (type.get(e) == Certain.STRING)
           isString = true;
-      }
-      else {
+      } else {
         if (i < es.size() - 1 && type.get(es.get(i + 1)) == Certain.STRING)
           continue;
-        if (!isString){
-          ¢.add(e);
+        if (!isString) {
+          $.add(e);
           isString = true;
         }
       }
     }
-    return ¢.size() == es.size() ? null 
-        : ¢.size() == 1 ? ¢.get(0) : subject.operands(¢).to(PLUS2);
+    return $.size() == es.size() ? null : $.size() == 1 ? $.get(0) : subject.operands($).to(PLUS2);
   }
 }
