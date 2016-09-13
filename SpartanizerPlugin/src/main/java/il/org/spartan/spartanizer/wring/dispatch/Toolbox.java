@@ -154,11 +154,11 @@ public class Toolbox {
             new TernaryPushdown(), //
             new TernaryPusdownStrings(), null) //
         .add(TypeDeclaration.class, //
-            new ModifierCleanInterface(), //
+            new TypeModifierCleanInterface(), //
             new AbstractBodyDeclarationSortModifiers.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
-            new ModifierCleanEnum(), //
+            new EnumDeclarationModifierCleanEnum(), //
             new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
         .add(FieldDeclaration.class, //
