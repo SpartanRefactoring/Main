@@ -326,32 +326,6 @@ public class Version250Test {
     trimming("volatile private int a;").to("private volatile int a;");
   }
 
-  @Ignore("under construction") @Test public void issue116_01() {
-    trimming("\"\" + x").to("x + \"\"");
-  }
-
-  @Ignore("under construction") @Test public void issue116_02() {
-    trimming("\"\" + x.foo()").to("x.foo() + \"\"");
-  }
-
-  @Ignore("under construction") @Test public void issue116_03() {
-    trimming("\"\" + (Integer)(\"\" + x).length()").to("(Integer)(\"\" + x).length() + \"\"").to("(Integer)(x +\"\").length() + \"\"");
-  }
-
-  @Ignore("under construction") @Test public void issue116_04() {
-    trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";");
-  }
-
-  @Ignore("under construction") @Test public void issue116_05() {
-    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"");
-  }
-
-  @Ignore("under construction") @Test public void issue116_06() {
-    trimming("\"\" + ((Integer)5).toString().indexOf(\"5\").toString().length()")
-        .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
-        .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"");
-  }
-
   @Test public void issue129_01() {
     trimming("$ += s + (new Integer(i) + \"\")").stays();
   }
