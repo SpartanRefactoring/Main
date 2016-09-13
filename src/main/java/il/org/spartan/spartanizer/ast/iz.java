@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast;
-
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -362,22 +362,22 @@ public enum iz {
     return is(¢, METHOD_INVOCATION);
   }
 
-  /** @param a the assignment who'¢ operator we want to check
+  /** @param a the assignment whose operator we want to check
    * @return true is the assignment'¢ operator is assign */
-  public static boolean isOpAssign(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
+  public static boolean isPlainAssignment(final Assignment a) {
+    return a != null && a.getOperator() == ASSIGN;
   }
 
-  /** @param a the assignment who'¢ operator we want to check
+  /** @param a the assignment whose operator we want to check
    * @return true is the assignment'¢ operator is plus assign */
-  public static boolean isOpMinusAssign(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.MINUS_ASSIGN;
+  public static boolean isMinusAssignment(final Assignment a) {
+    return a != null && a.getOperator() == MINUS_ASSIGN;
   }
 
-  /** @param a the assignment who'¢ operator we want to check
+  /** @param a the assignment whose operator we want to check
    * @return true is the assignment'¢ operator is plus assign */
-  public static boolean isOpPlusAssign(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
+  public static boolean isPlusAssignment(final Assignment a) {
+    return a != null && a.getOperator() == PLUS_ASSIGN;
   }
 
   /** Determine whether a declaration is private
@@ -573,7 +573,7 @@ public enum iz {
   /** @param a the assignment who's operator we want to check
    * @return true is the assignment's operator is assign */
   public static boolean plainAssignment(final Assignment a) {
-    return a != null && a.getOperator() == Assignment.Operator.ASSIGN;
+    return a != null && a.getOperator() == ASSIGN;
   }
 
   /** @param n JD
