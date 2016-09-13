@@ -263,6 +263,7 @@ public class subject {
       final ConditionalExpression $ = ast.newConditionalExpression();
       $.setExpression(plant(claim(condition)).into($));
       $.setThenExpression(plant(left).into($));
+      assert plant(right).into($) != null: "Planting " + right + " into " + $ +"/" + parent($) + "returned null";
       $.setElseExpression(plant(right).into($));
       return $;
     }
