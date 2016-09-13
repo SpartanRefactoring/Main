@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link NameYourClassHere}
+/** Unit tests for {@link InfixPlusRemoveParenthesis}
  * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
