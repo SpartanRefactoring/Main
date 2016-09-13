@@ -34,11 +34,11 @@ public class Issue162Test {
   @Test public void issue162_06() {
     trimming("(\"a\")+(x-2)").to("\"a\"+(x-2)").stays();
   }
-  
+
   @Test public void issue162_07() {
     trimming("(x-2)+\"abc\"").to("x-2+\"abc\"");
   }
-  
+
   @Test public void issue162_08() {
     trimming("(f() ? x : y) + \".toString\"").stays();
   }

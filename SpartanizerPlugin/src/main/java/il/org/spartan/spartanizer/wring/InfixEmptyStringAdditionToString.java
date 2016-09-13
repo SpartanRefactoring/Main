@@ -40,7 +40,7 @@ public class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixEx
     // do not add expression you might be ruining the code?
     /* TODO: Yossi, the only case where the current expression is not added to $
      * it when it is an "" that isn't needed in the code. This is exactly what
-     * this wring is meant to do*/
+     * this wring is meant to do */
     for (int i = 0; i < es.size(); ++i) {
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {

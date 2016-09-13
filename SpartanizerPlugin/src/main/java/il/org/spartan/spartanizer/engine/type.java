@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -324,7 +323,7 @@ public interface type {
       assert es.size() >= 2;
       implementation $ = get(first(es));
       chop(es);
-      for(Expression e : es)
+      for (final Expression e : es)
         $ = $.underBinaryOperator(o, get(e));
       return $;
     }
@@ -353,7 +352,7 @@ public interface type {
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (ASTNode context : hop.ancestors(x.getParent()))
+      for (final ASTNode context : hop.ancestors(x.getParent()))
         switch (context.getNodeType()) {
           case INFIX_EXPRESSION:
             return i.aboveBinaryOperator(az.infixExpression(context).getOperator());

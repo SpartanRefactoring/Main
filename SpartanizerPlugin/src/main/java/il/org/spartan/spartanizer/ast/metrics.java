@@ -2,10 +2,8 @@ package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.lang.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -17,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
-  public static int condensedSize(ASTNode ¢) {
+  public static int condensedSize(final ASTNode ¢) {
     return wizard.condense(¢).length();
   }
 
