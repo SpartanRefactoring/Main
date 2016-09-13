@@ -8,7 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>int i = +0</code> with <code>int i = 0</code>,
  * <code>int i = +1</code> with <code>int i = 1</code> <code>int i = +a</code>
@@ -16,11 +17,11 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NOP {
-  @Override String description(final PrefixExpression x) {
+  @Override public String description(final PrefixExpression x) {
     return "Remove unary + in " + x;
   }
 
-  @Override ASTNode replacement(final PrefixExpression x) {
+  @Override public ASTNode replacement(final PrefixExpression x) {
     return x.getOperator() != PLUS ? null : plant(duplicate.of(heart(x.getOperand()))).into(x.getParent());
   }
 

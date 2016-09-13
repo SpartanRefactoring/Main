@@ -8,7 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>x += 1 </code> by <code> x++ </code> and also
  * <code>x -= 1 </code> by <code> x-- </code>
@@ -27,11 +28,11 @@ public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assig
     return subject.operand(a.getLeftHandSide()).to(isIncrement(a) ? INCREMENT : DECREMENT);
   }
 
-  @Override String description(final Assignment a) {
+  @Override public String description(final Assignment a) {
     return "Replace " + a + " to " + a.getRightHandSide() + (isIncrement(a) ? "++" : "--");
   }
 
-  @Override ASTNode replacement(final Assignment a) {
+  @Override public ASTNode replacement(final Assignment a) {
     return !iz.isOpPlusAssign(a) && !iz.isOpMinusAssign(a) || !iz.literal1(a.getRightHandSide()) || !provablyNotString(a) ? null : replace(a);
   }
 }

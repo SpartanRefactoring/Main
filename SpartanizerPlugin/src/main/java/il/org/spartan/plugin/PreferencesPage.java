@@ -8,7 +8,7 @@ import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
-import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
 
 /** ??
  * @author Daniel Mittelman

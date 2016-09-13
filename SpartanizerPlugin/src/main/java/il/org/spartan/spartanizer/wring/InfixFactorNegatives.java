@@ -16,6 +16,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert an expression such as
  *
@@ -79,11 +81,11 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     return $;
   }
 
-  @Override String description(final InfixExpression x) {
+  @Override public String description(final InfixExpression x) {
     return "Use at most one arithmetical negation, for first factor of " + x.getOperator();
   }
 
-  @Override Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;

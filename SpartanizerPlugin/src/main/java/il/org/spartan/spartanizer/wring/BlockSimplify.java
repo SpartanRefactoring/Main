@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -41,7 +43,7 @@ import il.org.spartan.spartanizer.ast.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> implements Kind.NOP {
+public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Kind.NOP {
   public static boolean hasHidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
@@ -156,11 +158,11 @@ public final class BlockSimplify extends Wring.ReplaceCurrentNode<Block> impleme
     return $;
   }
 
-  @Override String description(@SuppressWarnings("unused") final Block __) {
+  @Override public String description(@SuppressWarnings("unused") final Block __) {
     return "Simplify block";
   }
 
-  @Override Statement replacement(final Block b) {
+  @Override public Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || hasHidings(ss))
       return null;

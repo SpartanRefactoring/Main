@@ -11,6 +11,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
  *
@@ -27,7 +29,7 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<Assignment> implements Kind.DistributiveRefactoring {
+public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements Kind.DistributiveRefactoring {
   static Expression extractRight(final Assignment a) {
     final Expression $ = extract.core(right(a));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
@@ -37,11 +39,11 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     return ¢.getOperator() != ASSIGN ? null : extractRight(¢);
   }
 
-  @Override String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + left(¢) + " with subsequent similar assignment";
   }
 
-  @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = a.getParent();
     if (!(parent instanceof Statement))
       return null;

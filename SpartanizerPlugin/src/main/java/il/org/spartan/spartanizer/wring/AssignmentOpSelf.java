@@ -9,13 +9,14 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any
  * operator.
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> implements Kind.Abbreviation {
+public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
   private static boolean asLeft(final Expression ¢, final Expression left) {
     return wizard.same(¢, left);
   }
@@ -50,11 +51,11 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     return $.size() == es.size() ? null : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(o);
   }
 
-  @Override String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Replace x = x " + step.operator(¢) + "a; to x " + step.operator(¢) + "= a;";
   }
 
-  @Override ASTNode replacement(final Assignment ¢) {
+  @Override public ASTNode replacement(final Assignment ¢) {
     return !iz.isOpAssign(¢) || !iz.infixExpression(right(¢)) ? null : replace(¢);
   }
 }

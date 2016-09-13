@@ -1,0 +1,57 @@
+package il.org.spartan.spartanizer.wring.strategies;
+
+import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+
+/** A wring is a transformation that works on an AstNode. Such a transformation
+ * make a single simplification of the tree. A wring is so small that it is
+ * idempotent: Applying a wring to the output of itself is the empty operation.
+ * @param <N> type of node which triggers the transformation.
+ * @author Yossi Gil
+ * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
+ * @since 2015-07-09 */
+public abstract class Wring<N extends ASTNode> implements Kind {
+  /** Determine whether the parameter is "eligible" for application of this
+   * instance. The parameter must be within the scope of the current instance.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
+   *         the simplification offered by this object. */
+  public boolean eligible(@SuppressWarnings("unused") final N __) {
+    return true;
+  }
+
+  public Rewrite make(final N n) {
+    return make(n, null);
+  }
+
+  public Rewrite make(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : make(n);
+  }
+
+  /** Determines whether this {@link Wring} object is not applicable for a given
+   * {@link PrefixExpression} is within the "scope" of this . Note that a
+   * {@link Wring} is applicable in principle to an object, but that actual
+   * application will be vacuous.
+   * @param e JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
+   *         the simplification offered by this object.
+   * @see #eligible(InfixExpression) */
+  public final boolean nonEligible(final N n) {
+    return !eligible(n);
+  }
+
+  /** Determines whether this {@link Wring} object is applicable for a given
+   * {@link InfixExpression} is within the "scope" of this . Note that it could
+   * be the case that a {@link Wring} is applicable in principle to an object,
+   * but that actual application will be vacuous.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
+   *         scope of this object @ */
+  public boolean scopeIncludes(final N n) {
+    return make(n, null) != null;
+  }
+
+  protected abstract String description(N n);
+}

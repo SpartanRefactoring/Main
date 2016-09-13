@@ -4,7 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.Wring.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** A {@link Wring} to change name of unused variable to double underscore "__"
  * TODO Ori: (maybe) inherent VariableChangeName instead of
@@ -57,11 +58,11 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "__";
   }
 
-  @Override String description(final SingleVariableDeclaration ¢) {
+  @Override public String description(final SingleVariableDeclaration ¢) {
     return "Change name of unused variable " + ¢.getName().getIdentifier() + " to __";
   }
 
-  @Override ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
+  @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     final MethodDeclaration d = getMethod(n);
     if (d == null)
       return null;

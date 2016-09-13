@@ -10,6 +10,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Convert Infinite loops with return statements to shorter ones : </br>
  * Convert <br/>
@@ -82,11 +84,11 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     return "Convert the break inside the loop to return";
   }
 
-  @Override String description(final Block b) {
+  @Override public String description(final Block b) {
     return "Convert the break inside " + b + " to return";
   }
 
-  @Override Rewrite make(final Block b) {
+  @Override public Rewrite make(final Block b) {
     final List<Statement> ss = step.statements(b);
     if (ss.size() < 2 || !iz.whileStatement(first(ss)) || !iz.returnStatement(second(ss)))
       return null;
