@@ -66,8 +66,6 @@ public final class AssignmentOpSelf extends ReplaceCurrentNode<Assignment> imple
     if (o != ASSIGN)
       return null;
     final InfixExpression right = az.infixExpression(right(a));
-    if (right == null)
-      return null;
-    return replace(a, right);
+    return right == null ? null : replace(a, right);
   }
 }

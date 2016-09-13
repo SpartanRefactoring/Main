@@ -245,13 +245,11 @@ public class subject {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
       $.setLeftOperand(plant(left).intoLeft($));
-      if (o != wizard.PLUS2)
-        $.setRightOperand(plant(right).into($));
-      else if (precedence.greater($, right)
-          || precedence.equal($, right) && (stringType.isNot(left) || PlantingExpression.isStringConactingSafe(right)) || iz.simple(right))
-        $.setRightOperand(right);
-      else
-        $.setRightOperand(subject.operand(right).parenthesis());
+      $.setRightOperand(
+          o != wizard.PLUS2 ? plant(right).into($)
+              : !precedence.greater($, right)
+                  && (!precedence.equal($, right) || !stringType.isNot(left) && !PlantingExpression.isStringConactingSafe(right)) && !iz.simple(right)
+                      ? subject.operand(right).parenthesis() : right);
       return $;
     }
 
@@ -272,8 +270,8 @@ public class subject {
     /** Convert the assignment operator into a statement
      * @param o JD
      * @return a statement of the operator */
-    public Statement toStatement(final Assignment.Operator o) {
-      return subject.operand(to(o)).toStatement();
+    public Statement toStatement(final Assignment.Operator ¢) {
+      return subject.operand(to(¢)).toStatement();
     }
   }
 

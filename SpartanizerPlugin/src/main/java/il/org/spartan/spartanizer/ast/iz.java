@@ -364,20 +364,20 @@ public enum iz {
 
   /** @param a the assignment whose operator we want to check
    * @return true is the assignment'¢ operator is assign */
-  public static boolean isPlainAssignment(final Assignment a) {
-    return a != null && a.getOperator() == ASSIGN;
+  public static boolean isPlainAssignment(final Assignment ¢) {
+    return ¢ != null && ¢.getOperator() == ASSIGN;
   }
 
   /** @param a the assignment whose operator we want to check
    * @return true is the assignment'¢ operator is plus assign */
-  public static boolean isMinusAssignment(final Assignment a) {
-    return a != null && a.getOperator() == MINUS_ASSIGN;
+  public static boolean isMinusAssignment(final Assignment ¢) {
+    return ¢ != null && ¢.getOperator() == MINUS_ASSIGN;
   }
 
   /** @param a the assignment whose operator we want to check
    * @return true is the assignment'¢ operator is plus assign */
-  public static boolean isPlusAssignment(final Assignment a) {
-    return a != null && a.getOperator() == PLUS_ASSIGN;
+  public static boolean isPlusAssignment(final Assignment ¢) {
+    return ¢ != null && ¢.getOperator() == PLUS_ASSIGN;
   }
 
   /** Determine whether a declaration is private

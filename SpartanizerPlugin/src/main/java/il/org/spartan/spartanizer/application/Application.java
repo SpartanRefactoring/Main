@@ -248,8 +248,8 @@ import il.org.spartan.utils.*;
 
   private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PackageDeclaration d) {
-        $.set(d.getName() + "");
+      @Override public boolean visit(final PackageDeclaration ¢) {
+        $.set(¢.getName() + "");
         return false;
       }
     });
@@ -285,8 +285,8 @@ import il.org.spartan.utils.*;
       linesBefore = countLines(this.file = file);
     }
 
-    public void addRoundStat(final int i) {
-      roundStats.add(Integer.valueOf(i));
+    public void addRoundStat(final int ¢) {
+      roundStats.add(Integer.valueOf(¢));
     }
 
     public void countLinesAfter() throws IOException {

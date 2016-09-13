@@ -57,14 +57,14 @@ abstract class ScopeManager extends ASTVisitor {
     pop();
   }
 
-  @Override public final boolean visit(final AnnotationTypeDeclaration d) {
+  @Override public final boolean visit(final AnnotationTypeDeclaration ¢) {
     push();
-    return go(d);
+    return go(¢);
   }
 
-  @Override public final boolean visit(final AnonymousClassDeclaration d) {
+  @Override public final boolean visit(final AnonymousClassDeclaration ¢) {
     push();
-    return go(d);
+    return go(¢);
   }
 
   @Override public final boolean visit(@SuppressWarnings("unused") final Block __) {
@@ -85,9 +85,9 @@ abstract class ScopeManager extends ASTVisitor {
     return push();
   }
 
-  @Override public final boolean visit(final TypeDeclaration d) {
+  @Override public final boolean visit(final TypeDeclaration ¢) {
     push();
-    return go(d);
+    return go(¢);
   }
 
   abstract boolean go(final AbstractTypeDeclaration d);
@@ -102,8 +102,8 @@ abstract class ScopeManager extends ASTVisitor {
 }
 
 class UnsafeUsesCollector extends UsesCollector {
-  private static boolean unsafe(final ASTNode n) {
-    return n instanceof ClassInstanceCreation;
+  private static boolean unsafe(final ASTNode ¢) {
+    return ¢ instanceof ClassInstanceCreation;
   }
 
   UnsafeUsesCollector(final List<SimpleName> result, final SimpleName focus) {
@@ -135,30 +135,30 @@ class UsesCollector extends HidingDepth {
     this(c.result, c.focus);
   }
 
-  @Override public boolean preVisit2(final ASTNode n) {
-    return !hidden() && !(n instanceof Type);
+  @Override public boolean preVisit2(final ASTNode ¢) {
+    return !hidden() && !(¢ instanceof Type);
   }
 
-  @Override public boolean visit(final CastExpression x) {
-    return recurse(right(x));
+  @Override public boolean visit(final CastExpression ¢) {
+    return recurse(right(¢));
   }
 
   @Override public boolean visit(final FieldAccess n) {
     return recurse(n.getExpression());
   }
 
-  @Override public boolean visit(final MethodDeclaration d) {
-    return !declaredIn(d) && recurse(d.getBody());
+  @Override public boolean visit(final MethodDeclaration ¢) {
+    return !declaredIn(¢) && recurse(¢.getBody());
   }
 
-  @Override public boolean visit(final MethodInvocation i) {
-    ingore(step.name(i));
-    recurse(step.receiver(i));
-    return recurse(arguments(i));
+  @Override public boolean visit(final MethodInvocation ¢) {
+    ingore(step.name(¢));
+    recurse(step.receiver(¢));
+    return recurse(arguments(¢));
   }
 
-  @Override public boolean visit(final QualifiedName n) {
-    return recurse(n.getQualifier());
+  @Override public boolean visit(final QualifiedName ¢) {
+    return recurse(¢.getQualifier());
   }
 
   @Override public boolean visit(final SimpleName n) {
@@ -191,18 +191,18 @@ class UsesCollector extends HidingDepth {
     return false;
   }
 
-  @Override boolean go(final AbstractTypeDeclaration d) {
-    ingore(d.getName());
-    return !declaredIn(d) && recurse(bodyDeclarations(d));
+  @Override boolean go(final AbstractTypeDeclaration ¢) {
+    ingore(¢.getName());
+    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
-  boolean go(final AnnotationTypeDeclaration d) {
-    ingore(d.getName());
-    return !declaredIn(d) && recurse(bodyDeclarations(d));
+  boolean go(final AnnotationTypeDeclaration ¢) {
+    ingore(¢.getName());
+    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
-  @Override boolean go(final AnonymousClassDeclaration d) {
-    return !declaredIn(d) && recurse(bodyDeclarations(d));
+  @Override boolean go(final AnonymousClassDeclaration ¢) {
+    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
   @Override boolean go(final EnhancedForStatement s) {
@@ -213,9 +213,9 @@ class UsesCollector extends HidingDepth {
     return recurse(s.getBody());
   }
 
-  boolean recurse(final ASTNode n) {
-    if (n != null && !hidden())
-      n.accept(clone());
+  boolean recurse(final ASTNode ¢) {
+    if (¢ != null && !hidden())
+      ¢.accept(clone());
     return false;
   }
 
@@ -239,8 +239,8 @@ class UsesCollector extends HidingDepth {
     return hidden();
   }
 
-  private boolean declaredIn(final AnonymousClassDeclaration d) {
-    declaresField(d);
+  private boolean declaredIn(final AnonymousClassDeclaration ¢) {
+    declaresField(¢);
     return hidden();
   }
 
@@ -255,12 +255,12 @@ class UsesCollector extends HidingDepth {
     return declaredBy(f.getName());
   }
 
-  private boolean declaredIn(final VariableDeclarationFragment f) {
-    return declaredBy(f.getName());
+  private boolean declaredIn(final VariableDeclarationFragment ¢) {
+    return declaredBy(¢.getName());
   }
 
-  private void declaresField(final ASTNode n) {
-    n.accept(new DeclaredInFields(n));
+  private void declaresField(final ASTNode ¢) {
+    ¢.accept(new DeclaredInFields(¢));
   }
 
   private boolean hit(final SimpleName ¢) {
@@ -302,8 +302,8 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
     super(result, focus);
   }
 
-  @Override public boolean visit(final Assignment a) {
-    return recurse(right(a));
+  @Override public boolean visit(final Assignment ¢) {
+    return recurse(right(¢));
   }
 
   @Override public boolean visit(final PostfixExpression it) {
