@@ -21,6 +21,36 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+      public void i() {
+        f();
+      }
+    }
+  }
+
   // can be String concating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
@@ -29,6 +59,58 @@ public class Version250Test {
   // can be String concating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimming("b=0+a;").stays();
+  }
+
+  @Test public void issue_177_bitWiseOr_noSideEffects() {
+    int a = 1;
+    int b = 2;
+    a = a|b; 
+    azzert.aye(a == 3);
+    trimming("a=a|b").to("a|=b");
+  }
+
+  @Test public void issue_177_bitWiseOr_withSideEffects() {
+    class Class {
+      Class() {
+        int x = 1;
+        x |= f(x);
+        azzert.aye(x == 3);
+      }
+      int f(int $) {
+        azzert.aye($ == 1);
+        return $ + 1;
+      }
+    }
+    @SuppressWarnings("unused") Class c = new Class();
+    trimming("a=a|b").to("a|=b");
+  }
+
+  @Test public void issue_177_conditionalOr_noSideEffects() {
+    boolean a = false;
+    boolean b = true;
+    a |= b; 
+    azzert.aye(a);
+    //trimming("a=a||b").to("a|=b");
+  }
+
+  @Test public void issue_177_conditionalOr_withSideEffects() {
+    class Class {
+      int a;
+      Class() {
+        a = 0;
+        boolean x = false;
+        x |= f(x);
+        azzert.aye(x);
+        azzert.aye(a == 1);
+      }
+      boolean f(boolean $) {
+        azzert.nay($);
+        ++a;
+        return true;
+      }
+    }
+    @SuppressWarnings("unused") Class c = new Class();
+    //trimming("a=a||b").to("a|=b");
   }
 
   @Test public void issue103_AND1() {
@@ -1238,15 +1320,15 @@ public class Version250Test {
   @Test public void issue87a() {
     trimming("a-b*c - (x - - - (d*e))").to("a  - b*c -x + d*e");
   }
-
+  
   @Test public void issue87b() {
     trimming("a-b*c").stays();
   }
-
+  
   @Test public void issue87c() {
     trimming("a + (b-c)").stays();
   }
-
+  
   @Test public void issue87d() {
     trimming("a - (b-c)").to("a - b + c");
   }
@@ -1254,39 +1336,9 @@ public class Version250Test {
   @Ignore public void trimmerBugXOR() {
     trimming("j=j^k").to("j^=k");
   }
-
+  
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
-  }
-
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-      public void i() {
-        f();
-      }
-    }
   }
 
  // @formatter:on
