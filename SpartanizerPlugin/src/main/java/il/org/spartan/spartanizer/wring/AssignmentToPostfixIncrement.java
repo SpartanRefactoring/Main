@@ -15,12 +15,12 @@ import il.org.spartan.spartanizer.wring.Wring.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
-  private static boolean isIncrement(final Assignment a) {
-    return a.getOperator() == Assignment.Operator.PLUS_ASSIGN;
+  private static boolean isIncrement(final Assignment ¢) {
+    return ¢.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
 
-  private static boolean provablyNotString(final Assignment a) {
-    return stringType.isNot(subject.pair(a.getLeftHandSide(), a.getRightHandSide()).to(wizard.assignmentToInfix(a.getOperator())));
+  private static boolean provablyNotString(final Assignment ¢) {
+    return stringType.isNot(subject.pair(¢.getLeftHandSide(), ¢.getRightHandSide()).to(wizard.assignmentToInfix(¢.getOperator())));
   }
 
   private static ASTNode replace(final Assignment a) {

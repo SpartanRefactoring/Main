@@ -33,12 +33,12 @@ public final class AssignmentAndAssignment extends Wring.ReplaceToNextStatement<
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);
   }
 
-  static Expression getRight(final Assignment a) {
-    return a.getOperator() != ASSIGN ? null : extractRight(a);
+  static Expression getRight(final Assignment ¢) {
+    return ¢.getOperator() != ASSIGN ? null : extractRight(¢);
   }
 
-  @Override String description(final Assignment a) {
-    return "Consolidate assignment to " + left(a) + " with subsequent similar assignment";
+  @Override String description(final Assignment ¢) {
+    return "Consolidate assignment to " + left(¢) + " with subsequent similar assignment";
   }
 
   @Override ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {

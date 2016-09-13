@@ -9,47 +9,11 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Wring} with a given sub-class of
-     * {@link ASTNode}.
-     * @param n JD
-     * @param ns JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
-      final List<Wring<N>> l = get(n);
-      for (final Wring<N> w : ns) {
-        if (w == null)
-          break;
-        assert w.wringGroup() != null : "Did you forget to use a specific kind for " + w.getClass().getSimpleName();
-        if (!w.wringGroup().isEnabled())
-          continue;
-        l.add(w);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
-  }
-
   /** The default instance of this class */
   static Toolbox instance;
 
   public static Toolbox defaultInstance() {
     return instance;
-  }
-
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
-    for (final Wring<N> $ : ns)
-      if ($.scopeIncludes(n))
-        return $;
-    return null;
   }
 
   /** Make a {@link Toolbox} for a specific kind of wrings
@@ -63,6 +27,11 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(EnhancedForStatement.class, new EnhancedForRenameParameterToCent()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -85,6 +54,7 @@ public class Toolbox {
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
+            // TODO: Niv, should this class be killed?
             // new InfixEmptyStringAdditionToString(), //under construction
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
@@ -96,10 +66,7 @@ public class Toolbox {
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
             new InfixSubractionEvaluate(), //
-            // new EvaluateShiftRight(), //
-            // new EvaluateShiftLeft(), //
             new InfixTermsZero(), //
-            // new InfixAdditionZero(), //
             new InfixAdditionNeutralElement(), //
             new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
@@ -116,7 +83,8 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
-            new BodyDeclarationRemoveModifiers.OfMethod(), //
+            new MethodDeclarationRenameSingleParameterToCent(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfMethod(), //
             new AbstractBodyDeclarationSortModifiers.ofMethod(), //
             null)
         .add(MethodInvocation.class, //
@@ -189,10 +157,8 @@ public class Toolbox {
             new ModifierCleanEnum(), //
             new AbstractBodyDeclarationSortModifiers.ofEnum(), //
             null) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover(), null) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(FieldDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfField(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfField(), //
             new AbstractBodyDeclarationSortModifiers.ofField(), //
             null) //
         .add(CastExpression.class, //
@@ -200,17 +166,23 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new BodyDeclarationRemoveModifiers.OfEnumConstant(), //
+            new AbstractBodyDeclarationRemoveModifiers.OfEnumConstant(), //
             new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember(), null) //
-        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation(), null) //
+        // TODO: Alex, shouldn't we remove this line?
         // .add(Initializer, new ModifierSort.ofInitializer(), null) //
         .seal();
+  }
+
+  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
+    for (final Wring<N> $ : ns)
+      if ($.scopeIncludes(n))
+        return $;
+    return null;
   }
 
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
@@ -231,5 +203,34 @@ public class Toolbox {
 
   <N extends ASTNode> List<Wring<N>> get(final N n) {
     return get(n.getClass());
+  }
+
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Wring} with a given sub-class of
+     * {@link ASTNode}.
+     * @param n JD
+     * @param ns JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
+      final List<Wring<N>> l = get(n);
+      for (final Wring<N> w : ns) {
+        if (w == null)
+          break;
+        assert w.wringGroup() != null : "Did you forget to use a specific kind for " + w.getClass().getSimpleName();
+        if (!w.wringGroup().isEnabled())
+          continue;
+        l.add(w);
+      }
+      return this;
+    }
+
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
+    }
   }
 }

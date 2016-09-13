@@ -28,8 +28,8 @@ public enum minus {
                     : 0;
   }
 
-  public static int level(final InfixExpression x) {
-    return out(x.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(x));
+  public static int level(final InfixExpression ¢) {
+    return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
   public static int level(final List<Expression> xs) {

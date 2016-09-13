@@ -40,6 +40,7 @@ public class DisabledChecker {
   }
 
   private class BodyDeclarationVisitor extends ASTVisitor {
+    // TODO: Ori Roth: Don't use short names for global things. 
     @SuppressWarnings("hiding") final Set<ASTNode> dns;
     @SuppressWarnings("hiding") final Set<ASTNode> ens;
 
@@ -58,40 +59,40 @@ public class DisabledChecker {
       return true;
     }
 
-    @Override public boolean visit(final AnnotationTypeDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final AnnotationTypeMemberDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final EnumConstantDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final EnumConstantDeclaration ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final EnumDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final EnumDeclaration ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final FieldDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final FieldDeclaration ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final Initializer i) {
-      return go(i);
+    @Override public boolean visit(final Initializer ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final MethodDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final MethodDeclaration ¢) {
+      return go(¢);
     }
 
-    @Override public boolean visit(final TypeDeclaration d) {
-      return go(d);
+    @Override public boolean visit(final TypeDeclaration ¢) {
+      return go(¢);
     }
 
-    private boolean go(final BodyDeclaration d) {
-      return go(d, d.getJavadoc());
+    private boolean go(final BodyDeclaration ¢) {
+      return go(¢, ¢.getJavadoc());
     }
 
     private void insertAnnotated(final BodyDeclaration d, final String s, final Set<ASTNode> g, final String[] ids) {

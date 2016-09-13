@@ -21,9 +21,9 @@ public enum extract {
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
-  public static List<Expression> allOperands(final InfixExpression x) {
-    assert x != null;
-    return hop.operands(flatten.of(x));
+  public static List<Expression> allOperands(final InfixExpression ¢) {
+    assert ¢ != null;
+    return hop.operands(flatten.of(¢));
   }
 
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
@@ -120,13 +120,24 @@ public enum extract {
     }
   }
 
+  public static double doubleNumber(final Expression x) {
+    if (!iz.longType(x))
+      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
+          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
+    final String token = az.numberLiteral(x).getToken();
+    if (!iz.prefixExpression(x))
+      return Double.parseDouble(token.substring(0, token.length() - 1));
+    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
+    return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
+  }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
    * @return expression statement if n is a block or an expression statement or
    *         null if it not an expression statement or if the block contains
    *         more than one statement */
-  public static ExpressionStatement expressionStatement(final ASTNode n) {
-    return n == null ? null : az.expressionStatement(extract.singleStatement(n));
+  public static ExpressionStatement expressionStatement(final ASTNode ¢) {
+    return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
@@ -211,9 +222,9 @@ public enum extract {
   public static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
     final Wrapper<MethodDeclaration> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration d) {
+      @Override public boolean visit(final MethodDeclaration ¢) {
         if ($.get() == null)
-          $.set(d);
+          $.set(¢);
         return false;
       }
     });
@@ -244,10 +255,10 @@ public enum extract {
   public static Type firstType(final Statement s) {
     final Wrapper<Type> $ = new Wrapper<>();
     s.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode n) {
-        if (!(n instanceof Type))
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (!(¢ instanceof Type))
           return true;
-        $.set((Type) n);
+        $.set((Type) ¢);
         return false;
       }
     });
@@ -264,9 +275,9 @@ public enum extract {
       return null;
     final Wrapper<VariableDeclarationFragment> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final VariableDeclarationFragment f) {
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
         if ($.get() == null)
-          $.set(f);
+          $.set(¢);
         return false;
       }
     });
@@ -296,8 +307,23 @@ public enum extract {
    * @param n JD
    * @return single {@link IfStatement} embedded in the parameter or
    *         <code><b>null</b></code> if not such statements exists. */
-  public static IfStatement ifStatement(final ASTNode n) {
-    return az.ifStatement(extract.singleStatement(n));
+  public static IfStatement ifStatement(final ASTNode ¢) {
+    return az.ifStatement(extract.singleStatement(¢));
+  }
+
+  public static int intNumber(final Expression ¢) {
+    return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
+        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
+  }
+
+  public static long longNumber(final Expression x) {
+    final String token = az.numberLiteral(x).getToken();
+    if (iz.intType(x))
+      return Long.parseLong(token);
+    if (!(x instanceof PrefixExpression))
+      return Long.parseLong(token.substring(0, token.length() - 1));
+    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
+    return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
   }
 
   /** @param n JD

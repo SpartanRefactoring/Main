@@ -120,8 +120,8 @@ public enum make {
       this.ast = ast;
     }
 
-    public NumberLiteral literal(final int i) {
-      return ast.newNumberLiteral(i + "");
+    public NumberLiteral literal(final int ¢) {
+      return ast.newNumberLiteral(¢ + "");
     }
 
     public StringLiteral literal(final String s) {

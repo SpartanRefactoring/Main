@@ -10,22 +10,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-/** convert
- *
- * <pre>
- * <b>abstract</b> <b>interface</b> a
- * {}
- * </pre>
- *
- * to
- *
- * <pre>
- * <b>interface</b> a {}
- * </pre>
- *
+/** convert <code><b>abstract</b> <b>interface</b>a {}</code> to
+ * <code><b>interface</b> a {}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
+public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends Wring.ReplaceCurrentNode<N>
+    implements Kind.SyntacticBaggage {
   private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier m : modifiers(¢))
@@ -118,16 +108,16 @@ public class BodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends W
   }
 
   // @formatter:off
-  public static class OfAnnotation extends BodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
+  public static class OfAnnotation extends AbstractBodyDeclarationRemoveModifiers<AnnotationTypeDeclaration> { /* empty */ }
 
-  public static class OfEnum extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+  public static class OfEnum extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
 
-  public static class OfEnumConstant extends BodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
+  public static class OfEnumConstant extends AbstractBodyDeclarationRemoveModifiers<EnumConstantDeclaration> { /* empty */ }
 
-  public static class OfField extends BodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
+  public static class OfField extends AbstractBodyDeclarationRemoveModifiers<FieldDeclaration> { /* empty */ }
 
-  public static class OfMethod extends BodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
+  public static class OfMethod extends AbstractBodyDeclarationRemoveModifiers<MethodDeclaration> { /* empty */ }
 
-  public static class OfType extends BodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
+  public static class OfType extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> { /* empty */ }
   // @formatter:on
 }
