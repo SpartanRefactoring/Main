@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wring;
-
+import il.org.spartan.spartanizer.wring.dispatch.Trimmer.DispatchingVisitor;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -121,7 +121,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
-    compilationUnit.accept(trimmer().new DispatchingVisitor() {
+    compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         if (!trimmer().inRange(m, n))
           return true;
