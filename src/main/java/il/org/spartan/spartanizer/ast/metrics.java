@@ -46,8 +46,8 @@ public interface metrics {
 
   /** @param n JD
    * @return The total number of leaves in the AST */
-  static int leaves(final ASTNode n) {
-    return nodes(n) - internals(n);
+  static int leaves(final ASTNode ¢) {
+    return nodes(¢) - internals(¢);
   }
 
   /** @param n JD
@@ -56,7 +56,22 @@ public interface metrics {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
   }
 
-  static int vocabulary(final CompilationUnit u) {
-    return u.hashCode();
+  /**
+   * @param u
+   * @return
+   */
+  static Set<String> dictionary(final ASTNode u) {
+    final Set<String> $ = new LinkedHashSet<>();
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(SimpleName node) {
+        $.add(node.getIdentifier());
+        return true;
+      }
+    });
+    return $;
+  }
+
+  static int vocabulary(final ASTNode u) {
+    return dictionary(u).size();
   }
 }

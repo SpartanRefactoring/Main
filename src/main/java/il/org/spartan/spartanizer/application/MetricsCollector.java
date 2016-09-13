@@ -23,6 +23,7 @@ public class MetricsCollector {
   }
 
   private static void collect(final CompilationUnit u) {
+    output.put("Count", metrics.count(u));
     output.put("Dexterity", metrics.dexterity(u));
     output.put("Leaves", metrics.leaves(u));
     output.put("Nodes", metrics.nodes(u));

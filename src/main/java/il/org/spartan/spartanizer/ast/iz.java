@@ -119,15 +119,15 @@ public enum iz {
     return in(x.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
 
-  public static boolean comparison(final Operator o) {
-    return in(o, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
+  public static boolean comparison(final Operator ¢) {
+    return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
   public static boolean compileTime(final Expression ¢) {
     // TODO: Dor, one of the following two check may re redundant
     // TODO: Yossi, I don't see any redundancy here
-    // TODO: Dor you check that it is a number and then it is anumber literal,
-    // what's the difference? Why do y ou it for one case, and not not for the
+    // TODO: Dor you check that it is a number and then it is a number literal,
+    // what's the difference? Why do you it for one case, and not not for the
     // case it is a prefix.
     // This is code smell...
     return iz.numberLiteral(¢) && number(¢) //
