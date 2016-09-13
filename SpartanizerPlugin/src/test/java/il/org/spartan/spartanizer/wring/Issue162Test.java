@@ -11,10 +11,12 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue162Test {
+  @Ignore("issue 172")
   @Test public void issue162_01() {
     trimming("0+(0+x+y+(4))").to("x+y+4").stays();
   }
 
+  @Ignore("under construction")
   @Test public void issue162_02() {
     trimming("\"I ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }

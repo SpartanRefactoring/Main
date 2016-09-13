@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.Wring.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
@@ -58,22 +59,23 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
-    boolean changed = false;
-    for (int i = 0; i < es.size(); ++i)
+    boolean isString = false;
+    for (int i = 0; i < es.size(); ++i){
+      boolean b = isString;
+      isString = isString || !stringType.isNot(es.get(i));
       if (iz.parenthesizeExpression(es.get(i))) {
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
-        for(;iz.parenthesizeExpression(¢);az.parenthesizedExpression(¢).getExpression()) {
+        for(;iz.parenthesizeExpression(¢);¢ = az.parenthesizedExpression(¢).getExpression()) 
           replace(es, ¢, i);
-          changed = true;
-        }
-        if (iz.infixExpression(¢)) {
-          if (i != 0 && !canRemove((InfixExpression) ¢))
+        if (iz.infixExpression(¢)) 
+          if (i != 0 && b && !canRemove((InfixExpression) ¢))
             continue;
-        } else if (iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
+        if (iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
         replace(es, ¢, i);
-        changed = true;
       }
-    return !changed ? null : makeInfix(es, x.getAST());
+    }
+    Expression $ = subject.operands(es).to(wizard.PLUS2)/* makeInfix(es, x.getAST())*/;
+    return !wizard.same($,x) ? $ : null;
   }
 }
