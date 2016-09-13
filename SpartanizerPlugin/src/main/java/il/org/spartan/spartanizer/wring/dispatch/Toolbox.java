@@ -201,8 +201,13 @@ public class Toolbox {
   
   public <N extends ASTNode> Wring<N> findWring(final N n, final Wring<N>... ws) {
     for (Wring<N> $ : get(n))
-      if ($.claims(n) && Arrays.asList(ws).contains($))
-        return $;
+      for (Wring w : ws)
+        if (w.getClass().equals($.getClass())) {
+          if ($.claims(n))
+            return $;
+          else
+            break;
+        }
     return null;
   }
 
