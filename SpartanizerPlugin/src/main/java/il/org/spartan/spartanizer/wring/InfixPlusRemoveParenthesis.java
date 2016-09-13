@@ -61,13 +61,10 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean changed = false;
     for (int i = 0; i < es.size(); ++i)
       if (iz.parenthesizeExpression(es.get(i))) {
-        // TODO: Niv, convert this into a for loop manually, or resolve
-        // issues:#145, #144
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
-        while (iz.parenthesizeExpression(¢)) {
+        for(;iz.parenthesizeExpression(¢);az.parenthesizedExpression(¢).getExpression()) {
           replace(es, ¢, i);
           changed = true;
-          ¢ = az.parenthesizedExpression(¢).getExpression();
         }
         if (iz.infixExpression(¢)) {
           if (i != 0 && !canRemove((InfixExpression) ¢))
