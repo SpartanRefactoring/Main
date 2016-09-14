@@ -61,8 +61,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier m : step.modifiers((VariableDeclarationStatement) f.getParent()))
-      if (m.isModifier() && ((Modifier) m).isFinal())
+    for (final IExtendedModifier ¢ : step.modifiers((VariableDeclarationStatement) f.getParent()))
+      if (¢.isModifier() && ((Modifier) ¢).isFinal())
         return null;
     final Statement s = extract.statement(f);
     if (s == null)

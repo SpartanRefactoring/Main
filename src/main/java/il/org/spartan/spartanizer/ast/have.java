@@ -16,8 +16,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Expression... xs) {
-    for (final Expression e : xs)
-      if (iz.booleanLiteral(e))
+    for (final Expression ¢ : xs)
+      if (iz.booleanLiteral(¢))
         return true;
     return false;
   }
@@ -27,8 +27,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Iterable<Expression> xs) {
-    for (final Expression e : xs)
-      if (iz.booleanLiteral(e))
+    for (final Expression ¢ : xs)
+      if (iz.booleanLiteral(¢))
         return true;
     return false;
   }
@@ -38,8 +38,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> xs) {
-    for (final Expression e : xs)
-      if (iz.literalFalse(e))
+    for (final Expression ¢ : xs)
+      if (iz.literalFalse(¢))
         return true;
     return false;
   }
@@ -49,8 +49,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
   public static boolean literal(final Expression... xs) {
-    for (final Expression e : xs)
-      if (iz.literal(e))
+    for (final Expression ¢ : xs)
+      if (iz.literal(¢))
         return true;
     return false;
   }
@@ -60,8 +60,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
   public static boolean literal(final List<Expression> xs) {
-    for (final Expression e : xs)
-      if (iz.literal(e))
+    for (final Expression ¢ : xs)
+      if (iz.literal(¢))
         return true;
     return false;
   }
@@ -71,8 +71,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal. */
   public static boolean numericLiteral(final Expression... xs) {
-    for (final Expression e : xs)
-      if (iz.numericLiteral(e))
+    for (final Expression ¢ : xs)
+      if (iz.numericLiteral(¢))
         return true;
     return false;
   }
@@ -82,8 +82,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal. */
   public static boolean numericLiteral(final Iterable<Expression> xs) {
-    for (final Expression e : xs)
-      if (iz.numericLiteral(e))
+    for (final Expression ¢ : xs)
+      if (iz.numericLiteral(¢))
         return true;
     return false;
   }
@@ -93,8 +93,8 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> xs) {
-    for (final Expression e : xs)
-      if (iz.literalTrue(e))
+    for (final Expression ¢ : xs)
+      if (iz.literalTrue(¢))
         return true;
     return false;
   }

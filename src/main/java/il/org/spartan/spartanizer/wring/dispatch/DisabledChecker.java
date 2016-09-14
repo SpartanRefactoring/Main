@@ -12,29 +12,29 @@ import org.eclipse.jdt.core.dom.*;
 public class DisabledChecker {
   /** Disable spartanization identifier, used by the programmer to indicate a
    * method/class not to be spartanized */
-  public static final String disablers[] = { "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
+  public static final String disablers[] = { "[[Hedonistic]]","@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]", "[[hedo]]" };
   /** Enable spartanization identifier, used by the programmer to indicate a
    * method/class to be spartanized */
-  public static final String enablers[] = { "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
-  final Set<ASTNode> dns;
-  final Set<ASTNode> ens;
+  public static final String enablers[] = { "[[Spartan]]", "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
+  final Set<ASTNode> disabledNodes;
+  final Set<ASTNode> enabledNodes;
 
   public DisabledChecker(final CompilationUnit u) {
-    dns = new HashSet<>();
-    ens = new HashSet<>();
+    disabledNodes = new HashSet<>();
+    enabledNodes = new HashSet<>();
     if (u == null)
       return;
-    u.accept(new BodyDeclarationVisitor(dns, ens));
+    u.accept(new BodyDeclarationVisitor(disabledNodes, enabledNodes));
   }
 
   /** @param n node
-   * @return true iff spartanization is disabled for n [[Hedonistic] */
+   * @return true iff spartanization is disabled for n  */
   public boolean check(final ASTNode n) {
     for (ASTNode p = n; p != null; p = p.getParent()) {
-      if (dns.contains(p))
+      if (disabledNodes.contains(p))
         return true;
-      if (ens.contains(p))
-        return false;
+      if (enabledNodes.contains(p))
+        break;
     }
     return false;
   }

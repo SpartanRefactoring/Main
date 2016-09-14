@@ -39,25 +39,25 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
     if (spartan.shorten(d.getType()) == null)
       return false;
     final MethodExplorer e = new MethodExplorer(m);
-    for (final SimpleName n : e.localVariables())
-      if (n.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
+    for (final SimpleName ¢ : e.localVariables())
+      if (¢.getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
-    for (final SingleVariableDeclaration n : parameters(m))
-      if (n.getName().getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
+    for (final SingleVariableDeclaration ¢ : parameters(m))
+      if (¢.getName().getIdentifier().equals(spartan.shorten(d.getType()) + pluralVariadic(d)))
         return false;
     return !m.getName().getIdentifier().equalsIgnoreCase(spartan.shorten(d.getType()) + pluralVariadic(d));
   }
 
-  private static String pluralVariadic(final SingleVariableDeclaration d) {
-    return d.isVarargs() ? "s" : getExtraDimensions(d);
+  private static String pluralVariadic(final SingleVariableDeclaration ¢) {
+    return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
-  private static boolean suitable(final SingleVariableDeclaration d) {
-    return new JavaTypeNameParser(d.getType() + "").isGenericVariation(d.getName().getIdentifier()) && !isShort(d);
+  private static boolean suitable(final SingleVariableDeclaration ¢) {
+    return new JavaTypeNameParser(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
 
-  @Override public String description(final SingleVariableDeclaration d) {
-    return d.getName() + "";
+  @Override public String description(final SingleVariableDeclaration ¢) {
+    return ¢.getName() + "";
   }
 
   @Override public Rewrite make(final SingleVariableDeclaration d, final ExclusionManager exclude) {
@@ -83,9 +83,9 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
         for (final TagElement t : ts) {
           if (!TagElement.TAG_PARAM.equals(t.getTagName()))
             continue;
-          for (final Object o : t.fragments())
-            if (o instanceof SimpleName && wizard.same((SimpleName) o, oldName)) {
-              r.replace((SimpleName) o, d.getAST().newSimpleName(newName), g);
+          for (final Object ¢ : t.fragments())
+            if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
+              r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
               return;
             }
         }

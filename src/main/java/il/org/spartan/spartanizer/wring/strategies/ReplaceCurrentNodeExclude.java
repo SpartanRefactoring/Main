@@ -18,8 +18,8 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring
     };
   }
 
-  @Override public boolean claims(final N n) {
-    return replacement(n, new ExclusionManager()) != null;
+  @Override public boolean claims(final N ¢) {
+    return replacement(¢, new ExclusionManager()) != null;
   }
 
   protected abstract ASTNode replacement(N n, final ExclusionManager m);

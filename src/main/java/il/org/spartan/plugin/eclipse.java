@@ -107,9 +107,9 @@ public interface eclipse {
     }
     for (final IPackageFragmentRoot r : packageFragmentRoots)
       if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
-        for (final IJavaElement e : r.getChildren())
-          if (e.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.addAll(as.list(((IPackageFragment) e).getCompilationUnits()));
+        for (final IJavaElement ¢ : r.getChildren())
+          if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+            $.addAll(as.list(((IPackageFragment) ¢).getCompilationUnits()));
     pm.done();
     return $;
   }

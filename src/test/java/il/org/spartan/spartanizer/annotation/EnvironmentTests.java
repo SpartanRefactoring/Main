@@ -61,8 +61,8 @@ import java.util.*;
     // other
     // block - their scope spans only as far as the block does.
     public class tryCatchTest {
-      boolean dangerousFunc(final boolean b) {
-        if (b)
+      boolean dangerousFunc(final boolean ¢) {
+        if (¢)
           throw new UnsupportedOperationException();
         return false;
       }
@@ -461,8 +461,8 @@ import java.util.*;
             /* C */
             /* B */
             if (new Oompa_Loompa(l) {
-              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
-                return l != null ? super.Oompa_Loompa(l) : Oompa_Loompa.this.Oompa_Loompa(l);
+              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa ¢) {
+                return ¢ != null ? super.Oompa_Loompa(¢) : Oompa_Loompa.this.Oompa_Loompa(¢);
               }
             }.Oompa_Loompa(l) == null)
               continue l;

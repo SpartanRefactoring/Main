@@ -93,8 +93,8 @@ public enum make {
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
-    for (final Expression e : rest(xs))
-      $.add(minusOf(e));
+    for (final Expression ¢ : rest(xs))
+      $.add(minusOf(¢));
     return $;
   }
 

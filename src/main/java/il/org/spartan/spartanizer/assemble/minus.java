@@ -34,8 +34,8 @@ public enum minus {
 
   public static int level(final List<Expression> xs) {
     int $ = 0;
-    for (final Expression e : xs)
-      $ += minus.level(e);
+    for (final Expression ¢ : xs)
+      $ += minus.level(¢);
     return $;
   }
 
@@ -65,8 +65,8 @@ public enum minus {
 
   private static List<Expression> peel(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : xs)
-      $.add(peel(e));
+    for (final Expression ¢ : xs)
+      $.add(peel(¢));
     return $;
   }
 }

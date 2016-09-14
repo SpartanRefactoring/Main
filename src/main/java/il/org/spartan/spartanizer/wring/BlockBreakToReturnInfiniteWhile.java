@@ -34,11 +34,11 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (iz.breakStatement(s)) {
-        $ = s;
+    for (final Statement ¢ : blockStatements) {
+      if (az.ifStatement(¢) != null)
+        $ = handleIf(¢, nextReturn);
+      if (iz.breakStatement(¢)) {
+        $ = ¢;
         break;
       }
     }

@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.ast.*;
 public class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
 
-  public void exclude(final ASTNode n) {
-    inner.add(n);
+  public void exclude(final ASTNode ¢) {
+    inner.add(¢);
   }
 
   public boolean isExcluded(final ASTNode n) {
@@ -25,7 +25,7 @@ public class ExclusionManager {
     return false;
   }
 
-  void unExclude(final ASTNode n) {
-    inner.remove(n);
+  void unExclude(final ASTNode ¢) {
+    inner.remove(¢);
   }
 }

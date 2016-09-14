@@ -158,11 +158,11 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return "Pushdown ?: into expression";
   }
 
-  @Override public Expression replacement(final ConditionalExpression x) {
-    return pushdown(x);
+  @Override public Expression replacement(final ConditionalExpression ¢) {
+    return pushdown(¢);
   }
 
-  @Override public boolean claims(final ConditionalExpression x) {
-    return pushdown(x) != null;
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return pushdown(¢) != null;
   }
 }

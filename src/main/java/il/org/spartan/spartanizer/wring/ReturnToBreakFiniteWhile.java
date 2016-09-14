@@ -39,11 +39,11 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
 
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
-    for (final Statement s : statements(b)) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(s)))
-        return s;
+    for (final Statement ¢ : statements(b)) {
+      if (az.ifStatement(¢) != null)
+        $ = handleIf(¢, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(¢)))
+        return ¢;
     }
     return $;
   }
@@ -82,16 +82,16 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
     return null;
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  private static boolean isInfiniteLoop(final WhileStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
 
-  @Override public String description(final Block b) {
-    return "Convert the return inside " + b + " to break";
+  @Override public String description(final Block ¢) {
+    return "Convert the return inside " + ¢ + " to break";
   }
 
   @Override public Rewrite make(final Block b) {

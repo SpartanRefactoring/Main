@@ -23,8 +23,8 @@ public final class MethodDeclarationOverrideDegenerateRemove extends Wring<Metho
     return (i.getName() + "").equals(d.getName() + "") && arguments(i).size() == parameters(d).size();
   }
 
-  @Override public String description(final MethodDeclaration d) {
-    return "Remove vacous '" + d.getName() + "' overriding method";
+  @Override public String description(final MethodDeclaration ¢) {
+    return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
 
   @Override public Rewrite make(final MethodDeclaration d) {

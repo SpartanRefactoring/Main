@@ -212,7 +212,7 @@ public final class TernaryPusdownStrings extends ReplaceCurrentNode<ConditionalE
     return "Replace ternarization with more clever one";
   }
 
-  @Override public Expression replacement(final ConditionalExpression x) {
-    return replacement(expression(x), then(x), elze(x));
+  @Override public Expression replacement(final ConditionalExpression ¢) {
+    return replacement(expression(¢), then(¢), elze(¢));
   }
 }

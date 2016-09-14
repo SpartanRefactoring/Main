@@ -221,16 +221,16 @@ public class Application implements IApplication {
   void printLineStatistics(final List<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
-      for (final FileStats f : ss) {
-        System.out.println("\n  " + f.fileName());
-        System.out.println("    Lines before: " + f.getLinesBefore());
-        System.out.println("    Lines after: " + f.getLinesAfter());
+      for (final FileStats ¢ : ss) {
+        System.out.println("\n  " + ¢.fileName());
+        System.out.println("    Lines before: " + ¢.getLinesBefore());
+        System.out.println("    Lines after: " + ¢.getLinesAfter());
       }
     else {
       int totalBefore = 0, totalAfter = 0;
-      for (final FileStats f : ss) {
-        totalBefore += f.getLinesBefore();
-        totalAfter += f.getLinesAfter();
+      for (final FileStats ¢ : ss) {
+        totalBefore += ¢.getLinesBefore();
+        totalAfter += ¢.getLinesAfter();
       }
       System.out.println("  Lines before: " + totalBefore);
       System.out.println("  Lines after: " + totalAfter);
@@ -262,8 +262,8 @@ public class Application implements IApplication {
     else
       for (int i = 0; i < optRounds; ++i) {
         int roundSum = 0;
-        for (final FileStats f : ss)
-          roundSum += f.getRoundStat(i);
+        for (final FileStats ¢ : ss)
+          roundSum += ¢.getRoundStat(i);
         System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }

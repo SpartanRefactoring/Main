@@ -62,8 +62,8 @@ public class fluentTrimmerApplication extends Trimmer.With {
    * @param pm a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  public final ASTRewrite createRewrite(final IProgressMonitor m) {
-    return createRewrite(m, (IMarker) null);
+  public final ASTRewrite createRewrite(final IProgressMonitor ¢) {
+    return createRewrite(¢, (IMarker) null);
   }
 
   public fluentTrimmerApplication gives(final String expected) {
@@ -173,12 +173,12 @@ public class fluentTrimmerApplication extends Trimmer.With {
        * @param n the node currently being visited.
        * @return <code><b>true</b></code> <i>iff</i> the sought node is
        *         found. */
-      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode n) {
+      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
-        if (!clazz.isAssignableFrom(n.getClass()))
+        if (!clazz.isAssignableFrom(¢.getClass()))
           return true;
-        $.set((N) n);
+        $.set((N) ¢);
         return false;
       }
     });
