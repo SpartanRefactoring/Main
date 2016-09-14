@@ -12,8 +12,16 @@ public class QuickFixer implements IMarkerResolutionGenerator {
     try {
       final Spartanization $ = Spartanizations.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
       assert $ != null;
-      return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(), $.getWringCommitDeclaration(), $.getWringCommitFile(),
-          $.getWringCommitProject(), $.getToggleDeclaration(), $.getToggleClass(), $.getToggleFile() };
+      return new IMarkerResolution[] { //
+          $.getFix(), //
+          $.getFixWithPreview(), //
+          $.getWringCommitDeclaration(), //
+          $.getWringCommitFile(), //
+          $.getWringCommitProject(), //
+          $.getToggleDeclaration(), //
+          $.getToggleClass(), //
+          $.getToggleFile(), //
+      }; //
     } catch (@SuppressWarnings("unused") final CoreException ____) {
       return new IMarkerResolution[] {};
     }
