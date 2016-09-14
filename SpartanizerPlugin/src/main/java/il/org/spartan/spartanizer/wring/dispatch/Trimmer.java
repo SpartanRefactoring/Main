@@ -108,6 +108,100 @@ public class Trimmer extends Spartanization {
     return new ExclusionManager();
   }
 
+  public static abstract class DispatchingVisitor extends ASTVisitor {
+    protected final ExclusionManager exclude = makeExcluder();
+
+    @Override public final boolean visit(final Assignment ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final Block ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final CastExpression ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final ConditionalExpression ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final EnhancedForStatement ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final EnumDeclaration ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final FieldDeclaration ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final IfStatement ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final InfixExpression ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final MethodDeclaration ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final MethodInvocation ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final NormalAnnotation ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final PostfixExpression ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final PrefixExpression ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final ReturnStatement ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final SingleVariableDeclaration ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final SuperConstructorInvocation ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final TypeDeclaration ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final VariableDeclarationFragment ¢) {
+      return cautiousGo(¢);
+    }
+    
+    @Override public final boolean visit(final ForStatement ¢) {
+      return cautiousGo(¢);
+    }
+    
+    @Override public final boolean visit(final WhileStatement ¢) {
+      return cautiousGo(¢);
+    }
+
+    protected abstract <N extends ASTNode> boolean go(final N n);
+
+    private boolean cautiousGo(final ASTNode ¢) {
+      return !exclude.isExcluded(¢) && go(¢);
+    }
+  }
+
   public class With {
     public Trimmer trimmer() {
       return Trimmer.this;
