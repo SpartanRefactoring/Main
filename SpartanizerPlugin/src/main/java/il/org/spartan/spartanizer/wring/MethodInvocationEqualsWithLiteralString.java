@@ -27,8 +27,8 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     return $;
   }
 
-  @Override public String description(final MethodInvocation i) {
-    return "Write " + first(arguments(i)) + "." + step.name(i) + "(" + step.receiver(i) + ") instead of " + i;
+  @Override public String description(final MethodInvocation ¢) {
+    return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + step.receiver(¢) + ") instead of " + ¢;
   }
 
   /* (non-Javadoc)

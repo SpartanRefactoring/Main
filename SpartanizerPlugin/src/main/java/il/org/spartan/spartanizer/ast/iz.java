@@ -131,8 +131,8 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   public static boolean conditional(final Expression... xs) {
-    for (final Expression e : xs)
-      if (is(extract.core(e), CONDITIONAL_EXPRESSION))
+    for (final Expression ¢ : xs)
+      if (is(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
     return false;
   }
@@ -691,8 +691,8 @@ public enum iz {
 
   public static boolean validForEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
-    for (final Expression e : lst)
-      if (!iz.compileTime(e))
+    for (final Expression ¢ : lst)
+      if (!iz.compileTime(¢))
         return false;
     return true;
   }

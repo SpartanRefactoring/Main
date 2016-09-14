@@ -17,12 +17,12 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> implements Kind.NOP {
-  @Override public String description(final PrefixExpression x) {
-    return "Remove unary + in " + x;
+  @Override public String description(final PrefixExpression ¢) {
+    return "Remove unary + in " + ¢;
   }
 
-  @Override public ASTNode replacement(final PrefixExpression x) {
-    return x.getOperator() != PLUS ? null : plant(duplicate.of(heart(x.getOperand()))).into(x.getParent());
+  @Override public ASTNode replacement(final PrefixExpression ¢) {
+    return ¢.getOperator() != PLUS ? null : plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 
   private Expression heart(final Expression x) {

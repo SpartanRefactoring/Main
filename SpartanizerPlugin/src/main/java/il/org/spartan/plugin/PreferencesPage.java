@@ -29,8 +29,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     // Create and fill the "enabled spartanizations" group box
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
-    for (final WringGroup w : WringGroup.values())
-      g.add(new ComboFieldEditor(w.id, w.label, WRING_COMBO_OPTIONS, g.getFieldEditor()));
+    for (final WringGroup ¢ : WringGroup.values())
+      g.add(new ComboFieldEditor(¢.id, ¢.label, WRING_COMBO_OPTIONS, g.getFieldEditor()));
     addField(g);
     g.init();
   }

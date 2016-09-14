@@ -52,11 +52,11 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     return "Eliminate nested conditional expression";
   }
 
-  @Override public Expression replacement(final ConditionalExpression x) {
-    return collapse(x);
+  @Override public Expression replacement(final ConditionalExpression ¢) {
+    return collapse(¢);
   }
 
-  @Override public boolean claims(final ConditionalExpression x) {
-    return collapse(x) != null;
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return collapse(¢) != null;
   }
 }

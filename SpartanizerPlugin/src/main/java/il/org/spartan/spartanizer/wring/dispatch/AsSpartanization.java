@@ -28,10 +28,10 @@ public final class AsSpartanization extends Spartanization {
   // TODO: Ori, how come we need this parameter?
   @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(N n) {
-        if (!inner.claims(n) || inner.cantWring(n))
+      @Override protected <N extends ASTNode> boolean go(N ¢) {
+        if (!inner.claims(¢) || inner.cantWring(¢))
           return true;
-        $.add(inner.make(n));
+        $.add(inner.make(¢));
         return true;
       }
     };
@@ -39,9 +39,9 @@ public final class AsSpartanization extends Spartanization {
 
   @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(N n) {
-        if (inRange(m, n))
-          inner.make(n).go(r, null);
+      @Override protected <N extends ASTNode> boolean go(N ¢) {
+        if (inRange(m, ¢))
+          inner.make(¢).go(r, null);
         return true;
       }
     });

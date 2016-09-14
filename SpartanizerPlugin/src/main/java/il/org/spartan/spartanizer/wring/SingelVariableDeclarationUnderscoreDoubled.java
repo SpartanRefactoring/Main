@@ -32,8 +32,8 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
         final Expression e = ((SingleMemberAnnotation) m).getValue();
         if (e instanceof StringLiteral)
           return "unused".equals(((StringLiteral) e).getLiteralValue());
-        for (final Expression x : (Iterable<Expression>) ((ArrayInitializer) ((SingleMemberAnnotation) m).getValue()).expressions())
-          return x instanceof StringLiteral && "unused".equals(((StringLiteral) x).getLiteralValue());
+        for (final Expression ¢ : (Iterable<Expression>) ((ArrayInitializer) ((SingleMemberAnnotation) m).getValue()).expressions())
+          return ¢ instanceof StringLiteral && "unused".equals(((StringLiteral) ¢).getLiteralValue());
         break;
       }
     return false;
@@ -66,15 +66,15 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     final MethodDeclaration d = getMethod(n);
     if (d == null)
       return null;
-    for (final SingleVariableDeclaration svd : step.parameters(d))
-      if (unusedVariableName().equals(svd.getName().getIdentifier()))
+    for (final SingleVariableDeclaration ¢ : step.parameters(d))
+      if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
-      for (final SingleVariableDeclaration svd : step.parameters(d))
-        if (!n.equals(svd))
-          m.exclude(svd);
+      for (final SingleVariableDeclaration ¢ : step.parameters(d))
+        if (!n.equals(¢))
+          m.exclude(¢);
     return replacement(n);
   }
 
