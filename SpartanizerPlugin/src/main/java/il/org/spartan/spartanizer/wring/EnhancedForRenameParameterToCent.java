@@ -17,16 +17,19 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
-  @Override public String description(final EnhancedForStatement ¢) {
-    return ¢.getParameter() + "";
+public final class EnhancedForRenameParameterToCent extends Wring<SingleVariableDeclaration> implements Kind.Centification {
+  @Override public String description(final SingleVariableDeclaration ¢) {
+    return ¢ + "";
   }
 
-  @Override public Rewrite make(final EnhancedForStatement s, final ExclusionManager m) {
+  @Override public Rewrite make(final SingleVariableDeclaration d, final ExclusionManager m) {
+    final ASTNode p = d.getParent();
+    if (p == null || !(p instanceof EnhancedForStatement))
+      return null;
+    final EnhancedForStatement s = (EnhancedForStatement) p;
     final Statement body = s.getBody();
     if (body == null)
       return null;
-    final SingleVariableDeclaration d = s.getParameter();
     if (!isJohnDoe(d))
       return null;
     final SimpleName n = d.getName();

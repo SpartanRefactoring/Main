@@ -208,20 +208,6 @@ public interface wizard {
     return $;
   }
 
-  // TODO: $ is initialized because otherwise complaining that variable may be
-  // not
-  // initialized from the reason it is initialized in an if statement.
-  // TODO: Alex and Dan: I hope you are not pulling my leg... You have a map,
-  // why don't you do
-  // a simple lookup on it?
-  static Assignment.Operator InfixToAssignment(final InfixExpression.Operator o) {
-    Assignment.Operator $ = REMAINDER_ASSIGN;
-    for (final Map.Entry<InfixExpression.Operator, Assignment.Operator> ¢ : infix2assign.entrySet())
-      if (¢.getKey() == o)
-        $ = ¢.getValue();
-    return $;
-  }
-
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
