@@ -11,17 +11,15 @@ import java.util.*;
       String y;
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void f() {
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i)
           x = i;
-        }
       }
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
         final List<String> tmp = new ArrayList<>();
         tmp.add("a");
-        for (final String s : tmp) {
-          y = s;
-        }
+        for (final String ¢ : tmp)
+          y = ¢;
       }
     }
   }
