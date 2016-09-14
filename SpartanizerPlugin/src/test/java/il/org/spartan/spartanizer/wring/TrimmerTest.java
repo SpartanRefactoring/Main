@@ -1430,22 +1430,22 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void issue131_12() {
-    trimming("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
-        .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
-        .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
-        .to("for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
+    trimming("boolean b=false;for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
+        .to("boolean b=false;for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
+        .to("boolean b=false;for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
+        .to("boolean b=false;for(int i=4 ; i<s.length() ; ++i){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
   }
 
   @Test public void issue131_13() {
-    trimming("while(i<7){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;").to("while(i<7){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
-        .to("while(i<7){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
+    trimming("int i=1;while(i<7){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;").to("int i=1;while(i<7){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
+        .to("int i=1;while(i<7){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
   }
 
   @Test public void issue131_14() {
-    trimming("while(i<7){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;")
-        .to("while(i<7){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;")
-        .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;")
-        .to("while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;");
+    trimming("public static void main(){while(i<7){if(i==5){t+=9;return xxx;}else return tr;y+=15;return xxx;}return xxx;}")
+        .to("public static void main(){while(i<7){if(i!=5)return tr;t+=9;return xxx;y+=15;return xxx;}return xxx;}")
+        .to("public static void main(){while(i<7){if(i!=5)return tr;t+=9;break;y+=15;return xxx;}return xxx;}")
+        .to("public static void main(){while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return xxx;}");
   }
 
   @Test public void issue131_2() {
@@ -3714,4 +3714,5 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   @Test public void xorSortClassConstantsAtEnd() {
     trimming("f(a,b,c,d) ^ BOB").stays();
   }
+  
 }

@@ -32,6 +32,14 @@ public class Toolbox {
     instance = new Maker()//
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(EnhancedForStatement.class, new EnhancedForRenameParameterToCent()) //
+        .add(ForStatement.class, //
+            new BlockBreakToReturnInfiniteFor(), //
+            new ReturnToBreakFiniteFor(), //
+            null)//
+        .add(WhileStatement.class, //
+            new BlockBreakToReturnInfiniteWhile(), //
+            new ReturnToBreakFiniteWhile(), //
+            null) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
         .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
         .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
@@ -113,12 +121,6 @@ public class Toolbox {
             new DeclarationInitializerReturnUpdateAssignment(), //
             new DeclarationInitializerStatementTerminatingScope(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), null) //
-        .add(Block.class, //
-            new BlockBreakToReturnInfiniteFor(), //
-            new BlockBreakToReturnInfiniteWhile(), //
-            new ReturnToBreakFiniteFor(), //
-            new ReturnToBreakFiniteWhile(), //
-            null) //
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
