@@ -13,21 +13,8 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> implements Kind {
-  /** Determine whether the parameter is "eligible" for application of this
-   * instance. The parameter must be within the scope of the current instance.
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
-   *         the simplification offered by this object. */
-  public boolean canWring(@SuppressWarnings("unused") final N __) {
-    return true;
-  }
-
-  public Rewrite make(final N ¢) {
-    return make(¢, null);
-  }
-
-  public Rewrite make(final N n, final ExclusionManager m) {
-    return m != null && m.isExcluded(n) ? null : make(n);
+  public static String name(final Wring ¢) {
+    return ¢.getClass().getSimpleName();
   }
 
   /** Determines whether this {@link Wring} object is not applicable for a given
@@ -42,6 +29,15 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return !canWring(¢);
   }
 
+  /** Determine whether the parameter is "eligible" for application of this
+   * instance. The parameter must be within the scope of the current instance.
+   * @param n JD
+   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
+   *         the simplification offered by this object. */
+  public boolean canWring(@SuppressWarnings("unused") final N __) {
+    return true;
+  }
+
   /** Determines whether this {@link Wring} object is applicable for a given
    * {@link InfixExpression} is within the "scope" of this . Note that it could
    * be the case that a {@link Wring} is applicable in principle to an object,
@@ -50,14 +46,17 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
-  @Deprecated
-  public boolean claims(final N ¢) {
+  @Deprecated public boolean claims(final N ¢) {
     return make(¢, null) != null;
   }
 
   protected abstract String description(N n);
 
-  public static String name(final Wring w) {
-    return w.getClass().getSimpleName();
+  public Rewrite make(final N ¢) {
+    return make(¢, null);
+  }
+
+  public Rewrite make(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : make(n);
   }
 }

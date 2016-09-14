@@ -12,7 +12,8 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue155Test {
   @Ignore @Test public void inlineFinal() {
-    trimming("for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  final String nb = versionNumbers[i];\n" + "  $[i] = Integer.parseInt(nb);\n" + "}")
+    trimming(
+        "for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  final String nb = versionNumbers[i];\n" + "  $[i] = Integer.parseInt(nb);\n" + "}")
             .to("for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" + "}");
   }
 

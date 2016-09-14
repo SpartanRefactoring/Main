@@ -49,6 +49,10 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
+  @Override public boolean claims(final InfixExpression ¢) {
+    return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
+  }
+
   @Override public String description(final InfixExpression ¢) {
     return "Eliminate redundant comparison with '" + literal(¢) + "'";
   }
@@ -57,9 +61,5 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     final BooleanLiteral literal = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
     return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
-  }
-
-  @Override public boolean claims(final InfixExpression ¢) {
-    return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 }

@@ -13,10 +13,24 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
 @Ignore public class EnvironmentTest {
+  // The difficulties of Environment - A Yossi example.
+  class A {
+    B a() {
+      return null;
+    }
+  }
+
+  class B {
+    A b() {
+      return null;
+    }
+  }
+
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   // =================== Empty Tests - Require Genesis ===================
@@ -578,18 +592,5 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
-  }
-
-  // The difficulties of Environment - A Yossi example.
-  class A {
-    B a() {
-      return null;
-    }
-  }
-
-  class B {
-    A b() {
-      return null;
-    }
   }
 }

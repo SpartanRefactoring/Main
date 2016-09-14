@@ -11,8 +11,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
-    similar(
-        "if (b) {\n" + " /* empty */" + "; \n" + "} { // no else \n" + " throw new Exception();\n" + "}", //
+    similar("if (b) {\n" + " /* empty */" + "; \n" + "} { // no else \n" + " throw new Exception();\n" + "}", //
         "if (b) {;} { throw new Exception(); }");
   }
 
@@ -97,11 +96,11 @@ import il.org.spartan.*;
         "if (b) {} else { throw new Exception(); }");
   }
 
-  @Test public void statement() {
-    azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
-  }
-
   private void similar(final String s1, final String s2) {
     azzert.that(essence(s2), is(essence(s1)));
+  }
+
+  @Test public void statement() {
+    azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
   }
 }

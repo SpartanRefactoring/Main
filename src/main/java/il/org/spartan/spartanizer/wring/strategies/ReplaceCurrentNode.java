@@ -7,6 +7,10 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
+  @Override public boolean claims(final N ¢) {
+    return replacement(¢) != null;
+  }
+
   @Override public final Rewrite make(final N n) {
     return cantWring(n) ? null : new Rewrite(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -16,8 +20,4 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
   }
 
   public abstract ASTNode replacement(N n);
-
-  @Override public boolean claims(final N n) {
-    return replacement(n) != null;
-  }
 }

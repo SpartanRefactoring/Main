@@ -83,6 +83,10 @@ public class ExpressionComparatorTest {
     azzert.that(cs("for (;;) { i++; }"), is(7));
   }
 
+  private int cs(final String statement) {
+    return metrics.lineCount(s(statement));
+  }
+
   @Test public void literalAndClassConstant() {
     azzert.that(ExpressionComparator.ADDITION.compare(e("1"), e("BOB")), greaterThan(0));
   }
@@ -129,9 +133,5 @@ public class ExpressionComparatorTest {
 
   @Test public void twoFunctionMultiplication() {
     azzert.that(ExpressionComparator.MULTIPLICATION.compare(e("f(a,b,c)"), e("f(a,b,c)")), is(0));
-  }
-
-  private int cs(final String statement) {
-    return metrics.lineCount(s(statement));
   }
 }

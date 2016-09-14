@@ -26,12 +26,12 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/org.spartan.refactoring.BuilderID.launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/il.org.spartan.spartanizer.BuilderID.launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.spartan.refactoring.BuilderID</name>
+			<name>il.org.spartan.spartanizer.BuilderID</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -50,8 +50,8 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.spartan.refactoring.builder.Nature</nature>
-		<nature>org.spartan.refactoring.NatureID</nature>
+		<nature>il.org.spartan.spartanizer.builder.Nature</nature>
+		<nature>il.org.spartan.spartanizer.NatureID</nature>
 		<nature>il.org.spartan.spartanizer.NatureID</nature>
 	</natures>
 </projectDescription>

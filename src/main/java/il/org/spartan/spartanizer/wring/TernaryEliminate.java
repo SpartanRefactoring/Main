@@ -12,15 +12,15 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression());
+  }
+
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate conditional exprssion with identical branches";
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return plant(extract.core(¢.getThenExpression())).into(¢.getParent());
-  }
-
-  @Override public boolean claims(final ConditionalExpression ¢) {
-    return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression());
   }
 }

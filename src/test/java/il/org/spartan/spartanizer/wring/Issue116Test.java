@@ -11,7 +11,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue116Test {
-  
   @Test public void issue116_01() {
     trimming("\"\" + x").to("x + \"\"").stays();
   }
@@ -37,7 +36,7 @@ public class Issue116Test {
         .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
         .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"").stays();
   }
-  
+
   @Test public void issue116_07() {
     trimming("\"\" + 0 + (x - 7)").to("0 + \"\" + (x - 7)").stays();
   }

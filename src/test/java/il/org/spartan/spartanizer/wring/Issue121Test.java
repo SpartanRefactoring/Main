@@ -83,7 +83,7 @@ import org.junit.*;
                 + "}");
   }
 
-  //That is a true renaming bug, and a true Environment issue.
+  // That is a true renaming bug, and a true Environment issue.
   @Ignore public void test04() {
     trimming("class A{"//
         + "class B{"//
@@ -116,7 +116,7 @@ import org.junit.*;
                 + "}"//
                 + "}");
   }
-  
+
   @Test public void test05() {
     trimming("class A{"//
         + "class B{"//
@@ -149,5 +149,4 @@ import org.junit.*;
                 + "}"//
                 + "}");
   }
-
 }

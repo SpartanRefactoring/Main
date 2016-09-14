@@ -11,8 +11,20 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2016-08-08 18:11:23 +0300 */
 @SuppressWarnings({ "unused" }) public abstract class VariableBindingVisitor extends ASTVisitor {
+  public class Binding {
+    // To be written
+  }
+
   /** stores binding information of all nodes */
   final Map<ASTNode, Binding> environmentOf = new HashMap<>();
+
+  /** collects all binding information, starting at the {@link ASTNode} of the
+   * root of the parameter
+   * @param ¢ a node on the tree, whose root is the strarting point of the
+   *        collection */
+  void collect(final ASTNode ¢) {
+    // TBD
+  }
 
   /** This function listens to the visiting actions and intercepts the calls as
    * necessary. At the first call to it during an invocation of
@@ -32,19 +44,7 @@ import org.eclipse.jdt.core.dom.*;
     // To be realized by user
   }
 
-  /** collects all binding information, starting at the {@link ASTNode} of the
-   * root of the parameter
-   * @param ¢ a node on the tree, whose root is the strarting point of the
-   *        collection */
-  void collect(final ASTNode ¢) {
-    // TBD
-  }
-
   boolean seen(final ASTNode ¢) {
     return environmentOf.containsKey(¢);
-  }
-
-  public class Binding {
-    // To be written
   }
 }

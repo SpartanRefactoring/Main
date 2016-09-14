@@ -16,6 +16,23 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2015-07-14 */
 public enum precedence {
   ;
+  /** *An empty <code><b>enum</b></code> for fluent programming. The name should
+   * say it all: The name, followed by a dot, followed by a method name, should
+   * read like a sentence phrase.
+   * @author Yossi Gil
+   * @since 2015-07-14 */
+  public enum is {
+    ;
+    /** determine whether an integer falls within the legal range of
+     * precedences.
+     * @param precedence JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a legal
+     *         precedence of Java. */
+    public static boolean legal(final int precedence) {
+      return precedence >= 1 && precedence <= 15;
+    }
+  }
+
   public static final int UNDEFINED = -1;
   private static final ChainStringToIntegerMap of = new ChainStringToIntegerMap()//
       .putOn(1, "[]", ".", "() invoke", "++ post", "-- post", "MethodInvocation", "PostfixExpression", "ArrayAccess", "FieldAccess", "QualifiedName") //
@@ -66,6 +83,18 @@ public enum precedence {
     return is.legal(precedence.of(¢));
   }
 
+  private static int of(final Assignment ¢) {
+    return of(¢.getOperator());
+  }
+
+  /** Determine the precedence of an
+   * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
+   * @param o JD
+   * @return precedence of the parameter */
+  private static int of(final Assignment.Operator ¢) {
+    return of(¢ + "");
+  }
+
   /** Determine the precedence of an arbitrary {@link ASTNode}
    * @param n JD
    * @return precedence of the parameter */
@@ -89,12 +118,20 @@ public enum precedence {
     }
   }
 
+  private static int of(final InfixExpression ¢) {
+    return of(¢.getOperator());
+  }
+
   /** Determine the precedence of an
    * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator}
    * @param o JD
    * @return precedence of the parameter */
   public static int of(final InfixExpression.Operator ¢) {
     return of(¢ + "");
+  }
+
+  private static int of(final String key) {
+    return !of.containsKey(key) ? UNDEFINED : of.get(key);
   }
 
   /** Determine the precedence of two expressions is the same.
@@ -113,42 +150,5 @@ public enum precedence {
    *         parameters is the same. */
   public static boolean same(final InfixExpression.Operator o, final Expression x) {
     return precedence.of(o) == precedence.of(x);
-  }
-
-  private static int of(final Assignment ¢) {
-    return of(¢.getOperator());
-  }
-
-  /** Determine the precedence of an
-   * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
-   * @param o JD
-   * @return precedence of the parameter */
-  private static int of(final Assignment.Operator ¢) {
-    return of(¢ + "");
-  }
-
-  private static int of(final InfixExpression ¢) {
-    return of(¢.getOperator());
-  }
-
-  private static int of(final String key) {
-    return !of.containsKey(key) ? UNDEFINED : of.get(key);
-  }
-
-  /** *An empty <code><b>enum</b></code> for fluent programming. The name should
-   * say it all: The name, followed by a dot, followed by a method name, should
-   * read like a sentence phrase.
-   * @author Yossi Gil
-   * @since 2015-07-14 */
-  public enum is {
-    ;
-    /** determine whether an integer falls within the legal range of
-     * precedences.
-     * @param precedence JD
-     * @return <code><b>true</b></code> <i>iff</i> the parameter is a legal
-     *         precedence of Java. */
-    public static boolean legal(final int precedence) {
-      return precedence >= 1 && precedence <= 15;
-    }
   }
 }
