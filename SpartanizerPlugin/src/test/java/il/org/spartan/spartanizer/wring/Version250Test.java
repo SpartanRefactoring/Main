@@ -87,7 +87,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = in.f(1) & 1;
+        final int x = in.f(1) & 1;
         azzert.that(x, is(0));
         azzert.that(in.a, is(1));
       }
@@ -107,7 +107,7 @@ public class Version250Test {
   @SuppressWarnings("unused") @Test public void issue_177_bitWiseOr_withSideEffects() {
     class Class {
       Class() {
-        azzert.that((f(1) | 1), is(3));
+        azzert.that(f(1) | 1, is(3));
       }
       int f(final int $) {
         azzert.that($, is(1));
@@ -144,7 +144,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = in.f(1) | 1;
+        final int x = in.f(1) | 1;
         azzert.that(x, is(3));
         azzert.that(in.a, is(1));
       }
@@ -179,7 +179,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = in.f(1) ^ 1;
+        final int x = in.f(1) ^ 1;
         azzert.that(x, is(3));
         azzert.that(in.a, is(1));
       }
@@ -202,7 +202,7 @@ public class Version250Test {
       int a;
       Class() {
         a = 0;
-        boolean x = f(true) & true;
+        final boolean x = f(true) & true;
         azzert.nay(x);
         azzert.that(a, is(1));
       }
@@ -231,7 +231,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        boolean x = in.f(true) & true;
+        final boolean x = in.f(true) & true;
         azzert.nay(x);
         azzert.aye(in.a == 1);
       }
@@ -266,7 +266,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        boolean x = in.f(true) & true;
+        final boolean x = in.f(true) & true;
         azzert.nay(x);
         azzert.that(in.a, is(1));
       }
@@ -288,7 +288,7 @@ public class Version250Test {
       int a;
       Class() {
         a = 0;
-        boolean x = f(false) | false;
+        final boolean x = f(false) | false;
         azzert.aye(x);
         azzert.that(a, is(1));
       }
@@ -317,7 +317,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        boolean x = in.f(false) | false;
+        final boolean x = in.f(false) | false;
         azzert.aye(x);
         azzert.that(in.a, is(1));
       }
@@ -352,7 +352,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = in.f(1) | 1;
+        final int x = in.f(1) | 1;
         azzert.that(x, is(3));
         azzert.that(in.a, is(1));
       }
@@ -726,6 +726,10 @@ public class Version250Test {
     trimming("public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .to("public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .stays();
+  }
+
+  @Test public void issue207() {
+    trimming("size() == 0").stays();
   }
 
   @Test public void issue31a() {
@@ -1585,12 +1589,8 @@ public class Version250Test {
   @Ignore public void trimmerBugXOR() {
     trimming("j=j^k").to("j^=k");
   }
-
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
-  }
-  @Test public void issue207() {
-    trimming("size() == 0").stays();
   }
 
 }

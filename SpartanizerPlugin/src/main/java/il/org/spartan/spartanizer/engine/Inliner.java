@@ -17,6 +17,65 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class Inliner {
+  public class InlinerWithValue extends Wrapper<Expression> {
+    InlinerWithValue(final Expression replacement) {
+      super(extract.core(replacement));
+    }
+
+    /** Computes the number of AST nodes added as a result of the replacement
+     * operation.
+     * @param es JD
+     * @return A non-negative integer, computed from the number of occurrences
+     *         of {@link #name} in the operands, and the size of the
+     *         replacement. */
+    public int addedSize(final ASTNode... ¢) {
+      return uses(¢).size() * (metrics.size(get()) - 1);
+    }
+
+    public boolean canInlineinto(final ASTNode... ¢) {
+      return Collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
+    }
+
+    public boolean canSafelyInlineinto(final ASTNode... ¢) {
+      return canInlineinto(¢) && unsafeUses(¢).isEmpty();
+    }
+
+    @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
+      for (final Wrapper<ASTNode> ¢ : ns)
+        inlineintoSingleton(get(), ¢);
+    }
+
+    @SafeVarargs public final void inlineInto(final ASTNode... ¢) {
+      inlineinto(wrap(¢));
+    }
+
+    private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {
+      final ASTNode oldExpression = n.get();
+      final ASTNode newExpression = duplicate.of(n.get());
+      n.set(newExpression);
+      rewriter.replace(oldExpression, newExpression, editGroup);
+      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
+        rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);
+    }
+
+    /** Computes the total number of AST nodes in the replaced parameters
+     * @param es JD
+     * @return A non-negative integer, computed from original size of the
+     *         parameters, the number of occurrences of {@link #name} in the
+     *         operands, and the size of the replacement. */
+    public int replacedSize(final ASTNode... ¢) {
+      return metrics.size(¢) + uses(¢).size() * (metrics.size(get()) - 1);
+    }
+
+    private List<SimpleName> unsafeUses(final ASTNode... ¢) {
+      return Collect.unsafeUsesOf(name).in(¢);
+    }
+
+    private List<SimpleName> uses(final ASTNode... ¢) {
+      return Collect.usesOf(name).in(¢);
+    }
+  }
+
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     int i = 0;
@@ -41,64 +100,5 @@ public final class Inliner {
 
   public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
-  }
-
-  public class InlinerWithValue extends Wrapper<Expression> {
-    InlinerWithValue(final Expression replacement) {
-      super(extract.core(replacement));
-    }
-
-    /** Computes the number of AST nodes added as a result of the replacement
-     * operation.
-     * @param es JD
-     * @return A non-negative integer, computed from the number of occurrences
-     *         of {@link #name} in the operands, and the size of the
-     *         replacement. */
-    public int addedSize(final ASTNode... ¢) {
-      return uses(¢).size() * (metrics.size(get()) - 1);
-    }
-
-    public boolean canInlineinto(final ASTNode... ¢) {
-      return Collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
-    }
-
-    public boolean canSafelyInlineinto(final ASTNode... ¢) {
-      return canInlineinto(¢) && unsafeUses(¢).isEmpty();
-    }
-
-    @SafeVarargs public final void inlineInto(final ASTNode... ¢) {
-      inlineinto(wrap(¢));
-    }
-
-    /** Computes the total number of AST nodes in the replaced parameters
-     * @param es JD
-     * @return A non-negative integer, computed from original size of the
-     *         parameters, the number of occurrences of {@link #name} in the
-     *         operands, and the size of the replacement. */
-    public int replacedSize(final ASTNode... ¢) {
-      return metrics.size(¢) + uses(¢).size() * (metrics.size(get()) - 1);
-    }
-
-    @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      for (final Wrapper<ASTNode> ¢ : ns)
-        inlineintoSingleton(get(), ¢);
-    }
-
-    private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {
-      final ASTNode oldExpression = n.get();
-      final ASTNode newExpression = duplicate.of(n.get());
-      n.set(newExpression);
-      rewriter.replace(oldExpression, newExpression, editGroup);
-      for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);
-    }
-
-    private List<SimpleName> unsafeUses(final ASTNode... ¢) {
-      return Collect.unsafeUsesOf(name).in(¢);
-    }
-
-    private List<SimpleName> uses(final ASTNode... ¢) {
-      return Collect.usesOf(name).in(¢);
-    }
   }
 }

@@ -46,6 +46,10 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return iz.sequencer(hop.lastStatement(¢));
   }
 
+  @Override public boolean claims(final IfStatement ¢) {
+    return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
+  }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant else (possibly after inverting if statement)";
   }
@@ -68,9 +72,5 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
         }
       }
     };
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 }

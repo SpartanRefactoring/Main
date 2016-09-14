@@ -19,23 +19,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
-  public static Expression right(final Assignment a1) {
-    return a1.getRightHandSide();
-  }
-
-  static Expression pushdown(final ConditionalExpression x) {
-    if (x == null)
-      return null;
-    final Expression then = core(x.getThenExpression());
-    final Expression elze = core(x.getElseExpression());
-    return wizard.same(then, elze) ? null : pushdown(x, then, elze);
-  }
-
-  static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
-    return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
-        : plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator())).into(x.getParent());
-  }
-
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
     for (int i = 0; i < es1.size(); ++i)
@@ -49,6 +32,19 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
 
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
     return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
+  }
+
+  static Expression pushdown(final ConditionalExpression x) {
+    if (x == null)
+      return null;
+    final Expression then = core(x.getThenExpression());
+    final Expression elze = core(x.getElseExpression());
+    return wizard.same(then, elze) ? null : pushdown(x, then, elze);
+  }
+
+  static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
+    return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
+        : plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator())).into(x.getParent());
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
@@ -123,7 +119,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (!wizard.same(receiver1, receiver2)) {
       if (receiver1 == null || !wizard.same(es1, es2))
         return null;
-      assert receiver2 != null: "r1 = " + receiver1;
+      assert receiver2 != null : "r1 = " + receiver1;
       final MethodInvocation $ = duplicate.of(e1);
       assert $ != null;
       $.setExpression(wizard.parenthesize(subject.pair(receiver1, receiver2).toCondition(x.getExpression())));
@@ -156,15 +152,19 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
+  public static Expression right(final Assignment a1) {
+    return a1.getRightHandSide();
+  }
+
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return pushdown(¢) != null;
+  }
+
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Pushdown ?: into expression";
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return pushdown(¢);
-  }
-
-  @Override public boolean claims(final ConditionalExpression ¢) {
-    return pushdown(¢) != null;
   }
 }

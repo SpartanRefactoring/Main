@@ -48,6 +48,34 @@ public class ArithmeticTest {
       trimming(" assertEquals(99*2, s_4x0_5x1.mean(), 1E-6);").to(" assertEquals(198, s_4x0_5x1.mean(), 1E-6);");
     }
 
+    @Test public void issue171_1() {
+      trimming("3*a+2").stays();
+    }
+
+    @Test public void issue171_2() {
+      trimming("3+p").stays();
+    }
+
+    @Test public void issue171_3() {
+      trimming("p%3%r").stays();
+    }
+
+    @Test public void issue171_4() {
+      trimming("p+q+w-9*4").to("p+q+w-36").stays();
+    }
+
+    @Test public void issue171_5() {
+      trimming("5L%p+q+w-9*4").to("q+w+5L%p-36").stays();
+    }
+
+    @Test public void issue171_6() {
+      trimming("5L%6.").to("5L").stays();
+    }
+
+    @Test public void issue201_1() {
+      trimming("private long l = (long) (1L * ++d * f--);").to("private long l = 1L*1L*++d*f--;").stays();
+    }
+
     @Test public void issue92_1() {
       trimming("1.+2*3 / 4 - 5").to("2*3/4+1.-5").to("6/4+1.-5").to("1+1.-5").to("2.0-5").to("-3.0");
     }
@@ -318,35 +346,5 @@ public class ArithmeticTest {
     @Test public void issue92_9() {
       trimming("3*4+2").to("12+2").to("14");
     }
-    
-    @Test public void issue171_1() {
-      trimming("3*a+2").stays();
-    }
-    
-    @Test public void issue171_2() {
-      trimming("3+p").stays();
-    }
-    
-    @Test public void issue171_3() {
-      trimming("p%3%r").stays();
-    }
-    
-    @Test public void issue171_4() {
-      trimming("p+q+w-9*4").to("p+q+w-36").stays();
-    }
-    
-    @Test public void issue171_5() {
-      trimming("5L%p+q+w-9*4").to("q+w+5L%p-36").stays();
-    }
-    
-    @Test public void issue171_6() {
-      trimming("5L%6.").to("5L").stays();
-    }
-    
-    @Test public void issue201_1() {
-      trimming("private long l = (long) (1L * ++d * f--);")
-      .to("private long l = 1L*1L*++d*f--;").stays();
-    }
-    
   }
 }

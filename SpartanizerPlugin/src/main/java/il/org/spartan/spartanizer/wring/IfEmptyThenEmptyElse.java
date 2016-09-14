@@ -21,6 +21,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.NOP {
+  @Override public boolean claims(final IfStatement ¢) {
+    return ¢ != null && iz.vacuousThen(¢) && iz.vacuousElse(¢);
+  }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
@@ -32,9 +36,5 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
         r.remove(s, g);
       }
     };
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return ¢ != null && iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 }

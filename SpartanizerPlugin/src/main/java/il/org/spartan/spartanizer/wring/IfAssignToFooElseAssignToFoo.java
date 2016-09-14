@@ -27,6 +27,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
+  @Override public boolean claims(final IfStatement ¢) {
+    return ¢ != null && wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
+  }
+
   @Override public String description(final IfStatement ¢) {
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
@@ -36,9 +40,5 @@ public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfSta
     final Assignment elze = extract.assignment(elze(s));
     return !wizard.compatible(then, elze) ? null
         : subject.pair(to(then), subject.pair(from(then), from(elze)).toCondition(s.getExpression())).toStatement(then.getOperator());
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return ¢ != null && wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
   }
 }

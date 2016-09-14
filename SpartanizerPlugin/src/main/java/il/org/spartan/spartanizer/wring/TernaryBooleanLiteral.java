@@ -112,15 +112,15 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return isTernaryOfBooleanLitreral(¢);
+  }
+
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return simplifyTernary(¢);
-  }
-
-  @Override public boolean claims(final ConditionalExpression ¢) {
-    return isTernaryOfBooleanLitreral(¢);
   }
 }

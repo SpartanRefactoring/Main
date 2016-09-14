@@ -24,13 +24,13 @@ public final class InfixAdditionSort extends InfixSorting implements Kind.Sortin
     return stringType.isNot(¢) && super.canWring(¢);
   }
 
+  @Override public boolean claims(final InfixExpression ¢) {
+    return ¢.getOperator() == PLUS;
+  }
+
   @Override public Expression replacement(final InfixExpression x) {
     final List<Expression> operands = extract.allOperands(x);
     return !stringType.isNot(x) || !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
-  }
-
-  @Override public boolean claims(final InfixExpression ¢) {
-    return ¢.getOperator() == PLUS;
   }
 
   @Override protected boolean sort(final List<Expression> ¢) {
