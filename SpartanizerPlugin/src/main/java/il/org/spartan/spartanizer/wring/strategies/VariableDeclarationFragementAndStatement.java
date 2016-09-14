@@ -22,8 +22,8 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
   }
 
   protected static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    for (final VariableDeclarationFragment b : forbiddenSiblings(f))
-      if (Collect.BOTH_SEMANTIC.of(b).existIn(ns))
+    for (final VariableDeclarationFragment ¢ : forbiddenSiblings(f))
+      if (Collect.BOTH_SEMANTIC.of(¢).existIn(ns))
         return true;
     return false;
   }
@@ -60,8 +60,8 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
     return $ - metrics.size(newParent);
   }
 
-  protected static boolean hasAnnotation(final VariableDeclarationFragment f) {
-    return hasAnnotation((VariableDeclarationStatement) f.getParent());
+  protected static boolean hasAnnotation(final VariableDeclarationFragment ¢) {
+    return hasAnnotation((VariableDeclarationStatement) ¢.getParent());
   }
 
   protected static int removalSaving(final VariableDeclarationFragment f) {
@@ -101,14 +101,14 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
   }
 
   static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier m : ms)
-      if (m.isAnnotation())
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
         return true;
     return false;
   }
 
-  static boolean hasAnnotation(final VariableDeclarationStatement s) {
-    return hasAnnotation(step.modifiers(s));
+  static boolean hasAnnotation(final VariableDeclarationStatement ¢) {
+    return hasAnnotation(step.modifiers(¢));
   }
 
   private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {

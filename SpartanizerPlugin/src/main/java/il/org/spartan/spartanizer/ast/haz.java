@@ -49,8 +49,8 @@ public enum haz {
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
-    for (final SimpleName n : ns)
-      if ("$".equals(n.getIdentifier()))
+    for (final SimpleName ¢ : ns)
+      if ("$".equals(¢.getIdentifier()))
         return true;
     return false;
   }

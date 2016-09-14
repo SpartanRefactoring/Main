@@ -20,11 +20,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixPseudoAdditionSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean claims(final InfixExpression x) {
-    return in(x.getOperator(), OR, XOR, AND);
+  @Override public boolean claims(final InfixExpression ¢) {
+    return in(¢.getOperator(), OR, XOR, AND);
   }
 
-  @Override protected boolean sort(final List<Expression> xs) {
-    return ExpressionComparator.ADDITION.sort(xs);
+  @Override protected boolean sort(final List<Expression> ¢) {
+    return ExpressionComparator.ADDITION.sort(¢);
   }
 }

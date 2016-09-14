@@ -39,11 +39,11 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-        $ = s;
+    for (final Statement ¢ : blockStatements) {
+      if (az.ifStatement(¢) != null)
+        $ = handleIf(¢, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(¢))) {
+        $ = ¢;
         break;
       }
     }

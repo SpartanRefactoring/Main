@@ -20,8 +20,8 @@ public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     int i = 0;
-    for (final ASTNode t : ns)
-      $[i++] = new Wrapper<>(t);
+    for (final ASTNode ¢ : ns)
+      $[i++] = new Wrapper<>(¢);
     return $;
   }
 
@@ -80,8 +80,8 @@ public final class Inliner {
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      for (final Wrapper<ASTNode> n : ns)
-        inlineintoSingleton(get(), n);
+      for (final Wrapper<ASTNode> ¢ : ns)
+        inlineintoSingleton(get(), ¢);
     }
 
     private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {

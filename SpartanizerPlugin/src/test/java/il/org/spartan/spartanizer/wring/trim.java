@@ -34,8 +34,8 @@ public interface trim {
   }
 
   @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-    return new fluentTrimmer(clazz, ws);
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ns) {
+    return new fluentTrimmer(clazz, ns);
   }
 
   /** Starting point of fluent API for @Testing:
@@ -58,8 +58,8 @@ public interface trim {
       };
     }
 
-    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-      return new fluentTrimmer(clazz, ws) {
+    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ns) {
+      return new fluentTrimmer(clazz, ns) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           // TODO Auto-generated method stub
           return super.checkAllConditions(pm);

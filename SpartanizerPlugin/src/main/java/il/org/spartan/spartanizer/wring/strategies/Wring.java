@@ -22,8 +22,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return true;
   }
 
-  public Rewrite make(final N n) {
-    return make(n, null);
+  public Rewrite make(final N ¢) {
+    return make(¢, null);
   }
 
   public Rewrite make(final N n, final ExclusionManager m) {
@@ -38,8 +38,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
    * @see #canWring(InfixExpression) */
-  public final boolean cantWring(final N n) {
-    return !canWring(n);
+  public final boolean cantWring(final N ¢) {
+    return !canWring(¢);
   }
 
   /** Determines whether this {@link Wring} object is applicable for a given
@@ -51,8 +51,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
   @Deprecated
-  public boolean claims(final N n) {
-    return make(n, null) != null;
+  public boolean claims(final N ¢) {
+    return make(¢, null) != null;
   }
 
   protected abstract String description(N n);

@@ -98,15 +98,15 @@ public enum sideEffects {
   }
 
   private static boolean free(final Expression... xs) {
-    for (final Expression e : xs)
-      if (!free(e))
+    for (final Expression ¢ : xs)
+      if (!free(¢))
         return false;
     return true;
   }
 
   private static boolean free(final List<?> os) {
-    for (final Object o : os)
-      if (o == null || !free(az.expression((ASTNode) o)))
+    for (final Object ¢ : os)
+      if (¢ == null || !free(az.expression((ASTNode) ¢)))
         return false;
     return true;
   }

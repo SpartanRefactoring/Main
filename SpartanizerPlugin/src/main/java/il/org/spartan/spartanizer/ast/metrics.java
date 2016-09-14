@@ -19,10 +19,10 @@ public interface metrics {
     return wizard.condense(¢).length();
   }
 
-  public static int size(final ASTNode... ns) {
+  static int size(final ASTNode... ns) {
     int $ = 0;
-    for (final ASTNode n : ns)
-      $ += metrics.nodesCount(n);
+    for (final ASTNode ¢ : ns)
+      $ += metrics.nodesCount(¢);
     return $;
   }
 
@@ -86,8 +86,8 @@ public interface metrics {
 
   static int length(final ASTNode... ns) {
     int $ = 0;
-    for (final ASTNode n : ns)
-      $ += (n + "").length();
+    for (final ASTNode ¢ : ns)
+      $ += (¢ + "").length();
     return $;
   }
 

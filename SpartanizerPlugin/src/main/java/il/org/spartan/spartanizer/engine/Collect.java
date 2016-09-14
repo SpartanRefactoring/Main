@@ -159,8 +159,8 @@ public enum Collect {
        * the {@VariableDeclarationFragment}s given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment f : fs)
-          add(f.getName());
+        for (final VariableDeclarationFragment ¢ : fs)
+          add(¢.getName());
       }
 
       /** Tries to add to the list provided by the closure (into) the
@@ -172,8 +172,8 @@ public enum Collect {
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
       boolean consider(final List<? extends Expression> xs) {
-        for (final Expression e : xs)
-          addFragments(fragments(az.variableDeclarationExpression(e)));
+        for (final Expression ¢ : xs)
+          addFragments(fragments(az.variableDeclarationExpression(¢)));
         return true;
       }
     };
@@ -230,8 +230,8 @@ public enum Collect {
       }
 
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment f : fs)
-          add(f.getName());
+        for (final VariableDeclarationFragment ¢ : fs)
+          add(¢.getName());
       }
 
       /** ThiWs function is needed cause a definition can be not in a
@@ -245,8 +245,8 @@ public enum Collect {
       }
 
       boolean consider(final List<? extends Expression> initializers) {
-        for (final Expression e : initializers)
-          addFragments(fragments(az.variableDeclarationExpression(e)));
+        for (final Expression ¢ : initializers)
+          addFragments(fragments(az.variableDeclarationExpression(¢)));
         return true;
       }
     };
@@ -291,8 +291,8 @@ public enum Collect {
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration d) {
-        for (final VariableDeclarationFragment f : getFieldsOfClass(d))
-          if (f.getName().subtreeMatch(matcher, what))
+        for (final VariableDeclarationFragment ¢ : getFieldsOfClass(d))
+          if (¢.getName().subtreeMatch(matcher, what))
             return false;
         return true;
       }
@@ -339,8 +339,8 @@ public enum Collect {
          * anonymous classes in which the formal parameters hide variables in
          * the enclosing scope. We don't want to collect them as uses of the
          * variable */
-        for (final SingleVariableDeclaration o : parameters(d))
-          if (o.getName().subtreeMatch(matcher, what))
+        for (final SingleVariableDeclaration ¢ : parameters(d))
+          if (¢.getName().subtreeMatch(matcher, what))
             return false;
         return true;
       }
@@ -375,8 +375,8 @@ public enum Collect {
       }
 
       boolean collect(@SuppressWarnings("rawtypes") final List os) {
-        for (final Object o : os)
-          add(o);
+        for (final Object ¢ : os)
+          add(¢);
         return true;
       }
 
@@ -438,8 +438,8 @@ public enum Collect {
   final List<SimpleName> collect(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
     for (final ASTNode n : ns)
-      for (final ASTVisitor v : collectors(what, $))
-        n.accept(v);
+      for (final ASTVisitor ¢ : collectors(what, $))
+        n.accept(¢);
     removeDuplicates($);
     Collections.sort($, (e1, e2) -> e1.getStartPosition() - e2.getStartPosition());
     return $;

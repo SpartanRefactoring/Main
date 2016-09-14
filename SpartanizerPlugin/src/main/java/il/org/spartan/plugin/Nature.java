@@ -19,8 +19,8 @@ public class Nature implements IProjectNature {
   @Override public void configure() throws CoreException {
     final IProjectDescription d = project.getDescription();
     final ICommand[] cs = d.getBuildSpec();
-    for (final ICommand c : cs)
-      if (c.getBuilderName().equals(Builder.BUILDER_ID))
+    for (final ICommand ¢ : cs)
+      if (¢.getBuilderName().equals(Builder.BUILDER_ID))
         return;
     set(d, cs);
   }
