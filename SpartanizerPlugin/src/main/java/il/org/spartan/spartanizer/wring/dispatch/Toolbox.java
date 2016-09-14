@@ -31,7 +31,6 @@ public class Toolbox {
   public static void refresh() {
     instance = new Maker()//
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(EnhancedForStatement.class, new EnhancedForRenameParameterToCent()) //
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
@@ -104,6 +103,7 @@ public class Toolbox {
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
+            new EnhancedForRenameParameterToCent(), //
             null)//
         .add(VariableDeclarationFragment.class, //
             new DeclarationAssignment(), //
