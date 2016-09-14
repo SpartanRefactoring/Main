@@ -22,8 +22,16 @@ public class CollectMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
+  /** Bug, what happens if we have many classes in the same file? Also, we do
+   * not want to count imports, and package instructions. Write a method that
+   * finds all classes, which could be none, at the upper level, and collect on
+   * these. Note that you have to print the file name which is common to all
+   * classes. Turn this if you like into a documentation */
   private static void collect(final CompilationUnit ¢) {
+    // TODO Matteo make sure that the counting does not include comments. Do
+    // this by adding stuff to the metrics suite.
     output.put("Length", ¢.getLength());
+    // TODO: Yossi, make this even more clever, by using function interfaces..
     output.put("Count", metrics.count(¢));
     output.put("Non whites", metrics.countNonWhites(¢));
     output.put("Condensed size", metrics.condensedSize(¢));
