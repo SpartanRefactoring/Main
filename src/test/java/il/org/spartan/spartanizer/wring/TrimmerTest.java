@@ -1424,9 +1424,9 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void issue131_11() {
-    trimming("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;")
-        .to("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
-        .to("for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
+    trimming("int t=5;int i=2;for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;return xxx;}return xxx;")
+        .to("int t=5;int i=2;for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;return xxx;}y+=15;break;}return xxx;")
+        .to("int t=5;int i=2;for(int i=4 ; i<s.length() ; ++i){if(i==5){t+=9;break;}y+=15;break;}return xxx;");
   }
 
   @Test public void issue131_12() {
