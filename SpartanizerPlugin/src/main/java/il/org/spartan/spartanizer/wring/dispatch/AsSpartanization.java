@@ -39,6 +39,14 @@ public final class AsSpartanization extends Spartanization {
       @Override public boolean visit(final IfStatement it) {
         return process(it);
       }
+      
+      @Override public boolean visit(final ForStatement it) {
+        return process(it);
+      }
+      
+      @Override public boolean visit(final WhileStatement it) {
+        return process(it);
+      }
 
       @Override public boolean visit(final InfixExpression it) {
         return process(it);
