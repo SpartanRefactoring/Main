@@ -60,8 +60,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
-  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression x) {
-    return x != null && have.booleanLiteral(core(x.getThenExpression()), core(x.getElseExpression()));
+  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
+    return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
 
   /** Consider an expression
@@ -101,8 +101,8 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * </pre>
    * </ol>
   */
-  private static Expression simplifyTernary(final ConditionalExpression x) {
-    return simplifyTernary(core(x.getThenExpression()), core(x.getElseExpression()), duplicate.of(x.getExpression()));
+  private static Expression simplifyTernary(final ConditionalExpression ¢) {
+    return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), duplicate.of(¢.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
@@ -116,11 +116,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return "Convert conditional expression into logical expression";
   }
 
-  @Override public Expression replacement(final ConditionalExpression x) {
-    return simplifyTernary(x);
+  @Override public Expression replacement(final ConditionalExpression ¢) {
+    return simplifyTernary(¢);
   }
 
-  @Override public boolean claims(final ConditionalExpression x) {
-    return isTernaryOfBooleanLitreral(x);
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return isTernaryOfBooleanLitreral(¢);
   }
 }

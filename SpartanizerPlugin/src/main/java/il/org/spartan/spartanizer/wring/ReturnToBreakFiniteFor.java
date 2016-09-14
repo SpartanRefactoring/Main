@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
 
@@ -31,7 +32,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collapse {
+public class ReturnToBreakFiniteFor extends Wring<ForStatement> implements Kind.Collapse {
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
@@ -39,11 +40,11 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
-    for (final Statement s : blockStatements) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(s))) {
-        $ = s;
+    for (final Statement ¢ : blockStatements) {
+      if (az.ifStatement(¢) != null)
+        $ = handleIf(¢, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(¢))) {
+        $ = ¢;
         break;
       }
     }
@@ -89,17 +90,17 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
     return "Convert the return inside the loop to break";
   }
 
-  @Override public String description(final Block ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
 
-  @Override public Rewrite make(final Block n) {
-    final List<Statement> ss = step.statements(n);
-    final ForStatement forStatement = az.forStatement(first(ss));
-    final ReturnStatement nextReturn = az.returnStatement(second(ss));
-    if (isInfiniteLoop(forStatement))
+  @Override public Rewrite make(final ForStatement n) {
+    final ReturnStatement nextReturn = extract.nextReturn(n);
+    if(nextReturn==null)
       return null;
-    final Statement body = forStatement.getBody();
+    if (isInfiniteLoop(n))
+      return null;
+    final Statement body = n.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     return $ == null ? null : new Rewrite(description(), $) {
@@ -108,9 +109,9 @@ public class ReturnToBreakFiniteFor extends Wring<Block> implements Kind.Collaps
       }
     };
   }
-
-  @Override public boolean claims(final Block b) {
-    final List<Statement> ss = step.statements(b);
-    return iz.forStatement(first(ss)) && iz.returnStatement(second(ss));
+  
+  @SuppressWarnings("deprecation") @Override public boolean claims(final ForStatement ¢) {
+    return ¢!=null && extract.nextReturn(¢)!=null && !isInfiniteLoop(¢);
   }
+
 }

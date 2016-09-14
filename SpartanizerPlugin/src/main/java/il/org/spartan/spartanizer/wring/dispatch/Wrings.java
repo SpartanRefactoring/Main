@@ -23,9 +23,9 @@ public enum Wrings {
   ;
   public static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
       final List<Statement> by2) {
-    for (final Statement s : from)
-      if (s != substitute)
-        duplicate.into(s, to);
+    for (final Statement ¢ : from)
+      if (¢ != substitute)
+        duplicate.into(¢, to);
       else {
         duplicate.into(by1, to);
         duplicate.into(by2, to);
@@ -66,8 +66,8 @@ public enum Wrings {
 
   public static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
-    for (final Statement s : what)
-      $.insertBefore(s, where, g);
+    for (final Statement ¢ : what)
+      $.insertBefore(¢, where, g);
     return $;
   }
 

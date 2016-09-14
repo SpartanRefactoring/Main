@@ -17,21 +17,21 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 /** Convert Infinite loops with return statements to shorter ones : </br>
  * Convert <br/>
  * <code>
- * while (true) { <br/>
+ * for(;true;) { <br/>
  * doSomething(); <br/>
  * if(done()) <br/>
  * break; <br/>
  * } <br/>
  *return XX; <br/>
  * </code> to : <br/>
- * <code> while (true) { <br/>
+ * <code> for(;true;) { <br/>
  * doSomething(); <br/>
  * if(done()) <br/>
  * return XX; <br/>
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.Collapse {
+public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implements Kind.Collapse {
   public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
@@ -70,11 +70,11 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
 
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
-    for (final Statement s : statements(b)) {
-      if (iz.ifStatement(s))
-        $ = handleIf(az.ifStatement(s), nextReturn);
-      if (iz.breakStatement(s))
-        return s;
+    for (final Statement ¢ : statements(b)) {
+      if (iz.ifStatement(¢))
+        $ = handleIf(az.ifStatement(¢), nextReturn);
+      if (iz.breakStatement(¢))
+        return ¢;
     }
     return $;
   }
@@ -91,16 +91,6 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
     return "Convert the break inside the loop to return";
   }
 
-  @Override public String description(final Block ¢) {
-    return "Convert the break inside " + ¢ + " to return";
-  }
-
-  // TODO: Dor, there are functions in extract that do much of this
-  // I will spartnize this for you. Implement in other classes
-  @Override public Rewrite make(final Block n) {
-    return make(statements(n));
-  }
-
   public Rewrite make(final ForStatement vor, final ReturnStatement nextReturn) {
     final Statement $ = make(vor.getBody(), nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
@@ -111,11 +101,18 @@ public class BlockBreakToReturnInfiniteFor extends Wring<Block> implements Kind.
     };
   }
 
-  public Rewrite make(final List<Statement> ss) {
-    final ForStatement vor = az.forStatement(first(ss));
+  public Rewrite make(final ForStatement vor) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
-    final ReturnStatement nextReturn = az.returnStatement(second(ss));
+    final ReturnStatement nextReturn = extract.nextReturn(vor);
     return nextReturn == null ? null : make(vor, nextReturn);
+  }
+
+  @Override protected String description(ForStatement n) {
+    return "Convert the break inside " + n + " to return";
+  }
+  
+  @SuppressWarnings("deprecation") @Override public boolean claims(final ForStatement ¢) {
+    return ¢!=null && extract.nextReturn(¢)!=null && isInfiniteLoop(¢);
   }
 }

@@ -16,19 +16,9 @@ import il.org.spartan.spartanizer.engine.*;
 public enum Wrap {
   OUTER("package p; // BEGIN PACKAGE \n", "\n// END PACKAGE\n"),
   /** Algorithm for wrapping/unwrapping a method */
-  Method("" + //
-      "package p;\n" + //
-      "public class C {\n" + //
-      "", "" + //
-          "} // END p\n" + //
-          ""), //
+  Method("package p;\n" + "public class C {\n", "} // END p\n"), //
   /** Algorithm for wrapping/unwrapping a statement */
-  Statement("" + Method.before + //
-      "public void m(){\n" + //
-      "", "" + //
-          "} // END m \n" + //
-          "" + Method.after + //
-          ""), //
+  Statement(Method.before + "public void m(){\n", "} // END m \n" + Method.after), //
   /** Algorithm for wrapping/unwrapping an expression */
   Expression(//
       Statement.before //

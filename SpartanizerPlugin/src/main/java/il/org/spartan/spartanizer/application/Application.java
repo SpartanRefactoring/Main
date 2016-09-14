@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
-@SuppressWarnings({ "static-method", "unused" }) public class Application implements IApplication {
+public class Application implements IApplication {
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
@@ -101,7 +101,7 @@ import il.org.spartan.utils.*;
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
-  void discardCompilationUnit(final ICompilationUnit u) {
+  static void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
@@ -121,7 +121,7 @@ import il.org.spartan.utils.*;
     }
   }
 
-  MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
+  static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {
@@ -133,7 +133,7 @@ import il.org.spartan.utils.*;
     return $.get() == null ? i : $.get();
   }
 
-  String getPackageNameFromSource(final String source) {
+  static String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
@@ -158,7 +158,7 @@ import il.org.spartan.utils.*;
       try {
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
-      } catch (final NumberFormatException e) {
+      } catch (@SuppressWarnings("unused") final NumberFormatException __) {
         // Ignore
       }
       if ("-V".equals(a))
@@ -171,11 +171,6 @@ import il.org.spartan.utils.*;
         printLog = true;
       if (!a.startsWith("-"))
         optPath = a;
-      try {
-        // TODO: Matteo, please check.
-      } catch (final NumberFormatException e) {
-        // Ignore
-      }
     }
     return optPath == null;
   }
@@ -201,7 +196,7 @@ import il.org.spartan.utils.*;
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  void printHelpPrompt() {
+  static void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
     System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "
@@ -226,16 +221,16 @@ import il.org.spartan.utils.*;
   void printLineStatistics(final List<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
-      for (final FileStats f : ss) {
-        System.out.println("\n  " + f.fileName());
-        System.out.println("    Lines before: " + f.getLinesBefore());
-        System.out.println("    Lines after: " + f.getLinesAfter());
+      for (final FileStats ¢ : ss) {
+        System.out.println("\n  " + ¢.fileName());
+        System.out.println("    Lines before: " + ¢.getLinesBefore());
+        System.out.println("    Lines after: " + ¢.getLinesAfter());
       }
     else {
       int totalBefore = 0, totalAfter = 0;
-      for (final FileStats f : ss) {
-        totalBefore += f.getLinesBefore();
-        totalAfter += f.getLinesAfter();
+      for (final FileStats ¢ : ss) {
+        totalBefore += ¢.getLinesBefore();
+        totalAfter += ¢.getLinesAfter();
       }
       System.out.println("  Lines before: " + totalBefore);
       System.out.println("  Lines after: " + totalAfter);
@@ -246,7 +241,7 @@ import il.org.spartan.utils.*;
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  private String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
@@ -267,8 +262,8 @@ import il.org.spartan.utils.*;
     else
       for (int i = 0; i < optRounds; ++i) {
         int roundSum = 0;
-        for (final FileStats f : ss)
-          roundSum += f.getRoundStat(i);
+        for (final FileStats ¢ : ss)
+          roundSum += ¢.getRoundStat(i);
         System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }
