@@ -12,7 +12,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.type.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
@@ -42,7 +41,8 @@ public class typeTest {
     private double d = c1 / c2;
     private int i = (int) d;
     private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
-    private long l = i * (b + c1) / c2;
+    // TODO: Ori
+    @SuppressWarnings("spartan") private long l = (long) (1L * ++d * f--);
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
 
     // basic tests for assignments
@@ -71,40 +71,50 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment1() {
-      azzert.that(Axiom.type(2), is(INT));
+      int x;
+      azzert.that(Axiom.type(x = 2), is(INT));
     }
 
     @Test public void axiomAssignment2() {
-      azzert.that(Axiom.type(2), is(BYTE));
+      byte x;
+      azzert.that(Axiom.type(x = 2), is(BYTE));
     }
 
     @Test public void axiomAssignment3() {
-      azzert.that(Axiom.type(2), is(CHAR));
+      char x;
+      azzert.that(Axiom.type(x = 2), is(CHAR));
     }
 
     @Test public void axiomAssignment4() {
-      azzert.that(Axiom.type(2), is(SHORT));
+      short x;
+      azzert.that(Axiom.type(x = 2), is(SHORT));
     }
 
     @Test public void axiomAssignment5() {
-      azzert.that(Axiom.type(2), is(LONG));
+      long x;
+      azzert.that(Axiom.type(x = 2), is(LONG));
     }
 
     @Test public void axiomAssignment6() {
-      azzert.that(Axiom.type(2), is(DOUBLE));
+      double x;
+      azzert.that(Axiom.type(x = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment7() {
-      azzert.that(Axiom.type("abs"), is(STRING));
+      String x;
+      azzert.that(Axiom.type(x = "abs"), is(STRING));
     }
 
     @Test public void axiomAssignment8() {
-      double y;
-      azzert.that(Axiom.type(y = 2), is(DOUBLE));
+      double x;
+      int y;
+      azzert.that(Axiom.type(x = y = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment9() {
-      azzert.that(Axiom.type((2)), is(INT));
+      double x;
+      int y;
+      azzert.that(Axiom.type(y = (int) (x = 2)), is(INT));
     }
 
     @Test public void axiomBoolean1() {
