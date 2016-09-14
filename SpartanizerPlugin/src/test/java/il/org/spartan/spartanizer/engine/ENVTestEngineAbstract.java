@@ -15,7 +15,13 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
-// TODO: Dan, header for this class.
+/**
+ * Abstract class for implementing specific Environment annotation based testers.
+ * @see EnvFlatHandler
+ * @see EnvNestedHandler
+ * @author Dan Greenstein
+ * @author Alex Kopzon
+ */
 public abstract class ENVTestEngineAbstract {
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
