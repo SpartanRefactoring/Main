@@ -185,8 +185,8 @@ class UsesCollector extends HidingDepth {
   }
 
   boolean declaredIn(final FieldDeclaration d) {
-    for (final Object o : d.fragments())
-      if (declaredIn((VariableDeclarationFragment) o))
+    for (final Object ¢ : d.fragments())
+      if (declaredIn((VariableDeclarationFragment) ¢))
         return true;
     return false;
   }
@@ -245,8 +245,8 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean declaredIn(final MethodDeclaration d) {
-    for (final Object o : d.parameters())
-      if (declaredIn((SingleVariableDeclaration) o))
+    for (final Object ¢ : d.parameters())
+      if (declaredIn((SingleVariableDeclaration) ¢))
         return true;
     return false;
   }
@@ -275,8 +275,8 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean recurse(final List<? extends ASTNode> ns) {
-    for (final ASTNode n : ns)
-      recurse(n);
+    for (final ASTNode ¢ : ns)
+      recurse(¢);
     return false;
   }
 

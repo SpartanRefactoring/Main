@@ -89,8 +89,8 @@ class Aggressive extends AbstractRenamePolicy {
 
   private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {
     int $ = 0;
-    for (final SimpleName n : ns)
-      $ = Math.max($, score(n, ss));
+    for (final SimpleName ¢ : ns)
+      $ = Math.max($, score(¢, ss));
     return $;
   }
 
@@ -103,8 +103,8 @@ class Aggressive extends AbstractRenamePolicy {
 
   private static int score(final SimpleName n, final List<ReturnStatement> ss) {
     int $ = 0;
-    for (final ReturnStatement r : ss)
-      $ += Collect.BOTH_LEXICAL.of(n).in(r).size();
+    for (final ReturnStatement ¢ : ss)
+      $ += Collect.BOTH_LEXICAL.of(n).in(¢).size();
     return $;
   }
 
@@ -130,8 +130,8 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   private boolean unused(final SimpleName n) {
-    for (final ReturnStatement s : returnStatements)
-      if (wizard.same(n, s.getExpression()))
+    for (final ReturnStatement ¢ : returnStatements)
+      if (wizard.same(n, ¢.getExpression()))
         return false;
     return true;
   }

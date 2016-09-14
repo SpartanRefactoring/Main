@@ -90,14 +90,14 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert es1 != null;
     final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
-    for (final Expression e : es1) {
-      assert e != null;
-      (isIn(e, es2) ? common : different).add(e);
+    for (final Expression ¢ : es1) {
+      assert ¢ != null;
+      (isIn(¢, es2) ? common : different).add(¢);
     }
-    for (final Expression e : es2) { // [a c]
-      assert e != null;
-      if (!isIn(e, common))
-        different.add(e);
+    for (final Expression ¢ : es2) { // [a c]
+      assert ¢ != null;
+      if (!isIn(¢, common))
+        different.add(¢);
     }
     assert common != null;
     if (!common.isEmpty())

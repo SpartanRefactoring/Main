@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Daniel Mittelman
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
-  @Override public String description(final SuperConstructorInvocation i) {
-    return "Remove vacuous 'super()' invocation in " + i;
+  @Override public String description(final SuperConstructorInvocation ¢) {
+    return "Remove vacuous 'super()' invocation in " + ¢;
   }
 
   @Override public Rewrite make(final SuperConstructorInvocation i) {
@@ -31,7 +31,7 @@ public final class SuperConstructorInvocationRemover extends Wring<SuperConstruc
     };
   }
 
-  @Override public boolean claims(final SuperConstructorInvocation i) {
-    return i.getExpression() == null && i.arguments().isEmpty();
+  @Override public boolean claims(final SuperConstructorInvocation ¢) {
+    return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 }

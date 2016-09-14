@@ -12,7 +12,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.type.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
@@ -42,7 +41,8 @@ public class typeTest {
     private double d = c1 / c2;
     private int i = (int) d;
     private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
-    private long l = (long) (1L * ++d * f--);
+    // TODO: Ori
+    @SuppressWarnings("spartan") private long l = (long) (1L * ++d * f--);
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
 
     // basic tests for assignments
@@ -194,6 +194,7 @@ public class typeTest {
       azzert.that(Axiom.type((2 * __33 / 4 + 1 - 5) % 4), is(INT));
     }
 
+    /** @DisableSpartan */
     @Test public void axiomExpression8() {
       azzert.that(Axiom.type(-3L % 4), is(LONG));
     }

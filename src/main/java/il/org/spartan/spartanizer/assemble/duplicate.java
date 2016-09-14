@@ -20,8 +20,8 @@ public enum duplicate {
    * @param from JD
    * @param into JD */
   public static <N extends ASTNode> void into(final List<N> from, final List<N> into) {
-    for (final N s : from)
-      into(s, into);
+    for (final N ¢ : from)
+      into(¢, into);
   }
 
   /** Duplicate a {@link Statement} into another list.
@@ -32,11 +32,11 @@ public enum duplicate {
   }
 
   public static void modifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
-    for (final IExtendedModifier m : from)
-      if (m.isModifier())
-        to.add(duplicate.of((Modifier) m));
-      else if (m.isAnnotation())
-        to.add(duplicate.of((Annotation) m));
+    for (final IExtendedModifier ¢ : from)
+      if (¢.isModifier())
+        to.add(duplicate.of((Modifier) ¢));
+      else if (¢.isAnnotation())
+        to.add(duplicate.of((Annotation) ¢));
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
@@ -50,8 +50,8 @@ public enum duplicate {
     if (o != wizard.MINUS2)
       return xs;
     final List<Expression> $ = new ArrayList<>();
-    for (final Expression e : xs)
-      $.add(subject.operand(e).to(wizard.MINUS1));
+    for (final Expression ¢ : xs)
+      $.add(subject.operand(¢).to(wizard.MINUS1));
     return $;
   }
 }

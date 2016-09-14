@@ -25,13 +25,13 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return True if the parenthesis can be removed and false otherwise */
-  private static boolean canRemove(final InfixExpression ¢) {
-    if (in(¢.getOperator(), TIMES, DIVIDE))
+  private static boolean canRemove(final InfixExpression x) {
+    if (in(x.getOperator(), TIMES, DIVIDE))
       return true;
-    if (¢.getOperator() != wizard.PLUS2)
+    if (x.getOperator() != wizard.PLUS2)
       return false;
-    for (final Expression e : extract.allOperands(¢))
-      if (type.get(e) != type.Primitive.Certain.STRING)
+    for (final Expression ¢ : extract.allOperands(x))
+      if (type.get(¢) != type.Primitive.Certain.STRING)
         return false;
     return true;
   }
@@ -51,15 +51,12 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean isString = false;
     for (int i = 0; i < es.size(); ++i) {
       final boolean b = isString;
-      isString = isString || !stringType.isNot(es.get(i));
+      isString |= !stringType.isNot(es.get(i));
       if (iz.parenthesizeExpression(es.get(i))) {
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
         for (; iz.parenthesizeExpression(¢); ¢ = az.parenthesizedExpression(¢).getExpression())
           replace(es, ¢, i);
-        if (iz.infixExpression(¢))
-          if (i != 0 && b && !canRemove((InfixExpression) ¢))
-            continue;
-        if (iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
+        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
         replace(es, ¢, i);
       }

@@ -70,11 +70,11 @@ public class Recurser<T> {
       return;
     }
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode n : children)
-      rs.add(new Recurser<T>(n));
+    for (final ASTNode ¢ : children)
+      rs.add(new Recurser<T>(¢));
     int index = 0;
-    for (final Recurser<T> r : rs) {
-      r.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
+    for (final Recurser<T> ¢ : rs) {
+      ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
     this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
@@ -86,11 +86,11 @@ public class Recurser<T> {
     if (children == null || children.isEmpty())
       return this.current = f.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
-    for (final ASTNode n : children)
-      rs.add(new Recurser<T>(n));
+    for (final ASTNode ¢ : children)
+      rs.add(new Recurser<T>(¢));
     int index = 0;
-    for (final Recurser<T> r : rs) {
-      this.current = r.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
+    for (final Recurser<T> ¢ : rs) {
+      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
     this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
@@ -105,8 +105,8 @@ public class Recurser<T> {
     final List<Recurser<T>> rs = new ArrayList<>();
     for (final ASTNode child : children)
       rs.add(new Recurser<T>(child));
-    for (final Recurser<T> rec : rs)
-      rec.preVisit(f);
+    for (final Recurser<T> ¢ : rs)
+      ¢.preVisit(f);
   }
 
   public T preVisit(final Function<Recurser<T>, T> f) {
@@ -118,8 +118,8 @@ public class Recurser<T> {
     for (final ASTNode child : children)
       rs.add(new Recurser<T>(child));
     int index = 0;
-    for (final Recurser<T> rec : rs) {
-      this.current = rec.from(index == 0 ? current : rs.get(index - 1).getCurrent()).preVisit(f);
+    for (final Recurser<T> ¢ : rs) {
+      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }
     return rs.isEmpty() ? this.current : rs.get(index - 1).getCurrent();
