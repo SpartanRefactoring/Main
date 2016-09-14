@@ -26,6 +26,7 @@ public final class AsSpartanization extends Spartanization {
   }
 
   // TODO: Ori, how come we need this parameter?
+
   @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(N ¢) {

@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kind.Collapse {
+public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> implements Kind.Collapse {
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
@@ -84,19 +84,15 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
     return "Convert the break inside the loop to return";
   }
 
-  @Override public String description(final Block ¢) {
+  @Override public String description(final WhileStatement ¢) {
     return "Convert the break inside " + ¢ + " to return";
   }
 
-  @Override public Rewrite make(final Block b) {
-    final List<Statement> ss = step.statements(b);
-    if (ss.size() < 2 || !iz.whileStatement(first(ss)) || !iz.returnStatement(second(ss)))
+  @Override public Rewrite make(final WhileStatement b) {
+    final ReturnStatement nextReturn = extract.nextReturn(b);
+    if (b==null || !isInfiniteLoop(b) || nextReturn==null)
       return null;
-    final WhileStatement whileStatement = az.whileStatement(first(ss));
-    final ReturnStatement nextReturn = az.returnStatement(second(ss));
-    if (!isInfiniteLoop(whileStatement))
-      return null;
-    final Statement body = whileStatement.getBody();
+    final Statement body = b.getBody();
     final Statement $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
     return $ == null ? null : new Rewrite(description(b), $) {
@@ -105,5 +101,9 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<Block> implements Kin
         r.remove(nextReturn, g);
       }
     };
+  }
+  
+  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
+    return ¢!=null && extract.nextReturn(¢)!=null && isInfiniteLoop(¢);
   }
 }
