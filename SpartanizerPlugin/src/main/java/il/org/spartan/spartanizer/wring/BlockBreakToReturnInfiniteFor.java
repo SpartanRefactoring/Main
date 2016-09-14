@@ -70,11 +70,11 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
 
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
-    for (final Statement s : statements(b)) {
-      if (iz.ifStatement(s))
-        $ = handleIf(az.ifStatement(s), nextReturn);
-      if (iz.breakStatement(s))
-        return s;
+    for (final Statement ¢ : statements(b)) {
+      if (iz.ifStatement(¢))
+        $ = handleIf(az.ifStatement(¢), nextReturn);
+      if (iz.breakStatement(¢))
+        return ¢;
     }
     return $;
   }

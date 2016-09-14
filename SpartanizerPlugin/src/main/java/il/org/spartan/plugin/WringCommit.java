@@ -38,17 +38,21 @@ public class WringCommit {
 
   public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
+    assert cu != null;
     final List<ICompilationUnit> us = eclipse.compilationUnits();
-    pm.beginTask("Spartanizing project", us.size());
+    assert us != null;
+    pm.beginTask("Spa rtanizing project", us.size());
     final IJavaProject jp = cu.getJavaProject();
     final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    assert w != null;
     for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
       try {
+        // TODO: ORIORIRORIORORI NO BUSY CURSOR
         ps.busyCursorWhile(px -> {
-          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          px.beginTask("Applying " + Wring.name(w) + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -104,7 +108,7 @@ public class WringCommit {
     DECLARATION, FILE, PROJECT
   }
 
-  static class WringCommitVisitor extends Trimmer.DispatchingVisitor {
+  static class WringCommitVisitor extends DispatchingVisitor {
     final IMarker marker;
     final ASTRewrite rewrite;
     final Type type;
@@ -157,7 +161,7 @@ public class WringCommit {
 
     protected void commitLocal( final Wring w, final ASTNode n) {
       final DisabledChecker dc = new DisabledChecker(compilationUnit);
-      n.accept(new Trimmer.DispatchingVisitor() {
+      n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           if (dc.check(n))
             return true;

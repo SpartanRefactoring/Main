@@ -6,11 +6,16 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 
+/** Hack to stop the trimmer from making more suggestions. The class should die.
+ * It serves the purpose of disabling suggestions of spartanization in a method,
+ * whose parameters are changed. But this disabling does not belong here. 
+ * @author Yossi Gil
+ * @year 2015 */
 public class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
 
-  public void exclude(final ASTNode n) {
-    inner.add(n);
+  public void exclude(final ASTNode ¢) {
+    inner.add(¢);
   }
 
   public boolean isExcluded(final ASTNode n) {
@@ -20,7 +25,7 @@ public class ExclusionManager {
     return false;
   }
 
-  void unExclude(final ASTNode n) {
-    inner.remove(n);
+  void unExclude(final ASTNode ¢) {
+    inner.remove(¢);
   }
 }

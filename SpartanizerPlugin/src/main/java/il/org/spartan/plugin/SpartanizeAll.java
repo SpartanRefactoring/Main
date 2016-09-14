@@ -18,13 +18,13 @@ public class SpartanizeAll extends BaseHandler {
 
   /** Returns the number of spartanization suggestions for a compilation unit
    * @param u JD
-   * @return number of suggesions available for the compilation unit */
+   * @return number of suggestions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    for (final Spartanization s : eclipse.safeSpartanizations) {
-      s.setMarker(null);
-      s.setCompilationUnit(u);
-      $ += s.countSuggestions();
+    for (final Spartanization ¢ : eclipse.safeSpartanizations) {
+      ¢.setMarker(null);
+      ¢.setCompilationUnit(u);
+      $ += ¢.countSuggestions();
     }
     return $;
   }
@@ -50,14 +50,15 @@ public class SpartanizeAll extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
+        // TODO: Ori, please please no busy cursor. Use ProgressManager
         ps.busyCursorWhile(pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
           "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
-          for (final ICompilationUnit u : us) {
-            eclipse.apply(u);
+          for (final ICompilationUnit ¢ : us) {
+            eclipse.apply(¢);
             pm.worked(1);
-            pm.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+            pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
           }
           pm.done();
         });

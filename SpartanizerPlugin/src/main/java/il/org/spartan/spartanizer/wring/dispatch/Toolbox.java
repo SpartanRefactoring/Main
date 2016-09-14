@@ -75,11 +75,7 @@ public class Toolbox {
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
             new InfixSubractionEvaluate(), //
-            //TODO: Yossi, InfixTermsZero and InfixAdditionNeutralElement seem to
-            //do the same thing. except the later is bugged and removes 0 from
-            //String concating as well. For now I left the second, Niv.
             new InfixTermsZero(), //
-            //new InfixAdditionNeutralElement(), //
             new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
@@ -197,30 +193,29 @@ public class Toolbox {
    * @param n JD
    * @return first {@link Wring} for which the parameter is within scope, or
    *         <code><b>null</b></code> if no such {@link Wring} is found. @ */
-  public <N extends ASTNode> Wring<N> find(final N n) {
-    return find(n, get(n));
+  public <N extends ASTNode> Wring<N> find(final N ¢) {
+    return find(¢, get(¢));
   }
   
-  public <N extends ASTNode> Wring<N> findWring(final N n, final Wring<N>... ws) {
+  public <N extends ASTNode> Wring<N> findWring(final N n, final Wring<N>... ns) {
     for (Wring<N> $ : get(n))
-      for (Wring<?> w : ws)
-        if (w.getClass().equals($.getClass())) {
+      for (Wring<?> ¢ : ns)
+        if (¢.getClass().equals($.getClass())) {
           if ($.claims(n))
             return $;
-          else
-            break;
+          break;
         }
     return null;
   }
 
-  @SuppressWarnings("unchecked") <N extends ASTNode> List<Wring<N>> get(final Class<? extends ASTNode> n) {
-    if (!inner.containsKey(n))
-      inner.put(n, new ArrayList<>());
-    return (List<Wring<N>>) (List<?>) inner.get(n);
+  @SuppressWarnings("unchecked") <N extends ASTNode> List<Wring<N>> get(final Class<? extends ASTNode> ¢) {
+    if (!inner.containsKey(¢))
+      inner.put(¢, new ArrayList<>());
+    return (List<Wring<N>>) (List<?>) inner.get(¢);
   }
 
-  <N extends ASTNode> List<Wring<N>> get(final N n) {
-    return get(n.getClass());
+  <N extends ASTNode> List<Wring<N>> get(final N ¢) {
+    return get(¢.getClass());
   }
 
   /** A builder for the enclosing class.
@@ -234,13 +229,13 @@ public class Toolbox {
      * @return <code><b>this</b></code>, for easy chaining. */
     @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
       final List<Wring<N>> l = get(n);
-      for (final Wring<N> w : ns) {
-        if (w == null)
+      for (final Wring<N> ¢ : ns) {
+        if (¢ == null)
           break;
-        assert w.wringGroup() != null : "Did you forget to use a specific kind for " + w.getClass().getSimpleName();
-        if (!w.wringGroup().isEnabled())
+        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+        if (!¢.wringGroup().isEnabled())
           continue;
-        l.add(w);
+        l.add(¢);
       }
       return this;
     }

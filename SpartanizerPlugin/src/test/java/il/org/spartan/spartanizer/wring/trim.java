@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016 */
 public interface trim {
   static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.findOpportunities(u).size();
+    return s.collectSuggesions(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
@@ -34,8 +34,8 @@ public interface trim {
   }
 
   @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-    return new fluentTrimmer(clazz, ws);
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ns) {
+    return new fluentTrimmer(clazz, ns);
   }
 
   /** Starting point of fluent API for @Testing:
@@ -58,8 +58,8 @@ public interface trim {
       };
     }
 
-    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ws) {
-      return new fluentTrimmer(clazz, ws) {
+    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ns) {
+      return new fluentTrimmer(clazz, ns) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           // TODO Auto-generated method stub
           return super.checkAllConditions(pm);

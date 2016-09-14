@@ -28,8 +28,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression> implements Kind.Collapse {
-  @Override public String description(final PrefixExpression x) {
-    return "Consolidate " + x + " with subsequent 'return' of " + step.operand(x);
+  @Override public String description(final PrefixExpression ¢) {
+    return "Consolidate " + ¢ + " with subsequent 'return' of " + step.operand(¢);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {

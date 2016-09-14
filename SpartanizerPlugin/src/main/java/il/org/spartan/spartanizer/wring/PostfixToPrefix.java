@@ -13,27 +13,27 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression> implements Kind.Idiomatic {
-  private static String description(final Operator o) {
-    return (o == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
+  private static String description(final Operator ¢) {
+    return (¢ == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }
 
-  private static PrefixExpression.Operator pre2post(final PostfixExpression.Operator o) {
-    return o == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
+  private static PrefixExpression.Operator pre2post(final PostfixExpression.Operator ¢) {
+    return ¢ == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
 
-  @Override public String description(final PostfixExpression x) {
-    return "Convert post-" + description(x.getOperator()) + " of " + step.operand(x) + " to pre-" + description(x.getOperator());
+  @Override public String description(final PostfixExpression ¢) {
+    return "Convert post-" + description(¢.getOperator()) + " of " + step.operand(¢) + " to pre-" + description(¢.getOperator());
   }
 
-  @Override public boolean canWring(final PostfixExpression x) {
-    return !(x.getParent() instanceof Expression) //
-        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(x) == null //
-        && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(x) == null //
-        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(x) == null;
+  @Override public boolean canWring(final PostfixExpression ¢) {
+    return !(¢.getParent() instanceof Expression) //
+        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(¢) == null //
+        && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(¢) == null //
+        && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
   }
 
-  @Override public PrefixExpression replacement(final PostfixExpression x) {
-    return subject.operand(step.operand(x)).to(pre2post(x.getOperator()));
+  @Override public PrefixExpression replacement(final PostfixExpression ¢) {
+    return subject.operand(step.operand(¢)).to(pre2post(¢.getOperator()));
   }
 
   @Override public boolean claims(@SuppressWarnings("unused") final PostfixExpression __) {
