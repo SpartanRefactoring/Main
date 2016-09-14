@@ -17,11 +17,11 @@ public class BlockSimplifyTest {
   }
 
   @Test public void seriesA01() {
-    trimming("public void f() {\n" + "  String source = \"10\";\n" + "  {\n" + "    BigFraction c = properFormat.parse(source);\n" + "   assert c != null;\n"
-        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
-        + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n" + "   assert c != null;\n"
-        + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n" + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n"
-        + "}").stays();
+    trimming("public void f() {\n" + "  String source = \"10\";\n" + "  {\n" + "    BigFraction c = properFormat.parse(source);\n"
+        + "   assert c != null;\n" + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n"
+        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "  {\n" + "    BigFraction c = improperFormat.parse(source);\n"
+        + "   assert c != null;\n" + "    azzert.assertEquals(BigInteger.TEN, c.getNumerator());\n"
+        + "    azzert.assertEquals(BigInteger.ONE, c.getDenominator());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA02() {
@@ -63,21 +63,21 @@ public class BlockSimplifyTest {
   }
 
   @Test public void seriesA08() {
-    trimming("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    f c = g.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n" + "  {\n"
-        + "    f c = X.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n" + "}").stays();
+    trimming("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    f c = g.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n"
+        + "  {\n" + "    f c = X.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA09() {
-    trimming("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "     g.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n" + "     X.parse(s);\n"
-        + "    Y(q, c.g());\n" + "  }\n" + "}")
-            .to("public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n"
-            ).stays();
+    trimming("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "     g.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n"
+        + "     X.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
+            .to("public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n")
+            .stays();
   }
 
   @Test public void seriesA10() {
-    trimming("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    g.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n" + "    X.parse(s);\n"
-        + "    Y(q, c.g());\n" + "  }\n" + "}")
-            .to("public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n"
-            ).stays();
+    trimming("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    g.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n"
+        + "    X.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
+            .to("public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n")
+            .stays();
   }
 }

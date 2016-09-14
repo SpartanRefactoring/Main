@@ -29,19 +29,19 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
   private static final specificity specifity = new specificity();
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Exchange left and right operands of comparison";
-  }
-
   @Override public boolean canWring(final InfixExpression ¢) {
     return specifity.compare(left(¢), right(¢)) < 0;
   }
 
-  @Override public Expression replacement(final InfixExpression ¢) {
-    return make.conjugate(¢);
-  }
-
   @Override public boolean claims(final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && iz.comparison(¢) && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
+  }
+
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Exchange left and right operands of comparison";
+  }
+
+  @Override public Expression replacement(final InfixExpression ¢) {
+    return make.conjugate(¢);
   }
 }

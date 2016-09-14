@@ -27,6 +27,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
+  @Override public boolean claims(final IfStatement ¢) {
+    return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
+  }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }
@@ -36,9 +40,5 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     final Expression then = extract.returnExpression(then(s));
     final Expression elze = extract.returnExpression(elze(s));
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(condition)).toReturn();
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 }

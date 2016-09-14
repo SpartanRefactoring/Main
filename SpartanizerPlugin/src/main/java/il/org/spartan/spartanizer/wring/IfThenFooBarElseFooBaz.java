@@ -55,6 +55,10 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return $;
   }
 
+  @Override public boolean claims(final IfStatement ¢) {
+    return make(¢) != null;
+  }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
@@ -95,9 +99,5 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
 
   @Override public Rewrite make(final IfStatement s, final ExclusionManager exclude) {
     return super.make(s, exclude);
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return make(¢) != null;
   }
 }

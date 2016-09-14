@@ -1,8 +1,5 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -86,6 +83,10 @@ public class ReturnToBreakFiniteFor extends Wring<ForStatement> implements Kind.
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
+  @SuppressWarnings("deprecation") @Override public boolean claims(final ForStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
+  }
+
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
@@ -94,13 +95,11 @@ public class ReturnToBreakFiniteFor extends Wring<ForStatement> implements Kind.
     return "Convert the return inside " + ¢ + " to break";
   }
 
-  @Override public Rewrite make(final ForStatement n) {
-    final ReturnStatement nextReturn = extract.nextReturn(n);
-    if(nextReturn==null)
+  @Override public Rewrite make(final ForStatement s) {
+    final ReturnStatement nextReturn = extract.nextReturn(s);
+    if (nextReturn == null || isInfiniteLoop(s))
       return null;
-    if (isInfiniteLoop(n))
-      return null;
-    final Statement body = n.getBody();
+    final Statement body = s.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     return $ == null ? null : new Rewrite(description(), $) {
@@ -109,9 +108,4 @@ public class ReturnToBreakFiniteFor extends Wring<ForStatement> implements Kind.
       }
     };
   }
-  
-  @SuppressWarnings("deprecation") @Override public boolean claims(final ForStatement ¢) {
-    return ¢!=null && extract.nextReturn(¢)!=null && !isInfiniteLoop(¢);
-  }
-
 }

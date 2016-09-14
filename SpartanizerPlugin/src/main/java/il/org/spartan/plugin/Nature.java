@@ -43,14 +43,14 @@ public class Nature implements IProjectNature {
     return project;
   }
 
-  @Override public void setProject(final IProject ¢) {
-    project = ¢;
-  }
-
   private void set(final IProjectDescription d, final ICommand[] cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(append(cs, c));
     project.setDescription(d, null);
+  }
+
+  @Override public void setProject(final IProject ¢) {
+    project = ¢;
   }
 }
