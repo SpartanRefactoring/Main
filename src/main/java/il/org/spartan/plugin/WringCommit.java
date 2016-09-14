@@ -86,9 +86,8 @@ public class WringCommit {
   }
 
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Wring w, final IFile f) {
-    if (f == null)
-      return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t, w);
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(f), m, t, w);
+    return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t,
+        w);
   }
 
   private static Wring<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
