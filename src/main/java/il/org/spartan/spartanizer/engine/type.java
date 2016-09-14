@@ -35,31 +35,31 @@ public interface type {
    * @author Niv Shalmon
    * @since 2016 */
   @SuppressWarnings("unused") interface Axiom {
-    static type.Primitive.Certain type(final boolean x) {
-      return type.Primitive.Certain.BOOLEAN;
+    static Certain type(final boolean x) {
+      return BOOLEAN;
     }
 
-    static type.Primitive.Certain type(final byte x) {
+    static Certain type(final byte x) {
       return BYTE;
     }
 
-    static type.Primitive.Certain type(final char x) {
+    static Certain type(final char x) {
       return CHAR;
     }
 
-    static type.Primitive.Certain type(final double x) {
+    static Certain type(final double x) {
       return DOUBLE;
     }
 
-    static type.Primitive.Certain type(final float x) {
+    static Certain type(final float x) {
       return FLOAT;
     }
 
-    static type.Primitive.Certain type(final int x) {
+    static Certain type(final int x) {
       return INT;
     }
 
-    static type.Primitive.Certain type(final long x) {
+    static Certain type(final long x) {
       return LONG;
     }
 
@@ -67,11 +67,11 @@ public interface type {
       return baptize("Object");
     }
 
-    static type.Primitive.Certain type(final short x) {
+    static Certain type(final short x) {
       return SHORT;
     }
 
-    static type.Primitive.Certain type(final String x) {
+    static Certain type(final String x) {
       return STRING;
     }
   }
@@ -471,7 +471,7 @@ public interface type {
      * {@link Primitive.Certain}
      * @author Yossi Gil
      * @since 2016 */
-    public enum Certain implements type.Primitive {
+    public enum Certain implements Primitive {
       BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
       BYTE("byte", "must be byte: (byte)1, nothing else"), //
       CHAR("char", "must be char: 'a', (char)97, nothing else"), //
@@ -492,11 +492,11 @@ public interface type {
         this.description = description;
       }
 
-      @Override public type.Primitive.Certain asPrimitiveCertain() {
+      @Override public Certain asPrimitiveCertain() {
         return this;
       }
 
-      @Override public type.Primitive.Uncertain asPrimitiveUncertain() {
+      @Override public Uncertain asPrimitiveUncertain() {
         return isIntegral() ? INTEGRAL //
             : isNumeric() ? NUMERIC //
                 : isAlphaNumeric() ? ALPHANUMERIC //
@@ -541,7 +541,7 @@ public interface type {
      * @author Yossi Gil
      * @author Niv Shalmon
      * @since 2016-08-XX */
-    public enum Uncertain implements type.Primitive {
+    public enum Uncertain implements Primitive {
       // Doubtful types, from four fold uncertainty down to bilateral
       // schizophrenia" .
       INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), //

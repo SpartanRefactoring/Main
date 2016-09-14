@@ -784,4 +784,8 @@ public enum iz {
   public static boolean wildcardType(final ASTNode ¢) {
     return is(¢, WILDCARD_TYPE);
   }
+
+  public static boolean pseudoNumber(final Expression ¢) {
+    return numberLiteral(¢) || extract.negativeLiteral(¢) != null;
+  }
 }

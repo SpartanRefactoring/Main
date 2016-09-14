@@ -10,6 +10,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -19,24 +22,6 @@ import il.org.spartan.spartanizer.wring.*;
  * @since 2016 */
 public enum make {
   ;
-  public static class ASTHolder {
-    private final AST ast;
-
-    public ASTHolder(final AST ast) {
-      this.ast = ast;
-    }
-
-    public NumberLiteral literal(final int ¢) {
-      return ast.newNumberLiteral(¢ + "");
-    }
-
-    public StringLiteral literal(final String s) {
-      final StringLiteral $ = ast.newStringLiteral();
-      $.setLiteralValue(s);
-      return $;
-    }
-  }
-
   /** Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
    * @param ¢ JD
@@ -62,18 +47,6 @@ public enum make {
     return $;
   }
 
-  static Expression makeInfix(final List<Expression> xs, final AST t) {
-    if (xs.size() == 1)
-      return first(xs);
-    final InfixExpression $ = t.newInfixExpression();
-    $.setOperator(wizard.PLUS2);
-    $.setLeftOperand(duplicate.of(first(xs)));
-    $.setRightOperand(duplicate.of(second(xs)));
-    for (int i = 2; i < xs.size(); ++i)
-      step.extendedOperands($).add(duplicate.of(xs.get(i)));
-    return $;
-  }
-
   public static StringLiteral makeStringLiteral(final ASTNode ¢) {
     return make.from(¢).literal("");
   }
@@ -84,6 +57,58 @@ public enum make {
         : ¢.getOperator() == wizard.MINUS1 ? ¢.getOperand() //
             : ¢.getOperator() == wizard.PLUS1 ? subject.operand(¢.getOperand()).to(wizard.MINUS1)//
                 : x;
+  }
+
+  /** Create a new {@link SimpleName} instance at the AST of the parameter
+   * @param n JD
+   * @param newName the name that the returned value shall bear
+   * @return a new {@link SimpleName} instance at the AST of the parameter */
+  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
+    return n.getAST().newSimpleName(newName);
+  }
+
+  /** @param ¢ JD
+   * @return parameter, but logically negated and simplified */
+  public static Expression notOf(final Expression ¢) {
+    final PrefixExpression $ = subject.operand(¢).to(NOT);
+    final Expression $$ = PrefixNotPushdown.simplifyNot($);
+    return $$ == null ? $ : $$;
+  }
+
+  public static ParenthesizedExpression parethesized(final Expression x) {
+    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
+    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
+    return $;
+  }
+
+  /** Factory method recording the expression that might be wrapped.
+   * @param inner JD */
+  public static make.PlantingExpression plant(final Expression inner) {
+    return new make.PlantingExpression(inner);
+  }
+
+  /** Factory method recording the statement might be wrapped.
+   * @param inner JD */
+  public static make.PlantingStatement plant(final Statement inner) {
+    return new make.PlantingStatement(inner);
+  }
+
+  /** @param ¢ the expression to return in the return statement
+   * @return new return statement */
+  public static ThrowStatement throwOf(final Expression ¢) {
+    return subject.operand(¢).toThrow();
+  }
+
+  static Expression makeInfix(final List<Expression> xs, final AST t) {
+    if (xs.size() == 1)
+      return first(xs);
+    final InfixExpression $ = t.newInfixExpression();
+    $.setOperator(wizard.PLUS2);
+    $.setLeftOperand(duplicate.of(first(xs)));
+    $.setRightOperand(duplicate.of(second(xs)));
+    for (int i = 2; i < xs.size(); ++i)
+      step.extendedOperands($).add(duplicate.of(xs.get(i)));
+    return $;
   }
 
   static Expression minus(final Expression x, final NumberLiteral l) {
@@ -110,36 +135,97 @@ public enum make {
     return $;
   }
 
-  /** Create a new {@link SimpleName} instance at the AST of the parameter
-   * @param n JD
-   * @param newName the name that the returned value shall bear
-   * @return a new {@link SimpleName} instance at the AST of the parameter */
-  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
-    return n.getAST().newSimpleName(newName);
-  }
-
-  /** @param ¢ JD
-   * @return parameter, but logically negated and simplified */
-  public static Expression notOf(final Expression ¢) {
-    final PrefixExpression $ = subject.operand(¢).to(NOT);
-    final Expression $$ = PrefixNotPushdown.simplifyNot($);
-    return $$ == null ? $ : $$;
-  }
-
-  public static ParenthesizedExpression parethesized(final Expression x) {
-    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
-    return $;
-  }
-
   private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
 
-  /** @param ¢ the expression to return in the return statement
-   * @return new return statement */
-  public static ThrowStatement throwOf(final Expression ¢) {
-    return subject.operand(¢).toThrow();
+  public static class ASTHolder {
+    private final AST ast;
+
+    public ASTHolder(final AST ast) {
+      this.ast = ast;
+    }
+
+    public NumberLiteral literal(final int ¢) {
+      return ast.newNumberLiteral(¢ + "");
+    }
+
+    public StringLiteral literal(final String s) {
+      final StringLiteral $ = ast.newStringLiteral();
+      $.setLiteralValue(s);
+      return $;
+    }
+  }
+
+  public static class PlantingExpression {
+    /** Determines whether an infix expression can be added to String concating
+     * without parenthesis type wise.
+     * @param Expression
+     * @return true if e is an infix expression and if it's first operand is of
+     *         type String and false otherwise */
+    static boolean isStringConactingSafe(final Expression ¢) {
+      return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
+    }
+
+    private static boolean isStringConcatingSafe(final InfixExpression ¢) {
+      return type.get(¢.getLeftOperand()) == Certain.STRING;
+    }
+
+    private final Expression inner;
+
+    /** Instantiates this class, recording the expression that might be wrapped.
+     * @param inner JD */
+    PlantingExpression(final Expression inner) {
+      this.inner = inner;
+    }
+
+    /** Executes conditional wrapping in parenthesis.
+     * @param host the destined parent
+     * @return either the expression itself, or the expression wrapped in
+     *         parenthesis, depending on the relative precedences of the
+     *         expression and its host. */
+    public Expression into(final ASTNode host) {
+      return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
+    }
+
+    public Expression intoLeft(final InfixExpression host) {
+      return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
+    }
+
+    private boolean noParenthesisRequiredIn(final ASTNode host) {
+      return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
+    }
+
+    private ParenthesizedExpression parenthesize(final Expression x) {
+      final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
+      $.setExpression(duplicate.of(x));
+      return $;
+    }
+
+    /** Determines whether inner can be added to host without parenthesis
+     * because host is a String concating InfixExpression and host is an infix
+     * expression starting with a String
+     * @param host
+     * @return */
+    private boolean stringConcatingSafeIn(final ASTNode host) {
+      if (!infixExpression(host))
+        return false;
+      final InfixExpression e = az.infixExpression(host);
+      return (e.getOperator() != wizard.PLUS2 || !stringType.isNot(e)) && isStringConactingSafe(inner);
+    }
+  }
+
+  public static class PlantingStatement {
+    private final Statement inner;
+
+    public PlantingStatement(final Statement inner) {
+      this.inner = inner;
+    }
+
+    public void intoThen(final IfStatement s) {
+      final IfStatement plant = az.ifStatement(inner);
+      s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
+    }
   }
 }

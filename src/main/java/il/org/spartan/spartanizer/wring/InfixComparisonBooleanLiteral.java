@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -60,6 +59,6 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
   @Override public Expression replacement(final InfixExpression x) {
     final BooleanLiteral literal = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
-    return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
+    return il.org.spartan.spartanizer.assemble.make.plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 }

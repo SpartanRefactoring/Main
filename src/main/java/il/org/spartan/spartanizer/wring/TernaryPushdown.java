@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -44,7 +43,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
 
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
-        : plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator())).into(x.getParent());
+        : il.org.spartan.spartanizer.assemble.make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator())).into(x.getParent());
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
