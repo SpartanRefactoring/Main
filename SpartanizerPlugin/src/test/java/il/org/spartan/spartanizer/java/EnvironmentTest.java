@@ -18,19 +18,6 @@ import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
 @Ignore public class EnvironmentTest {
-  // The difficulties of Environment - A Yossi example.
-  class A {
-    B a() {
-      return null;
-    }
-  }
-
-  class B {
-    A b() {
-      return null;
-    }
-  }
-
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   // =================== Empty Tests - Require Genesis ===================
@@ -150,7 +137,7 @@ import il.org.spartan.spartanizer.utils.*;
         "void func(MyClass my, int b) {String s = 4;\n" + "not_in_env++;}\n" + //
         "}}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = declares(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
     azzert.that($.contains("my"), is(true));
@@ -160,14 +147,14 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore public void define_8() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
     final String code = "int a = 0;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = declares(u);
     azzert.that($.contains("a"), is(true));
   }
 
@@ -592,5 +579,18 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
+  }
+
+  // The difficulties of Environment - A Yossi example.
+  class A {
+    B a() {
+      return null;
+    }
+  }
+
+  class B {
+    A b() {
+      return null;
+    }
   }
 }

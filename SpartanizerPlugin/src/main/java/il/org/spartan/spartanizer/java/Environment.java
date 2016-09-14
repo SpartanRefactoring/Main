@@ -128,7 +128,7 @@ import il.org.spartan.spartanizer.engine.*;
     return new LinkedHashSet<>();
   }
 
-  /** Spawns the first Nested {@link Environment}. Should be used when the first
+  /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
   static Environment genesis() {
     return EMPTY.spawn();
@@ -140,7 +140,8 @@ import il.org.spartan.spartanizer.engine.*;
     return new LinkedHashSet<>();
   }
 
-  /** Return true iff {@link Environment} doesn't have the name. */
+  /** Return true iff {@link Environment} doesn't have an entry with a given
+   * name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
