@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.*;
 
 /** Hack to stop the trimmer from making more suggestions. The class should die.
  * It serves the purpose of disabling suggestions of spartanization in a method,
- * whose parameters are changed. But this disabling does not belong here. 
+ * whose parameters are changed. But this disabling does not belong here.
  * @author Yossi Gil
  * @year 2015 */
 public class ExclusionManager {

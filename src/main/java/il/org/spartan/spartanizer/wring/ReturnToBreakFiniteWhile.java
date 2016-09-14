@@ -1,9 +1,6 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.lisp.*;
-
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -48,12 +45,12 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
     return $;
   }
 
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    return handleIf(az.ifStatement(s), nextReturn);
-  }
-
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
+  }
+
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    return handleIf(az.ifStatement(s), nextReturn);
   }
 
   private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
@@ -86,10 +83,13 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
+  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
+  }
+
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
-
 
   @Override public String description(final WhileStatement b) {
     return "Convert the return inside " + b + " to break";
@@ -97,19 +97,15 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
 
   @Override public Rewrite make(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
-    if (b==null || isInfiniteLoop(b) || nextReturn==null)
+    if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
     final Statement body = b.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, az.astNode((az.block(into.s("break;")).statements().get(0))), g);
+        r.replace($, az.astNode(az.block(into.s("break;")).statements().get(0)), g);
       }
     };
-  }
-  
-  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
-    return ¢!=null && extract.nextReturn(¢)!=null && !isInfiniteLoop(¢);
   }
 }

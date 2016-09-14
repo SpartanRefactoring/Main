@@ -121,12 +121,12 @@ public enum extract {
   }
 
   public static double doubleNumber(final Expression x) {
-    assert iz.numberLiteral(x)||iz.prefixExpression(x);
+    assert iz.numberLiteral(x) || iz.prefixExpression(x);
     if (!iz.longType(x))
       return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
           : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
-    if(iz.numberLiteral(x)){
-    final String token = az.numberLiteral(x).getToken();
+    if (iz.numberLiteral(x)) {
+      final String token = az.numberLiteral(x).getToken();
       return Double.parseDouble(token.substring(0, token.length() - 1));
     }
     final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
@@ -157,6 +157,14 @@ public enum extract {
       }
     });
     return $.get();
+  }
+
+  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+    if (x == null)
+      return;
+    $.add(x.getOperator());
+    findOperators(az.infixExpression(x.getLeftOperand()), $);
+    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
   /** Search for an {@link AssertStatement} in the tree rooted at an
@@ -314,14 +322,14 @@ public enum extract {
   }
 
   public static int intNumber(final Expression ¢) {
-    assert iz.numberLiteral(¢)||iz.prefixExpression(¢);
+    assert iz.numberLiteral(¢) || iz.prefixExpression(¢);
     return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
         : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
   }
 
   public static long longNumber(final Expression x) {
-    assert iz.numberLiteral(x)||iz.prefixExpression(x);
-    if(iz.numberLiteral(x)) {
+    assert iz.numberLiteral(x) || iz.prefixExpression(x);
+    if (iz.numberLiteral(x)) {
       final String token = az.numberLiteral(x).getToken();
       return Long.parseLong(iz.intType(x) ? token : token.substring(0, token.length() - 1));
     }
@@ -364,6 +372,13 @@ public enum extract {
         $.add(a);
     }
     return $;
+  }
+
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int i = 0; i < ss.size() - 1; ++i)
+      if (ss.get(i) == s)
+        return ss.get(i + 1);
+    return null;
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -481,37 +496,6 @@ public enum extract {
         extract.statementsInto((Statement) n, $);
   }
 
-  /** @param n a node to extract an expression from
-   * @return null if the statement is not an expression or return statement or
-   *         the expression if they are */
-  public static Expression throwExpression(final ASTNode n) {
-    final ThrowStatement $ = az.throwStatement(extract.singleStatement(n));
-    return $ == null ? null : $.getExpression();
-  }
-
-  /** Extract the single {@link ThrowStatement} embedded in a node.
-   * @param n JD
-   * @return single {@link ThrowStatement} embedded in the parameter, and return
-   *         it; <code><b>null</b></code> if not such statements exists. */
-  public static ThrowStatement throwStatement(final ASTNode ¢) {
-    return az.throwStatement(extract.singleStatement(¢));
-  }
-
-  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
-    if (x == null)
-      return;
-    $.add(x.getOperator());
-    findOperators(az.infixExpression(x.getLeftOperand()), $);
-    findOperators(az.infixExpression(x.getRightOperand()), $);
-  }
-
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int i = 0; i < ss.size() - 1; ++i)
-      if (ss.get(i) == s)
-        return ss.get(i + 1);
-    return null;
-  }
-
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Statement ¢ : step.statements(b))
       extract.statementsInto(¢, $);
@@ -528,5 +512,21 @@ public enum extract {
         $.add(¢);
         return $;
     }
+  }
+
+  /** @param n a node to extract an expression from
+   * @return null if the statement is not an expression or return statement or
+   *         the expression if they are */
+  public static Expression throwExpression(final ASTNode n) {
+    final ThrowStatement $ = az.throwStatement(extract.singleStatement(n));
+    return $ == null ? null : $.getExpression();
+  }
+
+  /** Extract the single {@link ThrowStatement} embedded in a node.
+   * @param n JD
+   * @return single {@link ThrowStatement} embedded in the parameter, and return
+   *         it; <code><b>null</b></code> if not such statements exists. */
+  public static ThrowStatement throwStatement(final ASTNode ¢) {
+    return az.throwStatement(extract.singleStatement(¢));
   }
 }

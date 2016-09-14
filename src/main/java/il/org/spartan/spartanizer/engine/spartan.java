@@ -40,17 +40,13 @@ public interface spartan {
     return shorten(¢.getName());
   }
 
+  /** [[Hedonistic]] */
   static String shorten(final ParameterizedType t) {
-    // the type is not ParameterizedType,
-    // hence step.typeArguments cannot be
-    // used
     final List<Type> ts = step.typeArguments(t);
     final Type first = first(ts);
-    // TODO: Ori.
-    @SuppressWarnings("spartan") final String $ = !iz.wildcardType(first) || az.wildcardType(first).getBound() != null ? shorten(ts) : shorten(t.getType());
-        if ($ == null)
+    final String $ = !iz.wildcardType(first) || az.wildcardType(first).getBound() != null ? shorten(ts) : shorten(t.getType());
+    if ($ == null)
       return null;
-    // TODO: Dan, you can use iz.in to simplify the switch
     switch (t.getType() + "") {
       case "Collection":
       case "Iterable":

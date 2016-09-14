@@ -15,12 +15,22 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
-/** 
- * convert <pre> int a = 3; return a; </pre> into <pre> return a; </pre>
+/** convert
+ * 
+ * <pre>
+ * int a = 3;
+ * return a;
+ * </pre>
+ * 
+ * into
+ * 
+ * <pre>
+ * return a;
+ * </pre>
+ * 
  * @author Yossi Gil
- * @since 2015-08-07 
- * @DisableSpartan
- */
+ * @since 2015-08-07
+ * @DisableSpartan */
 public final class DeclarationInitializerReturnAssignment extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
   @Override public String description(final VariableDeclarationFragment f) {
     return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";

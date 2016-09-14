@@ -11,8 +11,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue162Test {
-  @Ignore("issue 172")
-  @Test public void issue162_01() {
+  @Ignore("issue 172") @Test public void issue162_01() {
     trimming("0+(0+x+y+(4))").to("x+y+4").stays();
   }
 
@@ -43,7 +42,7 @@ public class Issue162Test {
   @Test public void issue162_08() {
     trimming("(f() ? x : y) + \".toString\"").stays();
   }
-  
+
   @Test public void issue162_09() {
     trimming("\"I \" + \"ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I \" + \"ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }

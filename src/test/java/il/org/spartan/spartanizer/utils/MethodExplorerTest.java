@@ -12,12 +12,13 @@ import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
-    azzert.that(new MethodExplorer(into.d("  void f() {\n" + "    try {\n" + "      f();\n" + "    } catch (final Exception|RuntimeException e) {\n" + "      f();\n" + "    }\n" + "  }")).localVariables().size(), is(1));
+    azzert.that(new MethodExplorer(into.d("  void f() {\n" + "    try {\n" + "      f();\n" + "    } catch (final Exception|RuntimeException e) {\n"
+        + "      f();\n" + "    }\n" + "  }")).localVariables().size(), is(1));
   }
 
   @Test public void localVariablesExtendedForLoop() {
-    azzert.that(new MethodExplorer(into.d(
-        "  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n" + "      $ += i;\n" + "    return $;\n" + "  } "))
+    azzert.that(new MethodExplorer(into
+        .d("  int sum(final int is[]) {\n" + "    int $ = 0;\n" + "    for (final int i : is)\n" + "      $ += i;\n" + "    return $;\n" + "  } "))
             .localVariables().size(),
         is(2));
   }
