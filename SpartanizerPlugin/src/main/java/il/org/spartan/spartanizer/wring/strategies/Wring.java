@@ -56,4 +56,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   protected abstract String description(N n);
+
+  public static String name(final Wring w) {
+    return w.getClass().getSimpleName();
+  }
 }
