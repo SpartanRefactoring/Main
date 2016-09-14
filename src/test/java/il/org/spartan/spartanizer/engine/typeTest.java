@@ -99,11 +99,12 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment8() {
+      double y;
       azzert.that(Axiom.type(y = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment9() {
-      azzert.that(Axiom.type((int) (2)), is(INT));
+      azzert.that(Axiom.type((2)), is(INT));
     }
 
     @Test public void axiomBoolean1() {
