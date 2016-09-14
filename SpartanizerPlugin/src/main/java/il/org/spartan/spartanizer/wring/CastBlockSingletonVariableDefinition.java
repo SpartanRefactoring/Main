@@ -32,13 +32,13 @@ public class CastBlockSingletonVariableDefinition extends Wring<Block> implement
     final List<Statement> ss = statements(n);
     if (ss.isEmpty())
       return null;
-    for (final Statement s : ss)
-      if (!iz.variableDeclarationStatement(s))
+    for (final Statement ¢ : ss)
+      if (!iz.variableDeclarationStatement(¢))
         return null;
     return new Rewrite(description(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final Statement s : ss)
-          r.remove(s, g);
+        for (final Statement ¢ : ss)
+          r.remove(¢, g);
       }
     };
   }

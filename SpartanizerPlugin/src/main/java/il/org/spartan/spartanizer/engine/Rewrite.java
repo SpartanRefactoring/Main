@@ -22,8 +22,8 @@ public abstract class Rewrite extends Range {
 
   static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
-    for (final ASTNode n : ns)
-      $ = $.merge(singleNodeRange(n));
+    for (final ASTNode ¢ : ns)
+      $ = $.merge(singleNodeRange(¢));
     return $;
   }
 

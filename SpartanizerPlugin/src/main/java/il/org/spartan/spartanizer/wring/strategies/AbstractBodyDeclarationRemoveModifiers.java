@@ -17,19 +17,19 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @since 2015-07-29 */
 public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
     implements Kind.SyntacticBaggage {
-  private static Set<Modifier> matches(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
+  private static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier m : modifiers(¢))
-      if (test(m, ms))
-        $.add((Modifier) m);
+    for (final IExtendedModifier ¢ : modifiers(d))
+      if (test(¢, ms))
+        $.add((Modifier) ¢);
     return $;
   }
 
   private static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
     final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier m : ms)
-      if (test(m, ps))
-        $.add((Modifier) m);
+    for (final IExtendedModifier ¢ : ms)
+      if (test(¢, ps))
+        $.add((Modifier) ¢);
     return $;
   }
 
@@ -89,8 +89,8 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
   }
 
   private static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
-    for (final Predicate<Modifier> p : ms)
-      if (p.test(m))
+    for (final Predicate<Modifier> ¢ : ms)
+      if (¢.test(m))
         return true;
     return false;
   }

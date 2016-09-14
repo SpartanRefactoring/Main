@@ -171,6 +171,7 @@ public class subject {
      * @return a method invocation expression of the method methodName with
      *         inner as an expression */
     public MethodInvocation toMethod(final String methodName) {
+      assert ast != null: "Cannot find ast for method: " + methodName + ". Inner = " + inner;
       final MethodInvocation $ = ast.newMethodInvocation();
       $.setExpression(inner);
       $.setName(ast.newSimpleName(methodName));
@@ -285,8 +286,8 @@ public class subject {
     public Several(final List<Expression> operands) {
       super(first(operands));
       this.operands = new ArrayList<>();
-      for (final Expression e : operands)
-        this.operands.add(claim(e));
+      for (final Expression ¢ : operands)
+        this.operands.add(claim(¢));
     }
 
     /** Create an infix expression from the given operator and the operands
@@ -314,8 +315,8 @@ public class subject {
     public SeveralStatements(final List<Statement> inner) {
       super(first(inner));
       this.inner = new ArrayList<>();
-      for (final Statement s : inner)
-        this.inner.add(claim(s));
+      for (final Statement ¢ : inner)
+        this.inner.add(claim(¢));
     }
 
     /** Transform the inner into a block

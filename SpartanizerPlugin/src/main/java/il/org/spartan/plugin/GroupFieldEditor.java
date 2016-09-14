@@ -118,8 +118,8 @@ public class GroupFieldEditor extends FieldEditor {
     if (members == null || members.isEmpty())
       return;
     if (c == 0)
-      for (final FieldEditor fe : members)
-        c = Math.max(c, fe.getNumberOfControls());
+      for (final FieldEditor ¢ : members)
+        c = Math.max(c, ¢.getNumberOfControls());
     gridData(c);
     gridLayout(c);
     for (final FieldEditor ¢ : members)
