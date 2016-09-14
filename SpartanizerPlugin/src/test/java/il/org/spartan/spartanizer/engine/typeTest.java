@@ -22,28 +22,29 @@ public class typeTest {
 
   // @Ignore ("type not implemented yet")
   public static class Working {
-    private static final int __33 = 3;
-    private static final int __32 = 3;
-    private static final long __2L = 2l;
-    private static final int __15 = 1;
-    private static final int __14 = 1;
-    private static final int __13 = 1;
-    private static final int __12 = 1;
-    private static final long __1L = 1L;
     private static final int __1 = 1;
+    private static final int __12 = 1;
+    private static final int __13 = 1;
+    private static final int __14 = 1;
+    private static final int __15 = 1;
+    private static final long __1L = 1L;
+    private static final long __2L = 2l;
     private static final int __3 = 3;
+    private static final int __32 = 3;
+    private static final int __33 = 3;
     /** Make sure the compiler cannot optimize this out */
-    private final byte b = (byte) (hashCode() ^ 0xDEADdeaf);
+    private byte b = (byte) (hashCode() ^ 0xDEADdeaf);
     private final boolean b1 = b > (byte) hashCode();
     private final boolean b2 = (b & (byte) hashCode() << 3) < 0;
+    private char c = (char) (b << __2L);
     private final char c1 = (char) (hashCode() ^ hashCode() << 7);
     private final char c2 = (char) (c1 << 13 ^ hashCode());
     private double d = c1 / c2;
+    private float f = (float) (0xCABAC0DAABBAL * c * d / b - (c1 ^ c2));
     private int i = (int) d;
-    private float f = (float) (0xCABAC0DAABBAL * d * i / b - (c1 ^ c2));
-    // TODO: Ori
-    @SuppressWarnings("spartan") private long l = (long) (1L * ++d * f--);
+    private long l = c2 + c1 * (b + i) << b; 
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
+    private String string = i + "" + l; 
 
     // basic tests for assignments
     @Test public void assingment1() {
@@ -71,18 +72,15 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment1() {
-      int x;
-      azzert.that(Axiom.type(x = 2), is(INT));
+      azzert.that(Axiom.type(i = 2), is(INT));
     }
 
     @Test public void axiomAssignment2() {
-      byte x;
-      azzert.that(Axiom.type(x = 2), is(BYTE));
+      azzert.that(Axiom.type(b = 2), is(BYTE));
     }
 
     @Test public void axiomAssignment3() {
-      char x;
-      azzert.that(Axiom.type(x = 2), is(CHAR));
+      azzert.that(Axiom.type(c = 2), is(CHAR));
     }
 
     @Test public void axiomAssignment4() {
@@ -91,30 +89,24 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment5() {
-      long x;
-      azzert.that(Axiom.type(x = 2), is(LONG));
+      azzert.that(Axiom.type(l = 2), is(LONG));
     }
 
     @Test public void axiomAssignment6() {
-      double x;
-      azzert.that(Axiom.type(x = 2), is(DOUBLE));
+      azzert.that(Axiom.type(d = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment7() {
-      String x;
-      azzert.that(Axiom.type(x = "abs"), is(STRING));
+      azzert.that(Axiom.type(string = "abs"), is(STRING));
     }
 
     @Test public void axiomAssignment8() {
       double x;
-      int y;
-      azzert.that(Axiom.type(x = y = 2), is(DOUBLE));
+      azzert.that(Axiom.type(d = i = 2), is(DOUBLE));
     }
 
     @Test public void axiomAssignment9() {
-      double x;
-      int y;
-      azzert.that(Axiom.type(y = (int) (x = 2)), is(INT));
+      azzert.that(Axiom.type(i = (int) (d = 2)), is(INT));
     }
 
     @Test public void axiomBoolean1() {
@@ -133,7 +125,6 @@ public class typeTest {
       azzert.that(Axiom.type((byte) 1), is(BYTE));
     }
 
-    // s for the axiom methods
     @Test public void axiomChar1() {
       azzert.that(Axiom.type('a'), is(CHAR));
     }
