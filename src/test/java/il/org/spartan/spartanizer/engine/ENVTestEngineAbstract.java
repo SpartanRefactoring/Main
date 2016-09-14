@@ -58,8 +58,11 @@ public abstract class ENVTestEngineAbstract {
   protected ASTNode n = null;
   protected LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
-  /* Add new Entry to testSet from the inner annotation. */
-  public void addTestSet(final List<MemberValuePair> ps) {
+  /**
+   * Adds a new Entry to testSet from the inner annotation.
+   * @param ps JD. 
+   */
+  protected void addTestSet(final List<MemberValuePair> ps) {
     final String s = wizard.condense(first(ps).getValue());
     /* A call to an inner function of PrudentType that calls
      * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
@@ -72,6 +75,7 @@ public abstract class ENVTestEngineAbstract {
      *
      * Returning a direct comparison is far too error prone, and would be a bad
      * idea for a debug tool. */
+    
     // add returns true iff the element did not exist in the set already.
     if (!testSet
         .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.condense(second(ps).getValue()))))))
@@ -79,30 +83,32 @@ public abstract class ENVTestEngineAbstract {
   }
 
   /** Compares the set from the annotation with the set that the checked
-   * function generates.
+   * function generates. Comparison done inorder. 
+   * Assertion fails <b>iff</b> testSet is not contained inorder in the provided set.
    * @param $ */
   public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     assert testSet != null;
     assert $ != null;
     final Iterator<Entry<String, Information>> i = testSet.iterator();
     final Iterator<Entry<String, Information>> j = $.iterator();
-    boolean flag = true;
+    boolean entryFound = true;
     while (i.hasNext()) {
       final Entry<String, Information> testEntry = i.next();
-      flag = false;
+      entryFound = false;
       while (j.hasNext()) {
         final Entry<String, Information> comparedEntry = j.next();
         if (comparedEntry.equals(testEntry)) {
-          flag = true;
+          entryFound = true;
           break;
         }
       }
     }
-    assert flag;
+    assert entryFound;
   }
 
   /** Compares the set from the annotation with the set that the checked
-   * function generates.
+   * function generates. Assertion fails <b>iff</b> testSet
+   * is not contained in the provided set.
    * @param $ */
   // TODO: Dan once the method is determined to be working, change to visibility
   // to
@@ -110,19 +116,7 @@ public abstract class ENVTestEngineAbstract {
   public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
     assert $ != null;
     assert testSet != null;
-    // TODO: Dan, it is a bit naive, childish programming to use "flag"... any
-    // chance you can make this more meaningful?
-    boolean flag;
-    for (final Entry<String, Information> e1 : testSet) {
-      flag = false;
-      for (final Entry<String, Information> e2 : $)
-        if (e1.getKey().equals(e2.getKey()) && e1.getValue().equals(e2.getValue())) {
-          flag = true;
-          break;
-        }
-      if (!flag)
-        azzert.fail("Some of the annotations are not contained in the result.");
-    }
+    assert $.containsAll(testSet) : "Some of the annotations are not contained in the result.";
   }
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
