@@ -16,7 +16,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.utils.*;
 
-/** Fluent API services for plugin
+/** Fluent API services for the plugin
  * @author Yossi Gil
  * @since 2016 */
 public interface eclipse {
