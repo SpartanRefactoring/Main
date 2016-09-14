@@ -18,42 +18,62 @@ public class CollectMetrics {
   private static CSVStatistics output = init();
 
   public static void main(final String[] where) {
-    collect(where.length != 0 ? where : new String[] { "." });
+    go(where.length != 0 ? where : new String[] { "." });
     System.err.println("Your output should be here: " + output.close());
   }
 
-  private static void collect(final CompilationUnit ¢) {
-    output.put("Length", ¢.getLength());
-    output.put("Count", metrics.count(¢));
-    output.put("Non whites", metrics.countNonWhites(¢));
-    output.put("Condensed size", metrics.condensedSize(¢));
-    output.put("Lines", metrics.lineCount(¢));
-    output.put("Dexterity", metrics.dexterity(¢));
-    output.put("Leaves", metrics.leaves(¢));
-    output.put("Nodes", metrics.nodes(¢));
-    output.put("Internals", metrics.internals(¢));
-    output.put("Vocabulary", metrics.vocabulary(¢));
-    output.put("Literacy", metrics.literacy(¢));
+  /** Bug, what happens if we have many classes in the same file? Also, we do
+   * not want to count imports, and package instructions. Write a method that
+   * finds all classes, which could be none, at the upper level, and collect on
+   * these. Note that you have to print the file name which is common to all
+   * classes. Turn this if you like into a documentation
+   * @param string */
+  private static void report(String prefix, final CompilationUnit ¢) {
+    // TODO Matteo make sure that the counting does not include comments. Do
+    // this by adding stuff to the metrics suite.
+    output.put(prefix + "Length", ¢.getLength());
+    // TODO: Yossi, make this even more clever, by using function interfaces..
+    output.put(prefix + "Count", metrics.count(¢));
+    output.put(prefix + "Non whites", metrics.countNonWhites(¢));
+    output.put(prefix + "Condensed size", metrics.condensedSize(¢));
+    output.put(prefix + "Lines", metrics.lineCount(¢));
+    output.put(prefix + "Dexterity", metrics.dexterity(¢));
+    output.put(prefix + "Leaves", metrics.leaves(¢));
+    output.put(prefix + "Nodes", metrics.nodes(¢));
+    output.put(prefix + "Internals", metrics.internals(¢));
+    output.put(prefix + "Vocabulary", metrics.vocabulary(¢));
+    output.put(prefix + "Literacy", metrics.literacy(¢));
     output.nl();
   }
 
-  private static void collect(final File f) {
+  private static void go(final File f) {
     try {
+      // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
-      collect(FileUtils.read(f));
+      go(FileUtils.read(f));
     } catch (final IOException e) {
       System.err.println(e.getMessage());
     }
   }
 
-  private static void collect(final String javaCode) {
+  private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
-    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+    CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    report("Before-", before);
+    CompilationUnit after = sptartnize(before);
+    assert after != null;
+    report("After-", after);
   }
 
-  private static void collect(final String[] where) {
-    for (final File f : new FilesGenerator(".java").from(where))
-      collect(f);
+  private static CompilationUnit sptartnize(CompilationUnit before) {
+    // TODO: try to it first with one wring only. I think this is going be
+    // better.
+    return before;
+  }
+
+  private static void go(final String[] where) {
+    for (final File ¢ : new FilesGenerator(".java").from(where))
+      go(¢);
   }
 
   private static CSVStatistics init() {

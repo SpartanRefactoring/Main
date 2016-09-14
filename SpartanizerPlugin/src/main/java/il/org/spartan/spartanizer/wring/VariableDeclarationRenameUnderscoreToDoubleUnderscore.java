@@ -15,11 +15,11 @@ public final class VariableDeclarationRenameUnderscoreToDoubleUnderscore<N exten
     return "Use double underscore instead a single underscore";
   }
 
-  @Override protected boolean change(final N n) {
-    return "_".equals(n.getName() + "");
+  @Override protected boolean change(final N ¢) {
+    return "_".equals(¢.getName() + "");
   }
 
-  @Override protected SimpleName replacement(final N n) {
-    return n.getAST().newSimpleName("__");
+  @Override protected SimpleName replacement(final N ¢) {
+    return ¢.getAST().newSimpleName("__");
   }
 }

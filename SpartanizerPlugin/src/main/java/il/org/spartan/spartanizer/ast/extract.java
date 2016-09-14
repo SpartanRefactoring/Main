@@ -513,8 +513,8 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement s : step.statements(b))
-      extract.statementsInto(s, $);
+    for (final Statement ¢ : step.statements(b))
+      extract.statementsInto(¢, $);
     return $;
   }
 

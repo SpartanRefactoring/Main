@@ -76,8 +76,8 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
   }
 
   private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
-    for (final Expression e : xs)
-      gather(e, $);
+    for (final Expression ¢ : xs)
+      gather(¢, $);
     return $;
   }
 

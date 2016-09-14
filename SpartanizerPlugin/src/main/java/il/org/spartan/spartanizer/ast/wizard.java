@@ -78,8 +78,8 @@ public interface wizard {
 
   static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
-    for (final Expression e : hop.operands(flatten.of(inner)))
-      operands.add(make.notOf(e));
+    for (final Expression ¢ : hop.operands(flatten.of(inner)))
+      operands.add(make.notOf(¢));
     return subject.operands(operands).to(PrefixNotPushdown.conjugate(inner.getOperator()));
   }
 
@@ -107,8 +107,8 @@ public interface wizard {
   static boolean compatible(final Assignment base, final Assignment... as) {
     if (hasNull(base, as))
       return false;
-    for (final Assignment a : as)
-      if (wizard.incompatible(base, a))
+    for (final Assignment ¢ : as)
+      if (wizard.incompatible(base, ¢))
         return false;
     return true;
   }

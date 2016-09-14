@@ -32,18 +32,18 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Collapse {
+public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements Kind.Collapse {
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
-    for (final Statement s : statements(b)) {
-      if (az.ifStatement(s) != null)
-        $ = handleIf(s, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(s)))
-        return s;
+    for (final Statement ¢ : statements(b)) {
+      if (az.ifStatement(¢) != null)
+        $ = handleIf(¢, nextReturn);
+      if (compareReturnStatements(nextReturn, az.returnStatement(¢)))
+        return ¢;
     }
     return $;
   }
@@ -53,9 +53,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
   }
 
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
-    if (s == null)
-      return null;
-    return handleIf(then(s), elze(s), nextReturn);
+    return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
 
   private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
@@ -84,27 +82,24 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
     return null;
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement s) {
-    return az.booleanLiteral(s.getExpression()) != null && az.booleanLiteral(s.getExpression()).booleanValue();
+  private static boolean isInfiniteLoop(final WhileStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
 
-  @Override public String description(final Block b) {
+
+  @Override public String description(final WhileStatement b) {
     return "Convert the return inside " + b + " to break";
   }
 
-  @Override public Rewrite make(final Block b) {
-    final List<Statement> ss = statements(b);
-    if (ss.size() < 2 || !iz.whileStatement(first(ss)) || !iz.returnStatement(second(ss)))
+  @Override public Rewrite make(final WhileStatement b) {
+    final ReturnStatement nextReturn = extract.nextReturn(b);
+    if (b==null || isInfiniteLoop(b) || nextReturn==null)
       return null;
-    final WhileStatement whileStatement = az.whileStatement(first(ss));
-    if (isInfiniteLoop(whileStatement))
-      return null;
-    final ReturnStatement nextReturn = az.returnStatement(second(ss));
-    final Statement body = whileStatement.getBody();
+    final Statement body = b.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     return $ == null ? null : new Rewrite(description(), $) {
@@ -112,5 +107,9 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
         r.replace($, az.astNode((az.block(into.s("break;")).statements().get(0))), g);
       }
     };
+  }
+  
+  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
+    return ¢!=null && extract.nextReturn(¢)!=null && !isInfiniteLoop(¢);
   }
 }
