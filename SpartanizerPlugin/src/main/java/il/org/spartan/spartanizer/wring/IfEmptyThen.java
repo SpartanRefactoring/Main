@@ -26,6 +26,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
+  @Override public boolean claims(final IfStatement ¢) {
+    return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
+  }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }
@@ -33,9 +37,5 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implement
   @Override public Statement replacement(final IfStatement s) {
     final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
     return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 }

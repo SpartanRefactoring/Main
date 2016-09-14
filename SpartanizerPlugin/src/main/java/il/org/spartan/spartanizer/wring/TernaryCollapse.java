@@ -48,15 +48,15 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
 
+  @Override public boolean claims(final ConditionalExpression ¢) {
+    return collapse(¢) != null;
+  }
+
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return collapse(¢);
-  }
-
-  @Override public boolean claims(final ConditionalExpression ¢) {
-    return collapse(¢) != null;
   }
 }

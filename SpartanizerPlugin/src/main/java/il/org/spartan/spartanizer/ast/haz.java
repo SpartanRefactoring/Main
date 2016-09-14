@@ -13,9 +13,21 @@ import il.org.spartan.*;
  * @since 2016-09-12 */
 public enum haz {
   ;
+  public static boolean dollar(final List<SimpleName> ns) {
+    for (final SimpleName ¢ : ns)
+      if ("$".equals(¢.getIdentifier()))
+        return true;
+    return false;
+  }
+
   @SuppressWarnings("unused") public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
+      boolean found() {
+        $.set(Boolean.TRUE);
+        return false;
+      }
+
       @Override public boolean visit(final EnumConstantDeclaration __) {
         return found();
       }
@@ -39,19 +51,7 @@ public enum haz {
       @Override public boolean visit(final VariableDeclarationStatement __) {
         return found();
       }
-
-      boolean found() {
-        $.set(Boolean.TRUE);
-        return false;
-      }
     });
     return $.get().booleanValue();
-  }
-
-  public static boolean dollar(final List<SimpleName> ns) {
-    for (final SimpleName ¢ : ns)
-      if ("$".equals(¢.getIdentifier()))
-        return true;
-    return false;
   }
 }

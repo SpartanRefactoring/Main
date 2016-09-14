@@ -55,6 +55,10 @@ import org.eclipse.jdt.core.dom.*;
     return a.toLowerCase();
   }
 
+  private boolean isGenericVariation(final SimpleName ¢) {
+    return isGenericVariation(¢.getIdentifier());
+  }
+
   public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
     return isGenericVariation(¢.getName());
   }
@@ -72,6 +76,10 @@ import org.eclipse.jdt.core.dom.*;
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
 
+  private boolean isLower(final int ¢) {
+    return Character.isLowerCase(typeName.charAt(¢));
+  }
+
   /** Shorthand for n.equals(this.shortName())
    * @param s JD
    * @return true if the provided name equals the type's short name */
@@ -79,26 +87,16 @@ import org.eclipse.jdt.core.dom.*;
     return ¢.equals(shortName());
   }
 
-  // TODO: Dan, is this a hack? You were supposed to look at the way
-  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
-  // 
-  //
-  // Yossi, I must have misunderstood your intention. In my understanding, in issue 31 you
-  // asked of me to rename identifiers whose typename's last word begins with 'ex' to 'x' instead of 'e'.
-  // 
-  // This cannot be done in a seperate wring, to the best of my understanding: We cannot have two wrings that change 
-  // the identifier in different ways, and each keeping the other wring applicable. 
-  // 
-  // The way to do that, in my opinion, is to change the renaming rules on a fundamental level - that is, here, or in spartan.java.
-  // I cannot see how can this be done in any way other than hard-coding it.
-  /** Returns the calculated short name for the type
-   * @return type's short name */
-  public String shortName() {
-    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
+  private boolean isUpper(final int ¢) {
+    return Character.isUpperCase(typeName.charAt(¢));
   }
 
   String lastName() {
     return typeName.substring(lastNameIndex());
+  }
+
+  private String lastNameCharIndex(final int ¢) {
+    return lastName().length() < ¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
 
   int lastNameIndex() {
@@ -113,24 +111,31 @@ import org.eclipse.jdt.core.dom.*;
     return 0;
   }
 
-  private boolean isGenericVariation(final SimpleName ¢) {
-    return isGenericVariation(¢.getIdentifier());
-  }
-
-  private boolean isLower(final int ¢) {
-    return Character.isLowerCase(typeName.charAt(¢));
-  }
-
-  private boolean isUpper(final int ¢) {
-    return Character.isUpperCase(typeName.charAt(¢));
-  }
-
-  private String lastNameCharIndex(final int ¢) {
-    return lastName().length() < ¢ + 1 ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
-  }
-
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
+  }
+
+  // TODO: Dan, is this a hack? You were supposed to look at the way
+  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
+  //
+  //
+  // Yossi, I must have misunderstood your intention. In my understanding, in
+  // issue 31 you
+  // asked of me to rename identifiers whose typename's last word begins with
+  // 'ex' to 'x' instead of 'e'.
+  //
+  // This cannot be done in a seperate wring, to the best of my understanding:
+  // We cannot have two wrings that change
+  // the identifier in different ways, and each keeping the other wring
+  // applicable.
+  //
+  // The way to do that, in my opinion, is to change the renaming rules on a
+  // fundamental level - that is, here, or in spartan.java.
+  // I cannot see how can this be done in any way other than hard-coding it.
+  /** Returns the calculated short name for the type
+   * @return type's short name */
+  public String shortName() {
+    return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
   // TODO: Alex, here is a nice exercise; try to find a function that would

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.wring;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -80,6 +78,10 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> imple
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
+  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
+  }
+
   @Override public String description() {
     return "Convert the break inside the loop to return";
   }
@@ -90,7 +92,7 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> imple
 
   @Override public Rewrite make(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
-    if (b==null || !isInfiniteLoop(b) || nextReturn==null)
+    if (b == null || !isInfiniteLoop(b) || nextReturn == null)
       return null;
     final Statement body = b.getBody();
     final Statement $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
@@ -101,9 +103,5 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> imple
         r.remove(nextReturn, g);
       }
     };
-  }
-  
-  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
-    return ¢!=null && extract.nextReturn(¢)!=null && isInfiniteLoop(¢);
   }
 }

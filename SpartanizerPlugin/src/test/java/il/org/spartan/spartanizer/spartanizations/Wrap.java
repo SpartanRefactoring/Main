@@ -46,12 +46,6 @@ public enum Wrap {
     throw new RuntimeException();
   }
 
-  static String removeComments(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
-  }
-
   private static String options(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
@@ -69,12 +63,26 @@ public enum Wrap {
     return $ + "";
   }
 
+  static String removeComments(final String codeFragment) {
+    return codeFragment//
+        .replaceAll("//.*?\n", "\n")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+  }
+
   private final String before;
   private final String after;
 
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;
+  }
+
+  private boolean contains(final String wrap, final String inner) {
+    final String off = off(wrap);
+    final String essence = essence(inner);
+    final String essence2 = essence(off);
+    assert essence2 != null;
+    return essence2.contains(essence);
   }
 
   /** Wrap a given code fragment, and then parse it, converting it into a
@@ -106,13 +114,5 @@ public enum Wrap {
    * @return wrapped phrase */
   public final String on(final String codeFragment) {
     return before + codeFragment + after;
-  }
-
-  private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String essence = essence(inner);
-    final String essence2 = essence(off);
-    assert essence2 != null;
-    return essence2.contains(essence);
   }
 }

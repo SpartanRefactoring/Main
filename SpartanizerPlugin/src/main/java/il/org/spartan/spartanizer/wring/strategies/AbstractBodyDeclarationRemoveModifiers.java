@@ -95,16 +95,16 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     return false;
   }
 
+  @Override public boolean claims(final BodyDeclaration ¢) {
+    final Set<Predicate<Modifier>> ps = redundancies(¢);
+    return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
+  }
+
   @Override public String description(final BodyDeclaration ¢) {
     return "Remove redundant " + redundants(¢) + " modifier(s) from declaration";
   }
 
   @Override public BodyDeclaration replacement(final BodyDeclaration $) {
     return prune(duplicate.of($), redundancies($));
-  }
-
-  @Override public boolean claims(final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> ps = redundancies(¢);
-    return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }
 }

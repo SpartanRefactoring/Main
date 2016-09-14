@@ -9,6 +9,13 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
+  @Override public boolean claims(final N n) {
+    final Statement nextStatement = extract.nextStatement(n);
+    return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
+  }
+
+  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
+
   @Override public Rewrite make(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null || cantWring(n))
@@ -20,11 +27,4 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
       }
     };
   }
-
-  @Override public boolean claims(final N n) {
-    final Statement nextStatement = extract.nextStatement(n);
-    return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
-  }
-
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }
