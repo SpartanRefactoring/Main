@@ -28,13 +28,15 @@ public class PreferencesResources {
     Centification(Kind.Centification.class), //
     DistributiveRefactoring(Kind.DistributiveRefactoring.class), //
     Dollarization(Kind.Dollarization.class), //
+    EarlyReturn(Kind.EarlyReturn.class), //
+    Idiomatic(Kind.Idiomatic.class), //
     Inlining(Kind.Inlining.class), //
     NoImpact(Kind.NOP.class), //
     ScopeReduction(Kind.ScopeReduction.class), //
     Sorting(Kind.Sorting.class), //
     SyntacticBaggage(Kind.SyntacticBaggage.class), //
     Ternarization(Kind.Ternarization.class), //
-    UnusedArguments(Kind.UnusedArguments.class), Idiomatic(Kind.Idiomatic.class), EarlyReturn(Kind.EarlyReturn.class)//
+    UnusedArguments(Kind.UnusedArguments.class), //
     ;
     public static WringGroup find(final Kind ¢) {
       return find(¢.getClass());
