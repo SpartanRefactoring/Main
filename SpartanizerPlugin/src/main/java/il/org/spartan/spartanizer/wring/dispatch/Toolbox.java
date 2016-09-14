@@ -67,11 +67,7 @@ public class Toolbox {
             // new ConcatStrings(), //removed for now so it won't break tests,
             // see issue #120
             new InfixSubractionEvaluate(), //
-            //TODO: Yossi, InfixTermsZero and InfixAdditionNeutralElement seem to
-            //do the same thing. except the later is bugged and removes 0 from
-            //String concating as well. For now I left the second, Niv.
             new InfixTermsZero(), //
-            //new InfixAdditionNeutralElement(), //
             new InfixPlusRemoveParenthesis(), //
             new InfixAdditionSort(), //
             new InfixComparisonBooleanLiteral(), //
