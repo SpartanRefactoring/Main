@@ -19,8 +19,8 @@ public class Spartanizations {
   private static final Map<String, Spartanization> map = new HashMap<String, Spartanization>() {
     static final long serialVersionUID = -8921699276699040030L;
     {
-      for (final Spartanization s : all)
-        put(s.getName(), s);
+      for (final Spartanization ¢ : all)
+        put(¢.getName(), ¢);
     }
   };
 
@@ -61,8 +61,8 @@ public class Spartanizations {
    * eclipse. */
   public static void reset() {
     map.clear();
-    for (final Spartanization s : all)
-      map.put(s.getName(), s);
+    for (final Spartanization ¢ : all)
+      map.put(¢.getName(), ¢);
   }
 
   private final Spartanization value;

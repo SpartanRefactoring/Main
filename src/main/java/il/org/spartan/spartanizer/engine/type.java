@@ -330,8 +330,8 @@ public interface type {
       assert es.size() >= 2;
       implementation $ = get(first(es));
       chop(es);
-      for (final Expression e : es)
-        $ = $.underBinaryOperator(o, get(e));
+      for (final Expression ¢ : es)
+        $ = $.underBinaryOperator(o, get(¢));
       return $;
     }
 
@@ -694,9 +694,9 @@ public interface type {
       private Uncertain(final String description, final Primitive... ps) {
         this.description = description;
         for (final Primitive p : ps)
-          for (final Certain c : p.options())
-            if (!options.contains(c))
-              options.add(c);
+          for (final Certain ¢ : p.options())
+            if (!options.contains(¢))
+              options.add(¢);
         // TODO: Niv, here is where you should insert yourself into the
         // dictionary.
       }

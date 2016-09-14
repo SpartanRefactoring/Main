@@ -52,8 +52,8 @@ public class MethodExplorer {
       }
 
       boolean add(final List<? extends Expression> xs) {
-        for (final Expression e : xs)
-          addFragments(fragments(az.variableDeclarationExpression(e)));
+        for (final Expression ¢ : xs)
+          addFragments(fragments(az.variableDeclarationExpression(¢)));
         return true;
       }
 
@@ -63,8 +63,8 @@ public class MethodExplorer {
       }
 
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment f : fs)
-          $.add(f.getName());
+        for (final VariableDeclarationFragment ¢ : fs)
+          $.add(¢.getName());
       }
     });
     return $;

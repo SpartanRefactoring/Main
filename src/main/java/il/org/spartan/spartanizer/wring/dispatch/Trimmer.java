@@ -54,7 +54,7 @@ public class Trimmer extends Spartanization {
     };
   }
 
-  @Override protected ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u) {
+  @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         if (new DisabledChecker(u).check(n))

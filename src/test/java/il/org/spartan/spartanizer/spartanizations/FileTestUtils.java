@@ -41,8 +41,8 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** Makes an Input file out of a Test file */
-  protected static File makeInFile(final File f) {
-    return createTempFile(deleteTestKeyword(makeAST.stringBuilder(f)), TestDirection.In, f);
+  protected static File makeInFile(final File ¢) {
+    return createTempFile(deleteTestKeyword(makeAST.stringBuilder(¢)), TestDirection.In, ¢);
   }
 
   /** Makes an Output file out of a Test file */
@@ -62,8 +62,8 @@ import il.org.spartan.spartanizer.engine.*;
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
-  static Spartanization makeSpartanizationObject(final File f) {
-    return makeSpartanizationObject(f.getName());
+  static Spartanization makeSpartanizationObject(final File ¢) {
+    return makeSpartanizationObject(¢.getName());
   }
 
   static Spartanization makeSpartanizationObject(final String folderForClass) {
@@ -173,9 +173,9 @@ import il.org.spartan.spartanizer.engine.*;
       assert location != null;
       assert location.listFiles() != null;
       final List<Object[]> $ = new ArrayList<>();
-      for (final File f : location.listFiles()) {
-        assert f != null;
-        go($, f);
+      for (final File ¢ : location.listFiles()) {
+        assert ¢ != null;
+        go($, ¢);
       }
       return $;
     }
