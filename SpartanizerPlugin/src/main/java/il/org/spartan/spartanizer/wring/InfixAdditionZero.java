@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
@@ -106,9 +105,9 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
           if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
+            r.replace(¢, il.org.spartan.spartanizer.assemble.make.plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, il.org.spartan.spartanizer.assemble.make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

@@ -28,18 +28,6 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
 
-  private static NumberLiteral getNegativeNumber(final Expression ¢) {
-    return !(¢ instanceof PrefixExpression) ? null : getNegativeNumber((PrefixExpression) ¢);
-  }
-
-  private static NumberLiteral getNegativeNumber(final PrefixExpression ¢) {
-    return ¢.getOperator() != PrefixExpression.Operator.MINUS || !(¢.getOperand() instanceof NumberLiteral) ? null : (NumberLiteral) ¢.getOperand();
-  }
-
-  private static boolean isNumber(final Expression ¢) {
-    return ¢ instanceof NumberLiteral || getNegativeNumber(¢) != null;
-  }
-
   private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
     assert receiver != null : "All I know is that threshold='" + threshold + "', and that operator is '" + o + "'";
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
@@ -73,7 +61,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
-    NumberLiteral l = getNegativeNumber(x);
+    NumberLiteral l = extract.negativeLiteral(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
        * NumberLiteral or an PrefixExpression which is a negative number */
@@ -91,7 +79,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       final CompilationUnit u = hop.compilationUnit(x);
       if (u == null)
         return null;
-      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver == null ? BindingUtils.container(x) : receiver.resolveTypeBinding(), "isEmpty",
+      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty",
           null, x, u);
       if (b == null)
         return null;
@@ -103,8 +91,8 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
-    return isNumber(¢1) && iz.methodInvocation(¢2) //
-        || isNumber(¢2) && iz.methodInvocation(¢1);
+    return iz.pseudoNumber(¢1) && iz.methodInvocation(¢2) //
+        || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
 
   @Override public String description(final InfixExpression x) {

@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.assemble;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.assemble.plant.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import java.util.*;
@@ -9,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.plant.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -82,7 +80,7 @@ public class subject {
     public Expression to(final PostfixExpression.Operator o) {
       final PostfixExpression $ = ast.newPostfixExpression();
       $.setOperator(o);
-      $.setOperand(plant(inner).into($));
+      $.setOperand(make.plant(inner).into($));
       return $;
     }
 
@@ -94,7 +92,7 @@ public class subject {
     public PrefixExpression to(final PrefixExpression.Operator o) {
       final PrefixExpression $ = ast.newPrefixExpression();
       $.setOperator(o);
-      $.setOperand(plant(inner).into($));
+      $.setOperand(make.plant(inner).into($));
       return $;
     }
 
@@ -163,8 +161,8 @@ public class subject {
       assert o != null;
       final Assignment $ = ast.newAssignment();
       $.setOperator(o);
-      $.setLeftHandSide(plant(left).into($));
-      $.setRightHandSide(plant(right).into($));
+      $.setLeftHandSide(make.plant(left).into($));
+      $.setRightHandSide(make.plant(right).into($));
       return $;
     }
 
@@ -176,10 +174,10 @@ public class subject {
     public InfixExpression to(final InfixExpression.Operator o) {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(o);
-      $.setLeftOperand(plant(left).intoLeft($));
-      $.setRightOperand(o != wizard.PLUS2 ? plant(right).into($)
+      $.setLeftOperand(make.plant(left).intoLeft($));
+      $.setRightOperand(o != wizard.PLUS2 ? make.plant(right).into($)
           : !precedence.greater($, right)
-              && (!precedence.equal($, right) || !stringType.isNot(left) && !PlantingExpression.isStringConactingSafe(right)) && !iz.simple(right)
+              && (!precedence.equal($, right) || !stringType.isNot(left) && !make.PlantingExpression.isStringConactingSafe(right)) && !iz.simple(right)
                   ? subject.operand(right).parenthesis() : right);
       return $;
     }
@@ -192,10 +190,10 @@ public class subject {
      *         condition */
     public ConditionalExpression toCondition(final Expression condition) {
       final ConditionalExpression $ = ast.newConditionalExpression();
-      $.setExpression(plant(claim(condition)).into($));
-      $.setThenExpression(plant(left).into($));
-      assert plant(right).into($) != null : "Planting " + right + " into " + $ + "/" + parent($) + "returned null";
-      $.setElseExpression(plant(right).into($));
+      $.setExpression(make.plant(claim(condition)).into($));
+      $.setThenExpression(make.plant(left).into($));
+      assert make.plant(right).into($) != null : "Planting " + right + " into " + $ + "/" + parent($) + "returned null";
+      $.setElseExpression(make.plant(right).into($));
       return $;
     }
 
@@ -230,7 +228,7 @@ public class subject {
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
       for (int i = 2; i < operands.size(); ++i)
-        extendedOperands($).add(plant(operands.get(i)).into($));
+        extendedOperands($).add(make.plant(operands.get(i)).into($));
       return $;
     }
   }
@@ -307,7 +305,7 @@ public class subject {
       final IfStatement $ = ast.newIfStatement();
       $.setExpression(claim(condition));
       if (then != null)
-        plant.plant(then).intoThen($);
+        make.plant(then).intoThen($);
       if (elze != null)
         $.setElseStatement(elze);
       return $;
@@ -327,7 +325,7 @@ public class subject {
 
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = duplicate.of(base);
-    extendedOperands($).add(plant(duplicate.of(add)).into($));
+    extendedOperands($).add(make.plant(duplicate.of(add)).into($));
     return $;
   }
 
