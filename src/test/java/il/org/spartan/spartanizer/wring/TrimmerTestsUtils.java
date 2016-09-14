@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
 public class TrimmerTestsUtils {
   public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.findOpportunities(u).size();
+    return s.collectSuggesions(u).size();
   }
 
   static String apply(final Trimmer t, final String from) {

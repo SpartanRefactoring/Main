@@ -100,21 +100,21 @@ public abstract class Spartanization extends Refactoring {
 
   /** creates an ASTRewrite which contains the changes
    * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
-   * @param pm a progress monitor in which the progress of the refactoring is
+   * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  public final ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor pm) {
-    return createRewrite(pm, u, (IMarker) null);
+  public final ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor m) {
+    return createRewrite(u, m, (IMarker) null);
   }
 
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
    * @param u what to check
    * @return a collection of {@link Rewrite} objects each containing a
-   *         spartanization opportunity */
-  public final List<Rewrite> findOpportunities(final CompilationUnit u) {
+   *         spartanization suggestion */
+  public final List<Rewrite> collectSuggesions(final CompilationUnit u) {
     final List<Rewrite> $ = new ArrayList<>();
-    u.accept(collect($, u));
+    u.accept(collectSuggestions($, u));
     return $;
   }
 
@@ -198,7 +198,7 @@ public abstract class Spartanization extends Refactoring {
   public IMarkerResolution getToggleFile() {
     return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
   }
-  
+
   public IMarkerResolution getWringCommitDeclaration() {
     return getWringCommit(WringCommit.Type.DECLARATION, "Commit change for scope");
   }
@@ -271,13 +271,13 @@ public abstract class Spartanization extends Refactoring {
     return name;
   }
 
-  protected abstract ASTVisitor collect(final List<Rewrite> $, final CompilationUnit u);
+  protected abstract ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u);
 
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
 
   /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no
-   *         selectionat all will return false.
+   * @return true if the node is not inside selection. If there is no selection
+   *         at all will return false.
    * @DisableSpartan */
   protected boolean isNodeOutsideSelection(final ASTNode n) {
     return !isSelected(n.getStartPosition());
@@ -294,7 +294,7 @@ public abstract class Spartanization extends Refactoring {
     textChange.setEdit(createRewrite(cu, m1).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
-    totalChanges += findOpportunities(cu).size();
+    totalChanges += collectSuggesions(cu).size();
     m.done();
   }
 
@@ -323,7 +323,7 @@ public abstract class Spartanization extends Refactoring {
     pm.done();
   }
 
-  private ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m) {
+  private ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m);
@@ -338,7 +338,7 @@ public abstract class Spartanization extends Refactoring {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m);
+    return createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
   @SuppressWarnings("static-method") private IMarkerResolution getToggle(final ToggleSpartanization.Type t, final String l) {
@@ -356,7 +356,7 @@ public abstract class Spartanization extends Refactoring {
       }
     };
   }
-  
+
   @SuppressWarnings("static-method") private IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {

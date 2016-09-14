@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.wring;
-import il.org.spartan.spartanizer.wring.dispatch.Trimmer.DispatchingVisitor;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;

@@ -26,33 +26,9 @@ public final class AsSpartanization extends Spartanization {
   }
 
   // TODO: Ori, how come we need this parameter?
-  @Override protected ASTVisitor collect(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
-    return new ASTVisitor() {
-      @Override public boolean visit(final Block it) {
-        return process(it);
-      }
-
-      @Override public boolean visit(final ConditionalExpression x) {
-        return process(x);
-      }
-
-      @Override public boolean visit(final IfStatement it) {
-        return process(it);
-      }
-
-      @Override public boolean visit(final InfixExpression it) {
-        return process(it);
-      }
-
-      @Override public boolean visit(final PrefixExpression it) {
-        return process(it);
-      }
-
-      @Override public boolean visit(final VariableDeclarationFragment it) {
-        return process(it);
-      }
-
-      <N extends ASTNode> boolean process(final N n) {
+  @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
+    return new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(N n) {
         if (!inner.claims(n) || inner.cantWring(n))
           return true;
         $.add(inner.make(n));
@@ -62,32 +38,8 @@ public final class AsSpartanization extends Spartanization {
   }
 
   @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(final Block e) {
-        return go(e);
-      }
-
-      @Override public boolean visit(final ConditionalExpression x) {
-        return go(x);
-      }
-
-      @Override public boolean visit(final IfStatement s) {
-        return go(s);
-      }
-
-      @Override public boolean visit(final InfixExpression x) {
-        return go(x);
-      }
-
-      @Override public boolean visit(final PrefixExpression x) {
-        return go(x);
-      }
-
-      @Override public boolean visit(final VariableDeclarationFragment f) {
-        return go(f);
-      }
-
-      <N extends ASTNode> boolean go(final N n) {
+    u.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(N n) {
         if (inRange(m, n))
           inner.make(n).go(r, null);
         return true;
