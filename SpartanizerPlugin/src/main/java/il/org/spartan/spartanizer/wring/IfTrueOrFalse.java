@@ -16,6 +16,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
+  @Override public boolean claims(final IfStatement ¢) {
+    return ¢ != null && (iz.literalTrue(¢.getExpression()) || iz.literalFalse(¢.getExpression()));
+  }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }
@@ -25,9 +29,5 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
     // a 'true' or 'false'
     // get into the replace.
     return iz.literalTrue(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
-  }
-
-  @Override public boolean claims(final IfStatement ¢) {
-    return ¢ != null && (iz.literalTrue(¢.getExpression()) || iz.literalFalse(¢.getExpression()));
   }
 }

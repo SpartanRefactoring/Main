@@ -17,6 +17,38 @@ public class CollectMetrics {
   private static final String OUTPUT = "/tmp/halstead.CSV";
   private static CSVStatistics output = init();
 
+  private static void go(final File f) {
+    try {
+      // This line is going to give you trouble if you process class by class.
+      output.put("File", f.getName());
+      go(FileUtils.read(f));
+    } catch (final IOException e) {
+      System.err.println(e.getMessage());
+    }
+  }
+
+  private static void go(final String javaCode) {
+    output.put("Characters", javaCode.length());
+    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    report("Before-", before);
+    final CompilationUnit after = sptartnize(before);
+    assert after != null;
+    report("After-", after);
+  }
+
+  private static void go(final String[] where) {
+    for (final File ¢ : new FilesGenerator(".java").from(where))
+      go(¢);
+  }
+
+  private static CSVStatistics init() {
+    try {
+      return new CSVStatistics(OUTPUT, "property");
+    } catch (final IOException e) {
+      throw new RuntimeException(OUTPUT, e);
+    }
+  }
+
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
     System.err.println("Your output should be here: " + output.close());
@@ -28,7 +60,7 @@ public class CollectMetrics {
    * these. Note that you have to print the file name which is common to all
    * classes. Turn this if you like into a documentation
    * @param string */
-  private static void report(String prefix, final CompilationUnit ¢) {
+  private static void report(final String prefix, final CompilationUnit ¢) {
     // TODO Matteo make sure that the counting does not include comments. Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
@@ -46,41 +78,9 @@ public class CollectMetrics {
     output.nl();
   }
 
-  private static void go(final File f) {
-    try {
-      // This line is going to give you trouble if you process class by class.
-      output.put("File", f.getName());
-      go(FileUtils.read(f));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
-    }
-  }
-
-  private static void go(final String javaCode) {
-    output.put("Characters", javaCode.length());
-    CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    report("Before-", before);
-    CompilationUnit after = sptartnize(before);
-    assert after != null;
-    report("After-", after);
-  }
-
-  private static CompilationUnit sptartnize(CompilationUnit before) {
+  private static CompilationUnit sptartnize(final CompilationUnit before) {
     // TODO: try to it first with one wring only. I think this is going be
     // better.
     return before;
-  }
-
-  private static void go(final String[] where) {
-    for (final File ¢ : new FilesGenerator(".java").from(where))
-      go(¢);
-  }
-
-  private static CSVStatistics init() {
-    try {
-      return new CSVStatistics(OUTPUT, "property");
-    } catch (final IOException e) {
-      throw new RuntimeException(OUTPUT, e);
-    }
   }
 }

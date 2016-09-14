@@ -18,52 +18,26 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-08-20 */
 public interface plant {
-  /** Factory method recording the expression that might be wrapped.
-   * @param inner JD */
-  static PlantingExpression plant(final Expression inner) {
-    return new PlantingExpression(inner);
-  }
-
-  /** Factory method recording the statement might be wrapped.
-   * @param inner JD */
-  static PlantingStatement plant(final Statement inner) {
-    return new PlantingStatement(inner);
-  }
-
   public static class PlantingExpression {
+    /** Determines whether an infix expression can be added to String concating
+     * without parenthesis type wise.
+     * @param Expression
+     * @return true if e is an infix expression and if it's first operand is of
+     *         type String and false otherwise */
+    static boolean isStringConactingSafe(final Expression ¢) {
+      return iz.infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
+    }
+
+    private static boolean isStringConcatingSafe(final InfixExpression ¢) {
+      return type.get(¢.getLeftOperand()) == Certain.STRING;
+    }
+
     private final Expression inner;
 
     /** Instantiates this class, recording the expression that might be wrapped.
      * @param inner JD */
     PlantingExpression(final Expression inner) {
       this.inner = inner;
-    }
-    
-    /**Determines whether an infix expression can be added to String concating
-     * without parenthesis type wise.
-     * @param Expression
-     * @return true if e is an infix expression and if it's first operand 
-     * is of type String and false otherwise
-     */
-    static boolean isStringConactingSafe(final Expression ¢){
-      return iz.infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
-    }
-    
-    private static boolean isStringConcatingSafe(final InfixExpression ¢){
-      return type.get(¢.getLeftOperand()) == Certain.STRING;
-    }
-    
-    /**Determines whether inner can be added to host without parenthesis because
-     * host is a String concating InfixExpression and host is an infix expression
-     * starting with a String
-     * @param host
-     * @return
-     */
-    private boolean stringConcatingSafeIn(final ASTNode host){
-      if (!iz.infixExpression(host))
-        return false;
-      InfixExpression e = az.infixExpression(host);
-      return (e.getOperator() != wizard.PLUS2 || !stringType.isNot(e)) && isStringConactingSafe(inner);
     }
 
     /** Executes conditional wrapping in parenthesis.
@@ -80,13 +54,25 @@ public interface plant {
     }
 
     private boolean noParenthesisRequiredIn(final ASTNode host) {
-      return precedence.greater(host, inner) || precedence.equal(host, inner) && (!wizard.nonAssociative(host));
+      return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 
     private ParenthesizedExpression parenthesize(final Expression x) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
       $.setExpression(duplicate.of(x));
       return $;
+    }
+
+    /** Determines whether inner can be added to host without parenthesis
+     * because host is a String concating InfixExpression and host is an infix
+     * expression starting with a String
+     * @param host
+     * @return */
+    private boolean stringConcatingSafeIn(final ASTNode host) {
+      if (!iz.infixExpression(host))
+        return false;
+      final InfixExpression e = az.infixExpression(host);
+      return (e.getOperator() != wizard.PLUS2 || !stringType.isNot(e)) && isStringConactingSafe(inner);
     }
   }
 
@@ -101,5 +87,17 @@ public interface plant {
       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
+  }
+
+  /** Factory method recording the expression that might be wrapped.
+   * @param inner JD */
+  static PlantingExpression plant(final Expression inner) {
+    return new PlantingExpression(inner);
+  }
+
+  /** Factory method recording the statement might be wrapped.
+   * @param inner JD */
+  static PlantingStatement plant(final Statement inner) {
+    return new PlantingStatement(inner);
   }
 }

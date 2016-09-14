@@ -161,18 +161,18 @@ public enum step {
     return ¢.fragments();
   }
 
+  /** Shorthand for {@link Assignment#getRightHandSide()}
+   * @param ¢ JD
+   * @return left operand of the parameter */
+  public static Expression from(final Assignment ¢) {
+    return ¢.getRightHandSide();
+  }
+
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
   @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
     return ¢.initializers();
-  }
-
-  /** Shorthand for {@link Assignment#getLeftHandSide()}
-   * @param ¢ JD
-   * @return left operand of the parameter */
-  public static Expression to(final Assignment ¢) {
-    return ¢.getLeftHandSide();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
@@ -270,13 +270,6 @@ public enum step {
     return ¢.resources();
   }
 
-  /** Shorthand for {@link Assignment#getRightHandSide()}
-   * @param ¢ JD
-   * @return left operand of the parameter */
-  public static Expression from(final Assignment ¢) {
-    return ¢.getRightHandSide();
-  }
-
   /** Shorthand for {@link CastExpression#getExpression()}
    * @param ¢ JD
    * @return right operand of the parameter */
@@ -314,6 +307,13 @@ public enum step {
    * @return then statement of the parameter */
   public static Statement then(final IfStatement ¢) {
     return ¢.getThenStatement();
+  }
+
+  /** Shorthand for {@link Assignment#getLeftHandSide()}
+   * @param ¢ JD
+   * @return left operand of the parameter */
+  public static Expression to(final Assignment ¢) {
+    return ¢.getLeftHandSide();
   }
 
   public static Type type(final CastExpression ¢) {
