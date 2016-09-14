@@ -87,8 +87,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = 1;
-        x &= in.f(x);
+        int x = in.f(1) & 1;
         azzert.that(x, is(0));
         azzert.that(in.a, is(1));
       }
@@ -100,7 +99,7 @@ public class Version250Test {
   @Test public void issue_177_bitWiseOr_noSideEffects() {
     int a = 1;
     final int b = 2;
-    a = a|b;
+    a |= b;
     azzert.that(a, is(3));
     trimming("a=a|b").to("a|=b");
   }
@@ -108,9 +107,7 @@ public class Version250Test {
   @SuppressWarnings("unused") @Test public void issue_177_bitWiseOr_withSideEffects() {
     class Class {
       Class() {
-        int x = 1;
-        x |= f(x);
-        azzert.that(x, is(3));
+        azzert.that((1 | f(1)), is(3));
       }
       int f(final int $) {
         azzert.that($, is(1));
@@ -147,8 +144,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = 1;
-        x |= in.f(x);
+        int x = 1 | in.f(1);
         azzert.that(x, is(3));
         azzert.that(in.a, is(1));
       }
@@ -183,8 +179,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = 1;
-        x ^= in.f(x);
+        int x = 1 ^ in.f(1);
         azzert.that(x, is(3));
         azzert.that(in.a, is(1));
       }
@@ -207,8 +202,7 @@ public class Version250Test {
       int a;
       Class() {
         a = 0;
-        boolean x = true;
-        x &= f(x);
+        boolean x = true & f(true);
         azzert.nay(x);
         azzert.that(a, is(1));
       }
@@ -237,8 +231,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        boolean x = true;
-        x &= in.f(x);
+        boolean x = true & in.f(true);
         azzert.nay(x);
         azzert.aye(in.a == 1);
       }
@@ -273,8 +266,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        boolean x = true;
-        x &= in.f(x);
+        boolean x = true & in.f(true);
         azzert.nay(x);
         azzert.that(in.a, is(1));
       }
@@ -296,8 +288,7 @@ public class Version250Test {
       int a;
       Class() {
         a = 0;
-        boolean x = false;
-        x |= f(x);
+        boolean x = false | f(false);
         azzert.aye(x);
         azzert.that(a, is(1));
       }
@@ -326,8 +317,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        boolean x = false;
-        x |= in.f(x);
+        boolean x = false | in.f(false);
         azzert.aye(x);
         azzert.that(in.a, is(1));
       }
@@ -362,8 +352,7 @@ public class Version250Test {
       }
       Inner in = new Inner(0);
       Class() {
-        int x = 1;
-        x |= in.f(x);
+        int x = 1 | in.f(1);
         azzert.that(x, is(3));
         azzert.that(in.a, is(1));
       }

@@ -53,9 +53,7 @@ public class ReturnToBreakFiniteWhile extends Wring<Block> implements Kind.Colla
   }
 
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
-    if (s == null)
-      return null;
-    return handleIf(then(s), elze(s), nextReturn);
+    return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
 
   private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
