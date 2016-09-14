@@ -211,8 +211,10 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        // TODO: Alex, shouldn't we remove this line?
-        // .add(Initializer, new ModifierSort.ofInitializer(), null) //
+        // TODO: Yossi, No, as I understood, initializers in java can have annotations and modifiers,
+        // just like every declaration. Even private class field which is const assigned at the class body
+        // is called initializer, and there I know could be some modifiers.
+        .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
         .seal();
   }
 
