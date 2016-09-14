@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.assemble.plant.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -55,7 +53,7 @@ public final class Inliner {
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       for (final ASTNode use : Collect.usesOf(name).in(newExpression))
-        rewriter.replace(use, !(use instanceof Expression) ? replacement : plant((Expression) replacement).into(use.getParent()), editGroup);
+        rewriter.replace(use, !(use instanceof Expression) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup);
     }
 
     /** Computes the total number of AST nodes in the replaced parameters

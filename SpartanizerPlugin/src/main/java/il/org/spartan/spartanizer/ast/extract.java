@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast;
-
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -7,6 +7,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.PrefixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
@@ -528,5 +529,13 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
+  }
+
+  public static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
+    return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : az.numberLiteral(operand(¢));
+  }
+
+  public static NumberLiteral negativeLiteral(final Expression ¢) {
+    return negativeLiteral(az.prefixExpression(¢));
   }
 }
