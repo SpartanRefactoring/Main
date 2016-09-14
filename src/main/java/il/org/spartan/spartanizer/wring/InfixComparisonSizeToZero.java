@@ -59,7 +59,14 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
-    return replacement(o, sign * Integer.parseInt(l.getToken()), subject.operand(receiver).toMethod("isEmpty"));
+    return replacement(o, receiver, sign * Integer.parseInt(l.getToken()));
+  }
+
+  private static ASTNode replacement(final Operator o, final Expression receiver, int threshold) {
+    assert receiver != null : "All I know is that threshold='" + threshold + "', and that operator is '" + o + "'";
+    MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
+    assert $ != null : "All I know is that threshould=" + threshold + ", receiver = " + $ + ", and o=" + o;
+    return replacement(o, threshold, $);
   }
 
   private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
@@ -76,6 +83,8 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       sign = 1;
     }
     final Expression receiver = step.receiver(i);
+    if (receiver == null)
+      return null;
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
     if (i.getAST().hasResolvedBindings()) {

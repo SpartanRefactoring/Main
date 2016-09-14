@@ -185,7 +185,7 @@ public class Version250Test {
       }
     }
     new Class();
-    trimming("a=a ^ b").to("a^=b");
+    trimming("a = a ^ b ").to("a ^= b");
   }
 
 
@@ -1589,6 +1589,8 @@ public class Version250Test {
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
   }
+  @Test public void issue207() {
+    trimming("size() == 0").stays();
+  }
 
- // @formatter:on
 }
