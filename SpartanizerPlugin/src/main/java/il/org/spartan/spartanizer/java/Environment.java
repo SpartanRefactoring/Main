@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
 /* TODO Wrings to improve once Environment is complete:
- * AssignmentToPostfixIncrement (Issue 107). */
+ * AssignmentToPostfixIncrement (Issue 107). 
+ * Identifier renaming (Issue 121)*/
 @SuppressWarnings({ "unused" }) public interface Environment {
   /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
    * for now, this class is intentionally package level, and intenationally
