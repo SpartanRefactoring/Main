@@ -186,6 +186,14 @@ public class Trimmer extends Spartanization {
     @Override public final boolean visit(final VariableDeclarationFragment ¢) {
       return cautiousGo(¢);
     }
+    
+    @Override public final boolean visit(final ForStatement ¢) {
+      return cautiousGo(¢);
+    }
+    
+    @Override public final boolean visit(final WhileStatement ¢) {
+      return cautiousGo(¢);
+    }
 
     protected abstract <N extends ASTNode> boolean go(final N n);
 

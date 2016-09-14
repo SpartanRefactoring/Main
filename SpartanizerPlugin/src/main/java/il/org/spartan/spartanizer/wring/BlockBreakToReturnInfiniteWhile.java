@@ -104,6 +104,6 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> imple
   }
   
   @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
-    return ¢!=null && extract.nextReturn(¢)!=null && !isInfiniteLoop(¢);
+    return ¢!=null && extract.nextReturn(¢)!=null && isInfiniteLoop(¢);
   }
 }

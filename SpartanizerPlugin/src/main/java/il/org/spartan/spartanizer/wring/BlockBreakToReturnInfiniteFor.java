@@ -113,6 +113,6 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
   }
   
   @SuppressWarnings("deprecation") @Override public boolean claims(final ForStatement ¢) {
-    return ¢!=null && extract.nextReturn(¢)!=null && !isInfiniteLoop(¢);
+    return ¢!=null && extract.nextReturn(¢)!=null && isInfiniteLoop(¢);
   }
 }
