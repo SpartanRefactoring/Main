@@ -1,12 +1,10 @@
-# Spartan Refactoring [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
-Spartan Refactoring is a plugin for Eclipse that automatically applies the
-principles of *[Spartan Programming]* to your Java code. Simply put, it reviews
-your code, provides suggestions and applies them in order to make your code
-cleaner, shorter and more comprehensible. It is written in Java.
+# The spartanizer: [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
+The spartanizer an  Eclipse plugin that automatically applies the principles of
+*[Spartan Programming]* to your Java code. It applies many different wrings, which are little rules that provide suggestions on how to shorten and simplify your code, e.g, by using fewer variables, factoring out common structures, more efficient use of control flow, etc. 
 
 ## Background
-This project was initially conceived as an academic project in the [Technion -
-Israel Institute of Technology], and was later developed for several years by
+This project was conceived as an academic project in the [Technion - Israel
+Institute of Technology], and was later developed for several years by
 different students and members of the Computer Science faculty.
 
 The refactorings made by this plug-in are based on the concept of Spartan
@@ -91,13 +89,13 @@ written back to the source code.
 NOTE: It is highly recommended to read (or at least skim through) the "How the plugin works" subsection before reading this.
 
 The code is contained within these Java packages:
-* **org.spartan.refactoring.wring** - Contains the wrings responsible for detecting and modifying the different blocks of code.
-* **org.spartan.refactoring.utils** - Utility classes directly related to the wrings, and used to process and interpret the AST
+* **il.org.spartan.spartanizer.wring** - Contains the wrings responsible for detecting and modifying the different blocks of code.
+* **il.org.spartan.spartanizer.utils** - Utility classes directly related to the wrings, and used to process and interpret the AST
 * **org.spartan.utils** - Contains more generic utility classes used throughout the project.
-* **org.spartan.refactoring.builder** - Classes that extend mandatory Eclipse API classes required to integrate the plugin with the Eclipse IDE.
-* **org.spartan.refactoring.handlers** - Handlers used by the Eclipse IDE
-* **org.spartan.refactoring.spartanizations** - Mostly unused code that will be removed in the future.
-* **org.spartan.refactoring.preferences** - Classes for managing the plugin's preferences.
+* **il.org.spartan.spartanizer.builder** - Classes that extend mandatory Eclipse API classes required to integrate the plugin with the Eclipse IDE.
+* **il.org.spartan.spartanizer.handlers** - Handlers used by the Eclipse IDE
+* **il.org.spartan.spartanizer.spartanizations** - Mostly unused code that will be removed in the future.
+* **il.org.spartan.spartanizer.preferences** - Classes for managing the plugin's preferences.
 
 ## License
 The project is available under the **[MIT License]**
