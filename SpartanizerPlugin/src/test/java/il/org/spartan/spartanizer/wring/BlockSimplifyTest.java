@@ -107,12 +107,12 @@ public class BlockSimplifyTest {
     assert d != null;
     final Wring<Block> inner = new BlockSimplify();
     assert inner != null;
-    final AsSpartanization s = new AsSpartanization(inner);
+    final WringApplicator s = new WringApplicator(inner);
     assert s != null;
     emptySimplestE_Aux(u, d, s);
   }
   
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final AsSpartanization s) {
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator s) {
     try {
       s.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {

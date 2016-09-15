@@ -21,7 +21,7 @@ public class SpartanizeAll extends BaseHandler {
    * @return number of suggestions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    for (final Spartanization ¢ : eclipse.safeSpartanizations) {
+    for (final Applicator ¢ : eclipse.safeSpartanizations) {
       ¢.setMarker(null);
       ¢.setCompilationUnit(u);
       $ += ¢.countSuggestions();
