@@ -628,6 +628,10 @@ public interface type {
       Certain(final String key, final String description) {
         // TODO: Niv, here is where you should insert yourself into the
         // dictionary.
+        // TODO: Yossi, can't do this here since the key in the dictionary
+        // is not the key of the type. For example the keys for INT are "int"
+        // and "Integer",
+        // so there is no simple way to do this automatically
         this.key = key;
         this.description = description;
       }
@@ -703,6 +707,8 @@ public interface type {
               options.add(¢);
         // TODO: Niv, here is where you should insert yourself into the
         // dictionary.
+        // TODO: Yossi, I don't think these types should even be in the
+        // dictionary, since baptize should never return these
       }
 
       @Override public boolean canB(final Certain ¢) {

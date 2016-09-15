@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests for {@link NameYourClassHere}
- * @author TODO // Write your name here
+ * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
