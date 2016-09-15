@@ -26,7 +26,7 @@ public class Version250Test {
     trimming("b = a + 0;").stays();
   }
   @Test public void issue218() {
-    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").stays();
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").to("2L").stays();
   }
   // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
