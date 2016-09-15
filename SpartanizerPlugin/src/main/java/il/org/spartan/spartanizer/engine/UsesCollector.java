@@ -57,6 +57,16 @@ abstract class ScopeManager extends ASTVisitor {
     pop();
   }
 
+  abstract boolean go(final AbstractTypeDeclaration d);
+
+  abstract boolean go(final AnonymousClassDeclaration d);
+
+  abstract boolean go(final EnhancedForStatement s);
+
+  abstract void pop();
+
+  abstract boolean push();
+
   @Override public final boolean visit(final AnnotationTypeDeclaration ¢) {
     push();
     return go(¢);
@@ -89,16 +99,6 @@ abstract class ScopeManager extends ASTVisitor {
     push();
     return go(¢);
   }
-
-  abstract boolean go(final AbstractTypeDeclaration d);
-
-  abstract boolean go(final AnonymousClassDeclaration d);
-
-  abstract boolean go(final EnhancedForStatement s);
-
-  abstract void pop();
-
-  abstract boolean push();
 }
 
 class UnsafeUsesCollector extends UsesCollector {
@@ -123,6 +123,18 @@ class UnsafeUsesCollector extends UsesCollector {
 }
 
 class UsesCollector extends HidingDepth {
+  private final class DeclaredInFields extends ASTVisitor {
+    private final ASTNode parent;
+
+    DeclaredInFields(final ASTNode parent) {
+      this.parent = parent;
+    }
+
+    @Override public boolean visit(final FieldDeclaration ¢) {
+      return ¢.getParent() == parent && !hidden() && !declaredIn(¢);
+    }
+  }
+
   private final List<SimpleName> result;
   private final SimpleName focus;
 
@@ -135,8 +147,113 @@ class UsesCollector extends HidingDepth {
     this(c.result, c.focus);
   }
 
+  @Override protected UsesCollector clone() {
+    return new UsesCollector(result, focus);
+  }
+
+  void consider(final SimpleName candidate) {
+    if (hit(candidate))
+      result.add(candidate);
+  }
+
+  private boolean declaredBy(final SimpleName ¢) {
+    if (¢ == focus) {
+      result.add(¢);
+      return false;
+    }
+    if (!hit(¢))
+      return false;
+    hide();
+    return true;
+  }
+
+  private boolean declaredIn(final AbstractTypeDeclaration d) {
+    d.accept(new ASTVisitor() {
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        return !hidden() && !declaredIn(¢);
+      }
+    });
+    return hidden();
+  }
+
+  private boolean declaredIn(final AnonymousClassDeclaration ¢) {
+    declaresField(¢);
+    return hidden();
+  }
+
+  boolean declaredIn(final FieldDeclaration d) {
+    for (final Object ¢ : d.fragments())
+      if (declaredIn((VariableDeclarationFragment) ¢))
+        return true;
+    return false;
+  }
+
+  private boolean declaredIn(final MethodDeclaration d) {
+    for (final Object ¢ : d.parameters())
+      if (declaredIn((SingleVariableDeclaration) ¢))
+        return true;
+    return false;
+  }
+
+  private boolean declaredIn(final SingleVariableDeclaration f) {
+    return declaredBy(f.getName());
+  }
+
+  private boolean declaredIn(final VariableDeclarationFragment ¢) {
+    return declaredBy(¢.getName());
+  }
+
+  private void declaresField(final ASTNode ¢) {
+    ¢.accept(new DeclaredInFields(¢));
+  }
+
+  @Override boolean go(final AbstractTypeDeclaration ¢) {
+    ingore(¢.getName());
+    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
+  }
+
+  boolean go(final AnnotationTypeDeclaration ¢) {
+    ingore(¢.getName());
+    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
+  }
+
+  @Override boolean go(final AnonymousClassDeclaration ¢) {
+    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
+  }
+
+  @Override boolean go(final EnhancedForStatement s) {
+    final SimpleName name = s.getParameter().getName();
+    if (name == focus || !declaredBy(name))
+      return true;
+    recurse(s.getExpression());
+    return recurse(s.getBody());
+  }
+
+  private boolean hit(final SimpleName ¢) {
+    return wizard.same(¢, focus);
+  }
+
+  /** This is where we ignore all occurrences of {@link SimpleName} which are
+   * not variable names, e.g., class name, function name, field name, etc.
+   * @param __ JD */
+  private void ingore(@SuppressWarnings("unused") final SimpleName __) {
+    // We simply ignore the parameter
+  }
+
   @Override public boolean preVisit2(final ASTNode ¢) {
     return !hidden() && !(¢ instanceof Type);
+  }
+
+  boolean recurse(final ASTNode ¢) {
+    if (¢ != null && !hidden())
+      ¢.accept(clone());
+    return false;
+  }
+
+  private boolean recurse(final List<? extends ASTNode> ns) {
+    for (final ASTNode ¢ : ns)
+      recurse(¢);
+    return false;
   }
 
   @Override public boolean visit(final CastExpression ¢) {
@@ -174,132 +291,19 @@ class UsesCollector extends HidingDepth {
   @Override public boolean visit(final VariableDeclarationFragment ¢) {
     return !declaredIn(¢) && recurse(¢.getInitializer());
   }
-
-  @Override protected UsesCollector clone() {
-    return new UsesCollector(result, focus);
-  }
-
-  void consider(final SimpleName candidate) {
-    if (hit(candidate))
-      result.add(candidate);
-  }
-
-  boolean declaredIn(final FieldDeclaration d) {
-    for (final Object ¢ : d.fragments())
-      if (declaredIn((VariableDeclarationFragment) ¢))
-        return true;
-    return false;
-  }
-
-  @Override boolean go(final AbstractTypeDeclaration ¢) {
-    ingore(¢.getName());
-    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
-  }
-
-  boolean go(final AnnotationTypeDeclaration ¢) {
-    ingore(¢.getName());
-    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
-  }
-
-  @Override boolean go(final AnonymousClassDeclaration ¢) {
-    return !declaredIn(¢) && recurse(bodyDeclarations(¢));
-  }
-
-  @Override boolean go(final EnhancedForStatement s) {
-    final SimpleName name = s.getParameter().getName();
-    if (name == focus || !declaredBy(name))
-      return true;
-    recurse(s.getExpression());
-    return recurse(s.getBody());
-  }
-
-  boolean recurse(final ASTNode ¢) {
-    if (¢ != null && !hidden())
-      ¢.accept(clone());
-    return false;
-  }
-
-  private boolean declaredBy(final SimpleName ¢) {
-    if (¢ == focus) {
-      result.add(¢);
-      return false;
-    }
-    if (!hit(¢))
-      return false;
-    hide();
-    return true;
-  }
-
-  private boolean declaredIn(final AbstractTypeDeclaration d) {
-    d.accept(new ASTVisitor() {
-      @Override public boolean visit(final FieldDeclaration ¢) {
-        return !hidden() && !declaredIn(¢);
-      }
-    });
-    return hidden();
-  }
-
-  private boolean declaredIn(final AnonymousClassDeclaration ¢) {
-    declaresField(¢);
-    return hidden();
-  }
-
-  private boolean declaredIn(final MethodDeclaration d) {
-    for (final Object ¢ : d.parameters())
-      if (declaredIn((SingleVariableDeclaration) ¢))
-        return true;
-    return false;
-  }
-
-  private boolean declaredIn(final SingleVariableDeclaration f) {
-    return declaredBy(f.getName());
-  }
-
-  private boolean declaredIn(final VariableDeclarationFragment ¢) {
-    return declaredBy(¢.getName());
-  }
-
-  private void declaresField(final ASTNode ¢) {
-    ¢.accept(new DeclaredInFields(¢));
-  }
-
-  private boolean hit(final SimpleName ¢) {
-    return wizard.same(¢, focus);
-  }
-
-  /** This is where we ignore all occurrences of {@link SimpleName} which are
-   * not variable names, e.g., class name, function name, field name, etc.
-   * @param __ JD */
-  private void ingore(@SuppressWarnings("unused") final SimpleName __) {
-    // We simply ignore the parameter
-  }
-
-  private boolean recurse(final List<? extends ASTNode> ns) {
-    for (final ASTNode ¢ : ns)
-      recurse(¢);
-    return false;
-  }
-
-  private final class DeclaredInFields extends ASTVisitor {
-    private final ASTNode parent;
-
-    DeclaredInFields(final ASTNode parent) {
-      this.parent = parent;
-    }
-
-    @Override public boolean visit(final FieldDeclaration ¢) {
-      return ¢.getParent() == parent && !hidden() && !declaredIn(¢);
-    }
-  }
 }
 
 class UsesCollectorIgnoreDefinitions extends UsesCollector {
+  UsesCollectorIgnoreDefinitions(final List<SimpleName> result, final SimpleName focus) {
+    super(result, focus);
+  }
+
   public UsesCollectorIgnoreDefinitions(final UsesCollector c) {
     super(c);
   }
 
-  UsesCollectorIgnoreDefinitions(final List<SimpleName> result, final SimpleName focus) {
-    super(result, focus);
+  @Override protected UsesCollectorIgnoreDefinitions clone() {
+    return new UsesCollectorIgnoreDefinitions(this);
   }
 
   @Override public boolean visit(final Assignment ¢) {
@@ -313,9 +317,5 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   // changed Prefix and Postfix on the two next visitors.
   @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression __) {
     return false;
-  }
-
-  @Override protected UsesCollectorIgnoreDefinitions clone() {
-    return new UsesCollectorIgnoreDefinitions(this);
   }
 }

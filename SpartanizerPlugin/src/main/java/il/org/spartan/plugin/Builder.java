@@ -29,6 +29,34 @@ public class Builder extends IncrementalProjectBuilder {
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
 
+  private static void addMarker(final Applicator s, final Rewrite r, final IMarker m) throws CoreException {
+    m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+    m.setAttribute(SPARTANIZATION_TYPE_KEY, s + "");
+    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
+    m.setAttribute(IMarker.CHAR_START, r.from);
+    m.setAttribute(IMarker.CHAR_END, r.to);
+    m.setAttribute(IMarker.TRANSIENT, false);
+    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
+  }
+
+  private static void addMarkers(final IFile ¢) throws CoreException {
+    Spartanizations.reset();
+    deleteMarkers(¢);
+    addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+  }
+
+  private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
+    for (final Applicator s : Spartanizations.all())
+      for (final Rewrite ¢ : s.collectSuggesions(u))
+        if (¢ != null)
+          addMarker(s, ¢, f.createMarker(MARKER_TYPE));
+  }
+
+  static void addMarkers(final IResource ¢) throws CoreException {
+    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
+      addMarkers((IFile) ¢);
+  }
+
   /** deletes all spartanization suggestion markers
    * @param f the file from which to delete the markers
    * @throws CoreException if this method fails. Reasons include: This resource
@@ -51,36 +79,24 @@ public class Builder extends IncrementalProjectBuilder {
     });
   }
 
-  static void addMarkers(final IResource ¢) throws CoreException {
-    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
-      addMarkers((IFile) ¢);
-  }
-
-  private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
-    m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
-    m.setAttribute(SPARTANIZATION_TYPE_KEY, s + "");
-    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
-    m.setAttribute(IMarker.CHAR_START, r.from);
-    m.setAttribute(IMarker.CHAR_END, r.to);
-    m.setAttribute(IMarker.TRANSIENT, false);
-    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
-  }
-
-  private static void addMarkers(final IFile ¢) throws CoreException {
-    Spartanizations.reset();
-    deleteMarkers(¢);
-    addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
-  }
-
-  private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    for (final Spartanization s : Spartanizations.all())
-      for (final Rewrite ¢ : s.collectSuggesions(u))
-        if (¢ != null)
-          addMarker(s, ¢, f.createMarker(MARKER_TYPE));
-  }
-
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
+  }
+
+  private void build() throws CoreException {
+    final IResourceDelta d = getDelta(getProject());
+    if (d == null)
+      fullBuild();
+    else
+      incrementalBuild(d);
+  }
+
+  private void build(final int kind) throws CoreException {
+    if (kind == FULL_BUILD) {
+      fullBuild();
+      return;
+    }
+    build();
   }
 
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
@@ -103,21 +119,5 @@ public class Builder extends IncrementalProjectBuilder {
     } catch (final CoreException e) {
       e.printStackTrace();
     }
-  }
-
-  private void build() throws CoreException {
-    final IResourceDelta d = getDelta(getProject());
-    if (d == null)
-      fullBuild();
-    else
-      incrementalBuild(d);
-  }
-
-  private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
-      fullBuild();
-      return;
-    }
-    build();
   }
 }

@@ -14,6 +14,8 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
     return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
   }
 
+  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
+
   @Override public Rewrite suggest(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null || cantSuggest(n))
@@ -25,6 +27,4 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
       }
     };
   }
-
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }
