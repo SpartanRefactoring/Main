@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.spartanizer.assemble.make.*;
+import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -9,24 +11,23 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
-/** Transforms x.toString() to "" + x
+/** Transforms x.toString() to x + ""
  * @author Stav Namir
+ * @author Niv Shalmon
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
   @Override public String description(final MethodInvocation i) {
-    final Expression receiver = step.receiver(i);
-    return "Use \"\" + " + (receiver == null ? "x" : receiver + "");
+    final Expression receiver = receiver(i);
+    return "Append \"\" instead of calling toString(). Rewrite as " + (receiver == null ? "x" : receiver) +"\"\""; 
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
-    if (!"toString".equals(step.name(i).getIdentifier()) || !i.arguments().isEmpty() || iz.expressionStatement(i.getParent()))
+    if (!"toString".equals(step.name(i).getIdentifier()) || arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
       return null;
-    final Expression receiver = step.receiver(i);
-    return receiver == null ? null : !(i.getParent() instanceof MethodInvocation) ? subject.pair(receiver, //
-        il.org.spartan.spartanizer.assemble.make.makeStringLiteral(i)//
-    ).to(InfixExpression.Operator.PLUS)
-        : parethesized(subject.pair(//
-            receiver, //
-            il.org.spartan.spartanizer.assemble.make.makeStringLiteral(i)).to(InfixExpression.Operator.PLUS));
+    final Expression receiver = receiver(i);
+    if (receiver == null)
+      return null;
+    final InfixExpression $ = subject.pair(receiver, makeEmptyString(i)).to(PLUS2);
+    return !iz.methodInvocation(parent(i)) ? $ : parethesized($);
   }
 }

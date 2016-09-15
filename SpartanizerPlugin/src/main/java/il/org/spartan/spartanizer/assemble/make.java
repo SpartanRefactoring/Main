@@ -47,7 +47,7 @@ public enum make {
     return $;
   }
 
-  public static StringLiteral makeStringLiteral(final ASTNode ¢) {
+  public static StringLiteral makeEmptyString(final ASTNode ¢) {
     return make.from(¢).literal("");
   }
 
