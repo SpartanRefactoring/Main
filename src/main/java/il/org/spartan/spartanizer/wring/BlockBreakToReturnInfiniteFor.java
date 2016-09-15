@@ -84,7 +84,7 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean wantsToSuggestButPerhapsCant(final ForStatement ¢) {
+  @SuppressWarnings("deprecation") @Override public boolean demandsToSuggestButPerhapsCant(final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 

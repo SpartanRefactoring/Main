@@ -48,7 +48,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 

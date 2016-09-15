@@ -46,7 +46,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return iz.sequencer(hop.lastStatement(¢));
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 

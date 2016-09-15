@@ -78,7 +78,7 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> imple
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean wantsToSuggestButPerhapsCant(final WhileStatement ¢) {
+  @SuppressWarnings("deprecation") @Override public boolean demandsToSuggestButPerhapsCant(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 

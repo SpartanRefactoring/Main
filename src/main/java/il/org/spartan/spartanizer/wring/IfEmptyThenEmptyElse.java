@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.NOP {
-  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return ¢ != null && iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 

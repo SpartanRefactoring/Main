@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 /** Similar to {@link ReplaceCurrentNode}, but with an
  * {@link ExclusionManager} */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
-  @Override public boolean wantsToSuggestButPerhapsCant(final N ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
     return replacement(¢, new ExclusionManager()) != null;
   }
 

@@ -24,7 +24,7 @@ public final class InfixAdditionSort extends InfixSorting implements Kind.Sortin
     return stringType.isNot(¢) && super.canSuggest(¢);
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return ¢.getOperator() == PLUS;
   }
 

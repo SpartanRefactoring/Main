@@ -33,7 +33,7 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
     return specifity.compare(left(¢), right(¢)) < 0;
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && iz.comparison(¢) && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
 

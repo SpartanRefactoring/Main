@@ -55,7 +55,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return $;
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return suggest(¢) != null;
   }
 
