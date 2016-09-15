@@ -1,6 +1,7 @@
 package il.org.spartan;
+// TODO: Yossi: I commented this one too.
 
-import static il.org.spartan.utils.___.*;
+// import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 import java.util.*;
@@ -36,8 +37,9 @@ public class CSVStatistics extends CSVLine.Ordered {
    *        numerical columns in the principal file
    * @throws IOException */
   public CSVStatistics(final String baseName, final String keysHeader) throws IOException {
-    nonnull(baseName);
-    nonnull(keysHeader);
+    // TODO: Yossi: I have a compilation error also for this method (nonnull).
+    // nonnull(baseName);
+    // nonnull(keysHeader);
     inner = new CSVWriter(removeExtension(baseName));
     summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;
