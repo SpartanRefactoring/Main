@@ -35,8 +35,8 @@ public enum Lines {
 
   /** Builds text from an array of lines
    * @param lines what needs to be concatenated
-   * @return parameters, concatenated together, with
-   *         {@link #END_OF_LINE_MARKER} separating consecutive arguments */
+   * @return parameters, concatenated together, with {@link #END_OF_LINE_MARKER}
+   *         separating consecutive arguments */
   public static String gather(final String... lines) {
     return separate.these(lines).by(END_OF_LINE_MARKER);
   }

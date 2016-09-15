@@ -66,10 +66,10 @@ public enum Token {
   BLOCK_COMMENT(COMMENT), // Includes just the last line of the block comment.
   DOC_COMMENT(COMMENT), // Includes just the last line of the DOC comment.
   PARTIAL_BLOCK_COMMENT(COMMENT), // Returned for each line, except the last
-                                    // in
+                                  // in
   // a block comment.
   PARTIAL_DOC_COMMENT(COMMENT), // Returned for each line, except the last in
-                                  // a
+                                // a
   // doc comment.
   /** Returned for each new line occurring within a block comment: */
   NL_BLOCK_COMMENT(COMMENT),

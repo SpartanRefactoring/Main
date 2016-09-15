@@ -11,8 +11,8 @@ import il.org.spartan.*;
  * @since 2016-09-11 */
 public class IdentifierLetters {
   public static void main(final String[] args) {
-    CSVLineWriter w = new CSVLineWriter();
-    for (int i = Character.MIN_CODE_POINT; i <= Character.MAX_CODE_POINT; ++i) {
+    final CSVLineWriter w = new CSVLineWriter();
+    for (int i = Character.MIN_CODE_POINT; i <= Character.MAX_CODE_POINT; ++i)
       if (Character.isJavaIdentifierStart(i) && !Character.isAlphabetic(i)) {
         w.put("Character", "'" + (char) i + "'").put("Unicode", hex(i)).put("Decimal", i);
         w.put("Ideographic", Character.isIdentifierIgnorable(i));
@@ -22,7 +22,6 @@ public class IdentifierLetters {
         w.put("hashCode", Character.hashCode((char) i));
         w.nl();
       }
-    }
   }
 
   static @NonNull String hex(final int i) {

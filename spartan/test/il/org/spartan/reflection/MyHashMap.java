@@ -439,9 +439,9 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Rehashes the contents of this map into a new array with a larger capacity.
    * This method is called automatically when the number of keys in this map
-   * reaches its threshold. If current capacity is MAXIMUM_CAPACITY, this
-   * method does not resize the map, but sets threshold to Integer.MAX_VALUE.
-   * This has the effect of preventing future calls.
+   * reaches its threshold. If current capacity is MAXIMUM_CAPACITY, this method
+   * does not resize the map, but sets threshold to Integer.MAX_VALUE. This has
+   * the effect of preventing future calls.
    * @param newCapacity the new capacity, MUST be a power of two; must be
    *        greater than current capacity unless current capacity is
    *        MAXIMUM_CAPACITY (in which case value is irrelevant). */
