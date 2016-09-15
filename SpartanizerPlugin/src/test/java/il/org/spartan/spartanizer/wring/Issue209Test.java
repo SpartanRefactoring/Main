@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue209Test {
   @Test public void issue209_01() {
-    trimming("new Integer(3).toString()").to("new Integer(3) + \"\"").stays();
+    trimming("new Integer(3).toString()").stays();
   }
   
   @Test public void issue209_02() {

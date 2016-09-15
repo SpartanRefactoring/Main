@@ -1010,7 +1010,7 @@ public class Version250Test {
   }
 
   @Test public void issue54_01() {
-    trimming("x.toString()").to("x + \"\"");
+    trimming("(x.toString())").to("x + \"\"");
   }
 
   @Test public void issue54_02() {
