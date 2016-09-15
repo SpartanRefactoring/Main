@@ -1441,8 +1441,7 @@ public class Version250Test {
     trimming("(long)(int)a").to("1L*(int)a").stays();
   }
 
-  @Ignore()
-  @Test public void issue82c() {
+  @Ignore("Issue #218") @Test public void issue82c() {
     trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").stays();
   }
 
