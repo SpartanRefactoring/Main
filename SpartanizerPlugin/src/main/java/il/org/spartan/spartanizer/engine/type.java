@@ -453,7 +453,7 @@ public interface type {
       }
 
       @SuppressWarnings("synthetic-access") default implementation join() {
-        assert !have(key());
+        assert !have(key()): "Bug: the dictionary should not have type " + key() + ("\n receiver is " + this) + "\n This is all I know";
         inner.types.put(key(), this);
         return this;
       }

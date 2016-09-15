@@ -1434,20 +1434,23 @@ public class Version250Test {
     trimming("(long)5").to("1L*5");
   }
 
+  @Test public void issue82b_a_cuold_be_double() {
+    trimming("(long)a").stays();
+  }
   @Test public void issue82b() {
-    trimming("(long)a").to("1L*a");
+    trimming("(long)(int)a").to("1L*(int)a").stays();
   }
 
-  @Test public void issue82c() {
-    trimming("(long)(long)a").to("1L*(long)a").to("1L*1L*a");
+  @Ignore("Issue #218") @Test public void issue82c() {
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").stays();
   }
 
   @Test public void issue82d() {
-    trimming("(long)a*(long)b").to("1L*a*1L*b");
+    trimming("(long)a*(long)b").stays();
   }
 
   @Test public void issue82e() {
-    trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a").stays();
+    trimming("(double)(long)a").to("1.*(long)a").stays();
   }
 
   @Test public void issue83a() {
