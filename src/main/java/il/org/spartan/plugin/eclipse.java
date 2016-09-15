@@ -35,23 +35,24 @@ public interface eclipse {
     return null;
   }
 
-  static void apply(final ICompilationUnit cu) {
-    apply(cu, new Range(0, 0));
+  static boolean apply(final ICompilationUnit cu) {
+    return apply(cu, new Range(0, 0));
   }
 
-  static void apply(final ICompilationUnit cu, final ITextSelection t) {
+  static boolean apply(final ICompilationUnit cu, final ITextSelection t) {
     for (final Spartanization s : safeSpartanizations)
       try {
         s.setCompilationUnit(cu);
         s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
-        s.performRule(cu, new NullProgressMonitor());
+        return s.performRule(cu, new NullProgressMonitor());
       } catch (final CoreException x) {
         x.printStackTrace();
       }
+    return false;
   }
 
-  static void apply(final ICompilationUnit cu, final Range r) {
-    apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
+  static boolean apply(final ICompilationUnit cu, final Range r) {
+    return apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
 
   static ICompilationUnit compilationUnit(final IEditorPart ep) {
