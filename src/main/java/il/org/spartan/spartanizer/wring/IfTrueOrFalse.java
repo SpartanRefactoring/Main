@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
-  @Override public boolean claims(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return ¢ != null && (iz.literalTrue(¢.getExpression()) || iz.literalFalse(¢.getExpression()));
   }
 

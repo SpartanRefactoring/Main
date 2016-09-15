@@ -36,21 +36,21 @@ public final class AsSpartanization extends Spartanization {
   @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (!inner.claims(¢) || inner.cantWring(¢))
+        if (!inner.demandsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
           return true;
-        $.add(inner.wring(¢));
+        $.add(inner.suggest(¢));
         return true;
       }
     };
   }
 
-  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (!inner.claims(¢) || inner.cantWring(¢))
+        if (!inner.demandsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
           return true;
         if (inRange(m, ¢))
-          inner.wring(¢).go(r, null);
+          inner.suggest(¢).go(r, null);
         return true;
       }
     });

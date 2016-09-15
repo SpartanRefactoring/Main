@@ -18,7 +18,7 @@ public class IfEmptyThenTest {
   private static final IfEmptyThen WRING = new IfEmptyThen();
 
   @Test public void eligible() {
-    assert WRING.canWring(IF);
+    assert WRING.canSuggest(IF);
   }
 
   @Test public void emptyThen() {
@@ -34,6 +34,6 @@ public class IfEmptyThenTest {
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.claims(IF);
+    assert WRING.demandsToSuggestButPerhapsCant(IF);
   }
 }

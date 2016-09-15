@@ -27,7 +27,7 @@ public final class MethodDeclarationOverrideDegenerateRemove extends Wring<Metho
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
 
-  @Override public Rewrite wring(final MethodDeclaration d) {
+  @Override public Rewrite suggest(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
         : new Rewrite(description(d), d) {

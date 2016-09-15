@@ -95,7 +95,7 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     return false;
   }
 
-  @Override public boolean claims(final BodyDeclaration ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }

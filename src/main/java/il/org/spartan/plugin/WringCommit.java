@@ -168,7 +168,7 @@ public class WringCommit {
             return true;
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Rewrite make = x.wring(n, exclude);
+            final Rewrite make = x.suggest(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 // LogManager.initialize();

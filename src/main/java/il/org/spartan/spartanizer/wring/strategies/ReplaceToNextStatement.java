@@ -9,14 +9,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
-  @Override public boolean claims(final N n) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final N n) {
     final Statement nextStatement = extract.nextStatement(n);
     return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
   }
 
-  @Override public Rewrite wring(final N n, final ExclusionManager exclude) {
+  @Override public Rewrite suggest(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
-    if (nextStatement == null || cantWring(n))
+    if (nextStatement == null || cantSuggest(n))
       return null;
     exclude.exclude(nextStatement);
     return new Rewrite(description(n), n, nextStatement) {
