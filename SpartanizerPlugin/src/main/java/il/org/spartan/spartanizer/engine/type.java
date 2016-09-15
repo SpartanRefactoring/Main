@@ -470,7 +470,7 @@ public interface type {
       @SuppressWarnings("synthetic-access") Certain(final String key, final String description, final String s) {
         this.key = key;
         this.description = description;
-        join();
+        inner.types.put(key, this);
         if (s != null)
           inner.types.put(s, this);
       }
