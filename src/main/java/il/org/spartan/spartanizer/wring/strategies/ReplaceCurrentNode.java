@@ -11,6 +11,8 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     return replacement(¢) != null;
   }
 
+  public abstract ASTNode replacement(N n);
+
   @Override public final Rewrite wring(final N n) {
     return cantWring(n) ? null : new Rewrite(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -18,6 +20,4 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
       }
     };
   }
-
-  public abstract ASTNode replacement(N n);
 }

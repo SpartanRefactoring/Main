@@ -17,10 +17,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression> implements Kind.Idiomatic {
-  private static Expression comparison(final InfixExpression ¢) {
-    return subject.pair(left(¢), right(¢)).to(conjugate(¢.getOperator()));
-  }
-
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
   public static Operator conjugate(final Operator ¢) {
@@ -35,18 +31,43 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
                                     : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
-  private static boolean hasOpportunity(final Expression inner) {
-    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
-  }
-
-  private static boolean hasOpportunity(final PrefixExpression ¢) {
-    return ¢ != null && hasOpportunity(core(step.operand(¢)));
+  /** A utility function, which tries to simplify a boolean expression, whose
+   * top most parameter is logical negation.
+   * @param x JD
+   * @return simplified parameter */
+  public static Expression simplifyNot(final PrefixExpression ¢) {
+    return pushdownNot(az.not(extract.core(¢)));
   }
 
   static Expression notOfLiteral(final BooleanLiteral l) {
     final BooleanLiteral $ = duplicate.of(l);
     $.setBooleanValue(!l.booleanValue());
     return $;
+  }
+
+  static Expression perhapsNotOfLiteral(final Expression ¢) {
+    return !iz.booleanLiteral(¢) ? null : notOfLiteral(az.booleanLiteral(¢));
+  }
+
+  static Expression pushdownNot(final Expression x) {
+    Expression $;
+    return ($ = perhapsNotOfLiteral(x)) != null//
+        || ($ = perhapsDoubleNegation(x)) != null//
+        || ($ = perhapsDeMorgan(x)) != null//
+        || ($ = perhapsComparison(x)) != null //
+            ? $ : null;
+  }
+
+  private static Expression comparison(final InfixExpression ¢) {
+    return subject.pair(left(¢), right(¢)).to(conjugate(¢.getOperator()));
+  }
+
+  private static boolean hasOpportunity(final Expression inner) {
+    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
+  }
+
+  private static boolean hasOpportunity(final PrefixExpression ¢) {
+    return ¢ != null && hasOpportunity(core(step.operand(¢)));
   }
 
   private static Expression perhapsComparison(final Expression inner) {
@@ -73,29 +94,8 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return ¢ == null ? null : tryToSimplify(step.operand(¢));
   }
 
-  static Expression perhapsNotOfLiteral(final Expression ¢) {
-    return !iz.booleanLiteral(¢) ? null : notOfLiteral(az.booleanLiteral(¢));
-  }
-
-  static Expression pushdownNot(final Expression x) {
-    Expression $;
-    return ($ = perhapsNotOfLiteral(x)) != null//
-        || ($ = perhapsDoubleNegation(x)) != null//
-        || ($ = perhapsDeMorgan(x)) != null//
-        || ($ = perhapsComparison(x)) != null //
-            ? $ : null;
-  }
-
   private static Expression pushdownNot(final PrefixExpression ¢) {
     return ¢ == null ? null : pushdownNot(step.operand(¢));
-  }
-
-  /** A utility function, which tries to simplify a boolean expression, whose
-   * top most parameter is logical negation.
-   * @param x JD
-   * @return simplified parameter */
-  public static Expression simplifyNot(final PrefixExpression ¢) {
-    return pushdownNot(az.not(extract.core(¢)));
   }
 
   private static Expression tryToSimplify(final Expression x) {

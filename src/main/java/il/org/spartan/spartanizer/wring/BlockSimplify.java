@@ -48,6 +48,13 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
 
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
+
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
       }
@@ -120,23 +127,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
             return true;
         return false;
       }
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
     }.test(ss);
-  }
-
-  private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
-    if (os1.size() != os2.size())
-      return false;
-    for (int i = 0; i < os1.size(); ++i)
-      if (os1.get(i) != os2.get(i))
-        return false;
-    return true;
   }
 
   static Statement reorganizeNestedStatement(final Statement s) {
@@ -149,6 +140,15 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
       default:
         return reorganizeStatement(s);
     }
+  }
+
+  private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
+    if (os1.size() != os2.size())
+      return false;
+    for (int i = 0; i < os1.size(); ++i)
+      if (os1.get(i) != os2.get(i))
+        return false;
+    return true;
   }
 
   private static Block reorganizeStatement(final Statement s) {

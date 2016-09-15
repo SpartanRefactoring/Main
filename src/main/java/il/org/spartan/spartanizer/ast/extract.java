@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.ast;
-import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.PrefixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
@@ -158,14 +158,6 @@ public enum extract {
       }
     });
     return $.get();
-  }
-
-  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
-    if (x == null)
-      return;
-    $.add(x.getOperator());
-    findOperators(az.infixExpression(x.getLeftOperand()), $);
-    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
   /** Search for an {@link AssertStatement} in the tree rooted at an
@@ -375,11 +367,12 @@ public enum extract {
     return $;
   }
 
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int i = 0; i < ss.size() - 1; ++i)
-      if (ss.get(i) == s)
-        return ss.get(i + 1);
-    return null;
+  public static NumberLiteral negativeLiteral(final Expression ¢) {
+    return negativeLiteral(az.prefixExpression(¢));
+  }
+
+  public static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
+    return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : az.numberLiteral(operand(¢));
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -497,24 +490,6 @@ public enum extract {
         extract.statementsInto((Statement) n, $);
   }
 
-  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement ¢ : step.statements(b))
-      extract.statementsInto(¢, $);
-    return $;
-  }
-
-  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
-    switch (¢.getNodeType()) {
-      case EMPTY_STATEMENT:
-        return $;
-      case BLOCK:
-        return extract.statementsInto((Block) ¢, $);
-      default:
-        $.add(¢);
-        return $;
-    }
-  }
-
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
@@ -531,11 +506,36 @@ public enum extract {
     return az.throwStatement(extract.singleStatement(¢));
   }
 
-  public static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-    return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : az.numberLiteral(operand(¢));
+  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+    if (x == null)
+      return;
+    $.add(x.getOperator());
+    findOperators(az.infixExpression(x.getLeftOperand()), $);
+    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
-  public static NumberLiteral negativeLiteral(final Expression ¢) {
-    return negativeLiteral(az.prefixExpression(¢));
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int i = 0; i < ss.size() - 1; ++i)
+      if (ss.get(i) == s)
+        return ss.get(i + 1);
+    return null;
+  }
+
+  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
+    for (final Statement ¢ : step.statements(b))
+      extract.statementsInto(¢, $);
+    return $;
+  }
+
+  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
+    switch (¢.getNodeType()) {
+      case EMPTY_STATEMENT:
+        return $;
+      case BLOCK:
+        return extract.statementsInto((Block) ¢, $);
+      default:
+        $.add(¢);
+        return $;
+    }
   }
 }

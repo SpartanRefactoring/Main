@@ -29,23 +29,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implements Kind.Collapse {
-  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
-    Statement $ = null;
-    for (final Statement ¢ : statements(b)) {
-      if (iz.ifStatement(¢))
-        $ = handleIf(az.ifStatement(¢), nextReturn);
-      if (iz.breakStatement(¢))
-        return ¢;
-    }
-    return $;
-  }
-
   public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
-  }
-
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    return handleIf(az.ifStatement(s), nextReturn);
   }
 
   public static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
@@ -73,15 +58,30 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
     return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
   }
 
-  private static boolean isInfiniteLoop(final ForStatement ¢) {
-    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
-  }
-
   public static Statement make(final Statement s, final ReturnStatement nextReturn) {
     return iz.breakStatement(s) ? s //
         : iz.ifStatement(s) ? handleIf(s, nextReturn) //
             : iz.block(s) ? handleBlock(az.block(s), nextReturn) //
                 : null;
+  }
+
+  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    for (final Statement ¢ : statements(b)) {
+      if (iz.ifStatement(¢))
+        $ = handleIf(az.ifStatement(¢), nextReturn);
+      if (iz.breakStatement(¢))
+        return ¢;
+    }
+    return $;
+  }
+
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    return handleIf(az.ifStatement(s), nextReturn);
+  }
+
+  private static boolean isInfiniteLoop(final ForStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @SuppressWarnings("deprecation") @Override public boolean claims(final ForStatement ¢) {
@@ -92,8 +92,14 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
     return "Convert the break inside the loop to return";
   }
 
-  @Override protected String description(final ForStatement ¢) {
-    return "Convert the break inside " + ¢ + " to return";
+  public Rewrite make(final ForStatement vor, final ReturnStatement nextReturn) {
+    final Statement $ = make(vor.getBody(), nextReturn);
+    return $ == null ? null : new Rewrite(description(), $) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        r.replace($, nextReturn, g);
+        r.remove(nextReturn, g);
+      }
+    };
   }
 
   @Override public Rewrite wring(final ForStatement vor) {
@@ -103,13 +109,7 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
     return nextReturn == null ? null : make(vor, nextReturn);
   }
 
-  public Rewrite make(final ForStatement vor, final ReturnStatement nextReturn) {
-    final Statement $ = make(vor.getBody(), nextReturn);
-    return $ == null ? null : new Rewrite(description(), $) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, nextReturn, g);
-        r.remove(nextReturn, g);
-      }
-    };
+  @Override protected String description(final ForStatement ¢) {
+    return "Convert the break inside " + ¢ + " to return";
   }
 }

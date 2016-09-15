@@ -43,9 +43,8 @@ public class typeTest {
     private double d = c1 / c2;
     private float f = (float) (0xCABAC0DAABBAL * c * d / b - (c1 ^ c2));
     private int i = (int) d;
-    private long l = c2 + c1 * (b + i) << b; 
+    private long l = c2 + c1 * (b + i) << b;
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
-    private String string = i + "" + l; 
 
     // basic tests for assignments
     @Test public void assingment1() {
@@ -85,8 +84,7 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment4() {
-      short x;
-      azzert.that(Axiom.type(x = 2), is(SHORT));
+      azzert.that(Axiom.type(2), is(SHORT));
     }
 
     @Test public void axiomAssignment5() {
@@ -98,11 +96,10 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment7() {
-      azzert.that(Axiom.type(string = "abs"), is(STRING));
+      azzert.that(Axiom.type("abs"), is(STRING));
     }
 
     @Test public void axiomAssignment8() {
-      double x;
       azzert.that(Axiom.type(d = i = 2), is(DOUBLE));
     }
 

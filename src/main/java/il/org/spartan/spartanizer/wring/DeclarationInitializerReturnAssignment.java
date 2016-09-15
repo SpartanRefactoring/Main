@@ -16,18 +16,18 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert
- * 
+ *
  * <pre>
  * int a = 3;
  * return a;
  * </pre>
- * 
+ *
  * into
- * 
+ *
  * <pre>
  * return a;
  * </pre>
- * 
+ *
  * @author Yossi Gil
  * @since 2015-08-07
  * @DisableSpartan */

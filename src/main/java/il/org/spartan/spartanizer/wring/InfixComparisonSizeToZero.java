@@ -79,8 +79,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       final CompilationUnit u = hop.compilationUnit(x);
       if (u == null)
         return null;
-      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty",
-          null, x, u);
+      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
       if (b == null)
         return null;
       final ITypeBinding t = b.getReturnType();

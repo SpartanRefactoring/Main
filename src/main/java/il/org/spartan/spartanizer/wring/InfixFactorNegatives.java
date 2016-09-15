@@ -100,7 +100,8 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
           if (¢ != first && minus.level(¢) > 0)
             r.replace(¢, il.org.spartan.spartanizer.assemble.make.plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, il.org.spartan.spartanizer.assemble.make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, il.org.spartan.spartanizer.assemble.make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS))
+              .into(first.getParent()), g);
       }
     };
   }
