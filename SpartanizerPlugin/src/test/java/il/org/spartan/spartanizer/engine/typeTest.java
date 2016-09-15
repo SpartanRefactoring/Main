@@ -84,7 +84,7 @@ public class typeTest {
     }
 
     @Test public void axiomAssignment4() {
-      azzert.that(Axiom.type(2), is(SHORT));
+      azzert.that(Axiom.type(s = 2), is(SHORT));
     }
 
     @Test public void axiomAssignment5() {
