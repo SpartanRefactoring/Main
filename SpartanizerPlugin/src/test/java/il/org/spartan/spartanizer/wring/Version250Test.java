@@ -21,12 +21,14 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
-  // can be String concating, so can't remove 0
+  // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
   }
-
-  // can be String concating, so can't remove 0
+  @Test public void issue218() {
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").stays();
+  }
+  // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimming("b=0+a;").stays();
   }
@@ -1265,11 +1267,11 @@ public class Version250Test {
   }
 
   // TODO: Niv, rewrite these two tests
-  @Ignore("can be string concating") @Test public void issue72ph() {
+  @Ignore("can be string concatenating") @Test public void issue72ph() {
     trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
-  @Ignore("can be string concating") @Test public void issue72pi() {
+  @Ignore("can be string concatenating") @Test public void issue72pi() {
     trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 
