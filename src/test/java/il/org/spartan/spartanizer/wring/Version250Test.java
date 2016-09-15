@@ -1034,6 +1034,14 @@ public class Version250Test {
     trimming("a.toString().length()").to("(a + \"\").length()");
   }
 
+  @Test public void issue54_1() {
+    trimming("(x.toString())").to("(x+\"\")");
+  }
+
+  @Test public void issue54_2() {
+    trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
+  }
+
   @Test public void issue70_01() {
     trimming("(double)5").to("1.*5");
   }
@@ -1434,11 +1442,12 @@ public class Version250Test {
     trimming("(long)5").to("1L*5");
   }
 
-  @Test public void issue82b_a_cuold_be_double() {
-    trimming("(long)a").stays();
-  }
   @Test public void issue82b() {
     trimming("(long)(int)a").to("1L*(int)a").stays();
+  }
+
+  @Test public void issue82b_a_cuold_be_double() {
+    trimming("(long)a").stays();
   }
 
   @Ignore("Issue #218") @Test public void issue82c() {

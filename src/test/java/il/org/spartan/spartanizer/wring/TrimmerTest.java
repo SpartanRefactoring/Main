@@ -1804,13 +1804,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
             .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
 
-  @Test public void issue54_1() {
-    trimming("(x.toString())").to("(x+\"\")");
-  }
 
-  @Test public void issue54_2() {
-    trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
-  }
 
   @Test public void issue54DoNonSideEffect() {
     trimming( //
