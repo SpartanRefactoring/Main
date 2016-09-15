@@ -1,7 +1,8 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan;
 
-import static il.org.spartan.utils.___.*;
+// TODO: I commented this import. Had it been renamed?
+// import static il.org.spartan.utils.___.*;
 
 import java.io.*;
 
@@ -74,7 +75,10 @@ import il.org.spartan.streotypes.*;
    * must have the exact same header.
    * @param cl the CSV line to be written */
   public void write(final CSVLine cl) {
-    require(header == null || header.equals(cl.header()), "\n" + header + "\n" + cl.header());
+    // TODO: Yossi, I can not find this function. Had it been removed/renamed.
+    // Still not working too
+    // require(header == null || header.equals(cl.header()), "\n" + header +
+    // "\n" + cl.header());
     if (header == null)
       writeln(header = cl.header());
     writeln(cl.line());
