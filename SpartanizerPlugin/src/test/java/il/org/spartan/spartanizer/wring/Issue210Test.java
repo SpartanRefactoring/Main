@@ -20,6 +20,18 @@ public class Issue210Test {
   }
   
   @Test public void issue210_03() {
-    trimming("8/4/0/12").to("8/0/4/12").stays();
+    trimming("8/4.0/0/12").stays();
   }
+  
+  @Test public void issue210_04() {
+    trimming("x+8l/0").stays();
+  }
+  
+  @Test public void issue210_05() {
+    trimming("8%0").stays();
+  }
+  
+  @Test public void issue210_06() {
+    trimming("8%0l").stays();
+  } 
 }
