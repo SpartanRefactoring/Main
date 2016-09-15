@@ -36,7 +36,7 @@ public class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
-    final CompilationUnit after = sptartnize(before);
+    final CompilationUnit after = spartanize(before);
     assert after != null;
     report("After-", after);
   }
@@ -78,7 +78,7 @@ public class CollectMetrics {
     output.nl();
   }
 
-  private static CompilationUnit sptartnize(final CompilationUnit before) {
+  private static CompilationUnit spartanize(final CompilationUnit before) {
     // TODO: try to it first with one wring only. I think this is going be
     // better.
     return before;
