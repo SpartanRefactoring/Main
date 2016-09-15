@@ -3217,55 +3217,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
         .to("boolean f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
 
-  @Test public void simplifyBlockComplexEmpty0() {
-    trimming("{;}").to("/* empty */    ");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0A() {
-    trimming("{}").to("/* empty */");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0B() {
-    trimming("{;}").to("/* empty */");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0C() {
-    trimming("{{;}}").to("/* empty */");
-  }
-
-  @Test public void simplifyBlockComplexEmpty0D() {
-    trimming("{;;;{;;;}{;}}").to("/* empty */    ");
-  }
-
-  @Test public void simplifyBlockComplexEmpty1() {
-    trimming("{;;{;{{}}}{}{};}").to("/* empty */ ");
-  }
-
-  @Test public void simplifyBlockComplexSingleton() {
-    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.Statement);
-  }
-
-  @Test public void simplifyBlockDeeplyNestedReturn() {
-    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.Statement);
-  }
-
-  /* Begin of already good tests */
-  @Test public void simplifyBlockEmpty() {
-    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.Statement);
-  }
-
-  @Test public void simplifyBlockExpressionVsExpression() {
-    trimming("6 - 7 < a * 3").to("-1 < 3 * a");
-  }
-
-  @Test public void simplifyBlockLiteralVsLiteral() {
-    trimming("if (a) return b; else c();").to("if(a)return b;c();");
-  }
-
-  @Test public void simplifyBlockThreeStatements() {
-    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
-  }
-
   @Test public void simplifyLogicalNegationNested() {
     trimming("!((a || b == c) && (d || !(!!c)))").to("!a && b != c || !d && c");
   }
