@@ -65,11 +65,10 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   public Class<N> myActualOperandsClass() {
-    if (myOperandsClass == null)
-      myOperandsClass = myAbstractOperandsClass();
-    if (isAbstract(myOperandsClass.getModifiers()))
+    Class<N> $ = myAbstractOperandsClass();
+    if (isAbstract($.getModifiers()))
       return null;
-    return myOperandsClass;
+    return $;
   }
 
   public String name() {
