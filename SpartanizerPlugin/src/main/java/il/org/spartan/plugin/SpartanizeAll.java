@@ -55,11 +55,14 @@ public class SpartanizeAll extends BaseHandler {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
           "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
+          List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit ¢ : us) {
-            eclipse.apply(¢);
+            if (!eclipse.apply(¢))
+              es.add(¢);
             pm.worked(1);
             pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
           }
+          us.removeAll(es);
           pm.done();
         });
       } catch (final InvocationTargetException x) {
