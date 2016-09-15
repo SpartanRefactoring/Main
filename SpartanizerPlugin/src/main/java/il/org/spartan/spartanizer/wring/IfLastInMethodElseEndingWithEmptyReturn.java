@@ -45,7 +45,7 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfState
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 
-  @Override public Rewrite make(final IfStatement s) {
+  @Override public Rewrite wring(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;

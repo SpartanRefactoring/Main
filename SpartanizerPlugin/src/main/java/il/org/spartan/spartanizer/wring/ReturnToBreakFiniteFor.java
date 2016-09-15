@@ -95,7 +95,7 @@ public class ReturnToBreakFiniteFor extends Wring<ForStatement> implements Kind.
     return "Convert the return inside " + ¢ + " to break";
   }
 
-  @Override public Rewrite make(final ForStatement s) {
+  @Override public Rewrite wring(final ForStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;

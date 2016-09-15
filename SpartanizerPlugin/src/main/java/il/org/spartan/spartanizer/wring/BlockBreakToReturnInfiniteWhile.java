@@ -90,7 +90,7 @@ public class BlockBreakToReturnInfiniteWhile extends Wring<WhileStatement> imple
     return "Convert the break inside " + ¢ + " to return";
   }
 
-  @Override public Rewrite make(final WhileStatement b) {
+  @Override public Rewrite wring(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || !isInfiniteLoop(b) || nextReturn == null)
       return null;

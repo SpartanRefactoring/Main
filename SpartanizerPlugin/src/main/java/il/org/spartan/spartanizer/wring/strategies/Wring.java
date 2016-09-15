@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> implements Kind {
-  public static String name(final Wring ¢) {
-    return ¢.getClass().getSimpleName();
+  public String name() {
+    return getClass().getSimpleName();
   }
 
   /** Determines whether this {@link Wring} object is not applicable for a given
@@ -47,16 +47,16 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
   @Deprecated public boolean claims(final N ¢) {
-    return make(¢, null) != null;
+    return wring(¢, null) != null;
   }
 
   protected abstract String description(N n);
 
-  public Rewrite make(final N ¢) {
-    return make(¢, null);
+  public Rewrite wring(final N ¢) {
+    return wring(¢, null);
   }
 
-  public Rewrite make(final N n, final ExclusionManager m) {
-    return m != null && m.isExcluded(n) ? null : make(n);
+  public Rewrite wring(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : wring(n);
   }
 }

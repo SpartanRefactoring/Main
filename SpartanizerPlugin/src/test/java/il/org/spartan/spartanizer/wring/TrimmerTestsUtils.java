@@ -131,20 +131,20 @@ public class TrimmerTestsUtils {
     return $.get();
   }
 
-  static String apply(final Wring<? extends ASTNode> n, final String from) {
+  static String apply(final Wring<? extends ASTNode> w, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
     assert d != null;
-    return TESTUtils.rewrite(new AsSpartanization(n, "Tested Refactoring"), u, d).get();
+    return TESTUtils.rewrite(new AsSpartanization(w), u, d).get();
   }
 
-  static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> n, final Wrap wrapper) {
-    final String wrap = wrapper.on(from);
+  static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> n, final Wrap w) {
+    final String wrap = w.on(from);
     final String unpeeled = apply(n, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
-    final String peeled = wrapper.off(unpeeled);
+    final String peeled = w.off(unpeeled);
     if (peeled.equals(from))
       azzert.that("No similification of " + from, peeled, is(not(from)));
     if (tide.clean(peeled).equals(tide.clean(from)))

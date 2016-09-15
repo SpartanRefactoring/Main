@@ -95,7 +95,7 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
     return "Convert the return inside " + b + " to break";
   }
 
-  @Override public Rewrite make(final WhileStatement b) {
+  @Override public Rewrite wring(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
