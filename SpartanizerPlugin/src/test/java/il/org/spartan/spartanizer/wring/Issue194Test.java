@@ -235,4 +235,25 @@ import org.junit.*;
         + "return y;"
         );
   }
+  
+  @Ignore public void test13(){
+    trimming("if(b1){"
+        + "x=3;"
+        + "if(b2)"
+        + "return f();"
+        + "y=7;"
+        + "return g();"
+        + "foo();"
+        + "}"
+        + "return h();")
+    .to("if(!b1)"
+        + "return h();"
+        + "x=3;"
+        + "if(b2)"
+        + "return f();"
+        + "y=7;"
+        + "return g();"
+        + "foo();"
+        );
+  }
 }
