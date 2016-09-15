@@ -13,11 +13,11 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
 abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-  @Override public boolean claims(final N ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
 
-  @Override public Rewrite wring(final N n) {
+  @Override public Rewrite suggest(final N n) {
     return new Rewrite(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<ASTNode> input = new ArrayList<>();
