@@ -631,9 +631,11 @@ public class typeTest {
       azzert.that(get(e.getRightOperand()), is(FLOAT));
     }
 
-    @Test public void context20() {
-      final ForStatement fs = extract.firstForStatement(into.s("for(;x;) somthing();"));
+    @SuppressWarnings("unchecked") @Test public void context20() {
+      final ForStatement fs = extract.firstForStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(get(fs.getExpression()), is(BOOLEAN));
+      azzert.that(get((Expression)(lisp.first(fs.initializers()))), is(INT));
+      azzert.that(get((Expression)(lisp.first(fs.updaters()))), is(NUMERIC));
     }
 
     @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
@@ -642,8 +644,9 @@ public class typeTest {
     }
 
     @Test public void context22() {
-      final AssertStatement as = extract.firstAssertStatement(into.s("assert x;"));
+      final AssertStatement as = extract.firstAssertStatement(into.s("assert x : \"message\";"));
       azzert.that(get(as.getExpression()), is(BOOLEAN));
+      azzert.that(get(as.getMessage()), is(STRING));
     }
 
     // tests using old version of prudent that is now removed

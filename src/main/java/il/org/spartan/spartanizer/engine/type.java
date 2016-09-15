@@ -299,9 +299,15 @@ public interface type {
           return lookDown((ConditionalExpression) ¢);
         case ASSIGNMENT:
           return lookDown((Assignment) ¢);
+        case VARIABLE_DECLARATION_EXPRESSION:
+          return lookDown((VariableDeclarationExpression) ¢);
         default:
           return NOTHING;
       }
+    }
+
+    private static implementation lookDown(VariableDeclarationExpression ¢) {
+      return baptize(¢.getType()+"");
     }
 
     private static implementation lookDown(final InfixExpression x) {
@@ -339,33 +345,31 @@ public interface type {
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
-      for (final ASTNode context : hop.ancestors(x.getParent()))
-        switch (context.getNodeType()) {
-          case INFIX_EXPRESSION:
-            return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
-          case ARRAY_ACCESS:
-            return i.asIntegral();
-          case PREFIX_EXPRESSION:
-            return i.above(az.prefixExpression(context).getOperator());
-          case POSTFIX_EXPRESSION:
-            return i.asNumeric();
-          case IF_STATEMENT:
-            // TODO: DOR. This is a bug, you have two parts to an assert. If you
-            // come from the message part, it could be anything. Add testing to
-            // make sure this is right.
-          case ASSERT_STATEMENT:
-            // TODO: DOR. This is a bug, you have three parts of a for,
-            // initialization, condition, and step. You can only infer anything
-            // if you hit the the condition part. Add testing to make sure this
-            // is right.
-          case FOR_STATEMENT:
-            // case WHILE_STATEMENT:
-            return BOOLEAN;
-          case PARENTHESIZED_EXPRESSION:
-            continue;
-          default:
-            return i;
-        }
+      for (final ASTNode base : hop.ancestors(x)){
+        final ASTNode context = base.getParent();
+        if (context != null)
+          switch (context.getNodeType()) {
+            case INFIX_EXPRESSION:
+              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+            case ARRAY_ACCESS:
+              return i.asIntegral();
+            case PREFIX_EXPRESSION:
+              return i.above(az.prefixExpression(context).getOperator());
+            case POSTFIX_EXPRESSION:
+              return i.asNumeric();
+            case ASSERT_STATEMENT:
+              return base.getLocationInParent() == AssertStatement.EXPRESSION_PROPERTY ? BOOLEAN : i;
+            case FOR_STATEMENT:
+              return base.getLocationInParent() == ForStatement.EXPRESSION_PROPERTY ? BOOLEAN : i;
+              // case WHILE_STATEMENT:
+            case IF_STATEMENT:
+              return BOOLEAN;
+            case PARENTHESIZED_EXPRESSION:
+              continue;
+            default:
+              return i;
+          }
+      }
       return i;
     }
 
