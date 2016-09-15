@@ -96,7 +96,7 @@ public class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implement
     return "Convert the break inside " + ¢ + " to return";
   }
 
-  @Override public Rewrite make(final ForStatement vor) {
+  @Override public Rewrite wring(final ForStatement vor) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     final ReturnStatement nextReturn = extract.nextReturn(vor);

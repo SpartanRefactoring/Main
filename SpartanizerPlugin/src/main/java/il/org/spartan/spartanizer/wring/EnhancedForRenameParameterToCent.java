@@ -22,7 +22,7 @@ public final class EnhancedForRenameParameterToCent extends Wring<SingleVariable
     return ¢ + "";
   }
 
-  @Override public Rewrite make(final SingleVariableDeclaration d, final ExclusionManager m) {
+  @Override public Rewrite wring(final SingleVariableDeclaration d, final ExclusionManager m) {
     final ASTNode p = d.getParent();
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;

@@ -29,7 +29,7 @@ public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Ki
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }
 
-  @Override public Rewrite make(final IfStatement s) {
+  @Override public Rewrite wring(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);

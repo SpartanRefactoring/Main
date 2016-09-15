@@ -91,7 +91,7 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
     return "remove 0 in X + 0 expressions from " + ¢;
   }
 
-  @Override public Rewrite make(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Rewrite wring(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;

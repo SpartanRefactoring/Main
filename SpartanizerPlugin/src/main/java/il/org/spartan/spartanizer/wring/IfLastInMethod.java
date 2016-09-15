@@ -39,7 +39,7 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Ear
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
 
-  @Override public Rewrite make(final IfStatement s) {
+  @Override public Rewrite wring(final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = az.block(s.getParent());

@@ -20,7 +20,14 @@ public final class AsSpartanization extends Spartanization {
   /** Instantiates this class
    * @param inner The wring we wish to convert
    * @param name The title of the refactoring */
-  @SuppressWarnings("unchecked") public AsSpartanization(final Wring<? extends ASTNode> inner, final String name) {
+  public AsSpartanization(final Wring<? extends ASTNode> w) {
+    this(w, w.name());
+  }
+
+  /** Instantiates this class
+   * @param inner The wring we wish to convert
+   * @param name The title of the refactoring */
+  @SuppressWarnings("unchecked") private AsSpartanization(final Wring<? extends ASTNode> inner, final String name) {
     super(name);
     this.inner = (Wring<ASTNode>) inner;
   }
@@ -31,7 +38,7 @@ public final class AsSpartanization extends Spartanization {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (!inner.claims(¢) || inner.cantWring(¢))
           return true;
-        $.add(inner.make(¢));
+        $.add(inner.wring(¢));
         return true;
       }
     };
@@ -41,7 +48,7 @@ public final class AsSpartanization extends Spartanization {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (inRange(m, ¢))
-          inner.make(¢).go(r, null);
+          inner.wring(¢).go(r, null);
         return true;
       }
     });

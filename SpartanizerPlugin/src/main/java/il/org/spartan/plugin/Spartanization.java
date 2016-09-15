@@ -117,10 +117,10 @@ public abstract class Spartanization extends Refactoring {
    *        displayed
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor m) {
-    return createRewrite(u, m, (IMarker) null);
+    return rewriterOf(u, m, (IMarker) null);
   }
 
-  private ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
+  public ASTRewrite rewriterOf(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     fillRewrite($, u, m);
@@ -135,7 +135,7 @@ public abstract class Spartanization extends Refactoring {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
-    return createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
   protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);

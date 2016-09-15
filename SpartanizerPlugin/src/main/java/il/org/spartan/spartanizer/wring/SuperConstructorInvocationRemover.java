@@ -27,7 +27,7 @@ public final class SuperConstructorInvocationRemover extends Wring<SuperConstruc
     return "Remove vacuous 'super()' invocation in " + ¢;
   }
 
-  @Override public Rewrite make(final SuperConstructorInvocation i) {
+  @Override public Rewrite wring(final SuperConstructorInvocation i) {
     return new Rewrite(description(i), i) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
