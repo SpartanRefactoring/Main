@@ -24,10 +24,6 @@ class Term {
     this.expression = expression;
   }
 
-  public boolean positive() {
-    return !negative;
-  }
-
   Expression asExpression() {
     if (!negative)
       return expression;
@@ -39,5 +35,9 @@ class Term {
 
   boolean negative() {
     return negative;
+  }
+
+  public boolean positive() {
+    return !negative;
   }
 }

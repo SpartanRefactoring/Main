@@ -57,7 +57,7 @@ public interface metrics {
     final Set<String> $ = new LinkedHashSet<>();
     u.accept(new ASTVisitor() {
       @Override public void endVisit(final SimpleName node) {
-        $.add(node.getIdentifier());
+        $.add(step.identifier(node));
       }
     });
     return $;
@@ -90,11 +90,6 @@ public interface metrics {
   static int lineCount(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass()))
-          addWeight($, child);
-      }
-
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
@@ -116,6 +111,11 @@ public interface metrics {
           if (elze(az.ifStatement(¢)) != null)
             ++a.inner;
         }
+      }
+
+      @Override public void preVisit(final ASTNode child) {
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          addWeight($, child);
       }
     });
     return $.inner;

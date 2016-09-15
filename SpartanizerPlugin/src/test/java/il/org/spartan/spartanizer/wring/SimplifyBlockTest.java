@@ -24,8 +24,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-@Ignore("Still problems with #205")
-public class SimplifyBlockTest {
+@Ignore("Still problems with #205") public class SimplifyBlockTest {
   @Test public void complexEmpty0() {
     trimming("{;}").to("/* empty */    ");
   }
@@ -112,6 +111,14 @@ public class SimplifyBlockTest {
     emptySimplestE_Aux(u, d, s);
   }
 
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final AsSpartanization s) {
+    try {
+      s.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
+  }
+
   @Test public void expressionVsExpression() {
     trimming("6 - 7 < a * 3").to("-1 < 3 * a");
   }
@@ -122,13 +129,5 @@ public class SimplifyBlockTest {
 
   @Test public void threeStatements() {
     assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
-  }
-
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final AsSpartanization s) {
-    try {
-      s.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
   }
 }

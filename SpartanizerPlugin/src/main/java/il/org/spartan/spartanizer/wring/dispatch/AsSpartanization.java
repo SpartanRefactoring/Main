@@ -23,15 +23,15 @@ public final class AsSpartanization extends Spartanization {
    * @param name The title of the refactoring */
   @SuppressWarnings("unchecked") public AsSpartanization(final Wring<? extends ASTNode> w) {
     super(w.name());
-    this.wring = (Wring<ASTNode>) w;
-    this.clazz = w.myActualOperandsClass();
-    assert this.clazz != null : "Oops, cannot find kind of operands of " + w.name();
+    wring = (Wring<ASTNode>) w;
+    clazz = w.myActualOperandsClass();
+    assert clazz != null : "Oops, cannot find kind of operands of " + w.name();
   }
 
   // TODO: Ori, how come we need this parameter?
   @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() == clazz || wring.demandsToSuggestButPerhapsCant(¢) || wring.canSuggest(¢))
           $.add(wring.suggest(¢));

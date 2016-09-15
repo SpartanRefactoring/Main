@@ -64,7 +64,7 @@ public class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression>
     for (final Expression ¢ : lisp.rest(xs)) {
       if (!iz.numberLiteral(¢) || !iz.compileTime(¢))
         return null;
-        sub -= extract.longNumber(¢);
+      sub -= extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }

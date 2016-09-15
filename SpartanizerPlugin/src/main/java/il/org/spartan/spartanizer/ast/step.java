@@ -169,7 +169,11 @@ public enum step {
   }
 
   public static String identifier(final MethodInvocation ¢) {
-    return name(¢).getIdentifier();
+    return identifier(name(¢));
+  }
+
+  public static String identifier(final SimpleName ¢) {
+    return ¢.getIdentifier();
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}

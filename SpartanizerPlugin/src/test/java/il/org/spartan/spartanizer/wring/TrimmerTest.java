@@ -1804,8 +1804,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
             .to("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
   }
 
-
-
   @Test public void issue54DoNonSideEffect() {
     trimming( //
         "int a  = f; do { b[i] = a; } while (b[i] != a);")//
@@ -3655,9 +3653,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     trimming("f(a,b,c,d) * f()").to("f() * f(a,b,c,d)");
   }
 
-  /* There is in fact only one Opportunity here, but because of a bug in stringType two where found.
-   * In this case, the * plain + kludge can be a String, and thus can't be sorted, although stringType
-   * thought it couldn't be a String and thus allowed sorting before*/
+  /* There is in fact only one Opportunity here, but because of a bug in
+   * stringType two where found. In this case, the * plain + kludge can be a
+   * String, and thus can't be sorted, although stringType thought it couldn't
+   * be a String and thus allowed sorting before */
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
         (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion != the * plain + kludge"))), is(1));

@@ -12,6 +12,24 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-08-29 */
 public class MethodExplorer {
+  @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
+    @Override public final boolean visit(final AnnotationTypeDeclaration ____) {
+      return false;
+    }
+
+    @Override public final boolean visit(final AnonymousClassDeclaration ____) {
+      return false;
+    }
+
+    @Override public final boolean visit(final EnumDeclaration ____) {
+      return false;
+    }
+
+    @Override public final boolean visit(final TypeDeclaration ____) {
+      return false;
+    }
+  }
+
   final MethodDeclaration inner;
 
   /** Instantiate this class
@@ -30,6 +48,22 @@ public class MethodExplorer {
   public List<SimpleName> localVariables() {
     final List<SimpleName> $ = new ArrayList<>();
     inner.accept(new IgnoreNestedMethods() {
+      boolean add(final List<? extends Expression> xs) {
+        for (final Expression ¢ : xs)
+          addFragments(fragments(az.variableDeclarationExpression(¢)));
+        return true;
+      }
+
+      boolean add(final SingleVariableDeclaration ¢) {
+        $.add(¢.getName());
+        return true;
+      }
+
+      void addFragments(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment ¢ : fs)
+          $.add(¢.getName());
+      }
+
       @Override public boolean visit(final CatchClause ¢) {
         return add(¢.getException());
       }
@@ -50,22 +84,6 @@ public class MethodExplorer {
         addFragments(fragments(¢));
         return true;
       }
-
-      boolean add(final List<? extends Expression> xs) {
-        for (final Expression ¢ : xs)
-          addFragments(fragments(az.variableDeclarationExpression(¢)));
-        return true;
-      }
-
-      boolean add(final SingleVariableDeclaration ¢) {
-        $.add(¢.getName());
-        return true;
-      }
-
-      void addFragments(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          $.add(¢.getName());
-      }
     });
     return $;
   }
@@ -84,23 +102,5 @@ public class MethodExplorer {
       }
     });
     return $;
-  }
-
-  @SuppressWarnings("unused") public abstract static class IgnoreNestedMethods extends ASTVisitor {
-    @Override public final boolean visit(final AnnotationTypeDeclaration ____) {
-      return false;
-    }
-
-    @Override public final boolean visit(final AnonymousClassDeclaration ____) {
-      return false;
-    }
-
-    @Override public final boolean visit(final EnumDeclaration ____) {
-      return false;
-    }
-
-    @Override public final boolean visit(final TypeDeclaration ____) {
-      return false;
-    }
   }
 }
