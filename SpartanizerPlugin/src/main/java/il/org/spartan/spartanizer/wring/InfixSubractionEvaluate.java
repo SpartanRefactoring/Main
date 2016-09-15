@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
@@ -60,13 +61,10 @@ public class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression>
     if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.compileTime(first(xs)))
       return null;
     long sub = extract.longNumber(first(xs));
-    int index = 0;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : lisp.rest(xs)) {
       if (!iz.numberLiteral(¢) || !iz.compileTime(¢))
         return null;
-      if (index != 0)
         sub -= extract.longNumber(¢);
-      ++index;
     }
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }
