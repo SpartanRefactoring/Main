@@ -54,6 +54,9 @@ public class Version250Test {
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
   }
+  @Test public void issue218a() {
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").to("2L").stays();
+  }
   // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimming("b=0+a;").stays();
@@ -538,7 +541,7 @@ public class Version250Test {
     trimming("a/=1;").stays();
   }
 
-  @Ignore public void issue107h() {
+  public void issue107h() {
     trimming("a-+=1;").to("a-++;");
   }
 
@@ -632,7 +635,7 @@ public class Version250Test {
                 "}");
   }
 
-  @Ignore public void issue111c() {
+  @Test public void issue111c() {
     trimming("protected public void func();").to("public protected void func();");
   }
 
@@ -647,7 +650,7 @@ public class Version250Test {
             "}").stays(); //
   }
 
-  @Ignore public void issue111d() {
+  public void issue111d() {
     trimming("protected public class A{}").to("public protected class A{}");
   }
 
@@ -772,9 +775,15 @@ public class Version250Test {
   }
 
   @Test public void issue218() {
-    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").stays();
+    trimming("(long)(long)2")//
+    .to("1L*(long)2")//
+    .to("1L*1L*2")//
+    .to("2L")//
+    .stays();
   }
-
+  @Test public void issue218x() {
+    trimming("(long)1L*2").to("2*(long)1L").to("2*1L*1L").to("2L").stays();
+  }
   @Test public void issue31a() {
     trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(now.modifiers());\n" + //

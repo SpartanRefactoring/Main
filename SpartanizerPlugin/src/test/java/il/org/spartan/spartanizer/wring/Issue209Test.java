@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-@Ignore("Until Niv Fixes this.") public class Issue209Test {
+public class Issue209Test {
   @Test public void issue116_05() {
     trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"").stays();
   }
@@ -21,8 +21,13 @@ import org.junit.runners.*;
         .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"").stays();
   }
 
+  // TODO: Yossi, you changed this to stay() for some reason. Notice that in
+  // this case there is no ";" at the end, so the context is not an expression
+  // statement but rather a simple statement and it should be changed.
+  // issue209_02 is the same case as an expression statement, and it really
+  // doesn't change there. I think this test should look like this
   @Test public void issue209_01() {
-    trimming("new Integer(3).toString()").stays();
+    trimming("new Integer(3).toString()").to("new Integer(3)+\"\"");
   }
 
   @Test public void issue209_02() {
@@ -30,7 +35,7 @@ import org.junit.runners.*;
   }
 
   @Test public void issue54_01() {
-    trimming("(x.toString())").to("x + \"\"");
+    trimming("(x.toString())").to("(x + \"\")");
   }
 
   @Test public void issue54_02() {
