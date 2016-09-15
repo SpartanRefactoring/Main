@@ -11,17 +11,17 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** An adapter that converts the protocol of a single @{link Wring} instance
- * into that of {@link Spartanization}. This class must eventually die.
+ * into that of {@link Applicator}. This class must eventually die.
  * @author Yossi Gil
  * @since 2015/07/25 */
-public final class AsSpartanization extends Spartanization {
+public final class WringApplicator extends Applicator {
   final Wring<ASTNode> wring;
   final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
    * @param wring The wring we wish to convert
    * @param name The title of the refactoring */
-  @SuppressWarnings("unchecked") public AsSpartanization(final Wring<? extends ASTNode> w) {
+  @SuppressWarnings("unchecked") public WringApplicator(final Wring<? extends ASTNode> w) {
     super(w.name());
     wring = (Wring<ASTNode>) w;
     clazz = w.myActualOperandsClass();

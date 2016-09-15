@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.engine.*;
  *         2013/07/10
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
-public abstract class Spartanization extends Refactoring {
+public abstract class Applicator extends Refactoring {
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
   private IMarker marker = null;
@@ -36,7 +36,7 @@ public abstract class Spartanization extends Refactoring {
 
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
-  protected Spartanization(final String name) {
+  protected Applicator(final String name) {
     this.name = name;
   }
 
@@ -183,8 +183,8 @@ public abstract class Spartanization extends Refactoring {
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
-          new RefactoringWizardOpenOperation(new Wizard(Spartanization.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartan refactoring: " + s + Spartanization.this);
+          new RefactoringWizardOpenOperation(new Wizard(Applicator.this)).run(Display.getCurrent().getActiveShell(),
+              "Spartan refactoring: " + s + Applicator.this);
         } catch (final InterruptedException e) {
           e.printStackTrace();
         }

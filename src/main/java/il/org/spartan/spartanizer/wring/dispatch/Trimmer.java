@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
-public class Trimmer extends Spartanization {
+public class Trimmer extends Applicator {
   public static abstract class DispatchingVisitor extends ASTVisitor {
     protected final ExclusionManager exclude = makeExcluder();
 

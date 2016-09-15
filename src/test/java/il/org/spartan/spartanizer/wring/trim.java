@@ -100,7 +100,7 @@ public interface trim {
     }
   }
 
-  static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+  static int countOpportunities(final Applicator s, final CompilationUnit u) {
     return s.collectSuggesions(u).size();
   }
 

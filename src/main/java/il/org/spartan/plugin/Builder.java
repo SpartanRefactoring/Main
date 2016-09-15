@@ -29,7 +29,7 @@ public class Builder extends IncrementalProjectBuilder {
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
 
-  private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
+  private static void addMarker(final Applicator s, final Rewrite r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, s + "");
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
@@ -46,7 +46,7 @@ public class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    for (final Spartanization s : Spartanizations.all())
+    for (final Applicator s : Spartanizations.all())
       for (final Rewrite ¢ : s.collectSuggesions(u))
         if (¢ != null)
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));
