@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return ¢ != null && extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
 

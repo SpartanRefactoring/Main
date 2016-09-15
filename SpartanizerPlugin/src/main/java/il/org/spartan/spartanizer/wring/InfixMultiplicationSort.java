@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixMultiplicationSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return in(¢.getOperator(), TIMES);
   }
 

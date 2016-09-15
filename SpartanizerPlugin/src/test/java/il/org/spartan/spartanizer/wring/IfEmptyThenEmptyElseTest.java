@@ -58,6 +58,6 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.wantsToSuggestButPerhapsCant(IF);
+    assert WRING.demandsToSuggestButPerhapsCant(IF);
   }
 }

@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
-  @Override public boolean wantsToSuggestButPerhapsCant(final N n) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final N n) {
     final Statement nextStatement = extract.nextStatement(n);
     return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
   }

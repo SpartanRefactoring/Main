@@ -42,7 +42,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
-  @Deprecated public boolean wantsToSuggestButPerhapsCant(final N ¢) {
+  @Deprecated public boolean demandsToSuggestButPerhapsCant(final N ¢) {
     return suggest(¢, null) != null;
   }
 

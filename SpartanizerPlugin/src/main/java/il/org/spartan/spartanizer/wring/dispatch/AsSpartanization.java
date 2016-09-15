@@ -36,7 +36,7 @@ public final class AsSpartanization extends Spartanization {
   @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (!inner.wantsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
+        if (!inner.demandsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
           return true;
         $.add(inner.suggest(¢));
         return true;
@@ -47,7 +47,7 @@ public final class AsSpartanization extends Spartanization {
   @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (!inner.wantsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
+        if (!inner.demandsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
           return true;
         if (inRange(m, ¢))
           inner.suggest(¢).go(r, null);

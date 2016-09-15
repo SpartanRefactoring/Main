@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
-  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return iz.vacuousElse(¢) && extract.returnStatement(then(¢)) != null && extract.nextReturn(¢) != null;
   }
 

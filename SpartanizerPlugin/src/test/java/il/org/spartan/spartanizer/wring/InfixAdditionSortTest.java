@@ -37,7 +37,7 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test02() {
-    assert new InfixAdditionSort().wantsToSuggestButPerhapsCant(INPUT);
+    assert new InfixAdditionSort().demandsToSuggestButPerhapsCant(INPUT);
   }
 
   @Test public void test03() {
@@ -49,7 +49,7 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test05() {
-    assert !new InfixAdditionSubtractionExpand().wantsToSuggestButPerhapsCant(INPUT);
+    assert !new InfixAdditionSubtractionExpand().demandsToSuggestButPerhapsCant(INPUT);
   }
 
   @Test public void test06() {
