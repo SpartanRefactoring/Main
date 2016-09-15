@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.engine.*;
         }
     }
 
-    abstract Object[] makeCase(final Spartanization s, final File d, final File f, final String name);
+    abstract Object[] makeCase(final Applicator s, final File d, final File f, final String name);
   }
 
   /* Auxiliary function for test suite inherited classes */
@@ -142,7 +142,7 @@ import il.org.spartan.spartanizer.engine.*;
     return $;
   }
 
-  private static Spartanization error(final String message, final Class<?> c, final Throwable t) {
+  private static Applicator error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
   }
@@ -179,15 +179,15 @@ import il.org.spartan.spartanizer.engine.*;
     return createTempFile($, TestDirection.Out, f);
   }
 
-  static Spartanization makeSpartanizationObject(final File ¢) {
+  static Applicator makeSpartanizationObject(final File ¢) {
     return makeSpartanizationObject(¢.getName());
   }
 
-  static Spartanization makeSpartanizationObject(final String folderForClass) {
+  static Applicator makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
     final Object $ = getInstance(c);
     assert $ != null;
-    return (Spartanization) $;
+    return (Applicator) $;
   }
 }

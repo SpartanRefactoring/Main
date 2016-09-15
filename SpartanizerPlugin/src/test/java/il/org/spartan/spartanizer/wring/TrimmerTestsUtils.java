@@ -136,7 +136,7 @@ public class TrimmerTestsUtils {
     assert u != null;
     final Document d = new Document(from);
     assert d != null;
-    return TESTUtils.rewrite(new AsSpartanization(w), u, d).get();
+    return TESTUtils.rewrite(new WringApplicator(w), u, d).get();
   }
 
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> n, final Wrap w) {
@@ -152,7 +152,7 @@ public class TrimmerTestsUtils {
     assertSimilar(expected, peeled);
   }
 
-  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
+  public static int countOpportunities(final Applicator s, final CompilationUnit u) {
     return s.collectSuggesions(u).size();
   }
 

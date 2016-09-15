@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 public class AsSpartanizationTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
   private final 
-    AsSpartanization it = new AsSpartanization(new BlockSimplify());
+    WringApplicator it = new WringApplicator(new BlockSimplify());
   
   @Test public void exists() {
     azzert.notNull(it);

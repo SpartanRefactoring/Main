@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface eclipse {
-  static final Spartanization[] safeSpartanizations = { //
+  static final Applicator[] safeSpartanizations = { //
       new Trimmer() };
   static final String NAME = "Spartanization";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
@@ -40,7 +40,7 @@ public interface eclipse {
   }
 
   static boolean apply(final ICompilationUnit cu, final ITextSelection t) {
-    for (final Spartanization s : safeSpartanizations)
+    for (final Applicator s : safeSpartanizations)
       try {
         s.setCompilationUnit(cu);
         s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
