@@ -44,7 +44,7 @@ public final class AsSpartanization extends Spartanization {
     };
   }
 
-  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (!inner.wantsToSuggestButPerhapsCant(¢) || inner.cantSuggest(¢))
