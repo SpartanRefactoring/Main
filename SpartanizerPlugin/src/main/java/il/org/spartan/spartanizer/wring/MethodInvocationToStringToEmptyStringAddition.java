@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
   @Override public String description(final MethodInvocation i) {
     final Expression receiver = receiver(i);
-    return "Append \"\" instead of calling toString(). Rewrite as " + (receiver == null ? "x" : receiver) +"\"\""; 
+    return "Append \"\" instead of calling toString(). Rewrite as " + (receiver == null ? "x" : receiver) + "\"\"";
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {

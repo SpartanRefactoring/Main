@@ -55,7 +55,7 @@ public class SpartanizeAll extends BaseHandler {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
           "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
-          List<ICompilationUnit> es = new LinkedList<>();
+          final List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit ¢ : us) {
             if (!eclipse.apply(¢))
               es.add(¢);

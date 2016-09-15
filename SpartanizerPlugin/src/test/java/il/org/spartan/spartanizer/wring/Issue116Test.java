@@ -27,8 +27,6 @@ public class Issue116Test {
     trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";").stays();
   }
 
-
-
   @Test public void issue116_07() {
     trimming("\"\" + 0 + (x - 7)").to("0 + \"\" + (x - 7)").stays();
   }

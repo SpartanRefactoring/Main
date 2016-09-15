@@ -634,8 +634,8 @@ public class typeTest {
     @SuppressWarnings("unchecked") @Test public void context20() {
       final ForStatement fs = extract.firstForStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(get(fs.getExpression()), is(BOOLEAN));
-      azzert.that(get((Expression)(lisp.first(fs.initializers()))), is(INT));
-      azzert.that(get((Expression)(lisp.first(fs.updaters()))), is(NUMERIC));
+      azzert.that(get((Expression) lisp.first(fs.initializers())), is(INT));
+      azzert.that(get((Expression) lisp.first(fs.updaters())), is(NUMERIC));
     }
 
     @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {

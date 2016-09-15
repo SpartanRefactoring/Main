@@ -53,6 +53,24 @@ public class fluentTrimmerApplication extends Trimmer.With {
     assert undoEdit != null;
   }
 
+  String aboutTheSame(final String s1, final String s2) {
+    assert s1 != null;
+    assert s2 != null;
+    if (s1.equals(s2)) // Highly unlikely, but what the hack
+      return null;
+    final String g1 = tide.clean(s1);
+    assert g1 != null;
+    final String g2a = guessedContext.off(s2);
+    assert g2a != null;
+    final String g2b = tide.clean(g2a);
+    assert g2b != null;
+    return tide.eq(g1, g2b) || tide.eq(s1, g2b) || tide.eq(g1, g2a) ? g2b : null;
+  }
+
+  String common(final String expected) {
+    return aboutTheSame(expected, document.get());
+  }
+
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite() {
@@ -65,6 +83,62 @@ public class fluentTrimmerApplication extends Trimmer.With {
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final IProgressMonitor ¢) {
     return createRewrite(¢, (IMarker) null);
+  }
+
+  private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
+    pm.beginTask("Creating rewrite operation...", 1);
+    final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());
+    fillRewrite($, m);
+    pm.done();
+    return $;
+  }
+
+  protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
+    compilationUnit.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        if (!trimmer().inRange(m, n))
+          return true;
+        final Wring<N> w = trimmer().toolbox.find(n);
+        if (w != null) {
+          final Rewrite make = w.suggest(n, exclude);
+          if (make != null)
+            make.go(r, null);
+        }
+        return true;
+      }
+    });
+  }
+
+  <N extends ASTNode> N findNode(final Class<N> clazz) {
+    final GuessedContext guessContext = GuessedContext.find(codeFragment);
+    assert guessContext != null;
+    final N $ = firstInstance(clazz);
+    assert $ != null;
+    return $;
+  }
+
+  <N extends ASTNode> N firstInstance(final Class<N> clazz) {
+    final Wrapper<N> $ = new Wrapper<>();
+    compilationUnit.accept(new ASTVisitor() {
+      /** The implementation of the visitation procedure in the JDT seems to be
+       * buggy. Each time we find a node which is an instance of the sought
+       * class, we return false. Hence, we do not anticipate any further calls
+       * to this function after the first such node is found. However, this does
+       * not seem to be the case. So, in the case our wrapper is not null, we do
+       * not carry out any further tests.
+       * @param n the node currently being visited.
+       * @return <code><b>true</b></code> <i>iff</i> the sought node is
+       *         found. */
+      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
+        if ($.get() != null)
+          return false;
+        if (!clazz.isAssignableFrom(¢.getClass()))
+          return true;
+        $.set((N) ¢);
+        return false;
+      }
+    });
+    return $.get();
   }
 
   public fluentTrimmerApplication gives(final String expected) {
@@ -118,79 +192,5 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n this '" + codeFragment + "' does not stay." //
               + "\n It converts instead to  '" + difference + "'" //
       );
-  }
-
-  protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
-    compilationUnit.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (!trimmer().inRange(m, n))
-          return true;
-        final Wring<N> w = trimmer().toolbox.find(n);
-        if (w != null) {
-          final Rewrite make = w.suggest(n, exclude);
-          if (make != null)
-            make.go(r, null);
-        }
-        return true;
-      }
-    });
-  }
-
-  String aboutTheSame(final String s1, final String s2) {
-    assert s1 != null;
-    assert s2 != null;
-    if (s1.equals(s2)) // Highly unlikely, but what the hack
-      return null;
-    final String g1 = tide.clean(s1);
-    assert g1 != null;
-    final String g2a = guessedContext.off(s2);
-    assert g2a != null;
-    final String g2b = tide.clean(g2a);
-    assert g2b != null;
-    return tide.eq(g1, g2b) || tide.eq(s1, g2b) || tide.eq(g1, g2a) ? g2b : null;
-  }
-
-  String common(final String expected) {
-    return aboutTheSame(expected, document.get());
-  }
-
-  <N extends ASTNode> N findNode(final Class<N> clazz) {
-    final GuessedContext guessContext = GuessedContext.find(codeFragment);
-    assert guessContext != null;
-    final N $ = firstInstance(clazz);
-    assert $ != null;
-    return $;
-  }
-
-  <N extends ASTNode> N firstInstance(final Class<N> clazz) {
-    final Wrapper<N> $ = new Wrapper<>();
-    compilationUnit.accept(new ASTVisitor() {
-      /** The implementation of the visitation procedure in the JDT seems to be
-       * buggy. Each time we find a node which is an instance of the sought
-       * class, we return false. Hence, we do not anticipate any further calls
-       * to this function after the first such node is found. However, this does
-       * not seem to be the case. So, in the case our wrapper is not null, we do
-       * not carry out any further tests.
-       * @param n the node currently being visited.
-       * @return <code><b>true</b></code> <i>iff</i> the sought node is
-       *         found. */
-      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
-          return false;
-        if (!clazz.isAssignableFrom(¢.getClass()))
-          return true;
-        $.set((N) ¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
-    pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());
-    fillRewrite($, m);
-    pm.done();
-    return $;
   }
 }

@@ -60,8 +60,42 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
     return $ - metrics.size(newParent);
   }
 
+  static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    boolean collecting = false;
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    for (final VariableDeclarationFragment brother : fragments(parent)) {
+      if (brother == f) {
+        collecting = true;
+        continue;
+      }
+      if (collecting)
+        $.add(brother);
+    }
+    return $;
+  }
+
+  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
+        return true;
+    return false;
+  }
+
   protected static boolean hasAnnotation(final VariableDeclarationFragment ¢) {
     return hasAnnotation((VariableDeclarationStatement) ¢.getParent());
+  }
+
+  static boolean hasAnnotation(final VariableDeclarationStatement ¢) {
+    return hasAnnotation(step.modifiers(¢));
+  }
+
+  private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    for (final VariableDeclarationFragment brother : fs)
+      if (brother != null && brother != f && brother.getInitializer() != null)
+        $.add(duplicate.of(brother));
+    return $;
   }
 
   protected static int removalSaving(final VariableDeclarationFragment f) {
@@ -85,47 +119,6 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
 
-  static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    boolean collecting = false;
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    for (final VariableDeclarationFragment brother : fragments(parent)) {
-      if (brother == f) {
-        collecting = true;
-        continue;
-      }
-      if (collecting)
-        $.add(brother);
-    }
-    return $;
-  }
-
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
-  }
-
-  static boolean hasAnnotation(final VariableDeclarationStatement ¢) {
-    return hasAnnotation(step.modifiers(¢));
-  }
-
-  private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    for (final VariableDeclarationFragment brother : fs)
-      if (brother != null && brother != f && brother.getInitializer() != null)
-        $.add(duplicate.of(brother));
-    return $;
-  }
-
-  @Override public Rewrite suggest(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Rewrite $ = super.suggest(f, exclude);
-    if ($ != null && exclude != null)
-      exclude.exclude(f.getParent());
-    return $;
-  }
-
   protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
       TextEditGroup g);
 
@@ -135,5 +128,12 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
       return null;
     final SimpleName n = f.getName();
     return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);
+  }
+
+  @Override public Rewrite suggest(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+    final Rewrite $ = super.suggest(f, exclude);
+    if ($ != null && exclude != null)
+      exclude.exclude(f.getParent());
+    return $;
   }
 }

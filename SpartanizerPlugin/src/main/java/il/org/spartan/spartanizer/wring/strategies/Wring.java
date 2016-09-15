@@ -44,6 +44,10 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return !canSuggest(¢);
   }
 
+  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
+    return (Class<N>) c2;
+  }
+
   /** Determines whether this {@link Wring} object is applicable for a given
    * {@link InfixExpression} is within the "scope" of this . Note that it could
    * be the case that a {@link Wring} is applicable in principle to an object,
@@ -56,6 +60,34 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return suggest(¢, null) != null;
   }
 
+  protected abstract String description(N n);
+
+  private Class<N> initializeMyOperandsClass() {
+    Class<N> $ = null;
+    for (final Method ¢ : getClass().getMethods())
+      if (¢.getParameterCount() == 1 && isInstance(¢) && isDefinedHere(¢))
+        $ = lowest($, ¢.getParameterTypes()[0]);
+    if ($ == null)
+      return castClass(ASTNode.class);
+    return $;
+  }
+
+  private boolean isDefinedHere(final Method ¢) {
+    return ¢.getDeclaringClass() == getClass();
+  }
+
+  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
+    if (c2 == null)
+      return c1;
+    if (!ASTNode.class.isAssignableFrom(c2))
+      return c1;
+    if (c1 == null)
+      return castClass(c2);
+    if (c1.isAssignableFrom(c2))
+      return castClass(c2);
+    return c1;
+  }
+
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
   public final Class<N> myAbstractOperandsClass() {
@@ -65,7 +97,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   public Class<N> myActualOperandsClass() {
-    Class<N> $ = myAbstractOperandsClass();
+    final Class<N> $ = myAbstractOperandsClass();
     if (isAbstract($.getModifiers()))
       return null;
     return $;
@@ -81,33 +113,5 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
   public Rewrite suggest(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : suggest(n);
-  }
-
-  protected abstract String description(N n);
-
-  private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
-    for (final Method ¢ : getClass().getMethods()) 
-      if (¢.getParameterCount() == 1 && isInstance(¢) && isDefinedHere(¢))
-        $ = lowest($, ¢.getParameterTypes()[0]);
-    if ($ == null)
-      return (Class<N>) ASTNode.class;
-    return $;
-  }
-
-  private boolean isDefinedHere(final Method ¢) {
-    return ¢.getDeclaringClass() == getClass();
-  }
-
-  private Class<N> lowest(Class<N> c1, Class<?> c2) {
-    if (c2 == null)
-      return c1;
-    if (!ASTNode.class.isAssignableFrom(c2))
-      return c1;
-    if (c1 == null)
-      return (Class<N>) c2;
-    if (c1.isAssignableFrom(c2))
-      return (Class<N>) c2;
-    return c1;
   }
 }
