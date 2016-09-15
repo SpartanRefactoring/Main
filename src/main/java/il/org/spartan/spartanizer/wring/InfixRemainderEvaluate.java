@@ -28,13 +28,10 @@ public class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> 
     if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     int remainder = extract.intNumber(first(xs));
-    int index = 0;
-    for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+    for (final Expression ¢ : rest(xs)) {
+      if (!iz.compileTime(¢) || extract.intNumber(¢) == 0)
         return null;
-      if (index != 0)
-        remainder %= extract.intNumber(¢);
-      ++index;
+      remainder %= extract.intNumber(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(remainder));
   }
@@ -43,15 +40,10 @@ public class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> 
     if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     long remainder = extract.longNumber(first(xs));
-    int index = 0;
-    // TODO: Dor, wouldn't it be simpler to iterate over lisp.rest(xs)?, we do
-    // not want an extra index variable. Take a look also at class Once
-    for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+    for (final Expression ¢ : rest(xs)) {
+      if (!iz.compileTime(¢) || extract.longNumber(¢) == 0)
         return null;
-      if (index != 0)
-        remainder %= extract.longNumber(¢);
-      ++index;
+      remainder %= extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(remainder) + "L");
   }
