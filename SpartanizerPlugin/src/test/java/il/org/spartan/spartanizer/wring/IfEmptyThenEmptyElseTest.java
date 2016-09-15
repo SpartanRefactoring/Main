@@ -22,7 +22,7 @@ public class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
 
   @Test public void eligible() {
-    assert WRING.canWring(IF);
+    assert WRING.canSuggest(IF);
   }
 
   @Test public void emptyElse() {
@@ -48,7 +48,7 @@ public class IfEmptyThenEmptyElseTest {
     final IfStatement s = extract.firstIfStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    final Rewrite t = WRING.wring(s);
+    final Rewrite t = WRING.suggest(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
     assert e != null;
@@ -58,6 +58,6 @@ public class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.claims(IF);
+    assert WRING.demandsToSuggestButPerhapsCant(IF);
   }
 }

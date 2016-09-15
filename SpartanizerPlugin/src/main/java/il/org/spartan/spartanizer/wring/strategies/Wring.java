@@ -20,9 +20,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
-   * @see #canWring(InfixExpression) */
-  public final boolean cantWring(final N ¢) {
-    return !canWring(¢);
+   * @see #canSuggest(InfixExpression) */
+  public final boolean cantSuggest(final N ¢) {
+    return !canSuggest(¢);
   }
 
   /** Determine whether the parameter is "eligible" for application of this
@@ -30,7 +30,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  public boolean canWring(@SuppressWarnings("unused") final N __) {
+  public boolean canSuggest(@SuppressWarnings("unused") final N __) {
     return true;
   }
 
@@ -42,20 +42,20 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
-  @Deprecated public boolean claims(final N ¢) {
-    return wring(¢, null) != null;
+  @Deprecated public boolean demandsToSuggestButPerhapsCant(final N ¢) {
+    return suggest(¢, null) != null;
   }
 
   public String name() {
     return getClass().getSimpleName();
   }
 
-  public Rewrite wring(final N ¢) {
-    return wring(¢, null);
+  public Rewrite suggest(final N ¢) {
+    return suggest(¢, null);
   }
 
-  public Rewrite wring(final N n, final ExclusionManager m) {
-    return m != null && m.isExcluded(n) ? null : wring(n);
+  public Rewrite suggest(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : suggest(n);
   }
 
   protected abstract String description(N n);

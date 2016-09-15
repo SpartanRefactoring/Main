@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
-  @Override public boolean claims(final ConditionalExpression ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final ConditionalExpression ¢) {
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression());
   }
 

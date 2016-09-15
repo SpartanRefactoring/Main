@@ -119,8 +119,8 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
     return $;
   }
 
-  @Override public Rewrite wring(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Rewrite $ = super.wring(f, exclude);
+  @Override public Rewrite suggest(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+    final Rewrite $ = super.suggest(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

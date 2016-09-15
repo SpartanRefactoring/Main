@@ -246,7 +246,7 @@ public abstract class Spartanization extends Refactoring {
   public ASTRewrite rewriterOf(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m);
+    consolidateSuggestions($, u, m);
     pm.done();
     return $;
   }
@@ -281,7 +281,7 @@ public abstract class Spartanization extends Refactoring {
 
   protected abstract ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u);
 
-  protected abstract void fillRewrite(ASTRewrite r, CompilationUnit u, IMarker m);
+  protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
 
   /** Determines if the node is outside of the selected text.
    * @return true if the node is not inside selection. If there is no selection

@@ -46,7 +46,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }
 
-  @Override public Rewrite wring(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Rewrite suggest(final IfStatement s, final ExclusionManager exclude) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;

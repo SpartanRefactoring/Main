@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
 public abstract class AbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N> {
-  @Override public boolean claims(final N ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
     return firstBad(¢) != null;
   }
 

@@ -37,11 +37,11 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test02() {
-    assert new InfixAdditionSort().claims(INPUT);
+    assert new InfixAdditionSort().demandsToSuggestButPerhapsCant(INPUT);
   }
 
   @Test public void test03() {
-    assert new InfixAdditionSort().canWring(INPUT);
+    assert new InfixAdditionSort().canSuggest(INPUT);
   }
 
   @Test public void test04() {
@@ -49,11 +49,11 @@ public class InfixAdditionSortTest {
   }
 
   @Test public void test05() {
-    assert !new InfixAdditionSubtractionExpand().claims(INPUT);
+    assert !new InfixAdditionSubtractionExpand().demandsToSuggestButPerhapsCant(INPUT);
   }
 
   @Test public void test06() {
-    assert new InfixAdditionSubtractionExpand().canWring(INPUT);
+    assert new InfixAdditionSubtractionExpand().canSuggest(INPUT);
   }
 
   @Test public void test07() {
