@@ -83,7 +83,7 @@ public class ReturnToBreakFiniteFor extends Wring<ForStatement> implements Kind.
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean wantsToSuggestButPerhapsCant(final ForStatement ¢) {
+  @SuppressWarnings("deprecation") @Override public boolean demandsToSuggestButPerhapsCant(final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 

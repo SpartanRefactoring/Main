@@ -40,7 +40,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return $;
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression $) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 

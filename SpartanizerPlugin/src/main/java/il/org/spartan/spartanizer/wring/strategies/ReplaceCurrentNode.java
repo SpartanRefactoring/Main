@@ -7,7 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-  @Override public boolean wantsToSuggestButPerhapsCant(final N ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
     return replacement(¢) != null;
   }
 

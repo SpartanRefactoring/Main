@@ -34,6 +34,6 @@ public class IfEmptyThenTest {
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.wantsToSuggestButPerhapsCant(IF);
+    assert WRING.demandsToSuggestButPerhapsCant(IF);
   }
 }

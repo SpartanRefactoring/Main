@@ -28,7 +28,7 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override public boolean demandsToSuggestButPerhapsCant(@SuppressWarnings("unused") final PostfixExpression __) {
     return true;
   }
 

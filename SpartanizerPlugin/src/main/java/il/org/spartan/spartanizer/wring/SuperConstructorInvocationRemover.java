@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Daniel Mittelman
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
-  @Override public boolean wantsToSuggestButPerhapsCant(final SuperConstructorInvocation ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final SuperConstructorInvocation ¢) {
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 

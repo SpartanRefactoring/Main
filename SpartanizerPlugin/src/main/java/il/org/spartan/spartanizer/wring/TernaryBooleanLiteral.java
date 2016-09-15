@@ -112,7 +112,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
-  @Override public boolean wantsToSuggestButPerhapsCant(final ConditionalExpression ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final ConditionalExpression ¢) {
     return isTernaryOfBooleanLitreral(¢);
   }
 
