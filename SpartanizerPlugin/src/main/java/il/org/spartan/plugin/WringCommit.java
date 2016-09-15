@@ -36,12 +36,12 @@ public class WringCommit {
     pm.done();
   }
 
-  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
+  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     assert cu != null;
     final List<ICompilationUnit> us = eclipse.compilationUnits();
     assert us != null;
-    pm.beginTask("Spa rtanizing project", us.size());
+    pm.beginTask("Spartanizing project", us.size());
     final IJavaProject jp = cu.getJavaProject();
     final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     assert w != null;
@@ -117,10 +117,10 @@ public class WringCommit {
     // TODO: Ori, you cannot have a boolean undocumented like this
     boolean b;
 
-    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type t, final CompilationUnit compilationUnit) {
+    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
       this.rewrite = rewrite;
       this.marker = marker;
-      type = t;
+      this.type = type;
       this.compilationUnit = compilationUnit;
       wring = null;
       b = false;
