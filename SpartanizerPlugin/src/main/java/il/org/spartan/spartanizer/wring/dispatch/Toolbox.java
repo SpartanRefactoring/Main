@@ -12,47 +12,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Wring} with a given sub-class of
-     * {@link ASTNode}.
-     * @param n JD
-     * @param ns JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
-      final List<Wring<N>> l = get(n);
-      for (final Wring<N> ¢ : ns) {
-        if (¢ == null)
-          break;
-        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
-        if (!¢.wringGroup().isEnabled())
-          continue;
-        l.add(¢);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
-  }
-
   /** The default instance of this class */
   static Toolbox instance;
 
   public static Toolbox defaultInstance() {
     return instance;
-  }
-
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
-    for (final Wring<N> $ : ns)
-      if ($.claims(n))
-        return $;
-    return null;
   }
 
   /** Make a {@link Toolbox} for a specific kind of wrings
@@ -211,11 +175,20 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        // TODO: Yossi, No, as I understood, initializers in java can have annotations and modifiers,
-        // just like every declaration. Even private class field which is const assigned at the class body
+        // TODO: Yossi, No, as I understood, initializers in java can have
+        // annotations and modifiers,
+        // just like every declaration. Even private class field which is const
+        // assigned at the class body
         // is called initializer, and there I know could be some modifiers.
         .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
         .seal();
+  }
+
+  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
+    for (final Wring<N> $ : ns)
+      if ($.claims(n))
+        return $;
+    return null;
   }
 
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
@@ -247,5 +220,34 @@ public class Toolbox {
 
   <N extends ASTNode> List<Wring<N>> get(final N ¢) {
     return get(¢.getClass());
+  }
+
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Wring} with a given sub-class of
+     * {@link ASTNode}.
+     * @param n JD
+     * @param ns JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
+      final List<Wring<N>> l = get(n);
+      for (final Wring<N> ¢ : ns) {
+        if (¢ == null)
+          break;
+        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+        if (!¢.wringGroup().isEnabled())
+          continue;
+        l.add(¢);
+      }
+      return this;
+    }
+
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
+    }
   }
 }

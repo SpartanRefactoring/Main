@@ -21,6 +21,89 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 public class WringCommit {
+  public static void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+    if (Type.PROJECT.equals(t)) {
+      goProject(pm, m);
+      return;
+    }
+    pm.beginTask("Toggling spartanization...", IProgressMonitor.UNKNOWN);
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
+    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    textChange.setTextType("java");
+    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
+    if (textChange.getEdit().getLength() != 0)
+      textChange.perform(pm);
+    pm.done();
+  }
+
+  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
+    final ICompilationUnit cu = eclipse.currentCompilationUnit();
+    assert cu != null;
+    final List<ICompilationUnit> us = eclipse.compilationUnits();
+    assert us != null;
+    pm.beginTask("Spa rtanizing project", us.size());
+    final IJavaProject jp = cu.getJavaProject();
+    final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    assert w != null;
+    for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      final IProgressService ps = wb.getProgressService();
+      final AtomicInteger pn = new AtomicInteger(i + 1);
+      try {
+        // TODO: ORIORIRORIORORI NO BUSY CURSOR
+        ps.busyCursorWhile(px -> {
+          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          int n = 0;
+          for (final ICompilationUnit u : us) {
+            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+            textChange.setTextType("java");
+            try {
+              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
+            } catch (JavaModelException | IllegalArgumentException e1) {
+              e1.printStackTrace();
+            }
+            if (textChange.getEdit().getLength() != 0)
+              try {
+                textChange.perform(pm);
+              } catch (final CoreException e) {
+                e.printStackTrace();
+              }
+            px.worked(1);
+            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+          }
+          px.done();
+        });
+      } catch (InvocationTargetException | InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    pm.done();
+  }
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
+    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
+    pm.beginTask("Creating rewrite operation...", 1);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m, t, w);
+    pm.done();
+    return $;
+  }
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Wring w, final IFile f) {
+    return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
+        m, t, w);
+  }
+
+  private static Wring<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
+    Toolbox.refresh();
+    final WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
+    if (w == null)
+      u.accept(v);
+    else
+      v.commitLocal(w, u);
+    return v.wring;
+  }
+
   public enum Type {
     DECLARATION, FILE, PROJECT
   }
@@ -109,88 +192,5 @@ public class WringCommit {
       b = true;
       return false;
     }
-  }
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
-    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
-    pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t, w);
-    pm.done();
-    return $;
-  }
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Wring w, final IFile f) {
-    return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
-        m, t, w);
-  }
-
-  private static Wring<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
-    Toolbox.refresh();
-    final WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
-    if (w == null)
-      u.accept(v);
-    else
-      v.commitLocal(w, u);
-    return v.wring;
-  }
-
-  public static void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
-    if (Type.PROJECT.equals(t)) {
-      goProject(pm, m);
-      return;
-    }
-    pm.beginTask("Toggling spartanization...", IProgressMonitor.UNKNOWN);
-    final ICompilationUnit u = makeAST.iCompilationUnit(m);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
-      textChange.perform(pm);
-    pm.done();
-  }
-
-  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
-    final ICompilationUnit cu = eclipse.currentCompilationUnit();
-    assert cu != null;
-    final List<ICompilationUnit> us = eclipse.compilationUnits();
-    assert us != null;
-    pm.beginTask("Spa rtanizing project", us.size());
-    final IJavaProject jp = cu.getJavaProject();
-    final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    assert w != null;
-    for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
-      final IWorkbench wb = PlatformUI.getWorkbench();
-      final IProgressService ps = wb.getProgressService();
-      final AtomicInteger pn = new AtomicInteger(i + 1);
-      try {
-        // TODO: ORIORIRORIORORI NO BUSY CURSOR
-        ps.busyCursorWhile(px -> {
-          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
-          int n = 0;
-          for (final ICompilationUnit u : us) {
-            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-            textChange.setTextType("java");
-            try {
-              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException e1) {
-              e1.printStackTrace();
-            }
-            if (textChange.getEdit().getLength() != 0)
-              try {
-                textChange.perform(pm);
-              } catch (final CoreException e) {
-                e.printStackTrace();
-              }
-            px.worked(1);
-            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
-          }
-          px.done();
-        });
-      } catch (InvocationTargetException | InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-    pm.done();
   }
 }

@@ -20,14 +20,14 @@ public class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression> imple
     return "Remove unary + in " + ¢;
   }
 
+  @Override public ASTNode replacement(final PrefixExpression ¢) {
+    return ¢.getOperator() != PLUS ? null : il.org.spartan.spartanizer.assemble.make.plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
+  }
+
   private Expression heart(final Expression x) {
     if (iz.is(x, PARENTHESIZED_EXPRESSION))
       return heart(step.expression(x));
     final PrefixExpression p = az.prefixExpression(x);
     return p == null || p.getOperator() != PLUS ? x : heart(p.getOperand());
-  }
-
-  @Override public ASTNode replacement(final PrefixExpression ¢) {
-    return ¢.getOperator() != PLUS ? null : il.org.spartan.spartanizer.assemble.make.plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 }

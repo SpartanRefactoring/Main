@@ -13,10 +13,6 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> implements Kind {
-  public String name() {
-    return getClass().getSimpleName();
-  }
-
   /** Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a
    * {@link Wring} is applicable in principle to an object, but that actual
@@ -50,7 +46,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return wring(¢, null) != null;
   }
 
-  protected abstract String description(N n);
+  public String name() {
+    return getClass().getSimpleName();
+  }
 
   public Rewrite wring(final N ¢) {
     return wring(¢, null);
@@ -59,4 +57,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   public Rewrite wring(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : wring(n);
   }
+
+  protected abstract String description(N n);
 }

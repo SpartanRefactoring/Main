@@ -31,10 +31,6 @@ public class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<I
     return "Concat the strings to a one string";
   }
 
-  @Override protected String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Concat the string literals to a single string";
-  }
-
   @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
@@ -56,5 +52,9 @@ public class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<I
       return null;
     assert !operands.isEmpty();
     return operands.size() <= 1 ? first(operands) : subject.operands(operands).to(wizard.PLUS2);
+  }
+
+  @Override protected String description(@SuppressWarnings("unused") final InfixExpression __) {
+    return "Concat the string literals to a single string";
   }
 }
