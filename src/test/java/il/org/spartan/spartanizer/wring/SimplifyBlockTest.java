@@ -57,6 +57,9 @@ public class SimplifyBlockTest {
   @Test public void emptySimpler() {
     assertSimplifiesTo("{;}", "", new BlockSimplify(), Wrap.Statement);
   }
+  @Test public void emptySimplest() {
+    assertSimplifiesTo("{}", "", new BlockSimplify(), Wrap.Statement);
+  }
 
   @Test public void expressionVsExpression() {
     trimming("6 - 7 < a * 3").to("-1 < 3 * a");
