@@ -14,6 +14,20 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @author Daniel Mittelman
  * @year 2016 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+  /** An event handler used to re-initialize the {@link Trimmer} spartanization
+   * once a wring preference was modified. */
+  static class SpartanPropertyListener implements IPropertyChangeListener {
+    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
+      // Recreate the toolbox's internal instance, adding only enabled wrings
+      Toolbox.refresh();
+      try {
+        Plugin.refreshAllProjects();
+      } catch (final Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
@@ -40,19 +54,5 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     setPreferenceStore(WringGroup.store());
     setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
-  }
-
-  /** An event handler used to re-initialize the {@link Trimmer} spartanization
-   * once a wring preference was modified. */
-  static class SpartanPropertyListener implements IPropertyChangeListener {
-    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
-      // Recreate the toolbox's internal instance, adding only enabled wrings
-      Toolbox.refresh();
-      try {
-        Plugin.refreshAllProjects();
-      } catch (final Exception e) {
-        e.printStackTrace();
-      }
-    }
   }
 }
