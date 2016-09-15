@@ -19,7 +19,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
-    if (!"toString".equals(step.name(i).getIdentifier()) || !i.arguments().isEmpty())
+    if (!"toString".equals(step.name(i).getIdentifier()) || !i.arguments().isEmpty() || iz.expressionStatement(i.getParent()))
       return null;
     final Expression receiver = step.receiver(i);
     return receiver == null ? null : !(i.getParent() instanceof MethodInvocation) ? subject.pair(receiver, //
