@@ -30,6 +30,9 @@ public enum stringType {
         continue;
       // TODO: Niv, you can make this switch simpler by using function {@link
       // iz.is}
+      // TODO: Yossi, this entire method will probably be removed soon.
+      // the !in(get(¢), STRING, ALPHANUMERIC) should cover this as well, but
+      // it fails one test right now so I haven't changed it yet
       switch (context.getNodeType()) {
         case INFIX_EXPRESSION:
           return true;
