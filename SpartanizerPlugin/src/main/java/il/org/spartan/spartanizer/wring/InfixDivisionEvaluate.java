@@ -30,13 +30,12 @@ public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> i
     if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     double divide = extract.doubleNumber(first(xs));
-    int index = 0;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : rest(xs)) {
       if (!iz.compileTime(¢))
         return null;
-      if (index != 0)
-        divide /= extract.doubleNumber(¢);
-      ++index;
+      if (extract.doubleNumber(¢) == 0)
+        return null;
+      divide /= extract.doubleNumber(¢);
     }
     return x.getAST().newNumberLiteral(Double.toString(divide));
   }
@@ -45,13 +44,12 @@ public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> i
     if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     int divide = extract.intNumber(first(xs));
-    int index = 0;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : rest(xs)) {
       if (!iz.compileTime(¢))
         return null;
-      if (index != 0)
-        divide /= extract.intNumber(¢);
-      ++index;
+      if (extract.intNumber(¢) == 0)
+        return null;
+      divide /= extract.intNumber(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(divide));
   }
@@ -60,13 +58,12 @@ public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> i
     if (xs.isEmpty() || !iz.compileTime(first(xs)))
       return null;
     long divide = extract.longNumber(first(xs));
-    int index = 0;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : rest(xs)) {
       if (!iz.compileTime(¢))
         return null;
-      if (index != 0)
-        divide /= extract.longNumber(¢);
-      ++index;
+      if (extract.longNumber(¢) == 0)
+        return null;
+      divide /= extract.longNumber(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
   }
