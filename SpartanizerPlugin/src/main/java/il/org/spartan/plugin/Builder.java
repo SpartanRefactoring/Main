@@ -29,6 +29,33 @@ public class Builder extends IncrementalProjectBuilder {
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
 
+  /** deletes all spartanization suggestion markers
+   * @param f the file from which to delete the markers
+   * @throws CoreException if this method fails. Reasons include: This resource
+   *         does not exist. This resource is a project that is not open.
+   *         Resource changes are disallowed during certain types of resource
+   *         change event notification¢ See {@link IResourceChangeEvent}¢for
+   *         more details. */
+  public static void deleteMarkers(final IFile ¢) throws CoreException {
+    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
+  }
+
+  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
+    d.accept(internalDelta -> {
+      final int k = internalDelta.getKind();
+      // return true to continue visiting children.
+      if (k != IResourceDelta.ADDED && k != IResourceDelta.CHANGED)
+        return true;
+      addMarkers(internalDelta.getResource());
+      return true;
+    });
+  }
+
+  static void addMarkers(final IResource ¢) throws CoreException {
+    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
+      addMarkers((IFile) ¢);
+  }
+
   private static void addMarker(final Spartanization s, final Rewrite r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, s + "");
@@ -52,51 +79,8 @@ public class Builder extends IncrementalProjectBuilder {
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));
   }
 
-  static void addMarkers(final IResource ¢) throws CoreException {
-    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
-      addMarkers((IFile) ¢);
-  }
-
-  /** deletes all spartanization suggestion markers
-   * @param f the file from which to delete the markers
-   * @throws CoreException if this method fails. Reasons include: This resource
-   *         does not exist. This resource is a project that is not open.
-   *         Resource changes are disallowed during certain types of resource
-   *         change event notification¢ See {@link IResourceChangeEvent}¢for
-   *         more details. */
-  public static void deleteMarkers(final IFile ¢) throws CoreException {
-    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
-  }
-
-  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
-    d.accept(internalDelta -> {
-      final int k = internalDelta.getKind();
-      // return true to continue visiting children.
-      if (k != IResourceDelta.ADDED && k != IResourceDelta.CHANGED)
-        return true;
-      addMarkers(internalDelta.getResource());
-      return true;
-    });
-  }
-
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
-  }
-
-  private void build() throws CoreException {
-    final IResourceDelta d = getDelta(getProject());
-    if (d == null)
-      fullBuild();
-    else
-      incrementalBuild(d);
-  }
-
-  private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
-      fullBuild();
-      return;
-    }
-    build();
   }
 
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
@@ -119,5 +103,21 @@ public class Builder extends IncrementalProjectBuilder {
     } catch (final CoreException e) {
       e.printStackTrace();
     }
+  }
+
+  private void build() throws CoreException {
+    final IResourceDelta d = getDelta(getProject());
+    if (d == null)
+      fullBuild();
+    else
+      incrementalBuild(d);
+  }
+
+  private void build(final int kind) throws CoreException {
+    if (kind == FULL_BUILD) {
+      fullBuild();
+      return;
+    }
+    build();
   }
 }

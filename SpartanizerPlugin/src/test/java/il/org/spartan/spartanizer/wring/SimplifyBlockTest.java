@@ -3,8 +3,7 @@ package il.org.spartan.spartanizer.wring;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
-
-import java.util.*;
+import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -18,7 +17,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Unit tests for {@link NameYourClassHere}
  * @author TODO // Write your name here
@@ -73,7 +71,7 @@ public class SimplifyBlockTest {
   @Test public void emptySimplestA() {
     final Wrap w = Wrap.Statement;
     final String wrap = w.on("{}");
-    final String unpeeled = apply((Wring<? extends ASTNode>) new BlockSimplify(), wrap);
+    final String unpeeled = apply(new BlockSimplify(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + "{}");
     final String peeled = w.off(unpeeled);
@@ -105,20 +103,11 @@ public class SimplifyBlockTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     final Document d = new Document(from);
     assert d != null;
-    BlockSimplify inner = new BlockSimplify();
+    final BlockSimplify inner = new BlockSimplify();
     assert inner != null;
-    AsSpartanization s = new AsSpartanization(inner);
+    final AsSpartanization s = new AsSpartanization(inner);
     assert s != null;
     emptySimplestE_Aux(u, d, s);
-  }
-
-
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, AsSpartanization s) {
-    try {
-      s.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
   }
 
   @Test public void expressionVsExpression() {
@@ -131,5 +120,13 @@ public class SimplifyBlockTest {
 
   @Test public void threeStatements() {
     assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
+  }
+
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final AsSpartanization s) {
+    try {
+      s.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
   }
 }

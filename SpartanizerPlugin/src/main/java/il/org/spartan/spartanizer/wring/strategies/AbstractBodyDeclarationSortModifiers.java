@@ -15,6 +15,33 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @since 2016 */
 public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements Kind.Collapse {
+  static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> {
+    return m1.isAnnotation() && m2.isAnnotation() ? 0
+        : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m1.isModifier() ? 1 : Modifiers.gt(m1 + "", m2 + "");
+  };
+
+  private static boolean Sorted(final List<IExtendedModifier> ms) {
+    final List<IExtendedModifier> ¢ = new ArrayList<>(ms);
+    Collections.sort(¢, comp);
+    return ms.equals(¢);
+  }
+
+  @Override public String description(@SuppressWarnings("unused") final N __) {
+    return "Sort Modifiers as defined at Modifier.class";
+  }
+
+  @Override public N replacement(final N $) {
+    return Sorted(step.modifiers($)) ? null : go(duplicate.of($));
+  }
+
+  N go(final N $) {
+    final List<IExtendedModifier> ms = new ArrayList<>(step.modifiers($));
+    Collections.sort(ms, comp);
+    step.modifiers($).clear();
+    step.modifiers($).addAll(ms);
+    return $;
+  }
+
   public static final class ofAnnotation extends AbstractBodyDeclarationSortModifiers<AnnotationTypeDeclaration> { //
   }
 
@@ -37,32 +64,5 @@ public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclara
   }
 
   public static final class ofType extends AbstractBodyDeclarationSortModifiers<TypeDeclaration> { //
-  }
-
-  static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> {
-    return m1.isAnnotation() && m2.isAnnotation() ? 0
-        : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m1.isModifier() ? 1 : Modifiers.gt(m1 + "", m2 + "");
-  };
-
-  private static boolean Sorted(final List<IExtendedModifier> ms) {
-    final List<IExtendedModifier> ¢ = new ArrayList<>(ms);
-    Collections.sort(¢, comp);
-    return ms.equals(¢);
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final N __) {
-    return "Sort Modifiers as defined at Modifier.class";
-  }
-
-  N go(final N $) {
-    final List<IExtendedModifier> ms = new ArrayList<>(step.modifiers($));
-    Collections.sort(ms, comp);
-    step.modifiers($).clear();
-    step.modifiers($).addAll(ms);
-    return $;
-  }
-
-  @Override public N replacement(final N $) {
-    return Sorted(step.modifiers($)) ? null : go(duplicate.of($));
   }
 }

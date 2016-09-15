@@ -14,6 +14,36 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
+/** @author Artium Nihamkin (original)
+ * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
+ * @author Yossi Gil (v3)
+ * @since 2013/01/01 */
+public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
+  @Override public String description(final MethodDeclaration ¢) {
+    return ¢.getName() + "";
+  }
+
+  @Override public Rewrite wring(final MethodDeclaration d, final ExclusionManager exclude) {
+    final Type t = d.getReturnType2();
+    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
+      return null;
+    final SimpleName n = new Conservative(d).selectReturnVariable();
+    if (n == null)
+      return null;
+    if (exclude != null)
+      exclude.exclude(d);
+    return new Rewrite("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        rename(n, $(), d, r, g);
+      }
+
+      SimpleName $() {
+        return d.getAST().newSimpleName("$");
+      }
+    };
+  }
+}
+
 abstract class AbstractRenamePolicy {
   private static List<ReturnStatement> prune(final List<ReturnStatement> $) {
     if ($ == null || $.isEmpty())
@@ -104,35 +134,5 @@ class Conservative extends AbstractRenamePolicy {
       if (wizard.same(n, ¢.getExpression()))
         return false;
     return true;
-  }
-}
-
-/** @author Artium Nihamkin (original)
- * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
- * @author Yossi Gil (v3)
- * @since 2013/01/01 */
-public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + "";
-  }
-
-  @Override public Rewrite wring(final MethodDeclaration d, final ExclusionManager exclude) {
-    final Type t = d.getReturnType2();
-    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
-      return null;
-    final SimpleName n = new Conservative(d).selectReturnVariable();
-    if (n == null)
-      return null;
-    if (exclude != null)
-      exclude.exclude(d);
-    return new Rewrite("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
-      SimpleName $() {
-        return d.getAST().newSimpleName("$");
-      }
-
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(n, $(), d, r, g);
-      }
-    };
   }
 }

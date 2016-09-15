@@ -21,36 +21,6 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-      public void i() {
-        f();
-      }
-    }
-  }
-
   // can be String concating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
@@ -63,33 +33,39 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_BitWiseAnd_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) & 1;
+        azzert.that(x, is(0));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
+
         int g() {
           class C {
             C() {
               h();
               ++a;
             }
+
             int h() {
               return 2;
             }
           }
           return new C().h();
         }
-      }
-      Inner in = new Inner(0);
-      Class() {
-        final int x = in.f(1) & 1;
-        azzert.that(x, is(0));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -109,6 +85,7 @@ public class Version250Test {
       Class() {
         azzert.that(f(1) | 1, is(3));
       }
+
       int f(final int $) {
         azzert.that($, is(1));
         return $ + 1;
@@ -120,33 +97,39 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_BitWiseOr_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) | 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
+
         int g() {
           class C {
             C() {
               h();
               ++a;
             }
+
             int h() {
               return 2;
             }
           }
           return new C().h();
         }
-      }
-      Inner in = new Inner(0);
-      Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -155,21 +138,33 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_BitWiseXor_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) ^ 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
+
         int g() {
           class C {
             C() {
               h();
               ++a;
             }
+
             int h() {
               return 2;
             }
@@ -177,17 +172,10 @@ public class Version250Test {
           return new C().h();
         }
       }
-      Inner in = new Inner(0);
-      Class() {
-        final int x = in.f(1) ^ 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
-      }
     }
     new Class();
     trimming("a = a ^ b ").to("a ^= b");
   }
-
 
   @Test public void issue_177_logicalAnd_noSideEffects() {
     boolean a = true;
@@ -200,12 +188,14 @@ public class Version250Test {
   @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffects() {
     class Class {
       int a;
+
       Class() {
         a = 0;
         final boolean x = f(true) & true;
         azzert.nay(x);
         azzert.that(a, is(1));
       }
+
       boolean f(final boolean $) {
         azzert.aye($);
         ++a;
@@ -218,22 +208,26 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEX() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(true) & true;
+        azzert.nay(x);
+        azzert.aye(in.a == 1);
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         boolean f(final boolean $) {
           azzert.aye($);
           ++a;
           return false;
         }
-      }
-      Inner in = new Inner(0);
-      Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
-        azzert.aye(in.a == 1);
       }
     }
     new Class();
@@ -242,33 +236,39 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(true) & true;
+        azzert.nay(x);
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         boolean f(final boolean $) {
           azzert.aye($);
           return g();
         }
+
         boolean g() {
           class C {
             C() {
               h();
               ++a;
             }
+
             boolean h() {
               return false;
             }
           }
           return new C().h();
         }
-      }
-      Inner in = new Inner(0);
-      Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -286,12 +286,14 @@ public class Version250Test {
   @SuppressWarnings("unused") @Test public void issue_177_logicalOr_withSideEffects() {
     class Class {
       int a;
+
       Class() {
         a = 0;
         final boolean x = f(false) | false;
         azzert.aye(x);
         azzert.that(a, is(1));
       }
+
       boolean f(final boolean $) {
         azzert.nay($);
         ++a;
@@ -304,22 +306,26 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalOr_withSideEffectsEX() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(false) | false;
+        azzert.aye(x);
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         boolean f(final boolean $) {
           azzert.nay($);
           ++a;
           return true;
         }
-      }
-      Inner in = new Inner(0);
-      Class() {
-        final boolean x = in.f(false) | false;
-        azzert.aye(x);
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -328,33 +334,39 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_LogicalOr_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) | 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
+
         Inner(final int i) {
           a = i;
         }
+
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
+
         int g() {
           class C {
             C() {
               h();
               ++a;
             }
+
             int h() {
               return 2;
             }
           }
           return new C().h();
         }
-      }
-      Inner in = new Inner(0);
-      Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -1608,8 +1620,39 @@ public class Version250Test {
   @Ignore public void trimmerBugXOR() {
     trimming("j=j^k").to("j^=k");
   }
+
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
+  }
+
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      public void i() {
+        f();
+      }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+    }
   }
 
 }

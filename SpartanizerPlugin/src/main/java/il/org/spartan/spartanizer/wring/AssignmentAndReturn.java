@@ -32,9 +32,12 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 // To make this happen, we need a wring that removes dead assignments to local
 // variables. Attach the "new-wring" label to this one.
 //
-// To clarify, if 'a' is a local variable, you would like the new wring to change
-// 'return a=3' to 'return 3'? Also, I understand the new wring should only work on return statements?
-// Or did you have something more extensive in mind? Is this the same as issue 194?
+// To clarify, if 'a' is a local variable, you would like the new wring to
+// change
+// 'return a=3' to 'return 3'? Also, I understand the new wring should only work
+// on return statements?
+// Or did you have something more extensive in mind? Is this the same as issue
+// 194?
 public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment> implements Kind.Collapse {
   @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " with its subsequent 'return'";
