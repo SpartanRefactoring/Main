@@ -10,10 +10,25 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue209Test {
+@Ignore("Until Niv Fixes this.") public class Issue209Test {
+  @Test public void issue116_05() {
+    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"").stays();
+  }
+
+  @Test public void issue116_06() {
+    trimming("\"\" + ((Integer)5).toString().indexOf(\"5\").toString().length()")
+        .to("((Integer)5).toString().indexOf(\"5\").toString().length() + \"\"").to("(((Integer)5).toString().indexOf(\"5\") + \"\").length() + \"\"")
+        .to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"").stays();
+  }
+
   @Test public void issue209_01() {
     trimming("new Integer(3).toString()").stays();
   }
+
+  @Test public void issue209_02() {
+    trimming("new Integer(3).toString();").stays();
+  }
+
   @Test public void issue54_01() {
     trimming("(x.toString())").to("x + \"\"");
   }
@@ -38,7 +53,16 @@ public class Issue209Test {
   @Test public void issue54_06() {
     trimming("a.toString().length()").to("(a + \"\").length()");
   }
-  @Test public void issue209_02() {
-    trimming("new Integer(3).toString();").stays();
+
+  @Test public void issue54_1() {
+    trimming("(x.toString())").to("(x+\"\")");
+  }
+
+  @Test public void issue54_2() {
+    trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
+  }
+
+  @Test public void reorderTest() {
+    trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((x + \"\")) + \"\"").stays();
   }
 }

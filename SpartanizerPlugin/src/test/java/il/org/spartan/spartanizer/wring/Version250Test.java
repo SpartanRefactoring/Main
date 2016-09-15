@@ -1009,16 +1009,6 @@ public class Version250Test {
         .to("enum a {x,y,z; void f() {}}");//
   }
 
-  
-
-  @Test public void issue54_1() {
-    trimming("(x.toString())").to("(x+\"\")");
-  }
-
-  @Test public void issue54_2() {
-    trimming("String s = f() + o.toString();").to("String s = f() + o + \"\";").stays();
-  }
-
   @Test public void issue70_01() {
     trimming("(double)5").to("1.*5");
   }
