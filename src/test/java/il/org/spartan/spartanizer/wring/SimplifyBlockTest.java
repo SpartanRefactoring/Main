@@ -17,6 +17,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Unit tests for {@link NameYourClassHere}
  * @author TODO // Write your name here
@@ -104,7 +105,7 @@ public class SimplifyBlockTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     final Document d = new Document(from);
     assert d != null;
-    final BlockSimplify inner = new BlockSimplify();
+    final Wring<Block> inner = new BlockSimplify();
     assert inner != null;
     final AsSpartanization s = new AsSpartanization(inner);
     assert s != null;
