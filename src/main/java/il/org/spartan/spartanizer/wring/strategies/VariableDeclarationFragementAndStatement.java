@@ -130,8 +130,8 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
     return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);
   }
 
-  @Override public Rewrite make(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Rewrite $ = super.make(f, exclude);
+  @Override public Rewrite wring(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+    final Rewrite $ = super.wring(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

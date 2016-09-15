@@ -16,7 +16,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
 
   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 
-  @Override public Rewrite make(final N n, final ExclusionManager exclude) {
+  @Override public Rewrite wring(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null || cantWring(n))
       return null;

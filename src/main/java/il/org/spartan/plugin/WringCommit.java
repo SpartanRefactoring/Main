@@ -85,7 +85,7 @@ public class WringCommit {
             return true;
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Rewrite make = x.make(n, exclude);
+            final Rewrite make = x.wring(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 // LogManager.initialize();
@@ -166,7 +166,7 @@ public class WringCommit {
       try {
         // TODO: ORIORIRORIORORI NO BUSY CURSOR
         ps.busyCursorWhile(px -> {
-          px.beginTask("Applying " + Wring.name(w) + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
           for (final ICompilationUnit u : us) {
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
