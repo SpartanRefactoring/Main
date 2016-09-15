@@ -212,32 +212,9 @@ public interface type {
   }
 
   static class inner {
-    // TODO: Dor, do you suppose you can make this cleaner? I think that the
-    // ctor of all types, certain and uncertain, can insert themselves to the
-    // dictionary.
     private static String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
-    @SuppressWarnings("serial") private static Map<String, implementation> types = new LinkedHashMap<String, implementation>() {
-      {
-        put("Byte", BYTE);
-        put("byte", BYTE);
-        put("Short", SHORT);
-        put("short", SHORT);
-        put("Character", CHAR);
-        put("char", CHAR);
-        put("Integer", INT);
-        put("int", INT);
-        put("Long", LONG);
-        put("long", LONG);
-        put("Float", FLOAT);
-        put("float", FLOAT);
-        put("Double", DOUBLE);
-        put("double", DOUBLE);
-        put("boolean", BOOLEAN);
-        put("Boolean", BOOLEAN);
-        put("String", STRING);
-      }
-    };
+    private static Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation conditionalWithNoInfo(final implementation ¢) {
       return in(¢, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
@@ -612,28 +589,25 @@ public interface type {
      * @author Yossi Gil
      * @since 2016 */
     public enum Certain implements Primitive {
-      BOOLEAN("boolean", "must be boolean: !f(), f() || g() "), //
-      BYTE("byte", "must be byte: (byte)1, nothing else"), //
-      CHAR("char", "must be char: 'a', (char)97, nothing else"), //
-      DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()"), //
-      FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()"), //
-      INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()"), //
-      LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()"), //
-      SHORT("short", "must be short: (short)15, nothing else"), //
-      STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()"), //
+      BOOLEAN("boolean", "must be boolean: !f(), f() || g() ","Boolean"), //
+      BYTE("byte", "must be byte: (byte)1, nothing else","Byte"), //
+      CHAR("char", "must be char: 'a', (char)97, nothing else","Character"), //
+      DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()","Double"), //
+      FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()","Float"), //
+      INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()","Integer"), //
+      LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()","Long"), //
+      SHORT("short", "must be short: (short)15, nothing else","Short"), //
+      STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()",null), //
       ;
       final String description;
       final String key;
 
-      Certain(final String key, final String description) {
-        // TODO: Niv, here is where you should insert yourself into the
-        // dictionary.
-        // TODO: Yossi, can't do this here since the key in the dictionary
-        // is not the key of the type. For example the keys for INT are "int"
-        // and "Integer",
-        // so there is no simple way to do this automatically
+      @SuppressWarnings("synthetic-access") Certain(final String key, final String description, final String s) {
         this.key = key;
         this.description = description;
+        join();
+        if (s != null)
+          inner.types.put(s, this);
       }
 
       @Override public Certain asPrimitiveCertain() {
