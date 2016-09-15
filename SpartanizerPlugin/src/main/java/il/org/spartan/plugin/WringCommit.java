@@ -54,6 +54,7 @@ public class WringCommit {
         ps.busyCursorWhile(px -> {
           px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
+          List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit u : us) {
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
@@ -68,9 +69,12 @@ public class WringCommit {
               } catch (final CoreException e) {
                 e.printStackTrace();
               }
+            else
+              es.add(u);
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
           }
+          us.removeAll(es);
           px.done();
         });
       } catch (InvocationTargetException | InterruptedException e) {
