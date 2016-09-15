@@ -69,7 +69,7 @@ public class Trimmer extends Spartanization {
     };
   }
 
-  @Override protected void fillRewrite(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     Toolbox.refresh();
     final DisabledChecker dc = new DisabledChecker(u);
     u.accept(new DispatchingVisitor() {
