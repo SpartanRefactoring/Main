@@ -186,7 +186,7 @@ public class Toolbox {
 
   private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
     for (final Wring<N> $ : ns)
-      if ($.claims(n))
+      if ($.wantsToSuggestButPerhapsCant(n))
         return $;
     return null;
   }
@@ -205,7 +205,7 @@ public class Toolbox {
     for (final Wring<N> $ : get(n))
       for (final Wring<?> ¢ : ns)
         if (¢.getClass().equals($.getClass())) {
-          if ($.claims(n))
+          if ($.wantsToSuggestButPerhapsCant(n))
             return $;
           break;
         }

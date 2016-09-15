@@ -20,7 +20,7 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> implements 
     return "Remove redundant return statement";
   }
 
-  @Override public Rewrite wring(final ReturnStatement s) {
+  @Override public Rewrite suggest(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
     final Block b = az.block(s.getParent());

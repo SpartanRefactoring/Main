@@ -28,7 +28,7 @@ public class CastBlockSingletonVariableDefinition extends Wring<Block> implement
     return "remove the block: " + n;
   }
 
-  @Override public Rewrite wring(final Block n) {
+  @Override public Rewrite suggest(final Block n) {
     final List<Statement> ss = statements(n);
     if (ss.isEmpty())
       return null;

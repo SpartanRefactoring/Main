@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class TypeModifierCleanInterface extends AbstractModifierClean<TypeDeclaration> implements Kind.SyntacticBaggage {
-  @Override public boolean canWring(final TypeDeclaration ¢) {
+  @Override public boolean canSuggest(final TypeDeclaration ¢) {
     return ¢.isInterface();
   }
 

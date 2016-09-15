@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixSubtractionSort extends InfixSortingOfCDR implements Kind.Sorting {
-  @Override public boolean claims(final InfixExpression ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return in(¢.getOperator(), MINUS);
   }
 
