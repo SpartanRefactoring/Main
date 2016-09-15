@@ -73,7 +73,7 @@ public class ArithmeticTest {
     }
 
     @Test public void issue201_1() {
-      trimming("private long l = (long) (1L * ++d * f--);").to("private long l = 1L*1L*++d*f--;").stays();
+      trimming("private long l = (long) (1L * ++d * f--);").stays();
     }
 
     @Test public void issue92_1() {
