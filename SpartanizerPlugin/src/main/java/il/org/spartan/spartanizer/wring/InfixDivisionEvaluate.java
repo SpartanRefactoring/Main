@@ -31,9 +31,7 @@ public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> i
       return null;
     double divide = extract.doubleNumber(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢))
-        return null;
-      if (extract.doubleNumber(¢) == 0)
+      if (!iz.compileTime(¢) || extract.doubleNumber(¢) == 0)
         return null;
       divide /= extract.doubleNumber(¢);
     }
@@ -45,9 +43,7 @@ public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> i
       return null;
     int divide = extract.intNumber(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢))
-        return null;
-      if (extract.intNumber(¢) == 0)
+      if (!iz.compileTime(¢) || extract.intNumber(¢) == 0)
         return null;
       divide /= extract.intNumber(¢);
     }
@@ -59,9 +55,7 @@ public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> i
       return null;
     long divide = extract.longNumber(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢))
-        return null;
-      if (extract.longNumber(¢) == 0)
+      if (!iz.compileTime(¢) || extract.longNumber(¢) == 0)
         return null;
       divide /= extract.longNumber(¢);
     }
