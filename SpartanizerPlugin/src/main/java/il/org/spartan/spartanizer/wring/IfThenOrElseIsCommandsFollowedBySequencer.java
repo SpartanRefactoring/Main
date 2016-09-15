@@ -46,7 +46,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return iz.sequencer(hop.lastStatement(¢));
   }
 
-  @Override public boolean claims(final IfStatement ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
     return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 
@@ -54,7 +54,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return "Remove redundant else (possibly after inverting if statement)";
   }
 
-  @Override public Rewrite wring(final IfStatement s) {
+  @Override public Rewrite suggest(final IfStatement s) {
     return new Rewrite(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);

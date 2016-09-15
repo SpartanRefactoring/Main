@@ -20,11 +20,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean canWring(final InfixExpression ¢) {
-    return stringType.isNot(¢) && super.canWring(¢);
+  @Override public boolean canSuggest(final InfixExpression ¢) {
+    return stringType.isNot(¢) && super.canSuggest(¢);
   }
 
-  @Override public boolean claims(final InfixExpression ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return ¢.getOperator() == PLUS;
   }
 

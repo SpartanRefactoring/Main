@@ -10,12 +10,12 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 /** Similar to {@link ReplaceCurrentNode}, but with an
  * {@link ExclusionManager} */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
-  @Override public boolean claims(final N ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final N ¢) {
     return replacement(¢, new ExclusionManager()) != null;
   }
 
-  @Override public final Rewrite wring(final N n, final ExclusionManager m) {
-    return cantWring(n) ? null : new Rewrite(description(n), n) {
+  @Override public final Rewrite suggest(final N n, final ExclusionManager m) {
+    return cantSuggest(n) ? null : new Rewrite(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, replacement(n, m), g);
       }

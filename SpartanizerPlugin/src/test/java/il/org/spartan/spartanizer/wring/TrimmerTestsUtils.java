@@ -119,12 +119,12 @@ public class TrimmerTestsUtils {
 
     public OperandToWring<N> in(final Wring<N> n) {
       final N findNode = findNode(n);
-      azzert.that(n.claims(findNode), is(true));
+      azzert.that(n.wantsToSuggestButPerhapsCant(findNode), is(true));
       return this;
     }
 
     public OperandToWring<N> notIn(final Wring<N> ¢) {
-      azzert.that(¢.claims(findNode(¢)), is(false));
+      azzert.that(¢.wantsToSuggestButPerhapsCant(findNode(¢)), is(false));
       return this;
     }
 

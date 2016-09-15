@@ -58,7 +58,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override public Rewrite wring(final IfStatement s) {
+  @Override public Rewrite suggest(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -97,8 +97,8 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     };
   }
 
-  @Override public Rewrite wring(final IfStatement s, final ExclusionManager exclude) {
-    return super.wring(s, exclude);
+  @Override public Rewrite suggest(final IfStatement s, final ExclusionManager exclude) {
+    return super.suggest(s, exclude);
   }
 
   private class DefinitionsCollector extends ASTVisitor {

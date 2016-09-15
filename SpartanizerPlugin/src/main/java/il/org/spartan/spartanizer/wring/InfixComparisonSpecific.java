@@ -29,11 +29,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
   private static final specificity specifity = new specificity();
 
-  @Override public boolean canWring(final InfixExpression ¢) {
+  @Override public boolean canSuggest(final InfixExpression ¢) {
     return specifity.compare(left(¢), right(¢)) < 0;
   }
 
-  @Override public boolean claims(final InfixExpression ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && iz.comparison(¢) && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
 

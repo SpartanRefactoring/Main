@@ -60,7 +60,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
     return ¢.getName() + "";
   }
 
-  @Override public Rewrite wring(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Rewrite suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;

@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override public boolean claims(final IfStatement ¢) {
+  @Override public boolean wantsToSuggestButPerhapsCant(final IfStatement ¢) {
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 
