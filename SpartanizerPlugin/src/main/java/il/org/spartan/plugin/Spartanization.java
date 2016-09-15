@@ -232,15 +232,17 @@ public abstract class Spartanization extends Refactoring {
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the <code>pm</code> */
-  public void performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
+  public boolean performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
     pm.beginTask("Creating change for a single compilation unit...", 2);
     final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(pm);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(m), m).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
+    boolean $ = textChange.getEdit().getLength() != 0;
+    if ($)
       textChange.perform(pm);
     pm.done();
+    return $;
   }
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
