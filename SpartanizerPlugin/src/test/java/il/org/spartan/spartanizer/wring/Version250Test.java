@@ -361,7 +361,6 @@ public class Version250Test {
     trimming("a=a|(b=b&a)").to("a|=b=b&a").to("a|=b&=a");
   }
 
-
   @Test public void issue103_AND1() {
     trimming("a=a&5;").to("a&=5;");
   }
@@ -1584,6 +1583,26 @@ public class Version250Test {
 
   @Test public void issue87d() {
     trimming("a - (b-c)").to("a - b + c");
+  }
+
+  @Ignore public void test_a() {
+    final String s = "studiesA";
+    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("studyA"));
+  }
+
+  @Test public void test_b() {
+    final String s = "studies";
+    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
+  }
+
+  @Test public void test_c() {
+    final String s = "studes";
+    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+  }
+
+  @Test public void test_d() {
+    final String s = "studs";
+    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
 
   @Ignore public void trimmerBugXOR() {
