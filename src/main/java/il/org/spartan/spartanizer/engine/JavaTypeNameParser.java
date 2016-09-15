@@ -138,14 +138,12 @@ import org.eclipse.jdt.core.dom.*;
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
-  // TODO: Alex, here is a nice exercise; try to find a function that would
-  // simplify the following code? Is it in the library, please add a TODO to me
-  // when you are done; leave this comment so that I would know what's going on.
-  // Actually, you can use a library function that would simplify the code
-  // greatly.
+  // TODO: Yossi, looks better :). I want to die with this Mitug stuff. Did you
+  // know that clock
+  // is two transistors and a capacitor? Cycle duty depends on the
+  // capacitance:@.
   private String toSingular(final String word) {
-    return word == null ? null
-        : word.endsWith("ies") ? word.substring(0, word.length() - 3) + "y"
-            : word.endsWith("es") ? word.substring(0, word.length() - 2) : word.endsWith("s") ? word.substring(0, word.length() - 1) : word;
+    final String $ = word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
+    return $;
   }
 }
