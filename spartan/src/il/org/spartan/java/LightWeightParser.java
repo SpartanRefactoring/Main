@@ -20,7 +20,7 @@ public class LightWeightParser {
     final Token t = skipUntil(__class, __enum, __interface, AT_INTERFACE);
     if (t == null)
       return;
-    final String s = getIdentifier();
+    getIdentifier();
     skipUntil(LBRACE);
   }
 

@@ -8,9 +8,9 @@ import java.util.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.Separate.*;
-import il.org.spatan.iteration.*;
 
 /** A <b>Utility Class</b> providing services of converting a collection or an
  * array into a {@link String}, with means for omitting <code><b>null</b></code>

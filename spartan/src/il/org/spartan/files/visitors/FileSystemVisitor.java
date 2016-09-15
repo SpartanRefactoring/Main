@@ -191,15 +191,15 @@ public class FileSystemVisitor {
    * <ol>
    * <li>{@link Action#visitFile(File)},
    * <li>{@link Action#visitDirectory(File)},
-   * <li>{@link  #visitZipEntry(String, String, InputStreamReader)}, or
+   * <li>{@link #visitZipEntry(String, String, InputStreamReader)}, or
    * <li>{@link Action#visitZip(File)}
    * </ol>
    * functions, depending on the file type. If this function throws
    * {@link Action.StopTraversal} exception, then the traversal stops:
    * completely if the current file was a plain file, i.e.,
-   * {@link Action#visitFile(File)} or {@link  #visitZipEntry(String, String,
-   * InputStreamReader)} was called, or just of the contained files, if this was
-   * an archive or a directory file.
+   * {@link Action#visitFile(File)} or
+   * {@link #visitZipEntry(String, String, InputStreamReader)} was called, or
+   * just of the contained files, if this was an archive or a directory file.
    * @throws IOException if the file system could not traversed for some reason
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */

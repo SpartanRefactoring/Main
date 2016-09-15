@@ -7,8 +7,8 @@ import static il.org.spartan.utils.___.*;
 
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
-import il.org.spatan.iteration.*;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -26,8 +26,8 @@ import il.org.spatan.iteration.*;
    * given <code><b>char</b></code>
    * @param bs an array of elements to be separated
    * @param between what should be used for separating these elements.
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>bs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final boolean[] bs, final char between) {
     return by(box(bs), "" + between);
@@ -37,8 +37,8 @@ import il.org.spatan.iteration.*;
    * given {{link @String}}
    * @param bs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>bs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final boolean[] bs, final String between) {
     return by(box(bs), between);
@@ -48,8 +48,8 @@ import il.org.spatan.iteration.*;
    * <code><b>char</b></code>
    * @param bs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>bs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final byte[] bs, final char between) {
     return by(box(bs), "" + between);
@@ -59,8 +59,8 @@ import il.org.spatan.iteration.*;
    * {{link @String}}
    * @param bs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>bs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final byte[] bs, final String between) {
     return by(box(bs), between);
@@ -70,8 +70,8 @@ import il.org.spatan.iteration.*;
    * <code><b>char</b></code>
    * @param cs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>cs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
   public static String by(final char[] cs, final char between) {
     return by(box(cs), "" + between);
@@ -81,8 +81,8 @@ import il.org.spatan.iteration.*;
    * {{link @String}}
    * @param cs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>cs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
   public static String by(final char[] cs, final String between) {
     return by(box(cs), between);
@@ -92,8 +92,8 @@ import il.org.spatan.iteration.*;
    * given <code><b>char</b></code>
    * @param ds an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ds</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
   public static String by(final double[] ds, final char between) {
     return by(box(ds), "" + between);
@@ -103,16 +103,16 @@ import il.org.spatan.iteration.*;
    * given {{link @String}}
    * @param ds an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ds</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
   public static String by(final double[] ds, final String between) {
     return by(box(ds), between);
   }
 
-  /** Separate elements of a given {{@link Iterable}} collection of objects by a given
-   * {@link String}, where the textual representation of each object is obtained
-   * by a user supplied function.
+  /** Separate elements of a given {{@link Iterable}} collection of objects by a
+   * given {@link String}, where the textual representation of each object is
+   * obtained by a user supplied function.
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
    * @param f a function object, providing a function that translates an object
@@ -129,9 +129,9 @@ import il.org.spatan.iteration.*;
     return $.toString();
   }
 
-  /** Separate elements of a given {{@link Iterable}} collection of objects by a given
-   * <code><b>char</b></code>, where the textual representation of each object
-   * is obtained by a user supplied function.
+  /** Separate elements of a given {{@link Iterable}} collection of objects by a
+   * given <code><b>char</b></code>, where the textual representation of each
+   * object is obtained by a user supplied function.
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
    * @param f a function object, providing a function that translates an object
@@ -159,9 +159,9 @@ import il.org.spatan.iteration.*;
     return by(f, ts, "" + between);
   }
 
-  /** Separate elements of a given generic array by a given {{link @String}}, where the
-   * textual representation of each object is obtained by a user supplied
-   * function.
+  /** Separate elements of a given generic array by a given {{link @String}},
+   * where the textual representation of each object is obtained by a user
+   * supplied function.
    * @param ts an array of elements to be separated
    * @param <T> type of elements in <code>ts</code>
    * @param f a function object, providing a function that translates an object
@@ -182,8 +182,8 @@ import il.org.spatan.iteration.*;
    * given <code><b>char</b></code>
    * @param fs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>fs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
   public static String by(final float[] fs, final char between) {
     return by(box(fs), "" + between);
@@ -193,8 +193,8 @@ import il.org.spatan.iteration.*;
    * given {{link @String}}
    * @param fs an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>fs</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
   public static String by(final float[] fs, final String between) {
     return by(box(fs), between);
@@ -204,8 +204,8 @@ import il.org.spatan.iteration.*;
    * <code><b>char</b></code>
    * @param is an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>is</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
   public static String by(final int[] is, final char between) {
     return by(box(is), "" + between);
@@ -215,8 +215,8 @@ import il.org.spatan.iteration.*;
    * {{link @String}}
    * @param is an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>is</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
   public static String by(final int[] is, final String between) {
     return by(box(is), between);
@@ -227,8 +227,8 @@ import il.org.spatan.iteration.*;
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ts</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final Iterable<T> ts, final char between) {
     return by(ts, "" + between);
@@ -239,8 +239,8 @@ import il.org.spatan.iteration.*;
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ts</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final Iterable<T> ts, final String between) {
     final Separator s = new Separator(between);
@@ -254,8 +254,8 @@ import il.org.spatan.iteration.*;
    * <code><b>char</b></code>
    * @param ls an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ls</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
   public static String by(final long[] ls, final char between) {
     return by(box(ls), "" + between);
@@ -265,8 +265,8 @@ import il.org.spatan.iteration.*;
    * {{link @String}}
    * @param ls an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ls</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
   public static String by(final long[] ls, final String between) {
     return by(box(ls), between);
@@ -299,8 +299,8 @@ import il.org.spatan.iteration.*;
    * given <code><b>char</b></code>
    * @param ss an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ss</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
   public static String by(final short[] ss, final char between) {
     return by(box(ss), "" + between);
@@ -310,8 +310,8 @@ import il.org.spatan.iteration.*;
    * given {{link @String}}
    * @param ss an array of elements to be separated
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ss</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
   public static String by(final short[] ss, final String between) {
     return by(box(ss), between);
@@ -321,8 +321,8 @@ import il.org.spatan.iteration.*;
    * @param ts an array of elements to be separated
    * @param <T> type of elements in the array parameter
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ts</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final T[] ts, final char between) {
     return by(ts, "" + between);
@@ -332,16 +332,16 @@ import il.org.spatan.iteration.*;
    * @param ts an array of elements to be separated
    * @param <T> type of elements in the array parameter
    * @param between what should be used for separating these elements
-   * @return a {{link @String}} obtained by concatenating the textual representation of
-   *         the elements in <code>ts</code> separated by
+   * @return a {{link @String}} obtained by concatenating the textual
+   *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final T[] ts, final String between) {
     return by((F<T>) t -> "" + t, ts, between);
   }
 
-  /** Separate elements of a given {{@link Iterable}} collection of objects by commas
-   * where the textual representation of each object is obtained by a user
-   * supplied function.
+  /** Separate elements of a given {{@link Iterable}} collection of objects by
+   * commas where the textual representation of each object is obtained by a
+   * user supplied function.
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
    * @param f a function object, providing a function that translates an object

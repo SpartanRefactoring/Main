@@ -3,9 +3,9 @@ package il.org.spartan.strings;
 
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import il.org.spatan.iteration.*;
 
 /** A utility class providing library functions that take an array or a
  * collection of objects, and return a parenthesized {@link String} of the non-

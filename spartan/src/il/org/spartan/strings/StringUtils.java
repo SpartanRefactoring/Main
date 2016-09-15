@@ -127,7 +127,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isDouble(final String s) {
     try {
-      @SuppressWarnings("unused") final Object __ = new Double(s);
+      new Double(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -136,7 +136,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isFloat(final String s) {
     try {
-      @SuppressWarnings("unused") final Object __ = new Float(s);
+      new Float(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -145,7 +145,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isInt(final String s) {
     try {
-      @SuppressWarnings("unused") final Object __ = new Integer(s);
+      new Integer(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -154,7 +154,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isLong(final String s) {
     try {
-      @SuppressWarnings("unused") final Object __ = new Long(s);
+      new Long(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;

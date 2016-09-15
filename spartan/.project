@@ -11,12 +11,12 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.spartan.refactoring.BuilderID</name>
+			<name>il.org.spartan.spartanizer.BuilderID</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>il.org.spartan.refactoring.BuilderID</name>
+			<name>il.il.org.spartan.spartanizer.BuilderID</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -34,8 +34,8 @@
 	<natures>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.spartan.refactoring.NatureID</nature>
-		<nature>il.org.spartan.refactoring.NatureID</nature>
+		<nature>il.org.spartan.spartanizer.NatureID</nature>
+		<nature>il.il.org.spartan.spartanizer.NatureID</nature>
 		<nature>il.org.spartan.spartanizer.NatureID</nature>
 	</natures>
 </projectDescription>
