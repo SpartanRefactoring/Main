@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
-  @Override public boolean claims(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 

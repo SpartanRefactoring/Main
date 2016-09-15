@@ -83,7 +83,7 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean claims(final WhileStatement ¢) {
+  @SuppressWarnings("deprecation") @Override public boolean demandsToSuggestButPerhapsCant(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
@@ -95,7 +95,7 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
     return "Convert the return inside " + b + " to break";
   }
 
-  @Override public Rewrite wring(final WhileStatement b) {
+  @Override public Rewrite suggest(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;

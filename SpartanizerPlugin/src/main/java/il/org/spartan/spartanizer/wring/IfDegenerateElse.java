@@ -32,7 +32,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> impl
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @Override public boolean claims(final IfStatement ¢) {
+  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
     return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
 

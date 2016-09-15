@@ -23,7 +23,7 @@ public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDec
     return ¢.getName() + "";
   }
 
-  @Override public Rewrite wring(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override public Rewrite suggest(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
