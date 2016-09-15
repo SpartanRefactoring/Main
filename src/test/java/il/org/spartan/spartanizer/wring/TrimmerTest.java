@@ -1805,7 +1805,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void issue54_1() {
-    trimming("x.toString()").to("x+\"\"");
+    trimming("(x.toString())").to("(x+\"\")");
   }
 
   @Test public void issue54_2() {
