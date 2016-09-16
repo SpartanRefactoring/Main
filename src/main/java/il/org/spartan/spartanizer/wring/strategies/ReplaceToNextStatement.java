@@ -20,6 +20,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null || cantSuggest(n))
       return null;
+    if (exclude != null)
     exclude.exclude(nextStatement);
     return new Rewrite(description(n), n, nextStatement) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

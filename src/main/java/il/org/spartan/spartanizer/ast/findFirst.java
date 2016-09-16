@@ -113,6 +113,8 @@ public interface findFirst {
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
           return true;
         $.set((N) ¢);
+        assert $.get() == ¢;
+
         return false;
       }
     });
