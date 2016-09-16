@@ -8,6 +8,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
@@ -30,7 +31,7 @@ public enum extract {
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
     assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
-    findOperators(x, $);
+    extract.findOperators(x, $);
     return $;
   }
 
@@ -141,177 +142,6 @@ public enum extract {
    *         more than one statement */
   public static ExpressionStatement expressionStatement(final ASTNode ¢) {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
-  }
-
-  /** Search for a {@link PrefixExpression} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static PostfixExpression findFirstPostfix(final ASTNode n) {
-    final Wrapper<PostfixExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  private static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
-    if (x == null)
-      return;
-    $.add(x.getOperator());
-    findOperators(az.infixExpression(x.getLeftOperand()), $);
-    findOperators(az.infixExpression(x.getRightOperand()), $);
-  }
-
-  /** Search for an {@link AssertStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static AssertStatement firstAssertStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<AssertStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final AssertStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Search for an {@link ForStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link ForStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static ForStatement firstForStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<ForStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final ForStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Search for an {@link IfStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static IfStatement firstIfStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<IfStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final IfStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Search for an {@link MethodDeclaration} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
-    final Wrapper<MethodDeclaration> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Find the first {@link InfixExpression} representing an addition, under a
-   * given node, as found in the usual visitation order.
-   * @param n JD
-   * @return first {@link InfixExpression} representing an addition under the
-   *         parameter given node, or <code><b>null</b></code> if no such value
-   *         could be found. */
-  public static InfixExpression firstPlus(final ASTNode n) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final InfixExpression ¢) {
-        if ($.get() != null)
-          return false;
-        if (¢.getOperator() != InfixExpression.Operator.PLUS)
-          return true;
-        $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  public static Type firstType(final Statement s) {
-    final Wrapper<Type> $ = new Wrapper<>();
-    s.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        if (!(¢ instanceof Type))
-          return true;
-        $.set((Type) ¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Return the first {@link VariableDeclarationFragment} encountered in a
-   * visit of the tree rooted a the parameter.
-   * @param n JD
-   * @return first such node encountered in a visit of the tree rooted a the
-   *         parameter, or <code><b>null</b></code> */
-  public static VariableDeclarationFragment firstVariableDeclarationFragment(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<VariableDeclarationFragment> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Search for an {@link WhileStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  public static WhileStatement firstWhileStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<WhileStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final WhileStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
   }
 
   /** Extract the single {@link ReturnStatement} embedded in a node.
@@ -537,5 +367,13 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
+  }
+
+  public static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+    if (x == null)
+      return;
+    $.add(x.getOperator());
+    findOperators(az.infixExpression(x.getLeftOperand()), $);
+    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 }

@@ -136,7 +136,7 @@ import il.org.spartan.spartanizer.java.*;
   @Test public void subjectOperands() {
     final Expression e = into.e("2 + a < b");
     assert stringType.isNot(e);
-    final InfixExpression plus = extract.firstPlus(e);
+    final InfixExpression plus = findFirst.firstPlus(e);
     assert stringType.isNot(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
@@ -165,7 +165,7 @@ import il.org.spartan.spartanizer.java.*;
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = into.e("(2 + a) * b");
     assert stringType.isNot(e);
-    final InfixExpression plus = extract.firstPlus(e);
+    final InfixExpression plus = findFirst.firstPlus(e);
     assert stringType.isNot(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));

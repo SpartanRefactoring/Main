@@ -21,7 +21,7 @@ public class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
   private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-  private final SimpleName a = extract.firstVariableDeclarationFragment(u).getName();
+  private final SimpleName a = findFirst.variableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();
   private final IfStatement s = extract.nextIfStatement(a);
@@ -30,7 +30,7 @@ public class OccurrencesTest {
   @Test public void correctSettings() {
     azzert.that(ab, iz("int a=2,b;"));
     azzert.that(b + "", is("b"));
-    azzert.that(s, is(extract.firstIfStatement(u)));
+    azzert.that(s, is(findFirst.ifStatement(u)));
     azzert.that(s, iz("if (a + b) a=3;"));
     azzert.that(e, iz("a + b"));
   }
