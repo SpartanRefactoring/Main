@@ -21,12 +21,12 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
-  // can be String concating, so can't remove 0
+  // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
   }
 
-  // can be String concating, so can't remove 0
+  // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimming("b=0+a;").stays();
   }
@@ -441,11 +441,11 @@ public class Version250Test {
     trimming("x=y+z").stays();
   }
 
-  @Test public void issue103d() {
+  public void issue103d() {
     trimming("x = x + x").to("x+=x");
   }
 
-  @Ignore public void issue103e() {
+  public void issue103e() {
     trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
   }
 
@@ -510,7 +510,7 @@ public class Version250Test {
     trimming("a/=1;").stays();
   }
 
-  @Ignore public void issue107h() {
+  public void issue107h() {
     trimming("a-+=1;").to("a-++;");
   }
 
@@ -604,7 +604,7 @@ public class Version250Test {
                 "}");
   }
 
-  @Ignore public void issue111c() {
+  @Test public void issue111c() {
     trimming("protected public void func();").to("public protected void func();");
   }
 
@@ -619,7 +619,7 @@ public class Version250Test {
             "}").stays(); //
   }
 
-  @Ignore public void issue111d() {
+  public void issue111d() {
     trimming("protected public class A{}").to("public protected class A{}");
   }
 
@@ -644,27 +644,27 @@ public class Version250Test {
                 "}");
   }
 
-  @Ignore public void issue111h() {
+  public void issue111h() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111i() {
+  public void issue111i() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111q() {
+  public void issue111q() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111w() {
+  public void issue111w() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111y() {
+  public void issue111y() {
     trimming("synchronized volatile public int a;").to("public volatile synchronized int a;");
   }
 
-  @Ignore public void issue111z() {
+  public void issue111z() {
     trimming("volatile private int a;").to("private volatile int a;");
   }
 
@@ -741,6 +741,22 @@ public class Version250Test {
 
   @Test public void issue207() {
     trimming("size() == 0").stays();
+  }
+
+  @Test public void issue218() {
+    trimming("(long)(long)2")//
+        .to("1L*(long)2")//
+        .to("1L*1L*2")//
+        .to("2L")//
+        .stays();
+  }
+
+  @Test public void issue218a() {
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").to("2L").stays();
+  }
+
+  @Test public void issue218x() {
+    trimming("(long)1L*2").to("2*(long)1L").to("2*1L*1L").to("2L").stays();
   }
 
   @Test public void issue31a() {
@@ -1009,31 +1025,6 @@ public class Version250Test {
         .to("enum a {x,y,z; void f() {}}");//
   }
 
-  @Test public void issue54_01() {
-    trimming("x.toString()").to("x + \"\"");
-  }
-
-  @Test public void issue54_02() {
-    trimming("if(x.toString() == \"abc\") return a;").to("if(x + \"\" == \"abc\") return a;");
-  }
-
-  @Test public void issue54_03() {
-    trimming("((Integer)6).toString()").to("(Integer)6 + \"\"");
-  }
-
-  @Test public void issue54_04() {
-    trimming("switch(x.toString()){ case \"1\": return; case \"2\": return; default: return; }")
-        .to("switch(x + \"\"){ case \"1\": return; case \"2\": return; default: return; }");
-  }
-
-  @Test public void issue54_05() {
-    trimming("x.toString(5)").stays();
-  }
-
-  @Test public void issue54_06() {
-    trimming("a.toString().length()").to("(a + \"\").length()");
-  }
-
   @Test public void issue70_01() {
     trimming("(double)5").to("1.*5");
   }
@@ -1290,11 +1281,11 @@ public class Version250Test {
   }
 
   // TODO: Niv, rewrite these two tests
-  @Ignore("can be string concating") @Test public void issue72ph() {
+  @Ignore("can be string concatenating") @Test public void issue72ph() {
     trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
-  @Ignore("can be string concating") @Test public void issue72pi() {
+  @Ignore("can be string concatenating") @Test public void issue72pi() {
     trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 
@@ -1435,19 +1426,23 @@ public class Version250Test {
   }
 
   @Test public void issue82b() {
-    trimming("(long)a").to("1L*a");
+    trimming("(long)(int)a").to("1L*(int)a").stays();
   }
 
-  @Test public void issue82c() {
-    trimming("(long)(long)a").to("1L*(long)a").to("1L*1L*a");
+  @Test public void issue82b_a_cuold_be_double() {
+    trimming("(long)a").stays();
+  }
+
+  @Ignore("Issue #218") @Test public void issue82c() {
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").stays();
   }
 
   @Test public void issue82d() {
-    trimming("(long)a*(long)b").to("1L*a*1L*b");
+    trimming("(long)a*(long)b").stays();
   }
 
   @Test public void issue82e() {
-    trimming("(double)(long)a").to("1.*(long)a").to("1.*1L*a").stays();
+    trimming("(double)(long)a").to("1.*(long)a").stays();
   }
 
   @Test public void issue83a() {

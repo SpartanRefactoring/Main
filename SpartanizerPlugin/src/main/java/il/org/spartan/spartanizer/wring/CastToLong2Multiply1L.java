@@ -7,10 +7,11 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
-/** Replace <code>(double)X</code> by <code>1.*X</code>
+/** Replace <code>(long)X</code> by <code>1L*X</code>
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
@@ -33,7 +34,7 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
     return eval(//
         () -> replacement(step.expression(¢))//
     ).when(//
-        step.type(¢).isPrimitiveType() && "long".equals(step.type(¢) + "") //
+        step.type(¢).isPrimitiveType() && "long".equals(step.type(¢) + "") && type.get(step.expression(¢)).isIntegral() //
     );
   }
 }

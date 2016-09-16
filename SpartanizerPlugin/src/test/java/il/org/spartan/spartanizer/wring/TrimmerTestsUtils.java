@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 public class TrimmerTestsUtils {
-  public static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.collectSuggesions(u).size();
+  public static int countOpportunities(final Applicator a, final CompilationUnit u) {
+    return a.collectSuggesions(u).size();
   }
 
   static String apply(final Trimmer t, final String from) {
@@ -28,12 +28,12 @@ public class TrimmerTestsUtils {
     return $.get();
   }
 
-  static String apply(final Wring<? extends ASTNode> w, final String from) {
+  static String apply(final Wring<? extends ASTNode> n, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
     assert d != null;
-    return TESTUtils.rewrite(new AsSpartanization(w), u, d).get();
+    return TESTUtils.rewrite(new WringApplicator(n), u, d).get();
   }
 
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> n, final Wrap w) {

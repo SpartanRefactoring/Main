@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.spartanizations;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
@@ -50,9 +50,9 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
     return extract.singleStatement(n);
   }
 
-  public static Document rewrite(final Spartanization s, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final Applicator a, final CompilationUnit u, final Document $) {
     try {
-      s.createRewrite(u, new NullProgressMonitor()).rewriteAST($, null).apply($);
+      a.createRewrite(u, nullProgressMonitor).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
@@ -67,18 +67,18 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
     return TESTUtils.rewrite(t, u, d).get();
   }
 
-  static void assertNoOpportunity(final Spartanization s, final String from) {
+  static void assertNoOpportunity(final Applicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    azzert.that(u + "", TrimmerTestsUtils.countOpportunities(s, u), is(0));
+    azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
 
   static void assertNotEvenSimilar(final String expected, final String actual) {
     azzert.that(tide.clean(actual), is(tide.clean(expected)));
   }
 
-  static void assertOneOpportunity(final Spartanization s, final String from) {
+  static void assertOneOpportunity(final Applicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    azzert.that(TrimmerTestsUtils.countOpportunities(s, u), greaterThanOrEqualTo(1));
+    azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
   }
 }

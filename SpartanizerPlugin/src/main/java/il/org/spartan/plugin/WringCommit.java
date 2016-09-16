@@ -36,12 +36,12 @@ public class WringCommit {
     pm.done();
   }
 
-  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException, CoreException {
+  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     assert cu != null;
     final List<ICompilationUnit> us = eclipse.compilationUnits();
     assert us != null;
-    pm.beginTask("Spa rtanizing project", us.size());
+    pm.beginTask("Spartanizing project", us.size());
     final IJavaProject jp = cu.getJavaProject();
     final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     assert w != null;
@@ -54,6 +54,7 @@ public class WringCommit {
         ps.busyCursorWhile(px -> {
           px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
+          final List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit u : us) {
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
@@ -62,7 +63,9 @@ public class WringCommit {
             } catch (JavaModelException | IllegalArgumentException e1) {
               e1.printStackTrace();
             }
-            if (textChange.getEdit().getLength() != 0)
+            if (textChange.getEdit().getLength() == 0)
+              es.add(u);
+            else
               try {
                 textChange.perform(pm);
               } catch (final CoreException e) {
@@ -71,6 +74,7 @@ public class WringCommit {
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
           }
+          us.removeAll(es);
           px.done();
         });
       } catch (InvocationTargetException | InterruptedException e) {
@@ -117,10 +121,10 @@ public class WringCommit {
     // TODO: Ori, you cannot have a boolean undocumented like this
     boolean b;
 
-    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type t, final CompilationUnit compilationUnit) {
+    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
       this.rewrite = rewrite;
       this.marker = marker;
-      type = t;
+      this.type = type;
       this.compilationUnit = compilationUnit;
       wring = null;
       b = false;

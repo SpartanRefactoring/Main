@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -14,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
   @Test public void plantIntoLess() {
-    azzert.that(subject.pair(into.e("a + 2"), into.e("b")).to(InfixExpression.Operator.LESS), iz("a+2<b"));
+    azzert.that(subject.pair(into.e("a + 2"), into.e("b")).to(LESS), iz("a+2<b"));
   }
 
   @Test public void plantIntoNull() {
@@ -35,7 +36,7 @@ import il.org.spartan.spartanizer.java.*;
 
   @Test public void plus() {
     final Expression e = into.e("a + 2 < b");
-    final Expression plus = extract.firstPlus(e);
+    final Expression plus = findFirst.firstPlus(e);
     azzert.that(plus + "", stringType.isNot(plus), is(true));
     azzert.that(e + "", stringType.isNot(plus), is(true));
   }

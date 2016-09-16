@@ -47,7 +47,7 @@ public enum make {
     return $;
   }
 
-  public static StringLiteral makeStringLiteral(final ASTNode ¢) {
+  public static StringLiteral makeEmptyString(final ASTNode ¢) {
     return make.from(¢).literal("");
   }
 
@@ -81,10 +81,18 @@ public enum make {
     return $;
   }
 
-  /** Factory method recording the expression that might be wrapped.
+  /** A fluent API method that wraps an {@link Expression} with parenthesis, if
+   * the location in which this expression occurs requires such wrapping.
+   * <p>
+   * Typical usage is in the form <code>new Plan(expression).in(host)</code>
+   * where <code>location</code> is the parent under which the expression is to
+   * be placed.
+   * <p>
+   * This function is a factory method recording the expression that might be
+   * wrapped.
    * @param inner JD */
-  public static make.PlantingExpression plant(final Expression inner) {
-    return new make.PlantingExpression(inner);
+  public static make.PlantingExpression plant(final Expression ¢) {
+    return new make.PlantingExpression(¢);
   }
 
   /** Factory method recording the statement might be wrapped.

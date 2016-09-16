@@ -30,7 +30,7 @@ public enum iz {
   }
 
   /** Determine whether a variable declaration is final or not
-   * @param s some declaration
+   * @param subject some declaration
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
    *         final */
   public static boolean __final(final VariableDeclarationStatement ¢) {
@@ -69,13 +69,13 @@ public enum iz {
     return is(¢, BLOCK);
   }
 
-  /** @param s JD
+  /** @param subject JD
    * @return true if the parameter is an essential block or false otherwise */
   public static boolean blockEssential(final Statement ¢) {
     return blockEssential(az.ifStatement(¢));
   }
 
-  /** @param s JD
+  /** @param subject JD
    * @return */
   public static boolean blockRequired(final IfStatement ¢) {
     return blockRequiredInReplacement(¢, ¢);
@@ -415,7 +415,7 @@ public enum iz {
     return ¢1 != null && literal(¢1.getToken(), d);
   }
 
-  /** @param s JD
+  /** @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter return a
    *         literal */
   public static boolean literal(final ReturnStatement ¢) {
@@ -632,7 +632,7 @@ public enum iz {
 
   /** Determine whether the "then" branch of an {@link Statement} is a single
    * statement.
-   * @param s JD
+   * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a statement */
   public static boolean singletonThen(final IfStatement ¢) {
     return iz.singletonStatement(then(¢));
@@ -670,7 +670,7 @@ public enum iz {
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
    * or has nothing but empty statements in it.
-   * @param s JD
+   * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
   public static boolean vacuous(final Statement ¢) {
@@ -678,7 +678,7 @@ public enum iz {
   }
 
   /** Determine whether the 'else' part of an {@link IfStatement} is vacuous.
-   * @param s JD
+   * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the 'else' part of the parameter */
   public static boolean vacuousElse(final IfStatement ¢) {
@@ -687,7 +687,7 @@ public enum iz {
 
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
    * but empty statements in it.
-   * @param s JD
+   * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
    *         statements in the parameter */
   public static boolean vacuousThen(final IfStatement ¢) {

@@ -57,7 +57,7 @@ public interface metrics {
     final Set<String> $ = new LinkedHashSet<>();
     u.accept(new ASTVisitor() {
       @Override public void endVisit(final SimpleName node) {
-        $.add(node.getIdentifier());
+        $.add(step.identifier(node));
       }
     });
     return $;
