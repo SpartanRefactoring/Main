@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.wring.dispatch;
 
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -16,12 +17,22 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
-public class Trimmer extends Spartanization {
+public class Trimmer extends Applicator {
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
   public static String fixedPoint(final String from) {
     return new Trimmer().fixed(from);
+  }
+
+  static ASTVisitor collect(final List<Rewrite> $) {
+    Toolbox.refresh();
+    return new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        final Wring<N> w = Toolbox.defaultInstance().find(n);
+        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
+      }
+    };
   }
 
   static ExclusionManager makeExcluder() {
@@ -46,16 +57,6 @@ public class Trimmer extends Spartanization {
   public Trimmer(final Toolbox toolbox) {
     super("  Spartanize");
     this.toolbox = toolbox;
-  }
-
-  protected ASTVisitor collect(final List<Rewrite> $) {
-    Toolbox.refresh();
-    return new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        final Wring<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
-      }
-    };
   }
 
   @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u) {
@@ -95,7 +96,7 @@ public class Trimmer extends Spartanization {
     final Document $ = new Document(from);
     for (;;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u, new NullProgressMonitor());
+      final ASTRewrite r = createRewrite(u, nullProgressMonitor);
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);

@@ -44,7 +44,8 @@ public interface hop {
    *         type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
-      if (iz.is($, ANONYMOUS_CLASS_DECLARATION //
+      if (iz.is($//
+          , ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //
           , TYPE_DECLARATION //
@@ -91,7 +92,7 @@ public interface hop {
   }
 
   /** Find the last statement residing under a given {@link Statement}
-   * @param s JD
+   * @param subject JD
    * @return last statement residing under a given {@link Statement}, or
    *         <code><b>null</b></code> if not such statements exists. */
   static ASTNode lastStatement(final Statement ¢) {

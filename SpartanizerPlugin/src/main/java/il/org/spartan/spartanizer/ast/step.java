@@ -168,6 +168,14 @@ public enum step {
     return ¢.getRightHandSide();
   }
 
+  public static String identifier(final MethodInvocation ¢) {
+    return identifier(name(¢));
+  }
+
+  public static String identifier(final SimpleName ¢) {
+    return ¢.getIdentifier();
+  }
+
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */

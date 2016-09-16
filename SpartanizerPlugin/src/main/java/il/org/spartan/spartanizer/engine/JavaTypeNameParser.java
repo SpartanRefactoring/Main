@@ -73,29 +73,12 @@ import org.eclipse.jdt.core.dom.*;
   }
 
   /** Shorthand for n.equals(this.shortName())
-   * @param s JD
+   * @param subject JD
    * @return true if the provided name equals the type's short name */
   public boolean isShort(final String ¢) {
     return ¢.equals(shortName());
   }
 
-  // TODO: Dan, is this a hack? You were supposed to look at the way
-  // "Expression" gets abbreviated to 'e'. Not turn every 'e' into an 'x'.
-  //
-  //
-  // Yossi, I must have misunderstood your intention. In my understanding, in
-  // issue 31 you
-  // asked of me to rename identifiers whose typename's last word begins with
-  // 'ex' to 'x' instead of 'e'.
-  //
-  // This cannot be done in a seperate wring, to the best of my understanding:
-  // We cannot have two wrings that change
-  // the identifier in different ways, and each keeping the other wring
-  // applicable.
-  //
-  // The way to do that, in my opinion, is to change the renaming rules on a
-  // fundamental level - that is, here, or in spartan.java.
-  // I cannot see how can this be done in any way other than hard-coding it.
   /** Returns the calculated short name for the type
    * @return type's short name */
   public String shortName() {
@@ -143,7 +126,6 @@ import org.eclipse.jdt.core.dom.*;
   // is two transistors and a capacitor? Cycle duty depends on the
   // capacitance:@.
   private String toSingular(final String word) {
-    final String $ = word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
-    return $;
+    return word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
   }
 }

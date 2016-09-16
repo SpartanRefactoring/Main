@@ -18,7 +18,7 @@ public class extractTest {
   }
 
   @Test public void firstMethdoDeclaration() {
-    azzert.that(extract.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
+    azzert.that(findFirst.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
   }
 
   @Test public void operandsCount() {
@@ -30,7 +30,7 @@ public class extractTest {
   }
 
   @Test public void plus() {
-    azzert.that(extract.firstPlus(into.e("a + 2 < b")), iz("a+2"));
+    azzert.that(findFirst.firstPlus(into.e("a + 2 < b")), iz("a+2"));
   }
 
   @Test public void prefixToPostfixDecrement() {
@@ -39,7 +39,7 @@ public class extractTest {
     final Statement s = s(from);
     assert s != null;
     azzert.that(s, iz("{" + from + "}"));
-    final PostfixExpression e = extract.findFirstPostfix(s);
+    final PostfixExpression e = findFirst.postfixExpression(s);
     assert e != null;
     azzert.that(e + "", is("i--"));
   }

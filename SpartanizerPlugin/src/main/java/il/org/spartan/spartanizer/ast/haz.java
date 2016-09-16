@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -15,7 +17,7 @@ public enum haz {
   ;
   public static boolean dollar(final List<SimpleName> ns) {
     for (final SimpleName ¢ : ns)
-      if ("$".equals(¢.getIdentifier()))
+      if ("$".equals(identifier(¢)))
         return true;
     return false;
   }

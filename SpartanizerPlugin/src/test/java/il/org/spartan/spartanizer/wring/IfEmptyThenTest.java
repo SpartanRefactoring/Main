@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class IfEmptyThenTest {
   private static final Statement INPUT = into.s("{if (b) ; else ff();}");
-  private static final IfStatement IF = extract.firstIfStatement(INPUT);
+  private static final IfStatement IF = findFirst.ifStatement(INPUT);
   private static final IfEmptyThen WRING = new IfEmptyThen();
 
   @Test public void eligible() {

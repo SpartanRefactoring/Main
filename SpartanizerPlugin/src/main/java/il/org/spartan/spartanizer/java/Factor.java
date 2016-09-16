@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
@@ -32,7 +34,7 @@ class Factor {
     if (!divider)
       return expression;
     final InfixExpression $ = expression.getAST().newInfixExpression();
-    $.setOperator(InfixExpression.Operator.DIVIDE);
+    $.setOperator(DIVIDE);
     $.setLeftOperand(expression.getAST().newNumberLiteral("1"));
     $.setRightOperand(!iz.infixExpression(expression) ? duplicate.of(expression) : make.parethesized(duplicate.of(expression)));
     return $;

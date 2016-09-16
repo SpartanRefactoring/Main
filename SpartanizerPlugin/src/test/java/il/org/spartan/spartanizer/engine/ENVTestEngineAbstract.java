@@ -58,6 +58,27 @@ public abstract class ENVTestEngineAbstract {
   protected ASTNode n = null;
   protected LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
+  /** Adds a new Entry to testSet from the inner annotation.
+   * @param ps JD. */
+  public void addTestSet(final List<MemberValuePair> ps) {
+    final String s = wizard.condense(first(ps).getValue());
+    /* A call to an inner function of PrudentType that calls
+     * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
+     * current situation, but not ideal.
+     *
+     * An Ideal solution would be to add a
+     * "boolean contains(PrudentType t1,PrudentType t2)" function, that will
+     * return true iff type t1 is contained in type t2 - for example,
+     * PrudentType.NUMERIC is contained in PrudentType.NOTNULL.
+     *
+     * Returning a direct comparison is far too error prone, and would be a bad
+     * idea for a debug tool. */
+    // add returns true iff the element did not exist in the set already.
+    if (!testSet
+        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.condense(second(ps).getValue()))))))
+      azzert.fail("Bad test file - an entity appears twice.");
+  }
+
   /** Compares the set from the annotation with the set that the checked
    * function generates. Comparison done inorder. Assertion fails <b>iff</b>
    * testSet is not contained inorder in the provided set.
@@ -166,27 +187,6 @@ public abstract class ENVTestEngineAbstract {
         foundTestedAnnotation = false;
       }
     });
-  }
-
-  /** Adds a new Entry to testSet from the inner annotation.
-   * @param ps JD. */
-  protected void addTestSet(final List<MemberValuePair> ps) {
-    final String s = wizard.condense(first(ps).getValue());
-    /* A call to an inner function of PrudentType that calls
-     * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
-     * current situation, but not ideal.
-     *
-     * An Ideal solution would be to add a
-     * "boolean contains(PrudentType t1,PrudentType t2)" function, that will
-     * return true iff type t1 is contained in type t2 - for example,
-     * PrudentType.NUMERIC is contained in PrudentType.NOTNULL.
-     *
-     * Returning a direct comparison is far too error prone, and would be a bad
-     * idea for a debug tool. */
-    // add returns true iff the element did not exist in the set already.
-    if (!testSet
-        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.condense(second(ps).getValue()))))))
-      azzert.fail("Bad test file - an entity appears twice.");
   }
 
   protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);

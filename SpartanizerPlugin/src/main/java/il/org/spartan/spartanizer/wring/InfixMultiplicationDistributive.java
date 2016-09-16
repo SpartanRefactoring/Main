@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -34,7 +35,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-  private static List<Expression> removeFirstEl(final List<Expression> xs) {
+  private static List<Expression> removeFirstElement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>(xs);
     $.remove($.get(0));// remove first
     return $;
@@ -109,9 +110,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
         subject.pair(//
             first(different), second(different)//
         ).to(//
-            Operator.PLUS)//
+            PLUS2)//
     ).to(//
-        Operator.TIMES//
+        TIMES//
     );
   }
 
@@ -124,8 +125,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     final List<Expression> different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
     for (int i = 0; i < xs.size(); ++i) {
-      System.out.println(" === " + xs.get(i));
-      temp = removeFirstEl(temp);
+      temp = removeFirstElement(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
@@ -141,7 +141,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     }
     Expression addition = null;
     for (int i = 0; i < different.size() - 1; ++i)
-      addition = subject.pair(addition != null ? addition : different.get(i), different.get(i + 1)).to(Operator.PLUS);
+      addition = subject.pair(addition != null ? addition : different.get(i), different.get(i + 1)).to(PLUS2);
     Expression multiplication = null;
     if (common.isEmpty())
       return addition;

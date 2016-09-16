@@ -30,7 +30,12 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
+        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
@@ -39,9 +44,6 @@ public class Toolbox {
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             null) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
-        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -180,6 +182,11 @@ public class Toolbox {
         // just like every declaration. Even private class field which is const
         // assigned at the class body
         // is called initializer, and there I know could be some modifiers.
+        // TODO: Alex, I could not place an annotation on an initializer.
+        // Suppose we can, then still, that this could not have been tested,
+        // since the dispatcher does not
+        // know about Initializers. Add initializers to DispatchingVisitor if
+        // you can provide a test case
         .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
         .seal();
   }
@@ -201,7 +208,7 @@ public class Toolbox {
     return find(¢, get(¢));
   }
 
-  public <N extends ASTNode> Wring<N> findWring(final N n, final Wring<N>... ns) {
+  public <N extends ASTNode> Wring<N> findWring(final N n, @SuppressWarnings("unchecked") final Wring<N>... ns) {
     for (final Wring<N> $ : get(n))
       for (final Wring<?> ¢ : ns)
         if (¢.getClass().equals($.getClass())) {
@@ -249,5 +256,17 @@ public class Toolbox {
     public Toolbox seal() {
       return this;
     }
+  }
+}
+
+class A {
+  // Or here. If you can, you know what to do. If you can't you also know. In
+  // both cases class A should die.
+  static {
+    new Integer(3 + new Integer(null + "" + new A()).hashCode());
+  }
+  // TODO: ALex, try to put an initializer here.
+  {
+    new Integer(3 + new Integer(null + "" + this).hashCode());
   }
 }

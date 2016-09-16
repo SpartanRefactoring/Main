@@ -68,7 +68,7 @@ public class subject {
 
   /** Create an instance of several statements together here we get only one
    * statement
-   * @param s JD
+   * @param context JD
    * @return a new instance using the given statement */
   public static SeveralStatements statement(final Statement ¢) {
     return statements(¢);
@@ -165,7 +165,7 @@ public class subject {
       return $;
     }
 
-    /** Create a new expression of method invocation owned by this ast
+    /** Create a new expression of method invocation owned by this AST
      * @param methodName a string contains the method name
      * @return a method invocation expression of the method methodName with
      *         inner as an expression */

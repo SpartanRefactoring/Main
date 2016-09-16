@@ -25,8 +25,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final Spartanization s, final CompilationUnit u) {
-    return s.collectSuggesions(u).size();
+  static int countOpportunities(final Applicator a, final CompilationUnit u) {
+    return a.collectSuggesions(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
