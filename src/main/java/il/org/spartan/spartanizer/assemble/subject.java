@@ -378,7 +378,7 @@ public class subject {
 
   /** Create an instance of several statements together here we get only one
    * statement
-   * @param s JD
+   * @param context JD
    * @return a new instance using the given statement */
   public static SeveralStatements statement(final Statement ¢) {
     return statements(¢);

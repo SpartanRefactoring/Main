@@ -291,7 +291,7 @@ public enum extract {
 
   /** Finds the single statement in the <code><b>else</b></code> branch of an
    * {@link IfStatement}
-   * @param s JD
+   * @param subject JD
    * @return single statement in the <code><b>else</b></code> branch of the
    *         parameter, or <code><b>null</b></code>, if no such statement
    *         exists. */
@@ -307,7 +307,7 @@ public enum extract {
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}
-   * @param s JD
+   * @param subject JD
    * @return single statement in the "then" branch of the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement singleThen(final IfStatement ¢) {
