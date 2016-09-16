@@ -165,11 +165,8 @@ public class WringCommit {
 
     protected void commitLocal(final Wring w, final ASTNode n) {
       Toolbox.refresh();
-      final DisabledChecker dc = new DisabledChecker(compilationUnit);
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (dc.check(n))
-            return true;
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
             final Rewrite make = x.suggest(n, exclude);
