@@ -1,18 +1,15 @@
 package il.org.spartan.spartanizer.ast;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
-/** An empty <code><b>interface</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
+
+/** An empty <code><b>interface</b></code> for fluent programming. The name
+ * should say it all: The name, followed by a dot, followed by a method name,
+ * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-28 */
 public interface findFirst {
-
   /** Search for an {@link AssertStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
@@ -171,6 +168,25 @@ public interface findFirst {
         if ($.get() == null)
           $.set(¢);
         return false;
+      }
+    });
+    return $.get();
+  }
+
+  static ThrowStatement throwStatement(ASTNode ¢) {
+    return findFirstClass(ThrowStatement.class, ¢);
+  }
+
+  static <N extends ASTNode> N findFirstClass(Class<N> c, ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<N> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
+        if (¢.getClass() != c)
+          return true;
+        $.set((N) ¢);
+        return true;
       }
     });
     return $.get();
