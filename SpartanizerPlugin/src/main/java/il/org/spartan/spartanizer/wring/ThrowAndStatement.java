@@ -19,7 +19,6 @@ public final class ThrowAndStatement extends ReplaceToNextStatement<ThrowStateme
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final ThrowStatement s, final Statement nextStatement, final TextEditGroup g) {
-    System.err.println("We go");
     final ASTNode parent = parent(s);
     if (iz.statement(parent))
       return null;

@@ -396,7 +396,7 @@ public abstract class Applicator extends Refactoring {
     marker = ¢;
   }
 
-  /** @param s the selection to set */
+  /** @param subject the selection to set */
   public void setSelection(final ITextSelection ¢) {
     selection = ¢;
   }
