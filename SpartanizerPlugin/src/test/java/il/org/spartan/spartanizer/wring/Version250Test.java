@@ -441,11 +441,11 @@ public class Version250Test {
     trimming("x=y+z").stays();
   }
 
-  @Test public void issue103d() {
+  public void issue103d() {
     trimming("x = x + x").to("x+=x");
   }
 
-  @Ignore public void issue103e() {
+  public void issue103e() {
     trimming("x = y + x + z + x + k + 9").to("x += y + z + x + k + 9");
   }
 
@@ -644,27 +644,27 @@ public class Version250Test {
                 "}");
   }
 
-  @Ignore public void issue111h() {
+  public void issue111h() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111i() {
+  public void issue111i() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111q() {
+  public void issue111q() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111w() {
+  public void issue111w() {
     trimming("protected public int a;").to("public protected int a;");
   }
 
-  @Ignore public void issue111y() {
+  public void issue111y() {
     trimming("synchronized volatile public int a;").to("public volatile synchronized int a;");
   }
 
-  @Ignore public void issue111z() {
+  public void issue111z() {
     trimming("volatile private int a;").to("private volatile int a;");
   }
 
@@ -1285,7 +1285,8 @@ public class Version250Test {
     trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
-  @Ignore("can be string concatenating") @Test public void issue72pi() {
+  @Ignore("can be string concatenating") 
+  @Test public void issue72pi() {
     trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 
