@@ -76,7 +76,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
     assert wring.suggest(focus) != null;
   }
 
-  @Test public void B$05toolboxCanFindFind() {
+  @Test public void B$05toolboxCanFindWring() {
     A$04_init();
     final Wring<?> w = Toolbox.defaultInstance().find(focus);
     assert w != null;
@@ -124,7 +124,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
     Toolbox.defaultInstance().find(focus);
   }
 
-  @Ignore @Test public void doubleVanillaThrow() {
+  @Test public void doubleVanillaThrow() {
     A$04_init();
     trimming("int f() {"//
         + " if (false) "//
@@ -144,7 +144,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
         .stays();
   }
 
-  @Ignore @Test public void vanilla() {
+  @Test public void vanilla() {
     trimming(INPUT)//
         .to("throw Something();a=3; return 2;") //
         .to("throw Something(); return 2;") //
