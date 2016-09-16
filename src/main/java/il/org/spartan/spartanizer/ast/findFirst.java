@@ -16,17 +16,7 @@ public interface findFirst {
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<AssertStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final AssertStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(AssertStatement.class, n);
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
@@ -35,15 +25,7 @@ public interface findFirst {
    * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static PostfixExpression postfixExpression(final ASTNode n) {
-    final Wrapper<PostfixExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PostfixExpression ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(PostfixExpression.class, n);
   }
 
   /** Search for an {@link ForStatement} in the tree rooted at an
@@ -52,17 +34,7 @@ public interface findFirst {
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static ForStatement forStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<ForStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final ForStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(ForStatement.class, n);
   }
 
   /** Search for an {@link IfStatement} in the tree rooted at an
@@ -71,17 +43,7 @@ public interface findFirst {
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static IfStatement ifStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<IfStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final IfStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(IfStatement.class, n);
   }
 
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
@@ -90,15 +52,7 @@ public interface findFirst {
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
-    final Wrapper<MethodDeclaration> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(MethodDeclaration.class, n);
   }
 
   /** Find the first {@link InfixExpression} representing an addition, under a
@@ -122,17 +76,8 @@ public interface findFirst {
     return $.get();
   }
 
-  static Type firstType(final Statement s) {
-    final Wrapper<Type> $ = new Wrapper<>();
-    s.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        if (!(¢ instanceof Type))
-          return true;
-        $.set((Type) ¢);
-        return false;
-      }
-    });
-    return $.get();
+  static Type firstType(final Statement n) {
+    return findFirstClass(Type.class, n);
   }
 
   /** Return the first {@link VariableDeclarationFragment} encountered in a
@@ -141,17 +86,7 @@ public interface findFirst {
    * @return first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code> */
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<VariableDeclarationFragment> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final VariableDeclarationFragment ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(VariableDeclarationFragment.class, n);
   }
 
   /** Search for an {@link WhileStatement} in the tree rooted at an
@@ -160,17 +95,7 @@ public interface findFirst {
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<WhileStatement> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final WhileStatement ¢) {
-        if ($.get() == null)
-          $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
+    return findFirstClass(WhileStatement.class, n);
   }
 
   static ThrowStatement throwStatement(ASTNode ¢) {
@@ -183,10 +108,12 @@ public interface findFirst {
     final Wrapper<N> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
       @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
-        if (¢.getClass() != c)
+        if ($.get() != null)
+          return false;
+        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
           return true;
         $.set((N) ¢);
-        return true;
+        return false;
       }
     });
     return $.get();
