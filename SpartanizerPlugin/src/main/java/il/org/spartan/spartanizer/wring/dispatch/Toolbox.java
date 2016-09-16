@@ -30,7 +30,6 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
-        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
@@ -187,6 +186,7 @@ public class Toolbox {
         // know about Initializers. Add initializers to DispatchingVisitor if
         // you can provide a test case
         .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
+        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .seal();
   }
 
