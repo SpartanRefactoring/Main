@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import java.util.*;
 
 import javax.swing.*;
@@ -44,7 +46,7 @@ public interface eclipse {
       try {
         s.setCompilationUnit(cu);
         s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
-        return s.performRule(cu, new NullProgressMonitor());
+        return s.performRule(cu, nullProgressMonitor);
       } catch (final CoreException x) {
         x.printStackTrace();
       }
@@ -66,7 +68,7 @@ public interface eclipse {
   /** @return List of all compilation units in the current project */
   static List<ICompilationUnit> compilationUnits() {
     try {
-      return compilationUnits(currentCompilationUnit(), new NullProgressMonitor());
+      return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException e) {
       e.printStackTrace();
     }
@@ -75,7 +77,7 @@ public interface eclipse {
 
   static List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
     try {
-      return compilationUnits(u, new NullProgressMonitor());
+      return compilationUnits(u, nullProgressMonitor);
     } catch (final JavaModelException x) {
       x.printStackTrace();
       return null;
@@ -86,7 +88,7 @@ public interface eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times put a "new NullProgressMonitor()"
+   *        operation times put a "nullProgressMonitor"
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {

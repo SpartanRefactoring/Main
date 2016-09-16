@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.eclipse.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import java.util.*;
 import java.util.List;
@@ -80,7 +81,7 @@ public abstract class Applicator extends Refactoring {
     // be easily optimized when called after countSuggestions()
     setMarker(null);
     try {
-      checkFinalConditions(new NullProgressMonitor());
+      checkFinalConditions(nullProgressMonitor);
     } catch (final OperationCanceledException e) {
       e.printStackTrace();
     } catch (final CoreException e) {
@@ -96,7 +97,7 @@ public abstract class Applicator extends Refactoring {
   public int countSuggestions() {
     setMarker(null);
     try {
-      checkFinalConditions(new NullProgressMonitor());
+      checkFinalConditions(nullProgressMonitor);
     } catch (final OperationCanceledException e) {
       e.printStackTrace();
     } catch (final CoreException e) {
@@ -141,7 +142,7 @@ public abstract class Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          runAsMarkerFix(new NullProgressMonitor(), m);
+          runAsMarkerFix(nullProgressMonitor, m);
         } catch (final CoreException e) {
           throw new RuntimeException(e);
         }
@@ -351,7 +352,7 @@ public abstract class Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          ToggleSpartanization.deactivate(new NullProgressMonitor(), m, t);
+          ToggleSpartanization.deactivate(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
           e.printStackTrace();
         }
@@ -375,7 +376,7 @@ public abstract class Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          WringCommit.go(new NullProgressMonitor(), m, t);
+          WringCommit.go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
           e.printStackTrace();
         }

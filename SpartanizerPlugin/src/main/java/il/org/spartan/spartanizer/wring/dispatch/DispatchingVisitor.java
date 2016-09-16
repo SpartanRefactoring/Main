@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.wring.dispatch;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** Weirdo that converts the type specific visit functions, into a single call
- * to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
+/** A visitor hack converting the type specific visit functions, into a single
+ * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
  * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
  * we do not because some of the tests rely on the functions here returning
  * false/true, or for no reason. No one really know...
@@ -22,6 +22,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final CastExpression ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final ClassInstanceCreation ¢) {
     return cautiousGo(¢);
   }
 

@@ -2,7 +2,9 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static il.org.spartan.spartanizer.engine.into.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
@@ -36,15 +38,15 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void divisionDoesntAssociate() {
-    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.DIVIDE), iz("a * B / (c * d)"));
+    azzert.that(subject.pair(e("a*B"), e("c*d")).to(DIVIDE), iz("a * B / (c * d)"));
   }
 
   @Test public void extractcoreLeft() {
-    azzert.that(subject.pair(e("((a-B))"), e("c-d")).to(InfixExpression.Operator.PLUS), iz("a - B + c - d"));
+    azzert.that(subject.pair(e("((a-B))"), e("c-d")).to(PLUS2), iz("a - B + c - d"));
   }
 
   @Test public void extractcoreRight() {
-    azzert.that(subject.pair(e("a-B"), e("(c-d)")).to(InfixExpression.Operator.PLUS), iz("a - B + c - d"));
+    azzert.that(subject.pair(e("a-B"), e("(c-d)")).to(PLUS2), iz("a - B + c - d"));
   }
 
   @Test public void makeIfNotStatement() {
@@ -64,11 +66,11 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void multiplicationOfAddition() {
-    azzert.that(subject.pair(e("a+B"), e("c+d")).to(InfixExpression.Operator.TIMES), iz("(a + B) * (c + d)"));
+    azzert.that(subject.pair(e("a+B"), e("c+d")).to(TIMES), iz("(a + B) * (c + d)"));
   }
 
   @Test public void multiplicationOfMultiplicatoin() {
-    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.TIMES), iz("a * B * c * d"));
+    azzert.that(subject.pair(e("a*B"), e("c*d")).to(TIMES), iz("a * B * c * d"));
   }
 
   @Test public void notPeels() {
@@ -76,23 +78,23 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void operandsNoParenthesisRest() {
-    azzert.that(subject.operands(e("((a-b))"), e("b-c"), e("c+d")).to(InfixExpression.Operator.PLUS), iz("a-b+b-c+c+d"));
+    azzert.that(subject.operands(e("((a-b))"), e("b-c"), e("c+d")).to(PLUS2), iz("a-b+b-c+c+d"));
   }
 
   @Test public void operandsParenthesisLeft() {
-    azzert.that(subject.operands(e("((a+b))"), e("b"), e("c")).to(InfixExpression.Operator.TIMES), iz("(a+b)*b*c"));
+    azzert.that(subject.operands(e("((a+b))"), e("b"), e("c")).to(TIMES), iz("(a+b)*b*c"));
   }
 
   @Test public void operandsParenthesisRest() {
-    azzert.that(subject.operands(e("((a))"), e("b+c"), e("c+d")).to(InfixExpression.Operator.TIMES), iz("a*(b+c)*(c+d)"));
+    azzert.that(subject.operands(e("((a))"), e("b+c"), e("c+d")).to(TIMES), iz("a*(b+c)*(c+d)"));
   }
 
   @Test public void operandsParenthesisRight() {
-    azzert.that(subject.operands(e("((a))"), e("b+c"), e("c")).to(InfixExpression.Operator.TIMES), iz("a*(b+c)*c"));
+    azzert.that(subject.operands(e("((a))"), e("b+c"), e("c")).to(TIMES), iz("a*(b+c)*c"));
   }
 
   @Test public void operandsVanilla() {
-    azzert.that(subject.operands(e("((a))"), e("b"), e("c")).to(InfixExpression.Operator.PLUS), iz("a+b+c"));
+    azzert.that(subject.operands(e("((a))"), e("b"), e("c")).to(PLUS2), iz("a+b+c"));
   }
 
   @Test public void postfix() {
@@ -130,7 +132,7 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void remainderDoesntAssociate() {
-    azzert.that(subject.pair(e("a*B"), e("c*d")).to(InfixExpression.Operator.REMAINDER), iz("a * B % (c * d)"));
+    azzert.that(subject.pair(e("a*B"), e("c*d")).to(REMAINDER), iz("a * B % (c * d)"));
   }
 
   @Test public void subjectOperands() {
@@ -175,7 +177,7 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void subtractionsDoesntAssociate() {
-    azzert.that(subject.pair(e("a-B"), e("c-d")).to(InfixExpression.Operator.MINUS), iz("a - B - (c - d)"));
+    azzert.that(subject.pair(e("a-B"), e("c-d")).to(MINUS), iz("a - B - (c - d)"));
   }
 
   @Test public void vanilla() {

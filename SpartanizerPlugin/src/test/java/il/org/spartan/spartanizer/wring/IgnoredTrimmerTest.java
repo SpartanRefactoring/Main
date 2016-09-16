@@ -194,9 +194,8 @@ import org.junit.runners.*;
   }
 
   @Test public void reanmeReturnVariableToDollar01() {
-    trimming(
-        " public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C res = new C(6);   S.x.f(res.j);   return res; ")
-            .to(" public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C $ = new C(6);   S.x.f($.j);   return $; ");
+    trimming(" public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C res = new C(6);   S.x.f(res.j);   return res; ")
+        .to(" public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C $ = new C(6);   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar02() {
