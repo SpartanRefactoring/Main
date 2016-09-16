@@ -63,7 +63,7 @@ import il.org.spartan.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class AAA_TemplateTestTemplate {
+public class AAA_TemplateForTestClasses {
   private static Object object() {
     return new Object();
   }
