@@ -19,22 +19,22 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016-04-11 */
 public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation> implements Kind.SyntacticBaggage {
   // building a replacement
-  private static ASTNode replacement(final MethodInvocation i, final Vector<Expression> sll) {
-    if (sll.isEmpty())
+  private static ASTNode replacement(final MethodInvocation i, final List<Expression> es) {
+    if (es.isEmpty())
       return make.makeEmptyString(i);
-    if (sll.size() == 1)
-      return ASTNode.copySubtree(i.getAST(), sll.get(0));
-    final Expression $ = i.getAST().newInfixExpression();
-    InfixExpression t = (InfixExpression) $;
-    for (final Expression ¢ : sll.subList(0, sll.size() - 2)) {
+    if (es.size() == 1)
+      return ASTNode.copySubtree(i.getAST(), es.get(0));
+    final InfixExpression $ = i.getAST().newInfixExpression();
+    InfixExpression t = $;
+    for (final Expression ¢ : es.subList(0, es.size() - 2)) {
       t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), ¢));
       t.setOperator(PLUS2);
       t.setRightOperand(i.getAST().newInfixExpression());
       t = (InfixExpression) t.getRightOperand();
     }
-    t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), sll.get(sll.size() - 2)));
+    t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), es.get(es.size() - 2)));
     t.setOperator(PLUS2);
-    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), sll.get(sll.size() - 1)));
+    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), es.get(es.size() - 1)));
     return $;
   }
 
@@ -46,7 +46,7 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
-    final Vector<Expression> sll = new Vector<>();
+    final List<Expression> terms = new ArrayList<>();
     MethodInvocation r = i;
     boolean hs = false;
     // collecting strings from append method arguments list and from class
@@ -59,27 +59,21 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
           return null;
         if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
           final Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
-          sll.insertElementAt(addParenthesisIfNeeded(a), 0);
+          terms.add(0, addParenthesisIfNeeded(a));
           hs |= iz.stringLiteral(a);
         }
-        if (!hs) {
-          // creating a "" string literal to ensure final value interpreted as
-          // a string.
-          // this expression is created twice, maybe unnecessarily
-          final StringLiteral es = i.getAST().newStringLiteral();
-          es.setLiteralValue("");
-          sll.insertElementAt(es, 0);
-        }
+        if (!hs) 
+          terms.add(0,make.makeEmptyString(e));
         break;
       }
       if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
         return null;
       final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
-      sll.insertElementAt(addParenthesisIfNeeded(a), 0);
+      terms.add(0,addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
       r = (MethodInvocation) e;
     }
-    return replacement(i, sll);
+    return replacement(i, terms);
   }
 
   @Override protected String description(@SuppressWarnings("unused") final MethodInvocation __) {
