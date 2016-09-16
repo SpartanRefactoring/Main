@@ -21,42 +21,11 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Version250Test {
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-      public void i() {
-        f();
-      }
-    }
-  }
   // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
   }
-  @Test public void issue218a() {
-    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").to("2L").stays();
-  }
+
   // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimming("b=0+a;").stays();
@@ -64,6 +33,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_BitWiseAnd_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) & 1;
+        azzert.that(x, is(0));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
 
@@ -89,14 +66,6 @@ public class Version250Test {
           }
           return new C().h();
         }
-      }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) & 1;
-        azzert.that(x, is(0));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -128,6 +97,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_BitWiseOr_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) | 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
 
@@ -153,14 +130,6 @@ public class Version250Test {
           }
           return new C().h();
         }
-      }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -169,6 +138,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_BitWiseXor_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) ^ 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
 
@@ -194,14 +171,6 @@ public class Version250Test {
           }
           return new C().h();
         }
-      }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) ^ 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -239,6 +208,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEX() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(true) & true;
+        azzert.nay(x);
+        azzert.aye(in.a == 1);
+      }
+
       class Inner {
         int a;
 
@@ -252,14 +229,6 @@ public class Version250Test {
           return false;
         }
       }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
-        azzert.aye(in.a == 1);
-      }
     }
     new Class();
     trimming("a=a && b").to("a&=b");
@@ -267,6 +236,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalAnd_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(true) & true;
+        azzert.nay(x);
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
 
@@ -292,14 +269,6 @@ public class Version250Test {
           }
           return new C().h();
         }
-      }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -337,6 +306,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_logicalOr_withSideEffectsEX() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(false) | false;
+        azzert.aye(x);
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
 
@@ -350,14 +327,6 @@ public class Version250Test {
           return true;
         }
       }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final boolean x = in.f(false) | false;
-        azzert.aye(x);
-        azzert.that(in.a, is(1));
-      }
     }
     new Class();
     trimming("a=a||b").to("a|=b");
@@ -365,6 +334,14 @@ public class Version250Test {
 
   @SuppressWarnings("unused") @Test public void issue_177_LogicalOr_withSideEffectsEXT() {
     class Class {
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) | 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
+      }
+
       class Inner {
         int a;
 
@@ -390,14 +367,6 @@ public class Version250Test {
           }
           return new C().h();
         }
-      }
-
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -776,14 +745,20 @@ public class Version250Test {
 
   @Test public void issue218() {
     trimming("(long)(long)2")//
-    .to("1L*(long)2")//
-    .to("1L*1L*2")//
-    .to("2L")//
-    .stays();
+        .to("1L*(long)2")//
+        .to("1L*1L*2")//
+        .to("2L")//
+        .stays();
   }
+
+  @Test public void issue218a() {
+    trimming("(long)(long)2").to("1L*(long)2").to("1L*1L*2").to("2L").stays();
+  }
+
   @Test public void issue218x() {
     trimming("(long)1L*2").to("2*(long)1L").to("2*1L*1L").to("2L").stays();
   }
+
   @Test public void issue31a() {
     trimming(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(now.modifiers());\n" + //
@@ -1643,6 +1618,36 @@ public class Version250Test {
 
   @Test public void trimmerBugXORCompiling() {
     trimming("j = j ^ k").to("j ^= k");
+  }
+
+  // @formatter:off
+  enum A { a1() {{ f(); }
+      public void f() {
+        g();
+      }
+       void g() {
+        h();
+      }
+       void h() {
+        i();
+      }
+       void i() {
+        f();
+      }
+    }, a2() {{ f(); }
+      public void i() {
+        f();
+      }
+      void f() {
+        g();
+      }
+      void g() {
+        h();
+      }
+      void h() {
+        i();
+      }
+    }
   }
 
 }

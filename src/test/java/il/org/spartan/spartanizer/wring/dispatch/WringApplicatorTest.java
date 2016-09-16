@@ -18,8 +18,20 @@ public class WringApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
   private final WringApplicator it = new WringApplicator(new BlockSimplify());
 
+  @Test public void clazzIsCorrect() {
+    azzert.that(it.clazz, is(Block.class));
+  }
+
+  @Test public void clazzIsNotNull() {
+    azzert.notNull(it.clazz);
+  }
+
   @Test public void exists() {
     azzert.notNull(it);
+  }
+
+  @Test public void nameIsCorrect() {
+    azzert.that(it.wring, instanceOf(BLOCK_SIMPLIFY));
   }
 
   @Test public void wring() {
@@ -28,17 +40,5 @@ public class WringApplicatorTest {
 
   @Test public void wringIsCorrect() {
     azzert.that(it.wring, instanceOf(BLOCK_SIMPLIFY));
-  }
-
-  @Test public void nameIsCorrect() {
-    azzert.that(it.wring, instanceOf(BLOCK_SIMPLIFY));
-  }
-
-  @Test public void clazzIsNotNull() {
-    azzert.notNull(it.clazz);
-  }
-
-  @Test public void clazzIsCorrect() {
-    azzert.that(it.clazz, is(Block.class));
   }
 }

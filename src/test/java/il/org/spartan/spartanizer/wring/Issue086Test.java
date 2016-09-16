@@ -116,7 +116,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
 
   @Test public void B$13applyWring() {
     A$04_init();
-    Rewrite suggest = wring.suggest(focus);
+    wring.suggest(focus);
   }
 
   @Test public void B$14applyWring() {
@@ -124,8 +124,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
     Toolbox.defaultInstance().find(focus);
   }
 
-  @Ignore
-  @Test public void doubleVanillaThrow() {
+  @Ignore @Test public void doubleVanillaThrow() {
     A$04_init();
     trimming("int f() {"//
         + " if (false) "//

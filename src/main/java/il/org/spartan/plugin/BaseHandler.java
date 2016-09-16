@@ -29,6 +29,14 @@ public abstract class BaseHandler extends AbstractHandler {
     }
   }
 
+  protected final String getDialogTitle() {
+    return inner.getName();
+  }
+
+  protected Applicator getRefactoring() {
+    return inner;
+  }
+
   private Void execute(final ISelection ¢) throws InterruptedException {
     return !(¢ instanceof ITextSelection) ? null : execute((ITextSelection) ¢);
   }
@@ -40,14 +48,6 @@ public abstract class BaseHandler extends AbstractHandler {
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(eclipse.currentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
-  }
-
-  protected final String getDialogTitle() {
-    return inner.getName();
-  }
-
-  protected Applicator getRefactoring() {
-    return inner;
   }
 
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit cu) {

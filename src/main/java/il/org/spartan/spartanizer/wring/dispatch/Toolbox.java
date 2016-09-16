@@ -12,47 +12,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Wring} with a given sub-class of
-     * {@link ASTNode}.
-     * @param n JD
-     * @param ns JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
-      final List<Wring<N>> l = get(n);
-      for (final Wring<N> ¢ : ns) {
-        if (¢ == null)
-          break;
-        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
-        if (!¢.wringGroup().isEnabled())
-          continue;
-        l.add(¢);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
-  }
-
   /** The default instance of this class */
   static Toolbox instance;
 
   public static Toolbox defaultInstance() {
     return instance;
-  }
-
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
-    for (final Wring<N> $ : ns)
-      if ($.demandsToSuggestButPerhapsCant(n))
-        return $;
-    return null;
   }
 
   /** Make a {@link Toolbox} for a specific kind of wrings
@@ -226,6 +190,13 @@ public class Toolbox {
         .seal();
   }
 
+  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
+    for (final Wring<N> $ : ns)
+      if ($.demandsToSuggestButPerhapsCant(n))
+        return $;
+    return null;
+  }
+
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
 
   /** Find the first {@link Wring} appropriate for an {@link ASTNode}
@@ -256,16 +227,45 @@ public class Toolbox {
   <N extends ASTNode> List<Wring<N>> get(final N ¢) {
     return get(¢.getClass());
   }
+
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Wring} with a given sub-class of
+     * {@link ASTNode}.
+     * @param n JD
+     * @param ns JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
+      final List<Wring<N>> l = get(n);
+      for (final Wring<N> ¢ : ns) {
+        if (¢ == null)
+          break;
+        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+        if (!¢.wringGroup().isEnabled())
+          continue;
+        l.add(¢);
+      }
+      return this;
+    }
+
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
+    }
+  }
 }
 
 class A {
-  // TODO: ALex, try to put an initializer here.
-  {
-    new Integer(3 + new Integer(null + "" + this).hashCode());
-  }
   // Or here. If you can, you know what to do. If you can't you also know. In
   // both cases class A should die.
   static {
     new Integer(3 + new Integer(null + "" + new A()).hashCode());
+  }
+  // TODO: ALex, try to put an initializer here.
+  {
+    new Integer(3 + new Integer(null + "" + this).hashCode());
   }
 }

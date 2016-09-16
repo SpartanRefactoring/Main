@@ -34,10 +34,26 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-  private static List<Expression> removeFirstEl(final List<Expression> xs) {
+  private static List<Expression> removeFirstElement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>(xs);
     $.remove($.get(0));// remove first
     return $;
+  }
+
+  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression $) {
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
+  }
+
+  @Override public String description() {
+    return "a*b + a*c => a * (b + c)";
+  }
+
+  @Override public String description(final InfixExpression ¢) {
+    return "Apply the distributive rule to " + ¢;
+  }
+
+  @Override public ASTNode replacement(final InfixExpression ¢) {
+    return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
   private void addCommon(final Expression op, final List<Expression> common) {
@@ -53,18 +69,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       xs.add(item);
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
-  }
-
-  @Override public String description() {
-    return "a*b + a*c => a * (b + c)";
-  }
-
-  @Override public String description(final InfixExpression ¢) {
-    return "Apply the distributive rule to " + ¢;
-  }
-
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
     for (final Expression $ : allOperands)
       if (wizard.same(op, $))
@@ -75,10 +79,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
     for (final Expression item : items)
       from.remove(item);
-  }
-
-  @Override public ASTNode replacement(final InfixExpression ¢) {
-    return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
@@ -124,8 +124,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     final List<Expression> different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
     for (int i = 0; i < xs.size(); ++i) {
-      System.out.println(" === " + xs.get(i));
-      temp = removeFirstEl(temp);
+      temp = removeFirstElement(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
