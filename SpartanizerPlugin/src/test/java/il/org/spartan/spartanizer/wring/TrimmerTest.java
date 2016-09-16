@@ -2491,7 +2491,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void prefixToPostfixDecrement() {
-    final String from = "for (int i = 0; i < 100;  i--)  i--;";
+    final String from = "for (int i = 0; i < 100;  i--)  j--;";
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
     assert s != null;
@@ -2506,7 +2506,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     azzert.that(new PostfixToPrefix().canSuggest(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     azzert.that(r, iz("--i"));
-    trimming(from).to("for(int i=0;i<100;--i)--i;");
+    trimming(from).to("for(int i=0;i<100;--i)--j;");
   }
 
   @Test public void prefixToPostfixIncreement() {
