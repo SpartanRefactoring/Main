@@ -96,10 +96,6 @@ public interface wizard {
   };
   static final NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
 
-  static boolean isValueType(final String typeName) {
-    return valueTypes.contains(typeName);
-  }
-
   static Expression applyDeMorgan(final InfixExpression inner) {
     final List<Expression> operands = new ArrayList<>();
     for (final Expression ¢ : hop.operands(flatten.of(inner)))
@@ -267,6 +263,10 @@ public interface wizard {
    *         otherwise */
   static boolean isShift(final InfixExpression.Operator ¢) {
     return in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+  }
+
+  static boolean isValueType(final String typeName) {
+    return valueTypes.contains(typeName);
   }
 
   static boolean isValueType(final Type ¢) {

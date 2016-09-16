@@ -24,7 +24,7 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
       return make.makeEmptyString(i);
     if (sll.size() == 1)
       return ASTNode.copySubtree(i.getAST(), sll.get(0));
-    Expression $ = i.getAST().newInfixExpression();
+    final Expression $ = i.getAST().newInfixExpression();
     InfixExpression t = (InfixExpression) $;
     for (final Expression ¢ : sll.subList(0, sll.size() - 2)) {
       t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), ¢));
@@ -44,7 +44,7 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
   private final Class<?>[] np = { InfixExpression.class };
 
   @Override public ASTNode replacement(final MethodInvocation i) {
-    if (!"toString".equals((i.getName() + "")))
+    if (!"toString".equals(i.getName() + ""))
       return null;
     final Vector<Expression> sll = new Vector<>();
     MethodInvocation r = i;
@@ -72,8 +72,7 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
         }
         break;
       }
-      if (!(e instanceof MethodInvocation) || !"append".equals((((MethodInvocation) e).getName() + ""))
-          || ((MethodInvocation) e).arguments().isEmpty())
+      if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
         return null;
       final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
       sll.insertElementAt(addParenthesisIfNeeded(a), 0);
