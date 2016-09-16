@@ -47,8 +47,6 @@ public class CollectMetricsApp implements IApplication {
     printStatistics("Before-", OUTPUT);
     spartanize();
     printStatistics("After-", SPARTAN_OUTPUT);
-//    go(args.length != 0 ? args : new String[] { "." });
-//    System.err.println("Your output should be here: " + output.close());    
     return IApplication.EXIT_OK;
   }
 
@@ -73,57 +71,6 @@ public class CollectMetricsApp implements IApplication {
     // Unused
   }
 
-//  public static void main(final String[] where) {
-//    go(where.length != 0 ? where : new String[] { "." });
-//    System.err.println("Your output should be here: " + output.close());
-//  }
-  
-//  /**
-//   * 
-//   * @param where
-//   */
-  
-//  private static void go(final String[] where) {
-//    for (final File ¢ : new FilesGenerator(".java").from(where))
-//      try {
-//        // This line is going to give you trouble if you process class by class.
-//        output.put("File", ¢.getName());
-//        go(FileUtils.read(¢));
-//      } catch (final IOException e) {
-//        System.err.println(e.getMessage());
-//      }
-//  }
-  
-  /**
-   * 
-   * @param f
-   */
-
-//  private static void go(final File f) {
-//    try {
-//      // This line is going to give you trouble if you process class by class.
-//      output.put("File", f.getName());
-//      go(FileUtils.read(f));
-//    } catch (final IOException e) {
-//      System.err.println(e.getMessage());
-//    }
-//  }
-  
-  /**
-   * 
-   * @param javaCode
-   */
-
-//  private static void go(final String javaCode) {
-//    output.put("Characters", javaCode.length());
-//    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-//    report("Before-", before);
-////    final CompilationUnit after = spartanize(before);
-//    spartanize();
-////    assert after != null;
-////    report("After-", after);
-//  }
-
   @SuppressWarnings("unchecked") 
   private static void spartanize() { // final CompilationUnit u) {
     // TODO: try to it do first with one wring only. 
@@ -140,19 +87,13 @@ public class CollectMetricsApp implements IApplication {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-//        final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
           final int n = SpartanizeAll.countSuggestions(u);
           if (n == 0)
             break;
-//          s.addRoundStat(n);
           eclipse.apply(u);
         }
-//        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-//        if (optVerbose)
             System.out.println("Spartanized file " + f.getAbsolutePath());
-//        s.countLinesAfter();
-//        fileStats.add(s);
         ++done;
       } catch (final JavaModelException | IOException e) {
         System.err.println(f + ": " + e.getMessage());
@@ -166,8 +107,6 @@ public class CollectMetricsApp implements IApplication {
         discardCompilationUnit(u);
       }
     }
-   
-//    return IApplication.EXIT_OK;
   }
   
   static void discardCompilationUnit(final ICompilationUnit u) {
@@ -236,8 +175,6 @@ public class CollectMetricsApp implements IApplication {
       throw new RuntimeException(outputReportDir, e);
     }
   }
-  
-  
 
   /** Bug, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
