@@ -65,7 +65,7 @@ public enum Wrings {
   }
 
   public static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
-    final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
+    final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     for (final Statement ¢ : what)
       $.insertBefore(¢, where, g);
     return $;
@@ -93,9 +93,9 @@ public enum Wrings {
     if (xs.size() <= 2)
       return false;
     int previousKind = -1;
-    for (final Expression e : xs)
-      if (e instanceof NumberLiteral || e instanceof CharacterLiteral) {
-        final int currentKind = new LiteralParser(e + "").type().ordinal();
+    for (final Expression x : xs)
+      if (x instanceof NumberLiteral || x instanceof CharacterLiteral) {
+        final int currentKind = new LiteralParser(x + "").type().ordinal();
         assert currentKind >= 0;
         if (previousKind == -1)
           previousKind = currentKind;

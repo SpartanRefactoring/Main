@@ -38,8 +38,8 @@ import org.junit.runners.*;
 
   @Test public void forwardDeclaration4() {
     trimming(
-        " /*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ")
-            .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   final BlahClass bc = new BlahClass(i);   y(i+m+bc.j);    private static class BlahClass {   public BlahClass(int i) {    j = 2*i;      public final int j; ");
+        " /*    * This is a comment    */      int i = 6;   int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   final C bc = new C(i);   y(i+m+bc.j);    private static class C {   public C(int i) {    j = 2*i;      public final int j; ")
+            .to(" /*    * This is a comment    */      int j = 3;   int k = j+2;   int m = k + j -19;   y(m*2 - k/m);   int i = 6;   final C bc = new C(i);   y(i+m+bc.j);    private static class C {   public C(int i) {    j = 2*i;      public final int j; ");
   }
 
   @Test public void forwardDeclaration5() {
@@ -55,8 +55,8 @@ import org.junit.runners.*;
 
   @Test public void forwardDeclaration7() {
     trimming(
-        "  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.x.f(res2.j);        private BlahClass res;   S.x.f(res.j);   return res; ")
-            .to("  j = 2*i;   }      public final int j;    private BlahClass yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.x.f(res2.j);        private BlahClass res;   final BlahClass res = new BlahClass(6);   S.x.f(res.j);   return res; ");
+        "  j = 2*i;   }      public final int j;    private C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f(res.j);   return res; ")
+            .to("  j = 2*i;   }      public final int j;    private C yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   final C res = new C(6);   S.x.f(res.j);   return res; ");
   }
 
   @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
@@ -94,13 +94,13 @@ import org.junit.runners.*;
   }
 
   @Test public void inlineSingleUse04() {
-    trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y-b.j);   y(y*2); ")
-        .to(" final BlahClass b = new BlahClass((6));   int y = 2+b.j;   y(y-b.j);   y(y*2); ");
+    trimming("int x = 6;   final C b = new C(x);   int y = 2+b.j;   y(y-b.j);   y(y*2); ")
+        .to(" final C b = new C((6));   int y = 2+b.j;   y(y-b.j);   y(y*2); ");
   }
 
   @Test public void inlineSingleUse05() {
-    trimming("int x = 6;   final BlahClass b = new BlahClass(x);   int y = 2+b.j;   y(y+x);   y(y*x); ")
-        .to(" int x = 6;   int y = 2+(new BlahClass(x)).j;   y(y+x);   y(y*x); ");
+    trimming("int x = 6;   final C b = new C(x);   int y = 2+b.j;   y(y+x);   y(y*x); ")
+        .to(" int x = 6;   int y = 2+(new C(x)).j;   y(y+x);   y(y*x); ");
   }
 
   @Test public void inlineSingleUse06() {
@@ -195,8 +195,8 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar01() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   S.x.f(res.j);   return res; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   S.x.f($.j);   return $; ");
+        " public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C res = new C(6);   S.x.f(res.j);   return res; ")
+            .to(" public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C $ = new C(6);   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar02() {
@@ -207,8 +207,8 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar03() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass res = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int x = blah.length()/2;   if (x==3)    return x;   x = y(res.j - x);   return x; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final BlahClass res = new BlahClass(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int $ = blah.length()/2;   if ($==3)    return $;   $ = y(res.j - $);   return $; ");
+        " public C(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final C res = new C(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int x = blah.length()/2;   if (x==3)    return x;   x = y(res.j - x);   return x; ")
+            .to(" public C(int i) {    j = 2*i;      public final int j;   public int yada7(final String blah) {   final C res = new C(blah.length());   if (blah.contains(0xDEAD))    return res.j;   int $ = blah.length()/2;   if ($==3)    return $;   $ = y(res.j - $);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar04() {
@@ -217,31 +217,31 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar05() {
     trimming(
-        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final BlahClass res) {     S.x.f(res.j);   S.x.f(res.j);   return res; ")
-            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass($.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final BlahClass res) {     S.x.f(res.j);   S.x.f($.j);   return $; ");
+        "  j = 2*i;   }      public final int j;    public C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final C res) {     S.x.f(res.j);   S.x.f(res.j);   return res; ")
+            .to("  j = 2*i;   }      public final int j;    public C yada6() {   final C $ = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C($.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final C res) {     S.x.f(res.j);   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar06() {
     trimming(
-        "  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass res = new BlahClass(r.j);     return res.j + 1;   S.x.f(res.j); ")
-            .to("  j = 2*i;   }      public final int j;    public void yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final BlahClass res2 = new BlahClass(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final BlahClass r) {     final BlahClass $ = new BlahClass(r.j);     return $.j + 1;   S.x.f(res.j); ");
+        "  j = 2*i;   }      public final int j;    public void yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final C r) {     final C res = new C(r.j);     return res.j + 1;   S.x.f(res.j); ")
+            .to("  j = 2*i;   }      public final int j;    public void yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final C r) {     final C $ = new C(r.j);     return $.j + 1;   S.x.f(res.j); ");
   }
 
   @Test public void reanmeReturnVariableToDollar07() {
     trimming(
-        "  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.x.f(res2.j);        private BlahClass res;   S.x.f(res.j);   return res; ")
-            .to("  j = 2*i;   }      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new BlahClass(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(BlahClass res2) {     S.x.f(res2.j);        private BlahClass res;   S.x.f($.j);   return $; ");
+        "  j = 2*i;   }      public final int j;    public C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f(res.j);   return res; ")
+            .to("  j = 2*i;   }      public final int j;    public C yada6() {   final C $ = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar08() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.x.f(res.j);   return res; ")
-            .to(" public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass $ = new BlahClass(6);   if ($.j == 0)    return null;   S.x.f($.j);   return $; ");
+        " public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C res = new C(6);   if (res.j == 0)    return null;   S.x.f(res.j);   return res; ")
+            .to(" public C(int i) {    j = 2*i;      public final int j;    public C yada6() {   final C $ = new C(6);   if ($.j == 0)    return null;   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar09() {
     trimming(
-        " public BlahClass(int i) {    j = 2*i;      public final int j;    public BlahClass yada6() {   final BlahClass res = new BlahClass(6);   if (res.j == 0)    return null;   S.x.f(res.j);   return null;")
+        " public C(int i){j = 2*i;public final int j;public C yada6() {   final C res = new C(6);   if (res.j == 0)    return null;   S.x.f(res.j);   return null;")
             .stays();
   }
 

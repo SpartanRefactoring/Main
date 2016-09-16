@@ -2939,7 +2939,10 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimming("Integer x = new Integer(1 + 9);").to("Integer x = Integer.valueOf(1 + 9);");
+    trimming("Integer x = new Integer(1 + 9);")//
+        .to("Integer x = new Integer(10);")//
+        .to("Integer x = Integer.valueOf(10);")//
+        .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
