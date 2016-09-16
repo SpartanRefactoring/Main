@@ -66,7 +66,7 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
-        .add(ThrowStatement.class, new ThrowAndStatement()) //
+        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
