@@ -17,11 +17,17 @@ import il.org.spartan.spartanizer.engine.type.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
 public class typeTest {
+  /** Ideally this class is empty, but still {@link Ignore}d.
+   * @author Yossi Gil
+   * @year 2016 */
+  @Ignore public static class NotWorkingYet {
+    // Ideally, an empty class
+  }
+
   @Ignore public static class Pending {
     // class for Pending s that don't currently pass
   }
 
-  // @Ignore ("type not implemented yet")
   public static class Working {
     private static final int __1 = 1;
     private static final int __12 = 1;
@@ -529,7 +535,7 @@ public class typeTest {
 
     // tests for deducing type from context
     @Test public void context01() {
-      final IfStatement is = extract.firstIfStatement(into.s("{if(f()) return x; return y;}"));
+      final IfStatement is = findFirst.ifStatement(into.s("{if(f()) return x; return y;}"));
       azzert.that(get(is.getExpression()), is(BOOLEAN));
     }
 
@@ -631,19 +637,22 @@ public class typeTest {
       azzert.that(get(e.getRightOperand()), is(FLOAT));
     }
 
-    @Test public void context20() {
-      final ForStatement fs = extract.firstForStatement(into.s("for(;x;) somthing();"));
+    @SuppressWarnings("unchecked") @Test public void context20() {
+      final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(get(fs.getExpression()), is(BOOLEAN));
+      azzert.that(get((Expression) lisp.first(fs.initializers())), is(INT));
+      azzert.that(get((Expression) lisp.first(fs.updaters())), is(NUMERIC));
     }
 
     @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
-      final WhileStatement ws = extract.firstWhileStatement(into.s("while(x) somthing();"));
+      final WhileStatement ws = findFirst.whileStatement(into.s("while(x) somthing();"));
       azzert.that(get(ws.getExpression()), is(BOOLEAN));
     }
 
     @Test public void context22() {
-      final AssertStatement as = extract.firstAssertStatement(into.s("assert x;"));
+      final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
       azzert.that(get(as.getExpression()), is(BOOLEAN));
+      azzert.that(get(as.getMessage()), is(STRING));
     }
 
     // tests using old version of prudent that is now removed

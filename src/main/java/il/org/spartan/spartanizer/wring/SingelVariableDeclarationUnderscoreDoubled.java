@@ -7,9 +7,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
-/** A {@link Wring} to change name of unused variable to double underscore "__"
- * TODO Ori: (maybe) inherent VariableChangeName instead of
- * ReplaceCurrentNodeExclude
+/** Rename unused variable to double underscore "__" TODO Ori: (maybe) inherent
+ * VariableChangeName instead of ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
 // TODO: Ori, please remove all warnings, do not suppress them.
@@ -27,6 +26,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   // TODO: Ori, search class {@link step}, you would find a way to avoid this
   // warning while using a lib function.
   public static boolean suppressedUnused(final SingleVariableDeclaration d) {
+    // TOOD: Ori, can you deal with this warning by using class {@link step}?
     for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
       if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName() + "")) {
         final Expression e = ((SingleMemberAnnotation) m).getValue();
@@ -60,7 +60,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   @Override public String description(final SingleVariableDeclaration ¢) {
-    return "Change name of unused variable " + ¢.getName().getIdentifier() + " to __";
+    return "Rename unused variable " + ¢.getName().getIdentifier() + " to __";
   }
 
   @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {

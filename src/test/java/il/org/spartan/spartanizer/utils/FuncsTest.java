@@ -21,7 +21,9 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class FuncsTest {
   @Test public void arrayOfInts() {
-    azzert.that(spartan.shorten(t("int[][] __;")), equalTo("iss"));
+    final Type t = t("int[][] __;");
+    assert t != null;
+    azzert.that(spartan.shorten(t), equalTo("iss"));
   }
 
   @Test public void asComparisonPrefixlExpression() {
@@ -141,6 +143,6 @@ public class FuncsTest {
   }
 
   private Type t(final String codeFragment) {
-    return extract.firstType(s(codeFragment));
+    return findFirst.firstType(s(codeFragment));
   }
 }

@@ -29,7 +29,7 @@ public class WringsTest {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = extract.firstMethodDeclaration(u);
+    final MethodDeclaration m = findFirst.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
@@ -46,7 +46,7 @@ public class WringsTest {
     azzert.that(sideEffects.free(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
     azzert.that(n, iz("a"));
@@ -89,7 +89,7 @@ public class WringsTest {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = extract.firstMethodDeclaration(u);
+    final MethodDeclaration m = findFirst.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
@@ -109,9 +109,9 @@ public class WringsTest {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = extract.firstMethodDeclaration(u);
+    final MethodDeclaration m = findFirst.firstMethodDeclaration(u);
     azzert.that(m, iz(input));
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(m);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;
     final SimpleName b = f.getName();
     azzert.that(Collect.usesOf(b).in(m).size(), is(2));
