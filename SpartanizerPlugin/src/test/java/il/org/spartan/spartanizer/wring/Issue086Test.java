@@ -106,13 +106,12 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
   @Test public void B$10descriptionContains() {
     A$04_init();
     azzert.that(wring.suggest(focus).description, //
-        containsString("" + focus));
+        containsString(focus + ""));
   }
 
   @Test public void B$12rangeNotEmpty() {
     A$04_init();
-    Rewrite suggest = wring.suggest(focus);
-    assert !suggest.isEmpty();
+    assert !wring.suggest(focus).isEmpty();
   }
 
   @Test public void B$13applyWring() {
@@ -125,7 +124,8 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
     Toolbox.defaultInstance().find(focus);
   }
 
-  @Ignore @Test public void doubleVanillaThrow() {
+  @Ignore
+  @Test public void doubleVanillaThrow() {
     A$04_init();
     trimming("int f() {"//
         + " if (false) "//

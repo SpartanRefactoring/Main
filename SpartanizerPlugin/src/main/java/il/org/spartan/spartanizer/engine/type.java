@@ -386,9 +386,9 @@ public interface type {
             case POSTFIX_EXPRESSION:
               return i.asNumeric();
             case ASSERT_STATEMENT:
-              return base.getLocationInParent() == AssertStatement.EXPRESSION_PROPERTY ? BOOLEAN : i;
+              return base.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case FOR_STATEMENT:
-              return base.getLocationInParent() == ForStatement.EXPRESSION_PROPERTY ? BOOLEAN : i;
+              return base.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             // case WHILE_STATEMENT:
             case IF_STATEMENT:
               return BOOLEAN;

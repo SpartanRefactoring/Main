@@ -177,14 +177,14 @@ public class WringCommit {
             } catch (JavaModelException | IllegalArgumentException e1) {
               e1.printStackTrace();
             }
-            if (textChange.getEdit().getLength() != 0)
+            if (textChange.getEdit().getLength() == 0)
+              es.add(u);
+            else
               try {
                 textChange.perform(pm);
               } catch (final CoreException e) {
                 e.printStackTrace();
               }
-            else
-              es.add(u);
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
           }

@@ -100,8 +100,8 @@ public interface trim {
     }
   }
 
-  static int countOpportunities(final Applicator s, final CompilationUnit u) {
-    return s.collectSuggesions(u).size();
+  static int countOpportunities(final Applicator a, final CompilationUnit u) {
+    return a.collectSuggesions(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {

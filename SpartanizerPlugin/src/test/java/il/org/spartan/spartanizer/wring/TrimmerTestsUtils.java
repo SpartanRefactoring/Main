@@ -131,12 +131,12 @@ public class TrimmerTestsUtils {
     return $.get();
   }
 
-  static String apply(final Wring<? extends ASTNode> w, final String from) {
+  static String apply(final Wring<? extends ASTNode> n, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
     assert d != null;
-    return TESTUtils.rewrite(new WringApplicator(w), u, d).get();
+    return TESTUtils.rewrite(new WringApplicator(n), u, d).get();
   }
 
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> n, final Wrap w) {
@@ -152,8 +152,8 @@ public class TrimmerTestsUtils {
     assertSimilar(expected, peeled);
   }
 
-  public static int countOpportunities(final Applicator s, final CompilationUnit u) {
-    return s.collectSuggesions(u).size();
+  public static int countOpportunities(final Applicator a, final CompilationUnit u) {
+    return a.collectSuggesions(u).size();
   }
 
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {

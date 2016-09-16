@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public class Issue214Test {
-  private static <N extends ASTNode> Class<N> mustBeASTNodeClass(final Class<N> c) {
-    return c;
+  private static <N extends ASTNode> Class<N> mustBeASTNodeClass(final Class<N> ¢) {
+    return ¢;
   }
 
   private final Wring<?> blockSimplify = new BlockSimplify();
