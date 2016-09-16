@@ -19,31 +19,22 @@ public interface findFirst {
     return findFirstClass(AssertStatement.class, ¢);
   }
 
-  /** Search for a {@link PrefixExpression} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static PostfixExpression postfixExpression(final ASTNode ¢) {
-    return findFirstClass(PostfixExpression.class, ¢);
-  }
-
-  /** Search for an {@link ForStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link ForStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static ForStatement forStatement(final ASTNode ¢) {
-    return findFirstClass(ForStatement.class, ¢);
-  }
-
-  /** Search for an {@link IfStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static IfStatement ifStatement(final ASTNode ¢) {
-    return findFirstClass(IfStatement.class, ¢);
+  static <N extends ASTNode> N findFirstClass(final Class<N> c, final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<N> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
+        if ($.get() != null)
+          return false;
+        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
+          return true;
+        $.set((N) ¢);
+        assert $.get() == ¢;
+        return false;
+      }
+    });
+    return $.get();
   }
 
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
@@ -80,6 +71,37 @@ public interface findFirst {
     return findFirstClass(Type.class, ¢);
   }
 
+  /** Search for an {@link ForStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link ForStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  static ForStatement forStatement(final ASTNode ¢) {
+    return findFirstClass(ForStatement.class, ¢);
+  }
+
+  /** Search for an {@link IfStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  static IfStatement ifStatement(final ASTNode ¢) {
+    return findFirstClass(IfStatement.class, ¢);
+  }
+
+  /** Search for a {@link PrefixExpression} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  static PostfixExpression postfixExpression(final ASTNode ¢) {
+    return findFirstClass(PostfixExpression.class, ¢);
+  }
+
+  static ThrowStatement throwStatement(final ASTNode ¢) {
+    return findFirstClass(ThrowStatement.class, ¢);
+  }
+
   /** Return the first {@link VariableDeclarationFragment} encountered in a
    * visit of the tree rooted a the parameter.
    * @param n JD
@@ -96,28 +118,5 @@ public interface findFirst {
    *         <code><b>null</b> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
     return findFirstClass(WhileStatement.class, ¢);
-  }
-
-  static ThrowStatement throwStatement(ASTNode ¢) {
-    return findFirstClass(ThrowStatement.class, ¢);
-  }
-
-  static <N extends ASTNode> N findFirstClass(Class<N> c, ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<N> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
-          return false;
-        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
-          return true;
-        $.set((N) ¢);
-        assert $.get() == ¢;
-
-        return false;
-      }
-    });
-    return $.get();
   }
 }

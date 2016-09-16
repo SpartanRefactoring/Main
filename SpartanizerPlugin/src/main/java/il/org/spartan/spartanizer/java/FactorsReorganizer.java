@@ -11,6 +11,10 @@ import il.org.spartan.spartanizer.assemble.*;
 
 // TOOD Niv: Who wrote this class?
 public class FactorsReorganizer {
+  public static Expression simplify(final InfixExpression ¢) {
+    return build(new FactorsCollector(¢));
+  }
+
   private static Expression build(final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
@@ -49,9 +53,5 @@ public class FactorsReorganizer {
       default:
         return subject.operands(¢).to(TIMES);
     }
-  }
-
-  public static Expression simplify(final InfixExpression ¢) {
-    return build(new FactorsCollector(¢));
   }
 }
