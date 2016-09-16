@@ -66,6 +66,7 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
+        .add(ThrowStatement.class, new ThrowAndStatement()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
@@ -216,6 +217,11 @@ public class Toolbox {
         // just like every declaration. Even private class field which is const
         // assigned at the class body
         // is called initializer, and there I know could be some modifiers.
+        // TODO: Alex, I could not place an annotation on an initializer.
+        // Suppose we can, then still, that this could not have been tested,
+        // since the dispatcher does not
+        // know about Initializers. Add initializers to DispatchingVisitor if
+        // you can provide a test case
         .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
         .seal();
   }
@@ -249,5 +255,17 @@ public class Toolbox {
 
   <N extends ASTNode> List<Wring<N>> get(final N ¢) {
     return get(¢.getClass());
+  }
+}
+
+class A {
+  // TODO: ALex, try to put an initializer here.
+  {
+    new Integer(3 + new Integer(null + this.toString()).hashCode());
+  }
+  // Or here. If you can, you know what to do. If you can't you also know. In
+  // both cases class A should die.
+  static {
+    new Integer(3 + new Integer(null + new A().toString()).hashCode());
   }
 }

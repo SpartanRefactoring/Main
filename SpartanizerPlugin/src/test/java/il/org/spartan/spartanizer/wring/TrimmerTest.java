@@ -2495,7 +2495,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     final Statement s = s(from);
     azzert.that(s, iz("{" + from + "}"));
     assert s != null;
-    final PostfixExpression e = extract.findFirstPostfix(s);
+    final PostfixExpression e = findFirst.postfixExpression(s);
     assert e != null;
     azzert.that(e, iz("i--"));
     final ASTNode parent = e.getParent();
@@ -3078,7 +3078,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     final CompilationUnit u = Wrap.Statement
         .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
             + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
-    final VariableDeclarationFragment f = extract.firstVariableDeclarationFragment(u);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
     assert f != null;
     azzert.that(f, iz(" res = 0"));
     azzert.that(extract.nextStatement(f),

@@ -529,7 +529,7 @@ public class typeTest {
 
     // tests for deducing type from context
     @Test public void context01() {
-      final IfStatement is = extract.firstIfStatement(into.s("{if(f()) return x; return y;}"));
+      final IfStatement is = findFirst.ifStatement(into.s("{if(f()) return x; return y;}"));
       azzert.that(get(is.getExpression()), is(BOOLEAN));
     }
 
@@ -632,19 +632,19 @@ public class typeTest {
     }
 
     @SuppressWarnings("unchecked") @Test public void context20() {
-      final ForStatement fs = extract.firstForStatement(into.s("for(int i = 0;x;++i) somthing();"));
+      final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(get(fs.getExpression()), is(BOOLEAN));
       azzert.that(get((Expression) lisp.first(fs.initializers())), is(INT));
       azzert.that(get((Expression) lisp.first(fs.updaters())), is(NUMERIC));
     }
 
     @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
-      final WhileStatement ws = extract.firstWhileStatement(into.s("while(x) somthing();"));
+      final WhileStatement ws = findFirst.whileStatement(into.s("while(x) somthing();"));
       azzert.that(get(ws.getExpression()), is(BOOLEAN));
     }
 
     @Test public void context22() {
-      final AssertStatement as = extract.firstAssertStatement(into.s("assert x : \"message\";"));
+      final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
       azzert.that(get(as.getExpression()), is(BOOLEAN));
       azzert.that(get(as.getMessage()), is(STRING));
     }
