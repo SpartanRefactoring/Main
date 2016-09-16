@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -109,9 +110,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
         subject.pair(//
             first(different), second(different)//
         ).to(//
-            Operator.PLUS)//
+            PLUS2)//
     ).to(//
-        Operator.TIMES//
+        TIMES//
     );
   }
 
@@ -140,7 +141,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     }
     Expression addition = null;
     for (int i = 0; i < different.size() - 1; ++i)
-      addition = subject.pair(addition != null ? addition : different.get(i), different.get(i + 1)).to(Operator.PLUS);
+      addition = subject.pair(addition != null ? addition : different.get(i), different.get(i + 1)).to(PLUS2);
     Expression multiplication = null;
     if (common.isEmpty())
       return addition;

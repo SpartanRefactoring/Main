@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -39,7 +41,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     dump.go(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
-    createRewrite = trimmer().createRewrite(compilationUnit, new NullProgressMonitor());
+    createRewrite = trimmer().createRewrite(compilationUnit, nullProgressMonitor);
     assert createRewrite != null;
     textEdit = createRewrite.rewriteAST(document, null);
     assert textEdit != null;
@@ -56,7 +58,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite() {
-    return createRewrite(new NullProgressMonitor());
+    return createRewrite(nullProgressMonitor);
   }
 
   /** creates an ASTRewrite which contains the changes

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -58,7 +60,7 @@ public interface findFirst {
       @Override public boolean visit(final InfixExpression ¢) {
         if ($.get() != null)
           return false;
-        if (¢.getOperator() != InfixExpression.Operator.PLUS)
+        if (¢.getOperator() != PLUS2)
           return true;
         $.set(¢);
         return false;

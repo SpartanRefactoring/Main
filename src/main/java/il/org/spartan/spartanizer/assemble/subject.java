@@ -165,7 +165,7 @@ public class subject {
       return $;
     }
 
-    /** Create a new expression of method invocation owned by this ast
+    /** Create a new expression of method invocation owned by this AST
      * @param methodName a string contains the method name
      * @return a method invocation expression of the method methodName with
      *         inner as an expression */

@@ -1285,8 +1285,7 @@ public class Version250Test {
     trimming("0+((x+y)+0+(z+h))+0").to("x+y+z+h").stays();
   }
 
-  @Ignore("can be string concatenating") 
-  @Test public void issue72pi() {
+  @Ignore("can be string concatenating") @Test public void issue72pi() {
     trimming("0+(0+x+y+((int)x+0))").to("x+y+(int)x").stays();
   }
 

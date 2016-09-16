@@ -2938,17 +2938,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     trimming("void f(int _) {System.h(_);}").to("void f(int __) {System.h(__);}");
   }
 
-  @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimming("Integer x = new Integer(1 + 9);")//
-        .to("Integer x = new Integer(10);")//
-        .to("Integer x = Integer.valueOf(10);")//
-        .stays();
-  }
-
-  @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
-    trimming("String x = new String(f());").to("String x = String.valueOf(f());");
-  }
-
   @Test public void replaceInitializationInReturn() {
     trimming("int a = 3; return a + 4;").to("return 3 + 4;");
   }

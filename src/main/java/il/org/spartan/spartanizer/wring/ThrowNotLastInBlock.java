@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.wring;
+
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -21,9 +20,9 @@ public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowState
 
   @Override protected ASTRewrite go(final ASTRewrite r, final ThrowStatement s, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = parent(s);
-    if (!iz.block(parent)) {
+    if (!iz.block(parent))
       r.remove(nextStatement, g);
-    } else {
+    else {
       final ListRewrite $ = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
       $.remove(nextStatement, g);
     }
