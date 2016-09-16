@@ -1,11 +1,14 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** @author Yossi Gil
@@ -17,6 +20,7 @@ public class Issue086Test {
   Statement s;
 
   @Before public void init() {
+    t = new ThrowAndStatement();
     s = into.s("{"//
         + " if (false) "//
         + "   i++; "//
@@ -29,11 +33,11 @@ public class Issue086Test {
         + " return 2;" + "}");//
   }
 
-  @Before public void init1() {
-    t = new ThrowAndStatement();
+  @Test public void findFirstThrow() {
+    azzert.that(findFirst.throwStatement(s), instanceOf(ThrowStatement.class));
   }
 
-  @Test public void vanillaThrow() {
+  @Ignore @Test public void vanillaThrow() {
     trimming("int f() {"//
         + " if (false) "//
         + "   i++; "//
