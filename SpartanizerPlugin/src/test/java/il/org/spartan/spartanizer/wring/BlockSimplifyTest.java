@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.wring;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.apply;
 
 import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
@@ -199,7 +199,7 @@ public class BlockSimplifyTest {
 
   private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator a) {
     try {
-      a.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
+      a.rewriterOf(u, nullProgressMonitor, (IMarker) null).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }

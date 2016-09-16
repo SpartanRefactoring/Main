@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.wring.dispatch;
 
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -95,7 +96,7 @@ public class Trimmer extends Applicator {
     final Document $ = new Document(from);
     for (;;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u, new NullProgressMonitor());
+      final ASTRewrite r = createRewrite(u, nullProgressMonitor);
       final TextEdit e = r.rewriteAST($, null);
       try {
         e.apply($);

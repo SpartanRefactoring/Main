@@ -124,7 +124,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
     Toolbox.defaultInstance().find(focus);
   }
 
-  @Test public void doubleVanillaThrow() {
+  @Ignore @Test public void doubleVanillaThrow() {
     A$04_init();
     trimming("int f() {"//
         + " if (false) "//
@@ -144,7 +144,7 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
         .stays();
   }
 
-  @Test public void vanilla() {
+  @Ignore @Test public void vanilla() {
     trimming(INPUT)//
         .to("throw Something();a=3; return 2;") //
         .to("throw Something(); return 2;") //
