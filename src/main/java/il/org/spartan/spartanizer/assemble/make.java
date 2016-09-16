@@ -216,8 +216,8 @@ public enum make {
    * This function is a factory method recording the expression that might be
    * wrapped.
    * @param inner JD */
-  public static make.PlantingExpression plant(final Expression x) {
-    return new make.PlantingExpression(x);
+  public static make.PlantingExpression plant(final Expression ¢) {
+    return new make.PlantingExpression(¢);
   }
 
   /** Factory method recording the statement might be wrapped.

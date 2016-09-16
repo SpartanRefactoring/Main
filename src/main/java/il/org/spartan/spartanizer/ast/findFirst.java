@@ -15,8 +15,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static AssertStatement assertStatement(final ASTNode n) {
-    return findFirstClass(AssertStatement.class, n);
+  static AssertStatement assertStatement(final ASTNode ¢) {
+    return findFirstClass(AssertStatement.class, ¢);
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
@@ -24,8 +24,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static PostfixExpression postfixExpression(final ASTNode n) {
-    return findFirstClass(PostfixExpression.class, n);
+  static PostfixExpression postfixExpression(final ASTNode ¢) {
+    return findFirstClass(PostfixExpression.class, ¢);
   }
 
   /** Search for an {@link ForStatement} in the tree rooted at an
@@ -33,8 +33,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static ForStatement forStatement(final ASTNode n) {
-    return findFirstClass(ForStatement.class, n);
+  static ForStatement forStatement(final ASTNode ¢) {
+    return findFirstClass(ForStatement.class, ¢);
   }
 
   /** Search for an {@link IfStatement} in the tree rooted at an
@@ -42,8 +42,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static IfStatement ifStatement(final ASTNode n) {
-    return findFirstClass(IfStatement.class, n);
+  static IfStatement ifStatement(final ASTNode ¢) {
+    return findFirstClass(IfStatement.class, ¢);
   }
 
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
@@ -51,8 +51,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static MethodDeclaration firstMethodDeclaration(final ASTNode n) {
-    return findFirstClass(MethodDeclaration.class, n);
+  static MethodDeclaration firstMethodDeclaration(final ASTNode ¢) {
+    return findFirstClass(MethodDeclaration.class, ¢);
   }
 
   /** Find the first {@link InfixExpression} representing an addition, under a
@@ -76,8 +76,8 @@ public interface findFirst {
     return $.get();
   }
 
-  static Type firstType(final Statement n) {
-    return findFirstClass(Type.class, n);
+  static Type firstType(final Statement ¢) {
+    return findFirstClass(Type.class, ¢);
   }
 
   /** Return the first {@link VariableDeclarationFragment} encountered in a
@@ -85,8 +85,8 @@ public interface findFirst {
    * @param n JD
    * @return first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code> */
-  static VariableDeclarationFragment variableDeclarationFragment(final ASTNode n) {
-    return findFirstClass(VariableDeclarationFragment.class, n);
+  static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
+    return findFirstClass(VariableDeclarationFragment.class, ¢);
   }
 
   /** Search for an {@link WhileStatement} in the tree rooted at an
@@ -94,8 +94,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static WhileStatement whileStatement(final ASTNode n) {
-    return findFirstClass(WhileStatement.class, n);
+  static WhileStatement whileStatement(final ASTNode ¢) {
+    return findFirstClass(WhileStatement.class, ¢);
   }
 
   static ThrowStatement throwStatement(ASTNode ¢) {

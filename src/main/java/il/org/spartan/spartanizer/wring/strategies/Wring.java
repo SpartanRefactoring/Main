@@ -67,9 +67,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     for (final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && isInstance(¢) && isDefinedHere(¢))
         $ = lowest($, ¢.getParameterTypes()[0]);
-    if ($ == null)
-      return castClass(ASTNode.class);
-    return $;
+    return $ != null ? $ : castClass(ASTNode.class);
   }
 
   private boolean isDefinedHere(final Method ¢) {
@@ -77,30 +75,18 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   }
 
   private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
-    if (c2 == null)
-      return c1;
-    if (!ASTNode.class.isAssignableFrom(c2))
-      return c1;
-    if (c1 == null)
-      return castClass(c2);
-    if (c1.isAssignableFrom(c2))
-      return castClass(c2);
-    return c1;
+    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
   public final Class<N> myAbstractOperandsClass() {
-    if (myOperandsClass == null)
-      return myOperandsClass = initializeMyOperandsClass();
-    return myOperandsClass;
+    return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
   public Class<N> myActualOperandsClass() {
     final Class<N> $ = myAbstractOperandsClass();
-    if (isAbstract($.getModifiers()))
-      return null;
-    return $;
+    return !isAbstract($.getModifiers()) ? $ : null;
   }
 
   public String name() {

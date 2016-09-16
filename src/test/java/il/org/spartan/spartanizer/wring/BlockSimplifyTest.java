@@ -77,7 +77,7 @@ public class BlockSimplifyTest {
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + "{}");
     final String peeled = w.off(unpeeled);
-    if (peeled.equals("{}"))
+    if ("{}".equals(peeled))
       azzert.that("No similification of " + "{}", peeled, is(not("{}")));
     if (tide.clean(peeled).equals(tide.clean("{}")))
       azzert.that("Simpification of " + "{}" + " is just reformatting", tide.clean("{}"), is(not(tide.clean(peeled))));
@@ -112,9 +112,9 @@ public class BlockSimplifyTest {
     emptySimplestE_Aux(u, d, s);
   }
   
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator s) {
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator a) {
     try {
-      s.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
+      a.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
