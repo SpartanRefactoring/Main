@@ -141,6 +141,6 @@ public class FuncsTest {
   }
 
   private Type t(final String codeFragment) {
-    return extract.firstType(s(codeFragment));
+    return findFirst.firstType(s(codeFragment));
   }
 }

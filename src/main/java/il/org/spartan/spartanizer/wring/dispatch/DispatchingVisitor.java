@@ -13,12 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class DispatchingVisitor extends ASTVisitor {
   protected final ExclusionManager exclude = Trimmer.makeExcluder();
 
-  private boolean cautiousGo(final ASTNode ¢) {
-    return !exclude.isExcluded(¢) && go(¢);
-  }
-
-  protected abstract <N extends ASTNode> boolean go(final N n);
-
   @Override public final boolean visit(final Assignment ¢) {
     return cautiousGo(¢);
   }
@@ -87,11 +81,21 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final ThrowStatement ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final TypeDeclaration ¢) {
     return cautiousGo(¢);
   }
 
   @Override public final boolean visit(final VariableDeclarationFragment ¢) {
     return cautiousGo(¢);
+  }
+
+  protected abstract <N extends ASTNode> boolean go(final N n);
+
+  private boolean cautiousGo(final ASTNode ¢) {
+    return !exclude.isExcluded(¢) && go(¢);
   }
 }
