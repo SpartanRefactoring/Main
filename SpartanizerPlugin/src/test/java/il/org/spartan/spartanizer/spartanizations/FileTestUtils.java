@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.engine.*;
         }
     }
 
-    abstract Object[] makeCase(final Applicator s, final File d, final File f, final String name);
+    abstract Object[] makeCase(final Applicator a, final File d, final File f, final String name);
   }
 
   /* Auxiliary function for test suite inherited classes */

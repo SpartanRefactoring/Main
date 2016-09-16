@@ -126,7 +126,6 @@ import org.eclipse.jdt.core.dom.*;
   // is two transistors and a capacitor? Cycle duty depends on the
   // capacitance:@.
   private String toSingular(final String word) {
-    final String $ = word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
-    return $;
+    return word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
   }
 }

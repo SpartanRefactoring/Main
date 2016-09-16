@@ -29,9 +29,9 @@ public class Builder extends IncrementalProjectBuilder {
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
 
-  private static void addMarker(final Applicator s, final Rewrite r, final IMarker m) throws CoreException {
+  private static void addMarker(final Applicator a, final Rewrite r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
-    m.setAttribute(SPARTANIZATION_TYPE_KEY, s + "");
+    m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);
