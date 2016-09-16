@@ -13,28 +13,41 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class DispatchingVisitor extends ASTVisitor {
   protected final ExclusionManager exclude = Trimmer.makeExcluder();
 
-  @Override public final boolean visit(final Assignment ¢) {
-    return cautiousGo(¢);
-  }
+    @Override final public boolean visit(final AnnotationTypeDeclaration ¢) {
+      return go(¢);
+    }
 
-  @Override public final boolean visit(final Block ¢) {
-    return cautiousGo(¢);
-  }
+    @Override final public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+      return go(¢);
+    }
 
-  @Override public final boolean visit(final CastExpression ¢) {
-    return cautiousGo(¢);
-  }
+    @Override public final boolean visit(final Assignment ¢) {
+      return cautiousGo(¢);
+    }
 
-  @Override public final boolean visit(final ClassInstanceCreation ¢) {
-    return cautiousGo(¢);
-  }
+    @Override public final boolean visit(final Block ¢) {
+      return cautiousGo(¢);
+    }
 
-  @Override public final boolean visit(final ConditionalExpression ¢) {
-    return cautiousGo(¢);
-  }
+    @Override public final boolean visit(final CastExpression ¢) {
+      return cautiousGo(¢);
+    }
 
-  @Override public final boolean visit(final EnhancedForStatement ¢) {
-    return cautiousGo(¢);
+    @Override public final boolean visit(final ClassInstanceCreation ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final ConditionalExpression ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final EnhancedForStatement ¢) {
+      return cautiousGo(¢);
+    }
+
+
+  @Override final public boolean visit(final EnumConstantDeclaration ¢) {
+    return go(¢);
   }
 
   @Override public final boolean visit(final EnumDeclaration ¢) {
@@ -51,6 +64,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
 
   @Override public final boolean visit(final InfixExpression ¢) {
     return cautiousGo(¢);
+  }
+
+  @Override final public boolean visit(final Initializer ¢) {
+    return go(¢);
   }
 
   @Override public final boolean visit(final MethodDeclaration ¢) {
