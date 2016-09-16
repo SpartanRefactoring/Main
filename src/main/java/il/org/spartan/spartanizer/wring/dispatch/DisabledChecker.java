@@ -4,92 +4,59 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.*;
+
 /** Determines whether an {@link ASTNode} is spartanization disabled. In the
  * current implementation, only instances of {@link BodyDeclaration} may be
  * disabled, and only via their {@link Javadoc} comment
+ * <p>
+ * Algorithm:
+ * <ol>
+ * <li>Visit all nodes that contain an annotation.
+ * <li>If a node has a disabler, disable all nodes below it using
+ * {@link hop#descendants(ASTNode)}
+ * <li>Disabling is done by setting a node property, and is carried out
+ * <li>If a node which was previously disabled contains an enabler, enable all
+ * all its descendants.
+ * <li>If a node which was previously enabled, contains a disabler, disable all
+ * nodes below it, and carry on.
+ * <li>Obviously, the visit needs to be pre-order, i.e., visiting the parent
+ * before the children.
+ * </ol>
+ * The disabling information is used later by the suggestion/fixing mechanisms,
+ * which should know little about this class.
  * @author Ori Roth
  * @since 2016/05/13 */
 public class DisabledChecker {
-  /** Disable spartanization identifier, used by the programmer to indicate a
-   * method/class not to be spartanized */
-  public static final String disablers[] = { "[[Hedonistic]]", "@DisableSpartan", "Hedonistic", "[[hedoni]]", "[[hedonisti]]", "[[hedon]]",
-      "[[hedo]]" };
-  /** Enable spartanization identifier, used by the programmer to indicate a
-   * method/class to be spartanized */
-  public static final String enablers[] = { "[[Spartan]]", "@EnableSpartan", "[[Spartan]]", "[[spartan]]", "[[sparta]]" };
-  final Set<ASTNode> disabledNodes;
-  final Set<ASTNode> enabledNodes;
+  // TODO: Ori. I am not sure we need a class for this one. All we need is a
+  // recursive function/visitor. yg.
+  /** Disable spartanization markers, used to indicate that no spartanization
+   * should be made to node */
+  public static final String disablers[] = { "[[SuppressWarningsSpartan]]", //
+  };
+  /** Enable spartanization identifier, overriding a disabler */
+  public static final String enablers[] = { "[[EnableWarningsSpartan]]", //
+  };
 
   public DisabledChecker(final CompilationUnit u) {
-    disabledNodes = new HashSet<>();
-    enabledNodes = new HashSet<>();
     if (u == null)
       return;
-    u.accept(new BodyDeclarationVisitor(disabledNodes, enabledNodes));
+    u.accept(new BodyDeclarationVisitor());
   }
 
   /** @param n node
    * @return true iff spartanization is disabled for n */
   public boolean check(final ASTNode n) {
-    for (ASTNode p = n; p != null; p = p.getParent()) {
-      if (disabledNodes.contains(p))
-        return true;
-      if (enabledNodes.contains(p))
-        break;
-    }
     return false;
   }
 
   private class BodyDeclarationVisitor extends ASTVisitor {
-    // TODO: Ori Roth: Don't use short names for global things.
-    final Set<ASTNode> dns;
-    final Set<ASTNode> ens;
-
-    BodyDeclarationVisitor(final Set<ASTNode> dns, final Set<ASTNode> ens) {
-      this.dns = dns;
-      this.ens = ens;
-    }
-
     public boolean go(final BodyDeclaration d, final Javadoc j) {
       return j == null || go(d, j + "");
     }
 
     public boolean go(final BodyDeclaration d, final String s) {
-      insertAnnotated(d, s, dns, disablers);
-      insertAnnotated(d, s, ens, enablers);
       return true;
-    }
-
-    @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final EnumConstantDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final EnumDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final FieldDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final Initializer ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final MethodDeclaration ¢) {
-      return go(¢);
-    }
-
-    @Override public boolean visit(final TypeDeclaration ¢) {
-      return go(¢);
     }
 
     private boolean go(final BodyDeclaration ¢) {
