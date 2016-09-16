@@ -30,7 +30,11 @@ public class Toolbox {
   /** Initialize this class' internal instance object */
   public static void refresh() {
     instance = new Maker()//
+        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod()) //
+        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
+        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
@@ -39,9 +43,6 @@ public class Toolbox {
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             null) //
-        .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
-        .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
             new AssignmentAndReturn(), //
@@ -186,7 +187,6 @@ public class Toolbox {
         // know about Initializers. Add initializers to DispatchingVisitor if
         // you can provide a test case
         .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
-        .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
         .seal();
   }
 
