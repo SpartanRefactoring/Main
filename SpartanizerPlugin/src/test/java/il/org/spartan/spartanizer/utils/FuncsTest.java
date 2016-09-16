@@ -21,9 +21,8 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 public class FuncsTest {
   @Test public void arrayOfInts() {
-    Type t = t("int[][] __;");
+    final Type t = t("int[][] __;");
     assert t != null;
-    System.out.println(t);
     azzert.that(spartan.shorten(t), equalTo("iss"));
   }
 

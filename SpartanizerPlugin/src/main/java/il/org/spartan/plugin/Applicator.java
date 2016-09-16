@@ -71,10 +71,6 @@ public abstract class Applicator extends Refactoring {
     return $;
   }
 
-  protected abstract ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u);
-
-  protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
-
   /** Count the number files that would change after Spartanization.
    * <p>
    * This is an slow operation. Do not call light-headedly.
@@ -120,16 +116,6 @@ public abstract class Applicator extends Refactoring {
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final CompilationUnit u, final IProgressMonitor m) {
     return rewriterOf(u, m, (IMarker) null);
-  }
-
-  /** creates an ASTRewrite, under the context of a text marker, which contains
-   * the changes
-   * @param pm a progress monitor in which to display the progress of the
-   *        refactoring
-   * @param m the marker
-   * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
   /** @return compilationUnit */
@@ -201,22 +187,6 @@ public abstract class Applicator extends Refactoring {
     return selection;
   }
 
-  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final ToggleSpartanization.Type t, final String l) {
-    return new IMarkerResolution() {
-      @Override public String getLabel() {
-        return l;
-      }
-
-      @Override public void run(final IMarker m) {
-        try {
-          ToggleSpartanization.deactivate(new NullProgressMonitor(), m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
-        }
-      }
-    };
-  }
-
   public IMarkerResolution getToggleClass() {
     return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
   }
@@ -227,30 +197,6 @@ public abstract class Applicator extends Refactoring {
 
   public IMarkerResolution getToggleFile() {
     return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
-  }
-
-  private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
-    if (!isTextSelected())
-      return compilationUnits(compilationUnit != null ? compilationUnit : currentCompilationUnit(), newSubMonitor(pm));
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    $.add(compilationUnit);
-    return $;
-  }
-
-  @SuppressWarnings("static-method") private IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
-    return new IMarkerResolution() {
-      @Override public String getLabel() {
-        return l;
-      }
-
-      @Override public void run(final IMarker m) {
-        try {
-          WringCommit.go(new NullProgressMonitor(), m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
-        }
-      }
-    };
   }
 
   public IMarkerResolution getWringCommitDeclaration() {
@@ -272,15 +218,6 @@ public abstract class Applicator extends Refactoring {
     return countSuggestions() > 0;
   }
 
-  private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview) throws CoreException {
-    marker = m;
-    pm.beginTask("Running refactoring...", 2);
-    scanCompilationUnitForMarkerFix(m, pm, preview);
-    marker = null;
-    pm.done();
-    return new RefactoringStatus();
-  }
-
   /** @param m marker which represents the range to apply the Spartanization
    *        within
    * @param n the node which needs to be within the range of
@@ -288,22 +225,6 @@ public abstract class Applicator extends Refactoring {
    * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
-  }
-
-  /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false.
-   * @DisableSpartan */
-  protected boolean isNodeOutsideSelection(final ASTNode n) {
-    return !isSelected(n.getStartPosition());
-  }
-
-  private boolean isSelected(final int offset) {
-    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
-  }
-
-  private boolean isTextSelected() {
-    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
 
   /** Performs the current Spartanization on the provided compilation unit
@@ -332,11 +253,6 @@ public abstract class Applicator extends Refactoring {
     return $;
   }
 
-  private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
-    pm.beginTask("Checking preconditions...", 2);
-    scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
-  }
-
   /** @param pm a progress monitor in which to display the progress of the
    *        refactoring
    * @param m the marker for which the refactoring needs to run
@@ -344,6 +260,37 @@ public abstract class Applicator extends Refactoring {
    * @throws CoreException the JDT core throws it */
   public RefactoringStatus runAsMarkerFix(final IProgressMonitor pm, final IMarker m) throws CoreException {
     return innerRunAsMarkerFix(pm, m, false);
+  }
+
+  /** @param compilationUnit the compilationUnit to set */
+  public void setCompilationUnit(final ICompilationUnit ¢) {
+    compilationUnit = ¢;
+  }
+
+  /** @param marker the marker to set for the refactoring */
+  public final void setMarker(final IMarker ¢) {
+    marker = ¢;
+  }
+
+  /** @param subject the selection to set */
+  public void setSelection(final ITextSelection ¢) {
+    selection = ¢;
+  }
+
+  @Override public String toString() {
+    return name;
+  }
+
+  protected abstract ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u);
+
+  protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
+
+  /** Determines if the node is outside of the selected text.
+   * @return true if the node is not inside selection. If there is no selection
+   *         at all will return false.
+   * @DisableSpartan */
+  protected boolean isNodeOutsideSelection(final ASTNode n) {
+    return !isSelected(n.getStartPosition());
   }
 
   /** @param u JD
@@ -386,22 +333,75 @@ public abstract class Applicator extends Refactoring {
     pm.done();
   }
 
-  /** @param compilationUnit the compilationUnit to set */
-  public void setCompilationUnit(final ICompilationUnit ¢) {
-    compilationUnit = ¢;
+  /** creates an ASTRewrite, under the context of a text marker, which contains
+   * the changes
+   * @param pm a progress monitor in which to display the progress of the
+   *        refactoring
+   * @param m the marker
+   * @return an ASTRewrite which contains the changes */
+  private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
-  /** @param marker the marker to set for the refactoring */
-  public final void setMarker(final IMarker ¢) {
-    marker = ¢;
+  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final ToggleSpartanization.Type t, final String l) {
+    return new IMarkerResolution() {
+      @Override public String getLabel() {
+        return l;
+      }
+
+      @Override public void run(final IMarker m) {
+        try {
+          ToggleSpartanization.deactivate(new NullProgressMonitor(), m, t);
+        } catch (IllegalArgumentException | CoreException e) {
+          e.printStackTrace();
+        }
+      }
+    };
   }
 
-  /** @param subject the selection to set */
-  public void setSelection(final ITextSelection ¢) {
-    selection = ¢;
+  private List<ICompilationUnit> getUnits(final IProgressMonitor pm) throws JavaModelException {
+    if (!isTextSelected())
+      return compilationUnits(compilationUnit != null ? compilationUnit : currentCompilationUnit(), newSubMonitor(pm));
+    final List<ICompilationUnit> $ = new ArrayList<>();
+    $.add(compilationUnit);
+    return $;
   }
 
-  @Override public String toString() {
-    return name;
+  @SuppressWarnings("static-method") private IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
+    return new IMarkerResolution() {
+      @Override public String getLabel() {
+        return l;
+      }
+
+      @Override public void run(final IMarker m) {
+        try {
+          WringCommit.go(new NullProgressMonitor(), m, t);
+        } catch (IllegalArgumentException | CoreException e) {
+          e.printStackTrace();
+        }
+      }
+    };
+  }
+
+  private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview) throws CoreException {
+    marker = m;
+    pm.beginTask("Running refactoring...", 2);
+    scanCompilationUnitForMarkerFix(m, pm, preview);
+    marker = null;
+    pm.done();
+    return new RefactoringStatus();
+  }
+
+  private boolean isSelected(final int offset) {
+    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
+  }
+
+  private boolean isTextSelected() {
+    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+  }
+
+  private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
+    pm.beginTask("Checking preconditions...", 2);
+    scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
   }
 }

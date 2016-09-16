@@ -17,6 +17,11 @@ public class CollectMetrics {
   private static final String OUTPUT = "/tmp/halstead.CSV";
   private static CSVStatistics output = init();
 
+  public static void main(final String[] where) {
+    go(where.length != 0 ? where : new String[] { "." });
+    System.err.println("Your output should be here: " + output.close());
+  }
+
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -47,11 +52,6 @@ public class CollectMetrics {
     } catch (final IOException e) {
       throw new RuntimeException(OUTPUT, e);
     }
-  }
-
-  public static void main(final String[] where) {
-    go(where.length != 0 ? where : new String[] { "." });
-    System.err.println("Your output should be here: " + output.close());
   }
 
   /** Bug, what happens if we have many classes in the same file? Also, we do

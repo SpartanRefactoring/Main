@@ -111,14 +111,6 @@ public class BlockSimplifyTest {
     assert s != null;
     emptySimplestE_Aux(u, d, s);
   }
-  
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator a) {
-    try {
-      a.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
-  }
 
   @Test public void expressionVsExpression() {
     trimming("6 - 7 < a * 3").to("-1 < 3 * a");
@@ -126,10 +118,6 @@ public class BlockSimplifyTest {
 
   @Test public void literalVsLiteral() {
     trimming("if (a) return b; else c();").to("if(a)return b;c();");
-  }
-
-  @Test public void threeStatements() {
-    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
   }
 
   @Test public void seriesA00() {
@@ -203,5 +191,17 @@ public class BlockSimplifyTest {
         + "    X.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
             .to("public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n")
             .stays();
+  }
+
+  @Test public void threeStatements() {
+    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
+  }
+
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator a) {
+    try {
+      a.rewriterOf(u, new NullProgressMonitor(), (IMarker) null).rewriteAST(d, null).apply(d);
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
   }
 }

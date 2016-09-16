@@ -39,15 +39,15 @@ import il.org.spartan.*;
  * </ul>
  * The reason is that <code><b>assert</b> is short, clear, but does not provide
  * as much information as {@link azzert}. In the above situations, a priori
- * there is nothing to print. 
- * 
+ * there is nothing to print.
+ *
  * <p>You can augment
  * <code><b>assert</b> with a short
  * {@link Object} (usually a {@link String}) that can provide some debugging
- * information (see the implementation of 
+ * information (see the implementation of
  * {@link #Z$040()} or {@link #Z$060()}.)
- * <li>Instead, use class {@link azzert} for anything else: 
- *<ul>  <li> to check whether something is 
+ * <li>Instead, use class {@link azzert} for anything else:
+ *<ul>  <li> to check whether something is
  *<code><b>null</b></code>, use <code>azzer.notNull(something)</code> which
  * prints the content of this something if it is not <code><b>null</b></code
  * <li>Test methods do not usually contain the word test in them. There is no
@@ -60,36 +60,12 @@ import il.org.spartan.*;
  * development)
  * </ol>
  * @author Yossi Gil // put your name here
- * @since 2016  // put the year/date here*/
+ * @since 2016 // put the year/date here */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class AAA_TemplateForTestClasses {
   private static Object object() {
     return new Object();
-  }
-
-  private int $0() {
-    return 0;
-  }
-
-  private int $1() {
-    return 1;
-  }
-
-  private boolean $false() {
-    return false;
-  }
-
-  private Object $null() {
-    return null;
-  }
-
-  private boolean $true() {
-    return true;
-  }
-
-  private Object sameSomeObject() {
-    return this;
   }
 
   /** if fails, suite did not compile... */
@@ -183,5 +159,29 @@ public class AAA_TemplateForTestClasses {
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimming("a").stays();
+  }
+
+  private int $0() {
+    return 0;
+  }
+
+  private int $1() {
+    return 1;
+  }
+
+  private boolean $false() {
+    return false;
+  }
+
+  private Object $null() {
+    return null;
+  }
+
+  private boolean $true() {
+    return true;
+  }
+
+  private Object sameSomeObject() {
+    return this;
   }
 }

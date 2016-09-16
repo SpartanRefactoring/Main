@@ -49,6 +49,23 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
 
+  /** Compare the length of the left and right arguments of an infix expression
+   * @param x JD
+   * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
+   *         parameter is is longer than the second argument */
+  public static boolean longerFirst(final InfixExpression ¢) {
+    return isLonger(left(¢), right(¢));
+  }
+
+  /** Compare method invocations by the number of arguments
+   * @param e1 JD
+   * @param e2 JD
+   * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
+   *         invocation with more arguments that the second argument */
+  public static boolean moreArguments(final Expression e1, final Expression e2) {
+    return argumentsCompare(e1, e2) > 0;
+  }
+
   /** Lexicographical comparison expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
@@ -78,32 +95,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return metrics.countNonWhites(e1) - metrics.countNonWhites(e2);
   }
 
-  private static boolean isLonger(final Expression e1, final Expression e2) {
-    return !hasNull(e1, e2) && (//
-    metrics.nodesCount(e1) > metrics.nodesCount(e2) + NODES_THRESHOLD || //
-        metrics.nodesCount(e1) >= metrics.nodesCount(e2) && moreArguments(e1, e2)//
-    );
-  }
-
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
-  }
-
-  /** Compare the length of the left and right arguments of an infix expression
-   * @param x JD
-   * @return <code><b>true</b></code> <i>iff</i> if the left operand of the
-   *         parameter is is longer than the second argument */
-  public static boolean longerFirst(final InfixExpression ¢) {
-    return isLonger(left(¢), right(¢));
-  }
-
-  /** Compare method invocations by the number of arguments
-   * @param e1 JD
-   * @param e2 JD
-   * @return <code><b>true</b></code> <i>iff</i> the first argument is a method
-   *         invocation with more arguments that the second argument */
-  public static boolean moreArguments(final Expression e1, final Expression e2) {
-    return argumentsCompare(e1, e2) > 0;
   }
 
   static int nodesCompare(final Expression e1, final Expression e2) {
@@ -112,6 +105,13 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   static int round(final int $, final int threshold) {
     return Math.abs($) > threshold ? $ : 0;
+  }
+
+  private static boolean isLonger(final Expression e1, final Expression e2) {
+    return !hasNull(e1, e2) && (//
+    metrics.nodesCount(e1) > metrics.nodesCount(e2) + NODES_THRESHOLD || //
+        metrics.nodesCount(e1) >= metrics.nodesCount(e2) && moreArguments(e1, e2)//
+    );
   }
 
   /** Sorts the {@link Expression} list

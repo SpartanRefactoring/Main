@@ -44,10 +44,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return !canSuggest(¢);
   }
 
-  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
-    return (Class<N>) c2;
-  }
-
   /** Determines whether this {@link Wring} object is applicable for a given
    * {@link InfixExpression} is within the "scope" of this . Note that it could
    * be the case that a {@link Wring} is applicable in principle to an object,
@@ -58,24 +54,6 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    *         scope of this object @ */
   @Deprecated public boolean demandsToSuggestButPerhapsCant(final N ¢) {
     return suggest(¢, null) != null;
-  }
-
-  protected abstract String description(N n);
-
-  private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
-    for (final Method ¢ : getClass().getMethods())
-      if (¢.getParameterCount() == 1 && isInstance(¢) && isDefinedHere(¢))
-        $ = lowest($, ¢.getParameterTypes()[0]);
-    return $ != null ? $ : castClass(ASTNode.class);
-  }
-
-  private boolean isDefinedHere(final Method ¢) {
-    return ¢.getDeclaringClass() == getClass();
-  }
-
-  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
-    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
   /** Heuristics to find the class of operands on which this class works.
@@ -99,5 +77,27 @@ public abstract class Wring<N extends ASTNode> implements Kind {
 
   public Rewrite suggest(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : suggest(n);
+  }
+
+  protected abstract String description(N n);
+
+  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
+    return (Class<N>) c2;
+  }
+
+  private Class<N> initializeMyOperandsClass() {
+    Class<N> $ = null;
+    for (final Method ¢ : getClass().getMethods())
+      if (¢.getParameterCount() == 1 && isInstance(¢) && isDefinedHere(¢))
+        $ = lowest($, ¢.getParameterTypes()[0]);
+    return $ != null ? $ : castClass(ASTNode.class);
+  }
+
+  private boolean isDefinedHere(final Method ¢) {
+    return ¢.getDeclaringClass() == getClass();
+  }
+
+  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
+    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 }

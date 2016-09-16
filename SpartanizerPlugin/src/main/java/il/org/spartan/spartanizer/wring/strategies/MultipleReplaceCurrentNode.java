@@ -17,8 +17,6 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
 
-  abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
-
   @Override public Rewrite suggest(final N n) {
     return new Rewrite(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -34,4 +32,6 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
       }
     };
   }
+
+  abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
 }

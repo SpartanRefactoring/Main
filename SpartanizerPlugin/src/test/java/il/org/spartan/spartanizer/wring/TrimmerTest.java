@@ -656,8 +656,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void declarationIfAssignment() {
-    trimming("    String res = s;\n" + "    if (s.equals(y))\n" + "      res = s + blah;\n" + "    S.out.println(res);")
-        .to("    String res = s.equals(y) ? s + blah :s;\n" + "    S.out.println(res);");
+    trimming("    String res = s;\n" + "    if (s.equals(y))\n" + "      res = s + blah;\n" + "    S.h(res);")
+        .to("    String res = s.equals(y) ? s + blah :s;\n" + "    S.h(res);");
   }
 
   @Test public void declarationIfAssignment3() {
@@ -669,8 +669,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void declarationIfUpdateAssignment() {
-    trimming("    String res = s;\n" + "    if (s.equals(y))\n" + "      res += s + blah;\n" + "    S.out.println(res);")
-        .to("    String res = s.equals(y) ? s + (s + blah) :s;\n" + "    S.out.println(res);");
+    trimming("    String res = s;\n" + "    if (s.equals(y))\n" + "      res += s + blah;\n" + "    S.h(res);")
+        .to("    String res = s.equals(y) ? s + (s + blah) :s;\n" + "    S.h(res);");
   }
 
   @Test public void declarationIfUsesLaterVariable() {
@@ -913,17 +913,15 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
-    trimming("public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.out.println('!');\n"
-        + "    System.out.println('!');\n" + "    ++i;\n" + "  } else {\n" + "    i += 2;\n" + "    System.out.println('@');\n"
-        + "    System.out.println('@');\n" + "    ++i;\n" + "  }\n" + "}")
-            .to("public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.out.println('!');\n"
-                + "    System.out.println('!');\n" + "  } else {\n" + "    i += 2;\n" + "    System.out.println('@');\n"
-                + "    System.out.println('@');\n" + "  }\n" + "  ++i;" + "}");
+    trimming("public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.h('!');\n" + "    System.h('!');\n"
+        + "    ++i;\n" + "  } else {\n" + "    i += 2;\n" + "    System.h('@');\n" + "    System.h('@');\n" + "    ++i;\n" + "  }\n" + "}")
+            .to("public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.h('!');\n" + "    System.h('!');\n"
+                + "  } else {\n" + "    i += 2;\n" + "    System.h('@');\n" + "    System.h('@');\n" + "  }\n" + "  ++i;" + "}");
   }
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
-    trimming("public final static final void f() {\n" + "  if (tr()) {\n" + "    int i = 0;\n" + "    System.out.println(i + 0);\n" + "    ++i;\n"
-        + "  } else {\n" + "    int i = 1;\n" + "    System.out.println(i * 1);\n" + "    ++i;\n" + "  }\n" + "}");
+    trimming("public final static final void f() {\n" + "  if (tr()) {\n" + "    int i = 0;\n" + "    System.h(i + 0);\n" + "    ++i;\n"
+        + "  } else {\n" + "    int i = 1;\n" + "    System.h(i * 1);\n" + "    ++i;\n" + "  }\n" + "}");
   }
 
   @Test public void ifBugSecondTry() {
@@ -1117,8 +1115,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void inline01() {
-    trimming("  public int y() {\n" + "    final Z res = new Z(6);\n" + "    S.out.println(res.j);\n" + "    return res;\n" + " }\n").to(//
-        "  public int y() {\n" + "    final Z $ = new Z(6);\n" + "    S.out.println($.j);\n" + "    return $;\n" + "  }\n");
+    trimming("  public int y() {\n" + "    final Z res = new Z(6);\n" + "    S.h(res.j);\n" + "    return res;\n" + " }\n").to(//
+        "  public int y() {\n" + "    final Z $ = new Z(6);\n" + "    S.h($.j);\n" + "    return $;\n" + "  }\n");
   }
 
   @Test public void inlineArrayInitialization1() {
@@ -1159,7 +1157,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
   @Test public void inlineSingleUse07() {
     trimming(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.out.println(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.out.println(coes.size()); ")
+        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.h(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() < x - y)       outdated.add(pi);     S.h(coes.size()); ")
             .stays();
   }
 
@@ -2758,9 +2756,9 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
   @Test public void pushdownTernaryintoPrintln() {
     trimming("    if (s.equals(t))\n"//
-        + "      S.out.println(Hey + res);\n"//
+        + "      S.h(Hey + res);\n"//
         + "    else\n"//
-        + "      S.out.println(Ho + x + a);").to("S.out.println(s.equals(t)?Hey+res:Ho+x+a);");
+        + "      S.h(Ho + x + a);").to("S.h(s.equals(t)?Hey+res:Ho+x+a);");
   }
 
   @Test public void pushdownTernaryLongFieldRefernece() {
@@ -2862,15 +2860,15 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
   @Test public void redundantButNecessaryBrackets1() {
     trimming("if (windowSize != INFINITE_WINDOW) {\n" + "  if (getN() == windowSize)\n" + "    eDA.addElementRolling(v);\n"
-        + "  else if (getN() < windowSize)\n" + "    eDA.addElement(v);\n" + "} else {\n" + "  System.out.println('!');\n"
-        + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  System.out.println('!');\n"
-        + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  eDA.addElement(v);\n" + "}").stays();
+        + "  else if (getN() < windowSize)\n" + "    eDA.addElement(v);\n" + "} else {\n" + "  System.h('!');\n" + "  System.h('!');\n"
+        + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  eDA.addElement(v);\n"
+        + "}").stays();
   }
 
   @Test public void redundantButNecessaryBrackets2() {
     trimming("if (windowSize != INFINITE_WINDOW) {\n" + "  if (getN() == windowSize)\n" + "    eDA.addElementRolling(v);\n" + "} else {\n"
-        + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  System.out.println('!');\n"
-        + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  System.out.println('!');\n" + "  eDA.addElement(v);\n" + "}").stays();
+        + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n"
+        + "  System.h('!');\n" + "  eDA.addElement(v);\n" + "}").stays();
   }
 
   @Test public void redundantButNecessaryBrackets3() {
@@ -2921,7 +2919,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore1() {
-    trimming("void f(int x) {System.out.println(x);}").stays();
+    trimming("void f(int x) {System.h(x);}").stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
@@ -2937,7 +2935,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void renameVariableUnderscore1() {
-    trimming("void f(int _) {System.out.println(_);}").to("void f(int __) {System.out.println(__);}");
+    trimming("void f(int _) {System.h(_);}").to("void f(int __) {System.h(__);}");
   }
 
   @Ignore @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
@@ -3395,10 +3393,9 @@ import il.org.spartan.spartanizer.wring.strategies.*;
 
   // TODO Ori: add binding for tests
   @Ignore @Test public void SwitchFewCasesReplaceWithIf1() {
-    trimming(" int x;\n" + " switch (x) {\n" + " case 1:\n" + "   System.out.println(\"1\");\n" + "   break;\n" + " default:\n"
-        + "   System.out.println(\"error\");\n" + "   break;\n" + " }\n")
-            .to(" int x;\n" + " if (x == 1) {\n" + "   System.out.println(\"1\");\n" + "   return 2;\n" + " } else\n"
-                + "   System.out.println(\"3\");\n");
+    trimming(" int x;\n" + " switch (x) {\n" + " case 1:\n" + "   System.h(\"1\");\n" + "   break;\n" + " default:\n" + "   System.h(\"error\");\n"
+        + "   break;\n" + " }\n")
+            .to(" int x;\n" + " if (x == 1) {\n" + "   System.h(\"1\");\n" + "   return 2;\n" + " } else\n" + "   System.h(\"3\");\n");
   }
 
   @Test public void switchSimplifyCaseAfterDefault() {
@@ -3444,22 +3441,22 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void ternarize07() {
-    trimming("String res;" + "res = s;   " + "if (res.equals(532)==true)    " + "  res = s + 0xABBA;   " + "S.out.println(res); ")
-        .to("String res =s ;" + "if (res.equals(532))    " + "  res = s + 0xABBA;   " + "S.out.println(res); ");
+    trimming("String res;" + "res = s;   " + "if (res.equals(532)==true)    " + "  res = s + 0xABBA;   " + "S.h(res); ")
+        .to("String res =s ;" + "if (res.equals(532))    " + "  res = s + 0xABBA;   " + "S.h(res); ");
   }
 
   @Test public void ternarize07a() {
-    trimming("String res;" + "res = s;   " + "if (res==true)    " + "  res = s + 0xABBA;   " + "S.out.println(res); ")
-        .to("String res=s;if(res)res=s+0xABBA;S.out.println(res);");
+    trimming("String res;" + "res = s;   " + "if (res==true)    " + "  res = s + 0xABBA;   " + "S.h(res); ")
+        .to("String res=s;if(res)res=s+0xABBA;S.h(res);");
   }
 
   @Test public void ternarize07aa() {
-    trimming("String res=s;if(res==true)res=s+0xABBA;S.out.println(res);").to("String res=s==true?s+0xABBA:s;S.out.println(res);");
+    trimming("String res=s;if(res==true)res=s+0xABBA;S.h(res);").to("String res=s==true?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize07b() {
-    trimming("String res =s ;" + "if (res.equals(532)==true)    " + "  res = s + 0xABBA;   " + "S.out.println(res); ")
-        .to("String res=s.equals(532)==true?s+0xABBA:s;S.out.println(res);");
+    trimming("String res =s ;" + "if (res.equals(532)==true)    " + "  res = s + 0xABBA;   " + "S.h(res); ")
+        .to("String res=s.equals(532)==true?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize09() {
@@ -3470,12 +3467,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     trimming("String res = s, foo = bar;   "//
         + "if (res.equals(532)==true)    " //
         + "res = s + 0xABBA;   "//
-        + "S.out.println(res); ").to("String res=s.equals(532)==true?s+0xABBA:s,foo=bar;S.out.println(res);");
+        + "S.h(res); ").to("String res=s.equals(532)==true?s+0xABBA:s,foo=bar;S.h(res);");
   }
 
   @Test public void ternarize12() {
-    trimming("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.out.println(res); ")
-        .to("String res=s.equals(532)?s+0xABBA:s;S.out.println(res);");
+    trimming("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ").to("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize13() {
@@ -3514,8 +3510,8 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void ternarize14() {
-    trimming("String res=m,foo=GY;if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.out.println(foo);}f();")
-        .to("String res=m,foo=GY;if(res.equals(f())){foo=M;int k=8;S.out.println(foo);}f();");
+    trimming("String res=m,foo=GY;if (res.equals(f())==true){foo = M;int k = 2;k = 8;S.h(foo);}f();")
+        .to("String res=m,foo=GY;if(res.equals(f())){foo=M;int k=8;S.h(foo);}f();");
   }
 
   @Test public void ternarize16() {
@@ -3529,12 +3525,12 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   public void ternarize18() {
-    trimming("final String res=s;System.out.println(s.equals(res)?tH3+res:h2A+res+0);")//
-        .to("System.out.println(s.equals(s)?tH3+res:h2A+s+0);");
+    trimming("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);")//
+        .to("System.h(s.equals(s)?tH3+res:h2A+s+0);");
   }
 
   @Test public void ternarize21() {
-    trimming("if (s.equals(532)){    S.out.println(gG);    S.out.l(kKz);} f(); ").stays();
+    trimming("if (s.equals(532)){    S.h(gG);    S.out.l(kKz);} f(); ").stays();
   }
 
   @Test public void ternarize21a() {
@@ -3611,7 +3607,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
   }
 
   @Test public void ternarize49() {
-    trimming("if (s.equals(532)){ S.out.println(gG); S.out.l(kKz); } f();").stays();
+    trimming("if (s.equals(532)){ S.h(gG); S.out.l(kKz); } f();").stays();
   }
 
   @Test public void ternarize52() {

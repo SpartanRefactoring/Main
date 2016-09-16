@@ -14,18 +14,18 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N>
     return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
   }
 
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
-
   @Override public Rewrite suggest(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null || cantSuggest(n))
       return null;
     if (exclude != null)
-    exclude.exclude(nextStatement);
+      exclude.exclude(nextStatement);
     return new Rewrite(description(n), n, nextStatement) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         ReplaceToNextStatement.this.go(r, n, nextStatement, g);
       }
     };
   }
+
+  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

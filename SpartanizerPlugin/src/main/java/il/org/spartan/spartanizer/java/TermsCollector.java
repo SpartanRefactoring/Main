@@ -23,12 +23,47 @@ public class TermsCollector {
   private final List<Expression> negative = new ArrayList<>();
   private final List<Term> all = new ArrayList<>();
 
+  public TermsCollector(final InfixExpression e) {
+    collect(e);
+  }
+
   TermsCollector() {
     /* For internal use only */
   }
 
-  public TermsCollector(final InfixExpression e) {
-    collect(e);
+  public List<Term> all() {
+    return all;
+  }
+
+  public List<Expression> minus() {
+    return negative;
+  }
+
+  public List<Expression> plus() {
+    return positive;
+  }
+
+  final TermsCollector collect(final InfixExpression ¢) {
+    if (¢ != null && !isLeafTerm(¢))
+      collectPlusNonLeaf(¢);
+    return this;
+  }
+
+  Void collectPlusNonLeaf(final InfixExpression ¢) {
+    assert ¢ != null;
+    assert !isLeafTerm(¢);
+    assert iz.infixPlus(¢) || iz.infixMinus(¢);
+    return iz.infixPlus(¢) ? collectPlusPrefixPlusExpression(¢) //
+        : collectPlusPrefixMinusExpression(¢);
+  }
+
+  Void collectPlusPrefixMinusExpression(final InfixExpression x) {
+    assert x != null;
+    assert !isLeafTerm(x);
+    assert iz.infixMinus(x);
+    final List<Expression> es = hop.operands(x);
+    addPositiveTerm(core(first(es)));
+    return collectNegativeTerms(rest(es));
   }
 
   private Void addMinus(final Expression ¢) {
@@ -59,16 +94,6 @@ public class TermsCollector {
 
   private Void addPositiveTerm(final Expression ¢) {
     return isLeafTerm(¢) ? addPlusTerm(¢) : collectPlusNonLeaf(az.infixExpression(¢));
-  }
-
-  public List<Term> all() {
-    return all;
-  }
-
-  final TermsCollector collect(final InfixExpression ¢) {
-    if (¢ != null && !isLeafTerm(¢))
-      collectPlusNonLeaf(¢);
-    return this;
   }
 
   private Void collectMinusPrefix(final Expression ¢) {
@@ -108,26 +133,9 @@ public class TermsCollector {
     return null;
   }
 
-  Void collectPlusNonLeaf(final InfixExpression ¢) {
-    assert ¢ != null;
-    assert !isLeafTerm(¢);
-    assert iz.infixPlus(¢) || iz.infixMinus(¢);
-    return iz.infixPlus(¢) ? collectPlusPrefixPlusExpression(¢) //
-        : collectPlusPrefixMinusExpression(¢);
-  }
-
   private Void collectPlusPrefix(final Expression ¢) {
     assert ¢ != null;
     return isLeafTerm(¢) ? addPlus(¢) : collectPlusNonLeaf(az.infixExpression(¢));
-  }
-
-  Void collectPlusPrefixMinusExpression(final InfixExpression x) {
-    assert x != null;
-    assert !isLeafTerm(x);
-    assert iz.infixMinus(x);
-    final List<Expression> es = hop.operands(x);
-    addPositiveTerm(core(first(es)));
-    return collectNegativeTerms(rest(es));
   }
 
   private Void collectPlusPrefixPlusExpression(final InfixExpression ¢) {
@@ -142,13 +150,5 @@ public class TermsCollector {
     for (final Expression ¢ : xs)
       addPositiveTerm(core(¢));
     return null;
-  }
-
-  public List<Expression> minus() {
-    return negative;
-  }
-
-  public List<Expression> plus() {
-    return positive;
   }
 }

@@ -213,14 +213,13 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
   @Test(timeout = 2000) public void ternarize01() {
     assertConvertsTo(
         //
-        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;else    $ = SPAM;System.out.println($);",
-        "System.out.println((!s.equals(532)?SPAM:s+0xABBA));");
+        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;else    $ = SPAM;x.y.f($);", "x.y.f((!s.equals(532)?SPAM:s+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize02() {
     assertConvertsTo(//
-        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);", //
-        "System.out.println((!s.equals(532)?s:s+0xABBA));");
+        "String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", //
+        "x.y.f((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize03() {
@@ -236,19 +235,17 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
 
   @Test(timeout = 2000) public void ternarize06() {
     assertConvertsTo(//
-        "String $;$ = s;if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);", //
-        "System.out.println((!s.equals(532)?s:s+0xABBA));");
+        "String $;$ = s;if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", //
+        "x.y.f((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test public void ternarize07a() {
-    assertConvertsTo("String $;" + "$ = s;   " + "if ($==true)    " + "  $ = s + 0xABBA;   " + "System.out.println($); ",
-        "System.out.println((!s?s:s+0xABBA));" //
+    assertConvertsTo("String $;" + "$ = s;   " + "if ($==true)    " + "  $ = s + 0xABBA;   " + "x.y.f($); ", "x.y.f((!s?s:s+0xABBA));" //
     );
   }
 
   @Test(timeout = 2000) public void ternarize11() {
-    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;System.out.println($);",
-        "System.out.println((!s.equals(532)?s:s+0xABBA));");
+    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f((!s.equals(532)?s:s+0xABBA));");
   }
 
   @Test public void ternarize15() {
@@ -278,10 +275,10 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
             "    String $ = s;\n" + //
             "    int a = 0;\n" + //
             "    if (s.equals($))\n" + //
-            "      System.out.println(tH3 + $);\n" + //
+            "      x.y.f(tH3 + $);\n" + //
             "    else\n" + //
-            "      System.out.println(h2A+ $ + a + s);",
-        "System.out.println(X.equals(X)?tH3+X:h2A+X+0+X);");
+            "      x.y.f(h2A+ $ + a + s);",
+        "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
 
   @Test(timeout = 2000) public void ternarize23() {
