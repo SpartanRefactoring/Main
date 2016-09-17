@@ -57,14 +57,13 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
       if (iz.enumConstantDeclaration(hop.containerType(container)))
         $.add(isProtected);
     }
-    if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢))) {
+    if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
-    }
     return $;
   }
 
-  private static boolean hasSafeVarags(MethodDeclaration d) {
-    for (Annotation a : extract.annotations(d)) {
+  private static boolean hasSafeVarags(final MethodDeclaration d) {
+    for (final Annotation a : extract.annotations(d)) {
       System.err.println(a);
       if (iz.identifier("SafeVarargs", a.getTypeName()))
         return true;

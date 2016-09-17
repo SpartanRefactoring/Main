@@ -18,7 +18,15 @@ public final class TrimmerTestsUtils {
     return a.collectSuggesions(u).size();
   }
 
-  static String apply(final Trimmer t, final String from) {
+  static String apply(final Wring<? extends ASTNode> n, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert u != null;
+    final Document d = new Document(from);
+    assert d != null;
+    return TESTUtils.rewrite(new WringApplicator(n), u, d).get();
+  }
+
+  static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
@@ -26,14 +34,6 @@ public final class TrimmerTestsUtils {
     final Document $ = TESTUtils.rewrite(t, u, d);
     assert $ != null;
     return $.get();
-  }
-
-  static String apply(final Wring<? extends ASTNode> n, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert u != null;
-    final Document d = new Document(from);
-    assert d != null;
-    return TESTUtils.rewrite(new WringApplicator(n), u, d).get();
   }
 
   static void assertSimplifiesTo(final String from, final String expected, final Wring<? extends ASTNode> n, final Wrap w) {
@@ -70,7 +70,7 @@ public final class TrimmerTestsUtils {
       assert expected != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -85,7 +85,7 @@ public final class TrimmerTestsUtils {
     void checkExpected(final String expected) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -99,7 +99,7 @@ public final class TrimmerTestsUtils {
     private void checkSame() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);

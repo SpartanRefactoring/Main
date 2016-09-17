@@ -45,16 +45,16 @@ public final class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpre
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.pseudoNumber(first(xs)))
       return null;
-    Integer z = az.boxed.int¢(first(xs));
+    final Integer z = az.boxed.int¢(first(xs));
     if (z == null)
       return null;
-   int sub = z.intValue(); 
+    int sub = z.intValue();
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!iz.numberLiteral(¢) || !type.isInt(¢))
         return null;
       if (index != 0) {
-        Integer int¢ = az.boxed.int¢(¢);
+        final Integer int¢ = az.boxed.int¢(¢);
         if (int¢ == null)
           return null;
         sub -= int¢.intValue();
