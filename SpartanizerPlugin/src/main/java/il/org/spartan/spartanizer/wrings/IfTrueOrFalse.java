@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** convert <code>if (true) x; else {y;} </code> into <code>x;</code> and
  * <code>if (false) x; else {y;}  </code> into <code>

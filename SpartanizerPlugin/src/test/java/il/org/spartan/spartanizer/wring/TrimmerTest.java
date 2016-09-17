@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 import il.org.spartan.spartanizer.wrings.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note

@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)

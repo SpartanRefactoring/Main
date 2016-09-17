@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** Converts <code>a?b?x:z:z</code>into <code>a&&b?x:z</code>
  * @author Yossi Gil

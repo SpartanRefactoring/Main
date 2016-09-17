@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring.strategies;
+package il.org.spartan.spartanizer.wringing;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;

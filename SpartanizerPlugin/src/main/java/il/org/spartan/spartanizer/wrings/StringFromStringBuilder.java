@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** A {@link Wring} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"

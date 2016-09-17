@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
  * class, e.g., <code>@Override void foo(){super.foo();}</code>

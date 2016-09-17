@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation

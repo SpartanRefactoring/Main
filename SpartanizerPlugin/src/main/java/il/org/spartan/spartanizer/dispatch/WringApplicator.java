@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** An adapter that converts the protocol of a single @{link Wring} instance
  * into that of {@link Applicator}. This class must eventually die.

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring.strategies;
+package il.org.spartan.spartanizer.wringing;
 
 import java.util.*;
 import java.util.function.*;

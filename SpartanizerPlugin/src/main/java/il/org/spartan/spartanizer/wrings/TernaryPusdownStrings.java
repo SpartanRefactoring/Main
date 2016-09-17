@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** convert <code>polite?"Eat your meal.":"Eat your meal, please"
  * </code>, <code>polite?"thanks for the meal":"I hated the meal"</code>, and

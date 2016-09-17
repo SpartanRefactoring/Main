@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.wrings;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** Replaces name of variables named "_" into "__"
  * @author Ori Roth
