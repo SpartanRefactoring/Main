@@ -75,7 +75,7 @@ public abstract class ENVTestEngineAbstract {
      * idea for a debug tool. */
     // add returns true iff the element did not exist in the set already.
     if (!testSet
-        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.generateFromTypeName(wizard.condense(second(ps).getValue()))))))
+        .add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
