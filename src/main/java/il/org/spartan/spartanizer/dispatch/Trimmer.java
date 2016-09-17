@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.wringing.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
-public class Trimmer extends Applicator {
+public  class Trimmer extends Applicator {
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
@@ -205,7 +205,7 @@ public class Trimmer extends Applicator {
     }
   }
 
-  public class With {
+  public abstract class With {
     public Trimmer trimmer() {
       return Trimmer.this;
     }

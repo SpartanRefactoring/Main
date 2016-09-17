@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double sum = 0;
     for (final Expression ¢ : xs) {
@@ -40,7 +40,10 @@ public class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> i
     for (final Expression ¢ : xs) {
       if (!iz.pseudoNumber(¢))
         return null;
-      sum += az.boxed.int¢(¢);
+      Integer int¢ = az.boxed.int¢(¢);
+      if (int¢ == null)
+        return null;
+      sum += int¢.intValue();
     }
     return x.getAST().newNumberLiteral(Integer.toString(sum));
   }

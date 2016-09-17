@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * can be replaced with <code>String s = myName + "'s grade is " + 100;</code>
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
-public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation> implements Kind.SyntacticBaggage {
+public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation> implements Kind.SyntacticBaggage {
   // building a replacement
   private static ASTNode replacement(final MethodInvocation i, final List<Expression> xs) {
     if (xs.isEmpty())

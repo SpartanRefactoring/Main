@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue165Test {
+public final class Issue165Test {
   @Test public void seriesA_01_vanilla() {
     trimming(//
         " public static boolean f(final VariableDeclarationStatement s) {\n" //

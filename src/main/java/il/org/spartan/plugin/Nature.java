@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.*;
 
 /** @author Artium Nihamkin
  * @since 2013/07/01 */
-public class Nature implements IProjectNature {
+public final class Nature implements IProjectNature {
   /** ID of this project nature */
   public static final String NATURE_ID = "il.org.spartan.spartanizer.NatureID";
   /** The project to which we relate */

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
  * whose parameters are changed. But this disabling does not belong here.
  * @author Yossi Gil
  * @year 2015 */
-public class ExclusionManager {
+public final class ExclusionManager {
   final Set<ASTNode> inner = new HashSet<>();
 
   public void exclude(final ASTNode ¢) {

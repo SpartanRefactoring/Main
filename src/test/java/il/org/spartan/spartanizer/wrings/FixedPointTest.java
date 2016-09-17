@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) public class FixedPointTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Statement);
   }

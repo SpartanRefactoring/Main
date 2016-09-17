@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 /** IApplication for collecting metrics pre and post Spartanization
  * @author Matteo Orru'
  * @year 2016 */
-public class CollectMetricsApp implements IApplication {
+public final class CollectMetricsApp implements IApplication {
   private static final String OUTPUT = System.getProperty("user.home") + "/halstead.csv";
   private static final String SPARTAN_OUTPUT = System.getProperty("user.home") + "/spartan_halstead.csv";
   private static CSVStatistics output;

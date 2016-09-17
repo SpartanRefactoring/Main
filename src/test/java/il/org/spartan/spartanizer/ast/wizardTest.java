@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class wizardTest {
+public final class wizardTest {
   @Test public void sameOfNullAndSomething() {
     assert !wizard.same(null, e("a"));
   }

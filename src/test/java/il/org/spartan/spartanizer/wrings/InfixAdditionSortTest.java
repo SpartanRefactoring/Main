@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2014-07-13 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class InfixAdditionSortTest {
+public final class InfixAdditionSortTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";
   private static final InfixExpression INPUT = into.i(input);
   private static final int nTERMS = 7;

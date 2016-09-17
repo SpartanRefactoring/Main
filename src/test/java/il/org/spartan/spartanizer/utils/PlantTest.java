@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
+@SuppressWarnings({ "javadoc", "static-method" }) public final class PlantTest {
   @Test public void plantIntoLess() {
     azzert.that(subject.pair(into.e("a + 2"), into.e("b")).to(LESS), iz("a+2<b"));
   }

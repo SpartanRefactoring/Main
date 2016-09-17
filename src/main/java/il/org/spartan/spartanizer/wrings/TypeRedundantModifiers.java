@@ -7,6 +7,6 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Remove redundant modifiers from a {@link TypeDeclaration}
  * @author Yossi Gil
  * @year 2016 */
-public class TypeRedundantModifiers extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> {
+public final class TypeRedundantModifiers extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> {
   // Intentionally empty, all clever stuff is in the superclass
 }

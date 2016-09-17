@@ -4,10 +4,10 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method") public class Issue121Test {
+@SuppressWarnings("static-method") public final class Issue121Test {
   @Test public void test01() {
     trimming("class A{ \n" //
-        + "static public class EX13{ \n" //
+        + "static public final class EX13{ \n" //
         + "class Onoes{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
         + "}   \n" //
@@ -21,7 +21,7 @@ import org.junit.*;
         + "}   \n" //
         + "}  \n" //
     ).to("class A{ \n" //
-        + "static public class EX13{ \n" //
+        + "static public final class EX13{ \n" //
         + "class Onoes{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
         + "}   \n" //

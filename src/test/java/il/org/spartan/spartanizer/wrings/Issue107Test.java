@@ -8,7 +8,7 @@ import org.junit.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-@SuppressWarnings("static-method") public class Issue107Test {
+@SuppressWarnings("static-method") public final class Issue107Test {
   // Not provably-not-string.
   @Test public void issue107a() {
     trimming("a+=1;").stays();

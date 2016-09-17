@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
  * Functions named {@link #base} are non-recursive
  * @author Yossi Gil
  * @since 2016-08 */
-public class TermsExpander {
+public final class TermsExpander {
   public static Expression simplify(final InfixExpression ¢) {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }

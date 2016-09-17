@@ -13,7 +13,7 @@ import org.junit.runners.*;
  * @see step */
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class stepTest {
+public final class stepTest {
   @Test public void chainComparison() {
     assertEquals("c", right(i("a == true == b == c")) + "");
   }

@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
-public class Application implements IApplication {
+public final class Application implements IApplication {
   /** Count the number of lines in a {@link File} f
    * @param f File
    * @return

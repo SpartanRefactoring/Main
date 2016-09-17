@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Dan Greenstein
  * @author Niv Shalmon
  * @since 2016 */
-public class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
+public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
   private static InfixExpression replace(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     swap(es, 0, 1);

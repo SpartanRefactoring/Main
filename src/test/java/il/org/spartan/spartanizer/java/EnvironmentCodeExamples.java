@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.annotations.*;
 
 @Ignore("This should never be furn") @SuppressWarnings("all") //
-public class EnvironmentCodeExamples {/* public static class EX02 { //
+public final class EnvironmentCodeExamples {/* public static class EX02 { //
                                        * initializator
                                        *
                                        * @FlatEnvUse({ @Id(name = "x", clazz =
@@ -80,7 +80,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * }) @FlatEnvUse({ @Id(name = "y", clazz = "int"),
    *
    * @Id(name = "x", clazz = "int"), @Id(name = "xsy", clazz = y_hiding.class)
-   * }) public class y_hiding { // purpose!
+   * }) public final class y_hiding { // purpose!
    *
    * @Begin class C {// }
    *
@@ -207,7 +207,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @End({ @Id(name = "EX04.x", clazz = "int"), @Id(name = "EX04.c2.x", clazz =
    * "int") }) class QQ {// } } } */
-  /* public static class EX09 { // template public class SOList<Type> implements
+  /* public static class EX09 { // template public final class SOList<Type> implements
    * Iterable<Type> { private class ____template____0 {} private final Type[]
    * arrayList;
    *
@@ -362,7 +362,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @End({ @Id(name = "EX08.Arr.arr", clazz = "String"[].class) }) class n { }
    * } } } // Some errors with this test, and the desired outcome is yet to be
    * // determined. */
-  /* public static class EX09 { // template public class SOList<Type> implements
+  /* public static class EX09 { // template public final class SOList<Type> implements
    * Iterable<Type> { private class ____template____0 {} private final Type[]
    * arrayList;
    *
@@ -424,9 +424,9 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @Id(name = "EX10.forTest.g.s", clazz = "String") }) final "int" b; } } } }
    *
-   * static public class EX11 { // Variables defined in try blocks behave like
+   * static public final class EX11 { // Variables defined in try blocks behave like
    * variables declared in any // other // block - their scope spans only as far
-   * as the block does. public class tryCatchTest { boolean dangerousFunc(final
+   * as the block does. public final class tryCatchTest { boolean dangerousFunc(final
    * boolean b) { if (b) throw new UnsupportedOperationException(); return
    * false; }
    *
@@ -465,7 +465,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @FlatEnvUse({ @Id(name = "e", clazz = NullPo"int"erException.class) })
    * final "int" a; } } } }
    *
-   * static public class EX12 { // Lambda use "int"erface GreetingService { void
+   * static public final class EX12 { // Lambda use "int"erface GreetingService { void
    * sayMessage("String" message); }
    *
    * "int"erface MathOperation {
@@ -496,7 +496,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * GreetingService greetService2 = (message) -> System.out.pr"int"ln("Hello "
    * + message); } }
    *
-   * static public class EX13 { class Onoes { "int" x;
+   * static public final class EX13 { class Onoes { "int" x;
    *
    * public Onoes(final "int" y) { x = y; }
    *
@@ -510,7 +510,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @Id(name = "EX13.foo.____anon____Onoes____0.x", clazz = "int") }) @Override
    * "int" giveMeANumber() { return n * x; } }; } }
    *
-   * static public class EX14 { class A { "int" x; }
+   * static public final class EX14 { class A { "int" x; }
    *
    * void func() { final A a1 = new A(); final A a2 = new A();
    *
@@ -522,7 +522,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @End({ @Id(name = "EX14.func.a1.x", clazz = A.class), @Id(name =
    * "EX14.func.a1.x", clazz = "int") }) class end { } } }
    *
-   * static public class EX15 { class A { "int" x;
+   * static public final class EX15 { class A { "int" x;
    *
    * void func() { final A a1 = new A(); final A a2 = new A();
    *

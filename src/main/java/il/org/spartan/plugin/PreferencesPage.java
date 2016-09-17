@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** ??
  * @author Daniel Mittelman
  * @year 2016 */
-public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 

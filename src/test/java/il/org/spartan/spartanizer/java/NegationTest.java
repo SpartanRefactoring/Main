@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class NegationTest {
+public final class NegationTest {
   @Test public void levelComplex() {
     azzert.that(minus.level(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), is(9));
   }

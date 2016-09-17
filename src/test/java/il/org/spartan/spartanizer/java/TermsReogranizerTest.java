@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings("static-method") public class TermsReogranizerTest {
+@SuppressWarnings("static-method") public final class TermsReogranizerTest {
   @Test public void test00() {
     azzert.that(TermsReorganizer.simplify(i("a-b")), iz("a-b"));
   }

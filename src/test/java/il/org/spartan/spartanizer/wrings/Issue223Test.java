@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue223Test {
+public final class Issue223Test {
   private static final Class<ClassInstanceCreation> SUBJECT_CLASS = ClassInstanceCreation.class;
   private static final String INPUT = "return new Integer(f());";
   Wring<ClassInstanceCreation> wring;

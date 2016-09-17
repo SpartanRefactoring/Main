@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.ast.*;
  * which should know little about this class.
  * @author Ori Roth
  * @since 2016/05/13 */
-public class DisabledChecker {
+public final class DisabledChecker {
   // TODO: Ori. I am not sure we need a class for this one. All we need is a
   // recursive function/visitor. yg.
   /** Disable spartanization markers, used to indicate that no spartanization
