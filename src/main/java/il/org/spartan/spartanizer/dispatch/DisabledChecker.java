@@ -49,5 +49,6 @@ public class DisabledChecker {
   }
 
   private class BodyDeclarationVisitor extends ASTVisitor {
+    // TODO: ORI
   }
 }
