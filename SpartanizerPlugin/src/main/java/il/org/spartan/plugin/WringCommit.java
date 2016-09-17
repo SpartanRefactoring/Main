@@ -156,11 +156,11 @@ public class WringCommit {
     }
 
     protected void commitDeclaration(final Wring<?> w, final ASTNode n) {
-      commitLocal(w, ToggleSpartanization.getDeclaringDeclaration(n));
+      commitLocal(w, SuppressSpartanizationOnOff.getDeclaringDeclaration(n));
     }
 
     protected void commitFile(final Wring<?> w, final ASTNode n) {
-      commitLocal(w, ToggleSpartanization.getDeclaringFile(n));
+      commitLocal(w, SuppressSpartanizationOnOff.getDeclaringFile(n));
     }
 
     protected void commitLocal(final Wring w, final ASTNode n) {

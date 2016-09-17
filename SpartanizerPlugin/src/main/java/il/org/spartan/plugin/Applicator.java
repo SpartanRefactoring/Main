@@ -190,15 +190,15 @@ public abstract class Applicator extends Refactoring {
   }
 
   public IMarkerResolution getToggleClass() {
-    return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
+    return getToggle(SuppressSpartanizationOnOff.Type.CLASS, "Disable spartanization for class");
   }
 
   public IMarkerResolution getToggleDeclaration() {
-    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization for scope");
+    return getToggle(SuppressSpartanizationOnOff.Type.DECLARATION, "Disable spartanization for scope");
   }
 
   public IMarkerResolution getToggleFile() {
-    return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
+    return getToggle(SuppressSpartanizationOnOff.Type.FILE, "Disable spartanization for file");
   }
 
   public IMarkerResolution getWringCommitDeclaration() {
@@ -345,7 +345,7 @@ public abstract class Applicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
-  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final ToggleSpartanization.Type t, final String l) {
+  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -353,7 +353,7 @@ public abstract class Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          ToggleSpartanization.deactivate(nullProgressMonitor, m, t);
+          SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException x) {
           Plugin.log(x);
         }
