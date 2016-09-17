@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
+import static il.org.spartan.spartanizer.dispatch.Wrings.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert

@@ -2,7 +2,7 @@ package il.org.spartan.plugin;
 
 import org.eclipse.jface.preference.*;
 
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 
 public class PreferencesResources {
   /** Page description **/

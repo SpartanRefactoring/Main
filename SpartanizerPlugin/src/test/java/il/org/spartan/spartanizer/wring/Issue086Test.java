@@ -9,8 +9,8 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 import il.org.spartan.spartanizer.wrings.*;
 

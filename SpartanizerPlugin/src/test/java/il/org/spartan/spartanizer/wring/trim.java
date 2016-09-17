@@ -6,7 +6,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.junit.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Fluent API for testing:

@@ -12,8 +12,8 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any

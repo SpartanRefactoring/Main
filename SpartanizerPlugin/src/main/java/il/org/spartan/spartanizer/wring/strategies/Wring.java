@@ -6,8 +6,8 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 
 /** A wring is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A wring is so small that it is

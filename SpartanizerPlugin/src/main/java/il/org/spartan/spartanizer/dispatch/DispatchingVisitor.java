@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring.dispatch;
+package il.org.spartan.spartanizer.dispatch;
 
 import org.eclipse.jdt.core.dom.*;
 
