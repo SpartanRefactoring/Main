@@ -220,7 +220,7 @@ public enum make {
       if (!infixExpression(host))
         return false;
       final InfixExpression e = az.infixExpression(host);
-      return (e.getOperator() != wizard.PLUS2 || !stringType.isNot(e)) && isStringConactingSafe(inner);
+      return (e.getOperator() != wizard.PLUS2 || !type.isNotString(e)) && isStringConactingSafe(inner);
     }
   }
 

@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
-import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
+import static il.org.spartan.spartanizer.wrings.TESTUtils.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.apply;
 

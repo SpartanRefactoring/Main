@@ -11,7 +11,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.java.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
@@ -63,15 +62,15 @@ public class flattenTest {
   }
 
   @Test public void isNotStringInfixFalse() {
-    assert !stringType.isNot(i("1+f"));
+    assert !type.isNotString(i("1+f"));
   }
 
   @Test public void isNotStringInfixPlain() {
-    assert !stringType.isNot(e("1+f"));
+    assert !type.isNotString(e("1+f"));
   }
 
   @Test public void leftOperandIsNotString() {
-    assert stringType.isNot(left(i("1+2")));
+    assert type.isNotString(left(i("1+2")));
   }
 
   @Test public void leftOperandIsNumeric() {

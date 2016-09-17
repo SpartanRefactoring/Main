@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.spartanizations;
+package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
@@ -12,7 +12,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wrings.*;
+import il.org.spartan.spartanizer.spartanizations.*;
 
 /** @author Yossi Gil
  * @since 2015-07-17 */

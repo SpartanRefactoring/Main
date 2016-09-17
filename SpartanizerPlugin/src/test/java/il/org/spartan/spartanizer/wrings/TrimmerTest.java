@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
-import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
+import static il.org.spartan.spartanizer.wrings.TESTUtils.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.apply;
 
