@@ -12,7 +12,6 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.*;
 import il.org.spartan.spartanizer.wrings.*;
 
 /** @author Yossi Gil
