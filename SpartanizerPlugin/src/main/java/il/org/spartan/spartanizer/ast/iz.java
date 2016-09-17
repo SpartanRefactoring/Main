@@ -576,7 +576,6 @@ public enum iz {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
-
   /** Determine whether a node is a return statement
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return

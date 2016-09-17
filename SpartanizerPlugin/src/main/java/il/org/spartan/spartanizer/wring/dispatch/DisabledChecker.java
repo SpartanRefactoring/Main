@@ -49,8 +49,5 @@ public class DisabledChecker {
   }
 
   private class BodyDeclarationVisitor extends ASTVisitor {
-    public boolean go(final BodyDeclaration d, final String s) {
-      return true;
-    }
   }
 }

@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -25,6 +24,7 @@ public enum extract {
     assert ¢ != null;
     return hop.operands(flatten.of(¢));
   }
+
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
     assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();

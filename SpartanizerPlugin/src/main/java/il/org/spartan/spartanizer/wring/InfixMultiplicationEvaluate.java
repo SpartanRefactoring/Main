@@ -8,7 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -32,7 +31,7 @@ public class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixExpress
     for (final Expression ¢ : xs) {
       if (!iz.pseudoNumber(¢))
         return null;
-      Double d = az.boxed.double¢(¢);
+      final Double d = az.boxed.double¢(¢);
       if (d == null)
         return null;
       $ *= d.doubleValue();
@@ -45,7 +44,7 @@ public class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixExpress
     for (final Expression ¢ : xs) {
       if (!iz.pseudoNumber(¢))
         return null;
-      Integer i = az.boxed.int¢(¢);
+      final Integer i = az.boxed.int¢(¢);
       if (i == null)
         return null;
       $ *= i.intValue();
@@ -58,10 +57,10 @@ public class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixExpress
     for (final Expression ¢ : xs) {
       if (!iz.pseudoNumber(¢))
         return null;
-      Long l = az.boxed.long¢(¢);
+      final Long l = az.boxed.long¢(¢);
       if (l == null)
         return null;
-      $ *= l.longValue(); 
+      $ *= l.longValue();
     }
     return x.getAST().newNumberLiteral(Long.toString($) + "L");
   }
