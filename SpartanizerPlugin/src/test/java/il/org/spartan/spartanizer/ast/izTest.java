@@ -51,7 +51,7 @@ public class izTest {
   }
 
   @Test public void emptyStringLiteral1() {
-    assert iz.literal(e(EMPTY_STRING), "");
+    assert iz.literal("", e(EMPTY_STRING));
   }
 
   @Test public void emptyStringLiteral2() {

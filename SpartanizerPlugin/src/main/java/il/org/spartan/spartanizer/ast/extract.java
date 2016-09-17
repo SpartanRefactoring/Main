@@ -32,34 +32,16 @@ public enum extract {
     return $;
   }
 
-  public static List<Annotation> annotations(final BodyDeclaration d) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(d)) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  public static List<Annotation> annotations(final BodyDeclaration ¢) {
+    return annotations(step.modifiers(¢));
   }
 
-  public static List<Annotation> annotations(final SingleVariableDeclaration d) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(d)) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
+    return annotations(step.modifiers(¢));
   }
 
-  public static List<Annotation> annotations(final VariableDeclarationStatement s) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(s)) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
+    return annotations(step.modifiers(¢));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -310,6 +292,16 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such statements exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
+  }
+
+  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : ms) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {
