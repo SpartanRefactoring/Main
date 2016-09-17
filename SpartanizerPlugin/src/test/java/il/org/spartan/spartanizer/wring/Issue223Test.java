@@ -187,7 +187,7 @@ public class Issue223Test {
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + a.get());
   }
-
+@Ignore
   @Test public void vanilla04() {
     final Operand o = trimming("new Integer(3)");
     final Wrap w = Wrap.find(o.get());
