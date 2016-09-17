@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Version250Test {
+public final class Version250Test {
   // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_a() {
     trimming("b = a + 0;").stays();
@@ -587,19 +587,19 @@ public class Version250Test {
   }
 
   @Test public void issue111a_1() {
-    trimming("public class A {" + //
+    trimming("public final class A {" + //
         "static public int a;" + //
         "}") //
-            .to("public class A {" + //
+            .to("public final class A {" + //
                 "public static int a;" + //
                 "}");
   }
 
   @Test public void issue111b_1() {
-    trimming("public class A {" + //
+    trimming("public final class A {" + //
         "static final public int a;" + //
         "}") //
-            .to("public class A {" + //
+            .to("public final class A {" + //
                 "public static final int a;" + //
                 "}");
   }
@@ -610,17 +610,17 @@ public class Version250Test {
 
   @Test public void issue111c_2() { // not working cause method sorting is not
                                     // integrated yet
-    trimming("public class A{" + //
+    trimming("public final class A{" + //
         "synchronized public void fun(final int a) {}" + //
         "final private String s = \"Alex\";" + //
-        "}").to("public class A{" + //
+        "}").to("public final class A{" + //
             "public synchronized void fun(final int a) {}" + //
             "private final String s = \"Alex\";" + //
             "}").stays(); //
   }
 
   public void issue111d() {
-    trimming("protected public class A{}").to("public protected class A{}");
+    trimming("protected public final class A{}").to("public protected class A{}");
   }
 
   @Test public void issue111d_1() {
@@ -628,7 +628,7 @@ public class Version250Test {
   }
 
   @Test public void issue111e() {
-    trimming("protected public class A{volatile static int a;}") //
+    trimming("protected public final class A{volatile static int a;}") //
         .to("public protected class A{volatile static int a;}") //
         .to("public protected class A{static volatile int a;}") //
         .stays();
@@ -829,7 +829,7 @@ public class Version250Test {
   }
 
   @Test public void issue50_Constructors1() {
-    trimming("public class ClassTest {\n"//
+    trimming("public final class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
         + "}").stays();
   }
@@ -847,22 +847,22 @@ public class Version250Test {
   }
 
   @Test public void issue50_Enums() {
-    trimming("public class ClassTest {\n"//
+    trimming("public final class ClassTest {\n"//
         + "static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
         + "}")
-            .to("public class ClassTest {\n"//
+            .to("public final class ClassTest {\n"//
                 + "enum Day {\n"//
                 + "SUNDAY, MONDAY\n"//
                 + "}");
   }
 
   @Test public void issue50_EnumsOnlyRightModifierRemoved() {
-    trimming("public class ClassTest {\n"//
+    trimming("public final class ClassTest {\n"//
         + "private static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
         + "}")
-            .to("public class ClassTest {\n"//
+            .to("public final class ClassTest {\n"//
                 + "private enum Day {\n"//
                 + "SUNDAY, MONDAY\n"//
                 + "}");

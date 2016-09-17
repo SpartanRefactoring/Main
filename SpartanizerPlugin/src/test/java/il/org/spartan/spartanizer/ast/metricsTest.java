@@ -8,7 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) public class metricsTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";
   private final Expression x1 = e("(-b - sqrt(b * b - 4 * a* c))/(2*a)"), x2 = e("(-b + sqrt(b * b - 4 * a* c))/(2*a)");
   private final Expression booleans = e("true||false||true");

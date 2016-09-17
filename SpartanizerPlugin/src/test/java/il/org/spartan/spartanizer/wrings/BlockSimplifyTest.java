@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.wringing.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @Ignore("Still problems with #205") //
-public class BlockSimplifyTest {
+public final class BlockSimplifyTest {
   @Test public void complexEmpty0() {
     trimming("{;}").to("/* empty */    ");
   }

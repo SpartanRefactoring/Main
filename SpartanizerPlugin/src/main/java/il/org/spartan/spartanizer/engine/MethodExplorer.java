@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
 /** A class for analyzing a method.
  * @author Yossi Gil
  * @since 2015-08-29 */
-public class MethodExplorer {
+public final class MethodExplorer {
   final MethodDeclaration inner;
 
   /** Instantiate this class

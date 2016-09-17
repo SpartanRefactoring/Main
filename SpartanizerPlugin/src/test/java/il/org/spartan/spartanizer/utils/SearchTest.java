@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Collect.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class SearchTest {
+@SuppressWarnings({ "javadoc", "static-method" }) public final class SearchTest {
   private final SimpleName n = az.simpleName(e("n"));
 
   @Test public void awful() {

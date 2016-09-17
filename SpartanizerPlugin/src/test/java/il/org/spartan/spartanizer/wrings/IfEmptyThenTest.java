@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class IfEmptyThenTest {
+public final class IfEmptyThenTest {
   private static final Statement INPUT = into.s("{if (b) ; else ff();}");
   private static final IfStatement IF = findFirst.ifStatement(INPUT);
   private static final IfEmptyThen WRING = new IfEmptyThen();

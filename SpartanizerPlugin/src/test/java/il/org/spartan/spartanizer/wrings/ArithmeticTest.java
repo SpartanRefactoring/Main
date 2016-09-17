@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2016-08-26 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class ArithmeticTest {
+public final class ArithmeticTest {
   public static class Working {
     @Test public void additionIsLong() {
       assert atomic.isLong(2L);

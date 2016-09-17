@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class ExtractStatementTest {
+public final class ExtractStatementTest {
   @Test public void declarationCorrectSize() {
     azzert.that(extract.statements(s("{int a; a();}")).size(), is(2));
   }

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class SingletStatementTest {
+public final class SingletStatementTest {
   @Test public void declarationAndStatementIsNull() {
     azzert.isNull(extract.singleStatement(s("{int a; a();}")));
   }

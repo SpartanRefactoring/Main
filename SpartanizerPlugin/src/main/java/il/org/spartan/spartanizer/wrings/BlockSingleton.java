@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.wringing.*;
 /** convert
  *
  * <pre>
- * if {a) g();}
+ * if a) g();}
  * </pre>
  *
  * into

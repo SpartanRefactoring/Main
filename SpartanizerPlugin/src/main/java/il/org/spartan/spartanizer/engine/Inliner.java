@@ -41,7 +41,7 @@ public final class Inliner {
     return new InlinerWithValue(replacement);
   }
 
-  public class InlinerWithValue extends Wrapper<Expression> {
+  public final class InlinerWithValue extends Wrapper<Expression> {
     InlinerWithValue(final Expression replacement) {
       super(extract.core(replacement));
     }

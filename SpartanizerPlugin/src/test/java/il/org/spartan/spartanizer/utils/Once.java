@@ -9,7 +9,7 @@ import il.org.spartan.*;
  * @see Separator
  * @author Yossi Gil
  * @since 21/08/2007 */
-public class Once {
+public final class Once {
   private String value;
 
   public Once(final String value) {

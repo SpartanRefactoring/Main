@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings("static-method") //
-public class RestructureTest {
+public final class RestructureTest {
   @Test public void issue72me4xA() {
     azzert.that(make.minus(into.e("-x")), iz("x"));
   }

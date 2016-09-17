@@ -11,7 +11,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue222Test {
+public final class Issue222Test {
   @Ignore @Test public void vanilla() {
     trimming(//
         "static List<Expression> operands(final InfixExpression x) {\n" //

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.wrings.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class Issue214Test {
+public final class Issue214Test {
   private static <N extends ASTNode> Class<N> mustBeASTNodeClass(final Class<N> ¢) {
     return ¢;
   }

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * <code>valueOf()</code>
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-06 */
-public class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation> implements Kind.SyntacticBaggage {
+public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation> implements Kind.SyntacticBaggage {
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
     if (arguments(c).size() != 1)
       return null;

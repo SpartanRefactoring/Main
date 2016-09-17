@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.assemble.*;
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class minusTest {
+public final class minusTest {
   @Test public void levelComplex() {
     azzert.that(minus.level(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), is(9));
   }

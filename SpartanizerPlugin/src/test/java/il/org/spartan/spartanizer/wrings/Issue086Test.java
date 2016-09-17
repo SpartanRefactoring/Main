@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue086Test extends Issue___TestTemplate {
+public final class Issue086Test extends Issue___TestTemplate {
   private static final String INPUT = "{"//
       + "   throw Something; "//
       + " f();" //

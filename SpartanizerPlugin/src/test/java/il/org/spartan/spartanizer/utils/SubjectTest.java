@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.assemble.subject.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {
+@SuppressWarnings({ "javadoc", "static-method" }) public final class SubjectTest {
   @Test public void assignment() {
     azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.ASSIGN), iz("a=b"));
     azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.PLUS_ASSIGN), iz("a+=b"));

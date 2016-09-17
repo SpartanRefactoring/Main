@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) public class TrimmerTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class TrimmerTest {
   @Test public void actualExampleForSortAddition() {
     trimming("1 + b.statements().indexOf(declarationStmt)").stays();
   }
@@ -1691,7 +1691,7 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void issue52i() {
-    trimming("public class ClassTest {\n"//
+    trimming("public final class ClassTest {\n"//
         + "static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
         + "SUNDAY, MONDAY\n"//
@@ -1699,14 +1699,14 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void issue52j() {
-    trimming("public class ClassTest {\n"//
+    trimming("public final class ClassTest {\n"//
         + "private static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
         + "}");
   }
 
   @Test public void issue52k() {
-    trimming("public class ClassTest {\n"//
+    trimming("public final class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
         + "}").stays();
   }

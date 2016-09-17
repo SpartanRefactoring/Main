@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wrings.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc" }) //
-public class WringApplicatorTest {
+public final class WringApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
   private final WringApplicator it = new WringApplicator(new BlockSimplify());
 
