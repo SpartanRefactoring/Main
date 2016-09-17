@@ -66,8 +66,8 @@ public final class SuppressSpartanizationOnOff {
     return $;
   }
 
-  static BodyDeclaration getDeclaringClass(final ASTNode n) {
-    ASTNode $ = n;
+  static BodyDeclaration getDeclaringClass(final ASTNode ¢) {
+    ASTNode $ = ¢;
     // TODO: Ori, please use ancestor search, we have good services. Do not
     // invent the wheel.
     for (; $ != null && !($ instanceof AbstractTypeDeclaration); $ = $.getParent())
@@ -75,8 +75,8 @@ public final class SuppressSpartanizationOnOff {
     return (BodyDeclaration) $;
   }
 
-  static BodyDeclaration getDeclaringDeclaration(final ASTNode n) {
-    ASTNode $ = n;
+  static BodyDeclaration getDeclaringDeclaration(final ASTNode ¢) {
+    ASTNode $ = ¢;
     // TODO: Ori, please use ancestor search, we have good services. Do not
     // invent the wheel. This will also get two warnings off our head.
     for (; $ != null && !($ instanceof BodyDeclaration); $ = $.getParent())

@@ -42,9 +42,9 @@ public final class Spartanizations {
   /** @param t Spartanization rule
    * @return Spartanization class rule instance */
   @SuppressWarnings("unchecked") //
-  public static <T extends Applicator> T findInstance(final Class<? extends T> t) {
+  public static <T extends Applicator> T findInstance(final Class<? extends T> ¢) {
     for (final Applicator $ : all)
-      if ($.getClass().equals(t))
+      if ($.getClass().equals(¢))
         return (T) $;
     return null;
   }

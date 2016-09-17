@@ -28,8 +28,8 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
-  static Expression getThrowExpression(final Statement s) {
-    final ThrowStatement $ = extract.throwStatement(s);
+  static Expression getThrowExpression(final Statement ¢) {
+    final ThrowStatement $ = extract.throwStatement(¢);
     return $ == null ? null : extract.core($.getExpression());
   }
 

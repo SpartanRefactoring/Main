@@ -39,9 +39,9 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return pushdownNot(az.not(extract.core(¢)));
   }
 
-  static Expression notOfLiteral(final BooleanLiteral l) {
-    final BooleanLiteral $ = duplicate.of(l);
-    $.setBooleanValue(!l.booleanValue());
+  static Expression notOfLiteral(final BooleanLiteral ¢) {
+    final BooleanLiteral $ = duplicate.of(¢);
+    $.setBooleanValue(!¢.booleanValue());
     return $;
   }
 
@@ -49,12 +49,12 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return !iz.booleanLiteral(¢) ? null : notOfLiteral(az.booleanLiteral(¢));
   }
 
-  static Expression pushdownNot(final Expression x) {
+  static Expression pushdownNot(final Expression ¢) {
     Expression $;
-    return ($ = perhapsNotOfLiteral(x)) != null//
-        || ($ = perhapsDoubleNegation(x)) != null//
-        || ($ = perhapsDeMorgan(x)) != null//
-        || ($ = perhapsComparison(x)) != null //
+    return ($ = perhapsNotOfLiteral(¢)) != null//
+        || ($ = perhapsDoubleNegation(¢)) != null//
+        || ($ = perhapsDeMorgan(¢)) != null//
+        || ($ = perhapsComparison(¢)) != null //
             ? $ : null;
   }
 
@@ -98,9 +98,9 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return ¢ == null ? null : pushdownNot(step.operand(¢));
   }
 
-  private static Expression tryToSimplify(final Expression x) {
-    final Expression $ = pushdownNot(az.not(x));
-    return $ != null ? $ : x;
+  private static Expression tryToSimplify(final Expression ¢) {
+    final Expression $ = pushdownNot(az.not(¢));
+    return $ != null ? $ : ¢;
   }
 
   @Override public boolean demandsToSuggestButPerhapsCant(final PrefixExpression ¢) {

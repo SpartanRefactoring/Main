@@ -40,9 +40,9 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> impl
     return "Remove vacuous 'else' branch";
   }
 
-  @Override public Statement replacement(final IfStatement s) {
-    final IfStatement $ = duplicate.of(s);
+  @Override public Statement replacement(final IfStatement ¢) {
+    final IfStatement $ = duplicate.of(¢);
     $.setElseStatement(null);
-    return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
+    return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
   }
 }

@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.*;
 @SuppressWarnings("restriction") public final class BindingUtils {
   /** @param n an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
-  public static ITypeBinding container(final ASTNode n) {
-    final ASTNode $ = hop.containerType(n);
+  public static ITypeBinding container(final ASTNode ¢) {
+    final ASTNode $ = hop.containerType(¢);
     return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
   }
 

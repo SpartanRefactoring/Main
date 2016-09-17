@@ -16,10 +16,10 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
     return "Expand additive terms in " + ¢;
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
-    if (TermsCollector.isLeafTerm(x))
+  @Override public Expression replacement(final InfixExpression ¢) {
+    if (TermsCollector.isLeafTerm(¢))
       return null;
-    final Expression $ = TermsExpander.simplify(x);
-    return !wizard.same($, x) ? $ : null;
+    final Expression $ = TermsExpander.simplify(¢);
+    return !wizard.same($, ¢) ? $ : null;
   }
 }
