@@ -262,15 +262,3 @@ public class Toolbox {
     }
   }
 }
-
-class A {
-  // Or here. If you can, you know what to do. If you can't you also know. In
-  // both cases class A should die.
-  static {
-    System.out.println(new Integer(3 + new Integer(null + "" + new A()).hashCode()));
-  }
-  // TODO: ALex, try to put an initializer here.
-  {
-    System.out.println(new Integer(3 + new Integer(null + "" + this).hashCode()));
-  }
-}
