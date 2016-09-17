@@ -20,16 +20,35 @@ import il.org.spartan.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
 public class Application implements IApplication {
+  
+  /**
+   * Count the number of lines in a {@link File} f
+   * @param f File
+   * @return
+   * @throws IOException
+   */
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
       return lr.getLineNumber();
     }
   }
+  
+  /**
+   * Count the number of lines in File named filename
+   * @param fileName
+   * @return
+   * @throws IOException
+   */
 
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
+  
+  /**
+   * Discard compilation unit u
+   * @param u
+   */
 
   static void discardCompilationUnit(final ICompilationUnit u) {
     try {
