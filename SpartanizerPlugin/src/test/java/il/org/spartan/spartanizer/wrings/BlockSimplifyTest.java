@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
 import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.apply;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
@@ -17,7 +18,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wringing.*;
-import il.org.spartan.spartanizer.wrings.*;
 
 /** Unit tests for {@link NameYourClassHere}
  * @author Yossi Gil

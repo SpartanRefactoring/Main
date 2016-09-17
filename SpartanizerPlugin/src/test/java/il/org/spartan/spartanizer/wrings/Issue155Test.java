@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wrings.*;
-
 /** Unit tests for {@link DeclarationInitializerStatementTerminatingScope}
  * @author Ori Roth
  * @since 2016 */

@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wrings.*;
-
 /** Unit test for {@link EnhancedForRenameParameterToCent}
  * @author Yossi Gil
  * @since 2016 */
