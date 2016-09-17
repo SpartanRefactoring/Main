@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -21,7 +20,7 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends InfixSorting implements Kind.Sorting {
   @Override public boolean canSuggest(final InfixExpression ¢) {
-    return stringType.isNot(¢) && super.canSuggest(¢);
+    return type.isNotString(¢) && super.canSuggest(¢);
   }
 
   @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
@@ -30,7 +29,7 @@ public final class InfixAdditionSort extends InfixSorting implements Kind.Sortin
 
   @Override public Expression replacement(final InfixExpression x) {
     final List<Expression> operands = extract.allOperands(x);
-    return !stringType.isNot(x) || !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
+    return !type.isNotString(x) || !sort(operands) ? null : subject.operands(operands).to(x.getOperator());
   }
 
   @Override protected boolean sort(final List<Expression> ¢) {

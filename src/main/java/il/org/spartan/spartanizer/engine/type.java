@@ -107,6 +107,15 @@ public interface type {
     return get(¢) == Certain.LONG;
   }
 
+  /** @param x JD
+   * @return <code><b>true</b></code> <i>if</i> the parameter is an expression
+   *         whose type is provably not of type {@link String}, in the sense
+   *         used in applying the <code>+</code> operator to concatenate
+   *         strings. concatenation. */
+  static boolean isNotString(final Expression ¢) {
+    return !in(get(¢), STRING, ALPHANUMERIC);
+  }
+
   static boolean isString(final Expression ¢) {
     return get(¢) == Certain.STRING;
   }
