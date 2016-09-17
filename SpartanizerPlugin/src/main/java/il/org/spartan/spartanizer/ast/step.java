@@ -335,5 +335,4 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢.values();
   }
-
 }

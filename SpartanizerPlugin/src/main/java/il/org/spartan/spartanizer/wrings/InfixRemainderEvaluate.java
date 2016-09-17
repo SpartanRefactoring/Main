@@ -31,7 +31,7 @@ public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpres
     for (final Expression ¢ : rest(xs)) {
       if (!iz.pseudoNumber(¢))
         return null;
-      Integer int¢ = az.boxed.int¢(¢);
+      final Integer int¢ = az.boxed.int¢(¢);
       if (int¢ == null || int¢.intValue() == 0)
         return null;
       remainder %= int¢.intValue();

@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.wrings.TESTUtils.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
-import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.apply;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -39,7 +38,7 @@ import il.org.spartan.spartanizer.wringing.*;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final Trimmer t = new Trimmer();
-    final String unpeeled = apply(t, wrap);
+    final String unpeeled = applyTrimmer(t, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);

@@ -22,17 +22,14 @@ public final class Issue209Test {
         .to("((\"\"+(Integer)5).indexOf(\"5\") + \"\").length() + \"\"").to("(((Integer)5+ \"\").indexOf(\"5\") + \"\").length() + \"\"").stays();
   }
 
-  // TODO: Yossi, you changed this to stay() for some reason. Notice that in
-  // this case there is no ";" at the end, so the context is not an expression
-  // statement but rather a simple statement and it should be changed.
-  // issue209_02 is the same case as an expression statement, and it really
-  // doesn't change there. I think this test should look like this
   @Test public void issue209_01() {
     trimming("new Integer(3).toString()").to("\"\"+new Integer(3)").to("new Integer(3)+\"\"");
   }
 
   @Test public void issue209_02() {
-    trimming("new Integer(3).toString();").stays();
+    trimming("new Integer(3).toString();")
+    .to("Integer.valueOf(3).toString();")
+    .stays();
   }
 
   @Test public void issue54_01() {
