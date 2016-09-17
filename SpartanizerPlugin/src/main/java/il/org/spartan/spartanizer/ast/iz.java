@@ -262,11 +262,8 @@ public enum iz {
   }
 
   public static boolean identifier(final String identifier, final Name typeName) {
-    if (typeName.isQualifiedName())
-      return identifier(identifier, ((QualifiedName) typeName).getName());
-    if (iz.simpleName(typeName))
-      return identifier(identifier, az.simpleName(typeName));
-    return false;
+    return typeName.isQualifiedName() ? identifier(identifier, ((QualifiedName) typeName).getName())
+        : iz.simpleName(typeName) && identifier(identifier, az.simpleName(typeName));
   }
 
   public static boolean identifier(final String identifier, final SimpleName n) {
