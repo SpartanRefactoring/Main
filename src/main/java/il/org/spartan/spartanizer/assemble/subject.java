@@ -147,9 +147,9 @@ public final class subject {
      * operator
      * @param o a postfix operator
      * @return the expression inner together with the postfix operator o */
-    public Expression to(final PostfixExpression.Operator o) {
+    public Expression to(final PostfixExpression.Operator ¢) {
       final PostfixExpression $ = ast.newPostfixExpression();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setOperand(make.plant(inner).into($));
       return $;
     }
@@ -159,9 +159,9 @@ public final class subject {
      * operator
      * @param o a prefix operator
      * @return the expression inner together with the prefix operator o */
-    public PrefixExpression to(final PrefixExpression.Operator o) {
+    public PrefixExpression to(final PrefixExpression.Operator ¢) {
       final PrefixExpression $ = ast.newPrefixExpression();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setOperand(make.plant(inner).into($));
       return $;
     }
@@ -227,10 +227,10 @@ public final class subject {
      * of the assignment expression is the field left/right respectively,
      * @param o an assignment operator
      * @return an assignment expression with operator o */
-    public Assignment to(final Assignment.Operator o) {
-      assert o != null;
+    public Assignment to(final Assignment.Operator ¢) {
+      assert ¢ != null;
       final Assignment $ = ast.newAssignment();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setLeftHandSide(make.plant(left).into($));
       $.setRightHandSide(make.plant(right).into($));
       return $;
@@ -241,11 +241,11 @@ public final class subject {
      * operator is the given one
      * @param o
      * @return an expression with the parameter o as an operator */
-    public InfixExpression to(final InfixExpression.Operator o) {
+    public InfixExpression to(final InfixExpression.Operator ¢) {
       final InfixExpression $ = ast.newInfixExpression();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setLeftOperand(make.plant(left).intoLeft($));
-      $.setRightOperand(o != wizard.PLUS2 ? make.plant(right).into($)
+      $.setRightOperand(¢ != wizard.PLUS2 ? make.plant(right).into($)
           : !precedence.greater($, right)
               && (!precedence.equal($, right) || !type.isNotString(left) && !make.PlantingExpression.isStringConactingSafe(right))
               && !iz.simple(right) ? subject.operand(right).parenthesis() : right);

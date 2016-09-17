@@ -35,8 +35,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-  private static List<Expression> removeFirstElement(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>(xs);
+  private static List<Expression> removeFirstElement(final List<Expression> ¢) {
+    final List<Expression> $ = new ArrayList<>(¢);
     $.remove($.get(0));// remove first
     return $;
   }

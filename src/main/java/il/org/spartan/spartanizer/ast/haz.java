@@ -41,23 +41,23 @@ public enum haz {
         return continue¢(fragments(node));
       }
 
-      @Override public boolean visit(final VariableDeclarationFragment f) {
-        return continue¢(f.getName());
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+        return continue¢(¢.getName());
       }
 
-      @Override public boolean visit(final VariableDeclarationStatement s) {
-        return continue¢(fragments(s));
+      @Override public boolean visit(final VariableDeclarationStatement ¢) {
+        return continue¢(fragments(¢));
       }
 
       private boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment f : fs)
-          if (!continue¢(f.getName()))
+        for (final VariableDeclarationFragment ¢ : fs)
+          if (!continue¢(¢.getName()))
             return false;
         return true;
       }
 
-      private boolean continue¢(final SimpleName name) {
-        if (iz.identifier("$", name))
+      private boolean continue¢(final SimpleName ¢) {
+        if (iz.identifier("$", ¢))
           return false;
         $.set(Boolean.TRUE);
         return true;

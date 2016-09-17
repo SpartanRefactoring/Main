@@ -75,9 +75,9 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-  public static ParenthesizedExpression parethesized(final Expression x) {
-    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
+  public static ParenthesizedExpression parethesized(final Expression ¢) {
+    final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
+    $.setExpression(step.parent(¢) == null ? ¢ : duplicate.of(¢));
     return $;
   }
 
@@ -159,9 +159,9 @@ public enum make {
       return ast.newNumberLiteral(¢ + "");
     }
 
-    public StringLiteral literal(final String s) {
+    public StringLiteral literal(final String ¢) {
       final StringLiteral $ = ast.newStringLiteral();
-      $.setLiteralValue(s);
+      $.setLiteralValue(¢);
       return $;
     }
   }
@@ -205,9 +205,9 @@ public enum make {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 
-    private ParenthesizedExpression parenthesize(final Expression x) {
+    private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-      $.setExpression(duplicate.of(x));
+      $.setExpression(duplicate.of(¢));
       return $;
     }
 

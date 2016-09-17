@@ -32,8 +32,8 @@ import il.org.spartan.spartanizer.wringing.*;
  * @since 2015-08-07
  * @DisableSpartan */
 public final class DeclarationInitializerReturnAssignment extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
-  @Override public String description(final VariableDeclarationFragment f) {
-    return "Eliminate temporary " + f.getName() + " and inline its value into the expression of the subsequent return statement";
+  @Override public String description(final VariableDeclarationFragment ¢) {
+    return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

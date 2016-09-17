@@ -66,9 +66,9 @@ public abstract class Applicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Suggestion} objects each containing a
    *         spartanization suggestion */
-  public final List<Suggestion> collectSuggesions(final CompilationUnit u) {
+  public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
     final List<Suggestion> $ = new ArrayList<>();
-    u.accept(collectSuggestions(u, $));
+    ¢.accept(collectSuggestions(¢, $));
     return $;
   }
 

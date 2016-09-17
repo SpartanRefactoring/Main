@@ -46,9 +46,9 @@ public final class PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static WringGroup find(final Class<? extends Kind> k) {
+    private static WringGroup find(final Class<? extends Kind> ¢) {
       for (final WringGroup $ : WringGroup.values())
-        if ($.clazz.isAssignableFrom(k))
+        if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;
     }

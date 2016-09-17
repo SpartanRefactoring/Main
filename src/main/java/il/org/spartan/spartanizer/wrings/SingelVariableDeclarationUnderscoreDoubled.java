@@ -35,8 +35,8 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return false;
   }
 
-  static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
-    final ASTNode $ = d.getParent();
+  static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
+    final ASTNode $ = ¢.getParent();
     return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
 

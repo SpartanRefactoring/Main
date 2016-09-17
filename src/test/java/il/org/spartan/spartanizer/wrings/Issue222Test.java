@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -12,7 +15,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue222Test {
-  @Test public void chocolate() {
+  @Test public void chocolate1() {
     trimming(//
         "static List<Expression> operands(final InfixExpression x) {\n" //
             + "  if (x == null)\n" //
@@ -26,6 +29,15 @@ public final class Issue222Test {
             + "  return $;\n" //
             + "}\n") //
                 .stays();
+  }
+  @Test public void chocolate2() {
+    trimming(
+        "private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + //
+          "for (final VariableDeclarationFragment f : fs)\n" + //
+            "if (!continue¢(f.getName()))\n" + //
+              "return false;\n" + //
+          "return true;\n" + //
+        "}").stays();
   }
 
   @Test public void vanilla() {

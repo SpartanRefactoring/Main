@@ -34,8 +34,8 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implement
     return "Invert conditional and remove vacuous 'then' branch";
   }
 
-  @Override public Statement replacement(final IfStatement s) {
-    final IfStatement $ = subject.pair(elze(s), null).toNot(s.getExpression());
-    return !iz.blockRequiredInReplacement(s, $) ? $ : subject.statement($).toBlock();
+  @Override public Statement replacement(final IfStatement ¢) {
+    final IfStatement $ = subject.pair(elze(¢), null).toNot(¢.getExpression());
+    return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
   }
 }

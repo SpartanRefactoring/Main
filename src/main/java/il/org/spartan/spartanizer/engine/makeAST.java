@@ -168,9 +168,9 @@ public enum makeAST {
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
-  public ASTParser makeParser(final ICompilationUnit u) {
+  public ASTParser makeParser(final ICompilationUnit ¢) {
     final ASTParser $ = wizard.parser(kind);
-    $.setSource(u);
+    $.setSource(¢);
     return $;
   }
 
