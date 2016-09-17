@@ -2894,6 +2894,11 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     trimming("void f(int x, @SuppressWarnings(\"unused\") int y) {}").to("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
   }
 
+  @Test public void renameUnusedVariableToDoubleUnderscore5() {
+    trimming("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")//
+        .to("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int __) {}");
+  }
+
   @Test public void renameVariableUnderscore1() {
     trimming("void f(int _) {System.h(_);}").to("void f(int __) {System.h(__);}");
   }

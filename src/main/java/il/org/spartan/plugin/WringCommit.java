@@ -26,7 +26,7 @@ public class WringCommit {
       goProject(pm, m);
       return;
     }
-    pm.beginTask("Toggling spartanization...", IProgressMonitor.UNKNOWN);
+    pm.beginTask("Applying suggestion", IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");

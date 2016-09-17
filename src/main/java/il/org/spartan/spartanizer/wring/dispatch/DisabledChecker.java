@@ -44,7 +44,7 @@ public class DisabledChecker {
 
   /** @param n node
    * @return true iff spartanization is disabled for n */
-  public boolean check(final ASTNode n) {
+  @SuppressWarnings("static-method") public boolean check(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
 

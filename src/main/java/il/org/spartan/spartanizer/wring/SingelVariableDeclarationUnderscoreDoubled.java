@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.wring;
 
+import static il.org.spartan.spartanizer.ast.extract.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
@@ -11,8 +13,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * VariableChangeName instead of ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-// TODO: Ori, please remove all warnings, do not suppress them.
-// @SuppressWarnings({ "javadoc", "unused", "unchecked" })
 public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
     implements Kind.UnusedArguments {
   static final boolean BY_ANNOTATION = true;
@@ -23,26 +23,25 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return u.conclusion();
   }
 
-  // TODO: Ori, search class {@link step}, you would find a way to avoid this
-  // warning while using a lib function.
-  public static boolean suppressedUnused(final SingleVariableDeclaration d) {
-    // TOOD: Ori, can you deal with this warning by using class {@link step}?
-    for (final IExtendedModifier m : (Iterable<IExtendedModifier>) d.modifiers())
-      if (m instanceof SingleMemberAnnotation && "SuppressWarnings".equals(((SingleMemberAnnotation) m).getTypeName() + "")) {
-        final Expression e = ((SingleMemberAnnotation) m).getValue();
-        if (e instanceof StringLiteral)
-          return "unused".equals(((StringLiteral) e).getLiteralValue());
-        // TODO: Ori????
-        for (final Expression ¢ : (Iterable<Expression>) ((ArrayInitializer) ((SingleMemberAnnotation) m).getValue()).expressions())
-          return ¢ instanceof StringLiteral && "unused".equals(((StringLiteral) ¢).getLiteralValue());
-        break;
-      }
+  public static boolean suppressing(final SingleVariableDeclaration d) {
+    for (final Annotation ¢ : annotations(d)) {
+      if (!"SuppressWarnings".equals(¢.getTypeName() + ""))
+        continue;
+      if (iz.singleMemberAnnotation(¢))
+        return suppresssing(az.singleMemberAnnotation(¢));
+      if (suppressing(az.normalAnnotation(¢)))
+        return true;
+    }
     return false;
   }
 
   static MethodDeclaration getMethod(final SingleVariableDeclaration d) {
     final ASTNode $ = d.getParent();
     return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
+  }
+
+  private static boolean isUnused(final Expression ¢) {
+    return iz.literal("unused", ¢);
   }
 
   private static ASTNode replacement(final SingleVariableDeclaration ¢) {
@@ -55,12 +54,39 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return $;
   }
 
+  private static boolean suppressing(final ArrayInitializer i) {
+    for (final Expression ¢ : step.expressions(i))
+      if (isUnused(¢))
+        return true;
+    return false;
+  }
+
+  private static boolean suppressing(final Expression ¢) {
+    return iz.literal("unused", ¢) || iz.arrayInitializer(¢) && suppressing(az.arrayInitializer(¢));
+  }
+
+  private static boolean suppressing(final NormalAnnotation a) {
+    if (a == null)
+      return false;
+    for (final MemberValuePair ¢ : step.values(a)) {
+      if (!iz.identifier("value", ¢.getName()))
+        continue;
+      if (isUnused(¢.getValue()))
+        return true;
+    }
+    return false;
+  }
+
+  private static boolean suppresssing(final SingleMemberAnnotation ¢) {
+    return suppressing(¢.getValue());
+  }
+
   private static String unusedVariableName() {
     return "__";
   }
 
   @Override public String description(final SingleVariableDeclaration ¢) {
-    return "Rename unused variable " + ¢.getName().getIdentifier() + " to __";
+    return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
   @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
@@ -70,7 +96,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     for (final SingleVariableDeclaration ¢ : step.parameters(d))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressedUnused(n) || isUsed(d, n.getName()))
+    if (BY_ANNOTATION && !suppressing(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration ¢ : step.parameters(d))

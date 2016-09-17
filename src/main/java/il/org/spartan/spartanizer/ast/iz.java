@@ -12,6 +12,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -47,6 +48,10 @@ public enum iz {
 
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);
+  }
+
+  public static boolean arrayInitializer(final ASTNode ¢) {
+    return is(¢, ARRAY_INITIALIZER);
   }
 
   /** @param n the statement or block to check if it is an assignment
@@ -202,7 +207,7 @@ public enum iz {
   }
 
   public static boolean emptyStringLiteral(final ASTNode ¢) {
-    return iz.literal(¢, "");
+    return iz.literal("", ¢);
   }
 
   public static boolean enumConstantDeclaration(final ASTNode ¢) {
@@ -254,6 +259,10 @@ public enum iz {
    *         statement */
   public static boolean forStatement(final ASTNode ¢) {
     return is(¢, FOR_STATEMENT);
+  }
+
+  public static boolean identifier(final String identifier, final SimpleName n) {
+    return identifier.equals(n.getIdentifier());
   }
 
   public static boolean ifStatement(final Statement ¢) {
@@ -418,6 +427,10 @@ public enum iz {
     return literal(¢.getExpression());
   }
 
+  public static boolean literal(final String s, final ASTNode ¢) {
+    return literal(az.stringLiteral(¢), s);
+  }
+
   /** @param ¢ JD
    * @return true if the given node is a literal or false otherwise */
   public static boolean literal(final String token, final double d) {
@@ -520,6 +533,10 @@ public enum iz {
         null);
   }
 
+  public static boolean normalAnnotations(final ASTNode ¢) {
+    return is(¢, NORMAL_ANNOTATION);
+  }
+
   /** Determine whether a node is the <code><b>null</b></code> keyword
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i>is thee <code><b>null</b></code>
@@ -616,6 +633,10 @@ public enum iz {
    *         name */
   public static boolean simpleName(final ASTNode ¢) {
     return is(¢, SIMPLE_NAME);
+  }
+
+  public static boolean singleMemberAnnotation(final ASTNode ¢) {
+    return is(¢, SINGLE_MEMBER_ANNOTATION);
   }
 
   /** Determine whether a node is a singleton statement, i.e., not a block.
@@ -742,10 +763,6 @@ public enum iz {
     return literal(az.numberLiteral(¢).getToken(), l);
   }
 
-  static boolean literal(final ASTNode ¢, final String s) {
-    return literal(az.stringLiteral(¢), s);
-  }
-
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
     return ¢ != null && ¢.booleanValue() == b;
   }
@@ -761,7 +778,8 @@ public enum iz {
   static boolean literal(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+    } catch (final IllegalArgumentException x) {
+      Plugin.log(x);
       return false;
     }
   }
