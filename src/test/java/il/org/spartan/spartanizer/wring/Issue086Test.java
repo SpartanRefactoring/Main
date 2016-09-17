@@ -75,16 +75,14 @@ public class Issue086Test extends AAA_TemplateForTestClasses {
     A$04_init();
     assert wring.suggest(focus) != null;
   }
-@Ignore
 
-  @Test public void B$05toolboxCanFindWring() {
+  @Ignore @Test public void B$05toolboxCanFindWring() {
     A$04_init();
     final Wring<?> w = Toolbox.defaultInstance().find(focus);
     assert w != null;
   }
-@Ignore
 
-  @Test public void B$06toolboxCanFindFindCorrectWring() {
+  @Ignore @Test public void B$06toolboxCanFindFindCorrectWring() {
     A$04_init();
     final Wring<?> w = Toolbox.defaultInstance().find(focus);
     azzert.that(w, instanceOf(wring.getClass()));
