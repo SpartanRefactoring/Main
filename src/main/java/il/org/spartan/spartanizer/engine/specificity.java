@@ -89,12 +89,12 @@ public final class specificity implements Comparator<Expression> {
     },
     TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literalTrue(¢);
+        return iz.literal¢true(¢);
       }
     },
     FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literalFalse(¢);
+        return iz.literal¢false(¢);
       }
     },;
     static boolean defined(final Expression ¢) {
