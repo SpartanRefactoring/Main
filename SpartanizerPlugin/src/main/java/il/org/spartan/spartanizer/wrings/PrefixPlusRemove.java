@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** Replace <code>int i = +0</code> with <code>int i = 0</code>,
  * <code>int i = +1</code> with <code>int i = 1</code> <code>int i = +a</code>
