@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 // TODO: Ori, why no header here?
-// TODO: Ori, the name toggle is confusing
-public class ToggleSpartanization {
+public class SuppressSpartanizationOnOff {
   static final String disabler = DisabledChecker.disablers[0];
 
   public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
