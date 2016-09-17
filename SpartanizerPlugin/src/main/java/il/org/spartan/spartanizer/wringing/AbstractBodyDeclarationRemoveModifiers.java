@@ -63,11 +63,9 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
   }
 
   private static boolean hasSafeVarags(final MethodDeclaration d) {
-    for (final Annotation a : extract.annotations(d)) {
-      System.err.println(a);
-      if (iz.identifier("SafeVarargs", a.getTypeName()))
+    for (final Annotation ¢ : extract.annotations(d))
+      if (iz.identifier("SafeVarargs", ¢.getTypeName()))
         return true;
-    }
     return false;
   }
 
