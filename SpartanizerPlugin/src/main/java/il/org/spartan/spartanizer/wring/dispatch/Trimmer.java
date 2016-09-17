@@ -71,21 +71,19 @@ public class Trimmer extends Applicator {
   }
 
   @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    Toolbox.refresh();
-    final DisabledChecker dc = new DisabledChecker(u);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (dc.check(n) || !inRange(m, n))
-          return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
-        if (w != null) {
-          final Rewrite make = w.suggest(n, exclude);
-          if (make != null) {
-            if (LogManager.isActive())
-              // LogManager.initialize();
-              LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), make.description, make.lineNumber + "");
-            make.go(r, null);
-          }
+        if (w == null)
+          return true;
+        if (!inRange(m, n))
+          return true;
+        final Rewrite make = w.suggest(n, exclude);
+        if (make != null) {
+          if (LogManager.isActive())
+            // LogManager.initialize();
+            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), make.description, make.lineNumber + "");
+          make.go(r, null);
         }
         return true;
       }
