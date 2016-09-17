@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class InfixSorting extends AbstractSorting {
   @Override public boolean canSuggest(final InfixExpression x) {

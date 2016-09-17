@@ -4,8 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an
  * {@link ExclusionManager} */

@@ -12,7 +12,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** Replace <code>X-0</code> by <code>X</code> and <code>0-X</code> by

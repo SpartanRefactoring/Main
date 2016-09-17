@@ -5,8 +5,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends Wring<N> {
   @Override public boolean demandsToSuggestButPerhapsCant(final N n) {

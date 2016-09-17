@@ -15,7 +15,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Fluent API services for the plugin
