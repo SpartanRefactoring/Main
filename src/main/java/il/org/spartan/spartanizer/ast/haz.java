@@ -22,7 +22,7 @@ public enum haz {
     return false;
   }
 
-   public static boolean variableDefinition(final ASTNode n) {
+  public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
