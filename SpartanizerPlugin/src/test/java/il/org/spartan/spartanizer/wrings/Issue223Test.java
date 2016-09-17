@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.wrings;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -188,7 +190,7 @@ public final class Issue223Test {
       azzert.fail("Nothing done on " + a.get());
   }
 
-  @Ignore @Test public void vanilla04() {
+  @Test public void vanilla04() {
     final Operand o = trimming("new Integer(3)");
     final Wrap w = Wrap.find(o.get());
     final String wrap = w.on(o.get());
@@ -199,6 +201,32 @@ public final class Issue223Test {
     final Trimmer a = new Trimmer();
     try {
       final ASTRewrite x = a.createRewrite(u, wizard.nullProgressMonitor);
+      x.rewriteAST(d, null).apply(d);
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
+    assert d != null;
+    final String unpeeled = d.get();
+    if (wrap.equals(unpeeled))
+      azzert.fail("Nothing done on " + o.get());
+  }
+
+  @Test public void vanilla05() {
+    final Operand o = trimming("new Integer(3)");
+    final Wrap w = Wrap.find(o.get());
+    final String wrap = w.on(o.get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    assert u != null;
+    final Document d = new Document(wrap);
+    assert d != null;
+    final Trimmer a = new Trimmer();
+    try {
+      final IProgressMonitor pm = wizard.nullProgressMonitor;
+      pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
+      final ASTRewrite $ = ASTRewrite.create(u.getAST());
+      a.consolidateSuggestions($, u, (IMarker) null);
+      pm.done();
+      final ASTRewrite x = $;
       x.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);

@@ -57,6 +57,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
+  @Override public final boolean visit(final ForStatement ¢) {
+    return cautiousGo(¢);
+  }
+
   @Override public final boolean visit(final IfStatement ¢) {
     return cautiousGo(¢);
   }
@@ -67,10 +71,6 @@ public abstract class DispatchingVisitor extends ASTVisitor {
 
   @Override public final boolean visit(final Initializer ¢) {
     return go(¢);
-  }
-
-  @Override public final boolean visit(final MethodDeclaration ¢) {
-    return cautiousGo(¢);
   }
 
   @Override public final boolean visit(final MethodInvocation ¢) {
@@ -110,6 +110,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final VariableDeclarationFragment ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final WhileStatement ¢) {
     return cautiousGo(¢);
   }
 
