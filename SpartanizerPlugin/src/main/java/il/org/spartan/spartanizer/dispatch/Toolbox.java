@@ -267,10 +267,10 @@ class A {
   // Or here. If you can, you know what to do. If you can't you also know. In
   // both cases class A should die.
   static {
-    new Integer(3 + new Integer(null + "" + new A()).hashCode());
+    System.out.println(new Integer(3 + new Integer(null + "" + new A()).hashCode()));
   }
   // TODO: ALex, try to put an initializer here.
   {
-    new Integer(3 + new Integer(null + "" + this).hashCode());
+    System.out.println(new Integer(3 + new Integer(null + "" + this).hashCode()));
   }
 }
