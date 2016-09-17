@@ -22,7 +22,7 @@ public class QuickFixer implements IMarkerResolutionGenerator {
           $.getToggleClass(), //
           $.getToggleFile(), //
       }; //
-    } catch (@SuppressWarnings("unused") final CoreException x) {
+    } catch (final CoreException x) {
       Plugin.log(x);
       return new IMarkerResolution[] {};
     }
