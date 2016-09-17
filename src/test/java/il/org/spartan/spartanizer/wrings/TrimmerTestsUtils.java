@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.spartanizations.TESTUtils.*;
+import static il.org.spartan.spartanizer.wrings.TESTUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;

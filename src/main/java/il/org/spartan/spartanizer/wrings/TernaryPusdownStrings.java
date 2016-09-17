@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 /** convert <code>polite?"Eat your meal.":"Eat your meal, please"
@@ -132,7 +132,7 @@ public final class TernaryPusdownStrings extends ReplaceCurrentNode<ConditionalE
   }
 
   private static Expression simplify(final Expression condition, final InfixExpression then, final InfixExpression elze) {
-    return stringType.isNot(then) || stringType.isNot(elze) ? null : simplifyStrings(then, elze, condition);
+    return type.isNotString(then) || type.isNotString(elze) ? null : simplifyStrings(then, elze, condition);
   }
 
   private static Expression simplify(final Expression condition, final String then, final String elze) {
