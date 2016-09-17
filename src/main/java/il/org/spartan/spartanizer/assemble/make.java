@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wrings.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should

@@ -7,8 +7,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wring.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wrings.*;
 
 /** TDD: Unit tests for {@link Wring#myActualOperandsClass()}
  * @author Yossi Gil
