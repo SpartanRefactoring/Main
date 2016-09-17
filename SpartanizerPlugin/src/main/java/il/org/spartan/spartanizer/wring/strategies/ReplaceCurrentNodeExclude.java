@@ -14,8 +14,8 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring
     return replacement(¢, new ExclusionManager()) != null;
   }
 
-  @Override public final Rewrite suggest(final N n, final ExclusionManager m) {
-    return cantSuggest(n) ? null : new Rewrite(description(n), n) {
+  @Override public final Suggestion suggest(final N n, final ExclusionManager m) {
+    return cantSuggest(n) ? null : new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, replacement(n, m), g);
       }

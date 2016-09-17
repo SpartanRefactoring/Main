@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.wring.dispatch;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
@@ -38,7 +36,7 @@ public class DisabledChecker {
   public static final String enablers[] = { "[[EnableWarningsSpartan]]", //
   };
 
-  public DisabledChecker(final CompilationUnit u) {
+  @SuppressWarnings("synthetic-access") public DisabledChecker(final CompilationUnit u) {
     if (u == null)
       return;
     u.accept(new BodyDeclarationVisitor());
@@ -57,18 +55,6 @@ public class DisabledChecker {
 
     public boolean go(final BodyDeclaration d, final String s) {
       return true;
-    }
-
-    private boolean go(final BodyDeclaration ¢) {
-      return go(¢, ¢.getJavadoc());
-    }
-
-    private void insertAnnotated(final BodyDeclaration d, final String s, final Set<ASTNode> g, final String[] ids) {
-      for (final String id : ids)
-        if (s.contains(id)) {
-          g.add(d);
-          return;
-        }
     }
   }
 }

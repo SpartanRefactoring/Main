@@ -39,11 +39,11 @@ public final class IfLastInMethod extends Wring<IfStatement> implements Kind.Ear
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
 
-  @Override public Rewrite suggest(final IfStatement s) {
+  @Override public Suggestion suggest(final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = az.block(s.getParent());
-    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Rewrite(description(s), s) {
+    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = duplicate.of(s);

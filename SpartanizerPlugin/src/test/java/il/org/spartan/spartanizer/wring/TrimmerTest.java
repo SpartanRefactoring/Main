@@ -775,13 +775,6 @@ import il.org.spartan.spartanizer.wring.strategies.*;
     trimming("int a=0;   if (y) a+=3; ").to("int a = y ? 0 + 3 : 0;");
   }
 
-
-
-
-
-
-
-
   @Test public void doNotConsolidateNewArrayActual() {
     trimming("occupied = new boolean[capacity];\n" + "placeholder = new boolean[capacity];").stays();
   }

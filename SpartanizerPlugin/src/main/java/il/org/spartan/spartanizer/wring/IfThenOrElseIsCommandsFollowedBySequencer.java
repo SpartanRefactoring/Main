@@ -54,8 +54,8 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends Wring<IfSta
     return "Remove redundant else (possibly after inverting if statement)";
   }
 
-  @Override public Rewrite suggest(final IfStatement s) {
-    return new Rewrite(description(s), s) {
+  @Override public Suggestion suggest(final IfStatement s) {
+    return new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
         final List<Statement> remainder = extract.statements(elze(shorterIf));

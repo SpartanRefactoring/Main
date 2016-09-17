@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -20,44 +21,35 @@ import il.org.spartan.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
 public class Application implements IApplication {
-  
-  /**
-   * Count the number of lines in a {@link File} f
+  /** Count the number of lines in a {@link File} f
    * @param f File
    * @return
-   * @throws IOException
-   */
+   * @throws IOException */
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
       return lr.getLineNumber();
     }
   }
-  
-  /**
-   * Count the number of lines in File named filename
+
+  /** Count the number of lines in File named filename
    * @param fileName
    * @return
-   * @throws IOException
-   */
-
+   * @throws IOException */
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
-  
-  /**
-   * Discard compilation unit u
-   * @param u
-   */
 
+  /** Discard compilation unit u
+   * @param u */
   static void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     } catch (final NullPointerException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
   }
 
