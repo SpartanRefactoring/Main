@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
@@ -51,7 +50,7 @@ public class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpressi
     boolean isString = false;
     for (int i = 0; i < es.size(); ++i) {
       final boolean b = isString;
-      isString |= !stringType.isNot(es.get(i));
+      isString |= !type.isNotString(es.get(i));
       if (iz.parenthesizeExpression(es.get(i))) {
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
         for (; iz.parenthesizeExpression(¢); ¢ = az.parenthesizedExpression(¢).getExpression())
