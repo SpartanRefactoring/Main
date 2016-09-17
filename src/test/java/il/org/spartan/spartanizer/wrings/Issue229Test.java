@@ -15,5 +15,4 @@ public final class Issue229Test {
   @Test public void vanilla() {
     trimming("final class X { @SafeVarargs public final void f(final int... ¢) {}}").stays();
   }
-
 }
