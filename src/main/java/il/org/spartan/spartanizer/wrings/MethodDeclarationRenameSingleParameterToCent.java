@@ -27,10 +27,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
   // TODO: Alex and Dan. Here you may want to test your environment on this one.
   @Override public Suggestion suggest(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
-    if (d.isConstructor() || iz.__abstract(d))
-      return null;
-    final Block b = d.getBody();
-    if (b == null)
+    if (d.isConstructor() || iz.abstract¢(d))
       return null;
     final List<SingleVariableDeclaration> ps = parameters(d);
     if (ps.size() != 1)
@@ -40,7 +37,12 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
       return null;
     final SimpleName n = parameter.getName();
     assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(b) || Collect.usesOf(n).in(b).isEmpty())
+    if (in(n.getIdentifier(), "$", "¢", "__", "_"))
+      return null;
+    final Block b = d.getBody();
+    if (b == null)
+      return null;
+    if (haz.variableDefinition(b) || Collect.usesOf(n).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(d);
