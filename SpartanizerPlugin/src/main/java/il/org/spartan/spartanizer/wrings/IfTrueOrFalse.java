@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @since 2016 */
 public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
   @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
-    return ¢ != null && (iz.literalTrue(¢.getExpression()) || iz.literalFalse(¢.getExpression()));
+    return ¢ != null && (iz.literal¢true(¢.getExpression()) || iz.literal¢false(¢.getExpression()));
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -28,6 +28,6 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
     // Prior test in scopeIncludes makes sure that only IfStatements containing
     // a 'true' or 'false'
     // get into the replace.
-    return iz.literalTrue(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
+    return iz.literal¢true(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
   }
 }
