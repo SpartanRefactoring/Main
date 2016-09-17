@@ -22,11 +22,11 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-16 */
 public enum iz {
   ;
-  public static boolean __abstract(final BodyDeclaration ¢) {
+  public static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
 
-  public static boolean __final(final BodyDeclaration ¢) {
+  public static boolean final¢(final BodyDeclaration ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
@@ -34,7 +34,7 @@ public enum iz {
    * @param subject some declaration
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
    *         final */
-  public static boolean __final(final VariableDeclarationStatement ¢) {
+  public static boolean final¢(final VariableDeclarationStatement ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
@@ -436,7 +436,7 @@ public enum iz {
   public static boolean literal(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException ____) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
   }
@@ -455,20 +455,14 @@ public enum iz {
 
   /** @param ¢ JD
    * @return true if the given node is a literal false or false otherwise */
-  public static boolean literalFalse(final ASTNode ¢) {
+  public static boolean literal¢false(final ASTNode ¢) {
     return iz.literal(¢, false);
   }
 
   /** @param ¢ JD
    * @return true if the given node is a literal true or false otherwise */
-  public static boolean literalTrue(final ASTNode ¢) {
+  public static boolean literal¢true(final ASTNode ¢) {
     return iz.literal(¢, true);
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is a literal 0 or false otherwise */
-  public static boolean literalZero(final ASTNode ¢) {
-    return iz.literal(¢, 0);
   }
 
   public static boolean longType(final Expression ¢) {
@@ -513,24 +507,32 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
    *         it never needs to be placed in parenthesis. */
   public static boolean noParenthesisRequired(final Expression ¢) {
-    return in(¢.getClass(), //
-        BooleanLiteral.class, //
-        CharacterLiteral.class, //
-        ClassInstanceCreation.class, //
-        FieldAccess.class, //
-        MethodInvocation.class, //
-        Name.class, //
-        NullLiteral.class, //
-        NumberLiteral.class, //
-        ParenthesizedExpression.class, //
-        QualifiedName.class, //
-        SimpleName.class, //
-        StringLiteral.class, //
-        SuperFieldAccess.class, //
-        SuperMethodInvocation.class, //
-        ThisExpression.class, //
-        TypeLiteral.class, //
-        null);
+    if(is(¢, //
+        ARRAY_ACCESS,
+        ARRAY_CREATION,
+        BOOLEAN_LITERAL, //
+        CAST_EXPRESSION,
+        CHARACTER_LITERAL, //
+        CLASS_INSTANCE_CREATION, //
+        FIELD_ACCESS, //
+        INSTANCEOF_EXPRESSION,
+        METHOD_INVOCATION, //
+        NULL_LITERAL, //
+        NUMBER_LITERAL, //
+        PARAMETERIZED_TYPE, //
+        PARENTHESIZED_EXPRESSION, //
+        QUALIFIED_NAME, //
+        SIMPLE_NAME, //
+        STRING_LITERAL, //
+        SUPER_CONSTRUCTOR_INVOCATION, //
+        SUPER_FIELD_ACCESS, //
+        SUPER_METHOD_INVOCATION, //
+        THIS_EXPRESSION, //
+       TYPE_LITERAL  //
+        ))
+      return true;
+    else
+      return false;
   }
 
   public static boolean normalAnnotations(final ASTNode ¢) {
