@@ -63,7 +63,7 @@ import il.org.spartan.*;
  * @since 2016 // put the year/date here */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class AAA_TemplateForTestClasses {
+public class Issue___TestTemplate {
   private static Object object() {
     return new Object();
   }
