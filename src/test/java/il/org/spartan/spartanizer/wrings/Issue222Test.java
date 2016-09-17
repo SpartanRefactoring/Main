@@ -12,7 +12,23 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue222Test {
-  @Ignore @Test public void vanilla() {
+  @Test public void chocolate() {
+    trimming(//
+        "static List<Expression> operands(final InfixExpression x) {\n" //
+            + "  if (x == null)\n" //
+            + "    return null;\n" //
+            + "  int y = x;\n" //
+            + "  final List<Expression> $ = new ArrayList<>();\n" //
+            + "  $.add(left(x));\n" //
+            + "  $.add(right(x));\n" //
+            + "  if (x.hasExtendedOperands())\n" //
+            + "    $.addAll(step.extendedOperands(x));\n" //
+            + "  return $;\n" //
+            + "}\n") //
+                .stays();
+  }
+
+  @Test public void vanilla() {
     trimming(//
         "static List<Expression> operands(final InfixExpression x) {\n" //
             + "  if (x == null)\n" //
