@@ -102,7 +102,6 @@ public class Builder extends IncrementalProjectBuilder {
       });
     } catch (final CoreException e) {
       Plugin.log(e);
-      ;
     }
   }
 

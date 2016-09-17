@@ -124,10 +124,6 @@ public enum iz {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  public static boolean compileTime(final Expression ¢) {
-    return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
-  }
-
   /** @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
@@ -577,8 +573,9 @@ public enum iz {
   }
 
   public static boolean pseudoNumber(final Expression ¢) {
-    return numberLiteral(¢) || extract.negativeLiteral(¢) != null;
+    return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
+
 
   /** Determine whether a node is a return statement
    * @param n JD
@@ -697,7 +694,7 @@ public enum iz {
   public static boolean validForEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
     for (final Expression ¢ : lst)
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return false;
     return true;
   }

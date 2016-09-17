@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.plugin.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -307,5 +311,107 @@ public enum az {
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.is($, WILDCARD_TYPE) ? null : (WildcardType) $;
+  }
+
+  /** A fluent API to parse numeric literals, including provisions for unary
+   * minus.
+   * @author Yossi Gil
+   * @year 2016 */
+  public interface boxed {
+    static String chop¢necessaryQuestionMark(final String ¢) {
+      return ¢.substring(0, ¢.length() - 1);
+    }
+
+    static Double double¢(final Expression ¢) {
+      assert iz.pseudoNumber(¢);
+      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? parseDouble(token(¢)) : parseDoubleAndNegate(token(¢))
+          : iz.numberLiteral(¢) ? parseDouble(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
+              : parseDoubleAndNegate(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
+    }
+
+    static Integer int¢(final Expression ¢) {
+      assert iz.pseudoNumber(¢);
+      return !iz.prefixExpression(¢) ? parseInteger(token(¢)) : parseIntegerAndNegate(token(¢));
+    }
+
+    static Long long¢(final Expression ¢) {
+      assert iz.pseudoNumber(¢);
+      return !iz.numberLiteral(¢) ? parseLongAndNegate(chop¢necessaryQuestionMark(token(¢)))
+          : parseLong(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+    }
+
+    static NumberLiteral negativeLiteral(final Expression ¢) {
+      return boxed.negativeLiteral(prefixExpression(¢));
+    }
+
+    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
+      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
+    }
+
+    static Double parseDouble(final String token) {
+      try {
+        return Double.valueOf(Double.parseDouble(token));
+      } catch (final NumberFormatException x) {
+        Plugin.log(x);
+        return null;
+      }
+    }
+
+    static Double parseDoubleAndNegate(final String token) {
+      try {
+        return Double.valueOf(-Double.parseDouble(token));
+      } catch (final NumberFormatException x) {
+        Plugin.log(x);
+        return null;
+      }
+    }
+
+    static Integer parseInteger(final String token) {
+      try {
+        return Integer.valueOf(Integer.parseInt(token));
+      } catch (final NumberFormatException x) {
+        Plugin.log(x);
+        return null;
+      }
+    }
+
+    static Integer parseIntegerAndNegate(final String token) {
+      try {
+        return Integer.valueOf(-Integer.parseInt(token));
+      } catch (final NumberFormatException x) {
+        Plugin.log(x);
+        return null;
+      }
+    }
+
+    static Long parseLong(final String token) {
+      try {
+        return Long.valueOf(Long.parseLong(token));
+      } catch (final NumberFormatException x) {
+        Plugin.log(x);
+        return null;
+      }
+    }
+
+    static Long parseLongAndNegate(final String token) {
+      try {
+        return Long.valueOf(-Long.parseLong(token));
+      } catch (final NumberFormatException x) {
+        Plugin.log(x);
+        return null;
+      }
+    }
+
+    static String token(final Expression ¢) {
+      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
+    }
+
+    static String token(final NumberLiteral ¢) {
+      return ¢.getToken();
+    }
+
+    static String token(final PrefixExpression ¢) {
+      return az.numberLiteral(operand(¢)).getToken();
+    }
   }
 }

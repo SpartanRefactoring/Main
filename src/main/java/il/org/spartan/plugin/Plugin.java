@@ -34,7 +34,6 @@ public class Plugin extends AbstractUIPlugin implements IStartup {
           p.build(IncrementalProjectBuilder.FULL_BUILD, null);
       } catch (final CoreException e) {
         Plugin.log(e);
-        ;
       }
   }
 

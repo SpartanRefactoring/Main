@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -28,9 +29,9 @@ public class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> i
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double sum = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return null;
-      sum += extract.doubleNumber(¢);
+      sum += az.boxed.double¢(¢);
     }
     return x.getAST().newNumberLiteral(Double.toString(sum));
   }
@@ -38,9 +39,9 @@ public class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> i
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     int sum = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return null;
-      sum += extract.intNumber(¢);
+      sum += az.boxed.int¢(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(sum));
   }
@@ -48,9 +49,9 @@ public class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> i
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
     long sum = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return null;
-      sum += extract.longNumber(¢);
+      sum += az.boxed.long¢(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(sum) + "L");
   }

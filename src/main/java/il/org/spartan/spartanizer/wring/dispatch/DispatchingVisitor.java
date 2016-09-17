@@ -13,11 +13,11 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class DispatchingVisitor extends ASTVisitor {
   protected final ExclusionManager exclude = Trimmer.makeExcluder();
 
-  @Override final public boolean visit(final AnnotationTypeDeclaration ¢) {
+  @Override public final boolean visit(final AnnotationTypeDeclaration ¢) {
     return go(¢);
   }
 
-  @Override final public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+  @Override public final boolean visit(final AnnotationTypeMemberDeclaration ¢) {
     return go(¢);
   }
 
@@ -45,7 +45,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
-  @Override final public boolean visit(final EnumConstantDeclaration ¢) {
+  @Override public final boolean visit(final EnumConstantDeclaration ¢) {
     return go(¢);
   }
 
@@ -65,7 +65,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
-  @Override final public boolean visit(final Initializer ¢) {
+  @Override public final boolean visit(final Initializer ¢) {
     return go(¢);
   }
 
