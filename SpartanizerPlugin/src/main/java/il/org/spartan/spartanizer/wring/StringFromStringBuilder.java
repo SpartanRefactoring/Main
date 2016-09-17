@@ -19,22 +19,22 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016-04-11 */
 public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation> implements Kind.SyntacticBaggage {
   // building a replacement
-  private static ASTNode replacement(final MethodInvocation i, final List<Expression> es) {
-    if (es.isEmpty())
+  private static ASTNode replacement(final MethodInvocation i, final List<Expression> xs) {
+    if (xs.isEmpty())
       return make.makeEmptyString(i);
-    if (es.size() == 1)
-      return ASTNode.copySubtree(i.getAST(), es.get(0));
+    if (xs.size() == 1)
+      return ASTNode.copySubtree(i.getAST(), xs.get(0));
     final InfixExpression $ = i.getAST().newInfixExpression();
     InfixExpression t = $;
-    for (final Expression ¢ : es.subList(0, es.size() - 2)) {
+    for (final Expression ¢ : xs.subList(0, xs.size() - 2)) {
       t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), ¢));
       t.setOperator(PLUS2);
       t.setRightOperand(i.getAST().newInfixExpression());
       t = (InfixExpression) t.getRightOperand();
     }
-    t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), es.get(es.size() - 2)));
+    t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 2)));
     t.setOperator(PLUS2);
-    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), es.get(es.size() - 1)));
+    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 1)));
     return $;
   }
 

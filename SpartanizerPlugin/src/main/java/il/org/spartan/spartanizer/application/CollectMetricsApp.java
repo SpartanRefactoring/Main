@@ -36,7 +36,6 @@ public class CollectMetricsApp implements IApplication {
       u.delete(true, null);
     } catch (final JavaModelException e) {
       Plugin.log(e);
-      ;
     } catch (final NullPointerException e) {
       Plugin.log(e);
     }
@@ -181,10 +180,10 @@ public class CollectMetricsApp implements IApplication {
   }
 
   public void copy(final File sourceLocation, final File targetLocation) throws IOException {
-    if (sourceLocation.isDirectory())
-      copyDirectory(sourceLocation, targetLocation);
-    else
+    if (!sourceLocation.isDirectory())
       copyFile(sourceLocation, targetLocation);
+    else
+      copyDirectory(sourceLocation, targetLocation);
   }
 
   @Override public Object start(final IApplicationContext arg0) {
