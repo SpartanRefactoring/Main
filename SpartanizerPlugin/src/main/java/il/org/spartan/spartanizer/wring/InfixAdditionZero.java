@@ -91,7 +91,7 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
     return "remove 0 in X + 0 expressions from " + ¢;
   }
 
-  @Override public Rewrite suggest(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
@@ -100,7 +100,7 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Rewrite(description(x), x) {
+    return new Suggestion(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)

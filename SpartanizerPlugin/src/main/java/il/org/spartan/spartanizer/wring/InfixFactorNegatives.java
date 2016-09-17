@@ -84,7 +84,7 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Rewrite suggest(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
@@ -93,7 +93,7 @@ public final class InfixFactorNegatives extends Wring<InfixExpression> implement
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Rewrite(description(x), x) {
+    return new Suggestion(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)

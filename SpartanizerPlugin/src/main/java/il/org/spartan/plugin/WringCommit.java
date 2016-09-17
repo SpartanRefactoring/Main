@@ -60,8 +60,8 @@ public class WringCommit {
             textChange.setTextType("java");
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException e1) {
-              e1.printStackTrace();
+            } catch (JavaModelException | IllegalArgumentException x) {
+              Plugin.log(x);
             }
             if (textChange.getEdit().getLength() == 0)
               es.add(u);
@@ -69,7 +69,7 @@ public class WringCommit {
               try {
                 textChange.perform(pm);
               } catch (final CoreException e) {
-                e.printStackTrace();
+                Plugin.log(e);
               }
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
@@ -78,7 +78,7 @@ public class WringCommit {
           px.done();
         });
       } catch (InvocationTargetException | InterruptedException e) {
-        e.printStackTrace();
+        Plugin.log(e);
       }
     }
     pm.done();
@@ -169,7 +169,7 @@ public class WringCommit {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Rewrite make = x.suggest(n, exclude);
+            final Suggestion make = x.suggest(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 // LogManager.initialize();

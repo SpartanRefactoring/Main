@@ -57,7 +57,7 @@ public class PreferencesResources {
       try {
         return k.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        e.printStackTrace();
+        Plugin.log(e);
         return null;
       }
     }

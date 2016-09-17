@@ -95,14 +95,14 @@ public class ReturnToBreakFiniteWhile extends Wring<WhileStatement> implements K
     return "Convert the return inside " + b + " to break";
   }
 
-  @Override public Rewrite suggest(final WhileStatement b) {
+  @Override public Suggestion suggest(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
     final Statement body = b.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    return $ == null ? null : new Rewrite(description(), $) {
+    return $ == null ? null : new Suggestion(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, az.astNode(az.block(into.s("break;")).statements().get(0)), g);
       }

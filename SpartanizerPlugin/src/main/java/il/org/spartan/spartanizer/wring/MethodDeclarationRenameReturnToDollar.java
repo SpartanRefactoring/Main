@@ -23,7 +23,7 @@ public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDec
     return ¢.getName() + "";
   }
 
-  @Override public Rewrite suggest(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
@@ -32,7 +32,7 @@ public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDec
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Rewrite("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
+    return new Suggestion("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(n, $(), d, r, g);
       }

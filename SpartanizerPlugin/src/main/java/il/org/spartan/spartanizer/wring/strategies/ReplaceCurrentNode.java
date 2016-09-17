@@ -13,8 +13,8 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
 
   public abstract ASTNode replacement(N n);
 
-  @Override public final Rewrite suggest(final N n) {
-    return cantSuggest(n) ? null : new Rewrite(description(n), n) {
+  @Override public final Suggestion suggest(final N n) {
+    return cantSuggest(n) ? null : new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, replacement(n), g);
       }

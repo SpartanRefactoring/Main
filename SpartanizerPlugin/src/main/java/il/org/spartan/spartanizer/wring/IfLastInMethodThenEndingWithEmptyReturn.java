@@ -46,12 +46,12 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfState
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }
 
-  @Override public Rewrite suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then(s)));
-    return deleteMe == null || deleteMe.getExpression() != null || exclude != null && exclude.equals(s) ? null : new Rewrite(description(s), s) {
+    return deleteMe == null || deleteMe.getExpression() != null || exclude != null && exclude.equals(s) ? null : new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }

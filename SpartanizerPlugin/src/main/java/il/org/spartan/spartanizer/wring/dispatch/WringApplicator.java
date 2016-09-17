@@ -29,7 +29,7 @@ public final class WringApplicator extends Applicator {
   }
 
   // TODO: Ori, how come we need this parameter?
-  @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, @SuppressWarnings("unused") final CompilationUnit __) {
+  @Override protected ASTVisitor collectSuggestions(@SuppressWarnings("unused") final CompilationUnit __, final List<Suggestion> $) {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);

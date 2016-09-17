@@ -20,12 +20,12 @@ public final class ReturnLastInMethod extends Wring<ReturnStatement> implements 
     return "Remove redundant return statement";
   }
 
-  @Override public Rewrite suggest(final ReturnStatement s) {
+  @Override public Suggestion suggest(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
     final Block b = az.block(s.getParent());
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null //
-        : new Rewrite(description(s), s) {
+        : new Suggestion(description(s), s) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(s, g);
           }

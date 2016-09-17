@@ -102,7 +102,7 @@ import il.org.spartan.spartanizer.engine.*;
       if ($ != null)
         $.deleteOnExit();
     } catch (final IOException e) {
-      e.printStackTrace(); // Probably permissions problem
+      Plugin.log(e); // Probably permissions problem
     }
     return $;
   }

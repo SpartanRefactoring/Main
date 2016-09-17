@@ -210,7 +210,7 @@ public class Issue223Test {
   }
 
   private ClassInstanceCreation findMe(final Statement c) {
-    return findFirst.findFirstClass(SUBJECT_CLASS, c);
+    return findFirst.instanceOf(SUBJECT_CLASS, c);
   }
 
   private ClassInstanceCreationValueTypes makeWring() {

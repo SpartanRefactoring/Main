@@ -63,7 +63,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
 
-  @Override public Rewrite suggest(final IfStatement s) {
+  @Override public Suggestion suggest(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -71,7 +71,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);
-    return commonPrefix.isEmpty() ? null : new Rewrite(description(s), s) {
+    return commonPrefix.isEmpty() ? null : new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (!iz.block(s.getParent())) {
@@ -97,7 +97,7 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     };
   }
 
-  @Override public Rewrite suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
     return super.suggest(s, exclude);
   }
 }
