@@ -18,15 +18,23 @@
       </runtime>
       <builder id="il.org.spartan.spartanizer.BuilderID"/> 
    </extension>
-     <extension
+   <extension
      id="il.org.spartan.spartanizer.application"
      name="Spartan Refactoring Application"
      point="org.eclipse.core.runtime.applications">
      <application>
-     <run class="il.org.spartan.spartanizer.application.Application"></run>
+     	<run class="il.org.spartan.spartanizer.application.Application"></run>
      </application>
    </extension>
-      <extension point="org.eclipse.ui.startup">
+      <extension
+     id="il.org.spartan.spartanizer.collectmetricsapp"
+     name="Collect Metrics Before and After Spartanization"
+     point="org.eclipse.core.runtime.applications">
+     <application>
+     	<run class="il.org.spartan.spartanizer.application.CollectMetricsApp"></run>
+     </application>
+   </extension>
+   <extension point="org.eclipse.ui.startup">
      <startup class="il.org.spartan.plugin.Plugin"/>
    </extension>
 
