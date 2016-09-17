@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -27,37 +28,37 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016 */
 public class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
-    double divide = extract.doubleNumber(first(xs));
+    double divide = az.boxed.double¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢) || extract.doubleNumber(¢) == 0)
+      if (!iz.pseudoNumber(¢) || az.boxed.double¢(¢) == 0)
         return null;
-      divide /= extract.doubleNumber(¢);
+      divide /= az.boxed.double¢(¢);
     }
     return x.getAST().newNumberLiteral(Double.toString(divide));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
-    int divide = extract.intNumber(first(xs));
+    int divide = az.boxed.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢) || extract.intNumber(¢) == 0)
+      if (!iz.pseudoNumber(¢) || az.boxed.int¢(¢) == 0)
         return null;
-      divide /= extract.intNumber(¢);
+      divide /= az.boxed.int¢(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(divide));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
-    long divide = extract.longNumber(first(xs));
+    long divide = az.boxed.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢) || extract.longNumber(¢) == 0)
+      if (!iz.pseudoNumber(¢) || az.boxed.long¢(¢) == 0)
         return null;
-      divide /= extract.longNumber(¢);
+      divide /= az.boxed.long¢(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
   }

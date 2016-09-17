@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -27,33 +28,42 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016 */
 public class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    double mul = 1;
+    double $ = 1;
     for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return null;
-      mul *= extract.doubleNumber(¢);
+      Double d = az.boxed.double¢(¢);
+      if (d == null)
+        return null;
+      $ *= d.doubleValue();
     }
-    return x.getAST().newNumberLiteral(Double.toString(mul));
+    return x.getAST().newNumberLiteral(Double.toString($));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    int mul = 1;
+    int $ = 1;
     for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return null;
-      mul *= extract.intNumber(¢);
+      Integer i = az.boxed.int¢(¢);
+      if (i == null)
+        return null;
+      $ *= i.intValue();
     }
-    return x.getAST().newNumberLiteral(Integer.toString(mul));
+    return x.getAST().newNumberLiteral(Integer.toString($));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    long mul = 1;
+    long $ = 1;
     for (final Expression ¢ : xs) {
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return null;
-      mul *= extract.longNumber(¢);
+      Long l = az.boxed.long¢(¢);
+      if (l == null)
+        return null;
+      $ *= l.longValue(); 
     }
-    return x.getAST().newNumberLiteral(Long.toString(mul) + "L");
+    return x.getAST().newNumberLiteral(Long.toString($) + "L");
   }
 
   @Override public String description() {

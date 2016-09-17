@@ -291,8 +291,8 @@ public abstract class Applicator extends Refactoring {
    * @return true if the node is not inside selection. If there is no selection
    *         at all will return false.
    * @DisableSpartan */
-  protected boolean isNodeOutsideSelection(final ASTNode n) {
-    return !isSelected(n.getStartPosition());
+  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
+    return !isSelected(¢.getStartPosition());
   }
 
   /** @param u JD
@@ -330,8 +330,8 @@ public abstract class Applicator extends Refactoring {
    * @throws CoreException */
   protected void scanCompilationUnits(final List<ICompilationUnit> us, final IProgressMonitor m) throws IllegalArgumentException, CoreException {
     m.beginTask("Iterating over gathered compilation units...", us.size());
-    for (final ICompilationUnit u : us)
-      scanCompilationUnit(u, newSubMonitor(m));
+    for (final ICompilationUnit ¢ : us)
+      scanCompilationUnit(¢, newSubMonitor(m));
     m.done();
   }
 

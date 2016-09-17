@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -61,7 +62,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
-    NumberLiteral l = extract.negativeLiteral(x);
+    NumberLiteral l = az.boxed.negativeLiteral(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
        * NumberLiteral or an PrefixExpression which is a negative number */

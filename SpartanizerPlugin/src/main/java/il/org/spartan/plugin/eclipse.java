@@ -71,7 +71,6 @@ public interface eclipse {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException e) {
       Plugin.log(e);
-      ;
     }
     return null;
   }

@@ -25,7 +25,6 @@ public enum extract {
     assert ¢ != null;
     return hop.operands(flatten.of(¢));
   }
-
   public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
     assert x != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
@@ -120,19 +119,6 @@ public enum extract {
     }
   }
 
-  public static double doubleNumber(final Expression x) {
-    assert iz.numberLiteral(x) || iz.prefixExpression(x);
-    if (!iz.longType(x))
-      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
-          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
-    if (iz.numberLiteral(x)) {
-      final String token = az.numberLiteral(x).getToken();
-      return Double.parseDouble(token.substring(0, token.length() - 1));
-    }
-    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
-    return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
-  }
-
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
    * @return expression statement if n is a block or an expression statement or
@@ -156,22 +142,6 @@ public enum extract {
    *         <code><b>null</b></code> if not such statements exists. */
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
-  }
-
-  public static int intNumber(final Expression ¢) {
-    assert iz.numberLiteral(¢) || iz.prefixExpression(¢);
-    return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
-        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
-  }
-
-  public static long longNumber(final Expression x) {
-    assert iz.numberLiteral(x) || iz.prefixExpression(x);
-    if (iz.numberLiteral(x)) {
-      final String token = az.numberLiteral(x).getToken();
-      return Long.parseLong(iz.intType(x) ? token : token.substring(0, token.length() - 1));
-    }
-    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
-    return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
   }
 
   /** @param n JD
@@ -211,20 +181,12 @@ public enum extract {
     return $;
   }
 
-  public static NumberLiteral negativeLiteral(final Expression ¢) {
-    return negativeLiteral(az.prefixExpression(¢));
-  }
-
-  public static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-    return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : az.numberLiteral(operand(¢));
-  }
-
   /** Find the {@link Assignment} that follows a given node.
    * @param n JD
    * @return {@link Assignment} that follows the parameter, or
    *         <code><b>null</b></code> if not such value exists. */
   public static Assignment nextAssignment(final ASTNode ¢) {
-    return extract.assignment(nextStatement(¢));
+    return assignment(extract.nextStatement(¢));
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
@@ -232,7 +194,7 @@ public enum extract {
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static IfStatement nextIfStatement(final ASTNode ¢) {
-    return az.ifStatement(nextStatement(¢));
+    return az.ifStatement(extract.nextStatement(¢));
   }
 
   /** Extract the {@link ReturnStatement} that immediately follows a given node
@@ -240,7 +202,7 @@ public enum extract {
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static ReturnStatement nextReturn(final ASTNode ¢) {
-    return az.returnStatement(nextStatement(¢));
+    return az.returnStatement(extract.nextStatement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given node.
@@ -248,7 +210,7 @@ public enum extract {
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement nextStatement(final ASTNode ¢) {
-    return nextStatement(extract.statement(¢));
+    return nextStatement(statement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -28,43 +29,43 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016 */
 public class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.pseudoNumber(first(xs)))
       return null;
-    double sub = extract.doubleNumber(first(xs));
+    double sub = az.boxed.double¢(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
-      if (!iz.numberLiteral(¢) || !iz.compileTime(¢))
+      if (!iz.numberLiteral(¢) || !iz.pseudoNumber(¢))
         return null;
       if (index != 0)
-        sub -= extract.doubleNumber(¢);
+        sub -= az.boxed.double¢(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Double.toString(sub));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.pseudoNumber(first(xs)))
       return null;
-    int sub = extract.intNumber(first(xs));
+    int sub = az.boxed.int¢(first(xs));
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!iz.numberLiteral(¢) || !type.isInt(¢))
         return null;
       if (index != 0)
-        sub -= extract.intNumber(¢);
+        sub -= az.boxed.int¢(¢);
       ++index;
     }
     return x.getAST().newNumberLiteral(Integer.toString(sub));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.pseudoNumber(first(xs)))
       return null;
-    long sub = extract.longNumber(first(xs));
+    long sub = az.boxed.long¢(first(xs));
     for (final Expression ¢ : lisp.rest(xs)) {
-      if (!iz.numberLiteral(¢) || !iz.compileTime(¢))
+      if (!iz.numberLiteral(¢) || !iz.pseudoNumber(¢))
         return null;
-      sub -= extract.longNumber(¢);
+      sub -= az.boxed.long¢(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(sub) + "L");
   }

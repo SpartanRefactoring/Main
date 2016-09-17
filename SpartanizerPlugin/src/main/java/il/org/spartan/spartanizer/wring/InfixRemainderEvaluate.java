@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
@@ -25,25 +26,25 @@ import il.org.spartan.spartanizer.wring.strategies.*;
  * @since 2016 */
 public class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
-    int remainder = extract.intNumber(first(xs));
+    int remainder = az.boxed.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢) || extract.intNumber(¢) == 0)
+      if (!iz.pseudoNumber(¢) || az.boxed.int¢(¢) == 0)
         return null;
-      remainder %= extract.intNumber(¢);
+      remainder %= az.boxed.int¢(¢);
     }
     return x.getAST().newNumberLiteral(Integer.toString(remainder));
   }
 
   private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.compileTime(first(xs)))
+    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
-    long remainder = extract.longNumber(first(xs));
+    long remainder = az.boxed.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.compileTime(¢) || extract.longNumber(¢) == 0)
+      if (!iz.pseudoNumber(¢) || az.boxed.long¢(¢) == 0)
         return null;
-      remainder %= extract.longNumber(¢);
+      remainder %= az.boxed.long¢(¢);
     }
     return x.getAST().newNumberLiteral(Long.toString(remainder) + "L");
   }
