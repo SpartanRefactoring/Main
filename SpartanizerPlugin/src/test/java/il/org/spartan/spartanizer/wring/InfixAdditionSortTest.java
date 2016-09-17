@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.wrings.*;
 
 /** Unit tests for {@link Wrings#ADDITION_SORTER}.
  * @author Yossi Gil
