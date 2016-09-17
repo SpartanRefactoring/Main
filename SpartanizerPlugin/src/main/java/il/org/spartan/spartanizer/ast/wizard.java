@@ -16,7 +16,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wring.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
@@ -286,7 +286,7 @@ public interface wizard {
 
   static boolean nonAssociative(final InfixExpression ¢) {
     return ¢ != null && (in(¢.getOperator(), MINUS, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
-        || iz.infixPlus(¢) && !stringType.isNot(¢));
+        || iz.infixPlus(¢) && !type.isNotString(¢));
   }
 
   /** Parenthesize an expression (if necessary).
