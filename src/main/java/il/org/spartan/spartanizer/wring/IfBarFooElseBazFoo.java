@@ -58,7 +58,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override public Rewrite suggest(final IfStatement s) {
+  @Override public Suggestion suggest(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -72,7 +72,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
       if (c.notAllDefined())
         return null;
     }
-    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Rewrite(description(s), s) {
+    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
@@ -97,7 +97,7 @@ public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind
     };
   }
 
-  @Override public Rewrite suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
     return super.suggest(s, exclude);
   }
 

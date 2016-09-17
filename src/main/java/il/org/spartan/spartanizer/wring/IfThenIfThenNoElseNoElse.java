@@ -42,11 +42,11 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
     return "Merge conditionals of nested if staement";
   }
 
-  @Override public Rewrite suggest(final IfStatement ¢) {
+  @Override public Suggestion suggest(final IfStatement ¢) {
     return suggest(¢, null);
   }
 
-  @Override public Rewrite suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
     if (!iz.vacuousElse(s))
       return null;
     final IfStatement then = az.ifStatement(extract.singleThen(s));
@@ -54,7 +54,7 @@ public final class IfThenIfThenNoElseNoElse extends Wring<IfStatement> implement
       return null;
     if (exclude != null)
       exclude.exclude(then);
-    return new Rewrite(description(s), s) {
+    return new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         collapse(Wrings.blockIfNeeded(s, r, g), r, g);
       }

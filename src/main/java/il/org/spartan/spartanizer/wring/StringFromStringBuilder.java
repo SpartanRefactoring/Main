@@ -62,14 +62,14 @@ public class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation
           terms.add(0, addParenthesisIfNeeded(a));
           hs |= iz.stringLiteral(a);
         }
-        if (!hs) 
-          terms.add(0,make.makeEmptyString(e));
+        if (!hs)
+          terms.add(0, make.makeEmptyString(e));
         break;
       }
       if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
         return null;
       final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
-      terms.add(0,addParenthesisIfNeeded(a));
+      terms.add(0, addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
       r = (MethodInvocation) e;
     }

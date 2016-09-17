@@ -25,7 +25,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
   }
 
   // TODO: Alex and Dan. Here you may want to test your environment on this one.
-  @Override public Rewrite suggest(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Suggestion suggest(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.__abstract(d))
       return null;
@@ -45,7 +45,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends Wring<Me
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Rewrite("Rename paraemter " + n + " to ¢ ", d) {
+    return new Suggestion("Rename paraemter " + n + " to ¢ ", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, d, r, g);
       }

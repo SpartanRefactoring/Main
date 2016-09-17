@@ -66,9 +66,10 @@ public class SpartanizeAll extends BaseHandler {
           pm.done();
         });
       } catch (final InvocationTargetException x) {
-        x.printStackTrace();
+        Plugin.log(x);
       } catch (final InterruptedException x) {
-        x.printStackTrace();
+        // TODO: What should we do here?
+        Plugin.log(x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)

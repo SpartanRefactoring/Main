@@ -28,14 +28,14 @@ public class CastBlockSingletonVariableDefinition extends Wring<Block> implement
     return "remove the block: " + n;
   }
 
-  @Override public Rewrite suggest(final Block n) {
+  @Override public Suggestion suggest(final Block n) {
     final List<Statement> ss = statements(n);
     if (ss.isEmpty())
       return null;
     for (final Statement ¢ : ss)
       if (!iz.variableDeclarationStatement(¢))
         return null;
-    return new Rewrite(description(), n) {
+    return new Suggestion(description(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final Statement ¢ : ss)
           r.remove(¢, g);

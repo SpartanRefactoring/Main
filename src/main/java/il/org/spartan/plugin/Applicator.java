@@ -64,11 +64,11 @@ public abstract class Applicator extends Refactoring {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
    * @param u what to check
-   * @return a collection of {@link Rewrite} objects each containing a
+   * @return a collection of {@link Suggestion} objects each containing a
    *         spartanization suggestion */
-  public final List<Rewrite> collectSuggesions(final CompilationUnit u) {
-    final List<Rewrite> $ = new ArrayList<>();
-    u.accept(collectSuggestions($, u));
+  public final List<Suggestion> collectSuggesions(final CompilationUnit u) {
+    final List<Suggestion> $ = new ArrayList<>();
+    u.accept(collectSuggestions(u, $));
     return $;
   }
 
@@ -83,9 +83,9 @@ public abstract class Applicator extends Refactoring {
     try {
       checkFinalConditions(nullProgressMonitor);
     } catch (final OperationCanceledException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     } catch (final CoreException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
     return changes.size();
   }
@@ -99,9 +99,9 @@ public abstract class Applicator extends Refactoring {
     try {
       checkFinalConditions(nullProgressMonitor);
     } catch (final OperationCanceledException e) {
-      e.printStackTrace();
+      // TODO: what should we do here? This is not an error
     } catch (final CoreException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
     return totalChanges;
   }
@@ -144,7 +144,7 @@ public abstract class Applicator extends Refactoring {
         try {
           runAsMarkerFix(nullProgressMonitor, m);
         } catch (final CoreException e) {
-          throw new RuntimeException(e);
+          Plugin.log(e);
         }
       }
     };
@@ -173,7 +173,8 @@ public abstract class Applicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(Applicator.this)).run(Display.getCurrent().getActiveShell(),
               "Spartan refactoring: " + s + Applicator.this);
         } catch (final InterruptedException e) {
-          e.printStackTrace();
+          // TODO: What should we do here?
+          Plugin.log(e);
         }
       }
     };
@@ -229,16 +230,16 @@ public abstract class Applicator extends Refactoring {
   }
 
   /** Performs the current Spartanization on the provided compilation unit
-   * @param cu the compilation to Spartanize
+   * @param u the compilation to Spartanize
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the <code>pm</code> */
-  public boolean performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
-    pm.beginTask("Creating change for a single compilation unit...", 2);
-    final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
+  public boolean performRule(final ICompilationUnit u, final IProgressMonitor pm) throws CoreException {
+    pm.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(pm);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(m), m).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m), m).rewriteAST());
     final boolean $ = textChange.getEdit().getLength() != 0;
     if ($)
       textChange.perform(pm);
@@ -247,7 +248,7 @@ public abstract class Applicator extends Refactoring {
   }
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
-    pm.beginTask("Creating rewrite operation...", 1);
+    pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
     pm.done();
@@ -282,7 +283,7 @@ public abstract class Applicator extends Refactoring {
     return name;
   }
 
-  protected abstract ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u);
+  protected abstract ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $);
 
   protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
 
@@ -324,14 +325,14 @@ public abstract class Applicator extends Refactoring {
   }
 
   /** Creates a change from each compilation unit and stores it in the changes
-   * array
+   * list
    * @throws IllegalArgumentException
    * @throws CoreException */
-  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException, CoreException {
-    pm.beginTask("Iterating over gathered compilation units...", cus.size());
-    for (final ICompilationUnit cu : cus)
-      scanCompilationUnit(cu, newSubMonitor(pm));
-    pm.done();
+  protected void scanCompilationUnits(final List<ICompilationUnit> us, final IProgressMonitor m) throws IllegalArgumentException, CoreException {
+    m.beginTask("Iterating over gathered compilation units...", us.size());
+    for (final ICompilationUnit u : us)
+      scanCompilationUnit(u, newSubMonitor(m));
+    m.done();
   }
 
   /** creates an ASTRewrite, under the context of a text marker, which contains
@@ -353,8 +354,8 @@ public abstract class Applicator extends Refactoring {
       @Override public void run(final IMarker m) {
         try {
           ToggleSpartanization.deactivate(nullProgressMonitor, m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
+        } catch (IllegalArgumentException | CoreException x) {
+          Plugin.log(x);
         }
       }
     };
@@ -378,7 +379,7 @@ public abstract class Applicator extends Refactoring {
         try {
           WringCommit.go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
+          Plugin.log(e);
         }
       }
     };
@@ -386,7 +387,7 @@ public abstract class Applicator extends Refactoring {
 
   private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview) throws CoreException {
     marker = m;
-    pm.beginTask("Running refactoring...", 2);
+    pm.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
     scanCompilationUnitForMarkerFix(m, pm, preview);
     marker = null;
     pm.done();
@@ -402,7 +403,8 @@ public abstract class Applicator extends Refactoring {
   }
 
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
-    pm.beginTask("Checking preconditions...", 2);
+    pm.beginTask("Checking preconditions...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
+    pm.done();
   }
 }

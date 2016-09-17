@@ -11,7 +11,7 @@ import il.org.spartan.utils.*;
  * {@link ASTRewrite} object.
  * @author Yossi Gil
  * @since 2015-08-28 */
-public abstract class Rewrite extends Range {
+public abstract class Suggestion extends Range {
   /** A factory function that converts a sequence of ASTNodes into a
    * {@link Range}
    * @param n arbitrary
@@ -42,12 +42,12 @@ public abstract class Rewrite extends Range {
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Rewrite(final String description, final ASTNode n, final ASTNode... ns) {
+  public Suggestion(final String description, final ASTNode n, final ASTNode... ns) {
     this(description, range(n, ns));
     lineNumber = ((CompilationUnit) searchAncestors.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
   }
 
-  Rewrite(final String description, final Range other) {
+  Suggestion(final String description, final Range other) {
     super(other);
     this.description = description;
   }

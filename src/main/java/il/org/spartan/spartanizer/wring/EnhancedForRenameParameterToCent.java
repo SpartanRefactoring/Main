@@ -22,7 +22,7 @@ public final class EnhancedForRenameParameterToCent extends Wring<SingleVariable
     return ¢ + "";
   }
 
-  @Override public Rewrite suggest(final SingleVariableDeclaration d, final ExclusionManager m) {
+  @Override public Suggestion suggest(final SingleVariableDeclaration d, final ExclusionManager m) {
     final ASTNode p = d.getParent();
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
@@ -41,7 +41,7 @@ public final class EnhancedForRenameParameterToCent extends Wring<SingleVariable
     if (uses.isEmpty())
       return null;
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Rewrite("Rename '" + n + "' to ¢ in enhanced for loop", d) {
+    return new Suggestion("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, s, r, g);
       }

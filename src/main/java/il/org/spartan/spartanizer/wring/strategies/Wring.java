@@ -71,11 +71,11 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return getClass().getSimpleName();
   }
 
-  public Rewrite suggest(final N ¢) {
+  public Suggestion suggest(final N ¢) {
     return suggest(¢, null);
   }
 
-  public Rewrite suggest(final N n, final ExclusionManager m) {
+  public Suggestion suggest(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : suggest(n);
   }
 

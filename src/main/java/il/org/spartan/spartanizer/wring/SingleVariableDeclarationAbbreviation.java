@@ -60,7 +60,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
     return ¢.getName() + "";
   }
 
-  @Override public Rewrite suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Suggestion suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;
@@ -71,7 +71,7 @@ public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVar
       exclude.exclude(m);
     final SimpleName oldName = d.getName();
     final String newName = spartan.shorten(d.getType()) + pluralVariadic(d);
-    return new Rewrite("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
+    return new Suggestion("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
         final Javadoc j = m.getJavadoc();

@@ -51,7 +51,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       try {
         Plugin.refreshAllProjects();
       } catch (final Exception e) {
-        e.printStackTrace();
+        Plugin.log(e);
+        ;
       }
     }
   }

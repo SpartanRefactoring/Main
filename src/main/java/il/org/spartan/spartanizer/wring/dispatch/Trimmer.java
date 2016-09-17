@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -25,7 +26,7 @@ public class Trimmer extends Applicator {
     return new Trimmer().fixed(from);
   }
 
-  static ASTVisitor collect(final List<Rewrite> $) {
+  static ASTVisitor collect(final List<Suggestion> $) {
     Toolbox.refresh();
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -39,7 +40,7 @@ public class Trimmer extends Applicator {
     return new ExclusionManager();
   }
 
-  static boolean prune(final Rewrite r, final List<Rewrite> rs) {
+  static boolean prune(final Suggestion r, final List<Suggestion> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
       rs.add(r);
@@ -59,7 +60,7 @@ public class Trimmer extends Applicator {
     this.toolbox = toolbox;
   }
 
-  @Override protected ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u) {
+  @Override protected ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         if (new DisabledChecker(u).check(n))
@@ -71,19 +72,23 @@ public class Trimmer extends Applicator {
   }
 
   @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
+        System.err.println("VISIT " + n.getClass().getSimpleName() + ": " + tide.clean(n + ""));
+        if (m != null)
+          System.err.println("Class is inrange? " + inRange(m, n) + " of " + m);
+        if (!inRange(m, n))
+          return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
-        if (!inRange(m, n))
-          return true;
-        final Rewrite make = w.suggest(n, exclude);
-        if (make != null) {
+        System.err.println("Wring is " + w.getClass().getSimpleName() + ": " + w);
+        final Suggestion s = w.suggest(n, exclude);
+        if (s != null) {
           if (LogManager.isActive())
-            // LogManager.initialize();
-            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), make.description, make.lineNumber + "");
-          make.go(r, null);
+            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
+          s.go(r, null);
         }
         return true;
       }
@@ -99,7 +104,7 @@ public class Trimmer extends Applicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        x.printStackTrace();
+        Plugin.log(x);
         throw new AssertionError(x);
       }
       if (!e.hasChildren())
