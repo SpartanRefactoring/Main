@@ -781,4 +781,12 @@ public enum iz {
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
   }
+
+  public static boolean identifier(String identifier, Name typeName) {
+    if (typeName.isQualifiedName())
+      return identifier(identifier, ((QualifiedName) typeName).getName());
+    if (iz.simpleName(typeName))
+      return identifier(identifier, az.simpleName(typeName));
+    return false;
+  }
 }
