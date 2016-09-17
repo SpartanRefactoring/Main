@@ -25,10 +25,10 @@ public enum extract {
     return hop.operands(flatten.of(¢));
   }
 
-  public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
-    assert x != null;
+  public static List<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
+    assert ¢ != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
-    extract.findOperators(x, $);
+    extract.findOperators(¢, $);
     return $;
   }
 
@@ -218,8 +218,8 @@ public enum extract {
    * @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
-  public static Expression returnExpression(final ASTNode n) {
-    final ReturnStatement $ = returnStatement(n);
+  public static Expression returnExpression(final ASTNode ¢) {
+    final ReturnStatement $ = returnStatement(¢);
     return $ == null ? null : $.getExpression();
   }
 
@@ -261,8 +261,8 @@ public enum extract {
    * @param n JD
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement statement(final ASTNode n) {
-    for (ASTNode $ = n; $ != null; $ = $.getParent())
+  public static Statement statement(final ASTNode ¢) {
+    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.statement($))
         return az.asStatement($);
     return null;
@@ -272,17 +272,17 @@ public enum extract {
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param n JD
    * @return list of such statements. */
-  public static List<Statement> statements(final ASTNode n) {
+  public static List<Statement> statements(final ASTNode ¢) {
     final List<Statement> $ = new ArrayList<>();
-    return n == null || !(n instanceof Statement) ? $ : //
-        extract.statementsInto((Statement) n, $);
+    return ¢ == null || !(¢ instanceof Statement) ? $ : //
+        extract.statementsInto((Statement) ¢, $);
   }
 
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
-  public static Expression throwExpression(final ASTNode n) {
-    final ThrowStatement $ = az.throwStatement(extract.singleStatement(n));
+  public static Expression throwExpression(final ASTNode ¢) {
+    final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
     return $ == null ? null : $.getExpression();
   }
 

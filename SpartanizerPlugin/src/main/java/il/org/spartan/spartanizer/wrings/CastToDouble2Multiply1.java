@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpression> implements Kind.NOP {
-  private static NumberLiteral literal(final Expression x) {
-    final NumberLiteral $ = x.getAST().newNumberLiteral();
+  private static NumberLiteral literal(final Expression ¢) {
+    final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1.");
     return $;
   }

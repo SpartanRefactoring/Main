@@ -18,11 +18,11 @@ public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<N
     return "Remove redundant parentheses from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @Override public ASTNode replacement(final NormalAnnotation a) {
-    if (!values(a).isEmpty())
+  @Override public ASTNode replacement(final NormalAnnotation ¢) {
+    if (!values(¢).isEmpty())
       return null;
-    final MarkerAnnotation $ = a.getAST().newMarkerAnnotation();
-    $.setTypeName(duplicate.of(a.getTypeName()));
+    final MarkerAnnotation $ = ¢.getAST().newMarkerAnnotation();
+    $.setTypeName(duplicate.of(¢.getTypeName()));
     return $;
   }
 }

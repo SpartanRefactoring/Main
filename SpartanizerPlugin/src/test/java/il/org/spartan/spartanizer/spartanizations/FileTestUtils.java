@@ -46,11 +46,11 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** Makes an Output file out of a Test file */
-  protected static File makeOutFile(final File f) {
-    final StringBuilder $ = makeAST.stringBuilder(f);
+  protected static File makeOutFile(final File ¢) {
+    final StringBuilder $ = makeAST.stringBuilder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
-    return createTempFile($, TestDirection.Out, f);
+    return createTempFile($, TestDirection.Out, ¢);
   }
 
   /** Creates a temporary file - including lazy deletion.

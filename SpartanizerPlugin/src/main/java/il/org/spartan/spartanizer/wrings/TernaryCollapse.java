@@ -14,11 +14,11 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-9-19 */
 public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
-  private static Expression collapse(final ConditionalExpression x) {
-    if (x == null)
+  private static Expression collapse(final ConditionalExpression ¢) {
+    if (¢ == null)
       return null;
     Expression $;
-    return ($ = collapseOnElse(x)) != null || ($ = collaspeOnThen(x)) != null ? $ : null;
+    return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
   }
 
   private static Expression collapseOnElse(final ConditionalExpression x) {
