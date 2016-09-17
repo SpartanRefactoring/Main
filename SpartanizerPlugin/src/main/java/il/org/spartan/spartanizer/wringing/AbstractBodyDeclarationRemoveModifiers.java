@@ -17,6 +17,61 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2015-07-29 */
 public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
     implements Kind.SyntacticBaggage {
+  private static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
+  private static final Predicate<Modifier> isFinal = Modifier::isFinal;
+  private static final Predicate<Modifier> isPrivate = Modifier::isPrivate;
+  private static final Predicate<Modifier> isProtected = Modifier::isProtected;
+  private static final Predicate<Modifier> isStatic = Modifier::isStatic;
+  private static final Predicate<Modifier> isPublic = Modifier::isPublic;
+
+  static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
+    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
+    if (modifiers(¢).isEmpty())
+      return $;
+    if (iz.enumDeclaration(¢))
+      $.add(isStatic);
+    if (iz.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
+      $.add(isStatic);
+      $.add(isAbstract);
+    }
+    if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
+      $.add(isFinal);
+    final ASTNode container = hop.containerType(¢);
+    if (container == null)
+      return $;
+    if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
+      $.add(isFinal);
+    if (iz.isInterface(container)) {
+      $.add(isPublic);
+      $.add(isPrivate);
+      $.add(isProtected);
+      if (iz.isMethodDeclaration(¢))
+        $.add(isAbstract);
+    }
+    if (iz.enumDeclaration(container))
+      $.add(isProtected);
+    if (iz.anonymousClassDeclaration(container)) {
+      $.add(isPrivate);
+      if (iz.isMethodDeclaration(¢))
+        $.add(isFinal);
+      if (iz.enumConstantDeclaration(hop.containerType(container)))
+        $.add(isProtected);
+    }
+    if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢))) {
+      $.remove(isFinal);
+    }
+    return $;
+  }
+
+  private static boolean hasSafeVarags(MethodDeclaration d) {
+    for (Annotation a : extract.annotations(d)) {
+      System.err.println(a);
+      if (iz.identifier("SafeVarargs", a.getTypeName()))
+        return true;
+    }
+    return false;
+  }
+
   private static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
     for (final IExtendedModifier ¢ : modifiers(d))
@@ -41,42 +96,6 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
         ¢.remove();
-    return $;
-  }
-
-  private static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
-    if (modifiers(¢).isEmpty())
-      return $;
-    if (iz.enumDeclaration(¢))
-      $.add(Modifier::isStatic);
-    if (iz.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
-      $.add(Modifier::isStatic);
-      $.add(Modifier::isAbstract);
-    }
-    if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
-      $.add(Modifier::isFinal);
-    final ASTNode container = hop.containerType(¢);
-    if (container == null)
-      return $;
-    if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
-      $.add(Modifier::isFinal);
-    if (iz.isInterface(container)) {
-      $.add(Modifier::isPublic);
-      $.add(Modifier::isPrivate);
-      $.add(Modifier::isProtected);
-      if (iz.isMethodDeclaration(¢))
-        $.add(Modifier::isAbstract);
-    }
-    if (iz.enumDeclaration(container))
-      $.add(Modifier::isProtected);
-    if (iz.anonymousClassDeclaration(container)) {
-      $.add(Modifier::isPrivate);
-      if (iz.isMethodDeclaration(¢))
-        $.add(Modifier::isFinal);
-      if (iz.enumConstantDeclaration(hop.containerType(container)))
-        $.add(Modifier::isProtected);
-    }
     return $;
   }
 

@@ -4,5 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.wringing.*;
 
-public final class MethodDeclarationRedundantModifiers extends AbstractBodyDeclarationRemoveModifiers<MethodDeclaration> {
-  /* empty */ }
+public final class MethodDeclarationRedundantModifiers extends //
+    AbstractBodyDeclarationRemoveModifiers<MethodDeclaration> {
+  // EMPTY
+}
