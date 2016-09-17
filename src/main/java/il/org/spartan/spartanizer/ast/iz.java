@@ -26,18 +26,6 @@ public enum iz {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
 
-  public static boolean final¢(final BodyDeclaration ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
-  /** Determine whether a variable declaration is final or not
-   * @param subject some declaration
-   * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
-   *         final */
-  public static boolean final¢(final VariableDeclarationStatement ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
   public static boolean abstractTypeDeclaration(final ASTNode ¢) {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
@@ -234,6 +222,18 @@ public enum iz {
     return is(¢, EXPRESSION_STATEMENT);
   }
 
+  public static boolean final¢(final BodyDeclaration ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
+  }
+
+  /** Determine whether a variable declaration is final or not
+   * @param subject some declaration
+   * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
+   *         final */
+  public static boolean final¢(final VariableDeclarationStatement ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
+  }
+
   /** @param o The operator to check
    * @return True - if the operator have opposite one in terms of operands
    *         swap. */
@@ -259,6 +259,14 @@ public enum iz {
    *         statement */
   public static boolean forStatement(final ASTNode ¢) {
     return is(¢, FOR_STATEMENT);
+  }
+
+  public static boolean identifier(final String identifier, final Name typeName) {
+    if (typeName.isQualifiedName())
+      return identifier(identifier, ((QualifiedName) typeName).getName());
+    if (iz.simpleName(typeName))
+      return identifier(identifier, az.simpleName(typeName));
+    return false;
   }
 
   public static boolean identifier(final String identifier, final SimpleName n) {
@@ -442,18 +450,6 @@ public enum iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a literal 0 or false otherwise */
-  public static boolean literal0(final ASTNode ¢) {
-    return iz.literal(¢, 0);
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is a literal 1 or false otherwise */
-  public static boolean literal1(final ASTNode ¢) {
-    return iz.literal(¢, 1);
-  }
-
-  /** @param ¢ JD
    * @return true if the given node is a literal false or false otherwise */
   public static boolean literal¢false(final ASTNode ¢) {
     return iz.literal(¢, false);
@@ -463,6 +459,18 @@ public enum iz {
    * @return true if the given node is a literal true or false otherwise */
   public static boolean literal¢true(final ASTNode ¢) {
     return iz.literal(¢, true);
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal 0 or false otherwise */
+  public static boolean literal0(final ASTNode ¢) {
+    return iz.literal(¢, 0);
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal 1 or false otherwise */
+  public static boolean literal1(final ASTNode ¢) {
+    return iz.literal(¢, 1);
   }
 
   public static boolean longType(final Expression ¢) {
@@ -780,13 +788,5 @@ public enum iz {
 
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
-  }
-
-  public static boolean identifier(String identifier, Name typeName) {
-    if (typeName.isQualifiedName())
-      return identifier(identifier, ((QualifiedName) typeName).getName());
-    if (iz.simpleName(typeName))
-      return identifier(identifier, az.simpleName(typeName));
-    return false;
   }
 }
