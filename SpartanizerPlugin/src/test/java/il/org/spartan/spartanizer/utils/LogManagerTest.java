@@ -6,7 +6,7 @@ import org.junit.*;
 
 @Ignore //
 @SuppressWarnings("static-method") //
-public class LogManagerTest {
+public final class LogManagerTest {
   @Test public void testActive() {
     LogManager.activateLog();
     assert LogManager.isActive();

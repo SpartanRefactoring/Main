@@ -9,7 +9,7 @@ import org.junit.*;
 
 /** @author Dor Ma'ayan
  * @since 2016 */
-@SuppressWarnings({ "static-method", "javadoc", "boxing" }) public class RecurserTest {
+@SuppressWarnings({ "static-method", "javadoc", "boxing" }) public final class RecurserTest {
   @Test public void issue101_1() {
     final Expression ¢ = into.i("3+4");
     final Recurser<Integer> recurse = new Recurser<>(¢, 0);

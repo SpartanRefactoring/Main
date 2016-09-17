@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue209Test {
+public final class Issue209Test {
   @Test public void issue116_05() {
     trimming("\"\" + foo(x.toString())").to("foo(x.toString()) + \"\"").to("foo((\"\"+x)) + \"\"").to("foo((x + \"\")) + \"\"").stays();
   }

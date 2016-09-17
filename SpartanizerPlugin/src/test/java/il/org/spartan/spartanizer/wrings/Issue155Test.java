@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue155Test {
+public final class Issue155Test {
   @Ignore @Test public void inlineFinal() {
     trimming(
         "for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  final String nb = versionNumbers[i];\n" + "  $[i] = Integer.parseInt(nb);\n" + "}")

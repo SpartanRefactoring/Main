@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.pseudoNumber(first(xs)))
       return null;
@@ -45,13 +45,20 @@ public class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpression>
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.numberLiteral(first(xs)) || !iz.pseudoNumber(first(xs)))
       return null;
-    int sub = az.boxed.int¢(first(xs));
+    Integer z = az.boxed.int¢(first(xs));
+    if (z == null)
+      return null;
+   int sub = z.intValue(); 
     int index = 0;
     for (final Expression ¢ : xs) {
       if (!iz.numberLiteral(¢) || !type.isInt(¢))
         return null;
-      if (index != 0)
-        sub -= az.boxed.int¢(¢);
+      if (index != 0) {
+        Integer int¢ = az.boxed.int¢(¢);
+        if (int¢ == null)
+          return null;
+        sub -= int¢.intValue();
+      }
       ++index;
     }
     return x.getAST().newNumberLiteral(Integer.toString(sub));

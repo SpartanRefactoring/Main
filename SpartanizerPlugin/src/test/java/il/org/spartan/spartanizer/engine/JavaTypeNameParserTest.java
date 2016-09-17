@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class JavaTypeNameParserTest {
+public final class JavaTypeNameParserTest {
   // some upper, some lower case characters - the upper are more representative.
   @Test public void Alex_and_Dan_test() {
     azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("d"));

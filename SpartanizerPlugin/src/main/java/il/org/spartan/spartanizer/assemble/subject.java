@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Contains subclasses and tools to build expressions and statements */
-public class subject {
+public final class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = duplicate.of(base);
     extendedOperands($).add(make.plant(duplicate.of(add)).into($));

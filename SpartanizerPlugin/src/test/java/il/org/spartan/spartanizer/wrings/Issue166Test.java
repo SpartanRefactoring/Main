@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue166Test {
+public final class Issue166Test {
   @Test public void dollar() {
     trimming("for(final int $:as)sum+=$;").stays();
   }

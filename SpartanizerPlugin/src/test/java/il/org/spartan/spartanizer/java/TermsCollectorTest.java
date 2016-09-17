@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-@SuppressWarnings("static-method") public class TermsCollectorTest {
+@SuppressWarnings("static-method") public final class TermsCollectorTest {
   private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
   private final TermsCollector c = new TermsCollector();
 

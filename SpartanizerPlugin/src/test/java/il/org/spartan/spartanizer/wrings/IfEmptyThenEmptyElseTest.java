@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class IfEmptyThenEmptyElseTest {
+public final class IfEmptyThenEmptyElseTest {
   private static final Statement INPUT = into.s("{if (b) ; else ;}");
   private static final IfStatement IF = findFirst.ifStatement(INPUT);
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class extractTest {
+public final class extractTest {
   @Test public void core() {
     azzert.isNull(extract.core((Expression) null));
     azzert.isNull(extract.core((Statement) null));

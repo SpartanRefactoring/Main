@@ -14,7 +14,7 @@ package il.org.spartan.spartanizer.wrings;
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon<code><shalmon.niv [at] gmail.com></code>
  * @since 2016-8-27 */
-/* public class InitializationListRemoveComma extends
+/* public final class InitializationListRemoveComma extends
  * ReplaceCurrentNode<ArrayInitializer> implements Kind.SyntacticBaggage {
  *
  * @Override public String description() { return "Remove Unecessary ','"; }

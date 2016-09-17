@@ -11,7 +11,7 @@ import org.junit.runners.*;
  * @see Issue209Test */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue224Test {
+public final class Issue224Test {
   @Test public void issue224_01() {
     trimming("a+b.toString()").to("a+\"\"+b").stays();
   }

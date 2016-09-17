@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2016 */
 @Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue142Test {
+public final class Issue142Test {
   @Test public void disableSpartanizaionInClass() {
     trimming("/**[[SuppressWarningsSpartan]]*/ class A {\n" + "  /***/ int f() {\n" + "    int $ = 1;\n" + "    return $;\n" + "  }\n"
         + "  /***/ int g() {\n" + "    int $ = 2;\n" + "    return $;\n" + "  }\n" + "}").stays();

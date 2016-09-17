@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue210Test {
+public final class Issue210Test {
   @Test public void issue210_01() {
     trimming("8/0").stays();
   }

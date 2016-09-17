@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code> (original /
  *         30.05.2014) (v3)
  * @since 2013/07/01 */
-public class Spartanizations {
+public final class Spartanizations {
   private static Applicator[] all = { //
       new Trimmer(), //
   };

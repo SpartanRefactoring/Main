@@ -23,15 +23,18 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
     int remainder = az.boxed.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.pseudoNumber(¢) || az.boxed.int¢(¢) == 0)
+      if (!iz.pseudoNumber(¢))
         return null;
-      remainder %= az.boxed.int¢(¢);
+      Integer int¢ = az.boxed.int¢(¢);
+      if (int¢ == null || int¢.intValue() == 0)
+        return null;
+      remainder %= int¢.intValue();
     }
     return x.getAST().newNumberLiteral(Integer.toString(remainder));
   }
@@ -60,9 +63,9 @@ public class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> 
     if (!iz.validForEvaluation(x))
       return null;
     final int sourceLength = (x + "").length();
-    ASTNode $;
     if (x.getOperator() != REMAINDER)
       return null;
+    ASTNode $;
     if (type.get(x) == INT)
       $ = replacementInt(extract.allOperands(x), x);
     else {

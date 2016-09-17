@@ -4,7 +4,7 @@ import org.eclipse.jface.preference.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 
-public class PreferencesResources {
+public final class PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartan Refactoring plug-in";
   /** General preferences **/

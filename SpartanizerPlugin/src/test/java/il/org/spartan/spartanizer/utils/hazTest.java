@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class hazTest {
+public final class hazTest {
   @Test public void seriesA_01() {
     assert !haz.variableDefinition(e("0"));
   }

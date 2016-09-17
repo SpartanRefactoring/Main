@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code>
  * @since 2013/07/01
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code> */
-public class Builder extends IncrementalProjectBuilder {
+public final class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all suggestions */
   public static final String SPARTANIZATION_LONG_PREFIX = "Spartanization suggestion: ";
   /** Short prefix to be used in front of all suggestions */

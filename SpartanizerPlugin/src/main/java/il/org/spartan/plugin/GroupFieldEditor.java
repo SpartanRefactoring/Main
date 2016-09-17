@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.*;
  * @author alf (original)
  * @author Daniel Mittelman (fixed and revised)
  * @since 29/03/2016 */
-public class GroupFieldEditor extends FieldEditor {
+public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private final String title;
   private int numColumns;

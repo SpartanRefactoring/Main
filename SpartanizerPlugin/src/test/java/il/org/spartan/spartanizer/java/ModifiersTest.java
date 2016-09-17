@@ -11,7 +11,7 @@ import il.org.spartan.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class ModifiersTest {
+public final class ModifiersTest {
   @Test public void modifierUse_01() {
     azzert.that(Modifiers.gt("public", "public"), is(0));
   }

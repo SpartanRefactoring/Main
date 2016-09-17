@@ -14,7 +14,7 @@ import il.org.spartan.*;
  * @since 2013/01/01
  * @author Ofir Elmakias
  * @since 2015/09/06 (Updated - auto initialization of the plugin) */
-public class Plugin extends AbstractUIPlugin implements IStartup {
+public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
 
   /** logs an error in the plugin

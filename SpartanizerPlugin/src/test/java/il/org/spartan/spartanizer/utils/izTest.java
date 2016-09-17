@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class izTest {
+public final class izTest {
   @Test public void booleanLiteralFalseOnNull() {
     azzert.that(iz.booleanLiteral(e("null")), is(false));
   }

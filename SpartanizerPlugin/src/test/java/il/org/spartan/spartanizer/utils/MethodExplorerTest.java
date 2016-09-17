@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) public class MethodExplorerTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class MethodExplorerTest {
   @Test public void localVariablesCatchExpression() {
     azzert.that(new MethodExplorer(into.d("  void f() {\n" + "    try {\n" + "      f();\n" + "    } catch (final Exception|RuntimeException e) {\n"
         + "      f();\n" + "    }\n" + "  }")).localVariables().size(), is(1));

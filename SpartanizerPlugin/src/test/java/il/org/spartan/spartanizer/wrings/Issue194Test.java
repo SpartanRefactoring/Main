@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method") public class Issue194Test {
+@SuppressWarnings("static-method") public final class Issue194Test {
   @Ignore public void test01() {
     trimming("if (a != null) { \n" //
         + "a = f(); \n" //

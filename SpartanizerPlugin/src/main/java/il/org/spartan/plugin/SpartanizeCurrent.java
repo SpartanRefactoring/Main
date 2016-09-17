@@ -7,7 +7,7 @@ import org.eclipse.core.commands.*;
  * static methods to spartanize only specific compilation units.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public class SpartanizeCurrent extends BaseHandler {
+public final class SpartanizeCurrent extends BaseHandler {
   /** Instantiates this class */
   public SpartanizeCurrent() {
     super(null);

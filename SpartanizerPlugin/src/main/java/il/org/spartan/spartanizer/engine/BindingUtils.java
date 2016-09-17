@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.*;
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
-@SuppressWarnings("restriction") public class BindingUtils {
+@SuppressWarnings("restriction") public final class BindingUtils {
   /** @param n an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode n) {
