@@ -168,7 +168,7 @@ public final class Issue223Test {
     assert "Integer.valueOf(3)" != null;
     final Wrap w = Wrap.find(a.get());
     final String wrap = w.on(a.get());
-    final String unpeeled = TrimmerTestsUtils.apply(new Trimmer(), wrap);
+    final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + a.get());
   }

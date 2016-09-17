@@ -40,7 +40,7 @@ public final class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpress
     for (final Expression ¢ : xs) {
       if (!iz.pseudoNumber(¢))
         return null;
-      Integer int¢ = az.boxed.int¢(¢);
+      final Integer int¢ = az.boxed.int¢(¢);
       if (int¢ == null)
         return null;
       sum += int¢.intValue();
