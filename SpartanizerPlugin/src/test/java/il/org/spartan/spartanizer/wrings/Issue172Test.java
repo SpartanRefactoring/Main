@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wrings.*;
-
 /** Unit tests for {@link InfixTermsZero}
  * @author Niv Shalmon
  * @since 2016 */
