@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wring.strategies;
+package il.org.spartan.spartanizer.wringing;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 

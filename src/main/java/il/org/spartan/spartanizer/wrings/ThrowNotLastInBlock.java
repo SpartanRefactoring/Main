@@ -8,7 +8,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** Convert <code>throw X;statement;</code> to <code>throw X;</code>.
  * @author Yossi Gil

@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 import il.org.spartan.spartanizer.wrings.*;
 
 /** Singleton containing all {@link Wring}s which are active, allowing selecting

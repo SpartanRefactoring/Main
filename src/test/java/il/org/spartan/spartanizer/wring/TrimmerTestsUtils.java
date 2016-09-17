@@ -11,7 +11,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 public class TrimmerTestsUtils {
   public static int countOpportunities(final Applicator a, final CompilationUnit u) {

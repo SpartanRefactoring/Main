@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** Removes unnecessary uses of Boolean.valueOf, e.g.,
  * <code>Boolean.valueOf(true) </code> into <code>Boolean.TRUE</code>

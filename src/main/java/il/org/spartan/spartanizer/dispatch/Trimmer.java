@@ -13,7 +13,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */

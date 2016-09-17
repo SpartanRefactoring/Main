@@ -10,7 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** removes empty return statements, provided that they are last in method.
  * @author Yossi Gil
