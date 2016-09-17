@@ -22,36 +22,45 @@ public enum haz {
     return false;
   }
 
-  @SuppressWarnings("unused") public static boolean variableDefinition(final ASTNode n) {
+   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final EnumConstantDeclaration __) {
-        return found();
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        return continue¢(¢.getName());
       }
 
       @Override public boolean visit(final FieldDeclaration node) {
-        return found();
+        return continue¢(fragments(node));
       }
 
       @Override public boolean visit(final SingleVariableDeclaration node) {
-        return found();
+        return continue¢(node.getName());
       }
 
       @Override public boolean visit(final VariableDeclarationExpression node) {
-        return found();
+        return continue¢(fragments(node));
       }
 
-      @Override public boolean visit(final VariableDeclarationFragment __) {
-        return found();
+      @Override public boolean visit(final VariableDeclarationFragment f) {
+        return continue¢(f.getName());
       }
 
-      @Override public boolean visit(final VariableDeclarationStatement __) {
-        return found();
+      @Override public boolean visit(final VariableDeclarationStatement s) {
+        return continue¢(fragments(s));
       }
 
-      boolean found() {
+      private boolean continue¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment f : fs)
+          if (!continue¢(f.getName()))
+            return false;
+        return true;
+      }
+
+      private boolean continue¢(final SimpleName name) {
+        if (iz.identifier("$", name))
+          return false;
         $.set(Boolean.TRUE);
-        return false;
+        return true;
       }
     });
     return $.get().booleanValue();
