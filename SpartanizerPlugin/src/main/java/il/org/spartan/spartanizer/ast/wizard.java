@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wrings.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.

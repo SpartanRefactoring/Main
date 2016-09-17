@@ -5,6 +5,8 @@ import static il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.spartanizer.wrings.*;
+
 /** Unit tests for {@link InfixPlusRemoveParenthesis}
  * @author Niv Shalmon
  * @since 2016 */

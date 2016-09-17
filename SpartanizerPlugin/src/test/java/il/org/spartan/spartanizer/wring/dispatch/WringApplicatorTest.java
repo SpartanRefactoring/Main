@@ -7,7 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wrings.*;
 
 /** Unit tests for {@link WringApplicator}
  * @author Yossi GIl
