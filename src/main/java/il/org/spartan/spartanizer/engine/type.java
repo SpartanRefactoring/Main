@@ -694,6 +694,9 @@ public interface type {
         // accurate, no matter how you change the types. If you will check you
         // will find that INTEGER and INTEGRAL, have the same description, which
         // is obviously buggy.
+        // TODO: Yossi, But each type inner.types is a concert type that has a
+        // concrete name. Since Uncertain/Odd types don't have such names, they
+        // don't have any valid key to be put in the dictionary with.
       }
 
       @Override public boolean canB(final Certain ¢) {
