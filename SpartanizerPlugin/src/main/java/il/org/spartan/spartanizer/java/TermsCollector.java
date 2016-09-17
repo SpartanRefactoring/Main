@@ -43,7 +43,7 @@ public final class TermsCollector {
     return positive;
   }
 
-  final TermsCollector collect(final InfixExpression ¢) {
+  TermsCollector collect(final InfixExpression ¢) {
     if (¢ != null && !isLeafTerm(¢))
       collectPlusNonLeaf(¢);
     return this;
