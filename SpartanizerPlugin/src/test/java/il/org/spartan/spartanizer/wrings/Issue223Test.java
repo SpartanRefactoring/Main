@@ -15,9 +15,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.wring.TrimmerTestsUtils.*;
 import il.org.spartan.spartanizer.wringing.*;
-import il.org.spartan.spartanizer.wrings.*;
+import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
 /** Unit tests for {@link ClassInstanceCreation}
  * @author Yossi Gil
