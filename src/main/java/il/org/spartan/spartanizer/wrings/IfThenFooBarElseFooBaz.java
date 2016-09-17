@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.wring.dispatch.Wrings.*;
+import static il.org.spartan.spartanizer.dispatch.Wrings.*;
 
 import java.util.*;
 
@@ -12,8 +12,8 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** convert

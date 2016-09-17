@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wring.strategies.*;
 
 /** pushes down "<code>!</code>", the negation operator as much as possible,
