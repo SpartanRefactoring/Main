@@ -507,32 +507,9 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
    *         it never needs to be placed in parenthesis. */
   public static boolean noParenthesisRequired(final Expression ¢) {
-    if(is(¢, //
-        ARRAY_ACCESS,
-        ARRAY_CREATION,
-        BOOLEAN_LITERAL, //
-        CAST_EXPRESSION,
-        CHARACTER_LITERAL, //
-        CLASS_INSTANCE_CREATION, //
-        FIELD_ACCESS, //
-        INSTANCEOF_EXPRESSION,
-        METHOD_INVOCATION, //
-        NULL_LITERAL, //
-        NUMBER_LITERAL, //
-        PARAMETERIZED_TYPE, //
-        PARENTHESIZED_EXPRESSION, //
-        QUALIFIED_NAME, //
-        SIMPLE_NAME, //
-        STRING_LITERAL, //
-        SUPER_CONSTRUCTOR_INVOCATION, //
-        SUPER_FIELD_ACCESS, //
-        SUPER_METHOD_INVOCATION, //
-        THIS_EXPRESSION, //
-       TYPE_LITERAL  //
-        ))
-      return true;
-    else
-      return false;
+    return is(¢, ARRAY_ACCESS, ARRAY_CREATION, BOOLEAN_LITERAL, CAST_EXPRESSION, CHARACTER_LITERAL, CLASS_INSTANCE_CREATION, FIELD_ACCESS,
+        INSTANCEOF_EXPRESSION, METHOD_INVOCATION, NULL_LITERAL, NUMBER_LITERAL, PARAMETERIZED_TYPE, PARENTHESIZED_EXPRESSION, QUALIFIED_NAME,
+        SIMPLE_NAME, STRING_LITERAL, SUPER_CONSTRUCTOR_INVOCATION, SUPER_FIELD_ACCESS, SUPER_METHOD_INVOCATION, THIS_EXPRESSION, TYPE_LITERAL);
   }
 
   public static boolean normalAnnotations(final ASTNode ¢) {

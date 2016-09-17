@@ -49,14 +49,14 @@ public enum haz {
         return continue¢(fragments(¢));
       }
 
-      private boolean continue¢(final List<VariableDeclarationFragment> fs) {
+      boolean continue¢(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment ¢ : fs)
           if (!continue¢(¢.getName()))
             return false;
         return true;
       }
 
-      private boolean continue¢(final SimpleName ¢) {
+      boolean continue¢(final SimpleName ¢) {
         if (iz.identifier("$", ¢))
           return false;
         $.set(Boolean.TRUE);
