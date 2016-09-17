@@ -40,7 +40,7 @@ public final class FactorsCollector {
     return multipliers;
   }
 
-  final FactorsCollector collect(final InfixExpression ¢) {
+  FactorsCollector collect(final InfixExpression ¢) {
     if (¢ != null && !isLeafFactor(¢))
       collectTimesNonLeaf(¢);
     return this;
