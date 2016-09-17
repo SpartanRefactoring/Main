@@ -2,9 +2,6 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -30,13 +27,23 @@ public final class Issue222Test {
             + "}\n") //
                 .stays();
   }
+
   @Test public void chocolate2() {
-    trimming(
-        "private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + //
-          "for (final VariableDeclarationFragment f : fs)\n" + //
-            "if (!continue¢(f.getName()))\n" + //
-              "return false;\n" + //
-          "return true;\n" + //
+    trimming("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + //
+        "for (final VariableDeclarationFragment f : fs){\n" + //
+        "int b = f(f);\n" + //
+        "f(f,b);\n" + //
+        "return g(f,b,f());\n" + //
+        "}\n" + //
+        "return true;\n" + //
+        "}").stays();
+  }
+
+  @Test public void chocolate3() {
+    trimming("int f(int a) {\n" + //
+        "for (int b: fs)\n" + //
+        "return 0;\n" + //
+        "return 1;\n" + //
         "}").stays();
   }
 
