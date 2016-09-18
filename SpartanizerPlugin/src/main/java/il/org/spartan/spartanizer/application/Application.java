@@ -267,8 +267,8 @@ public final class Application implements IApplication {
     if (optIndividualStatistics)
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
-        for (int i = 0; i < optRounds; ++i)
-          System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
+        for (int ¢ = 0; ¢ < optRounds; ++¢)
+          System.out.println("    Round #" + ¢ + 1 + ": " + (¢ < 9 ? " " : "") + f.getRoundStat(¢));
       }
     else
       for (int i = 0; i < optRounds; ++i) {

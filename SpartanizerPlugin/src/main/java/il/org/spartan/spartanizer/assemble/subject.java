@@ -297,8 +297,8 @@ public final class subject {
       assert operands.size() != 1;
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
-      for (int i = 2; i < operands.size(); ++i)
-        extendedOperands($).add(make.plant(operands.get(i)).into($));
+      for (int ¢ = 2; ¢ < operands.size(); ++¢)
+        extendedOperands($).add(make.plant(operands.get(¢)).into($));
       return $;
     }
   }

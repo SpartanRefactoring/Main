@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.wringing.*;
 public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> implements Kind.Abbreviation {
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
-    for (int i = d.getExtraDimensions(); i > 0; --i)
+    for (int ¢ = d.getExtraDimensions(); ¢ > 0; --¢)
       $ += "s";
     return $;
   }

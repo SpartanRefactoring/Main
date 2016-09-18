@@ -31,9 +31,9 @@ public final class Nature implements IProjectNature {
   @Override public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();
     final ICommand[] cs = description.getBuildSpec();
-    for (int i = 0; i < cs.length; ++i)
-      if (cs[i].getBuilderName().equals(Builder.BUILDER_ID)) {
-        description.setBuildSpec(delete(cs, i));
+    for (int ¢ = 0; ¢ < cs.length; ++¢)
+      if (cs[¢].getBuilderName().equals(Builder.BUILDER_ID)) {
+        description.setBuildSpec(delete(cs, ¢));
         project.setDescription(description, null);
         return;
       }

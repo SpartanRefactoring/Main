@@ -47,11 +47,11 @@ public final class TernaryPusdownStrings extends ReplaceCurrentNode<ConditionalE
       return firstDifference(s2, s1);
     assert s1.length() <= s2.length();
     int $ = 0;
-    for (int i = 0; i < s1.length(); ++i) {
-      if (!Character.isAlphabetic(s1.charAt(i)) && !Character.isAlphabetic(s2.charAt(i))//
-          || i == s1.length() - 1 && !Character.isAlphabetic(s2.charAt(i)))
-        $ = i;
-      if (first(s1, i) != first(s2, i))
+    for (int ¢ = 0; ¢ < s1.length(); ++¢) {
+      if (!Character.isAlphabetic(s1.charAt(¢)) && !Character.isAlphabetic(s2.charAt(¢))//
+          || ¢ == s1.length() - 1 && !Character.isAlphabetic(s2.charAt(¢)))
+        $ = ¢;
+      if (first(s1, ¢) != first(s2, ¢))
         return $;
     }
     return s1.length();
