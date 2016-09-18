@@ -59,9 +59,9 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || hasAnnotation(f) || initializer instanceof ArrayInitializer)
+    if (initializer == null || haz.hasAnnotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier ¢ : step.modifiers((VariableDeclarationStatement) f.getParent()))
+    for (final IExtendedModifier ¢ : step.extendedModifiers((VariableDeclarationStatement) f.getParent()))
       if (¢.isModifier() && ((Modifier) ¢).isFinal())
         return null;
     final Statement s = extract.statement(f);

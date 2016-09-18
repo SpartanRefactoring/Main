@@ -110,7 +110,8 @@ public class Toolbox {
               new SingleVariableDeclarationAbbreviation(), //
               new SingelVariableDeclarationUnderscoreDoubled(), //
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
-//              new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
+              // new
+              // SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
               null)//
           .add(VariableDeclarationFragment.class, //
               new DeclarationRedundantInitializer(), //

@@ -34,15 +34,15 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
-    return annotations(step.modifiers(¢));
+    return annotations(step.extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
-    return annotations(step.modifiers(¢));
+    return annotations(step.extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
-    return annotations(step.modifiers(¢));
+    return annotations(step.extendedModifiers(¢));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -136,7 +136,7 @@ public enum extract {
 
   public static List<Modifier> modifiers(final BodyDeclaration d) {
     final ArrayList<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(d)) {
+    for (final IExtendedModifier ¢ : step.extendedModifiers(d)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
         $.add(a);
@@ -146,7 +146,7 @@ public enum extract {
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
     final ArrayList<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(d)) {
+    for (final IExtendedModifier ¢ : step.extendedModifiers(d)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
         $.add(a);
@@ -156,7 +156,7 @@ public enum extract {
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
     final ArrayList<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(s)) {
+    for (final IExtendedModifier ¢ : step.extendedModifiers(s)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
         $.add(a);

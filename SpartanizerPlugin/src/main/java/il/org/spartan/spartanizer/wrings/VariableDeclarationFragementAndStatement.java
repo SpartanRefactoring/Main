@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 public abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   protected static Expression assignmentAsExpression(final Assignment a) {
@@ -60,10 +61,6 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
     return $ - metrics.size(newParent);
   }
 
-  protected static boolean hasAnnotation(final VariableDeclarationFragment ¢) {
-    return hasAnnotation((VariableDeclarationStatement) ¢.getParent());
-  }
-
   protected static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final int $ = metrics.size(parent);
@@ -98,17 +95,6 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
         $.add(brother);
     }
     return $;
-  }
-
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
-  }
-
-  static boolean hasAnnotation(final VariableDeclarationStatement ¢) {
-    return hasAnnotation(step.modifiers(¢));
   }
 
   private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {

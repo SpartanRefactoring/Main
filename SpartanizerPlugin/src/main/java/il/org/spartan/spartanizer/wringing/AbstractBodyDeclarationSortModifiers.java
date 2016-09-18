@@ -15,13 +15,13 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2016 */
 public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements Kind.Collapse {
-  static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> {
+  static Comparator<Modifier> comp = (final Modifier m1, final Modifier m2) -> {
     return m1.isAnnotation() && m2.isAnnotation() ? 0
         : m1.isAnnotation() && m2.isModifier() ? -1 : m2.isAnnotation() && m1.isModifier() ? 1 : Modifiers.gt(m1 + "", m2 + "");
   };
 
-  private static boolean Sorted(final List<IExtendedModifier> ms) {
-    final List<IExtendedModifier> ¢ = new ArrayList<>(ms);
+  private static boolean Sorted(final List<Modifier> ms) {
+    final List<Modifier> ¢ = new ArrayList<>(ms);
     Collections.sort(¢, comp);
     return ms.equals(¢);
   }
@@ -31,14 +31,14 @@ public abstract class AbstractBodyDeclarationSortModifiers<N extends BodyDeclara
   }
 
   @Override public N replacement(final N $) {
-    return Sorted(step.modifiers($)) ? null : go(duplicate.of($));
+    return Sorted(extract.modifiers($)) ? null : go(duplicate.of($));
   }
 
   N go(final N $) {
-    final List<IExtendedModifier> ms = new ArrayList<>(step.modifiers($));
+    final List<Modifier> ms = new ArrayList<>(extract.modifiers($));
     Collections.sort(ms, comp);
-    step.modifiers($).clear();
-    step.modifiers($).addAll(ms);
+    extract.modifiers($).clear();
+    extract.modifiers($).addAll(ms);
     return $;
   }
 

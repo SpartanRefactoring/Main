@@ -50,7 +50,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(duplicate.of(¢.getType()));
-    duplicate.modifiers(step.modifiers(¢), step.modifiers($));
+    duplicate.modifiers(step.extendedModifiers(¢), step.extendedModifiers($));
     return $;
   }
 

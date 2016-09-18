@@ -25,6 +25,23 @@ public final class CollectMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
+  // TODO Matteo: removed private visibility to allow tests
+  static CompilationUnit spartanize(final CompilationUnit before) {
+    // TODO: try to it first with one wring only. I think this is going be
+    // better.
+    final Trimmer tr = new Trimmer();
+    assert tr != null;
+    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    tr.setCompilationUnit($);
+    assert $ != null;
+    try {
+      tr.checkAllConditions(null);
+    } catch (OperationCanceledException | CoreException e) {
+      e.printStackTrace();
+    }
+    return before;
+  }
+
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -39,9 +56,9 @@ public final class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
-//    final CompilationUnit after = spartanize(before);
-//    assert after != null;
-//    report("After-", after);
+    // final CompilationUnit after = spartanize(before);
+    // assert after != null;
+    // report("After-", after);
   }
 
   private static void go(final String[] where) {
@@ -81,21 +98,5 @@ public final class CollectMetrics {
     output.put(prefix + "Imports", metrics.countImports(¢));
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
     output.nl();
-  }
-  // TODO Matteo: removed private visibility to allow tests
-  static CompilationUnit spartanize(final CompilationUnit before) {
-    // TODO: try to it first with one wring only. I think this is going be
-    // better.
-    Trimmer tr = new Trimmer();
-    assert tr != null;
-    ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
-    tr.setCompilationUnit($);
-    assert $ != null;
-    try {
-      tr.checkAllConditions(null);
-    } catch (OperationCanceledException | CoreException e) {
-      e.printStackTrace();
-    }
-    return before;
   }
 }

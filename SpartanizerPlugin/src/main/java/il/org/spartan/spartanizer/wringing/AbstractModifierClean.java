@@ -23,9 +23,9 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends R
 
   protected abstract boolean redundant(Modifier m);
 
-  IExtendedModifier firstThat(final N n, final Predicate<Modifier> m) {
-    for (final IExtendedModifier $ : step.modifiers(n))
-      if ($.isModifier() && m.test((Modifier) $))
+  Modifier firstThat(final N n, final Predicate<Modifier> m) {
+    for (final Modifier $ : extract.modifiers(n))
+      if ($.isModifier() && m.test($))
         return $;
     return null;
   }
@@ -34,18 +34,14 @@ public abstract class AbstractModifierClean<N extends BodyDeclaration> extends R
     return firstThat(¢, m) != null;
   }
 
-  private IExtendedModifier firstBad(final N n) {
+  private Modifier firstBad(final N n) {
     return firstThat(n, (final Modifier ¢) -> redundant(¢));
   }
 
   private N go(final N $) {
-    for (final Iterator<IExtendedModifier> ¢ = step.modifiers($).iterator(); ¢.hasNext();)
+    for (final Iterator<Modifier> ¢ = extract.modifiers($).iterator(); ¢.hasNext();)
       if (redundant(¢.next()))
         ¢.remove();
     return $;
-  }
-
-  private boolean redundant(final IExtendedModifier ¢) {
-    return redundant((Modifier) ¢);
   }
 }

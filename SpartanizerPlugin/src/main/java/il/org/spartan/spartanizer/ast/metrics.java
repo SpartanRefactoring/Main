@@ -22,53 +22,46 @@ public interface metrics {
   static int count(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") 
-      @Override 
-      public void preVisit(final ASTNode ¢) {
+      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
         ++$.inner;
       }
     });
     return $.inner;
   }
-  
-  static int countNoImport(CompilationUnit root) {
-    final Int $ = new Int();
-    root.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
-        if(!¢.getClass().equals(ImportDeclaration.class))
-            ++$.inner;
-      }
-    });
-    return $.inner;
-  }
 
-  static int countImports(CompilationUnit cu) {
+  static int countImports(final CompilationUnit cu) {
     final Int $ = new Int();
     cu.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if(¢.getClass().equals(ImportDeclaration.class))
+        if (¢.getClass().equals(ImportDeclaration.class))
           ++$.inner;
       }
     });
     return $.inner;
   }
 
-  /**
-   * Exclude comments and import package statement from the content.
+  static int countNoImport(final CompilationUnit root) {
+    final Int $ = new Int();
+    root.accept(new ASTVisitor() {
+      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
+        if (!¢.getClass().equals(ImportDeclaration.class))
+          ++$.inner;
+      }
+    });
+    return $.inner;
+  }
+
+  /** Exclude comments and import package statement from the content.
    * @param root
-   * @return
-   */
-  
+   * @return */
   static int countNoImportNoComments(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") 
-      @Override 
-      public void preVisit(final ASTNode ¢) {
-//        System.out.println(¢.getClass().toString());
-//        System.out.println(¢.IMPORT_DECLARATION);
-        if(!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
-            ++$.inner;
+      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
+        // System.out.println(¢.getClass().toString());
+        // System.out.println(¢.IMPORT_DECLARATION);
+        if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
+          ++$.inner;
       }
     });
     return $.inner;
@@ -135,6 +128,11 @@ public interface metrics {
   static int lineCount(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode child) {
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          addWeight($, child);
+      }
+
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
@@ -156,11 +154,6 @@ public interface metrics {
           if (elze(az.ifStatement(¢)) != null)
             ++a.inner;
         }
-      }
-
-      @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass()))
-          addWeight($, child);
       }
     });
     return $.inner;

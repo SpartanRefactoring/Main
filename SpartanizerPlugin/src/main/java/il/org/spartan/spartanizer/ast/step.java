@@ -132,6 +132,18 @@ public enum step {
     return ¢.expressions();
   }
 
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final BodyDeclaration ¢) {
+    return ¢.modifiers();
+  }
+
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final SingleVariableDeclaration ¢) {
+    return ¢.modifiers();
+  }
+
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationStatement ¢) {
+    return ¢.modifiers();
+  }
+
   /** Expose the list of extended operands in an {@link InfixExpression}
    * @param ¢ JD
    * @return reference to the list of extended operands contained in the
@@ -206,18 +218,6 @@ public enum step {
         $.add(az.astNode(child));
     }
     return $;
-  }
-
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final BodyDeclaration ¢) {
-    return ¢.modifiers();
-  }
-
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final SingleVariableDeclaration ¢) {
-    return ¢.modifiers();
-  }
-
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> modifiers(final VariableDeclarationStatement ¢) {
-    return ¢.modifiers();
   }
 
   public static SimpleName name(final MethodInvocation ¢) {

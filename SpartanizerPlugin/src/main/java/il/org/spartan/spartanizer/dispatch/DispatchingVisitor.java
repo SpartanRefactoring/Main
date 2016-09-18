@@ -33,7 +33,6 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     return cautiousGo(¢);
   }
 
-  
   @Override public final boolean visit(final EnhancedForStatement ¢) {
     return cautiousGo(¢);
   }
