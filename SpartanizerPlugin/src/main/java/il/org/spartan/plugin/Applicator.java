@@ -32,9 +32,9 @@ public abstract class Applicator extends Refactoring {
   private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
   private static final String APPLY_TO_CLASS = "Apply suggestion to enclosing type";
   private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
-  private ITextSelection selection = null;
-  private ICompilationUnit compilationUnit = null;
-  private IMarker marker = null;
+  private ITextSelection selection;
+  private ICompilationUnit compilationUnit;
+  private IMarker marker;
   final Collection<TextFileChange> changes = new ArrayList<>();
   private final String name;
   private int totalChanges;

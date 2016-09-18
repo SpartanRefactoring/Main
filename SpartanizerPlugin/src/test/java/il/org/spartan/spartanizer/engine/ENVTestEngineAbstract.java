@@ -51,11 +51,11 @@ public abstract class ENVTestEngineAbstract {
     return new LinkedHashSet<>();
   }
 
-  protected boolean foundTestedAnnotation = false; // Global flag, used to
+  protected boolean foundTestedAnnotation; // Global flag, used to
                                                    // determine when to run the
                                                    // test on a node with
                                                    // potential annotations.
-  protected ASTNode n = null;
+  protected ASTNode n;
   protected LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
   /** Adds a new Entry to testSet from the inner annotation.

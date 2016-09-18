@@ -135,11 +135,11 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ExpressionStatement expressionStatement(final ASTNode $) {
-    return iz.is($, EXPRESSION_STATEMENT) ? (ExpressionStatement) $ : null;
+    return !iz.is($, EXPRESSION_STATEMENT) ? null : (ExpressionStatement) $;
   }
 
-  public static FieldDeclaration fieldDeclaration(ASTNode n) {
-    return iz.is(n, FIELD_DECLARATION) ? (FieldDeclaration) n : null;
+  public static FieldDeclaration fieldDeclaration(ASTNode ¢) {
+    return !iz.is(¢, FIELD_DECLARATION) ? null : (FieldDeclaration) ¢;
   }
 
   /** Down-cast, if possible, to {@link ForStatement}

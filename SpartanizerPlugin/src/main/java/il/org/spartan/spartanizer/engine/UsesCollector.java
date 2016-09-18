@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.*;
 
 abstract class HidingDepth extends ScopeManager {
-  private int depth = 0;
+  private int depth;
   private int hideDepth = Integer.MAX_VALUE;
 
   boolean hidden() {

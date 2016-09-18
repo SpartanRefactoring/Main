@@ -158,7 +158,7 @@ public interface metrics {
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nodesCount(final ASTNode n) {
     class Integer {
-      int inner = 0;
+      int inner;
     }
     final Integer $ = new Integer();
     n.accept(new ASTVisitor() {

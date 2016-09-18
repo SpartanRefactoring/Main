@@ -5,5 +5,5 @@ package il.org.spartan.spartanizer.utils;
  * @author Yossi Gil
  * @year 2016 */
 public final class Int {
-  public int inner = 0;
+  public int inner;
 }
