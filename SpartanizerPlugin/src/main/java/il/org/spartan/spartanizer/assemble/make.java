@@ -51,6 +51,11 @@ public enum make {
     return make.from(¢).literal("");
   }
 
+  public static NullLiteral makeNullLiteral(ASTNode n) {
+    return
+    n.getAST().newNullLiteral();
+  }
+
   public static Expression minus(final Expression x) {
     final PrefixExpression ¢ = az.prefixExpression(x);
     return ¢ == null ? minus(x, az.numberLiteral(x))
