@@ -26,7 +26,7 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
 
   static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
-    if (modifiers(¢).isEmpty())
+    if (extendedModifiers(¢).isEmpty())
       return $;
     if (iz.enumDeclaration(¢))
       $.add(isStatic);
@@ -71,7 +71,7 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
 
   private static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
     final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : modifiers(d))
+    for (final IExtendedModifier ¢ : extendedModifiers(d))
       if (test(¢, ms))
         $.add((Modifier) ¢);
     return $;
@@ -86,11 +86,11 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
   }
 
   private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
-    return matches(modifiers(¢), ms);
+    return matches(extendedModifiers(¢), ms);
   }
 
   private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
-    for (final Iterator<IExtendedModifier> ¢ = modifiers($).iterator(); ¢.hasNext();)
+    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
         ¢.remove();
     return $;

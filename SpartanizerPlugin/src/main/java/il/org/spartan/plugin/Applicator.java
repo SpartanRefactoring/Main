@@ -30,8 +30,24 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class Applicator extends Refactoring {
   private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
   private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
-  private static final String APPLY_TO_CLASS = "Apply suggestion to enclosing type";
   private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
+
+  private static IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
+    return new IMarkerResolution() {
+      @Override public String getLabel() {
+        return l;
+      }
+
+      @Override public void run(final IMarker m) {
+        try {
+          WringCommit.go(nullProgressMonitor, m, t);
+        } catch (IllegalArgumentException | CoreException e) {
+          Plugin.log(e);
+        }
+      }
+    };
+  }
+
   private ITextSelection selection;
   private ICompilationUnit compilationUnit;
   private IMarker marker;
@@ -123,6 +139,18 @@ public abstract class Applicator extends Refactoring {
     return rewriterOf(u, m, (IMarker) null);
   }
 
+  public IMarkerResolution disableClassFix() {
+    return getToggle(SuppressSpartanizationOnOff.Type.CLASS, "Disable spartanization for class");
+  }
+
+  public IMarkerResolution disableFileFix() {
+    return getToggle(SuppressSpartanizationOnOff.Type.FILE, "Disable spartanization for file");
+  }
+
+  public IMarkerResolution disableFunctionFix() {
+    return getToggle(SuppressSpartanizationOnOff.Type.DECLARATION, "Disable spartanization for scope");
+  }
+
   /** @return compilationUnit */
   public ICompilationUnit getCompilationUnit() {
     return compilationUnit;
@@ -191,18 +219,6 @@ public abstract class Applicator extends Refactoring {
   /** @return selection */
   public ITextSelection getSelection() {
     return selection;
-  }
-
-  public IMarkerResolution disableClassFix() {
-    return getToggle(SuppressSpartanizationOnOff.Type.CLASS, "Disable spartanization for class");
-  }
-
-  public IMarkerResolution disableFunctionFix() {
-    return getToggle(SuppressSpartanizationOnOff.Type.DECLARATION, "Disable spartanization for scope");
-  }
-
-  public IMarkerResolution disableFileFix() {
-    return getToggle(SuppressSpartanizationOnOff.Type.FILE, "Disable spartanization for file");
   }
 
   public IMarkerResolution getWringCommitDeclaration() {
@@ -349,7 +365,7 @@ public abstract class Applicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
- private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
+  private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -371,22 +387,6 @@ public abstract class Applicator extends Refactoring {
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(compilationUnit);
     return $;
-  }
-
- private static IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
-    return new IMarkerResolution() {
-      @Override public String getLabel() {
-        return l;
-      }
-
-      @Override public void run(final IMarker m) {
-        try {
-          WringCommit.go(nullProgressMonitor, m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          Plugin.log(e);
-        }
-      }
-    };
   }
 
   private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview) throws CoreException {

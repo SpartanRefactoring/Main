@@ -138,7 +138,7 @@ public enum az {
     return !iz.is($, EXPRESSION_STATEMENT) ? null : (ExpressionStatement) $;
   }
 
-  public static FieldDeclaration fieldDeclaration(ASTNode ¢) {
+  public static FieldDeclaration fieldDeclaration(final ASTNode ¢) {
     return !iz.is(¢, FIELD_DECLARATION) ? null : (FieldDeclaration) ¢;
   }
 

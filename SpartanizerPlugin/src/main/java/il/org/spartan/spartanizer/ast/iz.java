@@ -744,7 +744,8 @@ public enum iz {
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
-    return literal(az.numberLiteral(¢).getToken(), l);
+    final NumberLiteral ¢1 = az.numberLiteral(¢);
+    return ¢1 != null && literal(¢1.getToken(), l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {

@@ -53,7 +53,6 @@ public final class SpartanizeAll extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
-
         // TODO: Ori, please please no busy cursor. Use ProgressManager
         final IRunnableWithProgress runnable = pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
@@ -69,8 +68,8 @@ public final class SpartanizeAll extends BaseHandler {
           us.removeAll(es);
           pm.done();
         };
-        ISchedulingRule rule = null;
-        IRunnableContext context = new ProgressMonitorDialog(null);
+        final ISchedulingRule rule = null;
+        final IRunnableContext context = new ProgressMonitorDialog(null);
         ps.runInUI(context, runnable, rule);
         // ps.run(true, true, runnable);
         // ps.busyCursorWhile(runnable);
