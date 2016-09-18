@@ -112,7 +112,7 @@ public final class WringCommit {
     DECLARATION, FILE, PROJECT
   }
 
-  static class WringCommitVisitor extends Trimmer.DispatchingVisitor {
+  static class WringCommitVisitor extends DispatchingVisitor {
     final IMarker marker;
     final ASTRewrite rewrite;
     final Type type;
@@ -165,7 +165,7 @@ public final class WringCommit {
 
     protected void commitLocal(final Wring w, final ASTNode n) {
       Toolbox.refresh();
-      n.accept(new Trimmer.DispatchingVisitor() {
+      n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {

@@ -123,7 +123,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
-    compilationUnit.accept(new Trimmer.DispatchingVisitor() {
+    compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         if (!trimmer().inRange(m, n))
           return true;
