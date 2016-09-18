@@ -1363,34 +1363,6 @@ import il.org.spartan.spartanizer.wringing.*;
   @Test public void issue110_18() {
     trimmingOf("booleanLiteral==0 ? \"asss\" : \"assfad\"").stays();
   }
-
-  @Test public void issue130_1() {
-    trimmingOf("while(true){doSomething();if(done())break;}return something();").gives("while(true){doSomething();if(done())return something();}");
-  }
-
-  @Test public void issue130_2() {
-    trimmingOf("while(false){doSomething();if(done())break;}return something();").stays();
-  }
-
-  @Test public void issue130_3() {
-    trimmingOf("while(true){doSomething();if(done()){t+=2;break;}}return something();")
-        .gives("while(true){doSomething();if(done()){t+=2;return something();}}");
-  }
-
-  @Test public void issue130_4() {
-    trimmingOf("for(int i=4 ; true ; ++i){doSomething();if(done())break;}return something();")
-        .gives("for(int i=4 ; true ; ++i){doSomething();if(done())return something();}");
-  }
-
-  @Test public void issue130_5() {
-    trimmingOf("for(int i=4 ; i<s.length() ; ++i){doSomething();if(done())break;}return something();").stays();
-  }
-
-  @Test public void issue130_6() {
-    trimmingOf("for(int i=4 ; true ; ++i){doSomething();if(done()){t+=2;break;}}return something();")
-        .gives("for(int i=4 ; true ; ++i){doSomething();if(done()){t+=2;return something();}}");
-  }
-
   @Test public void issue141_01() {
     trimmingOf("public static void go(final Object os[], final String... ss) {  \n"//
         + "for (final String saa : ss) \n"//
