@@ -585,6 +585,7 @@ public final class Version250Test {
   @Test public void issue108k() {
     trimming("z=foo(x=(y=y*u),17)").to("z=foo(x=(y*=u),17)");
   }
+
   @Test public void issue141_01() {
     trimming("public static void go(final Object os[], final String... ss) {  \n"//
         + "for (final String saa : ss) \n"//

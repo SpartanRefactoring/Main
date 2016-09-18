@@ -152,18 +152,20 @@ public final class Issue086Test extends Issue___TestTemplate {
         + " a = 3;" //
         + " return 2;" //
         + "}")//
-        .to("throw Something();f(); a=3; return 2;") //
-        .to("throw Something();a=3; return 2;") //
-        .to("throw Something(); return 2;") //
-        .to("throw Something();") //
-        .stays();
+            .to("throw Something();f(); a=3; return 2;") //
+            .to("throw Something();a=3; return 2;") //
+            .to("throw Something(); return 2;") //
+            .to("throw Something();") //
+            .stays();
   }
+
   @Test public void vanilla01() {
     trimming("throw Something();a=3; return 2;") //
         .to("throw Something(); return 2;") //
         .to("throw Something();") //
         .stays();
   }
+
   private ThrowNotLastInBlock makeWring() {
     return new ThrowNotLastInBlock();
   }
