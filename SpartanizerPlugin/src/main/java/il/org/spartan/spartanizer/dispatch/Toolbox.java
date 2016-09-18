@@ -33,6 +33,7 @@ public class Toolbox {
   public static void refresh() {
     if (instance == null)
       instance = new Maker()//
+          .add(EnhancedForStatement.class, new EnhancedForRenameParameterToCent())//
           .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
           .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
@@ -109,7 +110,7 @@ public class Toolbox {
               new SingleVariableDeclarationAbbreviation(), //
               new SingelVariableDeclarationUnderscoreDoubled(), //
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
-              new EnhancedForRenameParameterToCent(), //
+//              new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
               null)//
           .add(VariableDeclarationFragment.class, //
               new DeclarationRedundantInitializer(), //
