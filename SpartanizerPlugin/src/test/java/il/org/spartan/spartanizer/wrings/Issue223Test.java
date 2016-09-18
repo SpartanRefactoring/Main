@@ -147,26 +147,26 @@ public final class Issue223Test {
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimming("Integer x = new Integer(1 + 9);")//
-        .to("Integer x = Integer.valueOf(1+9);")//
-        .to("Integer x = Integer.valueOf(10);")//
+    trimmingOf("Integer x = new Integer(1 + 9);")//
+        .gives("Integer x = Integer.valueOf(1+9);")//
+        .gives("Integer x = Integer.valueOf(10);")//
         .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
-    trimming("String x = new String(f());").to("String x = String.valueOf(f());");
+    trimmingOf("String x = new String(f());").gives("String x = String.valueOf(f());");
   }
 
   @Test public void vanilla() {
-    trimming("new Integer(3)").to("Integer.valueOf(3)").stays();
+    trimmingOf("new Integer(3)").gives("Integer.valueOf(3)").stays();
   }
 
   @Test public void vanilla01() {
-    trimming("new Integer(3)").to("Integer.valueOf(3)");
+    trimmingOf("new Integer(3)").gives("Integer.valueOf(3)");
   }
 
   @Test public void vanilla02() {
-    final Operand a = trimming("new Integer(3)");
+    final Operand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final Wrap w = Wrap.find(a.get());
     final String wrap = w.on(a.get());
@@ -176,7 +176,7 @@ public final class Issue223Test {
   }
 
   @Test public void vanilla03() {
-    final Operand a = trimming("new Integer(3)");
+    final Operand a = trimmingOf("new Integer(3)");
     final Wrap w = Wrap.find(a.get());
     final String wrap = w.on(a.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
@@ -191,7 +191,7 @@ public final class Issue223Test {
   }
 
   @Test public void vanilla04() {
-    final Operand o = trimming("new Integer(3)");
+    final Operand o = trimmingOf("new Integer(3)");
     final Wrap w = Wrap.find(o.get());
     final String wrap = w.on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
@@ -212,7 +212,7 @@ public final class Issue223Test {
   }
 
   @Test public void vanilla05() {
-    final Operand o = trimming("new Integer(3)");
+    final Operand o = trimmingOf("new Integer(3)");
     final Wrap w = Wrap.find(o.get());
     final String wrap = w.on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);

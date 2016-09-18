@@ -6,7 +6,7 @@ import org.junit.*;
 
 @SuppressWarnings("static-method") public final class Issue121Test {
   @Test public void test01() {
-    trimming("class A{ \n" //
+    trimmingOf("class A{ \n" //
         + "static public final class EX13{ \n" //
         + "class Onoes{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
@@ -20,7 +20,7 @@ import org.junit.*;
         + "}   \n" //
         + "}   \n" //
         + "}  \n" //
-    ).to("class A{ \n" //
+    ).gives("class A{ \n" //
         + "static public final class EX13{ \n" //
         + "class Onoes{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
@@ -38,7 +38,7 @@ import org.junit.*;
   }
 
   @Test public void test02() {
-    trimming("class A{ \n" //
+    trimmingOf("class A{ \n" //
         + "class B{} \n" //
         + "B f(int t){ \n" //
         + "return new B(){ \n" //
@@ -48,7 +48,7 @@ import org.junit.*;
         + "}; \n" //
         + "} \n" //
         + "}")
-            .to("class A{ \n" //
+            .gives("class A{ \n" //
                 + "class B{} \n" //
                 + "B f(int ¢){ \n" //
                 + "return new B(){ \n" //
@@ -61,7 +61,7 @@ import org.junit.*;
   }
 
   @Test public void test03() {
-    trimming("class A{ \n" //
+    trimmingOf("class A{ \n" //
         + "class B{} \n" //
         + "B f(int t){ \n" //
         + "return new B(){ \n" //
@@ -71,7 +71,7 @@ import org.junit.*;
         + "}; \n" //
         + "} \n" //
         + "}")
-            .to("class A{ \n" //
+            .gives("class A{ \n" //
                 + "class B{} \n" //
                 + "B f(int ¢){ \n" //
                 + "return new B(){ \n" //
@@ -85,7 +85,7 @@ import org.junit.*;
 
   // That is a true renaming bug, and a true Environment issue.
   @Ignore public void test04() {
-    trimming("class A{"//
+    trimmingOf("class A{"//
         + "class B{"//
         + "int t;"//
         + "B(int t){"//
@@ -100,7 +100,7 @@ import org.junit.*;
         + "};"//
         + "}"//
         + "}")
-            .to("class A{"//
+            .gives("class A{"//
                 + "class B{"//
                 + "int t;"//
                 + "B(int t){"//
@@ -118,7 +118,7 @@ import org.junit.*;
   }
 
   @Test public void test05() {
-    trimming("class A{"//
+    trimmingOf("class A{"//
         + "class B{"//
         + "int t;"//
         + "B(int t){"//
@@ -133,7 +133,7 @@ import org.junit.*;
         + "};"//
         + "}"//
         + "}")
-            .to("class A{"//
+            .gives("class A{"//
                 + "class B{"//
                 + "int t;"//
                 + "B(int t){"//

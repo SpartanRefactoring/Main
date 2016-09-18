@@ -12,36 +12,36 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue165Test {
   @Test public void seriesA_01_vanilla() {
-    trimming(//
+    trimmingOf(//
         " public static boolean f(final VariableDeclarationStatement s) {\n" //
-            + "return (Modifier.FINAL & s.getModifiers()) != 0;}").to(//
+            + "return (Modifier.FINAL & s.getModifiers()) != 0;}").gives(//
                 " public static boolean f(final VariableDeclarationStatement ¢) {\n" //
                     + "return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
   }
 
   @Test public void seriesA_02_dollar() {
-    trimming(//
+    trimmingOf(//
         " public static boolean __final(final VariableDeclarationStatement $) {\n" //
             + "return (Modifier.FINAL & $.getModifiers()) != 0;}").stays();
   }
 
   @Test public void seriesA_03_single_underscore() {
-    trimming("void f(int _){}").to("void f(int __){}").stays();
+    trimmingOf("void f(int _){}").gives("void f(int __){}").stays();
   }
 
   @Test public void seriesA_04_double_underscore() {
-    trimming("void f(int __){}").stays();
+    trimmingOf("void f(int __){}").stays();
   }
 
   @Test public void seriesA_05_unused() {
-    trimming("void f(int a){}").stays();
+    trimmingOf("void f(int a){}").stays();
   }
 
   @Test public void seriesA_06_abstract() {
-    trimming("abstract void f(int a);").stays();
+    trimmingOf("abstract void f(int a);").stays();
   }
 
   @Test public void seriesA_06_meaningfulName() {
-    trimming("void f(String fileName) {f(fileName);}").stays();
+    trimmingOf("void f(String fileName) {f(fileName);}").stays();
   }
 }

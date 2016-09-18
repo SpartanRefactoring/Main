@@ -6,7 +6,7 @@ import org.junit.*;
 
 @SuppressWarnings("static-method") public final class Issue194Test {
   @Ignore public void test01() {
-    trimming("if (a != null) { \n" //
+    trimmingOf("if (a != null) { \n" //
         + "a = f(); \n" //
         + "if (g()) \n" //
         + "return f(); \n" //
@@ -14,7 +14,7 @@ import org.junit.*;
         + "return a; \n" //
         + "} \n" //
         + "return null;" //
-    ).to("if (a == null) \n" + "return null;" //
+    ).gives("if (a == null) \n" + "return null;" //
         + "a = f(); \n" //
         + "if (g()); \n" //
         + "return f(); \n" //
@@ -24,7 +24,7 @@ import org.junit.*;
   }
 
   @Ignore public void test02() {
-    trimming("if (a == null) { \n" //
+    trimmingOf("if (a == null) { \n" //
         + "a = f(); \n" //
         + "if (g()) \n" //
         + "return f(); \n" //
@@ -32,7 +32,7 @@ import org.junit.*;
         + "return a; \n" //
         + "} \n" //
         + "return null;" //
-    ).to("if (a != null) \n" + "return null;" //
+    ).gives("if (a != null) \n" + "return null;" //
         + "a = f(); \n" //
         + "if (g()); \n" //
         + "return f(); \n" //
@@ -44,7 +44,7 @@ import org.junit.*;
   // Don't do anything if there is more than return statements after the
   // ifstatement.
   @Test public void test03() {
-    trimming("if (a == null) { \n" //
+    trimmingOf("if (a == null) { \n" //
         + "a = f(); \n" //
         + "if (g()) \n" //
         + "return f(); \n" //
@@ -58,7 +58,7 @@ import org.junit.*;
 
   // Works with the current wring.
   @Test public void test04() {
-    trimming("if(b1){ \n" //
+    trimmingOf("if(b1){ \n" //
         + "if(b2){ \n" //
         + "x = f(); \n" //
         + "return g(); \n" //
@@ -66,14 +66,14 @@ import org.junit.*;
         + "return h(); \n" //
         + "} \n" //
         + "return i();")
-            .to("if(!b1) \n" //
+            .gives("if(!b1) \n" //
                 + "return i(); \n" //
                 + "if(b2){ \n" //
                 + "x = f(); \n" //
                 + "return g(); \n"//
                 + "}" //
                 + "return h(); \n" //
-            ).to("if(!b1) \n" //
+            ).gives("if(!b1) \n" //
                 + "return i(); \n" //
                 + "if(!b2) \n" //
                 + "return h(); \n" //
@@ -84,14 +84,14 @@ import org.junit.*;
 
   // Works with the original wring.
   @Test public void test05() {
-    trimming("if(x > y){ \n" //
+    trimmingOf("if(x > y){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //
         + "return z; \n" //
         + "} \n" //
         + "return x;")
-            .to("if(x <= y) \n" //
+            .gives("if(x <= y) \n" //
                 + "return x; \n" //
                 + "x*=y; \n" //
                 + "y*=z; \n" //
@@ -102,14 +102,14 @@ import org.junit.*;
 
   // Works with the orignal wring.
   @Test public void test06() {
-    trimming("if(x == y){ \n" //
+    trimmingOf("if(x == y){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //
         + "return z; \n" //
         + "} \n" //
         + "return x;")
-            .to("if(x != y) \n" //
+            .gives("if(x != y) \n" //
                 + "return x; \n" //
                 + "x*=y; \n" //
                 + "y*=z; \n" //
@@ -120,14 +120,14 @@ import org.junit.*;
 
   // Passes with original wring too...
   @Test public void test07() {
-    trimming("if(x != null){ \n" //
+    trimmingOf("if(x != null){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //
         + "return z; \n" //
         + "} \n" //
         + "return x;")
-            .to("if(x == null) \n" //
+            .gives("if(x == null) \n" //
                 + "return x; \n" //
                 + "x*=y; \n" //
                 + "y*=z; \n" //
@@ -137,19 +137,19 @@ import org.junit.*;
   }
 
   @Test public void test08() {
-    trimming("if( x != null){" + "x = f();" + "return g();" + "}" + "return null;")
-        .to("if( x == null)" + "return null;" + "x = f();" + "return g();");
+    trimmingOf("if( x != null){" + "x = f();" + "return g();" + "}" + "return null;")
+        .gives("if( x == null)" + "return null;" + "x = f();" + "return g();");
   }
 
   @Ignore public void test09() {
-    trimming("if(b1){ \n" //
+    trimmingOf("if(b1){ \n" //
         + "for(;;) \n" //
         + "return x; \n" //
         + "if(x!=x) \n" //
         + "return y; \n" //
         + "} \n" //
         + "return z;")
-            .to("if(!b1) \n" //
+            .gives("if(!b1) \n" //
                 + "return z; \n" //
                 + "for(;;) \n" //
                 + "return x; \n" //
@@ -158,13 +158,13 @@ import org.junit.*;
   }
 
   @Ignore public void test10() {
-    trimming("if(b1){ \n" //
+    trimmingOf("if(b1){ \n" //
         + "x=5; \n" //
         + "while(b2) \n" //
         + "return x; \n" //
         + "} \n" //
         + "return z;")
-            .to("if(!b1) \n" //
+            .gives("if(!b1) \n" //
                 + "return z; \n" //
                 + "x=5; \n" //
                 + "while(b2){ \n" //
@@ -173,14 +173,14 @@ import org.junit.*;
   }
 
   @Ignore public void test11() {
-    trimming("if(onoes() && omigod()){" //
+    trimmingOf("if(onoes() && omigod()){" //
         + "if(panic())" //
         + "return weGonnaDie();" //
         + "if(!panic())" //
         + "return meh();" //
         + "}" //
         + "return noExcitement();" //
-    ).to("if(!onoes() || !omigod())" //
+    ).gives("if(!onoes() || !omigod())" //
         + "return noExcitement();" //
         + "if(panic())" //
         + "return weGonnaDie();" //
@@ -190,13 +190,13 @@ import org.junit.*;
   }
 
   @Ignore public void test12() {
-    trimming("if(b1){" + "if(b2){" + "while(b3)" + "return x;" + "while(!b3)" + "return y;" + "}" + "return z;" + "}" + "return w;")
-        .to("if(!b1)" + "return w;" + "if(b2){" + "while(b3)" + "return x;" + "while(!b3)" + "return y;" + "}" + "return z;")
-        .to("if(!b1)" + "return w;" + "if(!b2)" + "return z;" + "while(b3)" + "return x;" + "while(!b3)" + "return y;");
+    trimmingOf("if(b1){" + "if(b2){" + "while(b3)" + "return x;" + "while(!b3)" + "return y;" + "}" + "return z;" + "}" + "return w;")
+        .gives("if(!b1)" + "return w;" + "if(b2){" + "while(b3)" + "return x;" + "while(!b3)" + "return y;" + "}" + "return z;")
+        .gives("if(!b1)" + "return w;" + "if(!b2)" + "return z;" + "while(b3)" + "return x;" + "while(!b3)" + "return y;");
   }
 
   @Ignore public void test13() {
-    trimming("if(b1){" + "x=3;" + "if(b2)" + "return f();" + "y=7;" + "return g();" + "foo();" + "}" + "return h();")
-        .to("if(!b1)" + "return h();" + "x=3;" + "if(b2)" + "return f();" + "y=7;" + "return g();" + "foo();");
+    trimmingOf("if(b1){" + "x=3;" + "if(b2)" + "return f();" + "y=7;" + "return g();" + "foo();" + "}" + "return h();")
+        .gives("if(!b1)" + "return h();" + "x=3;" + "if(b2)" + "return f();" + "y=7;" + "return g();" + "foo();");
   }
 }

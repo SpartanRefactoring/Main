@@ -13,7 +13,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue222Test {
   @Test public void chocolate1() {
-    trimming(//
+    trimmingOf(//
         "static List<Expression> operands(final InfixExpression x) {\n" //
             + "  if (x == null)\n" //
             + "    return null;\n" //
@@ -29,7 +29,7 @@ public final class Issue222Test {
   }
 
   @Test public void chocolate2() {
-    trimming("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + //
+    trimmingOf("private boolean continue¢(final List<VariableDeclarationFragment> fs) {\n" + //
         "for (final VariableDeclarationFragment f : fs){\n" + //
         "int b = f(f);\n" + //
         "f(f,b);\n" + //
@@ -40,7 +40,7 @@ public final class Issue222Test {
   }
 
   @Test public void chocolate3() {
-    trimming("int f(int a) {\n" + //
+    trimmingOf("int f(int a) {\n" + //
         "for (int b: fs)\n" + //
         "return 0;\n" + //
         "return 1;\n" + //
@@ -48,7 +48,7 @@ public final class Issue222Test {
   }
 
   @Test public void vanilla() {
-    trimming(//
+    trimmingOf(//
         "static List<Expression> operands(final InfixExpression x) {\n" //
             + "  if (x == null)\n" //
             + "    return null;\n" //
@@ -59,7 +59,7 @@ public final class Issue222Test {
             + "    $.addAll(step.extendedOperands(x));\n" //
             + "  return $;\n" //
             + "}\n") //
-                .to("static List<Expression> operands(final InfixExpression ¢) {\n" //
+                .gives("static List<Expression> operands(final InfixExpression ¢) {\n" //
                     + "  if (¢ == null)\n" //
                     + "    return null;\n" //
                     + "  final List<Expression> $ = new ArrayList<>();\n" //
