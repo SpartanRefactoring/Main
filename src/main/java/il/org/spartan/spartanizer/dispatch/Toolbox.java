@@ -33,6 +33,7 @@ public class Toolbox {
   public static void refresh() {
     if (instance == null)
       instance = new Maker()//
+          .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
           .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //

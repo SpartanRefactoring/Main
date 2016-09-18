@@ -5,16 +5,15 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wringing.*;
-
-/** Unit tests for {@link SafeVarargs} in
- * {@link AbstractBodyDeclarationRemoveModifiers}
- * @author Yossi Gil
+/** Unit tests for {@link ForRenameInitializerToCent}
+ * @author YossiGil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue229Test {
+public final class Issue212Test {
   @Test public void vanilla() {
-    trimming("final class X { @SafeVarargs public final void f(final int... ¢) {}}").stays();
+    trimming("for(int i=0;i<a.length;++i)sum +=i;")//
+    .to("for(int ¢ = 0;¢<a.length;++¢)sum+=¢;")//
+    .stays();
   }
 }
