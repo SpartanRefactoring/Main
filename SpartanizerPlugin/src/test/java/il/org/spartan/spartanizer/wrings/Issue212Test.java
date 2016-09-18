@@ -13,7 +13,15 @@ import org.junit.runners.*;
 public final class Issue212Test {
   @Test public void vanilla() {
     trimming("for(int i=0;i<a.length;++i)sum +=i;")//
-    .to("for(int ¢ = 0;¢<a.length;++¢)sum+=¢;")//
-    .stays();
+        .to("for(int ¢ = 0;¢<a.length;++¢)sum+=¢;")//
+        .stays();
+  }
+  @Test public void chocolate1() {
+    trimming("for(int $=0;$<a.length;++$)sum +=$;")//
+        .stays();
+  }
+  @Test public void chocolate2() {
+    trimming("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
+        .stays();
   }
 }
