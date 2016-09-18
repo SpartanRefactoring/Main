@@ -216,7 +216,10 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    return az.simpleName(lisp.onlyOne(fragments(¢)));
+    final VariableDeclarationFragment onlyOne = lisp.onlyOne(fragments(¢));
+    if (onlyOne == null)
+      return null;
+    return onlyOne.getName();
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
@@ -314,9 +317,9 @@ public enum extract {
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int i = 0; i < ss.size() - 1; ++i)
-      if (ss.get(i) == s)
-        return ss.get(i + 1);
+    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+      if (ss.get(¢) == s)
+        return ss.get(¢ + 1);
     return null;
   }
 

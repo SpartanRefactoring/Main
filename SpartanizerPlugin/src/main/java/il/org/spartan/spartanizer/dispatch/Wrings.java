@@ -59,8 +59,8 @@ public enum Wrings {
 
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
-    for (int i = what.size() - 1; i >= 0; --i)
-      $.insertAfter(what.get(i), where, g);
+    for (int ¢ = what.size() - 1; ¢ >= 0; --¢)
+      $.insertAfter(what.get(¢), where, g);
     return $;
   }
 
