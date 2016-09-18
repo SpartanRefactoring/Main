@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wringing.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue086Test extends Issue___TestTemplate {
   private static final String INPUT = "{"//
-      + "   throw Something; "//
+      + "   throw Something(); "//
       + " f();" //
       + " a = 3;" //
       + " return 2;" //
@@ -76,13 +76,13 @@ public final class Issue086Test extends Issue___TestTemplate {
     assert wring.suggest(focus) != null;
   }
 
-  @Ignore @Test public void B$05toolboxCanFindWring() {
+  @Test public void B$05toolboxCanFindWring() {
     A$04_init();
     final Wring<?> w = Toolbox.defaultInstance().find(focus);
     assert w != null;
   }
 
-  @Ignore @Test public void B$06toolboxCanFindFindCorrectWring() {
+  @Test public void B$06toolboxCanFindFindCorrectWring() {
     A$04_init();
     final Wring<?> w = Toolbox.defaultInstance().find(focus);
     azzert.that(w, instanceOf(wring.getClass()));
@@ -124,7 +124,7 @@ public final class Issue086Test extends Issue___TestTemplate {
     Toolbox.defaultInstance().find(focus);
   }
 
-  @Ignore @Test public void doubleVanillaThrow() {
+  @Test public void doubleVanillaThrow() {
     A$04_init();
     trimming("int f() {"//
         + " if (false) "//
@@ -140,18 +140,30 @@ public final class Issue086Test extends Issue___TestTemplate {
         .to("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}") //
         .to("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}") //
         .to("int f(){g(i);throw new RuntimeException();a=3;return 2;}") //
+        .to("int f(){g(i);throw new RuntimeException();return 2;}") //
         .to("int f(){g(i);throw new RuntimeException();}") //
         .stays();
   }
 
-  @Ignore @Test public void vanilla() {
-    trimming(INPUT)//
+  @Test public void vanilla() {
+    trimming("{"//
+        + "   throw Something(); "//
+        + " f();" //
+        + " a = 3;" //
+        + " return 2;" //
+        + "}")//
+        .to("throw Something();f(); a=3; return 2;") //
         .to("throw Something();a=3; return 2;") //
         .to("throw Something(); return 2;") //
-        .to("throw Something()") //
+        .to("throw Something();") //
         .stays();
   }
-
+  @Test public void vanilla01() {
+    trimming("throw Something();a=3; return 2;") //
+        .to("throw Something(); return 2;") //
+        .to("throw Something();") //
+        .stays();
+  }
   private ThrowNotLastInBlock makeWring() {
     return new ThrowNotLastInBlock();
   }
