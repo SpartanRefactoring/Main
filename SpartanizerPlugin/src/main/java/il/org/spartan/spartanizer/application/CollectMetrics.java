@@ -10,8 +10,8 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
