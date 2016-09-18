@@ -5,61 +5,66 @@ import org.junit.*;
 import il.org.spartan.spartanizer.annotations.*;
 
 @Ignore("This should never be furn") @SuppressWarnings("all") //
-public class EnvironmentCodeExamples {/* public static class EX02 { //
-                                       * initializator
-                                       *
-                                       * @FlatEnvUse({ @Id(name = "x", clazz =
-                                       * "int"), @Id(name = "y", clazz =
-                                       * prudentType."int") }) static class C1 {
-                                       *
-                                       * @NestedENV({ @Id(name = "EX02.C1.x",
-                                       * clazz = "int")
-                                       * }) @FlatEnvUse({ @Id(name = "x", clazz
-                                       * = "int") }) public static "int" y; //
-                                       * no
-                                       *
-                                       * @FlatEnvUse({ @Id(name = "x", clazz =
-                                       * "int"), @Id(name = "y", clazz = "int"))
-                                       * }) @NestedENV({
-                                       *
-                                       * @Id(name = "EX02.C1.x", clazz =
-                                       * "int"), @Id(name = "EX02.C1.y", clazz =
-                                       * "int")}) @FlatEnvUse({@Id(name = "y",
-                                       * clazz = "int"),
-                                       *
-                                       * @Id(name = "x", clazz = "int") })
-                                       * public static "int" x;
-                                       *
-                                       * public static void change_x() {
-                                       *
-                                       * @Begin class A {// } x = 3; //
-                                       * "int"eresting... what does it do? lol
-                                       *
-                                       * @End({ @Id(name = "EX02.C1.x", clazz =
-                                       * "int") }) class B {// } }
-                                       *
-                                       * public static void change_y() {
-                                       *
-                                       * @Begin class A {// } y = 3;
-                                       *
-                                       * @End({ @Id(name = "EX02.C1.y", clazz =
-                                       * "int") }) class B {// } }
-                                       *
-                                       * // 'y' // cause // static // class C1
-                                       * c1; }
-                                       *
-                                       * @NestedENV({}) @FlatEnvUse({}) static
-                                       * "int" x;
-                                       *
-                                       * @NestedENV({ @Id(name = "EX02.x", clazz
-                                       * = "int") }) @FlatEnvUse({ @Id(name =
-                                       * "x", clazz = "int") }) static "int" y;
-                                       * {
-                                       *
-                                       * @Begin class A {// } C1.x = 2;
-                                       *
-                                       * @End({ @Id(name = "EX02.C1.x", clazz =
-                                       * "int") }) class B {// } } */
+public final class EnvironmentCodeExamples {/* public static class EX02 { //
+                                             * initializator
+                                             *
+                                             * @FlatEnvUse({ @Id(name = "x",
+                                             * clazz = "int"), @Id(name = "y",
+                                             * clazz = prudentType."int") })
+                                             * static class C1 {
+                                             *
+                                             * @NestedENV({ @Id(name =
+                                             * "EX02.C1.x", clazz = "int")
+                                             * }) @FlatEnvUse({ @Id(name = "x",
+                                             * clazz = "int") }) public static
+                                             * "int" y; // no
+                                             *
+                                             * @FlatEnvUse({ @Id(name = "x",
+                                             * clazz = "int"), @Id(name = "y",
+                                             * clazz = "int")) }) @NestedENV({
+                                             *
+                                             * @Id(name = "EX02.C1.x", clazz =
+                                             * "int"), @Id(name = "EX02.C1.y",
+                                             * clazz =
+                                             * "int")}) @FlatEnvUse({@Id(name =
+                                             * "y", clazz = "int"),
+                                             *
+                                             * @Id(name = "x", clazz = "int") })
+                                             * public static "int" x;
+                                             *
+                                             * public static void change_x() {
+                                             *
+                                             * @Begin class A {// } x = 3; //
+                                             * "int"eresting... what does it do?
+                                             * lol
+                                             *
+                                             * @End({ @Id(name = "EX02.C1.x",
+                                             * clazz = "int") }) class B {// } }
+                                             *
+                                             * public static void change_y() {
+                                             *
+                                             * @Begin class A {// } y = 3;
+                                             *
+                                             * @End({ @Id(name = "EX02.C1.y",
+                                             * clazz = "int") }) class B {// } }
+                                             *
+                                             * // 'y' // cause // static //
+                                             * class C1 c1; }
+                                             *
+                                             * @NestedENV({}) @FlatEnvUse({})
+                                             * static "int" x;
+                                             *
+                                             * @NestedENV({ @Id(name = "EX02.x",
+                                             * clazz = "int")
+                                             * }) @FlatEnvUse({ @Id(name = "x",
+                                             * clazz = "int") }) static "int" y;
+                                             * {
+                                             *
+                                             * @Begin class A {// } C1.x = 2;
+                                             *
+                                             * @End({ @Id(name = "EX02.C1.x",
+                                             * clazz = "int") }) class B {// }
+                                             * } */
   static class EX02 {
     int x = 1;
     @FlatEnvUse({ @Id(name = "x", clazz = "int") }) int y;
@@ -80,7 +85,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * }) @FlatEnvUse({ @Id(name = "y", clazz = "int"),
    *
    * @Id(name = "x", clazz = "int"), @Id(name = "xsy", clazz = y_hiding.class)
-   * }) public class y_hiding { // purpose!
+   * }) public final class y_hiding { // purpose!
    *
    * @Begin class C {// }
    *
@@ -207,9 +212,9 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @End({ @Id(name = "EX04.x", clazz = "int"), @Id(name = "EX04.c2.x", clazz =
    * "int") }) class QQ {// } } } */
-  /* public static class EX09 { // template public class SOList<Type> implements
-   * Iterable<Type> { private class ____template____0 {} private final Type[]
-   * arrayList;
+  /* public static class EX09 { // template public final class SOList<Type>
+   * implements Iterable<Type> { private class ____template____0 {} private
+   * final Type[] arrayList;
    *
    * @OutOfOrderFlatENV({@Id(name="arrayList", clazz=____template____0.class)})
    * "int" currentSize;
@@ -362,9 +367,9 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @End({ @Id(name = "EX08.Arr.arr", clazz = "String"[].class) }) class n { }
    * } } } // Some errors with this test, and the desired outcome is yet to be
    * // determined. */
-  /* public static class EX09 { // template public class SOList<Type> implements
-   * Iterable<Type> { private class ____template____0 {} private final Type[]
-   * arrayList;
+  /* public static class EX09 { // template public final class SOList<Type>
+   * implements Iterable<Type> { private class ____template____0 {} private
+   * final Type[] arrayList;
    *
    * @OutOfOrderFlatENV({@Id(name="arrayList", clazz=____template____0.class)})
    * "int" currentSize;
@@ -424,11 +429,11 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    *
    * @Id(name = "EX10.forTest.g.s", clazz = "String") }) final "int" b; } } } }
    *
-   * static public class EX11 { // Variables defined in try blocks behave like
-   * variables declared in any // other // block - their scope spans only as far
-   * as the block does. public class tryCatchTest { boolean dangerousFunc(final
-   * boolean b) { if (b) throw new UnsupportedOperationException(); return
-   * false; }
+   * static public final class EX11 { // Variables defined in try blocks behave
+   * like variables declared in any // other // block - their scope spans only
+   * as far as the block does. public final class tryCatchTest { boolean
+   * dangerousFunc(final boolean b) { if (b) throw new
+   * UnsupportedOperationException(); return false; }
    *
    * void f() { "String" s; try {
    *
@@ -465,8 +470,8 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @FlatEnvUse({ @Id(name = "e", clazz = NullPo"int"erException.class) })
    * final "int" a; } } } }
    *
-   * static public class EX12 { // Lambda use "int"erface GreetingService { void
-   * sayMessage("String" message); }
+   * static public final class EX12 { // Lambda use "int"erface GreetingService
+   * { void sayMessage("String" message); }
    *
    * "int"erface MathOperation {
    *
@@ -496,7 +501,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * GreetingService greetService2 = (message) -> System.out.pr"int"ln("Hello "
    * + message); } }
    *
-   * static public class EX13 { class Onoes { "int" x;
+   * static public final class EX13 { class Onoes { "int" x;
    *
    * public Onoes(final "int" y) { x = y; }
    *
@@ -510,7 +515,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @Id(name = "EX13.foo.____anon____Onoes____0.x", clazz = "int") }) @Override
    * "int" giveMeANumber() { return n * x; } }; } }
    *
-   * static public class EX14 { class A { "int" x; }
+   * static public final class EX14 { class A { "int" x; }
    *
    * void func() { final A a1 = new A(); final A a2 = new A();
    *
@@ -522,7 +527,7 @@ public class EnvironmentCodeExamples {/* public static class EX02 { //
    * @End({ @Id(name = "EX14.func.a1.x", clazz = A.class), @Id(name =
    * "EX14.func.a1.x", clazz = "int") }) class end { } } }
    *
-   * static public class EX15 { class A { "int" x;
+   * static public final class EX15 { class A { "int" x;
    *
    * void func() { final A a1 = new A(); final A a2 = new A();
    *

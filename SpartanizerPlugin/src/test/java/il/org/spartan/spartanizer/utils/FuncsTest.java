@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-18
  * @see step */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class FuncsTest {
+public final class FuncsTest {
   @Test public void arrayOfInts() {
     final Type t = t("int[][] __;");
     assert t != null;

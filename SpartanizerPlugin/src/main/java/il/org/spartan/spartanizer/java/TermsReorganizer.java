@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
  * @since 2016 */
-public class TermsReorganizer {
+public final class TermsReorganizer {
   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
@@ -34,13 +34,13 @@ public class TermsReorganizer {
     return subject.operands(rest).to(wizard.MINUS2);
   }
 
-  private static Expression buildMinus(final List<Expression> xs) {
-    final Expression $ = subject.operand(first(xs)).to(wizard.MINUS1);
-    if (xs.size() == 1)
+  private static Expression buildMinus(final List<Expression> ¢) {
+    final Expression $ = subject.operand(first(¢)).to(wizard.MINUS1);
+    if (¢.size() == 1)
       return $;
-    xs.remove(0);
-    xs.add(0, $);
-    return subject.operands(xs).to(wizard.MINUS2);
+    ¢.remove(0);
+    ¢.add(0, $);
+    return subject.operands(¢).to(wizard.MINUS2);
   }
 
   private static Expression buildPlus(final List<Expression> ¢) {

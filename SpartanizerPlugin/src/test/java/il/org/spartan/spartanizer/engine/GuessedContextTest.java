@@ -11,7 +11,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @Ignore //
-public class GuessedContextTest {
+public final class GuessedContextTest {
   @Test public void dealWithBothKindsOfComment() {
     similar("if (b) {\n", //
         "if (b) {;} { throw new Exception(); }");

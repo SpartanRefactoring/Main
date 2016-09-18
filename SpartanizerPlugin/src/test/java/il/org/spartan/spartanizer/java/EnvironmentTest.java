@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
-@Ignore public class EnvironmentTest {
+@Ignore public final class EnvironmentTest {
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   // =================== Empty Tests - Require Genesis ===================

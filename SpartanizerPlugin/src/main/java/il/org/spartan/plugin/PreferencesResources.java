@@ -2,9 +2,9 @@ package il.org.spartan.plugin;
 
 import org.eclipse.jface.preference.*;
 
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 
-public class PreferencesResources {
+public final class PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartan Refactoring plug-in";
   /** General preferences **/
@@ -46,9 +46,9 @@ public class PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static WringGroup find(final Class<? extends Kind> k) {
+    private static WringGroup find(final Class<? extends Kind> ¢) {
       for (final WringGroup $ : WringGroup.values())
-        if ($.clazz.isAssignableFrom(k))
+        if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;
     }
@@ -57,7 +57,7 @@ public class PreferencesResources {
       try {
         return k.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        e.printStackTrace();
+        Plugin.log(e);
         return null;
       }
     }

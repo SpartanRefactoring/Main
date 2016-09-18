@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Expands terms of +/- expressions without reordering, e.g., convert
  * <code>a + (b+c+(d-e))</code> into <code>a+b+c+d-e</code>
@@ -16,9 +17,9 @@ import il.org.spartan.spartanizer.assemble.*;
  * Functions named {@link #base} are non-recursive
  * @author Yossi Gil
  * @since 2016-08 */
-public class TermsExpander {
+public final class TermsExpander {
   public static Expression simplify(final InfixExpression ¢) {
-    return !stringType.isNot(¢) ? ¢ : base(new TermsCollector(¢));
+    return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
   /** @see #recurse(List, InfixExpression) */

@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.JVM) //
 @SuppressWarnings({ "static-method", "javadoc", }) //
-public class UtilsTest {
+public final class UtilsTest {
   @Test public void compareFF() {
     azzert.that(compare(false, false), is(0));
   }

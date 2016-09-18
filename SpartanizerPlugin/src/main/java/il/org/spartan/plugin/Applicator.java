@@ -28,6 +28,10 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class Applicator extends Refactoring {
+  private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
+  private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
+  private static final String APPLY_TO_CLASS = "Apply suggestion to enclosing type";
+  private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
   private IMarker marker = null;
@@ -64,11 +68,11 @@ public abstract class Applicator extends Refactoring {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * spartanization suggestions
    * @param u what to check
-   * @return a collection of {@link Rewrite} objects each containing a
+   * @return a collection of {@link Suggestion} objects each containing a
    *         spartanization suggestion */
-  public final List<Rewrite> collectSuggesions(final CompilationUnit u) {
-    final List<Rewrite> $ = new ArrayList<>();
-    u.accept(collectSuggestions($, u));
+  public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
+    final List<Suggestion> $ = new ArrayList<>();
+    ¢.accept(collectSuggestions(¢, $));
     return $;
   }
 
@@ -83,9 +87,9 @@ public abstract class Applicator extends Refactoring {
     try {
       checkFinalConditions(nullProgressMonitor);
     } catch (final OperationCanceledException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     } catch (final CoreException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
     return changes.size();
   }
@@ -99,9 +103,9 @@ public abstract class Applicator extends Refactoring {
     try {
       checkFinalConditions(nullProgressMonitor);
     } catch (final OperationCanceledException e) {
-      e.printStackTrace();
+      // TODO: what should we do here? This is not an error
     } catch (final CoreException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
     return totalChanges;
   }
@@ -144,7 +148,7 @@ public abstract class Applicator extends Refactoring {
         try {
           runAsMarkerFix(nullProgressMonitor, m);
         } catch (final CoreException e) {
-          throw new RuntimeException(e);
+          Plugin.log(e);
         }
       }
     };
@@ -173,7 +177,8 @@ public abstract class Applicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(Applicator.this)).run(Display.getCurrent().getActiveShell(),
               "Spartan refactoring: " + s + Applicator.this);
         } catch (final InterruptedException e) {
-          e.printStackTrace();
+          // TODO: What should we do here?
+          Plugin.log(e);
         }
       }
     };
@@ -189,27 +194,27 @@ public abstract class Applicator extends Refactoring {
   }
 
   public IMarkerResolution getToggleClass() {
-    return getToggle(ToggleSpartanization.Type.CLASS, "Disable spartanization for class");
+    return getToggle(SuppressSpartanizationOnOff.Type.CLASS, "Disable spartanization for class");
   }
 
   public IMarkerResolution getToggleDeclaration() {
-    return getToggle(ToggleSpartanization.Type.DECLARATION, "Disable spartanization for scope");
+    return getToggle(SuppressSpartanizationOnOff.Type.DECLARATION, "Disable spartanization for scope");
   }
 
   public IMarkerResolution getToggleFile() {
-    return getToggle(ToggleSpartanization.Type.FILE, "Disable spartanization for file");
+    return getToggle(SuppressSpartanizationOnOff.Type.FILE, "Disable spartanization for file");
   }
 
   public IMarkerResolution getWringCommitDeclaration() {
-    return getWringCommit(WringCommit.Type.DECLARATION, "Commit change for scope");
+    return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
   }
 
   public IMarkerResolution getWringCommitFile() {
-    return getWringCommit(WringCommit.Type.FILE, "Commit change for file");
+    return getWringCommit(WringCommit.Type.FILE, APPLY_TO_FILE);
   }
 
   public IMarkerResolution getWringCommitProject() {
-    return getWringCommit(WringCommit.Type.PROJECT, "Commit change for project");
+    return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
   /** .
@@ -229,16 +234,16 @@ public abstract class Applicator extends Refactoring {
   }
 
   /** Performs the current Spartanization on the provided compilation unit
-   * @param cu the compilation to Spartanize
+   * @param u the compilation to Spartanize
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the <code>pm</code> */
-  public boolean performRule(final ICompilationUnit cu, final IProgressMonitor pm) throws CoreException {
-    pm.beginTask("Creating change for a single compilation unit...", 2);
-    final TextFileChange textChange = new TextFileChange(cu.getElementName(), (IFile) cu.getResource());
+  public boolean performRule(final ICompilationUnit u, final IProgressMonitor pm) throws CoreException {
+    pm.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(pm);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(cu).createAST(m), m).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m), m).rewriteAST());
     final boolean $ = textChange.getEdit().getLength() != 0;
     if ($)
       textChange.perform(pm);
@@ -247,7 +252,7 @@ public abstract class Applicator extends Refactoring {
   }
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IProgressMonitor pm, final IMarker m) {
-    pm.beginTask("Creating rewrite operation...", 1);
+    pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
     pm.done();
@@ -282,7 +287,7 @@ public abstract class Applicator extends Refactoring {
     return name;
   }
 
-  protected abstract ASTVisitor collectSuggestions(final List<Rewrite> $, final CompilationUnit u);
+  protected abstract ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $);
 
   protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
 
@@ -290,8 +295,8 @@ public abstract class Applicator extends Refactoring {
    * @return true if the node is not inside selection. If there is no selection
    *         at all will return false.
    * @DisableSpartan */
-  protected boolean isNodeOutsideSelection(final ASTNode n) {
-    return !isSelected(n.getStartPosition());
+  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
+    return !isSelected(¢.getStartPosition());
   }
 
   /** @param u JD
@@ -324,14 +329,14 @@ public abstract class Applicator extends Refactoring {
   }
 
   /** Creates a change from each compilation unit and stores it in the changes
-   * array
+   * list
    * @throws IllegalArgumentException
    * @throws CoreException */
-  protected void scanCompilationUnits(final List<ICompilationUnit> cus, final IProgressMonitor pm) throws IllegalArgumentException, CoreException {
-    pm.beginTask("Iterating over gathered compilation units...", cus.size());
-    for (final ICompilationUnit cu : cus)
-      scanCompilationUnit(cu, newSubMonitor(pm));
-    pm.done();
+  protected void scanCompilationUnits(final List<ICompilationUnit> us, final IProgressMonitor m) throws IllegalArgumentException, CoreException {
+    m.beginTask("Iterating over gathered compilation units...", us.size());
+    for (final ICompilationUnit ¢ : us)
+      scanCompilationUnit(¢, newSubMonitor(m));
+    m.done();
   }
 
   /** creates an ASTRewrite, under the context of a text marker, which contains
@@ -344,7 +349,7 @@ public abstract class Applicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
-  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final ToggleSpartanization.Type t, final String l) {
+  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -352,9 +357,9 @@ public abstract class Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          ToggleSpartanization.deactivate(nullProgressMonitor, m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
+          SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
+        } catch (IllegalArgumentException | CoreException x) {
+          Plugin.log(x);
         }
       }
     };
@@ -378,7 +383,7 @@ public abstract class Applicator extends Refactoring {
         try {
           WringCommit.go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
-          e.printStackTrace();
+          Plugin.log(e);
         }
       }
     };
@@ -386,7 +391,7 @@ public abstract class Applicator extends Refactoring {
 
   private RefactoringStatus innerRunAsMarkerFix(final IProgressMonitor pm, final IMarker m, final boolean preview) throws CoreException {
     marker = m;
-    pm.beginTask("Running refactoring...", 2);
+    pm.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
     scanCompilationUnitForMarkerFix(m, pm, preview);
     marker = null;
     pm.done();
@@ -402,7 +407,8 @@ public abstract class Applicator extends Refactoring {
   }
 
   private void runAsManualCall(final IProgressMonitor pm) throws JavaModelException, CoreException {
-    pm.beginTask("Checking preconditions...", 2);
+    pm.beginTask("Checking preconditions...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits(pm), newSubMonitor(pm));
+    pm.done();
   }
 }

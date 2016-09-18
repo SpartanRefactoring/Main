@@ -3,7 +3,7 @@ package il.org.spartan.plugin;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /
@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code> (original /
  *         30.05.2014) (v3)
  * @since 2013/07/01 */
-public class Spartanizations {
+public final class Spartanizations {
   private static Applicator[] all = { //
       new Trimmer(), //
   };
@@ -42,9 +42,9 @@ public class Spartanizations {
   /** @param t Spartanization rule
    * @return Spartanization class rule instance */
   @SuppressWarnings("unchecked") //
-  public static <T extends Applicator> T findInstance(final Class<? extends T> t) {
+  public static <T extends Applicator> T findInstance(final Class<? extends T> ¢) {
     for (final Applicator $ : all)
-      if ($.getClass().equals(t))
+      if ($.getClass().equals(¢))
         return (T) $;
     return null;
   }

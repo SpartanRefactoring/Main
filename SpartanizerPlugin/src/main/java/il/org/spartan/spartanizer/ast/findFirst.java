@@ -18,25 +18,7 @@ public interface findFirst {
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode ¢) {
-    return findFirstClass(AssertStatement.class, ¢);
-  }
-
-  static <N extends ASTNode> N findFirstClass(final Class<N> c, final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<N> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
-          return false;
-        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
-          return true;
-        $.set((N) ¢);
-        assert $.get() == ¢;
-        return false;
-      }
-    });
-    return $.get();
+    return instanceOf(AssertStatement.class, ¢);
   }
 
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
@@ -45,7 +27,7 @@ public interface findFirst {
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static MethodDeclaration firstMethodDeclaration(final ASTNode ¢) {
-    return findFirstClass(MethodDeclaration.class, ¢);
+    return instanceOf(MethodDeclaration.class, ¢);
   }
 
   /** Find the first {@link InfixExpression} representing an addition, under a
@@ -70,7 +52,7 @@ public interface findFirst {
   }
 
   static Type firstType(final Statement ¢) {
-    return findFirstClass(Type.class, ¢);
+    return instanceOf(Type.class, ¢);
   }
 
   /** Search for an {@link ForStatement} in the tree rooted at an
@@ -79,7 +61,7 @@ public interface findFirst {
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static ForStatement forStatement(final ASTNode ¢) {
-    return findFirstClass(ForStatement.class, ¢);
+    return instanceOf(ForStatement.class, ¢);
   }
 
   /** Search for an {@link IfStatement} in the tree rooted at an
@@ -88,7 +70,25 @@ public interface findFirst {
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static IfStatement ifStatement(final ASTNode ¢) {
-    return findFirstClass(IfStatement.class, ¢);
+    return instanceOf(IfStatement.class, ¢);
+  }
+
+  static <N extends ASTNode> N instanceOf(final Class<N> c, final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<N> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
+        if ($.get() != null)
+          return false;
+        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
+          return true;
+        $.set((N) ¢);
+        assert $.get() == ¢;
+        return false;
+      }
+    });
+    return $.get();
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
@@ -97,11 +97,11 @@ public interface findFirst {
    * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static PostfixExpression postfixExpression(final ASTNode ¢) {
-    return findFirstClass(PostfixExpression.class, ¢);
+    return instanceOf(PostfixExpression.class, ¢);
   }
 
   static ThrowStatement throwStatement(final ASTNode ¢) {
-    return findFirstClass(ThrowStatement.class, ¢);
+    return instanceOf(ThrowStatement.class, ¢);
   }
 
   /** Return the first {@link VariableDeclarationFragment} encountered in a
@@ -110,7 +110,7 @@ public interface findFirst {
    * @return first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code> */
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
-    return findFirstClass(VariableDeclarationFragment.class, ¢);
+    return instanceOf(VariableDeclarationFragment.class, ¢);
   }
 
   /** Search for an {@link WhileStatement} in the tree rooted at an
@@ -119,6 +119,6 @@ public interface findFirst {
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
-    return findFirstClass(WhileStatement.class, ¢);
+    return instanceOf(WhileStatement.class, ¢);
   }
 }

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class sideEffectsTest {
+public final class sideEffectsTest {
   @Test public void addition() {
     azzert.that(sideEffects.free(e("f() + 2")), is(false));
     azzert.that(sideEffects.free(e("2 + f() + 2")), is(false));

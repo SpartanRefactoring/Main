@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.utils;
 
 import java.io.*;
 
-public class LogManager {
+public final class LogManager {
   protected static boolean ACTIVE = false;
   private static String logDir = null; // /home/matteo/SpartanLog
   private static LogWriter logWriter = null;
@@ -23,7 +23,7 @@ public class LogManager {
     return logDir;
   }
 
-  // public class Writer {
+  // public final class Writer {
   // protected PrintWriter writer = null;
   // protected String outputPath = null;
   //
@@ -52,7 +52,7 @@ public class LogManager {
   // * @since 9/2016
   // */
   //
-  // public class LogWriter extends Writer {
+  // public final class LogWriter extends Writer {
   //
   // public LogWriter(){
   // outputPath = logDir;

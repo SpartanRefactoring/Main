@@ -16,9 +16,8 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.assemble.subject.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class SubjectTest {
+@SuppressWarnings({ "javadoc", "static-method" }) public final class SubjectTest {
   @Test public void assignment() {
     azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.ASSIGN), iz("a=b"));
     azzert.that(subject.pair(e("a"), e("b")).to(Assignment.Operator.PLUS_ASSIGN), iz("a+=b"));
@@ -137,9 +136,9 @@ import il.org.spartan.spartanizer.java.*;
 
   @Test public void subjectOperands() {
     final Expression e = into.e("2 + a < b");
-    assert stringType.isNot(e);
+    assert type.isNotString(e);
     final InfixExpression plus = findFirst.firstPlus(e);
-    assert stringType.isNot(plus);
+    assert type.isNotString(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);
@@ -166,9 +165,9 @@ import il.org.spartan.spartanizer.java.*;
 
   @Test public void subjectOperandsWithParenthesis() {
     final Expression e = into.e("(2 + a) * b");
-    assert stringType.isNot(e);
+    assert type.isNotString(e);
     final InfixExpression plus = findFirst.firstPlus(e);
-    assert stringType.isNot(plus);
+    assert type.isNotString(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     final boolean b = ExpressionComparator.ADDITION.sort(operands);

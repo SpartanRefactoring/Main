@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.wring.*;
+import il.org.spartan.spartanizer.wrings.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -75,9 +75,9 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-  public static ParenthesizedExpression parethesized(final Expression x) {
-    final ParenthesizedExpression $ = x.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(x) == null ? x : duplicate.of(x));
+  public static ParenthesizedExpression parethesized(final Expression ¢) {
+    final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
+    $.setExpression(step.parent(¢) == null ? ¢ : duplicate.of(¢));
     return $;
   }
 
@@ -114,8 +114,8 @@ public enum make {
     $.setOperator(wizard.PLUS2);
     $.setLeftOperand(duplicate.of(first(xs)));
     $.setRightOperand(duplicate.of(second(xs)));
-    for (int i = 2; i < xs.size(); ++i)
-      step.extendedOperands($).add(duplicate.of(xs.get(i)));
+    for (int ¢ = 2; ¢ < xs.size(); ++¢)
+      step.extendedOperands($).add(duplicate.of(xs.get(¢)));
     return $;
   }
 
@@ -159,9 +159,9 @@ public enum make {
       return ast.newNumberLiteral(¢ + "");
     }
 
-    public StringLiteral literal(final String s) {
+    public StringLiteral literal(final String ¢) {
       final StringLiteral $ = ast.newStringLiteral();
-      $.setLiteralValue(s);
+      $.setLiteralValue(¢);
       return $;
     }
   }
@@ -205,9 +205,9 @@ public enum make {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 
-    private ParenthesizedExpression parenthesize(final Expression x) {
+    private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
-      $.setExpression(duplicate.of(x));
+      $.setExpression(duplicate.of(¢));
       return $;
     }
 
@@ -220,7 +220,7 @@ public enum make {
       if (!infixExpression(host))
         return false;
       final InfixExpression e = az.infixExpression(host);
-      return (e.getOperator() != wizard.PLUS2 || !stringType.isNot(e)) && isStringConactingSafe(inner);
+      return (e.getOperator() != wizard.PLUS2 || !type.isNotString(e)) && isStringConactingSafe(inner);
     }
   }
 

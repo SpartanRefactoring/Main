@@ -58,18 +58,18 @@ public enum Make {
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
-  public ASTParser parser(final Document d) {
+  public ASTParser parser(final Document ¢) {
     final ASTParser $ = wizard.parser(kind);
-    $.setSource(d.get().toCharArray());
+    $.setSource(¢.get().toCharArray());
     return $;
   }
 
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
-  public ASTParser parser(final ICompilationUnit u) {
+  public ASTParser parser(final ICompilationUnit ¢) {
     final ASTParser $ = wizard.parser(kind);
-    $.setSource(u);
+    $.setSource(¢);
     return $;
   }
 

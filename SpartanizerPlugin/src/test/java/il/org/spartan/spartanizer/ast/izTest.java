@@ -15,7 +15,7 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class izTest {
+public final class izTest {
   private static final String EMPTY_STRING = "\"\"";
 
   @Test public void booleanLiteralFalseOnNull() {
@@ -51,7 +51,7 @@ public class izTest {
   }
 
   @Test public void emptyStringLiteral1() {
-    assert iz.literal(e(EMPTY_STRING), "");
+    assert iz.literal("", e(EMPTY_STRING));
   }
 
   @Test public void emptyStringLiteral2() {
