@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -65,7 +64,8 @@ public class Trimmer extends Applicator {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         // Uncomment for debugging
-        // System.err.println("VISIT " + n.getClass() + ": " + tide.clean(n + ""));
+        // System.err.println("VISIT " + n.getClass() + ": " + tide.clean(n +
+        // ""));
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
