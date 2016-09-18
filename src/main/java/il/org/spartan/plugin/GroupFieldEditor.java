@@ -30,7 +30,7 @@ public final class GroupFieldEditor extends FieldEditor {
   private final List<FieldEditor> members = new ArrayList<>();
   private final Group group;
   private final Composite parent;
-  private boolean initialized = false;
+  private boolean initialized;
 
   /** Create a group of {@link FieldEditor} objects
    * @param labelText (optional) the text that will appear in the top label. For

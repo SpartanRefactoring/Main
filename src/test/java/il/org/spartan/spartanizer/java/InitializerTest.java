@@ -11,7 +11,7 @@ public final class InitializerTest {
     // referenced by
     // the instances of this class...
   }
-  static int a = 0;
+  static int a;
 
  public static void main(@SuppressWarnings("unused") final String[] __) {
   new InitializerTest(3);

@@ -140,7 +140,7 @@ public final class SuppressSpartanizationOnOff {
 
   private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
     u.accept(new ASTVisitor() {
-      boolean b = false;
+      boolean b;
 
       @Override public void preVisit(final ASTNode n) {
         if (b || isNodeOutsideMarker(n, m))

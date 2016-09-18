@@ -272,7 +272,7 @@ public enum Collect {
    *         list. */
   private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
-      int loopDepth = 0;
+      int loopDepth;
 
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;

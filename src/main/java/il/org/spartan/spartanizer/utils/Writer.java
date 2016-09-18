@@ -3,8 +3,8 @@ package il.org.spartan.spartanizer.utils;
 import java.io.*;
 
 public class Writer {
-  protected PrintWriter writer = null;
-  protected String outputPath = null;
+  protected PrintWriter writer;
+  protected String outputPath;
 
   public void close() {
     writer.close();

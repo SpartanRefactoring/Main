@@ -21,7 +21,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return !isStatic(¢.getModifiers());
   }
 
-  private Class<N> myOperandsClass = null;
+  private Class<N> myOperandsClass;
 
   /** Determine whether the parameter is "eligible" for application of this
    * instance. The parameter must be within the scope of the current instance.
