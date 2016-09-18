@@ -1,34 +1,25 @@
 package il.org.spartan.spartanizer.application;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.collections.FilesGenerator.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.application.Application.*;
+import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.spartanizer.wring.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
 import il.org.spartan.utils.*;
 
-/** IApplication for collecting metrics pre and post Spartanization 
+/** IApplication for collecting metrics pre and post Spartanization
  * @author Matteo Orru'
  * @year 2016 */
-public class CollectMetricsApp implements IApplication {
-  
+public final class CollectMetricsApp implements IApplication {
   private static final String OUTPUT = System.getProperty("user.home") + "/halstead.csv";
   private static final String SPARTAN_OUTPUT = System.getProperty("user.home") + "/spartan_halstead.csv";
   private static CSVStatistics output;
@@ -39,115 +30,31 @@ public class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
 
   // app methods
-  
-  @Override public Object start(IApplicationContext arg0) throws Exception {
-    String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
-    System.out.println(path);
-    path = args[0];
-    printStatistics("Before-", OUTPUT);
-    spartanize();
-    printStatistics("After-", SPARTAN_OUTPUT);
-    return IApplication.EXIT_OK;
-  }
-
-  private static void printStatistics(String prefix, String outputPath) {
-    output = init(outputPath);
-    for (final File ¢ : new FilesGenerator(".java").from(path))
-      try {
-        // This line is going to give you trouble if you process class by class.
-        output.put("File", ¢.getName());
-        final String javaCode = FileUtils.read(¢);
-        output.put("Characters", javaCode.length());
-        final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-        report(prefix, cu);
-//        output.close();
-      } catch (final IOException e) {
-        System.err.println(e.getMessage());
-      }
-    
-  }
-
-  @Override public void stop() {
-    // Unused
-  }
-
-  @SuppressWarnings("unchecked") 
-  private static void spartanize() { // final CompilationUnit u) {
-    // TODO: try to it do first with one wring only. 
-    // I think this is going be
-    // better.
-    try {
-      prepareTempIJavaProject();
-    } catch (CoreException e) {
-      System.err.println(e.getMessage());
-//      return IApplication.EXIT_OK;
-    }
-    int done = 0, failed = 0;
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(path)) {
-      ICompilationUnit u = null;
-      try {
-        u = openCompilationUnit(f);
-        for (int i = 0; i < optRounds; ++i) {
-          final int n = SpartanizeAll.countSuggestions(u);
-          if (n == 0)
-            break;
-          eclipse.apply(u);
-        }
-            System.out.println("Spartanized file " + f.getAbsolutePath());
-        ++done;
-      } catch (final JavaModelException | IOException e) {
-        System.err.println(f + ": " + e.getMessage());
-        ++failed;
-      } catch (final Exception e) {
-        System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
-        e.printStackTrace();
-        ++failed;
-      } finally {
-        //
-        discardCompilationUnit(u);
-      }
-    }
-  }
-  
   static void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     } catch (final NullPointerException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
   }
-  
-  static ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
-    final String source = FileUtils.read(f);
-    setPackage(getPackageNameFromSource(source));
-    return pack.createCompilationUnit(f.getName(), source, false, null);
-  }
-  
+
   static String getPackageNameFromSource(final String source) {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
   }
 
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
-  }
-  
-  static void setPackage(final String name) throws JavaModelException {
-    pack = srcRoot.createPackageFragment(name, false, null);
+  static ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
+    final String source = FileUtils.read(f);
+    setPackage(getPackageNameFromSource(source));
+    return pack.createCompilationUnit(f.getName(), source, false, null);
   }
 
   static void prepareTempIJavaProject() throws CoreException {
-    @SuppressWarnings("unused") IWorkspace ws = ResourcesPlugin.getWorkspace();
+    ResourcesPlugin.getWorkspace();
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
     if (p.exists())
       p.delete(true, null);
@@ -167,13 +74,52 @@ public class CollectMetricsApp implements IApplication {
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
-  
-  private static CSVStatistics init(String outputReportDir) {
+
+  static void setPackage(final String name) throws JavaModelException {
+    pack = srcRoot.createPackageFragment(name, false, null);
+  }
+
+  private static void copyFile(final File source, final File target) throws IOException {
+    try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
+      final byte[] buf = new byte[1024];
+      int length;
+      while ((length = in.read(buf)) > 0)
+        out.write(buf, 0, length);
+    }
+  }
+
+  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final PackageDeclaration ¢) {
+        $.set(¢.getName() + "");
+        return false;
+      }
+    });
+    return $.get();
+  }
+
+  private static CSVStatistics init(final String outputReportDir) {
     try {
       return new CSVStatistics(outputReportDir, "property");
     } catch (final IOException e) {
       throw new RuntimeException(outputReportDir, e);
     }
+  }
+
+  private static void printStatistics(final String prefix, final String outputPath) {
+    output = init(outputPath);
+    for (final File ¢ : new FilesGenerator(".java").from(path))
+      try {
+        // This line is going to give you trouble if you process class by class.
+        output.put("File", ¢.getName());
+        final String javaCode = FileUtils.read(¢);
+        output.put("Characters", javaCode.length());
+        final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+        report(prefix, cu);
+        // output.close();
+      } catch (final IOException e) {
+        System.err.println(e.getMessage());
+      }
   }
 
   /** Bug, what happens if we have many classes in the same file? Also, we do
@@ -198,36 +144,66 @@ public class CollectMetricsApp implements IApplication {
     output.put(prefix + "Vocabulary", metrics.vocabulary(¢));
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.nl();
-   }
-  
-  public void copy(File sourceLocation, File targetLocation) throws IOException {
-    if (sourceLocation.isDirectory()) {
-        copyDirectory(sourceLocation, targetLocation);
-    } else {
-        copyFile(sourceLocation, targetLocation);
-    }
   }
 
-  private void copyDirectory(File source, File target) throws IOException {
-    if (!target.exists()) {
-        target.mkdir();
+  private static void spartanize() { // final CompilationUnit u) {
+    // TODO: try to it do first with one wring only.
+    // I think this is going be
+    // better.
+    try {
+      prepareTempIJavaProject();
+    } catch (final CoreException e) {
+      System.err.println(e.getMessage());
+      // return IApplication.EXIT_OK;
     }
-
-    for (String f : source.list()) {
-        copy(new File(source, f), new File(target, f));
-    }
-  }
-
-  private static void copyFile(File source, File target) throws IOException {        
-    try (
-            InputStream in = new FileInputStream(source);
-            OutputStream out = new FileOutputStream(target)
-    ) {
-        byte[] buf = new byte[1024];
-        int length;
-        while ((length = in.read(buf)) > 0) {
-            out.write(buf, 0, length);
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(path)) {
+      ICompilationUnit u = null;
+      try {
+        u = openCompilationUnit(f);
+        for (int i = 0; i < optRounds; ++i) {
+          final int n = SpartanizeAll.countSuggestions(u);
+          if (n == 0)
+            break;
+          eclipse.apply(u);
         }
+        System.out.println("Spartanized file " + f.getAbsolutePath());
+      } catch (final JavaModelException | IOException e) {
+        System.err.println(f + ": " + e.getMessage());
+      } catch (final Exception e) {
+        System.err.println("An unexpected error has occurred on file " + f + ": " + e.getMessage());
+        e.printStackTrace();
+      } finally {
+        //
+        discardCompilationUnit(u);
+      }
     }
+  }
+
+  public void copy(final File sourceLocation, final File targetLocation) throws IOException {
+    if (!sourceLocation.isDirectory())
+      copyFile(sourceLocation, targetLocation);
+    else
+      copyDirectory(sourceLocation, targetLocation);
+  }
+
+  @Override public Object start(final IApplicationContext arg0) {
+    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+    System.out.println(path);
+    path = args[0];
+    printStatistics("Before-", OUTPUT);
+    spartanize();
+    printStatistics("After-", SPARTAN_OUTPUT);
+    return IApplication.EXIT_OK;
+  }
+
+  @Override public void stop() {
+    // Unused
+  }
+
+  private void copyDirectory(final File source, final File target) throws IOException {
+    if (!target.exists())
+      target.mkdir();
+    for (final String f : source.list())
+      copy(new File(source, f), new File(target, f));
   }
 }
