@@ -1,12 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
+import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
-import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -21,9 +19,9 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null)
       return null;
+    extract.modifiers(parent);
     final Expression e = f.getInitializer();
-    if (e == null || !iz.literal(e) || Wizard.isDefaultLiteral(e)
-        || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e))
+    if (e == null || !iz.literal(e) || wizard.isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e))
       return null;
     final VariableDeclarationFragment $ = duplicate.of(f);
     $.setInitializer(null);

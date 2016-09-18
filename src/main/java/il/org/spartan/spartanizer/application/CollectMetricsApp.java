@@ -31,6 +31,10 @@ public final class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
   private static boolean optDoNotOverwrite = false;
 
+  static String determineOutputFilename(final String path) {
+    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
+  }
+
   // app methods
   static void discardCompilationUnit(final ICompilationUnit u) {
     try {
@@ -147,10 +151,6 @@ public final class CollectMetricsApp implements IApplication {
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.nl();
   }
-  
-  private static void stats(final String prefix, final CompilationUnit ¢) {
-    stats.get(prefix + "Count");
-  }
 
   private static void spartanize() { // final CompilationUnit u) {
     // TODO: try to it do first with one wring only.
@@ -173,7 +173,6 @@ public final class CollectMetricsApp implements IApplication {
           eclipse.apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-
         System.out.println("Spartanized file " + f.getAbsolutePath());
       } catch (final JavaModelException | IOException e) {
         System.err.println(f + ": " + e.getMessage());
@@ -185,10 +184,6 @@ public final class CollectMetricsApp implements IApplication {
         discardCompilationUnit(u);
       }
     }
-  }
-  
-  static String determineOutputFilename(final String path) {
-    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   public void copy(final File sourceLocation, final File targetLocation) throws IOException {

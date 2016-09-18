@@ -88,7 +88,7 @@ public interface eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link wizard@nullProgressMonitor{ 
+   *        operation times use {@link wizard@nullProgressMonitor{
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
@@ -112,11 +112,11 @@ public interface eclipse {
       pm.worked(1);
       if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
         pm.worked(1);
-        for (final IJavaElement ¢ : r.getChildren()) {
-          pm.worked(1);
-          if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.addAll(as.list(((IPackageFragment) ¢).getCompilationUnits()));
-        }
+      for (final IJavaElement ¢ : r.getChildren()) {
+        pm.worked(1);
+        if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+          $.addAll(as.list(((IPackageFragment) ¢).getCompilationUnits()));
+      }
     }
     pm.done();
     return $;

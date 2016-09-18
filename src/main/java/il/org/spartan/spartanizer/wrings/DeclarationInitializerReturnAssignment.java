@@ -38,7 +38,7 @@ public final class DeclarationInitializerReturnAssignment extends VariableDeclar
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || hasAnnotation(f))
+    if (initializer == null || haz.hasAnnotation(f))
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)

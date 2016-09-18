@@ -13,10 +13,10 @@ public final class InitializerTest {
   }
   static int a;
 
- public static void main(@SuppressWarnings("unused") final String[] __) {
-  new InitializerTest(3);
-  System.out.print(InitializerTest.a);
-}
+  public static void main(final String[] __) {
+    new InitializerTest(3);
+    System.out.print(InitializerTest.a);
+  }
 
   {
     // b is not recognized here.

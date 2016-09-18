@@ -22,6 +22,18 @@ public enum haz {
     return false;
   }
 
+  public static boolean hasAnnotation(final VariableDeclarationFragment ¢) {
+    return hasAnnotation((VariableDeclarationStatement) ¢.getParent());
+  }
+
+  public static boolean hasAnnotation(final VariableDeclarationStatement ¢) {
+    return haz.hasAnnotation(extract.modifiers(¢));
+  }
+
+  public static boolean hasNoModifiers(final BodyDeclaration ¢) {
+    return !¢.modifiers().isEmpty();
+  }
+
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
@@ -64,5 +76,17 @@ public enum haz {
       }
     });
     return $.get().booleanValue();
+  }
+
+  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
+        return true;
+    return false;
+  }
+
+  private static boolean hasAnnotation(final Object modifiers) {
+    // TODO Auto-generated method stub
+    return false;
   }
 }

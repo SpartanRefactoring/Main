@@ -5,7 +5,8 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit test for {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
+/** Unit test for
+ * {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
