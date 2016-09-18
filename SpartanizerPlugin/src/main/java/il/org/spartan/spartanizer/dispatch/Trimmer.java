@@ -55,7 +55,7 @@ public class Trimmer extends Applicator {
   }
 
   public Trimmer(final Toolbox toolbox) {
-    super("  Spartanize");
+    super("  Apply");
     this.toolbox = toolbox;
   }
 

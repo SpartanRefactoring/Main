@@ -5,7 +5,10 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
+import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
@@ -50,12 +53,13 @@ public final class SpartanizeAll extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
+
         // TODO: Ori, please please no busy cursor. Use ProgressManager
-        ps.busyCursorWhile(pm -> {
+        final IRunnableWithProgress runnable = pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
           "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
           int n = 0;
-          final List<ICompilationUnit> es = new LinkedList<>();
+          final List<ICompilationUnit> es = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
             if (!eclipse.apply(¢))
               es.add(¢);
@@ -64,7 +68,12 @@ public final class SpartanizeAll extends BaseHandler {
           }
           us.removeAll(es);
           pm.done();
-        });
+        };
+        ISchedulingRule rule = null;
+        IRunnableContext context = new ProgressMonitorDialog(null);
+        ps.runInUI(context, runnable, rule);
+        // ps.run(true, true, runnable);
+        // ps.busyCursorWhile(runnable);
       } catch (final InvocationTargetException x) {
         Plugin.log(x);
       } catch (final InterruptedException x) {
