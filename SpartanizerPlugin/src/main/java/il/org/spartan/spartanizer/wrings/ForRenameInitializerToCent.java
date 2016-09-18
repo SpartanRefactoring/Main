@@ -47,8 +47,10 @@ public final class ForRenameInitializerToCent extends Wring<VariableDeclarationE
       return null;
     if (haz.variableDefinition(body))
       return null;
-    if (m != null)
-      m.exclude(d);
+    if (m != null) {
+      m.exclude(body);
+      m.exclude(forStatement);
+    }
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Suggestion(description(d), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
