@@ -12,26 +12,26 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue073Test {
   @Test public void issue73_01() {
-    trimming("x + \"\"").stays();
+    trimmingOf("x + \"\"").stays();
   }
 
   @Test public void issue73_02() {
-    trimming("\"abc\" + \"\"").to("\"abc\"").stays();
+    trimmingOf("\"abc\" + \"\"").gives("\"abc\"").stays();
   }
 
   @Test public void issue73_03() {
-    trimming("\"\"+\"abc\"").to("\"abc\"").stays();
+    trimmingOf("\"\"+\"abc\"").gives("\"abc\"").stays();
   }
 
   @Test public void issue73_04() {
-    trimming("\"abc\" + \"\"+\"abc\"").to("\"abc\" + \"abc\"");
+    trimmingOf("\"abc\" + \"\"+\"abc\"").gives("\"abc\" + \"abc\"");
   }
 
   @Test public void issue73_05() {
-    trimming("x + \"\"+\"abc\"").to("x + \"abc\"").stays();
+    trimmingOf("x + \"\"+\"abc\"").gives("x + \"abc\"").stays();
   }
 
   @Test public void issue73_06() {
-    trimming("((String)x) + \"\"").to("((String)x)");
+    trimmingOf("((String)x) + \"\"").gives("((String)x)");
   }
 }

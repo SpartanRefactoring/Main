@@ -153,12 +153,12 @@ public class Issue___TestTemplate {
 
   /** Correct way of trimming does not change */
   @Test public void Z$130() {
-    trimming("a").stays();
+    trimmingOf("a").stays();
   }
 
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
-    trimming("a").stays();
+    trimmingOf("a").stays();
   }
 
   private int $0() {

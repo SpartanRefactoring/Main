@@ -126,7 +126,7 @@ public final class Issue086Test extends Issue___TestTemplate {
 
   @Test public void doubleVanillaThrow() {
     A$04_init();
-    trimming("int f() {"//
+    trimmingOf("int f() {"//
         + " if (false) "//
         + "   i++; "//
         + " else { "//
@@ -137,32 +137,32 @@ public final class Issue086Test extends Issue___TestTemplate {
         + " a = 3;" //
         + " return 2;" + "}"//
     )//
-        .to("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}") //
-        .to("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}") //
-        .to("int f(){g(i);throw new RuntimeException();a=3;return 2;}") //
-        .to("int f(){g(i);throw new RuntimeException();return 2;}") //
-        .to("int f(){g(i);throw new RuntimeException();}") //
+        .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}") //
+        .gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}") //
+        .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}") //
+        .gives("int f(){g(i);throw new RuntimeException();return 2;}") //
+        .gives("int f(){g(i);throw new RuntimeException();}") //
         .stays();
   }
 
   @Test public void vanilla() {
-    trimming("{"//
+    trimmingOf("{"//
         + "   throw Something(); "//
         + " f();" //
         + " a = 3;" //
         + " return 2;" //
         + "}")//
-            .to("throw Something();f(); a=3; return 2;") //
-            .to("throw Something();a=3; return 2;") //
-            .to("throw Something(); return 2;") //
-            .to("throw Something();") //
+            .gives("throw Something();f(); a=3; return 2;") //
+            .gives("throw Something();a=3; return 2;") //
+            .gives("throw Something(); return 2;") //
+            .gives("throw Something();") //
             .stays();
   }
 
   @Test public void vanilla01() {
-    trimming("throw Something();a=3; return 2;") //
-        .to("throw Something(); return 2;") //
-        .to("throw Something();") //
+    trimmingOf("throw Something();a=3; return 2;") //
+        .gives("throw Something(); return 2;") //
+        .gives("throw Something();") //
         .stays();
   }
 

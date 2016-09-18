@@ -12,42 +12,42 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue172Test {
   @Test public void issue172_01() {
-    trimming("1+3*x+0").to("1+3*x");
+    trimmingOf("1+3*x+0").gives("1+3*x");
   }
 
   @Test public void issue172_02() {
-    trimming("1+3*x+0+\"\"").to("1+3*x+\"\"");
+    trimmingOf("1+3*x+0+\"\"").gives("1+3*x+\"\"");
   }
 
   @Test public void issue172_03() {
-    trimming("0+x+\"\"").stays();
+    trimmingOf("0+x+\"\"").stays();
   }
 
   @Test public void issue172_04() {
-    trimming("2+1*x+0+\"abc\"+\"\"").to("2+1*x+\"abc\"").to("1*x+2+\"abc\"").to("x+2+\"abc\"").stays();
+    trimmingOf("2+1*x+0+\"abc\"+\"\"").gives("2+1*x+\"abc\"").gives("1*x+2+\"abc\"").gives("x+2+\"abc\"").stays();
   }
 
   @Test public void issue172_05() {
-    trimming("x+\"\"+\"abc\"+0").to("x+\"abc\"+0").stays();
+    trimmingOf("x+\"\"+\"abc\"+0").gives("x+\"abc\"+0").stays();
   }
 
   @Test public void issue172_06() {
-    trimming("0 + \"\"").stays();
+    trimmingOf("0 + \"\"").stays();
   }
 
   @Test public void issue172_07() {
-    trimming("\"\" + 0").to("0+\"\"").stays();
+    trimmingOf("\"\" + 0").gives("0+\"\"").stays();
   }
 
   @Test public void issue172_08() {
-    trimming("\"\" + 0 + 1").to("0+ \"\" + 1").stays();
+    trimmingOf("\"\" + 0 + 1").gives("0+ \"\" + 1").stays();
   }
 
   @Test public void issue172_09() {
-    trimming("x+1+0").stays();
+    trimmingOf("x+1+0").stays();
   }
 
   @Test public void issue172_10() {
-    trimming("0+x+1").stays();
+    trimmingOf("0+x+1").stays();
   }
 }

@@ -12,38 +12,38 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue162Test {
   @Ignore("issue 172") @Test public void issue162_01() {
-    trimming("0+(0+x+y+(4))").to("x+y+4").stays();
+    trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
 
   @Test public void issue162_02() {
-    trimming("\"I ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I ate\"+\"an\"+\" ice cream sandwich\"").stays();
+    trimmingOf("\"I ate\"+(\"an\"+\" ice cream sandwich\")").gives("\"I ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }
 
   @Test public void issue162_03() {
-    trimming("(2*3)+\"\"").to("2*3+\"\"").to("6+\"\"").stays();
+    trimmingOf("(2*3)+\"\"").gives("2*3+\"\"").gives("6+\"\"").stays();
   }
 
   @Test public void issue162_04() {
-    trimming("\"a\"+(x-2)").stays();
+    trimmingOf("\"a\"+(x-2)").stays();
   }
 
   @Test public void issue162_05() {
-    trimming("\"a\"+((x-2))").to("\"a\"+(x-2)").stays();
+    trimmingOf("\"a\"+((x-2))").gives("\"a\"+(x-2)").stays();
   }
 
   @Test public void issue162_06() {
-    trimming("(\"a\")+(x-2)").to("\"a\"+(x-2)").stays();
+    trimmingOf("(\"a\")+(x-2)").gives("\"a\"+(x-2)").stays();
   }
 
   @Test public void issue162_07() {
-    trimming("(x-2)+\"abc\"").to("x-2+\"abc\"");
+    trimmingOf("(x-2)+\"abc\"").gives("x-2+\"abc\"");
   }
 
   @Test public void issue162_08() {
-    trimming("(f() ? x : y) + \".toString\"").stays();
+    trimmingOf("(f() ? x : y) + \".toString\"").stays();
   }
 
   @Test public void issue162_09() {
-    trimming("\"I \" + \"ate\"+(\"an\"+\" ice cream sandwich\")").to("\"I \" + \"ate\"+\"an\"+\" ice cream sandwich\"").stays();
+    trimmingOf("\"I \" + \"ate\"+(\"an\"+\" ice cream sandwich\")").gives("\"I \" + \"ate\"+\"an\"+\" ice cream sandwich\"").stays();
   }
 }

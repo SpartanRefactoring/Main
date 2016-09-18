@@ -12,31 +12,32 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue116Test {
   @Test public void issue116_01() {
-    trimming("\"\" + x").to("x + \"\"").stays();
+    trimmingOf("\"\" + x").gives("x + \"\"").stays();
   }
 
   @Test public void issue116_02() {
-    trimming("\"\" + x.foo()").to("x.foo() + \"\"").stays();
+    trimmingOf("\"\" + x.foo()").gives("x.foo() + \"\"").stays();
   }
 
   @Test public void issue116_03() {
-    trimming("\"\" + (Integer)(\"\" + x).length()").to("(Integer)(\"\" + x).length() + \"\"").to("(Integer)(x +\"\").length() + \"\"").stays();
+    trimmingOf("\"\" + (Integer)(\"\" + x).length()").gives("(Integer)(\"\" + x).length() + \"\"").gives("(Integer)(x +\"\").length() + \"\"")
+        .stays();
   }
 
   @Test public void issue116_04() {
-    trimming("String s = \"\" + x.foo();").to("String s = x.foo() + \"\";").stays();
+    trimmingOf("String s = \"\" + x.foo();").gives("String s = x.foo() + \"\";").stays();
   }
 
   @Test public void issue116_07() {
-    trimming("\"\" + 0 + (x - 7)").to("0 + \"\" + (x - 7)").stays();
+    trimmingOf("\"\" + 0 + (x - 7)").gives("0 + \"\" + (x - 7)").stays();
   }
 
   @Test public void issue116_08() {
-    trimming("return x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\";")
-        .to("return \"Use \" + (x == null ? \"isEmpty()\" : \"\" + x + \".isEmpty()\");")
-        .to("return \"Use \" + ((x == null ? \"\" : \"\" + x + \".\")+\"isEmpty()\");")
-        .to("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
-        .to("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
-        .to("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";").stays();
+    trimmingOf("return x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\";")
+        .gives("return \"Use \" + (x == null ? \"isEmpty()\" : \"\" + x + \".isEmpty()\");")
+        .gives("return \"Use \" + ((x == null ? \"\" : \"\" + x + \".\")+\"isEmpty()\");")
+        .gives("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
+        .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
+        .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";").stays();
   }
 }

@@ -28,9 +28,6 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   @Override public final boolean visit(final ClassInstanceCreation ¢) {
     return cautiousGo(¢);
   }
-  @Override public final boolean visit(final VariableDeclarationExpression ¢) {
-    return cautiousGo(¢);
-  }
 
   @Override public final boolean visit(final ConditionalExpression ¢) {
     return cautiousGo(¢);
@@ -97,6 +94,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   @Override public final boolean visit(final TypeDeclaration ¢) {
+    return cautiousGo(¢);
+  }
+
+  @Override public final boolean visit(final VariableDeclarationExpression ¢) {
     return cautiousGo(¢);
   }
 
