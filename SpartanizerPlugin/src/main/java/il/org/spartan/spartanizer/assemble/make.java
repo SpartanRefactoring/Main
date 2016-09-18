@@ -51,9 +51,9 @@ public enum make {
     return make.from(¢).literal("");
   }
 
-  public static NullLiteral makeNullLiteral(ASTNode n) {
+  public static NullLiteral makeNullLiteral(ASTNode ¢) {
     return
-    n.getAST().newNullLiteral();
+    ¢.getAST().newNullLiteral();
   }
 
   public static Expression minus(final Expression x) {

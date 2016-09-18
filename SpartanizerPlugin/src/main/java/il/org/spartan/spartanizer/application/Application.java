@@ -106,8 +106,8 @@ public final class Application implements IApplication {
   IJavaProject javaProject;
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
-  boolean optDoNotOverwrite = false, optIndividualStatistics = false, optVerbose = false;
-  boolean optStatsLines = false, optStatsChanges = false, printLog = false;
+  boolean optDoNotOverwrite, optIndividualStatistics, optVerbose;
+  boolean optStatsLines, optStatsChanges, printLog;
   int optRounds = 20;
   String optPath;
 

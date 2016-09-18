@@ -403,7 +403,7 @@ import java.util.*;
 
       @Override public Iterator<Type> iterator() {
         return new Iterator<Type>() {
-          @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex = 0;
+          @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
 
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;

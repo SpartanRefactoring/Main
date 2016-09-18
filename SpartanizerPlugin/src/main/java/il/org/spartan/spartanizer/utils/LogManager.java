@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.utils;
 import java.io.*;
 
 public final class LogManager {
-  protected static boolean ACTIVE = false;
-  private static String logDir = null; // /home/matteo/SpartanLog
-  private static LogWriter logWriter = null;
+  protected static boolean ACTIVE;
+  private static String logDir; // /home/matteo/SpartanLog
+  private static LogWriter logWriter;
 
   public static void activateLog() {
     ACTIVE = true;

@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,25 +17,20 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
     return "Remove default values initiliazing field";
   }
 
-  @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment n) {
-    final FieldDeclaration parent = az.fieldDeclaration(parent(n));
+  @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
+    final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null)
       return null;
-    final Expression e = n.getInitializer();
-    if (e == null)
+    final Expression e = f.getInitializer();
+    if (e == null || !iz.literal(e) || Wizard.isDefaultLiteral(e)
+        || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e))
       return null;
-    if (!iz.literal(e))
-      return null;
-    if (!iz.nullLiteral(e) && !iz.literal0(e) && !iz.literal¢false(e) && !iz.literal(e, 0.0))
-      return null;
-    if (isBoxedType(parent.getType() + "") && !iz.nullLiteral(e))
-      return null;
-    final VariableDeclarationFragment $ = duplicate.of(n);
+    final VariableDeclarationFragment $ = duplicate.of(f);
     $.setInitializer(null);
     return $;
   }
 
-  @Override protected String description(final VariableDeclarationFragment n) {
-    return "Remove default initializer " + n.getInitializer() + " of field " + n.getName();
+  @Override protected String description(final VariableDeclarationFragment ¢) {
+    return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 }
