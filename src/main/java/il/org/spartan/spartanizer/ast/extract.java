@@ -2,13 +2,13 @@ package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -26,41 +26,23 @@ public enum extract {
     return hop.operands(flatten.of(¢));
   }
 
-  public static List<InfixExpression.Operator> allOperators(final InfixExpression x) {
-    assert x != null;
+  public static List<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
+    assert ¢ != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
-    extract.findOperators(x, $);
+    extract.findOperators(¢, $);
     return $;
   }
 
-  public static List<Annotation> annotations(final BodyDeclaration d) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(d)) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  public static List<Annotation> annotations(final BodyDeclaration ¢) {
+    return annotations(step.modifiers(¢));
   }
 
-  public static List<Annotation> annotations(final SingleVariableDeclaration d) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(d)) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
+    return annotations(step.modifiers(¢));
   }
 
-  public static List<Annotation> annotations(final VariableDeclarationStatement s) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.modifiers(s)) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
+    return annotations(step.modifiers(¢));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -120,19 +102,6 @@ public enum extract {
     }
   }
 
-  public static double doubleNumber(final Expression x) {
-    assert iz.numberLiteral(x) || iz.prefixExpression(x);
-    if (!iz.longType(x))
-      return !iz.prefixExpression(x) ? Double.parseDouble(az.numberLiteral(x).getToken())
-          : -1 * Double.parseDouble(az.numberLiteral(az.prefixExpression(x).getOperand()).getToken());
-    if (iz.numberLiteral(x)) {
-      final String token = az.numberLiteral(x).getToken();
-      return Double.parseDouble(token.substring(0, token.length() - 1));
-    }
-    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
-    return -1 * Double.parseDouble(negToken.substring(0, negToken.length() - 1));
-  }
-
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
    * @param n a statement or a block to extract the expression statement from
    * @return expression statement if n is a block or an expression statement or
@@ -156,22 +125,6 @@ public enum extract {
    *         <code><b>null</b></code> if not such statements exists. */
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
-  }
-
-  public static int intNumber(final Expression ¢) {
-    assert iz.numberLiteral(¢) || iz.prefixExpression(¢);
-    return !iz.prefixExpression(¢) ? Integer.parseInt(az.numberLiteral(¢).getToken())
-        : -1 * Integer.parseInt(az.numberLiteral(az.prefixExpression(¢).getOperand()).getToken());
-  }
-
-  public static long longNumber(final Expression x) {
-    assert iz.numberLiteral(x) || iz.prefixExpression(x);
-    if (iz.numberLiteral(x)) {
-      final String token = az.numberLiteral(x).getToken();
-      return Long.parseLong(iz.intType(x) ? token : token.substring(0, token.length() - 1));
-    }
-    final String negToken = az.numberLiteral(az.prefixExpression(x).getOperand()).getToken();
-    return -1 * Long.parseLong(negToken.substring(0, negToken.length() - 1));
   }
 
   /** @param n JD
@@ -211,20 +164,12 @@ public enum extract {
     return $;
   }
 
-  public static NumberLiteral negativeLiteral(final Expression ¢) {
-    return negativeLiteral(az.prefixExpression(¢));
-  }
-
-  public static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-    return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : az.numberLiteral(operand(¢));
-  }
-
   /** Find the {@link Assignment} that follows a given node.
    * @param n JD
    * @return {@link Assignment} that follows the parameter, or
    *         <code><b>null</b></code> if not such value exists. */
   public static Assignment nextAssignment(final ASTNode ¢) {
-    return extract.assignment(nextStatement(¢));
+    return assignment(extract.nextStatement(¢));
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
@@ -232,7 +177,7 @@ public enum extract {
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static IfStatement nextIfStatement(final ASTNode ¢) {
-    return az.ifStatement(nextStatement(¢));
+    return az.ifStatement(extract.nextStatement(¢));
   }
 
   /** Extract the {@link ReturnStatement} that immediately follows a given node
@@ -240,7 +185,7 @@ public enum extract {
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static ReturnStatement nextReturn(final ASTNode ¢) {
-    return az.returnStatement(nextStatement(¢));
+    return az.returnStatement(extract.nextStatement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given node.
@@ -248,7 +193,7 @@ public enum extract {
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement nextStatement(final ASTNode ¢) {
-    return nextStatement(extract.statement(¢));
+    return nextStatement(statement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement
@@ -270,12 +215,21 @@ public enum extract {
     return core(onlyOne($));
   }
 
+  public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
+    final VariableDeclarationFragment onlyOne = lisp.onlyOne(fragments(¢));
+    return onlyOne == null ? null : onlyOne.getName();
+  }
+
+  public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
+    return lisp.onlyOne(fragments(¢)).getName();
+  }
+
   /** Finds the expression returned by a return statement
    * @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
-  public static Expression returnExpression(final ASTNode n) {
-    final ReturnStatement $ = returnStatement(n);
+  public static Expression returnExpression(final ASTNode ¢) {
+    final ReturnStatement $ = returnStatement(¢);
     return $ == null ? null : $.getExpression();
   }
 
@@ -317,8 +271,8 @@ public enum extract {
    * @param n JD
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement statement(final ASTNode n) {
-    for (ASTNode $ = n; $ != null; $ = $.getParent())
+  public static Statement statement(final ASTNode ¢) {
+    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.statement($))
         return az.asStatement($);
     return null;
@@ -328,17 +282,17 @@ public enum extract {
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param n JD
    * @return list of such statements. */
-  public static List<Statement> statements(final ASTNode n) {
+  public static List<Statement> statements(final ASTNode ¢) {
     final List<Statement> $ = new ArrayList<>();
-    return n == null || !(n instanceof Statement) ? $ : //
-        extract.statementsInto((Statement) n, $);
+    return ¢ == null || !(¢ instanceof Statement) ? $ : //
+        extract.statementsInto((Statement) ¢, $);
   }
 
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
-  public static Expression throwExpression(final ASTNode n) {
-    final ThrowStatement $ = az.throwStatement(extract.singleStatement(n));
+  public static Expression throwExpression(final ASTNode ¢) {
+    final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
     return $ == null ? null : $.getExpression();
   }
 
@@ -350,10 +304,20 @@ public enum extract {
     return az.throwStatement(extract.singleStatement(¢));
   }
 
+  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : ms) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
   private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int i = 0; i < ss.size() - 1; ++i)
-      if (ss.get(i) == s)
-        return ss.get(i + 1);
+    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+      if (ss.get(¢) == s)
+        return ss.get(¢ + 1);
     return null;
   }
 

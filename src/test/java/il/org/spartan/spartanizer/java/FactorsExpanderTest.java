@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings("static-method") public class FactorsExpanderTest {
+@SuppressWarnings("static-method") public final class FactorsExpanderTest {
   @Test public void test00() {
     azzert.that(FactorsExpander.simplify(i("a/b")), iz("a/b"));
   }

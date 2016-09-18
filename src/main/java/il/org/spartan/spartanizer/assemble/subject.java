@@ -9,10 +9,11 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Contains subclasses and tools to build expressions and statements */
-public class subject {
+public final class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = duplicate.of(base);
     extendedOperands($).add(make.plant(duplicate.of(add)).into($));
@@ -146,9 +147,9 @@ public class subject {
      * operator
      * @param o a postfix operator
      * @return the expression inner together with the postfix operator o */
-    public Expression to(final PostfixExpression.Operator o) {
+    public Expression to(final PostfixExpression.Operator ¢) {
       final PostfixExpression $ = ast.newPostfixExpression();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setOperand(make.plant(inner).into($));
       return $;
     }
@@ -158,9 +159,9 @@ public class subject {
      * operator
      * @param o a prefix operator
      * @return the expression inner together with the prefix operator o */
-    public PrefixExpression to(final PrefixExpression.Operator o) {
+    public PrefixExpression to(final PrefixExpression.Operator ¢) {
       final PrefixExpression $ = ast.newPrefixExpression();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setOperand(make.plant(inner).into($));
       return $;
     }
@@ -226,10 +227,10 @@ public class subject {
      * of the assignment expression is the field left/right respectively,
      * @param o an assignment operator
      * @return an assignment expression with operator o */
-    public Assignment to(final Assignment.Operator o) {
-      assert o != null;
+    public Assignment to(final Assignment.Operator ¢) {
+      assert ¢ != null;
       final Assignment $ = ast.newAssignment();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setLeftHandSide(make.plant(left).into($));
       $.setRightHandSide(make.plant(right).into($));
       return $;
@@ -240,13 +241,13 @@ public class subject {
      * operator is the given one
      * @param o
      * @return an expression with the parameter o as an operator */
-    public InfixExpression to(final InfixExpression.Operator o) {
+    public InfixExpression to(final InfixExpression.Operator ¢) {
       final InfixExpression $ = ast.newInfixExpression();
-      $.setOperator(o);
+      $.setOperator(¢);
       $.setLeftOperand(make.plant(left).intoLeft($));
-      $.setRightOperand(o != wizard.PLUS2 ? make.plant(right).into($)
+      $.setRightOperand(¢ != wizard.PLUS2 ? make.plant(right).into($)
           : !precedence.greater($, right)
-              && (!precedence.equal($, right) || !stringType.isNot(left) && !make.PlantingExpression.isStringConactingSafe(right))
+              && (!precedence.equal($, right) || !type.isNotString(left) && !make.PlantingExpression.isStringConactingSafe(right))
               && !iz.simple(right) ? subject.operand(right).parenthesis() : right);
       return $;
     }
@@ -296,8 +297,8 @@ public class subject {
       assert operands.size() != 1;
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
-      for (int i = 2; i < operands.size(); ++i)
-        extendedOperands($).add(make.plant(operands.get(i)).into($));
+      for (int ¢ = 2; ¢ < operands.size(); ++¢)
+        extendedOperands($).add(make.plant(operands.get(¢)).into($));
       return $;
     }
   }

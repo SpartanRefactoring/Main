@@ -44,7 +44,7 @@ import org.eclipse.jdt.core.dom.*;
     return environmentOf.containsKey(¢);
   }
 
-  public class Binding {
+  public final class Binding {
     // To be written
   }
 }

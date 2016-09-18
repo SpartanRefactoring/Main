@@ -4,7 +4,7 @@ import static java.lang.System.*;
 
 import java.util.*;
 
-@SuppressWarnings("all") public class EnvironmentTests {
+@SuppressWarnings("all") public final class EnvironmentTests {
   {
     @Begin class A {
     }
@@ -33,8 +33,8 @@ import java.util.*;
       String y;
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void f() {
-        for (int i = 0; i < 10; ++i)
-          x = i;
+        for (int ¢ = 0; ¢ < 10; ++¢)
+          x = ¢;
       }
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
@@ -46,11 +46,11 @@ import java.util.*;
     }
   }
 
-  static public class EX11 {
+  static public final class EX11 {
     // Variables defined in try blocks behave like variables declared in any
     // other
     // block - their scope spans only as far as the block does.
-    public class tryCatchTest {
+    public final class tryCatchTest {
       boolean dangerousFunc(final boolean ¢) {
         if (¢)
           throw new UnsupportedOperationException();
@@ -166,7 +166,7 @@ import java.util.*;
         xsy = new y_hiding();
       }
 
-      @NestedENV({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" }) @OutOfOrderFlatENV({ "x", "xsy" }) public class y_hiding { // purpose!
+      @NestedENV({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" }) @OutOfOrderFlatENV({ "x", "xsy" }) public final class y_hiding { // purpose!
         @InOrderFlatENV({ "x", "xsy" }) @OutOfOrderFlatENV({ "xsy", "x" }) public int y;
 
         y_hiding() {
@@ -388,7 +388,7 @@ import java.util.*;
   }
 
   public static class EX9 { // template
-    public class SOList<Type> implements Iterable<Type> {
+    public final class SOList<Type> implements Iterable<Type> {
       private final Type[] arrayList;
       @OutOfOrderFlatENV({ "arrayList" }) int currentSize;
 

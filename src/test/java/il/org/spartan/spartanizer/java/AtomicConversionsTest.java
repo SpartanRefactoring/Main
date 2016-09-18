@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc" }) //
-public class AtomicConversionsTest {
+public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();
   private final boolean b1 = getClass().equals(getClass());
   private final boolean b2 = !b1 | b << b == (b & 1);

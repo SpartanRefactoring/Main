@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
  * @since 2014-08-25 */
 @SuppressWarnings({ "javadoc" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class OccurrencesTest {
+public final class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
   private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);

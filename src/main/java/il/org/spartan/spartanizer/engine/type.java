@@ -46,46 +46,6 @@ public interface type {
     return inner.types.get(name);
   }
 
-  /** Generates a type from a String name, if the String name represents a
-   * concrete type identifiable by PrudentType.
-   * @param typeName
-   * @return The specified type */
-  // TODO: Niv, should be table driven. need to decide default return value.
-  // perhaps simply replace with baptize. Or, better yet, you can do a search in
-  // the dictionary
-  static type generateFromTypeName(final String typeName) {
-    switch (typeName) {
-      case "byte":
-      case "Byte":
-        return BYTE;
-      case "short":
-      case "Short":
-        return SHORT;
-      case "char":
-      case "Character":
-        return CHAR;
-      case "int":
-      case "Integer":
-        return INT;
-      case "long":
-      case "Long":
-        return LONG;
-      case "float":
-      case "Float":
-        return FLOAT;
-      case "double":
-      case "Double":
-        return DOUBLE;
-      case "boolean":
-      case "Boolean":
-        return BOOLEAN;
-      case "String":
-        return STRING;
-      default:
-        return NOTHING;
-    }
-  }
-
   // TODO: Matteo. Nano-pattern of values: not implemented
   @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
     return inner.get(¢);
@@ -105,6 +65,15 @@ public interface type {
 
   static boolean isLong(final Expression ¢) {
     return get(¢) == Certain.LONG;
+  }
+
+  /** @param x JD
+   * @return <code><b>true</b></code> <i>if</i> the parameter is an expression
+   *         whose type is provably not of type {@link String}, in the sense
+   *         used in applying the <code>+</code> operator to concatenate
+   *         strings. concatenation. */
+  static boolean isNotString(final Expression ¢) {
+    return !in(get(¢), STRING, ALPHANUMERIC);
   }
 
   static boolean isString(final Expression ¢) {
@@ -669,9 +638,7 @@ public interface type {
       INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), //
       INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE), //
       NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), //
-      ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, BOOLEAN
-      /** TOOD: NIV???WHY */
-          , STRING), //
+      ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING), //
       BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
       final String description;
@@ -694,6 +661,9 @@ public interface type {
         // accurate, no matter how you change the types. If you will check you
         // will find that INTEGER and INTEGRAL, have the same description, which
         // is obviously buggy.
+        // TODO: Yossi, But each type inner.types is a concert type that has a
+        // concrete name. Since Uncertain/Odd types don't have such names, they
+        // don't have any valid key to be put in the dictionary with.
       }
 
       @Override public boolean canB(final Certain ¢) {

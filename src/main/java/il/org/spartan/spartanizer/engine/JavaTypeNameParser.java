@@ -14,7 +14,7 @@ import org.eclipse.jdt.core.dom.*;
  * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */
-@SuppressWarnings("static-method") public class JavaTypeNameParser {
+@SuppressWarnings("static-method") public final class JavaTypeNameParser {
   public static boolean isJohnDoe(final SingleVariableDeclaration ¢) {
     return isJohnDoe(¢.getType(), ¢.getName());
   }
@@ -23,7 +23,7 @@ import org.eclipse.jdt.core.dom.*;
     return new JavaTypeNameParser(typeName).isGenericVariation(variableName);
   }
 
-  static boolean isJohnDoe(final Type t, final SimpleName n) {
+  public static boolean isJohnDoe(final Type t, final SimpleName n) {
     return isJohnDoe(t + "", n.getIdentifier());
   }
 

@@ -39,7 +39,7 @@ public enum have {
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (iz.literalFalse(¢))
+      if (iz.literal¢false(¢))
         return true;
     return false;
   }
@@ -94,7 +94,7 @@ public enum have {
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (iz.literalTrue(¢))
+      if (iz.literal¢true(¢))
         return true;
     return false;
   }

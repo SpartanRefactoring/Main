@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 
-public class EnvNestedHandler extends ENVTestEngineAbstract {
+public final class EnvNestedHandler extends ENVTestEngineAbstract {
   public EnvNestedHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();

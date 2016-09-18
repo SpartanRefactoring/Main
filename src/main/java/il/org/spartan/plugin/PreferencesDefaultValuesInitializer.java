@@ -12,7 +12,7 @@ import il.org.spartan.plugin.PreferencesResources.*;
  * default preference values. These are set by the values specified here.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016/03/28 */
-public class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
+public final class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
     final IPreferenceStore s = store();
     s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");

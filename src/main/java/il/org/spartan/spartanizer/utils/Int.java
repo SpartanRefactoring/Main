@@ -4,6 +4,6 @@ package il.org.spartan.spartanizer.utils;
  * convenient than {@link Integer}
  * @author Yossi Gil
  * @year 2016 */
-public class Int {
+public final class Int {
   public int inner = 0;
 }

@@ -12,6 +12,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -21,20 +22,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-16 */
 public enum iz {
   ;
-  public static boolean __abstract(final BodyDeclaration ¢) {
+  public static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
-  }
-
-  public static boolean __final(final BodyDeclaration ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
-  /** Determine whether a variable declaration is final or not
-   * @param subject some declaration
-   * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
-   *         final */
-  public static boolean __final(final VariableDeclarationStatement ¢) {
-    return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
   public static boolean abstractTypeDeclaration(final ASTNode ¢) {
@@ -47,6 +36,10 @@ public enum iz {
 
   public static boolean anonymousClassDeclaration(final ASTNode ¢) {
     return is(¢, ANONYMOUS_CLASS_DECLARATION);
+  }
+
+  public static boolean arrayInitializer(final ASTNode ¢) {
+    return is(¢, ARRAY_INITIALIZER);
   }
 
   /** @param n the statement or block to check if it is an assignment
@@ -122,10 +115,6 @@ public enum iz {
 
   public static boolean comparison(final Operator ¢) {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
-  }
-
-  public static boolean compileTime(final Expression ¢) {
-    return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
   /** @param xs JD
@@ -206,7 +195,7 @@ public enum iz {
   }
 
   public static boolean emptyStringLiteral(final ASTNode ¢) {
-    return iz.literal(¢, "");
+    return iz.literal("", ¢);
   }
 
   public static boolean enumConstantDeclaration(final ASTNode ¢) {
@@ -231,6 +220,18 @@ public enum iz {
    *         {@link ExpressionStatement} statement */
   public static boolean expressionStatement(final ASTNode ¢) {
     return is(¢, EXPRESSION_STATEMENT);
+  }
+
+  public static boolean final¢(final BodyDeclaration ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
+  }
+
+  /** Determine whether a variable declaration is final or not
+   * @param subject some declaration
+   * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
+   *         final */
+  public static boolean final¢(final VariableDeclarationStatement ¢) {
+    return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
   /** @param o The operator to check
@@ -258,6 +259,15 @@ public enum iz {
    *         statement */
   public static boolean forStatement(final ASTNode ¢) {
     return is(¢, FOR_STATEMENT);
+  }
+
+  public static boolean identifier(final String identifier, final Name typeName) {
+    return typeName.isQualifiedName() ? identifier(identifier, ((QualifiedName) typeName).getName())
+        : iz.simpleName(typeName) && identifier(identifier, az.simpleName(typeName));
+  }
+
+  public static boolean identifier(final String identifier, final SimpleName n) {
+    return identifier.equals(n.getIdentifier());
   }
 
   public static boolean ifStatement(final Statement ¢) {
@@ -422,14 +432,30 @@ public enum iz {
     return literal(¢.getExpression());
   }
 
+  public static boolean literal(final String s, final ASTNode ¢) {
+    return literal(az.stringLiteral(¢), s);
+  }
+
   /** @param ¢ JD
    * @return true if the given node is a literal or false otherwise */
   public static boolean literal(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException ____) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return false;
     }
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal false or false otherwise */
+  public static boolean literal¢false(final ASTNode ¢) {
+    return iz.literal(¢, false);
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal true or false otherwise */
+  public static boolean literal¢true(final ASTNode ¢) {
+    return iz.literal(¢, true);
   }
 
   /** @param ¢ JD
@@ -442,24 +468,6 @@ public enum iz {
    * @return true if the given node is a literal 1 or false otherwise */
   public static boolean literal1(final ASTNode ¢) {
     return iz.literal(¢, 1);
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is a literal false or false otherwise */
-  public static boolean literalFalse(final ASTNode ¢) {
-    return iz.literal(¢, false);
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is a literal true or false otherwise */
-  public static boolean literalTrue(final ASTNode ¢) {
-    return iz.literal(¢, true);
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is a literal 0 or false otherwise */
-  public static boolean literalZero(final ASTNode ¢) {
-    return iz.literal(¢, 0);
   }
 
   public static boolean longType(final Expression ¢) {
@@ -504,24 +512,13 @@ public enum iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
    *         it never needs to be placed in parenthesis. */
   public static boolean noParenthesisRequired(final Expression ¢) {
-    return in(¢.getClass(), //
-        BooleanLiteral.class, //
-        CharacterLiteral.class, //
-        ClassInstanceCreation.class, //
-        FieldAccess.class, //
-        MethodInvocation.class, //
-        Name.class, //
-        NullLiteral.class, //
-        NumberLiteral.class, //
-        ParenthesizedExpression.class, //
-        QualifiedName.class, //
-        SimpleName.class, //
-        StringLiteral.class, //
-        SuperFieldAccess.class, //
-        SuperMethodInvocation.class, //
-        ThisExpression.class, //
-        TypeLiteral.class, //
-        null);
+    return is(¢, ARRAY_ACCESS, ARRAY_CREATION, BOOLEAN_LITERAL, CAST_EXPRESSION, CHARACTER_LITERAL, CLASS_INSTANCE_CREATION, FIELD_ACCESS,
+        INSTANCEOF_EXPRESSION, METHOD_INVOCATION, NULL_LITERAL, NUMBER_LITERAL, PARAMETERIZED_TYPE, PARENTHESIZED_EXPRESSION, QUALIFIED_NAME,
+        SIMPLE_NAME, STRING_LITERAL, SUPER_CONSTRUCTOR_INVOCATION, SUPER_FIELD_ACCESS, SUPER_METHOD_INVOCATION, THIS_EXPRESSION, TYPE_LITERAL);
+  }
+
+  public static boolean normalAnnotations(final ASTNode ¢) {
+    return is(¢, NORMAL_ANNOTATION);
   }
 
   /** Determine whether a node is the <code><b>null</b></code> keyword
@@ -577,7 +574,7 @@ public enum iz {
   }
 
   public static boolean pseudoNumber(final Expression ¢) {
-    return numberLiteral(¢) || extract.negativeLiteral(¢) != null;
+    return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
   /** Determine whether a node is a return statement
@@ -620,6 +617,10 @@ public enum iz {
    *         name */
   public static boolean simpleName(final ASTNode ¢) {
     return is(¢, SIMPLE_NAME);
+  }
+
+  public static boolean singleMemberAnnotation(final ASTNode ¢) {
+    return is(¢, SINGLE_MEMBER_ANNOTATION);
   }
 
   /** Determine whether a node is a singleton statement, i.e., not a block.
@@ -697,7 +698,7 @@ public enum iz {
   public static boolean validForEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
     for (final Expression ¢ : lst)
-      if (!iz.compileTime(¢))
+      if (!iz.pseudoNumber(¢))
         return false;
     return true;
   }
@@ -746,10 +747,6 @@ public enum iz {
     return literal(az.numberLiteral(¢).getToken(), l);
   }
 
-  static boolean literal(final ASTNode ¢, final String s) {
-    return literal(az.stringLiteral(¢), s);
-  }
-
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
     return ¢ != null && ¢.booleanValue() == b;
   }
@@ -765,7 +762,8 @@ public enum iz {
   static boolean literal(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+    } catch (final IllegalArgumentException x) {
+      Plugin.log(x);
       return false;
     }
   }

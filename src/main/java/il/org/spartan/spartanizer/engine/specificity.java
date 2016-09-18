@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.*;
 
 /** @author Yossi Gil
  * @since 2015-08-23 */
-public class specificity implements Comparator<Expression> {
+public final class specificity implements Comparator<Expression> {
   /** Determine
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter has a defined
@@ -89,12 +89,12 @@ public class specificity implements Comparator<Expression> {
     },
     TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literalTrue(¢);
+        return iz.literal¢true(¢);
       }
     },
     FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literalFalse(¢);
+        return iz.literal¢false(¢);
       }
     },;
     static boolean defined(final Expression ¢) {
