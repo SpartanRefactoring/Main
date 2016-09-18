@@ -217,9 +217,7 @@ public enum extract {
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
     final VariableDeclarationFragment onlyOne = lisp.onlyOne(fragments(¢));
-    if (onlyOne == null)
-      return null;
-    return onlyOne.getName();
+    return onlyOne == null ? null : onlyOne.getName();
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {

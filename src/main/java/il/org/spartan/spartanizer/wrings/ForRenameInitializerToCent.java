@@ -29,28 +29,22 @@ public final class ForRenameInitializerToCent extends Wring<VariableDeclarationE
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }
 
-  @Override public Suggestion suggest(final VariableDeclarationExpression d, final ExclusionManager m) {
-    final ForStatement forStatement = az.forStatement(parent(d));
+  @Override public Suggestion suggest(final VariableDeclarationExpression x, final ExclusionManager m) {
+    final ForStatement forStatement = az.forStatement(parent(x));
     if (forStatement == null)
       return null;
-    final SimpleName n = extract.onlyName(d);
-    if (n == null)
-      return null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_"))
-      return null;
-    if (!isJohnDoe(d.getType(), n))
+    final SimpleName n = extract.onlyName(x);
+    if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(x.getType(), n))
       return null;
     final Statement body = forStatement.getBody();
-    if (body == null)
-      return null;
-    if (haz.variableDefinition(body))
+    if (body == null || haz.variableDefinition(body))
       return null;
     if (m != null) {
       m.exclude(body);
       m.exclude(forStatement);
     }
-    final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Suggestion(description(d), d) {
+    final SimpleName ¢ = x.getAST().newSimpleName("¢");
+    return new Suggestion(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, forStatement, r, g);
       }
