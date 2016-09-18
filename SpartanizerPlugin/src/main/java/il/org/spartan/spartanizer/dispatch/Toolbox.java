@@ -112,6 +112,7 @@ public class Toolbox {
               new EnhancedForRenameParameterToCent(), //
               null)//
           .add(VariableDeclarationFragment.class, //
+              new DeclarationRedundantInitializer(), //
               new DeclarationAssignment(), //
               new DeclarationInitialiazerAssignment(), //
               new DeclarationInitialiazelUpdateAssignment(), //
