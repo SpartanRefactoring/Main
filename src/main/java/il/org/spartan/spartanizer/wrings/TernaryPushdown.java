@@ -38,11 +38,11 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
 
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
-    for (int i = 0; i < es1.size(); ++i)
-      if (!wizard.same(es1.get(i), es2.get(i))) {
+    for (int ¢ = 0; ¢ < es1.size(); ++¢)
+      if (!wizard.same(es1.get(¢), es2.get(¢))) {
         if ($ >= 0)
           return -1;
-        $ = i;
+        $ = ¢;
       }
     return $;
   }

@@ -47,9 +47,6 @@ public final class ForRenameInitializerToCent extends Wring<VariableDeclarationE
       return null;
     if (haz.variableDefinition(body))
       return null;
-    final List<SimpleName> uses = Collect.usesOf(n).in(body);
-    if (uses.isEmpty())
-      return null;
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");

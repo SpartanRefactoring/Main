@@ -27,8 +27,8 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
           for (final ASTNode ¢ : input)
             r.replace(¢, output.get(0), g);
         else if (input.size() == output.size())
-          for (int i = 0; i < input.size(); ++i)
-            r.replace(input.get(i), output.get(i), g);
+          for (int ¢ = 0; ¢ < input.size(); ++¢)
+            r.replace(input.get(¢), output.get(¢), g);
       }
     };
   }

@@ -33,8 +33,8 @@ import java.util.*;
       String y;
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void f() {
-        for (int i = 0; i < 10; ++i)
-          x = i;
+        for (int ¢ = 0; ¢ < 10; ++¢)
+          x = ¢;
       }
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {

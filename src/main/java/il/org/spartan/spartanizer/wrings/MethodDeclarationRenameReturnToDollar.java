@@ -123,9 +123,9 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   @Override SimpleName innerSelectReturnVariable() {
-    for (final Iterator<SimpleName> i = localVariables.iterator(); i.hasNext();)
-      if (unused(i.next()))
-        i.remove();
+    for (final Iterator<SimpleName> ¢ = localVariables.iterator(); ¢.hasNext();)
+      if (unused(¢.next()))
+        ¢.remove();
     return first(localVariables);
   }
 

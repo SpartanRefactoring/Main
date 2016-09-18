@@ -114,8 +114,8 @@ public enum make {
     $.setOperator(wizard.PLUS2);
     $.setLeftOperand(duplicate.of(first(xs)));
     $.setRightOperand(duplicate.of(second(xs)));
-    for (int i = 2; i < xs.size(); ++i)
-      step.extendedOperands($).add(duplicate.of(xs.get(i)));
+    for (int ¢ = 2; ¢ < xs.size(); ++¢)
+      step.extendedOperands($).add(duplicate.of(xs.get(¢)));
     return $;
   }
 
