@@ -33,7 +33,7 @@ public class Toolbox {
   public static void refresh() {
     if (instance == null)
       instance = new Maker()//
-          // .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
+          .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
           .add(ReturnStatement.class, new ReturnLastInMethod()) //

@@ -27,9 +27,7 @@ public final class Issue209Test {
   }
 
   @Test public void issue209_02() {
-    trimming("new Integer(3).toString();")
-    .to("Integer.valueOf(3).toString();")
-    .stays();
+    trimming("new Integer(3).toString();").to("Integer.valueOf(3).toString();").stays();
   }
 
   @Test public void issue54_01() {

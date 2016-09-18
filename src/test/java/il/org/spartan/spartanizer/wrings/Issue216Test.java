@@ -33,8 +33,8 @@ public final class Issue216Test {
 
   @Test public void issue216_06() {
     trimming("(long)new Integer(5)")//
-    .to("1L*new Integer(5)")//
-    .to("1L*Integer.valueOf(5)")//
-    .stays();
+        .to("1L*new Integer(5)")//
+        .to("1L*Integer.valueOf(5)")//
+        .stays();
   }
 }

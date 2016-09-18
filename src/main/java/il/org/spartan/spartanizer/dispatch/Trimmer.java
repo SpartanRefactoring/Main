@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -60,28 +59,19 @@ public class Trimmer extends Applicator {
     this.toolbox = toolbox;
   }
 
-  @Override protected ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $) {
-    return new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (new DisabledChecker(u).check(n))
-          return true;
-        final Wring<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
-      }
-    };
-  }
-
   @Override public void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        // System.err.println("VISIT " + n.getClass().getSimpleName() + ": " + tide.clean(n + ""));
+        // System.err.println("VISIT " + n.getClass().getSimpleName() + ": " +
+        // tide.clean(n + ""));
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
-        // System.err.println("Wring is " + w.getClass().getSimpleName() + ": " + w);
+        // System.err.println("Wring is " + w.getClass().getSimpleName() + ": "
+        // + w);
         final Suggestion s = w.suggest(n, exclude);
         if (s != null) {
           if (LogManager.isActive())
@@ -91,6 +81,17 @@ public class Trimmer extends Applicator {
         return true;
       }
     });
+  }
+
+  @Override protected ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $) {
+    return new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        if (new DisabledChecker(u).check(n))
+          return true;
+        final Wring<N> w = Toolbox.defaultInstance().find(n);
+        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
+      }
+    };
   }
 
   String fixed(final String from) {
@@ -110,6 +111,14 @@ public class Trimmer extends Applicator {
     }
   }
 
+  /** A visitor hack converting the type specific visit functions, into a single
+   * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
+   * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead.
+   * Currently, we do not because some of the tests rely on the functions here
+   * returning false/true, or for no reason. No one really know...
+   * @author Yossi Gil
+   * @year 2016
+   * @see ExclusionManager */
   public static abstract class DispatchingVisitor extends ASTVisitor {
     protected final ExclusionManager exclude = makeExcluder();
 
@@ -121,11 +130,11 @@ public class Trimmer extends Applicator {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final ClassInstanceCreation ¢) {
+    @Override public final boolean visit(final CastExpression ¢) {
       return cautiousGo(¢);
     }
 
-    @Override public final boolean visit(final CastExpression ¢) {
+    @Override public final boolean visit(final ClassInstanceCreation ¢) {
       return cautiousGo(¢);
     }
 
@@ -186,6 +195,10 @@ public class Trimmer extends Applicator {
     }
 
     @Override public final boolean visit(final SuperConstructorInvocation ¢) {
+      return cautiousGo(¢);
+    }
+
+    @Override public final boolean visit(final ThrowStatement ¢) {
       return cautiousGo(¢);
     }
 
