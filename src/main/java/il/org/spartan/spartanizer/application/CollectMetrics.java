@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -40,7 +39,7 @@ public final class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
-    final CompilationUnit after = spartanize(before);
+//    final CompilationUnit after = spartanize(before);
 //    assert after != null;
 //    report("After-", after);
   }
