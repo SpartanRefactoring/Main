@@ -1,5 +1,4 @@
-package il.org.spartan.spartanizer.wrings;
-
+package il.org.spartan.spartanizer.wrings; 
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,8 +22,8 @@ public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowState
     if (!iz.block(parent))
       r.remove(nextStatement, g);
     else {
-      final ListRewrite $ = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
-      $.remove(nextStatement, g);
+     final ListRewrite $ = r.getListRewrite(parent, Block.STATEMENTS_PROPERTY);
+     $.remove(nextStatement, g);
     }
     return r;
   }
