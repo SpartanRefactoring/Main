@@ -6,8 +6,8 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> @since
@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.wring.dispatch.*;
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code>
  * @since 2013/07/01
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code> */
-public class Builder extends IncrementalProjectBuilder {
+public final class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all suggestions */
   public static final String SPARTANIZATION_LONG_PREFIX = "Spartanization suggestion: ";
   /** Short prefix to be used in front of all suggestions */
@@ -56,7 +56,7 @@ public class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final Applicator a, final Rewrite r, final IMarker m) throws CoreException {
+  private static void addMarker(final Applicator a, final Suggestion r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
@@ -74,7 +74,7 @@ public class Builder extends IncrementalProjectBuilder {
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final Applicator s : Spartanizations.all())
-      for (final Rewrite ¢ : s.collectSuggesions(u))
+      for (final Suggestion ¢ : s.collectSuggesions(u))
         if (¢ != null)
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));
   }
@@ -101,7 +101,7 @@ public class Builder extends IncrementalProjectBuilder {
         return true; // to continue visiting children.
       });
     } catch (final CoreException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
   }
 

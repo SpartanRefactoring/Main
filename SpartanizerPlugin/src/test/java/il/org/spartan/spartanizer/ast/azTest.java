@@ -12,7 +12,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public class azTest {
+public final class azTest {
   @Test public void asComparisonPrefixlExpression() {
     final PrefixExpression p = mock(PrefixExpression.class);
     doReturn(PrefixExpression.Operator.NOT).when(p).getOperator();

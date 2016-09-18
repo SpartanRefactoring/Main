@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
-public class LogWriter extends Writer {
+public final class LogWriter extends Writer {
   public LogWriter(final String outputPath) {
     this.outputPath = outputPath;
     initializeWriter();

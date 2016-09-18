@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings("static-method") public class FactorsReogranizerTest {
+@SuppressWarnings("static-method") public final class FactorsReogranizerTest {
   @Test public void test00() {
     azzert.that(FactorsReorganizer.simplify(i("a/b")), iz("a/b"));
   }

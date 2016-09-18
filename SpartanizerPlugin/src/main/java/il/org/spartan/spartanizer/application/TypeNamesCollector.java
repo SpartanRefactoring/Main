@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
 /** Demonstrates iteration through files.
  * @author Yossi Gil
  * @year 2015 */
-public class TypeNamesCollector {
+public final class TypeNamesCollector {
   static Map<String, Integer> longNames = new TreeMap<>();
   static Map<String, Set<String>> shortToFull = new TreeMap<>();
 

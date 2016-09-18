@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method" }) //
-public class SpecificityTest {
+public final class SpecificityTest {
   private static final specificity SPECIFICITY = new specificity();
 
   @Test public void characterGreaterThanNull() {

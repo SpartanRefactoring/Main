@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings("static-method") public class TermsExpanderTest {
+@SuppressWarnings("static-method") public final class TermsExpanderTest {
   String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +" + "\"Total changes: \" + (initialCount - finalCount)";
 
   @Test public void test00() {

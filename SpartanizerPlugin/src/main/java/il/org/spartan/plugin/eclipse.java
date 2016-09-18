@@ -15,7 +15,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Fluent API services for the plugin
@@ -48,7 +48,7 @@ public interface eclipse {
         s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
         return s.performRule(cu, nullProgressMonitor);
       } catch (final CoreException x) {
-        x.printStackTrace();
+        Plugin.log(x);
       }
     return false;
   }
@@ -70,7 +70,7 @@ public interface eclipse {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
     return null;
   }
@@ -79,7 +79,7 @@ public interface eclipse {
     try {
       return compilationUnits(u, nullProgressMonitor);
     } catch (final JavaModelException x) {
-      x.printStackTrace();
+      Plugin.log(x);
       return null;
     }
   }
@@ -134,7 +134,7 @@ public interface eclipse {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException x) {
-      x.printStackTrace();
+      Plugin.log(x);
       return true;
     }
   }

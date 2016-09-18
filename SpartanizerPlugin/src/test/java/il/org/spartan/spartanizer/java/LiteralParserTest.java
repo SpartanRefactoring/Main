@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.type.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) public class LiteralParserTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class LiteralParserTest {
   @Test public void doubleBinaryLiterals() {
     azzert.that(new LiteralParser("0x1.fffffffffffffP+1023").type(), is(Primitive.Certain.DOUBLE));
     azzert.that(new LiteralParser("0x1.0p-1022").type(), is(Primitive.Certain.DOUBLE));

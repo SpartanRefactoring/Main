@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
 
 /** @author Dor Ma'ayan
  * @since 2016 */
-public class Recurser<T> {
+public final class Recurser<T> {
   /** Get a list of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */

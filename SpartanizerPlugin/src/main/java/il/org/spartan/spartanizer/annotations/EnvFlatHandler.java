@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 
 /* Implements the handler of flatEnv outer annotation. */
-public class EnvFlatHandler extends ENVTestEngineAbstract {
+public final class EnvFlatHandler extends ENVTestEngineAbstract {
   public EnvFlatHandler(final ASTNode $) {
     n = $;
     testSet = generateSet();

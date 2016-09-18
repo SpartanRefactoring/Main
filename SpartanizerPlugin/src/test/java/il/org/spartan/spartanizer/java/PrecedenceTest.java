@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 /** @author Yossi Gil
  * @since 2015-07-17 */
-@SuppressWarnings({ "static-method", "javadoc" }) public class PrecedenceTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class PrecedenceTest {
   @Test public void addition() {
     azzert.that(precedence.of(e("a+b")), is(5));
     azzert.that(precedence.of(e("a-b")), is(5));

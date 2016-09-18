@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
 // TOOD Niv: Who wrote this class?
-public class FactorsCollector {
+public final class FactorsCollector {
   public static boolean isLeafFactor(final Expression ¢) {
     return !iz.infixTimes(¢) && !iz.infixDivide(¢);
   }
@@ -40,7 +40,7 @@ public class FactorsCollector {
     return multipliers;
   }
 
-  final FactorsCollector collect(final InfixExpression ¢) {
+  FactorsCollector collect(final InfixExpression ¢) {
     if (¢ != null && !isLeafFactor(¢))
       collectTimesNonLeaf(¢);
     return this;

@@ -11,9 +11,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) public class PlantTest {
+@SuppressWarnings({ "javadoc", "static-method" }) public final class PlantTest {
   @Test public void plantIntoLess() {
     azzert.that(subject.pair(into.e("a + 2"), into.e("b")).to(LESS), iz("a+2<b"));
   }
@@ -37,7 +36,7 @@ import il.org.spartan.spartanizer.java.*;
   @Test public void plus() {
     final Expression e = into.e("a + 2 < b");
     final Expression plus = findFirst.firstPlus(e);
-    azzert.that(plus + "", stringType.isNot(plus), is(true));
-    azzert.that(e + "", stringType.isNot(plus), is(true));
+    azzert.that(plus + "", type.isNotString(plus), is(true));
+    azzert.that(e + "", type.isNotString(plus), is(true));
   }
 }

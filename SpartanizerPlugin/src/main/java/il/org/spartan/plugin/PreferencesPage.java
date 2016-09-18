@@ -8,12 +8,12 @@ import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.*;
 
 /** ??
  * @author Daniel Mittelman
  * @year 2016 */
-public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
@@ -51,7 +51,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       try {
         Plugin.refreshAllProjects();
       } catch (final Exception e) {
-        e.printStackTrace();
+        Plugin.log(e);
       }
     }
   }

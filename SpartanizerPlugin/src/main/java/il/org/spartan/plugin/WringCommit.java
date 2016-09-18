@@ -15,18 +15,18 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.spartanizer.wring.dispatch.*;
-import il.org.spartan.spartanizer.wring.strategies.*;
+import il.org.spartan.spartanizer.wringing.*;
 
-public class WringCommit {
+public final class WringCommit {
   public static void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     if (Type.PROJECT.equals(t)) {
       goProject(pm, m);
       return;
     }
-    pm.beginTask("Toggling spartanization...", IProgressMonitor.UNKNOWN);
+    pm.beginTask("Applying suggestion", IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -60,8 +60,8 @@ public class WringCommit {
             textChange.setTextType("java");
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException e1) {
-              e1.printStackTrace();
+            } catch (JavaModelException | IllegalArgumentException x) {
+              Plugin.log(x);
             }
             if (textChange.getEdit().getLength() == 0)
               es.add(u);
@@ -69,7 +69,7 @@ public class WringCommit {
               try {
                 textChange.perform(pm);
               } catch (final CoreException e) {
-                e.printStackTrace();
+                Plugin.log(e);
               }
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
@@ -78,7 +78,7 @@ public class WringCommit {
           px.done();
         });
       } catch (InvocationTargetException | InterruptedException e) {
-        e.printStackTrace();
+        Plugin.log(e);
       }
     }
     pm.done();
@@ -156,23 +156,20 @@ public class WringCommit {
     }
 
     protected void commitDeclaration(final Wring<?> w, final ASTNode n) {
-      commitLocal(w, ToggleSpartanization.getDeclaringDeclaration(n));
+      commitLocal(w, SuppressSpartanizationOnOff.getDeclaringDeclaration(n));
     }
 
     protected void commitFile(final Wring<?> w, final ASTNode n) {
-      commitLocal(w, ToggleSpartanization.getDeclaringFile(n));
+      commitLocal(w, SuppressSpartanizationOnOff.getDeclaringFile(n));
     }
 
     protected void commitLocal(final Wring w, final ASTNode n) {
       Toolbox.refresh();
-      final DisabledChecker dc = new DisabledChecker(compilationUnit);
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (dc.check(n))
-            return true;
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Rewrite make = x.suggest(n, exclude);
+            final Suggestion make = x.suggest(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 // LogManager.initialize();

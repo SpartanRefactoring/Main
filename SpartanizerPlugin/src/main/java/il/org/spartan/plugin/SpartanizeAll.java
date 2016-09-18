@@ -13,7 +13,7 @@ import org.eclipse.ui.progress.*;
  * Spartanizations on all Java files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public class SpartanizeAll extends BaseHandler {
+public final class SpartanizeAll extends BaseHandler {
   static final int MAX_PASSES = 20;
 
   /** Returns the number of spartanization suggestions for a compilation unit
@@ -66,9 +66,10 @@ public class SpartanizeAll extends BaseHandler {
           pm.done();
         });
       } catch (final InvocationTargetException x) {
-        x.printStackTrace();
+        Plugin.log(x);
       } catch (final InterruptedException x) {
-        x.printStackTrace();
+        // TODO: What should we do here?
+        Plugin.log(x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)

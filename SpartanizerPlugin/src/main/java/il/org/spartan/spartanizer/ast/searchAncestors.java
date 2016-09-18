@@ -66,9 +66,9 @@ public abstract class searchAncestors {
       this.clazz = clazz;
     }
 
-    @Override public ASTNode from(final ASTNode n) {
-      if (n != null)
-        for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || $.getClass().isInstance(clazz))
             return $;
       return null;
@@ -82,9 +82,9 @@ public abstract class searchAncestors {
       this.type = type;
     }
 
-    @Override public ASTNode from(final ASTNode n) {
-      if (n != null)
-        for (ASTNode $ = n.getParent(); $ != null; $ = $.getParent())
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if (type == $.getNodeType())
             return $;
       return null;

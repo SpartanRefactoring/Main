@@ -104,8 +104,8 @@ public interface hop {
    * @return inner most {@link MethodDeclaration} in which the parameter is
    *         nested, or <code><b>null</b></code>, if no such statement
    *         exists. */
-  static MethodDeclaration methodDeclaration(final ASTNode n) {
-    for (ASTNode $ = n; $ != null; $ = $.getParent())
+  static MethodDeclaration methodDeclaration(final ASTNode ¢) {
+    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.methodDeclaration($))
         return az.methodDeclaration($);
     return null;
@@ -115,14 +115,14 @@ public interface hop {
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
    * @return a list of all operands of an expression */
-  static List<Expression> operands(final InfixExpression x) {
-    if (x == null)
+  static List<Expression> operands(final InfixExpression ¢) {
+    if (¢ == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
-    $.add(left(x));
-    $.add(right(x));
-    if (x.hasExtendedOperands())
-      $.addAll(step.extendedOperands(x));
+    $.add(left(¢));
+    $.add(right(¢));
+    if (¢.hasExtendedOperands())
+      $.addAll(step.extendedOperands(¢));
     return $;
   }
 }

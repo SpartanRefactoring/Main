@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.type.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
-public class typeTest {
+public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore}d.
    * @author Yossi Gil
    * @year 2016 */
@@ -29,6 +29,7 @@ public class typeTest {
   }
 
   public static class Working {
+    private static final long LONG_MINUS_3L = -3L;
     private static final int __1 = 1;
     private static final int __12 = 1;
     private static final int __13 = 1;
@@ -191,7 +192,7 @@ public class typeTest {
 
     /** @DisableSpartan */
     @Test public void axiomExpression8() {
-      azzert.that(Axiom.type(-3L % 4), is(LONG));
+      azzert.that(Axiom.type(LONG_MINUS_3L % 4), is(LONG));
     }
 
     @Test public void axiomExpression9() {

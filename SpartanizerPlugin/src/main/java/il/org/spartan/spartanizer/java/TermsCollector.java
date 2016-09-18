@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.*;
  * them in three output fields: {@link #plus}, {@link #minus} and {@link #all}.
  * @author Yossi Gil
  * @since 2016 */
-public class TermsCollector {
+public final class TermsCollector {
   public static boolean isLeafTerm(final Expression ¢) {
     return !iz.infixPlus(¢) && !iz.infixMinus(¢);
   }
@@ -43,7 +43,7 @@ public class TermsCollector {
     return positive;
   }
 
-  final TermsCollector collect(final InfixExpression ¢) {
+  TermsCollector collect(final InfixExpression ¢) {
     if (¢ != null && !isLeafTerm(¢))
       collectPlusNonLeaf(¢);
     return this;
