@@ -23,7 +23,7 @@ import org.eclipse.jdt.core.dom.*;
     return new JavaTypeNameParser(typeName).isGenericVariation(variableName);
   }
 
-  static boolean isJohnDoe(final Type t, final SimpleName n) {
+  public static boolean isJohnDoe(final Type t, final SimpleName n) {
     return isJohnDoe(t + "", n.getIdentifier());
   }
 
