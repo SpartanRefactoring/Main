@@ -828,8 +828,20 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void duplicatePartialIfBranches() {
-    trimmingOf("    if (a) {\n" + "      f();\n" + "      g();\n" + "      ++i;\n" + "    } else {\n" + "      f();\n" + "      g();\n"
-        + "      --i;\n" + "    }").gives("   f();\n" + "   g();\n" + "    if (a) \n" + "      ++i;\n" + "    else \n" + "      --i;");
+    trimmingOf("    if (a) {\n"//
+        + "      f();\n"//
+        + "      g();\n"//
+        + "      ++i;\n"//
+        + "    } else {\n"//
+        + "      f();\n"//
+        + "      g();\n" + "      --i;\n"//
+        + "    }")
+            .gives("   f();\n"//
+                + "   g();\n"//
+                + "    if (a) \n"//
+                + "      ++i;\n"//
+                + "    else \n"//
+                + "      --i;");
   }
 
   @Test public void emptyElse() {
@@ -869,12 +881,37 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void forLoopBug() {
-    trimmingOf("      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else "
-        + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n" + " if (b) i = 3;")//
-            .gives("      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(i) == 'd')\n" + "          res--;\n" + "      return res;\n" + " if (b) i = 3;")//
-            .gives("      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n" + " if (b) i = 3;")//
+    trimmingOf("      for (int i = 0;i < s.length();++i)\n"//
+        + "       if (s.charAt(i) == 'a')\n"//
+        + "          res += 2;\n"//
+        + "        else " + "       if (s.charAt(i) == 'd')\n"//
+        + "          res -= 1;\n"//
+        + "      return res;\n"//
+        + " if (b) i = 3;")//
+            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n"//
+                + "       if (s.charAt(¢) == 'a')\n"//
+                + "          res += 2;\n"//
+                + "        else " //
+                + "       if (s.charAt(¢) == 'd')\n"//
+                + "          res-=1;\n"//
+                + "      return res;\n"//
+                + " if (b) i = 3;")//
+            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n"//
+                + "       if (s.charAt(¢) == 'a')\n"//
+                + "          res += 2;\n"//
+                + "        else " //
+                + "       if (s.charAt(¢) == 'd')\n"//
+                + "          res --;\n"//
+                + "      return res;\n"//
+                + " if (b) i = 3;")//
+            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n"//
+                + "       if (s.charAt(¢) == 'a')\n"//
+                + "          res += 2;\n"//
+                + "        else " //
+                + "       if (s.charAt(¢) == 'd')\n"//
+                + "          --res;\n"//
+                + "      return res;\n"//
+                + " if (b) i = 3;")//
             .stays();
   }
 
@@ -1363,6 +1400,7 @@ import il.org.spartan.spartanizer.wringing.*;
   @Test public void issue110_18() {
     trimmingOf("booleanLiteral==0 ? \"asss\" : \"assfad\"").stays();
   }
+
   @Test public void issue141_01() {
     trimmingOf("public static void go(final Object os[], final String... ss) {  \n"//
         + "for (final String saa : ss) \n"//
@@ -1722,6 +1760,7 @@ import il.org.spartan.spartanizer.wringing.*;
   @Test public void issue54ForPlain() {
     trimmingOf("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
         .gives("for (int i = 0; i < 100;  ++i) b[i] = f();")//
+        .gives("for (int ¢ = 0; ¢ < 100;  ++¢) b[¢] = f();")//
         .stays();
   }
 
@@ -2323,11 +2362,13 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
-    trimmingOf("for (int s = i; ++i; ++s);").stays();
+    trimmingOf("for (int s = i; ++i; ++s);").gives("for (int ¢ = i; ++i; ++¢);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s);").stays();
+    trimmingOf("for (int s = i++; i < 10; ++s);")//
+        .gives("for (int ¢ = i++; i < 10; ++¢);")//
+        .stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
@@ -2377,11 +2418,17 @@ import il.org.spartan.spartanizer.wringing.*;
     azzert.that(new PostfixToPrefix().canSuggest(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     azzert.that(r, iz("--i"));
-    trimmingOf(from).gives("for(int i=0;i<100;--i)--j;");
+    trimmingOf(from)//
+        .gives("for(int ¢=0;¢<100;¢--)j--;") //
+        .gives("for(int ¢=0;¢<100;--¢)--j;") //
+        .stays();
   }
 
   @Test public void prefixToPostfixIncreement() {
-    trimmingOf("for (int i = 0; i < 100; i++) i++;").gives("for(int i=0;i<100;++i)++i;");
+    trimmingOf("for (int i = 0; i < 100; i++) i++;")//
+        .gives("for(int ¢=0;¢<100;¢++)¢++;") //
+        .gives("for(int ¢=0;¢<100;++¢)++¢;") //
+        .stays();
   }
 
   @Test public void preIncrementReturn() {
@@ -2897,13 +2944,16 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void shortestFirstAlignmentShortened() {
-    trimmingOf("n.isF() ? (SimpleName) n \n" + //
-        "            : n.isG() ? ((QualifiedName) n).getName() \n" + //
+    trimmingOf("n.isF() ? (SimpleName) n \n"//
+        + //
+        "            : n.isG() ? ((QualifiedName) n).getName() \n"//
+        + //
         "                : null").stays();//
   }
 
   @Test public void shortestFirstAlignmentShortenedFurther() {
-    trimmingOf("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n" + //
+    trimmingOf("n.isF() ? (A) n : n.isG() ? ((B) n).f() \n"//
+        + //
         "                : null").stays();//
   }
 
@@ -2912,40 +2962,94 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void shortestIfBranchFirst01() {
-    trimmingOf("if (s.equals(0xDEAD)) {\n" + " int res=0; " + " for (int i=0; i<s.length(); ++i)     " + " if (s.charAt(i)=='a')      "
-        + "   res += 2;    " + "} else " + " if (s.charAt(i)=='d') " + "  res -= 1;  " + "return res;  ")
-            .gives("if (!s.equals(0xDEAD)) {" + " if(s.charAt(i)=='d')" + "  res-=1;" + "} else {" + "  int res=0;"
-                + "  for(int i=0;i<s.length();++i)" + "   if(s.charAt(i)=='a')" + "     res+=2;" + " }" + " return res;");
+    trimmingOf("if (s.equals(0xDEAD)) {\n"//
+        + " int res=0; "//
+        + " for (int i=0; i<s.length(); ++i)     "//
+        + " if (s.charAt(i)=='a')      " + "   res += 2;    "//
+        + "} else "//
+        + " if (s.charAt(i)=='d') "//
+        + "  res -= 1;  "//
+        + "return res;  ")
+            .gives("if (!s.equals(0xDEAD)) {"//
+                + " if(s.charAt(i)=='d')"//
+                + "  res-=1;"//
+                + "} else {"//
+                + "  int res=0;" + "  for(int i=0;i<s.length();++i)"//
+                + "   if(s.charAt(i)=='a')"//
+                + "     res+=2;"//
+                + " }"//
+                + " return res;");
   }
 
   @Test public void shortestIfBranchFirst02() {
-    trimmingOf(
-        "if (!s.equals(0xDEAD)) { " + " int res=0;" + " for (int i=0;i<s.length();++i)     " + "   if (s.charAt(i)=='a')      " + "     res += 2;"
-            + "   else " + "  if (s.charAt(i)=='d')      " + "       res -= 1;" + "  return res;" + "} else {    " + " return 8;" + "}")
-                .gives(" if (s.equals(0xDEAD)) \n" + "    return 8;" + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-                    + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
-                    + "          res -= 1;\n" + "      return res;\n");
+    trimmingOf("if (!s.equals(0xDEAD)) { "//
+        + " int res=0;"//
+        + " for (int i=0;i<s.length();++i)     "//
+        + "   if (s.charAt(i)=='a')      "//
+        + "     res += 2;" + "   else "//
+        + "  if (s.charAt(i)=='d')      "//
+        + "       res -= 1;"//
+        + "  return res;"//
+        + "} else {    "//
+        + " return 8;"//
+        + "}")
+            .gives(" if (s.equals(0xDEAD)) \n"//
+                + "    return 8;"//
+                + "      int res = 0;\n"//
+                + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"//
+                + "          res += 2;\n"//
+                + "        else "//
+                + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n"//
+                + "      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02a() {
-    trimmingOf(" if (!s.equals(0xDEAD)) {\n" + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-        + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
-        + "          res -= 1;\n" + "      return res;\n" + "    }\n" + "    return 8;")
-            .gives(" if (s.equals(0xDEAD)) " + "return 8; " + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-                + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
-                + "          res -= 1;\n" + "      return res;\n");
+    trimmingOf(" if (!s.equals(0xDEAD)) {\n"//
+        + "      int res = 0;\n"//
+        + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"//
+        + "          res += 2;\n"//
+        + "        else "//
+        + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n"//
+        + "      return res;\n"//
+        + "    }\n"//
+        + "    return 8;")
+            .gives(" if (s.equals(0xDEAD)) "//
+                + "return 8; "//
+                + "      int res = 0;\n"//
+                + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"//
+                + "          res += 2;\n"//
+                + "        else "//
+                + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n"//
+                + "      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02b() {
-    trimmingOf("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
-        + "        else " + "       if (s.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n")//
-            .stays();
+    trimmingOf("      int res = 0;\n"//
+        + "      for (int i = 0;i < s.length();++i)\n"//
+        + "       if (s.charAt(i) == 'a')\n"//
+        + "          res += 2;\n" + "        else "//
+        + "       if (s.charAt(i) == 'd')\n"//
+        + "          --res;\n"//
+        + "      return res;\n")//
+            .gives("      int res = 0;\n"//
+                + "      for (int ¢ = 0;¢ < s.length();++¢)\n"//
+                + "       if (s.charAt(¢) == 'a')\n"//
+                + "          res += 2;\n" + "        else "//
+                + "       if (s.charAt(¢) == 'd')\n"//
+                + "          --res;\n"//
+                + "      return res;\n")//
+            .stays()//
+    ;
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement
-        .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
+    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("      int res = 0;\n"//
+        + "      for (int i = 0;i < s.length();++i)\n"//
+        + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"//
+        + "        else "//
+        + "       if (s.charAt(i) == 'd')\n"//
+        + "          res -= 1;\n"//
+        + "      return res;\n");
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
     assert f != null;
     azzert.that(f, iz(" res = 0"));
@@ -2959,8 +3063,18 @@ import il.org.spartan.spartanizer.wringing.*;
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
-    trimmingOf("if (a) {" + " f();" + " g();" + " h();" + " return a;" + "}\n" + "return c;")
-        .gives("if (!a) return c;" + "f();" + "g();" + "h();" + "return a;");
+    trimmingOf("if (a) {"//
+        + " f();"//
+        + " g();"//
+        + " h();"//
+        + " return a;"//
+        + "}\n"//
+        + "return c;")
+            .gives("if (!a) return c;"//
+                + "f();"//
+                + "g();"//
+                + "h();"//
+                + "return a;");
   }
 
   @Test public void shortestOperand01() {
