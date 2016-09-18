@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -212,6 +213,14 @@ public enum extract {
 
   public static Expression onlyExpression(final List<Expression> $) {
     return core(onlyOne($));
+  }
+
+  public static SimpleName onlyName(final VariableDeclarationExpression d) {
+    return lisp.onlyOne(fragments(d)).getName();
+  }
+
+  public static SimpleName onlyName(final VariableDeclarationStatement d) {
+    return lisp.onlyOne(fragments(d)).getName();
   }
 
   /** Finds the expression returned by a return statement

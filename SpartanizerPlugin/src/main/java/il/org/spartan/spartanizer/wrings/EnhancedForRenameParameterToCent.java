@@ -31,8 +31,6 @@ public final class EnhancedForRenameParameterToCent extends Wring<SingleVariable
     if (body == null || !isJohnDoe(d))
       return null;
     final SimpleName n = d.getName();
-    if (m != null)
-      m.exclude(d);
     assert n != null;
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body))
       return null;
@@ -40,6 +38,8 @@ public final class EnhancedForRenameParameterToCent extends Wring<SingleVariable
     assert uses != null;
     if (uses.isEmpty())
       return null;
+    if (m != null)
+      m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Suggestion("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
