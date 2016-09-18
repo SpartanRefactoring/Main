@@ -2,18 +2,22 @@ package il.org.spartan.spartanizer.application;
 
 import java.io.*;
 
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.wring.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
  * @year 2016 */
-public class CollectMetrics {
+public final class CollectMetrics {
   private static final String OUTPUT = "/tmp/halstead.CSV";
   private static CSVStatistics output = init();
 
@@ -37,8 +41,8 @@ public class CollectMetrics {
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
     final CompilationUnit after = spartanize(before);
-    assert after != null;
-    report("After-", after);
+//    assert after != null;
+//    report("After-", after);
   }
 
   private static void go(final String[] where) {
@@ -75,12 +79,24 @@ public class CollectMetrics {
     output.put(prefix + "Internals", metrics.internals(¢));
     output.put(prefix + "Vocabulary", metrics.vocabulary(¢));
     output.put(prefix + "Literacy", metrics.literacy(¢));
+    output.put(prefix + "Imports", metrics.countImports(¢));
+    output.put(prefix + "No Imports", metrics.countNoImport(¢));
     output.nl();
   }
-
-  private static CompilationUnit spartanize(final CompilationUnit before) {
+  // TODO Matteo: removed private visibility to allow tests
+  static CompilationUnit spartanize(final CompilationUnit before) {
     // TODO: try to it first with one wring only. I think this is going be
     // better.
+    Trimmer tr = new Trimmer();
+    assert tr != null;
+    ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    tr.setCompilationUnit($);
+    assert $ != null;
+    try {
+      tr.checkAllConditions(null);
+    } catch (OperationCanceledException | CoreException e) {
+      e.printStackTrace();
+    }
     return before;
   }
 }

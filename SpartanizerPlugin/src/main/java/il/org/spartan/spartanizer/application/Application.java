@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -19,45 +20,36 @@ import il.org.spartan.utils.*;
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
-public class Application implements IApplication {
-  
-  /**
-   * Count the number of lines in a {@link File} f
+public final class Application implements IApplication {
+  /** Count the number of lines in a {@link File} f
    * @param f File
    * @return
-   * @throws IOException
-   */
+   * @throws IOException */
   static int countLines(final File f) throws IOException {
     try (LineNumberReader lr = new LineNumberReader(new FileReader(f))) {
       lr.skip(Long.MAX_VALUE);
       return lr.getLineNumber();
     }
   }
-  
-  /**
-   * Count the number of lines in File named filename
+
+  /** Count the number of lines in File named filename
    * @param fileName
    * @return
-   * @throws IOException
-   */
-
+   * @throws IOException */
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
-  
-  /**
-   * Discard compilation unit u
-   * @param u
-   */
 
+  /** Discard compilation unit u
+   * @param u */
   static void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     } catch (final NullPointerException e) {
-      e.printStackTrace();
+      Plugin.log(e);
     }
   }
 
@@ -120,10 +112,12 @@ public class Application implements IApplication {
   String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {
+    // parse command line arguments
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     final List<FileStats> fileStats = new ArrayList<>();
     try {
+      // prepare Java project
       prepareTempIJavaProject();
     } catch (final CoreException e) {
       System.err.println(e.getMessage());
@@ -275,8 +269,8 @@ public class Application implements IApplication {
     if (optIndividualStatistics)
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
-        for (int i = 0; i < optRounds; ++i)
-          System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + f.getRoundStat(i));
+        for (int ¢ = 0; ¢ < optRounds; ++¢)
+          System.out.println("    Round #" + ¢ + 1 + ": " + (¢ < 9 ? " " : "") + f.getRoundStat(¢));
       }
     else
       for (int i = 0; i < optRounds; ++i) {
