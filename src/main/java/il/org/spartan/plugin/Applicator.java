@@ -193,15 +193,15 @@ public abstract class Applicator extends Refactoring {
     return selection;
   }
 
-  public IMarkerResolution getToggleClass() {
+  public IMarkerResolution disableClassFix() {
     return getToggle(SuppressSpartanizationOnOff.Type.CLASS, "Disable spartanization for class");
   }
 
-  public IMarkerResolution getToggleDeclaration() {
+  public IMarkerResolution disableFunctionFix() {
     return getToggle(SuppressSpartanizationOnOff.Type.DECLARATION, "Disable spartanization for scope");
   }
 
-  public IMarkerResolution getToggleFile() {
+  public IMarkerResolution disableFileFix() {
     return getToggle(SuppressSpartanizationOnOff.Type.FILE, "Disable spartanization for file");
   }
 
@@ -349,7 +349,7 @@ public abstract class Applicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), pm, m);
   }
 
-  @SuppressWarnings("static-method") private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
+ private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -373,7 +373,7 @@ public abstract class Applicator extends Refactoring {
     return $;
   }
 
-  @SuppressWarnings("static-method") private IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
+ private static IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;

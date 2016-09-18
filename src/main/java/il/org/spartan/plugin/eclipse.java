@@ -41,12 +41,12 @@ public interface eclipse {
     return apply(cu, new Range(0, 0));
   }
 
-  static boolean apply(final ICompilationUnit cu, final ITextSelection t) {
-    for (final Applicator s : safeSpartanizations)
+  static boolean apply(final ICompilationUnit cu, final ITextSelection s) {
+    for (final Applicator a : safeSpartanizations)
       try {
-        s.setCompilationUnit(cu);
-        s.setSelection(t.getLength() > 0 && !t.isEmpty() ? t : null);
-        return s.performRule(cu, nullProgressMonitor);
+        a.setCompilationUnit(cu);
+        a.setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
+        return a.performRule(cu, nullProgressMonitor);
       } catch (final CoreException x) {
         Plugin.log(x);
       }
@@ -88,11 +88,11 @@ public interface eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times put a "nullProgressMonitor"
+   *        operation times use {@link wizard@nullProgressMonitor{ 
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
-    pm.beginTask("Gathering project information...", 1);
+    pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {
       announce("Cannot find current compilation unit " + u);
@@ -108,11 +108,16 @@ public interface eclipse {
       announce("Cannot find roots of " + javaProject);
       return $;
     }
-    for (final IPackageFragmentRoot r : packageFragmentRoots)
+    for (final IPackageFragmentRoot r : packageFragmentRoots) {
+      pm.worked(1);
       if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
-        for (final IJavaElement ¢ : r.getChildren())
+        pm.worked(1);
+        for (final IJavaElement ¢ : r.getChildren()) {
+          pm.worked(1);
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             $.addAll(as.list(((IPackageFragment) ¢).getCompilationUnits()));
+        }
+    }
     pm.done();
     return $;
   }

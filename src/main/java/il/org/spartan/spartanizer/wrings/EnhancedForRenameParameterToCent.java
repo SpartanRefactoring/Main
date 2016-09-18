@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.wrings;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -17,31 +15,27 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class EnhancedForRenameParameterToCent extends Wring<SingleVariableDeclaration> implements Kind.Centification {
-  @Override public String description(final SingleVariableDeclaration ¢) {
-    return ¢ + "";
+public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
+  @Override public String description(final EnhancedForStatement ¢) {
+    return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Suggestion suggest(final SingleVariableDeclaration d, final ExclusionManager m) {
-    final ASTNode p = d.getParent();
-    if (p == null || !(p instanceof EnhancedForStatement))
-      return null;
-    final EnhancedForStatement s = (EnhancedForStatement) p;
-    final Statement body = s.getBody();
-    if (body == null || !isJohnDoe(d))
-      return null;
+  @Override public Suggestion suggest(final EnhancedForStatement s, final ExclusionManager m) {
+    final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
-    assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body))
+    if (in(n.getIdentifier(), "$", "¢", "__", "_"))
       return null;
-    final List<SimpleName> uses = Collect.usesOf(n).in(body);
-    assert uses != null;
-    if (uses.isEmpty())
+    if (!isJohnDoe(d))
+      return null;
+    final Statement body = s.getBody();
+    if (haz.variableDefinition(body))
+      return null;
+    final SimpleName ¢ = s.getAST().newSimpleName("¢");
+    if (!Collect.usesOf(¢).in(body).isEmpty())
       return null;
     if (m != null)
-      m.exclude(d);
-    final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Suggestion("Rename '" + n + "' to ¢ in enhanced for loop", d) {
+      m.exclude(s);
+    return new Suggestion(description(s), s, body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, s, r, g);
       }
