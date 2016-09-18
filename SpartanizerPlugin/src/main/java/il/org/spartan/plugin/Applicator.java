@@ -28,6 +28,10 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class Applicator extends Refactoring {
+  private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
+  private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
+  private static final String APPLY_TO_CLASS = "Apply suggestion to enclosing type";
+  private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
   private ITextSelection selection = null;
   private ICompilationUnit compilationUnit = null;
   private IMarker marker = null;
@@ -202,15 +206,15 @@ public abstract class Applicator extends Refactoring {
   }
 
   public IMarkerResolution getWringCommitDeclaration() {
-    return getWringCommit(WringCommit.Type.DECLARATION, "Commit change for scope");
+    return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
   }
 
   public IMarkerResolution getWringCommitFile() {
-    return getWringCommit(WringCommit.Type.FILE, "Commit change for file");
+    return getWringCommit(WringCommit.Type.FILE, APPLY_TO_FILE);
   }
 
   public IMarkerResolution getWringCommitProject() {
-    return getWringCommit(WringCommit.Type.PROJECT, "Commit change for project");
+    return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
   /** .

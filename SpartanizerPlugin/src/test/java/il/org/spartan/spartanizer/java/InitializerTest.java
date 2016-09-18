@@ -4,7 +4,7 @@ package il.org.spartan.spartanizer.java;
 // ToolBox. Didn't finish yet.
 public final class InitializerTest {
   static {
-    InitializerTest.a++;
+    ++InitializerTest.a;
     System.out.println("Static initializer end (0).");
     // Seems that we can't do here anything that is connected to the instance.
     // But can be used for initializing some global data structures which are
@@ -13,11 +13,10 @@ public final class InitializerTest {
   }
   static int a = 0;
 
-  @SuppressWarnings("unused") public static final void main(final String[] s) {
-    new InitializerTest(3);
-    // b is not recognized here.
-    System.out.print(InitializerTest.a);
-  }
+ public static void main(@SuppressWarnings("unused") final String[] __) {
+  new InitializerTest(3);
+  System.out.print(InitializerTest.a);
+}
 
   {
     // b is not recognized here.
