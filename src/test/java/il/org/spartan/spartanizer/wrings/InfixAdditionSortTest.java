@@ -25,14 +25,14 @@ public final class InfixAdditionSortTest {
   private static final String OUTPUT = "a*b + b*c  + d*e + 1 + 2 + 3+4";
 
   @Test public void test00() {
-    trimming(input)//
-        .to(OUTPUT) //
+    trimmingOf(input)//
+        .gives(OUTPUT) //
         .stays();
   }
 
   @Test public void test01() {
-    trimming("1 + a*b") //
-        .to("a*b + 1") //
+    trimmingOf("1 + a*b") //
+        .gives("a*b + 1") //
         .stays();
   }
 

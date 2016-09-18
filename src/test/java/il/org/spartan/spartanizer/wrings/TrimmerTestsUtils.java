@@ -53,7 +53,7 @@ public final class TrimmerTestsUtils {
     return new OperandToWring<>(from, clazz);
   }
 
-  static Operand trimming(final String from) {
+  static Operand trimmingOf(final String from) {
     return new Operand(from);
   }
 
@@ -62,11 +62,7 @@ public final class TrimmerTestsUtils {
       super(inner);
     }
 
-    public void stays() {
-      checkSame();
-    }
-
-    public Operand to(final String expected) {
+    public Operand gives(final String expected) {
       assert expected != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -80,6 +76,10 @@ public final class TrimmerTestsUtils {
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       assertSimilar(expected, peeled);
       return new Operand(expected);
+    }
+
+    public void stays() {
+      checkSame();
     }
 
     void checkExpected(final String expected) {

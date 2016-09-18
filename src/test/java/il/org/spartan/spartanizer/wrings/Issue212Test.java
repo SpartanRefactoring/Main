@@ -11,17 +11,29 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue212Test {
-  @Test public void vanilla() {
-    trimming("for(int i=0;i<a.length;++i)sum +=i;")//
-        .to("for(int ¢ = 0;¢<a.length;++¢)sum+=¢;")//
-        .stays();
-  }
   @Test public void chocolate1() {
-    trimming("for(int $=0;$<a.length;++$)sum +=$;")//
+    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;")//
         .stays();
   }
+
   @Test public void chocolate2() {
-    trimming("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
+    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
         .stays();
+  }
+
+  @Test public void vanilla01() {
+    trimmingOf("for(int i=0;i<a.length;++i)sum+=i;")//
+        .gives("for(int ¢=0;¢<a.length;++¢)sum+=¢;")//
+        .stays();
+  }
+
+  @Test public void vanilla02() {
+    trimmingOf(//
+        " for (int i = 2; i < xs.size(); ++i)\n" + //
+            "    step.extendedOperands($).add(duplicate.of(xs.get(i)));"//
+    ).gives(//
+        " for (int ¢ = 2; ¢ < xs.size(); ++¢)\n" + //
+            "    step.extendedOperands($).add(duplicate.of(xs.get(¢)));"//
+    ).stays();
   }
 }

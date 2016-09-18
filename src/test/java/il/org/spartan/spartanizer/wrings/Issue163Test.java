@@ -12,18 +12,18 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue163Test {
   @Test public void issue163_01() {
-    trimming("return \"remove the block: \" + n + \"\";").to("return \"remove the block: \" + n;").stays();
+    trimmingOf("return \"remove the block: \" + n + \"\";").gives("return \"remove the block: \" + n;").stays();
   }
 
   @Test public void issue163_02() {
-    trimming("x + \"\" + f() + \"\" + g() + \"abc\"").to("x + \"\" + f() + g() + \"abc\"").stays();
+    trimmingOf("x + \"\" + f() + \"\" + g() + \"abc\"").gives("x + \"\" + f() + g() + \"abc\"").stays();
   }
 
   @Test public void issue163_03() {
-    trimming("x + \"\" + \"\"").to("x+\"\"").stays();
+    trimmingOf("x + \"\" + \"\"").gives("x+\"\"").stays();
   }
 
   @Test public void issue163_04() {
-    trimming("\"\"+\"\"+x +\"\"").to("\"\"+\"\"+x").to("\"\"+x").to("x+\"\"").stays();
+    trimmingOf("\"\"+\"\"+x +\"\"").gives("\"\"+\"\"+x").gives("\"\"+x").gives("x+\"\"").stays();
   }
 }

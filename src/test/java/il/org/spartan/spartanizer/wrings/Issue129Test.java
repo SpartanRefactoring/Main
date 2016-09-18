@@ -11,22 +11,22 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue129Test {
   @Test public void issue129_01() {
-    trimming("$ += s + (new Integer(i) + \"\")").to("$ += s + (Integer.valueOf(i) + \"\")").stays();
+    trimmingOf("$ += s + (new Integer(i) + \"\")").gives("$ += s + (Integer.valueOf(i) + \"\")").stays();
   }
 
   @Test public void issue129_02() {
-    trimming("1 + 2 - (x+1)").to("1+2-x-1").to("3-x-1").stays();
+    trimmingOf("1 + 2 - (x+1)").gives("1+2-x-1").gives("3-x-1").stays();
   }
 
   @Test public void issue129_03() {
-    trimming("1 + 2 + (x+1)").to("1 + 2 + x + 1").stays();
+    trimmingOf("1 + 2 + (x+1)").gives("1 + 2 + x + 1").stays();
   }
 
   @Test public void issue129_04() {
-    trimming("\"\" + 0 + (x - 7)").to("0 + \"\" + (x - 7)").stays();
+    trimmingOf("\"\" + 0 + (x - 7)").gives("0 + \"\" + (x - 7)").stays();
   }
 
   @Test public void issue129_05() {
-    trimming("x + 5 + y + 7.0 +1.*f(3)").stays();
+    trimmingOf("x + 5 + y + 7.0 +1.*f(3)").stays();
   }
 }

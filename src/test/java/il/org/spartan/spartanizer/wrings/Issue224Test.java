@@ -13,14 +13,14 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue224Test {
   @Test public void issue224_01() {
-    trimming("a+b.toString()").to("a+\"\"+b").stays();
+    trimmingOf("a+b.toString()").gives("a+\"\"+b").stays();
   }
 
   @Test public void issue224_02() {
-    trimming("b.toString()").to("\"\"+b").to("b+\"\"").stays();
+    trimmingOf("b.toString()").gives("\"\"+b").gives("b+\"\"").stays();
   }
 
   @Test public void issue224_03() {
-    trimming("\"5\"+b.toString()").to("\"5\"+\"\"+b").to("\"5\"+b").stays();
+    trimmingOf("\"5\"+b.toString()").gives("\"5\"+\"\"+b").gives("\"5\"+b").stays();
   }
 }

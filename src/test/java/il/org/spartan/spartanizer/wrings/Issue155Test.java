@@ -12,18 +12,18 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue155Test {
   @Ignore @Test public void inlineFinal() {
-    trimming(
+    trimmingOf(
         "for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  final String nb = versionNumbers[i];\n" + "  $[i] = Integer.parseInt(nb);\n" + "}")
-            .to("for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" + "}");
+            .gives("for (int i = 0; i < versionNumbers.length; ++i) {\n" + "  $[i] = Integer.parseInt(versionNumbers[i]);\n" + "}");
   }
 
   @Test public void inlineNonFinalIntoClassInstanceCreation() {
-    trimming("void h(int x) {\n" + "  ++x;\n" + "  final int y = x;\n" + "  new Object() {\n" + "    @Override\n" + "    public int hashCode() {\n"
+    trimmingOf("void h(int x) {\n" + "  ++x;\n" + "  final int y = x;\n" + "  new Object() {\n" + "    @Override\n" + "    public int hashCode() {\n"
         + "      return y;\n" + "    }\n" + "  };\n" + "}").stays();
   }
 
   @Test public void issue64a() {
-    trimming("void f() {" + //
+    trimmingOf("void f() {" + //
         "    final int a = f();\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
@@ -31,7 +31,7 @@ public final class Issue155Test {
   }
 
   @Test public void issue64b() {
-    trimming("void f() {" + //
+    trimmingOf("void f() {" + //
         "    final int a = 3;\n" + //
         "    new Object() {\n" + //
         "      @Override public int hashCode() { return a; }\n" + //
@@ -39,7 +39,7 @@ public final class Issue155Test {
   }
 
   @Test public void issue64c() {
-    trimming("void f(int x) {" + //
+    trimmingOf("void f(int x) {" + //
         "    ++x;\n" + //
         "    final int a = x;\n" + //
         "    new Object() {\n" + //
