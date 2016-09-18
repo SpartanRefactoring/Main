@@ -146,26 +146,26 @@ public final class Issue223Test {
     assert w.replacement(focus) != null;
   }
 
-  @Ignore @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
+  @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimming("Integer x = new Integer(1 + 9);")//
-        .to("Integer x = new Integer(10);")//
+        .to("Integer x = Integer.valueOf(1+9);")//
         .to("Integer x = Integer.valueOf(10);")//
         .stays();
   }
 
-  @Ignore @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
+  @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
     trimming("String x = new String(f());").to("String x = String.valueOf(f());");
   }
 
-  @Ignore @Test public void vanilla() {
+  @Test public void vanilla() {
     trimming("new Integer(3)").to("Integer.valueOf(3)").stays();
   }
 
-  @Ignore @Test public void vanilla01() {
+  @Test public void vanilla01() {
     trimming("new Integer(3)").to("Integer.valueOf(3)");
   }
 
-  @Ignore @Test public void vanilla02() {
+  @Test public void vanilla02() {
     final Operand a = trimming("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final Wrap w = Wrap.find(a.get());
@@ -175,7 +175,7 @@ public final class Issue223Test {
       azzert.fail("Nothing done on " + a.get());
   }
 
-  @Ignore @Test public void vanilla03() {
+  @Test public void vanilla03() {
     final Operand a = trimming("new Integer(3)");
     final Wrap w = Wrap.find(a.get());
     final String wrap = w.on(a.get());
