@@ -53,7 +53,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test06() {
-    assert new InfixAdditionSubtractionExpand().canSuggest(INPUT);
+    assert !new InfixAdditionSubtractionExpand().canSuggest(INPUT);
   }
 
   @Test public void test07() {
