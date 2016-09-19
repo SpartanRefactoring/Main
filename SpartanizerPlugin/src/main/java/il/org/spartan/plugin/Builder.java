@@ -56,7 +56,7 @@ public final class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final Applicator a, final Suggestion r, final IMarker m) throws CoreException {
+  private static void addMarker(final GUI$Applicator a, final Suggestion r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
@@ -73,7 +73,7 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    for (final Applicator s : Spartanizations.all())
+    for (final GUI$Applicator s : Spartanizations.all())
       for (final Suggestion ¢ : s.collectSuggesions(u))
         if (¢ != null)
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));

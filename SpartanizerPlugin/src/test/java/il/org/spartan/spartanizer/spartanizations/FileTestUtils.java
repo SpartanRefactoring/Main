@@ -62,16 +62,16 @@ import il.org.spartan.spartanizer.engine.*;
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
-  static Applicator makeSpartanizationObject(final File ¢) {
+  static GUI$Applicator makeSpartanizationObject(final File ¢) {
     return makeSpartanizationObject(¢.getName());
   }
 
-  static Applicator makeSpartanizationObject(final String folderForClass) {
+  static GUI$Applicator makeSpartanizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
     final Object $ = getInstance(c);
     assert $ != null;
-    return (Applicator) $;
+    return (GUI$Applicator) $;
   }
 
   /** Convert a canonical name of a class into a {@link Class} object, if
@@ -113,7 +113,7 @@ import il.org.spartan.spartanizer.engine.*;
     return $;
   }
 
-  private static Applicator error(final String message, final Class<?> c, final Throwable t) {
+  private static GUI$Applicator error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
   }
@@ -158,7 +158,7 @@ import il.org.spartan.spartanizer.engine.*;
         }
     }
 
-    abstract Object[] makeCase(final Applicator a, final File d, final File f, final String name);
+    abstract Object[] makeCase(final GUI$Applicator a, final File d, final File f, final String name);
   }
 
   /** An abstract class representing the concept of traversing the

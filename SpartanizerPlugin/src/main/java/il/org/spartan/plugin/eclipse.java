@@ -16,13 +16,12 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.utils.*;
 
 /** Fluent API services for the plugin
  * @author Yossi Gil
  * @since 2016 */
 public interface eclipse {
-  static final Applicator[] safeSpartanizations = { //
+  static final GUI$Applicator[] safeSpartanizations = { //
       new Trimmer() };
   static final String NAME = "Spartanization";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";

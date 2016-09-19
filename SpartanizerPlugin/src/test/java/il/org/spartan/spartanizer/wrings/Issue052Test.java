@@ -10,15 +10,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue052Test {
-  @Test public void A$B1() {
-    trimmingOf( //
-        "void m() { if (a) { f(); return; }}").gives("void m() { if (a) { f(); ; }}");
-  }
-
-  @Test public void A$B2() {
-    trimmingOf( //
-        "void m() { if (a) ++i; else { f(); return; }}").gives("void m() { if (a) ++i; else { f(); ; }}");
-  }
   @Test public void A$a() {
     trimmingOf("abstract abstract interface a"//
         + "{}").gives("interface a {}");
@@ -39,6 +30,15 @@ public class Issue052Test {
         + "{}").gives("interface a {}");
   }
 
+  @Test public void A$B1() {
+    trimmingOf( //
+        "void m() { if (a) { f(); return; }}").gives("void m() { if (a) { f(); ; }}");
+  }
+
+  @Test public void A$B2() {
+    trimmingOf( //
+        "void m() { if (a) ++i; else { f(); return; }}").gives("void m() { if (a) ++i; else { f(); ; }}");
+  }
 
   @Test public void A$c() {
     trimmingOf("interface a"//
@@ -157,5 +157,4 @@ public class Issue052Test {
             .gives("enum A {a1, a2; enum B {b1, b2; static class C { static enum D {c1, c2}}}")//
             .gives("enum A {a1, a2; enum B {b1, b2; static class C { enum D {c1, c2}}}");
   }
-
 }

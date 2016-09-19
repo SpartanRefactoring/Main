@@ -43,7 +43,7 @@ public interface metrics {
   static int countNoImport(final CompilationUnit root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class))
           ++$.inner;
       }
@@ -57,7 +57,7 @@ public interface metrics {
   static int countNoImportNoComments(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         // System.out.println(¢.getClass().toString());
         // System.out.println(¢.IMPORT_DECLARATION);
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
@@ -195,10 +195,7 @@ public interface metrics {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nodesCount(final ASTNode n) {
-    class Integer {
-      int inner;
-    }
-    final Integer $ = new Integer();
+    final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         ++$.inner;
