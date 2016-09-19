@@ -7,8 +7,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 
-public abstract class AbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N> {
+public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N>  implements Kind.SyntacticBaggage {
   @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
     return firstBad(¢) != null;
   }

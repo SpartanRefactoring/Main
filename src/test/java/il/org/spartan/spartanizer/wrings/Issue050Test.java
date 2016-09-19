@@ -170,8 +170,12 @@ public class Issue050Test {
         .gives("interface a {}");//
   }
 
-  @Test public void A$50c_interface() {
+  @Test public void A$50c_interface_static_abstract() {
     trimmingOf("static abstract interface a {}")//
+        .gives("interface a {}");//
+  }
+  @Test public void A$50c_interface__abstract() {
+    trimmingOf("abstract interface a {}")//
         .gives("interface a {}");//
   }
 

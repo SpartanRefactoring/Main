@@ -28,7 +28,7 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     return $;
   }
 
-  @Override protected String description(final ClassInstanceCreation ¢) {
+  @Override public String description(final ClassInstanceCreation ¢) {
     return "Use factory method " + ¢.getType() + ".valueOf() instead of new ";
   }
 }

@@ -76,7 +76,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return replacement(i, terms);
   }
 
-  @Override protected String description(@SuppressWarnings("unused") final MethodInvocation __) {
+  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use \"+\" operator to concatenate strings";
   }
 

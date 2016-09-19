@@ -109,7 +109,7 @@ public final class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> imp
     return nextReturn == null ? null : make(vor, nextReturn);
   }
 
-  @Override protected String description(final ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Convert the break inside " + ¢ + " to return";
   }
 }

@@ -33,14 +33,14 @@ public class Toolbox {
   public static void refresh() {
     if (instance == null)
       instance = new Maker()//
-          .add(EnhancedForStatement.class, new EnhancedForRenameParameterToCent())//
+          .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
           .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
           .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
           .add(ReturnStatement.class, new ReturnLastInMethod()) //
-          .add(AnnotationTypeMemberDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotationTypeMember()) //
-          .add(AnnotationTypeDeclaration.class, new AbstractBodyDeclarationSortModifiers.ofAnnotation()) //
+          .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
+          .add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotation()) //
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
@@ -98,8 +98,8 @@ public class Toolbox {
           .add(MethodDeclaration.class, //
               new MethodDeclarationRenameReturnToDollar(), //
               new MethodDeclarationRenameSingleParameterToCent(), //
-              new MethodDeclarationRedundantModifiers(), //
-              new AbstractBodyDeclarationSortModifiers.ofMethod(), //
+              new MethodDeclarationModifiersRedundant(), //
+              new BodyDeclarationModifiersSort.ofMethod(), //
               null)
           .add(MethodInvocation.class, //
               new MethodInvocationEqualsWithLiteralString(), //
@@ -161,16 +161,18 @@ public class Toolbox {
               new TernaryPushdown(), //
               new TernaryPusdownStrings(), null) //
           .add(TypeDeclaration.class, //
-              new TypeModifierCleanInterface(), //
-              new AbstractBodyDeclarationSortModifiers.ofType(), //
+              // new delmeTypeModifierCleanInterface(), //
+              new TypeRedundantModifiers(), //
+              new BodyDeclarationModifiersSort.ofType(), //
               null) //
           .add(EnumDeclaration.class, //
+              new EnumRedundantModifiers(), 
+              new BodyDeclarationModifiersSort.ofEnum(), //
               //new EnumDeclarationModifierCleanEnum(), //
-              new AbstractBodyDeclarationSortModifiers.ofEnum(), //
               null) //
           .add(FieldDeclaration.class, //
               new FieldRedundantModifiers(), //
-              new AbstractBodyDeclarationSortModifiers.ofField(), //
+              new BodyDeclarationModifiersSort.ofField(), //
               null) //
           .add(CastExpression.class, //
               new CastToDouble2Multiply1(), //
@@ -178,7 +180,7 @@ public class Toolbox {
               null) //
           .add(EnumConstantDeclaration.class, //
               new EnumConstantRedundantModifiers(), //
-              new AbstractBodyDeclarationSortModifiers.ofEnumConstant(), //
+              new BodyDeclarationModifiersSort.ofEnumConstant(), //
               null) //
           .add(NormalAnnotation.class, //
               new AnnotationDiscardValueName(), //
@@ -195,7 +197,7 @@ public class Toolbox {
           // since the dispatcher does not
           // know about Initializers. Add initializers to DispatchingVisitor if
           // you can provide a test case
-          .add(Initializer.class, new AbstractBodyDeclarationSortModifiers.ofInitializer(), null) //
+          .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), null) //
           .seal();
   }
 

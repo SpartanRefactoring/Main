@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
+public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
     implements Kind.SyntacticBaggage {
   private static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
   private static final Predicate<Modifier> isFinal = Modifier::isFinal;
@@ -28,8 +28,11 @@ public abstract class AbstractBodyDeclarationRemoveModifiers<N extends BodyDecla
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢).isEmpty())
       return $;
-    if (iz.enumDeclaration(¢))
+    if (iz.enumDeclaration(¢))  {
       $.add(isStatic);
+      $.add(isAbstract);
+      $.add(isFinal);
+    }
     if (iz.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
       $.add(isStatic);
       $.add(isAbstract);

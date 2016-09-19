@@ -21,7 +21,7 @@ import org.junit.*;
         + "}   \n" //
         + "}  \n" //
     ).gives("class A{ \n" //
-        + "static public final class EX13{ \n" //
+        + "public static final class EX13{ \n" //
         + "class Onoes{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
         + "}   \n" //

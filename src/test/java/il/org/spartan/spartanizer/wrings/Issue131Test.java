@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.wringing.*;
 
-/** {@link AbstractBodyDeclarationRemoveModifiers}
+/** {@link BodyDeclarationModifiersPrune}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
@@ -26,13 +26,13 @@ public final class Issue131Test {
   }
 
   @Test public void A$030() {
-    trimmingOf("for(int i=4 ; i<s.length() ; ++i)return x;return x;")//
+    trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)return x;return x;")//
         .gives("for(int ¢=4 ; ¢<s.length() ; ++¢)break;return x;")//
         .stays();
   }
 
   @Test public void A$040() {
-    trimmingOf("for(int i=4 ; i<s.length() ; ++i)if(t=4)return x;return x;") //
+    trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)if(t=4)return x;return x;") //
         .gives("for(int ¢=4 ; ¢<s.length() ; ++¢)if(t=4)break;return x;") //
         .stays();
   }
