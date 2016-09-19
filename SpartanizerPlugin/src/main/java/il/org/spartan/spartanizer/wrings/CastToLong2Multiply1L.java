@@ -34,7 +34,7 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
     return eval(//
         () -> replacement(step.expression(¢))//
     ).when(//
-        step.type(¢).isPrimitiveType() && "long".equals(step.type(¢) + "") && type.get(step.expression(¢)).isIntegral() //
+        step.type(¢).isPrimitiveType() && "long".equals(step.type(¢) + "") && type.of(step.expression(¢)).isIntegral() //
     );
   }
 }

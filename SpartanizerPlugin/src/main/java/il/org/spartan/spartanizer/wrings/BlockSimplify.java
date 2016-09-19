@@ -45,92 +45,6 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Kind.NOP {
-  public static boolean hasHidings(final List<Statement> ss) {
-    return new Predicate<List<Statement>>() {
-      final Set<String> dictionary = new HashSet<>();
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
-
-      boolean ¢(final CatchClause ¢) {
-        return ¢(¢.getException());
-      }
-
-      boolean ¢(final ForStatement ¢) {
-        return ¢(step.initializers(¢));
-      }
-
-      boolean ¢(final List<Expression> xs) {
-        for (final Expression ¢ : xs)
-          if (¢ instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) ¢))
-            return true;
-        return false;
-      }
-
-      boolean ¢(final SimpleName ¢) {
-        return ¢(¢.getIdentifier());
-      }
-
-      boolean ¢(final SingleVariableDeclaration ¢) {
-        return ¢(¢.getName());
-      }
-
-      boolean ¢(final Statement ¢) {
-        return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢) //
-            : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) //
-                : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
-      }
-
-      boolean ¢(final String ¢) {
-        if (dictionary.contains(¢))
-          return true;
-        dictionary.add(¢);
-        return false;
-      }
-
-      boolean ¢(final TryStatement ¢) {
-        return ¢¢¢(step.resources(¢)) || ¢¢(step.catchClauses(¢));
-      }
-
-      boolean ¢(final VariableDeclarationExpression ¢) {
-        return ¢¢¢¢(step.fragments(¢));
-      }
-
-      boolean ¢(final VariableDeclarationFragment ¢) {
-        return ¢(¢.getName());
-      }
-
-      boolean ¢(final VariableDeclarationStatement ¢) {
-        return ¢¢¢¢(fragments(¢));
-      }
-
-      boolean ¢¢(final List<CatchClause> cs) {
-        for (final CatchClause ¢ : cs)
-          if (¢(¢))
-            return true;
-        return false;
-      }
-
-      boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
-        for (final VariableDeclarationExpression ¢ : xs)
-          if (¢(¢))
-            return true;
-        return false;
-      }
-
-      boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment x : fs)
-          if (¢(x))
-            return true;
-        return false;
-      }
-    }.test(ss);
-  }
-
   static Statement reorganizeNestedStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
@@ -159,16 +73,16 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final Block __) {
-    return "Simplify block";
+  @Override public String description(final Block b) {
+    return "Simplify block with  " + extract.statements(b).size() + " statements";
   }
 
   @Override public Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
-    if (identical(ss, statements(b)) || hasHidings(ss))
+    if (identical(ss, statements(b)) || haz.hasHidings(ss))
       return null;
-    final ASTNode parent = b.getParent();
-    if (!(parent instanceof Statement) || parent instanceof TryStatement)
+    final ASTNode parent = az.asStatement(parent(b));
+    if (parent == null || iz.tryStatement(parent)) 
       return reorganizeStatement(b);
     switch (ss.size()) {
       case 0:

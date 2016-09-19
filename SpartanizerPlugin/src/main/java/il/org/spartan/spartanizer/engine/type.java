@@ -48,7 +48,7 @@ public interface type {
   }
 
   // TODO: Matteo. Nano-pattern of values: not implemented
-  @SuppressWarnings("synthetic-access") static type get(final Expression ¢) {
+  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
 
@@ -57,15 +57,15 @@ public interface type {
   }
 
   static boolean isDouble(final Expression ¢) {
-    return get(¢) == Certain.DOUBLE;
+    return of(¢) == Certain.DOUBLE;
   }
 
   static boolean isInt(final Expression ¢) {
-    return type.get(¢) == Certain.INT;
+    return type.of(¢) == Certain.INT;
   }
 
   static boolean isLong(final Expression ¢) {
-    return get(¢) == Certain.LONG;
+    return of(¢) == Certain.LONG;
   }
 
   /** @param x JD
@@ -74,11 +74,11 @@ public interface type {
    *         used in applying the <code>+</code> operator to concatenate
    *         strings. concatenation. */
   static boolean isNotString(final Expression ¢) {
-    return !in(get(¢), STRING, ALPHANUMERIC);
+    return !in(of(¢), STRING, ALPHANUMERIC);
   }
 
   static boolean isString(final Expression ¢) {
-    return get(¢) == Certain.STRING;
+    return of(¢) == Certain.STRING;
   }
 
   default Certain asPrimitiveCertain() {

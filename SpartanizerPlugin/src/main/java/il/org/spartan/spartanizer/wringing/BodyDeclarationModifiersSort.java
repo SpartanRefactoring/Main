@@ -22,12 +22,19 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   private static boolean isSorted(final List<? extends IExtendedModifier> ms) {
     ModifiersOrdering previous = ModifiersOrdering.$ANNOTATION$;
-    for (final IExtendedModifier current : ms)
+    for (final IExtendedModifier current : ms) {
       if (ModifiersOrdering.greaterThanOrEquals(current, previous))
         previous = ModifiersOrdering.find(current);
-      else
+      else {
         return false;
+
+      }
+    }
     return true;
+  }
+
+  @Override protected boolean prerequisite(N n) {
+    return !isSorted(extendedModifiers(n));
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ms) {
@@ -39,18 +46,17 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   @Override public N replacement(final N $) {
-    return isSorted(step.extendedModifiers($)) ? null : go(duplicate.of($));
+    return go(duplicate.of($));
   }
 
   N go(final N $) {
-    final List<IExtendedModifier> ms = new ArrayList<>(canonicalModifiers($));
-    System.out.println(ms);
-    step.extendedModifiers($).clear();
-    step.extendedModifiers($).addAll(ms);
+    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
+    extendedModifiers($).clear();
+    extendedModifiers($).addAll(ms);
     return $;
   }
 
-  private List<? extends IExtendedModifier> canonicalModifiers(final N $) {
+  private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(extendedModifiers($));
   }
 

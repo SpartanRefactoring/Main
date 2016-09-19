@@ -29,7 +29,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   }
 
   @Override public String description(final MethodInvocation ¢) {
-    return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + step.receiver(¢) + ") instead of " + ¢;
+    return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 
   /* (non-Javadoc)
@@ -43,7 +43,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     final Expression ¢ = onlyOne(arguments(i));
     if (¢ == null || !(¢ instanceof StringLiteral))
       return null;
-    final Expression e = step.receiver(i);
+    final Expression e = receiver(i);
     return e == null || e instanceof StringLiteral ? null : replacement(n, ¢, e);
   }
 }
