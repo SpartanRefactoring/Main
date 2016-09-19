@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -16,27 +17,6 @@ import il.org.spartan.spartanizer.wringing.*;
 /** @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends GUI$Applicator {
-  /** Apply trimming repeatedly, until no more changes
-   * @param from what to process
-   * @return trimmed text */
-  public static String fixedPoint(final String from) {
-    return new Trimmer().fixed(from);
-  }
-
-  static ASTVisitor collect(final List<Suggestion> $) {
-    Toolbox.refresh();
-    return new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        final Wring<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
-      }
-    };
-  }
-
-  static ExclusionManager makeExcluder() {
-    return new ExclusionManager();
-  }
-
   static boolean prune(final Suggestion r, final List<Suggestion> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
@@ -62,15 +42,14 @@ public class Trimmer extends GUI$Applicator {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         // Uncomment for debugging
-        // System.err.println("VISIT " + n.getClass() + ": " + tide.clean(n +
-        // ""));
+         System.err.println("VISIT " + n.getClass() + ": " + tide.clean(n + ""));
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
         // Uncomment for debugging
-        // System.err.println("Wring: " + w.getClass() + ": " + w);
+        System.err.println("Wring: " + w.getClass() + ": " + w);
         final Suggestion s = w.suggest(n, exclude);
         if (s != null) {
           if (LogManager.isActive())
@@ -92,7 +71,6 @@ public class Trimmer extends GUI$Applicator {
       }
     };
   }
-
   String fixed(final String from) {
     final Document $ = new Document(from);
     for (;;) {

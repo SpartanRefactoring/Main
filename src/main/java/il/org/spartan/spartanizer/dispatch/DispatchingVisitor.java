@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
  * @year 2016
  * @see ExclusionManager */
 public abstract class DispatchingVisitor extends ASTVisitor {
-  protected final ExclusionManager exclude = Trimmer.makeExcluder();
+  protected final ExclusionManager exclude = new ExclusionManager();
 
   @Override public final boolean visit(final Assignment ¢) {
     return cautiousGo(¢);
