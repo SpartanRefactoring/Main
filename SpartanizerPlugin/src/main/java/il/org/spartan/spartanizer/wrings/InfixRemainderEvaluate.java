@@ -59,17 +59,17 @@ public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpres
     return "Evaluate remainder of numbers";
   }
 
+  @Override protected boolean prerequisite(InfixExpression n) {
+    return n.getOperator() == REMAINDER && iz.validForEvaluation(n);
+  }
+
   @Override public ASTNode replacement(final InfixExpression x) {
-    if (!iz.validForEvaluation(x))
-      return null;
     final int sourceLength = (x + "").length();
-    if (x.getOperator() != REMAINDER)
-      return null;
     ASTNode $;
-    if (type.get(x) == INT)
+    if (type.of(x) == INT)
       $ = replacementInt(extract.allOperands(x), x);
     else {
-      if (type.get(x) != LONG)
+      if (type.of(x) != LONG)
         return null;
       $ = replacementLong(extract.allOperands(x), x);
     }

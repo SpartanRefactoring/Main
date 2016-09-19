@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -83,5 +84,91 @@ public enum haz {
       if (¢.isAnnotation())
         return true;
     return false;
+  }
+
+  public static boolean hasHidings(final List<Statement> ss) {
+    return new Predicate<List<Statement>>() {
+      final Set<String> dictionary = new HashSet<>();
+  
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
+  
+      boolean ¢(final CatchClause ¢) {
+        return ¢(¢.getException());
+      }
+  
+      boolean ¢(final ForStatement ¢) {
+        return ¢(step.initializers(¢));
+      }
+  
+      boolean ¢(final List<Expression> xs) {
+        for (final Expression ¢ : xs)
+          if (¢ instanceof VariableDeclarationExpression && ¢((VariableDeclarationExpression) ¢))
+            return true;
+        return false;
+      }
+  
+      boolean ¢(final SimpleName ¢) {
+        return ¢(¢.getIdentifier());
+      }
+  
+      boolean ¢(final SingleVariableDeclaration ¢) {
+        return ¢(¢.getName());
+      }
+  
+      boolean ¢(final Statement ¢) {
+        return ¢ instanceof VariableDeclarationStatement ? ¢((VariableDeclarationStatement) ¢) //
+            : ¢ instanceof ForStatement ? ¢((ForStatement) ¢) //
+                : ¢ instanceof TryStatement && ¢((TryStatement) ¢);
+      }
+  
+      boolean ¢(final String ¢) {
+        if (dictionary.contains(¢))
+          return true;
+        dictionary.add(¢);
+        return false;
+      }
+  
+      boolean ¢(final TryStatement ¢) {
+        return ¢¢¢(step.resources(¢)) || ¢¢(step.catchClauses(¢));
+      }
+  
+      boolean ¢(final VariableDeclarationExpression ¢) {
+        return ¢¢¢¢(step.fragments(¢));
+      }
+  
+      boolean ¢(final VariableDeclarationFragment ¢) {
+        return ¢(¢.getName());
+      }
+  
+      boolean ¢(final VariableDeclarationStatement ¢) {
+        return ¢¢¢¢(fragments(¢));
+      }
+  
+      boolean ¢¢(final List<CatchClause> cs) {
+        for (final CatchClause ¢ : cs)
+          if (¢(¢))
+            return true;
+        return false;
+      }
+  
+      boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
+        for (final VariableDeclarationExpression ¢ : xs)
+          if (¢(¢))
+            return true;
+        return false;
+      }
+  
+      boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment x : fs)
+          if (¢(x))
+            return true;
+        return false;
+      }
+    }.test(ss);
   }
 }

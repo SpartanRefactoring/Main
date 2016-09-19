@@ -402,4 +402,16 @@ public interface wizard {
         return false;
     return true;
   }
+
+  static boolean unreachable() {
+    return false;
+  }
+
+  static String dump() {
+    return "BUG: ";
+  }
+
+  static String endDump() {
+    return "\n-----this is all I know.";
+  }
 }

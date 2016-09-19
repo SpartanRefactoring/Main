@@ -26,14 +26,11 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNodeIfPreresuisite<IfStatement> implements Kind.Ternarization {
+public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
   @Override public String description(final IfStatement ¢) {
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
-    return wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
-  }
 
   @Override public Statement replacement(final IfStatement s) {
     final Assignment then = extract.assignment(then(s));

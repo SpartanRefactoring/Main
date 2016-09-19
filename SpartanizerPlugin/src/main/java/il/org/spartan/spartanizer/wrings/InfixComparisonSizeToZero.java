@@ -6,6 +6,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
@@ -30,7 +32,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
-    assert receiver != null : "All I know is that threshold='" + threshold + "', and that operator is '" + o + "'";
+    assert receiver != null :  dump() +// 
+        "\n threshold='" + threshold + //
+        "\n receiver ='" + receiver + //
+        "\n operator ='" + o + //
+        endDump();
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     assert $ != null : "All I know is that threshould=" + threshold + ", receiver = " + $ + ", and o=" + o;
     return replacement(o, threshold, $);
@@ -50,7 +56,10 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       return threshold != 0 ? null : make.notOf($);
     if (o == LESS)
       return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;
-    assert false : o + ": uncrecognized";
+    assert unreachable() :  dump() +// 
+        "\n threshold='" + threshold + //
+        "\n operator ='" + o + //
+        endDump();
     return null;
   }
 

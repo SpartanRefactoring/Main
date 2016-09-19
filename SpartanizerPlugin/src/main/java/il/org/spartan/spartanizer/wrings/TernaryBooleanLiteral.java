@@ -60,7 +60,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * .
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class TernaryBooleanLiteral extends ReplaceCurrentNodeIfPreresuisite<ConditionalExpression> implements Kind.NOP {
+public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
   private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }

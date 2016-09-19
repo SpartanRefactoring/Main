@@ -184,7 +184,7 @@ public enum iz {
   }
 
   public static boolean doubleType(final Expression ¢) {
-    return type.get(¢) == DOUBLE;
+    return type.of(¢) == DOUBLE;
   }
 
   /** Determine whether a node is an {@link EmptyStatement}
@@ -327,7 +327,7 @@ public enum iz {
   }
 
   public static boolean intType(final Expression ¢) {
-    return type.get(¢) == INT;
+    return type.of(¢) == INT;
   }
 
   public static boolean is(final ASTNode ¢, final int... types) {
@@ -472,7 +472,7 @@ public enum iz {
   }
 
   public static boolean longType(final Expression ¢) {
-    return type.get(¢) == LONG;
+    return type.of(¢) == LONG;
   }
 
   /** Determine whether a node is a {@link MethodDeclaration}
@@ -787,5 +787,9 @@ public enum iz {
 
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
+  }
+
+  public static boolean tryStatement(ASTNode n) {
+    return is(n, TRY_STATEMENT);
   }
 }
