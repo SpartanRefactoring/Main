@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -103,12 +105,12 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return $ != null ? $ : ¢;
   }
 
-  @Override public boolean canSuggest(final PrefixExpression ¢) {
-    return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
-  }
-
   @Override public String description(@SuppressWarnings("unused") final PrefixExpression __) {
     return "Pushdown logical negation ('!')";
+  }
+
+  @Override public boolean prerequisite(final PrefixExpression ¢) {
+    return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
   }
 
   @Override public Expression replacement(final PrefixExpression ¢) {

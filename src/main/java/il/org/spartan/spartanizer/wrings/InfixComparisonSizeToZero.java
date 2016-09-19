@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;

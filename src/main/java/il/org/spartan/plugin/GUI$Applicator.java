@@ -1,7 +1,6 @@
 package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.eclipse.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import java.util.*;
 import java.util.List;
@@ -16,6 +15,8 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;

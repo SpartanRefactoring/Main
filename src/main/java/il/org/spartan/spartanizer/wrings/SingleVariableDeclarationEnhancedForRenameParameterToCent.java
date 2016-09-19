@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerWring<SingleVariableDeclaration> implements Kind.Centification {
+public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerWring<SingleVariableDeclaration>
+    implements Kind.Centification {
   @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }

@@ -33,7 +33,7 @@ public class Issue111Test {
   }
 
   @Test public void A$c_2() { // not working cause method sorting is not
-                                    // integrated yet
+                              // integrated yet
     trimmingOf("public final class A{" + //
         "synchronized public void fun(final int a) {}" + //
         "final private String s = \"Alex\";" + //

@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.wringing;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -22,7 +22,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   private static boolean isSorted(final List<? extends IExtendedModifier> ms) {
     ModifiersOrdering previous = ModifiersOrdering.$ANNOTATION$;
-    for (IExtendedModifier current : ms)
+    for (final IExtendedModifier current : ms)
       if (ModifiersOrdering.greaterThanOrEquals(current, previous))
         previous = ModifiersOrdering.find(current);
       else
@@ -30,8 +30,12 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return true;
   }
 
+  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ms) {
+    return ms.stream().sorted(comp).collect(Collectors.toList());
+  }
+
   @Override public String description(final N n) {
-    return "Sort modifiers of " + extract.category(n) + " " +  extract.name(n) + " (" + extract.modifiers(n) + "->" + sort(extract.modifiers(n)) + ")";
+    return "Sort modifiers of " + extract.category(n) + " " + extract.name(n) + " (" + extract.modifiers(n) + "->" + sort(extract.modifiers(n)) + ")";
   }
 
   @Override public N replacement(final N $) {
@@ -48,10 +52,6 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   private List<? extends IExtendedModifier> canonicalModifiers(final N $) {
     return sort(extendedModifiers($));
-  }
-
-  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ms) {
-    return ms.stream().sorted(comp).collect(Collectors.toList());
   }
 
   public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //

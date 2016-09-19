@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.junit.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;

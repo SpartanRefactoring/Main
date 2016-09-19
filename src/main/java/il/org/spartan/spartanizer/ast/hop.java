@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,

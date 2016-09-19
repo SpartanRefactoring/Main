@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -112,12 +113,12 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNodeIfPreresuisit
     return subject.pair(literal != takeThen ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
 
-  @Override public boolean canSuggest(final ConditionalExpression ¢) {
-    return isTernaryOfBooleanLitreral(¢);
-  }
-
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
+  }
+
+  @Override public boolean prerequisite(final ConditionalExpression ¢) {
+    return isTernaryOfBooleanLitreral(¢);
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {

@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;

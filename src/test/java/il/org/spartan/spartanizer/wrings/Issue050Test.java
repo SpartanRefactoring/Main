@@ -2,11 +2,8 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.spartanizer.wringing.*;
 
 /** @author Yossi Gil
  * @since 2016 */
@@ -170,12 +167,13 @@ public class Issue050Test {
         .gives("interface a {}");//
   }
 
-  @Test public void A$50c_interface_static_abstract() {
-    trimmingOf("static abstract interface a {}")//
-        .gives("interface a {}");//
-  }
   @Test public void A$50c_interface__abstract() {
     trimmingOf("abstract interface a {}")//
+        .gives("interface a {}");//
+  }
+
+  @Test public void A$50c_interface_static_abstract() {
+    trimmingOf("static abstract interface a {}")//
         .gives("interface a {}");//
   }
 

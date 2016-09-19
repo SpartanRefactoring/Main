@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -27,12 +27,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNodeIfPreresuisite<IfStatement> implements Kind.Ternarization {
-  @Override public boolean canSuggest(final IfStatement ¢) {
-    return wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
-  }
-
   @Override public String description(final IfStatement ¢) {
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
   }
 
   @Override public Statement replacement(final IfStatement s) {

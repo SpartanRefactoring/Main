@@ -8,13 +8,13 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class CarefulWring<N extends ASTNode> extends Wring<N> {
-  @Override public final boolean canSuggest(N n) {
+  @Override public final boolean canSuggest(final N n) {
     return prerequisite(n) && suggest(n) != null;
   }
 
-  protected abstract boolean prerequisite(N n) ;
-
-  @Override public final boolean demandsToSuggestButPerhapsCant(N n) {
+  @Override public final boolean demandsToSuggestButPerhapsCant(final N n) {
     return canSuggest(n);
   }
+
+  protected abstract boolean prerequisite(N n);
 }

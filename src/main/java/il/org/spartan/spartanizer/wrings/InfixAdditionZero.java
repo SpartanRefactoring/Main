@@ -1,10 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
-import static il.org.spartan.spartanizer.assemble.make.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.extract.*;
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.assemble.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
@@ -13,6 +11,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.assemble.*;
@@ -108,8 +110,7 @@ public final class InfixAdditionZero extends EagerWring<InfixExpression> impleme
           if (¢ != first && minus.level(¢) > 0)
             r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS))
-              .into(first.getParent()), g);
+          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

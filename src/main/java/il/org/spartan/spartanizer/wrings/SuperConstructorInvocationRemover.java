@@ -13,12 +13,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Daniel Mittelman
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends CarefulWring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
-  @Override public boolean prerequisite(final SuperConstructorInvocation ¢) {
-    return ¢.getExpression() == null && ¢.arguments().isEmpty();
-  }
-
   @Override public String description(final SuperConstructorInvocation ¢) {
     return "Remove vacuous 'super()' invocation in " + ¢;
+  }
+
+  @Override public boolean prerequisite(final SuperConstructorInvocation ¢) {
+    return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 
   @Override public Suggestion suggest(final SuperConstructorInvocation i) {

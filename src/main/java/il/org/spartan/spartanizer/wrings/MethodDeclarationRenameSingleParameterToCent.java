@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import java.util.*;
@@ -10,6 +9,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;

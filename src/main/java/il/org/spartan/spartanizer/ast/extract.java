@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
@@ -64,6 +65,36 @@ public enum extract {
   public static Assignment assignment(final ASTNode n) {
     final ExpressionStatement e = extract.expressionStatement(n);
     return e == null ? null : az.assignment(e.getExpression());
+  }
+
+  public static String category(final BodyDeclaration d) {
+    switch (d.getNodeType()) {
+      case ANNOTATION_TYPE_DECLARATION:
+        return "@interface";
+      case ANNOTATION_TYPE_MEMBER_DECLARATION:
+        return "@interrface member";
+      case ENUM_DECLARATION:
+        return "enum";
+      case ENUM_CONSTANT_DECLARATION:
+        return "enum member";
+      case FIELD_DECLARATION:
+        return "field";
+      case INITIALIZER:
+        if (Modifier.isStatic(((Initializer) d).getModifiers()))
+          return "static type initializer";
+        return "type initializer";
+      case METHOD_DECLARATION:
+        return "method";
+      case TYPE_DECLARATION:
+        return category((TypeDeclaration) d);
+      default:
+        assert bug() : details() //
+            + "\n d = " + d //
+            + "\n d.getClass() = " + d.getClass() //
+            + "\n d.getNodeType() = " + d.getNodeType() //
+            + end();
+        return d.getClass().getSimpleName();
+    }
   }
 
   /** Peels any parenthesis that may wrap an {@Link Expression}
@@ -162,6 +193,34 @@ public enum extract {
         $.add(a);
     }
     return $;
+  }
+
+  public static String name(final BodyDeclaration d) {
+    switch (d.getNodeType()) {
+      case ANNOTATION_TYPE_DECLARATION:
+        return ((AnnotationTypeDeclaration) d).getName() + "";
+      case ANNOTATION_TYPE_MEMBER_DECLARATION:
+        return ((AnnotationTypeMemberDeclaration) d).getName() + "";
+      case ENUM_DECLARATION:
+        return ((EnumDeclaration) d).getName() + "";
+      case ENUM_CONSTANT_DECLARATION:
+        return ((EnumConstantDeclaration) d).getName() + "";
+      case FIELD_DECLARATION:
+        return separate.these(fragments((FieldDeclaration) d)).by("/");
+      case INITIALIZER:
+        return "";
+      case METHOD_DECLARATION:
+        return ((MethodDeclaration) d).getName() + "";
+      case TYPE_DECLARATION:
+        return ((TypeDeclaration) d).getName() + "";
+      default:
+        assert bug() : details() //
+            + "\n d = " + d //
+            + "\n d.getClass() = " + d.getClass() //
+            + "\n d.getNodeType() = " + d.getNodeType() //
+            + end();
+        return d.getClass().getSimpleName();
+    }
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -314,6 +373,33 @@ public enum extract {
     return $;
   }
 
+  private static boolean bug() {
+    return true;
+  }
+
+  private static String category(final TypeDeclaration a) {
+    final StringBuilder $ = new StringBuilder();
+    if (a.isInterface())
+      $.append("interface");
+    else
+      $.append("class");
+    if (a.isMemberTypeDeclaration())
+      $.append(" member");
+    if (a.isPackageMemberTypeDeclaration())
+      $.append(" package");
+    if (a.isLocalTypeDeclaration())
+      $.append(" local");
+    return $ + "";
+  }
+
+  private static String details() {
+    return "BUG: ";
+  }
+
+  private static String end() {
+    return "\n-----this is all I know.";
+  }
+
   private static Statement next(final Statement s, final List<Statement> ss) {
     for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
       if (ss.get(¢) == s)
@@ -337,90 +423,5 @@ public enum extract {
         $.add(¢);
         return $;
     }
-  }
-
-  public static String category(BodyDeclaration d) {
-    switch (d.getNodeType()) {
-      case ANNOTATION_TYPE_DECLARATION:
-        return "@interface";
-      case ANNOTATION_TYPE_MEMBER_DECLARATION:
-        return "@interrface member";
-      case ENUM_DECLARATION:
-        return "enum";
-      case ENUM_CONSTANT_DECLARATION:
-        return "enum member";
-      case FIELD_DECLARATION:
-        return "field";
-      case INITIALIZER:
-        if (Modifier.isStatic(((Initializer) d).getModifiers()))
-          return "static type initializer";
-        return "type initializer";
-      case METHOD_DECLARATION:
-        return "method";
-      case TYPE_DECLARATION:
-        return category((TypeDeclaration) d);
-      default:
-        assert bug() : details() //
-            + "\n d = " + d //
-            + "\n d.getClass() = " + d.getClass() //
-            + "\n d.getNodeType() = " + d.getNodeType() //
-            + end();
-        return d.getClass().getSimpleName();
-    }
-  }
-
-  private static String category(TypeDeclaration a) {
-    StringBuilder $ = new StringBuilder();
-    if (a.isInterface())
-      $.append("interface");
-    else
-      $.append("class");
-    if (a.isMemberTypeDeclaration())
-      $.append(" member");
-    if (a.isPackageMemberTypeDeclaration())
-      $.append(" package");
-    if (a.isLocalTypeDeclaration())
-      $.append(" local");
-    return $ + "";
-  }
-
-  private static String end() {
-    return "\n-----this is all I know.";
-  }
-
-  public static String name(BodyDeclaration d) {
-    switch (d.getNodeType()) {
-      case ANNOTATION_TYPE_DECLARATION:
-        return ((AnnotationTypeDeclaration) d).getName() + "";
-      case ANNOTATION_TYPE_MEMBER_DECLARATION:
-        return ((AnnotationTypeMemberDeclaration) d).getName() + "";
-      case ENUM_DECLARATION:
-        return ((EnumDeclaration) d).getName() + "";
-      case ENUM_CONSTANT_DECLARATION:
-        return ((EnumConstantDeclaration) d).getName() + "";
-      case FIELD_DECLARATION:
-        return separate.these(fragments((FieldDeclaration) d)).by("/");
-      case INITIALIZER:
-        return "";
-      case METHOD_DECLARATION:
-        return ((MethodDeclaration) d).getName() + "";
-      case TYPE_DECLARATION:
-        return ((TypeDeclaration) d).getName() + "";
-      default:
-        assert bug() : details() //
-            + "\n d = " + d //
-            + "\n d.getClass() = " + d.getClass() //
-            + "\n d.getNodeType() = " + d.getNodeType() //
-            + end();
-        return d.getClass().getSimpleName();
-    }
-  }
-
-  private static String details() {
-    return "BUG: ";
-  }
-
-  private static boolean bug() {
-    return true;
   }
 }

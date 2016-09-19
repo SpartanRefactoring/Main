@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -41,6 +42,10 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015-09-09 */
 public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerWring<IfStatement> implements Kind.EarlyReturn {
+  @SuppressWarnings("unused") @Override public String description(final IfStatement ____) {
+    return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
+  }
+
   @Override public Suggestion suggest(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
@@ -51,9 +56,5 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerWring<If
         r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
       }
     };
-  }
-
-  @SuppressWarnings("unused") @Override public String description(final IfStatement ____) {
-    return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 }

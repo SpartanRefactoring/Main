@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -29,14 +29,13 @@ import il.org.spartan.spartanizer.wringing.*;
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
   private static final specificity specifity = new specificity();
 
-
-
-  @Override public boolean canSuggest(final InfixExpression ¢) {
-    return specifity.compare(left(¢), right(¢)) < 0 && !¢.hasExtendedOperands() && iz.comparison(¢) && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
-  }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
+  }
+
+  @Override public boolean prerequisite(final InfixExpression ¢) {
+    return specifity.compare(left(¢), right(¢)) < 0 && !¢.hasExtendedOperands() && iz.comparison(¢)
+        && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
 
   @Override public Expression replacement(final InfixExpression ¢) {

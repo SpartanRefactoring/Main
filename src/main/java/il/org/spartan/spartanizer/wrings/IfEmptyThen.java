@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -26,12 +26,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
-  @Override public boolean canSuggest(final IfStatement ¢) {
-    return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
