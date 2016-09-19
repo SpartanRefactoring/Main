@@ -6,15 +6,22 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
+/** Replace current node strategy
+ * @author Yossi Gil
+ * @year 2016 */
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
+  @Override public final boolean demandsToSuggestButPerhapsCant(final N ¢) {
+    return replacement(¢) != null;
+  }
+
+  @Override public boolean canSuggest(final N ¢) {
     return replacement(¢) != null;
   }
 
   public abstract ASTNode replacement(N n);
 
   @Override public final Suggestion suggest(final N n) {
-    return cantSuggest(n) ? null : new Suggestion(description(n), n) {
+    return new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, replacement(n), g);
       }

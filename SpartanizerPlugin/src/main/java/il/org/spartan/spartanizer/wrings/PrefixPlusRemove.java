@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wrings;
-
+import static il.org.spartan.spartanizer.assemble.make.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -21,7 +21,7 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
   }
 
   @Override public ASTNode replacement(final PrefixExpression ¢) {
-    return ¢.getOperator() != PLUS ? null : il.org.spartan.spartanizer.assemble.make.plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
+    return ¢.getOperator() != PLUS ? null : plant(duplicate.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 
   private Expression heart(final Expression x) {

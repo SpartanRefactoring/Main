@@ -166,7 +166,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(final ConditionalExpression ¢) {
+  @Override public boolean canSuggest(final ConditionalExpression ¢) {
     return pushdown(¢) != null;
   }
 

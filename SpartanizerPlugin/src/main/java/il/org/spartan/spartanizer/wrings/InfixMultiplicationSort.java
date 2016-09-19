@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.wringing.*;
  * of {@link String}s.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixMultiplicationSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
+public final class InfixMultiplicationSort extends InfixExpressionSortingFull implements Kind.Sorting {
+  @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), TIMES);
   }
 

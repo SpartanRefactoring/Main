@@ -61,6 +61,6 @@ eclipse.preferences.version=1
 formatter_profile=_Spartan
 formatter_settings_version=12
 org.eclipse.jdt.ui.ignorelowercasenames=true
-org.eclipse.jdt.ui.importorder=java;javax;org;com;
+org.eclipse.jdt.ui.importorder=java;javax;org;com;\#il.org.spartan.spartanizer.ast.wizard;\#il.org.spartan.spartanizer.ast.step;\#il.org.spartan.spartanizer.ast.hop;\#il.org.spartan.spartanizer.ast.extract;
 org.eclipse.jdt.ui.ondemandthreshold=1
 org.eclipse.jdt.ui.staticondemandthreshold=1

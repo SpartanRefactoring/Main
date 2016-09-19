@@ -41,7 +41,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *         </pre>
  *
  * @since 2015-09-09 */
-public final class IfLastInMethodThenEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.EarlyReturn {
+public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerWring<IfStatement> implements Kind.EarlyReturn {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }

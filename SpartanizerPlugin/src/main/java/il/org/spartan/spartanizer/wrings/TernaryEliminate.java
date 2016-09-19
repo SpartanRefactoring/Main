@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.wrings;
-
 import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.spartanizer.assemble.make.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpression> implements Kind.NOP {
-  @Override public boolean demandsToSuggestButPerhapsCant(final ConditionalExpression ¢) {
+  @Override public boolean canSuggest(final ConditionalExpression ¢) {
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression());
   }
 
@@ -19,6 +19,6 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
-    return il.org.spartan.spartanizer.assemble.make.plant(extract.core(¢.getThenExpression())).into(¢.getParent());
+    return plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }
 }

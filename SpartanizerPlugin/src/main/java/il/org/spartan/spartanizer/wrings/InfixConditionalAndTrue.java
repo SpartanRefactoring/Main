@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
-  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
+  @Override public boolean canSuggest(final InfixExpression ¢) {
     return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
   }
 

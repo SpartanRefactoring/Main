@@ -39,7 +39,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class IfBarFooElseBazFoo extends Wring<IfStatement> implements Kind.Ternarization {
+public final class IfBarFooElseBazFoo extends EagerWring<IfStatement> implements Kind.Ternarization {
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {

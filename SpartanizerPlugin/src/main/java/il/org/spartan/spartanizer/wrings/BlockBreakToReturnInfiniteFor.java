@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> implements Kind.Collapse {
+public final class BlockBreakToReturnInfiniteFor extends CarefulWring<ForStatement> implements Kind.Collapse {
   public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
@@ -84,7 +84,7 @@ public final class BlockBreakToReturnInfiniteFor extends Wring<ForStatement> imp
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean demandsToSuggestButPerhapsCant(final ForStatement ¢) {
+  @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 

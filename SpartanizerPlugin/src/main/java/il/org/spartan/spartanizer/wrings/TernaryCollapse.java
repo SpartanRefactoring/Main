@@ -48,7 +48,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL_AND)) : null;
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(final ConditionalExpression ¢) {
+  @Override public boolean canSuggest(final ConditionalExpression ¢) {
     return collapse(¢) != null;
   }
 

@@ -9,11 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an
  * {@link ExclusionManager} */
-public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Wring<N> {
-  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
-    return replacement(¢, new ExclusionManager()) != null;
-  }
-
+public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends EagerWring<N> {
   @Override public final Suggestion suggest(final N n, final ExclusionManager m) {
     return cantSuggest(n) ? null : new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wrings;
+import static il.org.spartan.spartanizer.assemble.make.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
@@ -12,19 +13,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** eliminates redundant comparison with the two boolean literals:
- *
- * <pre>
- * <b>true</b>
- * </pre>
- *
- * and
- *
- * <pre>
- * <b>false</b>
- * </pre>
- *
- * .
+/** eliminates redundant comparison with <code><b>true</b> </code> and
+ * <code><b>false</b></code> .
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression> implements Kind.Collapse {
@@ -48,7 +38,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
+  @Override public boolean canSuggest(final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 
@@ -59,6 +49,6 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
   @Override public Expression replacement(final InfixExpression x) {
     final BooleanLiteral literal = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
-    return il.org.spartan.spartanizer.assemble.make.plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
+    return plant(!negating(x, literal) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 }

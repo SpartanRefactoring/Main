@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * This wring is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
-public final class SingleVariableDeclarationAbbreviation extends Wring<SingleVariableDeclaration> implements Kind.Abbreviation {
+public final class SingleVariableDeclarationAbbreviation extends EagerWring<SingleVariableDeclaration> implements Kind.Abbreviation {
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (int ¢ = d.getExtraDimensions(); ¢ > 0; --¢)

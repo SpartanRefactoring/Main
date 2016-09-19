@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.wrings;
+import static il.org.spartan.spartanizer.assemble.make.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
@@ -50,7 +51,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixAdditionZero extends Wring<InfixExpression> implements Kind.NOP {
+public final class InfixAdditionZero extends EagerWring<InfixExpression> implements Kind.NOP {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
@@ -105,9 +106,9 @@ public final class InfixAdditionZero extends Wring<InfixExpression> implements K
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)
           if (¢ != first && minus.level(¢) > 0)
-            r.replace(¢, il.org.spartan.spartanizer.assemble.make.plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
+            r.replace(¢, plant(duplicate.of(minus.peel(¢))).into(¢.getParent()), g);
         if (first != null)
-          r.replace(first, il.org.spartan.spartanizer.assemble.make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS))
+          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS))
               .into(first.getParent()), g);
       }
     };

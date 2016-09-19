@@ -114,7 +114,7 @@ public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> e
     return false;
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(final BodyDeclaration ¢) {
+  @Override public boolean canSuggest(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> ps = redundancies(¢);
     return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }

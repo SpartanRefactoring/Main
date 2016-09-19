@@ -8,18 +8,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** A wring to remove
- *
- * <pre>
- * super()
- * </pre>
- *
- * calls which take no arguments, as typically created by Eclipse's template for
- * constructors.
+/** Removes <code>super()</code> calls which take no arguments, as typically
+ * created by Eclipse's template for constructors.
  * @author Daniel Mittelman
  * @since 2015-08-26 */
-public final class SuperConstructorInvocationRemover extends Wring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
-  @Override public boolean demandsToSuggestButPerhapsCant(final SuperConstructorInvocation ¢) {
+public final class SuperConstructorInvocationRemover extends CarefulWring<SuperConstructorInvocation> implements Kind.SyntacticBaggage {
+  @Override public boolean prerequisite(final SuperConstructorInvocation ¢) {
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 

@@ -34,7 +34,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfLastInMethod extends Wring<IfStatement> implements Kind.EarlyReturn {
+public final class IfLastInMethod extends EagerWring<IfStatement> implements Kind.EarlyReturn {
   @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
