@@ -15,11 +15,10 @@ import il.org.spartan.spartanizer.wringing.*;
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class InfixDivisonSort extends InfixSortingOfCDR implements Kind.Sorting {
-  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
+public final class InfixDivisonSortRest extends InfixExpressionSortingRest implements Kind.Sorting {
+  @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), DIVIDE);
   }
-
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);
   }

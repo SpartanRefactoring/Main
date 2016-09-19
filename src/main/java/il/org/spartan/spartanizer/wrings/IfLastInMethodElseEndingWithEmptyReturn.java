@@ -40,7 +40,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
  * @since 2015-09-09 */
-public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfStatement> implements Kind.EarlyReturn {
+public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerWring<IfStatement> implements Kind.EarlyReturn {
   @Override public Suggestion suggest(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))

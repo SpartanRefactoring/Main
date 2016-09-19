@@ -28,9 +28,6 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(@SuppressWarnings("unused") final PostfixExpression __) {
-    return true;
-  }
 
   @Override public String description(final PostfixExpression ¢) {
     return "Convert post-" + description(¢.getOperator()) + " of " + step.operand(¢) + " to pre-" + description(¢.getOperator());

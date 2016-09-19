@@ -103,7 +103,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return $ != null ? $ : ¢;
   }
 
-  @Override public boolean demandsToSuggestButPerhapsCant(final PrefixExpression ¢) {
+  @Override public boolean canSuggest(final PrefixExpression ¢) {
     return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
   }
 

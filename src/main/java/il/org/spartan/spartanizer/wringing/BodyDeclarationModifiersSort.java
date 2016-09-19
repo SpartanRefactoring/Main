@@ -51,7 +51,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ms) {
-    return ms.stream().sorted(comp).distinct().collect(Collectors.toList());
+    return ms.stream().sorted(comp).collect(Collectors.toList());
   }
 
   public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //

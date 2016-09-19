@@ -26,9 +26,9 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
-    return ¢ != null && wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
+public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNodeIfPreresuisite<IfStatement> implements Kind.Ternarization {
+  @Override public boolean canSuggest(final IfStatement ¢) {
+    return wizard.compatible(extract.assignment(then(¢)), extract.assignment(elze(¢)));
   }
 
   @Override public String description(final IfStatement ¢) {

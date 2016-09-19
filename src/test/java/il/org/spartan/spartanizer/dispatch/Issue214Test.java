@@ -21,7 +21,7 @@ public final class Issue214Test {
   }
 
   private final Wring<?> blockSimplify = new BlockSimplify();
-  private final Wring<?> wring = new Wring<ASTNode>() {
+  private final Wring<?> wring = new EagerWring<ASTNode>() {
     @Override public String description() {
       return null;
     }

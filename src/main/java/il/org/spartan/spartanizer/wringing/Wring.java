@@ -28,9 +28,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  public boolean canSuggest(@SuppressWarnings("unused") final N __) {
-    return true;
-  }
+  public abstract boolean canSuggest(final N n) ;
 
   /** Determines whether this {@link Wring} object is not applicable for a given
    * {@link PrefixExpression} is within the "scope" of this . Note that a
@@ -52,9 +50,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
-  @Deprecated public boolean demandsToSuggestButPerhapsCant(final N ¢) {
-    return suggest(¢, null) != null;
-  }
+  @Deprecated public abstract boolean demandsToSuggestButPerhapsCant(final N ¢); 
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
