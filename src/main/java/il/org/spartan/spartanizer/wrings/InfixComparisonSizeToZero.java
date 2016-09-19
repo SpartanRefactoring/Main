@@ -32,7 +32,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
-    assert receiver != null :  dump() +// 
+    assert receiver != null : dump() + //
         "\n threshold='" + threshold + //
         "\n receiver ='" + receiver + //
         "\n operator ='" + o + //
@@ -56,7 +56,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       return threshold != 0 ? null : make.notOf($);
     if (o == LESS)
       return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;
-    assert unreachable() :  dump() +// 
+    assert unreachable() : dump() + //
         "\n threshold='" + threshold + //
         "\n operator ='" + o + //
         endDump();

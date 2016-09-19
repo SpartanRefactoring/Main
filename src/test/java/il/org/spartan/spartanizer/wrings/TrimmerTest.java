@@ -1464,6 +1464,11 @@ import il.org.spartan.spartanizer.wringing.*;
         .gives(" void f(final VariableDeclarationStatement s) { }");
   }
 
+  @Test public void initializer101() {
+    trimmingOf("int a = b; return a;").gives("return b;")//
+        .stays();
+  }
+
   @Test public void inline01() {
     trimmingOf("  public int y() {\n"//
         + "    final Z res = new Z(6);\n"//
@@ -3505,11 +3510,6 @@ import il.org.spartan.spartanizer.wringing.*;
   @Test public void shortestBranchIfWithComplexNestedIf5() {
     trimmingOf("if (a) {f(); g(); h(); ++i; f();} else if (a) ++i; else j++;")//
         .gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();}");
-  }
-
-  @Test public void initializer101() {
-    trimmingOf("int a = b; return a;").gives("return b;")//
-        .stays();
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf7() {

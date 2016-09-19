@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.wrings;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -82,7 +81,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
     if (identical(ss, statements(b)) || haz.hasHidings(ss))
       return null;
     final ASTNode parent = az.asStatement(parent(b));
-    if (parent == null || iz.tryStatement(parent)) 
+    if (parent == null || iz.tryStatement(parent))
       return reorganizeStatement(b);
     switch (ss.size()) {
       case 0:

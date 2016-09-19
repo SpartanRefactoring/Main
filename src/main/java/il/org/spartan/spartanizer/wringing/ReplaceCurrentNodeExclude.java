@@ -17,7 +17,7 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
         "\n n = " + n + //
         "\n m = " + m + //
         endDump();
-    ASTNode $ = replacement(n, m);
+    final ASTNode $ = replacement(n, m);
     if ($ == null)
       return null;
     return new Suggestion(description(n), n) {

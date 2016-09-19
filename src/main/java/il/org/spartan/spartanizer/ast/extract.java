@@ -381,11 +381,11 @@ public enum extract {
       $.append("member ");
     if (a.isLocalTypeDeclaration())
       $.append("local ");
-     if (a.isInterface())
+    if (a.isInterface())
       $.append("interface");
     else
       $.append("class");
-   return $ + "";
+    return $ + "";
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {

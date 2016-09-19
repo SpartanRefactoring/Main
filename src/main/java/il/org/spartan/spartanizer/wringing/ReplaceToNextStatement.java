@@ -14,7 +14,6 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulW
     return next != null && go(ASTRewrite.create(current.getAST()), current, next, null) != null;
   }
 
-
   @Override public Suggestion suggest(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null)

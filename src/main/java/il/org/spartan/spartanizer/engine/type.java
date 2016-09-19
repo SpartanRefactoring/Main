@@ -47,11 +47,6 @@ public interface type {
     return inner.types.get(name);
   }
 
-  // TODO: Matteo. Nano-pattern of values: not implemented
-  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
-    return inner.get(¢);
-  }
-
   @SuppressWarnings("synthetic-access") static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
@@ -79,6 +74,11 @@ public interface type {
 
   static boolean isString(final Expression ¢) {
     return of(¢) == Certain.STRING;
+  }
+
+  // TODO: Matteo. Nano-pattern of values: not implemented
+  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
+    return inner.get(¢);
   }
 
   default Certain asPrimitiveCertain() {

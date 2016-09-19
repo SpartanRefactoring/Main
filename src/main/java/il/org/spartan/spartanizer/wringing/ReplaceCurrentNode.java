@@ -18,8 +18,8 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulWring
     assert prerequisite(n) : dump() + //
         "\n n = " + n //
         + endDump();
-    ASTNode $ = replacement(n);
-    if ($== null)
+    final ASTNode $ = replacement(n);
+    if ($ == null)
       return null;
     return new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -27,6 +27,4 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulWring
       }
     };
   }
-
-
 }

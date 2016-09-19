@@ -43,7 +43,7 @@ public final class CastBlockSingletonVariableDefinition extends CarefulWring<Blo
     };
   }
 
-  @Override protected boolean prerequisite(Block n) {
+  @Override protected boolean prerequisite(final Block n) {
     return true;
   }
 }

@@ -218,6 +218,14 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
+  static String dump() {
+    return "BUG: ";
+  }
+
+  static String endDump() {
+    return "\n-----this is all I know.";
+  }
+
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -405,13 +413,5 @@ public interface wizard {
 
   static boolean unreachable() {
     return false;
-  }
-
-  static String dump() {
-    return "BUG: ";
-  }
-
-  static String endDump() {
-    return "\n-----this is all I know.";
   }
 }
