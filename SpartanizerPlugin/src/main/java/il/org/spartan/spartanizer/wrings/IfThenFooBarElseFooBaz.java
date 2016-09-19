@@ -40,7 +40,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements Kind.DistributiveRefactoring {
+public final class IfThenFooBarElseFooBaz extends EagerWring<IfStatement> implements Kind.DistributiveRefactoring {
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     while (!ss1.isEmpty() && !ss2.isEmpty()) {
@@ -54,11 +54,6 @@ public final class IfThenFooBarElseFooBaz extends Wring<IfStatement> implements 
     }
     return $;
   }
-
-  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
-    return suggest(¢) != null;
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }

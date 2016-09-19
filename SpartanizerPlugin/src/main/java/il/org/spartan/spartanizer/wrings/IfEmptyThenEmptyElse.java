@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThenEmptyElse extends Wring<IfStatement> implements Kind.NOP {
-  @Override public boolean demandsToSuggestButPerhapsCant(final IfStatement ¢) {
+public final class IfEmptyThenEmptyElse extends CarefulWring<IfStatement> implements Kind.NOP {
+  @Override public boolean prerequisite(final IfStatement ¢) {
     return ¢ != null && iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 

@@ -19,12 +19,13 @@ import il.org.spartan.spartanizer.wringing.*;
  * @see InfixAdditionSort
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixPseudoAdditionSort extends InfixSorting implements Kind.Sorting {
-  @Override public boolean demandsToSuggestButPerhapsCant(final InfixExpression ¢) {
+public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull implements Kind.Sorting {
+  @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), OR, XOR, AND);
   }
 
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
+
 }

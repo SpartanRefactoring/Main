@@ -12,12 +12,12 @@ import il.org.spartan.spartanizer.engine.*;
  * multiple nodes (or a single node).
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
-abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Wring<N> {
-  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
+abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulWring<N> {
+  @Override public boolean prerequisite(final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
 
-  @Override public Suggestion suggest(final N n) {
+  @Override public final Suggestion suggest(final N n) {
     return new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<ASTNode> input = new ArrayList<>();

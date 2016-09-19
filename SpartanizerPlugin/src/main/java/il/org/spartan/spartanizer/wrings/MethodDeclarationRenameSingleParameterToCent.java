@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class MethodDeclarationRenameSingleParameterToCent extends Wring<MethodDeclaration> implements Kind.Centification {
+public final class MethodDeclarationRenameSingleParameterToCent extends EagerWring<MethodDeclaration> implements Kind.Centification {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }

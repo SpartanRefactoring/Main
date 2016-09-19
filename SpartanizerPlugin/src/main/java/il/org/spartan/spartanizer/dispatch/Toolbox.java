@@ -92,7 +92,7 @@ public class Toolbox {
               new InfixMultiplicationSort(), //
               new InfixPseudoAdditionSort(), //
               new InfixSubtractionSort(), //
-              new InfixDivisonSort(), //
+              new InfixDivisonSortRest(), //
               new InfixConditionalCommon(), //
               null)
           .add(MethodDeclaration.class, //

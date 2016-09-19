@@ -50,15 +50,18 @@ public class Trimmer extends GUI$Applicator {
           return true;
         final Suggestion s = w.suggest(n, exclude);
         // Uncomment for debugging
-        System.out.println("     Wring: " + w.getClass().getSimpleName());
-        System.out.println("     Named: " + w.description());
-        System.out.println("      Kind: " + w.wringGroup());
-        System.out.println(" Described: " + w.description(n));
-        System.out.println("  Suggests: " + s);
+        System.out.println("       Wring: " + w.getClass().getSimpleName());
+        System.out.println("       Named: " + w.description());
+        System.out.println("        Kind: " + w.wringGroup());
+        System.out.println("   Described: " + w.description(n));
+        System.out.println(" Can suggest: " + w.canSuggest(n));
+        System.out.println("    Suggests: " + s);
         if (s != null) {
           if (LogManager.isActive())
             LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
+          System.out.println("      Before: " + r);
           s.go(r, null);
+          System.out.println("       After: " + r);
         }
         return true;
       }

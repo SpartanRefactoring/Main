@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N>  implements Kind.SyntacticBaggage {
-  @Override public boolean demandsToSuggestButPerhapsCant(final N ¢) {
+  @Override public boolean canSuggest(final N ¢) {
     return firstBad(¢) != null;
   }
 

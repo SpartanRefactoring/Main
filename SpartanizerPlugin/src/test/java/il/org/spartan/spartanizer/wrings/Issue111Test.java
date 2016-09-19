@@ -61,9 +61,9 @@ public class Issue111Test {
   @Test public void A$g() {
     trimmingOf("protected public final public enum Level { " + //
         "HIGH, MEDIUM, LOW" + //
-        "}").gives("public protected enum Level { " + //
+        "}").gives(" protected public public enum Level { " + //
             "HIGH, MEDIUM, LOW" + //
-            "}").gives("public protected enum Level { \n" + //
+            "}").gives("public public protected enum Level { \n" + //
                 "HIGH, MEDIUM, LOW\n" + //
                 "}");
   }

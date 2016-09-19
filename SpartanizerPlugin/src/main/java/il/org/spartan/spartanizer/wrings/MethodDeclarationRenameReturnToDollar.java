@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
  * @author Yossi Gil (v3)
  * @since 2013/01/01 */
-public final class MethodDeclarationRenameReturnToDollar extends Wring<MethodDeclaration> implements Kind.Dollarization {
+public final class MethodDeclarationRenameReturnToDollar extends EagerWring<MethodDeclaration> implements Kind.Dollarization {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }

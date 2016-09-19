@@ -93,7 +93,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert hasNull(new Object(), new Object(), new Object(), new Object(), null);
   }
 
-  @Test(timeout = 2000) public void inlineInitializers() {
+  @Test(timeout = 4000) public void inlineInitializers() {
     assertConvertsTo("int b,a = 2; return 3 * a * b; ", "return 2 * 3 * b;");
   }
 
