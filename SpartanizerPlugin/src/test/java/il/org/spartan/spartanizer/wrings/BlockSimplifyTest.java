@@ -201,7 +201,7 @@ public final class BlockSimplifyTest {
 
   private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator a) {
     try {
-      a.rewriterOf(u, nullProgressMonitor, (IMarker) null).rewriteAST(d, null).apply(d);
+      a.rewriterOf(u,  (IMarker) null).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }

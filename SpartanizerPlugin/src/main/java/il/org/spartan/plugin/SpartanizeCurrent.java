@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 
 import org.eclipse.core.commands.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
+
 /** A handler for {@link Spartanizations} This handler executes all safe
  * spartanizations on all Java files in the current project, while exposing
  * static methods to spartanize only specific compilation units.
@@ -14,7 +16,7 @@ public final class SpartanizeCurrent extends BaseHandler {
   }
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    eclipse.apply(eclipse.currentCompilationUnit(), eclipse.selectedText());
+    new Trimmer().apply(eclipse.currentCompilationUnit(), eclipse.selectedText());
     return null;
   }
 }

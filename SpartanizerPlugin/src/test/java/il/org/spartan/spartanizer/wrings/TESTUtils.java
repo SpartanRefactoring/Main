@@ -52,7 +52,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   public static Document rewrite(final Applicator a, final CompilationUnit u, final Document $) {
     try {
-      a.createRewrite(u, nullProgressMonitor).rewriteAST($, null).apply($);
+      a.createRewrite(u ).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
