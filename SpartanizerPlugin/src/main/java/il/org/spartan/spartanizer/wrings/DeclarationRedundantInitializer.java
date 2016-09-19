@@ -28,7 +28,7 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
     return $;
   }
 
-  @Override protected String description(final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 }

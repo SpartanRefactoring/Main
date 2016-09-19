@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.wrings;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 /** convert
@@ -20,11 +19,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class TypeModifierCleanInterface extends AbstractModifierClean<TypeDeclaration> implements Kind.SyntacticBaggage {
-  @Override public boolean canSuggest(final TypeDeclaration ¢) {
-    return ¢.isInterface();
-  }
-
+public final class delmeTypeModifierCleanInterface extends delmeAbstractModifierClean<TypeDeclaration> {
   @Override public String description(final TypeDeclaration ¢) {
     return "Remove redundant 'abstract'/'static' modifier from interface " + ¢.getName();
   }

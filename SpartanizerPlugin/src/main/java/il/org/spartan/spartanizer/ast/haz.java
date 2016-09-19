@@ -22,12 +22,12 @@ public enum haz {
     return false;
   }
 
-  public static boolean hasAnnotation(final VariableDeclarationFragment ¢) {
-    return hasAnnotation((VariableDeclarationStatement) ¢.getParent());
+  public static boolean annotation(final VariableDeclarationFragment ¢) {
+    return annotation((VariableDeclarationStatement) ¢.getParent());
   }
 
-  public static boolean hasAnnotation(final VariableDeclarationStatement ¢) {
-    return haz.hasAnnotation(extract.modifiers(¢));
+  public static boolean annotation(final VariableDeclarationStatement ¢) {
+    return extract.annotations(¢).isEmpty();
   }
 
   public static boolean hasNoModifiers(final BodyDeclaration ¢) {
@@ -85,8 +85,4 @@ public enum haz {
     return false;
   }
 
-  private static boolean hasAnnotation(final Object modifiers) {
-    // TODO Auto-generated method stub
-    return false;
-  }
 }

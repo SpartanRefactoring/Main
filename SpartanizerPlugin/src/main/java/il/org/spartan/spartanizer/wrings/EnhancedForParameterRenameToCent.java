@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
+public final class EnhancedForParameterRenameToCent extends Wring<EnhancedForStatement> implements Kind.Centification {
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
@@ -31,7 +31,7 @@ public final class EnhancedForRenameParameterToCent extends Wring<EnhancedForSta
     if (haz.variableDefinition(body))
       return null;
     final SimpleName ¢ = s.getAST().newSimpleName("¢");
-    if (!Collect.usesOf(¢).in(body).isEmpty())
+    if (Collect.usesOf(¢).in(body).isEmpty())
       return null;
     if (m != null)
       m.exclude(s);

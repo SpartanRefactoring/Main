@@ -4,5 +4,5 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.wringing.*;
 
-public final class EnumRedundantModifiers extends AbstractBodyDeclarationRemoveModifiers<TypeDeclaration> {
+public final class EnumRedundantModifiers extends BodyDeclarationModifiersPrune<EnumDeclaration> {
   /* empty */ }

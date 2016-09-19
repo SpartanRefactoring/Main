@@ -338,4 +338,89 @@ public enum extract {
         return $;
     }
   }
+
+  public static String category(BodyDeclaration d) {
+    switch (d.getNodeType()) {
+      case ANNOTATION_TYPE_DECLARATION:
+        return "@interface";
+      case ANNOTATION_TYPE_MEMBER_DECLARATION:
+        return "@interrface member";
+      case ENUM_DECLARATION:
+        return "enum";
+      case ENUM_CONSTANT_DECLARATION:
+        return "enum member";
+      case FIELD_DECLARATION:
+        return "field";
+      case INITIALIZER:
+        if (Modifier.isStatic(((Initializer) d).getModifiers()))
+          return "static type initializer";
+        return "type initializer";
+      case METHOD_DECLARATION:
+        return "method";
+      case TYPE_DECLARATION:
+        return category((TypeDeclaration) d);
+      default:
+        assert bug() : details() //
+            + "\n d = " + d //
+            + "\n d.getClass() = " + d.getClass() //
+            + "\n d.getNodeType() = " + d.getNodeType() //
+            + end();
+        return d.getClass().getSimpleName();
+    }
+  }
+
+  private static String category(TypeDeclaration a) {
+    StringBuilder $ = new StringBuilder();
+    if (a.isInterface())
+      $.append("interface");
+    else
+      $.append("class");
+    if (a.isMemberTypeDeclaration())
+      $.append(" member");
+    if (a.isPackageMemberTypeDeclaration())
+      $.append(" package");
+    if (a.isLocalTypeDeclaration())
+      $.append(" local");
+    return $ + "";
+  }
+
+  private static String end() {
+    return "\n-----this is all I know.";
+  }
+
+  public static String name(BodyDeclaration d) {
+    switch (d.getNodeType()) {
+      case ANNOTATION_TYPE_DECLARATION:
+        return ((AnnotationTypeDeclaration) d).getName() + "";
+      case ANNOTATION_TYPE_MEMBER_DECLARATION:
+        return ((AnnotationTypeMemberDeclaration) d).getName() + "";
+      case ENUM_DECLARATION:
+        return ((EnumDeclaration) d).getName() + "";
+      case ENUM_CONSTANT_DECLARATION:
+        return ((EnumConstantDeclaration) d).getName() + "";
+      case FIELD_DECLARATION:
+        return separate.these(fragments((FieldDeclaration) d)).by("/");
+      case INITIALIZER:
+        return "";
+      case METHOD_DECLARATION:
+        return ((MethodDeclaration) d).getName() + "";
+      case TYPE_DECLARATION:
+        return ((TypeDeclaration) d).getName() + "";
+      default:
+        assert bug() : details() //
+            + "\n d = " + d //
+            + "\n d.getClass() = " + d.getClass() //
+            + "\n d.getNodeType() = " + d.getNodeType() //
+            + end();
+        return d.getClass().getSimpleName();
+    }
+  }
+
+  private static String details() {
+    return "BUG: ";
+  }
+
+  private static boolean bug() {
+    return true;
+  }
 }
