@@ -8,13 +8,13 @@ import org.junit.*;
   @Test public void test01() {
     trimmingOf("class A{ \n" //
         + "static public final class EX13{ \n" //
-        + "class Onoes{ \n" //
+        + "class F{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
         + "}   \n" //
-        + "Onoes foo(int n, int y){   \n" //
-        + "return new Onoes(y){    \n" //
+        + "F foo(int ai, int y){   \n" //
+        + "return new F(y){    \n" //
         + "@Override int  giveMeANumber(){    \n" //
-        + "return n*x;    \n" //
+        + "return ai*x;    \n" //
         + "}   \n" //
         + "};   \n" //
         + "}   \n" //
@@ -22,13 +22,13 @@ import org.junit.*;
         + "}  \n" //
     ).gives("class A{ \n" //
         + "public static final class EX13{ \n" //
-        + "class Onoes{ \n" //
+        + "class F{ \n" //
         + "int x;   \n" + "int giveMeANumber() {return 0;}   \n" //
         + "}   \n" //
-        + "Onoes foo(int i, int y){   \n" //
-        + "return new Onoes(y){    \n" //
+        + "F foo(int ai, int y){   \n" //
+        + "return new F(y){    \n" //
         + "@Override int  giveMeANumber(){    \n" //
-        + "return i*x;    \n" //
+        + "return ai*x;    \n" //
         + "}   \n" //
         + "};   \n" //
         + "}   \n" //

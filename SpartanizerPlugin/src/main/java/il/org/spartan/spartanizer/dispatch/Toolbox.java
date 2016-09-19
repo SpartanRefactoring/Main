@@ -97,9 +97,9 @@ public class Toolbox {
               null)
           .add(MethodDeclaration.class, //
               new MethodDeclarationRenameReturnToDollar(), //
-              new MethodDeclarationRenameSingleParameterToCent(), //
               new MethodDeclarationModifiersRedundant(), //
               new BodyDeclarationModifiersSort.ofMethod(), //
+              new MethodDeclarationRenameSingleParameterToCent(), //
               null)
           .add(MethodInvocation.class, //
               new MethodInvocationEqualsWithLiteralString(), //
