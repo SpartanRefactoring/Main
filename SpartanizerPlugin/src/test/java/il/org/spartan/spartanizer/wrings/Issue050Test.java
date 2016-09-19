@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.wringing.*;
 
 /** @author Yossi Gil
  * @since 2016 */

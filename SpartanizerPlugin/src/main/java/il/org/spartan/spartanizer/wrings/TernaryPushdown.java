@@ -134,7 +134,6 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
           + "\n r1 = " + receiver1 //
           + "\n r1 = " + receiver2 //
           + "\n-----this is all I know.";
-      ;
       final MethodInvocation $ = duplicate.of(e1);
       assert $ != null;
       $.setExpression(wizard.parenthesize(subject.pair(receiver1, receiver2).toCondition(x.getExpression())));
