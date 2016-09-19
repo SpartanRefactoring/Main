@@ -12,25 +12,25 @@ import il.org.spartan.spartanizer.dispatch.*;
  *         30.05.2014) (v3)
  * @since 2013/07/01 */
 public final class Spartanizations {
-  private static Applicator[] all = { //
+  private static GUI$Applicator[] all = { //
       new Trimmer(), //
   };
   @SuppressWarnings("synthetic-access") //
-  private static final Map<String, Applicator> map = new HashMap<String, Applicator>() {
+  private static final Map<String, GUI$Applicator> map = new HashMap<String, GUI$Applicator>() {
     static final long serialVersionUID = -8921699276699040030L;
     {
-      for (final Applicator ¢ : all)
+      for (final GUI$Applicator ¢ : all)
         put(¢.getName(), ¢);
     }
   };
 
   /** @return all the registered spartanization refactoring objects */
-  public static Iterable<Applicator> all() {
+  public static Iterable<GUI$Applicator> all() {
     return map.values();
   }
 
   /** @return Iteration over all Spartanization class instances */
-  public static Iterable<Applicator> allAvailableSpartanizations() {
+  public static Iterable<GUI$Applicator> allAvailableSpartanizations() {
     return as.iterable(all);
   }
 
@@ -42,8 +42,8 @@ public final class Spartanizations {
   /** @param t Spartanization rule
    * @return Spartanization class rule instance */
   @SuppressWarnings("unchecked") //
-  public static <T extends Applicator> T findInstance(final Class<? extends T> ¢) {
-    for (final Applicator $ : all)
+  public static <T extends GUI$Applicator> T findInstance(final Class<? extends T> ¢) {
+    for (final GUI$Applicator $ : all)
       if ($.getClass().equals(¢))
         return (T) $;
     return null;
@@ -51,7 +51,7 @@ public final class Spartanizations {
 
   /** @param name the name of the spartanization
    * @return an instance of the spartanization */
-  public static Applicator get(final String name) {
+  public static GUI$Applicator get(final String name) {
     assert name != null;
     return map.get(name);
   }
@@ -61,18 +61,18 @@ public final class Spartanizations {
    * eclipse. */
   public static void reset() {
     map.clear();
-    for (final Applicator ¢ : all)
+    for (final GUI$Applicator ¢ : all)
       map.put(¢.getName(), ¢);
   }
 
-  private final Applicator value;
+  private final GUI$Applicator value;
 
-  private Spartanizations(final Applicator value) {
+  private Spartanizations(final GUI$Applicator value) {
     this.value = value;
   }
 
   /** @return Spartanization class rule instance */
-  public Applicator value() {
+  public GUI$Applicator value() {
     return value;
   }
 }

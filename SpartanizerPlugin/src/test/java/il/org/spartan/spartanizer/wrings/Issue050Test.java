@@ -10,13 +10,13 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue050Test {
-  @Test public void issue50_Constructors1() {
+  @Test public void A$50_Constructors1() {
     trimmingOf("public final class ClassTest {\n"//
         + "public  ClassTest(){}\n"//
         + "}").stays();
   }
 
-  @Test public void issue50_EnumInInterface1() {
+  @Test public void A$50_EnumInInterface1() {
     trimmingOf("public interface Int1 {\n"//
         + "static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
@@ -28,7 +28,7 @@ public class Issue050Test {
                 + "}" + "}");
   }
 
-  @Test public void issue50_Enums() {
+  @Test public void A$50_Enums() {
     trimmingOf("public final class ClassTest {\n"//
         + "static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
@@ -39,7 +39,7 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_EnumsOnlyRightModifierRemoved() {
+  @Test public void A$50_EnumsOnlyRightModifierRemoved() {
     trimmingOf("public final class ClassTest {\n"//
         + "private static enum Day {\n"//
         + "SUNDAY, MONDAY\n"//
@@ -50,7 +50,7 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_FinalClassMethods() {
+  @Test public void A$50_FinalClassMethods() {
     trimmingOf("final class ClassTest {\n"//
         + "final void remove();\n"//
         + "}")
@@ -59,7 +59,7 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_FinalClassMethodsOnlyRightModifierRemoved() {
+  @Test public void A$50_FinalClassMethodsOnlyRightModifierRemoved() {
     trimmingOf("final class ClassTest {\n"//
         + "public final void remove();\n"//
         + "}")
@@ -68,13 +68,13 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_inEnumMember() {
+  @Test public void A$50_inEnumMember() {
     trimmingOf(//
         "enum A {; final void f() {} public final void g() {} }"//
     ).stays();
   }
 
-  @Test public void issue50_inEnumMemberComplex() {
+  @Test public void A$50_inEnumMemberComplex() {
     trimmingOf(//
         "enum A { a1 {{ f(); } \n" + //
             "protected final void f() {g();}  \n" + //
@@ -109,7 +109,7 @@ public class Issue050Test {
     );
   }
 
-  @Test public void issue50_InterfaceMethods1() {
+  @Test public void A$50_InterfaceMethods1() {
     trimmingOf("public interface Int1 {\n"//
         + "public void add();\n"//
         + "void remove()\n; "//
@@ -120,7 +120,7 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_InterfaceMethods2() {
+  @Test public void A$50_InterfaceMethods2() {
     trimmingOf("public interface Int1 {\n"//
         + "public abstract void add();\n"//
         + "abstract void remove()\n; "//
@@ -131,7 +131,7 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_InterfaceMethods3() {
+  @Test public void A$50_InterfaceMethods3() {
     trimmingOf("public interface Int1 {\n"//
         + "abstract void add();\n"//
         + "void remove()\n; "//
@@ -142,67 +142,67 @@ public class Issue050Test {
                 + "}");
   }
 
-  @Test public void issue50_SimpleDontWorking() {
+  @Test public void A$50_SimpleDontWorking() {
     trimmingOf("interface a"//
         + "{}").stays();
   }
 
-  @Test public void issue50_SimpleWorking1() {
+  @Test public void A$50_SimpleWorking1() {
     trimmingOf("abstract abstract interface a"//
         + "{}").gives("interface a {}");
   }
 
-  @Test public void issue50_SimpleWorking2() {
+  @Test public void A$50_SimpleWorking2() {
     trimmingOf("abstract interface a"//
         + "{}").gives("interface a {}");
   }
 
-  @Test public void issue50a() {
+  @Test public void A$50a_interface() {
     trimmingOf("abstract interface a {}")//
         .gives("interface a {}");//
   }
 
-  @Test public void issue50b() {
+  @Test public void A$50b_interface() {
     trimmingOf("abstract static interface a {}")//
         .gives("interface a {}");//
   }
 
-  @Test public void issue50c() {
+  @Test public void A$50c_interface() {
     trimmingOf("static abstract interface a {}")//
         .gives("interface a {}");//
   }
 
-  @Test public void issue50d() {
+  @Test public void A$50d_interface() {
     trimmingOf("static interface a {}")//
         .gives("interface a {}");//
   }
 
-  @Test public void issue50e() {
+  @Test public void A$50e_enum() {
     trimmingOf("enum a {a,b}")//
         .stays();//
   }
 
-  @Test public void issue50e1() {
+  @Test public void A$50e1_enum() {
     trimmingOf("enum a {a}")//
         .stays();//
   }
 
-  @Test public void issue50e2() {
+  @Test public void A$50e2_enum() {
     trimmingOf("enum a {}")//
         .stays();//
   }
 
-  @Test public void issue50f() {
+  @Test public void A$50f_enum() {
     trimmingOf("static enum a {a, b}")//
         .gives("enum a {a, b}");//
   }
 
-  @Test public void issue50g() {
+  @Test public void A$50g_enum() {
     trimmingOf("static abstract enum a {x,y,z; void f() {}}")//
         .gives("enum a {x,y,z; void f() {}}");//
   }
 
-  @Test public void issue50h() {
+  @Test public void A$50h_enum() {
     trimmingOf("static abstract final enum a {x,y,z; void f() {}}")//
         .gives("enum a {x,y,z; void f() {}}");//
   }

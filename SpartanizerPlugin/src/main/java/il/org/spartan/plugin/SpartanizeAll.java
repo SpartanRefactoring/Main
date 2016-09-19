@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
-import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.operation.*;
@@ -26,7 +25,7 @@ public final class SpartanizeAll extends BaseHandler {
    * @return number of suggestions available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
-    for (final Applicator ¢ : eclipse.safeSpartanizations) {
+    for (final GUI$Applicator ¢ : eclipse.safeSpartanizations) {
       ¢.setMarker(null);
       ¢.setCompilationUnit(u);
       $ += ¢.countSuggestions();
@@ -56,7 +55,7 @@ public final class SpartanizeAll extends BaseHandler {
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
         // TODO: Ori, please please no busy cursor. Use ProgressManager
-final            Applicator a = new Trimmer();
+        final GUI$Applicator a = new Trimmer();
         final IRunnableWithProgress runnable = pm -> {
           pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
           "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
@@ -72,8 +71,7 @@ final            Applicator a = new Trimmer();
           us.removeAll(dead);
           pm.done();
         };
-        final ISchedulingRule rule = null;
-        final IRunnableContext context = new ProgressMonitorDialog(null);
+        new ProgressMonitorDialog(null);
         // ps.runInUI(context, runnable, rule);
         // ps.run(true, true, runnable);
         ps.busyCursorWhile(runnable);

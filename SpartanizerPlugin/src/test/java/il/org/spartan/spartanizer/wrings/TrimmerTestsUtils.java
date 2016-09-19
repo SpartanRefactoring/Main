@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 public final class TrimmerTestsUtils {
-  public static int countOpportunities(final Applicator a, final CompilationUnit u) {
+  public static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
     return a.collectSuggesions(u).size();
   }
 

@@ -165,7 +165,7 @@ public class Toolbox {
               new AbstractBodyDeclarationSortModifiers.ofType(), //
               null) //
           .add(EnumDeclaration.class, //
-              new EnumDeclarationModifierCleanEnum(), //
+              //new EnumDeclarationModifierCleanEnum(), //
               new AbstractBodyDeclarationSortModifiers.ofEnum(), //
               null) //
           .add(FieldDeclaration.class, //

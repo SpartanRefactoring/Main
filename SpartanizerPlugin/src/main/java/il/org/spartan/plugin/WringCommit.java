@@ -104,7 +104,7 @@ public final class WringCommit {
     if (w == null)
       u.accept(v);
     else
-      v.commitLocal(w, u);
+      v.applyLocal(w, u);
     return v.wring;
   }
 
@@ -127,7 +127,6 @@ public final class WringCommit {
       this.type = type;
       this.compilationUnit = compilationUnit;
       wring = null;
-      b = false;
     }
 
     public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
@@ -137,17 +136,16 @@ public final class WringCommit {
       this.type = type;
       this.compilationUnit = compilationUnit;
       this.wring = wring;
-      b = false;
     }
 
-    protected void commit(final Wring<?> w, final ASTNode n) {
+    protected void apply(final Wring<?> w, final ASTNode n) {
       wring = w;
       switch (type) {
         case DECLARATION:
-          commitDeclaration(w, n);
+          applyDeclaration(w, n);
           break;
         case FILE:
-          commitFile(w, n);
+          applyFile(w, n);
           break;
         case PROJECT:
         default:
@@ -155,15 +153,15 @@ public final class WringCommit {
       }
     }
 
-    protected void commitDeclaration(final Wring<?> w, final ASTNode n) {
-      commitLocal(w, SuppressSpartanizationOnOff.getDeclaringDeclaration(n));
+    protected void applyDeclaration(final Wring<?> w, final ASTNode n) {
+      applyLocal(w, SuppressSpartanizationOnOff.getDeclaringDeclaration(n));
     }
 
-    protected void commitFile(final Wring<?> w, final ASTNode n) {
-      commitLocal(w, SuppressSpartanizationOnOff.getDeclaringFile(n));
+    protected void applyFile(final Wring<?> w, final ASTNode n) {
+      applyLocal(w, SuppressSpartanizationOnOff.getDeclaringFile(n));
     }
 
-    protected void commitLocal(final Wring w, final ASTNode n) {
+    protected void applyLocal(final Wring w, final ASTNode n) {
       Toolbox.refresh();
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -189,7 +187,7 @@ public final class WringCommit {
         return true;
       final Wring<N> w = Toolbox.defaultInstance().find(n);
       if (w != null)
-        commit(w, n);
+        apply(w, n);
       b = true;
       return false;
     }
