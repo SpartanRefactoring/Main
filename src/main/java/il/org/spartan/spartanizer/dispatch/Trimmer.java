@@ -41,27 +41,18 @@ public class Trimmer extends GUI$Applicator {
     Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        // Uncomment for debugging
-        System.out.println("VISIT '" + tide.clean(n + "' (" + n.getClass().getSimpleName()) + ")");
+        TrimmerLog.visitation(n);
         if (!inRange(m, n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
         final Suggestion s = w.suggest(n, exclude);
-        // Uncomment for debugging
-        System.out.println("       Wring: " + w.getClass().getSimpleName());
-        System.out.println("       Named: " + w.description());
-        System.out.println("        Kind: " + w.wringGroup());
-        System.out.println("   Described: " + w.description(n));
-        System.out.println(" Can suggest: " + w.canSuggest(n));
-        System.out.println("    Suggests: " + s);
+        TrimmerLog.suggestion(w, n);
         if (s != null) {
           if (LogManager.isActive())
             LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
-          System.out.println("      Before: " + r);
-          s.go(r, null);
-          System.out.println("       After: " + r);
+          TrimmerLog.application(r, s);
         }
         return true;
       }

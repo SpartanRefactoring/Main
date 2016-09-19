@@ -182,7 +182,7 @@ public enum make {
     }
 
     private static boolean isStringConcatingSafe(final InfixExpression ¢) {
-      return type.get(¢.getLeftOperand()) == Certain.STRING;
+      return type.of(¢.getLeftOperand()) == Certain.STRING;
     }
 
     private final Expression inner;

@@ -30,7 +30,7 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
   }
 
   @Override public Expression replacement(final InfixExpression x) {
-    if (type.get(x) != Certain.STRING)
+    if (type.of(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
@@ -46,10 +46,10 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {
         $.add(e);
-        if (type.get(e) == Certain.STRING)
+        if (type.of(e) == Certain.STRING)
           isString = true;
       } else {
-        if (i < es.size() - 1 && type.get(es.get(i + 1)) == Certain.STRING)
+        if (i < es.size() - 1 && type.of(es.get(i + 1)) == Certain.STRING)
           continue;
         if (!isString) {
           $.add(e);

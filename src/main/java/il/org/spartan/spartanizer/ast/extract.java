@@ -88,11 +88,11 @@ public enum extract {
       case TYPE_DECLARATION:
         return category((TypeDeclaration) d);
       default:
-        assert bug() : details() //
+        assert wizard.unreachable() : wizard.dump() //
             + "\n d = " + d //
             + "\n d.getClass() = " + d.getClass() //
             + "\n d.getNodeType() = " + d.getNodeType() //
-            + end();
+            + wizard.endDump();
         return d.getClass().getSimpleName();
     }
   }
@@ -214,11 +214,11 @@ public enum extract {
       case TYPE_DECLARATION:
         return ((TypeDeclaration) d).getName() + "";
       default:
-        assert bug() : details() //
+        assert wizard.unreachable() : wizard.dump() //
             + "\n d = " + d //
             + "\n d.getClass() = " + d.getClass() //
             + "\n d.getNodeType() = " + d.getNodeType() //
-            + end();
+            + wizard.endDump();
         return d.getClass().getSimpleName();
     }
   }
@@ -373,31 +373,19 @@ public enum extract {
     return $;
   }
 
-  private static boolean bug() {
-    return true;
-  }
-
   private static String category(final TypeDeclaration a) {
     final StringBuilder $ = new StringBuilder();
-    if (a.isInterface())
+    if (!a.isPackageMemberTypeDeclaration())
+      $.append("internal ");
+    if (a.isMemberTypeDeclaration())
+      $.append("member ");
+    if (a.isLocalTypeDeclaration())
+      $.append("local ");
+     if (a.isInterface())
       $.append("interface");
     else
       $.append("class");
-    if (a.isMemberTypeDeclaration())
-      $.append(" member");
-    if (a.isPackageMemberTypeDeclaration())
-      $.append(" package");
-    if (a.isLocalTypeDeclaration())
-      $.append(" local");
-    return $ + "";
-  }
-
-  private static String details() {
-    return "BUG: ";
-  }
-
-  private static String end() {
-    return "\n-----this is all I know.";
+   return $ + "";
   }
 
   private static Statement next(final Statement s, final List<Statement> ss) {

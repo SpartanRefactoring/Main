@@ -87,12 +87,12 @@ public final class InfixSubractionEvaluate extends ReplaceCurrentNode<InfixExpre
     ASTNode $;
     if (x.getOperator() != MINUS)
       return null;
-    if (type.get(x) == INT)
+    if (type.of(x) == INT)
       $ = replacementInt(extract.allOperands(x), x);
-    else if (type.get(x) == DOUBLE)
+    else if (type.of(x) == DOUBLE)
       $ = replacementDouble(extract.allOperands(x), x);
     else {
-      if (type.get(x) != LONG)
+      if (type.of(x) != LONG)
         return null;
       $ = replacementLong(extract.allOperands(x), x);
     }

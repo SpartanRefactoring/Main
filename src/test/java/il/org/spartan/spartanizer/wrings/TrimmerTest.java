@@ -418,7 +418,32 @@ import il.org.spartan.spartanizer.wringing.*;
         .gives("!A||!B||!C||false||!D");
   }
 
-  @Test public void canonicalFragementExamples() {
+  @Test public void canonicalFragementExample1() {
+    trimmingOf("int a; a = 3;")//
+        .gives("int a = 3;");
+  }
+  @Test public void canonicalFragementExample2() {
+    trimmingOf("int a = 2; if (b) a = 3; ")//
+        .gives("int a = b ? 3 : 2;");
+  }
+  @Test public void canonicalFragementExample3() {
+    trimmingOf("int a = 2; a += 3; ")//
+        .gives("int a = 2 + 3;");
+  }
+  @Test public void canonicalFragementExample4() {
+    trimmingOf("int a = 2; a = 3 * a; ")//
+        .gives("int a = 3 * 2;");
+  }
+  @Test public void canonicalFragementExample5() {
+    trimmingOf("int a = 2; return 3 * a; ")//
+        .gives("return 3 * 2;");
+  }
+  @Test public void canonicalFragementExample6() {
+    trimmingOf("int a = 2; return a; ")//
+        .gives("return 2;");
+  }
+
+ @Test public void canonicalFragementExamples() {
     trimmingOf("int a; a = 3;")//
         .gives("int a = 3;");
     trimmingOf("int a = 2; if (b) a = 3; ")//

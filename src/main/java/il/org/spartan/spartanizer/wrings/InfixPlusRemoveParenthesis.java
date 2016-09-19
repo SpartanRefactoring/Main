@@ -30,7 +30,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     if (x.getOperator() != wizard.PLUS2)
       return false;
     for (final Expression ¢ : extract.allOperands(x))
-      if (type.get(¢) != type.Primitive.Certain.STRING)
+      if (type.of(¢) != type.Primitive.Certain.STRING)
         return false;
     return true;
   }

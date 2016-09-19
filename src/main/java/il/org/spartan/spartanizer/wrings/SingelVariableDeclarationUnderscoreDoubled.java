@@ -44,7 +44,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢);
   }
 
-  private static ASTNode replacement(final SingleVariableDeclaration ¢) {
+  private static ASTNode replace(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
@@ -102,7 +102,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
       for (final SingleVariableDeclaration ¢ : step.parameters(d))
         if (!n.equals(¢))
           m.exclude(¢);
-    return replacement(n);
+    return replace(n);
   }
 
   public static class IsUsed extends ASTVisitor {
@@ -146,5 +146,9 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
       return false;
     }
+  }
+
+  @Override public ASTNode replacement(SingleVariableDeclaration n) {
+    return replacement(n, null); 
   }
 }

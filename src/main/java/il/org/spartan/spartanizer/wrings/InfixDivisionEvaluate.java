@@ -66,23 +66,23 @@ public final class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpress
     return "Evaluate division of numbers";
   }
 
+  @Override protected boolean prerequisite(InfixExpression n) {
+    return n.getOperator() == DIVIDE && iz.validForEvaluation(n);
+  }
+
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate division of numbers";
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
-    if (!iz.validForEvaluation(x))
-      return null;
     final int sourceLength = (x + "").length();
     ASTNode $;
-    if (x.getOperator() != DIVIDE)
-      return null;
-    if (type.get(x) == INT)
+    if (type.of(x) == INT)
       $ = replacementInt(extract.allOperands(x), x);
-    else if (type.get(x) == DOUBLE)
+    else if (type.of(x) == DOUBLE)
       $ = replacementDouble(extract.allOperands(x), x);
     else {
-      if (type.get(x) != LONG)
+      if (type.of(x) != LONG)
         return null;
       $ = replacementLong(extract.allOperands(x), x);
     }
