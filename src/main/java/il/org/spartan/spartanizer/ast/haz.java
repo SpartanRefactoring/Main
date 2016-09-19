@@ -21,7 +21,7 @@ public enum haz {
   }
 
   public static boolean annotation(final VariableDeclarationStatement ¢) {
-    return extract.annotations(¢).isEmpty();
+    return ! extract.annotations(¢).isEmpty();
   }
 
   public static boolean dollar(final List<SimpleName> ns) {

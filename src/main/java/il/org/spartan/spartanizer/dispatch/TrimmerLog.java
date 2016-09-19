@@ -23,10 +23,10 @@ public class TrimmerLog {
         System.out.println("Stopped logging visitations");
       return;
     }
-    System.out.println("VISIT: '" + tide.clean(n+ "") + "' [" + n.getLength() + "] (" + clazz(n) + ")" + "parent=" + clazz(parent(n))); 
+    System.out.println("VISIT: '" + tide.clean(n+ "") + "' [" + n.getLength() + "] (" + clazz(n) + ")" + " parent = " + clazz(parent(n))); 
   }
 
-  private static String clazz(ASTNode n) {
+  private static String clazz(Object n) {
     return n.getClass().getSimpleName();
   }
 
@@ -36,7 +36,7 @@ public class TrimmerLog {
         System.out.println("Stopped logging suggestions");
       return;
     }
-    System.out.println("       Wring: " + w.getClass().getSimpleName());
+    System.out.println("       Wring: " + clazz(w));
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.wringGroup());
     System.out.println("   Described: " + w.description(n));
