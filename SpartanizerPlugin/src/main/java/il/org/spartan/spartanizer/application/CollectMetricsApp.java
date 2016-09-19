@@ -13,6 +13,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -170,7 +171,7 @@ public final class CollectMetricsApp implements IApplication {
           final int n = SpartanizeAll.countSuggestions(u);
           if (n == 0)
             break;
-          eclipse.apply(u);
+          new Trimmer().apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         System.out.println("Spartanized file " + f.getAbsolutePath());

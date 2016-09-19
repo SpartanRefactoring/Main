@@ -37,26 +37,6 @@ public interface eclipse {
     return null;
   }
 
-  static boolean apply(final ICompilationUnit cu) {
-    return apply(cu, new Range(0, 0));
-  }
-
-  static boolean apply(final ICompilationUnit cu, final ITextSelection s) {
-    for (final Applicator a : safeSpartanizations)
-      try {
-        a.setCompilationUnit(cu);
-        a.setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
-        return a.performRule(cu, nullProgressMonitor);
-      } catch (final CoreException x) {
-        Plugin.log(x);
-      }
-    return false;
-  }
-
-  static boolean apply(final ICompilationUnit cu, final Range r) {
-    return apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
-  }
-
   static ICompilationUnit compilationUnit(final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }

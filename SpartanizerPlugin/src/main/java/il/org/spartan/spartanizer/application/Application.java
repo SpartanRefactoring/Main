@@ -13,6 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.Plugin;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -138,7 +139,7 @@ public final class Application implements IApplication {
           if (n == 0)
             break;
           s.addRoundStat(n);
-          eclipse.apply(u);
+          new Trimmer().apply(u);
         }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)

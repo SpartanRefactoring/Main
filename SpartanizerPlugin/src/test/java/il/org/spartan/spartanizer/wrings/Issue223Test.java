@@ -200,7 +200,7 @@ public final class Issue223Test {
     assert d != null;
     final Trimmer a = new Trimmer();
     try {
-      final ASTRewrite x = a.createRewrite(u, wizard.nullProgressMonitor);
+      final ASTRewrite x = a.createRewrite(u );
       x.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
