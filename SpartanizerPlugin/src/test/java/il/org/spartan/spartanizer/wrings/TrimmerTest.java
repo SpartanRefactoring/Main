@@ -2790,7 +2790,11 @@ import il.org.spartan.spartanizer.wringing.*;
     trimmingOf("f(a++, i--, b++, ++b);")//
         .stays();
   }
-
+  @Test public void postfixToPrefix101() {
+    trimmingOf("i++;")
+        .gives("++i;")//
+        .stays();
+  }
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
     trimmingOf("for (int s = i; ++i; ++s);")//
         .gives("for (int ¢ = i; ++i; ++¢);")//
@@ -3493,11 +3497,11 @@ import il.org.spartan.spartanizer.wringing.*;
         .gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();}");
   }
 
-  @Test public void shortestBranchIfWithComplexNestedIf6() {
-    trimmingOf("if (a) {f(); g(); h(); ++i; f(); j++;} else if (a) ++i; else j++;")//
-        .gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();j++;}");
+  @Test public void initializer101() {
+    trimmingOf("int a = b; return a;")
+        .gives("return b;")//
+        .stays();
   }
-
   @Test public void shortestBranchIfWithComplexNestedIf7() {
     trimmingOf("if (a) {f(); ++i; g(); h(); ++i; f(); j++;} else if (a) ++i; else j++;")
         .gives("if(!a)if(a)++i;else j++;else{f();++i;g();h();++i;f();j++;}");

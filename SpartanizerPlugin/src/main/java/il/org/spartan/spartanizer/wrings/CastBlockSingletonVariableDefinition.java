@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * <code> {int a=0;} </code> </br>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public final class CastBlockSingletonVariableDefinition extends EagerWring<Block> implements Kind.Collapse {
+public final class CastBlockSingletonVariableDefinition extends CarefulWring<Block> implements Kind.Collapse {
   @Override public String description() {
     return "remove the block";
   }
@@ -41,5 +41,9 @@ public final class CastBlockSingletonVariableDefinition extends EagerWring<Block
           r.remove(¢, g);
       }
     };
+  }
+
+  @Override protected boolean prerequisite(Block n) {
+    return true;
   }
 }

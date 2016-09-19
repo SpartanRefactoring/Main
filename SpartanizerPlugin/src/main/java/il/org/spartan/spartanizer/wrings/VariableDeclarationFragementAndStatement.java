@@ -74,7 +74,7 @@ public abstract class VariableDeclarationFragementAndStatement extends ReplaceTo
 
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
-   * Still, if the containing node left empty, it is removed as well.
+   * Still, if the containing node is left empty, it is removed as well.
    * @param f
    * @param r
    * @param g */
