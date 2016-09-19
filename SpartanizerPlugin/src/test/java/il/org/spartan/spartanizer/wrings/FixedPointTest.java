@@ -323,16 +323,16 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assertConvertsTo(
         "    int size = 17;\n" //
             + "   if (m.equals(153)==true)\n" //
-            + "     for (int i=0; i < size; i++){\n" //
-            + "       S.out.l(HH);\n" //
+            + "     for (int ¢=0; ¢ < size; ¢++){\n" //
+            + "       sum += ¢;\n" //
             + "     }\n" //
             + "   else\n" //
-            + "     for (int i=0; i < size; i++){\n" //
+            + "     for (int i=0; ¢ < size; ¢++){\n" //
             + "       S.out.l('f');\n" //
             + "     }",
         "if(m.equals(153))" //
             + "for(int ¢=0;¢<17;++¢)" //
-            + "  S.out.l(HH);" //
+            + "       sum += ¢;\n" //
             + "else " //
             + "  for(int ¢=0;¢<17;++¢) " //
             + "    S.out.l('f');");

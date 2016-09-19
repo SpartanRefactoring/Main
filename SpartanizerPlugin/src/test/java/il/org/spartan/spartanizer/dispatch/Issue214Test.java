@@ -26,7 +26,7 @@ public final class Issue214Test {
       return null;
     }
 
-    @Override protected String description(@SuppressWarnings("unused") final ASTNode __) {
+    @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
       return null;
     }
   };

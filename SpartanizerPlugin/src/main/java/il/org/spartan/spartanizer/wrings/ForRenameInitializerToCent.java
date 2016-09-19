@@ -39,6 +39,8 @@ public final class ForRenameInitializerToCent extends Wring<VariableDeclarationE
     final Statement body = forStatement.getBody();
     if (body == null || haz.variableDefinition(body))
       return null;
+    if (Collect.usesOf(n).in(body).isEmpty())
+      return null;
     if (m != null) {
       m.exclude(body);
       m.exclude(forStatement);

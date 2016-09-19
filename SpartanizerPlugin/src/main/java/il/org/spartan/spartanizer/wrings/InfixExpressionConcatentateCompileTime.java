@@ -54,7 +54,7 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     return operands.size() <= 1 ? first(operands) : subject.operands(operands).to(wizard.PLUS2);
   }
 
-  @Override protected String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Concat the string literals to a single string";
   }
 }

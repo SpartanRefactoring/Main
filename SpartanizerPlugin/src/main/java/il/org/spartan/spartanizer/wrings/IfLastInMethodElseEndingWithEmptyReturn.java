@@ -53,7 +53,7 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends Wring<IfState
     };
   }
 
-  @SuppressWarnings("unused") @Override protected String description(final IfStatement ____) {
+  @SuppressWarnings("unused") @Override public String description(final IfStatement ____) {
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 }

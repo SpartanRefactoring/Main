@@ -79,7 +79,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return m != null && m.isExcluded(n) ? null : suggest(n);
   }
 
-  protected abstract String description(N n);
+  public abstract String description(N n);
 
   @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
     return (Class<N>) c2;
