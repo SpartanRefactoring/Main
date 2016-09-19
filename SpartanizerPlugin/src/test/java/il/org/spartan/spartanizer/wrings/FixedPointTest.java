@@ -328,14 +328,14 @@ import il.org.spartan.spartanizer.spartanizations.*;
             + "     }\n" //
             + "   else\n" //
             + "     for (int i=0; ¢ < size; ¢++){\n" //
-            + "       S.out.l('f');\n" //
+            + "       S.out.l('f',i);\n" //
             + "     }",
         "if(m.equals(153))" //
             + "for(int ¢=0;¢<17;++¢)" //
             + "       sum += ¢;\n" //
             + "else " //
             + "  for(int ¢=0;¢<17;++¢) " //
-            + "    S.out.l('f');");
+            + "    S.out.l('f',¢);");
   }
 
   @Test(timeout = 2000) public void ternarize54() {

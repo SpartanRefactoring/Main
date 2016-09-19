@@ -29,8 +29,8 @@ public final class Issue130Test {
   }
 
   @Test public void A$04() {
-    trimmingOf("for(int i=4 ; true ; ++i){doSomething();if(done())break;}return something();")
-        .gives("for(int ¢=4 ; true ; ++¢){doSomething();if(done())return something();}")//
+    trimmingOf("for(int i=4 ; true ; ++i){doSomething(i);if(done())break;}return something();")
+        .gives("for(int ¢=4 ; true ; ++¢){doSomething(¢);if(done())return something();}")//
         .stays()//
     ;
   }

@@ -28,7 +28,5 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulWring
     };
   }
 
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") final N n) {
-    return true;
-  }
+
 }

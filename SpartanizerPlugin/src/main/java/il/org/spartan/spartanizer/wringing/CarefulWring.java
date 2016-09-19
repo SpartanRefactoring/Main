@@ -15,6 +15,7 @@ public abstract class CarefulWring<N extends ASTNode> extends Wring<N> {
   @Override public final boolean demandsToSuggestButPerhapsCant(final N n) {
     return canSuggest(n);
   }
-
-  protected abstract boolean prerequisite(N n);
+  protected boolean prerequisite(@SuppressWarnings("unused") final N n) {
+    return true;
+  }
 }
