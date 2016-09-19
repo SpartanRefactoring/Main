@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.wrings;
-import static il.org.spartan.spartanizer.assemble.make.*;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.ast.extract.*;
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.assemble.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -38,12 +40,12 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @Override public boolean canSuggest(final InfixExpression ¢) {
-    return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
-  }
-
   @Override public String description(final InfixExpression ¢) {
     return "Eliminate redundant comparison with '" + literal(¢) + "'";
+  }
+
+  @Override public boolean prerequisite(final InfixExpression ¢) {
+    return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 
   @Override public Expression replacement(final InfixExpression x) {

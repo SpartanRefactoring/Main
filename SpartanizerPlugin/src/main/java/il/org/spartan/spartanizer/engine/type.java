@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.extract.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -14,6 +13,8 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;

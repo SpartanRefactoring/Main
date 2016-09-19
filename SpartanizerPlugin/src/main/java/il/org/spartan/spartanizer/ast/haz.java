@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.ast;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 
@@ -15,19 +15,19 @@ import il.org.spartan.*;
  * @since 2016-09-12 */
 public enum haz {
   ;
-  public static boolean dollar(final List<SimpleName> ns) {
-    for (final SimpleName ¢ : ns)
-      if ("$".equals(identifier(¢)))
-        return true;
-    return false;
-  }
-
   public static boolean annotation(final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
 
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return extract.annotations(¢).isEmpty();
+  }
+
+  public static boolean dollar(final List<SimpleName> ns) {
+    for (final SimpleName ¢ : ns)
+      if ("$".equals(identifier(¢)))
+        return true;
+    return false;
   }
 
   public static boolean hasNoModifiers(final BodyDeclaration ¢) {
@@ -84,5 +84,4 @@ public enum haz {
         return true;
     return false;
   }
-
 }

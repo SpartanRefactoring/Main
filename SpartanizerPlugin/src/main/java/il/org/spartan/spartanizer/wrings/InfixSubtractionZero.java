@@ -2,14 +2,16 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.assemble.make.*;
-import static il.org.spartan.spartanizer.ast.hop.*;
 import static il.org.spartan.spartanizer.ast.iz.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
+import static il.org.spartan.spartanizer.ast.hop.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.dispatch.*;

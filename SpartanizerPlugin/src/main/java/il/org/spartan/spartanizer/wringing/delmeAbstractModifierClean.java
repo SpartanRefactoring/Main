@@ -9,13 +9,13 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N>  implements Kind.SyntacticBaggage {
-  @Override public boolean canSuggest(final N ¢) {
-    return firstBad(¢) != null;
-  }
-
+public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
+  }
+
+  @Override public boolean prerequisite(final N ¢) {
+    return firstBad(¢) != null;
   }
 
   @Override public N replacement(final N $) {

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 

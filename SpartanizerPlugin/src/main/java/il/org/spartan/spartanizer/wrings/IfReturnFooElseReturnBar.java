@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -27,12 +27,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override public boolean canSuggest(final IfStatement ¢) {
-    return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 
   @Override public Statement replacement(final IfStatement s) {

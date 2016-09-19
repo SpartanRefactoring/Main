@@ -166,9 +166,8 @@ public class Toolbox {
               new BodyDeclarationModifiersSort.ofType(), //
               null) //
           .add(EnumDeclaration.class, //
-              new EnumRedundantModifiers(), 
-              new BodyDeclarationModifiersSort.ofEnum(), //
-              //new EnumDeclarationModifierCleanEnum(), //
+              new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
+              // new EnumDeclarationModifierCleanEnum(), //
               null) //
           .add(FieldDeclaration.class, //
               new FieldRedundantModifiers(), //

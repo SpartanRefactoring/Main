@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -83,16 +83,16 @@ public final class ReturnToBreakFiniteWhile extends CarefulWring<WhileStatement>
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
-  }
-
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
 
   @Override public String description(final WhileStatement b) {
     return "Convert the return inside " + b + " to break";
+  }
+
+  @SuppressWarnings("deprecation") @Override public boolean prerequisite(final WhileStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
   @Override public Suggestion suggest(final WhileStatement b) {

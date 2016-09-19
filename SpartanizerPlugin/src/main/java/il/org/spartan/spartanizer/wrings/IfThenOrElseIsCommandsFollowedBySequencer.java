@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.dispatch.Wrings.*;
 
 import java.util.*;
@@ -8,6 +7,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -46,12 +47,12 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulWrin
     return iz.sequencer(hop.lastStatement(¢));
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
-    return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant else (possibly after inverting if statement)";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 
   @Override public Suggestion suggest(final IfStatement s) {

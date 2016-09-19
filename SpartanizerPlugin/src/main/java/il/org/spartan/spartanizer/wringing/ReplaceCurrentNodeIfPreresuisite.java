@@ -9,12 +9,8 @@ import il.org.spartan.spartanizer.engine.*;
 /** Replace current node strategy
  * @author Yossi Gil
  * @year 2016 */
-public abstract class ReplaceCurrentNodeIfPreresuisite<N extends ASTNode> extends Wring<N> {
-  @Override public final boolean demandsToSuggestButPerhapsCant(N ¢) {
-    return canSuggest(¢);
-  }
-
-  @Override public abstract boolean canSuggest(N n);
+public abstract class ReplaceCurrentNodeIfPreresuisite<N extends ASTNode> extends CarefulWring<N> {
+  public abstract ASTNode replacement(N n);
 
   @Override public final Suggestion suggest(final N n) {
     return cantSuggest(n) ? null : new Suggestion(description(n), n) {
@@ -23,6 +19,4 @@ public abstract class ReplaceCurrentNodeIfPreresuisite<N extends ASTNode> extend
       }
     };
   }
-
-  public abstract ASTNode replacement(N n);
 }

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -30,12 +30,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
-  @Override public boolean prerequisite(final IfStatement ¢) {
-    return iz.vacuousElse(¢) && extract.returnStatement(then(¢)) != null && extract.nextReturn(¢) != null;
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'return'";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return iz.vacuousElse(¢) && extract.returnStatement(then(¢)) != null && extract.nextReturn(¢) != null;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {

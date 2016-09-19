@@ -19,11 +19,11 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixSubtractionSort extends InfixExpressionSortingRest implements Kind.Sorting {
-  @Override protected boolean suitable(final InfixExpression ¢) {
-    return in(¢.getOperator(), MINUS2);
-  }
-
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
+  }
+
+  @Override protected boolean suitable(final InfixExpression ¢) {
+    return in(¢.getOperator(), MINUS2);
   }
 }

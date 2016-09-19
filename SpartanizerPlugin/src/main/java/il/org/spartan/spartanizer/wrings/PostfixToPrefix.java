@@ -21,16 +21,15 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
     return ¢ == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
 
-  @Override public boolean canSuggest(final PostfixExpression ¢) {
+  @Override public String description(final PostfixExpression ¢) {
+    return "Convert post-" + description(¢.getOperator()) + " of " + step.operand(¢) + " to pre-" + description(¢.getOperator());
+  }
+
+  @Override public boolean prerequisite(final PostfixExpression ¢) {
     return !(¢.getParent() instanceof Expression) //
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_STATEMENT).from(¢) == null //
         && searchAncestors.forType(ASTNode.SINGLE_VARIABLE_DECLARATION).from(¢) == null //
         && searchAncestors.forType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
-  }
-
-
-  @Override public String description(final PostfixExpression ¢) {
-    return "Convert post-" + description(¢.getOperator()) + " of " + step.operand(¢) + " to pre-" + description(¢.getOperator());
   }
 
   @Override public PrefixExpression replacement(final PostfixExpression ¢) {

@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -46,10 +47,6 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
         ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), then.getExpression()).to(CONDITIONAL_AND))
         : wizard.same(thenThen, elze)
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf(then.getExpression())).to(CONDITIONAL_AND)) : null;
-  }
-
-  @Override public boolean canSuggest(final ConditionalExpression ¢) {
-    return collapse(¢) != null;
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {

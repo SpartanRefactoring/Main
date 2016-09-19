@@ -78,16 +78,16 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulWring<WhileSta
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
-  }
-
   @Override public String description() {
     return "Convert the break inside the loop to return";
   }
 
   @Override public String description(final WhileStatement ¢) {
     return "Convert the break inside " + ¢ + " to return";
+  }
+
+  @SuppressWarnings("deprecation") @Override public boolean prerequisite(final WhileStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
   @Override public Suggestion suggest(final WhileStatement b) {

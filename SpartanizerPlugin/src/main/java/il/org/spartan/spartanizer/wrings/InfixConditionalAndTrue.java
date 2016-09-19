@@ -21,12 +21,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
-  @Override public boolean canSuggest(final InfixExpression ¢) {
-    return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
-  }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'true' argument to '&&'";
+  }
+
+  @Override public boolean prerequisite(final InfixExpression ¢) {
+    return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
   }
 
   @Override public Expression replacement(final InfixExpression ¢) {

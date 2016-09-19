@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -32,12 +32,12 @@ public final class IfDegenerateElse extends ReplaceCurrentNodeIfPreresuisite<IfS
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @Override public boolean canSuggest(final IfStatement ¢) {
-    return ¢ != null && then(¢) != null && degenerateElse(¢);
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove vacuous 'else' branch";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
 
   @Override public Statement replacement(final IfStatement ¢) {

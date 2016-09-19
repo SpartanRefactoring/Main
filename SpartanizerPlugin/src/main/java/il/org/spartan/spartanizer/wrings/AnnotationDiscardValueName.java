@@ -29,8 +29,4 @@ public final class AnnotationDiscardValueName //
     $.setValue(duplicate.of(p.getValue()));
     return $;
   }
-
-
-
-
 }

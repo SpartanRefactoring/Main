@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.dispatch.Wrings.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -13,6 +12,8 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;

@@ -24,11 +24,11 @@ public enum ModifiersOrdering {
     return compare(find(modifier1), find(modifier2));
   }
 
-  public static int compare(IExtendedModifier m, ModifiersOrdering o) {
+  public static int compare(final IExtendedModifier m, final ModifiersOrdering o) {
     return compare(find(m), o);
   }
 
-  public static int compare(String modifier1, String modifier2) {
+  public static int compare(final String modifier1, final String modifier2) {
     return compare(find(modifier1), find(modifier2));
   }
 
@@ -36,18 +36,18 @@ public enum ModifiersOrdering {
     return find(m + "");
   }
 
-  public static boolean greaterThanOrEquals(IExtendedModifier m1, ModifiersOrdering m2) {
+  public static boolean greaterThanOrEquals(final IExtendedModifier m1, final ModifiersOrdering m2) {
     return compare(m1, m2) >= 0;
   }
 
-  private static int compare(final ModifiersOrdering m1, final ModifiersOrdering m2) {
-    return m1.ordinal() - m2.ordinal();
-  }
-
-  static ModifiersOrdering find(String modifier) {
+  static ModifiersOrdering find(final String modifier) {
     for (final ModifiersOrdering $ : ModifiersOrdering.values())
       if (modifier.equals(($ + "").toLowerCase()))
         return $;
     return $ANNOTATION$;
+  }
+
+  private static int compare(final ModifiersOrdering m1, final ModifiersOrdering m2) {
+    return m1.ordinal() - m2.ordinal();
   }
 }

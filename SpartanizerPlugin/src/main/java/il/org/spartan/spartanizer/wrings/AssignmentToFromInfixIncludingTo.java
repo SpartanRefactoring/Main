@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;

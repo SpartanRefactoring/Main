@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.wringing;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -15,8 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
-    implements Kind.SyntacticBaggage {
+public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   private static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
   private static final Predicate<Modifier> isFinal = Modifier::isFinal;
   private static final Predicate<Modifier> isPrivate = Modifier::isPrivate;
@@ -28,7 +27,7 @@ public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> e
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢).isEmpty())
       return $;
-    if (iz.enumDeclaration(¢))  {
+    if (iz.enumDeclaration(¢)) {
       $.add(isStatic);
       $.add(isAbstract);
       $.add(isFinal);
@@ -114,13 +113,13 @@ public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> e
     return false;
   }
 
-  @Override public boolean canSuggest(final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> ps = redundancies(¢);
-    return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
-  }
-
   @Override public String description(final BodyDeclaration ¢) {
     return "Remove redundant " + redundants(¢) + " modifier(s) from declaration";
+  }
+
+  @Override public boolean prerequisite(final BodyDeclaration ¢) {
+    final Set<Predicate<Modifier>> ps = redundancies(¢);
+    return !ps.isEmpty() && !matchess(¢, ps).isEmpty();
   }
 
   @Override public BodyDeclaration replacement(final BodyDeclaration $) {

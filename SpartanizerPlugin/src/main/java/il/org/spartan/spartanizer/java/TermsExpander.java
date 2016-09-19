@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.engine.*;

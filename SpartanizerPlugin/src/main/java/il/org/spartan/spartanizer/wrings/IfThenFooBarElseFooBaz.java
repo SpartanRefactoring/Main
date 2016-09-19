@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.dispatch.Wrings.*;
 
 import java.util.*;
@@ -9,6 +8,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -54,6 +55,7 @@ public final class IfThenFooBarElseFooBaz extends EagerWring<IfStatement> implem
     }
     return $;
   }
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }

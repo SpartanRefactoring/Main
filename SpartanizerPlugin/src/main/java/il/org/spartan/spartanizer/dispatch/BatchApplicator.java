@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 public class BatchApplicator {
-
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
