@@ -9,16 +9,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulWring<N> {
-  @Override public final boolean prerequisite(final N n) {
-    if (!suitable(n))
-      return false;
-    final Statement nextStatement = extract.nextStatement(n);
-    return nextStatement != null && go(ASTRewrite.create(n.getAST()), n, nextStatement, null) != null;
+  @Override public final boolean prerequisite(final N current) {
+    final Statement next = extract.nextStatement(current);
+    return next != null && go(ASTRewrite.create(current.getAST()), current, next, null) != null;
   }
 
-  protected boolean suitable(N n) {
-    return true;
-  }
 
   @Override public Suggestion suggest(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
