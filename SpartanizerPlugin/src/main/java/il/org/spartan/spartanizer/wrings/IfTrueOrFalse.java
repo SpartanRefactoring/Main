@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,12 +16,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Dan Greenstein
  * @since 2016 */
 public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
-  @Override public boolean canSuggest(final IfStatement ¢) {
-    return ¢ != null && (iz.literal¢true(¢.getExpression()) || iz.literal¢false(¢.getExpression()));
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return ¢ != null && (iz.literal¢true(¢.getExpression()) || iz.literal¢false(¢.getExpression()));
   }
 
   @Override public Statement replacement(final IfStatement ¢) {

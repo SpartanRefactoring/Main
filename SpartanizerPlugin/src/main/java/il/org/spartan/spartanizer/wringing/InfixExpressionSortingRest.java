@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class InfixExpressionSortingRest extends InfixExpressionSorting {
-  @Override public final boolean canSuggest(final InfixExpression x) {
+  @Override public final boolean prerequisite(final InfixExpression x) {
     if (!suitable(x))
       return false;
     final List<Expression> es = extract.allOperands(x);

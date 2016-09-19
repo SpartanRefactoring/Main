@@ -1,14 +1,16 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -41,16 +43,16 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return $;
   }
 
-  @Override public boolean canSuggest(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
-  }
-
   @Override public String description() {
     return "a*b + a*c => a * (b + c)";
   }
 
   @Override public String description(final InfixExpression ¢) {
     return "Apply the distributive rule to " + ¢;
+  }
+
+  @Override public boolean prerequisite(final InfixExpression $) {
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
   }
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.spartanizer.ast.step.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.plugin.*;
 

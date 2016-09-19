@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -43,6 +43,10 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   // when put out of method arguments list
   private final Class<?>[] np = { InfixExpression.class };
 
+  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
+    return "Use \"+\" operator to concatenate strings";
+  }
+
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
@@ -74,10 +78,6 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       r = (MethodInvocation) e;
     }
     return replacement(i, terms);
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
-    return "Use \"+\" operator to concatenate strings";
   }
 
   /** Adds parenthesis to expression if needed.

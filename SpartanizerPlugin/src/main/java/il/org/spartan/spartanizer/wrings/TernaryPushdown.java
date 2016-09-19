@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
+
+import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -164,10 +166,6 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
     return $;
-  }
-
-  @Override public boolean canSuggest(final ConditionalExpression ¢) {
-    return pushdown(¢) != null;
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {

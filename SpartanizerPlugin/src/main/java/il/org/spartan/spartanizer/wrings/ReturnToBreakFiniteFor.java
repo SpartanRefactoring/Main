@@ -83,16 +83,16 @@ public final class ReturnToBreakFiniteFor extends CarefulWring<ForStatement> imp
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
-  }
-
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
 
   @Override public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
+  }
+
+  @Override public boolean prerequisite(final ForStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
   @Override public Suggestion suggest(final ForStatement s) {

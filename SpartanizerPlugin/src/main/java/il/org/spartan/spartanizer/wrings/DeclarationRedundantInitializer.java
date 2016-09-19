@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import org.eclipse.jdt.core.dom.*;
+
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
-import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -13,6 +14,10 @@ import il.org.spartan.spartanizer.wringing.*;
 public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<VariableDeclarationFragment> implements Kind.SyntacticBaggage {
   @Override public String description() {
     return "Remove default values initiliazing field";
+  }
+
+  @Override public String description(final VariableDeclarationFragment ¢) {
+    return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 
   @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
@@ -26,9 +31,5 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
     final VariableDeclarationFragment $ = duplicate.of(f);
     $.setInitializer(null);
     return $;
-  }
-
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 }

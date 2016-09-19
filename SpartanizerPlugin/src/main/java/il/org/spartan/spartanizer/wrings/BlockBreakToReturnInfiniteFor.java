@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -84,12 +84,12 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulWring<ForStateme
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
-  }
-
   @Override public String description() {
     return "Convert the break inside the loop to return";
+  }
+
+  @Override public String description(final ForStatement ¢) {
+    return "Convert the break inside " + ¢ + " to return";
   }
 
   public Suggestion make(final ForStatement vor, final ReturnStatement nextReturn) {
@@ -102,14 +102,14 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulWring<ForStateme
     };
   }
 
+  @Override public boolean prerequisite(final ForStatement ¢) {
+    return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
+  }
+
   @Override public Suggestion suggest(final ForStatement vor) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     final ReturnStatement nextReturn = extract.nextReturn(vor);
     return nextReturn == null ? null : make(vor, nextReturn);
-  }
-
-  @Override public String description(final ForStatement ¢) {
-    return "Convert the break inside " + ¢ + " to return";
   }
 }

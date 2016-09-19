@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -27,12 +27,12 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement> implements Kind.Ternarization {
-  @Override public boolean canSuggest(final IfStatement ¢) {
-    return ¢ != null && extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
-  }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
+  }
+
+  @Override public boolean prerequisite(final IfStatement ¢) {
+    return ¢ != null && extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
 
   @Override public Statement replacement(final IfStatement s) {

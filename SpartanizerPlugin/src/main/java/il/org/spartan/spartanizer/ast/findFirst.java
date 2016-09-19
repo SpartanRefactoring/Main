@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.ast;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
 

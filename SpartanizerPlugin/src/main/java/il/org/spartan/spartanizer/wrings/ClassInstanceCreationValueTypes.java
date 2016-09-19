@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -17,6 +18,10 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation> implements Kind.SyntacticBaggage {
+  @Override public String description(final ClassInstanceCreation ¢) {
+    return "Use factory method " + ¢.getType() + ".valueOf() instead of new ";
+  }
+
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
     if (arguments(c).size() != 1)
       return null;
@@ -26,9 +31,5 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     final MethodInvocation $ = subject.operand(make.newSimpleName(c, t + "")).toMethod("valueOf");
     arguments($).add(duplicate.of(first(arguments(c))));
     return $;
-  }
-
-  @Override public String description(final ClassInstanceCreation ¢) {
-    return "Use factory method " + ¢.getType() + ".valueOf() instead of new ";
   }
 }
