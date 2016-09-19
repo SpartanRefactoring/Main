@@ -30,9 +30,9 @@ public final class EnhancedForParameterRenameToCent extends Wring<EnhancedForSta
     final Statement body = s.getBody();
     if (haz.variableDefinition(body))
       return null;
-    final SimpleName ¢ = s.getAST().newSimpleName("¢");
-    if (Collect.usesOf(¢).in(body).isEmpty())
+    if (Collect.usesOf(n).in(body).isEmpty())
       return null;
+    final SimpleName ¢ = s.getAST().newSimpleName("¢");
     if (m != null)
       m.exclude(s);
     return new Suggestion(description(s), s, body) {
