@@ -26,6 +26,11 @@ public final class Version250Test {
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;").stays();
   }
+  @Test public void simpleForLoop() {
+    trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
+    .gives("for(int ¢=0;¢<100;++¢)sum+=¢;")//
+    .stays();
+  }
 
   // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
