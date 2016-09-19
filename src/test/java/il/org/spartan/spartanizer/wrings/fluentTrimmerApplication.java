@@ -41,7 +41,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     dump.go(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
-    createRewrite = trimmer().createRewrite(compilationUnit, nullProgressMonitor);
+    createRewrite = trimmer().createRewrite(compilationUnit);
     assert createRewrite != null;
     textEdit = createRewrite.rewriteAST(document, null);
     assert textEdit != null;
