@@ -73,11 +73,6 @@ public final class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixE
     return "Evaluate multiplication numbers";
   }
 
-  
-  @Override protected boolean prerequisite(InfixExpression n) {
-    return n.getOperator() == TIMES &&  iz.validForEvaluation(n);
-  }
-
   @Override public ASTNode replacement(final InfixExpression x) {
     final int sourceLength = (x + "").length();
     ASTNode $;
@@ -91,5 +86,9 @@ public final class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixE
       $ = replacementLong(extract.allOperands(x), x);
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+  }
+
+  @Override protected boolean prerequisite(final InfixExpression n) {
+    return n.getOperator() == TIMES && iz.validForEvaluation(n);
   }
 }

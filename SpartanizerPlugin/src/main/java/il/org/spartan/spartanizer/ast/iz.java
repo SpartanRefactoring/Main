@@ -670,6 +670,10 @@ public enum iz {
     return iz.oneOf(¢, NULL_LITERAL, THIS_EXPRESSION);
   }
 
+  public static boolean tryStatement(final ASTNode n) {
+    return is(n, TRY_STATEMENT);
+  }
+
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
    * or has nothing but empty statements in it.
    * @param subject JD
@@ -787,9 +791,5 @@ public enum iz {
 
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
-  }
-
-  public static boolean tryStatement(ASTNode n) {
-    return is(n, TRY_STATEMENT);
   }
 }

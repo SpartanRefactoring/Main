@@ -17,20 +17,19 @@ public class TrimmerLog {
   private static int maxSuggestions = 20;
   private static int maxApplications = 10;
 
-  static void visitation(ASTNode n) {
-    if (--maxVisitations <= 0) {
-      if (maxVisitations == 0)
-        System.out.println("Stopped logging visitations");
+  static void application(final ASTRewrite r, final Suggestion s) {
+    if (--maxApplications <= 0) {
+      if (maxApplications == 0)
+        System.out.println("Stopped logging applications");
+      s.go(r, null);
       return;
     }
-    System.out.println("VISIT: '" + tide.clean(n+ "") + "' [" + n.getLength() + "] (" + clazz(n) + ")" + " parent = " + clazz(parent(n))); 
+    System.out.println("      Before: " + r);
+    s.go(r, null);
+    System.out.println("       After: " + r);
   }
 
-  private static String clazz(Object n) {
-    return n.getClass().getSimpleName();
-  }
-
-  static <N extends ASTNode> void suggestion(Wring<N> w, N n) {
+  static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
         System.out.println("Stopped logging suggestions");
@@ -44,15 +43,16 @@ public class TrimmerLog {
     System.out.println("    Suggests: " + w.suggest(n));
   }
 
-  static void application(final ASTRewrite r, final Suggestion s) {
-    if (--maxApplications <= 0) {
-      if (maxApplications == 0)
-        System.out.println("Stopped logging applications");
-      s.go(r, null);
+  static void visitation(final ASTNode n) {
+    if (--maxVisitations <= 0) {
+      if (maxVisitations == 0)
+        System.out.println("Stopped logging visitations");
       return;
     }
-    System.out.println("      Before: " + r);
-    s.go(r, null);
-    System.out.println("       After: " + r);
+    System.out.println("VISIT: '" + tide.clean(n + "") + "' [" + n.getLength() + "] (" + clazz(n) + ")" + " parent = " + clazz(parent(n)));
+  }
+
+  private static String clazz(final Object n) {
+    return n.getClass().getSimpleName();
   }
 }
