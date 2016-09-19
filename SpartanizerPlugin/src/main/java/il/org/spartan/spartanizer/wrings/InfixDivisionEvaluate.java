@@ -66,10 +66,6 @@ public final class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpress
     return "Evaluate division of numbers";
   }
 
-  @Override protected boolean prerequisite(InfixExpression n) {
-    return n.getOperator() == DIVIDE && iz.validForEvaluation(n);
-  }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Evaluate division of numbers";
   }
@@ -87,5 +83,9 @@ public final class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpress
       $ = replacementLong(extract.allOperands(x), x);
     }
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
+  }
+
+  @Override protected boolean prerequisite(final InfixExpression n) {
+    return n.getOperator() == DIVIDE && iz.validForEvaluation(n);
   }
 }

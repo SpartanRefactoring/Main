@@ -31,7 +31,6 @@ public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfSta
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
 
-
   @Override public Statement replacement(final IfStatement s) {
     final Assignment then = extract.assignment(then(s));
     final Assignment elze = extract.assignment(elze(s));

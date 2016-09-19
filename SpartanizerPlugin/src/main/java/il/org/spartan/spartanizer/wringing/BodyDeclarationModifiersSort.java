@@ -22,19 +22,12 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   private static boolean isSorted(final List<? extends IExtendedModifier> ms) {
     ModifiersOrdering previous = ModifiersOrdering.$ANNOTATION$;
-    for (final IExtendedModifier current : ms) {
+    for (final IExtendedModifier current : ms)
       if (ModifiersOrdering.greaterThanOrEquals(current, previous))
         previous = ModifiersOrdering.find(current);
-      else {
+      else
         return false;
-
-      }
-    }
     return true;
-  }
-
-  @Override protected boolean prerequisite(N n) {
-    return !isSorted(extendedModifiers(n));
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ms) {
@@ -47,6 +40,10 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   @Override public N replacement(final N $) {
     return go(duplicate.of($));
+  }
+
+  @Override protected boolean prerequisite(final N n) {
+    return !isSorted(extendedModifiers(n));
   }
 
   N go(final N $) {
