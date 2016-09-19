@@ -10,7 +10,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue111Test {
-  @Test public void issue111a_1() {
+  @Test public void A$a_1() {
     trimmingOf("public final class A {" + //
         "static public int a;" + //
         "}") //
@@ -19,7 +19,7 @@ public class Issue111Test {
                 "}");
   }
 
-  @Test public void issue111b_1() {
+  @Test public void A$b_1() {
     trimmingOf("public final class A {" + //
         "static final public int a;" + //
         "}") //
@@ -28,11 +28,11 @@ public class Issue111Test {
                 "}");
   }
 
-  @Test public void issue111c() {
+  @Test public void A$c() {
     trimmingOf("protected public void func();").gives("public protected void func();");
   }
 
-  @Test public void issue111c_2() { // not working cause method sorting is not
+  @Test public void A$c_2() { // not working cause method sorting is not
                                     // integrated yet
     trimmingOf("public final class A{" + //
         "synchronized public void fun(final int a) {}" + //
@@ -43,22 +43,22 @@ public class Issue111Test {
             "}").stays(); //
   }
 
-  public void issue111d() {
+  public void A$d() {
     trimmingOf("protected public final class A{}").gives("public protected class A{}");
   }
 
-  @Test public void issue111d_1() {
+  @Test public void A$d_1() {
     trimmingOf("abstract class A {}").stays();
   }
 
-  @Test public void issue111e() {
+  @Test public void A$e() {
     trimmingOf("protected public final class A{volatile static int a;}") //
         .gives("public protected final class A{volatile static int a;}") //
         .gives("public protected final class A{static volatile int a;}") //
         .stays();
   }
 
-  @Test public void issue111g() {
+  @Test public void A$g() {
     trimmingOf("protected public final public enum Level { " + //
         "HIGH, MEDIUM, LOW" + //
         "}").gives("protected public public enum Level { " + //
@@ -68,27 +68,27 @@ public class Issue111Test {
                 "}");
   }
 
-  public void issue111h() {
+  public void A$h() {
     trimmingOf("protected public int a;").gives("public protected int a;");
   }
 
-  public void issue111i() {
+  public void A$i() {
     trimmingOf("protected public int a;").gives("public protected int a;");
   }
 
-  public void issue111q() {
+  public void A$q() {
     trimmingOf("protected public int a;").gives("public protected int a;");
   }
 
-  public void issue111w() {
+  public void A$w() {
     trimmingOf("protected public int a;").gives("public protected int a;");
   }
 
-  public void issue111y() {
+  public void A$y() {
     trimmingOf("synchronized volatile public int a;").gives("public volatile synchronized int a;");
   }
 
-  public void issue111z() {
+  public void A$z() {
     trimmingOf("volatile private int a;").gives("private volatile int a;");
   }
 }

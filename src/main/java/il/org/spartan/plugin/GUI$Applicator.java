@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  *         2013/07/10
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
-public abstract class Applicator extends Refactoring {
+public abstract class GUI$Applicator extends Refactoring {
   private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
   private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
   private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
@@ -57,18 +57,29 @@ public abstract class Applicator extends Refactoring {
   private int totalChanges;
   IProgressMonitor progressMonitor = nullProgressMonitor;
 
-  public IProgressMonitor getProgressMonitor() {
-    return progressMonitor;
-  }
-
-  public void setProgressMonitor(IProgressMonitor progressMonitor) {
-    this.progressMonitor = progressMonitor;
-  }
-
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
-  protected Applicator(final String name) {
+  protected GUI$Applicator(final String name) {
     this.name = name;
+  }
+
+  public boolean apply(final ICompilationUnit cu) {
+    return apply(cu, new Range(0, 0));
+  }
+
+  public boolean apply(final ICompilationUnit cu, final ITextSelection s) {
+    try {
+      setCompilationUnit(cu);
+      setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
+      return performRule(cu);
+    } catch (final CoreException x) {
+      Plugin.log(x);
+    }
+    return false;
+  }
+
+  public boolean apply(final ICompilationUnit cu, final Range r) {
+    return apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
 
   @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
@@ -77,7 +88,7 @@ public abstract class Applicator extends Refactoring {
     if (marker == null)
       runAsManualCall();
     else {
-      innerRunAsMarkerFix( marker, true);
+      innerRunAsMarkerFix(marker, true);
       marker = null; // consume marker
     }
     pm.done();
@@ -146,7 +157,7 @@ public abstract class Applicator extends Refactoring {
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  public final ASTRewrite createRewrite(final CompilationUnit u ) {
+  public final ASTRewrite createRewrite(final CompilationUnit u) {
     return rewriterOf(u, (IMarker) null);
   }
 
@@ -213,8 +224,8 @@ public abstract class Applicator extends Refactoring {
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
-          new RefactoringWizardOpenOperation(new Wizard(Applicator.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartan refactoring: " + s + Applicator.this);
+          new RefactoringWizardOpenOperation(new Wizard(GUI$Applicator.this)).run(Display.getCurrent().getActiveShell(),
+              "Spartan refactoring: " + s + GUI$Applicator.this);
         } catch (final InterruptedException e) {
           // TODO: What should we do here?
           Plugin.log(e);
@@ -225,6 +236,10 @@ public abstract class Applicator extends Refactoring {
 
   @Override public final String getName() {
     return name;
+  }
+
+  public IProgressMonitor getProgressMonitor() {
+    return progressMonitor;
   }
 
   /** @return selection */
@@ -278,7 +293,7 @@ public abstract class Applicator extends Refactoring {
     return $;
   }
 
-  public ASTRewrite rewriterOf(final CompilationUnit u,  final IMarker m) {
+  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
@@ -303,6 +318,10 @@ public abstract class Applicator extends Refactoring {
   /** @param marker the marker to set for the refactoring */
   public final void setMarker(final IMarker ¢) {
     marker = ¢;
+  }
+
+  public void setProgressMonitor(final IProgressMonitor progressMonitor) {
+    this.progressMonitor = progressMonitor;
   }
 
   /** @param subject the selection to set */
@@ -399,10 +418,10 @@ public abstract class Applicator extends Refactoring {
     return $;
   }
 
-  private RefactoringStatus innerRunAsMarkerFix( final IMarker m, final boolean preview) throws CoreException {
+  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnitForMarkerFix(m,  preview);
+    scanCompilationUnitForMarkerFix(m, preview);
     marker = null;
     progressMonitor.done();
     return new RefactoringStatus();
@@ -418,26 +437,7 @@ public abstract class Applicator extends Refactoring {
 
   private void runAsManualCall() throws JavaModelException, CoreException {
     progressMonitor.beginTask("Checking preconditions...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnits(getUnits() );
+    scanCompilationUnits(getUnits());
     progressMonitor.done();
-  }
-
-  public boolean apply(final ICompilationUnit cu, final Range r) {
-    return apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
-  }
-
-  public boolean apply(final ICompilationUnit cu, final ITextSelection s) {
-      try {
-        setCompilationUnit(cu);
-        setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
-        return performRule(cu);
-      } catch (final CoreException x) {
-        Plugin.log(x);
-      }
-    return false;
-  }
-
-  public boolean apply(final ICompilationUnit cu) {
-    return apply(cu, new Range(0, 0));
   }
 }

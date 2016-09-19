@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 /** An adapter that converts the protocol of a single @{link Wring} instance
- * into that of {@link Applicator}. This class must eventually die.
+ * into that of {@link GUI$Applicator}. This class must eventually die.
  * @author Yossi Gil
  * @since 2015/07/25 */
-public final class WringApplicator extends Applicator {
+public final class WringApplicator extends GUI$Applicator {
   final Wring<ASTNode> wring;
   final Class<? extends ASTNode> clazz;
 

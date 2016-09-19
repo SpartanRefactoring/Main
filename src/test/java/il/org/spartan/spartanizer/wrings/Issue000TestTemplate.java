@@ -13,5 +13,5 @@ public class Issue000TestTemplate {
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimmingOf("a").stays();
-  } 
+  }
 }

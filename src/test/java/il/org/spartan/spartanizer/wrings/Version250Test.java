@@ -728,7 +728,6 @@ public final class Version250Test {
     trimmingOf("String tellTale(ExamplyExamplar foo)").stays();
   }
 
-
   @Test public void issue70_01() {
     trimmingOf("(double)5").gives("1.*5");
   }

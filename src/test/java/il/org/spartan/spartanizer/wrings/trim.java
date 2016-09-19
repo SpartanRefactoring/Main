@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final Applicator a, final CompilationUnit u) {
+  static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
     return a.collectSuggesions(u).size();
   }
 

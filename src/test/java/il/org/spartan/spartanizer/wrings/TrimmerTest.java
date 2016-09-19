@@ -1553,7 +1553,6 @@ import il.org.spartan.spartanizer.wringing.*;
         + "{}").gives("interface a {}");
   }
 
-
   @Test public void issue53() {
     trimmingOf( //
         "int[] is = f(); for (int i: is) f(i);")//

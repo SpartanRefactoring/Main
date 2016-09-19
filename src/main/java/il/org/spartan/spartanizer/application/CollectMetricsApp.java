@@ -24,7 +24,6 @@ public final class CollectMetricsApp implements IApplication {
   private static final String OUTPUT = System.getProperty("user.home") + "/halstead.csv";
   private static final String SPARTAN_OUTPUT = System.getProperty("user.home") + "/spartan_halstead.csv";
   private static CSVStatistics output;
-  private static CSVStatistics stats;
   private static IJavaProject javaProject;
   private static IPackageFragmentRoot srcRoot;
   private static IPackageFragment pack;

@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -50,9 +49,9 @@ import il.org.spartan.spartanizer.spartanizations.*;
     return extract.singleStatement(n);
   }
 
-  public static Document rewrite(final Applicator a, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
     try {
-      a.createRewrite(u ).rewriteAST($, null).apply($);
+      a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
@@ -67,7 +66,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     return TESTUtils.rewrite(t, u, d).get();
   }
 
-  static void assertNoOpportunity(final Applicator a, final String from) {
+  static void assertNoOpportunity(final GUI$Applicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
@@ -76,7 +75,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     azzert.that(tide.clean(actual), is(tide.clean(expected)));
   }
 
-  static void assertOneOpportunity(final Applicator a, final String from) {
+  static void assertOneOpportunity(final GUI$Applicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
