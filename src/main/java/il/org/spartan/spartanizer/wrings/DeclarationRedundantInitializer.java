@@ -22,9 +22,7 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
 
   @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
-    if (parent == null)
-      return null;
-    if (Modifier.isFinal(parent.getModifiers()))
+    if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;
     final Expression e = f.getInitializer();
     if (e == null || !iz.literal(e) || wizard.isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e))

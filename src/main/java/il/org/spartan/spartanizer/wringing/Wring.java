@@ -3,9 +3,11 @@ package il.org.spartan.spartanizer.wringing;
 import static java.lang.reflect.Modifier.*;
 
 import java.lang.reflect.*;
+import java.lang.reflect.Modifier;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -17,23 +19,17 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Wring<N extends ASTNode> implements Kind {
-  private static boolean isInstance(final Method ¢) {
-    return !isStatic(¢.getModifiers());
-  }
-
   private Class<N> myOperandsClass;
 
   /** Determine whether the parameter is "eligible" for application of this
-   * instance. The parameter must be within the scope of the current instance.
+   * instance. 
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
   public abstract boolean canSuggest(final N n);
 
-  /** Determines whether this {@link Wring} object is not applicable for a given
-   * {@link PrefixExpression} is within the "scope" of this . Note that a
-   * {@link Wring} is applicable in principle to an object, but that actual
-   * application will be vacuous.
+  /** Determines whether this instance can make a {@link Suggestion} for the paramter 
+   * instance. 
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
@@ -50,7 +46,9 @@ public abstract class Wring<N extends ASTNode> implements Kind {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is within the
    *         scope of this object @ */
-  @Deprecated public abstract boolean demandsToSuggestButPerhapsCant(final N ¢);
+  @Deprecated public boolean demandsToSuggestButPerhapsCant(final N ¢) {
+    return canSuggest(¢);
+  }
 
   public abstract String description(N n);
 
@@ -84,7 +82,7 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   private Class<N> initializeMyOperandsClass() {
     Class<N> $ = null;
     for (final Method ¢ : getClass().getMethods())
-      if (¢.getParameterCount() == 1 && isInstance(¢) && isDefinedHere(¢))
+      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
         $ = lowest($, ¢.getParameterTypes()[0]);
     return $ != null ? $ : castClass(ASTNode.class);
   }
