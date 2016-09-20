@@ -71,7 +71,7 @@ public final class Issue223Test {
 
   @Test public void B$030demands() {
     A$040_init();
-    assert wring.demandsToSuggestButPerhapsCant(focus);
+    assert wring.canSuggest(focus);
   }
 
   @Test public void B$040suggestionNotNull() {
@@ -131,7 +131,7 @@ public final class Issue223Test {
   @Test public void B$140findWringDemands() {
     A$040_init();
     final ReplaceCurrentNode<ClassInstanceCreation> w = (ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus);
-    assert w.demandsToSuggestButPerhapsCant(focus);
+    assert w.canSuggest(focus);
   }
 
   @Test public void B$150findWringCanSuggest() {

@@ -33,7 +33,7 @@ public final class WringApplicator extends GUI$Applicator {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || wring.demandsToSuggestButPerhapsCant(¢) || wring.canSuggest(¢))
+        if (¢.getClass() == clazz || wring.canSuggest(¢))
           $.add(wring.suggest(¢));
       }
     };
@@ -43,7 +43,7 @@ public final class WringApplicator extends GUI$Applicator {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || wring.demandsToSuggestButPerhapsCant(¢) || wring.canSuggest(¢) || inRange(m, ¢))
+        if (¢.getClass() == clazz || wring.canSuggest(¢) || inRange(m, ¢))
           wring.suggest(¢).go(r, null);
       }
     });

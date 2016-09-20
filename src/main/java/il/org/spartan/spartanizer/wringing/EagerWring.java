@@ -10,11 +10,7 @@ public abstract class EagerWring<N extends ASTNode> extends Wring<N> {
     return this.suggest(¢) != null;
   }
 
-  @Override public final boolean demandsToSuggestButPerhapsCant(final N ¢) {
-    return canSuggest(¢);
-  }
-
-  @Override public String description() {
-    return getClass().getSimpleName();
+  final protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
+    return true;
   }
 }

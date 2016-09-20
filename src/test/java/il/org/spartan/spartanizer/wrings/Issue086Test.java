@@ -68,7 +68,7 @@ public final class Issue086Test extends Issue___TestTemplate {
 
   @Test public void B$03demands() {
     A$04_init();
-    assert wring.demandsToSuggestButPerhapsCant(focus);
+    assert wring.canSuggest(focus);
   }
 
   @Test public void B$04suggestionNotNull() {
