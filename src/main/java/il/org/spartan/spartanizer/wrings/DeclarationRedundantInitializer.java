@@ -24,7 +24,8 @@ public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<Va
     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null)
       return null;
-    extract.modifiers(parent);
+    if (Modifier.isFinal(parent.getModifiers()))
+      return null;
     final Expression e = f.getInitializer();
     if (e == null || !iz.literal(e) || wizard.isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e))
       return null;
