@@ -166,7 +166,7 @@
                      style="push">
                </command>
                <command
-                     label="toggle spartanizer"
+                     label="Show suggestions"
                      commandId="il.org.spartan.commands.ToggleCommand"
                      id="il.org.spartan.plugin.menus.ToggleCommand"
                      style="toggle">
