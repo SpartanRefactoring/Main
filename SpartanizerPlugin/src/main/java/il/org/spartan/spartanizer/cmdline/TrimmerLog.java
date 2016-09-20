@@ -22,7 +22,7 @@ public class TrimmerLog {
   private static int maxSuggestions = 20;
   private static int maxApplications = 10;
   private static boolean logToScreen = true; // default output
-  private static boolean logToFile = false;
+  private static boolean logToFile;
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
 
   public static void application(final ASTRewrite r, final Suggestion s) {
@@ -65,14 +65,14 @@ public class TrimmerLog {
       output.nl();
     }
     
-    if (logToScreen) {
-        System.out.println("       Wring: " + clazz(w));
-        System.out.println("       Named: " + w.description());
-        System.out.println("        Kind: " + w.wringGroup());
-        System.out.println("   Described: " + w.description(n));
-        System.out.println(" Can suggest: " + w.canSuggest(n));
-        System.out.println("    Suggests: " + w.suggest(n));
-    }
+    if (!logToScreen)
+      return;
+    System.out.println("       Wring: " + clazz(w));
+    System.out.println("       Named: " + w.description());
+    System.out.println("        Kind: " + w.wringGroup());
+    System.out.println("   Described: " + w.description(n));
+    System.out.println(" Can suggest: " + w.canSuggest(n));
+    System.out.println("    Suggests: " + w.suggest(n));
   }
   
   public static void activateLogToScreen(){

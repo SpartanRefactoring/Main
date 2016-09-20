@@ -219,13 +219,11 @@ public interface metrics {
     return dictionary(u).size();
   }
 
-  public static int tokens(String s) {
+  static int tokens(String s) {
     int $ = 0;
     for (Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
       Token t = tokenizer.next();
-      if (t == null)
-        return $;
-      if (t == Token.EOF)
+      if (t == null || t == Token.EOF)
         return $;
       if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
         continue;

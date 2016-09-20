@@ -419,10 +419,8 @@ public interface wizard {
     return tide.clean(wizard.removeComments2(codeFragment));
   }
 
-  public static String removeComments(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+  static String removeComments(final String codeFragment) {
+    return codeFragment.replaceAll("//.*?\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
   static String removeComments2(final String codeFragment) {
