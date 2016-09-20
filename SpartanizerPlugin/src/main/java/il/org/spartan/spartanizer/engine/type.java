@@ -558,11 +558,10 @@ public interface type {
      *         be **/
     Iterable<Certain> options();
 
-    /**
-     * Primitive types known for certain.  {@link String}  is also considered {@link Primitive.Certain}
-     * @author  Yossi Gil
-     * @since  2016 
-     */
+    /** Primitive types known for certain. {@link String} is also considered
+     * {@link Primitive.Certain}
+     * @author Yossi Gil
+     * @since 2016 */
     enum Certain implements Primitive {
       BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean"), BYTE("byte", "must be byte: (byte)1, nothing else", "Byte"), CHAR("char",
           "must be char: 'a', (char)97, nothing else",
@@ -606,12 +605,25 @@ public interface type {
       }
     }
 
-    /**
-     * Tells how much we know about the type of of a variable, function, or expression. This should be conservative approximation to the real type of the entity, what a rational, but prudent programmer would case about the type <p> Dispatching in this class should emulate the type inference of Java. It is simple to that by hard coding constants. <p> This type should never be <code><b>null</b></code>. Don't bother to check that it is. We want a  {@link NullPointerException}  thrown if this is the case. or, you may as well write <pre> Kind k = f(); assert k != null : // "Implementation of Kind is buggy"; </pre>
-     * @author  Yossi Gil
-     * @author  Niv Shalmon
-     * @since  2016-08-XX 
-     */
+    /** Tells how much we know about the type of of a variable, function, or
+     * expression. This should be conservative approximation to the real type of
+     * the entity, what a rational, but prudent programmer would case about the
+     * type
+     * <p>
+     * Dispatching in this class should emulate the type inference of Java. It
+     * is simple to that by hard coding constants.
+     * <p>
+     * This type should never be <code><b>null</b></code>. Don't bother to check
+     * that it is. We want a {@link NullPointerException} thrown if this is the
+     * case. or, you may as well write
+     * 
+     * <pre>
+     *  Kind k = f(); assert k != null : // "Implementation of Kind is buggy";
+     * </pre>
+     * 
+     * @author Yossi Gil
+     * @author Niv Shalmon
+     * @since 2016-08-XX */
     enum Uncertain implements Primitive {
       INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), INTEGRAL(
           "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT,

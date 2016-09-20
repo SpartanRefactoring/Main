@@ -89,8 +89,7 @@ public enum extract {
         return category((TypeDeclaration) ¢);
       default:
         assert wizard.unreachable() : wizard.dump() //
-            + "\n d = " + ¢
-            + "\n d.getClass() = " + ¢.getClass() //
+            + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
             + wizard.endDump();
         return ¢.getClass().getSimpleName();
@@ -215,8 +214,7 @@ public enum extract {
         return ((TypeDeclaration) ¢).getName() + "";
       default:
         assert wizard.unreachable() : wizard.dump() //
-            + "\n d = " + ¢
-            + "\n d.getClass() = " + ¢.getClass() //
+            + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
             + wizard.endDump();
         return ¢.getClass().getSimpleName();
