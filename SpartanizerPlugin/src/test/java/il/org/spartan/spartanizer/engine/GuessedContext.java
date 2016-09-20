@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -63,10 +64,6 @@ public enum GuessedContext {
       not_statment_may_occur_in_initializer_block, //
       not_statment_may_occur_in_static_initializer_block, };
 
-  public static String essence(final String codeFragment) {
-    return tide.clean(removeComments(codeFragment));
-  }
-
   /** Finds the most appropriate Guess for a given code fragment
    * @param codeFragment JD
    * @return most appropriate Guess, or null, if the parameter could not be
@@ -79,7 +76,7 @@ public enum GuessedContext {
         "Nota!\n" + //
         "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
         "at a string literal somewhere \n " + //
-        "\t\t =>  in *your* __sbצלך__ @Test related Java code  <== \n" + //
+        "\t\t =>  in *your* __צלך__ @Test related Java code  <== \n" + //
         "To fix this problem, copy this trace window (try right clicking __here__). Then,\n" + //
         "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
@@ -100,23 +97,17 @@ public enum GuessedContext {
       $.append("\n\t\t Is it a " + w + "?");
       $.append("\n\t Let's see...");
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
-      $.append("\n\t```" + essence(on) + "'''");
+      $.append("\n\t```" + wizard.essence(on) + "'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
       $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
           + " on (essentially) this bit of code");
-      $.append("\n\t\t\t```" + essence(u + "") + "'''");
+      $.append("\n\t\t\t```" + wizard.essence(u + "") + "'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
       $.append("\n\t\t\t```" + u + "'''");
       $.append("\n\t\t And the full list of problems was: ");
       $.append("\n\t\t\t```" + u.getProblems() + "'''");
     }
     return $ + "";
-  }
-
-  static String removeComments(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
   private final String before;
@@ -164,8 +155,8 @@ public enum GuessedContext {
 
   private boolean contains(final String wrap, final String inner) {
     final String off = off(wrap);
-    final String essence = essence(inner);
-    final String essence2 = essence(off);
+    final String essence = wizard.essence(inner);
+    final String essence2 = wizard.essence(off);
     assert essence2 != null;
     return essence2.contains(essence);
   }

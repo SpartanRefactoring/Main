@@ -8,6 +8,7 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) //
 @Ignore //
@@ -22,7 +23,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void essenceTest() {
-    azzert.that("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    azzert.that("if(b){;}throw new Exception();", is(wizard.essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
 
   @Test public void expression() {
@@ -131,7 +132,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void removeCommentsTest() {
-    similar(removeComments(//
+    similar(wizard.removeComments2(//
         "if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 
@@ -140,6 +141,6 @@ public final class GuessedContextTest {
   }
 
   private void similar(final String s1, final String s2) {
-    azzert.that(essence(s2), is(essence(s1)));
+    azzert.that(wizard.essence(s2), is(wizard.essence(s1)));
   }
 }

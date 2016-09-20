@@ -3,12 +3,15 @@ package il.org.spartan.spartanizer.ast;
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.java.*;
+import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -214,5 +217,19 @@ public interface metrics {
 
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
+  }
+
+  public static int tokens(String s) {
+    int $ = 0;
+    for (Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+      Token t = tokenizer.next();
+      if (t == null)
+        return $;
+      if (t == Token.EOF)
+        return $;
+      if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
+        continue;
+      ++$;
+    }
   }
 }

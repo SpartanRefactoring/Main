@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -31,7 +32,7 @@ public enum Wrap {
   public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
 
   public static String essence(final String codeFragment) {
-    return tide.clean(removeComments(codeFragment));
+    return tide.clean(wizard.removeComments(codeFragment));
   }
 
   /** Finds the most appropriate Wrap for a given code fragment
@@ -44,12 +45,6 @@ public enum Wrap {
         return $;
     azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
-  }
-
-  static String removeComments(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
   private static String options(final String codeFragment) {
