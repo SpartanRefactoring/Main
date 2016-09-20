@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.cmdline;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -17,7 +17,7 @@ public class TrimmerLog {
   private static int maxSuggestions = 20;
   private static int maxApplications = 10;
 
-  static void application(final ASTRewrite r, final Suggestion s) {
+  public static void application(final ASTRewrite r, final Suggestion s) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
         System.out.println("Stopped logging applications");
@@ -29,7 +29,7 @@ public class TrimmerLog {
     System.out.println("       After: " + r);
   }
 
-  static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
+  public static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
         System.out.println("Stopped logging suggestions");
@@ -43,7 +43,7 @@ public class TrimmerLog {
     System.out.println("    Suggests: " + w.suggest(n));
   }
 
-  static void visitation(final ASTNode ¢) {
+  public static void visitation(final ASTNode ¢) {
     if (--maxVisitations <= 0) {
       if (maxVisitations == 0)
         System.out.println("Stopped logging visitations");

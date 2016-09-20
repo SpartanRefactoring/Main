@@ -9,6 +9,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.wringing.*;
@@ -16,7 +17,7 @@ import il.org.spartan.spartanizer.wringing.*;
 /** @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends GUI$Applicator {
-  static boolean prune(final Suggestion r, final List<Suggestion> rs) {
+  public static boolean prune(final Suggestion r, final List<Suggestion> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
       rs.add(r);
@@ -58,18 +59,7 @@ public class Trimmer extends GUI$Applicator {
     });
   }
 
-  @Override protected ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $) {
-    return new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (new DisabledChecker(u).check(n))
-          return true;
-        final Wring<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
-      }
-    };
-  }
-
-  String fixed(final String from) {
+  public String fixed(final String from) {
     final Document $ = new Document(from);
     for (;;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
@@ -84,6 +74,17 @@ public class Trimmer extends GUI$Applicator {
       if (!e.hasChildren())
         return $.get();
     }
+  }
+
+  @Override protected ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $) {
+    return new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        if (new DisabledChecker(u).check(n))
+          return true;
+        final Wring<N> w = Toolbox.defaultInstance().find(n);
+        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
+      }
+    };
   }
 
   public abstract class With {

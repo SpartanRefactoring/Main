@@ -8,7 +8,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
