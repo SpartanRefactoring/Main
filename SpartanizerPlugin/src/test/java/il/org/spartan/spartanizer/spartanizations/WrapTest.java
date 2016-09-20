@@ -8,6 +8,7 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public final class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
@@ -92,7 +93,7 @@ import il.org.spartan.*;
   }
 
   @Test public void removeComments() {
-    similar(Wrap.removeComments("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
+    similar(wizard.removeComments("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
         "if (b) {} else { throw new Exception(); }");
   }
 

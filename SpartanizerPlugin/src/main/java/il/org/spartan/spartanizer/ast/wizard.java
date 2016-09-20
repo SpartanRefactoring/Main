@@ -414,4 +414,20 @@ public interface wizard {
   static boolean unreachable() {
     return false;
   }
+
+  static String essence(final String codeFragment) {
+    return tide.clean(wizard.removeComments2(codeFragment));
+  }
+
+  public static String removeComments(final String codeFragment) {
+    return codeFragment//
+        .replaceAll("//.*?\n", "\n")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+  }
+
+  static String removeComments2(final String codeFragment) {
+    return codeFragment//
+        .replaceAll("//.*?\n", "\n")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+  }
 }

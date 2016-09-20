@@ -10,6 +10,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
@@ -29,22 +30,10 @@ public final class MethodsCollector {
         continue;
       w.put("Body", s);
       w.put("Characters", s.length());
-      w.put("Tokens", tokens(s));
+      w.put("Tokens", metrics.tokens(s));
       w.nl();
     }
     System.err.println("Look for your output here: " + w.close());
-  }
-
-  static int tokens(String s) {
-    int $ = 0;
-    for (Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      Token t = tokenizer.next();
-      if (t == null)
-        return $;
-      if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
-        continue;
-      ++$;
-    }
   }
 
   private static void collect(final CompilationUnit u) {

@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
  * @year 2016 */
-public final class CollectMetrics {
+public final class CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static CSVStatistics output = init();
 
