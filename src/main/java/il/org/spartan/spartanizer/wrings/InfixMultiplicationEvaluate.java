@@ -88,7 +88,7 @@ public final class InfixMultiplicationEvaluate extends ReplaceCurrentNode<InfixE
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 
-  @Override protected boolean prerequisite(final InfixExpression n) {
-    return n.getOperator() == TIMES && iz.validForEvaluation(n);
+  @Override protected boolean prerequisite(final InfixExpression ¢) {
+    return ¢.getOperator() == TIMES && iz.validForEvaluation(¢);
   }
 }

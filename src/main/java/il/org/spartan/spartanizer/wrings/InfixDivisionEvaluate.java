@@ -85,7 +85,7 @@ public final class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpress
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 
-  @Override protected boolean prerequisite(final InfixExpression n) {
-    return n.getOperator() == DIVIDE && iz.validForEvaluation(n);
+  @Override protected boolean prerequisite(final InfixExpression ¢) {
+    return ¢.getOperator() == DIVIDE && iz.validForEvaluation(¢);
   }
 }

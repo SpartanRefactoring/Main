@@ -158,8 +158,8 @@ public abstract class GUI$Applicator extends Refactoring {
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  public final ASTRewrite createRewrite(final CompilationUnit u) {
-    return rewriterOf(u, (IMarker) null);
+  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
+    return rewriterOf(¢, (IMarker) null);
   }
 
   public IMarkerResolution disableClassFix() {
@@ -307,8 +307,8 @@ public abstract class GUI$Applicator extends Refactoring {
    * @param m the marker for which the refactoring needs to run
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */
-  public RefactoringStatus runAsMarkerFix(final IMarker m) throws CoreException {
-    return innerRunAsMarkerFix(m, false);
+  public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
+    return innerRunAsMarkerFix(¢, false);
   }
 
   /** @param compilationUnit the compilationUnit to set */
@@ -321,8 +321,8 @@ public abstract class GUI$Applicator extends Refactoring {
     marker = ¢;
   }
 
-  public void setProgressMonitor(final IProgressMonitor progressMonitor) {
-    this.progressMonitor = progressMonitor;
+  public void setProgressMonitor(final IProgressMonitor ¢) {
+    this.progressMonitor = ¢;
   }
 
   /** @param subject the selection to set */
@@ -367,10 +367,10 @@ public abstract class GUI$Applicator extends Refactoring {
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(m).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
-      if (!preview)
-        textChange.perform(progressMonitor);
-      else
+      if (preview)
         changes.add(textChange);
+      else
+        textChange.perform(progressMonitor);
     progressMonitor.done();
   }
 
@@ -391,8 +391,8 @@ public abstract class GUI$Applicator extends Refactoring {
    *        refactoring
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final IMarker m) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(m, progressMonitor), m);
+  private ASTRewrite createRewrite(final IMarker ¢) {
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢);
   }
 
   private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {

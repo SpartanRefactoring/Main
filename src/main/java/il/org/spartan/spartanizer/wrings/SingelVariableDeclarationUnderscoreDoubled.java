@@ -89,8 +89,8 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Override public ASTNode replacement(final SingleVariableDeclaration n) {
-    return replacement(n, null);
+  @Override public ASTNode replacement(final SingleVariableDeclaration ¢) {
+    return replacement(¢, null);
   }
 
   @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {

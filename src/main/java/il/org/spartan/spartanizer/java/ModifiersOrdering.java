@@ -32,8 +32,8 @@ public enum ModifiersOrdering {
     return compare(find(modifier1), find(modifier2));
   }
 
-  public static ModifiersOrdering find(final IExtendedModifier m) {
-    return find(m + "");
+  public static ModifiersOrdering find(final IExtendedModifier ¢) {
+    return find(¢ + "");
   }
 
   public static boolean greaterThanOrEquals(final IExtendedModifier m1, final ModifiersOrdering m2) {

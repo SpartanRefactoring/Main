@@ -30,9 +30,9 @@ public interface metrics {
     return $.inner;
   }
 
-  static int countImports(final CompilationUnit cu) {
+  static int countImports(final CompilationUnit u) {
     final Int $ = new Int();
-    cu.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(ImportDeclaration.class))
           ++$.inner;

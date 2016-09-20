@@ -38,9 +38,7 @@ public final class ForRenameInitializerToCent extends EagerWring<VariableDeclara
     if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(x.getType(), n))
       return null;
     final Statement body = forStatement.getBody();
-    if (body == null || haz.variableDefinition(body))
-      return null;
-    if (Collect.usesOf(n).in(body).isEmpty())
+    if (body == null || haz.variableDefinition(body) || Collect.usesOf(n).in(body).isEmpty())
       return null;
     if (m != null) {
       m.exclude(body);
