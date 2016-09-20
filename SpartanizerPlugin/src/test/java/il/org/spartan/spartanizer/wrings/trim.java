@@ -80,11 +80,9 @@ public interface trim {
     }
   }
 
-  /**
-   * Unit tests demonstrating the fluent API
-   * @author  Yossi Gil
-   * @since  2016 
-   */
+  /** Unit tests demonstrating the fluent API
+   * @author Yossi Gil
+   * @since 2016 */
   @SuppressWarnings("static-method") @Ignore static class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");

@@ -322,7 +322,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public void setProgressMonitor(final IProgressMonitor ¢) {
-    this.progressMonitor = ¢;
+    progressMonitor = ¢;
   }
 
   /** @param subject the selection to set */
