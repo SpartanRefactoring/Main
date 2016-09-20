@@ -660,6 +660,13 @@ public final class Version250Test {
     trimmingOf("(long)1L*2").gives("2*(long)1L").gives("2*1L*1L").gives("2L").stays();
   }
 
+  @Test public void issue237() {
+    trimmingOf("class X {final int __ = 0;}").stays();
+    trimmingOf("class X {final boolean __ = false;}").stays();
+    trimmingOf("class X {final double __ = 0.0;}").stays();
+    trimmingOf("class X {final Object __ = null;}").stays();
+  }
+
   @Test public void issue31a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(now.modifiers());\n" + //

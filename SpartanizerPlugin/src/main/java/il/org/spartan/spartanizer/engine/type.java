@@ -616,11 +616,11 @@ public interface type {
      * This type should never be <code><b>null</b></code>. Don't bother to check
      * that it is. We want a {@link NullPointerException} thrown if this is the
      * case. or, you may as well write
-     * 
+     *
      * <pre>
      *  Kind k = f(); assert k != null : // "Implementation of Kind is buggy";
      * </pre>
-     * 
+     *
      * @author Yossi Gil
      * @author Niv Shalmon
      * @since 2016-08-XX */

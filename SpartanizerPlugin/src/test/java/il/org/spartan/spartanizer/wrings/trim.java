@@ -6,6 +6,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.junit.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wringing.*;
 
