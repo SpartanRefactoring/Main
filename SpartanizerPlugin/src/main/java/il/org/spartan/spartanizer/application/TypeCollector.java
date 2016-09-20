@@ -58,11 +58,16 @@ public final class TypeCollector {
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
     final int essence2 = essence(out + "").length();
+    final int nodes2 = metrics.nodesCount(makeAST.COMPILATION_UNIT.from(out));
     System.out.println(++n + " " + extract.category(in) + " " + extract.name(in));
     output//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
-        .put("Nodes", nodes)//
+        .put("Nodes1", nodes)//
+        .put("Nodes2", nodes2)//
+        .put("ΔNodes", nodes - nodes2)//
+        .put("δNodees", δ(nodes, nodes2))//
+        .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("ΔTokens", tokens - tokens2)//
