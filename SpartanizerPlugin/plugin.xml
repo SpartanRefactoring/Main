@@ -3,7 +3,7 @@
 <plugin>
    <extension
          id="il.org.spartan.spartanizer.BuilderID"
-         name="Spartanization Suggestions"
+         name="Spartanizer"
          point="org.eclipse.core.resources.builders">
       <builder hasNature="true">
          <run class="il.org.spartan.plugin.Builder"/> 
@@ -39,18 +39,18 @@
    </extension>
 
 <extension
-    id="il.org.spartan.spartanizer.spartanizationSuggestion"
-    name="Spartanization Suggestion"
+    id="il.org.spartan.spartanizer.suggestion"
+    name="Spartanization"
     point="org.eclipse.core.resources.markers">
   <super type="org.eclipse.core.resources.problemmarker" />
 </extension>
    <extension point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator 
-               markerType="il.org.spartan.spartanizer.spartanizationSuggestion"
+               markerType="il.org.spartan.spartanizer.suggestion"
          class="il.org.spartan.plugin.QuickFixer"/>
    </extension>
    <extension point="org.eclipse.ui.editors.annotationTypes">
-     <type markerType="il.org.spartan.spartanizer.spartanizationSuggestion" 
+     <type markerType="il.org.spartan.spartanizer.suggestion" 
        name="il.org.spartan.plugin.spartanizationMarker" />
    </extension>
    <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
@@ -60,7 +60,7 @@
          colorPreferenceValue="0,0,180"
          contributesToHeader="false"
          includeOnPreferencePage="true"
-         label="Spartanization Suggestion"
+         label="Suggestion"
          overviewRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.overview"
          overviewRulerPreferenceValue="true"
          presentationLayer="0"
@@ -76,7 +76,7 @@
       <command
             categoryId="il.org.spartan.plugin"
             id="il.org.spartan.commands.ToggleCommand"
-            name="Toggle Automatic Spartanization Suggestion">
+            name="Suggestions on/off">
             <state
               class="org.eclipse.ui.handlers.RegistryToggleState:true"
               id="org.eclipse.ui.commands.toggleState">
