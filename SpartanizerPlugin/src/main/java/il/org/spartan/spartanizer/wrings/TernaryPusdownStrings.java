@@ -65,7 +65,8 @@ public final class TernaryPusdownStrings extends ReplaceCurrentNode<ConditionalE
    * @return a StringLiteral whose literal value is the prefix of length i of
    *         s */
   private static StringLiteral getPrefix(final String s, final int i, final ASTNode n) {
-    return make.from(n).literal(i == 0 ? "" : s.substring(0, i));
+    return make.from(n).literal(i <= 0 ? "" : s.substring(0, i));
+    // Hacke for issue #236
   }
 
   /** @param s JD
