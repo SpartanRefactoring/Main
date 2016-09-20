@@ -47,44 +47,48 @@ public final class TypeCollector {
 
   static int n;
 
-  static boolean collect(AbstractTypeDeclaration ¢) {
-    System.out.println(++n + " " + extract.category(¢) + " " + extract.name(¢));
-    final int length = ¢.getLength();
-    final int tide = clean(¢ + "").length();
-    final String text = essence(¢ + "");
-    final int tokens = metrics.tokens(¢ + "");
-    final int essence = text.length();
-    final int nodesCount = metrics.nodesCount(¢);
-    String spartanized = BatchApplicator.fixedPoint(¢ + "");
-    final int tokensAfter = metrics.tokens(spartanized); 
+  static boolean collect(AbstractTypeDeclaration in) {
+    final int length = in.getLength();
+    final int tokens = metrics.tokens(in + "");
+    final int nodes = metrics.nodesCount(in);
+    final int tide = clean(in + "").length();
+    final int essence = essence(in + "").length();
+    final String out = BatchApplicator.fixedPoint(in + "");
+    final int length2 = out.length();
+    final int tokens2 = metrics.tokens(out);
+    final int tide2 = clean(out + "").length();
+    final int essence2 = essence(out + "").length();
+    System.out.println(++n + " " + extract.category(in) + " " + extract.name(in));
     output//
-        .put("Category", extract.category(¢))//
-        .put("Name", extract.name(¢))//
-        .put("Nodes", nodesCount)//
-        .put("Tokens", tokens)//
-        .put("Lost tokens", tokens - metrics.tokens(text))//
-        .put("Length", length)//
-        .put("Tide", tide)//
-        .put("Essence", essence) //
-        .put("Ds(L∻T)", diffString(length, tide)) //
-        .put("Ds(L∻E)", diffString(length, essence)) //
-        .put("Ds(T∻E)", diffString(tide, essence)) //
-        .put("D(L∻T)", diff(length, tide)) //
-        .put("D(L∻E)", diff(length, essence)) //
-        .put("D(T/E)", diff(tide, essence)) //
+        .put("Category", extract.category(in))//
+        .put("Name", extract.name(in))//
+        .put("Nodes", nodes)//
+        .put("Tokens1", tokens)//
+        .put("Tokens2", tokens2)//
+        .put("ΔTokens", tokens - tokens2)//
+        .put("δToknes", δ(tokens, tokens2))//
+        .put("Length1", length)//
+        .put("Length2", length2)//
+        .put("ΔLength", length - length2)//
+        .put("δLength", δ(length, length2))//
+        .put("Tide1", tide)//
+        .put("Tide2", tide2)//
+        .put("ΔTide2", tide - tide2)//
+        .put("δTide2", δ(tide, tide2))//
+        .put("Essence1", essence)//
+        .put("Essence2", essence2)//
+        .put("ΔEssence2", essence - essence2)//
+        .put("δEssence2", δ(essence, essence2))//
         .put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //
-        .put("Tokens after", tokensAfter) //
-        .put("Tokens saved", tokens - tokensAfter) //
-        .put("Tb∻Ta", diffString(tokens, tokensAfter)) //
-    // .put("Text", text.substring(0,Math.min(100,text.length()))) //
     ;
-    
-    
-    
     output.nl();
     return false;
+  }
+
+  private static double δ(int n1, int n2) {
+    return (1- 1. * n2 / n1);
   }
 
   private static double ratio(double n1, double n2) {
@@ -92,27 +96,25 @@ public final class TypeCollector {
   }
 
   private static String diffString(int n1, int n2) {
-    final double ratio = diff(n1, n2);
-    return Unit.formatRelative(ratio);
+    return Unit.formatRelative(diff(n1, n2));
   }
 
   private static double diff(int n1, int n2) {
     final int sum = Math.abs(n1) + Math.abs(n2);
-    final double ratio = sum == 0 ? sum : 2.0 * (n1 - n2) / sum;
-    return ratio;
+    return sum == 0 ? sum : 2.0 * (n1 - n2) / sum;
   }
 
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final TypeDeclaration ¢) {
-        return collect(¢);
-      }
-
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return collect(¢);
       }
 
       @Override public boolean visit(final EnumDeclaration ¢) {
+        return collect(¢);
+      }
+
+      @Override public boolean visit(final TypeDeclaration ¢) {
         return collect(¢);
       }
     });

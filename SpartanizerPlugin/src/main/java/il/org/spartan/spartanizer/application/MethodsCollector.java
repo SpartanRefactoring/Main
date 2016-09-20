@@ -25,12 +25,12 @@ public final class MethodsCollector {
     collect(where.length != 0 ? where : new String[] { "." });
     int n = 0;
     final CSVStatistics w = new CSVStatistics("methods.csv", "property");
-    for (final String s : methods) {
+    for (final String ¢ : methods) {
       if (++n % 10 != 0)
         continue;
-      w.put("Body", s);
-      w.put("Characters", s.length());
-      w.put("Tokens", metrics.tokens(s));
+      w.put("Body", ¢);
+      w.put("Characters", ¢.length());
+      w.put("Tokens", metrics.tokens(¢));
       w.nl();
     }
     System.err.println("Look for your output here: " + w.close());
@@ -40,9 +40,7 @@ public final class MethodsCollector {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
         MethodDeclaration $ = duplicate.of(¢);
-        if (Modifier.isAbstract($.getModifiers()))
-          return false;
-        if (¢.isConstructor())
+        if (Modifier.isAbstract($.getModifiers()) || ¢.isConstructor())
           return false;
         $.setJavadoc(null);
         $.setName($.getAST().newSimpleName("f"));
