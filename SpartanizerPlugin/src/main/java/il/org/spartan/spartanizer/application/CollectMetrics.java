@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2016 */
 public final class CollectMetrics {
-  private static final String OUTPUT = "/tmp/halstead.CSV";
+  private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static CSVStatistics output = init();
 
   public static void main(final String[] where) {
