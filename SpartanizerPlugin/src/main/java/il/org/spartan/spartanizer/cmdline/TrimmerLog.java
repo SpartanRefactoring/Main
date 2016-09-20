@@ -53,10 +53,7 @@ public class TrimmerLog {
         System.out.println("Stopped logging suggestions");
       return;
     }
-    
-    System.out.println(logToScreen);
-    System.out.println(logToFile);
-    
+  
     if (logToFile) {
       init();
       output.put("Wring", clazz(w));
