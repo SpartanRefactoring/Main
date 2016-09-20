@@ -29,4 +29,12 @@ public class Issue236Test {
         .gives("\"something\" + (b? \"\" : \" else\")").stays();
   }
   
+  @Test public void issue236_03() {
+    trimmingOf("isIncrement(¢) ? \"++\" : \"--\"").stays();
+  }
+  
+  @Test public void issue236_04() {
+    trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"").gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"").stays();
+  }
+  
 }
