@@ -46,10 +46,7 @@ import java.util.*;
     }
   }
 
-  static public final class EX11 {
-    // Variables defined in try blocks behave like variables declared in any
-    // other
-    // block - their scope spans only as far as the block does.
+  public static final class EX11 {
     public final class tryCatchTest {
       boolean dangerousFunc(final boolean ¢) {
         if (¢)

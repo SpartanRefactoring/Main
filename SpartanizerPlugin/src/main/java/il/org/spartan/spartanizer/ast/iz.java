@@ -670,8 +670,8 @@ public enum iz {
     return iz.oneOf(¢, NULL_LITERAL, THIS_EXPRESSION);
   }
 
-  public static boolean tryStatement(final ASTNode n) {
-    return is(n, TRY_STATEMENT);
+  public static boolean tryStatement(final ASTNode ¢) {
+    return is(¢, TRY_STATEMENT);
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}

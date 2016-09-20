@@ -18,32 +18,32 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2016 */
 public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements Kind.Sorting {
-  final static Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> ModifiersOrdering.compare(m1, m2);
+  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> ModifiersOrdering.compare(m1, m2);
 
   private static boolean isSorted(final List<? extends IExtendedModifier> ms) {
     ModifiersOrdering previous = ModifiersOrdering.$ANNOTATION$;
-    for (final IExtendedModifier current : ms)
-      if (ModifiersOrdering.greaterThanOrEquals(current, previous))
-        previous = ModifiersOrdering.find(current);
-      else
+    for (final IExtendedModifier current : ms) {
+      if (!ModifiersOrdering.greaterThanOrEquals(current, previous))
         return false;
+      previous = ModifiersOrdering.find(current);
+    }
     return true;
   }
 
-  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ms) {
-    return ms.stream().sorted(comp).collect(Collectors.toList());
+  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
+    return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
 
-  @Override public String description(final N n) {
-    return "Sort modifiers of " + extract.category(n) + " " + extract.name(n) + " (" + extract.modifiers(n) + "->" + sort(extract.modifiers(n)) + ")";
+  @Override public String description(final N ¢) {
+    return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
   }
 
   @Override public N replacement(final N $) {
     return go(duplicate.of($));
   }
 
-  @Override protected boolean prerequisite(final N n) {
-    return !isSorted(extendedModifiers(n));
+  @Override protected boolean prerequisite(final N ¢) {
+    return !isSorted(extendedModifiers(¢));
   }
 
   N go(final N $) {

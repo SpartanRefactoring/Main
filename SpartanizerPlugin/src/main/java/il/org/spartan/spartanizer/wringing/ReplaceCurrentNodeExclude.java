@@ -13,21 +13,16 @@ import il.org.spartan.spartanizer.engine.*;
  * {@link ExclusionManager} */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
   @Override public final Suggestion suggest(final N n, final ExclusionManager m) {
-    assert prerequisite(n) : dump() + //
-        "\n n = " + n + //
-        "\n m = " + m + //
-        endDump();
+    assert prerequisite(n) : dump() + "\n n = " + n + "\n m = " + m + endDump();
     final ASTNode $ = replacement(n, m);
-    if ($ == null)
-      return null;
-    return new Suggestion(description(n), n) {
+    return $ == null ? null : new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }
     };
   }
 
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") final N n) {
+  @Override protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;
   }
 

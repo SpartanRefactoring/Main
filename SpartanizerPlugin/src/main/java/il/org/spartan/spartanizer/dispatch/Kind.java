@@ -56,7 +56,7 @@ public interface Kind {
     }
   }
 
-  public interface EarlyReturn extends Structural {
+  interface EarlyReturn extends Structural {
     static final String label = "Early return";
 
     @Override default String description() {

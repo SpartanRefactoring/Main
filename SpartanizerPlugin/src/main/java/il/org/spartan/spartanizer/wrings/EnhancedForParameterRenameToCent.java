@@ -23,14 +23,10 @@ public final class EnhancedForParameterRenameToCent extends EagerWring<EnhancedF
   @Override public Suggestion suggest(final EnhancedForStatement s, final ExclusionManager m) {
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
-    if (in(n.getIdentifier(), "$", "¢", "__", "_"))
-      return null;
-    if (!isJohnDoe(d))
+    if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
       return null;
     final Statement body = s.getBody();
-    if (haz.variableDefinition(body))
-      return null;
-    if (Collect.usesOf(n).in(body).isEmpty())
+    if (haz.variableDefinition(body) || Collect.usesOf(n).in(body).isEmpty())
       return null;
     final SimpleName ¢ = s.getAST().newSimpleName("¢");
     if (m != null)

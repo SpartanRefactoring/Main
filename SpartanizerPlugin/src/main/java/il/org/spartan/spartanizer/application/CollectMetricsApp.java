@@ -29,7 +29,7 @@ public final class CollectMetricsApp implements IApplication {
   private static IPackageFragment pack;
   private static String path;
   private static int optRounds = 1;
-  private static boolean optDoNotOverwrite = false;
+  private static boolean optDoNotOverwrite;
 
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";

@@ -8,15 +8,15 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class CarefulWring<N extends ASTNode> extends Wring<N> {
-  @Override public final boolean canSuggest(final N n) {
-    return prerequisite(n) && suggest(n) != null;
+  @Override public final boolean canSuggest(final N ¢) {
+    return prerequisite(¢) && suggest(¢) != null;
   }
 
-  @Override public final boolean demandsToSuggestButPerhapsCant(final N n) {
-    return canSuggest(n);
+  @Override public final boolean demandsToSuggestButPerhapsCant(final N ¢) {
+    return canSuggest(¢);
   }
 
-  protected boolean prerequisite(@SuppressWarnings("unused") final N n) {
+  protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;
   }
 }
