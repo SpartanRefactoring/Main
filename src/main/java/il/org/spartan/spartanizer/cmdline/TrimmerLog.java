@@ -47,7 +47,6 @@ public class TrimmerLog {
   }
 
   public static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
-    init();
     
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
@@ -59,6 +58,7 @@ public class TrimmerLog {
     System.out.println(logToFile);
     
     if (logToFile) {
+      init();
       output.put("Wring", clazz(w));
       output.put("Named", w.description());
       output.put("Kind", w.wringGroup());
@@ -100,6 +100,16 @@ public class TrimmerLog {
   }
   
   public static void setOutputDir(String $){
-    outputDir = $;
+    TrimmerLog.outputDir = $;
   }
+
+  public static void setMaxVisitations(int maxVisitations) {
+    TrimmerLog.maxVisitations = maxVisitations;
+  }
+
+  public static void setMaxSuggestions(int maxSuggestions) {
+    TrimmerLog.maxSuggestions = maxSuggestions;
+  }
+  
+  
 }
