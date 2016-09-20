@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixAdditionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     double sum = 0;
     for (final Expression ¢ : xs) {

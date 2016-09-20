@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Converts <code>a?b?x:z:z</code>into <code>a&&b?x:z</code>
  * @author Yossi Gil
  * @since 2015-9-19 */
-public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
+public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression> implements Kind.CommnoFactoring {
   private static Expression collapse(final ConditionalExpression ¢) {
     if (¢ == null)
       return null;

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpression> implements Kind.NOP {
+public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpression> implements Kind.InVain {
   private static NumberLiteral literal(final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1.");

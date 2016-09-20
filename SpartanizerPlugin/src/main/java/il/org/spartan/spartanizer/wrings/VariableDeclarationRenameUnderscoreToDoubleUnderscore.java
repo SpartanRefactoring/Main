@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */
 public final class VariableDeclarationRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
-    extends AbstractVariableDeclarationChangeName<N> implements Kind.UnusedArguments {
+    extends AbstractVariableDeclarationChangeName<N> implements Kind.Annonimization {
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "Use double underscore instead a single underscore";
   }
