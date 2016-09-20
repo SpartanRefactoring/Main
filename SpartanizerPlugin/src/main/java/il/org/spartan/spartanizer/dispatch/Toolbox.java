@@ -159,7 +159,7 @@ public class Toolbox {
               new TernaryEliminate(), //
               new TernaryShortestFirst(), //
               new TernaryPushdown(), //
-              new TernaryPusdownStrings(), null) //
+              new TernaryPushdownStrings(), null) //
           .add(TypeDeclaration.class, //
               // new delmeTypeModifierCleanInterface(), //
               new TypeRedundantModifiers(), //
