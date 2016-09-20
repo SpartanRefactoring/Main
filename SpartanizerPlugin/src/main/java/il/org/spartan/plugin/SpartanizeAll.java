@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
@@ -71,7 +70,6 @@ public final class SpartanizeAll extends BaseHandler {
           us.removeAll(dead);
           pm.done();
         };
-        new ProgressMonitorDialog(null);
         // ps.runInUI(context, runnable, rule);
         // ps.run(true, true, runnable);
         ps.busyCursorWhile(runnable);

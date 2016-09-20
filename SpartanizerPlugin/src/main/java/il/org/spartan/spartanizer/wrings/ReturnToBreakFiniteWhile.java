@@ -91,7 +91,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulWring<WhileStatement>
     return "Convert the return inside " + b + " to break";
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 

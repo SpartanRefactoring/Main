@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
     assertEquals(from, w.off(wrap));
-    final String unpeeled = BatchApplicator.fixedPoint(wrap);
+    final String unpeeled = NonGUIApplicator.fixedPoint(wrap);
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);

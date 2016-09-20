@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.java.*;
-import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -39,13 +37,13 @@ public final class MethodsCollector {
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
-        MethodDeclaration $ = duplicate.of(¢);
+        final MethodDeclaration $ = duplicate.of(¢);
         if (Modifier.isAbstract($.getModifiers()) || ¢.isConstructor())
           return false;
         $.setJavadoc(null);
         $.setName($.getAST().newSimpleName("f"));
         $.setFlags(0);
-        String s = BatchApplicator.fixedPoint($ + "");
+        final String s = NonGUIApplicator.fixedPoint($ + "");
         methods.add(tide.clean(s));
         return false;
       }

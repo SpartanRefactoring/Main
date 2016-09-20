@@ -29,13 +29,13 @@ public final class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpress
   private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;
-    double divide = az.boxed.double¢(first(xs));
+    double $ = az.boxed.double¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
       if (!iz.pseudoNumber(¢) || az.boxed.double¢(¢) == 0)
         return null;
-      divide /= az.boxed.double¢(¢);
+      $ /= az.boxed.double¢(¢);
     }
-    return x.getAST().newNumberLiteral(Double.toString(divide));
+    return x.getAST().newNumberLiteral(Double.toString($));
   }
 
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
