@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.io.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
@@ -13,9 +15,15 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @year 2016 */
 public class TrimmerLog {
+  
+  private static CSVStatistics output;
+  
   private static int maxVisitations = 30;
   private static int maxSuggestions = 20;
   private static int maxApplications = 10;
+  private static boolean logToScreen = true; // default output
+  private static boolean logToFile = false;
+  private static String outputDir = "/tmp/trimmerlog-output.CSV";
 
   public static void application(final ASTRewrite r, final Suggestion s) {
     if (--maxApplications <= 0) {
@@ -29,18 +37,50 @@ public class TrimmerLog {
     System.out.println("       After: " + r);
   }
 
+  private static CSVStatistics init() {
+    try {
+      output = new CSVStatistics(outputDir, "Suggestions");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   public static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
+    
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
         System.out.println("Stopped logging suggestions");
       return;
     }
-    System.out.println("       Wring: " + clazz(w));
-    System.out.println("       Named: " + w.description());
-    System.out.println("        Kind: " + w.wringGroup());
-    System.out.println("   Described: " + w.description(n));
-    System.out.println(" Can suggest: " + w.canSuggest(n));
-    System.out.println("    Suggests: " + w.suggest(n));
+  
+    if (logToFile) {
+      init();
+      output.put("Wring", clazz(w));
+      output.put("Named", w.description());
+      output.put("Kind", w.wringGroup());
+      output.put("Described", w.description(n));
+      output.put("Can suggest", w.canSuggest(n));
+      output.put("Suggests", w.suggest(n));
+      output.nl();
+    }
+    
+    if (logToScreen) {
+        System.out.println("       Wring: " + clazz(w));
+        System.out.println("       Named: " + w.description());
+        System.out.println("        Kind: " + w.wringGroup());
+        System.out.println("   Described: " + w.description(n));
+        System.out.println(" Can suggest: " + w.canSuggest(n));
+        System.out.println("    Suggests: " + w.suggest(n));
+    }
+  }
+  
+  public static void activateLogToScreen(){
+    logToScreen = true;
+  }
+  
+  public static void activateLogToFile(){
+    logToFile = true;
   }
 
   public static void visitation(final ASTNode ¢) {
@@ -55,4 +95,18 @@ public class TrimmerLog {
   private static String clazz(final Object n) {
     return n.getClass().getSimpleName();
   }
+  
+  public static void setOutputDir(String $){
+    TrimmerLog.outputDir = $;
+  }
+
+  public static void setMaxVisitations(int maxVisitations) {
+    TrimmerLog.maxVisitations = maxVisitations;
+  }
+
+  public static void setMaxSuggestions(int maxSuggestions) {
+    TrimmerLog.maxSuggestions = maxSuggestions;
+  }
+  
+  
 }
