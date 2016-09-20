@@ -95,7 +95,7 @@
    </extension>
    <extension point="org.eclipse.ui.handlers">
       <handler
-            class="il.org.spartan.plugin.Toggle"
+            class="il.org.spartan.plugin.SuggestionsOnOfToggle"
             commandId="il.org.spartan.commands.ToggleCommand">
       </handler>
       <handler
