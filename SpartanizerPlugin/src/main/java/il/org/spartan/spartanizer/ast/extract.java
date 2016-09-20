@@ -67,8 +67,8 @@ public enum extract {
     return e == null ? null : az.assignment(e.getExpression());
   }
 
-  public static String category(final BodyDeclaration d) {
-    switch (d.getNodeType()) {
+  public static String category(final BodyDeclaration ¢) {
+    switch (¢.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
         return "@interface";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
@@ -80,20 +80,20 @@ public enum extract {
       case FIELD_DECLARATION:
         return "field";
       case INITIALIZER:
-        if (Modifier.isStatic(((Initializer) d).getModifiers()))
+        if (Modifier.isStatic(((Initializer) ¢).getModifiers()))
           return "static type initializer";
         return "type initializer";
       case METHOD_DECLARATION:
         return "method";
       case TYPE_DECLARATION:
-        return category((TypeDeclaration) d);
+        return category((TypeDeclaration) ¢);
       default:
         assert wizard.unreachable() : wizard.dump() //
-            + "\n d = " + d //
-            + "\n d.getClass() = " + d.getClass() //
-            + "\n d.getNodeType() = " + d.getNodeType() //
+            + "\n d = " + ¢
+            + "\n d.getClass() = " + ¢.getClass() //
+            + "\n d.getNodeType() = " + ¢.getNodeType() //
             + wizard.endDump();
-        return d.getClass().getSimpleName();
+        return ¢.getClass().getSimpleName();
     }
   }
 
@@ -195,31 +195,31 @@ public enum extract {
     return $;
   }
 
-  public static String name(final BodyDeclaration d) {
-    switch (d.getNodeType()) {
+  public static String name(final BodyDeclaration ¢) {
+    switch (¢.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
-        return ((AnnotationTypeDeclaration) d).getName() + "";
+        return ((AnnotationTypeDeclaration) ¢).getName() + "";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
-        return ((AnnotationTypeMemberDeclaration) d).getName() + "";
+        return ((AnnotationTypeMemberDeclaration) ¢).getName() + "";
       case ENUM_DECLARATION:
-        return ((EnumDeclaration) d).getName() + "";
+        return ((EnumDeclaration) ¢).getName() + "";
       case ENUM_CONSTANT_DECLARATION:
-        return ((EnumConstantDeclaration) d).getName() + "";
+        return ((EnumConstantDeclaration) ¢).getName() + "";
       case FIELD_DECLARATION:
-        return separate.these(fragments((FieldDeclaration) d)).by("/");
+        return separate.these(fragments((FieldDeclaration) ¢)).by("/");
       case INITIALIZER:
         return "";
       case METHOD_DECLARATION:
-        return ((MethodDeclaration) d).getName() + "";
+        return ((MethodDeclaration) ¢).getName() + "";
       case TYPE_DECLARATION:
-        return ((TypeDeclaration) d).getName() + "";
+        return ((TypeDeclaration) ¢).getName() + "";
       default:
         assert wizard.unreachable() : wizard.dump() //
-            + "\n d = " + d //
-            + "\n d.getClass() = " + d.getClass() //
-            + "\n d.getNodeType() = " + d.getNodeType() //
+            + "\n d = " + ¢
+            + "\n d.getClass() = " + ¢.getClass() //
+            + "\n d.getNodeType() = " + ¢.getNodeType() //
             + wizard.endDump();
-        return d.getClass().getSimpleName();
+        return ¢.getClass().getSimpleName();
     }
   }
 
@@ -373,18 +373,15 @@ public enum extract {
     return $;
   }
 
-  private static String category(final TypeDeclaration a) {
+  private static String category(final TypeDeclaration ¢) {
     final StringBuilder $ = new StringBuilder();
-    if (!a.isPackageMemberTypeDeclaration())
+    if (!¢.isPackageMemberTypeDeclaration())
       $.append("internal ");
-    if (a.isMemberTypeDeclaration())
+    if (¢.isMemberTypeDeclaration())
       $.append("member ");
-    if (a.isLocalTypeDeclaration())
+    if (¢.isLocalTypeDeclaration())
       $.append("local ");
-    if (a.isInterface())
-      $.append("interface");
-    else
-      $.append("class");
+    $.append(!¢.isInterface() ? "class" : "interface");
     return $ + "";
   }
 

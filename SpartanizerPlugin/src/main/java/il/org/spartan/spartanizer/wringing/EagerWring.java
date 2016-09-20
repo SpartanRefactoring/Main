@@ -6,12 +6,12 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class EagerWring<N extends ASTNode> extends Wring<N> {
-  @Override public final boolean canSuggest(final N n) {
-    return this.suggest(n) != null;
+  @Override public final boolean canSuggest(final N ¢) {
+    return this.suggest(¢) != null;
   }
 
-  @Override public final boolean demandsToSuggestButPerhapsCant(final N n) {
-    return canSuggest(n);
+  @Override public final boolean demandsToSuggestButPerhapsCant(final N ¢) {
+    return canSuggest(¢);
   }
 
   @Override public String description() {

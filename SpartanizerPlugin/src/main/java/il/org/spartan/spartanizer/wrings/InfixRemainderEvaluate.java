@@ -72,7 +72,7 @@ public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpres
     return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
   }
 
-  @Override protected boolean prerequisite(final InfixExpression n) {
-    return n.getOperator() == REMAINDER && iz.validForEvaluation(n);
+  @Override protected boolean prerequisite(final InfixExpression ¢) {
+    return ¢.getOperator() == REMAINDER && iz.validForEvaluation(¢);
   }
 }

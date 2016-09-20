@@ -80,22 +80,18 @@ public interface trim {
     }
   }
 
-  /** Unit tests demonstrating the fluent API
-   * @author Yossi Gil
-   * @since 2016 */
-  @SuppressWarnings("static-method") //
-  @Ignore public static class TEST {
+  /**
+   * Unit tests demonstrating the fluent API
+   * @author  Yossi Gil
+   * @since  2016 
+   */
+  @SuppressWarnings("static-method") @Ignore static class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");
     }
 
     @Test public void trimming_of_gives_gives_gives_stays() {
-      trim//
-          .of("int b = 3; int a = b; return  a;")//
-          .gives("int b = 3; int a = b; return  a;")//
-          .gives("int a = 3; return  a;")//
-          .gives("return 3;")//
-          .stays();
+      trim.of("int b = 3; int a = b; return  a;").gives("int b = 3; int a = b; return  a;").gives("int a = 3; return  a;").gives("return 3;").stays();
     }
 
     @Test public void trimming_of_gives_stays() {
@@ -107,9 +103,7 @@ public interface trim {
     }
 
     @Test public void trimming_repeatedly_of_gives() {
-      trim.repeatedly//
-          .of("int b = 3; int a = b; return  a;")//
-          .gives("return 3;");
+      trim.repeatedly.of("int b = 3; int a = b; return  a;").gives("return 3;");
     }
   }
 }

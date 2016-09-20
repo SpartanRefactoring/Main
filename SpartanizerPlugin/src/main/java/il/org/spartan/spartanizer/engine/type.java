@@ -558,21 +558,18 @@ public interface type {
      *         be **/
     Iterable<Certain> options();
 
-    /** Primitive types known for certain. {@link String} is also considered
-     * {@link Primitive.Certain}
-     * @author Yossi Gil
-     * @since 2016 */
-    public enum Certain implements Primitive {
-      BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean"), //
-      BYTE("byte", "must be byte: (byte)1, nothing else", "Byte"), //
-      CHAR("char", "must be char: 'a', (char)97, nothing else", "Character"), //
-      DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()", "Double"), //
-      FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()", "Float"), //
-      INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()", "Integer"), //
-      LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()", "Long"), //
-      SHORT("short", "must be short: (short)15, nothing else", "Short"), //
-      STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", null), //
-      ;
+    /**
+     * Primitive types known for certain.  {@link String}  is also considered {@link Primitive.Certain}
+     * @author  Yossi Gil
+     * @since  2016 
+     */
+    enum Certain implements Primitive {
+      BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean"), BYTE("byte", "must be byte: (byte)1, nothing else", "Byte"), CHAR("char",
+          "must be char: 'a', (char)97, nothing else",
+          "Character"), DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()", "Double"), FLOAT("float",
+              "must be float: 2f, 2.3f+1, 2F-f()", "Float"), INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()", "Integer"), LONG(
+                  "long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()", "Long"), SHORT("short", "must be short: (short)15, nothing else",
+                      "Short"), STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", null);
       final String description;
       final String key;
 
@@ -589,10 +586,7 @@ public interface type {
       }
 
       @Override public Uncertain asPrimitiveUncertain() {
-        return isIntegral() ? INTEGRAL //
-            : isNumeric() ? NUMERIC //
-                : isAlphaNumeric() ? ALPHANUMERIC //
-                    : this != BOOLEAN ? null : BOOLEANINTEGRAL;
+        return isIntegral() ? INTEGRAL : isNumeric() ? NUMERIC : isAlphaNumeric() ? ALPHANUMERIC : this != BOOLEAN ? null : BOOLEANINTEGRAL;
       }
 
       @Override public boolean canB(final Certain ¢) {
@@ -612,36 +606,17 @@ public interface type {
       }
     }
 
-    /** Tells how much we know about the type of of a variable, function, or
-     * expression. This should be conservative approximation to the real type of
-     * the entity, what a rational, but prudent programmer would case about the
-     * type
-     * <p>
-     * Dispatching in this class should emulate the type inference of Java. It
-     * is simple to that by hard coding constants.
-     * <p>
-     * This type should never be <code><b>null</b></code>. Don't bother to check
-     * that it is. We want a {@link NullPointerException} thrown if this is the
-     * case. or, you may as well write
-     *
-     * <pre>
-     * Kind k = f();
-     * assert k != null : //
-     * "Implementation of Kind is buggy";
-     * </pre>
-     *
-     * @author Yossi Gil
-     * @author Niv Shalmon
-     * @since 2016-08-XX */
-    public enum Uncertain implements Primitive {
-      // Doubtful types, from four fold uncertainty down to bilateral
-      // schizophrenia" .
-      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), //
-      INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE), //
-      NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), //
-      ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING), //
-      BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
-      ;
+    /**
+     * Tells how much we know about the type of of a variable, function, or expression. This should be conservative approximation to the real type of the entity, what a rational, but prudent programmer would case about the type <p> Dispatching in this class should emulate the type inference of Java. It is simple to that by hard coding constants. <p> This type should never be <code><b>null</b></code>. Don't bother to check that it is. We want a  {@link NullPointerException}  thrown if this is the case. or, you may as well write <pre> Kind k = f(); assert k != null : // "Implementation of Kind is buggy"; </pre>
+     * @author  Yossi Gil
+     * @author  Niv Shalmon
+     * @since  2016-08-XX 
+     */
+    enum Uncertain implements Primitive {
+      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), INTEGRAL(
+          "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT,
+          BYTE), NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), ALPHANUMERIC(
+              "only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING), BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL);
       final String description;
       final Set<Certain> options = new LinkedHashSet<>();
 
@@ -651,20 +626,6 @@ public interface type {
           for (final Certain ¢ : p.options())
             if (!options.contains(¢))
               options.add(¢);
-        // TODO: Niv, here is where you should insert yourself into the
-        // dictionary.
-        // TODO: Yossi, I don't think these types should even be in the
-        // dictionary, since baptize should never return these
-        // TODO: Niv, the point is that it makes it easy to manage and search
-        // for the types in a simpler manner. Not sure we need to treat all
-        // types equally, but this would help, would help produce consistent
-        // naming etc. Moreover, it would make sure that the description is
-        // accurate, no matter how you change the types. If you will check you
-        // will find that INTEGER and INTEGRAL, have the same description, which
-        // is obviously buggy.
-        // TODO: Yossi, But each type inner.types is a concert type that has a
-        // concrete name. Since Uncertain/Odd types don't have such names, they
-        // don't have any valid key to be put in the dictionary with.
       }
 
       @Override public boolean canB(final Certain ¢) {

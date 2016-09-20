@@ -19,7 +19,7 @@ public final class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all suggestions */
   public static final String SPARTANIZATION_LONG_PREFIX = "Spartanization suggestion: ";
   /** Short prefix to be used in front of all suggestions */
-  public static final String SPARTANIZATION_SHORT_PREFIX = "Spartanize: ";
+  public static final String SPARTANIZATION_SHORT_PREFIX = "Suggestion: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
   /** the ID under which this builder is registered */

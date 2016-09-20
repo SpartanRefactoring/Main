@@ -43,13 +43,13 @@ public class TrimmerLog {
     System.out.println("    Suggests: " + w.suggest(n));
   }
 
-  static void visitation(final ASTNode n) {
+  static void visitation(final ASTNode ¢) {
     if (--maxVisitations <= 0) {
       if (maxVisitations == 0)
         System.out.println("Stopped logging visitations");
       return;
     }
-    System.out.println("VISIT: '" + tide.clean(n + "") + "' [" + n.getLength() + "] (" + clazz(n) + ")" + " parent = " + clazz(parent(n)));
+    System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + clazz(¢) + ")" + " parent = " + clazz(parent(¢)));
   }
 
   private static String clazz(final Object n) {
