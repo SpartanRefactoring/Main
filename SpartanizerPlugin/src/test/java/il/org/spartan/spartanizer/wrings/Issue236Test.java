@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link TernaryPusdownStrings}
+/** Unit tests for {@link TernaryPushdownStrings}
  * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
