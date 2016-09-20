@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.application;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
@@ -11,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
-import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
@@ -26,6 +24,7 @@ import il.org.spartan.utils.*;
 public final class TypeCollector {
   static Set<String> methods = new LinkedHashSet<>();
   private static CSVStatistics output;
+  static int n;
 
   public static void main(final String[] where) throws IOException {
     output = new CSVStatistics("types.CSV");
@@ -33,27 +32,13 @@ public final class TypeCollector {
     System.err.println("Look for your output here: " + output.close());
   }
 
-  static int tokens(String s) {
-    int $ = 0;
-    for (Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      Token t = tokenizer.next();
-      if (t == null)
-        return $;
-      if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
-        continue;
-      ++$;
-    }
-  }
-
-  static int n;
-
-  static boolean collect(AbstractTypeDeclaration in) {
+  static boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
     final int nodes = metrics.nodesCount(in);
     final int tide = clean(in + "").length();
     final int essence = essence(in + "").length();
-    final String out = BatchApplicator.fixedPoint(in + "");
+    final String out = NonGUIApplicator.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -92,21 +77,16 @@ public final class TypeCollector {
     return false;
   }
 
-  private static double δ(int n1, int n2) {
-    return (1- 1. * n2 / n1);
-  }
-
-  private static double ratio(double n1, double n2) {
-    return n2 / n1;
-  }
-
-  private static String diffString(int n1, int n2) {
-    return Unit.formatRelative(diff(n1, n2));
-  }
-
-  private static double diff(int n1, int n2) {
-    final int sum = Math.abs(n1) + Math.abs(n2);
-    return sum == 0 ? sum : 2.0 * (n1 - n2) / sum;
+  static int tokens(final String s) {
+    int $ = 0;
+    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+      final Token t = tokenizer.next();
+      if (t == null)
+        return $;
+      if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
+        continue;
+      ++$;
+    }
   }
 
   private static void collect(final CompilationUnit u) {
@@ -140,5 +120,13 @@ public final class TypeCollector {
   private static void collect(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where))
       collect(¢);
+  }
+
+  private static double ratio(final double n1, final double n2) {
+    return n2 / n1;
+  }
+
+  private static double δ(final int n1, final int n2) {
+    return 1 - 1. * n2 / n1;
   }
 }

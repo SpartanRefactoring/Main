@@ -153,10 +153,11 @@ public class Issue072Test {
 
   @Test public void issue72ph() {
     trimmingOf("0+((x+y)+0+(z+h))+0")//
-    .gives("0 +(x+y) +0+(z+h)+0")//
-    .gives("0 +x+y +0+(z+h)+0")//
-    .stays();
+        .gives("0 +(x+y) +0+(z+h)+0")//
+        .gives("0 +x+y +0+(z+h)+0")//
+        .stays();
   }
+
   @Test public void issue72pi() {
     trimmingOf("0+(0+x+y+((int)x+0))")//
         .gives("0+0+x+y+((int)x +0)")//

@@ -215,19 +215,19 @@ public interface metrics {
     return $;
   }
 
-  static int vocabulary(final ASTNode u) {
-    return dictionary(u).size();
-  }
-
-  static int tokens(String s) {
+  static int tokens(final String s) {
     int $ = 0;
-    for (Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      Token t = tokenizer.next();
+    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+      final Token t = tokenizer.next();
       if (t == null || t == Token.EOF)
         return $;
       if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
         continue;
       ++$;
     }
+  }
+
+  static int vocabulary(final ASTNode u) {
+    return dictionary(u).size();
   }
 }

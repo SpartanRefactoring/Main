@@ -14,7 +14,7 @@ public final class InitializerTest {
   static int a;
 
   public static void main(final String[] __) {
-    new InitializerTest(3);
+    new InitializerTest(3).hashCode();
     System.out.print(InitializerTest.a);
   }
 

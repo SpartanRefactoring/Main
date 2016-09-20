@@ -7,7 +7,6 @@ import java.lang.reflect.Modifier;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -22,14 +21,14 @@ public abstract class Wring<N extends ASTNode> implements Kind {
   private Class<N> myOperandsClass;
 
   /** Determine whether the parameter is "eligible" for application of this
-   * instance. 
+   * instance.
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
   public abstract boolean canSuggest(final N n);
 
-  /** Determines whether this instance can make a {@link Suggestion} for the paramter 
-   * instance. 
+  /** Determines whether this instance can make a {@link Suggestion} for the
+   * paramter instance.
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
@@ -38,16 +37,8 @@ public abstract class Wring<N extends ASTNode> implements Kind {
     return !canSuggest(¢);
   }
 
-  /** Determines whether this {@link Wring} object is applicable for a given
-   * {@link InfixExpression} is within the "scope" of this . Note that it could
-   * be the case that a {@link Wring} is applicable in principle to an object,
-   * but that actual application will be vacuous. If a wring claims a node, it
-   * may be the case that the node would not be seen at all by other wrings
-   * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is within the
-   *         scope of this object @ */
-  @Deprecated public boolean demandsToSuggestButPerhapsCant(final N ¢) {
-    return canSuggest(¢);
+  @Override public String description() {
+    return getClass().getSimpleName();
   }
 
   public abstract String description(N n);

@@ -50,7 +50,7 @@ public interface trim {
     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
-          return super.gives(BatchApplicator.fixedPoint(expected));
+          return super.gives(NonGUIApplicator.fixedPoint(expected));
         }
 
         @Override public void stays() {
