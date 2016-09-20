@@ -16,6 +16,20 @@ public class BatchApplicator {
     return new Trimmer().fixed(from);
   }
 
+  public static void main(String[] args) {
+    System.out.println(fixedPoint(read()));
+  }
+
+  static String read() {
+    String $ = "";
+    try (Scanner s = new Scanner(System.in).useDelimiter("\\n")) {
+      while (s.hasNext()) {
+        $ += s.next() + "\n";
+      }
+    }
+    return $;
+  }
+
   static ASTVisitor collect(final List<Suggestion> $) {
     Toolbox.refresh();
     return new DispatchingVisitor() {
