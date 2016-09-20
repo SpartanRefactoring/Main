@@ -76,7 +76,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     for (int ¢ = 0; ¢ < s1.length(); ++¢) {
       if (!Character.isAlphabetic(last(s1, ¢)) && !Character.isAlphabetic(last(s2, ¢))
           || ¢ == s1.length() - 1 && !Character.isAlphabetic(last(s2, ¢)))
-        $ = ¢ + 1;
+        $ = last(s1, ¢) != last(s2, ¢) ? ¢ : ¢ + 1;
       if (last(s1, ¢) != last(s2, ¢))
         return $;
     }
@@ -139,10 +139,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   private static Expression simplify(final Expression condition, final String then, final String elze) {
-    return simplify(condition, then, elze, firstDifference(then, elze));
-  }
-
-  private static Expression simplify(final Expression condition, final String then, final String elze, final int commonPrefixIndex) {
+    final int commonPrefixIndex = firstDifference(then, elze);
     if (commonPrefixIndex != 0)
       return replacementPrefix(then, elze, commonPrefixIndex, condition);
     final int commonSuffixLength = lastDifference(then, elze);
