@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
+public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements Kind.CommnoFactoring {
   private static Expression chopHead(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     es.remove(0);

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */
-public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
     if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
       return null;

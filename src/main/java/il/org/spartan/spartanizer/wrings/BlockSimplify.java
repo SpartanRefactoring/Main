@@ -43,7 +43,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Kind.NOP {
+public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Kind.InVain {
   static Statement reorganizeNestedStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {

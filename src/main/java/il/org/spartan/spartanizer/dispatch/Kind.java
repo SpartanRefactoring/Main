@@ -40,7 +40,7 @@ public interface Kind {
 
   /** A specialized {@link Collapse} carried out, by factoring out some common
    * element */
-  interface DistributiveRefactoring extends Collapse { // S2
+  interface CommnoFactoring extends Collapse { // S2
     static String label = "Distributive refactoring";
 
     @Override default String description() {
@@ -82,7 +82,7 @@ public interface Kind {
     }
   }
 
-  interface NOP extends Structural { // S0
+  interface InVain extends Structural { // S0
     static final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
 
     @Override default String description() {
@@ -125,7 +125,7 @@ public interface Kind {
     }
   }
 
-  interface UnusedArguments extends Nominal {
+  interface Annonimization extends Nominal {
     static final String label = "Unused arguments";
 
     @Override default String description() {

@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixAdditionZero extends EagerWring<InfixExpression> implements Kind.NOP {
+public final class InfixAdditionZero extends EagerWring<InfixExpression> implements Kind.InVain {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
