@@ -16,14 +16,14 @@ import il.org.spartan.spartanizer.wringing.*;
  * @year 2016 */
 public class TrimmerLog {
   
-  private static final String OUTPUT = "/tmp/trimmerlog-output.CSV";
   private static CSVStatistics output;
   
   private static int maxVisitations = 30;
   private static int maxSuggestions = 20;
   private static int maxApplications = 10;
-  private static boolean logToScreen = false;
+  private static boolean logToScreen = true; // default output
   private static boolean logToFile = false;
+  private static String outputDir = "/tmp/trimmerlog-output.CSV";
 
   public static void application(final ASTRewrite r, final Suggestion s) {
     if (--maxApplications <= 0) {
@@ -39,7 +39,7 @@ public class TrimmerLog {
 
   private static CSVStatistics init() {
     try {
-      output = new CSVStatistics(OUTPUT, "Suggestions");
+      output = new CSVStatistics(outputDir, "Suggestions");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -48,6 +48,7 @@ public class TrimmerLog {
 
   public static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
     init();
+    
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
         System.out.println("Stopped logging suggestions");
@@ -96,5 +97,9 @@ public class TrimmerLog {
 
   private static String clazz(final Object n) {
     return n.getClass().getSimpleName();
+  }
+  
+  public static void setOutputDir(String $){
+    outputDir = $;
   }
 }
