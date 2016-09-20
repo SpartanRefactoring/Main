@@ -48,8 +48,10 @@ public class Trimmer extends GUI$Applicator {
         if (w == null)
           return true;
         final Suggestion s = w.suggest(n, exclude);
-        TrimmerLog.suggestion(w, n);
         if (s != null) {
+          TrimmerLog.activateLogToFile();
+//          TrimmerLog.activateLogToScreen();
+          TrimmerLog.suggestion(w, n);
           if (LogManager.isActive())
             LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
           TrimmerLog.application(r, s);
