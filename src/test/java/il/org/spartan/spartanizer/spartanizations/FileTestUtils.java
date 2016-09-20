@@ -118,17 +118,15 @@ import il.org.spartan.spartanizer.engine.*;
     return null;
   }
 
-  /**
-   * An abstract class to be extended and implemented by client, while overriding  {@link #go(List,File)}  as per customer's need.
+  /** An abstract class to be extended and implemented by client, while
+   * overriding {@link #go(List,File)} as per customer's need.
    * @seTestUtils.SATestSuite.Files
    * @see FileTestUtils.Traverse
-   * @author  Yossi Gil
-   * @since  2014/05/24 
-   */
+   * @author Yossi Gil
+   * @since 2014/05/24 */
   public abstract static class Directories extends FileTestUtils.Traverse {
-    /**
-    * Adds a test case to the collection of all test cases generated in the traversal 
-    */
+    /** Adds a test case to the collection of all test cases generated in the
+     * traversal */
     @Override public final void go(final List<Object[]> $, final File f) {
       if (!f.isDirectory())
         return;
@@ -140,13 +138,12 @@ import il.org.spartan.spartanizer.engine.*;
     abstract Object[] makeCase(File d);
   }
 
-  /**
-   * An abstract class to be extended and implemented by client, while overriding  {@link #go(List,File)}  as per customer's need.
+  /** An abstract class to be extended and implemented by client, while
+   * overriding {@link #go(List,File)} as per customer's need.
    * @seTestUtils.SATestSuite.Directories
    * @see FileTestUtils.Traverse
-   * @author  Yossi Gil
-   * @since  2014/05/24 
-   */
+   * @author Yossi Gil
+   * @since 2014/05/24 */
   public abstract static class Files extends FileTestUtils.Traverse {
     @Override public void go(final List<Object[]> $, final File d) {
       for (final File f : d.listFiles())
@@ -160,17 +157,14 @@ import il.org.spartan.spartanizer.engine.*;
     abstract Object[] makeCase(final GUI$Applicator a, final File d, final File f, final String name);
   }
 
-  /**
-   * An abstract class representing the concept of traversing the {@link #location}  while generating test cases.
+  /** An abstract class representing the concept of traversing the
+   * {@link #location} while generating test cases.
    * @seTestUtils.SATestSuite.Files
    * @seTestUtils.SATestSuite.Directories
-   * @author  Yossi Gil
-   * @since  2014/05/24 
-   */
+   * @author Yossi Gil
+   * @since 2014/05/24 */
   public abstract static class Traverse extends FileTestUtils {
-    /**
-    * @return  a collection of all test cases generated in the traversal 
-    */
+    /** @return a collection of all test cases generated in the traversal */
     public final Collection<Object[]> go() {
       assert location != null;
       assert location.listFiles() != null;
@@ -182,11 +176,9 @@ import il.org.spartan.spartanizer.engine.*;
       return $;
     }
 
-    /**
-    * Collect test cases from each file in  {@link #location}
-    * @param $  where to save the collected test cases
-    * @param f  an entry in  {@link #location}  
-    */
+    /** Collect test cases from each file in {@link #location}
+     * @param $ where to save the collected test cases
+     * @param f an entry in {@link #location} */
     public abstract void go(List<Object[]> $, final File f);
   }
 

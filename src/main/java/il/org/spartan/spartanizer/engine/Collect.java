@@ -463,27 +463,29 @@ public enum Collect {
     public abstract List<SimpleName> in(final ASTNode... ns);
   }
 
-  /**
-   * An auxiliary class which makes it possible to use an easy invocation sequence for the various offerings of the containing class. This class should never be instantiated or inherited by clients. <p> This class realizes the function object concept; an instance of it records the value we search for; it represents the function that, given a location for the search, will carry out the search for the captured value in its location parameter.
+  /** An auxiliary class which makes it possible to use an easy invocation
+   * sequence for the various offerings of the containing class. This class
+   * should never be instantiated or inherited by clients.
+   * <p>
+   * This class realizes the function object concept; an instance of it records
+   * the value we search for; it represents the function that, given a location
+   * for the search, will carry out the search for the captured value in its
+   * location parameter.
    * @see Collect#of
-   * @author  Yossi Gil <yossi.gil @ gmail.com>
-   * @since  2013/14/07 
-   */
+   * @author Yossi Gil <yossi.gil @ gmail.com>
+   * @since 2013/14/07 */
   public abstract static class Of {
-    /**
-    * Determine whether this instance occurs in a bunch of expressions
-    * @param ns  JD
-    * @return  <code><b>true</b></code> <i>iff</i> this instance occurs in the Parameter. 
-    */
+    /** Determine whether this instance occurs in a bunch of expressions
+     * @param ns JD
+     * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
+     *         Parameter. */
     public boolean existIn(final ASTNode... ¢) {
       return !in(¢).isEmpty();
     }
 
-    /**
-    * the method that will carry out the search
-    * @param ns  where to search
-    * @return  a list of occurrences of the captured value in the parameter. 
-    */
+    /** the method that will carry out the search
+     * @param ns where to search
+     * @return a list of occurrences of the captured value in the parameter. */
     public abstract List<SimpleName> in(ASTNode... ns);
   }
 }
