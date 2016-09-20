@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-09-01 */
-public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> implements Kind.DistributiveRefactoring {
+public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> implements Kind.CommnoFactoring {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = az.ifStatement(extract.singleThen(s));
     final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);

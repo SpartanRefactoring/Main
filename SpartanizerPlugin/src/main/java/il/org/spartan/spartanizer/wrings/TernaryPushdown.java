@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.wringing.*;
 /** Pushdown a ternary as far down as possible
  * @author Yossi Gil
  * @year 2015 */
-public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements Kind.DistributiveRefactoring {
+public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements Kind.CommnoFactoring {
   public static Expression right(final Assignment a1) {
     return a1.getRightHandSide();
   }

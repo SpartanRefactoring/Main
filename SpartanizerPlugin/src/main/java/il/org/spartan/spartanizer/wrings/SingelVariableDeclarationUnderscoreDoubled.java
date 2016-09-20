@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
 public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
-    implements Kind.UnusedArguments {
+    implements Kind.Annonimization {
   static final boolean BY_ANNOTATION = true;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
