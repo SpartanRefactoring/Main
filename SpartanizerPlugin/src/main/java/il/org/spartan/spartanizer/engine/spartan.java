@@ -28,9 +28,9 @@ public interface spartan {
 
 
   static String shorten(List<Type> ts) {
-    for (final Type t :ts) 
-      if (!iz.wildcardType(t) || az.wildcardType(t).getBound() != null)
-        return shorten(t);
+    for (final Type ¢ :ts) 
+      if (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null)
+        return shorten(¢);
     return null;
   }
 
