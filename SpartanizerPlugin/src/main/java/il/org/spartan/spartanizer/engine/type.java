@@ -217,7 +217,7 @@ public interface type {
     }
 
     private static implementation lookDown(final CastExpression ¢) {
-      return baptize(step.type(¢) + "");
+      return get(step.expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
     }
 
     private static implementation lookDown(final ClassInstanceCreation ¢) {
