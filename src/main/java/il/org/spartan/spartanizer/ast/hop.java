@@ -135,7 +135,7 @@ public interface hop {
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
 
-  public static SimpleName lastComponent(final Name ¢) {
+  static SimpleName lastComponent(final Name ¢) {
     return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 }

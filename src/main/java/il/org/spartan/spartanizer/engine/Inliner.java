@@ -64,7 +64,7 @@ public final class Inliner {
       return canInlineinto(¢) && unsafeUses(¢).isEmpty();
     }
 
-    @SafeVarargs public final void inlineInto(final ASTNode... ¢) {
+    @SafeVarargs public void inlineInto(final ASTNode... ¢) {
       inlineinto(wrap(¢));
     }
 
