@@ -49,12 +49,12 @@ public final class SpartanizeAll extends BaseHandler {
     if (initialCount == 0)
       return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
     eclipse.announce(message);
+    final GUI$Applicator a = new Trimmer();
     for (int i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
         // TODO: Ori, please please no busy cursor. Use ProgressManager
-        final GUI$Applicator a = new Trimmer();
         ps.busyCursorWhile(pm -> {
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
@@ -75,7 +75,7 @@ public final class SpartanizeAll extends BaseHandler {
         Plugin.log(x);
       } catch (final InterruptedException x) {
         // TODO: What should we do here?
-        Plugin.log(x);
+        Plugin.info(x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)
