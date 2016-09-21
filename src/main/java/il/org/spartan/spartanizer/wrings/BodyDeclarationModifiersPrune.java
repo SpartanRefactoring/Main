@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.wrings;
 
 import java.util.*;
 import java.util.function.*;
@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
  * <code><b>interface</b> a{}</code>, etc.
