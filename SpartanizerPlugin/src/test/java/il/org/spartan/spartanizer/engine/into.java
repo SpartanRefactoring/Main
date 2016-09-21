@@ -48,7 +48,7 @@ public enum into {
    *         parameter. */
   public static MethodDeclaration d(final String methodDelclaration) {
     assert methodDelclaration != null;
-    return findFirst.firstMethodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
+    return findFirst.methodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
 
   /** Convert a given {@link String} into an {@link Expression}, or fail the
