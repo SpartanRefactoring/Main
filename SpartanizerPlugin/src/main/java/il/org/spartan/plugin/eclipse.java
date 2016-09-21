@@ -25,7 +25,7 @@ public interface eclipse {
       new Trimmer() };
   static final String NAME = "Spartanization";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  ImageIcon icon = new ImageIcon(new eclipse() {
+  static final ImageIcon icon = new ImageIcon(new eclipse() {
     // TODO: Ori, why do we need this kludge?
   }.getClass().getResource(ICON_PATH));
 
