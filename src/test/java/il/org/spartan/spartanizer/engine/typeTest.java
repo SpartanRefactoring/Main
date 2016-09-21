@@ -28,6 +28,7 @@ public final class typeTest {
     // class for Pending s that don't currently pass
   }
 
+  /** @DisableSpartan */
   public static class Working {
     private static final long LONG_MINUS_3L = -3L;
     private static final int __1 = 1;
@@ -53,7 +54,6 @@ public final class typeTest {
     private long l = c2 + c1 * (b + i) << b;
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
     private String str = "string";
-    private boolean bl = true;
 
     // basic tests for assignments
     @Test public void assingment1() {
@@ -201,13 +201,57 @@ public final class typeTest {
       azzert.that(Axiom.type(-0.022321428571428572), is(DOUBLE));
     }
     
-    //TODO: Niv, look deeper into how conditionals' type works
     @Test public void axiomConditional01() {
-      azzert.that(Axiom.type(bl ? 3 : s), is(SHORT));
+      azzert.that(Axiom.type(b1 ? 3 : s), is(SHORT));
     }
     
     @SuppressWarnings("boxing") @Test public void axiomConditional02() {
-      azzert.that(Axiom.type(bl ? 3 : str), is(NOTHING));
+      azzert.that(Axiom.type(b1 ? 3 : str), is(NOTHING));
+    }
+    
+    @Test public void axiomConditional03() {
+      azzert.that(Axiom.type(b1 ? s : 3), is(SHORT));
+    }
+    
+    @Test public void axiomConditional04() {
+      azzert.that(Axiom.type(b1 ? i : b), is(INT));
+    }
+    
+    @Test public void axiomConditional05() {
+      azzert.that(Axiom.type(b1 ? i : l), is(LONG));
+    }
+    
+    @Test public void axiomConditional07() {
+      azzert.that(Axiom.type(b1 ? f : s), is(FLOAT));
+    }
+    
+    @Test public void axiomConditional08() {
+      azzert.that(Axiom.type(b1 ? f : d), is(DOUBLE));
+    }
+    
+    @Test public void axiomConditional09() {
+      azzert.that(Axiom.type(b1 ? s : b), is(SHORT));
+    }
+    
+    
+    @Test public void axiomConditional10() {
+      azzert.that(Axiom.type(b1 ? b : b), is(BYTE));
+    }
+    
+    @SuppressWarnings("boxing") @Test public void axiomConditional11() {
+      azzert.that(Axiom.type(b1 ? b2 : f), is(NOTHING));
+    }
+    
+    @Test public void axiomConditional12() {
+      azzert.that(Axiom.type(b1 ? b2 : false), is(BOOLEAN));
+    }
+    
+    @Test public void axiomConditional13() {
+      azzert.that(Axiom.type(b1 ? str : ""), is(STRING));
+    }
+    
+    @SuppressWarnings("boxing") @Test public void axiomConditional14() {
+      azzert.that(Axiom.type(b1 ? str : b2), is(NOTHING));
     }
 
     @Test public void axiomFloat() {
@@ -377,7 +421,7 @@ public final class typeTest {
       azzert.that(Axiom.type(b1 ^ b2), is(BOOLEAN));
     }
 
-    // s for casting expression
+    // tests for casting expression
     @Test public void cast01() {
       azzert.that(of(into.e("(List)f()")), is(baptize("List")));
     }
