@@ -196,6 +196,8 @@ public final class ArithmeticTest {
     @Test public void issue92_21() {
       trimmingOf("5*5+6*7-9")//
       .gives("25+42-9")//
+      .gives("67-9")//
+      .gives("58")//
       .stays() //
       ;
     }
