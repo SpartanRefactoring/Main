@@ -26,23 +26,21 @@ import il.org.spartan.spartanizer.ast.*;
 public final class InfixSubractionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) throws Exception {
     double $ = az.throwing.double¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
+    for (final Expression ¢ : rest(xs))
       $ -= az.throwing.double¢(¢);
-    }
-    return ($);
+    return $;
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
     int $ = az.throwing.int¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
-        $ -= az.throwing.int¢(¢);
-    }
-    return ($);
+    for (final Expression ¢ : rest(xs))
+      $ -= az.throwing.int¢(¢);
+    return $;
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
     long $ = az.throwing.long¢(first(xs));
-    for (final Expression ¢ : rest(xs)) 
+    for (final Expression ¢ : rest(xs))
       $ -= az.throwing.long¢(¢);
     return $;
   }
@@ -54,6 +52,4 @@ public final class InfixSubractionEvaluate extends $EvaluateInfixExpression {
   @Override Operator operator() {
     return MINUS2;
   }
-
-
 }

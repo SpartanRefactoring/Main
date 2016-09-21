@@ -123,6 +123,18 @@ public enum haz {
     return !¢.modifiers().isEmpty();
   }
 
+  public static boolean unknownNumberOfEvaluations(final SimpleName n, final Statement s) {
+    ASTNode child = n;
+    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
+      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
+          || iz.is(ancestor, FOR_STATEMENT) && initializers((ForStatement) ancestor).indexOf(child) != -1
+          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
+        return true;
+      child = ancestor;
+    }
+    return false;
+  }
+
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
@@ -171,18 +183,6 @@ public enum haz {
     for (final IExtendedModifier ¢ : ms)
       if (¢.isAnnotation())
         return true;
-    return false;
-  }
-
-  public static boolean unknownNumberOfEvaluations(final SimpleName n, final Statement s) {
-    ASTNode child = n;
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
-      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
-          || iz.is(ancestor, FOR_STATEMENT) && initializers((ForStatement) ancestor).indexOf(child) != -1
-          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
-        return true;
-      child = ancestor;
-    }
     return false;
   }
 }

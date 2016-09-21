@@ -25,26 +25,23 @@ import il.org.spartan.spartanizer.ast.*;
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) throws Exception {
     double $ = 1;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : xs)
       $ *= az.throwing.double¢(¢);
-    }
     return $;
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
     int $ = 1;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : xs)
       $ *= az.throwing.int¢(¢);
-    }
-    return ($);
+    return $;
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
     long $ = 1;
-    for (final Expression ¢ : xs) {
+    for (final Expression ¢ : xs)
       $ *= az.throwing.long¢(¢);
-    }
-    return ($); 
+    return $;
   }
 
   @Override String operation() {
@@ -54,6 +51,4 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
   @Override Operator operator() {
     return TIMES;
   }
-
-
 }

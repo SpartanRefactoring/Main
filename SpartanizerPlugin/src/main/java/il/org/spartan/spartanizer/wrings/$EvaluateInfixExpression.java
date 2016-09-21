@@ -45,21 +45,21 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return super.wringGroup();
   }
 
-  abstract String operation();
-
-  abstract Operator operator();
-
   abstract double evaluateDouble(List<Expression> es) throws Exception;
 
   abstract int evaluateInt(List<Expression> es) throws Exception;
 
   abstract long evaluateLong(List<Expression> es) throws Exception;
 
+  abstract String operation();
+
+  abstract Operator operator();
+
   private final String opportunisticReplacement(final InfixExpression x) throws Exception {
     if (type.of(x) == INT)
       return Integer.toString(evaluateInt(extract.allOperands(x)));
     if (type.of(x) == DOUBLE)
-      return Double.toString(evaluateDouble(extract.allOperands(x))); 
+      return Double.toString(evaluateDouble(extract.allOperands(x)));
     if (type.of(x) == LONG)
       return Long.toString(evaluateLong(extract.allOperands(x))) + "L";
     return null;

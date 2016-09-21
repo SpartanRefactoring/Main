@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.wrings;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import static org.junit.Assert.*;
 
-import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -22,18 +20,16 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wringing.*;
 import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
-import il.org.spartan.utils.*;
 
+@SuppressWarnings("static-method") //
 public class TrimmerLogTest {
-  private Map prop;
-
   @Ignore @Test public void test01() {
-    Wring<ASTNode> w = null;
-    ASTNode n = null;
+    final Wring<ASTNode> w = null;
+    final ASTNode n = null;
     TrimmerLog.suggestion(w, n);
     assertTrue(false);
   }
- 
+
   @Test public void test02() {
     final Operand o = trimmingOf("new Integer(3)");
     final Wrap w = Wrap.find(o.get());
@@ -59,7 +55,7 @@ public class TrimmerLogTest {
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + o.get());
   }
- 
+
   @Test public void test03() {
     final Operand o = trimmingOf("for(int i=0; i < 100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
@@ -85,9 +81,8 @@ public class TrimmerLogTest {
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + o.get());
   }
- 
- 
-  @Test public void test04(){
+
+  @Test public void test04() {
     final Operand o = trimmingOf("for(int i=0; i < 100; i++){\n\tSystem.out.prinln(i);\n}");
     final Wrap w = Wrap.find(o.get());
     System.out.println(w);
@@ -95,14 +90,11 @@ public class TrimmerLogTest {
     System.out.println(wrap);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-    IJavaElement je = u.getJavaElement();
+    final IJavaElement je = u.getJavaElement();
     assert je == null;
-
   }
- 
-  @Ignore @Test public void test05(){
+
+  @Ignore @Test public void test05() {
     TrimmerLog.fileProperties();
-
   }
-
 }
