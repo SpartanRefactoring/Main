@@ -48,8 +48,24 @@ public class TrimmerLog {
     // TODO Auto-generated method stub
   }
 
+  public static int getMaxApplications() {
+    return maxApplications;
+  }
+
+  public static int getMaxSuggestions() {
+    return maxSuggestions;
+  }
+
+  public static int getMaxVisitations() {
+    return maxVisitations;
+  }
+
   public static void setFileName(final String $) {
     fileName = $;
+  }
+
+  public static void setMaxApplications(final int maxApplications) {
+    TrimmerLog.maxApplications = maxApplications;
   }
 
   public static void setMaxSuggestions(final int maxSuggestions) {

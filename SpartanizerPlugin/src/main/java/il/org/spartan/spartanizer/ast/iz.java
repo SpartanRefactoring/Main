@@ -769,7 +769,7 @@ public enum iz {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
-      Plugin.info(x); 
+      Plugin.info(x);
       return false;
     }
   }

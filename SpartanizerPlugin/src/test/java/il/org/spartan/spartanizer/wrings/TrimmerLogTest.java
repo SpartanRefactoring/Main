@@ -3,9 +3,11 @@ package il.org.spartan.spartanizer.wrings;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import static org.junit.Assert.*;
 
+import java.io.*;
+import java.util.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -89,7 +91,19 @@ public class TrimmerLogTest {
     assert u.getJavaElement() == null;
   }
 
-  @Ignore @Test public void test05() {
+  @Ignore("not ready yet") @Test public void test05() {
     TrimmerLog.fileProperties();
+  }
+
+  @Ignore("not ready yet") @Test public void test06() {
+    final String path = "/home/matteo/MUTATION_TESTING_REFACTORING/test-common-lang/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtils.java";
+    final File f = new File(path);
+    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(f);
+    final Trimmer trimmer = new Trimmer();
+    final int opp = TrimmerTestsUtils.countOpportunities(trimmer, cu);
+    System.out.println(opp);
+    final List<Suggestion> suggestions = trimmer.collectSuggesions(cu);
+    for (final Suggestion suggestion : suggestions)
+      System.out.println(suggestion.description);
   }
 }

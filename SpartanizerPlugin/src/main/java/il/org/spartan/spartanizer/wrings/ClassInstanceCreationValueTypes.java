@@ -28,7 +28,7 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     final Type t = c.getType();
     if (!wizard.isValueType(t))
       return null;
-    SimpleName n = hop.simpleName(t);
+    final SimpleName n = hop.simpleName(t);
     final MethodInvocation $ = subject.operand(duplicate.of(n)).toMethod("valueOf");
     arguments($).add(duplicate.of(first(arguments(c))));
     return $;
