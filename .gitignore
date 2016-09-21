@@ -142,3 +142,4 @@ out/
 target/
 
 # User defined (add below this line) // vim: +,$!sort -u
+/types.CSV

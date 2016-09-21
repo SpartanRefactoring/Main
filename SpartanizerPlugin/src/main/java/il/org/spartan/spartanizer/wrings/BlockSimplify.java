@@ -73,7 +73,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
   }
 
   @Override public String description(final Block ¢) {
-    return "Simplify block with  " + extract.statements(¢).size() + " statements";
+    return "Simplify block with  " + extract.statements(¢).size() + " sideEffects";
   }
 
   @Override public Statement replacement(final Block b) {

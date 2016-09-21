@@ -17,7 +17,7 @@ public enum Make {
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
   /** Strategy for conversion into an expression */
   EXPRESSION(ASTParser.K_EXPRESSION), //
-  /** Strategy for conversion into an sequence of statements */
+  /** Strategy for conversion into an sequence of sideEffects */
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //

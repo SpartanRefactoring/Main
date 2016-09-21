@@ -292,9 +292,9 @@ public enum step {
     return ¢.getRightOperand();
   }
 
-  /** Expose the list of statements contained in a {@link Block}
+  /** Expose the list of sideEffects contained in a {@link Block}
    * @param ¢ JD
-   * @return reference to the list of statements contained in the argument */
+   * @return reference to the list of sideEffects contained in the argument */
   @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
     return ¢.statements();
   }

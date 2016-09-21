@@ -2201,26 +2201,7 @@ import il.org.spartan.spartanizer.wringing.*;
             .stays();
   }
 
-  @Test public void issue64b() {
-    trimmingOf("void f() {" + //
-        "    final int a = 3;\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };"//
-        + "}")//
-            .stays();
-  }
 
-  @Test public void issue64c() {
-    trimmingOf("void f(int x) {" + //
-        "    ++x;\n" + //
-        "    final int a = x;\n" + //
-        "    new Object() {\n" + //
-        "      @Override public int hashCode() { return a; }\n" + //
-        "    };"//
-        + "}")//
-            .stays();
-  }
 
   @Test public void issue73a() {
     trimmingOf("void foo(StringBuilder sb) {}")//
