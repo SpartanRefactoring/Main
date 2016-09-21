@@ -102,8 +102,7 @@ public class TrimmerLogTest {
     final Trimmer trimmer = new Trimmer();
     final int opp = TrimmerTestsUtils.countOpportunities(trimmer, cu);
     System.out.println(opp);
-    final List<Suggestion> suggestions = trimmer.collectSuggesions(cu);
-    for (final Suggestion suggestion : suggestions)
-      System.out.println(suggestion.description);
+    for (final Suggestion ¢ : trimmer.collectSuggesions(cu))
+      System.out.println(¢.description);
   }
 }
