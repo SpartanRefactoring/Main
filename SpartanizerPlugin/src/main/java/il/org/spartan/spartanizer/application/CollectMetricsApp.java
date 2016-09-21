@@ -120,8 +120,7 @@ public final class CollectMetricsApp implements IApplication {
         output.put("File", ¢.getName());
         final String javaCode = FileUtils.read(¢);
         output.put("Characters", javaCode.length());
-        final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-        report(prefix, cu);
+        report(prefix, ((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode)));
       } catch (final IOException e) {
         System.err.println(e.getMessage());
       }

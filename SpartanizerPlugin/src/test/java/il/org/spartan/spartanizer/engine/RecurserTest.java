@@ -11,31 +11,19 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" }) public final class RecurserTest {
   @Test public void issue101_1() {
-    final Expression ¢ = into.i("3+4");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(3, (int) recurse.preVisit(accum));
+    assertEquals(3, (int) (new Recurser<>(into.i("3+4"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_10() {
-    final Expression ¢ = into.e("a==4 ? 34 : 56+34+99");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(9, (int) recurse.preVisit(accum));
+    assertEquals(9, (int) (new Recurser<>(into.e("a==4 ? 34 : 56+34+99"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_11() {
-    final Expression ¢ = into.e("!f.g(X,false)||a.b.e(m.h())");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(10, (int) recurse.preVisit(accum));
+    assertEquals(10, (int) (new Recurser<>(into.e("!f.g(X,false)||a.b.e(m.h())"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_12() {
-    final Expression ¢ = into.e("g(false)||a(h())");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(5, (int) recurse.preVisit(accum));
+    assertEquals(5, (int) (new Recurser<>(into.e("g(false)||a(h())"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_13() {
@@ -50,10 +38,7 @@ import org.junit.*;
   }
 
   @Test public void issue101_14() {
-    final Expression ¢ = into.i("3+(4*5)+6");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(7, (int) recurse.postVisit(accum));
+    assertEquals(7, (int) (new Recurser<>(into.i("3+(4*5)+6"), 0)).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_15() {
@@ -112,52 +97,31 @@ import org.junit.*;
   }
 
   @Test public void issue101_2() {
-    final Expression ¢ = into.i("3+4");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(3, (int) recurse.postVisit(accum));
+    assertEquals(3, (int) (new Recurser<>(into.i("3+4"), 0)).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_3() {
-    final Expression ¢ = into.i("5*6+43*2");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(7, (int) recurse.preVisit(accum));
+    assertEquals(7, (int) (new Recurser<>(into.i("5*6+43*2"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_4() {
-    final Expression ¢ = into.i("3+4*4+6*7+8");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(11, (int) recurse.preVisit(accum));
+    assertEquals(11, (int) (new Recurser<>(into.i("3+4*4+6*7+8"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_5() {
-    final Expression ¢ = into.i("3+4*4+6*7+8");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(11, (int) recurse.postVisit(accum));
+    assertEquals(11, (int) (new Recurser<>(into.i("3+4*4+6*7+8"), 0)).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_6() {
-    final Expression ¢ = into.i("3+4+5+6");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(5, (int) recurse.postVisit(accum));
+    assertEquals(5, (int) (new Recurser<>(into.i("3+4+5+6"), 0)).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_7() {
-    final Expression ¢ = into.e("a==4 ? 34 : 56");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(6, (int) recurse.postVisit(accum));
+    assertEquals(6, (int) (new Recurser<>(into.e("a==4 ? 34 : 56"), 0)).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_8() {
-    final Expression ¢ = into.e("a==4 ? 34 : 56+34");
-    final Recurser<Integer> recurse = new Recurser<>(¢, 0);
-    final Function<Recurser<Integer>, Integer> accum = (x) -> (1 + x.getCurrent());
-    assertEquals(8, (int) recurse.preVisit(accum));
+    assertEquals(8, (int) (new Recurser<>(into.e("a==4 ? 34 : 56+34"), 0)).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_9() {

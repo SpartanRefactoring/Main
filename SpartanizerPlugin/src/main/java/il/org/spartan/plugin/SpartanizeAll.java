@@ -55,9 +55,10 @@ public final class SpartanizeAll extends BaseHandler {
       try {
         // TODO: Ori, please please no busy cursor. Use ProgressManager
         final GUI$Applicator a = new Trimmer();
-        final IRunnableWithProgress runnable = pm -> {
-          pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-          "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+        ps.busyCursorWhile(pm -> {
+          pm.beginTask(
+              "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
+              us.size());
           int n = 0;
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
@@ -69,10 +70,7 @@ public final class SpartanizeAll extends BaseHandler {
           }
           us.removeAll(dead);
           pm.done();
-        };
-        // ps.runInUI(context, runnable, rule);
-        // ps.run(true, true, runnable);
-        ps.busyCursorWhile(runnable);
+        });
       } catch (final InvocationTargetException x) {
         Plugin.log(x);
       } catch (final InterruptedException x) {

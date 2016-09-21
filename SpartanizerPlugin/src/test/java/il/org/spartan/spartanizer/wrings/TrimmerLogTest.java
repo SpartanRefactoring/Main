@@ -45,14 +45,12 @@ public class TrimmerLogTest {
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
       a.consolidateSuggestions($, u, (IMarker) null);
       pm.done();
-      final ASTRewrite x = $;
-      x.rewriteAST(d, null).apply(d);
+      $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
     assert d != null;
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
+    if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
 
@@ -71,14 +69,12 @@ public class TrimmerLogTest {
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
       a.consolidateSuggestions($, u, (IMarker) null);
       pm.done();
-      final ASTRewrite x = $;
-      x.rewriteAST(d, null).apply(d);
+      $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
     assert d != null;
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
+    if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
 
@@ -90,8 +86,7 @@ public class TrimmerLogTest {
     System.out.println(wrap);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-    final IJavaElement je = u.getJavaElement();
-    assert je == null;
+    assert u.getJavaElement() == null;
   }
 
   @Ignore @Test public void test05() {
