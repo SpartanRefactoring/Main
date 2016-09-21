@@ -56,7 +56,7 @@ public abstract class GUI$Applicator extends Refactoring {
   final Collection<TextFileChange> changes = new ArrayList<>();
   private final String name;
   private int totalChanges;
-  IProgressMonitor progressMonitor = nullProgressMonitor;
+  public IProgressMonitor progressMonitor = nullProgressMonitor;
 
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
@@ -297,8 +297,6 @@ public abstract class GUI$Applicator extends Refactoring {
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
-    // TODO: Matteo, this is a source for NPE
-    // TrimmerLog.setFileName(u.getJavaElement().getElementName());
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
     progressMonitor.done();

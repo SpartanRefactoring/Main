@@ -48,6 +48,7 @@ public final class SpartanizeAll extends BaseHandler {
     message.append("with " + initialCount + " suggestions");
     if (initialCount == 0)
       return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
+    eclipse.announce(message);
     for (int i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
