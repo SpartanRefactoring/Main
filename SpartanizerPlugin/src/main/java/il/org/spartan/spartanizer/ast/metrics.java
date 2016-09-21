@@ -19,6 +19,21 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
+  /** Counts the number of nodes in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  static int bodySize(final ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration d) {
+        if (d.getBody() != null)
+          $.inner += nodesCount(d.getBody());
+        return false;
+      }
+    });
+    return $.inner;
+  }
+
   static int condensedSize(final ASTNode ¢) {
     return wizard.condense(¢).length();
   }
@@ -203,21 +218,6 @@ public interface metrics {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         ++$.inner;
-      }
-    });
-    return $.inner;
-  }
-
-  /** Counts the number of nodes in a tree rooted at a given node
-   * @param n JD
-   * @return Number of abstract syntax tree nodes under the parameter. */
-  static int bodySize(final ASTNode n) {
-    final Int $ = new Int();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration d) {
-        if (d.getBody() != null)
-          $.inner += nodesCount(d.getBody());
-        return false;
       }
     });
     return $.inner;
