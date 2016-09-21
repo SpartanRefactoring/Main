@@ -65,8 +65,7 @@ import java.util.*;
 
       void foo() {
         try {
-          final String s = "onoes";
-          dangerousFunc("yay".equals(s));
+          dangerousFunc("yay".equals("onoes"));
         } catch (final UnsupportedOperationException e) {
         }
       }

@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> es) throws Exception {
-    throw new Exception("no remainder among doubles" + es);
+  @Override double evaluateDouble(final List<Expression> ¢) throws Exception {
+    throw new Exception("no remainder among doubles" + ¢);
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {

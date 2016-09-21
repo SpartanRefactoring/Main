@@ -22,8 +22,8 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return "Evaluate " + operation();
   }
 
-  @Override public final String description(final InfixExpression x) {
-    return description() + ":" + x;
+  @Override public final String description(final InfixExpression ¢) {
+    return description() + ":" + ¢;
   }
 
   @Override public final boolean prerequisite(final InfixExpression ¢) {
@@ -45,23 +45,19 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return super.wringGroup();
   }
 
-  abstract double evaluateDouble(List<Expression> es) throws Exception;
+  abstract double evaluateDouble(List<Expression> xs) throws Exception;
 
-  abstract int evaluateInt(List<Expression> es) throws Exception;
+  abstract int evaluateInt(List<Expression> xs) throws Exception;
 
-  abstract long evaluateLong(List<Expression> es) throws Exception;
+  abstract long evaluateLong(List<Expression> xs) throws Exception;
 
   abstract String operation();
 
   abstract Operator operator();
 
-  private final String opportunisticReplacement(final InfixExpression x) throws Exception {
-    if (type.of(x) == INT)
-      return Integer.toString(evaluateInt(extract.allOperands(x)));
-    if (type.of(x) == DOUBLE)
-      return Double.toString(evaluateDouble(extract.allOperands(x)));
-    if (type.of(x) == LONG)
-      return Long.toString(evaluateLong(extract.allOperands(x))) + "L";
-    return null;
+  private String opportunisticReplacement(final InfixExpression ¢) throws Exception {
+    return type.of(¢) == INT ? Integer.toString(evaluateInt(extract.allOperands(¢)))
+        : type.of(¢) == DOUBLE ? Double.toString(evaluateDouble(extract.allOperands(¢)))
+            : type.of(¢) == LONG ? Long.toString(evaluateLong(extract.allOperands(¢))) + "L" : null;
   }
 }
