@@ -41,6 +41,7 @@ public class Trimmer extends GUI$Applicator {
     Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
+        progressMonitor.worked(1);
         TrimmerLog.visitation(n);
         if (!inRange(m, n))
           return true;

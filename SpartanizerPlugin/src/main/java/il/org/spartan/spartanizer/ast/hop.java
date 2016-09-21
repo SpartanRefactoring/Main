@@ -126,9 +126,16 @@ public interface hop {
       $.addAll(step.extendedOperands(¢));
     return $;
   }
-
   static SimpleName simpleName(final Type ¢) {
-    return ¢.isSimpleType() ? (SimpleName) ((SimpleType) ¢).getName()
+    return lastComponent(name(¢)); 
+  }
+
+  static Name name(final Type ¢) {
+    return ¢.isSimpleType() ? ((SimpleType) ¢).getName() 
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
+  }
+
+  public static SimpleName lastComponent(final Name ¢) {
+    return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 }
