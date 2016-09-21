@@ -51,11 +51,7 @@ public final class CollectClassMetrics {
 
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
-    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    report("Before-", before);
-    // final CompilationUnit after = spartanize(before);
-    // assert after != null;
-    // report("After-", after);
+    report("Before-", ((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode)));
   }
 
   private static void go(final String[] where) {

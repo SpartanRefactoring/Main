@@ -53,7 +53,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName name, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
@@ -64,21 +64,18 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);
-    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(name).in(nextStatement).isEmpty())
+    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
-    final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
+    final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {
       final SimpleName use = onlyOne(uses);
       if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
         return null;
     }
-    for (final SimpleName use : uses) {
-      if (never(use, nextStatement))
+    for (final SimpleName use : uses)
+      if (never(use, nextStatement) || isPresentOnAnymous(use, nextStatement))
         return null;
-      if (isPresentOnAnymous(use, nextStatement))
-        return null;
-    }
-    final InlinerWithValue i = new Inliner(name, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);

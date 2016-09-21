@@ -81,17 +81,15 @@ public class TrimmerLog {
       output.put("Suggests", w.suggest(n));
       output.nl();
     }
-    if (!logToScreen)
+    if (!logToScreen || !logToScreen)
       return;
-    if (logToScreen) {
-      System.out.println("        File: " + fileName);
-      System.out.println("       Wring: " + clazz(w));
-      System.out.println("       Named: " + w.description());
-      System.out.println("        Kind: " + w.wringGroup());
-      System.out.println("   Described: " + w.description(n));
-      System.out.println(" Can suggest: " + w.canSuggest(n));
-      System.out.println("    Suggests: " + w.suggest(n));
-    }
+    System.out.println("        File: " + fileName);
+    System.out.println("       Wring: " + clazz(w));
+    System.out.println("       Named: " + w.description());
+    System.out.println("        Kind: " + w.wringGroup());
+    System.out.println("   Described: " + w.description(n));
+    System.out.println(" Can suggest: " + w.canSuggest(n));
+    System.out.println("    Suggests: " + w.suggest(n));
   }
 
   public static void visitation(final ASTNode ¢) {

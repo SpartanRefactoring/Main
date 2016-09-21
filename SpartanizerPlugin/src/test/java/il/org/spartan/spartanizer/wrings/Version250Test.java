@@ -1091,23 +1091,19 @@ public final class Version250Test {
   }
 
   @Ignore public void test_a() {
-    final String s = "studiesA";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("studyA"));
+    azzert.that("studiesA".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("studyA"));
   }
 
   @Test public void test_b() {
-    final String s = "studies";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
+    azzert.that("studies".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
   }
 
   @Test public void test_c() {
-    final String s = "studes";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+    azzert.that("studes".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
 
   @Test public void test_d() {
-    final String s = "studs";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+    azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
 
   @Ignore public void trimmerBugXOR() {

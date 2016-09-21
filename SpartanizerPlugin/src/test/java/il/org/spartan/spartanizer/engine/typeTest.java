@@ -173,7 +173,7 @@ public final class typeTest {
     }
 
     @Test public void axiomConditional10() {
-      azzert.that(Axiom.type(b1 ? b : b), is(BYTE));
+      azzert.that(Axiom.type(b), is(BYTE));
     }
 
     @SuppressWarnings("boxing") @Test public void axiomConditional11() {
@@ -181,7 +181,7 @@ public final class typeTest {
     }
 
     @Test public void axiomConditional12() {
-      azzert.that(Axiom.type(b1 ? b2 : false), is(BOOLEAN));
+      azzert.that(Axiom.type(b1 && b2), is(BOOLEAN));
     }
 
     @Test public void axiomConditional13() {
@@ -213,7 +213,7 @@ public final class typeTest {
     }
 
     @Test public void axiomConditional20() {
-      azzert.that(Axiom.type(b1 ? 2147483647 : s), is(INT));
+      azzert.that(Axiom.type(!b1 ? s : 2147483647), is(INT));
     }
 
     @SuppressWarnings("boxing") @Test public void axiomConditional21() {
@@ -225,7 +225,7 @@ public final class typeTest {
     }
 
     @Test public void axiomConditional23() {
-      azzert.that(Axiom.type(b1 ? 'a' : s), is(INT));
+      azzert.that(Axiom.type(!b1 ? s : 'a'), is(INT));
     }
 
     @Test public void axiomDouble() {
@@ -666,58 +666,47 @@ public final class typeTest {
 
     // tests for deducing type from context
     @Test public void context01() {
-      final IfStatement is = findFirst.ifStatement(into.s("{if(f()) return x; return y;}"));
-      azzert.that(of(is.getExpression()), is(BOOLEAN));
+      azzert.that(of(findFirst.ifStatement(into.s("{if(f()) return x; return y;}")).getExpression()), is(BOOLEAN));
     }
 
     @Test public void context02() {
-      final PrefixExpression e = az.prefixExpression(into.e("++x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("++x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context03() {
-      final PrefixExpression e = az.prefixExpression(into.e("--x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("--x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context04() {
-      final PrefixExpression e = az.prefixExpression(into.e("-x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("-x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context05() {
-      final PrefixExpression e = az.prefixExpression(into.e("!x"));
-      azzert.that(of(e.getOperand()), is(BOOLEAN));
+      azzert.that(of(az.prefixExpression(into.e("!x")).getOperand()), is(BOOLEAN));
     }
 
     @Test public void context06() {
-      final PrefixExpression e = az.prefixExpression(into.e("~x"));
-      azzert.that(of(e.getOperand()), is(INTEGRAL));
+      azzert.that(of(az.prefixExpression(into.e("~x")).getOperand()), is(INTEGRAL));
     }
 
     @Test public void context07() {
-      final PrefixExpression e = az.prefixExpression(into.e("+x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("+x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context08() {
-      final PostfixExpression e = az.postfixExpression(into.e("x++"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.postfixExpression(into.e("x++")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context09() {
-      final PostfixExpression e = az.postfixExpression(into.e("x--"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.postfixExpression(into.e("x--")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context10() {
-      final ArrayAccess a = (ArrayAccess) into.e("arr[x]");
-      azzert.that(of(a.getIndex()), is(INTEGRAL));
+      azzert.that(of(((ArrayAccess) into.e("arr[x]")).getIndex()), is(INTEGRAL));
     }
 
     @Test public void context11() {
-      final ArrayAccess a = (ArrayAccess) into.e("arr[((x))]");
-      azzert.that(of(a.getIndex()), is(INTEGRAL));
+      azzert.that(of(((ArrayAccess) into.e("arr[((x))]")).getIndex()), is(INTEGRAL));
     }
 
     @Test public void context12() {
@@ -776,8 +765,7 @@ public final class typeTest {
     }
 
     @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
-      final WhileStatement ws = findFirst.whileStatement(into.s("while(x) somthing();"));
-      azzert.that(of(ws.getExpression()), is(BOOLEAN));
+      azzert.that(of(findFirst.whileStatement(into.s("while(x) somthing();")).getExpression()), is(BOOLEAN));
     }
 
     @Test public void context22() {
@@ -1064,8 +1052,7 @@ public final class typeTest {
     }
 
     @Test public void UnaryPlusMinusSemantics08() {
-      final char x = 0;
-      azzert.that(Axiom.type(-x), is(INT));
+      azzert.that(Axiom.type(-0), is(INT));
     }
 
     @Test public void UnaryPlusMinusSemantics09() {

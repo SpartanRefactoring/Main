@@ -89,8 +89,6 @@ import il.org.spartan.spartanizer.java.*;
     assert use != null;
     assert !haz.unknownNumberOfEvaluations(use, nextStatement);
     assert !DeclarationInitializerStatementTerminatingScope.never(name, nextStatement);
-    final int addedSize = 0;
-    final int removalSaving = $VariableDeclarationFragementAndStatement.removalSaving(f);
-    assert removalSaving > addedSize;
+    assert $VariableDeclarationFragementAndStatement.removalSaving(f) > 0;
   }
 }
