@@ -1083,6 +1083,16 @@ public final class Version250Test {
   @Test public void issue87d() {
     trimmingOf("a - (b-c)").gives("a - b + c");
   }
+  @Test public void issue241a() {
+    trimmingOf("interface x { int a; }").stays();
+  }
+@Test public void issue241b() {
+    trimmingOf("interface x { static int a; }")//
+    .gives("interface x { int a; }")//
+    .stays();
+  }
+
+
 
   @Test public void simpleForLoop() {
     trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
