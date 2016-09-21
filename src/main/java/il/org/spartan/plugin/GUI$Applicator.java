@@ -18,7 +18,6 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -143,6 +142,7 @@ public abstract class GUI$Applicator extends Refactoring {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException e) {
       // TODO: what should we do here? This is not an error
+      Plugin.info(e);
     } catch (final CoreException e) {
       Plugin.log(e);
     }
@@ -298,7 +298,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     // TODO: Matteo, this is a source for NPE
-//    TrimmerLog.setFileName(u.getJavaElement().getElementName());
+    // TrimmerLog.setFileName(u.getJavaElement().getElementName());
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
     progressMonitor.done();

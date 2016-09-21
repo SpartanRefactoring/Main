@@ -25,9 +25,9 @@ public interface metrics {
   static int bodySize(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration d) {
-        if (d.getBody() != null)
-          $.inner += nodesCount(d.getBody());
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        if (¢.getBody() != null)
+          $.inner += nodesCount(¢.getBody());
         return false;
       }
     });

@@ -126,4 +126,9 @@ public interface hop {
       $.addAll(step.extendedOperands(¢));
     return $;
   }
+
+  static SimpleName simpleName(final Type ¢) {
+    return ¢.isSimpleType() ? (SimpleName) ((SimpleType) ¢).getName()
+        : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
+  }
 }

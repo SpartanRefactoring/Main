@@ -2201,8 +2201,6 @@ import il.org.spartan.spartanizer.wringing.*;
             .stays();
   }
 
-
-
   @Test public void issue73a() {
     trimmingOf("void foo(StringBuilder sb) {}")//
         .gives("void foo(StringBuilder b) {}");
