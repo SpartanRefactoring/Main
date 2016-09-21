@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.application;
 
 import java.io.*;
+import java.util.*;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -17,26 +19,12 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @year 2016 */
 public final class CollectMetrics {
-  private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
+  private static String OUTPUT = "/tmp/test.csv";
   private static CSVStatistics output = init();
-
+  
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
     System.err.println("Your output should be here: " + output.close());
-  }
-
-  static CompilationUnit spartanize(final CompilationUnit before) {
-    final Trimmer tr = new Trimmer();
-    assert tr != null;
-    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
-    tr.setCompilationUnit($);
-    assert $ != null;
-    try {
-      tr.checkAllConditions(null);
-    } catch (OperationCanceledException | CoreException e) {
-      e.printStackTrace();
-    }
-    return before;
   }
 
   private static void go(final File f) {
@@ -53,9 +41,28 @@ public final class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
-    // final CompilationUnit after = spartanize(before);
-    // assert after != null;
-    // report("After-", after);
+    CompilationUnit after = spartanize(javaCode, before);
+    assert after != null;
+    report("After-", after);
+    output.nl();
+  }
+
+  private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
+    Trimmer t = new Trimmer();
+    assert t != null;
+    String spartanized = t.fixed(javaCode);
+    output.put("Characters", spartanized.length());
+    CompilationUnit after = (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);
+    return after;
+  }
+  
+  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
+    try {
+      a.createRewrite(u).rewriteAST($, null).apply($);
+      return $;
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
   }
 
   private static void go(final String[] where) {
@@ -94,6 +101,5 @@ public final class CollectMetrics {
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.put(prefix + "Imports", metrics.countImports(¢));
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
-    output.nl();
-  }
+   }
 }
