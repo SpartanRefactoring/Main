@@ -297,7 +297,8 @@ public abstract class GUI$Applicator extends Refactoring {
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
-    TrimmerLog.setFileName(u.getJavaElement().getElementName());
+    // TODO: Matteo, this is a source for NPE
+//    TrimmerLog.setFileName(u.getJavaElement().getElementName());
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
     progressMonitor.done();
