@@ -115,4 +115,9 @@ public class TrimmerLog {
     fileName = $;    
   }
 
+  public static void fileProperties() {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
