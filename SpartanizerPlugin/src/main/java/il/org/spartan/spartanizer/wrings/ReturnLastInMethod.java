@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** removes empty return statements, provided that they are last in method.
+/** removes empty return sideEffects, provided that they are last in method.
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class ReturnLastInMethod extends EagerWring<ReturnStatement> implements Kind.SyntacticBaggage {

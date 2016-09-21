@@ -95,7 +95,7 @@ public interface hop {
   /** Find the last statement residing under a given {@link Statement}
    * @param subject JD
    * @return last statement residing under a given {@link Statement}, or
-   *         <code><b>null</b></code> if not such statements exists. */
+   *         <code><b>null</b></code> if not such sideEffects exists. */
   static ASTNode lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
   }

@@ -41,7 +41,7 @@ import org.junit.*;
     );
   }
 
-  // Don't do anything if there is more than return statements after the
+  // Don't do anything if there is more than return sideEffects after the
   // ifstatement.
   @Test public void test03() {
     trimmingOf("if (a == null) { \n" //

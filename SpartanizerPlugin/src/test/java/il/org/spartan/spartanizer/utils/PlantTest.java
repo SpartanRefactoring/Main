@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.engine.*;
 
   @Test public void plus() {
     final Expression e = into.e("a + 2 < b");
-    final Expression plus = findFirst.firstPlus(e);
+    final Expression plus = findFirst.infixPlus(e);
     azzert.that(plus + "", type.isNotString(plus), is(true));
     azzert.that(e + "", type.isNotString(plus), is(true));
   }

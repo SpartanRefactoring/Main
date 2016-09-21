@@ -26,8 +26,8 @@ public interface findFirst {
    * @param n JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static MethodDeclaration firstMethodDeclaration(final ASTNode ¢) {
-    return instanceOf(MethodDeclaration.class, ¢);
+  static MethodDeclaration methodDeclaration(final ASTNode ¢) {
+    return findFirst.instanceOf(MethodDeclaration.class, ¢);
   }
 
   /** Find the first {@link InfixExpression} representing an addition, under a
@@ -36,7 +36,7 @@ public interface findFirst {
    * @return first {@link InfixExpression} representing an addition under the
    *         parameter given node, or <code><b>null</b></code> if no such value
    *         could be found. */
-  static InfixExpression firstPlus(final ASTNode n) {
+  static InfixExpression infixPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final InfixExpression ¢) {
@@ -76,19 +76,20 @@ public interface findFirst {
   static <N extends ASTNode> N instanceOf(final Class<N> c, final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<N> $ = new Wrapper<>();
+    final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") @Override public boolean preVisit2(final ASTNode ¢) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
           return true;
-        $.set((N) ¢);
+        $.set(¢);
         assert $.get() == ¢;
         return false;
       }
     });
-    return $.get();
+    @SuppressWarnings("unchecked") N $$ = (N) $.get();
+    return $$;
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an

@@ -141,7 +141,7 @@ public interface metrics {
     return $;
   }
 
-  /** Counts the number of statements in a tree rooted at a given node
+  /** Counts the number of sideEffects in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int lineCount(final ASTNode n) {
