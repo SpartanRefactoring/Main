@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.application;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -21,10 +20,19 @@ import il.org.spartan.utils.*;
 public final class CollectMetrics {
   private static String OUTPUT = "/tmp/test.csv";
   private static CSVStatistics output = init();
-  
+
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
     System.err.println("Your output should be here: " + output.close());
+  }
+
+  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
+    try {
+      a.createRewrite(u).rewriteAST($, null).apply($);
+      return $;
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
   }
 
   private static void go(final File f) {
@@ -41,28 +49,10 @@ public final class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
-    CompilationUnit after = spartanize(javaCode, before);
+    final CompilationUnit after = spartanize(javaCode, before);
     assert after != null;
     report("After-", after);
     output.nl();
-  }
-
-  private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
-    Trimmer t = new Trimmer();
-    assert t != null;
-    String spartanized = t.fixed(javaCode);
-    output.put("Characters", spartanized.length());
-    CompilationUnit after = (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);
-    return after;
-  }
-  
-  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
-    try {
-      a.createRewrite(u).rewriteAST($, null).apply($);
-      return $;
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
   }
 
   private static void go(final String[] where) {
@@ -101,5 +91,13 @@ public final class CollectMetrics {
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.put(prefix + "Imports", metrics.countImports(¢));
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
-   }
+  }
+
+  private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
+    final Trimmer t = new Trimmer();
+    assert t != null;
+    final String spartanized = t.fixed(javaCode);
+    output.put("Characters", spartanized.length());
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);
+  }
 }

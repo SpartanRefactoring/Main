@@ -39,9 +39,9 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
     }
     if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
       $.add(isFinal);
+    final ASTNode container = hop.containerType(¢);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
-    final ASTNode container = hop.containerType(¢);
     if (container == null)
       return $;
     if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
@@ -63,6 +63,8 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
       if (iz.enumConstantDeclaration(hop.containerType(container)))
         $.add(isProtected);
     }
+    if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
+      $.remove(isFinal);
     return $;
   }
 

@@ -223,7 +223,7 @@ public enum iz {
     return is(¢, EXPRESSION_STATEMENT);
   }
 
-  public static boolean fieldDeclaration(BodyDeclaration ¢) {
+  public static boolean fieldDeclaration(final BodyDeclaration ¢) {
     return is(¢, FIELD_DECLARATION);
   }
 
@@ -330,6 +330,12 @@ public enum iz {
     return step.operator(az.infixExpression(¢)) == TIMES;
   }
 
+  /** @param ¢ JD
+   * @return true if the given node is an interface or false otherwise */
+  public static boolean interface¢(final ASTNode ¢) {
+    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
+  }
+
   public static boolean intType(final Expression ¢) {
     return type.of(¢) == INT;
   }
@@ -350,12 +356,6 @@ public enum iz {
    * @return true if the variable is declared as final */
   public static boolean isFinal(final VariableDeclarationStatement ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is an interface or false otherwise */
-  public static boolean interface¢(final ASTNode ¢) {
-    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
   /** @param ¢ JD

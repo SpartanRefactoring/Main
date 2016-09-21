@@ -92,6 +92,10 @@ public interface hop {
         : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
   }
 
+  static SimpleName lastComponent(final Name ¢) {
+    return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
+  }
+
   /** Find the last statement residing under a given {@link Statement}
    * @param subject JD
    * @return last statement residing under a given {@link Statement}, or
@@ -112,6 +116,11 @@ public interface hop {
     return null;
   }
 
+  static Name name(final Type ¢) {
+    return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
+        : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
+  }
+
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
@@ -126,16 +135,8 @@ public interface hop {
       $.addAll(step.extendedOperands(¢));
     return $;
   }
+
   static SimpleName simpleName(final Type ¢) {
-    return lastComponent(name(¢)); 
-  }
-
-  static Name name(final Type ¢) {
-    return ¢.isSimpleType() ? ((SimpleType) ¢).getName() 
-        : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
-  }
-
-  static SimpleName lastComponent(final Name ¢) {
-    return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
+    return lastComponent(name(¢));
   }
 }

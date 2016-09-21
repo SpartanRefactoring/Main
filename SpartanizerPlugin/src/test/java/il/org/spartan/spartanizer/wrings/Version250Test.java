@@ -670,7 +670,8 @@ public final class Version250Test {
         .gives("interface x { int a; }")//
         .stays();
   }
-@Test public void issue243() {
+
+  @Test public void issue243() {
     trimmingOf("interface x { " //
         + "int a = 0; "//
         + "boolean b = 0; "//
@@ -682,8 +683,9 @@ public final class Version250Test {
         + "float f = 0.0; "//
         + "float f1 = 1;"//
         + "}")//
-        .stays();
+            .stays();
   }
+
   @Test public void issue31a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(now.modifiers());\n" + //
