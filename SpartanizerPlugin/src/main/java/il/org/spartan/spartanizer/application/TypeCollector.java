@@ -54,12 +54,12 @@ public final class TypeCollector {
         .put("Nodes1", nodes)//
         .put("Nodes2", nodes2)//
         .put("ΔNodes", nodes - nodes2)//
-        .put("δNodees", δ(nodes, nodes2))//
+        .put("δNodes", δ(nodes, nodes2))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("ΔBody", body - body2)//
         .put("δBody", δ(body, body2))//
-         .put("Length1", length)//
+        .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("ΔTokens", tokens - tokens2)//
@@ -79,7 +79,7 @@ public final class TypeCollector {
         .put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //
-        .put("R(B/S)", ratio(nodes,body)) //
+        .put("R(B/S)", ratio(nodes, body)) //
     ;
     output.nl();
     return false;
