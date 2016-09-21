@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import static org.junit.Assert.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
