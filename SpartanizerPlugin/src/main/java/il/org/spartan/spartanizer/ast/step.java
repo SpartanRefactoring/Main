@@ -324,32 +324,32 @@ public enum step {
     return ¢.getLeftHandSide();
   }
 
+  /** Shorthand for {@link NumberLiteral#getToken()}
+   * @param ¢ JD
+   * @return the token representing the number */
+  public static String token(final NumberLiteral ¢) {
+    return ¢.getToken();
+  }
+
   /** Shorthand for {@link CastExpression#getType()}
    * @param ¢ JD
    * @return the Type of the {@link castExpression} */
   public static Type type(final CastExpression ¢) {
     return ¢.getType();
   }
-  
+
   /** Shorthand for {@link ClassInstanceCreation#getType()}
    * @param ¢ JD
    * @return the Type of the {@link ClassInstanceCreation} */
   public static Type type(final ClassInstanceCreation ¢) {
     return ¢.getType();
   }
-  
+
   /** Shorthand for {@link VariableDeclarationExpression#getType()}
    * @param ¢ JD
    * @return the Type of the {@link VariableDeclarationExpression} */
   public static Type type(final VariableDeclarationExpression ¢) {
     return ¢.getType();
-  }
-  
-  /** Shorthand for {@link NumberLiteral#getToken()}
-   * @param ¢ JD
-   * @return the token representing the number */
-  public static String token(final NumberLiteral ¢){
-    return ¢.getToken();
   }
 
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {

@@ -780,6 +780,7 @@ public final class Version250Test {
   @Test public void issue70_12() {
     trimmingOf("foo((double)18)").gives("foo(1.*18)");
   }
+
   @Ignore @Test public void issue73_01() {
     trimmingOf("\"\" + \"abc\"").gives("\"abc\"");
   }

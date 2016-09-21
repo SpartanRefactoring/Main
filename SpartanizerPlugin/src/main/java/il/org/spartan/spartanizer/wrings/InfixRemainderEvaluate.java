@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(List<Expression> allOperands) throws Exception {
-    throw new Exception("no remainder among doubles");
+  @Override double evaluateDouble(final List<Expression> es) throws Exception {
+    throw new Exception("no remainder among doubles" + es);
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
@@ -33,7 +33,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
         throw new Exception("remainder in division by zero is undefined");
       $ %= int¢;
     }
-    return ($);
+    return $;
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {

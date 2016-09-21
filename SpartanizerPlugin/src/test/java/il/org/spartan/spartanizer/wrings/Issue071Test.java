@@ -10,7 +10,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue071Test {
-
   @Test public void a() {
     trimmingOf("1*a").gives("a");
   }
@@ -82,5 +81,4 @@ public class Issue071Test {
   @Test public void r() {
     trimmingOf("1L*a").stays();
   }
-
 }

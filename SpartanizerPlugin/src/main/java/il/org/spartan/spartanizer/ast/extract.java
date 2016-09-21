@@ -113,12 +113,12 @@ public enum extract {
 
   /** Computes the "essence" of a statement, i.e., if a statement is essentially
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
-   * perhaps along with any number of empty sideEffects, then its essence is this
-   * single non-empty statement.
+   * perhaps along with any number of empty sideEffects, then its essence is
+   * this single non-empty statement.
    * @param s JD
    * @return essence of the parameter, or <code><b>null</b></code>, if there are
-   *         no non-empty sideEffects within the parameter. If, however there are
-   *         multiple non-empty sideEffects inside the parameter then the
+   *         no non-empty sideEffects within the parameter. If, however there
+   *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
   public static Statement core(final Statement s) {
     final List<Statement> ss = extract.statements(s);
