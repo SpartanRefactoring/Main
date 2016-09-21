@@ -306,7 +306,8 @@ public final class subject {
 
   /** Some Statements */
   public static class SeveralStatements extends Claimer {
-    private final List<Statement> inner; // here we work with several sideEffects
+    private final List<Statement> inner; // here we work with several
+                                         // sideEffects
                                          // so we have a sideEffects list
 
     /** assign each of the given operands to the inner list the left operand is

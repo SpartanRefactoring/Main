@@ -31,12 +31,11 @@ public final class InitializerTest {
   }
 
   InitializerTest(final int i) {
-    // b is not recognized here.
-    System.out.println("int constructor");
+    System.out.println("int constructor" + i);
   }
 
   InitializerTest(final String s) {
     // b is not recognized here.
-    System.out.println("String constructor");
+    System.out.println("String constructor" + s);
   }
 }

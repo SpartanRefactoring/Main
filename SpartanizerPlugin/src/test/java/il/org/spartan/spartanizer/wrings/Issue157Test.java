@@ -140,10 +140,10 @@ import org.junit.*;
         + "ss[i] = hash[i] == null ? null : hash[i].getName(); \n" //
         + "return combine(ss);  \n" //
         + "}")
-            .gives(" public static String combine(final Set<List<HashSet<?>[]>> sssss) {  \n" //
-                + "final String[] ss = new String[sssss.size()];  \n" //
+            .gives(" public static String combine(final Set<List<HashSet<?>[]>> ssss) {  \n" //
+                + "final String[] ss = new String[ssss.size()];  \n" //
                 + "for (int i = 0; i < ss.length; ++i)  \n" //
-                + "ss[i] = sssss[i] == null ? null : sssss[i].getName(); \n" //
+                + "ss[i] = ssss[i] == null ? null : ssss[i].getName(); \n" //
                 + "return combine(ss);  \n" //
                 + "}");
   }

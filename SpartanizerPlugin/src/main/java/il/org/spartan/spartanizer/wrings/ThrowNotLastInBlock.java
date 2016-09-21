@@ -20,12 +20,12 @@ public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowState
 
   @Override protected ASTRewrite go(final ASTRewrite r, final ThrowStatement s, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = parent(s);
-    if (!iz.block(parent))
+    if (!iz.block(parent)) {
       r.remove(nextStatement, g);
-    else {
-      final ListRewrite $ = r.getListRewrite(parent, Block.STATEMENTS_PROPERTY);
-      $.remove(nextStatement, g);
+      return r;
     }
+    final ListRewrite $ = r.getListRewrite(parent, Block.STATEMENTS_PROPERTY);
+    $.remove(nextStatement, g);
     return r;
   }
 }

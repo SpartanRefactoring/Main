@@ -91,13 +91,11 @@ public abstract class ENVTestEngineAbstract {
     while (i.hasNext()) {
       final Entry<String, Information> testEntry = i.next();
       entryFound = false;
-      while (j.hasNext()) {
-        final Entry<String, Information> comparedEntry = j.next();
-        if (comparedEntry.equals(testEntry)) {
+      while (j.hasNext())
+        if (j.next().equals(testEntry)) {
           entryFound = true;
           break;
         }
-      }
     }
     assert entryFound;
   }

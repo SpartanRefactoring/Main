@@ -174,6 +174,10 @@ public enum az {
     return !iz.is($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
+  public static LambdaExpression lambdaExpression(final ASTNode $) {
+    return !iz.is($, LAMBDA_EXPRESSION) ? null : (LambdaExpression) $;
+  }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
    * @param $ result
    * @return argument, but down-casted to a {@link MethodDeclaration}, or
@@ -299,6 +303,10 @@ public enum az {
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final Expression $) {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
+  }
+
+  public static VariableDeclarationStatement variableDeclrationStatement(final ASTNode $) {
+    return !iz.is($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
   }
 
   /** Down-cast, if possible, to {@link WhileStatement}

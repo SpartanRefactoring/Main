@@ -81,20 +81,20 @@ public final class Recurser<T> {
     f.accept(this);
   }
 
-  public T postVisit(final Function<Recurser<T>, T> f) {
+  public T postVisit(final Function<Recurser<T>, T> t) {
     final List<ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
-      return this.current = f.apply(this);
+      return this.current = t.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
     for (final ASTNode ¢ : children)
       rs.add(new Recurser<T>(¢));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
-      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
+      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(t);
       ++index;
     }
     this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
-    return this.current = f.apply(this);
+    return this.current = t.apply(this);
   }
 
   public void preVisit(final Consumer<Recurser<T>> f) {
@@ -109,8 +109,8 @@ public final class Recurser<T> {
       ¢.preVisit(f);
   }
 
-  public T preVisit(final Function<Recurser<T>, T> f) {
-    this.current = f.apply(this);
+  public T preVisit(final Function<Recurser<T>, T> t) {
+    this.current = t.apply(this);
     final List<ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return this.current;
@@ -119,7 +119,7 @@ public final class Recurser<T> {
       rs.add(new Recurser<T>(child));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
-      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).preVisit(f);
+      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).preVisit(t);
       ++index;
     }
     return rs.isEmpty() ? this.current : rs.get(index - 1).getCurrent();

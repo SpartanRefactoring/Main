@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,8 +24,11 @@ public interface spartan {
     return null;
   }
 
-  static String shorten(final List<? extends Type> ¢) {
-    return shorten(onlyOne(¢));
+  static String shorten(final List<Type> ts) {
+    for (final Type ¢ : ts)
+      if (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null)
+        return shorten(¢);
+    return null;
   }
 
   static String shorten(final Name ¢) {
@@ -40,13 +41,11 @@ public interface spartan {
     return shorten(¢.getName());
   }
 
-  /** [[Hedonistic]] */
   static String shorten(final ParameterizedType t) {
     final List<Type> ts = step.typeArguments(t);
-    final Type first = first(ts);
-    final String $ = !iz.wildcardType(first) || az.wildcardType(first).getBound() != null ? shorten(ts) : shorten(t.getType());
+    final String $ = shorten(ts);
     if ($ == null)
-      return null;
+      return shorten(t.getType());
     switch (t.getType() + "") {
       case "Collection":
       case "Iterable":
@@ -57,6 +56,7 @@ public interface spartan {
       case "LinkedHashSet":
       case "ArrayList":
       case "TreeSet":
+      case "Vector":
         return $ + "s";
       default:
         return $;

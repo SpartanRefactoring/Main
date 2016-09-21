@@ -17,14 +17,14 @@ import il.org.spartan.*;
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
 
+  public static void info(final Exception ¢) {
+    System.err.println(¢.getMessage());
+  }
+
   /** logs an error in the plugin
    * @param t an error */
   public static void log(final Throwable ¢) {
     plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.spartanizer", 0, ¢.getMessage(), ¢));
-  }
-
-  public static void info(final Exception e) {
-    // TODO Auto-generated method stub
   }
 
   public static AbstractUIPlugin plugin() {
