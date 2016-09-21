@@ -661,6 +661,29 @@ public final class Version250Test {
     trimmingOf("class X {final Object __ = null;}").stays();
   }
 
+  @Test public void issue241a() {
+    trimmingOf("interface x { int a; }").stays();
+  }
+
+  @Test public void issue241b() {
+    trimmingOf("interface x { static int a; }")//
+        .gives("interface x { int a; }")//
+        .stays();
+  }
+@Test public void issue243() {
+    trimmingOf("interface x { " //
+        + "int a = 0; "//
+        + "boolean b = 0; "//
+        + "byte ba = 0; "//
+        + "short s = 0; "//
+        + "long s = 0; "//
+        + "long s1 = 2; "//
+        + "double d = 0.0; "//
+        + "float f = 0.0; "//
+        + "float f1 = 1;"//
+        + "}")//
+        .stays();
+  }
   @Test public void issue31a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(now.modifiers());\n" + //
@@ -1083,16 +1106,6 @@ public final class Version250Test {
   @Test public void issue87d() {
     trimmingOf("a - (b-c)").gives("a - b + c");
   }
-  @Test public void issue241a() {
-    trimmingOf("interface x { int a; }").stays();
-  }
-@Test public void issue241b() {
-    trimmingOf("interface x { static int a; }")//
-    .gives("interface x { int a; }")//
-    .stays();
-  }
-
-
 
   @Test public void simpleForLoop() {
     trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
