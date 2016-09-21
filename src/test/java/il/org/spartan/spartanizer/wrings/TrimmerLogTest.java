@@ -96,13 +96,29 @@ public class TrimmerLogTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     IJavaElement je = u.getJavaElement();
-    assert je != null;
+    assert je == null;
 
   }
- 
-  @Ignore @Test public void test05(){
+  
+  @Ignore("not ready yet") @Test public void test05(){
     TrimmerLog.fileProperties();
-
+  }
+ 
+  @Test public void test06(){
+    String path = "/home/matteo/MUTATION_TESTING_REFACTORING/test-common-lang/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtils.java";
+    File f = new File(path);
+    CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(f);
+    Trimmer trimmer = new Trimmer();
+    int opp = TrimmerTestsUtils.countOpportunities(trimmer , cu);
+    System.out.println(opp);
+    azzert.that(opp, not(is($0())));
+    List<Suggestion> suggestions = trimmer.collectSuggesions(cu);
+    for(Suggestion suggestion: suggestions)
+      System.out.println(suggestion.description);
+  }
+  
+  private int $0() {
+    return 0;
   }
 
 }
