@@ -11,19 +11,19 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" }) public final class RecurserTest {
   @Test public void issue101_1() {
-    assertEquals(3, (int) (new Recurser<>(into.i("3+4"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(3, (int) new Recurser<>(into.i("3+4"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_10() {
-    assertEquals(9, (int) (new Recurser<>(into.e("a==4 ? 34 : 56+34+99"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(9, (int) new Recurser<>(into.e("a==4 ? 34 : 56+34+99"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_11() {
-    assertEquals(10, (int) (new Recurser<>(into.e("!f.g(X,false)||a.b.e(m.h())"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(10, (int) new Recurser<>(into.e("!f.g(X,false)||a.b.e(m.h())"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_12() {
-    assertEquals(5, (int) (new Recurser<>(into.e("g(false)||a(h())"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(5, (int) new Recurser<>(into.e("g(false)||a(h())"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_13() {
@@ -38,7 +38,7 @@ import org.junit.*;
   }
 
   @Test public void issue101_14() {
-    assertEquals(7, (int) (new Recurser<>(into.i("3+(4*5)+6"), 0)).postVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(7, (int) new Recurser<>(into.i("3+(4*5)+6"), 0).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_15() {
@@ -97,31 +97,31 @@ import org.junit.*;
   }
 
   @Test public void issue101_2() {
-    assertEquals(3, (int) (new Recurser<>(into.i("3+4"), 0)).postVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(3, (int) new Recurser<>(into.i("3+4"), 0).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_3() {
-    assertEquals(7, (int) (new Recurser<>(into.i("5*6+43*2"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(7, (int) new Recurser<>(into.i("5*6+43*2"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_4() {
-    assertEquals(11, (int) (new Recurser<>(into.i("3+4*4+6*7+8"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(11, (int) new Recurser<>(into.i("3+4*4+6*7+8"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_5() {
-    assertEquals(11, (int) (new Recurser<>(into.i("3+4*4+6*7+8"), 0)).postVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(11, (int) new Recurser<>(into.i("3+4*4+6*7+8"), 0).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_6() {
-    assertEquals(5, (int) (new Recurser<>(into.i("3+4+5+6"), 0)).postVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(5, (int) new Recurser<>(into.i("3+4+5+6"), 0).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_7() {
-    assertEquals(6, (int) (new Recurser<>(into.e("a==4 ? 34 : 56"), 0)).postVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(6, (int) new Recurser<>(into.e("a==4 ? 34 : 56"), 0).postVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_8() {
-    assertEquals(8, (int) (new Recurser<>(into.e("a==4 ? 34 : 56+34"), 0)).preVisit((x) -> (1 + x.getCurrent())));
+    assertEquals(8, (int) new Recurser<>(into.e("a==4 ? 34 : 56+34"), 0).preVisit((x) -> (1 + x.getCurrent())));
   }
 
   @Test public void issue101_9() {

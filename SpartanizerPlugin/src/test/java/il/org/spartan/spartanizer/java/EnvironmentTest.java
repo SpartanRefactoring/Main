@@ -77,11 +77,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_1() {
-    azzert.that(Environment.declares(((CompilationUnit) makeAST.COMPILATION_UNIT.from("int a = 0;"))).contains("a"), is(true));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_10() {
-    azzert.that(Environment.declares(((CompilationUnit) makeAST.COMPILATION_UNIT.from("int a = 0;"))).contains("a"), is(true));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_2() {
@@ -94,7 +94,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_3() {
-    azzert.that(Environment.declares(((CompilationUnit) makeAST.COMPILATION_UNIT.from("public void f(int a){}"))).contains("a"), is(true));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("public void f(int a){}")).contains("a"), is(true));
   }
 
   @Ignore public void define_4() {
@@ -106,7 +106,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_5() {
-    azzert.that(Environment.declares(((CompilationUnit) makeAST.COMPILATION_UNIT.from("a = 0;"))).contains("a"), is(false));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("a = 0;")).contains("a"), is(false));
   }
 
   @Ignore public void define_6() {
@@ -133,11 +133,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_8() {
-    azzert.that(declares(((CompilationUnit) makeAST.COMPILATION_UNIT.from("int a = 0;"))).contains("a"), is(true));
+    azzert.that(declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
-    azzert.that(declares(((CompilationUnit) makeAST.COMPILATION_UNIT.from("int a = 0;"))).contains("a"), is(true));
+    azzert.that(declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Test public void defineTestMethodDefinition() {
@@ -224,7 +224,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered000() {
-    (new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")))).compareOutOfOrder(s);
+    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;"))).compareOutOfOrder(s);
   }
 
   @Test public void EngineTestFlatUnordered001() {
