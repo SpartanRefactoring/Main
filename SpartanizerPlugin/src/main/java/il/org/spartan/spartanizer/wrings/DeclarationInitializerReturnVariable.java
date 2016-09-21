@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturnVariable extends VariableDeclarationFragementAndStatement implements Kind.Inlining {
+public final class DeclarationInitializerReturnVariable extends $VariableDeclarationFragementAndStatement implements Kind.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }

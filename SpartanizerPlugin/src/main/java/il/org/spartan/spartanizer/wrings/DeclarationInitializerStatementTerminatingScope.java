@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -33,7 +34,14 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerStatementTerminatingScope extends VariableDeclarationFragementAndStatement implements Kind.Inlining {
+public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement implements Kind.Inlining {
+  static boolean isPresentOnAnymous(final SimpleName n, final Statement s) {
+    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
+      if (iz.is(ancestor, ANONYMOUS_CLASS_DECLARATION))
+        return true;
+    return false;
+  }
+
   static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.is(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
@@ -49,7 +57,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    final Statement currentStatement = extract.statement(f);
+    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
       return null;
     final Block parent = az.block(currentStatement.getParent());
@@ -60,15 +68,16 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
       return null;
     final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
     if (!sideEffects.free(initializer)) {
-      if (uses.size() > 1)
+      final SimpleName use = onlyOne(uses);
+      if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
         return null;
-      for (final SimpleName use : uses)
-        if (haz.unknownNumberOfEvaluations(use, nextStatement))
-          return null;
     }
-    for (final SimpleName use : uses)
+    for (final SimpleName use : uses) {
       if (never(use, nextStatement))
         return null;
+      if (isPresentOnAnymous(use, nextStatement))
+        return null;
+    }
     final InlinerWithValue i = new Inliner(name, r, g).byValue(initializer);
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);

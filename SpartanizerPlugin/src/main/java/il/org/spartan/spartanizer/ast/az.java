@@ -301,6 +301,10 @@ public enum az {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 
+  public static VariableDeclarationStatement variableDeclrationStatement(ASTNode $) {
+    return !iz.is($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
+  }
+
   /** Down-cast, if possible, to {@link WhileStatement}
    * @param $ result
    * @return parameter down-casted to the returned type, or
