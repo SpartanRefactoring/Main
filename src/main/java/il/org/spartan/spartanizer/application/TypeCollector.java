@@ -36,6 +36,7 @@ public final class TypeCollector {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
     final int nodes = metrics.nodesCount(in);
+    final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = essence(in + "").length();
     final String out = NonGUIApplicator.fixedPoint(in + "");
@@ -43,7 +44,9 @@ public final class TypeCollector {
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
     final int essence2 = essence(out + "").length();
-    final int nodes2 = metrics.nodesCount(makeAST.COMPILATION_UNIT.from(out));
+    final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
+    final int nodes2 = metrics.nodesCount(from);
+    final int body2 = metrics.bodySize(from);
     System.out.println(++n + " " + extract.category(in) + " " + extract.name(in));
     output//
         .put("Category", extract.category(in))//
@@ -52,7 +55,11 @@ public final class TypeCollector {
         .put("Nodes2", nodes2)//
         .put("ΔNodes", nodes - nodes2)//
         .put("δNodees", δ(nodes, nodes2))//
-        .put("Length1", length)//
+        .put("Body", body)//
+        .put("Body2", body2)//
+        .put("ΔBody", body - body2)//
+        .put("δBody", δ(body, body2))//
+         .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("ΔTokens", tokens - tokens2)//
@@ -67,11 +74,12 @@ public final class TypeCollector {
         .put("δTide2", δ(tide, tide2))//
         .put("Essence1", essence)//
         .put("Essence2", essence2)//
-        .put("ΔEssence2", essence - essence2)//
-        .put("δEssence2", δ(essence, essence2))//
+        .put("ΔEssence", essence - essence2)//
+        .put("δEssence", δ(essence, essence2))//
         .put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //
+        .put("R(B/S)", ratio(nodes,body)) //
     ;
     output.nl();
     return false;
@@ -106,6 +114,8 @@ public final class TypeCollector {
   }
 
   private static void collect(final File f) {
+    if (f.getPath().contains("src/test"))
+      return;
     try {
       collect(FileUtils.read(f));
     } catch (final IOException e) {
