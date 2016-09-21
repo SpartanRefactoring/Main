@@ -221,15 +221,11 @@ public final class typeTest {
     }
 
     @SuppressWarnings("boxing") @Test public void axiomConditional22() {
-      azzert.that(Axiom.type(b1 ? (Integer)i : (Integer)null), is(NOTHING));
+      azzert.that(Axiom.type(b1 ? (Integer) i : (Integer) null), is(NOTHING));
     }
 
     @Test public void axiomConditional23() {
       azzert.that(Axiom.type(b1 ? 'a' : s), is(INT));
-    }
-    
-    @Test public void axiomNull() {
-      azzert.that(Axiom.type((Integer)null), is(NOTHING));
     }
 
     @Test public void axiomDouble() {
@@ -311,6 +307,10 @@ public final class typeTest {
 
     @Test public void axiomLong() {
       azzert.that(Axiom.type(7l), is(LONG));
+    }
+
+    @Test public void axiomNull() {
+      azzert.that(Axiom.type((Integer) null), is(NOTHING));
     }
 
     @Test public void axiomShort() {
@@ -539,6 +539,14 @@ public final class typeTest {
 
     @Test public void cast19() {
       azzert.that(of(into.e("(float)1d")), is(FLOAT));
+    }
+
+    @Test public void cast20() {
+      azzert.that(type.of(into.e("(Integer)null")), is(NULL));
+    }
+    
+    @Test public void cast21() {
+      azzert.that(type.of(into.e("(Integer)((null))")), is(NULL));
     }
 
     // tests for conditionals
