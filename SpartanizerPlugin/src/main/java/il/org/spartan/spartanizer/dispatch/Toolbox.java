@@ -76,7 +76,7 @@ public class Toolbox {
               new InfixAdditionSubtractionExpand(), //
               new InfixEmptyStringAdditionToString(), //
               new InfixConcatenationEmptyStringLeft(), //
-              new InfixFactorNegatives(), //
+              new InfixFactorNegative(), //
               new InfixAdditionEvaluate(), //
               // new ConcatStrings(), //removed for now so it won't break tests,
               // see issue #120
