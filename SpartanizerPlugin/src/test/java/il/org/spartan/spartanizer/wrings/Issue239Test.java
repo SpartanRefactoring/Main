@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author TODO: Matteo 
+/** @author TODO: Matteo??? 
  * @year 2016 */
 @SuppressWarnings("static-method") public class Issue239Test {
   @Test public void a$01() {
@@ -17,11 +17,4 @@ import org.junit.*;
             "}").stays();
   }
 
-  @Test public void a$02() {
-    trimmingOf("private void testInteger(final boolean testTransients) {\n" + //
-        "final Integer i1 = Integer.valueOf(12345);\n" + //
-        "final Integer i2 = Integer.valueOf(12345);\n" + //
-        "assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
-        "}").stays();
-  }
 }
