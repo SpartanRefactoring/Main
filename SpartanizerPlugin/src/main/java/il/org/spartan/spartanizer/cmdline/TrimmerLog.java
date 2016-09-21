@@ -120,4 +120,22 @@ public class TrimmerLog {
     
   }
 
+  public static int getMaxApplications() {
+    return maxApplications;
+  }
+
+  public static void setMaxApplications(int maxApplications) {
+    TrimmerLog.maxApplications = maxApplications;
+  }
+
+  public static int getMaxVisitations() {
+    return maxVisitations;
+  }
+
+  public static int getMaxSuggestions() {
+    return maxSuggestions;
+  }
+  
+  
+
 }
