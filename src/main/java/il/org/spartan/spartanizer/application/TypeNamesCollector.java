@@ -33,13 +33,13 @@ public final class TypeNamesCollector {
     }
     System.err.println("Look for your output here: " + w.close());
   }
-private static void collect(final CompilationUnit u) {
+
+  private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleType ¢) {
         record(hop.simpleName(¢) + "");
         return true;
       }
-
 
       void record(final String longName) {
         if (!longNames.containsKey(longName))

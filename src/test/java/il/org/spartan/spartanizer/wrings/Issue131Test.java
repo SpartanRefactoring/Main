@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wringing.*;
-
 /** {@link $BodyDeclarationModifiersPrune}
  * @author Yossi Gil
  * @since 2016 */
