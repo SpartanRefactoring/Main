@@ -26,17 +26,15 @@ public final class ArithmeticTest {
     }
 
     @Test public void issue143_2() {
-      trimmingOf("@Override public int hashCode() { "//
-          + "return 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())))"
-          + "+(self == null ? 0 : self.hashCode());" //
-          + "}")
-              .gives("@Override public int hashCode() { "//
-                  + "return (self == null ? 0 : self.hashCode())"
-                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(1 * 31 + (blockScope == null ? 0 : blockScope.hashCode())));" //
-                  + "}")
-              .gives("@Override public int hashCode() { "//
-                  + "return (self == null ? 0 : self.hashCode())"
-                  + "+ 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 *(31 + (blockScope == null ? 0 : blockScope.hashCode())));" + "}");
+      trimmingOf("return ((31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode())) * 31"
+          + "+ ((hiding == null) ? 0 : hiding.hashCode())) * 31 + ((self == null) ? 0 : self.hashCode());")
+              .gives("return 31 * ((31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode())) * 31"
+                  + "+ ((hiding == null) ? 0 : hiding.hashCode())) + ((self == null) ? 0 : self.hashCode());")
+              .gives("return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + (31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode())) * 31) + ((self == null) ? 0 : self.hashCode());")
+              .gives("return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + 31 * (31 * 1 + ((blockScope == null) ? 0 : blockScope.hashCode()))) + ((self == null) ? 0 : self.hashCode());")
+              .gives("return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + 31 * (31 + ((blockScope == null) ? 0 : blockScope.hashCode()))) + ((self == null) ? 0 : self.hashCode());")
+              .gives("return 31 * (((hiding == null) ? 0 : hiding.hashCode()) + 31 * (((blockScope == null) ? 0 : blockScope.hashCode()) + 31)) + ((self == null) ? 0 : self.hashCode());")
+              .stays();
     }
 
     @Test public void issue158_1() {

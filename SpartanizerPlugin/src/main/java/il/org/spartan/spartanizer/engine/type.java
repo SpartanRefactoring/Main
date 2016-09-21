@@ -186,13 +186,6 @@ public interface type {
     /** All type that were ever born , as well as all primitive types */
     private static Map<String, implementation> types = new LinkedHashMap<>();
 
-    private static implementation conditionalWithNoInfo(final implementation ¢) {
-      return in(¢, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
-          ? NUMERIC //
-          : !in(¢, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
-              ? NOTHING : ¢;
-    }
-
     private static implementation get(final Expression ¢) {
       return hasType(¢) ? getType(¢) : setType(¢, lookUp(¢, lookDown(¢)));
     }
@@ -208,6 +201,14 @@ public interface type {
      * @return true if n has a type property and false otherwise */
     private static boolean hasType(final ASTNode ¢) {
       return getType(¢) != null;
+    }
+
+    private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
+      if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
+        return false;
+      final NumberLiteral l = az.numberLiteral(x);
+      final int n = Integer.parseInt(step.token(l));
+      return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
     }
 
     private static implementation lookDown(final Assignment x) {
@@ -226,13 +227,9 @@ public interface type {
     private static implementation lookDown(final ConditionalExpression x) {
       final implementation $ = get(step.then(x));
       final implementation ¢ = get(step.elze(x));
-      // If we don't know much about one operand but do know enough about the
-      // other, we can still learn something
       return $ == ¢ ? $
-          : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
-              : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
-                  : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                      : $.isAlphaNumeric() && ¢.isAlphaNumeric() ? ALPHANUMERIC : NOTHING;
+          : isCastedToShort($, ¢, step.elze(x)) || isCastedToShort(¢, $, step.then(x)) ? SHORT
+              : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
 
     /** @param x JD
@@ -300,7 +297,7 @@ public interface type {
 
     private static implementation lookDown(final PostfixExpression ¢) {
       return get(step.operand(¢)).asNumeric(); // see
-                                              // testInDecreamentSemantics
+                                               // testInDecreamentSemantics
     }
 
     private static implementation lookDown(final PrefixExpression ¢) {
