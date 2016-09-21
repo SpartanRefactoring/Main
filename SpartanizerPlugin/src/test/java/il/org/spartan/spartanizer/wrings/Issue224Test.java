@@ -12,15 +12,15 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue224Test {
-  @Test public void issue224_01() {
+  @Test public void a$01() {
     trimmingOf("a+b.toString()").gives("a+\"\"+b").stays();
   }
 
-  @Test public void issue224_02() {
+  @Test public void a$02() {
     trimmingOf("b.toString()").gives("\"\"+b").gives("b+\"\"").stays();
   }
 
-  @Test public void issue224_03() {
+  @Test public void a$03() {
     trimmingOf("\"5\"+b.toString()").gives("\"5\"+\"\"+b").gives("\"5\"+b").stays();
   }
 }

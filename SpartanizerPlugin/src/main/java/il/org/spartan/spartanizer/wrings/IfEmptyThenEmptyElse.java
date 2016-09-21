@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** A {@link Wring} to eliminate degenerate if statements such as
+/** A {@link Wring} to eliminate degenerate if sideEffects such as
  *
  * <pre>
  * if (x)

@@ -23,6 +23,10 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     plugin.getLog().log(new Status(IStatus.ERROR, "il.org.spartan.spartanizer", 0, ¢.getMessage(), ¢));
   }
 
+  public static void info(final Exception e) {
+    // TODO Auto-generated method stub
+  }
+
   public static AbstractUIPlugin plugin() {
     return plugin;
   }
