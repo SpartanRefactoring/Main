@@ -23,13 +23,7 @@ public class TrimmerLog {
   private static boolean logToFile;
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
 
-  public static void activateLogToFile() {
-    logToFile = true;
-  }
-
-  public static void activateLogToScreen() {
-    logToScreen = true;
-  }
+  private static String fileName;
 
   public static void application(final ASTRewrite r, final Suggestion s) {
     if (--maxApplications <= 0) {
@@ -63,6 +57,7 @@ public class TrimmerLog {
     }
     if (logToFile) {
       init();
+      output.put("File", fileName);
       output.put("Wring", clazz(w));
       output.put("Named", w.description());
       output.put("Kind", w.wringGroup());
@@ -71,14 +66,27 @@ public class TrimmerLog {
       output.put("Suggests", w.suggest(n));
       output.nl();
     }
+    
     if (!logToScreen)
       return;
-    System.out.println("       Wring: " + clazz(w));
-    System.out.println("       Named: " + w.description());
-    System.out.println("        Kind: " + w.wringGroup());
-    System.out.println("   Described: " + w.description(n));
-    System.out.println(" Can suggest: " + w.canSuggest(n));
-    System.out.println("    Suggests: " + w.suggest(n));
+    
+    if (logToScreen) {
+        System.out.println("        File: " + fileName);
+        System.out.println("       Wring: " + clazz(w));
+        System.out.println("       Named: " + w.description());
+        System.out.println("        Kind: " + w.wringGroup());
+        System.out.println("   Described: " + w.description(n));
+        System.out.println(" Can suggest: " + w.canSuggest(n));
+        System.out.println("    Suggests: " + w.suggest(n));
+    }
+  }
+  
+  public static void activateLogToScreen(){
+    logToScreen = true;
+  }
+  
+  public static void activateLogToFile(){
+    logToFile = true;
   }
 
   public static void visitation(final ASTNode ¢) {
@@ -102,4 +110,9 @@ public class TrimmerLog {
     }
     return null;
   }
+
+  public static void setFileName(String $) {
+    fileName = $;    
+  }
+
 }

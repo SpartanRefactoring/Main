@@ -18,6 +18,7 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -296,6 +297,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
+    TrimmerLog.setFileName(u.getJavaElement().getElementName());
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateSuggestions($, u, m);
     progressMonitor.done();
