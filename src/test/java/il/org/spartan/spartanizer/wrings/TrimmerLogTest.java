@@ -96,7 +96,7 @@ public class TrimmerLogTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     IJavaElement je = u.getJavaElement();
-    assert je != null;
+    assert je == null;
 
   }
  
