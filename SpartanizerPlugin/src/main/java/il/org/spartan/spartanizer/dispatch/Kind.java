@@ -21,6 +21,14 @@ public interface Kind {
     }
   }
 
+  interface Annonimization extends Nominal {
+    static final String label = "Unused arguments";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
   interface Centification extends Nominal {
     String label = "Centification";
 
@@ -119,14 +127,6 @@ public interface Kind {
   /** Replace conditional statement with the conditional operator */
   interface Ternarization extends Structural { // S3
     static String label = "Ternarization";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  interface Annonimization extends Nominal {
-    static final String label = "Unused arguments";
 
     @Override default String description() {
       return label;
