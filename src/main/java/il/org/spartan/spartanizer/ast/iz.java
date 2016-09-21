@@ -674,10 +674,10 @@ public enum iz {
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
-   * or has nothing but empty statements in it.
+   * or has nothing but empty sideEffects in it.
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the parameter */
+   *         sideEffects in the parameter */
   public static boolean vacuous(final Statement ¢) {
     return extract.statements(¢).isEmpty();
   }
@@ -685,16 +685,16 @@ public enum iz {
   /** Determine whether the 'else' part of an {@link IfStatement} is vacuous.
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the 'else' part of the parameter */
+   *         sideEffects in the 'else' part of the parameter */
   public static boolean vacuousElse(final IfStatement ¢) {
     return vacuous(elze(¢));
   }
 
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
-   * but empty statements in it.
+   * but empty sideEffects in it.
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the parameter */
+   *         sideEffects in the parameter */
   public static boolean vacuousThen(final IfStatement ¢) {
     return vacuous(then(¢));
   }

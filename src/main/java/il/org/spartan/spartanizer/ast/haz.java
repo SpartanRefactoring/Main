@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -169,6 +171,18 @@ public enum haz {
     for (final IExtendedModifier ¢ : ms)
       if (¢.isAnnotation())
         return true;
+    return false;
+  }
+
+  public static boolean unknownNumberOfEvaluations(final SimpleName n, final Statement s) {
+    ASTNode child = n;
+    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
+      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
+          || iz.is(ancestor, FOR_STATEMENT) && initializers((ForStatement) ancestor).indexOf(child) != -1
+          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
+        return true;
+      child = ancestor;
+    }
     return false;
   }
 }

@@ -11,27 +11,27 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue073Test {
-  @Test public void issue73_01() {
+  @Test public void a$01() {
     trimmingOf("x + \"\"").stays();
   }
 
-  @Test public void issue73_02() {
+  @Test public void a$02() {
     trimmingOf("\"abc\" + \"\"").gives("\"abc\"").stays();
   }
 
-  @Test public void issue73_03() {
+  @Test public void a$03() {
     trimmingOf("\"\"+\"abc\"").gives("\"abc\"").stays();
   }
 
-  @Test public void issue73_04() {
+  @Test public void a$04() {
     trimmingOf("\"abc\" + \"\"+\"abc\"").gives("\"abc\" + \"abc\"");
   }
 
-  @Test public void issue73_05() {
+  @Test public void a$05() {
     trimmingOf("x + \"\"+\"abc\"").gives("x + \"abc\"").stays();
   }
 
-  @Test public void issue73_06() {
+  @Test public void a$06() {
     trimmingOf("((String)x) + \"\"").gives("((String)x)");
   }
 }

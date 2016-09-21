@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** Convert Infinite loops with return statements to shorter ones : </br>
+/** Convert Infinite loops with return sideEffects to shorter ones : </br>
  * Convert <br/>
  * <code>
  * while (true) { <br/>

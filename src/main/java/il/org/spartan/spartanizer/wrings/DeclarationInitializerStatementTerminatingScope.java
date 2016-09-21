@@ -34,19 +34,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends VariableDeclarationFragementAndStatement implements Kind.Inlining {
-  private static boolean forbidden(final SimpleName n, final Statement s) {
-    ASTNode child = null;
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
-      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
-          || iz.is(ancestor, FOR_STATEMENT) && step.initializers((ForStatement) ancestor).indexOf(child) != -1
-          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
-        return true;
-      child = ancestor;
-    }
-    return false;
-  }
-
-  private static boolean never(final SimpleName n, final Statement s) {
+  static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.is(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
@@ -57,34 +45,31 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName name, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier ¢ : step.extendedModifiers((VariableDeclarationStatement) f.getParent()))
-      if (¢.isModifier() && ((Modifier) ¢).isFinal())
-        return null;
-    final Statement s = extract.statement(f);
-    if (s == null)
+    final Statement currentStatement = extract.statement(f);
+    if (currentStatement == null)
       return null;
-    final Block parent = az.block(s.getParent());
+    final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);
-    if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
+    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(name).in(nextStatement).isEmpty())
       return null;
-    final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);
+    final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
     if (!sideEffects.free(initializer)) {
       if (uses.size() > 1)
         return null;
       for (final SimpleName use : uses)
-        if (forbidden(use, nextStatement))
+        if (haz.unknownNumberOfEvaluations(use, nextStatement))
           return null;
     }
     for (final SimpleName use : uses)
       if (never(use, nextStatement))
         return null;
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(name, r, g).byValue(initializer);
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);
