@@ -223,6 +223,10 @@ public enum iz {
     return is(¢, EXPRESSION_STATEMENT);
   }
 
+  public static boolean fieldDeclaration(BodyDeclaration ¢) {
+    return is(¢, FIELD_DECLARATION);
+  }
+
   public static boolean final¢(final BodyDeclaration ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
@@ -350,7 +354,7 @@ public enum iz {
 
   /** @param ¢ JD
    * @return true if the given node is an interface or false otherwise */
-  public static boolean isInterface(final ASTNode ¢) {
+  public static boolean interface¢(final ASTNode ¢) {
     return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
