@@ -71,7 +71,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (!"size".equals(step.name(i).getIdentifier()))
       return null;
     int sign = -1;
-    NumberLiteral l = az.boxed.negativeLiteral(x);
+    NumberLiteral l = az.throwing.negativeLiteral(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
        * NumberLiteral or an PrefixExpression which is a negative number */
