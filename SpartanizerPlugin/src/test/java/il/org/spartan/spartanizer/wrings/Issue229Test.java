@@ -14,6 +14,6 @@ import il.org.spartan.spartanizer.wringing.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue229Test {
   @Test public void vanilla() {
-    trimmingOf("final class X { @SafeVarargs public final void f(final int... ¢) {}}").stays();
+    trimmingOf("final class X { @SafeVarargs public void f(final int... ¢) {}}").stays();
   }
 }
