@@ -544,7 +544,7 @@ public final class typeTest {
     @Test public void cast20() {
       azzert.that(type.of(into.e("(Integer)null")), is(NULL));
     }
-    
+
     @Test public void cast21() {
       azzert.that(type.of(into.e("(Integer)((null))")), is(NULL));
     }

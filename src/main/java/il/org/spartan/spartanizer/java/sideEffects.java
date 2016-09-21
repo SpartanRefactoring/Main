@@ -13,6 +13,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 
 public enum sideEffects {
@@ -28,6 +29,7 @@ public enum sideEffects {
       CHARACTER_LITERAL, //
       EMPTY_STATEMENT, //
       FIELD_ACCESS, //
+      LAMBDA_EXPRESSION, //
       NULL_LITERAL, //
       NUMBER_LITERAL, //
       PRIMITIVE_TYPE, //
@@ -90,7 +92,8 @@ public enum sideEffects {
       case ARRAY_INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
       default:
-        throw new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName());
+        Plugin.log(new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName()));
+        return false;
     }
   }
 

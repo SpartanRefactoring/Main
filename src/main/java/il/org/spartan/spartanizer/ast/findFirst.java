@@ -21,13 +21,26 @@ public interface findFirst {
     return instanceOf(AssertStatement.class, ¢);
   }
 
-  /** Search for an {@link MethodDeclaration} in the tree rooted at an
+  static Type firstType(final Statement ¢) {
+    return instanceOf(Type.class, ¢);
+  }
+
+  /** Search for an {@link ForStatement} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link ForStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  static ForStatement forStatement(final ASTNode ¢) {
+    return instanceOf(ForStatement.class, ¢);
+  }
+
+  /** Search for an {@link IfStatement} in the tree rooted at an
    * {@link ASTNode}.
    * @param n JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
-  static MethodDeclaration methodDeclaration(final ASTNode ¢) {
-    return findFirst.instanceOf(MethodDeclaration.class, ¢);
+  static IfStatement ifStatement(final ASTNode ¢) {
+    return instanceOf(IfStatement.class, ¢);
   }
 
   /** Find the first {@link InfixExpression} representing an addition, under a
@@ -51,28 +64,6 @@ public interface findFirst {
     return $.get();
   }
 
-  static Type firstType(final Statement ¢) {
-    return instanceOf(Type.class, ¢);
-  }
-
-  /** Search for an {@link ForStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link ForStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static ForStatement forStatement(final ASTNode ¢) {
-    return instanceOf(ForStatement.class, ¢);
-  }
-
-  /** Search for an {@link IfStatement} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param n JD
-   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static IfStatement ifStatement(final ASTNode ¢) {
-    return instanceOf(IfStatement.class, ¢);
-  }
-
   static <N extends ASTNode> N instanceOf(final Class<N> c, final ASTNode n) {
     if (n == null)
       return null;
@@ -88,8 +79,17 @@ public interface findFirst {
         return false;
       }
     });
-    @SuppressWarnings("unchecked") N $$ = (N) $.get();
+    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
+  }
+
+  /** Search for an {@link MethodDeclaration} in the tree rooted at an
+   * {@link ASTNode}.
+   * @param n JD
+   * @return first {@link IfStatement} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  static MethodDeclaration methodDeclaration(final ASTNode ¢) {
+    return findFirst.instanceOf(MethodDeclaration.class, ¢);
   }
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
