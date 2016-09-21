@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 

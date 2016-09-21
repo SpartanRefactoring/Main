@@ -127,7 +127,7 @@ public interface hop {
     return $;
   }
 
-  static SimpleName simpleName(Type ¢) {
+  static SimpleName simpleName(final Type ¢) {
     return ¢.isSimpleType() ? (SimpleName) ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }

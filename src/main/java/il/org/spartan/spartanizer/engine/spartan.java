@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,9 +24,8 @@ public interface spartan {
     return null;
   }
 
-
-  static String shorten(List<Type> ts) {
-    for (final Type ¢ :ts) 
+  static String shorten(final List<Type> ts) {
+    for (final Type ¢ : ts)
       if (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null)
         return shorten(¢);
     return null;

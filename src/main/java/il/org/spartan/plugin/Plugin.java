@@ -18,7 +18,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
 
   public static void info(final Exception ¢) {
-    System.err.println(¢.getMessage()); 
+    System.err.println(¢.getMessage());
   }
 
   /** logs an error in the plugin

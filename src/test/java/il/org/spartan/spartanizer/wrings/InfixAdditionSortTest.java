@@ -121,6 +121,6 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test15() {
-    azzert.that((InfixExpression) TermsExpander.simplify(INPUT) + "", iz(INPUT + ""));
+    azzert.that(TermsExpander.simplify(INPUT) + "", iz(INPUT + ""));
   }
 }
