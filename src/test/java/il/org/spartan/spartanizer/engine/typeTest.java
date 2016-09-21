@@ -52,6 +52,8 @@ public final class typeTest {
     private int i = (int) d;
     private long l = c2 + c1 * (b + i) << b;
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
+    private String str = "string";
+    private boolean bl = true;
 
     // basic tests for assignments
     @Test public void assingment1() {
@@ -197,6 +199,15 @@ public final class typeTest {
 
     @Test public void axiomExpression9() {
       azzert.that(Axiom.type(-0.022321428571428572), is(DOUBLE));
+    }
+    
+    //TODO: Niv, look deeper into how conditionals' type works
+    @Test public void axiomConditional01() {
+      azzert.that(Axiom.type(bl ? 3 : s), is(SHORT));
+    }
+    
+    @SuppressWarnings("boxing") @Test public void axiomConditional02() {
+      azzert.that(Axiom.type(bl ? 3 : str), is(NOTHING));
     }
 
     @Test public void axiomFloat() {
@@ -509,7 +520,11 @@ public final class typeTest {
     }
 
     @Test public void conditional17() {
-      azzert.that(of(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(NUMERIC));
+      azzert.that(of(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(ALPHANUMERIC));
+    }
+    
+    @Test public void conditional18() {
+      azzert.that(of(into.e("b ? y(2)+10 : x-6")), is(ALPHANUMERIC));
     }
 
     // tests for constructors
