@@ -1,18 +1,9 @@
 package il.org.spartan.spartanizer.wrings;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.step.*;
-
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.*;
 
 /** @author Yossi Gil
  * @since 2016 */
