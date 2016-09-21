@@ -12,7 +12,6 @@ public final class LogWriter extends Writer {
   }
 
   private void initializeWriter() {
-    final String outputFileName = outputPath + "/suggestions.csv";
-    initializeWriter(outputFileName);
+    initializeWriter(outputPath + "/suggestions.csv");
   }
 }

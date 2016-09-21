@@ -10,7 +10,7 @@ public abstract class EagerWring<N extends ASTNode> extends Wring<N> {
     return this.suggest(¢) != null;
   }
 
-  final protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
+  protected final boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;
   }
 }

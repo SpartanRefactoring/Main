@@ -22,8 +22,15 @@ public class TrimmerLog {
   private static boolean logToScreen = true; // default output
   private static boolean logToFile;
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
-
   private static String fileName;
+
+  public static void activateLogToFile() {
+    logToFile = true;
+  }
+
+  public static void activateLogToScreen() {
+    logToScreen = true;
+  }
 
   public static void application(final ASTRewrite r, final Suggestion s) {
     if (--maxApplications <= 0) {
@@ -35,6 +42,30 @@ public class TrimmerLog {
     System.out.println("      Before: " + r);
     s.go(r, null);
     System.out.println("       After: " + r);
+  }
+
+  public static void fileProperties() {
+    // TODO Auto-generated method stub
+  }
+
+  public static int getMaxApplications() {
+    return maxApplications;
+  }
+
+  public static int getMaxSuggestions() {
+    return maxSuggestions;
+  }
+
+  public static int getMaxVisitations() {
+    return maxVisitations;
+  }
+
+  public static void setFileName(final String $) {
+    fileName = $;
+  }
+
+  public static void setMaxApplications(final int maxApplications) {
+    TrimmerLog.maxApplications = maxApplications;
   }
 
   public static void setMaxSuggestions(final int maxSuggestions) {
@@ -66,27 +97,15 @@ public class TrimmerLog {
       output.put("Suggests", w.suggest(n));
       output.nl();
     }
-    
-    if (!logToScreen)
+    if (!logToScreen || !logToScreen)
       return;
-    
-    if (logToScreen) {
-        System.out.println("        File: " + fileName);
-        System.out.println("       Wring: " + clazz(w));
-        System.out.println("       Named: " + w.description());
-        System.out.println("        Kind: " + w.wringGroup());
-        System.out.println("   Described: " + w.description(n));
-        System.out.println(" Can suggest: " + w.canSuggest(n));
-        System.out.println("    Suggests: " + w.suggest(n));
-    }
-  }
-  
-  public static void activateLogToScreen(){
-    logToScreen = true;
-  }
-  
-  public static void activateLogToFile(){
-    logToFile = true;
+    System.out.println("        File: " + fileName);
+    System.out.println("       Wring: " + clazz(w));
+    System.out.println("       Named: " + w.description());
+    System.out.println("        Kind: " + w.wringGroup());
+    System.out.println("   Described: " + w.description(n));
+    System.out.println(" Can suggest: " + w.canSuggest(n));
+    System.out.println("    Suggests: " + w.suggest(n));
   }
 
   public static void visitation(final ASTNode ¢) {
@@ -110,32 +129,4 @@ public class TrimmerLog {
     }
     return null;
   }
-
-  public static void setFileName(String $) {
-    fileName = $;    
-  }
-
-  public static void fileProperties() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  public static int getMaxApplications() {
-    return maxApplications;
-  }
-
-  public static void setMaxApplications(int maxApplications) {
-    TrimmerLog.maxApplications = maxApplications;
-  }
-
-  public static int getMaxVisitations() {
-    return maxVisitations;
-  }
-
-  public static int getMaxSuggestions() {
-    return maxSuggestions;
-  }
-  
-  
-
 }

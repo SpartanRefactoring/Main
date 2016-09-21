@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitialiazelUpdateAssignment extends VariableDeclarationFragementAndStatement implements Kind.Collapse {
+public final class DeclarationInitialiazelUpdateAssignment extends $VariableDeclarationFragementAndStatement implements Kind.Collapse {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }

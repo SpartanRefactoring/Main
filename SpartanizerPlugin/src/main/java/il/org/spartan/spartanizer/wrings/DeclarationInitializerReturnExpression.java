@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
 /** convert <code>int a = 3;return a;</code> into <code>return a;</code>
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerReturnExpression extends VariableDeclarationFragementAndStatement implements Kind.Inlining {
+public final class DeclarationInitializerReturnExpression extends $VariableDeclarationFragementAndStatement implements Kind.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
