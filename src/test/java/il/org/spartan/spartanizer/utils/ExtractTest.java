@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void firstMethdoDeclaration() {
-    azzert.that(findFirst.firstMethodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
+    azzert.that(findFirst.methodDeclaration(Wrap.Method.intoCompilationUnit("int f() { return a; }")), iz("int f() { return a; }"));
   }
 
   @Test public void operandsCount() {
@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void plus() {
-    azzert.that(findFirst.firstPlus(into.e("a + 2 < b")), iz("a+2"));
+    azzert.that(findFirst.infixPlus(into.e("a + 2 < b")), iz("a+2"));
   }
 
   @Test public void prefixToPostfixDecrement() {

@@ -19,6 +19,21 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016-09-06 */
 public interface metrics {
+  /** Counts the number of nodes in a tree rooted at a given node
+   * @param n JD
+   * @return Number of abstract syntax tree nodes under the parameter. */
+  static int bodySize(final ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        if (¢.getBody() != null)
+          $.inner += nodesCount(¢.getBody());
+        return false;
+      }
+    });
+    return $.inner;
+  }
+
   static int condensedSize(final ASTNode ¢) {
     return wizard.condense(¢).length();
   }
@@ -126,7 +141,7 @@ public interface metrics {
     return $;
   }
 
-  /** Counts the number of statements in a tree rooted at a given node
+  /** Counts the number of sideEffects in a tree rooted at a given node
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int lineCount(final ASTNode n) {
@@ -215,21 +230,19 @@ public interface metrics {
     return $;
   }
 
-  static int vocabulary(final ASTNode u) {
-    return dictionary(u).size();
-  }
-
-  public static int tokens(String s) {
+  static int tokens(final String s) {
     int $ = 0;
-    for (Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      Token t = tokenizer.next();
-      if (t == null)
-        return $;
-      if (t == Token.EOF)
+    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+      final Token t = tokenizer.next();
+      if (t == null || t == Token.EOF)
         return $;
       if (t.kind == Kind.COMMENT || t.kind == Kind.NONCODE)
         continue;
       ++$;
     }
+  }
+
+  static int vocabulary(final ASTNode u) {
+    return dictionary(u).size();
   }
 }

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -33,20 +34,15 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerStatementTerminatingScope extends VariableDeclarationFragementAndStatement implements Kind.Inlining {
-  private static boolean forbidden(final SimpleName n, final Statement s) {
-    ASTNode child = null;
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
-      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
-          || iz.is(ancestor, FOR_STATEMENT) && step.initializers((ForStatement) ancestor).indexOf(child) != -1
-          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
+public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement implements Kind.Inlining {
+  static boolean isPresentOnAnymous(final SimpleName n, final Statement s) {
+    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
+      if (iz.is(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
-      child = ancestor;
-    }
     return false;
   }
 
-  private static boolean never(final SimpleName n, final Statement s) {
+  static boolean never(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.is(ancestor, TRY_STATEMENT, SYNCHRONIZED_STATEMENT))
         return true;
@@ -61,28 +57,23 @@ public final class DeclarationInitializerStatementTerminatingScope extends Varia
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    for (final IExtendedModifier ¢ : step.extendedModifiers((VariableDeclarationStatement) f.getParent()))
-      if (¢.isModifier() && ((Modifier) ¢).isFinal())
-        return null;
-    final Statement s = extract.statement(f);
-    if (s == null)
+    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
+    if (currentStatement == null)
       return null;
-    final Block parent = az.block(s.getParent());
+    final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);
-    if (!lastIn(nextStatement, ss) || !penultimateIn(s, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
+    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
-    final List<SimpleName> uses = Collect.usesOf(f.getName()).in(nextStatement);
+    final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {
-      if (uses.size() > 1)
+      final SimpleName use = onlyOne(uses);
+      if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
         return null;
-      for (final SimpleName use : uses)
-        if (forbidden(use, nextStatement))
-          return null;
     }
     for (final SimpleName use : uses)
-      if (never(use, nextStatement))
+      if (never(use, nextStatement) || isPresentOnAnymous(use, nextStatement))
         return null;
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     final Statement newStatement = duplicate.of(nextStatement);

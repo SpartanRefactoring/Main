@@ -175,7 +175,7 @@ public enum step {
 
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
-   * @return left operand of the parameter */
+   * @return right operand of the parameter */
   public static Expression from(final Assignment ¢) {
     return ¢.getRightHandSide();
   }
@@ -292,9 +292,9 @@ public enum step {
     return ¢.getRightOperand();
   }
 
-  /** Expose the list of statements contained in a {@link Block}
+  /** Expose the list of sideEffects contained in a {@link Block}
    * @param ¢ JD
-   * @return reference to the list of statements contained in the argument */
+   * @return reference to the list of sideEffects contained in the argument */
   @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
     return ¢.statements();
   }
@@ -324,7 +324,31 @@ public enum step {
     return ¢.getLeftHandSide();
   }
 
+  /** Shorthand for {@link NumberLiteral#getToken()}
+   * @param ¢ JD
+   * @return the token representing the number */
+  public static String token(final NumberLiteral ¢) {
+    return ¢.getToken();
+  }
+
+  /** Shorthand for {@link CastExpression#getType()}
+   * @param ¢ JD
+   * @return the Type of the {@link castExpression} */
   public static Type type(final CastExpression ¢) {
+    return ¢.getType();
+  }
+
+  /** Shorthand for {@link ClassInstanceCreation#getType()}
+   * @param ¢ JD
+   * @return the Type of the {@link ClassInstanceCreation} */
+  public static Type type(final ClassInstanceCreation ¢) {
+    return ¢.getType();
+  }
+
+  /** Shorthand for {@link VariableDeclarationExpression#getType()}
+   * @param ¢ JD
+   * @return the Type of the {@link VariableDeclarationExpression} */
+  public static Type type(final VariableDeclarationExpression ¢) {
     return ¢.getType();
   }
 

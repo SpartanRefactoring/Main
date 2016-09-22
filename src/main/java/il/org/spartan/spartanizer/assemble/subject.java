@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Contains subclasses and tools to build expressions and statements */
+/** Contains subclasses and tools to build expressions and sideEffects */
 public final class subject {
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = duplicate.of(base);
@@ -52,7 +52,7 @@ public final class subject {
     return new Pair(left, right);
   }
 
-  /** Create an instance of 2 statements together
+  /** Create an instance of 2 sideEffects together
    * @param s1 the first statement
    * @param s2 the second statement
    * @return a new instance of the class StatementPair */
@@ -60,15 +60,15 @@ public final class subject {
     return new StatementPair(s1, s2);
   }
 
-  /** Create an instance of several statements together here we get the
-   * statements as a list
-   * @param ss a list of statements
-   * @return a new instance using the given statements */
+  /** Create an instance of several sideEffects together here we get the
+   * sideEffects as a list
+   * @param ss a list of sideEffects
+   * @return a new instance using the given sideEffects */
   public static SeveralStatements ss(final List<Statement> ¢) {
     return new SeveralStatements(¢);
   }
 
-  /** Create an instance of several statements together here we get only one
+  /** Create an instance of several sideEffects together here we get only one
    * statement
    * @param context JD
    * @return a new instance using the given statement */
@@ -76,10 +76,10 @@ public final class subject {
     return statements(¢);
   }
 
-  /** Create an instance of several statements together here we get the
-   * statements in separate and not as a list
+  /** Create an instance of several sideEffects together here we get the
+   * sideEffects in separate and not as a list
    * @param ss JD
-   * @return a new instance using the given statements */
+   * @return a new instance using the given sideEffects */
   public static SeveralStatements statements(final Statement... ¢) {
     return ss(as.list(¢));
   }
@@ -306,12 +306,13 @@ public final class subject {
 
   /** Some Statements */
   public static class SeveralStatements extends Claimer {
-    private final List<Statement> inner; // here we work with several statements
-                                         // so we have a statements list
+    private final List<Statement> inner; // here we work with several
+                                         // sideEffects
+                                         // so we have a sideEffects list
 
     /** assign each of the given operands to the inner list the left operand is
      * the owner
-     * @param inner a list of statements */
+     * @param inner a list of sideEffects */
     public SeveralStatements(final List<Statement> inner) {
       super(first(inner));
       this.inner = new ArrayList<>();
@@ -354,14 +355,14 @@ public final class subject {
     }
   }
 
-  /** A pair of statements */
+  /** A pair of sideEffects */
   public static class StatementPair extends Claimer {
     private final Statement elze;
     private final Statement then;
 
     /** assign then and elze to the matching fields the then operand is the
      * owner
-     * @param flat a list of statements */
+     * @param flat a list of sideEffects */
     StatementPair(final Statement then, final Statement elze) {
       super(then);
       this.then = claim(then);

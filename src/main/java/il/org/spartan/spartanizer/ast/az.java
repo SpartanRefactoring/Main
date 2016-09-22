@@ -10,8 +10,6 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
-import il.org.spartan.plugin.*;
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -176,6 +174,10 @@ public enum az {
     return !iz.is($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
+  public static LambdaExpression lambdaExpression(final ASTNode $) {
+    return !iz.is($, LAMBDA_EXPRESSION) ? null : (LambdaExpression) $;
+  }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
    * @param $ result
    * @return argument, but down-casted to a {@link MethodDeclaration}, or
@@ -303,6 +305,10 @@ public enum az {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 
+  public static VariableDeclarationStatement variableDeclrationStatement(final ASTNode $) {
+    return !iz.is($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
+  }
+
   /** Down-cast, if possible, to {@link WhileStatement}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -323,89 +329,59 @@ public enum az {
    * minus.
    * @author Yossi Gil
    * @year 2016 */
-  public interface boxed {
+  public interface throwing {
     static String chop¢necessaryQuestionMark(final String ¢) {
       return ¢.substring(0, ¢.length() - 1);
     }
 
-    static Double double¢(final Expression ¢) {
+    static double double¢(final Expression ¢) throws Exception {
       assert iz.pseudoNumber(¢);
-      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? parseDouble(token(¢)) : parseDoubleAndNegate(token(¢))
-          : iz.numberLiteral(¢) ? parseDouble(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
-              : parseDoubleAndNegate(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
+      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
+          : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
+              : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
     }
 
-    static Integer int¢(final Expression ¢) {
-      assert iz.pseudoNumber(¢);
-      return !iz.prefixExpression(¢) ? parseInteger(token(¢)) : parseIntegerAndNegate(token(¢));
+    static double double¢(final String token) throws Exception {
+      try {
+        return Double.parseDouble(token);
+      } catch (final NumberFormatException x) {
+        throw new Exception(token, x);
+      }
     }
 
-    static Long long¢(final Expression ¢) {
+    static int int¢(final Expression ¢) throws Exception {
       assert iz.pseudoNumber(¢);
-      return !iz.numberLiteral(¢) ? parseLongAndNegate(chop¢necessaryQuestionMark(token(¢)))
-          : parseLong(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
+    }
+
+    static int int¢(final String token) throws Exception {
+      try {
+        return Integer.parseInt(token);
+      } catch (final NumberFormatException x) {
+        throw new Exception(token, x);
+      }
+    }
+
+    static long long¢(final Expression ¢) throws Exception {
+      assert iz.pseudoNumber(¢);
+      return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
+          : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+    }
+
+    static long long¢(final String token) throws Exception {
+      try {
+        return Long.parseLong(token);
+      } catch (final NumberFormatException x) {
+        throw new Exception(token, x);
+      }
     }
 
     static NumberLiteral negativeLiteral(final Expression ¢) {
-      return boxed.negativeLiteral(prefixExpression(¢));
+      return throwing.negativeLiteral(prefixExpression(¢));
     }
 
     static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
       return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
-    }
-
-    static Double parseDouble(final String token) {
-      try {
-        return Double.valueOf(Double.parseDouble(token));
-      } catch (final NumberFormatException x) {
-        Plugin.log(x);
-        return null;
-      }
-    }
-
-    static Double parseDoubleAndNegate(final String token) {
-      try {
-        return Double.valueOf(-Double.parseDouble(token));
-      } catch (final NumberFormatException x) {
-        Plugin.log(x);
-        return null;
-      }
-    }
-
-    static Integer parseInteger(final String token) {
-      try {
-        return Integer.valueOf(Integer.parseInt(token));
-      } catch (final NumberFormatException x) {
-        Plugin.log(x);
-        return null;
-      }
-    }
-
-    static Integer parseIntegerAndNegate(final String token) {
-      try {
-        return Integer.valueOf(-Integer.parseInt(token));
-      } catch (final NumberFormatException x) {
-        Plugin.log(x);
-        return null;
-      }
-    }
-
-    static Long parseLong(final String token) {
-      try {
-        return Long.valueOf(Long.parseLong(token));
-      } catch (final NumberFormatException x) {
-        Plugin.log(x);
-        return null;
-      }
-    }
-
-    static Long parseLongAndNegate(final String token) {
-      try {
-        return Long.valueOf(-Long.parseLong(token));
-      } catch (final NumberFormatException x) {
-        Plugin.log(x);
-        return null;
-      }
     }
 
     static String token(final Expression ¢) {

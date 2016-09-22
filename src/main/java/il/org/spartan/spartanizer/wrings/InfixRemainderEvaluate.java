@@ -1,19 +1,16 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
 
-/** Evaluate the remainder of numbers according to the following rules <br/>
+/** Evaluate the $ of numbers according to the following rules <br/>
  * <br/>
  * <code>
  * int % int --> int <br/>
@@ -23,56 +20,37 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixRemainderEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
-  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
-      return null;
-    int remainder = az.boxed.int¢(first(xs));
+public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
+  @Override double evaluateDouble(final List<Expression> ¢) throws Exception {
+    throw new Exception("no remainder among doubles" + ¢);
+  }
+
+  @Override int evaluateInt(final List<Expression> xs) throws Exception {
+    int $ = az.throwing.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.pseudoNumber(¢))
-        return null;
-      final Integer int¢ = az.boxed.int¢(¢);
-      if (int¢ == null || int¢.intValue() == 0)
-        return null;
-      remainder %= int¢.intValue();
+      final int int¢ = az.throwing.int¢(¢);
+      if (int¢ == 0)
+        throw new Exception("remainder in division by zero is undefined");
+      $ %= int¢;
     }
-    return x.getAST().newNumberLiteral(Integer.toString(remainder));
+    return $;
   }
 
-  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
-      return null;
-    long remainder = az.boxed.long¢(first(xs));
+  @Override long evaluateLong(final List<Expression> xs) throws Exception {
+    long $ = az.throwing.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.pseudoNumber(¢) || az.boxed.long¢(¢) == 0)
-        return null;
-      remainder %= az.boxed.long¢(¢);
+      if (az.throwing.long¢(¢) == 0)
+        throw new Exception("remainder in division by zero is undefined");
+      $ %= az.throwing.long¢(¢);
     }
-    return x.getAST().newNumberLiteral(Long.toString(remainder) + "L");
+    return $;
   }
 
-  @Override public String description() {
-    return "Evaluate remainder of numbers";
+  @Override String operation() {
+    return "remainder";
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate remainder of numbers";
-  }
-
-  @Override public ASTNode replacement(final InfixExpression x) {
-    final int sourceLength = (x + "").length();
-    ASTNode $;
-    if (type.of(x) == INT)
-      $ = replacementInt(extract.allOperands(x), x);
-    else {
-      if (type.of(x) != LONG)
-        return null;
-      $ = replacementLong(extract.allOperands(x), x);
-    }
-    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
-  }
-
-  @Override protected boolean prerequisite(final InfixExpression ¢) {
-    return ¢.getOperator() == REMAINDER && iz.validForEvaluation(¢);
+  @Override Operator operator() {
+    return REMAINDER;
   }
 }

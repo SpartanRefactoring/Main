@@ -14,7 +14,15 @@ public interface Kind {
   }
 
   interface Abbreviation extends Nominal {
-    static final String label = "Abbreviation";
+    final String label = "Abbreviation";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
+  interface Annonimization extends Nominal {
+    final String label = "Unused arguments";
 
     @Override default String description() {
       return label;
@@ -31,7 +39,7 @@ public interface Kind {
 
   /** Merge two syntactical elements into one, whereby achieving shorter core */
   interface Collapse extends Structural {
-    static final String label = "Collapse";
+    final String label = "Collapse";
 
     @Override default String description() {
       return label;
@@ -40,8 +48,8 @@ public interface Kind {
 
   /** A specialized {@link Collapse} carried out, by factoring out some common
    * element */
-  interface DistributiveRefactoring extends Collapse { // S2
-    static String label = "Distributive refactoring";
+  interface CommnoFactoring extends Collapse { // S2
+    String label = "Distributive refactoring";
 
     @Override default String description() {
       return label;
@@ -49,7 +57,7 @@ public interface Kind {
   }
 
   interface Dollarization extends Nominal {
-    static final String label = "Dollarization";
+    final String label = "Dollarization";
 
     @Override default String description() {
       return label;
@@ -57,7 +65,7 @@ public interface Kind {
   }
 
   interface EarlyReturn extends Structural {
-    static final String label = "Early return";
+    final String label = "Early return";
 
     @Override default String description() {
       return label;
@@ -67,7 +75,7 @@ public interface Kind {
   /** Change expression to a more familiar structure, which is not necessarily
    * shorter */
   interface Idiomatic extends Structural {
-    static final String label = "Idiomatic";
+    final String label = "Idiomatic";
 
     @Override default String description() {
       return label;
@@ -75,15 +83,15 @@ public interface Kind {
   }
 
   interface Inlining extends Structural { // S5
-    static final String label = "Eliminates a variable by inlining";
+    final String label = "Eliminates a variable by inlining";
 
     @Override default String description() {
       return label;
     }
   }
 
-  interface NOP extends Structural { // S0
-    static final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
+  interface InVain extends Structural { // S0
+    final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
 
     @Override default String description() {
       return label;
@@ -91,7 +99,7 @@ public interface Kind {
   }
 
   interface ScopeReduction extends Structural { // S6
-    static final String label = "Scope reduction";
+    final String label = "Scope reduction";
 
     @Override default String description() {
       return label;
@@ -100,7 +108,7 @@ public interface Kind {
 
   /** Use alphabetical, or some other ordering, when order does not matter */
   interface Sorting extends Idiomatic {
-    static final String label = "Sorting";
+    final String label = "Sorting";
 
     @Override default String description() {
       return label;
@@ -109,7 +117,7 @@ public interface Kind {
 
   /** Remove syntactical elements that do not change the code semantics */
   interface SyntacticBaggage extends Structural {// S1
-    static final String label = "Syntactic baggage";
+    final String label = "Syntactic baggage";
 
     @Override default String description() {
       return label;
@@ -118,15 +126,7 @@ public interface Kind {
 
   /** Replace conditional statement with the conditional operator */
   interface Ternarization extends Structural { // S3
-    static String label = "Ternarization";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
-  interface UnusedArguments extends Nominal {
-    static final String label = "Unused arguments";
+    String label = "Ternarization";
 
     @Override default String description() {
       return label;

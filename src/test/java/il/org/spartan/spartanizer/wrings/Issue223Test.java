@@ -71,7 +71,7 @@ public final class Issue223Test {
 
   @Test public void B$030demands() {
     A$040_init();
-    assert wring.demandsToSuggestButPerhapsCant(focus);
+    assert wring.canSuggest(focus);
   }
 
   @Test public void B$040suggestionNotNull() {
@@ -81,14 +81,12 @@ public final class Issue223Test {
 
   @Test public void B$050toolboxCanFindWring() {
     A$040_init();
-    final Wring<?> w = Toolbox.defaultInstance().find(focus);
-    assert w != null;
+    assert Toolbox.defaultInstance().find(focus) != null;
   }
 
   @Test public void B$060toolboxCanFindFindCorrectWring() {
     A$040_init();
-    final Wring<?> w = Toolbox.defaultInstance().find(focus);
-    azzert.that(w, instanceOf(wring.getClass()));
+    azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(wring.getClass()));
   }
 
   @Test public void B$070callSuggest() {
@@ -124,26 +122,22 @@ public final class Issue223Test {
 
   @Test public void B$130findWringOfCorretType() {
     A$040_init();
-    final Wring<ClassInstanceCreation> w = Toolbox.defaultInstance().find(focus);
-    azzert.that(w, instanceOf(ReplaceCurrentNode.class));
+    azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(ReplaceCurrentNode.class));
   }
 
   @Test public void B$140findWringDemands() {
     A$040_init();
-    final ReplaceCurrentNode<ClassInstanceCreation> w = (ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus);
-    assert w.demandsToSuggestButPerhapsCant(focus);
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canSuggest(focus);
   }
 
   @Test public void B$150findWringCanSuggest() {
     A$040_init();
-    final ReplaceCurrentNode<ClassInstanceCreation> w = (ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus);
-    assert w.canSuggest(focus);
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canSuggest(focus);
   }
 
   @Test public void B$160findWringReplacmenentNotNull() {
     A$040_init();
-    final ReplaceCurrentNode<ClassInstanceCreation> w = (ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus);
-    assert w.replacement(focus) != null;
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).replacement(focus) != null;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
@@ -170,8 +164,7 @@ public final class Issue223Test {
     assert "Integer.valueOf(3)" != null;
     final Wrap w = Wrap.find(a.get());
     final String wrap = w.on(a.get());
-    final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
-    if (wrap.equals(unpeeled))
+    if (wrap.equals(TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
@@ -185,8 +178,7 @@ public final class Issue223Test {
     assert d != null;
     final Document $ = TESTUtils.rewrite(new Trimmer(), u, d);
     assert $ != null;
-    final String unpeeled = $.get();
-    if (wrap.equals(unpeeled))
+    if (wrap.equals($.get()))
       azzert.fail("Nothing done on " + a.get());
   }
 
@@ -200,14 +192,12 @@ public final class Issue223Test {
     assert d != null;
     final Trimmer a = new Trimmer();
     try {
-      final ASTRewrite x = a.createRewrite(u);
-      x.rewriteAST(d, null).apply(d);
+      a.createRewrite(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
     assert d != null;
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
+    if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
 
@@ -226,14 +216,12 @@ public final class Issue223Test {
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
       a.consolidateSuggestions($, u, (IMarker) null);
       pm.done();
-      final ASTRewrite x = $;
-      x.rewriteAST(d, null).apply(d);
+      $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
     assert d != null;
-    final String unpeeled = d.get();
-    if (wrap.equals(unpeeled))
+    if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
 

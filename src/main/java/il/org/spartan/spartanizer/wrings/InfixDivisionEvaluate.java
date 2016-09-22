@@ -1,17 +1,14 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
@@ -25,67 +22,42 @@ import il.org.spartan.spartanizer.wringing.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixDivisionEvaluate extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
-  private static ASTNode replacementDouble(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
-      return null;
-    double divide = az.boxed.double¢(first(xs));
+public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
+  @Override double evaluateDouble(final List<Expression> xs) throws Exception {
+    double $ = az.throwing.double¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.pseudoNumber(¢) || az.boxed.double¢(¢) == 0)
-        return null;
-      divide /= az.boxed.double¢(¢);
+      if (az.throwing.double¢(¢) == 0)
+        throw new Exception("Cannot evaluate division by zero");
+      $ /= az.throwing.double¢(¢);
     }
-    return x.getAST().newNumberLiteral(Double.toString(divide));
+    return $;
   }
 
-  private static ASTNode replacementInt(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
-      return null;
-    int divide = az.boxed.int¢(first(xs));
+  @Override int evaluateInt(final List<Expression> xs) throws Exception {
+    int $ = az.throwing.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.pseudoNumber(¢) || az.boxed.int¢(¢) == 0)
-        return null;
-      divide /= az.boxed.int¢(¢);
+      if (az.throwing.int¢(¢) == 0)
+        throw new Exception("Cannot evaluate division by zero");
+      $ /= az.throwing.int¢(¢);
     }
-    return x.getAST().newNumberLiteral(Integer.toString(divide));
+    return $;
   }
 
-  private static ASTNode replacementLong(final List<Expression> xs, final InfixExpression x) {
-    if (xs.isEmpty() || !iz.pseudoNumber(first(xs)))
-      return null;
-    long divide = az.boxed.long¢(first(xs));
+  @Override long evaluateLong(final List<Expression> xs) throws Exception {
+    long $ = az.throwing.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (!iz.pseudoNumber(¢) || az.boxed.long¢(¢) == 0)
-        return null;
-      divide /= az.boxed.long¢(¢);
+      if (az.throwing.long¢(¢) == 0)
+        throw new Exception("Cannot evaluate division by zero");
+      $ /= az.throwing.long¢(¢);
     }
-    return x.getAST().newNumberLiteral(Long.toString(divide) + "L");
+    return $;
   }
 
-  @Override public String description() {
-    return "Evaluate division of numbers";
+  @Override String operation() {
+    return "division";
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "Evaluate division of numbers";
-  }
-
-  @Override public ASTNode replacement(final InfixExpression x) {
-    final int sourceLength = (x + "").length();
-    ASTNode $;
-    if (type.of(x) == INT)
-      $ = replacementInt(extract.allOperands(x), x);
-    else if (type.of(x) == DOUBLE)
-      $ = replacementDouble(extract.allOperands(x), x);
-    else {
-      if (type.of(x) != LONG)
-        return null;
-      $ = replacementLong(extract.allOperands(x), x);
-    }
-    return $ != null && az.numberLiteral($).getToken().length() < sourceLength ? $ : null;
-  }
-
-  @Override protected boolean prerequisite(final InfixExpression ¢) {
-    return ¢.getOperator() == DIVIDE && iz.validForEvaluation(¢);
+  @Override Operator operator() {
+    return DIVIDE;
   }
 }

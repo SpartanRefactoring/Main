@@ -30,7 +30,7 @@ public final class WringsTest {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = findFirst.firstMethodDeclaration(u);
+    final MethodDeclaration m = findFirst.methodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
@@ -90,7 +90,7 @@ public final class WringsTest {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = findFirst.firstMethodDeclaration(u);
+    final MethodDeclaration m = findFirst.methodDeclaration(u);
     azzert.that(m, iz(input));
     final Block b = m.getBody();
     final EnhancedForStatement s = (EnhancedForStatement) first(statements(b));
@@ -110,7 +110,7 @@ public final class WringsTest {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d);
-    final MethodDeclaration m = findFirst.firstMethodDeclaration(u);
+    final MethodDeclaration m = findFirst.methodDeclaration(u);
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;

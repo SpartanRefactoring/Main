@@ -84,15 +84,11 @@ public final class BlockSimplifyTest {
   }
 
   @Test public void emptySimplestB() {
-    final Wrap w = Wrap.Statement;
-    final String wrap = w.on("{}");
-    apply(new BlockSimplify(), wrap);
+    apply(new BlockSimplify(), Wrap.Statement.on("{}"));
   }
 
   @Test public void emptySimplestC() {
-    final Wrap w = Wrap.Statement;
-    final String wrap = w.on("{}");
-    apply(new BlockSimplify(), wrap);
+    apply(new BlockSimplify(), Wrap.Statement.on("{}"));
   }
 
   @Test public void emptySimplestD() {

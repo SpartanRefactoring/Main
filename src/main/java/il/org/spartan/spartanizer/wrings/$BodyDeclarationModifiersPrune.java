@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.wrings;
 
 import java.util.*;
 import java.util.function.*;
@@ -10,12 +10,13 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.wringing.*;
 
 /** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
+abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
   private static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
   private static final Predicate<Modifier> isFinal = Modifier::isFinal;
   private static final Predicate<Modifier> isPrivate = Modifier::isPrivate;
@@ -32,27 +33,30 @@ public abstract class BodyDeclarationModifiersPrune<N extends BodyDeclaration> e
       $.add(isAbstract);
       $.add(isFinal);
     }
-    if (iz.isInterface(¢) || ¢ instanceof AnnotationTypeDeclaration) {
+    if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration) {
       $.add(isStatic);
       $.add(isAbstract);
     }
     if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
       $.add(isFinal);
     final ASTNode container = hop.containerType(¢);
+    if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
+      $.remove(isFinal);
     if (container == null)
       return $;
     if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
       $.add(isFinal);
-    if (iz.isInterface(container)) {
+    if (iz.interface¢(container)) {
       $.add(isPublic);
       $.add(isPrivate);
       $.add(isProtected);
       if (iz.isMethodDeclaration(¢))
         $.add(isAbstract);
-    }
-    if (iz.enumDeclaration(container))
+      if (iz.fieldDeclaration(¢))
+        $.add(isStatic);
+    } else if (iz.enumDeclaration(container))
       $.add(isProtected);
-    if (iz.anonymousClassDeclaration(container)) {
+    else if (iz.anonymousClassDeclaration(container)) {
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);

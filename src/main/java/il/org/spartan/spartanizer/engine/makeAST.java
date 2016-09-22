@@ -54,7 +54,7 @@ public enum makeAST {
       return (Expression) makeParser(¢).createAST(null);
     }
   },
-  /** Constant used in order to get the source as a sequence of statements. */
+  /** Constant used in order to get the source as a sequence of sideEffects. */
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Constant used in order to get the source as a sequence of class body
    * declarations. */

@@ -68,7 +68,7 @@ public final class Issue086Test extends Issue___TestTemplate {
 
   @Test public void B$03demands() {
     A$04_init();
-    assert wring.demandsToSuggestButPerhapsCant(focus);
+    assert wring.canSuggest(focus);
   }
 
   @Test public void B$04suggestionNotNull() {
@@ -78,14 +78,12 @@ public final class Issue086Test extends Issue___TestTemplate {
 
   @Test public void B$05toolboxCanFindWring() {
     A$04_init();
-    final Wring<?> w = Toolbox.defaultInstance().find(focus);
-    assert w != null;
+    assert Toolbox.defaultInstance().find(focus) != null;
   }
 
   @Test public void B$06toolboxCanFindFindCorrectWring() {
     A$04_init();
-    final Wring<?> w = Toolbox.defaultInstance().find(focus);
-    azzert.that(w, instanceOf(wring.getClass()));
+    azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(wring.getClass()));
   }
 
   @Test public void B$07callSuggest() {

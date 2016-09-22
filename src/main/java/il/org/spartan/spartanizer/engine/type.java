@@ -169,7 +169,7 @@ public interface type {
     }
 
     static type type(final Object o) {
-      return baptize("Object");
+      return NOTHING;
     }
 
     static Certain type(final short x) {
@@ -186,15 +186,8 @@ public interface type {
     /** All type that were ever born , as well as all primitive types */
     private static Map<String, implementation> types = new LinkedHashMap<>();
 
-    private static implementation conditionalWithNoInfo(final implementation ¢) {
-      return in(¢, BYTE, SHORT, CHAR, INT, INTEGRAL, LONG, FLOAT, NUMERIC) //
-          ? NUMERIC //
-          : !in(¢, DOUBLE, STRING, BOOLEAN, BOOLEAN) //
-              ? NOTHING : ¢;
-    }
-
     private static implementation get(final Expression ¢) {
-      return inner.hasType(¢) ? inner.getType(¢) : inner.setType(¢, inner.lookUp(¢, inner.lookDown(¢)));
+      return hasType(¢) ? getType(¢) : setType(¢, lookUp(¢, lookDown(¢)));
     }
 
     /** @param n JD/
@@ -210,29 +203,33 @@ public interface type {
       return getType(¢) != null;
     }
 
+    private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
+      if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
+        return false;
+      final NumberLiteral l = az.numberLiteral(x);
+      final int n = Integer.parseInt(step.token(l));
+      return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
+    }
+
     private static implementation lookDown(final Assignment x) {
-      final implementation $ = get(x.getLeftHandSide());
-      return !$.isNoInfo() ? $ : get(x.getRightHandSide()).isNumeric() ? NUMERIC : get(x.getRightHandSide());
+      final implementation $ = get(step.to(x));
+      return !$.isNoInfo() ? $ : get(step.from(x)).isNumeric() ? NUMERIC : get(step.from(x));
     }
 
     private static implementation lookDown(final CastExpression ¢) {
-      return baptize(step.type(¢) + "");
+      return get(step.expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
     }
 
     private static implementation lookDown(final ClassInstanceCreation ¢) {
-      return baptize(¢.getType() + "");
+      return baptize(step.type(¢) + "");
     }
 
     private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = get(x.getThenExpression());
-      final implementation ¢ = get(x.getElseExpression());
-      // If we don't know much about one operand but do know enough about the
-      // other, we can still learn something
+      final implementation $ = get(step.then(x));
+      final implementation ¢ = get(step.elze(x));
       return $ == ¢ ? $
-          : $.isNoInfo() || ¢.isNoInfo() ? conditionalWithNoInfo($.isNoInfo() ? ¢ : $) //
-              : $.isIntegral() && ¢.isIntegral() ? $.underIntegersOnlyOperator(¢) //
-                  : $.isNumeric() && ¢.isNumeric() ? $.underNumericOnlyOperator(¢)//
-                      : $.isNumeric() && ¢ == ALPHANUMERIC ? $ : ¢.isNumeric() && $ == ALPHANUMERIC ? ¢ : NOTHING; //
+          : isCastedToShort($, ¢, step.elze(x)) || isCastedToShort(¢, $, step.then(x)) ? SHORT
+              : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
 
     /** @param x JD
@@ -277,22 +274,21 @@ public interface type {
     }
 
     private static implementation lookDown(final InfixExpression x) {
-      final InfixExpression.Operator o = x.getOperator();
+      final InfixExpression.Operator o = step.operator(x);
       final List<Expression> es = hop.operands(x);
       assert es.size() >= 2;
       implementation $ = get(first(es));
-      chop(es);
-      for (final Expression ¢ : es)
+      for (final Expression ¢ : rest(es))
         $ = $.underBinaryOperator(o, get(¢));
       return $;
     }
 
     private static implementation lookDown(final MethodInvocation ¢) {
-      return "toString".equals(¢.getName() + "") && ¢.arguments().isEmpty() ? STRING : NOTHING;
+      return "toString".equals(step.name(¢) + "") && step.arguments(¢).isEmpty() ? STRING : NOTHING;
     }
 
     private static implementation lookDown(final NumberLiteral ¢) {
-      return new LiteralParser(¢.getToken()).type();
+      return new LiteralParser(step.token(¢)).type();
     }
 
     private static implementation lookDown(final ParenthesizedExpression ¢) {
@@ -300,16 +296,16 @@ public interface type {
     }
 
     private static implementation lookDown(final PostfixExpression ¢) {
-      return get(¢.getOperand()).asNumeric(); // see
-                                              // testInDecreamentSemantics
+      return get(step.operand(¢)).asNumeric(); // see
+                                               // testInDecreamentSemantics
     }
 
     private static implementation lookDown(final PrefixExpression ¢) {
-      return get(¢.getOperand()).under(¢.getOperator());
+      return get(step.operand(¢)).under(step.operator(¢));
     }
 
     private static implementation lookDown(final VariableDeclarationExpression ¢) {
-      return baptize(¢.getType() + "");
+      return baptize(step.type(¢) + "");
     }
 
     private static implementation lookUp(final Expression x, final implementation i) {
@@ -351,6 +347,7 @@ public interface type {
       // TODO: Alex and Dan: Take a look here to see how you store information
       // within a node
       // TODO: Ori, Matteo this is for you too
+      assert !hasType(n);
       n.setProperty(propertyName, i);
       return i;
     }
@@ -415,8 +412,7 @@ public interface type {
         return in(this, CHAR, BYTE, SHORT);
       }
 
-      /** @return true if one of {@link #NOTHING}, {@link #BAPTIZED},
-       *         {@link #NONNULL}, {@link #VOID}, {@link #NULL} or false
+      /** @return true if one of {@link #NOTHING}, {@link #NULL} or false
        *         otherwise */
       default boolean isNoInfo() {
         return in(this, NOTHING, NULL);
@@ -495,17 +491,13 @@ public interface type {
         final implementation $ = k.asNumericUnderOperation();
         assert $ != null;
         assert $.isNumeric() : this + ": is for some reason not numeric ";
-        // Double contaminates Numeric
-        // Numeric contaminates Float
-        // FLOAT contaminates Integral
-        // LONG contaminates INTEGRAL
-        // INTEGRAL contaminates INT
-        // Everything else is INT after an operation
-        return in(DOUBLE, $, this) ? DOUBLE
-            : in(NUMERIC, $, this) ? NUMERIC //
-                : in(FLOAT, $, this) ? FLOAT //
-                    : in(LONG, $, this) ? LONG : //
-                        !in(INTEGRAL, $, this) ? INT : INTEGRAL;
+        return in(DOUBLE, $, this) ? DOUBLE // Double contaminates Numeric
+            : in(NUMERIC, $, this) ? NUMERIC // Numeric contaminates Float
+                : in(FLOAT, $, this) ? FLOAT // FLOAT contaminates Integral
+                    : in(LONG, $, this) ? LONG : // LONG contaminates INTEGRAL
+                        !in(INTEGRAL, $, this) ? INT : INTEGRAL;// INTEGRAL
+                                                                // contaminates
+                                                                // INT
       }
 
       /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
@@ -513,13 +505,13 @@ public interface type {
        *         {@link #ALPHANUMERIC}, in case it cannot decide */
       default implementation underPlus(final implementation k) {
         // addition with NULL or String must be a String
-        // unless both operands are numeric, the result may be a String
+        // unless both operands are numeric, the result is alphanumeric
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
     }
   }
 
-  /** Types we do not full understand yet.
+  /** Types we do not fully understand yet.
    * @author Yossi Gil
    * @author Niv Shalmon
    * @since 2016 */
@@ -563,12 +555,16 @@ public interface type {
      * @author Yossi Gil
      * @since 2016 */
     enum Certain implements Primitive {
-      BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean"), BYTE("byte", "must be byte: (byte)1, nothing else", "Byte"), CHAR("char",
-          "must be char: 'a', (char)97, nothing else",
-          "Character"), DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()", "Double"), FLOAT("float",
-              "must be float: 2f, 2.3f+1, 2F-f()", "Float"), INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()", "Integer"), LONG(
-                  "long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()", "Long"), SHORT("short", "must be short: (short)15, nothing else",
-                      "Short"), STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", null);
+      BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean")//
+      , BYTE("byte", "must be byte: (byte)1, nothing else", "Byte")//
+      , CHAR("char", "must be char: 'a', (char)97, nothing else", "Character")//
+      , DOUBLE("double", "must be double: 2.0, 2.0*a()-g(), no 2%a(), no 2*f()", "Double"), //
+      FLOAT("float", "must be float: 2f, 2.3f+1, 2F-f()", "Float")//
+      , INT("int", "must be int: 2, 2*(int)f(), 2%(int)f(), 'a'*2 , no 2*f()", "Integer")//
+      , LONG("long", "must be long: 2L, 2*(long)f(), 2%(long)f(), no 2*f()", "Long")//
+      , SHORT("short", "must be short: (short)15, nothing else", "Short")//
+      , STRING("String", "must be string: \"\"+a, a.toString(), f()+null, not f()+g()", null)//
+      ;
       final String description;
       final String key;
 
@@ -605,30 +601,18 @@ public interface type {
       }
     }
 
-    /** Tells how much we know about the type of of a variable, function, or
-     * expression. This should be conservative approximation to the real type of
-     * the entity, what a rational, but prudent programmer would case about the
-     * type
-     * <p>
-     * Dispatching in this class should emulate the type inference of Java. It
-     * is simple to that by hard coding constants.
-     * <p>
-     * This type should never be <code><b>null</b></code>. Don't bother to check
-     * that it is. We want a {@link NullPointerException} thrown if this is the
-     * case. or, you may as well write
-     *
-     * <pre>
-     *  Kind k = f(); assert k != null : // "Implementation of Kind is buggy";
-     * </pre>
-     *
+    /** A set of {@link Primitive.Certain} types, where the expressions type
+     * cannot be determined for certain
      * @author Yossi Gil
      * @author Niv Shalmon
      * @since 2016-08-XX */
     enum Uncertain implements Primitive {
-      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), INTEGRAL(
-          "must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT,
-          BYTE), NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), ALPHANUMERIC(
-              "only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING), BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL);
+      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG)//
+      , INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE)//
+      , NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE)//
+      , ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING)//
+      , BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL)//
+      ;
       final String description;
       final Set<Certain> options = new LinkedHashSet<>();
 

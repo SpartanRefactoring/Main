@@ -113,12 +113,12 @@ public enum extract {
 
   /** Computes the "essence" of a statement, i.e., if a statement is essentially
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
-   * perhaps along with any number of empty statements, then its essence is this
-   * single non-empty statement.
+   * perhaps along with any number of empty sideEffects, then its essence is
+   * this single non-empty statement.
    * @param s JD
    * @return essence of the parameter, or <code><b>null</b></code>, if there are
-   *         no non-empty statements within the parameter. If, however there are
-   *         multiple non-empty statements inside the parameter then the
+   *         no non-empty sideEffects within the parameter. If, however there
+   *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
   public static Statement core(final Statement s) {
     final List<Statement> ss = extract.statements(s);
@@ -152,7 +152,7 @@ public enum extract {
   /** Extract the single {@link ReturnStatement} embedded in a node.
    * @param n JD
    * @return single {@link IfStatement} embedded in the parameter or
-   *         <code><b>null</b></code> if not such statements exists. */
+   *         <code><b>null</b></code> if not such sideEffects exists. */
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
   }
@@ -293,7 +293,7 @@ public enum extract {
   /** Extract the single {@link ReturnStatement} embedded in a node.
    * @param n JD
    * @return single {@link ReturnStatement} embedded in the parameter, and
-   *         return it; <code><b>null</b></code> if not such statements
+   *         return it; <code><b>null</b></code> if not such sideEffects
    *         exists. */
   public static ReturnStatement returnStatement(final ASTNode ¢) {
     return az.returnStatement(extract.singleStatement(¢));
@@ -335,10 +335,10 @@ public enum extract {
     return null;
   }
 
-  /** Extract the list of non-empty statements embedded in node (nesting within
+  /** Extract the list of non-empty sideEffects embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param n JD
-   * @return list of such statements. */
+   * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
     final List<Statement> $ = new ArrayList<>();
     return ¢ == null || !(¢ instanceof Statement) ? $ : //
@@ -356,7 +356,7 @@ public enum extract {
   /** Extract the single {@link ThrowStatement} embedded in a node.
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
-   *         it; <code><b>null</b></code> if not such statements exists. */
+   *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
