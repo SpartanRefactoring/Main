@@ -1,0 +1,12 @@
+#! /bin/bash
+cat $* |\
+/usr/bin/perl -0pe 's|//.*?\n|\n|g; s#/\*(.|\n)*?\*/##g;' |\
+sed '/^\s*$/d' |\
+sed 's/^\s*//' |\
+sed 's/\s*$//' |\
+sed 's/\s+/ /' |\
+sed 's/\([^a-zA-Z]\) \([^a-zA-Z]\)/\1\2/g' |\
+sed 's/\([^a-zA-Z]\) \([a-zA-Z]\)/\1\2/g' |\
+sed 's/\([a-zA-Z]\) \([^a-zA-Z]\)/\1\2/g' |\
+more
+
