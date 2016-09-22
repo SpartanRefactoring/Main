@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Dan Greenstein
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(minus(first(prune)), chop(prune));
   }

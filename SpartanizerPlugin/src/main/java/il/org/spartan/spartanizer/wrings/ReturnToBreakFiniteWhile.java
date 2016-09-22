@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** Convert Finite loops with return statements to shorter ones : </br>
+/** Convert Finite loops with return sideEffects to shorter ones : </br>
  * Convert <br/>
  * <code>
  * for (..) { <br/>
@@ -91,7 +91,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulWring<WhileStatement>
     return "Convert the return inside " + b + " to break";
   }
 
-  @SuppressWarnings("deprecation") @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 

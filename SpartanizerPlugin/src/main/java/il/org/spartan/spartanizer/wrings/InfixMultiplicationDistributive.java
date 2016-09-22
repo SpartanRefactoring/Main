@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * .
  * @author Matteo Orru'
  * @since 2015-07-17 */
-public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements Kind.DistributiveRefactoring {
+public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements Kind.CommnoFactoring {
   private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }

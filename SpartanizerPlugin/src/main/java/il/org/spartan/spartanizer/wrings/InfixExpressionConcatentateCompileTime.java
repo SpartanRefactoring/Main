@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Dor Ma'ayan
  * @author Nov Shalmon
  * @since 2016-09-04 */
-public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression> implements Kind.NOP {
+public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   @Override public String description() {
     return "Concat the strings to a one string";
   }

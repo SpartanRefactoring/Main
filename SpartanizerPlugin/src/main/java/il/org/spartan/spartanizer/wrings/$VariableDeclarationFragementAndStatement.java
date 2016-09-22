@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-public abstract class VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   protected static Expression assignmentAsExpression(final Assignment a) {
     final Operator o = a.getOperator();
     return o == ASSIGN ? duplicate.of(from(a)) : subject.pair(to(a), from(a)).to(wizard.assign2infix(o));

@@ -5,9 +5,7 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wringing.*;
-
-/** Unit tests for {@link SafeVarargs} in {@link BodyDeclarationModifiersPrune}
+/** Unit tests for {@link SafeVarargs} in {@link $BodyDeclarationModifiersPrune}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

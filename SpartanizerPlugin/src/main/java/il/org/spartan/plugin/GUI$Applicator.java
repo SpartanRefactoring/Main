@@ -56,7 +56,7 @@ public abstract class GUI$Applicator extends Refactoring {
   final Collection<TextFileChange> changes = new ArrayList<>();
   private final String name;
   private int totalChanges;
-  IProgressMonitor progressMonitor = nullProgressMonitor;
+  public IProgressMonitor progressMonitor = nullProgressMonitor;
 
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
@@ -142,6 +142,7 @@ public abstract class GUI$Applicator extends Refactoring {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException e) {
       // TODO: what should we do here? This is not an error
+      Plugin.info(e);
     } catch (final CoreException e) {
       Plugin.log(e);
     }

@@ -24,19 +24,19 @@ public final class PreferencesResources {
    * allowing to get the set preference value for each of them */
   public enum WringGroup {
     Abbreviation(Kind.Abbreviation.class), //
+    Annonimaization(Kind.Annonimization.class), //
     Canonicalization(Kind.Collapse.class), //
+    CommonFactoring(Kind.CommnoFactoring.class), //
     Centification(Kind.Centification.class), //
-    DistributiveRefactoring(Kind.DistributiveRefactoring.class), //
     Dollarization(Kind.Dollarization.class), //
     EarlyReturn(Kind.EarlyReturn.class), //
     Idiomatic(Kind.Idiomatic.class), //
     Inlining(Kind.Inlining.class), //
-    NoImpact(Kind.NOP.class), //
+    InVain(Kind.InVain.class), //
     ScopeReduction(Kind.ScopeReduction.class), //
     Sorting(Kind.Sorting.class), //
     SyntacticBaggage(Kind.SyntacticBaggage.class), //
     Ternarization(Kind.Ternarization.class), //
-    UnusedArguments(Kind.UnusedArguments.class), //
     ;
     public static WringGroup find(final Kind ¢) {
       return find(¢.getClass());

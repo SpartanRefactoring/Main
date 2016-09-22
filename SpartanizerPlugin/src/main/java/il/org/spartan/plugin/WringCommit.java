@@ -170,7 +170,6 @@ public final class WringCommit {
             final Suggestion make = x.suggest(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
-                // LogManager.initialize();
                 LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
               make.go(rewrite, null);
             }

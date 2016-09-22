@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -36,12 +37,8 @@ public final class TypeNamesCollector {
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleType ¢) {
-        record(last(¢.getName()) + "");
+        record(hop.simpleName(¢) + "");
         return true;
-      }
-
-      SimpleName last(final Name ¢) {
-        return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
       }
 
       void record(final String longName) {

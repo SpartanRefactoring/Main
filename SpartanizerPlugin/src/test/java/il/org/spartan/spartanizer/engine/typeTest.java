@@ -14,6 +14,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.type.*;
 
+/** unit tests for {@link type}, as well as tests for the types of certain
+ * expression using {@link type.Axiom}.
+ * @author Niv Shalmon
+ * @Since 2016-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "javadoc", "static-method", "unused" }) //
 public final class typeTest {
@@ -28,6 +32,7 @@ public final class typeTest {
     // class for Pending s that don't currently pass
   }
 
+  /** @DisableSpartan */
   public static class Working {
     private static final long LONG_MINUS_3L = -3L;
     private static final int __1 = 1;
@@ -52,6 +57,7 @@ public final class typeTest {
     private int i = (int) d;
     private long l = c2 + c1 * (b + i) << b;
     private short s = (short) ((i ^ l) * (1L * c1 ^ c2 << 0xF) / d);
+    private final String str = "string";
 
     // basic tests for assignments
     @Test public void assingment1() {
@@ -134,6 +140,94 @@ public final class typeTest {
       azzert.that(Axiom.type('a'), is(CHAR));
     }
 
+    @Test public void axiomConditional01() {
+      azzert.that(Axiom.type(b1 ? 3 : s), is(SHORT));
+    }
+
+    @SuppressWarnings("boxing") @Test public void axiomConditional02() {
+      azzert.that(Axiom.type(b1 ? 3 : str), is(NOTHING));
+    }
+
+    @Test public void axiomConditional03() {
+      azzert.that(Axiom.type(b1 ? s : 3), is(SHORT));
+    }
+
+    @Test public void axiomConditional04() {
+      azzert.that(Axiom.type(b1 ? i : b), is(INT));
+    }
+
+    @Test public void axiomConditional05() {
+      azzert.that(Axiom.type(b1 ? i : l), is(LONG));
+    }
+
+    @Test public void axiomConditional07() {
+      azzert.that(Axiom.type(b1 ? f : s), is(FLOAT));
+    }
+
+    @Test public void axiomConditional08() {
+      azzert.that(Axiom.type(b1 ? f : d), is(DOUBLE));
+    }
+
+    @Test public void axiomConditional09() {
+      azzert.that(Axiom.type(b1 ? s : b), is(SHORT));
+    }
+
+    @Test public void axiomConditional10() {
+      azzert.that(Axiom.type(b), is(BYTE));
+    }
+
+    @SuppressWarnings("boxing") @Test public void axiomConditional11() {
+      azzert.that(Axiom.type(b1 ? b2 : f), is(NOTHING));
+    }
+
+    @Test public void axiomConditional12() {
+      azzert.that(Axiom.type(b1 && b2), is(BOOLEAN));
+    }
+
+    @Test public void axiomConditional13() {
+      azzert.that(Axiom.type(b1 ? str : ""), is(STRING));
+    }
+
+    @SuppressWarnings("boxing") @Test public void axiomConditional14() {
+      azzert.that(Axiom.type(b1 ? str : b2), is(NOTHING));
+    }
+
+    @SuppressWarnings("boxing") @Test public void axiomConditional15() {
+      azzert.that(Axiom.type(b1 ? c : b2), is(NOTHING));
+    }
+
+    @Test public void axiomConditional16() {
+      azzert.that(Axiom.type(b1 ? c : b), is(INT));
+    }
+
+    @Test public void axiomConditional17() {
+      azzert.that(Axiom.type(b1 ? c : s), is(INT));
+    }
+
+    @Test public void axiomConditional18() {
+      azzert.that(Axiom.type(b1 ? 3l : s), is(LONG));
+    }
+
+    @Test public void axiomConditional19() {
+      azzert.that(Axiom.type(b1 ? i : s), is(INT));
+    }
+
+    @Test public void axiomConditional20() {
+      azzert.that(Axiom.type(!b1 ? s : 2147483647), is(INT));
+    }
+
+    @SuppressWarnings("boxing") @Test public void axiomConditional21() {
+      azzert.that(Axiom.type(b1 ? i : null), is(NOTHING));
+    }
+
+    @SuppressWarnings("boxing") @Test public void axiomConditional22() {
+      azzert.that(Axiom.type(b1 ? (Integer) i : (Integer) null), is(NOTHING));
+    }
+
+    @Test public void axiomConditional23() {
+      azzert.that(Axiom.type(!b1 ? s : 'a'), is(INT));
+    }
+
     @Test public void axiomDouble() {
       azzert.that(Axiom.type(7.), is(DOUBLE));
     }
@@ -213,6 +307,10 @@ public final class typeTest {
 
     @Test public void axiomLong() {
       azzert.that(Axiom.type(7l), is(LONG));
+    }
+
+    @Test public void axiomNull() {
+      azzert.that(Axiom.type((Integer) null), is(NOTHING));
     }
 
     @Test public void axiomShort() {
@@ -366,7 +464,7 @@ public final class typeTest {
       azzert.that(Axiom.type(b1 ^ b2), is(BOOLEAN));
     }
 
-    // s for casting expression
+    // tests for casting expression
     @Test public void cast01() {
       azzert.that(of(into.e("(List)f()")), is(baptize("List")));
     }
@@ -443,7 +541,15 @@ public final class typeTest {
       azzert.that(of(into.e("(float)1d")), is(FLOAT));
     }
 
-    // s for conditionals
+    @Test public void cast20() {
+      azzert.that(type.of(into.e("(Integer)null")), is(NULL));
+    }
+
+    @Test public void cast21() {
+      azzert.that(type.of(into.e("(Integer)((null))")), is(NULL));
+    }
+
+    // tests for conditionals
     @Test public void conditional01() {
       azzert.that(of(into.e("f() ? 3 : 7")), is(INT));
     }
@@ -457,7 +563,7 @@ public final class typeTest {
     }
 
     @Test public void conditional04() {
-      azzert.that(of(into.e("f() ? 3L : 7.")), is(DOUBLE));
+      azzert.that(of(into.e("f() ? 3 : (short)7")), is(SHORT));
     }
 
     @Test public void conditional05() {
@@ -477,19 +583,19 @@ public final class typeTest {
     }
 
     @Test public void conditional09() {
-      azzert.that(of(into.e("f() ? f() : false")), is(BOOLEAN));
+      azzert.that(of(into.e("f() ? f() : false")), is(NOTHING));
     }
 
-    @Test public void conditional10() {
-      azzert.that(of(into.e("f() ? f() : 2")), is(NUMERIC));
+    @Ignore("") @Test public void conditional10() {
+      azzert.that(of(into.e("f() ? f() : 2")), is(NOTHING));
     }
 
     @Test public void conditional11() {
-      azzert.that(of(into.e("f() ? f() : 2l")), is(NUMERIC));
+      azzert.that(of(into.e("f() ? f() : 2l")), is(NOTHING));
     }
 
     @Test public void conditional12() {
-      azzert.that(of(into.e("f() ? 2. : g()")), is(DOUBLE));
+      azzert.that(of(into.e("f() ? 2. : g()")), is(NOTHING));
     }
 
     @Test public void conditional13() {
@@ -497,7 +603,7 @@ public final class typeTest {
     }
 
     @Test public void conditional14() {
-      azzert.that(of(into.e("f() ? x : 'a'")), is(NUMERIC));
+      azzert.that(of(into.e("f() ? x : 'a'")), is(NOTHING));
     }
 
     @Test public void conditional15() {
@@ -505,11 +611,35 @@ public final class typeTest {
     }
 
     @Test public void conditional16() {
-      azzert.that(of(into.e("f() ? \"a\" : h()")), is(STRING));
+      azzert.that(of(into.e("f() ? \"a\" : h()")), is(NOTHING));
     }
 
     @Test public void conditional17() {
-      azzert.that(of(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(NUMERIC));
+      azzert.that(of(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(NOTHING));
+    }
+
+    @Test public void conditional18() {
+      azzert.that(of(into.e("b ? y(2)+10 : x-6")), is(NOTHING));
+    }
+
+    @Test public void conditional19() {
+      azzert.that(of(into.e("b ? \"\" : 7")), is(NOTHING));
+    }
+
+    @Test public void conditional20() {
+      azzert.that(of(into.e("b ? (byte)3 : 7")), is(INT));
+    }
+
+    @Test public void conditional21() {
+      azzert.that(of(into.e("b ? (short)3 : 7")), is(SHORT));
+    }
+
+    @Test public void conditional22() {
+      azzert.that(of(into.e("b ? (short)3 : 7l")), is(LONG));
+    }
+
+    @Test public void conditional23() {
+      azzert.that(of(into.e("b ? (short)3 : 2147483647")), is(INT));
     }
 
     // tests for constructors
@@ -536,58 +666,47 @@ public final class typeTest {
 
     // tests for deducing type from context
     @Test public void context01() {
-      final IfStatement is = findFirst.ifStatement(into.s("{if(f()) return x; return y;}"));
-      azzert.that(of(is.getExpression()), is(BOOLEAN));
+      azzert.that(of(findFirst.ifStatement(into.s("{if(f()) return x; return y;}")).getExpression()), is(BOOLEAN));
     }
 
     @Test public void context02() {
-      final PrefixExpression e = az.prefixExpression(into.e("++x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("++x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context03() {
-      final PrefixExpression e = az.prefixExpression(into.e("--x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("--x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context04() {
-      final PrefixExpression e = az.prefixExpression(into.e("-x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("-x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context05() {
-      final PrefixExpression e = az.prefixExpression(into.e("!x"));
-      azzert.that(of(e.getOperand()), is(BOOLEAN));
+      azzert.that(of(az.prefixExpression(into.e("!x")).getOperand()), is(BOOLEAN));
     }
 
     @Test public void context06() {
-      final PrefixExpression e = az.prefixExpression(into.e("~x"));
-      azzert.that(of(e.getOperand()), is(INTEGRAL));
+      azzert.that(of(az.prefixExpression(into.e("~x")).getOperand()), is(INTEGRAL));
     }
 
     @Test public void context07() {
-      final PrefixExpression e = az.prefixExpression(into.e("+x"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.prefixExpression(into.e("+x")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context08() {
-      final PostfixExpression e = az.postfixExpression(into.e("x++"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.postfixExpression(into.e("x++")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context09() {
-      final PostfixExpression e = az.postfixExpression(into.e("x--"));
-      azzert.that(of(e.getOperand()), is(NUMERIC));
+      azzert.that(of(az.postfixExpression(into.e("x--")).getOperand()), is(NUMERIC));
     }
 
     @Test public void context10() {
-      final ArrayAccess a = (ArrayAccess) into.e("arr[x]");
-      azzert.that(of(a.getIndex()), is(INTEGRAL));
+      azzert.that(of(((ArrayAccess) into.e("arr[x]")).getIndex()), is(INTEGRAL));
     }
 
     @Test public void context11() {
-      final ArrayAccess a = (ArrayAccess) into.e("arr[((x))]");
-      azzert.that(of(a.getIndex()), is(INTEGRAL));
+      azzert.that(of(((ArrayAccess) into.e("arr[((x))]")).getIndex()), is(INTEGRAL));
     }
 
     @Test public void context12() {
@@ -646,8 +765,7 @@ public final class typeTest {
     }
 
     @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
-      final WhileStatement ws = findFirst.whileStatement(into.s("while(x) somthing();"));
-      azzert.that(of(ws.getExpression()), is(BOOLEAN));
+      azzert.that(of(findFirst.whileStatement(into.s("while(x) somthing();")).getExpression()), is(BOOLEAN));
     }
 
     @Test public void context22() {
@@ -934,8 +1052,7 @@ public final class typeTest {
     }
 
     @Test public void UnaryPlusMinusSemantics08() {
-      final char x = 0;
-      azzert.that(Axiom.type(-x), is(INT));
+      azzert.that(Axiom.type(-0), is(INT));
     }
 
     @Test public void UnaryPlusMinusSemantics09() {

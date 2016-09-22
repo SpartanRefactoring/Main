@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** A {@link Wring} to eliminate degenerate if statements such as
+/** A {@link Wring} to eliminate degenerate if sideEffects such as
  *
  * <pre>
  * if (x)
@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThenEmptyElse extends CarefulWring<IfStatement> implements Kind.NOP {
+public final class IfEmptyThenEmptyElse extends CarefulWring<IfStatement> implements Kind.InVain {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }

@@ -3,16 +3,10 @@ package il.org.spartan.spartanizer.wrings;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -667,6 +661,31 @@ public final class Version250Test {
     trimmingOf("class X {final Object __ = null;}").stays();
   }
 
+  @Test public void issue241a() {
+    trimmingOf("interface x { int a; }").stays();
+  }
+
+  @Test public void issue241b() {
+    trimmingOf("interface x { static int a; }")//
+        .gives("interface x { int a; }")//
+        .stays();
+  }
+
+  @Test public void issue243() {
+    trimmingOf("interface x { " //
+        + "int a = 0; "//
+        + "boolean b = 0; "//
+        + "byte ba = 0; "//
+        + "short s = 0; "//
+        + "long s = 0; "//
+        + "long s1 = 2; "//
+        + "double d = 0.0; "//
+        + "float f = 0.0; "//
+        + "float f1 = 1;"//
+        + "}")//
+            .stays();
+  }
+
   @Test public void issue31a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
         "      return hasAnnotation(now.modifiers());\n" + //
@@ -786,79 +805,6 @@ public final class Version250Test {
   @Test public void issue70_12() {
     trimmingOf("foo((double)18)").gives("foo(1.*18)");
   }
-
-  @Test public void issue71a() {
-    trimmingOf("1*a").gives("a");
-  }
-
-  @Test public void issue71b() {
-    trimmingOf("a*1").gives("a");
-  }
-
-  @Test public void issue71c() {
-    trimmingOf("1*a*b").gives("a*b");
-  }
-
-  @Test public void issue71d() {
-    trimmingOf("1*a*1*b").gives("a*b");
-  }
-
-  @Test public void issue71e() {
-    trimmingOf("a*1*b*1").gives("a*b");
-  }
-
-  @Test public void issue71f() {
-    trimmingOf("1.0*a").stays();
-  }
-
-  @Test public void issue71g() {
-    trimmingOf("a*2").gives("2*a");
-  }
-
-  @Test public void issue71h() {
-    trimmingOf("1*1").gives("1");
-  }
-
-  @Test public void issue71i() {
-    trimmingOf("1*1*1").gives("1");
-  }
-
-  @Test public void issue71j() {
-    trimmingOf("1*1*1*1*1.0").gives("1.0");
-  }
-
-  @Test public void issue71k() {
-    trimmingOf("-1*1*1").gives("-1");
-  }
-
-  @Test public void issue71l() {
-    trimmingOf("1*1*-1*-1").gives("1");
-  }
-
-  @Test public void issue71m() {
-    trimmingOf("1*1*-1*-1*-1*1*-1").gives("1");
-  }
-
-  @Test public void issue71n() {
-    trimmingOf("1*1").gives("1");
-  }
-
-  @Test public void issue71o() {
-    trimmingOf("(1)*((a))").gives("a");
-  }
-
-  @Test public void issue71p() {
-    trimmingOf("((1)*((a)))").gives("(a)");
-  }
-
-  @Test public void issue71q() {
-    trimmingOf("1L*1").gives("1L");
-  }
-
-  @Test public void issue71r() {
-    trimmingOf("1L*a").stays();
-  }
-
 
   @Ignore @Test public void issue73_01() {
     trimmingOf("\"\" + \"abc\"").gives("\"abc\"");
@@ -1170,23 +1116,19 @@ public final class Version250Test {
   }
 
   @Ignore public void test_a() {
-    final String s = "studiesA";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("studyA"));
+    azzert.that("studiesA".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("studyA"));
   }
 
   @Test public void test_b() {
-    final String s = "studies";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
+    azzert.that("studies".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
   }
 
   @Test public void test_c() {
-    final String s = "studes";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+    azzert.that("studes".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
 
   @Test public void test_d() {
-    final String s = "studs";
-    azzert.that(s.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+    azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
 
   @Ignore public void trimmerBugXOR() {

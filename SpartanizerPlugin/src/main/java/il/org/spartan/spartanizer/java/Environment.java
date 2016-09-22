@@ -14,13 +14,12 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "unused" }) public interface Environment {
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
-  static final Environment EMPTY = new Environment() {
-    /* Empty */
+  final Environment EMPTY = new Environment() {
   };
   /** Initializer for EMPTY */
-  static final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
+  final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
   /** Initializer for EMPTY */
-  static final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
+  final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
 
   /** @return set of entries defined in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declares(final ASTNode n) {

@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -222,6 +223,10 @@ public enum iz {
     return is(¢, EXPRESSION_STATEMENT);
   }
 
+  public static boolean fieldDeclaration(final BodyDeclaration ¢) {
+    return is(¢, FIELD_DECLARATION);
+  }
+
   public static boolean final¢(final BodyDeclaration ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
@@ -325,6 +330,12 @@ public enum iz {
     return step.operator(az.infixExpression(¢)) == TIMES;
   }
 
+  /** @param ¢ JD
+   * @return true if the given node is an interface or false otherwise */
+  public static boolean interface¢(final ASTNode ¢) {
+    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
+  }
+
   public static boolean intType(final Expression ¢) {
     return type.of(¢) == INT;
   }
@@ -345,12 +356,6 @@ public enum iz {
    * @return true if the variable is declared as final */
   public static boolean isFinal(final VariableDeclarationStatement ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is an interface or false otherwise */
-  public static boolean isInterface(final ASTNode ¢) {
-    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
   /** @param ¢ JD
@@ -674,10 +679,10 @@ public enum iz {
   }
 
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
-   * or has nothing but empty statements in it.
+   * or has nothing but empty sideEffects in it.
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the parameter */
+   *         sideEffects in the parameter */
   public static boolean vacuous(final Statement ¢) {
     return extract.statements(¢).isEmpty();
   }
@@ -685,16 +690,16 @@ public enum iz {
   /** Determine whether the 'else' part of an {@link IfStatement} is vacuous.
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the 'else' part of the parameter */
+   *         sideEffects in the 'else' part of the parameter */
   public static boolean vacuousElse(final IfStatement ¢) {
     return vacuous(elze(¢));
   }
 
   /** Determine whether a statement is an {@link EmptyStatement} or has nothing
-   * but empty statements in it.
+   * but empty sideEffects in it.
    * @param subject JD
    * @return <code><b>true</b></code> <i>iff</i> there are no non-empty
-   *         statements in the parameter */
+   *         sideEffects in the parameter */
   public static boolean vacuousThen(final IfStatement ¢) {
     return vacuous(then(¢));
   }
@@ -768,6 +773,7 @@ public enum iz {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
+      Plugin.info(x);
       return false;
     }
   }

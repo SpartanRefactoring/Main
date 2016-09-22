@@ -25,93 +25,75 @@ import il.org.spartan.*;
   }
 
   @Test public void issue101_5() {
-    final Expression ¢ = i("3+4+5+6");
-    azzert.that(metrics.nodes(¢), is(5));
+    azzert.that(metrics.nodes(i("3+4+5+6")), is(5));
   }
 
   @Test public void issue128_1() {
-    final Expression ¢ = i("3+4");
-    azzert.that(metrics.nodes(¢), is(3));
+    azzert.that(metrics.nodes(i("3+4")), is(3));
   }
 
   @Test public void issue128_11() {
-    final Expression ¢ = i("3+4");
-    azzert.that(metrics.internals(¢), is(1));
+    azzert.that(metrics.internals(i("3+4")), is(1));
   }
 
   @Test public void issue128_12() {
-    final Expression ¢ = i("3+4");
-    azzert.that(metrics.leaves(¢), is(2));
+    azzert.that(metrics.leaves(i("3+4")), is(2));
   }
 
   @Test public void issue128_13() {
-    final Expression ¢ = e("a==4 ? 34 : 56");
-    azzert.that(metrics.internals(¢), is(2));
+    azzert.that(metrics.internals(e("a==4 ? 34 : 56")), is(2));
   }
 
   @Test public void issue128_14() {
-    final Expression ¢ = e("a==4 ? 34 : 56");
-    azzert.that(metrics.leaves(¢), is(4));
+    azzert.that(metrics.leaves(e("a==4 ? 34 : 56")), is(4));
   }
 
   @Test public void issue128_15() {
-    final Expression ¢ = e("1+2");
-    azzert.that(metrics.dexterity(¢), is(2));
+    azzert.that(metrics.dexterity(e("1+2")), is(2));
   }
 
   @Test public void issue128_16() {
-    final Expression ¢ = e("a+2");
-    azzert.that(metrics.dexterity(¢), is(3));
+    azzert.that(metrics.dexterity(e("a+2")), is(3));
   }
 
   @Test public void issue128_17() {
-    final Expression ¢ = e("g(false)||a(h())");
-    azzert.that(metrics.dexterity(¢), is(3));
+    azzert.that(metrics.dexterity(e("g(false)||a(h())")), is(3));
   }
 
   @Test public void issue128_18() {
-    final Expression ¢ = e("a==4 ? (34++) : 56+34+99");
-    azzert.that(metrics.dexterity(¢), is(5));
+    azzert.that(metrics.dexterity(e("a==4 ? (34++) : 56+34+99")), is(5));
   }
 
   @Test public void issue128_2() {
-    final Expression ¢ = i("3+4");
-    azzert.that(metrics.nodes(¢), is(3));
+    azzert.that(metrics.nodes(i("3+4")), is(3));
   }
 
   @Test public void issue128_3() {
-    final Expression ¢ = i("5*6+43*2");
-    azzert.that(metrics.nodes(¢), is(7));
+    azzert.that(metrics.nodes(i("5*6+43*2")), is(7));
   }
 
   @Test public void issue128_4() {
-    final Expression ¢ = i("3+4*4+6*7+8");
-    azzert.that(metrics.nodes(¢), is(11));
+    azzert.that(metrics.nodes(i("3+4*4+6*7+8")), is(11));
   }
 
   @Test public void issue128_6() {
-    final Expression ¢ = e("a==4 ? 34 : 56");
-    azzert.that(metrics.nodes(¢), is(6));
+    azzert.that(metrics.nodes(e("a==4 ? 34 : 56")), is(6));
   }
 
   @Test public void issue128_7() {
-    final Expression ¢ = e("a==4 ? 34 : 56+34");
-    azzert.that(metrics.nodes(¢), is(8));
+    azzert.that(metrics.nodes(e("a==4 ? 34 : 56+34")), is(8));
   }
 
   @Test public void issue128_8() {
-    final Expression ¢ = e("a==4 ? 34 : 56+34+99");
-    azzert.that(metrics.nodes(¢), is(9));
+    azzert.that(metrics.nodes(e("a==4 ? 34 : 56+34+99")), is(9));
   }
 
   @Test public void issue128_9() {
-    final Expression ¢ = e("!f.g(X,false)||a.b.e(m.h())");
-    azzert.that(metrics.nodes(¢), is(10));
+    azzert.that(metrics.nodes(e("!f.g(X,false)||a.b.e(m.h())")), is(10));
   }
 
   @Test public void issue129_10() {
-    final Expression ¢ = e("g(false)||a(h())");
-    azzert.that(metrics.nodes(¢), is(5));
+    azzert.that(metrics.nodes(e("g(false)||a(h())")), is(5));
   }
 
   @Test public void literacy() {
