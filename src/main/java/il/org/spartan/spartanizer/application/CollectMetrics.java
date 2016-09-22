@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.application;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -19,11 +20,21 @@ import il.org.spartan.utils.*;
  * @year 2016 */
 public final class CollectMetrics {
   private static String OUTPUT = "/tmp/test.csv";
-  private static CSVStatistics output = init();
+  private static String OUTPUT_SUGGESTIONS = "/tmp/suggestions.csv";
+  private static CSVStatistics output = init(OUTPUT, "property");
+  private static CSVStatistics suggestions = init(OUTPUT_SUGGESTIONS, "suggestions");
 
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
     System.err.println("Your output should be here: " + output.close());
+  }
+
+  private static CSVStatistics init(String outputDir, String property) {
+    try {
+      return new CSVStatistics(outputDir, property);
+    } catch (final IOException e) {
+      throw new RuntimeException(OUTPUT, e);
+    }
   }
 
   public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
@@ -39,6 +50,7 @@ public final class CollectMetrics {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
+      suggestions.put("File", f.getName());
       go(FileUtils.read(f));
     } catch (final IOException e) {
       System.err.println(e.getMessage());
@@ -49,10 +61,29 @@ public final class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
+    collectsuggestions(javaCode, before);
     final CompilationUnit after = spartanize(javaCode, before);
     assert after != null;
     report("After-", after);
     output.nl();
+  }
+
+  private static void collectsuggestions(String javaCode, CompilationUnit before) {
+    Trimmer tr = new Trimmer();
+    List<Suggestion> l = tr.collectSuggesions(before);
+    reportSuggestions(l);
+    
+  }
+
+  private static void reportSuggestions(List<Suggestion> l) {
+//      suggestions = new CSVStatistics("/tmp/suggestions.csv");
+      for(Suggestion $: l){
+        suggestions.put("description", $.description);
+        suggestions.put("from", $.from);
+        suggestions.put("to", $.to);
+        suggestions.put("linenumber", $.lineNumber);
+        suggestions.nl();
+      }
   }
 
   private static void go(final String[] where) {
