@@ -249,15 +249,15 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection;
   }
 
-  public IMarkerResolution getWringCommitDeclaration() {
+  public static IMarkerResolution getWringCommitDeclaration() {
     return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
   }
 
-  public IMarkerResolution getWringCommitFile() {
+  public static IMarkerResolution getWringCommitFile() {
     return getWringCommit(WringCommit.Type.FILE, APPLY_TO_FILE);
   }
 
-  public IMarkerResolution getWringCommitProject() {
+  public static IMarkerResolution getWringCommitProject() {
     return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
