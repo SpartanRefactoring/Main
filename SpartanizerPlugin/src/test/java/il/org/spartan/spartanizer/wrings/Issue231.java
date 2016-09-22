@@ -21,6 +21,11 @@ public class Issue231 {
         .stays();
   }
 
+  @Test public void plain() {
+    trimmingOf("a ? x.f(b) : y.f(b)")//
+        .gives("(a?x:y).f(b)");
+  }
+
   @Test public void vanilla1() {
     trimmingOf("a ? y.f(b) : Class.f(b)")//
         .stays();
