@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue212{
+public final class Issue212 {
   @Test public void chocolate1() {
     trimmingOf("for(int $=0;$<a.length;++$)sum +=$;")//
         .stays();

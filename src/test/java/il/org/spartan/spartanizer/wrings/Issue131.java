@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue131{
+public final class Issue131 {
   @Test public void A$010() {
     trimmingOf("for(int i=4; i<s.length() ; ++i){i+=9;return x;}return x;")//
         .gives("for(int ¢=4; ¢<s.length() ; ++¢){¢+=9;break;}return x;") //

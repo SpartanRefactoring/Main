@@ -9,7 +9,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue111{
+public class Issue111 {
   @Test public void A$a_1() {
     trimmingOf("public final class A {" + //
         "static public int a;" + //

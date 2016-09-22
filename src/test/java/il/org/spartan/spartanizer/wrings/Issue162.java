@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue162{
+public final class Issue162 {
   @Ignore("issue 172") @Test public void issue162_01() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
