@@ -1307,8 +1307,8 @@ import il.org.spartan.spartanizer.wringing.*;
         .stays();
   }
 
-  @Test public void ifSequencerNoElseSequencer0() {
-    trimmingOf("if (a) return; break;")//
+  @Test public void ifSequencerNoElseSequencer00() {
+    trimmingOf("for(;;){if (a) return; break;}a = 3;")//
         .stays();
   }
 
@@ -1332,8 +1332,19 @@ import il.org.spartan.spartanizer.wringing.*;
         .gives("if (!a) return; break;");
   }
 
+  @Test public void ifSequencerNoElseSequencer04a() {
+    trimmingOf("for (;;) {if (a) break; return;} a =3;")//
+        .gives("for (;;) {if (!a) return; break;}a=3;")//
+        .stays();
+  }
+
   @Test public void ifSequencerNoElseSequencer05() {
-    trimmingOf("if (a) {x(); return;} continue;")//
+    trimmingOf("for(;;){if(a){x();return;}continue;} a=2;")//
+        .stays();
+  }
+
+  @Test public void ifSequencerNoElseSequencer05a() {
+    trimmingOf("if (a) {x(); return;} continue; a=3;")//
         .stays();
   }
 

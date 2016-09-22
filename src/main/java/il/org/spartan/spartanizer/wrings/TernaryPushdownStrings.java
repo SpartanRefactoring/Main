@@ -125,7 +125,12 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final List<Expression> es = extract.allOperands(x);
     final StringLiteral l = az.stringLiteral(last(es));
     assert l != null;
-    assert l.getLiteralValue().length() >= i;
+    assert l.getLiteralValue().length() >= i : dump() + //
+        "\n x = " + x + //
+        "\n i = " + i + //
+        "\n es = " + es + //
+        "\n l = " + l + //
+        endDump();
     final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, x);
     replaceLast(es, prefix);
     return subject.operands(es).to(PLUS2);

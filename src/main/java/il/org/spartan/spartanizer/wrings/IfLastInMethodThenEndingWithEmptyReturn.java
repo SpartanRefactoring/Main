@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * <pre>
  * if (a) {
- *   f(); 
+ *   f();
  *   return;
  * }
  * </pre>
@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * <pre>
  * if (a)
- * f(); 
+ *   f();
  * </pre>
  *
  * provided that this
