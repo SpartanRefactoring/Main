@@ -114,10 +114,9 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private void build(final int kind) throws CoreException {
-    if (kind == FULL_BUILD) {
+    if (kind != FULL_BUILD)
+      build();
+    else
       fullBuild();
-      return;
-    }
-    build();
   }
 }
