@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.bench;
 
 import static il.org.spartan.utils.Box.*;
@@ -10,6 +7,8 @@ import java.text.*;
 
 import org.junit.*;
 
+/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2010 */
 public enum Unit {
   INTEGER {
     @Override public String format(final double d) {
