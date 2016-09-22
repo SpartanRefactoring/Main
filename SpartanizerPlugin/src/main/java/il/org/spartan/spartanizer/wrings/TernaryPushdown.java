@@ -34,8 +34,8 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
 
   static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
-        : il.org.spartan.spartanizer.assemble.make
-            .plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator())).into(x.getParent());
+        : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator()))
+            .into(x.getParent());
   }
 
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -124,6 +124,8 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final Expression receiver2 = e2.getExpression();
     if (!wizard.same(receiver1, receiver2)) {
       if (receiver1 == null || receiver2 == null || !wizard.same(es1, es2))
+        return null;
+      if (NameGuess.isClassName(receiver1) || NameGuess.isClassName(receiver2))
         return null;
       final MethodInvocation $ = duplicate.of(e1);
       assert $ != null;
