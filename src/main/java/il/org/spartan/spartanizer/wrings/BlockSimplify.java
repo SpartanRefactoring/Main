@@ -48,7 +48,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
     final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
       case 0:
-        return s.getAST().newEmptyStatement();
+        return make.emptyStatement(s); 
       case 1:
         return duplicate.of(first(ss));
       default:
@@ -85,7 +85,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
       return reorganizeStatement(b);
     switch (ss.size()) {
       case 0:
-        return b.getAST().newEmptyStatement();
+        return make.emptyStatement(b);
       case 1:
         final Statement s = first(ss);
         if (iz.blockEssential(s))

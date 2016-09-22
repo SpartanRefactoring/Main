@@ -8,35 +8,14 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** convert
- *
- * <pre>
- * if (a) {
- *   return x;
- * } else {
- *   return y;
- * }
- * </pre>
- *
- * into
- *
- * <pre>
- * if (a)
- *   return x;
- * return y;
- * </pre>
- *
- * provided that this
- *
- * <pre>
- * <b>if</b>
- * </pre>
- *
+/** convert <code> if(a)f();else{g();return;} </code> into
+ * <code>if(a)f();else{g();;}</code> provided that this <code><b>if</b> </code>
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @author Daniel Mittelman <tt><mittelmania [at] gmail.com></tt>
@@ -53,7 +32,7 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerWring<If
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(elze(s)));
     return deleteMe == null || deleteMe.getExpression() != null ? null : new Suggestion(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(deleteMe, s.getAST().newEmptyStatement(), g);
+        r.replace(deleteMe, make.emptyStatement(s), g);
       }
     };
   }

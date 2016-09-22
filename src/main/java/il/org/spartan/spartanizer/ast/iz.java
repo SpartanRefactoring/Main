@@ -796,4 +796,9 @@ public enum iz {
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
   }
+
+  public static boolean lastInMethod(Statement s) {
+    final Block b = az.block(parent(s));
+    return last(s, statements(b)) && iz.methodDeclaration(parent(b));
+  }
 }

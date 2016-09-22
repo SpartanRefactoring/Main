@@ -142,6 +142,7 @@ public class Toolbox {
               new IfThenOrElseIsCommandsFollowedBySequencer(), //
               new IfFooSequencerIfFooSameSequencer(), //
               new IfCommandsSequencerNoElseSingletonSequencer(), //
+              new IfPenultimateInMethodFollowedBySingleStatement(), //
               new IfThenIfThenNoElseNoElse(), //
               new IfEmptyThenEmptyElse(), //
               new IfDegenerateElse(), //
