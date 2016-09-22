@@ -9,7 +9,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue130{
+public final class Issue130 {
   @Test public void A$01() {
     trimmingOf("while(true){doSomething();if(done())break;}return something();")//
         .gives("while(true){doSomething();if(done())return something();}")//

@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue163{
+public final class Issue163 {
   @Test public void issue163_01() {
     trimmingOf("return \"remove the block: \" + n + \"\";").gives("return \"remove the block: \" + n;").stays();
   }

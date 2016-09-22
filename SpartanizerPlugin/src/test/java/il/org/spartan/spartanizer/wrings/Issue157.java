@@ -7,7 +7,7 @@ import org.junit.*;
 /** Unit tests for Renaming Bug, Issue 157.
  * @author Dan Greenstein
  * @since 2016 */
-@SuppressWarnings("static-method") public final class Issue157{
+@SuppressWarnings("static-method") public final class Issue157 {
   @Test public void test01() {
     trimmingOf(" public static String combine(final Class<?>[] classes) {  \n" //
         + "final String[] ss = new String[classes.length];  \n" //
