@@ -11,7 +11,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue222{
+public final class Issue222 {
   @Test public void chocolate1() {
     trimmingOf(//
         "static List<Expression> operands(final InfixExpression x) {\n" //
