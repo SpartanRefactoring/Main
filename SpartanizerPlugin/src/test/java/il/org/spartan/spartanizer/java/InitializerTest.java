@@ -1,41 +1,59 @@
 package il.org.spartan.spartanizer.java;
 
-// TODO: Yossi, did you want me to play with initializers? I moved this from the
-// ToolBox. Didn't finish yet.
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
+
+@SuppressWarnings("static-method") //
 public final class InitializerTest {
+  static int a = 0;
+  static InitializerTest i;
   static {
-    ++InitializerTest.a;
-    System.out.println("Static initializer end (0).");
-    // Seems that we can't do here anything that is connected to the instance.
-    // But can be used for initializing some global data structures which are
-    // referenced by
-    // the instances of this class...
+    InitializerTest.a = 100;
+    InitializerTest.b = 200;
+    InitializerTest.c = 300;
+    //i.e = 500;
+    System.out.println("Static initializer");
   }
-  static int a;
+  static int b = 0;
+  static int c;
 
-  public static void main(final String[] __) {
-    new InitializerTest(3).hashCode();
-    System.out.print(InitializerTest.a);
-  }
+  /*@SuppressWarnings("unused") public static void main(final String[] __) {
+    System.out.println("Inner field a before creating an instance = " + InitializerTest.a);
+    new InitializerTest();
+    System.out.print("Inner field a after creating an instance = " + InitializerTest.a);
+  }*/
 
+  int e;
   {
-    // b is not recognized here.
-    ++a;
-    // a is updated here instead of being incremented in all the constructors.
-    System.out.println("Instance initializer end (1).");
+    // Instance Initializer can union some operations which are required for
+    // each constructor of the class.
+    // for example: a is updated here instead of being updated by each
+    // constructor.
+    a = 0;
+    e = 5000;
+    System.out.println("Instance initializer");
   }
 
-  InitializerTest() {
-    // b is not recognized here.
-    System.out.println("Empty Constructor");
+  @Test
+  public void T_00() {
+    azzert.that(InitializerTest.a, is(0));
+    azzert.that(InitializerTest.b, is(0));
+    azzert.that(InitializerTest.c, is(300));
   }
 
-  InitializerTest(final int i) {
-    System.out.println("int constructor" + i);
-  }
-
-  InitializerTest(final String s) {
-    // b is not recognized here.
-    System.out.println("String constructor" + s);
+  @Test
+  public void T_01() {
+    i = new InitializerTest();
+    azzert.that(i.a, is(0));
   }
 }
+// TODO: Yossi, I played with initializers, and that's my observation:
+// STATIC: Called before creating the instance, have access only to outer DS and
+// static fields.
+// INSTANCE: Called each time an instance is created, have access to everything.
+// TEST: When I run the class from main, it uses only one instance as I wanted.
+// When I use Junit there are 2 extra instance initializer calls, one from each Test case.
+// Going to the last exam now.
