@@ -18,18 +18,26 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** Demonstrates iteration through files.
+/** Scans all files and apply spartnize all.
  * @author Yossi Gil
  * @year 2015 */
-public final class TypeCollector {
-  static Set<String> methods = new LinkedHashSet<>();
-  private static CSVStatistics output;
+public final class BatchSpartanizer {
+  private static CSVStatistics report;
+  private static String inputFileName = "/tmp/input.java";
+  private static String outputFileName = "/tmp/output.java";
   static int n;
+  private static PrintWriter fin;
+  private static PrintWriter fout;
 
   public static void main(final String[] where) throws IOException {
-    output = new CSVStatistics("types.CSV");
-    collect(where.length != 0 ? where : new String[] { "." });
-    System.err.println("Look for your output here: " + output.close());
+    try (PrintWriter finLocal = new PrintWriter(new FileWriter(inputFileName)); //
+        PrintWriter foutLocal = new PrintWriter(new FileWriter(outputFileName))) {
+      fin = finLocal;
+      fout = foutLocal;
+      report = new CSVStatistics("/tmp/types.CSV");
+      collect(where.length != 0 ? where : new String[] { "." });
+      System.err.println("Look for your report here: " + report.close());
+    }
   }
 
   static boolean collect(final AbstractTypeDeclaration in) {
@@ -48,7 +56,9 @@ public final class TypeCollector {
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
     System.out.println(++n + " " + extract.category(in) + " " + extract.name(in));
-    output//
+    fin.print(in);
+    fout.print(out);
+    report//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
         .put("Nodes1", nodes)//
@@ -81,7 +91,7 @@ public final class TypeCollector {
         .put("R(E/T)", ratio(tide, essence)) //
         .put("R(B/S)", ratio(nodes, body)) //
     ;
-    output.nl();
+    report.nl();
     return false;
   }
 
