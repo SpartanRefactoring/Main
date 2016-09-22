@@ -6,8 +6,6 @@ import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
@@ -50,15 +48,17 @@ public final class SpartanizeAll extends BaseHandler {
     message.append("with " + initialCount + " suggestions");
     if (initialCount == 0)
       return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
+    eclipse.announce(message);
+    final GUI$Applicator a = new Trimmer();
     for (int i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
         // TODO: Ori, please please no busy cursor. Use ProgressManager
-        final GUI$Applicator a = new Trimmer();
-        final IRunnableWithProgress runnable = pm -> {
-          pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + //
-          "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES, us.size());
+        ps.busyCursorWhile(pm -> {
+          pm.beginTask(
+              "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
+              us.size());
           int n = 0;
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
@@ -70,16 +70,12 @@ public final class SpartanizeAll extends BaseHandler {
           }
           us.removeAll(dead);
           pm.done();
-        };
-        new ProgressMonitorDialog(null);
-        // ps.runInUI(context, runnable, rule);
-        // ps.run(true, true, runnable);
-        ps.busyCursorWhile(runnable);
+        });
       } catch (final InvocationTargetException x) {
         Plugin.log(x);
       } catch (final InterruptedException x) {
         // TODO: What should we do here?
-        Plugin.log(x);
+        Plugin.info(x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)

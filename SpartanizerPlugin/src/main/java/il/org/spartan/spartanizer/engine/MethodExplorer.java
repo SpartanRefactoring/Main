@@ -70,10 +70,10 @@ public final class MethodExplorer {
     return $;
   }
 
-  /** Computes the list of all return statements found in a
+  /** Computes the list of all return sideEffects found in a
    * {@link MethodDeclaration}.
    * <p>
-   * This method correctly ignores return statements found within nested types.
+   * This method correctly ignores return sideEffects found within nested types.
    * @return a list of {@link ReturnStatement} from the given method. */
   public List<ReturnStatement> returnStatements() {
     final List<ReturnStatement> $ = new ArrayList<>();

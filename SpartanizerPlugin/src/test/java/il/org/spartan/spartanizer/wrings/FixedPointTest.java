@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
     final String wrap = w.on(from);
     assertEquals(from, w.off(wrap));
-    final String unpeeled = BatchApplicator.fixedPoint(wrap);
+    final String unpeeled = NonGUIApplicator.fixedPoint(wrap);
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
@@ -304,7 +304,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   @Test(timeout = 2000) public void ternarize23() {
     assertConvertsTo(//
         "int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", //
-        "int a=(s.equals(532)?y(2)+10:r(3)-6);");
+        "int a=0 + (s.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {

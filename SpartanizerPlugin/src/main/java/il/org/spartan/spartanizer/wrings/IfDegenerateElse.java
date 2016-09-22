@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.wringing.*;
  *
  * @author Yossi Gil
  * @since 2015-08-01 */
-public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> implements Kind.NOP {
+public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> implements Kind.InVain {
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);
   }

@@ -21,12 +21,10 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface eclipse {
-  static final GUI$Applicator[] safeSpartanizations = { //
-      new Trimmer() };
-  static final String NAME = "Spartanization";
-  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  ImageIcon icon = new ImageIcon(new eclipse() {
-    // TODO: Ori, why do we need this kludge?
+  final GUI$Applicator[] safeSpartanizations = { new Trimmer() };
+  final String NAME = "Spartanization";
+  final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
+  final ImageIcon icon = new ImageIcon(new eclipse() {
   }.getClass().getResource(ICON_PATH));
 
   /** @param message What to announce

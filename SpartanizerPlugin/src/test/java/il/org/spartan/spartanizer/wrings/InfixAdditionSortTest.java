@@ -37,7 +37,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test02() {
-    assert new InfixAdditionSort().demandsToSuggestButPerhapsCant(INPUT);
+    assert new InfixAdditionSort().canSuggest(INPUT);
   }
 
   @Test public void test03() {
@@ -49,7 +49,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test05() {
-    assert !new InfixAdditionSubtractionExpand().demandsToSuggestButPerhapsCant(INPUT);
+    assert !new InfixAdditionSubtractionExpand().canSuggest(INPUT);
   }
 
   @Test public void test06() {
@@ -121,7 +121,6 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test15() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    azzert.that(i + "", iz(INPUT + ""));
+    azzert.that(TermsExpander.simplify(INPUT) + "", iz(INPUT + ""));
   }
 }

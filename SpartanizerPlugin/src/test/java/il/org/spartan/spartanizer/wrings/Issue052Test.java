@@ -63,7 +63,7 @@ public class Issue052Test {
             + "}")
                 .gives("public interface A {\n"//
                     + "static void remove()\n; "//
-                    + "static int i = 3\n; "//
+                    + "int i = 3\n; "//
                     + "}");
   }
 
@@ -75,7 +75,7 @@ public class Issue052Test {
             + "}")
                 .gives("public interface A {\n"//
                     + "static void remove()\n; "//
-                    + "static int i\n; "//
+                    + "int i\n; "//
                     + "}");
   }
 

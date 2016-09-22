@@ -77,17 +77,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_1() {
-    final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
-    azzert.that($.contains("a"), is(true));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_10() {
-    final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
-    azzert.that($.contains("a"), is(true));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_2() {
@@ -100,10 +94,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_3() {
-    final String code = "public void f(int a){}";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
-    azzert.that($.contains("a"), is(true));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("public void f(int a){}")).contains("a"), is(true));
   }
 
   @Ignore public void define_4() {
@@ -115,10 +106,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_5() {
-    final String code = "a = 0;";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
-    azzert.that($.contains("a"), is(false));
+    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("a = 0;")).contains("a"), is(false));
   }
 
   @Ignore public void define_6() {
@@ -145,17 +133,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_8() {
-    final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = declares(u);
-    azzert.that($.contains("a"), is(true));
+    azzert.that(declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
-    final String code = "int a = 0;";
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = declares(u);
-    azzert.that($.contains("a"), is(true));
+    azzert.that(declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Test public void defineTestMethodDefinition() {
@@ -242,10 +224,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered000() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;"));
-    final EnvFlatHandler e = new EnvFlatHandler($);
-    // e.runTest();
-    e.compareOutOfOrder(s);
+    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;"))).compareOutOfOrder(s);
   }
 
   @Test public void EngineTestFlatUnordered001() {
@@ -371,9 +350,8 @@ import il.org.spartan.spartanizer.utils.*;
   /** This test is meant to fail by azzert, due to double addition of the same
    * values. */
   @SuppressWarnings("unused") @Ignore public void EngineTestFlatUnordered13() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}"));
-    new EnvFlatHandler($);
+    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")));
   }
 
   @Test public void EngineTestFromFile() {

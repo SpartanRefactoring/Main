@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-public class BatchApplicator {
+public class NonGUIApplicator {
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
@@ -16,18 +16,8 @@ public class BatchApplicator {
     return new Trimmer().fixed(from);
   }
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     System.out.println(fixedPoint(read()));
-  }
-
-  static String read() {
-    String $ = "";
-    try (Scanner s = new Scanner(System.in).useDelimiter("\\n")) {
-      while (s.hasNext()) {
-        $ += s.next() + "\n";
-      }
-    }
-    return $;
   }
 
   static ASTVisitor collect(final List<Suggestion> $) {
@@ -38,5 +28,14 @@ public class BatchApplicator {
         return w == null || w.cantSuggest(n) || Trimmer.prune(w.suggest(n, exclude), $);
       }
     };
+  }
+
+  static String read() {
+    String $ = "";
+    try (Scanner s = new Scanner(System.in).useDelimiter("\\n")) {
+      while (s.hasNext())
+        $ += s.next() + "\n";
+    }
+    return $;
   }
 }

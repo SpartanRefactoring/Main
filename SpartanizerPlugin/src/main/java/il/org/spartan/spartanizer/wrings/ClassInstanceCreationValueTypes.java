@@ -19,17 +19,21 @@ import il.org.spartan.spartanizer.wringing.*;
  * @since 2016-04-06 */
 public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation> implements Kind.SyntacticBaggage {
   @Override public String description(final ClassInstanceCreation ¢) {
-    return "Use factory method " + ¢.getType() + ".valueOf() instead of new ";
+    return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
 
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
-    if (arguments(c).size() != 1)
+    final Expression e = onlyOne(arguments(c));
+    if (e == null)
       return null;
     final Type t = c.getType();
     if (!wizard.isValueType(t))
       return null;
-    final MethodInvocation $ = subject.operand(make.newSimpleName(c, t + "")).toMethod("valueOf");
-    arguments($).add(duplicate.of(first(arguments(c))));
+    final SimpleName simpleName = hop.simpleName(t);
+    if (simpleName == null)
+      return null;
+    final MethodInvocation $ = subject.operand(duplicate.of(simpleName)).toMethod("valueOf");
+    arguments($).add(duplicate.of(e));
     return $;
   }
 }
