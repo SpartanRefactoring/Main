@@ -6,8 +6,6 @@ import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
@@ -29,6 +27,15 @@ public final class BatchSpartanizer {
     else
       for (final String s : where)
         new BatchSpartanizer(s).fire();
+  }
+
+  static String essenceNew(final String codeFragment) {
+    final String $ = codeFragment.replaceAll("//.*?\r\n", "\n")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "").replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "")
+        .replaceAll("\\s*$", "").replaceAll("\\s+", " ").replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
+        .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
+        .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
+    return $;
   }
 
   static String folder2File(final String path) {
@@ -143,20 +150,6 @@ public final class BatchSpartanizer {
     ;
     report.nl();
     return false;
-  }
-  
-  static String essenceNew(final String codeFragment) {
-    String $ = codeFragment
-      .replaceAll("//.*?\r\n", "\n")//
-      .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
-      .replaceAll("^\\s*$", "")
-      .replaceAll("^\\s*\\n", "")
-      .replaceAll("\\s*$", "")
-      .replaceAll("\\s+", " ")
-      .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)","\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
-      .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)","\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
-      .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)","\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
-    return $;
   }
 
   void collect(final CompilationUnit u) {

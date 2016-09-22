@@ -35,6 +35,10 @@ public enum make {
     return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
+  public static EmptyStatement emptyStatement(final ASTNode n) {
+    return n.getAST().newEmptyStatement();
+  }
+
   public static ASTHolder from(final ASTNode ¢) {
     assert ¢ != null;
     return new make.ASTHolder(¢.getAST());
@@ -240,9 +244,5 @@ public enum make {
       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
-  }
-
-  public static EmptyStatement emptyStatement(ASTNode n) {
-    return n.getAST().newEmptyStatement();
   }
 }

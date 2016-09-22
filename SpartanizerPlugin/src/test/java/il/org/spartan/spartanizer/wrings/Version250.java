@@ -447,6 +447,18 @@ public final class Version250 {
                 .stays();
   }
 
+  @Test public void issue199a() {
+    trimmingOf(//
+        "void f() { \n" + //
+            "  if (a == b) \n" + //
+            "    return;\n" + //
+            "  g();\n" + //
+            "} \n") //
+                .gives("void f(){if(a==b);else g();}") //
+                .gives("void f(){if(a!=b) g();}") //
+                .stays();
+  }
+
   @Test public void issue207() {
     trimmingOf("size() == 0").stays();
   }
@@ -467,7 +479,6 @@ public final class Version250 {
     trimmingOf("(long)1L*2").gives("2*(long)1L").gives("2*1L*1L").gives("2L").stays();
   }
 
-
   @Test public void issue237() {
     trimmingOf("class X {final int __ = 0;}").stays();
     trimmingOf("class X {final boolean __ = false;}").stays();
@@ -484,6 +495,7 @@ public final class Version250 {
         .gives("interface x { int a; }")//
         .stays();
   }
+
   @Test public void issue243() {
     trimmingOf("interface x { " //
         + "int a = 0; "//
