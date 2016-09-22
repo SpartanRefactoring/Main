@@ -442,12 +442,8 @@ public final class Version250 {
             "  }\n" + //
             "  g();\n" + //
             "} \n") //
-                .gives("void f() { \n" + //
-                    "  if (a == b)\n" + //
-                    "    f();\n" + //
-                    " else\n " + //
-                    "  g();\n" + //
-                    "} \n") //
+                .gives("void f(){if(a==b){f();}else g();}") //
+                .gives("void f(){if(a==b)f();else g();}") //
                 .stays();
   }
 
@@ -471,10 +467,6 @@ public final class Version250 {
     trimmingOf("(long)1L*2").gives("2*(long)1L").gives("2*1L*1L").gives("2L").stays();
   }
 
-  @Test public void issue231a() {
-    trimmingOf("a ? x.f(b) : y.f(b)")//
-        .gives("(a?x:y).f(b)");
-  }
 
   @Test public void issue237() {
     trimmingOf("class X {final int __ = 0;}").stays();

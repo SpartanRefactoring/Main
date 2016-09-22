@@ -241,4 +241,8 @@ public enum make {
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
   }
+
+  public static EmptyStatement emptyStatement(ASTNode n) {
+    return n.getAST().newEmptyStatement();
+  }
 }
