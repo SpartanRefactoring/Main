@@ -90,12 +90,12 @@ public final class BatchSpartanizer {
     final int nodes = metrics.nodesCount(in);
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
-    final int essence = essence(in + "").length();
+    final int essence = BatchSpartanizer.essenceNew(in + "").length();
     final String out = NonGUIApplicator.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
-    final int essence2 = essence(out + "").length();
+    final int essence2 = BatchSpartanizer.essenceNew(out + "").length();
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
@@ -143,6 +143,20 @@ public final class BatchSpartanizer {
     ;
     report.nl();
     return false;
+  }
+  
+  static String essenceNew(final String codeFragment) {
+    String $ = codeFragment
+      .replaceAll("//.*?\r\n", "\n")//
+      .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
+      .replaceAll("^\\s*$", "")
+      .replaceAll("^\\s*\\n", "")
+      .replaceAll("\\s*$", "")
+      .replaceAll("\\s+", " ")
+      .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)","\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
+      .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)","\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
+      .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)","\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
+    return $;
   }
 
   void collect(final CompilationUnit u) {
