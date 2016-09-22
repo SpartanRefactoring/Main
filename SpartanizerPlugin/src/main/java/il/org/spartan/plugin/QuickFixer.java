@@ -15,9 +15,9 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return new IMarkerResolution[] { //
           $.getFix(), //
           $.getFixWithPreview(), //
-          $.getWringCommitDeclaration(), //
-          $.getWringCommitFile(), //
-          $.getWringCommitProject(), //
+          GUI$Applicator.getWringCommitDeclaration(), //
+          GUI$Applicator.getWringCommitFile(), //
+          GUI$Applicator.getWringCommitProject(), //
           $.disableFunctionFix(), //
           $.disableClassFix(), //
           $.disableFileFix(), //
