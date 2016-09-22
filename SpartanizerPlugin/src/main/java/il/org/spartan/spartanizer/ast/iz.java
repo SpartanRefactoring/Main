@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -21,6 +22,10 @@ import il.org.spartan.spartanizer.engine.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
+/**
+ * @author yogi
+ *
+ */
 public enum iz {
   ;
   public static boolean abstract¢(final BodyDeclaration ¢) {
@@ -797,6 +802,12 @@ public enum iz {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
   }
 
+
+  /**
+   * Determines whether a statement is last statement in its containing method
+   * @param s JD
+   * @return true if the parameter is a statement which is last in its method
+   */
   public static boolean lastInMethod(Statement s) {
     final Block b = az.block(parent(s));
     return last(s, statements(b)) && iz.methodDeclaration(parent(b));
