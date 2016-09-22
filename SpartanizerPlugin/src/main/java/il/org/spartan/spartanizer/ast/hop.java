@@ -137,6 +137,6 @@ public interface hop {
   }
 
   static SimpleName simpleName(final Type ¢) {
-    return lastComponent(name(¢));
+    return lastComponent(hop.name(¢));
   }
 }

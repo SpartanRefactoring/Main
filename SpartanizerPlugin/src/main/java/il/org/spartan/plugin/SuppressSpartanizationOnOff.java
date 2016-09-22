@@ -58,8 +58,7 @@ public final class SuppressSpartanizationOnOff {
 
   static String enablersRemoved(final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
-    final Set<String> es = getEnablers($);
-    for (final String e : es) {
+    for (final String e : getEnablers($)) {
       final String qe = Pattern.quote(e);
       $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }

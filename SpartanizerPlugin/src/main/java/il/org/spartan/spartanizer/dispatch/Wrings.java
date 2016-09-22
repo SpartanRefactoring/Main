@@ -54,8 +54,35 @@ public enum Wrings {
     }
   }
 
+  /**
+   * Determines if we can be certain that a {@link Statement}
+   * ends with a sequencer ({@link ReturnStatement}, {@link ThrowStatement}, {@link BreakStatement}, {@link ContinueStatement}).
+   * @param ¢ JD
+   * @return true <b>iff</b> the Statement can be verified to end with a sequencer.
+   */
   public static boolean endsWithSequencer(final Statement ¢) {
-    return iz.sequencer(hop.lastStatement(¢));
+    if (¢ == null)
+      return false;
+    final Statement $ = (Statement) hop.lastStatement(¢);
+    if ($ == null)
+      return false;
+    switch ($.getNodeType()) {
+      case RETURN_STATEMENT:
+      case BREAK_STATEMENT:
+      case THROW_STATEMENT:
+      case CONTINUE_STATEMENT:
+        return true;
+      case BLOCK:
+        return endsWithSequencer(last(step.statements((Block) $)));
+      case LABELED_STATEMENT:
+        return endsWithSequencer(((LabeledStatement) $).getBody());
+      case DO_STATEMENT:
+        return endsWithSequencer(((DoStatement) $).getBody());
+      case IF_STATEMENT:
+        return endsWithSequencer(then((IfStatement) $)) && endsWithSequencer(elze((IfStatement) $));
+      default:
+        return false;
+    }
   }
 
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
@@ -106,6 +133,10 @@ public enum Wrings {
     return false;
   }
 
+  private static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
+  }
+
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName)//
         .inlineInto(Collect.usesOf(oldName).in(region).toArray(new Expression[] {}));
@@ -122,6 +153,10 @@ public enum Wrings {
     duplicate.into(siblings, step.statements($));
     r.replace(parent, $, g);
     return r;
+  }
+
+  private static int sequencerRank(final ASTNode ¢) {
+    return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
   public static boolean shoudlInvert(final IfStatement s) {
@@ -151,13 +186,5 @@ public enum Wrings {
     assert n1 == n2;
     final IfStatement $ = invert(s);
     return positivePrefixLength($) >= positivePrefixLength(invert($));
-  }
-
-  private static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
-  }
-
-  private static int sequencerRank(final ASTNode ¢) {
-    return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 }
