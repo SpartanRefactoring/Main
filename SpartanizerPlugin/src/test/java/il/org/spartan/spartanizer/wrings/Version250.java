@@ -46,6 +46,11 @@ public final class Version250 {
     trimmingOf("(long)1L*2").gives("2*(long)1L").gives("2*1L*1L").gives("2L").stays();
   }
 
+  @Test public void issue231a() {
+    trimmingOf("a ? x.f(b) : y.f(b)")//
+        .gives("(a?x:y).f(b)");
+  }
+
   @Test public void issue237() {
     trimmingOf("class X {final int __ = 0;}").stays();
     trimmingOf("class X {final boolean __ = false;}").stays();
@@ -530,35 +535,4 @@ public final class Version250 {
   @Test public void trimmerBugXORCompiling() {
     trimmingOf("j = j ^ k").gives("j ^= k");
   }
-
-  // @formatter:off
-  enum A { a1() {{ f(); }
-      public void f() {
-        g();
-      }
-       void g() {
-        h();
-      }
-       void h() {
-        i();
-      }
-       void i() {
-        f();
-      }
-    }, a2() {{ f(); }
-      public void i() {
-        f();
-      }
-      void f() {
-        g();
-      }
-      void g() {
-        h();
-      }
-      void h() {
-        i();
-      }
-    }
-  }
-
 }

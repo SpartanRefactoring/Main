@@ -31,6 +31,23 @@ public final class BatchSpartanizer {
         new BatchSpartanizer(s).fire();
   }
 
+  static String folder2File(final String path) {
+    return path//
+        .replaceAll("[\\ /.]", "-")//
+        .replaceAll("-+", "-")//
+        .replaceAll("^-", "")//
+        .replaceAll("-$", "")//
+    ;
+  }
+
+  static String p(final int n1, final int n2) {
+    return Unit.formatRelative(δ(n1, n2));
+  }
+
+  static double ratio(final double n1, final double n2) {
+    return n2 / n1;
+  }
+
   static int tokens(final String s) {
     int $ = 0;
     for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
@@ -41,19 +58,6 @@ public final class BatchSpartanizer {
         continue;
       ++$;
     }
-  }
-
-  static String folder2File(final String path) {
-    return path//
-        .replaceAll("[\\ /.]", "-")//
-        .replaceAll("-+", "-")//
-        .replaceAll("^-", "")//
-        .replaceAll("-$", "")//
-    ;
-  }
-
-  static double ratio(final double n1, final double n2) {
-    return n2 / n1;
   }
 
   static double δ(final double n1, final double n2) {
@@ -67,7 +71,7 @@ public final class BatchSpartanizer {
   private PrintWriter befores;
   private PrintWriter afters;
   private CSVStatistics report;
-  private String reportFileName;
+  private final String reportFileName;
 
   private BatchSpartanizer(final String path) {
     this(path, folder2File(path));
@@ -78,28 +82,6 @@ public final class BatchSpartanizer {
     beforeFileName = folder + name + ",before.java";
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
-  }
-
-  void fire() {
-    System.err.printf(
-        "Input path=%s\n" + //
-            "Collective before path=%s\n" + //
-            "Collective after path=%s\n" + //
-            "\n" //
-        , inputPath, beforeFileName, afterFileName);
-    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-      befores = b;
-      afters = a;
-      report = new CSVStatistics(reportFileName);
-      for (final File ¢ : new FilesGenerator(".java").from(inputPath))
-        collect(¢);
-    } catch (final IOException x) {
-      x.printStackTrace();
-      System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
-    }
-    System.err.print("\n Done: " + classesDone + " files processed.");
-    System.err.print("\n Summary:: " + report.close());
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
@@ -163,10 +145,6 @@ public final class BatchSpartanizer {
     return false;
   }
 
-  static String p(int n1, int n2) {
-    return Unit.formatRelative(δ(n1, n2));
-  }
-
   void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
@@ -195,5 +173,27 @@ public final class BatchSpartanizer {
 
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+  }
+
+  void fire() {
+    System.err.printf(
+        "Input path=%s\n" + //
+            "Collective before path=%s\n" + //
+            "Collective after path=%s\n" + //
+            "\n" //
+        , inputPath, beforeFileName, afterFileName);
+    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+      befores = b;
+      afters = a;
+      report = new CSVStatistics(reportFileName);
+      for (final File ¢ : new FilesGenerator(".java").from(inputPath))
+        collect(¢);
+    } catch (final IOException x) {
+      x.printStackTrace();
+      System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
+    }
+    System.err.print("\n Done: " + classesDone + " files processed.");
+    System.err.print("\n Summary:: " + report.close());
   }
 }

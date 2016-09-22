@@ -29,14 +29,6 @@ public final class CollectMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  private static CSVStatistics init(String outputDir, String property) {
-    try {
-      return new CSVStatistics(outputDir, property);
-    } catch (final IOException e) {
-      throw new RuntimeException(OUTPUT, e);
-    }
-  }
-
   public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
@@ -44,6 +36,12 @@ public final class CollectMetrics {
     } catch (MalformedTreeException | BadLocationException e) {
       throw new AssertionError(e);
     }
+  }
+
+  private static void collectsuggestions(final String javaCode, final CompilationUnit before) {
+    final Trimmer tr = new Trimmer();
+    final List<Suggestion> l = tr.collectSuggesions(before);
+    reportSuggestions(l);
   }
 
   private static void go(final File f) {
@@ -68,32 +66,14 @@ public final class CollectMetrics {
     output.nl();
   }
 
-  private static void collectsuggestions(String javaCode, CompilationUnit before) {
-    Trimmer tr = new Trimmer();
-    List<Suggestion> l = tr.collectSuggesions(before);
-    reportSuggestions(l);
-    
-  }
-
-  private static void reportSuggestions(List<Suggestion> l) {
-//      suggestions = new CSVStatistics("/tmp/suggestions.csv");
-      for(Suggestion $: l){
-        suggestions.put("description", $.description);
-        suggestions.put("from", $.from);
-        suggestions.put("to", $.to);
-        suggestions.put("linenumber", $.lineNumber);
-        suggestions.nl();
-      }
-  }
-
   private static void go(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where))
       go(¢);
   }
 
-  private static CSVStatistics init() {
+  private static CSVStatistics init(final String outputDir, final String property) {
     try {
-      return new CSVStatistics(OUTPUT, "property");
+      return new CSVStatistics(outputDir, property);
     } catch (final IOException e) {
       throw new RuntimeException(OUTPUT, e);
     }
@@ -122,6 +102,17 @@ public final class CollectMetrics {
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.put(prefix + "Imports", metrics.countImports(¢));
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
+  }
+
+  private static void reportSuggestions(final List<Suggestion> l) {
+    // suggestions = new CSVStatistics("/tmp/suggestions.csv");
+    for (final Suggestion $ : l) {
+      suggestions.put("description", $.description);
+      suggestions.put("from", $.from);
+      suggestions.put("to", $.to);
+      suggestions.put("linenumber", $.lineNumber);
+      suggestions.nl();
+    }
   }
 
   private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
