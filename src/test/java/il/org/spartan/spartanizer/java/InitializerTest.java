@@ -14,18 +14,16 @@ public final class InitializerTest {
     InitializerTest.a = 100;
     InitializerTest.b = 200;
     InitializerTest.c = 300;
-    //i.e = 500;
+    // i.e = 500;
     System.out.println("Static initializer");
   }
   static int b = 0;
   static int c;
-
-  /*@SuppressWarnings("unused") public static void main(final String[] __) {
-    System.out.println("Inner field a before creating an instance = " + InitializerTest.a);
-    new InitializerTest();
-    System.out.print("Inner field a after creating an instance = " + InitializerTest.a);
-  }*/
-
+  /* @SuppressWarnings("unused") public static void main(final String[] __) {
+   * System.out.println("Inner field a before creating an instance = " +
+   * InitializerTest.a); new InitializerTest();
+   * System.out.print("Inner field a after creating an instance = " +
+   * InitializerTest.a); } */
   int e;
   {
     // Instance Initializer can union some operations which are required for
@@ -37,17 +35,15 @@ public final class InitializerTest {
     System.out.println("Instance initializer");
   }
 
-  @Test
-  public void T_00() {
+  @Test public void T_00() {
     azzert.that(InitializerTest.a, is(0));
     azzert.that(InitializerTest.b, is(0));
     azzert.that(InitializerTest.c, is(300));
   }
 
-  @Test
-  public void T_01() {
+  @Test public void T_01() {
     i = new InitializerTest();
-    azzert.that(i.a, is(0));
+    azzert.that(InitializerTest.a, is(0));
   }
 }
 // TODO: Yossi, I played with initializers, and that's my observation:
@@ -55,5 +51,6 @@ public final class InitializerTest {
 // static fields.
 // INSTANCE: Called each time an instance is created, have access to everything.
 // TEST: When I run the class from main, it uses only one instance as I wanted.
-// When I use Junit there are 2 extra instance initializer calls, one from each Test case.
+// When I use Junit there are 2 extra instance initializer calls, one from each
+// Test case.
 // Going to the last exam now.

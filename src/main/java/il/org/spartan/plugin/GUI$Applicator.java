@@ -34,6 +34,18 @@ public abstract class GUI$Applicator extends Refactoring {
   private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
   private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
 
+  public static IMarkerResolution getWringCommitDeclaration() {
+    return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
+  }
+
+  public static IMarkerResolution getWringCommitFile() {
+    return getWringCommit(WringCommit.Type.FILE, APPLY_TO_FILE);
+  }
+
+  public static IMarkerResolution getWringCommitProject() {
+    return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
+  }
+
   private static IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
@@ -247,18 +259,6 @@ public abstract class GUI$Applicator extends Refactoring {
   /** @return selection */
   public ITextSelection getSelection() {
     return selection;
-  }
-
-  public static IMarkerResolution getWringCommitDeclaration() {
-    return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
-  }
-
-  public static IMarkerResolution getWringCommitFile() {
-    return getWringCommit(WringCommit.Type.FILE, APPLY_TO_FILE);
-  }
-
-  public static IMarkerResolution getWringCommitProject() {
-    return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
   /** .

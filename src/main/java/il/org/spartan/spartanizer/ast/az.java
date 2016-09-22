@@ -325,6 +325,10 @@ public enum az {
     return !iz.is($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 
+  static Name name(final ASTNode e) {
+    return e instanceof Name ? (Name) e : null;
+  }
+
   /** A fluent API to parse numeric literals, including provisions for unary
    * minus.
    * @author Yossi Gil
