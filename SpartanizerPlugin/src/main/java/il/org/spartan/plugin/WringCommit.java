@@ -119,8 +119,10 @@ public final class WringCommit {
     final Type type;
     final CompilationUnit compilationUnit;
     Wring<?> wring;
-    // TODO: Ori, you cannot have a boolean undocumented like this
-    boolean b;
+    /**
+     * A boolean flag indicating end of traverse. Set true after required operation has been made.
+     */
+    boolean doneTraversing;
 
     public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
       this.rewrite = rewrite;
@@ -128,6 +130,7 @@ public final class WringCommit {
       this.type = type;
       this.compilationUnit = compilationUnit;
       wring = null;
+      doneTraversing = false;
     }
 
     public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
@@ -181,14 +184,14 @@ public final class WringCommit {
     }
 
     @Override protected <N extends ASTNode> boolean go(final N n) {
-      if (b)
+      if (doneTraversing)
         return false;
       if (eclipse.isNodeOutsideMarker(n, marker))
         return true;
       final Wring<N> w = Toolbox.defaultInstance().find(n);
       if (w != null)
         apply(w, n);
-      b = true;
+      doneTraversing = true;
       return false;
     }
   }
