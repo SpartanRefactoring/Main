@@ -25,17 +25,16 @@ public final class BatchSpartanizer {
     if (where.length == 0)
       new BatchSpartanizer(".", "current-wroking-directory").fire();
     else
-      for (final String s : where)
-        new BatchSpartanizer(s).fire();
+      for (final String ¢ : where)
+        new BatchSpartanizer(¢).fire();
   }
 
   static String essenceNew(final String codeFragment) {
-    final String $ = codeFragment.replaceAll("//.*?\r\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "").replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "")
-        .replaceAll("\\s*$", "").replaceAll("\\s+", " ").replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
+    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
+        .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
+        .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
         .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
         .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
-    return $;
   }
 
   static String folder2File(final String path) {
@@ -169,13 +168,12 @@ public final class BatchSpartanizer {
   }
 
   void collect(final File f) {
-    if (f.getPath().contains("src/test"))
-      return;
-    try {
-      collect(FileUtils.read(f));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
-    }
+    if (!f.getPath().contains("src/test"))
+      try {
+        collect(FileUtils.read(f));
+      } catch (final IOException e) {
+        System.err.println(e.getMessage());
+      }
   }
 
   void collect(final String javaCode) {

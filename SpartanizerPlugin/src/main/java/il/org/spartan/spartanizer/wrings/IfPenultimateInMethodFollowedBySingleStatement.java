@@ -19,38 +19,35 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement> implements Kind.EarlyReturn {
-  static <T> void removeLast(final List<T> ts) {
-    ts.remove(ts.size() - 1);
+  static <T> void removeLast(final List<T> ¢) {
+    ¢.remove(¢.size() - 1);
   }
 
-  @Override public String description(final IfStatement s) {
-    return "Convert return into else in " + s;
+  @Override public String description(final IfStatement ¢) {
+    return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 
-  public void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    final ListRewrite lr = r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY);
-    lr.remove(s, g);
+  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement ifStatement, final Statement nextStatement, final TextEditGroup g) {
-    if (elze(ifStatement) != null)
+  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+    if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
-    if (!iz.lastInMethod(nextStatement))
-      return null;
-    final Statement then = then(ifStatement);
+    final Statement then = then(s);
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     r.replace(deleteMe, make.emptyStatement(deleteMe), g);
     remove(r, nextStatement, g);
-    final IfStatement newIf = duplicate.of(ifStatement);
+    final IfStatement newIf = duplicate.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
       removeLast(step.statements(block));
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(duplicate.of(nextStatement));
-    r.replace(ifStatement, newIf, g);
+    r.replace(s, newIf, g);
     remove(r, nextStatement, g);
     return r;
   }
