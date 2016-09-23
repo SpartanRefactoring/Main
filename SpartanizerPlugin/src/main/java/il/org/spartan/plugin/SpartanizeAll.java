@@ -16,6 +16,10 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public final class SpartanizeAll extends BaseHandler {
+  protected SpartanizeAll(GUI$Applicator inner) {
+    super(inner);
+  }
+
   static final int MAX_PASSES = 20;
 
   /** Returns the number of spartanization suggestions for a compilation unit
@@ -25,15 +29,10 @@ public final class SpartanizeAll extends BaseHandler {
     int $ = 0;
     for (final GUI$Applicator ¢ : eclipse.safeSpartanizations) {
       ¢.setMarker(null);
-      ¢.setCompilationUnitInterface(u);
+      ¢.setICompilationUnit(u);
       $ += ¢.countSuggestions();
     }
     return $;
-  }
-
-  /** Instantiates this class */
-  public SpartanizeAll() {
-    super(null);
   }
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {

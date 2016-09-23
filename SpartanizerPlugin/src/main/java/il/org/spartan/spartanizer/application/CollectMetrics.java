@@ -39,9 +39,7 @@ public final class CollectMetrics {
   }
 
   private static void collectsuggestions(final String javaCode, final CompilationUnit before) {
-    final Trimmer tr = new Trimmer();
-    final List<Suggestion> l = tr.collectSuggesions(before);
-    reportSuggestions(l);
+    reportSuggestions((new Trimmer()).collectSuggesions(before));
   }
 
   private static void go(final File f) {
@@ -104,9 +102,9 @@ public final class CollectMetrics {
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
   }
 
-  private static void reportSuggestions(final List<Suggestion> l) {
+  private static void reportSuggestions(final List<Suggestion> ¢) {
     // suggestions = new CSVStatistics("/tmp/suggestions.csv");
-    for (final Suggestion $ : l) {
+    for (final Suggestion $ : ¢) {
       suggestions.put("description", $.description);
       suggestions.put("from", $.from);
       suggestions.put("to", $.to);

@@ -8,7 +8,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings("static-method") //
 public final class InitializerTest {
-  static int a = 0;
+  static int a;
   static InitializerTest i;
   static {
     InitializerTest.a = 100;
@@ -17,7 +17,7 @@ public final class InitializerTest {
     // i.e = 500;
     System.out.println("Static initializer");
   }
-  static int b = 0;
+  static int b;
   static int c;
 
   int e;
