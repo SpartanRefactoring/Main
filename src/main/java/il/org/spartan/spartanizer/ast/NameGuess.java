@@ -20,7 +20,7 @@ public enum NameGuess {
   UNKNOWN, //
   ;
   public static boolean isClassName(final ASTNode ¢) {
-    return isClassName(hop.lastComponent(az.name(¢)) + "");
+    return ¢ != null && isClassName(hop.lastComponent(az.name(¢)) + "");
   }
 
   public static boolean isClassName(final String e) {
