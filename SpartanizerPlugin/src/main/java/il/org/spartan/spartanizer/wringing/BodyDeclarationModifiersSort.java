@@ -29,7 +29,8 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     }
     return true;
   }
-
+  // TODO: Dan, just look at this! every time in the future we have to sort something, we just make a list
+  // of the elements, define comparator and it's ready! Beautiful.
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
@@ -53,8 +54,15 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return $;
   }
 
+  private static List<? extends IExtendedModifier> removeSame(List<? extends IExtendedModifier> $) {
+    // TODO: Yossi, Why is not working?
+    List<? extends IExtendedModifier> l = $.stream().distinct().collect(Collectors.toList());
+    //List<? extends IExtendedModifier> l = new ArrayList<>(new HashSet<>($)); // Doesn't work as well
+    return l;
+  }
+  
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
-    return sort(extendedModifiers($));
+    return sort(removeSame(extendedModifiers($)));
   }
 
   public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
