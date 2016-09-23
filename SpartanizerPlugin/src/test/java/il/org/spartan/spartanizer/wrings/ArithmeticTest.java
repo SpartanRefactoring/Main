@@ -596,7 +596,7 @@ public final class ArithmeticTest {
     @Test public void issue206_10() {
       trimmingOf("1L*1L*a*b*c").gives("1L*a*b*c").stays();
     }
-    @Test public void issue206_20() {
+    @Test public void issue206_11() {
       trimmingOf("public int compareTo(final Fraction other) {"
           + "return other == this || numerator == other.numerator && denominator == other.denominator"
           + "|| 1L * 1L * numerator * other.denominator == 1L * 1L * denominator * other.numerator ? 0"
@@ -607,6 +607,14 @@ public final class ArithmeticTest {
           + "|| 1L * numerator * other.denominator == 1L * denominator * other.numerator ? 0"
           + ": 1L * numerator * other.denominator < 1L * denominator * other.numerator ? -1 : 1;"
           + "}");
+    }
+    
+    @Test public void issue206_12() {
+      trimmingOf("8%3%a").gives("2%a").stays();
+    }
+    
+    @Test public void issue206_13() {
+      trimmingOf("a%8%3").stays();
     }
   }
 }
