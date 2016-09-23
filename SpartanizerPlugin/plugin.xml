@@ -180,7 +180,6 @@
          <menu
                id="org.eclipse.jdt.ui.refactoring.menu2"
                label="Spartanization">
-  
             <command
                      commandId="il.org.spartan.plugin.Cleanup"
                      style="push">
