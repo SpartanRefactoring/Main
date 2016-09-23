@@ -28,6 +28,16 @@ public final class WringApplicator extends GUI$Applicator {
     assert clazz != null : "Oops, cannot find kind of operands of " + w.name();
   }
 
+  @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    u.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        super.preVisit(¢);
+        if (¢.getClass() == clazz || wring.canSuggest(¢) || inRange(m, ¢))
+          wring.suggest(¢).go(r, null);
+      }
+    });
+  }
+
   // TODO: Ori, how come we need this parameter?
   @Override protected ASTVisitor makeSuggestionsCollector(@SuppressWarnings("unused") final CompilationUnit __, final List<Suggestion> $) {
     return new ASTVisitor() {
@@ -37,15 +47,5 @@ public final class WringApplicator extends GUI$Applicator {
           $.add(wring.suggest(¢));
       }
     };
-  }
-
-  @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    u.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
-        super.preVisit(¢);
-        if (¢.getClass() == clazz || wring.canSuggest(¢) || inRange(m, ¢))
-          wring.suggest(¢).go(r, null);
-      }
-    });
   }
 }

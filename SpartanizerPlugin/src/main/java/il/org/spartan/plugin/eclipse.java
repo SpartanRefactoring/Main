@@ -25,6 +25,7 @@ public interface eclipse {
   final String NAME = "Spartanization";
   final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
   final ImageIcon icon = new ImageIcon(new eclipse() {
+    // This anonymous class is intentionally empty
   }.getClass().getResource(ICON_PATH));
 
   /** @param message What to announce

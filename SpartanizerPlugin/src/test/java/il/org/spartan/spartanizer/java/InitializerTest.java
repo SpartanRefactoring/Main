@@ -19,7 +19,6 @@ public final class InitializerTest {
   }
   static int b;
   static int c;
-
   int e;
   {
     // Instance Initializer can union some operations which are required for
