@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** @author Alex Kopakzon
+/** @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //

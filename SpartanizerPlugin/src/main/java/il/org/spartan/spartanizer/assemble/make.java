@@ -35,8 +35,8 @@ public enum make {
     return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
-  public static EmptyStatement emptyStatement(final ASTNode n) {
-    return n.getAST().newEmptyStatement();
+  public static EmptyStatement emptyStatement(final ASTNode ¢) {
+    return ¢.getAST().newEmptyStatement();
   }
 
   public static ASTHolder from(final ASTNode ¢) {

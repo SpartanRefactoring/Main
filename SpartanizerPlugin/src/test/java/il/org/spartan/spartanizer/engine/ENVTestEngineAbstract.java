@@ -56,7 +56,7 @@ public abstract class ENVTestEngineAbstract {
                                            // test on a node with
                                            // potential annotations.
   protected ASTNode n;
-  protected LinkedHashSet<Entry<String, Environment.Information>> testSet;
+  protected static LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */
