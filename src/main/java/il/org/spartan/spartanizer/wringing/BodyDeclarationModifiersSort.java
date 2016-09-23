@@ -55,10 +55,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> removeSame(List<? extends IExtendedModifier> $) {
-    // TODO: Yossi, Why is not working?
-    List<? extends IExtendedModifier> l = $.stream().distinct().collect(Collectors.toList());
-    //List<? extends IExtendedModifier> l = new ArrayList<>(new HashSet<>($)); // Doesn't work as well
-    return l;
+    return $.stream().distinct().collect(Collectors.toList());
   }
   
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
