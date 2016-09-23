@@ -79,17 +79,16 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
         if (j == null)
           return;
         final List<TagElement> ts = step.tags(j);
-        if (ts == null)
-          return;
-        for (final TagElement t : ts) {
-          if (!TagElement.TAG_PARAM.equals(t.getTagName()))
-            continue;
-          for (final Object ¢ : t.fragments())
-            if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-              r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
-              return;
-            }
-        }
+        if (ts != null)
+          for (final TagElement t : ts) {
+            if (!TagElement.TAG_PARAM.equals(t.getTagName()))
+              continue;
+            for (final Object ¢ : t.fragments())
+              if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
+                r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
+                return;
+              }
+          }
       }
     };
   }
