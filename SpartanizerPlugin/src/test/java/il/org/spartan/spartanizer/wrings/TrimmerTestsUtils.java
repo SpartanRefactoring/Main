@@ -103,9 +103,8 @@ public final class TrimmerTestsUtils {
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
-        return;
-      assertSimilar(get(), peeled);
+      if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
+        assertSimilar(get(), peeled);
     }
   }
 

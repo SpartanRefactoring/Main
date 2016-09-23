@@ -37,9 +37,8 @@ public final class DisabledChecker {
   };
 
   @SuppressWarnings("synthetic-access") public DisabledChecker(final CompilationUnit u) {
-    if (u == null)
-      return;
-    u.accept(new BodyDeclarationVisitor());
+    if (u != null)
+      u.accept(new BodyDeclarationVisitor());
   }
 
   /** @param n node

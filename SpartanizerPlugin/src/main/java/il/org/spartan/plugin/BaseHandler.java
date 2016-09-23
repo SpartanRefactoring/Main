@@ -17,8 +17,13 @@ public abstract class BaseHandler extends AbstractHandler {
 
   /** Instantiates this class
    * @param inner JD */
-  protected BaseHandler(final GUI$Applicator inner) {
+  BaseHandler(final GUI$Applicator inner) {
     this.inner = inner;
+  }
+
+  /** Instantiates this class */
+  BaseHandler() {
+    this(null);
   }
 
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
@@ -50,10 +55,10 @@ public abstract class BaseHandler extends AbstractHandler {
     return null;
   }
 
-  private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit cu) {
+  private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
     final GUI$Applicator $ = getRefactoring();
     $.setSelection(s);
-    $.setCompilationUnitInterface(cu);
+    $.setICompilationUnit(u);
     return new Wizard($);
   }
 }
