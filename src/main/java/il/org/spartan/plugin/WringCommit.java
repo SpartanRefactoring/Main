@@ -119,9 +119,8 @@ public final class WringCommit {
     final Type type;
     final CompilationUnit compilationUnit;
     Wring<?> wring;
-    /**
-     * A boolean flag indicating end of traverse. Set true after required operation has been made.
-     */
+    /** A boolean flag indicating end of traverse. Set true after required
+     * operation has been made. */
     boolean doneTraversing;
 
     public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
