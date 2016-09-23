@@ -14,8 +14,6 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
-
-import static il.org.spartan.spartanizer.ast.wizard.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 /** Common strategy of all evaluators$EvaluateExpression
@@ -56,7 +54,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
             }
         }
     }
-    if(indexForRightEvaluation(x)>1 && operator()!=DIVIDE){
+    if(indexForRightEvaluation(x)>1 && operator()!=DIVIDE && operator()!=REMAINDER ){
       String str = null;
       int index = indexForRightEvaluation(x);
         InfixExpression cuttedExpression = subject.operands(extract.allOperands(x).subList(extract.allOperands(x).size()-index,extract.allOperands(x).size())).to(operator());
