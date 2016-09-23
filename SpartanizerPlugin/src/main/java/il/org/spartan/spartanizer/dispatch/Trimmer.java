@@ -80,9 +80,12 @@ public class Trimmer extends GUI$Applicator {
   @Override protected ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
+        progressMonitor.worked(1);
         if (new DisabledChecker(u).check(n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
+        if (w != null)
+          progressMonitor.worked(5);
         return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
       }
     };
@@ -93,5 +96,4 @@ public class Trimmer extends GUI$Applicator {
       return Trimmer.this;
     }
   }
-
 }
