@@ -293,8 +293,10 @@ public abstract class GUI$Applicator extends Refactoring {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
     TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
-    for (Suggestion ¢: suggestions)
+    for (Suggestion ¢: suggestions) {
+      progressMonitor.worked(1);
       ¢.go(astRewrite, g);
+    }
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();
     final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
