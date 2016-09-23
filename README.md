@@ -13,8 +13,7 @@ lot of reading material on the subject in the [project wiki].
 
 ## Compiling from source
 #### Using Maven and Git in command line(recommended)
-Clone the repository by:
-Asuming that the current derectory is at relative path "?"
+By asuming that the current derectory is at relative path "?", Clone the repository by:
 
 ```
 git clone https://github.com/SpartanRefactoring/Spartanizer.git
