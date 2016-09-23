@@ -34,6 +34,7 @@ public final class SpartanizeCurrent extends BaseHandler {
       try {
         ps.busyCursorWhile(pm -> {
           applicator.setProgressMonitor(pm);
+          pm.setTaskName(status + "");
           applicator.parse();
           applicator.scan();
           n.inner = applicator.suggestionsCount();
@@ -46,11 +47,11 @@ public final class SpartanizeCurrent extends BaseHandler {
         return null;
       }
       if (n.inner <= 0) {
-        status.append("\n Applied a total of " + total + " suggestions in " + (i + 1) + " rounds");
+        status.append("\n Applied a total of " + total + " suggestions in " + i  + " rounds");
         return eclipse.announce(status);
       }
       total += n.inner;
-      status.append("\n Round " + i + ": " + n.inner + " suggestions (total count " + (i+1) + " passes");
+      status.append("\n Round " + (i +1) + ": " + n.inner + " suggestions (previous rounds: " + total + " suggestions");
     }
     status.append("\n too many passes; aborting"); 
     throw new ExecutionException(status + "");
