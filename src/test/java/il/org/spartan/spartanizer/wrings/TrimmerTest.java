@@ -3942,12 +3942,13 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void sortAdditionThreeOperands3() {
     trimmingOf("1+2F+33+142+1")//
-        .stays();
+    .gives("1+2F+176")    
+    .stays();
   }
 
   @Test public void sortAdditionThreeOperands4() {
     trimmingOf("1+2+'a'")//
-        .stays();
+    .gives("3+'a'");    
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
@@ -4023,12 +4024,13 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void sortThreeOperands3() {
     trimmingOf("2*2F*33*142")//
+    .gives("2*2F*4686")
         .stays();
   }
 
   @Test public void sortThreeOperands4() {
     trimmingOf("2*3*'a'")//
-        .stays();
+    .gives("6*'a'"); 
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
@@ -4434,7 +4436,7 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void useOutcontextToManageStringAmbiguity() {
     trimmingOf("1+2+s<3")//
-        .gives("s+1+2<3");
+        .gives("3+s<3");
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
