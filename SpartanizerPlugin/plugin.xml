@@ -72,7 +72,7 @@
    </specification>
 </extension>
    <extension point="org.eclipse.ui.commands">
-      <category id="il.org.spartan.plugin" name="Spartanization Category"/>
+      <category id="il.org.spartan.plugin" name="Spartanization commands"/>
       <command
             categoryId="il.org.spartan.plugin"
             id="il.org.spartan.commands.ToggleCommand"
@@ -116,8 +116,8 @@
             <command
                   commandId="il.org.spartan.plugin.ApplySpartanization"
                   icon="src/main/icons/spartan-warrior.gif"
-                  tooltip="Spartanize this file"
-                  id="il.org.spartan.plugin.toolbars.ApplySpartanization">
+                  tooltip="Fully spartanize this file"
+                  id="il.org.spartan.plugin.toolbars.HelmetButton">
             </command>
          </toolbar>
       </menuContribution>
