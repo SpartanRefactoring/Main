@@ -486,6 +486,18 @@ public final class Version250 {
         .stays();
   }
 
+  @Ignore @Test public void issue230a1() {
+    trimmingOf("class A{volatile volatile int a;}") //
+        .gives("class A{volatile int a;}") //
+        .stays();
+  }
+
+  @Ignore @Test public void issue230a2() {
+    trimmingOf("class A{volatile @Override static static @Deprecated int f() {}}") //
+        .gives("class A{@Override @Deprecated static volatile int f() {}}") //
+        .stays();
+  }
+
   @Test public void issue230b() {
     trimmingOf("protected public final class A{volatile static int a;}") //
         .gives("public protected final class A{volatile static int a;}") //
@@ -506,7 +518,7 @@ public final class Version250 {
         .gives("@Deprecated public protected final class A{@SuppressWarnings(\"deprecation\") static volatile int a;}") //
         .stays();
   }
-
+  
   // TODO: Yossi, do you want the annotations to be sorted as well?
   // Alphabetically? Some other predefined by you order? I saw a few issues
   // about annotations sorting conventions on stack overflow, thought you must
@@ -526,12 +538,6 @@ public final class Version250 {
   @Test public void issue230f() {
     trimmingOf("class A{volatile @Override static @Deprecated int f() {}}") //
         .gives("class A{@Override @Deprecated static volatile int f() {}}") //
-        .stays();
-  }
-
-  @Ignore @Test public void issue230fa() {
-    trimmingOf("class A{volatile volatile int a;}") //
-        .gives("class A{volatile int a;}") //
         .stays();
   }
 
