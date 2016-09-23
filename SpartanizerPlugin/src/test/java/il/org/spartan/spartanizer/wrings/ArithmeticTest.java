@@ -557,6 +557,7 @@ public final class ArithmeticTest {
       ;
     }
     
+
     @Test public void issue206_1() {
       trimmingOf("3+4+a").gives("7+a").stays();
     }

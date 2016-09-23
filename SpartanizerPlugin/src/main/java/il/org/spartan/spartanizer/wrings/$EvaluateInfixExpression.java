@@ -99,6 +99,8 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   public static int indexForLeftEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
     int counter=0;
+    int d = 0,f = 0;
+    long l = (long) (1L * ++d * f--);
     for (final Expression ¢ : lst){
         if (!iz.number(¢)){
             if(counter>1)
@@ -123,5 +125,4 @@ public static int indexForRightEvaluation(final InfixExpression x) {
     }
     return -1;
 }
-
 }
