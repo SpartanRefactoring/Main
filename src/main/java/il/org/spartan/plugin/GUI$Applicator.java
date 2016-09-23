@@ -14,10 +14,12 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -30,9 +32,9 @@ import il.org.spartan.utils.*;
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class GUI$Applicator extends Refactoring {
-  private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
-  private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
   private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
+  private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
+  private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
 
   public static IMarkerResolution getWringCommitDeclaration() {
     return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
@@ -62,13 +64,15 @@ public abstract class GUI$Applicator extends Refactoring {
     };
   }
 
-  private ITextSelection selection;
-  private ICompilationUnit compilationUnit;
-  private IMarker marker;
-  final Collection<TextFileChange> changes = new ArrayList<>();
-  private final String name;
-  private int totalChanges;
   public IProgressMonitor progressMonitor = nullProgressMonitor;
+  final Collection<TextFileChange> changes = new ArrayList<>();
+  private CompilationUnit compilationUnit;
+  private ICompilationUnit compilationUnitInterface;
+  private IMarker marker;
+  private final String name;
+  private ITextSelection selection;
+  final List<Suggestion> suggestions = new ArrayList<>();
+  private int totalChanges;
 
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
@@ -76,13 +80,17 @@ public abstract class GUI$Applicator extends Refactoring {
     this.name = name;
   }
 
+  boolean apply() {
+    return apply(compilationUnitInterface, new Range(0, 0));
+  }
+
   public boolean apply(final ICompilationUnit cu) {
     return apply(cu, new Range(0, 0));
   }
 
-  public boolean apply(final ICompilationUnit cu, final ITextSelection s) {
+  public boolean fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
     try {
-      setCompilationUnit(cu);
+      setCompilationUnitInterface(cu);
       setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
     } catch (final CoreException x) {
@@ -92,14 +100,14 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public boolean apply(final ICompilationUnit cu, final Range r) {
-    return apply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
+    return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size()));
   }
 
   @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
-      runAsManualCall();
+      collectAllSuggestions();
     else {
       innerRunAsMarkerFix(marker, true);
       marker = null; // consume marker
@@ -110,7 +118,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
-    if (compilationUnit == null && marker == null)
+    if (compilationUnitInterface == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
     return $;
   }
@@ -122,7 +130,7 @@ public abstract class GUI$Applicator extends Refactoring {
    *         spartanization suggestion */
   public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
     final List<Suggestion> $ = new ArrayList<>();
-    ¢.accept(collectSuggestions(¢, $));
+    ¢.accept(makeSuggestionsCollector(¢, $));
     return $;
   }
 
@@ -175,37 +183,19 @@ public abstract class GUI$Applicator extends Refactoring {
     return rewriterOf(¢, (IMarker) null);
   }
 
-  public IMarkerResolution disableClassFix() {
-    return getToggle(SuppressSpartanizationOnOff.Type.CLASS, "Disable spartanization for class");
-  }
-
-  public IMarkerResolution disableFileFix() {
-    return getToggle(SuppressSpartanizationOnOff.Type.FILE, "Disable spartanization for file");
-  }
-
-  public IMarkerResolution disableFunctionFix() {
-    return getToggle(SuppressSpartanizationOnOff.Type.DECLARATION, "Disable spartanization for scope");
-  }
-
   /** @return compilationUnit */
-  public ICompilationUnit getCompilationUnit() {
-    return compilationUnit;
+  public ICompilationUnit getCompilationUnitInterface() {
+    return compilationUnitInterface;
   }
 
+  /** a quickfix which automatically performs the spartanization
+   * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
+   * @since 2013/07/01 */
   /** @return a quick fix for this instance */
   public IMarkerResolution getFix() {
-    return getFix(getName());
-  }
-
-  /** @param s Spartanization's name
-   * @return a quickfix which automatically performs the spartanization */
-  public IMarkerResolution getFix(final String s) {
-    /** a quickfix which automatically performs the spartanization
-     * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-     * @since 2013/07/01 */
     return new IMarkerResolution() {
       @Override public String getLabel() {
-        return s;
+        return getName();
       }
 
       @Override public void run(final IMarker m) {
@@ -261,6 +251,10 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection;
   }
 
+  public List<Suggestion> getSuggestions() {
+    return suggestions;
+  }
+
   /** .
    * @return True if there are spartanizations which can be performed on the
    *         compilation unit. */
@@ -295,6 +289,46 @@ public abstract class GUI$Applicator extends Refactoring {
     return $;
   }
 
+  public boolean follow() throws CoreException {
+    progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
+    final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
+    TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
+    for (Suggestion s: suggestions)
+      s.go(astRewrite, g);
+    progressMonitor.done();
+    final TextEdit rewriteAST = astRewrite.rewriteAST();
+    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    textFileChange.setTextType("java");
+    textFileChange.setEdit(rewriteAST);
+    final boolean $ = textFileChange.getEdit().getLength() != 0;
+    if ($)
+      textFileChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $;
+  }
+
+  public IFile compilatinUnitIFile() {
+    return (IFile) compilationUnitInterface.getResource();
+  }
+
+  public String compilationUnitName() {
+    return compilationUnitInterface.getElementName();
+  }
+
+
+  public boolean go() throws CoreException {
+    progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    textChange.setTextType("java");
+    final IProgressMonitor m = newSubMonitor(progressMonitor);
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(compilationUnitInterface).createAST(m)).rewriteAST());
+    final boolean $ = textChange.getEdit().getLength() != 0;
+    if ($)
+      textChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $;
+  }
+
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -312,9 +346,9 @@ public abstract class GUI$Applicator extends Refactoring {
     return innerRunAsMarkerFix(¢, false);
   }
 
-  /** @param compilationUnit the compilationUnit to set */
-  public void setCompilationUnit(final ICompilationUnit ¢) {
-    compilationUnit = ¢;
+  /** @param compilationUnitInterface the compilationUnit to set */
+  public void setCompilationUnitInterface(final ICompilationUnit ¢) {
+    compilationUnitInterface = ¢;
   }
 
   /** @param marker the marker to set for the refactoring */
@@ -335,7 +369,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return name;
   }
 
-  protected abstract ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $);
+  protected abstract ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $);
 
   protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
 
@@ -345,6 +379,15 @@ public abstract class GUI$Applicator extends Refactoring {
    * @DisableSpartan */
   protected boolean isNodeOutsideSelection(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());
+  }
+
+  protected void parse() {
+    compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(compilationUnitInterface).createAST(progressMonitor);
+  }
+
+  protected void scan() {
+    suggestions.clear();
+    compilationUnit.accept(makeSuggestionsCollector(compilationUnit, suggestions));
   }
 
   /** @param u JD
@@ -386,6 +429,18 @@ public abstract class GUI$Applicator extends Refactoring {
     progressMonitor.done();
   }
 
+  void collectAllSuggestions() throws JavaModelException, CoreException {
+    progressMonitor.beginTask("Collecting suggestions...", IProgressMonitor.UNKNOWN);
+    scanCompilationUnits(getUnits());
+    progressMonitor.done();
+  }
+
+  void collectSuggestions() {
+    progressMonitor.beginTask("Collecting suggestions...", IProgressMonitor.UNKNOWN);
+    scan();
+    progressMonitor.done();
+  }
+
   /** creates an ASTRewrite, under the context of a text marker, which contains
    * the changes
    * @param pm a progress monitor in which to display the progress of the
@@ -396,7 +451,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢);
   }
 
-  private IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
+  static IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -414,9 +469,9 @@ public abstract class GUI$Applicator extends Refactoring {
 
   private List<ICompilationUnit> getUnits() throws JavaModelException {
     if (!isTextSelected())
-      return compilationUnits(compilationUnit != null ? compilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
+      return compilationUnits(compilationUnitInterface != null ? compilationUnitInterface : currentCompilationUnit(), newSubMonitor(progressMonitor));
     final List<ICompilationUnit> $ = new ArrayList<>();
-    $.add(compilationUnit);
+    $.add(compilationUnitInterface);
     return $;
   }
 
@@ -437,9 +492,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
 
-  private void runAsManualCall() throws JavaModelException, CoreException {
-    progressMonitor.beginTask("Checking preconditions...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnits(getUnits());
-    progressMonitor.done();
+  public int suggestionsCount() {
+    return suggestions.size();
   }
 }

@@ -25,7 +25,7 @@ public final class SpartanizeAll extends BaseHandler {
     int $ = 0;
     for (final GUI$Applicator ¢ : eclipse.safeSpartanizations) {
       ¢.setMarker(null);
-      ¢.setCompilationUnit(u);
+      ¢.setCompilationUnitInterface(u);
       $ += ¢.countSuggestions();
     }
     return $;
