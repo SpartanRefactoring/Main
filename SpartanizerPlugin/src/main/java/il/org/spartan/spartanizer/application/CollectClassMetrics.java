@@ -29,7 +29,7 @@ public final class CollectClassMetrics {
     final Trimmer tr = new Trimmer();
     assert tr != null;
     final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
-    tr.setCompilationUnit($);
+    tr.setCompilationUnitInterface($);
     assert $ != null;
     try {
       tr.checkAllConditions(null);

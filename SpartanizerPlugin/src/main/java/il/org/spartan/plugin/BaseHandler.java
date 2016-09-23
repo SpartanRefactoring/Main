@@ -53,7 +53,7 @@ public abstract class BaseHandler extends AbstractHandler {
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit cu) {
     final GUI$Applicator $ = getRefactoring();
     $.setSelection(s);
-    $.setCompilationUnit(cu);
+    $.setCompilationUnitInterface(cu);
     return new Wizard($);
   }
 }

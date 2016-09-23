@@ -146,7 +146,7 @@ public final class SuppressSpartanizationOnOff {
           return;
         BodyDeclaration d;
         switch (t) {
-          case DECLARATION:
+          case FUNCTION:
             d = getDeclaringDeclaration(n);
             break;
           case CLASS:
@@ -177,6 +177,6 @@ public final class SuppressSpartanizationOnOff {
   }
 
   public enum Type {
-    DECLARATION, CLASS, FILE
+    FUNCTION, CLASS, FILE
   }
 }
