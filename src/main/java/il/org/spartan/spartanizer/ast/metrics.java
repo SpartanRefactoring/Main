@@ -158,21 +158,16 @@ public interface metrics {
         if (iz.is(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)
             ++a.inner;
-          return;
-        }
-        if (iz.is(¢, EMPTY_STATEMENT))
-          return;
-        if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT)) {
-          a.inner += 4;
-          return;
-        }
-        if (!iz.is(¢, IF_STATEMENT))
-          a.inner += 3;
-        else {
-          a.inner += 4;
-          if (elze(az.ifStatement(¢)) != null)
-            ++a.inner;
-        }
+        } else if (!iz.is(¢, EMPTY_STATEMENT))
+          if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT))
+            a.inner += 4;
+          else if (!iz.is(¢, IF_STATEMENT))
+            a.inner += 3;
+          else {
+            a.inner += 4;
+            if (elze(az.ifStatement(¢)) != null)
+              ++a.inner;
+          }
       }
     });
     return $.inner;

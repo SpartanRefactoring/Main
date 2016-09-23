@@ -19,8 +19,8 @@ public enum NameGuess {
   WEIRDO, //
   UNKNOWN, //
   ;
-  public static boolean isClassName(final ASTNode e) {
-    return isClassName(hop.lastComponent(az.name(e)) + "");
+  public static boolean isClassName(final ASTNode ¢) {
+    return isClassName(hop.lastComponent(az.name(¢)) + "");
   }
 
   public static boolean isClassName(final String e) {

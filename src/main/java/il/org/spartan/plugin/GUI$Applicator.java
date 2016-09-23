@@ -67,7 +67,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
-  private ICompilationUnit compilationUnitInterface;
+  private ICompilationUnit iCompilationUnit;
   private IMarker marker;
   private final String name;
   private ITextSelection selection;
@@ -81,7 +81,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   boolean apply() {
-    return apply(compilationUnitInterface, new Range(0, 0));
+    return apply(iCompilationUnit, new Range(0, 0));
   }
 
   public boolean apply(final ICompilationUnit cu) {
@@ -90,7 +90,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   public boolean fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
     try {
-      setCompilationUnitInterface(cu);
+      setICompilationUnit(cu);
       setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
     } catch (final CoreException x) {
@@ -118,7 +118,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
-    if (compilationUnitInterface == null && marker == null)
+    if (iCompilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
     return $;
   }
@@ -184,8 +184,8 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** @return compilationUnit */
-  public ICompilationUnit getCompilationUnitInterface() {
-    return compilationUnitInterface;
+  public ICompilationUnit getiCompilationUnit() {
+    return iCompilationUnit;
   }
 
   /** a quickfix which automatically performs the spartanization
@@ -293,8 +293,8 @@ public abstract class GUI$Applicator extends Refactoring {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
     TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
-    for (Suggestion s: suggestions)
-      s.go(astRewrite, g);
+    for (Suggestion ¢: suggestions)
+      ¢.go(astRewrite, g);
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();
     final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
@@ -308,11 +308,11 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public IFile compilatinUnitIFile() {
-    return (IFile) compilationUnitInterface.getResource();
+    return (IFile) iCompilationUnit.getResource();
   }
 
   public String compilationUnitName() {
-    return compilationUnitInterface.getElementName();
+    return iCompilationUnit.getElementName();
   }
 
 
@@ -321,7 +321,7 @@ public abstract class GUI$Applicator extends Refactoring {
     final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(progressMonitor);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(compilationUnitInterface).createAST(m)).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m)).rewriteAST());
     final boolean $ = textChange.getEdit().getLength() != 0;
     if ($)
       textChange.perform(progressMonitor);
@@ -346,9 +346,9 @@ public abstract class GUI$Applicator extends Refactoring {
     return innerRunAsMarkerFix(¢, false);
   }
 
-  /** @param compilationUnitInterface the compilationUnit to set */
-  public void setCompilationUnitInterface(final ICompilationUnit ¢) {
-    compilationUnitInterface = ¢;
+  /** @param iCompilationUnit the compilationUnit to set */
+  public void setICompilationUnit(final ICompilationUnit ¢) {
+    iCompilationUnit = ¢;
   }
 
   /** @param marker the marker to set for the refactoring */
@@ -382,7 +382,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   protected void parse() {
-    compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(compilationUnitInterface).createAST(progressMonitor);
+    compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   protected void scan() {
@@ -469,9 +469,9 @@ public abstract class GUI$Applicator extends Refactoring {
 
   private List<ICompilationUnit> getUnits() throws JavaModelException {
     if (!isTextSelected())
-      return compilationUnits(compilationUnitInterface != null ? compilationUnitInterface : currentCompilationUnit(), newSubMonitor(progressMonitor));
+      return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
     final List<ICompilationUnit> $ = new ArrayList<>();
-    $.add(compilationUnitInterface);
+    $.add(iCompilationUnit);
     return $;
   }
 
