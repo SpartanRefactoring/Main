@@ -493,6 +493,12 @@ public final class Version250 {
   }
 
   @Ignore @Test public void issue230a2() {
+    trimmingOf("private @Nullable T value = null;") //
+        .gives("@Nullable private T value = null;") //
+        .stays();
+  }
+
+  @Ignore @Test public void issue230a3() {
     trimmingOf("class A{volatile @Override static static @Deprecated int f() {}}") //
         .gives("class A{@Override @Deprecated static volatile int f() {}}") //
         .stays();
