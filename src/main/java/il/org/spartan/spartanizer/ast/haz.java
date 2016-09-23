@@ -185,4 +185,8 @@ public enum haz {
         return true;
     return false;
   }
+  
+  static boolean binding(final ASTNode n) {
+    return n != null && n.getAST() != null && n.getAST().hasResolvedBindings();
+  }
 }
