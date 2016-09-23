@@ -32,8 +32,7 @@ public class Issue111 {
     trimmingOf("protected public void func();").gives("public protected void func();");
   }
 
-  @Test public void A$c_2() { // not working cause method sorting is not
-                              // integrated yet
+  @Test public void A$c_2() { 
     trimmingOf("public final class A{" + //
         "synchronized public void fun(final int a) {}" + //
         "final private String s = \"Alex\";" + //
