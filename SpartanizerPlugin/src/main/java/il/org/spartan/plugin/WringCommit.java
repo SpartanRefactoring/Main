@@ -162,7 +162,6 @@ public final class WringCommit {
     }
 
     protected void applyLocal(final Wring w, final ASTNode n) {
-      Toolbox.refresh();
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);

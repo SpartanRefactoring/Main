@@ -33,7 +33,7 @@ public class Trimmer extends GUI$Applicator {
   }
 
   public Trimmer(final Toolbox toolbox) {
-    super("  Apply");
+    super("Apply");
     this.toolbox = toolbox;
   }
 
@@ -77,7 +77,7 @@ public class Trimmer extends GUI$Applicator {
     }
   }
 
-  @Override protected ASTVisitor collectSuggestions(final CompilationUnit u, final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         if (new DisabledChecker(u).check(n))
@@ -93,4 +93,5 @@ public class Trimmer extends GUI$Applicator {
       return Trimmer.this;
     }
   }
+
 }
