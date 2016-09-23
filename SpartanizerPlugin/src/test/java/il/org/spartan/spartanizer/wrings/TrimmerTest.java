@@ -1775,8 +1775,8 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void issue110_13() {
     trimmingOf("f() ? \"first is:\" + d() + \"second\" : \"first are:\" + g() + \"and second\"")//
-        .gives("\"first\" + (f() ? \" is:\" + d() + \"second\": \" are:\" + g() + \"and second\")")//
-        .gives("\"first\" + ((f() ? \" is:\" + d() + \"\": \" are:\" + g() + \"and \") + \"second\")");
+        .gives("\"first \" + (f() ? \"is:\" + d() + \"second\": \"are:\" + g() + \"and second\")")//
+        .gives("\"first \" + ((f() ? \"is:\" + d() + \"\": \"are:\" + g() + \"and \") + \"second\")");
   }
 
   @Test public void issue110_14() {
