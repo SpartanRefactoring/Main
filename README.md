@@ -26,7 +26,7 @@ mvn package
 ```
 The packaged plug-in (.jar file) will be created in the
 `?/Spartanizer/SpartanRefactoring/target` directory.
-Copy the .jar file into your <eclipse_directory>/dropins or plugins, and
+Copy the .jar file into your eclipse directory, Eclipse/dropins or plugins, and
 run Eclipse.
 
 #### From inside Eclipse
