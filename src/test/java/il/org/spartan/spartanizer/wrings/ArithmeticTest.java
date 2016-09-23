@@ -554,5 +554,37 @@ public final class ArithmeticTest {
           .stays() //
       ;
     }
+    
+    @Test public void issue206_1() {
+      trimmingOf("3+4+a").gives("7+a").stays();
+    }
+    
+    @Test public void issue206_2() {
+      trimmingOf("3*4*a").gives("12*a").stays();
+    }
+    
+    @Test public void issue206_3() {
+      trimmingOf("3-4-a").gives("-1-a").stays();
+    }
+    
+    @Test public void issue206_4() {
+      trimmingOf("5/1/a").gives("5/a").stays();
+    }
+    
+    @Test public void issue206_5() {
+      trimmingOf("a+8+9").gives("a+17").stays();
+    }
+    
+    @Test public void issue206_6() {
+      trimmingOf("a*8*9").gives("a*72").stays();
+    }
+    
+    @Test public void issue206_7() {
+      trimmingOf("a/8/2").stays();
+    }
+    
+    @Test public void issue206_8() {
+      trimmingOf("a-8-2-2").gives("a-4").stays();
+    }
   }
 }
