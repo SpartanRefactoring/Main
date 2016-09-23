@@ -51,7 +51,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     for (int ¢ = 0; ¢ < s1.length(); ++¢) {
       if (!Character.isAlphabetic(first(s1, ¢)) && !Character.isAlphabetic(first(s2, ¢))
           || ¢ == s1.length() - 1 && !Character.isAlphabetic(first(s2, ¢)))
-        $ = ¢;
+        $ = first(s1, ¢) != first(s2, ¢) ? ¢ : ¢ + 1;
       if (first(s1, ¢) != first(s2, ¢))
         return $;
     }
@@ -203,7 +203,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     if (!iz.stringLiteral(last(thenOperands)) || !iz.stringLiteral(last(elzeOperands)))
       return null;
     final String thenStr = ((StringLiteral) last(thenOperands)).getLiteralValue();
-    final String elzeStr = ((StringLiteral) last(thenOperands)).getLiteralValue();
+    final String elzeStr = ((StringLiteral) last(elzeOperands)).getLiteralValue();
     final int commonSuffixIndex = lastDifference(thenStr, elzeStr);
     return commonSuffixIndex == 0 ? null
         : subject.pair(subject.operand(subject
