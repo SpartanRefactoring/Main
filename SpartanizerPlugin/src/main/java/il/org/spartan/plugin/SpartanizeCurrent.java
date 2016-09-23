@@ -50,8 +50,8 @@ public final class SpartanizeCurrent extends BaseHandler {
         status.append("\n Applied a total of " + total + " suggestions in " + i  + " rounds");
         return eclipse.announce(status);
       }
-      total += n.inner;
       status.append("\n Round " + (i +1) + ": " + n.inner + " suggestions (previous rounds: " + total + " suggestions");
+      total += n.inner;
     }
     status.append("\n too many passes; aborting"); 
     throw new ExecutionException(status + "");

@@ -289,9 +289,7 @@ public interface wizard {
   }
 
   static boolean isValueType(final Type ¢) {
-    // TODO: Ori, check if there is binding, and if there is convert to
-    // binaryName: t resolveBinding().getBinaryName();
-    return isValueType(¢ + "");
+    return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
   }
 
   /** Determine whether a node is an infix expression whose operator is
