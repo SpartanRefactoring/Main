@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
   final Environment EMPTY = new Environment() {
+    // This class is intentionally empty
   };
   /** Initializer for EMPTY */
   final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();

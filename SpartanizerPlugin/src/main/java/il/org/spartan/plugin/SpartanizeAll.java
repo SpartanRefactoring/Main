@@ -16,10 +16,6 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public final class SpartanizeAll extends BaseHandler {
-  protected SpartanizeAll(GUI$Applicator inner) {
-    super(inner);
-  }
-
   static final int MAX_PASSES = 20;
 
   /** Returns the number of spartanization suggestions for a compilation unit
@@ -33,6 +29,10 @@ public final class SpartanizeAll extends BaseHandler {
       $ += ¢.countSuggestions();
     }
     return $;
+  }
+
+  protected SpartanizeAll(final GUI$Applicator inner) {
+    super(inner);
   }
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
