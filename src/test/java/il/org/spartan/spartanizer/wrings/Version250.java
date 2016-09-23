@@ -479,6 +479,170 @@ public final class Version250 {
     trimmingOf("(long)1L*2").gives("2*(long)1L").gives("2*1L*1L").gives("2L").stays();
   }
 
+  @Ignore @Test public void issue230a() {
+    trimmingOf("protected public final class A{volatile static int a;}") //
+        .gives("public protected class A{volatile static int a;}") //
+        .gives("public protected class A{static volatile int a;}") //
+        .stays();
+  }
+
+  @Test public void issue230b() {
+    trimmingOf("protected public final class A{volatile static int a;}") //
+        .gives("public protected final class A{volatile static int a;}") //
+        .gives("public protected final class A{static volatile int a;}") //
+        .stays();
+  }
+
+  @Test public void issue230c() {
+    trimmingOf("protected public final @Deprecated class A{volatile static int a;}") //
+        .gives("@Deprecated public protected final class A{volatile static int a;}") //
+        .gives("@Deprecated public protected final class A{static volatile int a;}") //
+        .stays();
+  }
+
+  @Test public void issue230d() {
+    trimmingOf("protected public final @Deprecated class A{volatile static @SuppressWarnings(\"deprecation\") int a;}") //
+        .gives("@Deprecated public protected final class A{volatile static @SuppressWarnings(\"deprecation\") int a;}") //
+        .gives("@Deprecated public protected final class A{@SuppressWarnings(\"deprecation\") static volatile int a;}") //
+        .stays();
+  }
+
+  // TODO: Yossi, do you want the annotations to be sorted as well?
+  // Alphabetically? Some other predefined by you order? I saw a few issues
+  // about annotations sorting conventions on stack overflow, thought you must
+  // have an opinion about it. for my opinion the best way to do it is to define
+  // some
+  // ordering to predefined annotations, and all other (hand-made) annotations
+  // will
+  // be at the bottom. Three next tests are checking annotations ordering and
+  // some
+  // should fall after defining sorting convention to annotations.
+  @Test public void issue230e() {
+    trimmingOf("class A{volatile @Deprecated static @Override int f() {}}") //
+        .gives("class A{@Deprecated @Override static volatile int f() {}}") //
+        .stays();
+  }
+
+  @Test public void issue230f() {
+    trimmingOf("class A{volatile @Override static @Deprecated int f() {}}") //
+        .gives("class A{@Override @Deprecated static volatile int f() {}}") //
+        .stays();
+  }
+
+  @Ignore @Test public void issue230fa() {
+    trimmingOf("class A{volatile volatile int a;}") //
+        .gives("class A{volatile int a;}") //
+        .stays();
+  }
+
+  @Test public void issue230g() {
+    trimmingOf("public @interface Prio {" + //
+        "public enum Priority { LOW, MEDIUM, HIGH }" + //
+        "String value();" + //
+        "Priority priority() default Priority.MEDIUM;" + //
+        "}" + //
+        "class A {" + //
+        "static @Override @Prio(priority=HIGH, value=\"Alex\") public @Deprecated void func() {}}") //
+            .gives("public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "class A {" + //
+                "@Override @Prio(priority=HIGH, value=\"Alex\") @Deprecated public static void func() {}}")
+            .stays();
+  }
+
+  // Meta-annotations are not replaced with modifiers - good!
+  @Test public void issue230h() {
+    trimmingOf("@Retention(RetentionPolicy.RUNTIME)" + //
+        "@Target({ElementType.METHOD})" + //
+        "public @interface Tweezable {}") //
+            .stays();
+  }
+
+  @Test public void issue230i() {
+    trimmingOf("public @interface hand_made { String[] value(); }" + //
+        "final @hand_made({}) String s = \"a\";") //
+            .gives("public @interface hand_made { String[] value(); }" + //
+                "@hand_made({}) final String s = \"a\";") //
+            .stays();
+  }
+
+  @Test public void issue230j() {
+    trimmingOf("@Target({ElementType.METHOD})" + //
+        "@Inherited " + //
+        "public @interface Prio {" + //
+        "public enum Priority { LOW, MEDIUM, HIGH }" + //
+        "String value();" + //
+        "Priority priority() default Priority.MEDIUM;" + //
+        "}" + //
+        "public final static class A {public @Prio(priority=HIGH, value=\"Alex\")" + //
+        "void func() {public final static class B {public final static @Prio(priority=HIGH, value=\"Alex\")" + //
+        "public final static void foo() {public final static class C {}}}}}") //
+            .gives("@Target({ElementType.METHOD})" + //
+                "@Inherited " + //
+                "public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "public static final class A {public @Prio(priority=HIGH, value=\"Alex\")" + //
+                "void func() {public final static class B {public final static @Prio(priority=HIGH, value=\"Alex\")" + //
+                "public final static void foo() {public final static class C {}}}}}") //
+            .gives("@Target({ElementType.METHOD})" + //
+                "@Inherited " + //
+                "public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "public static final class A {@Prio(priority=HIGH, value=\"Alex\") public " + //
+                "void func() {public final static class B {public final static @Prio(priority=HIGH, value=\"Alex\")" + //
+                "public final static void foo() {public final static class C {}}}}}") //
+            .gives("@Target({ElementType.METHOD})" + //
+                "@Inherited " + //
+                "public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "public static final class A {@Prio(priority=HIGH, value=\"Alex\") public " + //
+                "void func() {public static final class B {public final static @Prio(priority=HIGH, value=\"Alex\")" + //
+                "public final static void foo() {public final static class C {}}}}}") //
+            .gives("@Target({ElementType.METHOD})" + //
+                "@Inherited " + //
+                "public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "public static final class A {@Prio(priority=HIGH, value=\"Alex\") public " + //
+                "void func() {public static final class B {public static @Prio(priority=HIGH, value=\"Alex\")" + //
+                "public static void foo() {public final static class C {}}}}}") //
+            .gives("@Target({ElementType.METHOD})" + //
+                "@Inherited " + //
+                "public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "public static final class A {@Prio(priority=HIGH, value=\"Alex\") public " + //
+                "void func() {public static final class B {@Prio(priority=HIGH, value=\"Alex\")" + //
+                "public public static static void foo() {public final static class C {}}}}}") //
+            .gives("@Target({ElementType.METHOD})" + //
+                "@Inherited " + //
+                "public @interface Prio {" + //
+                "public enum Priority { LOW, MEDIUM, HIGH }" + //
+                "String value();" + //
+                "Priority priority() default Priority.MEDIUM;" + //
+                "}" + //
+                "public static final class A {@Prio(priority=HIGH, value=\"Alex\") public " + //
+                "void func() {public static final class B {@Prio(priority=HIGH, value=\"Alex\")" + //
+                "public public static static void foo() {public static final class C {}}}}}") //
+            .stays();
+  }
+
   @Test public void issue237() {
     trimmingOf("class X {final int __ = 0;}").stays();
     trimmingOf("class X {final boolean __ = false;}").stays();
