@@ -48,11 +48,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index,extract.allOperands(x).size());
         if (iz.validForEvaluation(cuttedExpression)){
             str = opportunisticReplacement(cuttedExpression);
-            if(str!=null){
-                if(afterExpressionOperands.size()==1){
-                    return subject.pair(az.expression(x.getAST().newNumberLiteral(str)),afterExpressionOperands.get(0)).to(operator());
-                }
-                return subject.pair(az.expression(x.getAST().newNumberLiteral(str)),subject.operands(afterExpressionOperands).to(operator())).to(operator());
+            if(str!=null) {
+              return afterExpressionOperands.size() == 1
+                  ? subject.pair(az.expression(x.getAST().newNumberLiteral(str)), afterExpressionOperands.get(0)).to(operator())
+                  : subject.pair(az.expression(x.getAST().newNumberLiteral(str)), subject.operands(afterExpressionOperands).to(operator()))
+                      .to(operator());
             }
         }
     }
