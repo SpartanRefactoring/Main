@@ -113,9 +113,8 @@ public final class SuppressSpartanizationOnOff {
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (!(¢ instanceof BodyDeclaration))
-          return;
-        unEnable($, (BodyDeclaration) ¢);
+        if (¢ instanceof BodyDeclaration)
+          unEnable($, (BodyDeclaration) ¢);
       }
     });
   }
