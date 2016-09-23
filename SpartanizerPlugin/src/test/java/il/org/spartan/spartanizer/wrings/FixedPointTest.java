@@ -94,7 +94,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test(timeout = 4000) public void inlineInitializers() {
-    assertConvertsTo("int b,a = 2; return 3 * a * b; ", "return 2 * 3 * b;");
+    assertConvertsTo("int b,a = 2; return 3 * a * b; ", "return 6 * b;");
   }
 
   @Test(timeout = 2000) public void issue37() {
@@ -227,7 +227,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test(timeout = 2000) public void sortAddition5() {
-    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 1 + 2 + 3 < -1");
+    assertSimplifiesTo("1 + 2  + 3 + a < 3 -4", "a + 6 < -1");
   }
 
   @Test(timeout = 2000) public void ternarize01() {

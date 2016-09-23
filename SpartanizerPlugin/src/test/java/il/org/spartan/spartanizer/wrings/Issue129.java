@@ -19,7 +19,7 @@ public class Issue129 {
   }
 
   @Test public void issue129_03() {
-    trimmingOf("1 + 2 + (x+1)").gives("1 + 2 + x + 1").stays();
+    trimmingOf("1 + 2 + (x+1)").gives("3 + x + 1").stays();
   }
 
   @Test public void issue129_04() {

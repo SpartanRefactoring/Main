@@ -44,7 +44,7 @@ public final class Issue172 {
   }
 
   @Test public void a$09() {
-    trimmingOf("x+1+0").stays();
+    trimmingOf("x+1+0").gives("x+1").stays();
   }
 
   @Test public void a$10() {

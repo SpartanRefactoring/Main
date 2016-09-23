@@ -145,7 +145,9 @@ public class Issue072 {
   }
 
   @Test public void pf() {
-    trimmingOf("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0").gives("(int)x+(int)x+(int)y+(int)z").stays();
+    trimmingOf("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0")
+    .gives("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0")
+    .gives("(int)x+(int)x+(int)y+(int)z").stays();
   }
 
   @Test public void pg() {
@@ -161,9 +163,7 @@ public class Issue072 {
 
   @Test public void pi() {
     trimmingOf("0+(0+x+y+((int)x+0))")//
-        .gives("0+0+x+y+((int)x +0)")//
-        .gives("0+0+x+y+((int)x)") //
-        .gives("0+0+x+y+(int)x") //
+        .gives("0+x+y+(int)x +0")//
         .stays();
   }
 }
