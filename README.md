@@ -12,14 +12,23 @@ Programming, which suggests guidelines for writing short, clean code. There's a
 lot of reading material on the subject in the [project wiki].
 
 ## Compiling from source
-#### Using Maven (recommended)
-After cloning the repository, go into the SpartanRefactoring directory and execute:
+#### Using Maven and Git in command line(recommended)
+Clone the repository by:
+Asuming that the current derectory is at relative path "?"
+
+```
+git clone https://github.com/SpartanRefactoring/Spartanizer.git
+```
+After cloning the repository, go into the ?/Spartanizer/SpartanRefactoring
+directory and execute:
 
 ```
 mvn package
 ```
-
-The packaged plug-in (.jar file) will be created in the `target/` directory.
+The packaged plug-in (.jar file) will be created in the
+`?/Spartanizer/SpartanRefactoring/target` directory.
+Copy the .jar file into your <eclipse_directory>/dropins or plugins, and
+run Eclipse.
 
 #### From inside Eclipse
 
