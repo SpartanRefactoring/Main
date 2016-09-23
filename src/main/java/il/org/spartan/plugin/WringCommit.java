@@ -15,6 +15,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -154,11 +155,12 @@ public final class WringCommit {
     }
 
     protected void applyDeclaration(final Wring<?> w, final ASTNode n) {
-      applyLocal(w, SuppressSpartanizationOnOff.getDeclaringDeclaration(n));
+      System.out.println(searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
+      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
     }
 
     protected void applyFile(final Wring<?> w, final ASTNode n) {
-      applyLocal(w, SuppressSpartanizationOnOff.getDeclaringFile(n));
+      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
     protected void applyLocal(final Wring w, final ASTNode n) {

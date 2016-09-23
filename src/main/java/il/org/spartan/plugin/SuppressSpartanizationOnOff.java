@@ -12,13 +12,28 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
-// TODO: Ori, why no header here?
+/**
+ * A utility class used to add enablers/disablers to code automatically, with AST scan
+ * based recursive algorithms. The automatic disabling mechanism is offered in the marker
+ * quick fix menu, see {@link QuickFixer}. The change is textual, implemented as a JavaDoc
+ * comment that can be read by {@link DisabledChecker}.
+ * 
+ * @author Ori Roth
+ */
 public final class SuppressSpartanizationOnOff {
   static final String disabler = DisabledChecker.disablers[0];
 
+  /**
+   * Commit textual change of a certain {@link Type}: adding a disabler comment to marked
+   * code with a progress monitor.
+   * @param pm progress monitor for the operation
+   * @param m marked code to be disabled
+   * @param t deactivation {@link Type}
+   */
   public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
@@ -30,9 +45,14 @@ public final class SuppressSpartanizationOnOff {
     pm.done();
   }
 
+  /**
+   * Textually disable a {@link BodyDeclaration}, while recursively removing enablers from
+   * sub tree.
+   * @param $ a rewrite to fill
+   * @param d a {@link BodyDeclaration} to disable
+   */
   static void disable(final ASTRewrite $, final BodyDeclaration d) {
     final Javadoc j = d.getJavadoc();
-    // TOOD: Ori, spartanize the following using the plugin.
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
       s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
@@ -42,6 +62,11 @@ public final class SuppressSpartanizationOnOff {
       $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(), d.getNodeType()), null);
   }
 
+  /**
+   * @param n an {@link ASTNode}
+   * @return true iff the node is disabled by an ancestor {@link BodyDeclaration}, containing
+   * a disabler in its JavaDoc.
+   */
   static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
@@ -56,6 +81,10 @@ public final class SuppressSpartanizationOnOff {
     return false;
   }
 
+  /**
+   * @param j a {@link JavaDoc}
+   * @return comment's text, without eneblers identifiers.
+   */
   static String enablersRemoved(final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
     for (final String e : getEnablers($)) {
@@ -63,34 +92,6 @@ public final class SuppressSpartanizationOnOff {
       $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }
     return $;
-  }
-
-  static BodyDeclaration getDeclaringClass(final ASTNode ¢) {
-    ASTNode $ = ¢;
-    // TODO: Ori, please use ancestor search, we have good services. Do not
-    // invent the wheel.
-    for (; $ != null && !($ instanceof AbstractTypeDeclaration); $ = $.getParent())
-      ;
-    return (BodyDeclaration) $;
-  }
-
-  static BodyDeclaration getDeclaringDeclaration(final ASTNode ¢) {
-    ASTNode $ = ¢;
-    // TODO: Ori, please use ancestor search, we have good services. Do not
-    // invent the wheel. This will also get two warnings off our head.
-    for (; $ != null && !($ instanceof BodyDeclaration); $ = $.getParent())
-      ;
-    return (BodyDeclaration) $;
-  }
-
-  static BodyDeclaration getDeclaringFile(final ASTNode n) {
-    ASTNode $ = getDeclaringDeclaration(n);
-    if ($ == null)
-      return null;
-    for (ASTNode p = $.getParent(); p != null; p = p.getParent())
-      if (p instanceof BodyDeclaration)
-        $ = p;
-    return (BodyDeclaration) $;
   }
 
   static Set<String> getDisablers(final String ¢) {
@@ -109,7 +110,6 @@ public final class SuppressSpartanizationOnOff {
     return $;
   }
 
-  // TODO: Ori, why not use the word disable instead of "UnEnable"?
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
@@ -146,13 +146,13 @@ public final class SuppressSpartanizationOnOff {
         BodyDeclaration d;
         switch (t) {
           case FUNCTION:
-            d = getDeclaringDeclaration(n);
+            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
             break;
           case CLASS:
-            d = getDeclaringClass(n);
+            d = (BodyDeclaration) searchAncestors.forClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
             break;
           case FILE:
-            d = getDeclaringFile(n);
+            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n);
             break;
           default:
             return;
