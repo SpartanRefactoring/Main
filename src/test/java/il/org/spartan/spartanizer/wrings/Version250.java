@@ -146,121 +146,6 @@ public final class Version250 {
     trimmingOf("foo((double)18)").gives("foo(1.*18)");
   }
 
-  @Ignore @Test public void issue073_01() {
-    trimmingOf("\"\" + \"abc\"").gives("\"abc\"");
-  }
-
-  @Ignore @Test public void issue073_02() {
-    trimmingOf("\"\" + \"abc\" + \"\"").gives("\"abc\"");
-  }
-
-  @Ignore @Test public void issue073_03() {
-    trimmingOf("\"abc\" + \"\"").gives("\"abc\"");
-  }
-
-  @Ignore @Test public void issue073_04() {
-    trimmingOf("x + \"\"").stays();
-  }
-
-  @Ignore @Test public void issue073_05() {
-    trimmingOf("\"\" + x").stays();
-  }
-
-  @Ignore @Test public void issue073_06() {
-    trimmingOf("\"abc\" + \"\" + x").gives("\"abc\" + x");
-  }
-
-  @Test public void issue075a() {
-    trimmingOf("int i = 0;").stays();
-  }
-
-  @Test public void issue075b() {
-    trimmingOf("int i = +1;").gives("int i = 1;");
-  }
-
-  @Test public void issue075c() {
-    trimmingOf("int i = +a;").gives("int i = a;");
-  }
-
-  @Test public void issue075d() {
-    trimmingOf("+ 0").gives("0");
-  }
-
-  @Test public void issue075e() {
-    trimmingOf("a = +0").gives("a = 0");
-  }
-
-  @Test public void issue075f() {
-    trimmingOf("a = 1+0").gives("a = 1");
-  }
-
-  @Test public void issue075g() {
-    trimmingOf("i=0").stays();
-  }
-
-  @Test public void issue075h() {
-    trimmingOf("int i; i = +0;").gives("int i = +0;").gives("int i=0;");
-  }
-
-  @Test public void issue075i() {
-    trimmingOf("+0").gives("0");
-  }
-
-  @Test public void issue075i0() {
-    trimmingOf("-+-+2").gives("--+2");
-  }
-
-  @Test public void issue075i1() {
-    trimmingOf("+0").gives("0");
-  }
-
-  @Test public void issue075i2() {
-    trimmingOf("+1").gives("1");
-  }
-
-  @Test public void issue075i3() {
-    trimmingOf("+-1").gives("-1");
-  }
-
-  @Test public void issue075i4() {
-    trimmingOf("+1.0").gives("1.0");
-  }
-
-  @Test public void issue075i5() {
-    trimmingOf("+'0'").gives("'0'");
-  }
-
-  @Test public void issue075i6() {
-    trimmingOf("+1L").gives("1L");
-  }
-
-  @Test public void issue075i7() {
-    trimmingOf("+0F").gives("0F");
-  }
-
-  @Test public void issue075i8() {
-    trimmingOf("+0L").gives("0L");
-  }
-
-  @Test public void issue075il() {
-    trimmingOf("+(a+b)").gives("a+b");
-  }
-
-  @Test public void issue075j() {
-    trimmingOf("+1E3").gives("1E3");
-  }
-
-  @Test public void issue075k() {
-    trimmingOf("(+(+(+x)))").gives("(x)");
-  }
-
-  @Test public void issue075m() {
-    trimmingOf("+ + + i").gives("i");
-  }
-
-  @Test public void issue075n() {
-    trimmingOf("(2*+(a+b))").gives("(2*(a+b))");
-  }
 
   @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076a() {
     trimmingOf("a*b + a*c").gives("a*(b+c)");
@@ -277,31 +162,6 @@ public final class Version250 {
   @Test public void issue076d() {
     trimmingOf("a * (b + c)").stays();
   }
-
-  @Test public void issue082a() {
-    trimmingOf("(long)5").gives("1L*5");
-  }
-
-  @Test public void issue082b() {
-    trimmingOf("(long)(int)a").gives("1L*(int)a").stays();
-  }
-
-  @Test public void issue082b_a_cuold_be_double() {
-    trimmingOf("(long)a").stays();
-  }
-
-  @Ignore("Issue #218") @Test public void issue082c() {
-    trimmingOf("(long)(long)2").gives("1L*(long)2").gives("1L*1L*2").stays();
-  }
-
-  @Test public void issue082d() {
-    trimmingOf("(long)a*(long)b").stays();
-  }
-
-  @Test public void issue082e() {
-    trimmingOf("(double)(long)a").gives("1.*(long)a").stays();
-  }
-
   @Test public void issue083a() {
     trimmingOf("if(x.size()>=0) return a;").gives("if(true) return a;");
   }
@@ -418,19 +278,31 @@ public final class Version250 {
   }
 
   @Test public void issue086_2() {
-    trimmingOf("if(false) {c();\nb();\na();}").gives("{}");
+    trimmingOf("if(false) {c();\nb();\na();}")//
+    .gives("{}")
+    .gives("")
+    .stays();
   }
 
-  @Ignore public void issue086_3() {
-    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").stays();
+  @Test public void issue086_3() {
+    trimmingOf("if(false) {c();\nb();\na();}")//
+    .gives("{}")
+    .gives("")
+    .stays();
   }
 
-  @Ignore public void issue086_4() {
-    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").stays();
+  @Test public void issue086_4() {
+    trimmingOf("if(false) {c();\nb();\na();}")//
+    .gives("{}")
+    .gives("")
+    .stays();
   }
 
-  @Ignore public void issue086_5() {
-    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").stays();
+  @Test public void issue086_5() {
+    trimmingOf("if(false) {c();\nb();\na();}")//
+    .gives("{}")
+    .gives("")
+    .stays();
   }
 
   @Test public void issue199() {
@@ -479,26 +351,26 @@ public final class Version250 {
     trimmingOf("(long)1L*2").gives("2*(long)1L").gives("2*1L*1L").gives("2L").stays();
   }
 
-  @Ignore @Test public void issue230a() {
+  @Test public void issue230a() {
     trimmingOf("protected public final class A{volatile static int a;}") //
         .gives("public protected class A{volatile static int a;}") //
         .gives("public protected class A{static volatile int a;}") //
         .stays();
   }
 
-  @Ignore @Test public void issue230a1() {
+  @Test public void issue230a1() {
     trimmingOf("class A{volatile volatile int a;}") //
         .gives("class A{volatile int a;}") //
         .stays();
   }
 
-  @Ignore @Test public void issue230a2() {
+  @Test public void issue230a2() {
     trimmingOf("private @Nullable T value = null;") //
         .gives("@Nullable private T value = null;") //
         .stays();
   }
 
-  @Ignore @Test public void issue230a3() {
+  @Test public void issue230a3() {
     trimmingOf("class A{volatile @Override static static @Deprecated int f() {}}") //
         .gives("class A{@Override @Deprecated static volatile int f() {}}") //
         .stays();
@@ -524,7 +396,7 @@ public final class Version250 {
         .gives("@Deprecated public protected final class A{@SuppressWarnings(\"deprecation\") static volatile int a;}") //
         .stays();
   }
-  
+
   // TODO: Yossi, do you want the annotations to be sorted as well?
   // Alphabetically? Some other predefined by you order? I saw a few issues
   // about annotations sorting conventions on stack overflow, thought you must
@@ -693,9 +565,6 @@ public final class Version250 {
         .stays();
   }
 
-  @Ignore public void test_a() {
-    azzert.that("studiesA".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("studyA"));
-  }
 
   @Test public void test_b() {
     azzert.that("studies".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
@@ -709,7 +578,7 @@ public final class Version250 {
     azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
 
-  @Ignore public void trimmerBugXOR() {
+  @Ignore @Test public void trimmerBugXOR() {
     trimmingOf("j=j^k").gives("j^=k");
   }
 
