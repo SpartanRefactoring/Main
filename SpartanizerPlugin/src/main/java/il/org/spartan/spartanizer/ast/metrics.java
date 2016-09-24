@@ -240,4 +240,9 @@ public interface metrics {
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
   }
+
+  static boolean horizontalComplexity(Object object) {
+    // TODO Auto-generated method stub
+    return false;
+  }
 }
