@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
 
+import java.io.*;
+
 /** Our way of dealing with logging,
  * @author Yossi Gil
  * @year 2016 */
@@ -28,20 +30,24 @@ public enum LoggingManner {
   };
   public static final LoggingManner now = ABORT_ON_ERROR;
 
+  public static void infoIOException(IOException e, String string) {
+    // TODO Auto-generated method stub
+  }
   public final LoggingManner info(final String message) {
-    try {
-      log(message);
-    } catch (final Throwable t) {
-      // ignore
-    }
-    return this;
+    return LOG_TO_STDERR.log(message);
   }
 
   public abstract LoggingManner log(String message);
 
+  public static String dump() {
+    return "MISSING_CASE: ";
+  }
+  public static String endDump() {
+    return "\n-----this is all I know.";
+  }
   /** logs an error in the plugin
    * @param t an error */
-  public static void xlog(final Throwable ¢) {
+  public static void log(final Throwable ¢) {
     now.log(¢ + "");
   }
 
@@ -75,4 +81,5 @@ public enum LoggingManner {
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
   }
-}
+
+  }

@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -32,11 +33,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
-    assert receiver != null : dump() + //
+    assert receiver != null : LoggingManner.dump() + //
         "\n threshold='" + threshold + //
         "\n receiver ='" + receiver + //
         "\n operator ='" + o + //
-        endDump();
+        LoggingManner.endDump();
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     assert $ != null : "All I know is that threshould=" + threshold + ", receiver = " + $ + ", and o=" + o;
     return replacement(o, threshold, $);
@@ -56,10 +57,10 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       return threshold != 0 ? null : make.notOf($);
     if (o == LESS)
       return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;
-    assert unreachable() : dump() + //
+    assert unreachable() : LoggingManner.dump() + //
         "\n threshold='" + threshold + //
         "\n operator ='" + o + //
-        endDump();
+        LoggingManner.endDump();
     return null;
   }
 

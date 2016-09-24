@@ -97,7 +97,7 @@ import il.org.spartan.spartanizer.engine.*;
       if ($ != null)
         $.deleteOnExit();
     } catch (final IOException e) {
-      LoggingManner.xlog(e); // Probably permissions problem
+      LoggingManner.log(e); // Probably permissions problem
     }
     return $;
   }
