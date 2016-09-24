@@ -240,14 +240,24 @@ public interface metrics {
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
   }
+  static int horizontalComplexity(Statement statement) {
+    return horizontalComplexity(0, statement);
+  }
 
-  static int horizontalComplexity(Statement s) {
+  static int horizontalComplexity(int base, Statement s) {
     if (null == s)
       return 0;
     if (iz.emptyStatement(s))
       return 1;
     if (iz.block(s))
-      return 2 + iz.horizontalComplexity(step.statements(az.block(s)));
+      return 2 + metrics.horizontalComplexity(base + 1, step.statements(az.block(s)));
     return 13443;
+  }
+
+  static int horizontalComplexity(int base, List<Statement> statements) {
+    int $= 0;
+    for (final Statement statement: statements) 
+      $ += base + horizontalComplexity(statement);
+    return $;
   }
 }
