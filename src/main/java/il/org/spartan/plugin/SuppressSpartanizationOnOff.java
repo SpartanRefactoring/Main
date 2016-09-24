@@ -16,24 +16,20 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/**
- * A utility class used to add enablers/disablers to code automatically, with AST scan
- * based recursive algorithms. The automatic disabling mechanism is offered in the marker
- * quick fix menu, see {@link QuickFixer}. The change is textual, implemented as a JavaDoc
- * comment that can be read by {@link DisabledChecker}.
- * 
- * @author Ori Roth
- */
+/** A utility class used to add enablers/disablers to code automatically, with
+ * AST scan based recursive algorithms. The automatic disabling mechanism is
+ * offered in the marker quick fix menu, see {@link QuickFixer}. The change is
+ * textual, implemented as a JavaDoc comment that can be read by
+ * {@link DisabledChecker}.
+ * @author Ori Roth */
 public final class SuppressSpartanizationOnOff {
-  static final String disabler = DisabledChecker.disablers[0];
+  static final String disabler = Trimmer.disablers[0];
 
-  /**
-   * Commit textual change of a certain {@link Type}: adding a disabler comment to marked
-   * code with a progress monitor.
+  /** Commit textual change of a certain {@link Type}: adding a disabler comment
+   * to marked code with a progress monitor.
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
-   * @param t deactivation {@link Type}
-   */
+   * @param t deactivation {@link Type} */
   public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
@@ -45,12 +41,10 @@ public final class SuppressSpartanizationOnOff {
     pm.done();
   }
 
-  /**
-   * Textually disable a {@link BodyDeclaration}, while recursively removing enablers from
-   * sub tree.
+  /** Textually disable a {@link BodyDeclaration}, while recursively removing
+   * enablers from sub tree.
    * @param $ a rewrite to fill
-   * @param d a {@link BodyDeclaration} to disable
-   */
+   * @param d a {@link BodyDeclaration} to disable */
   static void disable(final ASTRewrite $, final BodyDeclaration d) {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
@@ -58,33 +52,35 @@ public final class SuppressSpartanizationOnOff {
       s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
-    else
-      $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(), d.getNodeType()), null);
+    else {
+      final BodyDeclaration cd = (BodyDeclaration) ASTNode.copySubtree(d.getAST(), d);
+      final Javadoc cj = (Javadoc) $.createStringPlaceholder(s, ASTNode.JAVADOC);
+      cd.setJavadoc(cj);
+      $.replace(d, cd, null);
+    }
+    // $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(),
+    // d.getNodeType()), null);
   }
 
-  /**
-   * @param n an {@link ASTNode}
-   * @return true iff the node is disabled by an ancestor {@link BodyDeclaration}, containing
-   * a disabler in its JavaDoc.
-   */
+  /** @param n an {@link ASTNode}
+   * @return true iff the node is disabled by an ancestor
+   *         {@link BodyDeclaration}, containing a disabler in its JavaDoc. */
   static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
-        for (final String e : DisabledChecker.enablers)
+        for (final String e : Trimmer.enablers)
           if (s.contains(e))
             return false;
-        for (final String d : DisabledChecker.disablers)
+        for (final String d : Trimmer.disablers)
           if (s.contains(d))
             return true;
       }
     return false;
   }
 
-  /**
-   * @param j a {@link JavaDoc}
-   * @return comment's text, without eneblers identifiers.
-   */
+  /** @param j a {@link JavaDoc}
+   * @return comment's text, without eneblers identifiers. */
   static String enablersRemoved(final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
     for (final String e : getEnablers($)) {
@@ -95,11 +91,11 @@ public final class SuppressSpartanizationOnOff {
   }
 
   static Set<String> getDisablers(final String ¢) {
-    return getKeywords(¢, DisabledChecker.disablers);
+    return getKeywords(¢, Trimmer.disablers);
   }
 
   static Set<String> getEnablers(final String ¢) {
-    return getKeywords(¢, DisabledChecker.enablers);
+    return getKeywords(¢, Trimmer.enablers);
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
@@ -141,7 +137,7 @@ public final class SuppressSpartanizationOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || isNodeOutsideMarker(n, m))
+        if (b || eclipse.facade.isNodeOutsideMarker(n, m))
           return;
         BodyDeclaration d;
         switch (t) {

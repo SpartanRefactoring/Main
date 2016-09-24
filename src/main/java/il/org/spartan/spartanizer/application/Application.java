@@ -41,19 +41,6 @@ public final class Application implements IApplication {
     return countLines(new File(fileName));
   }
 
-  /** Discard compilation unit u
-   * @param u */
-  static void discardCompilationUnit(final ICompilationUnit u) {
-    try {
-      u.close();
-      u.delete(true, null);
-    } catch (final JavaModelException e) {
-      Plugin.log(e);
-    } catch (final NullPointerException e) {
-      Plugin.log(e);
-    }
-  }
-
   static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
@@ -174,6 +161,19 @@ public final class Application implements IApplication {
 
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
+  }
+
+  /** Discard compilation unit u
+   * @param u */
+  void discardCompilationUnit(final ICompilationUnit u) {
+    try {
+      u.close();
+      u.delete(true, null);
+    } catch (final JavaModelException e) {
+      Plugin.logEvaluationError(this, e);
+    } catch (final NullPointerException e) {
+      Plugin.logEvaluationError(this, e);
+    }
   }
 
   void discardTempIProject() {

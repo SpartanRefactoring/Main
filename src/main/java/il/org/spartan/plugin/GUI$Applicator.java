@@ -19,7 +19,6 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -48,6 +47,22 @@ public abstract class GUI$Applicator extends Refactoring {
     return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
+  static IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
+    return new IMarkerResolution() {
+      @Override public String getLabel() {
+        return l;
+      }
+
+      @Override public void run(final IMarker m) {
+        try {
+          SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
+        } catch (IllegalArgumentException | CoreException x) {
+          Plugin.logEvaluationError(this, x);
+        }
+      }
+    };
+  }
+
   private static IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
@@ -56,9 +71,9 @@ public abstract class GUI$Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          WringCommit.go(nullProgressMonitor, m, t);
+          new WringCommit().go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
-          Plugin.log(e);
+          Plugin.logEvaluationError(this, e);
         }
       }
     };
@@ -80,23 +95,8 @@ public abstract class GUI$Applicator extends Refactoring {
     this.name = name;
   }
 
-  boolean apply() {
-    return apply(iCompilationUnit, new Range(0, 0));
-  }
-
   public boolean apply(final ICompilationUnit cu) {
     return apply(cu, new Range(0, 0));
-  }
-
-  public boolean fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
-    try {
-      setICompilationUnit(cu);
-      setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
-      return performRule(cu);
-    } catch (final CoreException x) {
-      Plugin.log(x);
-    }
-    return false;
   }
 
   public boolean apply(final ICompilationUnit cu, final Range r) {
@@ -130,41 +130,30 @@ public abstract class GUI$Applicator extends Refactoring {
    *         spartanization suggestion */
   public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
     final List<Suggestion> $ = new ArrayList<>();
-    ¢.accept(makeSuggestionsCollector(¢, $));
+    ¢.accept(makeSuggestionsCollector($));
     return $;
   }
 
-  /** Count the number files that would change after Spartanization.
-   * <p>
-   * This is an slow operation. Do not call light-headedly.
-   * @return total number of files with suggestions */
-  public int countFilesChanges() {
-    // TODO OriRoth: not sure if this function is necessary - if it is, it could
-    // be easily optimized when called after countSuggestions()
-    setMarker(null);
-    try {
-      checkFinalConditions(nullProgressMonitor);
-    } catch (final OperationCanceledException e) {
-      Plugin.log(e);
-    } catch (final CoreException e) {
-      Plugin.log(e);
-    }
-    return changes.size();
+  public IFile compilatinUnitIFile() {
+    return (IFile) iCompilationUnit.getResource();
+  }
+
+  public String compilationUnitName() {
+    return iCompilationUnit.getElementName();
   }
 
   /** Count the number of suggestions offered by this instance.
    * <p>
-   * This is an slow operation. Do not call light-headedly.
+   * This is a slow operation. Do not call light-headedly.
    * @return total number of suggestions offered by this instance */
   public int countSuggestions() {
     setMarker(null);
     try {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException e) {
-      // TODO: what should we do here? This is not an error
-      Plugin.info(e);
-    } catch (final CoreException e) {
-      Plugin.log(e);
+      Plugin.logCancellationRequest(this, e);
+    } catch (final CoreException x) {
+      Plugin.logEvaluationError(this, x);
     }
     return totalChanges;
   }
@@ -183,9 +172,35 @@ public abstract class GUI$Applicator extends Refactoring {
     return rewriterOf(¢, (IMarker) null);
   }
 
-  /** @return compilationUnit */
-  public ICompilationUnit getiCompilationUnit() {
-    return iCompilationUnit;
+  public boolean follow() throws CoreException {
+    progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
+    final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
+    final TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
+    for (final Suggestion ¢ : suggestions) {
+      progressMonitor.worked(1);
+      ¢.go(astRewrite, g);
+    }
+    progressMonitor.done();
+    final TextEdit rewriteAST = astRewrite.rewriteAST();
+    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    textFileChange.setTextType("java");
+    textFileChange.setEdit(rewriteAST);
+    final boolean $ = textFileChange.getEdit().getLength() != 0;
+    if ($)
+      textFileChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $;
+  }
+
+  public boolean fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
+    try {
+      setICompilationUnit(cu);
+      setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
+      return performRule(cu);
+    } catch (final CoreException x) {
+      Plugin.logEvaluationError(this, x);
+    }
+    return false;
   }
 
   /** a quickfix which automatically performs the spartanization
@@ -201,8 +216,8 @@ public abstract class GUI$Applicator extends Refactoring {
       @Override public void run(final IMarker m) {
         try {
           runAsMarkerFix(m);
-        } catch (final CoreException e) {
-          Plugin.log(e);
+        } catch (final CoreException x) {
+          Plugin.logEvaluationError(this, x);
         }
       }
     };
@@ -231,11 +246,15 @@ public abstract class GUI$Applicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(GUI$Applicator.this)).run(Display.getCurrent().getActiveShell(),
               "Spartan refactoring: " + s + GUI$Applicator.this);
         } catch (final InterruptedException e) {
-          // TODO: What should we do here?
-          Plugin.log(e);
+          Plugin.logCancellationRequest(this, e);
         }
       }
     };
+  }
+
+  /** @return compilationUnit */
+  public ICompilationUnit getiCompilationUnit() {
+    return iCompilationUnit;
   }
 
   @Override public final String getName() {
@@ -255,6 +274,19 @@ public abstract class GUI$Applicator extends Refactoring {
     return suggestions;
   }
 
+  public boolean go() throws CoreException {
+    progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
+    textChange.setTextType("java");
+    final IProgressMonitor m = newSubMonitor(progressMonitor);
+    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m)).rewriteAST());
+    final boolean $ = textChange.getEdit().getLength() != 0;
+    if ($)
+      textChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $;
+  }
+
   /** .
    * @return True if there are spartanizations which can be performed on the
    *         compilation unit. */
@@ -268,7 +300,7 @@ public abstract class GUI$Applicator extends Refactoring {
    *        <code><b>m</b></code>
    * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+    return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
 
   /** Performs the current Spartanization on the provided compilation unit
@@ -282,48 +314,6 @@ public abstract class GUI$Applicator extends Refactoring {
     textChange.setTextType("java");
     final IProgressMonitor m = newSubMonitor(progressMonitor);
     textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m)).rewriteAST());
-    final boolean $ = textChange.getEdit().getLength() != 0;
-    if ($)
-      textChange.perform(progressMonitor);
-    progressMonitor.done();
-    return $;
-  }
-
-  public boolean follow() throws CoreException {
-    progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
-    for (Suggestion ¢: suggestions) {
-      progressMonitor.worked(1);
-      ¢.go(astRewrite, g);
-    }
-    progressMonitor.done();
-    final TextEdit rewriteAST = astRewrite.rewriteAST();
-    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
-    textFileChange.setTextType("java");
-    textFileChange.setEdit(rewriteAST);
-    final boolean $ = textFileChange.getEdit().getLength() != 0;
-    if ($)
-      textFileChange.perform(progressMonitor);
-    progressMonitor.done();
-    return $;
-  }
-
-  public IFile compilatinUnitIFile() {
-    return (IFile) iCompilationUnit.getResource();
-  }
-
-  public String compilationUnitName() {
-    return iCompilationUnit.getElementName();
-  }
-
-
-  public boolean go() throws CoreException {
-    progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
-    textChange.setTextType("java");
-    final IProgressMonitor m = newSubMonitor(progressMonitor);
-    textChange.setEdit(createRewrite((CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m)).rewriteAST());
     final boolean $ = textChange.getEdit().getLength() != 0;
     if ($)
       textChange.perform(progressMonitor);
@@ -367,11 +357,13 @@ public abstract class GUI$Applicator extends Refactoring {
     selection = ¢;
   }
 
+  public int suggestionsCount() {
+    return suggestions.size();
+  }
+
   @Override public String toString() {
     return name;
   }
-
-  protected abstract ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $);
 
   protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
 
@@ -383,13 +375,15 @@ public abstract class GUI$Applicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
+  protected abstract ASTVisitor makeSuggestionsCollector(final List<Suggestion> $);
+
   protected void parse() {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   protected void scan() {
     suggestions.clear();
-    compilationUnit.accept(makeSuggestionsCollector(compilationUnit, suggestions));
+    compilationUnit.accept(makeSuggestionsCollector(suggestions));
   }
 
   /** @param u JD
@@ -431,6 +425,10 @@ public abstract class GUI$Applicator extends Refactoring {
     progressMonitor.done();
   }
 
+  boolean apply() {
+    return apply(iCompilationUnit, new Range(0, 0));
+  }
+
   void collectAllSuggestions() throws JavaModelException, CoreException {
     progressMonitor.beginTask("Collecting suggestions...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits());
@@ -451,22 +449,6 @@ public abstract class GUI$Applicator extends Refactoring {
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IMarker ¢) {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢);
-  }
-
-  static IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
-    return new IMarkerResolution() {
-      @Override public String getLabel() {
-        return l;
-      }
-
-      @Override public void run(final IMarker m) {
-        try {
-          SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
-        } catch (IllegalArgumentException | CoreException x) {
-          Plugin.log(x);
-        }
-      }
-    };
   }
 
   private List<ICompilationUnit> getUnits() throws JavaModelException {
@@ -492,9 +474,5 @@ public abstract class GUI$Applicator extends Refactoring {
 
   private boolean isTextSelected() {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
-  }
-
-  public int suggestionsCount() {
-    return suggestions.size();
   }
 }

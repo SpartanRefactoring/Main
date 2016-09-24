@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** Fluent API services for the plugin
  * @author Yossi Gil
  * @since 2016 */
-public interface eclipse {
-  final GUI$Applicator[] safeSpartanizations = { new Trimmer() };
-  final String NAME = "Spartanization";
-  final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  final ImageIcon icon = new ImageIcon(new eclipse() {
-  }.getClass().getResource(ICON_PATH));
+public enum eclipse {
+  facade;
+  final static GUI$Applicator[] safeSpartanizations = { new Trimmer() };
+  final static String NAME = "Spartanization";
+  final static String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
+  final static ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
 
   /** @param message What to announce
    * @return <code><b>null</b></code> */
@@ -40,25 +40,6 @@ public interface eclipse {
 
   static ICompilationUnit compilationUnit(final IResource ¢) {
     return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
-  }
-
-  /** @return List of all compilation units in the current project */
-  static List<ICompilationUnit> compilationUnits() {
-    try {
-      return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
-    } catch (final JavaModelException e) {
-      Plugin.log(e);
-    }
-    return null;
-  }
-
-  static List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
-    try {
-      return compilationUnits(u, nullProgressMonitor);
-    } catch (final JavaModelException x) {
-      Plugin.log(x);
-      return null;
-    }
   }
 
   /** @param u A compilation unit for reference - you give me an arbitrary
@@ -111,16 +92,6 @@ public interface eclipse {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
-  static boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
-    try {
-      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException x) {
-      Plugin.log(x);
-      return true;
-    }
-  }
-
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
   }
@@ -133,5 +104,34 @@ public interface eclipse {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
+  }
+
+  /** @return List of all compilation units in the current project */
+  List<ICompilationUnit> compilationUnits() {
+    try {
+      return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
+    } catch (final JavaModelException x) {
+      Plugin.logEvaluationError(this, x);
+    }
+    return null;
+  }
+
+  List<ICompilationUnit> compilationUnits(final ICompilationUnit u) {
+    try {
+      return compilationUnits(u, nullProgressMonitor);
+    } catch (final JavaModelException x) {
+      Plugin.logEvaluationError(this, x);
+      return null;
+    }
+  }
+
+  boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
+    try {
+      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
+          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+    } catch (final CoreException x) {
+      Plugin.logEvaluationError(this, x);
+      return true;
+    }
   }
 }

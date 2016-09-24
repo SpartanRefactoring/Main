@@ -98,6 +98,65 @@ public final class ArithmeticTest {
           .stays();
     }
 
+    @Test public void issue206_1() {
+      trimmingOf("3+4+a").gives("7+a").stays();
+    }
+
+    @Test public void issue206_10() {
+      trimmingOf("1L*1L*a*b*c").gives("1L*a*b*c").stays();
+    }
+
+    @Test public void issue206_11() {
+      trimmingOf(
+          "public int compareTo(final Fraction other) {" + "return other == this || numerator == other.numerator && denominator == other.denominator"
+              + "|| 1L * 1L * numerator * other.denominator == 1L * 1L * denominator * other.numerator ? 0"
+              + ": 1L * 1L * numerator * other.denominator < 1L * 1L * denominator * other.numerator ? -1 : 1;" + "}")
+                  .gives("public int compareTo(final Fraction other) {"
+                      + "return other == this || numerator == other.numerator && denominator == other.denominator"
+                      + "|| 1L * numerator * other.denominator == 1L * denominator * other.numerator ? 0"
+                      + ": 1L * numerator * other.denominator < 1L * denominator * other.numerator ? -1 : 1;" + "}");
+    }
+
+    @Test public void issue206_12() {
+      trimmingOf("8%3%a").gives("2%a").stays();
+    }
+
+    @Test public void issue206_13() {
+      trimmingOf("a%8%3").stays();
+    }
+
+    @Test public void issue206_2() {
+      trimmingOf("3*4*a").gives("12*a").stays();
+    }
+
+    @Test public void issue206_3() {
+      trimmingOf("3-4-a").gives("-1-a").stays();
+    }
+
+    @Test public void issue206_4() {
+      trimmingOf("5/1/a").gives("5/a").stays();
+    }
+
+    @Test public void issue206_5() {
+      trimmingOf("a+8+9").gives("a+17").stays();
+    }
+
+    @Test public void issue206_6() {
+      trimmingOf("a*8*9").gives("a*72").gives("72*a").stays();
+    }
+
+    @Test public void issue206_7() {
+      trimmingOf("a-8-2-2").gives("a-4").stays();
+    }
+
+    @Test public void issue206_8() {
+      trimmingOf("a-8-2L-2").gives("a-4L").stays();
+    }
+
+    @Test public void issue206_9() {
+      trimmingOf("a-8-2L-2.0").gives("a-4.0").stays();
+    }
+
     @Test public void issue92_1() {
       trimmingOf("1.+2*3 / 4 - 5")//
           .gives("2*3/4+1.-5")//
@@ -521,8 +580,7 @@ public final class ArithmeticTest {
           .gives("-1.0/2*3/4*30/7/8/9") //
           .gives("30*-1.0/2*3/4/7/8/9") //
           .gives("3*30*-1.0/2/4/7/8/9")//
-          .gives("-90.0/2/4/7/8/9")
-          .gives("-0.022321428571428572")//
+          .gives("-90.0/2/4/7/8/9").gives("-0.022321428571428572")//
           .stays() //
       ;
     }
@@ -555,66 +613,6 @@ public final class ArithmeticTest {
           .gives("14")//
           .stays() //
       ;
-    }
-    
-    @Test public void issue206_1() {
-      trimmingOf("3+4+a").gives("7+a").stays();
-    }
-    
-    @Test public void issue206_2() {
-      trimmingOf("3*4*a").gives("12*a").stays();
-    }
-    
-    @Test public void issue206_3() {
-      trimmingOf("3-4-a").gives("-1-a").stays();
-    }
-    
-    @Test public void issue206_4() {
-      trimmingOf("5/1/a").gives("5/a").stays();
-    }
-    
-    @Test public void issue206_5() {
-      trimmingOf("a+8+9").gives("a+17").stays();
-    }
-    
-    @Test public void issue206_6() {
-      trimmingOf("a*8*9").gives("a*72").gives("72*a").stays();
-    }
-        
-    @Test public void issue206_7() {
-      trimmingOf("a-8-2-2").gives("a-4").stays();
-    }
-    
-    @Test public void issue206_8() {
-      trimmingOf("a-8-2L-2").gives("a-4L").stays();
-    }
-    
-    @Test public void issue206_9() {
-      trimmingOf("a-8-2L-2.0").gives("a-4.0").stays();
-    }
-    
-    @Test public void issue206_10() {
-      trimmingOf("1L*1L*a*b*c").gives("1L*a*b*c").stays();
-    }
-    @Test public void issue206_11() {
-      trimmingOf("public int compareTo(final Fraction other) {"
-          + "return other == this || numerator == other.numerator && denominator == other.denominator"
-          + "|| 1L * 1L * numerator * other.denominator == 1L * 1L * denominator * other.numerator ? 0"
-          + ": 1L * 1L * numerator * other.denominator < 1L * 1L * denominator * other.numerator ? -1 : 1;"
-          + "}")
-      .gives("public int compareTo(final Fraction other) {"
-          + "return other == this || numerator == other.numerator && denominator == other.denominator"
-          + "|| 1L * numerator * other.denominator == 1L * denominator * other.numerator ? 0"
-          + ": 1L * numerator * other.denominator < 1L * denominator * other.numerator ? -1 : 1;"
-          + "}");
-    }
-    
-    @Test public void issue206_12() {
-      trimmingOf("8%3%a").gives("2%a").stays();
-    }
-    
-    @Test public void issue206_13() {
-      trimmingOf("a%8%3").stays();
     }
   }
 }

@@ -15,15 +15,15 @@ import org.eclipse.ui.handlers.*;
 public abstract class BaseHandler extends AbstractHandler {
   private final GUI$Applicator inner;
 
+  /** Instantiates this class */
+  BaseHandler() {
+    this(null);
+  }
+
   /** Instantiates this class
    * @param inner JD */
   BaseHandler(final GUI$Applicator inner) {
     this.inner = inner;
-  }
-
-  /** Instantiates this class */
-  BaseHandler() {
-    this(null);
   }
 
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
