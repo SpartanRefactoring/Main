@@ -246,6 +246,8 @@ public interface metrics {
       return 0;
     if (iz.emptyStatement(s))
       return 1;
-    return 3;
+    if (iz.block(s))
+      return 2;
+    return 13443;
   }
 }
