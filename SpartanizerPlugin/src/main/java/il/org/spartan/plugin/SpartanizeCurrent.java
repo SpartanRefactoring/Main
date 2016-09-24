@@ -18,18 +18,18 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public final class SpartanizeCurrent extends BaseHandler {
-  private int MAX_PASSES = 20;
+  private final int MAX_PASSES = 20;
 
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
-    final StringBuilder status = new StringBuilder("Spartanizing " +  currentCompilationUnit.getElementName());
-    JOptionPane pane = new JOptionPane(status, JOptionPane.INFORMATION_MESSAGE, JOptionPane.NO_OPTION, eclipse.icon, null, Integer.valueOf(0));
+    final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
+    new JOptionPane(status, JOptionPane.INFORMATION_MESSAGE, JOptionPane.NO_OPTION, eclipse.icon, null, Integer.valueOf(0));
     final IWorkbench wb = PlatformUI.getWorkbench();
     final GUI$Applicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);
     int total = 0;
     for (int i = 0; i < MAX_PASSES; ++i) {
-      final Int n = new Int(); 
+      final Int n = new Int();
       final IProgressService ps = wb.getProgressService();
       try {
         ps.busyCursorWhile(pm -> {
@@ -41,19 +41,19 @@ public final class SpartanizeCurrent extends BaseHandler {
           applicator.apply();
         });
       } catch (final InvocationTargetException x) {
-        Plugin.log(x);
+        Plugin.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        Plugin.info(x);
+        Plugin.logCancellationRequest(this, x);
         return null;
       }
       if (n.inner <= 0) {
-        status.append("\n Applied a total of " + total + " suggestions in " + i  + " rounds");
+        status.append("\n Applied a total of " + total + " suggestions in " + i + " rounds");
         return eclipse.announce(status);
       }
-      status.append("\n Round " + (i +1) + ": " + n.inner + " suggestions (previous rounds: " + total + " suggestions");
+      status.append("\n Round " + (i + 1) + ": " + n.inner + " suggestions (previous rounds: " + total + " suggestions");
       total += n.inner;
     }
-    status.append("\n too many passes; aborting"); 
+    status.append("\n too many passes; aborting");
     throw new ExecutionException(status + "");
   }
 }

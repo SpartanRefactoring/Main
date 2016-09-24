@@ -102,23 +102,23 @@ public enum makeAST {
     }
   }
 
-  /** Creates a {@link StringBuilder} object out of a file object.
-   * @param f JD
-   * @return {@link StringBuilder} whose content is the same as the contents of
-   *         the parameter. */
-  public static StringBuilder stringBuilder(final File f) {
-    try (final Scanner $ = new Scanner(f)) {
-      return new StringBuilder($.useDelimiter("\\Z").next());
-    } catch (final Exception e) {
-      Plugin.log(e);
-      return new StringBuilder();
-    }
-  }
-
   final int kind;
 
   private makeAST(final int kind) {
     this.kind = kind;
+  }
+
+  /** Creates a {@link StringBuilder} object out of a file object.
+   * @param f JD
+   * @return {@link StringBuilder} whose content is the same as the contents of
+   *         the parameter. */
+  public StringBuilder builder(final File f) {
+    try (final Scanner $ = new Scanner(f)) {
+      return new StringBuilder($.useDelimiter("\\Z").next());
+    } catch (final Exception e) {
+      Plugin.logEvaluationError(this, e);
+      return new StringBuilder();
+    }
   }
 
   /** Parses a given {@link Document}.

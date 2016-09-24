@@ -93,7 +93,7 @@ public interface hop {
   }
 
   static SimpleName lastComponent(final Name ¢) {
-    return ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
+    return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 
   /** Find the last statement residing under a given {@link Statement}

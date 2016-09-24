@@ -205,7 +205,7 @@ public interface wizard {
   }
 
   static String dump() {
-    return "BUG: ";
+    return "MISSING_CASE: ";
   }
 
   static String endDump() {
@@ -271,7 +271,7 @@ public interface wizard {
   }
 
   static boolean isDefaultLiteral(final Expression ¢) {
-    return !iz.nullLiteral(¢) && !iz.literal0(¢) && !iz.literal¢false(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
+    return !iz.nullLiteral(¢) && !iz.parsed.literal0(¢) && !iz.literal¢false(¢) && !iz.parsed.literal(¢, 0.0) && !iz.parsed.literal(¢, 0L);
   }
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not

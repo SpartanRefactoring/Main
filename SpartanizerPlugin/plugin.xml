@@ -1,197 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
+
 <plugin>
-   <extension point="org.eclipse.ui.handlers">
-      <handler commandId="il.org.spartan.commands.SpartanizeAll" class="il.org.spartan.plugin.SpartanizeAll"/>
-      <handler commandId="il.org.spartan.commands.SpartanizeCurrent" class="il.org.spartan.plugin.SpartanizeCurrent"/>
-      <handler commandId="il.org.spartan.commands.SuggestionToggle" class="il.org.spartan.plugin.SuggestionsOnOfToggle"/>
-   </extension>
-  <extension point="org.eclipse.ui.commands">
-      <category id="il.org.spartan" name="Spartanization commands"/>
-      <command categoryId="il.org.spartan" id="il.org.spartan.commands.SpartanizeAll" name="Spartanize entire project"/>
-      <command categoryId="il.org.spartan" id="il.org.spartan.commands.SpartanizeCurrent" name="Spartanize active window" />
-      <command categoryId="il.org.spartan" id="il.org.spartan.commands.SuggestionToggle"
-            name="Suggestions on/off">
-            <state
-              class="org.eclipse.ui.handlers.RegistryToggleState:true"
-              id="org.eclipse.ui.commands.toggleState">
-            </state>
-      </command>
-   </extension>
-   <extension point="org.eclipse.core.resources.builders" name="Spartanizer" id="il.org.spartan.spartanizer.BuilderID">
-      <builder hasNature="true">
-         <run class="il.org.spartan.plugin.Builder"/> 
-      </builder>
-   </extension>
-   <extension point="org.eclipse.core.resources.natures" name="Spartanizable" id="il.org.spartan.spartanizer.NatureID">
-      <builder id="il.org.spartan.spartanizer.BuilderID"/> 
-      <runtime>
-         <run class="il.org.spartan.plugin.Nature"/> 
-      </runtime>
-   </extension>
-   <extension point="org.eclipse.core.runtime.applications" name="Spartan Refactoring Application" id="il.org.spartan.spartanizer.application">
-     <application>
-     	<run class="il.org.spartan.spartanizer.application.Application"></run>
-     </application>
-   </extension>
-      <extension
-     id="il.org.spartan.spartanizer.collectmetricsapp"
-     name="Collect Metrics Before and After Spartanization"
-     point="org.eclipse.core.runtime.applications">
-     <application>
-     	<run class="il.org.spartan.spartanizer.application.CollectMetricsApp"></run>
-     </application>
-   </extension>
-   <extension point="org.eclipse.ui.startup">
-     <startup class="il.org.spartan.plugin.Plugin"/>
-   </extension>
+<!-- Which program to run at startup -->
+<extension point="org.eclipse.ui.startup">
+  <startup class="il.org.spartan.plugin.Plugin"/>
+</extension>
 
+<!-- Builder, i.e, the system component that keeps generating spartan tips when
+the program changes: https://goo.gl/sIqIBC
+ -->
+<extension 
+  name="Spartan tipper" 
+  id="spartan.tipper" 
+  point="org.eclipse.core.resources.builders"
+>
+  <!-- the most important part, which Java class to run on changes -->
+  <builder hasNature="true"> 
+    <run class="il.org.spartan.plugin.Builder"/> 
+  </builder>
+</extension>
+
+<!-- Preferences page -->
+<extension point="org.eclipse.ui.preferencePages">
+  <page 
+  name="Spartanization"
+  class="il.org.spartan.plugin.PreferencesPage"
+  id="il.org.spartan.plugin.PluginPreferencesPage"
+  category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
+  </page>
+</extension>
+
+<!-- Preferences-->
+<extension point="org.eclipse.core.runtime.preferences">
+  <scope 
+    name="PluginPreferencesPage" 
+    class="il.org.spartan.plugin.PreferencesPage"
+  />
+  <initializer class="il.org.spartan.plugin.PreferencesDefaultValuesInitializer"/>
+</extension>
+
+<!-- Daniel Mittleman' application-->
+<extension 
+  point="org.eclipse.core.runtime.applications" 
+  name="Batch spartanization"
+  id="il.org.spartan.spartanizer.application"
+>
+  <application>
+  <run class="il.org.spartan.spartanizer.application.Application"/>
+  </application>
+</extension>
+
+<!-- Matteo Orru's application-->
 <extension
-    id="il.org.spartan.spartanizer.suggestion"
-    name="Spartanization"
-    point="org.eclipse.core.resources.markers">
-  <super type="org.eclipse.core.resources.problemmarker" />
+  point="org.eclipse.core.runtime.applications"
+  name="Metrics collector by Matteo Orru"
+ id="il.org.spartan.spartanizer.collectmetricsapp"
+>
+  <application>
+  <run class="il.org.spartan.spartanizer.application.CollectMetricsApp"></run>
+  </application>
 </extension>
-   <extension point="org.eclipse.ui.ide.markerResolution">
-      <markerResolutionGenerator 
-               markerType="il.org.spartan.spartanizer.suggestion"
-         class="il.org.spartan.plugin.QuickFixer"/>
-   </extension>
-   <extension point="org.eclipse.ui.editors.annotationTypes">
-     <type markerType="il.org.spartan.spartanizer.suggestion" 
-       name="il.org.spartan.plugin.spartanizationMarker" />
-   </extension>
-   <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
-   <specification
-         annotationType="il.org.spartan.plugin.spartanizationMarker"
-         colorPreferenceKey="il.org.spartan.plugin.spartanizationMarker.color"
-         colorPreferenceValue="0,0,180"
-         contributesToHeader="false"
-         includeOnPreferencePage="true"
-         label="Suggestion"
-         overviewRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.overview"
-         overviewRulerPreferenceValue="true"
-         presentationLayer="0"
-         textPreferenceKey="il.org.spartan.plugin.spartanizationMarker.text"
-         textPreferenceValue="true"
-         textStylePreferenceValue="PROBLEM_UNDERLINE"
-         verticalRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.ruler"
-         verticalRulerPreferenceValue="true">
-   </specification>
-</extension>
-      <extension point="org.eclipse.ui.menus">
-      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
-            <command 
-            tooltip="Fully spartanize compilation unit"
-              commandId="il.org.spartan.commands.SpartanizeAll"
-                  icon="src/main/icons/spartan-warrior.gif"
-                  id="il.org.spartan.plugin.toolbars.HelmetButton">
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="il.org.spartan.menus.spartanization"
-               label="Spartanization"
-               mnemonic="S">
-            <command label="Enable spartan suggestions"
-                  commandId="il.org.spartan.commands.SuggestionToggle"
-                  id="il.org.spartan.menus.Toggle"
-                  style="toggle"
-                  mnemonic="S">
-            </command>
-            <visibleWhen>
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-         <menu
-               id="org.eclipse.jdt.ui.refactoring.menu"
-               label="Refactor">
-            <menu label="Spartanization">
-               <command
-                     label="spartanize active window"
-                     commandId="il.org.spartan.commands.SpartanizeAll"
-                     id="il.org.spartan.plugin.menus.SpartanizeCurrentCommand"
-                     style="push">
-               </command>
-               <command
-                     label="spartanize entire project"
-                     commandId="il.org.spartan.commands.SpartanizeCurrent"
-                     id="il.org.spartan.plugin.menus.ApplySpartanizationCommand"
-                     style="push">
-               </command>
-               <command
-                     label="Show suggestions"
-                     commandId="il.org.spartan.commands.SuggestionToggle"
-                     id="il.org.spartan.plugin.menus.SuggestionToggle"
-                     style="toggle">
-               </command>
-            </menu>
-         </menu>
-      </menuContribution>
-      <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="org.eclipse.jdt.ui.refactoring.menu2"
-               label="Spartanization">
-            <command commandId="il.org.spartan.commands.SpartanizeAll" style="push"/>
 
-            <visibleWhen>
-               <and>
-                  <with
-                        variable="activeEditorInput">
-                     <adapt
-                           type="org.eclipse.core.resources.IResource">
-                        <test
-                              forcePluginActivation="true"
-                              property="org.eclipse.core.resources.extension"
-                              value="java">
-                        </test>
-                     </adapt>
-                  </with>
-                  <not>
-                     <iterate
-                           ifEmpty="true"
-                           operator="or">
-                        <adapt
-                              type="org.eclipse.core.resources.IResource">
-                        </adapt>
-                     </iterate>
-                  </not>
-               </and>
-            </visibleWhen>
-         </menu>
-      </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="il.org.spartan.plugin.PreferencesPage"
-            id="il.org.spartan.plugin.PluginPreferencesPage"
-            name="Spartanization"
-            category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
-      </page>
-   </extension>
-   <extension
-         id="id1"
-         point="org.eclipse.core.resources.markers">
-   </extension>
-   <extension
-           point="org.eclipse.core.runtime.preferences">
-           <scope name="PluginPreferencesPage" class="il.org.spartan.plugin.PreferencesPage"/>
-        <initializer
-              class="il.org.spartan.plugin.PreferencesDefaultValuesInitializer">
-        </initializer>
-  </extension>
+<!-- Marker: for showing the tips of spartanizaton 
+https://goo.gl/OI2pBd -->
+<extension 
+  id="il.org.spartan.tip"
+  name="Spartanization"
+  point="org.eclipse.core.resources.markers" 
+>
+  <!-- in the future we may want to break this into several kinds, renaming,
+       syntactic baggage, ternarization, etc. -->
+  <super type="org.eclipse.core.resources.problemmarker"/>
+</extension>
+
+<extension point="org.eclipse.ui.editors.annotationTypes">
+  <type 
+    name="il.org.spartan.tip"
+    super="org.eclipse.ui.workbench.texteditor.info"
+    markerType="org.eclipse.jdt.core.problem"
+    markerSeverity="0"
+  />
+</extension>
+
+<!-- Marker resolution: This is where the quick fixing menus gets bound to the 
+Java class which generates quick fix suggestions. -->
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
+   markerType="il.org.spartan.tip"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+
+<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+  <specification
+     annotationType="il.org.spartan.tip"
+     colorPreferenceKey="il.org.spartan.spartanizationMarker.color"
+     colorPreferenceValue="0,0,180"
+     contributesToHeader="false"
+     includeOnPreferencePage="true"
+     label="Tip"
+     overviewRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.overview"
+     overviewRulerPreferenceValue="true"
+     presentationLayer="0"
+     textPreferenceKey="il.org.spartan.spartanizationMarker.text"
+     textPreferenceValue="true"
+     textStylePreferenceValue="PROBLEM_UNDERLINE"
+     verticalRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.ruler"
+     verticalRulerPreferenceValue="true">
+  </specification>
+</extension>
+
+<!-- Nature: trust us, without this mystery, there would be no suggestions 
+     shown/generated, manual is a bit vague, but that's the bottom line -->
+<extension 
+  point = "org.eclipse.core.resources.natures" 
+  name = "Spartanizable" 
+  id = "il.org.spartan.nature"
+>
+  <runtime>
+    <run class="il.org.spartan.plugin.Nature"/> 
+  </runtime>`
+</extension>
+
+<!-- List of our abstract commands: 
+http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fguide%2Fworkbench_cmd_commands.htm 
+-->
+<extension point="org.eclipse.ui.commands">
+     <command id="il.org.spartan.SpartanizeAll" name="Spartanize entire project"/>
+     <command id="il.org.spartan.SpartanizeCurrent" name="Spartanize active window" />
+     <command id="il.org.spartan.SuggestionToggle" name="Suggestions on/off">
+           <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
+    </command>
+     <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)" />
+     <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
+</extension>
+
+
+<!-- Handlers of commands: which class to activate -->
+<extension point="org.eclipse.ui.handlers">
+   <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.SpartanizeAll"/>
+   <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.SpartanizeCurrent"/>
+   <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.SuggestionsOnOfToggle"/>
+   <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
+   <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
+</extension>
+
+<!-- Menus -->
+<extension point="org.eclipse.ui.menus"> 
+
+  <!-- Toolbar button -->
+  <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+    <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
+       <command 
+       tooltip="Fully spartanize compilation unit"
+         commandId="il.org.spartan.SpartanizeCurrent" 
+         icon="src/main/icons/spartan-warrior.gif" 
+         id="il.org.spartan.plugin.toolbars.HelmetButton">
+       </command>
+    </toolbar>
+  </menuContribution>
+
+  <!-- Popup menus 
+       Not sure that this is not the one that creates URI exceptions at start
+  <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
+     <menu id="il.org.spartan.menus.spartanization" label="Spartanization" mnemonic="S">
+        <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
+        <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
+        <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/>
+        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
+        <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
+         <command commandId="il.org.spartan.SuggestionToggle"
+              id="il.org.spartan.menus.Toggle"
+              style="toggle"
+              mnemonic="S">
+        </command>
+     </menu>
+  </menuContribution>
+  -->
+
+  <!-- Top line, main menu -->
+<menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
+   <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
+      <menu label="Spartanization">
+        <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
+        <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
+        <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/> 
+        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
+        <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
+   </menu>
+   </menu>
+</menuContribution>
+ </extension>
+
 </plugin>

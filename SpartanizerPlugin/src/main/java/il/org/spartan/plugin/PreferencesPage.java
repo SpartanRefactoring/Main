@@ -49,9 +49,9 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       // Recreate the toolbox's internal instance, adding only enabled wrings
       Toolbox.refresh();
       try {
-        Plugin.refreshAllProjects();
+        RefreshAll.go();
       } catch (final Exception e) {
-        Plugin.log(e);
+        Plugin.logEvaluationError(this, e);
       }
     }
   }

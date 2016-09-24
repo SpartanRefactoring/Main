@@ -146,7 +146,6 @@ public final class Version250 {
     trimmingOf("foo((double)18)").gives("foo(1.*18)");
   }
 
-
   @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076a() {
     trimmingOf("a*b + a*c").gives("a*(b+c)");
   }
@@ -162,6 +161,7 @@ public final class Version250 {
   @Test public void issue076d() {
     trimmingOf("a * (b + c)").stays();
   }
+
   @Test public void issue083a() {
     trimmingOf("if(x.size()>=0) return a;").gives("if(true) return a;");
   }
@@ -279,30 +279,22 @@ public final class Version250 {
 
   @Test public void issue086_2() {
     trimmingOf("if(false) {c();\nb();\na();}")//
-    .gives("{}")
-    .gives("")
-    .stays();
+        .gives("{}").gives("").stays();
   }
 
   @Test public void issue086_3() {
     trimmingOf("if(false) {c();\nb();\na();}")//
-    .gives("{}")
-    .gives("")
-    .stays();
+        .gives("{}").gives("").stays();
   }
 
   @Test public void issue086_4() {
     trimmingOf("if(false) {c();\nb();\na();}")//
-    .gives("{}")
-    .gives("")
-    .stays();
+        .gives("{}").gives("").stays();
   }
 
   @Test public void issue086_5() {
     trimmingOf("if(false) {c();\nb();\na();}")//
-    .gives("{}")
-    .gives("")
-    .stays();
+        .gives("{}").gives("").stays();
   }
 
   @Test public void issue199() {
@@ -564,7 +556,6 @@ public final class Version250 {
         .gives("for(int ¢=0;¢<100;++¢)sum+=¢;")//
         .stays();
   }
-
 
   @Test public void test_b() {
     azzert.that("studies".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));

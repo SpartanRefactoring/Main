@@ -130,7 +130,7 @@ public enum make {
 
   static Expression minus(final Expression x, final NumberLiteral l) {
     return l == null ? minusOf(x) //
-        : newLiteral(l, literal0(l) ? "0" : signAdjust(l.getToken())) //
+        : newLiteral(l, iz.parsed.literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
 
@@ -143,7 +143,7 @@ public enum make {
   }
 
   static Expression minusOf(final Expression ¢) {
-    return literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
+    return iz.parsed.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
   }
 
   static NumberLiteral newLiteral(final ASTNode n, final String token) {

@@ -40,14 +40,9 @@ import il.org.spartan.spartanizer.engine.*;
     return null;
   }
 
-  /** Makes an Input file out of a Test file */
-  protected static File makeInFile(final File ¢) {
-    return createTempFile(deleteTestKeyword(makeAST.stringBuilder(¢)), TestDirection.In, ¢);
-  }
-
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
-    final StringBuilder $ = makeAST.stringBuilder(¢);
+    final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);
@@ -102,7 +97,7 @@ import il.org.spartan.spartanizer.engine.*;
       if ($ != null)
         $.deleteOnExit();
     } catch (final IOException e) {
-      Plugin.log(e); // Probably permissions problem
+      Plugin.xlog(e); // Probably permissions problem
     }
     return $;
   }
@@ -116,6 +111,11 @@ import il.org.spartan.spartanizer.engine.*;
   private static GUI$Applicator error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
+  }
+
+  /** Makes an Input file out of a Test file */
+  protected File makeInFile(final File ¢) {
+    return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
   /** An abstract class to be extended and implemented by client, while

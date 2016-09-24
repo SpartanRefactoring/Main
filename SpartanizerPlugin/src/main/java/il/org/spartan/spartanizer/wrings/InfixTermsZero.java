@@ -21,7 +21,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> im
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
-      if (!iz.literal0(¢))
+      if (!iz.parsed.literal0(¢))
         $.add(¢);
     return $.size() == xs.size() ? null
         : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(PLUS);
