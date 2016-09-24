@@ -30,14 +30,14 @@ public class Issue230 {
     trimmingOf("class A{@UserDefined1 @UserDefined1 int a;}") //
         .stays();
   }
-  
+
   @Test public void a111() {
     trimmingOf("class A{@Deprecated @Deprecated int a;}") //
         .gives("class A{@Deprecated int a;}") //
         .stays();
   }
-  
-  @Test public void a2() {
+
+  @Ignore("Issue #230") @Test public void a2() {
     trimmingOf("private @Nullable T value = null;") //
         .gives("@Nullable private T value = null;") //
         .stays();
@@ -48,42 +48,42 @@ public class Issue230 {
         .gives("class A{@Override @Deprecated static volatile int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a31() {
     trimmingOf("class A{@Override static static @Deprecated int f() {}}") //
         .gives("class A{@Override @Deprecated static int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a32() {
     trimmingOf("class A{@Deprecated @Override static static int f() {}}") //
         .gives("class A{@Override @Deprecated static int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a33() {
     trimmingOf("class A{@UserDefined @Override static static int f() {}}") //
         .gives("class A{@Override @UserDefined static int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a34() {
     trimmingOf("class A{@UserDefined1 @UserDefined2 @Override static static int f() {}}") //
         .gives("class A{@Override @UserDefined1 @UserDefined2 static int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a35() {
     trimmingOf("class A{@UserDefined1 @UserDefined2 @Override int f() {}}") //
         .gives("class A{@Override @UserDefined1 @UserDefined2 int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a36() {
     trimmingOf("class A{@UserDefined1 @UserDefined2 int f() {}}") //
         .stays();
   }
-  
+
   @Test public void a37() {
     trimmingOf("class A{@UserDefined1 @UserDefined2 @Override @UserDefined1 int f() {}}") //
         .gives("class A{@Override @UserDefined1 @UserDefined2 @UserDefined1 int f() {}}") //
