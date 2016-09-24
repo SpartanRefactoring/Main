@@ -33,6 +33,8 @@ public class Issue249 {
 
 
   public int metricUnderTest(String javaStatements) {
+    if (javaStatements == null)
+      return metrics.horizontalComplexity(null);
     return metrics.horizontalComplexity(into.s(javaStatements));
   }
 }
