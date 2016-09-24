@@ -29,6 +29,16 @@ public enum eclipse {
   final static String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
   final static ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
 
+  /** Add nature to one project */
+  static void addNature(final IProject p) throws CoreException {
+    final IProjectDescription d = p.getDescription();
+    final String[] natures = d.getNatureIds();
+    if (as.list(natures).contains(Nature.NATURE_ID))
+      return; // Already got the nature
+    d.setNatureIds(append(natures, Nature.NATURE_ID));
+    p.setDescription(d, null);
+  }
+
   /** @param message What to announce
    * @return <code><b>null</b></code> */
   static Void announce(final Object message) {
@@ -135,15 +145,5 @@ public enum eclipse {
       LoggingManner.logEvaluationError(this, x);
       return true;
     }
-  }
-
-  /** Add nature to one project */
-  static void addNature(final IProject p) throws CoreException {
-    final IProjectDescription d = p.getDescription();
-    final String[] natures = d.getNatureIds();
-    if (as.list(natures).contains(Nature.NATURE_ID))
-      return; // Already got the nature
-    d.setNatureIds(append(natures, Nature.NATURE_ID));
-    p.setDescription(d, null);
   }
 }

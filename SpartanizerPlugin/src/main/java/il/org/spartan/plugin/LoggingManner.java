@@ -30,21 +30,18 @@ public enum LoggingManner {
   };
   public static final LoggingManner now = ABORT_ON_ERROR;
 
-  public static void infoIOException(IOException e, String string) {
-    // TODO Auto-generated method stub
-  }
-  public final LoggingManner info(final String message) {
-    return LOG_TO_STDERR.log(message);
-  }
-
-  public abstract LoggingManner log(String message);
-
   public static String dump() {
     return "MISSING_CASE: ";
   }
+
   public static String endDump() {
     return "\n-----this is all I know.";
   }
+
+  public static void infoIOException(final IOException e, final String string) {
+    // TODO Auto-generated method stub
+  }
+
   /** logs an error in the plugin
    * @param t an error */
   public static void log(final Throwable ¢) {
@@ -82,4 +79,9 @@ public enum LoggingManner {
             "\n o = " + o + "'");
   }
 
+  public final LoggingManner info(final String message) {
+    return LOG_TO_STDERR.log(message);
   }
+
+  public abstract LoggingManner log(String message);
+}
