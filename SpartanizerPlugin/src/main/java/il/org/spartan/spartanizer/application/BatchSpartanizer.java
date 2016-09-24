@@ -5,8 +5,6 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
