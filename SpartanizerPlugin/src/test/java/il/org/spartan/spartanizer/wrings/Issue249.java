@@ -20,7 +20,8 @@ public class Issue249 {
   }
 
   @Test public void a01() {
-    azzert.that(metrics.horizontalComplexity(into.s("")), is(0));
+String javaStatements = "";
+    azzert.that(metrics.horizontalComplexity(into.s(javaStatements)), is(0));
   }
 
   @Test public void a02() {
