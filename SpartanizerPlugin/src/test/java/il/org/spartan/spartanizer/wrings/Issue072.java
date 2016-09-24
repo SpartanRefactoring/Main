@@ -27,8 +27,8 @@ public class Issue072 {
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert iz.literal0(left(i));
-    assert !iz.literal0(right(i));
+    assert iz.parsed.literal0(left(i));
+    assert !iz.parsed.literal0(right(i));
     azzert.that(make.minus(left(i)), iz("0"));
     azzert.that(make.minus(right(i)), iz("-x"));
     trimmingOf(s).gives("-x");

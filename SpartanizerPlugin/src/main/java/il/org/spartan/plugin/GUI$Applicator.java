@@ -57,7 +57,7 @@ public abstract class GUI$Applicator extends Refactoring {
         try {
           SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException x) {
-          Plugin.log(x);
+          Plugin.logEvaluationError(this, x);
         }
       }
     };
@@ -71,9 +71,9 @@ public abstract class GUI$Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          WringCommit.go(nullProgressMonitor, m, t);
+          new WringCommit().go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
-          Plugin.log(e);
+          Plugin.logEvaluationError(this, e);
         }
       }
     };
@@ -152,10 +152,10 @@ public abstract class GUI$Applicator extends Refactoring {
     setMarker(null);
     try {
       checkFinalConditions(nullProgressMonitor);
-    } catch (final OperationCanceledException e) {
-      Plugin.log(e);
+    } catch (final OperationCanceledException x) {
+      Plugin.logCancellationRequest(this, x);
     } catch (final CoreException e) {
-      Plugin.log(e);
+      Plugin.logEvaluationError(this, e);
     }
     return changes.size();
   }
@@ -169,10 +169,9 @@ public abstract class GUI$Applicator extends Refactoring {
     try {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException e) {
-      // TODO: what should we do here? This is not an error
-      Plugin.info(e);
-    } catch (final CoreException e) {
-      Plugin.log(e);
+      Plugin.logCancellationRequest(this, e);
+    } catch (final CoreException x) {
+      Plugin.logEvaluationError(this, x);
     }
     return totalChanges;
   }
@@ -217,7 +216,7 @@ public abstract class GUI$Applicator extends Refactoring {
       setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
     } catch (final CoreException x) {
-      Plugin.log(x);
+      Plugin.logEvaluationError(this, x);
     }
     return false;
   }
@@ -235,8 +234,8 @@ public abstract class GUI$Applicator extends Refactoring {
       @Override public void run(final IMarker m) {
         try {
           runAsMarkerFix(m);
-        } catch (final CoreException e) {
-          Plugin.log(e);
+        } catch (final CoreException x) {
+          Plugin.logEvaluationError(this, x);
         }
       }
     };
@@ -265,8 +264,7 @@ public abstract class GUI$Applicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(GUI$Applicator.this)).run(Display.getCurrent().getActiveShell(),
               "Spartan refactoring: " + s + GUI$Applicator.this);
         } catch (final InterruptedException e) {
-          // TODO: What should we do here?
-          Plugin.log(e);
+          Plugin.logCancellationRequest(this, e);
         }
       }
     };
@@ -320,7 +318,7 @@ public abstract class GUI$Applicator extends Refactoring {
    *        <code><b>m</b></code>
    * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+    return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
 
   /** Performs the current Spartanization on the provided compilation unit

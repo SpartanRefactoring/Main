@@ -53,15 +53,6 @@ public final class PreferencesResources {
       return null;
     }
 
-    private static Object getLabel(final Class<? extends Kind> k) {
-      try {
-        return k.getField("label").get(null);
-      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        Plugin.log(e);
-        return null;
-      }
-    }
-
     private final Class<? extends Kind> clazz;
     final String id;
     final String label;
@@ -74,6 +65,15 @@ public final class PreferencesResources {
 
     public boolean isEnabled() {
       return Plugin.plugin() == null || "on".equals(store().getString(id));
+    }
+
+    private Object getLabel(final Class<? extends Kind> k) {
+      try {
+        return k.getField("label").get(null);
+      } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+        Plugin.logEvaluationError(this, e);
+        return null;
+      }
     }
   }
 }

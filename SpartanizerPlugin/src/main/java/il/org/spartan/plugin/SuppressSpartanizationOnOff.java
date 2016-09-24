@@ -131,7 +131,7 @@ public final class SuppressSpartanizationOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || isNodeOutsideMarker(n, m))
+        if (b || eclipse.facade.isNodeOutsideMarker(n, m))
           return;
         BodyDeclaration d;
         switch (t) {

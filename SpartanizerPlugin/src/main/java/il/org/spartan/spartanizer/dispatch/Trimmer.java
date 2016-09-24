@@ -69,7 +69,8 @@ public class Trimmer extends GUI$Applicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        Plugin.log(x);
+        Plugin.logEvaluationError(this, x);
+        
         throw new AssertionError(x);
       }
       if (!e.hasChildren())

@@ -63,23 +63,23 @@ public final class specificity implements Comparator<Expression> {
     ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         final NumberLiteral ¢1 = az.numberLiteral(¢);
-        return ¢1 != null && iz.literal(¢1.getToken(), 0);
+        return ¢1 != null && iz.parsed.literal(¢1.getToken(), 0);
       }
     },
     ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
         final NumberLiteral ¢1 = az.numberLiteral(¢);
-        return ¢1 != null && iz.literal(¢1.getToken(), 1);
+        return ¢1 != null && iz.parsed.literal(¢1.getToken(), 1);
       }
     },
     ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literal(¢, 0.0);
+        return iz.parsed.literal(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literal(¢, 1.0);
+        return iz.parsed.literal(¢, 1.0);
       }
     },
     EMPTY_STRING {
