@@ -57,7 +57,7 @@ public class Issue249 {
   }
   
   @Test public void a09() {
-    azzert.that(az.block(into.s("{}")), iz("[]"));
+    azzert.that(az.block(into.s("{}")), iz("{}"));
   }
 
   public int metricUnderTest(final String javaStatements) {
