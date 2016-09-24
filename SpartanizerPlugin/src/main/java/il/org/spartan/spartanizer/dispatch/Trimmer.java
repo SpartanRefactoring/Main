@@ -89,7 +89,7 @@ public class Trimmer extends GUI$Applicator {
     }
   }
 
-  @Override protected ASTVisitor makeSuggestionsCollector(@SuppressWarnings("unused") final CompilationUnit u, final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final List<Suggestion> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);

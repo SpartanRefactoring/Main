@@ -19,7 +19,6 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -130,26 +129,8 @@ public abstract class GUI$Applicator extends Refactoring {
    *         spartanization suggestion */
   public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
     final List<Suggestion> $ = new ArrayList<>();
-    ¢.accept(makeSuggestionsCollector(¢, $));
+    ¢.accept(makeSuggestionsCollector($));
     return $;
-  }
-
-  /** Count the number files that would change after Spartanization.
-   * <p>
-   * This is an slow operation. Do not call light-headedly.
-   * @return total number of files with suggestions */
-  public int countFilesChanges() {
-    // TODO OriRoth: not sure if this function is necessary - if it is, it could
-    // be easily optimized when called after countSuggestions()
-    setMarker(null);
-    try {
-      checkFinalConditions(nullProgressMonitor);
-    } catch (final OperationCanceledException e) {
-      Plugin.log(e);
-    } catch (final CoreException e) {
-      Plugin.log(e);
-    }
-    return changes.size();
   }
 
   /** Count the number of suggestions offered by this instance.
@@ -371,7 +352,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return name;
   }
 
-  protected abstract ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $);
+  protected abstract ASTVisitor makeSuggestionsCollector(final List<Suggestion> $);
 
   protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
 
@@ -389,7 +370,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   protected void scan() {
     suggestions.clear();
-    compilationUnit.accept(makeSuggestionsCollector(compilationUnit, suggestions));
+    compilationUnit.accept(makeSuggestionsCollector(suggestions));
   }
 
   /** @param u JD
