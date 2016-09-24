@@ -35,7 +35,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           QuickFixer.disableFileFix(), //
       }; //
     } catch (final CoreException x) {
-      Plugin.log(x);
+      Plugin.logEvaluationError(this, x);
       return new IMarkerResolution[] {};
     }
   }

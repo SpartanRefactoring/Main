@@ -132,6 +132,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SuggestionToggle" name="Suggestions on/off">
            <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
     </command>
+     <command id="il.org.spartan.RefreshAllProjects" name="Refresh all projects (slow)" />
 </extension>
 
 
@@ -140,6 +141,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.SpartanizeAll"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.SpartanizeCurrent"/>
    <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.SuggestionsOnOfToggle"/>
+   <handler commandId="il.org.spartan.RefreshAllProjects" class="il.org.spartan.plugin.RefreshAllProjects"/>
 </extension>
 
 <!-- Menus -->
