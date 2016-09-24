@@ -57,7 +57,7 @@ public abstract class GUI$Applicator extends Refactoring {
         try {
           SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException x) {
-          Plugin.logEvaluationError(this, x);
+          LoggingManner.logEvaluationError(this, x);
         }
       }
     };
@@ -73,7 +73,7 @@ public abstract class GUI$Applicator extends Refactoring {
         try {
           new WringCommit().go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
-          Plugin.logEvaluationError(this, e);
+          LoggingManner.logEvaluationError(this, e);
         }
       }
     };
@@ -151,9 +151,9 @@ public abstract class GUI$Applicator extends Refactoring {
     try {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException e) {
-      Plugin.logCancellationRequest(this, e);
+      LoggingManner.logCancellationRequest(this, e);
     } catch (final CoreException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
     }
     return totalChanges;
   }
@@ -198,7 +198,7 @@ public abstract class GUI$Applicator extends Refactoring {
       setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
     } catch (final CoreException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
     }
     return false;
   }
@@ -217,7 +217,7 @@ public abstract class GUI$Applicator extends Refactoring {
         try {
           runAsMarkerFix(m);
         } catch (final CoreException x) {
-          Plugin.logEvaluationError(this, x);
+          LoggingManner.logEvaluationError(this, x);
         }
       }
     };
@@ -246,7 +246,7 @@ public abstract class GUI$Applicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(GUI$Applicator.this)).run(Display.getCurrent().getActiveShell(),
               "Spartan refactoring: " + s + GUI$Applicator.this);
         } catch (final InterruptedException e) {
-          Plugin.logCancellationRequest(this, e);
+          LoggingManner.logCancellationRequest(this, e);
         }
       }
     };

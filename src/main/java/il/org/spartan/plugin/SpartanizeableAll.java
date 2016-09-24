@@ -17,9 +17,9 @@ public final class SpartanizeableAll extends BaseHandler {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       if (p.isOpen())
         try {
-          Plugin.addNature(p);
+          eclipse.addNature(p);
         } catch (final CoreException e) {
-          Plugin.logEvaluationError(this, e);
+          LoggingManner.logEvaluationError(this, e);
         }
   }
 }

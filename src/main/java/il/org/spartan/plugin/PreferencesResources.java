@@ -71,7 +71,7 @@ public final class PreferencesResources {
       try {
         return k.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-        Plugin.logEvaluationError(this, e);
+        LoggingManner.logEvaluationError(this, e);
         return null;
       }
     }

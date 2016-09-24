@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-import il.org.spartan.plugin.Plugin;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -116,7 +116,7 @@ public enum makeAST {
     try (final Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception e) {
-      Plugin.logEvaluationError(this, e);
+      LoggingManner.logEvaluationError(this, e);
       return new StringBuilder();
     }
   }

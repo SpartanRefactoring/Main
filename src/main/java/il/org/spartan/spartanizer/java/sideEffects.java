@@ -92,7 +92,7 @@ public enum sideEffects {
       case ARRAY_INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
       default:
-        Plugin.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing handler for class: " + ¢.getClass().getSimpleName()));
+        LoggingManner.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing handler for class: " + ¢.getClass().getSimpleName()));
         return false;
     }
   }

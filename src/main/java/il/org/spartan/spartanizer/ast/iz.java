@@ -763,7 +763,7 @@ public enum iz {
     try {
       return Double.parseDouble(token) == d;
     } catch (final IllegalArgumentException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
       return false;
     }
   }
@@ -794,7 +794,7 @@ public enum iz {
     try {
       return Integer.parseInt(token) == i;
     } catch (final IllegalArgumentException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
       return false;
     }
   }
@@ -803,7 +803,7 @@ public enum iz {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
       return false;
     }
   }

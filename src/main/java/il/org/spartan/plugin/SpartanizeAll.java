@@ -70,9 +70,9 @@ public final class SpartanizeAll extends BaseHandler {
           pm.done();
         });
       } catch (final InvocationTargetException x) {
-        Plugin.logEvaluationError(this, x);
+        LoggingManner.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        Plugin.logEvaluationError(this, x);
+        LoggingManner.logEvaluationError(this, x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)

@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -208,7 +209,14 @@ public final class BatchSpartanizer {
     }
     System.err.print("\n Done: " + classesDone + " files processed.");
   }
-
+  Process essence() {
+    try {
+      return Runtime.getRuntime().exec(new String[] { "./essence", "-persist" });
+    } catch (final IOException e) {
+      LoggingManner.logProbableBug(this, e);
+      return null;
+    }
+  }
   private void count() {
   }
 }

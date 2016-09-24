@@ -86,7 +86,7 @@ public final class WringCommit {
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
             } catch (JavaModelException | IllegalArgumentException x) {
-              Plugin.logEvaluationError(this, x);
+              LoggingManner.logEvaluationError(this, x);
             }
             if (textChange.getEdit().getLength() == 0)
               es.add(u);
@@ -94,7 +94,7 @@ public final class WringCommit {
               try {
                 textChange.perform(pm);
               } catch (final CoreException e) {
-                Plugin.logEvaluationError(this, e);
+                LoggingManner.logEvaluationError(this, e);
               }
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
@@ -103,7 +103,7 @@ public final class WringCommit {
           px.done();
         });
       } catch (InvocationTargetException | InterruptedException e) {
-        Plugin.logEvaluationError(this, e);
+        LoggingManner.logEvaluationError(this, e);
       }
     }
     pm.done();
