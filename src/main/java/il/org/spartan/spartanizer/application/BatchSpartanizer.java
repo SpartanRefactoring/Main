@@ -5,6 +5,7 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -23,7 +24,7 @@ public final class BatchSpartanizer {
 
   public static void main(final String[] where) {
     if (where.length == 0)
-      new BatchSpartanizer(".", "current-wroking-directory").fire();
+      new BatchSpartanizer(".", "current-working-directory").fire();
     else
       for (final String ¢ : where)
         new BatchSpartanizer(¢).fire();
@@ -78,6 +79,7 @@ public final class BatchSpartanizer {
   private PrintWriter afters;
   private CSVStatistics report;
   private final String reportFileName;
+  private final static String script = "./essence";
 
   private BatchSpartanizer(final String path) {
     this(path, folder2File(path));
@@ -85,7 +87,7 @@ public final class BatchSpartanizer {
 
   private BatchSpartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
-    beforeFileName = folder + name + ",before.java";
+    beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
   }
@@ -102,6 +104,7 @@ public final class BatchSpartanizer {
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
     final int essence2 = BatchSpartanizer.essenceNew(out + "").length();
+    final int essenceWC = wc(BatchSpartanizer.essenceNew(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
@@ -142,6 +145,7 @@ public final class BatchSpartanizer {
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", δ(essence, essence2))//
         .put("% Essence", p(essence, essence2))//
+        .put("Essence (wc)", essenceWC) // essence in terms of words (not characters)
         .put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //
@@ -149,6 +153,10 @@ public final class BatchSpartanizer {
     ;
     report.nl();
     return false;
+  }
+
+  private static int wc(String $) {
+     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 
   void collect(final CompilationUnit u) {
@@ -198,7 +206,43 @@ public final class BatchSpartanizer {
       x.printStackTrace();
       System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
     }
+    applyEssenceCommandLine();
     System.err.print("\n Done: " + classesDone + " files processed.");
     System.err.print("\n Summary:: " + report.close());
+  }
+  
+  private void applyEssenceCommandLine(){
+    try {
+ 
+    String essentializedCodeBefore = executeScript(beforeFileName);
+    String essentializedCodeAfter = executeScript(afterFileName);
+    
+    int numWordEssentialBefore = essenceNew(essentializedCodeBefore.toString()).trim().length();
+    int numWordEssentialAfter = essenceNew(essentializedCodeAfter.toString()).trim().length();
+
+    System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
+    System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
+    System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
+    
+    } catch (final IOException e) {
+      System.err.println(e.getMessage());
+    }
+  }
+
+  private static String executeScript(final String pathname) throws IOException {
+    ProcessBuilder builder = new ProcessBuilder("/bin/bash");
+    builder.command(script, pathname);
+    builder.redirectErrorStream(true);
+    Process process = builder.start();
+    
+    InputStream stdout = process.getInputStream ();
+    BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
+    
+    String line;
+    StringBuffer sb = new StringBuffer();
+    while ((line = reader.readLine ()) != null) {
+      sb.append(line);
+    }
+    return sb.toString();
   }
 }
