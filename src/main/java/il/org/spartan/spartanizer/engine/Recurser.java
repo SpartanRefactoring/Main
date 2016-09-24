@@ -18,6 +18,9 @@ public final class Recurser<T> {
   public static List<ASTNode> children(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
+    if(iz.block(n)){
+      return az.block(n).statements();
+    }
     final InfixExpression ¢ = az.infixExpression(n);
     if (¢ != null) {
       // We must have this weird special case of adding right before left
