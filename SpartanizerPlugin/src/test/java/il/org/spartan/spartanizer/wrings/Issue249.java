@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue249 {
   @Test public void a00() {
-    azzert.that(metrics.horizontalComplexity(null), is(0));
+    azzert.that(metricUnderTest(null), is(0));
   }
 
   @Test public void a01() {
