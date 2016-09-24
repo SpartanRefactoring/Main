@@ -27,6 +27,11 @@ public class Issue249 {
     azzert.that(metricUnderTest(";"), is(1));
   }
 
+  @Test public void a03() {
+    azzert.that(metricUnderTest("{}"), is(2));
+  }
+
+
   public int metricUnderTest(String javaStatements) {
     return metrics.horizontalComplexity(into.s(javaStatements));
   }
