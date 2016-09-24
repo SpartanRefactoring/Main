@@ -38,13 +38,18 @@ public final class WringApplicator extends GUI$Applicator {
     });
   }
 
-  // TODO: Ori, how come we need this parameter?
-  @Override protected ASTVisitor makeSuggestionsCollector(@SuppressWarnings("unused") final CompilationUnit __, final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final List<Suggestion> $) {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || wring.canSuggest(¢))
-          $.add(wring.suggest(¢));
+        progressMonitor.worked(1);
+        if (¢.getClass() == clazz)
+          return;
+        progressMonitor.worked(1);
+        if (!wring.canSuggest(¢))
+          return;
+        progressMonitor.worked(1);
+        $.add(wring.suggest(¢));
       }
     };
   }
