@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.Utils.*;
+
 import java.util.*;
 
 import javax.swing.*;
@@ -111,7 +113,7 @@ public enum eclipse {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
     }
     return null;
   }
@@ -120,7 +122,7 @@ public enum eclipse {
     try {
       return compilationUnits(u, nullProgressMonitor);
     } catch (final JavaModelException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
       return null;
     }
   }
@@ -130,8 +132,18 @@ public enum eclipse {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException x) {
-      Plugin.logEvaluationError(this, x);
+      LoggingManner.logEvaluationError(this, x);
       return true;
     }
+  }
+
+  /** Add nature to one project */
+  static void addNature(final IProject p) throws CoreException {
+    final IProjectDescription d = p.getDescription();
+    final String[] natures = d.getNatureIds();
+    if (as.list(natures).contains(Nature.NATURE_ID))
+      return; // Already got the nature
+    d.setNatureIds(append(natures, Nature.NATURE_ID));
+    p.setDescription(d, null);
   }
 }
