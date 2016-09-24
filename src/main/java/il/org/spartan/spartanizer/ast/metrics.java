@@ -241,7 +241,11 @@ public interface metrics {
     return dictionary(u).size();
   }
 
-  static int horizontalComplexity(Object object) {
-    return 0;
+  static int horizontalComplexity(Statement s) {
+    if (null == s)
+      return 0;
+    if (iz.emptyStatement(s))
+      return 1;
+    return 3;
   }
 }
