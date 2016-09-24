@@ -10,8 +10,4 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue249 {
-  /** Correct way of trimming does not change */
-  @Test public void Z$140() {
-    trimmingOf("a").stays();
-  }
 }
