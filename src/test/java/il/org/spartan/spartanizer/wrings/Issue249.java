@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.wrings;
-
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
 import org.junit.*;
