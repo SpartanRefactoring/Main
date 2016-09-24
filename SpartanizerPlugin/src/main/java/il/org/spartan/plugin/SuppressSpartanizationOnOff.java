@@ -53,12 +53,13 @@ public final class SuppressSpartanizationOnOff {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else {
-      BodyDeclaration cd = (BodyDeclaration) ASTNode.copySubtree(d.getAST(), d);
-      Javadoc cj = (Javadoc) $.createStringPlaceholder(s, ASTNode.JAVADOC);
+      final BodyDeclaration cd = (BodyDeclaration) ASTNode.copySubtree(d.getAST(), d);
+      final Javadoc cj = (Javadoc) $.createStringPlaceholder(s, ASTNode.JAVADOC);
       cd.setJavadoc(cj);
       $.replace(d, cd, null);
     }
-//      $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(), d.getNodeType()), null);
+    // $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(),
+    // d.getNodeType()), null);
   }
 
   /** @param n an {@link ASTNode}
