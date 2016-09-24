@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -13,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
  * {@link ExclusionManager} */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
   @Override public final Suggestion suggest(final N n, final ExclusionManager m) {
-    assert prerequisite(n) : dump() + "\n n = " + n + "\n m = " + m + endDump();
+    assert prerequisite(n) : LoggingManner.dump() + "\n n = " + n + "\n m = " + m + LoggingManner.endDump();
     final ASTNode $ = replacement(n, m);
     return $ == null ? null : new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

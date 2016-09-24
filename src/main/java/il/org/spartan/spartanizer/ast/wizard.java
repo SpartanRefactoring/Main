@@ -204,14 +204,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  static String dump() {
-    return "MISSING_CASE: ";
-  }
-
-  static String endDump() {
-    return "\n-----this is all I know.";
-  }
-
   static String essence(final String codeFragment) {
     return tide.clean(wizard.removeComments2(codeFragment));
   }

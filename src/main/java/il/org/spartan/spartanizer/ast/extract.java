@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -88,10 +89,10 @@ public enum extract {
       case TYPE_DECLARATION:
         return category((TypeDeclaration) ¢);
       default:
-        assert wizard.unreachable() : wizard.dump() //
+        assert wizard.unreachable() : LoggingManner.dump() //
             + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
-            + wizard.endDump();
+            + LoggingManner.endDump();
         return ¢.getClass().getSimpleName();
     }
   }
@@ -213,10 +214,10 @@ public enum extract {
       case TYPE_DECLARATION:
         return ((TypeDeclaration) ¢).getName() + "";
       default:
-        assert wizard.unreachable() : wizard.dump() //
+        assert wizard.unreachable() : LoggingManner.dump() //
             + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
-            + wizard.endDump();
+            + LoggingManner.endDump();
         return ¢.getClass().getSimpleName();
     }
   }

@@ -24,7 +24,7 @@ public final class BatchSpartanizer {
 
   public static void main(final String[] where) {
     if (where.length == 0)
-      new BatchSpartanizer(".", "current-wroking-directory").fire();
+      new BatchSpartanizer(".", "current-working-directory").fire();
     else
       for (final String ¢ : where)
         new BatchSpartanizer(¢).fire();
@@ -173,9 +173,8 @@ public final class BatchSpartanizer {
       try {
         collect(FileUtils.read(f));
       } catch (final IOException e) {
-        System.err.println(e.getMessage());
+        LoggingManner.infoIOException(e,"File = " + f); 
       }
-    System.err.print("\n Summary:: " + report.close());
   }
 
   void collect(final String javaCode) {
@@ -184,7 +183,12 @@ public final class BatchSpartanizer {
 
   void fire() {
     collect();
-    count();
+    runEssence();
+    runWordCount();
+  }
+
+  private void runWordCount() {
+    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 
   private void collect() {
@@ -208,15 +212,41 @@ public final class BatchSpartanizer {
       System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
     }
     System.err.print("\n Done: " + classesDone + " files processed.");
+    System.err.print("\n Summary: " + report.close());
   }
-  Process essence() {
+
+  void runEssence() {
+    shellEssenceMetrics(beforeFileName);
+    shellEssenceMetrics(afterFileName);
+  }
+
+  public Process shellEssenceMetrics(String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
+  }
+
+  public Process bash(final String shellCommand) {
+    final String[] command = { "/bin/bash", "-c", shellCommand };
     try {
-      return Runtime.getRuntime().exec(new String[] { "./essence", "-persist" });
-    } catch (final IOException e) {
-      LoggingManner.logProbableBug(this, e);
-      return null;
+      Process p = Runtime.getRuntime().exec(command);
+      if (p != null)
+        return dumpOutput(p);
+    } catch (IOException x) {
+      LoggingManner.logProbableBug(this, x);
     }
+    return null;
   }
-  private void count() {
+
+  public static String essenced(String fileName) {
+    return fileName + ".essence";
+  }
+
+  Process dumpOutput(Process p) {
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+      for (String line = in.readLine(); line != null; line = in.readLine())
+        System.out.println(line);
+    } catch (IOException x) {
+      LoggingManner.logProbableBug(this, x);
+    }
+    return p;
   }
 }

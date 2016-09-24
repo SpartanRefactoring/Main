@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Replace current node strategy
@@ -15,7 +16,7 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulWring
   public abstract ASTNode replacement(N n);
 
   @Override public final Suggestion suggest(final N n) {
-    assert prerequisite(n) : dump() + "\n n = " + n + endDump();
+    assert prerequisite(n) : LoggingManner.dump() + "\n n = " + n + LoggingManner.endDump();
     final ASTNode $ = replacement(n);
     return $ == null ? null : new Suggestion(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
