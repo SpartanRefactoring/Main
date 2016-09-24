@@ -31,7 +31,6 @@ public class Issue249 {
     azzert.that(metricUnderTest("{}"), is(2));
   }
 
-
   public int metricUnderTest(String javaStatements) {
     if (javaStatements == null)
       return metrics.horizontalComplexity(null);
