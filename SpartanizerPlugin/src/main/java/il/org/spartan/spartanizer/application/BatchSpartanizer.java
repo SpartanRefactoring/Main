@@ -182,6 +182,7 @@ public final class BatchSpartanizer {
       } catch (final IOException e) {
         System.err.println(e.getMessage());
       }
+    System.err.print("\n Summary:: " + report.close());
   }
 
   void collect(final String javaCode) {
@@ -189,12 +190,19 @@ public final class BatchSpartanizer {
   }
 
   void fire() {
+    collect();
+    count();
+  }
+
+  private void collect() {
     System.err.printf(
         "Input path=%s\n" + //
             "Collective before path=%s\n" + //
             "Collective after path=%s\n" + //
             "\n" //
-        , inputPath, beforeFileName, afterFileName);
+        , inputPath, //
+        beforeFileName, //
+        afterFileName);
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
@@ -208,7 +216,9 @@ public final class BatchSpartanizer {
     }
     applyEssenceCommandLine();
     System.err.print("\n Done: " + classesDone + " files processed.");
-    System.err.print("\n Summary:: " + report.close());
+  }
+
+  private void count() {
   }
   
   private void applyEssenceCommandLine(){

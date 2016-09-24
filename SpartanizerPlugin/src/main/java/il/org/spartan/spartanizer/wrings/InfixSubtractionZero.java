@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.assemble.make.*;
-import static il.org.spartan.spartanizer.ast.iz.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -14,6 +13,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 import static il.org.spartan.spartanizer.ast.hop.*;
 
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.wringing.*;
 
@@ -31,7 +31,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   private static List<Expression> prune(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
-      if (!literal0(¢))
+      if (!iz.parsed.literal0(¢))
         $.add(¢);
     return $.size() != xs.size() ? $ : null;
   }
@@ -45,9 +45,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
       return make.from(first).literal(0);
     assert !prune.isEmpty();
     if (prune.size() == 1)
-      return !literal0(first) ? first : minus(first(prune));
+      return !iz.parsed.literal0(first) ? first : minus(first(prune));
     assert prune.size() >= 2;
-    return subject.operands(!literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
+    return subject.operands(!iz.parsed.literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
   }
 
   @Override public String description(final InfixExpression ¢) {

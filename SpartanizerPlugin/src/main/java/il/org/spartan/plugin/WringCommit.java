@@ -22,69 +22,6 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 public final class WringCommit {
-  public static void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
-    if (Type.PROJECT.equals(t)) {
-      goProject(pm, m);
-      return;
-    }
-    pm.beginTask("Applying suggestion", IProgressMonitor.UNKNOWN);
-    final ICompilationUnit u = makeAST.iCompilationUnit(m);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
-      textChange.perform(pm);
-    pm.done();
-  }
-
-  public static void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
-    final ICompilationUnit cu = eclipse.currentCompilationUnit();
-    assert cu != null;
-    final List<ICompilationUnit> us = eclipse.compilationUnits();
-    assert us != null;
-    pm.beginTask("Spartanizing project", us.size());
-    final IJavaProject jp = cu.getJavaProject();
-    final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    assert w != null;
-    for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
-      final IWorkbench wb = PlatformUI.getWorkbench();
-      final IProgressService ps = wb.getProgressService();
-      final AtomicInteger pn = new AtomicInteger(i + 1);
-      try {
-        // TODO: ORIORIRORIORORI NO BUSY CURSOR
-        ps.busyCursorWhile(px -> {
-          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
-          int n = 0;
-          final List<ICompilationUnit> es = new LinkedList<>();
-          for (final ICompilationUnit u : us) {
-            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-            textChange.setTextType("java");
-            try {
-              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException x) {
-              Plugin.log(x);
-            }
-            if (textChange.getEdit().getLength() == 0)
-              es.add(u);
-            else
-              try {
-                textChange.perform(pm);
-              } catch (final CoreException e) {
-                Plugin.log(e);
-              }
-            px.worked(1);
-            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
-          }
-          us.removeAll(es);
-          px.done();
-        });
-      } catch (InvocationTargetException | InterruptedException e) {
-        Plugin.log(e);
-      }
-    }
-    pm.done();
-  }
-
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
@@ -109,6 +46,69 @@ public final class WringCommit {
     return v.wring;
   }
 
+  public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+    if (Type.PROJECT.equals(t)) {
+      goProject(pm, m);
+      return;
+    }
+    pm.beginTask("Applying suggestion", IProgressMonitor.UNKNOWN);
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
+    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    textChange.setTextType("java");
+    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
+    if (textChange.getEdit().getLength() != 0)
+      textChange.perform(pm);
+    pm.done();
+  }
+
+  public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
+    final ICompilationUnit cu = eclipse.currentCompilationUnit();
+    assert cu != null;
+    final List<ICompilationUnit> us = eclipse.facade.compilationUnits();
+    assert us != null;
+    pm.beginTask("Spartanizing project", us.size());
+    final IJavaProject jp = cu.getJavaProject();
+    final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    assert w != null;
+    for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      final IProgressService ps = wb.getProgressService();
+      final AtomicInteger pn = new AtomicInteger(i + 1);
+      try {
+        // TODO: ORIORIRORIORORI NO BUSY CURSOR
+        ps.busyCursorWhile(px -> {
+          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          int n = 0;
+          final List<ICompilationUnit> es = new LinkedList<>();
+          for (final ICompilationUnit u : us) {
+            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+            textChange.setTextType("java");
+            try {
+              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
+            } catch (JavaModelException | IllegalArgumentException x) {
+              Plugin.logEvaluationError(this, x);
+            }
+            if (textChange.getEdit().getLength() == 0)
+              es.add(u);
+            else
+              try {
+                textChange.perform(pm);
+              } catch (final CoreException e) {
+                Plugin.logEvaluationError(this, e);
+              }
+            px.worked(1);
+            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+          }
+          us.removeAll(es);
+          px.done();
+        });
+      } catch (InvocationTargetException | InterruptedException e) {
+        Plugin.logEvaluationError(this, e);
+      }
+    }
+    pm.done();
+  }
+
   public enum Type {
     DECLARATION, FILE, PROJECT
   }
@@ -119,9 +119,8 @@ public final class WringCommit {
     final Type type;
     final CompilationUnit compilationUnit;
     Wring<?> wring;
-    /**
-     * A boolean flag indicating end of traverse. Set true after required operation has been made.
-     */
+    /** A boolean flag indicating end of traverse. Set true after required
+     * operation has been made. */
     boolean doneTraversing;
 
     public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
@@ -158,7 +157,6 @@ public final class WringCommit {
     }
 
     protected void applyDeclaration(final Wring<?> w, final ASTNode n) {
-      System.out.println(searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
     }
 
@@ -166,9 +164,11 @@ public final class WringCommit {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
-    protected void applyLocal(final Wring w, final ASTNode n) {
+    protected void applyLocal(@SuppressWarnings("rawtypes") final Wring w, final ASTNode n) {
       n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(final N n) {
+        @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
+          if (Trimmer.isDisabled(n))
+            return true;
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
             final Suggestion make = x.suggest(n, exclude);
@@ -180,13 +180,17 @@ public final class WringCommit {
           }
           return true;
         }
+
+        @Override protected void initialization(@SuppressWarnings("hiding") final ASTNode n) {
+          Trimmer.disabledScan(n);
+        }
       });
     }
 
     @Override protected <N extends ASTNode> boolean go(final N n) {
       if (doneTraversing)
         return false;
-      if (eclipse.isNodeOutsideMarker(n, marker))
+      if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
       final Wring<N> w = Toolbox.defaultInstance().find(n);
       if (w != null)

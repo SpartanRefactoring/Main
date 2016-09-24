@@ -39,7 +39,7 @@ public final class CollectMetrics {
   }
 
   private static void collectsuggestions(final String javaCode, final CompilationUnit before) {
-    reportSuggestions((new Trimmer()).collectSuggesions(before));
+    reportSuggestions(new Trimmer().collectSuggesions(before));
   }
 
   private static void go(final File f) {
