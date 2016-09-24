@@ -1,4 +1,7 @@
 #! /bin/bash
+#
+# Java program assumes this is a filter, if you write more, less, or redirect
+# to read from stdin you may be ruining it
 cat $* |\
 /usr/bin/perl -0pe 's|//.*?\n|\n|g; s#/\*(.|\n)*?\*/##g;' |\
 sed '/^\s*$/d' |\
