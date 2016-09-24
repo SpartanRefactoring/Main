@@ -47,6 +47,9 @@ public class Issue249 {
     assert step.statements(b) != null; 
     azzert.that(step.statements(b).size(), is(0));
   }
+  @Test public void a07() {
+    azzert.that(step.statements(az.block(into.s("{}"))).size(), is(0));
+  }
 
   public int metricUnderTest(String javaStatements) {
     if (javaStatements == null)
