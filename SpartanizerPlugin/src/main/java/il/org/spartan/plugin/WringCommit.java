@@ -157,7 +157,6 @@ public final class WringCommit {
     }
 
     protected void applyDeclaration(final Wring<?> w, final ASTNode n) {
-      System.out.println(searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
     }
 
@@ -165,9 +164,11 @@ public final class WringCommit {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
-    protected void applyLocal(final Wring w, final ASTNode n) {
+    protected void applyLocal(@SuppressWarnings("rawtypes") final Wring w, final ASTNode n) {
       n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(final N n) {
+        @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
+          if (Trimmer.isDisabled(n))
+            return true;
           @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
             final Suggestion make = x.suggest(n, exclude);
@@ -178,6 +179,9 @@ public final class WringCommit {
             }
           }
           return true;
+        }
+        @Override protected void initialization(@SuppressWarnings("hiding") ASTNode n) {
+          Trimmer.disabledScan(n);
         }
       });
     }
