@@ -132,7 +132,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SuggestionToggle" name="Suggestions on/off">
            <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
     </command>
-     <command id="il.org.spartan.RefreshAllProjects" name="Refresh all projects (slow)" />
+     <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)" />
+     <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
 </extension>
 
 
@@ -141,13 +142,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.SpartanizeAll"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.SpartanizeCurrent"/>
    <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.SuggestionsOnOfToggle"/>
-   <handler commandId="il.org.spartan.RefreshAllProjects" class="il.org.spartan.plugin.RefreshAllProjects"/>
+   <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
+   <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
 </extension>
 
 <!-- Menus -->
 <extension point="org.eclipse.ui.menus"> 
 
-  <!-- Toolbar -->
+  <!-- Toolbar button -->
   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
        <command 
@@ -159,22 +161,19 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </toolbar>
   </menuContribution>
 
-  <!-- Popups -->
-  <menuContribution 
-    allPopups="true" 
-    locationURI="popup:org.eclipse.ui.popup.any?after=additions"
-  >
+  <!-- Popup menus -->
+  <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Spartanization" mnemonic="S">
-        <command label="Enable spartan suggestions"
-              commandId="il.org.spartan.SuggestionToggle"
+        <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
+        <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
+        <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/>
+        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
+        <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
+         <command commandId="il.org.spartan.SuggestionToggle"
               id="il.org.spartan.menus.Toggle"
               style="toggle"
               mnemonic="S">
         </command>
-        <visibleWhen>
-           <iterate ifEmpty="false" operator="and"> <adapt type="org.eclipse.core.resources.IFile"> </adapt>
-           </iterate>
-        </visibleWhen>
      </menu>
   </menuContribution>
 
@@ -184,42 +183,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <menu label="Spartanization">
         <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
         <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
-        <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/> </menu>
+        <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/> 
+        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
+        <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
+   </menu>
    </menu>
 </menuContribution>
-
-<menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-   <menu
-         id="org.eclipse.jdt.ui.refactoring.menu2"
-         label="Spartanization">
-      <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
-          <visibleWhen>
-             <and>
-                <with
-                      variable="activeEditorInput">
-                   <adapt
-                         type="org.eclipse.core.resources.IResource">
-                      <test
-                            forcePluginActivation="true"
-                            property="org.eclipse.core.resources.extension"
-                            value="java">
-                      </test>
-                   </adapt>
-                </with>
-                <not>
-                   <iterate
-                         ifEmpty="true"
-                         operator="or">
-                      <adapt
-                            type="org.eclipse.core.resources.IResource">
-                      </adapt>
-                   </iterate>
-                </not>
-             </and>
-          </visibleWhen>
-       </menu>
-    </menuContribution>
-
  </extension>
 
 </plugin>
