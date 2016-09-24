@@ -242,7 +242,6 @@ public interface metrics {
   }
 
   static int horizontalComplexity(Object object) {
-    // TODO Auto-generated method stub
-    return false;
+    return 0;
   }
 }
