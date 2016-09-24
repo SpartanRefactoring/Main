@@ -247,7 +247,7 @@ public interface metrics {
     if (iz.emptyStatement(s))
       return 1;
     if (iz.block(s))
-      return 2;
+      return 2 + iz.horizontalComplexity(step.statements(az.block(s)));
     return 13443;
   }
 }
