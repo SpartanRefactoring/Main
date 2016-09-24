@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.ast;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.*;
+
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and
  * other conventions
  * @author Yossi Gil
@@ -50,9 +52,9 @@ public enum NameGuess {
       return NameGuess.CLASS_NAME;
     if (nameOfSomething.matches("[a-z][_a-zA-Z]*")) //
       return NameGuess.METHOD_OR_VARIABLE;
-    assert wizard.unreachable() : wizard.dump() + //
+    assert wizard.unreachable() : LoggingManner.dump() + //
         "\n nameOfSomething=" + nameOfSomething + //
-        wizard.endDump();
+        LoggingManner.endDump();
     return NameGuess.UNKNOWN;
   }
 }
