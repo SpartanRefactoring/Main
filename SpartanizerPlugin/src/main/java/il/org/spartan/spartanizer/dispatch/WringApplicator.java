@@ -28,8 +28,7 @@ public final class WringApplicator extends GUI$Applicator {
     assert clazz != null : "Oops, cannot find kind of operands of " + w.name();
   }
 
-  // TODO: Ori, how come we need this parameter?
-  @Override protected ASTVisitor makeSuggestionsCollector(@SuppressWarnings("unused") final CompilationUnit __, final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final List<Suggestion> $) {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
