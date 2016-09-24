@@ -38,8 +38,22 @@ public enum LoggingManner {
     return "\n-----this is all I know.";
   }
 
-  public static void infoIOException(final IOException e, final String string) {
-    // TODO Auto-generated method stub
+  public static LoggingManner nonAbortingManner() {
+    return now != ABORT_ON_ERROR ? now : LOG_TO_STDOUT;
+  }
+
+  public static LoggingManner infoIOException(final Exception e, final String message) {
+    return info(//
+            "   Got an exception of type : " + e.getClass().getSimpleName() + //
+            "\n      (probably I/O exception)" +
+            "\n   The exception says: '" + e + "'" + //
+            "\n   The associated message is " + //
+            "\n        >>>'" + message + "'<<<" //
+            );
+  }
+
+  public final static LoggingManner info(final String message) {
+    return nonAbortingManner().log(message);
   }
 
   /** logs an error in the plugin
@@ -77,10 +91,6 @@ public enum LoggingManner {
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
-  }
-
-  public final LoggingManner info(final String message) {
-    return LOG_TO_STDERR.log(message);
   }
 
   public abstract LoggingManner log(String message);
