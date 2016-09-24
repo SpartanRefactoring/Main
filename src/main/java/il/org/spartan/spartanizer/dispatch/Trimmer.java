@@ -9,6 +9,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -17,6 +18,14 @@ import il.org.spartan.spartanizer.wringing.*;
 /** @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends GUI$Applicator {
+  /** Disable spartanization markers, used to indicate that no spartanization
+   * should be made to node */
+  public static final String disablers[] = { "[[SuppressWarningsSpartan]]", //
+  };
+  /** Enable spartanization identifier, overriding a disabler */
+  public static final String enablers[] = { "[[EnableWarningsSpartan]]", //
+  };
+  static final String disabledPropertyId = "Trimmer_disabled_id";
   public static boolean prune(final Suggestion r, final List<Suggestion> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
@@ -43,7 +52,7 @@ public class Trimmer extends GUI$Applicator {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
         TrimmerLog.visitation(n);
-        if (!inRange(m, n))
+        if (!inRange(m, n) || isDisabled(n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
@@ -56,6 +65,9 @@ public class Trimmer extends GUI$Applicator {
           TrimmerLog.application(r, s);
         }
         return true;
+      }
+      @Override protected void initialization(ASTNode n) {
+        disabledScan(n);
       }
     });
   }
@@ -78,16 +90,19 @@ public class Trimmer extends GUI$Applicator {
     }
   }
 
-  @Override protected ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final List<Suggestion> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
-        if (new DisabledChecker(u).check(n))
+        if (isDisabled(n))
           return true;
         final Wring<N> w = Toolbox.defaultInstance().find(n);
         if (w != null)
           progressMonitor.worked(5);
         return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
+      }
+      @Override protected void initialization(ASTNode n) {
+        disabledScan(n);
       }
     };
   }
@@ -96,5 +111,83 @@ public class Trimmer extends GUI$Applicator {
     public Trimmer trimmer() {
       return Trimmer.this;
     }
+  }
+  
+  /**
+   * @param n an {@link ASTNode}
+   * @return true iff the node is spartanization disabled
+   */
+  public static boolean isDisabled(ASTNode n) {
+    return NodeData.has(n, disabledPropertyId);
+  }
+  
+  /**
+   * A recursive scan for disabled nodes. Adds disabled property to disabled nodes and their
+   * sub trees.
+   * <p>
+   * Algorithm:
+   * <ol>
+   * <li>Visit all nodes that contain an annotation.
+   * <li>If a node has a disabler, disable all nodes below it using
+   * {@link hop#descendants(ASTNode)}
+   * <li>Disabling is done by setting a node property, and is carried out
+   * <li>If a node which was previously disabled contains an enabler, enable all
+   * all its descendants.
+   * <li>If a node which was previously enabled, contains a disabler, disable all
+   * nodes below it, and carry on.
+   * <li>Obviously, the visit needs to be pre-order, i.e., visiting the parent
+   * before the children.
+   * </ol>
+   * The disabling information is used later by the suggestion/fixing mechanisms,
+   * which should know little about this class.
+   * @param n an {@link ASTNode}
+   * @author Ori Roth
+   * @since 2016/05/13
+   */
+  public static void disabledScan(ASTNode n) {
+    n.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") N n) {
+        if (!(n instanceof BodyDeclaration) || !isDisabledByIdentifier((BodyDeclaration) n))
+          return true;
+        disable((BodyDeclaration) n);
+        return false;
+      }
+    });
+  }
+  
+  /**
+   * The recursive disabling process. Returns to {@link Trimmer#disabledScan} upon reaching
+   * an enabler.
+   * @param d disabled {@link BodyDeclaration}
+   */
+  static void disable(BodyDeclaration d) {
+    d.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(N n) {
+        if (n instanceof BodyDeclaration && isEnabledByIdentifier((BodyDeclaration) n)) {
+          disabledScan(n);
+          return false;
+        }
+        NodeData.set(n, disabledPropertyId);
+        return true;
+      }
+    });
+  }
+  
+  static boolean isDisabledByIdentifier(BodyDeclaration d) {
+    return hasJavaDocIdentifier(d, disablers);
+  }
+  
+  static boolean isEnabledByIdentifier(BodyDeclaration d) {
+    return !hasJavaDocIdentifier(d, disablers) && hasJavaDocIdentifier(d, enablers);
+  }
+  
+  static boolean hasJavaDocIdentifier(BodyDeclaration d, String[] ids) {
+    if (d == null || d.getJavadoc() == null)
+      return false;
+    String s = d.getJavadoc().toString();
+    for (String i : ids)
+      if (s.contains(i))
+        return true;
+    return false;
   }
 }

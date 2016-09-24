@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
  * {@link DisabledChecker}.
  * @author Ori Roth */
 public final class SuppressSpartanizationOnOff {
-  static final String disabler = DisabledChecker.disablers[0];
+  static final String disabler = Trimmer.disablers[0];
 
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
@@ -52,8 +52,13 @@ public final class SuppressSpartanizationOnOff {
       s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
-    else
-      $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(), d.getNodeType()), null);
+    else {
+      BodyDeclaration cd = (BodyDeclaration) ASTNode.copySubtree(d.getAST(), d);
+      Javadoc cj = (Javadoc) $.createStringPlaceholder(s, ASTNode.JAVADOC);
+      cd.setJavadoc(cj);
+      $.replace(d, cd, null);
+    }
+//      $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(), d.getNodeType()), null);
   }
 
   /** @param n an {@link ASTNode}
@@ -63,10 +68,10 @@ public final class SuppressSpartanizationOnOff {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
-        for (final String e : DisabledChecker.enablers)
+        for (final String e : Trimmer.enablers)
           if (s.contains(e))
             return false;
-        for (final String d : DisabledChecker.disablers)
+        for (final String d : Trimmer.disablers)
           if (s.contains(d))
             return true;
       }
@@ -85,11 +90,11 @@ public final class SuppressSpartanizationOnOff {
   }
 
   static Set<String> getDisablers(final String ¢) {
-    return getKeywords(¢, DisabledChecker.disablers);
+    return getKeywords(¢, Trimmer.disablers);
   }
 
   static Set<String> getEnablers(final String ¢) {
-    return getKeywords(¢, DisabledChecker.enablers);
+    return getKeywords(¢, Trimmer.enablers);
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {

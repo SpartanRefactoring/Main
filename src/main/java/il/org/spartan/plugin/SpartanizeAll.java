@@ -53,7 +53,6 @@ public final class SpartanizeAll extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
-        // TODO: Ori, please please no busy cursor. Use ProgressManager
         ps.busyCursorWhile(pm -> {
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,

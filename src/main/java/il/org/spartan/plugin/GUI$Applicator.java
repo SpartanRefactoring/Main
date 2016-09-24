@@ -130,7 +130,7 @@ public abstract class GUI$Applicator extends Refactoring {
    *         spartanization suggestion */
   public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
     final List<Suggestion> $ = new ArrayList<>();
-    ¢.accept(makeSuggestionsCollector(¢, $));
+    ¢.accept(makeSuggestionsCollector($));
     return $;
   }
 
@@ -142,27 +142,9 @@ public abstract class GUI$Applicator extends Refactoring {
     return iCompilationUnit.getElementName();
   }
 
-  /** Count the number files that would change after Spartanization.
-   * <p>
-   * This is an slow operation. Do not call light-headedly.
-   * @return total number of files with suggestions */
-  public int countFilesChanges() {
-    // TODO OriRoth: not sure if this function is necessary - if it is, it could
-    // be easily optimized when called after countSuggestions()
-    setMarker(null);
-    try {
-      checkFinalConditions(nullProgressMonitor);
-    } catch (final OperationCanceledException x) {
-      Plugin.logCancellationRequest(this, x);
-    } catch (final CoreException e) {
-      Plugin.logEvaluationError(this, e);
-    }
-    return changes.size();
-  }
-
   /** Count the number of suggestions offered by this instance.
    * <p>
-   * This is an slow operation. Do not call light-headedly.
+   * This is a slow operation. Do not call light-headedly.
    * @return total number of suggestions offered by this instance */
   public int countSuggestions() {
     setMarker(null);
@@ -393,7 +375,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  protected abstract ASTVisitor makeSuggestionsCollector(final CompilationUnit u, final List<Suggestion> $);
+  protected abstract ASTVisitor makeSuggestionsCollector(final List<Suggestion> $);
 
   protected void parse() {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
@@ -401,7 +383,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   protected void scan() {
     suggestions.clear();
-    compilationUnit.accept(makeSuggestionsCollector(compilationUnit, suggestions));
+    compilationUnit.accept(makeSuggestionsCollector(suggestions));
   }
 
   /** @param u JD
