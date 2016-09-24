@@ -23,11 +23,11 @@ public class Issue249 {
     azzert.that(metricUnderTest(""), is(0));
   }
 
-  public int metricUnderTest(String javaStatements) {
-    return metrics.horizontalComplexity(into.s(javaStatements));
-  }
-
   @Test public void a02() {
     azzert.that(metricUnderTest(";"), is(1));
+  }
+
+  public int metricUnderTest(String javaStatements) {
+    return metrics.horizontalComplexity(into.s(javaStatements));
   }
 }
