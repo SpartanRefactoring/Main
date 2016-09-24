@@ -20,8 +20,7 @@ public class Issue249 {
   }
 
   @Test public void a01() {
-    String javaStatements = "";
-    azzert.that(metricUnderTest(javaStatements), is(0));
+    azzert.that(metricUnderTest(""), is(0));
   }
 
   public int metricUnderTest(String javaStatements) {
@@ -29,7 +28,6 @@ public class Issue249 {
   }
 
   @Test public void a02() {
-    final String s = ";";
-    azzert.that(metricUnderTest(s), is(1));
+    azzert.that(metricUnderTest(";"), is(1));
   }
 }
