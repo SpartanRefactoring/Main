@@ -161,7 +161,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </toolbar>
   </menuContribution>
 
-  <!-- Popup menus -->
+  <!-- Popup menus 
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Spartanization" mnemonic="S">
         <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
@@ -176,6 +176,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         </command>
      </menu>
   </menuContribution>
+  -->
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
