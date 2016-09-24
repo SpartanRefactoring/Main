@@ -7,6 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** @author Yossi Gil
  * @since 2016 */
@@ -15,5 +16,8 @@ import il.org.spartan.spartanizer.ast.*;
 public class Issue249 {
   @Test public void a00() {
     azzert.that(metrics.horizontalComplexity(null), is(0));
+  }
+  @Test public void a01() {
+    azzert.that(metrics.horizontalComplexity(into.s("")), is(0));
   }
 }
