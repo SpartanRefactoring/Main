@@ -55,6 +55,10 @@ public class Issue249 {
   @Test public void a08() {
     azzert.that(step.statements(az.block(into.s("{}"))), iz("[]"));
   }
+  
+  @Test public void a09() {
+    azzert.that(az.block(into.s("{}")), iz("[]"));
+  }
 
   public int metricUnderTest(final String javaStatements) {
     if (javaStatements == null)
