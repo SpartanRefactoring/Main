@@ -31,7 +31,11 @@ public final class SpartanizeAll extends BaseHandler {
     return $;
   }
 
-  protected SpartanizeAll(final GUI$Applicator inner) {
+  public SpartanizeAll() {
+    this(new Trimmer());
+  }
+
+  public SpartanizeAll(final GUI$Applicator inner) {
     super(inner);
   }
 

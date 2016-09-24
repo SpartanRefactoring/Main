@@ -33,23 +33,12 @@ public enum IExtendedModifiersOrdering {
     return compare(find(m), o);
   }
 
-  private static int compare(final IExtendedModifiersOrdering m1, final IExtendedModifiersOrdering m2) {
-    return m1.ordinal() - m2.ordinal();
-  }
-
   public static int compare(final String modifier1, final String modifier2) {
     return compare(find(modifier1), find(modifier2));
   }
 
   public static IExtendedModifiersOrdering find(final IExtendedModifier ¢) {
     return find(¢ + "");
-  }
-
-  static IExtendedModifiersOrdering find(final String modifier) {
-    for (final IExtendedModifiersOrdering $ : IExtendedModifiersOrdering.values())
-      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" + $))
-        return $;
-    return $USER_DEFINED_ANNOTATION$;
   }
 
   public static boolean greaterThan(final IExtendedModifier m1, final IExtendedModifiersOrdering m2) {
@@ -62,5 +51,16 @@ public enum IExtendedModifiersOrdering {
 
   public static boolean isUserDefinedAnnotation(final IExtendedModifier m1) {
     return compare(m1, $USER_DEFINED_ANNOTATION$) == 0;
+  }
+
+  static IExtendedModifiersOrdering find(final String modifier) {
+    for (final IExtendedModifiersOrdering $ : IExtendedModifiersOrdering.values())
+      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" + $))
+        return $;
+    return $USER_DEFINED_ANNOTATION$;
+  }
+
+  private static int compare(final IExtendedModifiersOrdering m1, final IExtendedModifiersOrdering m2) {
+    return m1.ordinal() - m2.ordinal();
   }
 }

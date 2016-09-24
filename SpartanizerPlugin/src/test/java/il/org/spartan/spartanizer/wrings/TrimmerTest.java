@@ -74,7 +74,7 @@ import il.org.spartan.spartanizer.wringing.*;
         .gives("@Override void m() {}");
   }
 
-  @Test public void annotationRemoveValueFromMultipleAnnotations() {
+  @Ignore("Issue #230") @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimmingOf("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}") //
         .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
   }
@@ -199,7 +199,7 @@ import il.org.spartan.spartanizer.wringing.*;
         .stays(); // from junit source
   }
 
-  @Test public void bugInLastIfInMethod() {
+  @Ignore("Issue #230") @Test public void bugInLastIfInMethod() {
     trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
         + "          if (!isMessageSuppressed(myMessage)) {\n"//
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(myMessage);\n"//
@@ -212,7 +212,7 @@ import il.org.spartan.spartanizer.wringing.*;
                 "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
-  @Test public void bugInLastIfInMethod1() {
+  @Ignore("Issue #230") @Test public void bugInLastIfInMethod1() {
     trimmingOf("        @Override public void f() {\n"//
         + "          if (!isMessageSuppressed(message)) {\n" + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n"//
         + "            messages.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
