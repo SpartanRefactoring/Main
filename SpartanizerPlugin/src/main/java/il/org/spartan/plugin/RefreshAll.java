@@ -14,7 +14,7 @@ public final class RefreshAll extends BaseHandler {
         if (p.isOpen())
           p.build(IncrementalProjectBuilder.FULL_BUILD, null);
       } catch (final CoreException e) {
-        Plugin.logEvaluationError(new RefreshAll(), e);
+        LoggingManner.logEvaluationError(new RefreshAll(), e);
       }
   }
 

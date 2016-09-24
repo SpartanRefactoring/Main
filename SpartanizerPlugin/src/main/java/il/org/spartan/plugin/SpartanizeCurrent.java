@@ -41,9 +41,9 @@ public final class SpartanizeCurrent extends BaseHandler {
           applicator.apply();
         });
       } catch (final InvocationTargetException x) {
-        Plugin.logEvaluationError(this, x);
+        LoggingManner.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        Plugin.logCancellationRequest(this, x);
+        LoggingManner.logCancellationRequest(this, x);
         return null;
       }
       if (n.inner <= 0) {

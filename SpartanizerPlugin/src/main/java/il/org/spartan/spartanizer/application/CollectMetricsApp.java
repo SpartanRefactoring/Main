@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -166,9 +165,9 @@ public final class CollectMetricsApp implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
-      Plugin.logEvaluationError(this, e);
+      LoggingManner.logEvaluationError(this, e);
     } catch (final NullPointerException e) {
-      Plugin.logProbableBug(this, e);
+      LoggingManner.logProbableBug(this, e);
     }
   }
 
