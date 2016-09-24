@@ -5,6 +5,7 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
@@ -20,6 +21,11 @@ import il.org.spartan.utils.*;
  * @year 2015 */
 public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
+  private final static String script = "./essence";
+
+  public static String essenced(final String fileName) {
+    return fileName + ".essence";
+  }
 
   public static void main(final String[] where) {
     if (where.length == 0)
@@ -70,6 +76,24 @@ public final class BatchSpartanizer {
     return 1 - n2 / n1;
   }
 
+  private static String executeScript(final String pathname) throws IOException {
+    final ProcessBuilder builder = new ProcessBuilder("/bin/bash");
+    builder.command(script, pathname);
+    builder.redirectErrorStream(true);
+    final Process process = builder.start();
+    final InputStream stdout = process.getInputStream();
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+    String line;
+    final StringBuffer sb = new StringBuffer();
+    while ((line = reader.readLine()) != null)
+      sb.append(line);
+    return sb.toString();
+  }
+
+  private static int wc(final String $) {
+    return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
+  }
+
   private int classesDone;
   private final String inputPath;
   private final String beforeFileName;
@@ -78,7 +102,6 @@ public final class BatchSpartanizer {
   private PrintWriter afters;
   private CSVStatistics report;
   private final String reportFileName;
-  private final static String script = "./essence";
 
   private BatchSpartanizer(final String path) {
     this(path, folder2File(path));
@@ -89,6 +112,22 @@ public final class BatchSpartanizer {
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
+  }
+
+  public Process bash(final String shellCommand) {
+    final String[] command = { "/bin/bash", "-c", shellCommand };
+    try {
+      final Process p = Runtime.getRuntime().exec(command);
+      if (p != null)
+        return dumpOutput(p);
+    } catch (final IOException x) {
+      LoggingManner.logProbableBug(this, x);
+    }
+    return null;
+  }
+
+  public Process shellEssenceMetrics(final String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
@@ -144,7 +183,8 @@ public final class BatchSpartanizer {
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", δ(essence, essence2))//
         .put("% Essence", p(essence, essence2))//
-        .put("Essence (wc)", essenceWC) // essence in terms of words (not characters)
+        .put("Essence (wc)", essenceWC) // essence in terms of words (not
+                                        // characters)
         .put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //
@@ -152,10 +192,6 @@ public final class BatchSpartanizer {
     ;
     report.nl();
     return false;
-  }
-
-  private static int wc(String $) {
-     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 
   void collect(final CompilationUnit u) {
@@ -179,12 +215,22 @@ public final class BatchSpartanizer {
       try {
         collect(FileUtils.read(f));
       } catch (final IOException e) {
-        LoggingManner.infoIOException(e,"File = " + f); 
+        LoggingManner.infoIOException(e, "File = " + f);
       }
   }
 
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+  }
+
+  Process dumpOutput(final Process p) {
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+      for (String line = in.readLine(); line != null; line = in.readLine())
+        System.out.println(line);
+    } catch (final IOException x) {
+      LoggingManner.logProbableBug(this, x);
+    }
+    return p;
   }
 
   void fire() {
@@ -193,8 +239,23 @@ public final class BatchSpartanizer {
     runWordCount();
   }
 
-  private void runWordCount() {
-    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
+  void runEssence() {
+    shellEssenceMetrics(beforeFileName);
+    shellEssenceMetrics(afterFileName);
+  }
+
+  private void applyEssenceCommandLine() {
+    try {
+      final String essentializedCodeBefore = executeScript(beforeFileName);
+      final String essentializedCodeAfter = executeScript(afterFileName);
+      final int numWordEssentialBefore = essenceNew(essentializedCodeBefore.toString()).trim().length();
+      final int numWordEssentialAfter = essenceNew(essentializedCodeAfter.toString()).trim().length();
+      System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
+      System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
+      System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
+    } catch (final IOException e) {
+      System.err.println(e.getMessage());
+    }
   }
 
   private void collect() {
@@ -222,73 +283,7 @@ public final class BatchSpartanizer {
     System.err.print("\n Summary: " + report.close());
   }
 
-  void runEssence() {
-    shellEssenceMetrics(beforeFileName);
-    shellEssenceMetrics(afterFileName);
-  }
-
-  public Process shellEssenceMetrics(String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
-  }
-
-  public Process bash(final String shellCommand) {
-    final String[] command = { "/bin/bash", "-c", shellCommand };
-    try {
-      Process p = Runtime.getRuntime().exec(command);
-      if (p != null)
-        return dumpOutput(p);
-    } catch (IOException x) {
-      LoggingManner.logProbableBug(this, x);
-    }
-    return null;
-  }
-
-  public static String essenced(String fileName) {
-    return fileName + ".essence";
-  }
-
-  Process dumpOutput(Process p) {
-    try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-      for (String line = in.readLine(); line != null; line = in.readLine())
-        System.out.println(line);
-    } catch (IOException x) {
-      LoggingManner.logProbableBug(this, x);
-    }
-    return p;
-  }
-  
-  private void applyEssenceCommandLine(){
-    try {
- 
-    String essentializedCodeBefore = executeScript(beforeFileName);
-    String essentializedCodeAfter = executeScript(afterFileName);
-    
-    int numWordEssentialBefore = essenceNew(essentializedCodeBefore.toString()).trim().length();
-    int numWordEssentialAfter = essenceNew(essentializedCodeAfter.toString()).trim().length();
-
-    System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
-    System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
-    System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
-    }
-  }
-
-  private static String executeScript(final String pathname) throws IOException {
-    ProcessBuilder builder = new ProcessBuilder("/bin/bash");
-    builder.command(script, pathname);
-    builder.redirectErrorStream(true);
-    Process process = builder.start();
-    
-    InputStream stdout = process.getInputStream ();
-    BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
-    
-    String line;
-    StringBuffer sb = new StringBuffer();
-    while ((line = reader.readLine ()) != null) {
-      sb.append(line);
-    }
-    return sb.toString();
+  private void runWordCount() {
+    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 }
