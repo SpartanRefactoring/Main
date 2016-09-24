@@ -241,7 +241,7 @@ public interface metrics {
     return dictionary(u).size();
   }
 
-  static boolean horizontalComplexity(Object object) {
+  static int horizontalComplexity(Object object) {
     // TODO Auto-generated method stub
     return false;
   }
