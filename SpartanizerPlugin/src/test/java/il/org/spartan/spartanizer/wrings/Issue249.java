@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.wrings;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -38,20 +37,26 @@ public class Issue249 {
   @Test public void a05() {
     azzert.that(metricUnderTest("{{}}"), is(4));
   }
+
   @Test public void a06() {
     final Statement s = into.s("{}");
     assert s != null;
     azzert.that(s, instanceOf(Block.class));
     final Block b = az.block(s);
     assert b != null;
-    assert step.statements(b) != null; 
+    assert step.statements(b) != null;
     azzert.that(step.statements(b).size(), is(0));
   }
+
   @Test public void a07() {
     azzert.that(step.statements(az.block(into.s("{}"))).size(), is(0));
   }
 
-  public int metricUnderTest(String javaStatements) {
+  @Test public void a08() {
+    azzert.that(step.statements(az.block(into.s("{}"))), iz("[]"));
+  }
+
+  public int metricUnderTest(final String javaStatements) {
     if (javaStatements == null)
       return metrics.horizontalComplexity(null);
     return metrics.horizontalComplexity(into.s(javaStatements));
