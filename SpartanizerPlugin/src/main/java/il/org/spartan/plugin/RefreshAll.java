@@ -7,14 +7,14 @@ import org.eclipse.core.runtime.*;
 /** ??
  * @author Yossi Gil
  * @year 2016 */
-public final class RefreshAllProjects extends BaseHandler {
+public final class RefreshAll extends BaseHandler {
   public static void go() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       try {
         if (p.isOpen())
           p.build(IncrementalProjectBuilder.FULL_BUILD, null);
       } catch (final CoreException e) {
-        Plugin.logEvaluationError(new RefreshAllProjects(), e);
+        Plugin.logEvaluationError(new RefreshAll(), e);
       }
   }
 

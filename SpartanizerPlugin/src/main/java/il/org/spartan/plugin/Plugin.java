@@ -103,15 +103,4 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     LoggingManner.now.info("SDS: spartanizer");
     super.saveDialogSettings();
   }
-
-  /** Add nature to all opened projects */
-  @Deprecated void applyPluginToAllProjects() {
-    for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
-      if (p.isOpen())
-        try {
-          addNature(p);
-        } catch (final CoreException e) {
-          Plugin.logEvaluationError(this, e);
-        }
-  }
 }
