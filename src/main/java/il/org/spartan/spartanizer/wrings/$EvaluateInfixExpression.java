@@ -98,7 +98,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         }
       }
     } catch (final Exception e) {
-      Plugin.info(e);
+      Plugin.logEvaluationError(this, e);
     }
     return null;
   }

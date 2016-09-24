@@ -40,7 +40,7 @@ public final class SpartanizeAll extends BaseHandler {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
     message.append("starting at " + currentCompilationUnit.getElementName() + "\n");
-    final List<ICompilationUnit> us = eclipse.compilationUnits(currentCompilationUnit);
+    final List<ICompilationUnit> us = eclipse.facade.compilationUnits(currentCompilationUnit);
     message.append("found " + us.size() + " compilation units \n");
     final IWorkbench wb = PlatformUI.getWorkbench();
     final int initialCount = countSuggestions(currentCompilationUnit);
@@ -71,10 +71,9 @@ public final class SpartanizeAll extends BaseHandler {
           pm.done();
         });
       } catch (final InvocationTargetException x) {
-        Plugin.log(x);
+        Plugin.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        // TODO: What should we do here?
-        Plugin.info(x);
+        Plugin.logEvaluationError(this, x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
       if (finalCount <= 0)

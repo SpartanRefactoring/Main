@@ -17,7 +17,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 
 public enum sideEffects {
-  ;
+  MISSING_CASE;
   /** Determine whether the evaluation of an expression is guaranteed to be free
    * of any side effects.
    * @param e JD
@@ -92,7 +92,7 @@ public enum sideEffects {
       case ARRAY_INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
       default:
-        Plugin.log(new RuntimeException("Missing handler for class: " + ¢.getClass().getSimpleName()));
+        Plugin.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing handler for class: " + ¢.getClass().getSimpleName()));
         return false;
     }
   }
