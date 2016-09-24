@@ -32,7 +32,11 @@ public class Issue249 {
   }
 
   @Test public void a04() {
-    azzert.that(metricUnderTest("{;}"), is(3));
+    azzert.that(metricUnderTest("{;}"), is(4));
+  }
+
+  @Test public void a05() {
+    azzert.that(metricUnderTest("{{}}"), is(4));
   }
 
   public int metricUnderTest(String javaStatements) {

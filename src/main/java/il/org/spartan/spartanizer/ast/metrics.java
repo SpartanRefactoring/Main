@@ -240,6 +240,7 @@ public interface metrics {
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
   }
+
   static int horizontalComplexity(Statement statement) {
     return horizontalComplexity(0, statement);
   }
@@ -255,8 +256,8 @@ public interface metrics {
   }
 
   static int horizontalComplexity(int base, List<Statement> statements) {
-    int $= 0;
-    for (final Statement statement: statements) 
+    int $ = 0;
+    for (final Statement statement : statements)
       $ += base + horizontalComplexity(statement);
     return $;
   }
