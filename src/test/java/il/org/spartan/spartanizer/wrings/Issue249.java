@@ -20,11 +20,16 @@ public class Issue249 {
   }
 
   @Test public void a01() {
-String javaStatements = "";
-    azzert.that(metrics.horizontalComplexity(into.s(javaStatements)), is(0));
+    String javaStatements = "";
+    azzert.that(metricUnderTest(javaStatements), is(0));
+  }
+
+  public int metricUnderTest(String javaStatements) {
+    return metrics.horizontalComplexity(into.s(javaStatements));
   }
 
   @Test public void a02() {
-    azzert.that(metrics.horizontalComplexity(into.s(";")), is(1));
+    final String s = ";";
+    azzert.that(metricUnderTest(s), is(1));
   }
 }
