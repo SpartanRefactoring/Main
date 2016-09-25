@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.tippers.*;
 
 /** convert <code>int a = 3;return a;</code> into <code>return a;</code>
  * @author Yossi Gil

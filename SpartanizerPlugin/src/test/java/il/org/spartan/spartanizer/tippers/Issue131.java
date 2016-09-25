@@ -5,13 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.tippers.*;
-
-/**
- * {@link $BodyDeclarationModifiersPrune}
- * @author                       Yossi Gil
- * @since                       2016 
- */
+/** {@link $BodyDeclarationModifiersPrune}
+ * @author Yossi Gil
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue131 {
   @Test public void A$010() {
     trimmingOf("for(int i=4; i<s.length() ; ++i){i+=9;return x;}return x;").gives("for(int ¢=4; ¢<s.length() ; ++¢){¢+=9;break;}return x;").stays();

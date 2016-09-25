@@ -125,9 +125,8 @@ import il.org.spartan.spartanizer.engine.*;
    * @author Yossi Gil
    * @since 2014/05/24 */
   public abstract static class Directories extends FileTestUtils.Traverse {
-    /**
-     * Adds a test case to the collection of all test cases generated in the traversal 
-     */
+    /** Adds a test case to the collection of all test cases generated in the
+     * traversal */
     @Override public final void go(final List<Object[]> $, final File f) {
       if (!f.isDirectory())
         return;

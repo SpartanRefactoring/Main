@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.tippers.*;
 
 /** Evaluate the addition of numbers according to the following rules <br/>
  * <br/>

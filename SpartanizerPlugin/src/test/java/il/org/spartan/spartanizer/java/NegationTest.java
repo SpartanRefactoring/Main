@@ -11,12 +11,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-/**
- * A test suite for class                       {@link minus}
- * @author                       Yossi Gil
- * @since                       2015-07-18
- * @see step                       
- */
+/** A test suite for class {@link minus}
+ * @author Yossi Gil
+ * @since 2015-07-18
+ * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class NegationTest {
   @Test public void levelComplex() {
     azzert.that(minus.level(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), is(9));

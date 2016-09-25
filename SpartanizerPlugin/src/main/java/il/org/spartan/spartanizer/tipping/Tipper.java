@@ -27,8 +27,8 @@ public abstract class Tipper<N extends ASTNode> implements Kind {
    *         the simplification offered by this object. */
   public abstract boolean canTip(final N n);
 
-  /** Determines whether this instance can make a {@link Tip} for the
-   * parameter instance.
+  /** Determines whether this instance can make a {@link Tip} for the parameter
+   * instance.
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.

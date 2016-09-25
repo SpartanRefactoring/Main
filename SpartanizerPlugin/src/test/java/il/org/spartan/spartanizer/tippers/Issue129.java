@@ -5,10 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * @author                       Yossi Gil
- * @since                       2016 
- */
+/** @author Yossi Gil
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue129 {
   @Test public void issue129_01() {
     trimmingOf("$ += s + (new Integer(i) + \"\")").gives("$ += s + (Integer.valueOf(i) + \"\")").stays();
