@@ -120,7 +120,8 @@ Java class which generates quick fix suggestions. -->
 >
   <runtime>
     <run class="il.org.spartan.plugin.Nature"/> 
-  </runtime>`
+  </runtime>
+  <builder id="spartan.tipper"/> 
 </extension>
 
 <!-- List of our abstract commands: 

@@ -13,13 +13,13 @@ public final class SpartanizeableAll extends BaseHandler {
     return null;
   }
 
-  public void go() {
+  public static void go() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       if (p.isOpen())
         try {
           eclipse.addNature(p);
         } catch (final CoreException e) {
-          LoggingManner.logEvaluationError(this, e);
+          LoggingManner.logEvaluationError(new SpartanizeableAll(), e);
         }
   }
 }
