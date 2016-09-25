@@ -51,13 +51,16 @@ public final class WringCommit {
       goProject(pm, m);
       return;
     }
-    pm.beginTask("Applying suggestion", IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
+    if (Type.FILE.equals(t))
+      eclipse.announce("Done apllying " + w.description() + " tip to " + u.getElementName());
     pm.done();
   }
 
@@ -74,13 +77,17 @@ public final class WringCommit {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
+      final AtomicBoolean cancled = new AtomicBoolean(false);
       try {
-        // TODO: ORIORIRORIORORI NO BUSY CURSOR
-        ps.busyCursorWhile(px -> {
-          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+        ps.run(true, true, px -> {
+          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
           final List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit u : us) {
+            if (px.isCanceled()) {
+              cancled.set(true);
+              break;
+            }
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
             try {
@@ -105,8 +112,11 @@ public final class WringCommit {
       } catch (InvocationTargetException | InterruptedException e) {
         LoggingManner.logEvaluationError(this, e);
       }
+      if (us.isEmpty() || cancled.get())
+        break;
     }
     pm.done();
+    eclipse.announce("Done apllying " + w.description() + " tip to " + jp.getElementName());
   }
 
   public enum Type {
