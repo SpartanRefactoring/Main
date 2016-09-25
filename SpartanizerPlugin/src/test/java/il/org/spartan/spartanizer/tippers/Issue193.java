@@ -21,4 +21,17 @@ import org.junit.runners.*;
   @Test public void t30() {
     trimmingOf("(x+y)*0").gives("0").stays();
   }
+  
+  @Test public void t40() {
+    trimmingOf("calc()*0").gives("0*calc()").stays();
+  }
+  
+  @Test public void t50() {
+    trimmingOf("0*(f())").stays();
+  }
+  
+  @Test public void t60() {
+    trimmingOf("0*(new int[f()])").stays();
+  }
+  
 }
