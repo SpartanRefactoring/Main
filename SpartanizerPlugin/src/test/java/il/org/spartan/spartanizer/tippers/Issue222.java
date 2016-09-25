@@ -7,8 +7,8 @@ import org.junit.runners.*;
 
 /**
  * Unit tests for centification of a single parameter to a function even if it defines a "$" variable
- * @author                       Yossi Gil
- * @since                       2016 
+ * @author                                           Yossi Gil
+ * @since                                           2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue222 {
   @Test public void chocolate1() {

@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
 /**
  * * Unit tests for the nesting class Unit test for the containing class. Note our naming convention: a) test methods do not use the redundant "test" prefix. b) test methods begin with the name of the method they check.
- * @author                       Yossi Gil
- * @since                       2014-07-10 
+ * @author                                           Yossi Gil
+ * @since                                           2014-07-10 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {

@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /**
- * Unit tests for                       {@link NameYourClassHere}
- * @author                       Yossi Gil
- * @since                       2016 
+ * Unit tests for                                           {@link NameYourClassHere}
+ * @author                                           Yossi Gil
+ * @since                                           2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method",
     "javadoc" }) @Ignore("Still problems with #205") public final class BlockSimplifyTest {

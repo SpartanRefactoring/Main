@@ -15,15 +15,15 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.type.*;
 
 /**
- * unit tests for                       {@link type}                      , as well as tests for the types of certain expression using                       {@link type.Axiom}                      .
- * @author                       Niv Shalmon
- * @Since                       2016-09 
+ * unit tests for                                           {@link type}                                          , as well as tests for the types of certain expression using                                           {@link type.Axiom}                                          .
+ * @author                                           Niv Shalmon
+ * @Since                                           2016-09 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method", "unused" }) public final class typeTest {
   /**
-  * Ideally this class is empty, but still                       {@link Ignore}                      d.
-  * @author                       Yossi Gil
-  * @year                       2016 
+  * Ideally this class is empty, but still                                           {@link Ignore}                                          d.
+  * @author                                           Yossi Gil
+  * @year                                           2016 
   */
   @Ignore public static class NotWorkingYet {
   }
@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.engine.type.*;
   }
 
   /**
-  * @DisableSpartan                       
+  * @DisableSpartan                                           
   */
   public static class Working {
     private static final long LONG_MINUS_3L = -3L;
@@ -287,7 +287,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     /**
-    * @DisableSpartan                       
+    * @DisableSpartan                                           
     */
     @Test public void axiomExpression8() {
       azzert.that(Axiom.type(LONG_MINUS_3L % 4), is(LONG));
