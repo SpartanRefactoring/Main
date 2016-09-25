@@ -40,8 +40,8 @@ public class Toolbox {
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
           .add(ReturnStatement.class, new ReturnLastInMethod()) //
          // Disabled to protect against infinite loop
-//          .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
-//         .add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotation()) //
+          //.add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
+          //.add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotation()) //
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
@@ -101,7 +101,7 @@ public class Toolbox {
               new MethodDeclarationRenameReturnToDollar(), //
               new MethodDeclarationModifiersRedundant(), //
               // Disabled to protect against infinite loop
-///              new BodyDeclarationModifiersSort.ofMethod() , //
+              new BodyDeclarationModifiersSort.ofMethod() , //
               new MethodDeclarationRenameSingleParameterToCent(), //
               null)
           .add(MethodInvocation.class, //
@@ -168,16 +168,16 @@ public class Toolbox {
               // new delmeTypeModifierCleanInterface(), //
               new TypeRedundantModifiers(), //
               // Disabled to protect against infinite loop
-//              new BodyDeclarationModifiersSort.ofType(), //
+              new BodyDeclarationModifiersSort.ofType(), //
               null) //
           .add(EnumDeclaration.class, //
               new EnumRedundantModifiers(), 
-              //new BodyDeclarationModifiersSort.ofEnum(), //
+              new BodyDeclarationModifiersSort.ofEnum(), //
               // new EnumDeclarationModifierCleanEnum(), //
               null) //
           .add(FieldDeclaration.class, //
               new FieldRedundantModifiers(), //
-              // new BodyDeclarationModifiersSort.ofField(), //
+              new BodyDeclarationModifiersSort.ofField(), //
               null) //
           .add(CastExpression.class, //
               new CastToDouble2Multiply1(), //
@@ -185,7 +185,7 @@ public class Toolbox {
               null) //
           .add(EnumConstantDeclaration.class, //
               new EnumConstantRedundantModifiers(), //
-              // new BodyDeclarationModifiersSort.ofEnumConstant(), //
+              new BodyDeclarationModifiersSort.ofEnumConstant(), //
               null) //
           .add(NormalAnnotation.class, //
               new AnnotationDiscardValueName(), //
@@ -202,7 +202,7 @@ public class Toolbox {
           // since the dispatcher does not
           // know about Initializers. Add initializers to DispatchingVisitor if
           // you can provide a test case
-//           .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), null) //
+          .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), null) //
           .seal();
   }
 
