@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -22,13 +23,15 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     if(n.getOperator()!=TIMES)
       return null;
     if(iz.numberLiteral(n.getLeftOperand()) && //
-       az.numberLiteral(n.getLeftOperand()).getToken().equals("0")){
+       az.numberLiteral(n.getLeftOperand()).getToken().equals("0") && //
+       sideEffects.free(n.getRightOperand())){
       NumberLiteral $ = n.getAST().newNumberLiteral();
       $.setToken("0");
       return $; 
     }
     if(iz.numberLiteral(n.getRightOperand()) && //
-        az.numberLiteral(n.getRightOperand()).getToken().equals("0")){
+        az.numberLiteral(n.getRightOperand()).getToken().equals("0")&& //
+        sideEffects.free(n.getLeftOperand())){
       NumberLiteral $ = n.getAST().newNumberLiteral();
       $.setToken("0");
       return $; 
