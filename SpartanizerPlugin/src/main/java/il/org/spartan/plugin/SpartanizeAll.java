@@ -47,7 +47,9 @@ public final class SpartanizeAll extends BaseHandler {
     final List<ICompilationUnit> us = eclipse.facade.compilationUnits(currentCompilationUnit);
     message.append("found " + us.size() + " compilation units \n");
     final IWorkbench wb = PlatformUI.getWorkbench();
+    System.out.println("wew");
     final int initialCount = countSuggestions(currentCompilationUnit);
+    System.out.println("ewe");
     message.append("with " + initialCount + " suggestions");
     if (initialCount == 0)
       return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
@@ -57,14 +59,16 @@ public final class SpartanizeAll extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
       try {
-        ps.busyCursorWhile(pm -> {
+        ps.run(true, true, pm -> {
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
               us.size());
           int n = 0;
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
-            a.setProgressMonitor(pm);
+            if (pm.isCanceled())
+              break;
+//            a.setProgressMonitor(pm);
             pm.worked(1);
             pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
             if (!a.apply(¢))
@@ -79,13 +83,12 @@ public final class SpartanizeAll extends BaseHandler {
         LoggingManner.logEvaluationError(this, x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
-      if (finalCount <= 0)
-        return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + //
-            "Completed in " + (1 + i) + " passes. \n" + //
-            "Total changes: " + (initialCount - finalCount) + "\n" + //
-            "Suggestions before: " + initialCount + "\n" + //
-            "Suggestions after: " + finalCount + "\n" + //
-            message);
+      return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + //
+          "Completed in " + (1 + i) + " passes. \n" + //
+          "Total changes: " + (initialCount - finalCount) + "\n" + //
+          "Suggestions before: " + initialCount + "\n" + //
+          "Suggestions after: " + finalCount + "\n" + //
+          message);
     }
     throw new ExecutionException("Too many iterations");
   }
