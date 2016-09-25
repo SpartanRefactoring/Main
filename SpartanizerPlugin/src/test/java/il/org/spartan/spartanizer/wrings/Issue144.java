@@ -69,4 +69,16 @@ public class Issue144 {
         + "return sb + \"\";");
   }
 
+  @Test public void t04() {
+    trimmingOf("public boolean check(final ASTNode n) {"
+        + "ASTNode p = n;"
+        + "while (p != null) {"
+        + "if (dns.contains(p))"
+        + "continue;"
+        + "p = p.getParent();"
+        + "}"
+        + "return false;"
+        + "}")
+    .stays();
+  }
 }
