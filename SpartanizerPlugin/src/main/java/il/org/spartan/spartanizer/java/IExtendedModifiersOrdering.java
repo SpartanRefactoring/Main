@@ -28,9 +28,9 @@ public enum IExtendedModifiersOrdering {
   STRICTFP, //
   ;
   public static boolean[] bitMap() {
-    final boolean[] bitMap = new boolean[IExtendedModifiersOrdering.size()];
-    Arrays.fill(bitMap, false);
-    return bitMap;
+    final boolean[] $ = new boolean[IExtendedModifiersOrdering.size()];
+    Arrays.fill($, false);
+    return $;
   }
 
   public static int compare(final IExtendedModifier modifier1, final IExtendedModifier modifier2) {
@@ -80,11 +80,11 @@ public enum IExtendedModifiersOrdering {
     return find(modifier).ordinal();
   }
 
-  private static final int size() {
+  private static int size() {
     return IExtendedModifiersOrdering.values().length;
   }
 
-  public static final int userDefinedAnnotationsOrdinal() {
+  public static int userDefinedAnnotationsOrdinal() {
     return IExtendedModifiersOrdering.$USER_DEFINED_ANNOTATION$.ordinal();
   }
 }
