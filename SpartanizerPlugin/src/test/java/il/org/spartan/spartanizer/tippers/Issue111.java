@@ -5,10 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * @author                       Alex
- * @since                       2016 
- */
+/** @author Alex
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue111 {
   @Test public void A$a_1() {
     trimmingOf("public final class A {" + "static public int a;" + "}").gives("public final class A {" + "public static int a;" + "}");

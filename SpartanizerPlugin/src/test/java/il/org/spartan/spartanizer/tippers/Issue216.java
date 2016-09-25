@@ -5,13 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.tippers.*;
-
-/**
- * Unit tests for                       {@link CastToLong2Multiply1L}
- * @author                       Niv Shalmon
- * @since                       2016 
- */
+/** Unit tests for {@link CastToLong2Multiply1L}
+ * @author Niv Shalmon
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue216 {
   @Test public void issue216_01() {
     trimmingOf("(long)1.0").stays();

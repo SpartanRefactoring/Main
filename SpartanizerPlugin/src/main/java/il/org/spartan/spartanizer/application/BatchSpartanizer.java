@@ -248,8 +248,8 @@ public final class BatchSpartanizer {
     try {
       final String essentializedCodeBefore = executeScript(beforeFileName);
       final String essentializedCodeAfter = executeScript(afterFileName);
-      final int numWordEssentialBefore = essenceNew((essentializedCodeBefore + "")).trim().length();
-      final int numWordEssentialAfter = essenceNew((essentializedCodeAfter + "")).trim().length();
+      final int numWordEssentialBefore = essenceNew(essentializedCodeBefore + "").trim().length();
+      final int numWordEssentialAfter = essenceNew(essentializedCodeAfter + "").trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
@@ -281,9 +281,5 @@ public final class BatchSpartanizer {
     applyEssenceCommandLine();
     System.err.print("\n Done: " + classesDone + " files processed.");
     System.err.print("\n Summary: " + report.close());
-  }
-
-  private void runWordCount() {
-    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 }

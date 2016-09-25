@@ -9,7 +9,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class IfEmptyThenTest {
   private static final Statement INPUT = into.s("{if (b) ; else ff();}");

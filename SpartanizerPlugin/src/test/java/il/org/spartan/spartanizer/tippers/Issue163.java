@@ -5,11 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * Unit tests for                       {@link NameYourClassHere}
- * @author                       Niv Shalmon
- * @since                       2016 
- */
+/** Unit tests for {@link NameYourClassHere}
+ * @author Niv Shalmon
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue163 {
   @Test public void issue163_01() {
     trimmingOf("return \"remove the block: \" + n + \"\";").gives("return \"remove the block: \" + n;").stays();
