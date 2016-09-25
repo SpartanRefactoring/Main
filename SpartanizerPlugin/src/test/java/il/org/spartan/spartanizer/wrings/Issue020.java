@@ -9,7 +9,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue020 {
+@Ignore public class Issue020 {
   /** Correct way of trimming does not change */
   @Test public void constructorParameterRenaming_00() {
     trimmingOf("class A {" + //
