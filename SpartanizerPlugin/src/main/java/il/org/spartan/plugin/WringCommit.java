@@ -75,9 +75,8 @@ public final class WringCommit {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
       try {
-        // TODO: ORIORIRORIORORI NO BUSY CURSOR
-        ps.busyCursorWhile(px -> {
-          px.beginTask("Applying " + w.getClass().getSimpleName() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+        ps.run(true, true, px -> {
+          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
           final List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit u : us) {
@@ -105,8 +104,11 @@ public final class WringCommit {
       } catch (InvocationTargetException | InterruptedException e) {
         LoggingManner.logEvaluationError(this, e);
       }
+      if (us.isEmpty())
+        break;
     }
     pm.done();
+    eclipse.announce("Done apllying " + w.description() + " tip to " + jp.getElementName());
   }
 
   public enum Type {
