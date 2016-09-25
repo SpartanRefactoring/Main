@@ -51,13 +51,16 @@ public final class WringCommit {
       goProject(pm, m);
       return;
     }
-    pm.beginTask("Applying suggestion", IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
+    if (Type.FILE.equals(t))
+      eclipse.announce("Done apllying " + w.description() + " tip to " + u.getElementName());
     pm.done();
   }
 
