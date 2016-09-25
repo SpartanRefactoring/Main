@@ -6,10 +6,14 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
+
+// TODO Yossi: review class, functionality added by Ori
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil
  * @since 2015-08-22 */
 public abstract class searchAncestors {
+  
   /** Factory method, returning an instance which can search by a node class
    * @param n JD
    * @return a newly created instance
@@ -26,6 +30,20 @@ public abstract class searchAncestors {
   public static searchAncestors forType(final int type) {
     return new ByNodeType(type);
   }
+  
+  /** Factory method, returning an instance which can search by a node instances.
+   * @param n JD
+   * @return a newly created instance */
+  @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
+    return new ByNodeInstances(as.list(¢));
+  }
+  
+  /** Factory method, returning an instance which can search by a node instances.
+   * @param n JD
+   * @return a newly created instance */
+  @SuppressWarnings("unused") public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
+    return new ByNodeInstances<N>(¢);
+  }
 
   public static Until until(final ASTNode ¢) {
     return new Until(¢);
@@ -35,15 +53,10 @@ public abstract class searchAncestors {
    * @return closest ancestor whose type matches the given type. */
   public abstract ASTNode from(final ASTNode n);
 
-  // TODO Yossi: please confirm, written by Ori, can replace/be merged with from
-  // (see
-  // lastFrom below)
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
   public abstract ASTNode inclusiveFrom(final ASTNode n);
 
-  // TODO Yossi: default implementation using from function, please confirm,
-  // written by Ori
   /** @param n JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode inclusiveLastFrom(final ASTNode n) {
@@ -53,8 +66,6 @@ public abstract class searchAncestors {
     return $;
   }
 
-  // TODO Yossi: default implementation using from function, please confirm,
-  // written by Ori
   /** @param n JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode lastFrom(final ASTNode n) {
@@ -125,6 +136,26 @@ public abstract class searchAncestors {
 
     @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
       return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
+    }
+  }
+  
+  static class ByNodeInstances <N extends ASTNode> extends searchAncestors {
+    private final List<N> instances;
+
+    public ByNodeInstances(final List<N> instances) {
+      this.instances = instances;
+    }
+
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if (instances.contains($))
+            return $;
+      return null;
+    }
+
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && instances.contains(¢) ? ¢ : from(¢);
     }
   }
 }
