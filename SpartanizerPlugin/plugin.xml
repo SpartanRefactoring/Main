@@ -195,4 +195,11 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 </menuContribution>
  </extension>
 
+<!-- Shortcuts -->
+<extension point="org.eclipse.ui.bindings">
+	<key sequence="Ctrl+5"
+		commandId="il.org.spartan.SpartanizeCurrent"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+</extension>
+
 </plugin>
