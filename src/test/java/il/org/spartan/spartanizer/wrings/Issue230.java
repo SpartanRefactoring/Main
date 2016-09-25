@@ -111,16 +111,6 @@ public class Issue230 {
         .stays();
   }
 
-  // TODO: Yossi, do you want the annotations to be sorted as well?
-  // Alphabetically? Some other predefined by you order? I saw a few issues
-  // about annotations sorting conventions on stack overflow, thought you must
-  // have an opinion about it. for my opinion the best way to do it is to define
-  // some
-  // ordering to predefined annotations, and all other (hand-made) annotations
-  // will
-  // be at the bottom. Three next tests are checking annotations ordering and
-  // some
-  // should fall after defining sorting convention to annotations.
   @Test public void e() {
     trimmingOf("class A{volatile @Deprecated static @Override int f() {}}") //
         .gives("class A{@Override @Deprecated static volatile int f() {}}") //
