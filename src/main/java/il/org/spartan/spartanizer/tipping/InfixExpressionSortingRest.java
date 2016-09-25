@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.tipping;
 
 import static il.org.spartan.lisp.*;
 

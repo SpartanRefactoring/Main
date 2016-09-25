@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /**
  * Unit tests for                       {@link ThrowNotLastInBlock}
@@ -59,12 +59,12 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void B$03canSuggest() {
     A$04_init();
-    assert tipper.canSuggest(focus);
+    assert tipper.canTip(focus);
   }
 
   @Test public void B$03demands() {
     A$04_init();
-    assert tipper.canSuggest(focus);
+    assert tipper.canTip(focus);
   }
 
   @Test public void B$04suggestionNotNull() {

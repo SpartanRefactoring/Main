@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Logging stuff
  * @author Yossi Gil
@@ -32,7 +32,7 @@ public class TrimmerLog {
     logToScreen = true;
   }
 
-  public static void application(final ASTRewrite r, final Suggestion s) {
+  public static void application(final ASTRewrite r, final Tip s) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
         System.out.println("Stopped logging applications");
@@ -83,7 +83,7 @@ public class TrimmerLog {
   public static <N extends ASTNode> void suggestion(final Tipper<N> w, final N n) {
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
-        System.out.println("Stopped logging suggestions");
+        System.out.println("Stopped logging tips");
       return;
     }
     if (logToFile) {
@@ -93,7 +93,7 @@ public class TrimmerLog {
       output.put("Named", w.description());
       output.put("Kind", w.wringGroup());
       output.put("Described", w.description(n));
-      output.put("Can suggest", w.canSuggest(n));
+      output.put("Can suggest", w.canTip(n));
       output.put("Suggests", w.suggest(n));
       output.nl();
     }
@@ -104,7 +104,7 @@ public class TrimmerLog {
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.wringGroup());
     System.out.println("   Described: " + w.description(n));
-    System.out.println(" Can suggest: " + w.canSuggest(n));
+    System.out.println(" Can suggest: " + w.canTip(n));
     System.out.println("    Suggests: " + w.suggest(n));
   }
 

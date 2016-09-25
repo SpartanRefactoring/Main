@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : </br>
  * Convert <br/>
@@ -95,14 +95,14 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Suggestion suggest(final WhileStatement b) {
+  @Override public Tip suggest(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
     final Statement body = b.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    return $ == null ? null : new Suggestion(description(), $) {
+    return $ == null ? null : new Tip(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, az.astNode(az.block(into.s("break;")).statements().get(0)), g);
       }

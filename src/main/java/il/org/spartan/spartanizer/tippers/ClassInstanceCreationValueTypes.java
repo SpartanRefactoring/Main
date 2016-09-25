@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Replaces, e.g., <code>Integer x=new Integer(2);</code> with
  * <code>Integer x=Integer.valueOf(2);</code>, more generally new of of any

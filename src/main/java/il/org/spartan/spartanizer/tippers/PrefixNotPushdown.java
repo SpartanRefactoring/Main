@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** pushes down "<code>!</code>", the negation operator as much as possible,
  * using the de-Morgan and other simplification rules.

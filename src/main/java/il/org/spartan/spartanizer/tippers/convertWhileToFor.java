@@ -10,7 +10,7 @@ package il.org.spartan.spartanizer.tippers;
 //import il.org.spartan.spartanizer.ast.*;
 //import il.org.spartan.spartanizer.dispatch.*;
 //import il.org.spartan.spartanizer.engine.*;
-//import il.org.spartan.spartanizer.wringing.*;
+//import il.org.spartan.spartanizer.tipping.*;
 //
 ///** @author Dor Ma'ayan
 // * @since 2016-09-23 */

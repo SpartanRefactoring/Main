@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
@@ -59,7 +59,7 @@ public final class IfBarFooElseBazFoo extends EagerWring<IfStatement> implements
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override public Suggestion suggest(final IfStatement s) {
+  @Override public Tip suggest(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -73,7 +73,7 @@ public final class IfBarFooElseBazFoo extends EagerWring<IfStatement> implements
       if (c.notAllDefined())
         return null;
     }
-    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Suggestion(description(s), s) {
+    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
@@ -98,7 +98,7 @@ public final class IfBarFooElseBazFoo extends EagerWring<IfStatement> implements
     };
   }
 
-  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Tip suggest(final IfStatement s, final ExclusionManager exclude) {
     return super.suggest(s, exclude);
   }
 

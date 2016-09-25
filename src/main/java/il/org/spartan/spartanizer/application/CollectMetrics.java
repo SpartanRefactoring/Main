@@ -20,9 +20,9 @@ import il.org.spartan.utils.*;
  * @year 2016 */
 public final class CollectMetrics {
   private static String OUTPUT = "/tmp/test.csv";
-  private static String OUTPUT_SUGGESTIONS = "/tmp/suggestions.csv";
+  private static String OUTPUT_SUGGESTIONS = "/tmp/tips.csv";
   private static CSVStatistics output = init(OUTPUT, "property");
-  private static CSVStatistics suggestions = init(OUTPUT_SUGGESTIONS, "suggestions");
+  private static CSVStatistics suggestions = init(OUTPUT_SUGGESTIONS, "tips");
 
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
@@ -102,9 +102,9 @@ public final class CollectMetrics {
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
   }
 
-  private static void reportSuggestions(final List<Suggestion> ¢) {
-    // suggestions = new CSVStatistics("/tmp/suggestions.csv");
-    for (final Suggestion $ : ¢) {
+  private static void reportSuggestions(final List<Tip> ¢) {
+    // tips = new CSVStatistics("/tmp/tips.csv");
+    for (final Tip $ : ¢) {
       suggestions.put("description", $.description);
       suggestions.put("from", $.from);
       suggestions.put("to", $.to);

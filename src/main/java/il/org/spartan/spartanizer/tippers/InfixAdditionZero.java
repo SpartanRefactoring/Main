@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to convert an expression such as
  *
@@ -93,7 +93,7 @@ public final class InfixAdditionZero extends EagerWring<InfixExpression> impleme
     return "remove 0 in X + 0 expressions from " + ¢;
   }
 
-  @Override public Suggestion suggest(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Tip suggest(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
@@ -102,7 +102,7 @@ public final class InfixAdditionZero extends EagerWring<InfixExpression> impleme
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Suggestion(description(x), x) {
+    return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)

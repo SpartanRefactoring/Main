@@ -17,9 +17,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.wringing.*;
-import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
+import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /**
  * Unit tests for                       {@link ClassInstanceCreation}
@@ -67,12 +66,12 @@ import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
   @Test public void B$030canSuggest() {
     A$040_init();
-    assert tipper.canSuggest(focus);
+    assert tipper.canTip(focus);
   }
 
   @Test public void B$030demands() {
     A$040_init();
-    assert tipper.canSuggest(focus);
+    assert tipper.canTip(focus);
   }
 
   @Test public void B$040suggestionNotNull() {
@@ -127,12 +126,12 @@ import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
   @Test public void B$140findWringDemands() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canSuggest(focus);
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canTip(focus);
   }
 
   @Test public void B$150findWringCanSuggest() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canSuggest(focus);
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canTip(focus);
   }
 
   @Test public void B$160findWringReplacmenentNotNull() {

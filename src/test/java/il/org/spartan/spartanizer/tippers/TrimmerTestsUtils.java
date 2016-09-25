@@ -11,7 +11,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 public final class TrimmerTestsUtils {
   public static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
@@ -118,12 +118,12 @@ public final class TrimmerTestsUtils {
 
     public OperandToWring<N> in(final Tipper<N> n) {
       final N findNode = findNode(n);
-      azzert.that(n.canSuggest(findNode), is(true));
+      azzert.that(n.canTip(findNode), is(true));
       return this;
     }
 
     public OperandToWring<N> notIn(final Tipper<N> ¢) {
-      azzert.that(¢.canSuggest(findNode(¢)), is(false));
+      azzert.that(¢.canTip(findNode(¢)), is(false));
       return this;
     }
 

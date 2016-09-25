@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.tipping;
 
 import java.util.*;
 import java.util.function.*;

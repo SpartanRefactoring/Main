@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.tipping;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @year 2016 */
 public abstract class EagerWring<N extends ASTNode> extends Tipper<N> {
-  @Override public final boolean canSuggest(final N ¢) {
+  @Override public final boolean canTip(final N ¢) {
     return this.suggest(¢) != null;
   }
 
