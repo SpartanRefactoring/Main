@@ -24,12 +24,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     final List<Expression> lst = extract.allOperands(x);
     int $ = 0;
     for (final Expression ¢ : lst) {
-      if (!iz.number(¢)) {
-        if ($ > 1)
-          return $;
-        return 0;
-      }
-      $++;
+      if (!iz.number(¢))
+        return $ > 1 ? $ : 0;
+      ++$;
     }
     return 0;
   }
@@ -37,13 +34,10 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   public static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
     int $ = 0;
-    for (int i = lst.size() - 1; i >= 0; i--) {
-      if (!iz.number(lst.get(i))) {
-        if ($ > 1)
-          return $;
-        return 0;
-      }
-      $++;
+    for (int ¢ = lst.size() - 1; ¢ >= 0; --¢) {
+      if (!iz.number(lst.get(¢)))
+        return $ > 1 ? $ : 0;
+      ++$;
     }
     return -1;
   }
@@ -75,9 +69,8 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         if (iz.validForEvaluation(cuttedExpression)) {
           str = opportunisticReplacement(cuttedExpression);
           if (str != null)
-            return afterExpressionOperands.size() == 1
-                ? subject.pair(az.expression(x.getAST().newNumberLiteral(str)), afterExpressionOperands.get(0)).to(operator())
-                : subject.pair(az.expression(x.getAST().newNumberLiteral(str)), subject.operands(afterExpressionOperands).to(operator()))
+            return (subject.pair(az.expression(x.getAST().newNumberLiteral(str)),
+                afterExpressionOperands.size() == 1 ? afterExpressionOperands.get(0) : subject.operands(afterExpressionOperands).to(operator())))
                     .to(operator());
         }
       }
@@ -89,12 +82,10 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
         if (iz.validForEvaluation(cuttedExpression)) {
           str = opportunisticReplacement(cuttedExpression);
-          if (str != null) {
-            if (beforeExpressionOperands.size() == 1)
-              return subject.pair(beforeExpressionOperands.get(0), az.expression(x.getAST().newNumberLiteral(str))).to(operator());
-            return subject.pair(subject.operands(beforeExpressionOperands).to(operator()), az.expression(x.getAST().newNumberLiteral(str)))
-                .to(operator());
-          }
+          if (str != null)
+            return (subject.pair(
+                beforeExpressionOperands.size() == 1 ? beforeExpressionOperands.get(0) : subject.operands(beforeExpressionOperands).to(operator()),
+                az.expression(x.getAST().newNumberLiteral(str)))).to(operator());
         }
       }
     } catch (final Exception e) {

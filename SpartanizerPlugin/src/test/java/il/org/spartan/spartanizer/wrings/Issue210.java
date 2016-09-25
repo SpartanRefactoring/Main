@@ -6,9 +6,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * Unit tests for  {@link InfixDivisionEvaluate}
- * @author  Niv Shalmon
- * @since  2016 
+ * Unit tests for                       {@link InfixDivisionEvaluate}
+ * @author                       Niv Shalmon
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue210 {
   @Test public void issue210_01() {

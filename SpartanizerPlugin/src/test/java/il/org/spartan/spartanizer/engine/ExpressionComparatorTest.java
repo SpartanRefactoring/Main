@@ -10,9 +10,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
 /**
- * Test class for  {@link ExpressionComparator}
- * @author  Yossi Gil
- * @since  2015-07-17 
+ * Test class for                       {@link ExpressionComparator}
+ * @author                       Yossi Gil
+ * @since                       2015-07-17 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
