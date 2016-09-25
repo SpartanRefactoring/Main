@@ -3,10 +3,12 @@ package il.org.spartan.spartanizer.application;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
@@ -14,6 +16,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 
 /** Scans files named by folder, ignore test files, and collect statistics.
@@ -76,7 +79,7 @@ public final class BatchSpartanizer {
     return 1 - n2 / n1;
   }
 
-  private static String executeScript(final String pathname) throws IOException {
+  private static String runScript(final String pathname) throws IOException {
     final ProcessBuilder builder = new ProcessBuilder("/bin/bash");
     builder.command(script, pathname);
     builder.redirectErrorStream(true);
@@ -129,7 +132,7 @@ public final class BatchSpartanizer {
   public Process shellEssenceMetrics(final String fileName) {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
-
+  
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
@@ -149,14 +152,16 @@ public final class BatchSpartanizer {
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);
     afters.print(out);
+    report.summaryFileName();
+    
     report//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
         .put("Nodes1", nodes)//
         .put("Nodes2", nodes2)//
-        .put("ΔNodes", nodes - nodes2)//
-        .put("δNodes", δ(nodes, nodes2))//
-        .put("δNodes%", p(nodes, nodes2))//
+        .put("Δ Nodes", nodes - nodes2)//
+        .put("δ Nodes", δ(nodes, nodes2))//
+        .put("δ Nodes %", p(nodes, nodes2))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("Δ Body", body - body2)//
@@ -235,8 +240,8 @@ public final class BatchSpartanizer {
 
   void fire() {
     collect();
-    // runEssence();
-    // runWordCount();
+    runEssence();
+    runWordCount();
   }
 
   void runEssence() {
@@ -246,10 +251,10 @@ public final class BatchSpartanizer {
 
   private void applyEssenceCommandLine() {
     try {
-      final String essentializedCodeBefore = executeScript(beforeFileName);
-      final String essentializedCodeAfter = executeScript(afterFileName);
-      final int numWordEssentialBefore = essenceNew((essentializedCodeBefore + "")).trim().length();
-      final int numWordEssentialAfter = essenceNew((essentializedCodeAfter + "")).trim().length();
+      final String essentializedCodeBefore = runScript(beforeFileName);
+      final String essentializedCodeAfter = runScript(afterFileName);
+      final int numWordEssentialBefore = essentializedCodeBefore.trim().length(); //essenceNew((essentializedCodeBefore + "")).trim().length();
+      final int numWordEssentialAfter = essentializedCodeAfter.trim().length(); //essenceNew((essentializedCodeBefore + "")).trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
