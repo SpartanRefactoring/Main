@@ -27,8 +27,8 @@ public class Issue072 {
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));
     assert !i.hasExtendedOperands();
-    assert iz.literal0(left(i));
-    assert !iz.literal0(right(i));
+    assert iz.parsed.literal0(left(i));
+    assert !iz.parsed.literal0(right(i));
     azzert.that(make.minus(left(i)), iz("0"));
     azzert.that(make.minus(right(i)), iz("-x"));
     trimmingOf(s).gives("-x");
@@ -145,9 +145,8 @@ public class Issue072 {
   }
 
   @Test public void pf() {
-    trimmingOf("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0")
-    .gives("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0")
-    .gives("(int)x+(int)x+(int)y+(int)z").stays();
+    trimmingOf("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0").gives("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0")
+        .gives("(int)x+(int)x+(int)y+(int)z").stays();
   }
 
   @Test public void pg() {

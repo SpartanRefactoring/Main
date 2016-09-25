@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -39,19 +38,6 @@ public final class Application implements IApplication {
    * @throws IOException */
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
-  }
-
-  /** Discard compilation unit u
-   * @param u */
-  static void discardCompilationUnit(final ICompilationUnit u) {
-    try {
-      u.close();
-      u.delete(true, null);
-    } catch (final JavaModelException e) {
-      Plugin.log(e);
-    } catch (final NullPointerException e) {
-      Plugin.log(e);
-    }
   }
 
   static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
@@ -174,6 +160,19 @@ public final class Application implements IApplication {
 
   String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
+  }
+
+  /** Discard compilation unit u
+   * @param u */
+  void discardCompilationUnit(final ICompilationUnit u) {
+    try {
+      u.close();
+      u.delete(true, null);
+    } catch (final JavaModelException e) {
+      LoggingManner.logEvaluationError(this, e);
+    } catch (final NullPointerException e) {
+      LoggingManner.logEvaluationError(this, e);
+    }
   }
 
   void discardTempIProject() {

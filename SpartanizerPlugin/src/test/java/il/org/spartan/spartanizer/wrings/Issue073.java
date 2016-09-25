@@ -47,7 +47,6 @@ public final class Issue073 {
     trimmingOf("((String)x) + \"\"").gives("((String)x)");
   }
 
-
   @Test public void a$10() {
     trimmingOf("x + \"\"").stays();
   }
@@ -55,5 +54,4 @@ public final class Issue073 {
   @Test public void a$11() {
     trimmingOf("\"abc\" + \"\"").gives("\"abc\"");
   }
-  
 }

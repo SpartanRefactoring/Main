@@ -32,7 +32,7 @@ public class Issue111 {
     trimmingOf("protected public void func();").gives("public protected void func();");
   }
 
-  @Test public void A$c_2() { 
+  @Test public void A$c_2() {
     trimmingOf("public final class A{" + //
         "synchronized public void fun(final int a) {}" + //
         "final private String s = \"Alex\";" + //
@@ -62,7 +62,7 @@ public class Issue111 {
         "HIGH, MEDIUM, LOW" + //
         "}").gives(" protected public public enum Level { " + //
             "HIGH, MEDIUM, LOW" + //
-            "}").gives("public public protected enum Level { \n" + //
+            "}").gives("public protected enum Level { \n" + //
                 "HIGH, MEDIUM, LOW\n" + //
                 "}");
   }

@@ -74,7 +74,7 @@ import il.org.spartan.spartanizer.wringing.*;
         .gives("@Override void m() {}");
   }
 
-  @Test public void annotationRemoveValueFromMultipleAnnotations() {
+  @Ignore("Issue #230") @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimmingOf("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}") //
         .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
   }
@@ -199,7 +199,7 @@ import il.org.spartan.spartanizer.wringing.*;
         .stays(); // from junit source
   }
 
-  @Test public void bugInLastIfInMethod() {
+  @Ignore("Issue #230") @Test public void bugInLastIfInMethod() {
     trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
         + "          if (!isMessageSuppressed(myMessage)) {\n"//
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(myMessage);\n"//
@@ -212,7 +212,7 @@ import il.org.spartan.spartanizer.wringing.*;
                 "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
-  @Test public void bugInLastIfInMethod1() {
+  @Ignore("Issue #230") @Test public void bugInLastIfInMethod1() {
     trimmingOf("        @Override public void f() {\n"//
         + "          if (!isMessageSuppressed(message)) {\n" + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n"//
         + "            messages.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
@@ -3942,13 +3942,12 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void sortAdditionThreeOperands3() {
     trimmingOf("1+2F+33+142+1")//
-    .gives("1+2F+176")    
-    .stays();
+        .gives("1+2F+176").stays();
   }
 
   @Test public void sortAdditionThreeOperands4() {
     trimmingOf("1+2+'a'")//
-    .gives("3+'a'");    
+        .gives("3+'a'");
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
@@ -4024,13 +4023,12 @@ import il.org.spartan.spartanizer.wringing.*;
 
   @Test public void sortThreeOperands3() {
     trimmingOf("2*2F*33*142")//
-    .gives("2*2F*4686")
-        .stays();
+        .gives("2*2F*4686").stays();
   }
 
   @Test public void sortThreeOperands4() {
     trimmingOf("2*3*'a'")//
-    .gives("6*'a'"); 
+        .gives("6*'a'");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
