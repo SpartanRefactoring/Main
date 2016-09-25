@@ -14,12 +14,10 @@ import org.eclipse.jdt.core.dom.*;
   /** stores binding information of all nodes */
   final Map<ASTNode, Binding> environmentOf = new HashMap<>();
 
-  /** This function listens to the visiting actions and intercepts the calls as
-   * necessary. At the first call to it during an invocation of
-   * {@link ASTNode#accept(ASTVisitor)} on this object, it conducts a
-   * preliminary full visit of the tree, starting from its root, collecting the
-   * binding information.
-   * @see org.eclipse.jdt.core.dom.ASTVisitor#preVisit(org.eclipse.jdt.core.dom.ASTNode) */
+  /**
+   * This function listens to the visiting actions and intercepts the calls as necessary. At the first call to it during an invocation of {@link ASTNode#accept(ASTVisitor)}  on this object, it conducts a preliminary full visit of the tree, starting from its root, collecting the binding information.
+   * @see org.eclipse.jdt.core.dom.ASTVisitor#preVisit(org.eclipse.jdt.core.dom.ASTNode)  
+   */
   @Override public final void preVisit(final ASTNode ¢) {
     if (!seen(¢))
       collect(¢);

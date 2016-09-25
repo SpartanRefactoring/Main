@@ -9,12 +9,12 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
-/** Test class for {@link ExpressionComparator}
- * @author Yossi Gil
- * @since 2015-07-17 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
-public final class ExpressionComparatorTest {
+/**
+ * Test class for  {@link ExpressionComparator}
+ * @author  Yossi Gil
+ * @since  2015-07-17 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class ExpressionComparatorTest {
   @Test public void alphabeticalCompare() {
     azzert.that(ExpressionComparator.alphabeticalCompare(e("1+2"), e("6+7")), lessThan(0));
   }

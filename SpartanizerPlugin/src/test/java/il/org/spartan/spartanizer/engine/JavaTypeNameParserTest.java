@@ -8,10 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public final class JavaTypeNameParserTest {
-  // some upper, some lower case characters - the upper are more representative.
+@SuppressWarnings({ "javadoc", "static-method" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class JavaTypeNameParserTest {
   @Test public void Alex_and_Dan_test() {
     azzert.that(new JavaTypeNameParser("Alex_and_Dan").shortName(), is("d"));
   }
@@ -84,7 +81,6 @@ public final class JavaTypeNameParserTest {
     azzert.that(new JavaTypeNameParser("Q").shortName(), is("q"));
   }
 
-  // all lower case characters - not sure how you want to shorten it.
   @Test public void some_name_an_electrical_engineer_can_give() {
     azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("v"));
   }

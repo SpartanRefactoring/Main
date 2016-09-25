@@ -53,8 +53,6 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     final List<Expression> terms = new ArrayList<>();
     MethodInvocation r = i;
     boolean hs = false;
-    // collecting strings from append method arguments list and from class
-    // instance creation arguments list
     while (true) {
       final Expression e = r.getExpression();
       if (e instanceof ClassInstanceCreation) {

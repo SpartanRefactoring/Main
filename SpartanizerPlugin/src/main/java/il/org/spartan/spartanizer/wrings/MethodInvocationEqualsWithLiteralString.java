@@ -32,10 +32,6 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 
-  /* (non-Javadoc)
-   *
-   * @see il.org.spartan.spartanizer.wring.ReplaceCurrentNode#replacement(org.
-   * eclipse.jdt.core.dom.ASTNode) */
   @Override public ASTNode replacement(final MethodInvocation i) {
     final SimpleName n = step.name(i);
     if (!mns.contains(n + ""))

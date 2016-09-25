@@ -41,7 +41,7 @@ public interface metrics {
   static int count(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @SuppressWarnings("unused") @Override public void preVisit(final ASTNode ¢) {
+      @Override @SuppressWarnings("unused") public void preVisit(final ASTNode ¢) {
         ++$.inner;
       }
     });
@@ -77,8 +77,6 @@ public interface metrics {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        // System.out.println(¢.getClass().toString());
-        // System.out.println(¢.IMPORT_DECLARATION);
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
           ++$.inner;
       }
@@ -241,8 +239,8 @@ public interface metrics {
     return dictionary(u).size();
   }
 
-  static int horizontalComplexity(Statement statement) {
-    return horizontalComplexity(0, statement);
+  static int horizontalComplexity(Statement ¢) {
+    return horizontalComplexity(0, ¢);
   }
 
   static int horizontalComplexity(int base, Statement s) {
@@ -250,14 +248,12 @@ public interface metrics {
       return 0;
     if (iz.emptyStatement(s))
       return 1;
-    if (iz.block(s))
-      return 2 + metrics.horizontalComplexity(base + 1, step.statements(az.block(s)));
-    return 13443;
+    return iz.block(s) ? 2 + metrics.horizontalComplexity(base + 1, step.statements(az.block(s))) : 13443;
   }
 
-  static int horizontalComplexity(int base, List<Statement> statements) {
+  static int horizontalComplexity(int base, List<Statement> ss) {
     int $ = 0;
-    for (final Statement statement : statements)
+    for (final Statement statement : ss)
       $ += base + horizontalComplexity(statement);
     return $;
   }

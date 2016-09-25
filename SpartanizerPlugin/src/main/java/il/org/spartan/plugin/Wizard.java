@@ -12,6 +12,5 @@ public final class Wizard extends RefactoringWizard {
   }
 
   @Override protected void addUserInputPages() {
-    // No user pages are required
   }
 }

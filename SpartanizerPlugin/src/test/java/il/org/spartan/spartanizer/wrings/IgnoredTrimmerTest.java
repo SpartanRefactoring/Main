@@ -5,14 +5,12 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** * Unit tests for the nesting class Unit test for the containing class. Note
- * our naming convention: a) test methods do not use the redundant "test"
- * prefix. b) test methods begin with the name of the method they check.
- * @author Yossi Gil
- * @since 2014-07-10 */
-@Ignore //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) public final class IgnoredTrimmerTest {
+/**
+ * * Unit tests for the nesting class Unit test for the containing class. Note our naming convention: a) test methods do not use the redundant "test" prefix. b) test methods begin with the name of the method they check.
+ * @author  Yossi Gil
+ * @since  2014-07-10 
+ */
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimmingOf("    @SuppressWarnings() int $ = (Class<T>) findClass(className);\n").stays();
   }
@@ -76,10 +74,9 @@ import org.junit.runners.*;
   }
 
   @Test public void inline00() {
-    trimmingOf("  Object a() { ").gives(//
-        "  Object a() { " + "    class a {\n" + "      Object a() {\n" + "        return a;\n" + "    }\n" + "    final Object a = new Object();\n"
-            + "    if (a instanceof a)\n" + "      new Object();  \n" + "    final Object a = new Object();\n" + "    if (a instanceof a)\n"
-            + "      new Object();" + "}\n");
+    trimmingOf("  Object a() { ").gives("  Object a() { " + "    class a {\n" + "      Object a() {\n" + "        return a;\n" + "    }\n"
+        + "    final Object a = new Object();\n" + "    if (a instanceof a)\n" + "      new Object();  \n" + "    final Object a = new Object();\n"
+        + "    if (a instanceof a)\n" + "      new Object();" + "}\n");
   }
 
   @Test public void inlineSingleUse01() {
@@ -132,9 +129,7 @@ import org.junit.runners.*;
   }
 
   @Test public void issue06A() {
-    trimmingOf("x/a*-b/-c*- - - d / d")//
-        .gives("-x/a * b/ c * d/d")//
-        .stays();
+    trimmingOf("x/a*-b/-c*- - - d / d").gives("-x/a * b/ c * d/d").stays();
   }
 
   @Test public void issue06C2() {
@@ -158,30 +153,24 @@ import org.junit.runners.*;
   }
 
   @Test public void issue120_4() {
-    trimmingOf("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"") //
-        .gives("c.toString()+\"abc\"+a.toString()+\"defgh\"");
+    trimmingOf("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"").gives("c.toString()+\"abc\"+a.toString()+\"defgh\"");
   }
 
   @Test public void issue54ForPlainUseInCondition() {
-    trimmingOf("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;")//
-        .stays();
+    trimmingOf("int a  = f(); for (int i = 0; a < 100;  ++i) b[i] = 3;").stays();
   }
 
   @Test public void issue54ForPlainUseInInitializer() {
-    trimmingOf("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;")//
-        .gives(" for (int i = f(); i < 100; i++) b[i] = 3;");
+    trimmingOf("int a  = f(); for (int i = a; i < 100; i++) b[i] = 3;").gives(" for (int i = f(); i < 100; i++) b[i] = 3;");
   }
 
   @Test public void issue54ForPlainUseInUpdaters() {
-    trimmingOf("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;")//
-        .stays();
+    trimmingOf("int a  = f(); for (int i = 0; i < 100; i *= a) b[i] = 3;").stays();
   }
 
   public void issue62b() {
-    trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
+    trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }").gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")
+        .gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }").gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }")
         .gives("int f(int i) { for(;i<100;++i){} return i; }").stays();
   }
 
@@ -280,9 +269,8 @@ import org.junit.runners.*;
   }
 
   @Test public void shortestOperand05() {
-    trimmingOf("    final W s = new W(\"bob\");\n" + //
-        "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
-            .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
+    trimmingOf("    final W s = new W(\"bob\");\n" + "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
+        .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
   @Test public void shortestOperand09() {
@@ -339,20 +327,6 @@ import org.junit.runners.*;
 
   @Test public void switchSimplifyParenthesizedCases() {
     trimmingOf("switch (checkMatrix(A)) {\n").gives("switch (checkMatrix(A)) {\n");
-    // switch (checkMatrix(A)) {
-    // case -1: {
-    // System.x.f("1");
-    // System.exit(0);
-    // }
-    // case -2: {
-    // System.x.f("2");
-    // System.exit(0);
-    // }
-    // case 0: {
-    // System.x.f("3");
-    // break;
-    // }
-    // }
   }
 
   @Test public void switchSimplifyWithDefault() {

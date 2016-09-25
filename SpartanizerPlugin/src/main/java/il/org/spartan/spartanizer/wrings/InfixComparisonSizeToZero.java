@@ -118,9 +118,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     final Expression right = right(x);
     final Expression left = left(x);
     return !validTypes(right, left) ? null
-        : iz.methodInvocation(left) ? //
-            replacement(o, az.methodInvocation(left), right) //
-            : replacement(wizard.conjugate(o), az.methodInvocation(right), left)//
-    ;
+        : iz.methodInvocation(left) ? replacement(o, az.methodInvocation(left), right)
+            : replacement(wizard.conjugate(o), az.methodInvocation(right), left);
   }
 }

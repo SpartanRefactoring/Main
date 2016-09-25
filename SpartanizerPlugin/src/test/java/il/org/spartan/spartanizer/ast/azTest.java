@@ -10,9 +10,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public final class azTest {
+@SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class azTest {
   @Test public void asComparisonPrefixlExpression() {
     final PrefixExpression p = mock(PrefixExpression.class);
     doReturn(PrefixExpression.Operator.NOT).when(p).getOperator();

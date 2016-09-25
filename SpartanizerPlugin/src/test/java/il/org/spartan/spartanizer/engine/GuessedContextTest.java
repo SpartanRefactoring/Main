@@ -10,12 +10,9 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) //
-@Ignore //
-public final class GuessedContextTest {
+@SuppressWarnings({ "static-method", "javadoc" }) @Ignore public final class GuessedContextTest {
   @Test public void dealWithBothKindsOfComment() {
-    similar("if (b) {\n", //
-        "if (b) {;} { throw new Exception(); }");
+    similar("if (b) {\n", "if (b) {;} { throw new Exception(); }");
   }
 
   @Test public void dealWithComment() {
@@ -75,8 +72,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void findMethod() {
-    azzert.that(find("f() { a(); b();}"), //
-        is(METHOD_LOOKALIKE));
+    azzert.that(find("f() { a(); b();}"), is(METHOD_LOOKALIKE));
   }
 
   @Test public void findPlusPlus() {
@@ -132,8 +128,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void removeCommentsTest() {
-    similar(wizard.removeComments2(//
-        "if (b) {\n"), "if (b) {} else { throw new Exception(); }");
+    similar(wizard.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 
   @Test public void statement() {

@@ -7,6 +7,7 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -750,6 +751,22 @@ public enum iz {
 
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
+  }
+  
+  /**
+   * Determine whether an {@link ASTNode} contains as a children a {@link ContinueStatement}
+   * @param ¢ JD
+   * @return <code> true </code> iff ¢ contains any continue statement
+   * @see {@link convertWhileToFor}
+   */
+  @SuppressWarnings("boxing") public static boolean containsContinueStatement(ASTNode ¢){
+    if(¢==null)
+      return false;
+    final Recurser<Integer> recurse = new Recurser<>(¢,0);
+    final Function<Recurser<Integer>,Integer> check = (x) -> {
+      return x.getRoot().getNodeType() == ASTNode.CONTINUE_STATEMENT ? x.getCurrent() + 1 : x.getCurrent();
+    };
+    return  recurse.postVisit(check) > 0;
   }
 
   public boolean literal(final ASTNode ¢, final double d) {
