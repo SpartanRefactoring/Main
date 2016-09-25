@@ -61,8 +61,8 @@ public class Trimmer extends GUI$Applicator {
 
   /** @param n an {@link ASTNode}
    * @return true iff the node is spartanization disabled */
-  public static boolean isDisabled(final ASTNode n) {
-    return NodeData.has(n, disabledPropertyId);
+  public static boolean isDisabled(final ASTNode ¢) {
+    return NodeData.has(¢, disabledPropertyId);
   }
 
   public static boolean prune(final Suggestion r, final List<Suggestion> rs) {
@@ -92,19 +92,19 @@ public class Trimmer extends GUI$Applicator {
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
     if (d == null || d.getJavadoc() == null)
       return false;
-    final String s = d.getJavadoc().toString();
-    for (final String i : ids)
-      if (s.contains(i))
+    final String s = "" + d.getJavadoc();
+    for (final String ¢ : ids)
+      if (s.contains(¢))
         return true;
     return false;
   }
 
-  static boolean isDisabledByIdentifier(final BodyDeclaration d) {
-    return hasJavaDocIdentifier(d, disablers);
+  static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {
+    return hasJavaDocIdentifier(¢, disablers);
   }
 
-  static boolean isEnabledByIdentifier(final BodyDeclaration d) {
-    return !hasJavaDocIdentifier(d, disablers) && hasJavaDocIdentifier(d, enablers);
+  static boolean isEnabledByIdentifier(final BodyDeclaration ¢) {
+    return !hasJavaDocIdentifier(¢, disablers) && hasJavaDocIdentifier(¢, enablers);
   }
 
   public final Toolbox toolbox;

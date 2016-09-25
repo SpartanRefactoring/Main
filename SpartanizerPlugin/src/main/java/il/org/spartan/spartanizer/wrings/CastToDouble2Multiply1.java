@@ -30,10 +30,6 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
   }
 
   @Override public ASTNode replacement(final CastExpression ¢) {
-    return eval(//
-        () -> replacement(step.expression(¢))//
-    ).when(//
-        step.type(¢).isPrimitiveType() && "double".equals(step.type(¢) + "") //
-    );
+    return eval(() -> replacement(step.expression(¢))).when(step.type(¢).isPrimitiveType() && "double".equals(step.type(¢) + ""));
   }
 }

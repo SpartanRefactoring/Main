@@ -24,10 +24,10 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2016 */
 public enum eclipse {
   facade;
-  final static GUI$Applicator[] safeSpartanizations = { new Trimmer() };
-  final static String NAME = "Spartanization";
-  final static String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  final static ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
+  static final GUI$Applicator[] safeSpartanizations = { new Trimmer() };
+  static final String NAME = "Spartanization";
+  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
+  static final ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
 
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {

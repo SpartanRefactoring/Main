@@ -5,12 +5,12 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link DeclarationRedundantInitializer}
- * @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue221 {
+/**
+ * Unit tests for  {@link DeclarationRedundantInitializer}
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue221 {
   @Test public void A$01() {
     trimmingOf("class D { int a; }").stays();
   }
@@ -20,13 +20,11 @@ public final class Issue221 {
   }
 
   @Test public void A$03() {
-    trimmingOf("class D{int a=0;}")//
-        .gives("class D{int a;}");
+    trimmingOf("class D{int a=0;}").gives("class D{int a;}");
   }
 
   @Test public void A$04() {
-    trimmingOf("class D{Integer a=0;}")//
-        .stays();
+    trimmingOf("class D{Integer a=0;}").stays();
   }
 
   class D {
