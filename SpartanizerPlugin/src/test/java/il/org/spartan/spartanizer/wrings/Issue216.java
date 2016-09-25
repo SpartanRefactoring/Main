@@ -6,9 +6,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * Unit tests for  {@link CastToLong2Multiply1L}
- * @author  Niv Shalmon
- * @since  2016 
+ * Unit tests for                       {@link CastToLong2Multiply1L}
+ * @author                       Niv Shalmon
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue216 {
   @Test public void issue216_01() {

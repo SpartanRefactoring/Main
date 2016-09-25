@@ -6,9 +6,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * Unit tests for  {@link InfixPlusRemoveParenthesis}
- * @author  Niv Shalmon
- * @since  2016 
+ * Unit tests for                       {@link InfixPlusRemoveParenthesis}
+ * @author                       Niv Shalmon
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue162 {
   @Ignore("issue 172") @Test public void issue162_01() {

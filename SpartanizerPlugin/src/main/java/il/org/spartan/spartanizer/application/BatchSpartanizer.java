@@ -87,7 +87,7 @@ public final class BatchSpartanizer {
     final StringBuffer sb = new StringBuffer();
     while ((line = reader.readLine()) != null)
       sb.append(line);
-    return "" + sb;
+    return sb + "";
   }
 
   private static int wc(final String $) {
@@ -248,8 +248,8 @@ public final class BatchSpartanizer {
     try {
       final String essentializedCodeBefore = executeScript(beforeFileName);
       final String essentializedCodeAfter = executeScript(afterFileName);
-      final int numWordEssentialBefore = essenceNew(("" + essentializedCodeBefore)).trim().length();
-      final int numWordEssentialAfter = essenceNew(("" + essentializedCodeAfter)).trim().length();
+      final int numWordEssentialBefore = essenceNew((essentializedCodeBefore + "")).trim().length();
+      final int numWordEssentialAfter = essenceNew((essentializedCodeAfter + "")).trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
