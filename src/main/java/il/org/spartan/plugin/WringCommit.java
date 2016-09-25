@@ -74,12 +74,17 @@ public final class WringCommit {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
+      final AtomicBoolean cancled = new AtomicBoolean(false);
       try {
         ps.run(true, true, px -> {
           px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
           int n = 0;
           final List<ICompilationUnit> es = new LinkedList<>();
           for (final ICompilationUnit u : us) {
+            if (px.isCanceled()) {
+              cancled.set(true);
+              break;
+            }
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
             try {
@@ -104,7 +109,7 @@ public final class WringCommit {
       } catch (InvocationTargetException | InterruptedException e) {
         LoggingManner.logEvaluationError(this, e);
       }
-      if (us.isEmpty())
+      if (us.isEmpty() || cancled.get())
         break;
     }
     pm.done();
