@@ -191,4 +191,19 @@ public class Issue020 {
                 "}}") //
             .stays();
   }
+  
+  @Test public void constructorParameterRenaming_07c() {
+    trimmingOf("class A {" + //
+        "int x;" + //
+        "A(int y, int z) {" + //
+        "this.x = y;" + //
+        "this.x = z;" + //
+        "}}") //
+            .gives("class A {" + //
+                "int x;" + //
+                "A(int x) {" + //
+                "this.x = x;" + //
+                "}}") //
+            .stays();
+  }
 }
