@@ -37,7 +37,7 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     return false;
   }
   @Override public ASTNode replacement(InfixExpression ¢) {
-    if(¢.getOperator()!=TIMES || !isContainsZero(¢) || isContainsSideEffect(¢))
+    if (¢.getOperator() != TIMES || !isContainsZero(¢) || isContainsSideEffect(¢))
       return null;
     NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("0");
