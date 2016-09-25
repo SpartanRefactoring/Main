@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
  * multiple nodes (or a single node).
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
-abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulWring<N> {
+abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   @Override public boolean prerequisite(final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }

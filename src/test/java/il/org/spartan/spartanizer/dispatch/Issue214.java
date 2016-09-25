@@ -7,11 +7,11 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.wringing.*;
-import il.org.spartan.spartanizer.wrings.*;
 
 /**
- * TDD: Unit tests for                       {@link Wring#myActualOperandsClass()}
+ * TDD: Unit tests for                       {@link Tipper#myActualOperandsClass()}
  * @author                       Yossi Gil
  * @since                       2016 
  */
@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.wrings.*;
     return ¢;
   }
 
-  private final Wring<?> blockSimplify = new BlockSimplify();
-  private final Wring<?> wring = new EagerWring<ASTNode>() {
+  private final Tipper<?> blockSimplify = new BlockSimplify();
+  private final Tipper<?> tipper = new EagerWring<ASTNode>() {
     @Override public String description() {
       return null;
     }
@@ -32,19 +32,19 @@ import il.org.spartan.spartanizer.wrings.*;
   };
 
   @Test public void A01_hasFunction() {
-    wring.myActualOperandsClass();
+    tipper.myActualOperandsClass();
   }
 
   @Test public void A02_functionIsNotVoid() {
-    wring.myActualOperandsClass();
+    tipper.myActualOperandsClass();
   }
 
   @Test public void A03_functionReturnsClass() {
-    azzert.that(wring.myActualOperandsClass(), anyOf(nullValue(), instanceOf(Class.class)));
+    azzert.that(tipper.myActualOperandsClass(), anyOf(nullValue(), instanceOf(Class.class)));
   }
 
   @Test public void A04_functionReturnsNulByDeault() {
-    azzert.that(wring.myActualOperandsClass(), is(nullValue()));
+    azzert.that(tipper.myActualOperandsClass(), is(nullValue()));
   }
 
   @Test public void A05_simplifyBlockReturnBlock() {
@@ -60,15 +60,15 @@ import il.org.spartan.spartanizer.wrings.*;
   }
 
   @Test public void A08_WringReturnsSomeASTNode() {
-    azzert.that(wring.myAbstractOperandsClass(), is(ASTNode.class));
+    azzert.that(tipper.myAbstractOperandsClass(), is(ASTNode.class));
   }
 
   @Test public void A09_WringReturnsReasonableValue() {
-    azzert.that(wring.myAbstractOperandsClass().getClass(), is(Class.class));
+    azzert.that(tipper.myAbstractOperandsClass().getClass(), is(Class.class));
   }
 
   @Test public void A10_WringReturnsCorrectStaticType() {
-    azzert.that(mustBeASTNodeClass(wring.myAbstractOperandsClass()), is(wring.myAbstractOperandsClass()));
+    azzert.that(mustBeASTNodeClass(tipper.myAbstractOperandsClass()), is(tipper.myAbstractOperandsClass()));
   }
 
   @Test public void A11_WringReturnsCorrectValueBlockSimplify() {

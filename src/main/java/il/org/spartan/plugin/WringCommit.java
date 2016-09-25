@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.wringing.*;
 
 public final class WringCommit {
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -31,19 +31,19 @@ public final class WringCommit {
     return $;
   }
 
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Wring w, final IFile f) {
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Tipper w, final IFile f) {
     return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
         m, t, w);
   }
 
-  private static Wring<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Wring w) {
+  private static Tipper<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
     Toolbox.refresh();
     final WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
     if (w == null)
       u.accept(v);
     else
       v.applyLocal(w, u);
-    return v.wring;
+    return v.tipper;
   }
 
   public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
@@ -68,7 +68,7 @@ public final class WringCommit {
     assert us != null;
     pm.beginTask("Spartanizing project", us.size());
     final IJavaProject jp = cu.getJavaProject();
-    final Wring w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     assert w != null;
     for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
       final IWorkbench wb = PlatformUI.getWorkbench();
@@ -118,7 +118,7 @@ public final class WringCommit {
     final ASTRewrite rewrite;
     final Type type;
     final CompilationUnit compilationUnit;
-    Wring<?> wring;
+    Tipper<?> tipper;
     /** A boolean flag indicating end of traverse. Set true after required
      * operation has been made. */
     boolean doneTraversing;
@@ -128,21 +128,21 @@ public final class WringCommit {
       this.marker = marker;
       this.type = type;
       this.compilationUnit = compilationUnit;
-      wring = null;
+      tipper = null;
       doneTraversing = false;
     }
 
     public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
-        final Wring<?> wring) {
+        final Tipper<?> wring) {
       this.rewrite = rewrite;
       this.marker = marker;
       this.type = type;
       this.compilationUnit = compilationUnit;
-      this.wring = wring;
+      this.tipper = wring;
     }
 
-    protected void apply(final Wring<?> w, final ASTNode n) {
-      wring = w;
+    protected void apply(final Tipper<?> w, final ASTNode n) {
+      tipper = w;
       switch (type) {
         case DECLARATION:
           applyDeclaration(w, n);
@@ -156,20 +156,20 @@ public final class WringCommit {
       }
     }
 
-    protected void applyDeclaration(final Wring<?> w, final ASTNode n) {
+    protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
     }
 
-    protected void applyFile(final Wring<?> w, final ASTNode n) {
+    protected void applyFile(final Tipper<?> w, final ASTNode n) {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
-    protected void applyLocal(@SuppressWarnings("rawtypes") final Wring w, final ASTNode n) {
+    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode n) {
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
           if (Trimmer.isDisabled(n))
             return true;
-          @SuppressWarnings("unchecked") final Wring<N> x = Toolbox.defaultInstance().findWring(n, w);
+          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
             final Suggestion make = x.suggest(n, exclude);
             if (make != null) {
@@ -192,7 +192,7 @@ public final class WringCommit {
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
-      final Wring<N> w = Toolbox.defaultInstance().find(n);
+      final Tipper<N> w = Toolbox.defaultInstance().find(n);
       if (w != null)
         apply(w, n);
       doneTraversing = true;

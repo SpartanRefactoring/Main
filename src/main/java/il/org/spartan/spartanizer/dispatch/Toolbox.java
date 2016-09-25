@@ -4,10 +4,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.wringing.*;
-import il.org.spartan.spartanizer.wrings.*;
 
-/** Singleton containing all {@link Wring}s which are active, allowing selecting
+/** Singleton containing all {@link Tipper}s which are active, allowing selecting
  * and applying the most appropriate such object for a given {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
@@ -25,7 +25,7 @@ public class Toolbox {
    * @param clazz JD
    * @param w JS
    * @return a new instance containing only the wrings passed as parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Wring<N>... ns) {
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
     return new Maker().add(clazz, ns);
   }
 
@@ -205,8 +205,8 @@ public class Toolbox {
           .seal();
   }
 
-  private static <N extends ASTNode> Wring<N> find(final N n, final List<Wring<N>> ns) {
-    for (final Wring<N> $ : ns)
+  private static <N extends ASTNode> Tipper<N> find(final N n, final List<Tipper<N>> ns) {
+    for (final Tipper<N> $ : ns)
       if ($.canSuggest(n))
         return $;
     return null;
@@ -214,17 +214,17 @@ public class Toolbox {
 
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
 
-  /** Find the first {@link Wring} appropriate for an {@link ASTNode}
+  /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param n JD
-   * @return first {@link Wring} for which the parameter is within scope, or
-   *         <code><b>null</b></code> if no such {@link Wring} is found. @ */
-  public <N extends ASTNode> Wring<N> find(final N ¢) {
+   * @return first {@link Tipper} for which the parameter is within scope, or
+   *         <code><b>null</b></code> if no such {@link Tipper} is found. @ */
+  public <N extends ASTNode> Tipper<N> find(final N ¢) {
     return find(¢, get(¢));
   }
 
-  public <N extends ASTNode> Wring<N> findWring(final N n, @SuppressWarnings("unchecked") final Wring<N>... ns) {
-    for (final Wring<N> $ : get(n))
-      for (final Wring<?> ¢ : ns)
+  public <N extends ASTNode> Tipper<N> findWring(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
+    for (final Tipper<N> $ : get(n))
+      for (final Tipper<?> ¢ : ns)
         if (¢.getClass().equals($.getClass())) {
           if ($.canSuggest(n))
             return $;
@@ -233,13 +233,13 @@ public class Toolbox {
     return null;
   }
 
-  @SuppressWarnings("unchecked") <N extends ASTNode> List<Wring<N>> get(final Class<? extends ASTNode> ¢) {
+  @SuppressWarnings("unchecked") <N extends ASTNode> List<Tipper<N>> get(final Class<? extends ASTNode> ¢) {
     if (!inner.containsKey(¢))
       inner.put(¢, new ArrayList<>());
-    return (List<Wring<N>>) (List<?>) inner.get(¢);
+    return (List<Tipper<N>>) (List<?>) inner.get(¢);
   }
 
-  <N extends ASTNode> List<Wring<N>> get(final N ¢) {
+  <N extends ASTNode> List<Tipper<N>> get(final N ¢) {
     return get(¢.getClass());
   }
 
@@ -247,14 +247,14 @@ public class Toolbox {
    * @author Yossi Gil
    * @since 2015-08-22 */
   public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Wring} with a given sub-class of
+    /** Associate a bunch of{@link Tipper} with a given sub-class of
      * {@link ASTNode}.
      * @param n JD
      * @param ns JD
      * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Wring<N>... ns) {
-      final List<Wring<N>> l = get(n);
-      for (final Wring<N> ¢ : ns) {
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Tipper<N>... ns) {
+      final List<Tipper<N>> l = get(n);
+      for (final Tipper<N> ¢ : ns) {
         if (¢ == null)
           break;
         assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
