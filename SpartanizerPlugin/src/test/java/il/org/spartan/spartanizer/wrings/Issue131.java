@@ -100,4 +100,28 @@ public final class Issue131 {
         .gives("public static void main(){while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return x;}") //
         .stays();
   }
+  
+  @Test public void A$150() {
+    trimmingOf("  private int free(int max) {"
+        + "int $ = 0;"
+        + "for (; $ < max; ++$) {"
+        + "Entry<T> entry = queue.poll();"
+        + "if (entry == null)"
+        + "return $;"
+        + "freeEntry(entry);"
+        + "}"
+        + "return $;"
+        + "}")
+        .gives("  private int free(int max) {"
+            + "int $ = 0;"
+            + "for (; $ < max; ++$) {"
+            + "Entry<T> entry = queue.poll();"
+            + "if (entry == null)"
+            + "break;"
+            + "freeEntry(entry);"
+            + "}"
+            + "return $;"
+            + "}");
+  }
+    
 }
