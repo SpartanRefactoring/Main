@@ -1,7 +1,5 @@
 package il.org.spartan.plugin;
 
-import java.io.*;
-
 /** Our way of dealing with logging,
  * @author Yossi Gil
  * @year 2016 */
