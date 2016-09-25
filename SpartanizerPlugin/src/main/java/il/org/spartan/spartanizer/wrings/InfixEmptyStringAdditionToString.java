@@ -36,12 +36,6 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     assert es.size() > 1;
     final List<Expression> $ = new ArrayList<>();
     boolean isString = false;
-    // TODO: Niv, I am a bit confused about this loop. There are cases in which
-    // you do not add the current expression to '$'. How could that be? If you
-    // do not add expression you might be ruining the code?
-    /* TODO: Yossi, the only case where the current expression is not added to $
-     * it when it is an "" that isn't needed in the code. This is exactly what
-     * this wring is meant to do */
     for (int i = 0; i < es.size(); ++i) {
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {

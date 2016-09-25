@@ -20,7 +20,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     plugin = this;
   }
 
-  /** Called whenever the plugin is first loaded into the workbench */
+  /**
+   * Called whenever the plugin is first loaded into the workbench 
+   */
   @Override public void earlyStartup() {
     LoggingManner.now.info("EARLY STATRTUP: spartanizer");
     startSpartan();

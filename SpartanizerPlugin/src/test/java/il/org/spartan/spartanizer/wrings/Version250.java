@@ -8,70 +8,58 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** * Unit tests for the nesting class Unit test for the containing class. Note
- * our naming convention: a) test methods do not use the redundant "test"
- * prefix. b) test methods begin with the name of the method they check.
- * @author Yossi Gil
- * @since 2014-07-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Version250 {
-  // can be String concatenating, so can't remove 0
+/**
+ * * Unit tests for the nesting class Unit test for the containing class. Note our naming convention: a) test methods do not use the redundant "test" prefix. b) test methods begin with the name of the method they check.
+ * @author  Yossi Gil
+ * @since  2014-07-10 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Version250 {
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;").stays();
   }
 
-  // can be String concatenating, so can't remove 0
   @Test public void additionZeroTest_b() {
     trimmingOf("b=0+a;").stays();
   }
 
   @Test public void issue031a() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + //
-        "      return hasAnnotation(now.modifiers());\n" + //
-        "    }").gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n" + //
-            "      return hasAnnotation(now.modifiers());\n" + //
-            "    }");
+    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(now.modifiers());\n"
+        + "    }")
+            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
+                + "      return hasAnnotation(now.modifiers());\n" + "    }");
   }
 
   @Test public void issue031b() {
-    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}") //
-        .gives("void f(final VariableDeclarationStatement s, int abc) {}");
+    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}").gives("void f(final VariableDeclarationStatement s, int abc) {}");
   }
 
   @Test public void issue031c() {
-    trimmingOf(" void f(final VariableDeclarationAtatement n, int abc) {}") //
-        .gives("void f(final VariableDeclarationAtatement a, int abc) {}");
+    trimmingOf(" void f(final VariableDeclarationAtatement n, int abc) {}").gives("void f(final VariableDeclarationAtatement a, int abc) {}");
   }
 
   @Test public void issue031d() {
-    trimmingOf(" void f(final Expression n) {}") //
-        .gives("void f(final Expression x) {}");
+    trimmingOf(" void f(final Expression n) {}").gives("void f(final Expression x) {}");
   }
 
   @Test public void issue031e() {
-    trimmingOf(" void f(final Exception n) {}") //
-        .gives("void f(final Exception x) {}");
+    trimmingOf(" void f(final Exception n) {}").gives("void f(final Exception x) {}");
   }
 
   @Test public void issue031f() {
-    trimmingOf(" void f(final Exception exception, Expression expression) {}") //
-        .gives("void f(final Exception x, Expression expression) {}");
+    trimmingOf(" void f(final Exception exception, Expression expression) {}").gives("void f(final Exception x, Expression expression) {}");
   }
 
   @Test public void issue031g() {
-    trimmingOf("void foo(TestExpression exp,TestAssignment testAssignment)") //
-        .gives("void foo(TestExpression x,TestAssignment testAssignment)").gives("void foo(TestExpression x,TestAssignment a)");
+    trimmingOf("void foo(TestExpression exp,TestAssignment testAssignment)").gives("void foo(TestExpression x,TestAssignment testAssignment)")
+        .gives("void foo(TestExpression x,TestAssignment a)");
   }
 
   @Test public void issue031h() {
-    trimmingOf(" void f(final Exception n) {}") //
-        .gives("void f(final Exception x) {}");
+    trimmingOf(" void f(final Exception n) {}").gives("void f(final Exception x) {}");
   }
 
   @Test public void issue031i() {
-    trimmingOf(" void f(final Exception n) {}") //
-        .gives("void f(final Exception x) {}");
+    trimmingOf(" void f(final Exception n) {}").gives("void f(final Exception x) {}");
   }
 
   @Test public void issue031j() {
@@ -128,10 +116,7 @@ public final class Version250 {
   }
 
   @Test public void issue070_09() {
-    trimmingOf("(double) 2. * (double)5")//
-        .gives("(double)5 * (double)2.") //
-        .gives("1. * 5  * 1. * 2.")//
-        .gives("10.0");
+    trimmingOf("(double) 2. * (double)5").gives("(double)5 * (double)2.").gives("1. * 5  * 1. * 2.").gives("10.0");
   }
 
   @Test public void issue070_10() {
@@ -215,11 +200,7 @@ public final class Version250 {
   }
 
   @Test public void issue083n() {
-    trimmingOf("if(a.size() <= -9) ++a;a+=1;")//
-        .gives("if(false) ++a;a+=1;") //
-        .gives("{}a+=1;") //
-        .gives("a+=1;") //
-        .stays();
+    trimmingOf("if(a.size() <= -9) ++a;a+=1;").gives("if(false) ++a;a+=1;").gives("{}a+=1;").gives("a+=1;").stays();
   }
 
   @Test public void issue085_86a() {
@@ -278,49 +259,29 @@ public final class Version250 {
   }
 
   @Test public void issue086_2() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
-        .gives("{}").gives("").stays();
+    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").gives("").stays();
   }
 
   @Test public void issue086_3() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
-        .gives("{}").gives("").stays();
+    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").gives("").stays();
   }
 
   @Test public void issue086_4() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
-        .gives("{}").gives("").stays();
+    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").gives("").stays();
   }
 
   @Test public void issue086_5() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
-        .gives("{}").gives("").stays();
+    trimmingOf("if(false) {c();\nb();\na();}").gives("{}").gives("").stays();
   }
 
   @Test public void issue199() {
-    trimmingOf(//
-        "void f() { \n" + //
-            "  if (a == b) {\n" + //
-            "    f();\n" + //
-            "    return;\n" + //
-            "  }\n" + //
-            "  g();\n" + //
-            "} \n") //
-                .gives("void f(){if(a==b){f();}else g();}") //
-                .gives("void f(){if(a==b)f();else g();}") //
-                .stays();
+    trimmingOf("void f() { \n" + "  if (a == b) {\n" + "    f();\n" + "    return;\n" + "  }\n" + "  g();\n" + "} \n")
+        .gives("void f(){if(a==b){f();}else g();}").gives("void f(){if(a==b)f();else g();}").stays();
   }
 
   @Test public void issue199a() {
-    trimmingOf(//
-        "void f() { \n" + //
-            "  if (a == b) \n" + //
-            "    return;\n" + //
-            "  g();\n" + //
-            "} \n") //
-                .gives("void f(){if(a==b);else g();}") //
-                .gives("void f(){if(a!=b) g();}") //
-                .stays();
+    trimmingOf("void f() { \n" + "  if (a == b) \n" + "    return;\n" + "  g();\n" + "} \n").gives("void f(){if(a==b);else g();}")
+        .gives("void f(){if(a!=b) g();}").stays();
   }
 
   @Test public void issue207() {
@@ -328,11 +289,7 @@ public final class Version250 {
   }
 
   @Test public void issue218() {
-    trimmingOf("(long)(long)2")//
-        .gives("1L*(long)2")//
-        .gives("1L*1L*2")//
-        .gives("2L")//
-        .stays();
+    trimmingOf("(long)(long)2").gives("1L*(long)2").gives("1L*1L*2").gives("2L").stays();
   }
 
   @Test public void issue218a() {
@@ -355,30 +312,16 @@ public final class Version250 {
   }
 
   @Test public void issue241b() {
-    trimmingOf("interface x { static int a; }")//
-        .gives("interface x { int a; }")//
-        .stays();
+    trimmingOf("interface x { static int a; }").gives("interface x { int a; }").stays();
   }
 
   @Test public void issue243() {
-    trimmingOf("interface x { " //
-        + "int a = 0; "//
-        + "boolean b = 0; "//
-        + "byte ba = 0; "//
-        + "short s = 0; "//
-        + "long s = 0; "//
-        + "long s1 = 2; "//
-        + "double d = 0.0; "//
-        + "float f = 0.0; "//
-        + "float f1 = 1;"//
-        + "}")//
-            .stays();
+    trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short s = 0; " + "long s = 0; " + "long s1 = 2; "
+        + "double d = 0.0; " + "float f = 0.0; " + "float f1 = 1;" + "}").stays();
   }
 
   @Test public void simpleForLoop() {
-    trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
-        .gives("for(int ¢=0;¢<100;++¢)sum+=¢;")//
-        .stays();
+    trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;").gives("for(int ¢=0;¢<100;++¢)sum+=¢;").stays();
   }
 
   @Test public void test_b() {

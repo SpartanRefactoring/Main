@@ -68,7 +68,6 @@ public final class SpartanizeAll extends BaseHandler {
           for (final ICompilationUnit ¢ : us) {
             if (pm.isCanceled())
               break;
-//            a.setProgressMonitor(pm);
             pm.worked(1);
             pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
             if (!a.apply(¢))
@@ -83,12 +82,9 @@ public final class SpartanizeAll extends BaseHandler {
         LoggingManner.logEvaluationError(this, x);
       }
       final int finalCount = countSuggestions(currentCompilationUnit);
-      return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + //
-          "Completed in " + (1 + i) + " passes. \n" + //
-          "Total changes: " + (initialCount - finalCount) + "\n" + //
-          "Suggestions before: " + initialCount + "\n" + //
-          "Suggestions after: " + finalCount + "\n" + //
-          message);
+      return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n"
+          + "Total changes: " + (initialCount - finalCount) + "\n" + "Suggestions before: " + initialCount + "\n" + "Suggestions after: " + finalCount
+          + "\n" + message);
     }
     throw new ExecutionException("Too many iterations");
   }

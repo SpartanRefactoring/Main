@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-@Ignore //
-@SuppressWarnings("static-method") //
-public final class LogManagerTest {
+@Ignore @SuppressWarnings("static-method") public final class LogManagerTest {
   @Test public void testActive() {
     LogManager.activateLog();
     assert LogManager.isActive();

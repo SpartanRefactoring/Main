@@ -311,7 +311,6 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
     return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
   }
 
-  // changed Prefix and Postfix on the two next visitors.
   @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression __) {
     return false;
   }

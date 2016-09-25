@@ -85,8 +85,7 @@ import il.org.spartan.*;
   }
 
   @Ignore("no similar case fo multification") @Test public void test19() {
-    azzert.that(FactorsReorganizer.simplify(i("a-b*c - (x - - - (d*e))")), //
-        iz("a + d*e - b*c -x"));
+    azzert.that(FactorsReorganizer.simplify(i("a-b*c - (x - - - (d*e))")), iz("a + d*e - b*c -x"));
   }
 
   @Test public void test20() {

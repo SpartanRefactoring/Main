@@ -25,9 +25,6 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    // Prior test in scopeIncludes makes sure that only IfStatements containing
-    // a 'true' or 'false'
-    // get into the replace.
     return iz.literal¢true(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
   }
 }

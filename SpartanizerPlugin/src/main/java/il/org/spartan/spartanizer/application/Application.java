@@ -99,12 +99,10 @@ public final class Application implements IApplication {
   String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {
-    // parse command line arguments
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     final List<FileStats> fileStats = new ArrayList<>();
     try {
-      // prepare Java project
       prepareTempIJavaProject();
     } catch (final CoreException e) {
       System.err.println(e.getMessage());
@@ -155,7 +153,6 @@ public final class Application implements IApplication {
   }
 
   @Override public void stop() {
-    // Unused
   }
 
   String determineOutputFilename(final String path) {

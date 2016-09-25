@@ -42,17 +42,17 @@ public enum LoggingManner {
     return now != ABORT_ON_ERROR ? now : LOG_TO_STDOUT;
   }
 
-  public static LoggingManner infoIOException(final Exception e, final String message) {
+  public static LoggingManner infoIOException(final Exception x, final String message) {
     return info(//
-            "   Got an exception of type : " + e.getClass().getSimpleName() + //
+            "   Got an exception of type : " + x.getClass().getSimpleName() + //
             "\n      (probably I/O exception)" +
-            "\n   The exception says: '" + e + "'" + //
+            "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
             "\n        >>>'" + message + "'<<<" //
             );
   }
 
-  public final static LoggingManner info(final String message) {
+  public static LoggingManner info(final String message) {
     return nonAbortingManner().log(message);
   }
 

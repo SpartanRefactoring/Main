@@ -52,7 +52,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @Override public boolean prerequisite(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($)); // super.scopeIncludes($);
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

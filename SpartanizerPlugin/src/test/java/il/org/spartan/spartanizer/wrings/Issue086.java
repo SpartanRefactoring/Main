@@ -13,18 +13,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** Unit tests for {@link ThrowNotLastInBlock}
- * @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue086 extends Issue___ {
-  private static final String INPUT = "{"//
-      + "   throw Something(); "//
-      + " f();" //
-      + " a = 3;" //
-      + " return 2;" //
-      + "}";
+/**
+ * Unit tests for  {@link ThrowNotLastInBlock}
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue086 extends Issue___ {
+  private static final String INPUT = "{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}";
   Wring<ThrowStatement> wring;
   Statement context;
   ThrowStatement focus;
@@ -35,7 +30,7 @@ public final class Issue086 extends Issue___ {
   }
 
   @Test public void A$02_CreateContext() {
-    context = into.s(INPUT);//
+    context = into.s(INPUT);
     assert context != null;
   }
 
@@ -103,8 +98,7 @@ public final class Issue086 extends Issue___ {
 
   @Test public void B$10descriptionContains() {
     A$04_init();
-    azzert.that(wring.suggest(focus).description, //
-        containsString(focus + ""));
+    azzert.that(wring.suggest(focus).description, containsString(focus + ""));
   }
 
   @Test public void B$12rangeNotEmpty() {
@@ -124,44 +118,19 @@ public final class Issue086 extends Issue___ {
 
   @Test public void doubleVanillaThrow() {
     A$04_init();
-    trimmingOf("int f() {"//
-        + " if (false) "//
-        + "   i++; "//
-        + " else { "//
-        + "   g(i); "//
-        + "   throw new RuntimeException(); "//
-        + " } "//
-        + " f();" //
-        + " a = 3;" //
-        + " return 2;" + "}"//
-    )//
-        .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}") //
-        .gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}") //
-        .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}") //
-        .gives("int f(){g(i);throw new RuntimeException();return 2;}") //
-        .gives("int f(){g(i);throw new RuntimeException();}") //
-        .stays();
+    trimmingOf("int f() {" + " if (false) " + "   i++; " + " else { " + "   g(i); " + "   throw new RuntimeException(); " + " } " + " f();"
+        + " a = 3;" + " return 2;" + "}").gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}")
+            .gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}")
+            .gives("int f(){g(i);throw new RuntimeException();return 2;}").gives("int f(){g(i);throw new RuntimeException();}").stays();
   }
 
   @Test public void vanilla() {
-    trimmingOf("{"//
-        + "   throw Something(); "//
-        + " f();" //
-        + " a = 3;" //
-        + " return 2;" //
-        + "}")//
-            .gives("throw Something();f(); a=3; return 2;") //
-            .gives("throw Something();a=3; return 2;") //
-            .gives("throw Something(); return 2;") //
-            .gives("throw Something();") //
-            .stays();
+    trimmingOf("{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}").gives("throw Something();f(); a=3; return 2;")
+        .gives("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
   }
 
   @Test public void vanilla01() {
-    trimmingOf("throw Something();a=3; return 2;") //
-        .gives("throw Something(); return 2;") //
-        .gives("throw Something();") //
-        .stays();
+    trimmingOf("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
   }
 
   private ThrowNotLastInBlock makeWring() {

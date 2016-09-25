@@ -85,8 +85,7 @@ import il.org.spartan.*;
   }
 
   @Ignore("not implemented yet") @Test public void test19() {
-    azzert.that(FactorsExpander.simplify(i("a-b*c - (x - - - (d*e))")), //
-        iz("a - b*c -x + d*e"));
+    azzert.that(FactorsExpander.simplify(i("a-b*c - (x - - - (d*e))")), iz("a - b*c -x + d*e"));
   }
 
   @Test public void test20() {
