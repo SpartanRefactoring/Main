@@ -64,6 +64,8 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
+    // TODO: Yossi, what is better: create an instance here or hold one in the enum itself?
+    // Both ways I need to reset or create an instance here, so no difference in number of lines.
     final boolean[] bitMap = IExtendedModifiersOrdering.bitMap();
     return $.stream().filter(m -> pred(m, bitMap)).collect(Collectors.toList());
   }
