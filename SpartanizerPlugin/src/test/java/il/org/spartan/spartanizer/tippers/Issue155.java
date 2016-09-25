@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.tippers.*;
-
 /**
  * Unit tests for                                           {@link DeclarationInitializerStatementTerminatingScope}
  * @author                                           Ori Roth

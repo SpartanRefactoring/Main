@@ -39,7 +39,7 @@ public class MyCSVStatistics extends CSVStatistics {
     this.keysHeader = keysHeader;
   }
 
-  public String close() {
+  @Override public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
       final CSVLine l = new CSVLine.Ordered.Separated("%");
@@ -62,11 +62,11 @@ public class MyCSVStatistics extends CSVStatistics {
     return summarizer.close();
   }
 
-  public String mainFileName() {
+  @Override public String mainFileName() {
     return inner.fileName();
   }
 
-  public void nl() {
+  @Override public void nl() {
     inner.writeFlush(this);
   }
 
@@ -85,7 +85,7 @@ public class MyCSVStatistics extends CSVStatistics {
     return super.put(key, value);
   }
 
-  public String summaryFileName() {
+  @Override public String summaryFileName() {
     return summarizer.fileName();
   }
 

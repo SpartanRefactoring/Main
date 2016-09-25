@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.tippers.*;
-
 /**
  * Unit test for                                          {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
  * @author                                           Yossi Gil
