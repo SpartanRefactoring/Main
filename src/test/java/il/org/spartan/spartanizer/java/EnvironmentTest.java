@@ -268,9 +268,8 @@ import il.org.spartan.spartanizer.utils.*;
     e.compareOutOfOrder(s);
   }
 
-  /**
-  * This test assumes that the annotation data is cleared after each annotation. This will only be true once we implement uses and declares. 
-  */
+  /** This test assumes that the annotation data is cleared after each
+   * annotation. This will only be true once we implement uses and declares. */
   @Ignore public void EngineTestFlatUnordered10() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
@@ -281,9 +280,8 @@ import il.org.spartan.spartanizer.utils.*;
     e.compareOutOfOrder(s);
   }
 
-  /**
-  * This test assumes that the annotation data is cleared after each annotation. This will only be true once we implement uses and declares. 
-  */
+  /** This test assumes that the annotation data is cleared after each
+   * annotation. This will only be true once we implement uses and declares. */
   @Ignore public void EngineTestFlatUnordered11() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"x\", clazz = \"String\"), "
         + "@Id(name = \"y\", clazz = \"String\")," + "@Id(name = \"z\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
@@ -304,9 +302,8 @@ import il.org.spartan.spartanizer.utils.*;
     e.compareOutOfOrder(s);
   }
 
-  /**
-  * This test is meant to fail by azzert, due to double addition of the same values. 
-  */
+  /** This test is meant to fail by azzert, due to double addition of the same
+   * values. */
   @SuppressWarnings("unused") @Ignore public void EngineTestFlatUnordered13() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")));

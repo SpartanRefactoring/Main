@@ -191,7 +191,7 @@ import org.junit.runners.*;
                 "}}") //
             .stays();
   }
-  
+
   @Test public void constructorParameterRenaming_07c() {
     trimmingOf("class A {" + //
         "int x;" + //

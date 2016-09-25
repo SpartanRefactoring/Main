@@ -5,14 +5,10 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.tippers.*;
-
-/**
- * Unit tests for                       {@link MethodInvocationToStringToEmptyStringAddition}
- * @author                       Niv Shalmon
- * @since                       2016
- * @see Issue209Test                       
- */
+/** Unit tests for {@link MethodInvocationToStringToEmptyStringAddition}
+ * @author Niv Shalmon
+ * @since 2016
+ * @see Issue209Test */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue224 {
   @Test public void a$01() {
     trimmingOf("a+b.toString()").gives("a+\"\"+b").stays();

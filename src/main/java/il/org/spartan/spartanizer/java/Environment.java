@@ -189,52 +189,40 @@ import il.org.spartan.spartanizer.engine.*;
       nest = parent;
     }
 
-    /**
-     * @return   true iff   {@link Environment}   is empty. 
-     */
+    /** @return true iff {@link Environment} is empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
 
-    /**
-     * @return   Map entries used in the current scope. 
-     */
+    /** @return Map entries used in the current scope. */
     @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
       return new LinkedHashSet<>(flat.entrySet());
     }
 
-    /**
-     * @return   The information about the name in current  {@link Environment}  . 
-     */
+    /** @return The information about the name in current {@link Environment}
+     *         . */
     @Override public Information get(final String name) {
       final Information $ = flat.get(name);
       return $ != null ? $ : nest.get(name);
     }
 
-    /**
-     * Check whether the   {@link Environment}   already has the name. 
-     */
+    /** Check whether the {@link Environment} already has the name. */
     @Override public boolean has(final String name) {
       return flat.containsKey(name) || nest.has(name);
     }
 
-    /**
-     * @return   Names used the   {@link Environment}  . 
-     */
+    /** @return Names used the {@link Environment} . */
     @Override public LinkedHashSet<String> names() {
       return new LinkedHashSet<>(flat.keySet());
     }
 
-    /**
-     * One step up in the   {@link Environment}   tree. Funny but it even sounds like next(). 
-     */
+    /** One step up in the {@link Environment} tree. Funny but it even sounds
+     * like next(). */
     @Override public Environment nest() {
       return nest;
     }
 
-    /**
-     * Add name to the current scope in the   {@link Environment}  . 
-     */
+    /** Add name to the current scope in the {@link Environment} . */
     @Override public Information put(final String name, final Information value) {
       flat.put(name, value);
       assert !flat.isEmpty();

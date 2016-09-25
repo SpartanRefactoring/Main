@@ -8,11 +8,6 @@ import org.eclipse.core.runtime.*;
  * @author Yossi Gil
  * @year 2016 */
 public final class SpartanizeableAll extends BaseHandler {
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    go();
-    return null;
-  }
-
   public static void go() {
     for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
       if (p.isOpen())
@@ -21,5 +16,10 @@ public final class SpartanizeableAll extends BaseHandler {
         } catch (final CoreException e) {
           LoggingManner.logEvaluationError(new SpartanizeableAll(), e);
         }
+  }
+
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    go();
+    return null;
   }
 }

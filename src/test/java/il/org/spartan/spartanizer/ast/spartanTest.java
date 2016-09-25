@@ -9,12 +9,10 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/**
- * A test suite for class                       {@link spartan}
- * @author                       Yossi Gil
- * @since                       2015-07-18
- * @see step                       
- */
+/** A test suite for class {@link spartan}
+ * @author Yossi Gil
+ * @since 2015-07-18
+ * @see step */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class spartanTest {
   @Test public void arrayOfInts() {
     azzert.that(spartan.shorten(t("int[][] __;")), equalTo("iss"));
