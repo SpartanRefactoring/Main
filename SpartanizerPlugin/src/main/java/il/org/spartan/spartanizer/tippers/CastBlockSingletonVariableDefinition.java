@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Remove blocks that include only variable declerations: <br/>
  * For example, remove the block : </br>
@@ -28,14 +28,14 @@ public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Bl
     return "remove the block: " + n;
   }
 
-  @Override public Suggestion suggest(final Block n) {
+  @Override public Tip suggest(final Block n) {
     final List<Statement> ss = statements(n);
     if (ss.isEmpty())
       return null;
     for (final Statement ¢ : ss)
       if (!iz.variableDeclarationStatement(¢))
         return null;
-    return new Suggestion(description(), n) {
+    return new Tip(description(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final Statement ¢ : ss)
           r.remove(¢, g);

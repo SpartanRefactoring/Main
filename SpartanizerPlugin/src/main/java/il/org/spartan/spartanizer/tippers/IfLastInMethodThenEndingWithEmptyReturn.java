@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
@@ -44,12 +44,12 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerWring<If
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }
 
-  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Tip suggest(final IfStatement s, final ExclusionManager exclude) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then(s)));
-    return deleteMe == null || deleteMe.getExpression() != null || exclude != null && exclude.equals(s) ? null : new Suggestion(description(s), s) {
+    return deleteMe == null || deleteMe.getExpression() != null || exclude != null && exclude.equals(s) ? null : new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, make.emptyStatement(deleteMe), g);
       }

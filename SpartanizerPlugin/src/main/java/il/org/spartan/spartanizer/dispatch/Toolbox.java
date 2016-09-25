@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Singleton containing all {@link Tipper}s which are active, allowing selecting
  * and applying the most appropriate such object for a given {@link ASTNode}.
@@ -207,7 +207,7 @@ public class Toolbox {
 
   private static <N extends ASTNode> Tipper<N> find(final N n, final List<Tipper<N>> ns) {
     for (final Tipper<N> $ : ns)
-      if ($.canSuggest(n))
+      if ($.canTip(n))
         return $;
     return null;
   }
@@ -226,7 +226,7 @@ public class Toolbox {
     for (final Tipper<N> $ : get(n))
       for (final Tipper<?> ¢ : ns)
         if (¢.getClass().equals($.getClass())) {
-          if ($.canSuggest(n))
+          if ($.canTip(n))
             return $;
           break;
         }

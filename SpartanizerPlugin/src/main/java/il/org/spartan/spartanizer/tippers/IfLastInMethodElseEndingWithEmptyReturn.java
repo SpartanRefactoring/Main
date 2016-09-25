@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code> if(a)f();else{g();return;} </code> into
  * <code>if(a)f();else{g();;}</code> provided that this <code><b>if</b> </code>
@@ -25,12 +25,12 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerWring<If
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 
-  @Override public Suggestion suggest(final IfStatement s) {
+  @Override public Tip suggest(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(elze(s)));
-    return deleteMe == null || deleteMe.getExpression() != null ? null : new Suggestion(description(s), s) {
+    return deleteMe == null || deleteMe.getExpression() != null ? null : new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(deleteMe, make.emptyStatement(s), g);
       }

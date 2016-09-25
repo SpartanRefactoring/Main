@@ -4,7 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to remove the empty String "" in String conversion
  * expression like <code> "" + X </code> but ONLY if X is a String.

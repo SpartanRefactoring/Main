@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /**
  * Unit tests for                      {@link BodyDeclarationModifiersSort}

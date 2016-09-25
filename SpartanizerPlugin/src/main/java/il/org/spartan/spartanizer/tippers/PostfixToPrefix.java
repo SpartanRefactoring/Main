@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.PostfixExpression.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement

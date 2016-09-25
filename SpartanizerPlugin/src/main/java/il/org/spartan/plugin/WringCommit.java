@@ -18,8 +18,8 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.spartanizer.wringing.*;
 
 public final class WringCommit {
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
@@ -171,7 +171,7 @@ public final class WringCommit {
             return true;
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Suggestion make = x.suggest(n, exclude);
+            final Tip make = x.suggest(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");

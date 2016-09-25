@@ -8,7 +8,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>throw X;statement;</code> to <code>throw X;</code>.
  * @author Yossi Gil

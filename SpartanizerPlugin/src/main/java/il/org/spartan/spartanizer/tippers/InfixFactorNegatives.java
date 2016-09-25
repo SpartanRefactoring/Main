@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert an expression such as
  *
@@ -87,7 +87,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Suggestion suggest(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Tip suggest(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
@@ -96,7 +96,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Suggestion(description(x), x) {
+    return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)

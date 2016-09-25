@@ -20,7 +20,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
@@ -30,7 +30,7 @@ public final class ForRenameInitializerToCent extends EagerWring<VariableDeclara
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }
 
-  @Override public Suggestion suggest(final VariableDeclarationExpression x, final ExclusionManager m) {
+  @Override public Tip suggest(final VariableDeclarationExpression x, final ExclusionManager m) {
     final ForStatement forStatement = az.forStatement(parent(x));
     if (forStatement == null)
       return null;
@@ -45,7 +45,7 @@ public final class ForRenameInitializerToCent extends EagerWring<VariableDeclara
       m.exclude(forStatement);
     }
     final SimpleName ¢ = x.getAST().newSimpleName("¢");
-    return new Suggestion(description(x), x) {
+    return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, forStatement, r, g);
       }

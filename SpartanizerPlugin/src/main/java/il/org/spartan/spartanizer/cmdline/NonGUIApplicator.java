@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 public class NonGUIApplicator {
   /** Apply trimming repeatedly, until no more changes
@@ -20,12 +20,12 @@ public class NonGUIApplicator {
     System.out.println(fixedPoint(read()));
   }
 
-  static ASTVisitor collect(final List<Suggestion> $) {
+  static ASTVisitor collect(final List<Tip> $) {
     Toolbox.refresh();
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.cantSuggest(n) || Trimmer.prune(w.suggest(n, exclude), $);
+        return w == null || w.cantTip(n) || Trimmer.prune(w.suggest(n, exclude), $);
       }
     };
   }

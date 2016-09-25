@@ -12,8 +12,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.spartanizer.wringing.*;
 
 /** @author Yossi Gil
  * @since 2015/07/10 */
@@ -65,7 +65,7 @@ public class Trimmer extends GUI$Applicator {
     return NodeData.has(¢, disabledPropertyId);
   }
 
-  public static boolean prune(final Suggestion r, final List<Suggestion> rs) {
+  public static boolean prune(final Tip r, final List<Tip> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
       rs.add(r);
@@ -130,7 +130,7 @@ public class Trimmer extends GUI$Applicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
-        final Suggestion s = w.suggest(n, exclude);
+        final Tip s = w.suggest(n, exclude);
         TrimmerLog.suggestion(w, n);
         if (s != null) {
           if (LogManager.isActive())
@@ -163,7 +163,7 @@ public class Trimmer extends GUI$Applicator {
     }
   }
 
-  @Override protected ASTVisitor makeSuggestionsCollector(final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -172,7 +172,7 @@ public class Trimmer extends GUI$Applicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w != null)
           progressMonitor.worked(5);
-        return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
+        return w == null || w.cantTip(n) || prune(w.suggest(n, exclude), $);
       }
 
       @Override protected void initialization(final ASTNode ¢) {

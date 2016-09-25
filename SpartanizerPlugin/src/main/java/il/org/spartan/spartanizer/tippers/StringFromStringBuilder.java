@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"

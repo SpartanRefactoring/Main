@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** abbreviates the name of a method parameter that is a viable candidate for
  * abbreviation (meaning that its name is suitable for renaming, and isn't the
@@ -61,7 +61,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
     return ¢.getName() + "";
   }
 
-  @Override public Suggestion suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;
@@ -72,7 +72,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
       exclude.exclude(m);
     final SimpleName oldName = d.getName();
     final String newName = spartan.shorten(d.getType()) + pluralVariadic(d);
-    return new Suggestion("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
+    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
         final Javadoc j = m.getJavadoc();

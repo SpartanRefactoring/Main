@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** removes empty return sideEffects, provided that they are last in method.
  * @author Yossi Gil
@@ -21,11 +21,11 @@ public final class ReturnLastInMethod extends EagerWring<ReturnStatement> implem
     return "Remove redundant return statement";
   }
 
-  @Override public Suggestion suggest(final ReturnStatement s) {
+  @Override public Tip suggest(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
     final Block b = az.block(s.getParent());
-    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Suggestion(description(s), s) {
+    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(s, g);
       }

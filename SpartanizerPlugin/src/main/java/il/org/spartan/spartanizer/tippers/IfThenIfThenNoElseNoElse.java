@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
@@ -43,11 +43,11 @@ public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> impl
     return "Merge conditionals of nested if staement";
   }
 
-  @Override public Suggestion suggest(final IfStatement ¢) {
+  @Override public Tip suggest(final IfStatement ¢) {
     return suggest(¢, null);
   }
 
-  @Override public Suggestion suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Tip suggest(final IfStatement s, final ExclusionManager exclude) {
     if (!iz.vacuousElse(s))
       return null;
     final IfStatement then = az.ifStatement(extract.singleThen(s));
@@ -55,7 +55,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> impl
       return null;
     if (exclude != null)
       exclude.exclude(then);
-    return new Suggestion(description(s), s) {
+    return new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         collapse(Wrings.blockIfNeeded(s, r, g), r, g);
       }

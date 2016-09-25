@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.tipping;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -13,10 +13,10 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   public abstract ASTNode replacement(N n);
 
-  @Override public final Suggestion suggest(final N n) {
+  @Override public final Tip suggest(final N n) {
     assert prerequisite(n) : LoggingManner.dump() + "\n n = " + n + LoggingManner.endDump();
     final ASTNode $ = replacement(n);
-    return $ == null ? null : new Suggestion(description(n), n) {
+    return $ == null ? null : new Tip(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }

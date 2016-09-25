@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert Infinite loops with return sideEffects to shorter ones : </br>
  * Convert <br/>
@@ -92,9 +92,9 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside " + ¢ + " to return";
   }
 
-  public Suggestion make(final ForStatement vor, final ReturnStatement nextReturn) {
+  public Tip make(final ForStatement vor, final ReturnStatement nextReturn) {
     final Statement $ = make(vor.getBody(), nextReturn);
-    return $ == null ? null : new Suggestion(description(), $) {
+    return $ == null ? null : new Tip(description(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
@@ -106,7 +106,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Suggestion suggest(final ForStatement vor) {
+  @Override public Tip suggest(final ForStatement vor) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     final ReturnStatement nextReturn = extract.nextReturn(vor);

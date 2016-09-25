@@ -18,9 +18,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 public final class SpartanizeAll extends BaseHandler {
   static final int MAX_PASSES = 20;
 
-  /** Returns the number of spartanization suggestions for a compilation unit
+  /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
-   * @return number of suggestions available for the compilation unit */
+   * @return number of tips available for the compilation unit */
   public static int countSuggestions(final ICompilationUnit u) {
     int $ = 0;
     for (final GUI$Applicator ¢ : eclipse.safeSpartanizations) {
@@ -50,9 +50,9 @@ public final class SpartanizeAll extends BaseHandler {
     System.out.println("wew");
     final int initialCount = countSuggestions(currentCompilationUnit);
     System.out.println("ewe");
-    message.append("with " + initialCount + " suggestions");
+    message.append("with " + initialCount + " tips");
     if (initialCount == 0)
-      return eclipse.announce("No suggestions for '" + javaProject.getElementName() + "' project\n" + message);
+      return eclipse.announce("No tips for '" + javaProject.getElementName() + "' project\n" + message);
     eclipse.announce(message);
     final GUI$Applicator a = new Trimmer();
     for (int i = 0; i < MAX_PASSES; ++i) {

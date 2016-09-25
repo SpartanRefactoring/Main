@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tippers.*;
   private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
 
   @Test public void eligible() {
-    assert WRING.canSuggest(IF);
+    assert WRING.canTip(IF);
   }
 
   @Test public void emptyElse() {
@@ -47,7 +47,7 @@ import il.org.spartan.spartanizer.tippers.*;
     final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    final Suggestion t = WRING.suggest(s);
+    final Tip t = WRING.suggest(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
     assert e != null;
@@ -57,6 +57,6 @@ import il.org.spartan.spartanizer.tippers.*;
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.canSuggest(IF);
+    assert WRING.canTip(IF);
   }
 }

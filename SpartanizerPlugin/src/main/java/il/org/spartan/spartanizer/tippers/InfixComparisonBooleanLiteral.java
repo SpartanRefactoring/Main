@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.ast.extract.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** eliminates redundant comparison with <code><b>true</b> </code> and
  * <code><b>false</b></code> .

@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
@@ -23,7 +23,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerWring<Meth
     return ¢.getName() + "";
   }
 
-  @Override public Suggestion suggest(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip suggest(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
@@ -32,7 +32,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerWring<Meth
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Suggestion("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
+    return new Tip("Rename '" + n + "' to $ (main variable returned by " + description(d) + ")", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(n, $(), d, r, g);
       }

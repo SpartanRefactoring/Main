@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /**
  * TDD: Unit tests for                       {@link Tipper#myActualOperandsClass()}

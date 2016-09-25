@@ -24,7 +24,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     try {
       final GUI$Applicator $ = Spartanizations.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
       assert $ != null;
-      return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(), GUI$Applicator.getWringCommitDeclaration(),
+      return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(), GUI$Applicator.getTipperCommitDeclaration(),
           GUI$Applicator.getWringCommitFile(), GUI$Applicator.getWringCommitProject(), QuickFixer.disableFunctionFix(), QuickFixer.disableClassFix(),
           QuickFixer.disableFileFix() };
     } catch (final CoreException x) {

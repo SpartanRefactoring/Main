@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.wringing;
+package il.org.spartan.spartanizer.tipping;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -14,13 +14,13 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
     return next != null && go(ASTRewrite.create(current.getAST()), current, next, null) != null;
   }
 
-  @Override public Suggestion suggest(final N n, final ExclusionManager exclude) {
+  @Override public Tip suggest(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
     if (nextStatement == null)
       return null;
     if (exclude != null)
       exclude.exclude(nextStatement);
-    return new Suggestion(description(n), n, nextStatement) {
+    return new Tip(description(n), n, nextStatement) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         ReplaceToNextStatement.this.go(r, n, nextStatement, g);
       }
