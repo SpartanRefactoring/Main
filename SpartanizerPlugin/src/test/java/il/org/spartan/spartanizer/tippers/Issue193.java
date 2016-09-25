@@ -34,4 +34,12 @@ import org.junit.runners.*;
     trimmingOf("0*(new int[f()])").stays();
   }
   
+  @Test public void t70() {
+    trimmingOf("x*0*new int[f()]").gives("0*x*new int[f()]").stays();
+  }
+  
+  @Test public void t80() {
+    trimmingOf("calc()*x*0").gives("0*x*calc()").stays();
+  }
+  
 }

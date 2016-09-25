@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
+import java.util.*;
+
 /**
  * Convert a multiplication of expression\statement by zero to zero <br/>
  * where there is no any side effect
@@ -19,27 +21,30 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
  */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
 
-  @Override public ASTNode replacement(InfixExpression n) {
-    if(n.getOperator()!=TIMES)
+  private boolean isContainsZero(InfixExpression ¢){
+    List<Expression> operands = extract.allOperands(¢);
+    for(Expression e : operands)
+      if (iz.numberLiteral(e) && az.numberLiteral(e).getToken().equals("0"))
+        return true;
+    return false;
+  }
+  
+  private boolean isContainsSideEffect(InfixExpression ¢){
+    List<Expression> operands = extract.allOperands(¢);
+    for(Expression e : operands)
+      if (!sideEffects.free(e))
+        return true;
+    return false;
+  }
+  @Override public ASTNode replacement(InfixExpression ¢) {
+    if(¢.getOperator()!=TIMES || !isContainsZero(¢) || isContainsSideEffect(¢))
       return null;
-    if(iz.numberLiteral(n.getLeftOperand()) && //
-       az.numberLiteral(n.getLeftOperand()).getToken().equals("0") && //
-       sideEffects.free(n.getRightOperand())){
-      NumberLiteral $ = n.getAST().newNumberLiteral();
-      $.setToken("0");
-      return $; 
-    }
-    if(iz.numberLiteral(n.getRightOperand()) && //
-        az.numberLiteral(n.getRightOperand()).getToken().equals("0")&& //
-        sideEffects.free(n.getLeftOperand())){
-      NumberLiteral $ = n.getAST().newNumberLiteral();
-      $.setToken("0");
-      return $; 
-    }
-    return null;
+    NumberLiteral $ = ¢.getAST().newNumberLiteral();
+    $.setToken("0");
+    return $;
   }
 
-  @Override public String description(InfixExpression n) {
-    return "Convert" + n + " to 0";
+  @Override public String description(InfixExpression ¢) {
+    return "Convert" + ¢ + " to 0";
   }
 }
