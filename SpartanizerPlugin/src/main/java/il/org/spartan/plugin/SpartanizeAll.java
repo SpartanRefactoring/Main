@@ -47,9 +47,7 @@ public final class SpartanizeAll extends BaseHandler {
     final List<ICompilationUnit> us = eclipse.facade.compilationUnits(currentCompilationUnit);
     message.append("found " + us.size() + " compilation units \n");
     final IWorkbench wb = PlatformUI.getWorkbench();
-    System.out.println("wew");
     final int initialCount = countSuggestions(currentCompilationUnit);
-    System.out.println("ewe");
     message.append("with " + initialCount + " tips");
     if (initialCount == 0)
       return eclipse.announce("No tips for '" + javaProject.getElementName() + "' project\n" + message);
