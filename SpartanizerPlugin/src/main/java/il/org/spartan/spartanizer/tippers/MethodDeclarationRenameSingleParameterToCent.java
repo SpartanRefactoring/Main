@@ -15,7 +15,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
  * @author Yossi Gil
@@ -25,7 +25,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerWri
     return ¢.getName() + "";
   }
 
-  @Override public Suggestion suggest(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Tip suggest(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -45,7 +45,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerWri
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Suggestion("Rename paraemter " + n + " to ¢ ", d) {
+    return new Tip("Rename paraemter " + n + " to ¢ ", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, d, r, g);
       }

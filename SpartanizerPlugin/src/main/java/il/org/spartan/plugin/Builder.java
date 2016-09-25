@@ -16,9 +16,9 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2013/07/01
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code> */
 public final class Builder extends IncrementalProjectBuilder {
-  /** Long prefix to be used in front of all suggestions */
+  /** Long prefix to be used in front of all tips */
   public static final String SPARTANIZATION_LONG_PREFIX = "Spartanization suggestion: ";
-  /** Short prefix to be used in front of all suggestions */
+  /** Short prefix to be used in front of all tips */
   public static final String SPARTANIZATION_SHORT_PREFIX = "Tip: ";
   /** Empty prefix for brevity */
   public static final String EMPTY_PREFIX = "";
@@ -56,7 +56,7 @@ public final class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final GUI$Applicator a, final Suggestion r, final IMarker m) throws CoreException {
+  private static void addMarker(final GUI$Applicator a, final Tip r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
@@ -74,7 +74,7 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
     for (final GUI$Applicator s : Spartanizations.all())
-      for (final Suggestion ¢ : s.collectSuggesions(u))
+      for (final Tip ¢ : s.collectSuggesions(u))
         if (¢ != null)
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));
   }

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tippers.*;
   private static final IfEmptyThen WRING = new IfEmptyThen();
 
   @Test public void eligible() {
-    assert WRING.canSuggest(IF);
+    assert WRING.canTip(IF);
   }
 
   @Test public void emptyThen() {
@@ -33,6 +33,6 @@ import il.org.spartan.spartanizer.tippers.*;
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.canSuggest(IF);
+    assert WRING.canTip(IF);
   }
 }

@@ -6,7 +6,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes the parentheses from annotations that do not take arguments,
  * converting <code><pre>@Override()</pre></code> to

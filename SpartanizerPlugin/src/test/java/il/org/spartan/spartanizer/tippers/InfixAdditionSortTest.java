@@ -34,11 +34,11 @@ import il.org.spartan.spartanizer.tippers.*;
   }
 
   @Test public void test02() {
-    assert new InfixAdditionSort().canSuggest(INPUT);
+    assert new InfixAdditionSort().canTip(INPUT);
   }
 
   @Test public void test03() {
-    assert new InfixAdditionSort().canSuggest(INPUT);
+    assert new InfixAdditionSort().canTip(INPUT);
   }
 
   @Test public void test04() {
@@ -46,11 +46,11 @@ import il.org.spartan.spartanizer.tippers.*;
   }
 
   @Test public void test05() {
-    assert !new InfixAdditionSubtractionExpand().canSuggest(INPUT);
+    assert !new InfixAdditionSubtractionExpand().canTip(INPUT);
   }
 
   @Test public void test06() {
-    assert !new InfixAdditionSubtractionExpand().canSuggest(INPUT);
+    assert !new InfixAdditionSubtractionExpand().canTip(INPUT);
   }
 
   @Test public void test07() {

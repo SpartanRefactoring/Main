@@ -35,7 +35,7 @@ public abstract class GUI$Applicator extends Refactoring {
   private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
   private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
 
-  public static IMarkerResolution getWringCommitDeclaration() {
+  public static IMarkerResolution getTipperCommitDeclaration() {
     return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
   }
 
@@ -86,7 +86,7 @@ public abstract class GUI$Applicator extends Refactoring {
   private IMarker marker;
   private final String name;
   private ITextSelection selection;
-  final List<Suggestion> suggestions = new ArrayList<>();
+  final List<Tip> tips = new ArrayList<>();
   private int totalChanges;
 
   /*** Instantiates this class, with message identical to name
@@ -124,12 +124,12 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
-   * spartanization suggestions
+   * spartanization tips
    * @param u what to check
-   * @return a collection of {@link Suggestion} objects each containing a
+   * @return a collection of {@link Tip} objects each containing a
    *         spartanization suggestion */
-  public final List<Suggestion> collectSuggesions(final CompilationUnit ¢) {
-    final List<Suggestion> $ = new ArrayList<>();
+  public final List<Tip> collectSuggesions(final CompilationUnit ¢) {
+    final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeSuggestionsCollector($));
     return $;
   }
@@ -142,10 +142,10 @@ public abstract class GUI$Applicator extends Refactoring {
     return iCompilationUnit.getElementName();
   }
 
-  /** Count the number of suggestions offered by this instance.
+  /** Count the number of tips offered by this instance.
    * <p>
    * This is a slow operation. Do not call light-headedly.
-   * @return total number of suggestions offered by this instance */
+   * @return total number of tips offered by this instance */
   public int countSuggestions() {
     setMarker(null);
     try {
@@ -176,7 +176,7 @@ public abstract class GUI$Applicator extends Refactoring {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
     final TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
-    for (final Suggestion ¢ : suggestions) {
+    for (final Tip ¢ : tips) {
       progressMonitor.worked(1);
       ¢.go(astRewrite, g);
     }
@@ -271,8 +271,8 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection;
   }
 
-  public List<Suggestion> getSuggestions() {
-    return suggestions;
+  public List<Tip> getSuggestions() {
+    return tips;
   }
 
   public boolean go() throws CoreException {
@@ -359,7 +359,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public int suggestionsCount() {
-    return suggestions.size();
+    return tips.size();
   }
 
   @Override public String toString() {
@@ -376,15 +376,15 @@ public abstract class GUI$Applicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  protected abstract ASTVisitor makeSuggestionsCollector(final List<Suggestion> $);
+  protected abstract ASTVisitor makeSuggestionsCollector(final List<Tip> $);
 
   protected void parse() {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   protected void scan() {
-    suggestions.clear();
-    compilationUnit.accept(makeSuggestionsCollector(suggestions));
+    tips.clear();
+    compilationUnit.accept(makeSuggestionsCollector(tips));
   }
 
   /** @param u JD
@@ -431,13 +431,13 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   void collectAllSuggestions() throws JavaModelException, CoreException {
-    progressMonitor.beginTask("Collecting suggestions...", IProgressMonitor.UNKNOWN);
+    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits());
     progressMonitor.done();
   }
 
   void collectSuggestions() {
-    progressMonitor.beginTask("Collecting suggestions...", IProgressMonitor.UNKNOWN);
+    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scan();
     progressMonitor.done();
   }

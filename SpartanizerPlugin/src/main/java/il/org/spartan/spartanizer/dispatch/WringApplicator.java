@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link GUI$Applicator}. This class must eventually die.
@@ -32,13 +32,13 @@ public final class WringApplicator extends GUI$Applicator {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || tipper.canSuggest(¢) || inRange(m, ¢))
+        if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
           tipper.suggest(¢).go(r, null);
       }
     });
   }
 
-  @Override protected ASTVisitor makeSuggestionsCollector(final List<Suggestion> $) {
+  @Override protected ASTVisitor makeSuggestionsCollector(final List<Tip> $) {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
@@ -46,7 +46,7 @@ public final class WringApplicator extends GUI$Applicator {
         if (¢.getClass() == clazz)
           return;
         progressMonitor.worked(1);
-        if (!tipper.canSuggest(¢))
+        if (!tipper.canTip(¢))
           return;
         progressMonitor.worked(1);
         $.add(tipper.suggest(¢));

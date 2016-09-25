@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-import il.org.spartan.spartanizer.wringing.*;
-import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
+import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {
@@ -101,7 +101,7 @@ public class TrimmerLogTest {
     final Trimmer trimmer = new Trimmer();
     final int opp = TrimmerTestsUtils.countOpportunities(trimmer, cu);
     System.out.println(opp);
-    for (final Suggestion ¢ : trimmer.collectSuggesions(cu))
+    for (final Tip ¢ : trimmer.collectSuggesions(cu))
       System.out.println(¢.description);
   }
 }

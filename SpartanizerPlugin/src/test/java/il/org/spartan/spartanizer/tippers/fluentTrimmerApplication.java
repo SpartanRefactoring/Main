@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 public class fluentTrimmerApplication extends Trimmer.With {
   public final String codeFragment;
@@ -129,7 +129,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
           return true;
         final Tipper<N> w = trimmer().toolbox.find(n);
         if (w != null) {
-          final Suggestion make = w.suggest(n, exclude);
+          final Tip make = w.suggest(n, exclude);
           if (make != null)
             make.go(r, null);
         }

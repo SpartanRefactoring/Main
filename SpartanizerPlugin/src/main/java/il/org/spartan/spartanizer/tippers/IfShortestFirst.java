@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.dispatch.Wrings.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *

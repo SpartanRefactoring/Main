@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   protected static Expression assignmentAsExpression(final Assignment a) {
@@ -106,8 +106,8 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $;
   }
 
-  @Override public Suggestion suggest(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Suggestion $ = super.suggest(f, exclude);
+  @Override public Tip suggest(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+    final Tip $ = super.suggest(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

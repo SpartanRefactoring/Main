@@ -12,7 +12,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
@@ -23,7 +23,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     return ¢ + "";
   }
 
-  @Override public Suggestion suggest(final SingleVariableDeclaration d, final ExclusionManager m) {
+  @Override public Tip suggest(final SingleVariableDeclaration d, final ExclusionManager m) {
     final ASTNode p = d.getParent();
     if (p == null || !(p instanceof EnhancedForStatement))
       return null;
@@ -42,7 +42,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Suggestion("Rename '" + n + "' to ¢ in enhanced for loop", d) {
+    return new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, s, r, g);
       }

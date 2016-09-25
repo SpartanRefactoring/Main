@@ -15,7 +15,7 @@ import static il.org.spartan.spartanizer.ast.hop.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>X-0</code> by <code>X</code> and <code>0-X</code> by
  * <code>-X<code>

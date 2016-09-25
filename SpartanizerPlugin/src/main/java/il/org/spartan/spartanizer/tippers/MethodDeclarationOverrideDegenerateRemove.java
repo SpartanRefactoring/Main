@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
  * class, e.g., <code>@Override void foo(){super.foo();}</code>
@@ -27,10 +27,10 @@ public final class MethodDeclarationOverrideDegenerateRemove extends EagerWring<
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
 
-  @Override public Suggestion suggest(final MethodDeclaration d) {
+  @Override public Tip suggest(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
-        : new Suggestion(description(d), d) {
+        : new Tip(description(d), d) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(d, g);
           }

@@ -47,10 +47,10 @@ public final class SpartanizeCurrent extends BaseHandler {
         return null;
       }
       if (n.inner <= 0) {
-        status.append("\n Applied a total of " + total + " suggestions in " + i + " rounds");
+        status.append("\n Applied a total of " + total + " tips in " + i + " rounds");
         return eclipse.announce(status);
       }
-      status.append("\n Round " + (i + 1) + ": " + n.inner + " suggestions (previous rounds: " + total + " suggestions");
+      status.append("\n Round " + (i + 1) + ": " + n.inner + " tips (previous rounds: " + total + " tips");
       total += n.inner;
     }
     status.append("\n too many passes; aborting");

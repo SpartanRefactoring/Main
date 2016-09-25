@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
@@ -40,11 +40,11 @@ public final class IfLastInMethod extends EagerWring<IfStatement> implements Kin
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
 
-  @Override public Suggestion suggest(final IfStatement s) {
+  @Override public Tip suggest(final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = az.block(s.getParent());
-    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Suggestion(description(s), s) {
+    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = duplicate.of(s);

@@ -6,7 +6,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wringing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes <code>super()</code> calls which take no arguments, as typically
  * created by Eclipse's template for constructors.
@@ -21,8 +21,8 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 
-  @Override public Suggestion suggest(final SuperConstructorInvocation i) {
-    return new Suggestion(description(i), i) {
+  @Override public Tip suggest(final SuperConstructorInvocation i) {
+    return new Tip(description(i), i) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }
