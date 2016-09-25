@@ -6,9 +6,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * Unit tests for  {@link DisabledChecker}
- * @author  Ori Roth
- * @since  2016 
+ * Unit tests for                       {@link DisabledChecker}
+ * @author                       Ori Roth
+ * @since                       2016 
  */
 @Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue142 {
   @Test public void disableSpartanizaionInClass() {

@@ -6,8 +6,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * @author  Yossi Gil
- * @since  2016 
+ * @author                       Yossi Gil
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue130 {
   @Test public void A$01() {

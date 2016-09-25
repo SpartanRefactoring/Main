@@ -9,12 +9,11 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author Yossi Gil
- * @since 2016 */
-// @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@Ignore // Be nice to others while we work on this
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue249 {
+/**
+ * @author                      Yossi Gil
+ * @since                      2016 
+ */
+@Ignore @SuppressWarnings({ "static-method", "javadoc" }) public class Issue249 {
   @Test public void a00() {
     azzert.that(metricUnderTest(null), is(0));
   }
@@ -62,8 +61,6 @@ public class Issue249 {
   }
 
   public int metricUnderTest(final String javaStatements) {
-    if (javaStatements == null)
-      return metrics.horizontalComplexity(null);
-    return metrics.horizontalComplexity(into.s(javaStatements));
+    return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }
 }

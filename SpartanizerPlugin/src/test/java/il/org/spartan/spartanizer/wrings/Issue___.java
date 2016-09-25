@@ -11,9 +11,9 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 
 /**
- * A template for unit tests for  {@link NameYourClassHere} , can be used by: <ul> <li>Create a new test class that <code><b>extends</b></code> this class. <ol> <li>All methods in this class will be executed in your code. <li>You would probably want to copy the <code><b>imports</b></code> of this class. </ul> <li>Create a <u>new</u> test class by copying the source of this one: <ol> <li>edit this javaDoc in your copy. <li>put your name in the header <li>sooner or later you will want to erase from your copy: <ul> <li> {@link Test}  copied from this class <li>auxiliary <code><b>private</b></code> methods <li>everything else copied from this class </ul> </ol> In writing tests, note the following <ol> <li>Use <code><b>assert</b></code> statement for the following: <ul> <li><code><b>assert</b> something();</code> <li><code><b>assert</b> !something();</code> <li><code><b>assert</b> thing() != null;</code> </ul> The reason is that <code><b>assert</b> is short, clear, but does not provide as much information as  {@link azzert} . In the above situations, a priori there is nothing to print. <p>You can augment <code><b>assert</b> with a short {@link Object}  (usually a  {@link String} ) that can provide some debugging information (see the implementation of {@link #Z$040()}  or  {@link #Z$060()} .) <li>Instead, use class  {@link azzert}  for anything else: <ul>  <li> to check whether something is <code><b>null</b></code>, use <code>azzer.notNull(something)</code> which prints the content of this something if it is not <code><b>null</b></code <li>Test methods do not usually contain the word test in them. There is no point in repeating ourselves. <li>Naming convention here is that test methods begin with a capital letter A...Z, and are numbered. <li>Also, as in BASIC, tests numbering is in multiple of tens, so as to make it possible to insert tests between tests. <li>Using series for tests is the best way for doing TDD (test driven development) </ol>
- * @author  Yossi Gil // put your name here
- * @since  2016 // put the year/date here 
+ * A template for unit tests for                       {@link NameYourClassHere}                      , can be used by: <ul> <li>Create a new test class that <code><b>extends</b></code> this class. <ol> <li>All methods in this class will be executed in your code. <li>You would probably want to copy the <code><b>imports</b></code> of this class. </ul> <li>Create a <u>new</u> test class by copying the source of this one: <ol> <li>edit this javaDoc in your copy. <li>put your name in the header <li>sooner or later you will want to erase from your copy: <ul> <li>                      {@link Test}                       copied from this class <li>auxiliary <code><b>private</b></code> methods <li>everything else copied from this class </ul> </ol> In writing tests, note the following <ol> <li>Use <code><b>assert</b></code> statement for the following: <ul> <li><code><b>assert</b> something();</code> <li><code><b>assert</b> !something();</code> <li><code><b>assert</b> thing() != null;</code> </ul> The reason is that <code><b>assert</b> is short, clear, but does not provide as much information as                       {@link azzert}                      . In the above situations, a priori there is nothing to print. <p>You can augment <code><b>assert</b> with a short                      {@link Object}                       (usually a                       {@link String}                      ) that can provide some debugging information (see the implementation of                      {@link #Z$040()}                       or                       {@link #Z$060()}                      .) <li>Instead, use class                       {@link azzert}                       for anything else: <ul>  <li> to check whether something is <code><b>null</b></code>, use <code>azzer.notNull(something)</code> which prints the content of this something if it is not <code><b>null</b></code <li>Test methods do not usually contain the word test in them. There is no point in repeating ourselves. <li>Naming convention here is that test methods begin with a capital letter A...Z, and are numbered. <li>Also, as in BASIC, tests numbering is in multiple of tens, so as to make it possible to insert tests between tests. <li>Using series for tests is the best way for doing TDD (test driven development) </ol>
+ * @author                       Yossi Gil // put your name here
+ * @since                       2016 // put the year/date here 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue___ {
   private static Object object() {
@@ -42,28 +42,28 @@ import il.org.spartan.*;
   }
 
   /**
-  * This is the incorrect way you should check for nulls, using  {@link azzert} makes sure we get more informative messages 
+  * This is the incorrect way you should check for nulls, using                       {@link azzert}                      makes sure we get more informative messages 
   */
   @Test public void Z$030() {
     azzert.isNull($null());
   }
 
   /**
-  * Correct way of checking for nulls.  {@link azzert}  cannot provide further information if the test fails, since failures give null which carries no information informative messages 
+  * Correct way of checking for nulls.                       {@link azzert}                       cannot provide further information if the test fails, since failures give null which carries no information informative messages 
   */
   @Test public void Z$040() {
     assert new Object() != null : "Weird... I (" + this + ") never knew that new can return null";
   }
 
   /**
-  * Correct way of checking for nulls.  {@link azzert}  cannot provide further information if the test fails, since failures give null which carries no information informative messages 
+  * Correct way of checking for nulls.                       {@link azzert}                       cannot provide further information if the test fails, since failures give null which carries no information informative messages 
   */
   @Test public void Z$050() {
     assert new Object() != null;
   }
 
   /**
-  * Correct way of checking for true value.  {@link azzert}  cannot provide further information if the test fails, since failures give nothing but boolean value. 
+  * Correct way of checking for true value.                       {@link azzert}                       cannot provide further information if the test fails, since failures give nothing but boolean value. 
   */
   @Test public void Z$060() {
     assert $true();
@@ -71,7 +71,7 @@ import il.org.spartan.*;
   }
 
   /**
-  * Correct way of checking for false value.  {@link azzert}  cannot provide further information if the test fails, since failures give nothing but boolean value. 
+  * Correct way of checking for false value.                       {@link azzert}                       cannot provide further information if the test fails, since failures give nothing but boolean value. 
   */
   @Test public void Z$070() {
     assert !$false();
