@@ -1,8 +1,12 @@
 package il.org.spartan.plugin;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
+
+import il.org.spartan.*;
 
 /** @author Artium Nihamkin
  * @since 2013/01/01
@@ -23,11 +27,13 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
     LoggingManner.now.info("EARLY STATRTUP: spartanizer");
+    startSpartan();
   }
 
   @Override public void start(final BundleContext ¢) throws Exception {
     super.start(¢);
     LoggingManner.now.info("START: spartnizer");
+    startSpartan();
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
@@ -49,5 +55,10 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   @Override protected void saveDialogSettings() {
     LoggingManner.now.info("SDS: spartanizer");
     super.saveDialogSettings();
+  }
+
+  private static void startSpartan() {
+    SpartanizeableAll.go();
+    RefreshAll.go();
   }
 }
