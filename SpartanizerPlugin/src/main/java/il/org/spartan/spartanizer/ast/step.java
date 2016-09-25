@@ -194,6 +194,20 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
     return ¢.initializers();
   }
+  
+  /** Expose the loop condition contained in a {@link ForStatement}
+   * @param ¢ JD
+   * @return reference to the list of initializers contained in the argument */
+  public static Expression condition(final ForStatement ¢) {
+    return ¢.getExpression();
+  }
+  
+  /** Expose the list of updaters contained in a {@link ForStatement}
+   * @param ¢ JD
+   * @return reference to the list of initializers contained in the argument */
+  @SuppressWarnings("unchecked") public static List<Expression> updaters(final ForStatement ¢) {
+    return ¢.updaters();
+  }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
    * @param ¢ JD
