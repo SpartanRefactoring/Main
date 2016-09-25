@@ -75,21 +75,26 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + m.getName().getIdentifier(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, d.getAST().newSimpleName(newName), m, r, g);
-        final Javadoc j = m.getJavadoc();
-        if (j == null)
-          return;
-        final List<TagElement> ts = step.tags(j);
-        if (ts != null)
-          for (final TagElement t : ts) {
-            if (!TagElement.TAG_PARAM.equals(t.getTagName()))
-              continue;
-            for (final Object ¢ : t.fragments())
-              if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-                r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
-                return;
-              }
-          }
+        fixJavadoc(m, oldName, newName, r, g);
       }
     };
+  }
+  
+  static void fixJavadoc(final MethodDeclaration m, final SimpleName oldName, final String newName,
+      final ASTRewrite r, final TextEditGroup g) {
+    final Javadoc j = m.getJavadoc();
+    if (j == null)
+      return;
+    final List<TagElement> ts = step.tags(j);
+    if (ts != null)
+      for (final TagElement t : ts) {
+        if (!TagElement.TAG_PARAM.equals(t.getTagName()))
+          continue;
+        for (final Object ¢ : t.fragments())
+          if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
+            r.replace((SimpleName) ¢, m.getAST().newSimpleName(newName), g);
+            return;
+          }
+      }
   }
 }
