@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** Maintain a canonical order of modifiers.
@@ -25,6 +27,12 @@ public enum IExtendedModifiersOrdering {
   NATIVE, //
   STRICTFP, //
   ;
+  public static boolean[] bitMap() {
+    final boolean[] bitMap = new boolean[IExtendedModifiersOrdering.size()];
+    Arrays.fill(bitMap, false);
+    return bitMap;
+  }
+
   public static int compare(final IExtendedModifier modifier1, final IExtendedModifier modifier2) {
     return compare(find(modifier1), find(modifier2));
   }
@@ -33,12 +41,23 @@ public enum IExtendedModifiersOrdering {
     return compare(find(m), o);
   }
 
+  private static int compare(final IExtendedModifiersOrdering m1, final IExtendedModifiersOrdering m2) {
+    return m1.ordinal() - m2.ordinal();
+  }
+
   public static int compare(final String modifier1, final String modifier2) {
     return compare(find(modifier1), find(modifier2));
   }
 
   public static IExtendedModifiersOrdering find(final IExtendedModifier ¢) {
     return find(¢ + "");
+  }
+
+  static IExtendedModifiersOrdering find(final String modifier) {
+    for (final IExtendedModifiersOrdering $ : IExtendedModifiersOrdering.values())
+      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" + $))
+        return $;
+    return $USER_DEFINED_ANNOTATION$;
   }
 
   public static boolean greaterThan(final IExtendedModifier m1, final IExtendedModifiersOrdering m2) {
@@ -53,14 +72,19 @@ public enum IExtendedModifiersOrdering {
     return compare(m1, $USER_DEFINED_ANNOTATION$) == 0;
   }
 
-  static IExtendedModifiersOrdering find(final String modifier) {
-    for (final IExtendedModifiersOrdering $ : IExtendedModifiersOrdering.values())
-      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" + $))
-        return $;
-    return $USER_DEFINED_ANNOTATION$;
+  public static int ordinal(final IExtendedModifier ¢) {
+    return ordinal(¢ + "");
   }
 
-  private static int compare(final IExtendedModifiersOrdering m1, final IExtendedModifiersOrdering m2) {
-    return m1.ordinal() - m2.ordinal();
+  static int ordinal(final String modifier) {
+    return find(modifier).ordinal();
+  }
+
+  private static final int size() {
+    return IExtendedModifiersOrdering.values().length;
+  }
+
+  public static final int userDefinedAnnotationsOrdinal() {
+    return IExtendedModifiersOrdering.$USER_DEFINED_ANNOTATION$.ordinal();
   }
 }
