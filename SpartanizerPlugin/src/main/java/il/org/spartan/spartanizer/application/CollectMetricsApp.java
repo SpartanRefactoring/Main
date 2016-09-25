@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.Plugin;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -33,18 +32,6 @@ public final class CollectMetricsApp implements IApplication {
 
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
-  }
-
-  // app methods
-  static void discardCompilationUnit(final ICompilationUnit u) {
-    try {
-      u.close();
-      u.delete(true, null);
-    } catch (final JavaModelException e) {
-      Plugin.log(e);
-    } catch (final NullPointerException e) {
-      Plugin.log(e);
-    }
   }
 
   static String getPackageNameFromSource(final String source) {
@@ -151,7 +138,47 @@ public final class CollectMetricsApp implements IApplication {
     output.nl();
   }
 
-  private static void spartanize() { // final CompilationUnit u) {
+  public void copy(final File sourceLocation, final File targetLocation) throws IOException {
+    if (!sourceLocation.isDirectory())
+      copyFile(sourceLocation, targetLocation);
+    else
+      copyDirectory(sourceLocation, targetLocation);
+  }
+
+  @Override public Object start(final IApplicationContext arg0) {
+    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+    System.out.println(path);
+    path = args[0];
+    printStatistics("Before-", OUTPUT);
+    spartanize();
+    printStatistics("After-", SPARTAN_OUTPUT);
+    return IApplication.EXIT_OK;
+  }
+
+  @Override public void stop() {
+    // Unused
+  }
+
+  // app methods
+  void discardCompilationUnit(final ICompilationUnit u) {
+    try {
+      u.close();
+      u.delete(true, null);
+    } catch (final JavaModelException e) {
+      LoggingManner.logEvaluationError(this, e);
+    } catch (final NullPointerException e) {
+      LoggingManner.logProbableBug(this, e);
+    }
+  }
+
+  private void copyDirectory(final File source, final File target) throws IOException {
+    if (!target.exists())
+      target.mkdir();
+    for (final String f : source.list())
+      copy(new File(source, f), new File(target, f));
+  }
+
+  private void spartanize() { // final CompilationUnit u) {
     // TODO: try to it do first with one wring only.
     // I think this is going be
     // better.
@@ -183,33 +210,5 @@ public final class CollectMetricsApp implements IApplication {
         discardCompilationUnit(u);
       }
     }
-  }
-
-  public void copy(final File sourceLocation, final File targetLocation) throws IOException {
-    if (!sourceLocation.isDirectory())
-      copyFile(sourceLocation, targetLocation);
-    else
-      copyDirectory(sourceLocation, targetLocation);
-  }
-
-  @Override public Object start(final IApplicationContext arg0) {
-    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
-    System.out.println(path);
-    path = args[0];
-    printStatistics("Before-", OUTPUT);
-    spartanize();
-    printStatistics("After-", SPARTAN_OUTPUT);
-    return IApplication.EXIT_OK;
-  }
-
-  @Override public void stop() {
-    // Unused
-  }
-
-  private void copyDirectory(final File source, final File target) throws IOException {
-    if (!target.exists())
-      target.mkdir();
-    for (final String f : source.list())
-      copy(new File(source, f), new File(target, f));
   }
 }

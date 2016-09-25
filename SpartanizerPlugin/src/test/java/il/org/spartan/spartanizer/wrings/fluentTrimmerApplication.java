@@ -50,7 +50,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
       assert undoEdit != null;
       dump.go(document.get(), "DOC Content now");
     } catch (MalformedTreeException | BadLocationException x) {
-      throw new AssertionError("BUG", x);
+      throw new AssertionError("MISSING_CASE", x);
     }
     assert undoEdit != null;
   }

@@ -23,6 +23,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dan Greenstein
  * @author Alex Kopzon */
 public abstract class ENVTestEngineAbstract {
+  protected static LinkedHashSet<Entry<String, Environment.Information>> testSet;
+
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
@@ -52,11 +54,10 @@ public abstract class ENVTestEngineAbstract {
   }
 
   protected boolean foundTestedAnnotation; // Global flag, used to
-                                           // determine when to run the
-                                           // test on a node with
-                                           // potential annotations.
+  // determine when to run the
+  // test on a node with
+  // potential annotations.
   protected ASTNode n;
-  protected static LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */

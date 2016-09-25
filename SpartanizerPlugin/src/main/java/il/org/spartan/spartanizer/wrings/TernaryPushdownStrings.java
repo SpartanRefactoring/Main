@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -125,12 +126,12 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final List<Expression> es = extract.allOperands(x);
     final StringLiteral l = az.stringLiteral(last(es));
     assert l != null;
-    assert l.getLiteralValue().length() >= i : dump() + //
+    assert l.getLiteralValue().length() >= i : LoggingManner.dump() + //
         "\n x = " + x + //
         "\n i = " + i + //
         "\n es = " + es + //
         "\n l = " + l + //
-        endDump();
+        LoggingManner.endDump();
     final StringLiteral prefix = getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, x);
     replaceLast(es, prefix);
     return subject.operands(es).to(PLUS2);

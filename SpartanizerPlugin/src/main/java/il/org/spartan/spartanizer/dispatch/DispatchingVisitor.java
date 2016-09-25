@@ -12,6 +12,14 @@ import org.eclipse.jdt.core.dom.*;
  * @see ExclusionManager */
 public abstract class DispatchingVisitor extends ASTVisitor {
   protected final ExclusionManager exclude = new ExclusionManager();
+  private boolean initialized = false;
+
+  @Override public void preVisit(final ASTNode n) {
+    if (initialized)
+      return;
+    initialization(n);
+    initialized = true;
+  }
 
   @Override public final boolean visit(final Assignment ¢) {
     return cautiousGo(¢);
@@ -114,6 +122,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   protected abstract <N extends ASTNode> boolean go(final N n);
+
+  protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
+    // overridden
+  }
 
   private boolean cautiousGo(final ASTNode ¢) {
     return !exclude.isExcluded(¢) && go(¢);

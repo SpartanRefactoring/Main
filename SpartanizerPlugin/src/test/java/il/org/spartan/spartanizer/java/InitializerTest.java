@@ -19,7 +19,6 @@ public final class InitializerTest {
   }
   static int b;
   static int c;
-
   int e;
   {
     // Instance Initializer can union some operations which are required for
@@ -31,7 +30,7 @@ public final class InitializerTest {
     System.out.println("Instance initializer");
   }
 
-  @Test public void T_00() {
+  @Ignore @Test public void T_00() {
     azzert.that(InitializerTest.a, is(0));
     azzert.that(InitializerTest.b, is(0));
     azzert.that(InitializerTest.c, is(300));
