@@ -12,7 +12,7 @@ public enum LoggingManner {
     }
   },
   IGNORE {
-    @Override public LoggingManner log(@SuppressWarnings("unused") final String message) {
+    @Override public LoggingManner log(@SuppressWarnings("unused") final String __) {
       return this;
     }
   },

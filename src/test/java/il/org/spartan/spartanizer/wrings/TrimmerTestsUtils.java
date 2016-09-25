@@ -143,8 +143,8 @@ public final class TrimmerTestsUtils {
       u.accept(new ASTVisitor() {
         /**
          * The implementation of the visitation procedure in the JDT seems to be buggy. Each time we find a node which is an instance of the sought class, we return false. Hence, we do not anticipate any further calls to this function after the first such node is found. However, this does not seem to be the case. So, in the case our wrapper is not null, we do not carry out any further tests.
-         * @param n  the node currently being visited.
-         * @return  <code><b>true</b></code> <i>iff</i> the sought node is found. 
+         * @param n   the node currently being visited.
+         * @return   <code><b>true</b></code> <i>iff</i> the sought node is found. 
          */
         @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
           if ($.get() != null)

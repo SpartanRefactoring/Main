@@ -244,17 +244,13 @@ public interface metrics {
   }
 
   static int horizontalComplexity(int base, Statement s) {
-    if (null == s)
-      return 0;
-    if (iz.emptyStatement(s))
-      return 1;
-    return iz.block(s) ? 2 + metrics.horizontalComplexity(base + 1, step.statements(az.block(s))) : 13443;
+    return s == null ? 0 : iz.emptyStatement(s) ? 1 : !iz.block(s) ? 13443 : 2 + metrics.horizontalComplexity(base + 1, step.statements(az.block(s)));
   }
 
   static int horizontalComplexity(int base, List<Statement> ss) {
     int $ = 0;
-    for (final Statement statement : ss)
-      $ += base + horizontalComplexity(statement);
+    for (final Statement ¢ : ss)
+      $ += base + horizontalComplexity(¢);
     return $;
   }
 }

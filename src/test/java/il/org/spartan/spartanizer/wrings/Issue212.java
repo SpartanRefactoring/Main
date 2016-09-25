@@ -6,9 +6,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * Unit tests for  {@link ForRenameInitializerToCent}
- * @author  YossiGil
- * @since  2016 
+ * Unit tests for                       {@link ForRenameInitializerToCent}
+ * @author                       YossiGil
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue212 {
   @Test public void chocolate1() {

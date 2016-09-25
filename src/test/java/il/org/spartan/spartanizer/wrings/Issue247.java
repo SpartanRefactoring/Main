@@ -6,9 +6,9 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /**
- * Unit tests for  {@link TernaryPushdownStrings}
- * @author  Niv Shalmon
- * @since  2016-09 
+ * Unit tests for                       {@link TernaryPushdownStrings}
+ * @author                       Niv Shalmon
+ * @since                       2016-09 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue247 {
   @Test public void issue247_01() {

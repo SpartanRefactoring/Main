@@ -7,8 +7,8 @@ import org.junit.runners.*;
 
 /**
  * Unit tests for centification of a single parameter to a function
- * @author  Yossi Gil
- * @since  2016 
+ * @author                       Yossi Gil
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue165 {
   @Test public void seriesA_01_vanilla() {
