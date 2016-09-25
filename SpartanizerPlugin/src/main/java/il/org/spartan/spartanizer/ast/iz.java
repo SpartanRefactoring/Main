@@ -823,8 +823,6 @@ public enum iz {
      return x.getCurrent();
     };
     int number =  recurse.postVisit(check);
-    int a=0;
-    a+=1;
     return  number>0;
   }
 }
