@@ -11,10 +11,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 
 /**
- * A test suite for class  {@link minus}
- * @author  Yossi Gil
- * @since  2015-07-18
- * @see step  
+ * A test suite for class                       {@link minus}
+ * @author                       Yossi Gil
+ * @since                       2015-07-18
+ * @see step                       
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class minusTest {
   @Test public void levelComplex() {

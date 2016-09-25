@@ -16,10 +16,10 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /**
- * A test suite for class  {@link step}
- * @author  Yossi Gil
- * @since  2015-07-18
- * @see step  
+ * A test suite for class                       {@link step}
+ * @author                       Yossi Gil
+ * @since                       2015-07-18
+ * @see step                       
  */
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class FuncsTest {
   @Test public void arrayOfInts() {

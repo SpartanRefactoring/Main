@@ -760,13 +760,9 @@ public enum iz {
    * @see {@link convertWhileToFor}
    */
   @SuppressWarnings("boxing") public static boolean containsContinueStatement(ASTNode ¢){
-    if(¢==null)
-      return false;
-    final Recurser<Integer> recurse = new Recurser<>(¢,0);
-    final Function<Recurser<Integer>,Integer> check = (x) -> {
-      return x.getRoot().getNodeType() == ASTNode.CONTINUE_STATEMENT ? x.getCurrent() + 1 : x.getCurrent();
-    };
-    return  recurse.postVisit(check) > 0;
+    return ¢ != null && (new Recurser<>(¢, 0)).postVisit((x) -> {
+      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
+    }) > 0;
   }
 
   public boolean literal(final ASTNode ¢, final double d) {

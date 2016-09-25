@@ -92,7 +92,7 @@ public class Trimmer extends GUI$Applicator {
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
     if (d == null || d.getJavadoc() == null)
       return false;
-    final String s = "" + d.getJavadoc();
+    final String s = d.getJavadoc() + "";
     for (final String ¢ : ids)
       if (s.contains(¢))
         return true;

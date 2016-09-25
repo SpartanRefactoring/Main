@@ -7,8 +7,8 @@ import org.junit.runners.*;
 
 /**
  * {@link $BodyDeclarationModifiersPrune}
- * @author  Yossi Gil
- * @since  2016 
+ * @author                       Yossi Gil
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue131 {
   @Test public void A$010() {
