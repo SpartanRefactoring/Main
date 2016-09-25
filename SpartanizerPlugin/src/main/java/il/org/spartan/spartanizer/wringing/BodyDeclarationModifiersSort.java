@@ -68,9 +68,6 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return $.stream().filter(m -> pred(m, bitMap)).collect(Collectors.toList());
   }
 
-  // TODO: Dan, just look at this! every time in the future we have to sort
-  // something, we just make a list
-  // of the elements, define comparator and it's ready! Beautiful.
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
