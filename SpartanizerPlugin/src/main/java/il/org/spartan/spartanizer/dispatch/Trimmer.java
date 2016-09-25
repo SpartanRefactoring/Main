@@ -127,7 +127,7 @@ public class Trimmer extends GUI$Applicator {
         TrimmerLog.visitation(n);
         if (!inRange(m, n) || isDisabled(n))
           return true;
-        final Wring<N> w = Toolbox.defaultInstance().find(n);
+        final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
         final Suggestion s = w.suggest(n, exclude);
@@ -169,7 +169,7 @@ public class Trimmer extends GUI$Applicator {
         progressMonitor.worked(1);
         if (isDisabled(n))
           return true;
-        final Wring<N> w = Toolbox.defaultInstance().find(n);
+        final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w != null)
           progressMonitor.worked(5);
         return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);

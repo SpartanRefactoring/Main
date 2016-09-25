@@ -18,7 +18,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.wrings.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.

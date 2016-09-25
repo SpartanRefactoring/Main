@@ -80,7 +80,7 @@ public class TrimmerLog {
     TrimmerLog.outputDir = $;
   }
 
-  public static <N extends ASTNode> void suggestion(final Wring<N> w, final N n) {
+  public static <N extends ASTNode> void suggestion(final Tipper<N> w, final N n) {
     if (--maxSuggestions <= 0) {
       if (maxSuggestions == 0)
         System.out.println("Stopped logging suggestions");
@@ -89,7 +89,7 @@ public class TrimmerLog {
     if (logToFile) {
       init();
       output.put("File", fileName);
-      output.put("Wring", clazz(w));
+      output.put("Tipper", clazz(w));
       output.put("Named", w.description());
       output.put("Kind", w.wringGroup());
       output.put("Described", w.description(n));
@@ -100,7 +100,7 @@ public class TrimmerLog {
     if (!logToScreen || !logToScreen)
       return;
     System.out.println("        File: " + fileName);
-    System.out.println("       Wring: " + clazz(w));
+    System.out.println("       Tipper: " + clazz(w));
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.wringGroup());
     System.out.println("   Described: " + w.description(n));

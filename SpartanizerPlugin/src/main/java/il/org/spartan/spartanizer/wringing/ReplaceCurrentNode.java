@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** Replace current node strategy
  * @author Yossi Gil
  * @year 2016 */
-public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulWring<N> {
+public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   public abstract ASTNode replacement(N n);
 
   @Override public final Suggestion suggest(final N n) {
