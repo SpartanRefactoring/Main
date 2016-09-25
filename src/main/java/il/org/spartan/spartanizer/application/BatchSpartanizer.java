@@ -3,12 +3,9 @@ package il.org.spartan.spartanizer.application;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
@@ -16,7 +13,6 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 
 /** Scans files named by folder, ignore test files, and collect statistics.
