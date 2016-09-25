@@ -90,6 +90,7 @@ public class Toolbox {
               new InfixConditionalOrFalse(), //
               new InfixComparisonSpecific(), //
               new InfixMultiplicationByOne(), //
+              new InfixMultiplicationByZero(), //
               new InfixMultiplicationSort(), //
               new InfixPseudoAdditionSort(), //
               new InfixSubtractionSort(), //
