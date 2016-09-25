@@ -13,9 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 
-@SuppressWarnings({ "javadoc", "static-method" }) //
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-public final class flattenTest {
+@SuppressWarnings({ "javadoc", "static-method" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class flattenTest {
   @Test public void flattenExists() {
     flatten.of(i("1+2"));
   }

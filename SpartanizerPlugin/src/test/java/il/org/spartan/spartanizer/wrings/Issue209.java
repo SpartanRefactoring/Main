@@ -5,12 +5,12 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link MethodInvocationToStringToEmptyStringAddition}
- * @author Niv Shalmon
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue209 {
+/**
+ * Unit tests for  {@link MethodInvocationToStringToEmptyStringAddition}
+ * @author  Niv Shalmon
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue209 {
   @Test public void issue116_05() {
     trimmingOf("\"\" + foo(x.toString())").gives("foo(x.toString()) + \"\"").gives("foo((\"\"+x)) + \"\"").gives("foo((x + \"\")) + \"\"").stays();
   }

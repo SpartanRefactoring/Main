@@ -8,9 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
-public final class SpecificityTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class SpecificityTest {
   private static final specificity SPECIFICITY = new specificity();
 
   @Test public void characterGreaterThanNull() {

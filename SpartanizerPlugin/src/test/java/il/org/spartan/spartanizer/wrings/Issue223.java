@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wringing.*;
 import il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 
-/** Unit tests for {@link ClassInstanceCreation}
- * @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public final class Issue223 {
+/**
+ * Unit tests for  {@link ClassInstanceCreation}
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue223 {
   private static final Class<ClassInstanceCreation> SUBJECT_CLASS = ClassInstanceCreation.class;
   private static final String INPUT = "return new Integer(f());";
   Wring<ClassInstanceCreation> wring;
@@ -38,7 +38,7 @@ public final class Issue223 {
   }
 
   @Test public void A$020_CreateContext() {
-    context = into.s(INPUT);//
+    context = into.s(INPUT);
     assert context != null;
   }
 
@@ -106,8 +106,7 @@ public final class Issue223 {
 
   @Test public void B$100descriptionContains() {
     A$040_init();
-    azzert.that(wring.suggest(focus).description, //
-        containsString(focus.getType() + ""));
+    azzert.that(wring.suggest(focus).description, containsString(focus.getType() + ""));
   }
 
   @Test public void B$110rangeNotEmpty() {
@@ -141,10 +140,7 @@ public final class Issue223 {
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimmingOf("Integer x = new Integer(1 + 9);")//
-        .gives("Integer x = Integer.valueOf(1+9);")//
-        .gives("Integer x = Integer.valueOf(10);")//
-        .stays();
+    trimmingOf("Integer x = new Integer(1 + 9);").gives("Integer x = Integer.valueOf(1+9);").gives("Integer x = Integer.valueOf(10);").stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {

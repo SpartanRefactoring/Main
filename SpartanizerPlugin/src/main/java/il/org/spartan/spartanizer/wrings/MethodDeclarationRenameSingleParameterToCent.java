@@ -25,7 +25,6 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerWri
     return ¢.getName() + "";
   }
 
-  // TODO: Alex and Dan. Here you may want to test your environment on this one.
   @Override public Suggestion suggest(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))

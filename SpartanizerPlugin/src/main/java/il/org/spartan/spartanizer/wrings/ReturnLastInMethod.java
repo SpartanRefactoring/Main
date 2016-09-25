@@ -25,11 +25,10 @@ public final class ReturnLastInMethod extends EagerWring<ReturnStatement> implem
     if (s.getExpression() != null)
       return null;
     final Block b = az.block(s.getParent());
-    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null //
-        : new Suggestion(description(s), s) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            r.remove(s, g);
-          }
-        };
+    return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Suggestion(description(s), s) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        r.remove(s, g);
+      }
+    };
   }
 }

@@ -23,21 +23,21 @@ public class convertWhileToFor extends ReplaceCurrentNode<WhileStatement> implem
     return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   }
 
- @Override public ASTNode replacement(WhileStatement s) {
+  @Override public ASTNode replacement(WhileStatement s) {
     final Statement body = s.getBody();
     final Expression whileExpression = s.getExpression();
     final ASTNode lastStatement = hop.lastStatement(body);
-   if (iz.assignment(lastStatement) || iz.incrementOrDecrement(lastStatement) || iz.expressionStatement(lastStatement)) {
+    if (iz.assignment(lastStatement) || iz.incrementOrDecrement(lastStatement) || iz.expressionStatement(lastStatement)) {
       final ForStatement forLoop = s.getAST().newForStatement();
-      //System.out.println(forLoop.updaters());
-     System.out.println(lastStatement.getNodeType());
+      // System.out.println(forLoop.updaters());
+      System.out.println(lastStatement.getNodeType());
       List<Expression> lst = new ArrayList<Expression>();
       forLoop.getAST().newExpression();
-     forLoop.updaters().add(az.expressionStatement(lastStatement).getExpression());
-          //add(az.expressionStatement(lastStatement));
+      forLoop.updaters().add(az.expressionStatement(lastStatement).getExpression());
+      // add(az.expressionStatement(lastStatement));
       forLoop.initializers().add(az.expression(whileExpression));
       return forLoop;
     }
-   return null;
+    return null;
   }
 }

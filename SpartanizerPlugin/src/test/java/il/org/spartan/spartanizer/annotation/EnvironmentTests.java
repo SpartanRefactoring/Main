@@ -92,7 +92,7 @@ import java.util.*;
     }
 
     @OutOfOrderFlatENV({ "x", "y" }) static class C1 {
-      @NestedENV({ "EX2.C1.x#int" }) @OutOfOrderFlatENV({ "x" }) public static int y; // no
+      @NestedENV({ "EX2.C1.x#int" }) @OutOfOrderFlatENV({ "x" }) public static int y;
       @InOrderFlatENV({ "x", "y", "c1" }) @NestedENV({ "EX2.C1.x#int", "EX2.C1.y#int", "EX2.C1.c1#C1" }) @OutOfOrderFlatENV({ "c1", "y",
           "x" }) public static int x;
 
@@ -136,8 +136,7 @@ import java.util.*;
     }
 
     @NestedENV({}) @OutOfOrderFlatENV({}) int x, y;
-    @NestedENV({ "EX3.x", "EX3.y" }) @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) int q; // no
-                                                                                                           // xsy
+    @NestedENV({ "EX3.x", "EX3.y" }) @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) int q;
 
     EX3() {
       @Begin class A {
@@ -162,7 +161,7 @@ import java.util.*;
         xsy = new y_hiding();
       }
 
-      @NestedENV({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" }) @OutOfOrderFlatENV({ "x", "xsy" }) public final class y_hiding { // purpose!
+      @NestedENV({ "EX3.x_hiding.x#int", "EX3.x_hiding.xsy#y_hiding" }) @OutOfOrderFlatENV({ "x", "xsy" }) public final class y_hiding {
         @InOrderFlatENV({ "x", "xsy" }) @OutOfOrderFlatENV({ "xsy", "x" }) public int y;
 
         y_hiding() {
@@ -273,11 +272,11 @@ import java.util.*;
 
         @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void b_func() {
           @Begin class opening {
-            /**/}
+          }
           ++a_x;
           ++b_x;
           @End({ "a_x", "b_x" }) class closing {
-            /**/}
+          }
         }
 
         @InOrderFlatENV({ "x", "a_x", "b_x" }) @OutOfOrderFlatENV({ "b_x", "a_x", "x" }) class c {
@@ -285,12 +284,12 @@ import java.util.*;
 
           @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "c_x", "b_x", "a_x", "x" }) void c_func() {
             @Begin class opening {
-              /**/}
+            }
             ++a_x;
             ++b_x;
             ++c_x;
             @End({ "a_x", "b_x", "c_x" }) class closing {
-              /**/}
+            }
           }
 
           @InOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x" }) class d {
@@ -298,13 +297,13 @@ import java.util.*;
 
             @OutOfOrderFlatENV({ "x", "a_x", "b_x", "c_x", "d_x" }) void d_func() {
               @Begin class opening {
-                /**/}
+              }
               ++a_x;
               ++b_x;
               ++c_x;
               ++d_x;
               @End({ "a_x", "b_x", "c_x", "d_x" }) class closing {
-                /**/}
+              }
             }
           }
         }
@@ -317,19 +316,16 @@ import java.util.*;
       int x;
 
       @NestedENV({ "EX6.Outer.x#int" }) @OutOfOrderFlatENV({ "x" }) class Inner {
-        final Outer outer = Outer.this; // Supposedly, this should allow us to
-                                        // access the outer x.
+        final Outer outer = Outer.this;
 
         @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(final Inner p) {
           @Begin class m {
-            /**/}
-          // working on the current instance
+          }
           x = 0;
           x = 1;
-          // working on another instance
           p.outer.x = 2;
           @End({ "x" }) class n {
-            /**/}
+          }
         }
       }
     }
@@ -344,12 +340,12 @@ import java.util.*;
         @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @OutOfOrderFlatENV({ "x",
             "outer2" }) void func(final Inner2 p) {
           @Begin class A {
-            /**/}
+          }
           x = 0;
           Outer2.this.x = 1;
           p.outer2.x = 2;
           @End({ "x" }) class B {
-            /**/}
+          }
         }
       }
     }
@@ -375,10 +371,10 @@ import java.util.*;
 
       @NestedENV({ "EX8.Arr.arr#String[]" }) @OutOfOrderFlatENV({ "arr" }) void foo() {
         @Begin class m {
-          /**/}
+        }
         arr[2] = "$$$";
         @End({ "arr" }) class n {
-          /**/}
+        }
       }
     }
   }
