@@ -10,20 +10,20 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** An adapter that converts the protocol of a single @{link Wring} instance
+/** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link GUI$Applicator}. This class must eventually die.
  * @author Yossi Gil
  * @since 2015/07/25 */
 public final class WringApplicator extends GUI$Applicator {
-  final Wring<ASTNode> wring;
+  final Tipper<ASTNode> tipper;
   final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
-   * @param wring The wring we wish to convert
+   * @param tipper The tipper we wish to convert
    * @param name The title of the refactoring */
-  @SuppressWarnings("unchecked") public WringApplicator(final Wring<? extends ASTNode> w) {
+  @SuppressWarnings("unchecked") public WringApplicator(final Tipper<? extends ASTNode> w) {
     super(w.name());
-    wring = (Wring<ASTNode>) w;
+    tipper = (Tipper<ASTNode>) w;
     clazz = w.myActualOperandsClass();
     assert clazz != null : "Oops, cannot find kind of operands of " + w.name();
   }
@@ -32,8 +32,8 @@ public final class WringApplicator extends GUI$Applicator {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || wring.canSuggest(¢) || inRange(m, ¢))
-          wring.suggest(¢).go(r, null);
+        if (¢.getClass() == clazz || tipper.canSuggest(¢) || inRange(m, ¢))
+          tipper.suggest(¢).go(r, null);
       }
     });
   }
@@ -46,10 +46,10 @@ public final class WringApplicator extends GUI$Applicator {
         if (¢.getClass() == clazz)
           return;
         progressMonitor.worked(1);
-        if (!wring.canSuggest(¢))
+        if (!tipper.canSuggest(¢))
           return;
         progressMonitor.worked(1);
-        $.add(wring.suggest(¢));
+        $.add(tipper.suggest(¢));
       }
     };
   }

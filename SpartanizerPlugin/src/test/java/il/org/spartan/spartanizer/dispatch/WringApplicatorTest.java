@@ -7,7 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.wrings.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /**
  * Unit tests for                       {@link WringApplicator}
@@ -31,14 +31,14 @@ import il.org.spartan.spartanizer.wrings.*;
   }
 
   @Test public void nameIsCorrect() {
-    azzert.that(it.wring, instanceOf(BLOCK_SIMPLIFY));
+    azzert.that(it.tipper, instanceOf(BLOCK_SIMPLIFY));
   }
 
   @Test public void wring() {
-    azzert.notNull(it.wring);
+    azzert.notNull(it.tipper);
   }
 
   @Test public void wringIsCorrect() {
-    azzert.that(it.wring, instanceOf(BLOCK_SIMPLIFY));
+    azzert.that(it.tipper, instanceOf(BLOCK_SIMPLIFY));
   }
 }
