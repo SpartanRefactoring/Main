@@ -64,7 +64,9 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
-    return $.stream().filter(m -> pred(m, IExtendedModifiersOrdering.bitMap())).collect(Collectors.toList());
+    boolean[] bitMap = IExtendedModifiersOrdering.bitMap();
+    List<? extends IExtendedModifier> l =  $.stream().filter(m -> pred(m, bitMap)).collect(Collectors.toList());
+    return l;
   }
 
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
