@@ -50,10 +50,10 @@ public class Trimmer extends GUI$Applicator {
    * @since 2016/05/13 */
   public static void disabledScan(final ASTNode n) {
     n.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
-        if (!(n instanceof BodyDeclaration) || !isDisabledByIdentifier((BodyDeclaration) n))
+      @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N ¢) {
+        if (!(¢ instanceof BodyDeclaration) || !isDisabledByIdentifier((BodyDeclaration) ¢))
           return true;
-        disable((BodyDeclaration) n);
+        disable((BodyDeclaration) ¢);
         return false;
       }
     });
@@ -78,12 +78,12 @@ public class Trimmer extends GUI$Applicator {
    * @param d disabled {@link BodyDeclaration} */
   static void disable(final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (n instanceof BodyDeclaration && isEnabledByIdentifier((BodyDeclaration) n)) {
-          disabledScan(n);
+      @Override protected <N extends ASTNode> boolean go(final N ¢) {
+        if (¢ instanceof BodyDeclaration && isEnabledByIdentifier((BodyDeclaration) ¢)) {
+          disabledScan(¢);
           return false;
         }
-        NodeData.set(n, disabledPropertyId);
+        NodeData.set(¢, disabledPropertyId);
         return true;
       }
     });
@@ -140,8 +140,8 @@ public class Trimmer extends GUI$Applicator {
         return true;
       }
 
-      @Override protected void initialization(final ASTNode n) {
-        disabledScan(n);
+      @Override protected void initialization(final ASTNode ¢) {
+        disabledScan(¢);
       }
     });
   }
@@ -175,8 +175,8 @@ public class Trimmer extends GUI$Applicator {
         return w == null || w.cantSuggest(n) || prune(w.suggest(n, exclude), $);
       }
 
-      @Override protected void initialization(final ASTNode n) {
-        disabledScan(n);
+      @Override protected void initialization(final ASTNode ¢) {
+        disabledScan(¢);
       }
     };
   }

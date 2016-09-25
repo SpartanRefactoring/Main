@@ -235,8 +235,8 @@ public final class BatchSpartanizer {
 
   void fire() {
     collect();
-    runEssence();
-    runWordCount();
+    // runEssence();
+    // runWordCount();
   }
 
   void runEssence() {

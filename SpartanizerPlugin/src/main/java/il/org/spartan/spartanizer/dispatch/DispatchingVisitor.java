@@ -14,10 +14,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   protected final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
-  @Override public void preVisit(final ASTNode n) {
+  @Override public void preVisit(final ASTNode ¢) {
     if (initialized)
       return;
-    initialization(n);
+    initialization(¢);
     initialized = true;
   }
 
