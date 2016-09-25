@@ -8,9 +8,9 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /**
- * Unit tests for                       {@link TernaryPushdownStrings}
- * @author                       Niv Shalmon
- * @since                       2016 
+ * Unit tests for                                           {@link TernaryPushdownStrings}
+ * @author                                           Niv Shalmon
+ * @since                                           2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue236 {
   @Test public void issue236_01() {

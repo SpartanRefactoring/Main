@@ -15,9 +15,9 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /**
- * Unit tests for                       {@link ThrowNotLastInBlock}
- * @author                       Yossi Gil
- * @since                       2016 
+ * Unit tests for                                           {@link ThrowNotLastInBlock}
+ * @author                                           Yossi Gil
+ * @since                                           2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue086 extends Issue___ {
   private static final String INPUT = "{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}";

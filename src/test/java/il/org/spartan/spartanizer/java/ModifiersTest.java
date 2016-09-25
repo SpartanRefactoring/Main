@@ -8,8 +8,8 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 
 /**
- * @author                      Alex Kopzon
- * @since                      2016 
+ * @author                                          Alex Kopzon
+ * @since                                          2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class ModifiersTest {
   @Test public void modifierUse_01() {

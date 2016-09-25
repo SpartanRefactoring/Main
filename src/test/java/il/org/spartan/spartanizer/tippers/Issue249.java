@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /**
- * @author                      Yossi Gil
- * @since                      2016 
+ * @author                                          Yossi Gil
+ * @since                                          2016 
  */
 @Ignore @SuppressWarnings({ "static-method", "javadoc" }) public class Issue249 {
   @Test public void a00() {

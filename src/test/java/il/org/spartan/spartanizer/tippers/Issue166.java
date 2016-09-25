@@ -8,9 +8,9 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /**
- * Unit test for                      {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
- * @author                       Yossi Gil
- * @since                       2016 
+ * Unit test for                                          {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
+ * @author                                           Yossi Gil
+ * @since                                           2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue166 {
   @Test public void dollar() {
