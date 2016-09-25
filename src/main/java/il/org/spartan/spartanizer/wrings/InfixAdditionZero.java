@@ -86,7 +86,6 @@ public final class InfixAdditionZero extends EagerWring<InfixExpression> impleme
   }
 
   @Override public String description() {
-    // TODO Auto-generated method stub
     return null;
   }
 

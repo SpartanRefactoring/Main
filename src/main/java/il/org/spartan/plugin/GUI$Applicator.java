@@ -110,7 +110,7 @@ public abstract class GUI$Applicator extends Refactoring {
       collectAllSuggestions();
     else {
       innerRunAsMarkerFix(marker, true);
-      marker = null; // consume marker
+      marker = null;
     }
     pm.done();
     return new RefactoringStatus();
@@ -233,9 +233,10 @@ public abstract class GUI$Applicator extends Refactoring {
    *         spartanization */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
-      /** a quickfix which opens a refactoring wizard with the spartanization
-       * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-       *         (v2) */
+      /**
+       * a quickfix which opens a refactoring wizard with the spartanization
+       * @author  Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2) 
+       */
       @Override public String getLabel() {
         return "Show spartanization preview";
       }

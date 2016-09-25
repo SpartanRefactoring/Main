@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.wringing.*;
  * @since 2016-08-14 */
 public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   @Override public String description() {
-    // TODO Auto-generated method stub
     return null;
   }
 

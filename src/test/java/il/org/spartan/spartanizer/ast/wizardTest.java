@@ -6,9 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "javadoc", "static-method" }) //
-public final class wizardTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class wizardTest {
   @Test public void sameOfNullAndSomething() {
     assert !wizard.same(null, e("a"));
   }

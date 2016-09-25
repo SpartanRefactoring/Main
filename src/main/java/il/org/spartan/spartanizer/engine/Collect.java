@@ -193,21 +193,21 @@ public enum Collect {
         return consider(initializers(¢));
       }
 
-      /** {@link PostfixExpression} can be only INCREMENT OR DECREMENT.
-       * @param it JD
-       * @return identifier of the operand. */
+      /**
+       * {@link PostfixExpression}  can be only INCREMENT OR DECREMENT.
+       * @param it  JD
+       * @return  identifier of the operand. 
+       */
       @Override public boolean visit(final PostfixExpression it) {
-        // return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT,
-        // PostfixExpression.Operator.DECREMENT) || consider(it.getOperand());
         return consider(it.getOperand());
       }
 
-      /** {@link PrefixExpression} can be more then only INCREMENT OR DECREMENT,
-       * but only on that cases it is a definition.
-       * @param it JD
-       * @return identifier of the operand. */
+      /**
+       * {@link PrefixExpression}  can be more then only INCREMENT OR DECREMENT, but only on that cases it is a definition.
+       * @param it  JD
+       * @return  identifier of the operand. 
+       */
       @Override public boolean visit(final PrefixExpression it) {
-        // return consider(it.getOperand());
         return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
 
@@ -336,10 +336,6 @@ public enum Collect {
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
-        /* Now: this is a bit complicated. Java allows declaring methods in
-         * anonymous classes in which the formal parameters hide variables in
-         * the enclosing scope. We don't want to collect them as uses of the
-         * variable */
         for (final SingleVariableDeclaration ¢ : parameters(d))
           if (¢.getName().subtreeMatch(matcher, what))
             return false;

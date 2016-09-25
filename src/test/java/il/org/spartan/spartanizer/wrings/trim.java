@@ -62,28 +62,25 @@ public interface trim {
     @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Wring<N>... ns) {
       return new fluentTrimmer(clazz, ns) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
-          // TODO Auto-generated method stub
           return super.checkAllConditions(pm);
         }
 
-        /* @Override public <T> T getAdapter(final Class<T> adapter) { // TODO
-         * Auto-generated method stub return (T) super.getAdapter(adapter); } */
         @Override public fluentTrimmerApplication of(final String codeFragment) {
-          // TODO Auto-generated method stub
           return super.of(codeFragment);
         }
 
         @Override protected RefactoringTickProvider doGetRefactoringTickProvider() {
-          // TODO Auto-generated method stub
           return super.doGetRefactoringTickProvider();
         }
       };
     }
   }
 
-  /** Unit tests demonstrating the fluent API
-   * @author Yossi Gil
-   * @since 2016 */
+  /**
+   * Unit tests demonstrating the fluent API
+   * @author  Yossi Gil
+   * @since  2016 
+   */
   @SuppressWarnings("static-method") @Ignore static class TEST {
     @Test public void trimming_of_gives() {
       trim.of("a +=1;").gives("a++;");

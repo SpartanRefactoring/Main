@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @year 2015 */
 public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
-  private final static String script = "./essence";
+  private static final String script = "./essence";
 
   public static String essenced(final String fileName) {
     return fileName + ".essence";
@@ -87,7 +87,7 @@ public final class BatchSpartanizer {
     final StringBuffer sb = new StringBuffer();
     while ((line = reader.readLine()) != null)
       sb.append(line);
-    return sb.toString();
+    return "" + sb;
   }
 
   private static int wc(final String $) {
@@ -248,8 +248,8 @@ public final class BatchSpartanizer {
     try {
       final String essentializedCodeBefore = executeScript(beforeFileName);
       final String essentializedCodeAfter = executeScript(afterFileName);
-      final int numWordEssentialBefore = essenceNew(essentializedCodeBefore.toString()).trim().length();
-      final int numWordEssentialAfter = essenceNew(essentializedCodeAfter.toString()).trim().length();
+      final int numWordEssentialBefore = essenceNew(("" + essentializedCodeBefore)).trim().length();
+      final int numWordEssentialAfter = essenceNew(("" + essentializedCodeAfter)).trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
