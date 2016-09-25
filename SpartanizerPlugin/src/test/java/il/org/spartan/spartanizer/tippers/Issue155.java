@@ -8,9 +8,9 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /**
- * Unit tests for                       {@link DeclarationInitializerStatementTerminatingScope}
- * @author                       Ori Roth
- * @since                       2016 
+ * Unit tests for                                           {@link DeclarationInitializerStatementTerminatingScope}
+ * @author                                           Ori Roth
+ * @since                                           2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue155 {
   @Ignore @Test public void inlineFinal() {

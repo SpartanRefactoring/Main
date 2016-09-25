@@ -8,9 +8,9 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /**
- * Unit tests for                      {@link BodyDeclarationModifiersSort}
- * @author                      Alex Kopzon
- * @since                      2016-09 
+ * Unit tests for                                          {@link BodyDeclarationModifiersSort}
+ * @author                                          Alex Kopzon
+ * @since                                          2016-09 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue230 {
   @Test public void a() {
