@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue103 {
+/**
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue103 {
   @Test public void _AND1() {
     trimmingOf("a=a&5;").gives("a&=5;");
   }

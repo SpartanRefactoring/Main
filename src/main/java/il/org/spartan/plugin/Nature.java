@@ -13,9 +13,6 @@ public final class Nature implements IProjectNature {
   /** The project to which we relate */
   private IProject project;
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.core.resources.IProjectNature#configure() */
   @Override public void configure() throws CoreException {
     final IProjectDescription d = project.getDescription();
     final ICommand[] cs = d.getBuildSpec();
@@ -25,9 +22,6 @@ public final class Nature implements IProjectNature {
     set(d, cs);
   }
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.core.resources.IProjectNature#deconfigure() */
   @Override public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();
     final ICommand[] cs = description.getBuildSpec();

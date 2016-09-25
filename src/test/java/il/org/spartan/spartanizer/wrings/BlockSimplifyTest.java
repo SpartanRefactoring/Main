@@ -18,13 +18,13 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.wringing.*;
 
-/** Unit tests for {@link NameYourClassHere}
- * @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-@Ignore("Still problems with #205") //
-public final class BlockSimplifyTest {
+/**
+ * Unit tests for  {@link NameYourClassHere}
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method",
+    "javadoc" }) @Ignore("Still problems with #205") public final class BlockSimplifyTest {
   @Test public void complexEmpty0() {
     trimmingOf("{;}").gives("/* empty */    ");
   }

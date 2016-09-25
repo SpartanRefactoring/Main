@@ -95,9 +95,6 @@ public abstract class searchAncestors {
       this.clazz = clazz;
     }
 
-    // TODO Yossi: replaced
-    // $.getClass().isInstance(clazz) -> clazz.isAssignableFrom($.getClass()))
-    // please confirm, changed by Ori
     @Override public ASTNode from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())

@@ -14,12 +14,12 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** Tests for {@Link InfixAdditionZero}
- * @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue072 {
+/**
+ * Tests for  {@Link  InfixAdditionZero}
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue072 {
   @Test public void ma() {
     final String s = "0-x";
     final InfixExpression i = into.i(s);
@@ -51,9 +51,7 @@ public class Issue072 {
   }
 
   @Test public void md3() {
-    trimmingOf("0-x-0-y-0-z-0-0")//
-        .gives("-x-y-z")//
-        .stays();
+    trimmingOf("0-x-0-y-0-z-0-0").gives("-x-y-z").stays();
   }
 
   @Test public void me() {
@@ -85,17 +83,12 @@ public class Issue072 {
   }
 
   @Test public void mf1A() {
-    trimmingOf("0-(x-0)")//
-        .gives("-(x-0)")//
-        .gives("-(x)") //
-        .stays();
+    trimmingOf("0-(x-0)").gives("-(x-0)").gives("-(x)").stays();
   }
 
   @Test public void mf1B() {
     assert iz.simple(into.e("x"));
-    trimmingOf("-(x-0)")//
-        .gives("-(x)")//
-        .stays();
+    trimmingOf("-(x-0)").gives("-(x)").stays();
   }
 
   @Test public void mg() {
@@ -111,9 +104,7 @@ public class Issue072 {
   }
 
   @Test public void mi() {
-    trimmingOf("0-x-0-y-0-z-0")//
-        .gives("-x-y-z")//
-        .stays();
+    trimmingOf("0-x-0-y-0-z-0").gives("-x-y-z").stays();
   }
 
   @Test public void mj() {
@@ -154,15 +145,10 @@ public class Issue072 {
   }
 
   @Test public void ph() {
-    trimmingOf("0+((x+y)+0+(z+h))+0")//
-        .gives("0 +(x+y) +0+(z+h)+0")//
-        .gives("0 +x+y +0+(z+h)+0")//
-        .stays();
+    trimmingOf("0+((x+y)+0+(z+h))+0").gives("0 +(x+y) +0+(z+h)+0").gives("0 +x+y +0+(z+h)+0").stays();
   }
 
   @Test public void pi() {
-    trimmingOf("0+(0+x+y+((int)x+0))")//
-        .gives("0+x+y+(int)x +0")//
-        .stays();
+    trimmingOf("0+(0+x+y+((int)x+0))").gives("0+x+y+(int)x +0").stays();
   }
 }

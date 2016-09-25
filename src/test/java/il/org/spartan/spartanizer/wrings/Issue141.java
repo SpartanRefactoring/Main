@@ -5,23 +5,19 @@ import static il.org.spartan.spartanizer.wrings.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Yossi Gil
- * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class Issue141 {
+/**
+ * @author  Yossi Gil
+ * @since  2016 
+ */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue141 {
   @Test public void t01() {
-    trimmingOf("public static void go(final Object os[], final String... ss) {  \n"//
-        + "for (final String saa : ss) \n"//
-        + "out(saa);  \n" + "out(\"elements\", os);   \n"//
-        + "}").stays();
+    trimmingOf("public static void go(final Object os[], final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
+        + "out(\"elements\", os);   \n" + "}").stays();
   }
 
   @Test public void t02() {
-    trimmingOf("public static void go(final List<Object> os, final String... ss) {  \n"//
-        + "for (final String saa : ss) \n"//
-        + "out(saa);  \n" + "out(\"elements\", os);   \n"//
-        + "}").stays();
+    trimmingOf("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
+        + "out(\"elements\", os);   \n" + "}").stays();
   }
 
   @Test public void t03() {

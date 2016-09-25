@@ -764,12 +764,9 @@ public enum iz {
       return false;
     final Recurser<Integer> recurse = new Recurser<>(¢,0);
     final Function<Recurser<Integer>,Integer> check = (x) -> {
-      if (x.getRoot().getNodeType() == ASTNode.CONTINUE_STATEMENT)//
-       return x.getCurrent()+1;
-     return x.getCurrent();
+      return x.getRoot().getNodeType() == ASTNode.CONTINUE_STATEMENT ? x.getCurrent() + 1 : x.getCurrent();
     };
-    int number =  recurse.postVisit(check);
-    return  number>0;
+    return  recurse.postVisit(check) > 0;
   }
 
   public boolean literal(final ASTNode ¢, final double d) {

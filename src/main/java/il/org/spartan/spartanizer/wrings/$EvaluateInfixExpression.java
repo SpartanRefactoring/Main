@@ -22,28 +22,28 @@ import il.org.spartan.spartanizer.wringing.*;
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
   public static int indexForLeftEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
-    int counter = 0;
+    int $ = 0;
     for (final Expression ¢ : lst) {
       if (!iz.number(¢)) {
-        if (counter > 1)
-          return counter;
+        if ($ > 1)
+          return $;
         return 0;
       }
-      counter++;
+      $++;
     }
     return 0;
   }
 
   public static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
-    int counter = 0;
+    int $ = 0;
     for (int i = lst.size() - 1; i >= 0; i--) {
       if (!iz.number(lst.get(i))) {
-        if (counter > 1)
-          return counter;
+        if ($ > 1)
+          return $;
         return 0;
       }
-      counter++;
+      $++;
     }
     return -1;
   }

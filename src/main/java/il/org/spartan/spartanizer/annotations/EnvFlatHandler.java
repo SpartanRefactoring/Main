@@ -31,14 +31,6 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
     runTest();
   }
 
-  /* TODO Update EnvironmentCodeExamples - currently NestedENV does not
-   * represent the expected results of neither Environment.uses or
-   * Environment.declares. Should be the expected result of
-   * Environment.declares.
-   *
-   * @see
-   * il.org.spartan.spartanizer.engine.ENVTestEngineAbstract#buildEnvironmentSet
-   * (org.eclipse.jdt.core.dom.BodyDeclaration) */
   @Override protected LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
@@ -55,7 +47,6 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
-      // runs on the Ids
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(values(¢));

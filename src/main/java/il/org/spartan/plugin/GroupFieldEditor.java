@@ -60,7 +60,6 @@ public final class GroupFieldEditor extends FieldEditor {
     return group;
   }
 
-  /* (non-Javadoc) Method declared on FieldEditor. */
   @Override public int getNumberOfControls() {
     return members.size();
   }
@@ -80,13 +79,11 @@ public final class GroupFieldEditor extends FieldEditor {
     return true;
   }
 
-  /* @see FieldEditor.setEnabled */
   @Override public void setEnabled(final boolean enabled, final Composite parentParam) {
     for (final FieldEditor ¢ : members)
       ¢.setEnabled(enabled, parentParam);
   }
 
-  /* (non-Javadoc) Method declared on FieldEditor. */
   @Override public void setFocus() {
     if (members != null && !members.isEmpty())
       members.iterator().next().setFocus();
@@ -107,7 +104,6 @@ public final class GroupFieldEditor extends FieldEditor {
     doStore();
   }
 
-  /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
     this.numColumns = numColumns;
   }
@@ -128,25 +124,19 @@ public final class GroupFieldEditor extends FieldEditor {
     parent.redraw();
   }
 
-  @SuppressWarnings("unused") @Override protected void doFillIntoGrid(final Composite ____parent, final int ____numColumns) {
-    // TODO Auto-generated method stub
+  @Override @SuppressWarnings("unused") protected void doFillIntoGrid(final Composite ____parent, final int ____numColumns) {
   }
 
-  /* (non-Javadoc) Method declared on FieldEditor. Loads the value from the
-   * preference store and sets it to the check box. */
   @Override protected void doLoad() {
     for (final FieldEditor ¢ : members)
       ¢.load();
   }
 
-  /* (non-Javadoc) Method declared on FieldEditor. Loads the default value from
-   * the preference store and sets it to the check box. */
   @Override protected void doLoadDefault() {
     for (final FieldEditor ¢ : members)
       ¢.loadDefault();
   }
 
-  /* (non-Javadoc) Method declared on FieldEditor. */
   @Override protected void doStore() {
     for (final FieldEditor ¢ : members)
       ¢.store();
