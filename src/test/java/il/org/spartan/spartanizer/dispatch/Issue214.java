@@ -11,9 +11,9 @@ import il.org.spartan.spartanizer.wringing.*;
 import il.org.spartan.spartanizer.wrings.*;
 
 /**
- * TDD: Unit tests for  {@link Wring#myActualOperandsClass()}
- * @author  Yossi Gil
- * @since  2016 
+ * TDD: Unit tests for                       {@link Wring#myActualOperandsClass()}
+ * @author                       Yossi Gil
+ * @since                       2016 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class Issue214 {
   private static <N extends ASTNode> Class<N> mustBeASTNodeClass(final Class<N> ¢) {
