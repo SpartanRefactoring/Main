@@ -19,7 +19,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
-      if (!iz.literal1(¢))
+      if (!iz.parsed.literal1(¢))
         $.add(¢);
     return $.size() == xs.size() ? null
         : $.isEmpty() ? duplicate.of(first(xs)) : $.size() == 1 ? duplicate.of(first($)) : subject.operands($).to(TIMES);

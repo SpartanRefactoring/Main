@@ -18,18 +18,36 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2016 */
 public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements Kind.Sorting {
-  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> ModifiersOrdering.compare(m1, m2);
+  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
+      m2);
 
-  private static boolean isSorted(final List<? extends IExtendedModifier> ms) {
-    ModifiersOrdering previous = ModifiersOrdering.$ANNOTATION$;
+  public static boolean contains(final List<IExtendedModifier> ms, final IExtendedModifier m) {
+    for (final IExtendedModifier ¢ : ms)
+      if (IExtendedModifiersOrdering.compare(m, ¢) == 0)
+        return true;
+    return false;
+  }
+
+  private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
+    IExtendedModifiersOrdering previous = IExtendedModifiersOrdering.Override;
     for (final IExtendedModifier current : ms) {
-      if (!ModifiersOrdering.greaterThanOrEquals(current, previous))
+      if (!IExtendedModifiersOrdering.greaterThan(current, previous))
         return false;
-      previous = ModifiersOrdering.find(current);
+      previous = IExtendedModifiersOrdering.find(current);
     }
     return true;
   }
-  // TODO: Dan, just look at this! every time in the future we have to sort something, we just make a list
+
+  private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
+    final List<IExtendedModifier> n = new ArrayList<>();
+    for (final IExtendedModifier m : $)
+      if (!contains(n, m) || IExtendedModifiersOrdering.isUserDefinedAnnotation(m))
+        n.add(m);
+    return n;
+  }
+
+  // TODO: Dan, just look at this! every time in the future we have to sort
+  // something, we just make a list
   // of the elements, define comparator and it's ready! Beautiful.
   private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(Collectors.toList());
@@ -44,7 +62,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   @Override protected boolean prerequisite(final N ¢) {
-    return !isSorted(extendedModifiers(¢));
+    return !isSortedAndDistinct(extendedModifiers(¢));
   }
 
   N go(final N $) {
@@ -54,10 +72,6 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return $;
   }
 
-  private static List<? extends IExtendedModifier> removeSame(List<? extends IExtendedModifier> $) {
-    return $.stream().distinct().collect(Collectors.toList());
-  }
-  
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(removeSame(extendedModifiers($)));
   }

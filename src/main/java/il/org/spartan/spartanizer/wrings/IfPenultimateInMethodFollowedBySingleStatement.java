@@ -19,16 +19,16 @@ import il.org.spartan.spartanizer.wringing.*;
  * @author Yossi Gil
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement> implements Kind.EarlyReturn {
+  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+  }
+
   static <T> void removeLast(final List<T> ¢) {
     ¢.remove(¢.size() - 1);
   }
 
   @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
-  }
-
-  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {

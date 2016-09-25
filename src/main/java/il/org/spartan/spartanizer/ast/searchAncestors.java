@@ -34,29 +34,32 @@ public abstract class searchAncestors {
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
   public abstract ASTNode from(final ASTNode n);
-  
-  // TODO Yossi: please confirm, written by Ori, can replace/be merged with from (see
+
+  // TODO Yossi: please confirm, written by Ori, can replace/be merged with from
+  // (see
   // lastFrom below)
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
   public abstract ASTNode inclusiveFrom(final ASTNode n);
-  
-  // TODO Yossi: default implementation using from function, please confirm, written by Ori
-  /** @param n JD
-   * @return furtherest ancestor whose type matches the given type. */
-  public ASTNode lastFrom(final ASTNode n) {
-    ASTNode $ = from(n);
-    for (ASTNode p = $ ; p != null ; p = from(p))
-      $ = p;
-    return $;
-  }
-  
-  // TODO Yossi: default implementation using from function, please confirm, written by Ori
+
+  // TODO Yossi: default implementation using from function, please confirm,
+  // written by Ori
   /** @param n JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode inclusiveLastFrom(final ASTNode n) {
     ASTNode $ = inclusiveFrom(n);
-    for (ASTNode p = $ ; p != null ; p = from(p))
+    for (ASTNode p = $; p != null; p = from(p))
+      $ = p;
+    return $;
+  }
+
+  // TODO Yossi: default implementation using from function, please confirm,
+  // written by Ori
+  /** @param n JD
+   * @return furtherest ancestor whose type matches the given type. */
+  public ASTNode lastFrom(final ASTNode n) {
+    ASTNode $ = from(n);
+    for (ASTNode p = $; p != null; p = from(p))
       $ = p;
     return $;
   }
@@ -103,8 +106,8 @@ public abstract class searchAncestors {
       return null;
     }
 
-    @Override public ASTNode inclusiveFrom(ASTNode n) {
-      return n != null && (n.getClass().equals(clazz) || clazz.isAssignableFrom(n.getClass())) ? n : from(n);
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && (¢.getClass().equals(clazz) || clazz.isAssignableFrom(¢.getClass())) ? ¢ : from(¢);
     }
   }
 
@@ -123,8 +126,8 @@ public abstract class searchAncestors {
       return null;
     }
 
-    @Override public ASTNode inclusiveFrom(ASTNode n) {
-      return n != null && type == n.getNodeType() ? n : from(n);
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
     }
   }
 }

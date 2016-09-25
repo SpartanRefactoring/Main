@@ -179,14 +179,14 @@ public enum haz {
     return $.get().booleanValue();
   }
 
+  static boolean binding(final ASTNode ¢) {
+    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
+  }
+
   static boolean hasAnnotation(final List<IExtendedModifier> ms) {
     for (final IExtendedModifier ¢ : ms)
       if (¢.isAnnotation())
         return true;
     return false;
-  }
-  
-  static boolean binding(final ASTNode n) {
-    return n != null && n.getAST() != null && n.getAST().hasResolvedBindings();
   }
 }

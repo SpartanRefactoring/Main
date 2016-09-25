@@ -204,14 +204,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  static String dump() {
-    return "BUG: ";
-  }
-
-  static String endDump() {
-    return "\n-----this is all I know.";
-  }
-
   static String essence(final String codeFragment) {
     return tide.clean(wizard.removeComments2(codeFragment));
   }
@@ -271,7 +263,7 @@ public interface wizard {
   }
 
   static boolean isDefaultLiteral(final Expression ¢) {
-    return !iz.nullLiteral(¢) && !iz.literal0(¢) && !iz.literal¢false(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
+    return !iz.nullLiteral(¢) && !iz.parsed.literal0(¢) && !iz.literal¢false(¢) && !iz.parsed.literal(¢, 0.0) && !iz.parsed.literal(¢, 0L);
   }
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not
