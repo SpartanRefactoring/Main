@@ -69,10 +69,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         if (iz.validForEvaluation(cuttedExpression)) {
           str = opportunisticReplacement(cuttedExpression);
           if (str != null)
-            return subject
-                .pair(az.expression(x.getAST().newNumberLiteral(str)),
-                    afterExpressionOperands.size() == 1 ? afterExpressionOperands.get(0) : subject.operands(afterExpressionOperands).to(operator()))
-                .to(operator());
+            return (subject.pair(az.expression(x.getAST().newNumberLiteral(str)),
+                afterExpressionOperands.size() == 1 ? afterExpressionOperands.get(0) : subject.operands(afterExpressionOperands).to(operator())))
+                    .to(operator());
         }
       }
       if (indexForRightEvaluation(x) > 1 && operator() != DIVIDE && operator() != REMAINDER) {
@@ -84,9 +83,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         if (iz.validForEvaluation(cuttedExpression)) {
           str = opportunisticReplacement(cuttedExpression);
           if (str != null)
-            return subject.pair(
+            return (subject.pair(
                 beforeExpressionOperands.size() == 1 ? beforeExpressionOperands.get(0) : subject.operands(beforeExpressionOperands).to(operator()),
-                az.expression(x.getAST().newNumberLiteral(str))).to(operator());
+                az.expression(x.getAST().newNumberLiteral(str)))).to(operator());
         }
       }
     } catch (final Exception e) {

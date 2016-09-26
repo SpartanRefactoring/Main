@@ -7,9 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Singleton containing all {@link Tipper}s which are active, allowing
- * selecting and applying the most appropriate such object for a given
- * {@link ASTNode}.
+/** Singleton containing all {@link Tipper}s which are active, allowing selecting
+ * and applying the most appropriate such object for a given {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
@@ -40,11 +39,9 @@ public class Toolbox {
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
           .add(ReturnStatement.class, new ReturnLastInMethod()) //
-          // Disabled to protect against infinite loop
-          // .add(AnnotationTypeMemberDeclaration.class, new
-          // BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
-          // .add(AnnotationTypeDeclaration.class, new
-          // BodyDeclarationModifiersSort.ofAnnotation()) //
+         // Disabled to protect against infinite loop
+          //.add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
+          //.add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotation()) //
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
@@ -93,6 +90,7 @@ public class Toolbox {
               new InfixConditionalOrFalse(), //
               new InfixComparisonSpecific(), //
               new InfixMultiplicationByOne(), //
+              new InfixMultiplicationByZero(), //
               new InfixMultiplicationSort(), //
               new InfixPseudoAdditionSort(), //
               new InfixSubtractionSort(), //
@@ -103,7 +101,7 @@ public class Toolbox {
               new MethodDeclarationRenameReturnToDollar(), //
               new MethodDeclarationModifiersRedundant(), //
               // Disabled to protect against infinite loop
-              /// new BodyDeclarationModifiersSort.ofMethod() , //
+              new BodyDeclarationModifiersSort.ofMethod() , //
               new MethodDeclarationRenameSingleParameterToCent(), //
               null)
           .add(MethodInvocation.class, //
@@ -170,16 +168,16 @@ public class Toolbox {
               // new delmeTypeModifierCleanInterface(), //
               new TypeRedundantModifiers(), //
               // Disabled to protect against infinite loop
-              // new BodyDeclarationModifiersSort.ofType(), //
+              new BodyDeclarationModifiersSort.ofType(), //
               null) //
           .add(EnumDeclaration.class, //
-              new EnumRedundantModifiers(),
-              // new BodyDeclarationModifiersSort.ofEnum(), //
+              new EnumRedundantModifiers(), 
+              new BodyDeclarationModifiersSort.ofEnum(), //
               // new EnumDeclarationModifierCleanEnum(), //
               null) //
           .add(FieldDeclaration.class, //
               new FieldRedundantModifiers(), //
-              // new BodyDeclarationModifiersSort.ofField(), //
+              new BodyDeclarationModifiersSort.ofField(), //
               null) //
           .add(CastExpression.class, //
               new CastToDouble2Multiply1(), //
@@ -187,7 +185,7 @@ public class Toolbox {
               null) //
           .add(EnumConstantDeclaration.class, //
               new EnumConstantRedundantModifiers(), //
-              // new BodyDeclarationModifiersSort.ofEnumConstant(), //
+              new BodyDeclarationModifiersSort.ofEnumConstant(), //
               null) //
           .add(NormalAnnotation.class, //
               new AnnotationDiscardValueName(), //
@@ -204,8 +202,7 @@ public class Toolbox {
           // since the dispatcher does not
           // know about Initializers. Add initializers to DispatchingVisitor if
           // you can provide a test case
-          // .add(Initializer.class, new
-          // BodyDeclarationModifiersSort.ofInitializer(), null) //
+          .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), null) //
           .seal();
   }
 

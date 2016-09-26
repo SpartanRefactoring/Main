@@ -19,12 +19,12 @@ public final class specificity implements Comparator<Expression> {
     return Level.defined(¢);
   }
 
-  /** A comparison of two {@link Expression} by their level of specificity.
-   * @param e1 JD
-   * @param e2 JD
-   * @return a negative, zero, or positive integer, depending on the level of
-   *         specificity the first parameter, is less than, equal, or greater
-   *         than the specificity level of the second parameter. */
+  /**
+   * A comparison of two                       {@link Expression}                       by their level of specificity.
+   * @param e1                       JD
+   * @param e2                       JD
+   * @return                       a negative, zero, or positive integer, depending on the level of specificity the first parameter, is less than, equal, or greater than the specificity level of the second parameter. 
+   */
   @Override public int compare(final Expression e1, final Expression e2) {
     return Level.of(e1) - Level.of(e2);
   }

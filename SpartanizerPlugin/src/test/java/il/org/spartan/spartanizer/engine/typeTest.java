@@ -12,23 +12,27 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.engine.type.*;
 
-/** unit tests for {@link type} , as well as tests for the types of certain
- * expression using {@link type.Axiom} .
- * @author Niv Shalmon
- * @Since 2016-09 */
+/**
+ * unit tests for                                           {@link type}                                          , as well as tests for the types of certain expression using                                           {@link type.Axiom}                                          .
+ * @author                                           Niv Shalmon
+ * @Since                                           2016-09 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method", "unused" }) public final class typeTest {
-  /** Ideally this class is empty, but still {@link Ignore} d.
-   * @author Yossi Gil
-   * @year 2016 */
+  /**
+  * Ideally this class is empty, but still                                           {@link Ignore}                                          d.
+  * @author                                           Yossi Gil
+  * @year                                           2016 
+  */
   @Ignore public static class NotWorkingYet {
   }
 
   @Ignore public static class Pending {
   }
 
-  /** @DisableSpartan */
+  /**
+  * @DisableSpartan                                           
+  */
   public static class Working {
     private static final long LONG_MINUS_3L = -3L;
     private static final int __1 = 1;
@@ -41,7 +45,9 @@ import il.org.spartan.spartanizer.engine.type.*;
     private static final int __3 = 3;
     private static final int __32 = 3;
     private static final int __33 = 3;
-    /** Make sure the compiler cannot optimize this out */
+    /**
+    * Make sure the compiler cannot optimize this out 
+    */
     private byte b = (byte) (hashCode() ^ 0xDEADdeaf);
     private final boolean b1 = b > (byte) hashCode();
     private final boolean b2 = (b & (byte) hashCode() << 3) < 0;
@@ -279,7 +285,9 @@ import il.org.spartan.spartanizer.engine.type.*;
       azzert.that(Axiom.type((2 * __33 / 4 + 1 - 5) % 4), is(INT));
     }
 
-    /** @DisableSpartan */
+    /**
+    * @DisableSpartan                                           
+    */
     @Test public void axiomExpression8() {
       azzert.that(Axiom.type(LONG_MINUS_3L % 4), is(LONG));
     }
