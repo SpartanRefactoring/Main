@@ -20,7 +20,7 @@ public final class EnhancedForParameterRenameToCent extends EagerWring<EnhancedF
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip suggest(final EnhancedForStatement s, final ExclusionManager m) {
+  @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName n = d.getName();
     if (in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(d))
