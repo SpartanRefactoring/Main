@@ -20,9 +20,9 @@ import il.org.spartan.utils.*;
  * @year 2016 */
 public final class CollectMetrics {
   private static String OUTPUT = "/tmp/test.csv";
-  private static String OUTPUT_SUGGESTIONS = "/tmp/tips.csv";
+  private static String OUTPUT_Tips = "/tmp/tips.csv";
   private static CSVStatistics output = init(OUTPUT, "property");
-  private static CSVStatistics suggestions = init(OUTPUT_SUGGESTIONS, "tips");
+  private static CSVStatistics Tips = init(OUTPUT_Tips, "tips");
 
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
@@ -38,15 +38,15 @@ public final class CollectMetrics {
     }
   }
 
-  private static void collectsuggestions(final String javaCode, final CompilationUnit before) {
-    reportSuggestions(new Trimmer().collectSuggesions(before));
+  private static void collectTips(final String javaCode, final CompilationUnit before) {
+    reportTips(new Trimmer().collectSuggesions(before));
   }
 
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
-      suggestions.put("File", f.getName());
+      Tips.put("File", f.getName());
       go(FileUtils.read(f));
     } catch (final IOException e) {
       System.err.println(e.getMessage());
@@ -57,7 +57,7 @@ public final class CollectMetrics {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
-    collectsuggestions(javaCode, before);
+    collectTips(javaCode, before);
     final CompilationUnit after = spartanize(javaCode, before);
     assert after != null;
     report("After-", after);
@@ -102,14 +102,14 @@ public final class CollectMetrics {
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
   }
 
-  private static void reportSuggestions(final List<Tip> ¢) {
+  private static void reportTips(final List<Tip> ¢) {
     // tips = new CSVStatistics("/tmp/tips.csv");
     for (final Tip $ : ¢) {
-      suggestions.put("description", $.description);
-      suggestions.put("from", $.from);
-      suggestions.put("to", $.to);
-      suggestions.put("linenumber", $.lineNumber);
-      suggestions.nl();
+      Tips.put("description", $.description);
+      Tips.put("from", $.from);
+      Tips.put("to", $.to);
+      Tips.put("linenumber", $.lineNumber);
+      Tips.nl();
     }
   }
 

@@ -23,7 +23,7 @@ public class TrimmerLogTest {
   @Ignore @Test public void test01() throws TipperException {
     final Tipper<ASTNode> w = null;
     final ASTNode n = null;
-    TrimmerLog.suggestion(w, n);
+    TrimmerLog.tip(w, n);
     assertTrue(false);
   }
 
@@ -40,7 +40,7 @@ public class TrimmerLogTest {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateSuggestions($, u, (IMarker) null);
+      a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
@@ -64,7 +64,7 @@ public class TrimmerLogTest {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateSuggestions($, u, (IMarker) null);
+      a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {

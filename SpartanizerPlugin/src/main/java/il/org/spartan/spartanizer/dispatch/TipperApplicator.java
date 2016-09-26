@@ -28,7 +28,7 @@ public final class TipperApplicator extends GUI$Applicator {
     assert clazz != null : "Oops, cannot find kind of operands of " + w.name();
   }
 
-  @Override protected void consolidateSuggestions(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
@@ -43,7 +43,7 @@ public final class TipperApplicator extends GUI$Applicator {
     });
   }
 
-  @Override protected ASTVisitor makeSuggestionsCollector(final List<Tip> $) {
+  @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
     return new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class TrimmerLog {
   private static CSVStatistics output;
   private static int maxVisitations = 30;
-  private static int maxSuggestions = 20;
+  private static int maxTips = 20;
   private static int maxApplications = 10;
   private static boolean logToScreen = true; // default output
   private static boolean logToFile;
@@ -52,8 +52,8 @@ public class TrimmerLog {
     return maxApplications;
   }
 
-  public static int getMaxSuggestions() {
-    return maxSuggestions;
+  public static int getMaxTips() {
+    return maxTips;
   }
 
   public static int getMaxVisitations() {
@@ -68,8 +68,8 @@ public class TrimmerLog {
     TrimmerLog.maxApplications = maxApplications;
   }
 
-  public static void setMaxSuggestions(final int maxSuggestions) {
-    TrimmerLog.maxSuggestions = maxSuggestions;
+  public static void setMaxTips(final int maxTips) {
+    TrimmerLog.maxTips = maxTips;
   }
 
   public static void setMaxVisitations(final int maxVisitations) {
@@ -80,9 +80,9 @@ public class TrimmerLog {
     TrimmerLog.outputDir = $;
   }
 
-  public static <N extends ASTNode> void suggestion(final Tipper<N> w, final N n) throws TipperException {
-    if (--maxSuggestions <= 0) {
-      if (maxSuggestions == 0)
+  public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) throws TipperException {
+    if (--maxTips <= 0) {
+      if (maxTips == 0)
         System.out.println("Stopped logging tips");
       return;
     }
@@ -121,7 +121,7 @@ public class TrimmerLog {
 
   private static CSVStatistics init() {
     try {
-      output = new CSVStatistics(outputDir, "Suggestions");
+      output = new CSVStatistics(outputDir, "Tips");
     } catch (final IOException e) {
       e.printStackTrace();
     }
