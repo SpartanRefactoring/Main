@@ -41,16 +41,16 @@ public enum Tippers {
     return (IfStatement) first(statements(b));
   }
 
-  public static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
-    final List<Expression> operands = extract.allOperands(e);
+  public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
+    final List<Expression> operands = extract.allOperands(x);
     wizard.removeAll(b, operands);
     switch (operands.size()) {
       case 0:
-        return e.getAST().newBooleanLiteral(b);
+        return x.getAST().newBooleanLiteral(b);
       case 1:
         return duplicate.of(first(operands));
       default:
-        return subject.operands(operands).to(e.getOperator());
+        return subject.operands(operands).to(x.getOperator());
     }
   }
 
@@ -117,11 +117,11 @@ public enum Tippers {
     return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
-  public static boolean mixedLiteralKind(final List<Expression> es) {
-    if (es.size() <= 2)
+  public static boolean mixedLiteralKind(final List<Expression> xs) {
+    if (xs.size() <= 2)
       return false;
     int previousKind = -1;
-    for (final Expression x : es)
+    for (final Expression x : xs)
       if (x instanceof NumberLiteral || x instanceof CharacterLiteral) {
         final int currentKind = new LiteralParser(x + "").type().ordinal();
         assert currentKind >= 0;

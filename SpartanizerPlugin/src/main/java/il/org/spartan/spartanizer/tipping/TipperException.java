@@ -6,7 +6,7 @@ public abstract class TipperException extends Exception {
   public TipperException() {
   }
 
-  abstract public String what();
+  public abstract String what();
 
   public static class TipNotImplementedException extends TipperException {
     private static final long serialVersionUID = 1L;

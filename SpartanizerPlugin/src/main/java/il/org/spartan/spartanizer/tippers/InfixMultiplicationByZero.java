@@ -28,19 +28,18 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     $.setToken("0");
     return $;
   }
-
-  private boolean isContainsSideEffect(final InfixExpression ¢) {
-    final List<Expression> operands = extract.allOperands(¢);
-    for (final Expression e : operands)
+// TODO: Yossi make an issue about this bug: check for usage also in the generator expressiona
+  // TOOD: Yossi and another issue, allow inlining into generator expression
+  private static boolean isContainsSideEffect(final InfixExpression ¢) {
+    for (final Expression e : extract.allOperands(¢))
       if (!sideEffects.free(e))
         return true;
     return false;
   }
 
   private boolean isContainsZero(final InfixExpression ¢) {
-    final List<Expression> operands = extract.allOperands(¢);
-    for (final Expression e : operands)
-      if (iz.numberLiteral(e) && az.numberLiteral(e).getToken().equals("0"))
+    for (final Expression e : extract.allOperands(¢))
+      if (iz.numberLiteral(e) && "0".equals(az.numberLiteral(e).getToken()))
         return true;
     return false;
   }

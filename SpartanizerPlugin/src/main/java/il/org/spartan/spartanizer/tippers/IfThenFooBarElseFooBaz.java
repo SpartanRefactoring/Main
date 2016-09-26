@@ -44,14 +44,13 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> implements Kind.CommnoFactoring {
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
-    while (!ss1.isEmpty() && !ss2.isEmpty()) {
+    for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
       final Statement s1 = first(ss1);
       final Statement s2 = first(ss2);
       if (!wizard.same(s1, s2))
         break;
       $.add(s1);
       ss1.remove(0);
-      ss2.remove(0);
     }
     return $;
   }

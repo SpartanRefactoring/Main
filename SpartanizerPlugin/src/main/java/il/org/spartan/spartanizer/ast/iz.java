@@ -111,8 +111,8 @@ public enum iz {
     return is(¢, BREAK_STATEMENT);
   }
 
-  public static boolean comparison(final Expression e) {
-    return iz.infixExpression(e) && iz.comparison(az.infixExpression(e));
+  public static boolean comparison(final Expression ¢) {
+    return iz.infixExpression(¢) && iz.comparison(az.infixExpression(¢));
   }
 
   /** @param x JD
@@ -126,11 +126,11 @@ public enum iz {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  /** @param es JD
+  /** @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
-  public static boolean conditional(final Expression... es) {
-    for (final Expression ¢ : es)
+  public static boolean conditional(final Expression... xs) {
+    for (final Expression ¢ : xs)
       if (is(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
     return false;
@@ -731,8 +731,8 @@ public enum iz {
     return vacuous(then(¢));
   }
 
-  public static boolean validForEvaluation(final InfixExpression e) {
-    final List<Expression> lst = extract.allOperands(e);
+  public static boolean validForEvaluation(final InfixExpression x) {
+    final List<Expression> lst = extract.allOperands(x);
     for (final Expression ¢ : lst)
       if (!iz.pseudoNumber(¢))
         return false;
