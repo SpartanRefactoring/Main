@@ -245,7 +245,7 @@ public class Toolbox {
     return find(¢, get(¢));
   }
 
-  public <N extends ASTNode> Tipper<N> findWring(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
+  public <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
     for (final Tipper<N> $ : get(n))
       for (final Tipper<?> ¢ : ns)
         if (¢.getClass().equals($.getClass())) {

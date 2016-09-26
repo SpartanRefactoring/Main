@@ -179,7 +179,7 @@ public final class WringCommit {
         @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
           if (Trimmer.isDisabled(n))
             return true;
-          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findWring(n, w);
+          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findTipper(n, w);
           if (x != null) {
             final Tip make = x.tip(n, exclude);
             if (make != null) {
