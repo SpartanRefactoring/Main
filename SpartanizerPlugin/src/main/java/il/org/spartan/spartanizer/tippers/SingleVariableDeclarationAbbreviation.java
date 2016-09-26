@@ -61,7 +61,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
     return ¢.getName() + "";
   }
 
-  @Override public Tip suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;

@@ -181,7 +181,7 @@ public final class WringCommit {
             return true;
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Tip make = x.suggest(n, exclude);
+            final Tip make = x.tip(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");

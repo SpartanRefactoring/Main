@@ -156,6 +156,7 @@ public final class CollectMetricsApp implements IApplication {
   }
 
   @Override public void stop() {
+    ___.nothing();
   }
 
   // app methods

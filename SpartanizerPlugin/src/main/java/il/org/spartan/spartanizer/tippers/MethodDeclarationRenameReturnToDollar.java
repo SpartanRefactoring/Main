@@ -23,7 +23,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerWring<Meth
     return ¢.getName() + "";
   }
 
-  @Override public Tip suggest(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
