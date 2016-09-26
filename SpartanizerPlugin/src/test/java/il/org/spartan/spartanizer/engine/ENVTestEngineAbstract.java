@@ -25,6 +25,33 @@ import il.org.spartan.spartanizer.utils.*;
 public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Environment.Information>> testSet;
 
+  /** Compares the given {@link LinkedHashSet} with the inner testSet.
+   * Comparison done out-of-order. Assertion fails <b>iff</b> testSet is not
+   * contained in the provided set.
+   * @param $ JD
+   * @return true iff the specified {@link LinkedHashSet} contains testSet. */
+  // TODO: Dan once the method is determined to be working, change to visibility
+  // to
+  // protected.
+  public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
+    assert $ != null;
+    assert testSet != null;
+    boolean entryFound = true;
+    for (final Entry<String, Information> i : testSet) {
+      entryFound = false;
+      for (final Entry<String, Information> j : $)
+        if (iz.equal(i, j)) {
+          entryFound = true;
+          break;
+        }
+      assert entryFound : "some entry not found out of order!";
+    }
+  }
+
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
+  }
+
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
@@ -49,8 +76,8 @@ public abstract class ENVTestEngineAbstract {
     return "Id".equals(n1 + "");
   }
 
-  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
-    return new LinkedHashSet<>();
+  public static void testSetReset() {
+    testSet.clear();
   }
 
   protected boolean foundTestedAnnotation; // Global flag, used to
@@ -79,10 +106,13 @@ public abstract class ENVTestEngineAbstract {
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
-  /** Compares the set from the annotation with the set that the checked
-   * function generates. Comparison done inorder. Assertion fails <b>iff</b>
-   * testSet is not contained inorder in the provided set.
-   * @param $ */
+  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+
+  /** Compares the given {@link LinkedHashSet} with the inner testSet.
+   * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
+   * contained in the same order in the provided set.
+   * @param $ JD
+   * @return true iff the sets specified, are equally the same. */
   public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
     assert testSet != null;
     assert $ != null;
@@ -90,29 +120,20 @@ public abstract class ENVTestEngineAbstract {
     final Iterator<Entry<String, Information>> j = $.iterator();
     boolean entryFound = true;
     while (i.hasNext()) {
-      final Entry<String, Information> testEntry = i.next();
       entryFound = false;
       while (j.hasNext())
-        if (j.next().equals(testEntry)) {
+        if (iz.equal(i.next(), j.next())) {
           entryFound = true;
           break;
         }
+      assert entryFound : "some entry not found in order!";
     }
-    assert entryFound;
   }
 
-  /** Compares the set from the annotation with the set that the checked
-   * function generates. Assertion fails <b>iff</b> testSet is not contained in
-   * the provided set.
-   * @param $ */
-  // TODO: Dan once the method is determined to be working, change to visibility
-  // to
-  // protected.
-  public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert $ != null;
-    assert testSet != null;
-    assert $.containsAll(testSet) : "Some of the annotations are not contained in the result.";
-  }
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
+  protected abstract void handler(final Annotation ¢);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
@@ -126,6 +147,13 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
+      /** Iterate over outer annotations of the current declaration and dispatch
+       * them to handlers. otherwise */
+      void checkAnnotations(final List<Annotation> as) {
+        for (final Annotation ¢ : as)
+          handler(¢);
+      }
+
       @Override public boolean visit(final AnnotationTypeDeclaration $) {
         visitNodesWithPotentialAnnotations($);
         return true;
@@ -166,13 +194,6 @@ public abstract class ENVTestEngineAbstract {
         return true;
       }
 
-      /** Iterate over outer annotations of the current declaration and dispatch
-       * them to handlers. otherwise */
-      void checkAnnotations(final List<Annotation> as) {
-        for (final Annotation ¢ : as)
-          handler(¢);
-      }
-
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
@@ -186,11 +207,4 @@ public abstract class ENVTestEngineAbstract {
       }
     });
   }
-
-  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  protected abstract void handler(final Annotation ¢);
 }
