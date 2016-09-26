@@ -88,7 +88,7 @@ public class Toolbox {
           .add(WhileStatement.class, //
               new BlockBreakToReturnInfiniteWhile(), //
               new ReturnToBreakFiniteWhile(), //
-              new ConvertWhileWithLastStatementUpdateToFor(), //
+              //new ConvertWhileWithLastStatementUpdateToFor(), //
               null) //
           .add(Assignment.class, //
               new AssignmentAndAssignment(), //
