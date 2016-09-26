@@ -5,9 +5,11 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link DeclarationRedundantInitializer}
- * @author Yossi Gil
- * @since 2016 */
+/**
+ * Unit tests for                                           {@link DeclarationRedundantInitializer}
+ * @author                                           Yossi Gil
+ * @since                                           2016 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue221 {
   @Test public void A$01() {
     trimmingOf("class D { int a; }").stays();

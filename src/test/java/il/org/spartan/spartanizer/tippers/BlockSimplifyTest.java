@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.apply;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
@@ -18,9 +17,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Unit tests for {@link NameYourClassHere}
- * @author Yossi Gil
- * @since 2016 */
+/**
+ * Unit tests for                                           {@link NameYourClassHere}
+ * @author                                           Yossi Gil
+ * @since                                           2016 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method",
     "javadoc" }) @Ignore("Still problems with #205") public final class BlockSimplifyTest {
   @Test public void complexEmpty0() {
