@@ -7,9 +7,11 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.java.*;
 
-/** * Unit tests for Arithmetic Operations Calculations
- * @author Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>
- * @since 2016-08-26 */
+/**
+ * * Unit tests for Arithmetic Operations Calculations
+ * @author                                           Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>
+ * @since                                           2016-08-26 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class ArithmeticTest {
   public static class Working {
     @Test public void additionIsLong() {
