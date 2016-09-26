@@ -7,10 +7,10 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Replace (X != null) ? X : Y with X ?? Y <br>
- * replace (X == null) ? Y : X with X ?? Y <br>
- * replace (null == X) ? Y : X with X ?? Y <br>
- * replace (null != X) ? X : Y with X ?? Y <br>
+/** Replace X != null ? X : Y with X ?? Y <br>
+ * replace X == null ? Y : X with X ?? Y <br>
+ * replace null == X ? Y : X with X ?? Y <br>
+ * replace null != X ? X : Y with X ?? Y <br>
  * @author Ori Marcovitch
  * @year 2016 */
 public final class TernaryNullCoallescing extends ReplaceCurrentNode<ConditionalExpression> implements Kind.CommnoFactoring {
@@ -25,9 +25,8 @@ public final class TernaryNullCoallescing extends ReplaceCurrentNode<Conditional
   }
 
   private static ASTNode replacement(Expression left, Expression right, Expression elze) {
-    if ((!iz.nullLiteral(left) && iz.nullLiteral(right) && wizard.same(left, elze)))
-      Counter.count(TernaryNullCoallescing.class);
-    if (iz.nullLiteral(left) && !iz.nullLiteral(right) && wizard.same(right, elze))
+    if ((!iz.nullLiteral(left) && iz.nullLiteral(right) && wizard.same(left, elze))
+        || (iz.nullLiteral(left) && !iz.nullLiteral(right) && wizard.same(right, elze)))
       Counter.count(TernaryNullCoallescing.class);
     return null;
   }
