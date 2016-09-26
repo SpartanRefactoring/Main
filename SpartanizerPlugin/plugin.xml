@@ -162,10 +162,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </toolbar>
   </menuContribution>
 
-  <!-- Popup menus 
-       Not sure that this is not the one that creates URI exceptions at start. Commented
-       out for now // TODO: Ori Roth
-       -->
+  <!-- Popup menus -->
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Laconization" mnemonic="M">
         <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
@@ -178,6 +175,11 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
               style="toggle"
               mnemonic="S">
         </command>
+        <visibleWhen>
+            <with variable="activePartId">
+                <equals value="org.eclipse.ui.views.ProblemView" />
+            </with>
+        </visibleWhen>
      </menu>
   </menuContribution>
 
