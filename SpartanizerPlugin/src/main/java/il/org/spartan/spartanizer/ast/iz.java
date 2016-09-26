@@ -123,11 +123,11 @@ public enum iz {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  /** @param xs JD
+  /** @param es JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
-  public static boolean conditional(final Expression... xs) {
-    for (final Expression ¢ : xs)
+  public static boolean conditional(final Expression... es) {
+    for (final Expression ¢ : es)
       if (is(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
     return false;
@@ -478,6 +478,10 @@ public enum iz {
     return type.of(¢) == LONG;
   }
 
+  public static boolean memberRef(final ASTNode ¢) {
+    return is(¢, MEMBER_REF);
+  }
+
   /** Determine whether a node is a {@link MethodDeclaration}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
@@ -703,8 +707,8 @@ public enum iz {
     return vacuous(then(¢));
   }
 
-  public static boolean validForEvaluation(final InfixExpression x) {
-    final List<Expression> lst = extract.allOperands(x);
+  public static boolean validForEvaluation(final InfixExpression e) {
+    final List<Expression> lst = extract.allOperands(e);
     for (final Expression ¢ : lst)
       if (!iz.pseudoNumber(¢))
         return false;
