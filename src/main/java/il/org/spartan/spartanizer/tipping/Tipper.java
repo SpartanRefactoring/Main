@@ -58,12 +58,12 @@ public abstract class Tipper<N extends ASTNode> implements Kind {
     return getClass().getSimpleName();
   }
 
-  public Tip suggest(final N ¢) {
-    return suggest(¢, null);
+  public Tip tip(final N ¢) {
+    return tip(¢, null);
   }
 
-  public Tip suggest(final N n, final ExclusionManager m) {
-    return m != null && m.isExcluded(n) ? null : suggest(n);
+  public Tip tip(final N n, final ExclusionManager m) {
+    return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
   @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {

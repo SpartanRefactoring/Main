@@ -129,7 +129,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
           return true;
         final Tipper<N> w = trimmer().toolbox.find(n);
         if (w != null) {
-          final Tip make = w.suggest(n, exclude);
+          final Tip make = w.tip(n, exclude);
           if (make != null)
             make.go(r, null);
         }

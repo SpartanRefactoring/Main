@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.java;
-
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.java.Environment.*;
 
@@ -13,7 +12,9 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") @Ignore public final class EnvironmentTest {
   Environment e0 = Environment.genesis();
@@ -427,7 +428,8 @@ import il.org.spartan.spartanizer.utils.*;
   @SuppressWarnings("unused") @Test public void putTest() {
     try {
       e0.nest().put("Dan", new Information());
-    } catch (final IllegalArgumentException e) {
+    } catch (final IllegalArgumentException __) {
+      ___.______unused(__); 
     }
   }
 

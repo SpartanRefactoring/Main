@@ -90,7 +90,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip suggest(final WhileStatement b) {
+  @Override public Tip tip(final WhileStatement b) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || !isInfiniteLoop(b) || nextReturn == null)
       return null;
