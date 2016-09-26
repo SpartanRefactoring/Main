@@ -54,6 +54,13 @@ public enum step {
     return ¢.catchClauses();
   }
 
+  /** Expose the loop condition contained in a {@link ForStatement}
+   * @param ¢ JD
+   * @return reference to the list of initializers contained in the argument */
+  public static Expression condition(final ForStatement ¢) {
+    return ¢.getExpression();
+  }
+
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}
    * @param ¢ JD
    * @return else part of the parameter */
@@ -193,20 +200,6 @@ public enum step {
    * @return reference to the list of initializers contained in the argument */
   @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
     return ¢.initializers();
-  }
-  
-  /** Expose the loop condition contained in a {@link ForStatement}
-   * @param ¢ JD
-   * @return reference to the list of initializers contained in the argument */
-  public static Expression condition(final ForStatement ¢) {
-    return ¢.getExpression();
-  }
-  
-  /** Expose the list of updaters contained in a {@link ForStatement}
-   * @param ¢ JD
-   * @return reference to the list of initializers contained in the argument */
-  @SuppressWarnings("unchecked") public static List<Expression> updaters(final ForStatement ¢) {
-    return ¢.updaters();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
@@ -368,6 +361,13 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {
     return ¢.typeArguments();
+  }
+
+  /** Expose the list of updaters contained in a {@link ForStatement}
+   * @param ¢ JD
+   * @return reference to the list of initializers contained in the argument */
+  @SuppressWarnings("unchecked") public static List<Expression> updaters(final ForStatement ¢) {
+    return ¢.updaters();
   }
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {

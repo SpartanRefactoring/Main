@@ -5,12 +5,13 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * Unit test for: -                     {@link MethodDeclarationRenameReturnToDollar}                    -                     {@link MethodDeclarationRenameSingleParameterToCent}                    Checks \@param tag value in javadoc is changed with dollar/cent renaming.
- * @author                     Ori Roth
- * @since                     2016
- * @see SingleVariableDeclarationAbbreviation#fixJavadoc                    TODO Ori: add testing for comments
- */
+/** Unit test for: - {@link MethodDeclarationRenameReturnToDollar} -
+ * {@link MethodDeclarationRenameSingleParameterToCent} Checks \@param tag value
+ * in javadoc is changed with dollar/cent renaming.
+ * @author Ori Roth
+ * @since 2016
+ * @see SingleVariableDeclarationAbbreviation#fixJavadoc TODO Ori: add testing
+ *      for comments */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") public class Issue180 {
   @Test public void renameToCent() {
     trimmingOf("/**\n" + " * @param s\n" + " */\n" + "int length(String s) {\n" + "  return s.length();\n" + "}")

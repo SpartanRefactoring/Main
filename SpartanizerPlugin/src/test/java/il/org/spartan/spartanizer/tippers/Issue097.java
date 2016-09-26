@@ -4,10 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/**
- * @author                                           Stav Namir
- * @since                                           2016-08-29 
- */
+/** @author Stav Namir
+ * @since 2016-08-29 */
 @SuppressWarnings("static-method") @Ignore("Issue #97 : under construction") public final class Issue097 {
   @Test public void test01() {
     trimmingOf(

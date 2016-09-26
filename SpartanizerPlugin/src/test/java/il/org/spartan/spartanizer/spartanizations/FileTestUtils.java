@@ -40,6 +40,11 @@ import il.org.spartan.spartanizer.engine.*;
     return null;
   }
 
+  /** Makes an Input file out of a Test file */
+  protected static File makeInFile(final File ¢) {
+    return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
+  }
+
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
     final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
@@ -113,11 +118,6 @@ import il.org.spartan.spartanizer.engine.*;
     return null;
   }
 
-  /** Makes an Input file out of a Test file */
-  protected static File makeInFile(final File ¢) {
-    return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
-  }
-
   /** An abstract class to be extended and implemented by client, while
    * overriding {@link #go(List,File)} as per customer's need.
    * @seTestUtils.SATestSuite.Files
@@ -125,9 +125,8 @@ import il.org.spartan.spartanizer.engine.*;
    * @author Yossi Gil
    * @since 2014/05/24 */
   public abstract static class Directories extends FileTestUtils.Traverse {
-    /**
-     * Adds a test case to the collection of all test cases generated in the traversal 
-     */
+    /** Adds a test case to the collection of all test cases generated in the
+     * traversal */
     @Override public final void go(final List<Object[]> $, final File f) {
       if (!f.isDirectory())
         return;
