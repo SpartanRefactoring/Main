@@ -5,11 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/**
- * Unit tests for                                           {@link InfixTermsZero}
- * @author                                           Niv Shalmon
- * @since                                           2016 
- */
+/** Unit tests for {@link InfixTermsZero}
+ * @author Niv Shalmon
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue172 {
   @Test public void a$01() {
     trimmingOf("1+3*x+0").gives("1+3*x");

@@ -13,11 +13,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/**
- * Unit tests for                                           {@link Wrings#ADDITION_SORTER}                                          .
- * @author                                           Yossi Gil
- * @since                                           2014-07-13 
- */
+/** Unit tests for {@link Wrings#ADDITION_SORTER} .
+ * @author Yossi Gil
+ * @since 2014-07-13 */
 @SuppressWarnings({ "javadoc", "static-method" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class InfixAdditionSortTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";
   private static final InfixExpression INPUT = into.i(input);

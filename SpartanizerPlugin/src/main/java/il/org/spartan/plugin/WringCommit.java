@@ -148,7 +148,7 @@ public final class WringCommit {
       this.marker = marker;
       this.type = type;
       this.compilationUnit = compilationUnit;
-      this.tipper = wring;
+      tipper = wring;
     }
 
     protected void apply(final Tipper<?> w, final ASTNode n) {
