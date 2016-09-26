@@ -73,7 +73,7 @@ public final class TipperCommit {
     final IJavaProject jp = cu.getJavaProject();
     final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     assert w != null;
-    for (int i = 0; i < SpartanizeAll.MAX_PASSES; ++i) {
+    for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
