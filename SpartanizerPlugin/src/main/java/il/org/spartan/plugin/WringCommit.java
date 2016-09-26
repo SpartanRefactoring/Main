@@ -191,7 +191,7 @@ public final class WringCommit {
           return true;
         }
 
-        @Override protected void initialization(@SuppressWarnings("hiding") final ASTNode ¢) {
+        @Override protected void initialization(final ASTNode ¢) {
           Trimmer.disabledScan(¢);
         }
       });
