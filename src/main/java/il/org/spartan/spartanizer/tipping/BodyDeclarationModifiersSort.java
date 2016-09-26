@@ -15,7 +15,9 @@ import il.org.spartan.spartanizer.java.*;
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.
  * @author Alex Kopzon
+ * @author Dor Ma'ayan
  * @since 2016 */
+
 public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements Kind.Sorting {
   public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
@@ -79,13 +81,17 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   N go(final N $) {
     final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
+    final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($));
     extendedModifiers($).clear();
+    extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
     return $;
   }
 
   @Override protected boolean prerequisite(final N ¢) {
-    return !isSortedAndDistinct(extendedModifiers(¢));
+    if(extendedModifiers(¢).size() == 0)
+      return false;
+    return !isSortedAndDistinct(extract.modifiers(¢));
   }
 
   @Override public N replacement(final N $) {
@@ -93,6 +99,6 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
-    return sort(removeSame(extendedModifiers($)));
+    return sort(removeSame(extract.modifiers($)));
   }
 }
