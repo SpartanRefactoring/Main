@@ -91,7 +91,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   @Override protected boolean prerequisite(final N ¢) {
     if(extendedModifiers(¢).size() == 0)
       return false;
-    return !isSortedAndDistinct(extract.modifiers(¢));
+    return !isSortedAndDistinct(extendedModifiers(¢));
   }
 
   @Override public N replacement(final N $) {
