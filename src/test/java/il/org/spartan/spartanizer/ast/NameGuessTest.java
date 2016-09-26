@@ -7,9 +7,11 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** Tests of {@link NameGuess}
- * @author Yossi Gil
- * @since 2016 */
+/**
+ * Tests of                                           {@link NameGuess}
+ * @author                                           Yossi Gil
+ * @since                                           2016 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class NameGuessTest {
   @Test public void anonymous1() {
     azzert.that(NameGuess.of("_"), is(NameGuess.ANONYMOUS));

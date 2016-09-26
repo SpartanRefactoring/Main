@@ -48,6 +48,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerWri
     return new Tip("Rename paraemter " + n + " to ¢ ", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Wrings.rename(n, ¢, d, r, g);
+        SingleVariableDeclarationAbbreviation.fixJavadoc(d, n, ¢ + "", r, g);
       }
     };
   }
