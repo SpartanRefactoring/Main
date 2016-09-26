@@ -7,6 +7,7 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
@@ -107,29 +108,22 @@ public enum iz {
     return is(¢, BREAK_STATEMENT);
   }
 
-  /** @param ¢ JD
+  /** @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
    *         expression. */
   public static boolean comparison(final InfixExpression ¢) {
     return in(¢.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
 
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
-   *         expression. */
-  public static boolean comparison(final Expression ¢) {
-    return ¢ instanceof InfixExpression && iz.comparison((InfixExpression) ¢);
-  }
-
   public static boolean comparison(final Operator ¢) {
     return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
-  /** @param es JD
+  /** @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
-  public static boolean conditional(final Expression... es) {
-    for (final Expression ¢ : es)
+  public static boolean conditional(final Expression... xs) {
+    for (final Expression ¢ : xs)
       if (is(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
     return false;
@@ -170,6 +164,17 @@ public enum iz {
   public static boolean constant(final Expression ¢) {
     return is(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
         || is(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
+  }
+
+  /** Determine whether an {@link ASTNode} contains as a children a
+   * {@link ContinueStatement}
+   * @param ¢ JD
+   * @return <code> true </code> iff ¢ contains any continue statement
+   * @see {@link convertWhileToFor} */
+  @SuppressWarnings("boxing") public static boolean containsContinueStatement(final ASTNode ¢) {
+    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
+      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
+    }) > 0;
   }
 
   /** Check whether the operator of an expression is susceptible for applying
@@ -292,6 +297,8 @@ public enum iz {
    *         false if node is not an Expression Statement or its a Post or Pre
    *         fix expression that its operator is not ++ or -- */
   public static boolean incrementOrDecrement(final ASTNode ¢) {
+    if (¢ == null)
+      return false;
     switch (¢.getNodeType()) {
       case EXPRESSION_STATEMENT:
         return incrementOrDecrement(step.expression(¢));
@@ -696,8 +703,8 @@ public enum iz {
     return vacuous(then(¢));
   }
 
-  public static boolean validForEvaluation(final InfixExpression e) {
-    final List<Expression> lst = extract.allOperands(e);
+  public static boolean validForEvaluation(final InfixExpression x) {
+    final List<Expression> lst = extract.allOperands(x);
     for (final Expression ¢ : lst)
       if (!iz.pseudoNumber(¢))
         return false;
@@ -760,17 +767,6 @@ public enum iz {
 
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
-  }
-
-  /** Determine whether an {@link ASTNode} contains as a children a
-   * {@link ContinueStatement}
-   * @param ¢ JD
-   * @return <code> true </code> iff ¢ contains any continue statement
-   * @see {@link convertWhileToFor} */
-  @SuppressWarnings("boxing") public static boolean containsContinueStatement(ASTNode ¢) {
-    return ¢ != null && (new Recurser<>(¢, 0)).postVisit((x) -> {
-      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    }) > 0;
   }
 
   public boolean literal(final ASTNode ¢, final double d) {

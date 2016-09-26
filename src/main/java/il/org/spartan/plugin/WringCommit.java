@@ -148,7 +148,7 @@ public final class WringCommit {
       this.marker = marker;
       this.type = type;
       this.compilationUnit = compilationUnit;
-      this.tipper = wring;
+      tipper = wring;
     }
 
     protected void apply(final Tipper<?> w, final ASTNode n) {
@@ -181,7 +181,7 @@ public final class WringCommit {
             return true;
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findWring(n, w);
           if (x != null) {
-            final Tip make = x.suggest(n, exclude);
+            final Tip make = x.tip(n, exclude);
             if (make != null) {
               if (LogManager.isActive())
                 LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
@@ -191,7 +191,7 @@ public final class WringCommit {
           return true;
         }
 
-        @Override protected void initialization(@SuppressWarnings("hiding") final ASTNode ¢) {
+        @Override protected void initialization(final ASTNode ¢) {
           Trimmer.disabledScan(¢);
         }
       });
