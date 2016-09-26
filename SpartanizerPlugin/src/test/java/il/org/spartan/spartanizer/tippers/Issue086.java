@@ -64,7 +64,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assert tipper.canTip(focus);
   }
 
-  @Test public void B$04suggestionNotNull() throws TipperException {
+  @Test public void B$04tipNotNull() throws TipperException {
     A$04_init();
     assert tipper.tip(focus) != null;
   }

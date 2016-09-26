@@ -142,7 +142,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.handlers">
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.SpartanizeAll"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.SpartanizeCurrent"/>
-   <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.SuggestionsOnOfToggle"/>
+   <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.TipsOnOfToggle"/>
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
 </extension>

@@ -22,7 +22,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** the base class for all Spartanization Refactoring classes, contains common
+/** the base class for all GUI applicators contains common
  * functionality
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
@@ -31,9 +31,9 @@ import il.org.spartan.utils.*;
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class GUI$Applicator extends Refactoring {
-  private static final String APPLY_TO_FILE = "Apply suggestion to compilation unit";
-  private static final String APPLY_TO_FUNCTION = "Apply suggestion to enclosing function";
-  private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
+  private static final String APPLY_TO_FILE = "Apply tip to compilation unit";
+  private static final String APPLY_TO_FUNCTION = "Apply tip to enclosing function";
+  private static final String APPLY_TO_PROJECT = "Apply tip to entire project";
 
   public static IMarkerResolution getTipperCommitDeclaration() {
     return getWringCommit(TipperCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
@@ -47,7 +47,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return getWringCommit(TipperCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
-  static IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
+  static IMarkerResolution getToggle(final SuppressWarningsLaconicOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -55,7 +55,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          SuppressSpartanizationOnOff.deactivate(nullProgressMonitor, m, t);
+          SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException x) {
           LoggingManner.logEvaluationError(this, x);
         }
@@ -107,7 +107,7 @@ public abstract class GUI$Applicator extends Refactoring {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
-      collectAllSuggestions();
+      collectAllTips();
     else {
       innerRunAsMarkerFix(marker, true);
       marker = null;
@@ -124,13 +124,13 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
-   * spartanization tips
+   * tipper tips
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a
-   *         spartanization suggestion */
+   *         spartanization tip */
   public final List<Tip> collectSuggesions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
-    ¢.accept(makeSuggestionsCollector($));
+    ¢.accept(makeTipsCollector($));
     return $;
   }
 
@@ -146,7 +146,7 @@ public abstract class GUI$Applicator extends Refactoring {
    * <p>
    * This is a slow operation. Do not call light-headedly.
    * @return total number of tips offered by this instance */
-  public int countSuggestions() {
+  public int countTips() {
     setMarker(null);
     try {
       checkFinalConditions(progressMonitor);
@@ -175,7 +175,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public boolean follow() throws CoreException {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    final TextEditGroup g = new TextEditGroup("spartanization: textEditGroup");
+    final TextEditGroup g = new TextEditGroup("laconization: textEditGroup");
     for (final Tip ¢ : tips) {
       progressMonitor.worked(1);
       ¢.go(astRewrite, g);
@@ -230,21 +230,21 @@ public abstract class GUI$Applicator extends Refactoring {
 
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the
-   *         spartanization */
+   *         tipper */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
-      /** a quickfix which opens a refactoring wizard with the spartanization
+      /** a quickfix which opens a refactoring wizard with the tipper
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
        *         (v2) */
       @Override public String getLabel() {
-        return "Show spartanization preview";
+        return "Loconization preview";
       }
 
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
           new RefactoringWizardOpenOperation(new Wizard(GUI$Applicator.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartan refactoring: " + s + GUI$Applicator.this);
+              "Laconization: " + s + GUI$Applicator.this);
         } catch (final InterruptedException e) {
           LoggingManner.logCancellationRequest(this, e);
         }
@@ -270,7 +270,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection;
   }
 
-  public List<Tip> getSuggestions() {
+  public List<Tip> getTips() {
     return tips;
   }
 
@@ -290,8 +290,8 @@ public abstract class GUI$Applicator extends Refactoring {
   /** .
    * @return True if there are spartanizations which can be performed on the
    *         compilation unit. */
-  public final boolean haveSuggestions() {
-    return countSuggestions() > 0;
+  public final boolean haveTips() {
+    return countTips() > 0;
   }
 
   /** @param m marker which represents the range to apply the Spartanization
@@ -303,7 +303,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
 
-  /** Performs the current Spartanization on the provided compilation unit
+  /** Performs the current tipper on the provided compilation unit
    * @param u the compilation to Spartanize
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
@@ -324,7 +324,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateSuggestions($, u, m);
+    consolidateTips($, u, m);
     progressMonitor.done();
     return $;
   }
@@ -357,7 +357,7 @@ public abstract class GUI$Applicator extends Refactoring {
     selection = ¢;
   }
 
-  public int suggestionsCount() {
+  public int TipsCount() {
     return tips.size();
   }
 
@@ -365,7 +365,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return name;
   }
 
-  protected abstract void consolidateSuggestions(ASTRewrite r, CompilationUnit u, IMarker m);
+  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m);
 
   /** Determines if the node is outside of the selected text.
    * @return true if the node is not inside selection. If there is no selection
@@ -375,7 +375,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  protected abstract ASTVisitor makeSuggestionsCollector(final List<Tip> $);
+  protected abstract ASTVisitor makeTipsCollector(final List<Tip> $);
 
   protected void parse() {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
@@ -383,7 +383,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   protected void scan() {
     tips.clear();
-    compilationUnit.accept(makeSuggestionsCollector(tips));
+    compilationUnit.accept(makeTipsCollector(tips));
   }
 
   /** @param u JD
@@ -429,13 +429,13 @@ public abstract class GUI$Applicator extends Refactoring {
     return apply(iCompilationUnit, new Range(0, 0));
   }
 
-  void collectAllSuggestions() throws JavaModelException, CoreException {
+  void collectAllTips() throws JavaModelException, CoreException {
     progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits());
     progressMonitor.done();
   }
 
-  void collectSuggestions() {
+  void collectTips() {
     progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scan();
     progressMonitor.done();
