@@ -7,14 +7,14 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Dor Ma'ayan
+/** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode<WhileStatement> implements Kind.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
-    hop.removeLastStatement(dupWhileBody(s));
-    $.setBody(hop.removeLastStatement(dupWhileBody(s)));
+    //minus.LastStatement(dupWhileBody(s));
+    $.setBody(minus.LastStatement(dupWhileBody(s)));
     return $;
   }
 
