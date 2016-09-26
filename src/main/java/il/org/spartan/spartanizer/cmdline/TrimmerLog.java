@@ -32,15 +32,15 @@ public class TrimmerLog {
     logToScreen = true;
   }
 
-  public static void application(final ASTRewrite r, final Tip s) {
+  public static void application(final ASTRewrite r, final Tip t) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
         System.out.println("Stopped logging applications");
-      s.go(r, null);
+      t.go(r, null);
       return;
     }
     System.out.println("      Before: " + r);
-    s.go(r, null);
+    t.go(r, null);
     System.out.println("       After: " + r);
   }
 
