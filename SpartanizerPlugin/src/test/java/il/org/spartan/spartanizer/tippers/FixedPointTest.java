@@ -230,7 +230,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test(timeout = 2000) public void ternarize40() {
     assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;",
-        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
+        "int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
   }
 
   @Test public void ternarize49a() {

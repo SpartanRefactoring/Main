@@ -292,6 +292,8 @@ public enum iz {
    *         false if node is not an Expression Statement or its a Post or Pre
    *         fix expression that its operator is not ++ or -- */
   public static boolean incrementOrDecrement(final ASTNode ¢) {
+    if (¢ == null)
+      return false;
     switch (¢.getNodeType()) {
       case EXPRESSION_STATEMENT:
         return incrementOrDecrement(step.expression(¢));
