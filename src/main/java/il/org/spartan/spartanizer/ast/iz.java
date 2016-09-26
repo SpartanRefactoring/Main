@@ -7,6 +7,7 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
@@ -163,6 +164,17 @@ public enum iz {
   public static boolean constant(final Expression ¢) {
     return is(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
         || is(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
+  }
+
+  /** Determine whether an {@link ASTNode} contains as a children a
+   * {@link ContinueStatement}
+   * @param ¢ JD
+   * @return <code> true </code> iff ¢ contains any continue statement
+   * @see {@link convertWhileToFor} */
+  @SuppressWarnings("boxing") public static boolean containsContinueStatement(final ASTNode ¢) {
+    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
+      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
+    }) > 0;
   }
 
   /** Check whether the operator of an expression is susceptible for applying
@@ -749,18 +761,6 @@ public enum iz {
 
   private static boolean prefixMinus(final Expression ¢) {
     return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
-  }
-  
-  /**
-   * Determine whether an {@link ASTNode} contains as a children a {@link ContinueStatement}
-   * @param ¢ JD
-   * @return <code> true </code> iff ¢ contains any continue statement
-   * @see {@link convertWhileToFor}
-   */
-  @SuppressWarnings("boxing") public static boolean containsContinueStatement(ASTNode ¢){
-    return ¢ != null && (new Recurser<>(¢, 0)).postVisit((x) -> {
-      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    }) > 0;
   }
 
   public boolean literal(final ASTNode ¢, final double d) {

@@ -15,14 +15,17 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     return plugin;
   }
 
+  private static void startSpartan() {
+    SpartanizeableAll.go();
+    RefreshAll.go();
+  }
+
   /** an empty c'tor. creates an instance of the plugin. */
   public Plugin() {
     plugin = this;
   }
 
-  /**
-   * Called whenever the plugin is first loaded into the workbench 
-   */
+  /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
     LoggingManner.info("EARLY STATRTUP: spartanizer");
     startSpartan();
@@ -53,10 +56,5 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   @Override protected void saveDialogSettings() {
     LoggingManner.info("SDS: spartanizer");
     super.saveDialogSettings();
-  }
-
-  private static void startSpartan() {
-    SpartanizeableAll.go();
-    RefreshAll.go();
   }
 }
