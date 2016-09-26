@@ -50,8 +50,8 @@ import org.eclipse.jdt.core.dom.*;
   public String abbreviate() {
     String a = "";
     final Matcher m = Pattern.compile("[A-Z]").matcher(typeName);
-    while (m.find())
-      a += m.group();
+    for (; m.find(); a += m.group())
+      ;
     return a.toLowerCase();
   }
 
