@@ -18,38 +18,38 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
     return $;
   }
 
-  private static Statement dupWhileBody(final WhileStatement s) {
-    return duplicate.of(s.getBody());
+  private static Statement dupWhileBody(final WhileStatement ¢) {
+    return duplicate.of(¢.getBody());
   }
 
-  private static Expression dupWhileExpression(final WhileStatement s) {
-    return duplicate.of(s.getExpression());
+  private static Expression dupWhileExpression(final WhileStatement ¢) {
+    return duplicate.of(¢.getExpression());
   }
 
-  private static Expression dupWhileLastStatement(final WhileStatement s) {
-    return duplicate.of(az.expressionStatement(lastStatement(s)).getExpression());
+  private static Expression dupWhileLastStatement(final WhileStatement ¢) {
+    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ASTNode lastStatement(final WhileStatement s) {
-    return hop.lastStatement(s.getBody());
+  private static ASTNode lastStatement(final WhileStatement ¢) {
+    return hop.lastStatement(¢.getBody());
   }
 
-  private static boolean lastStatementIsUpdate(final WhileStatement s) {
-    return iz.assignment(lastStatement(s)) || iz.incrementOrDecrement(lastStatement(s)) || iz.expressionStatement(lastStatement(s));
+  private static boolean lastStatementIsUpdate(final WhileStatement ¢) {
+    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢));
   }
 
-  @Override public String description(final WhileStatement n) {
-    return "Convert the while about '(" + n.getExpression() + ")' to a traditional for(;;)";
+  @Override public String description(final WhileStatement ¢) {
+    return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   }
 
-  @Override public ASTNode replacement(final WhileStatement s) {
-    if (lastStatementIsUpdate(s)) {
-      final ForStatement $ = s.getAST().newForStatement();
-      return buildForWhithoutLastStatement($, s);
+  @Override public ASTNode replacement(final WhileStatement ¢) {
+    if (lastStatementIsUpdate(¢)) {
+      final ForStatement $ = ¢.getAST().newForStatement();
+      return buildForWhithoutLastStatement($, ¢);
     }
     return null;
   }
