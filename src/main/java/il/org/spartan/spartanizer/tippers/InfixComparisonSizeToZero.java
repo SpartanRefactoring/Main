@@ -108,7 +108,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   @Override public String description(final InfixExpression x) {
     final Expression right = right(x);
     final Expression left = left(x);
-    return description(left instanceof MethodInvocation ? left : right);
+    return description(expression(left instanceof MethodInvocation ? left : right));
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
