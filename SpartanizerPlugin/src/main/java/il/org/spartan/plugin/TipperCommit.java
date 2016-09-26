@@ -184,7 +184,7 @@ public final class TipperCommit {
             Tip make = null;
             try {
               make = x.tip(n, exclude);
-            } catch (final TipperException e) {
+            } catch (final TipperFailure e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
             }

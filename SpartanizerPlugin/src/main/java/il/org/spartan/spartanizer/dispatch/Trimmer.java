@@ -134,7 +134,7 @@ public class Trimmer extends GUI$Applicator {
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
-        } catch (final TipperException e) {
+        } catch (final TipperFailure e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
@@ -180,7 +180,7 @@ public class Trimmer extends GUI$Applicator {
           progressMonitor.worked(5);
         try {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
-        } catch (final TipperException e) {
+        } catch (final TipperFailure e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }

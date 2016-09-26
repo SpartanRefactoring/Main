@@ -11,7 +11,7 @@ public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
     try {
       return prerequisite(¢) && tip(¢) != null;
-    } catch (final TipperException e) {
+    } catch (final TipperFailure e) {
       return false;
     }
   }
