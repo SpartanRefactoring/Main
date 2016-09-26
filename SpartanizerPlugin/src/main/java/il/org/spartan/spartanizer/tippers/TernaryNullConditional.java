@@ -36,11 +36,7 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
     final Expression right = step.right(condition);
     step.then(x);
     step.elze(x);
-    if (iz.nullLiteral(left) && iz.memberRef(right)) {
-    }
-    if (iz.memberRef(left) && iz.nullLiteral(right)) {
-    }
-    // return null;
+    // 
     //
     //// MemberRef m = ;
     return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
