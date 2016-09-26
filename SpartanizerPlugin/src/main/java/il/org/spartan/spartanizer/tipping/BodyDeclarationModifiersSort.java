@@ -81,7 +81,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   N go(final N $) {
     final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
-    final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($));
+    final List<IExtendedModifier> as = new ArrayList<>(sortedAnnotations($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
@@ -100,5 +100,9 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(removeSame(extract.modifiers($)));
+  }
+  
+  private List<? extends IExtendedModifier> sortedAnnotations(final N $) {
+    return sort(removeSame(extract.annotations($)));
   }
 }
