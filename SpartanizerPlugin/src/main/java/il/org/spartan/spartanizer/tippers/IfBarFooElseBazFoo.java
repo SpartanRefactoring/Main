@@ -59,7 +59,7 @@ public final class IfBarFooElseBazFoo extends EagerWring<IfStatement> implements
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override public Tip suggest(final IfStatement s) {
+  @Override public Tip tip(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s));
     if (then.isEmpty())
       return null;
@@ -98,8 +98,8 @@ public final class IfBarFooElseBazFoo extends EagerWring<IfStatement> implements
     };
   }
 
-  @Override public Tip suggest(final IfStatement s, final ExclusionManager exclude) {
-    return super.suggest(s, exclude);
+  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
+    return super.tip(s, exclude);
   }
 
   private class DefinitionsCollector extends ASTVisitor {

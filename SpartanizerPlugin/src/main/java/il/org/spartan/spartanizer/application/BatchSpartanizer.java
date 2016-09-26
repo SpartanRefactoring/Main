@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.application;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -128,7 +129,7 @@ public final class BatchSpartanizer {
   public Process shellEssenceMetrics(final String fileName) {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
-  
+
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
@@ -149,7 +150,6 @@ public final class BatchSpartanizer {
     befores.print(in);
     afters.print(out);
     report.summaryFileName();
-    
     report//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
@@ -249,8 +249,12 @@ public final class BatchSpartanizer {
     try {
       final String essentializedCodeBefore = runScript(beforeFileName);
       final String essentializedCodeAfter = runScript(afterFileName);
-      final int numWordEssentialBefore = essentializedCodeBefore.trim().length(); //essenceNew((essentializedCodeBefore + "")).trim().length();
-      final int numWordEssentialAfter = essentializedCodeAfter.trim().length(); //essenceNew((essentializedCodeBefore + "")).trim().length();
+      final int numWordEssentialBefore = essentializedCodeBefore.trim().length(); // essenceNew((essentializedCodeBefore
+                                                                                  // +
+                                                                                  // "")).trim().length();
+      final int numWordEssentialAfter = essentializedCodeAfter.trim().length(); // essenceNew((essentializedCodeBefore
+                                                                                // +
+                                                                                // "")).trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));

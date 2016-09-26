@@ -36,22 +36,17 @@ public enum LoggingManner {
     return "\n-----this is all I know.";
   }
 
-  public static LoggingManner nonAbortingManner() {
-    return now != ABORT_ON_ERROR ? now : LOG_TO_STDOUT;
+  public static LoggingManner info(final String message) {
+    return nonAbortingManner().log(message);
   }
 
   public static LoggingManner infoIOException(final Exception x, final String message) {
     return info(//
-            "   Got an exception of type : " + x.getClass().getSimpleName() + //
-            "\n      (probably I/O exception)" +
-            "\n   The exception says: '" + x + "'" + //
+        "   Got an exception of type : " + x.getClass().getSimpleName() + //
+            "\n      (probably I/O exception)" + "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
             "\n        >>>'" + message + "'<<<" //
-            );
-  }
-
-  public static LoggingManner info(final String message) {
-    return nonAbortingManner().log(message);
+    );
   }
 
   /** logs an error in the plugin
@@ -89,6 +84,10 @@ public enum LoggingManner {
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
+  }
+
+  public static LoggingManner nonAbortingManner() {
+    return now != ABORT_ON_ERROR ? now : LOG_TO_STDOUT;
   }
 
   public abstract LoggingManner log(String message);

@@ -24,18 +24,18 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return a1.getRightHandSide();
   }
 
-  static Expression pushdown(final ConditionalExpression x) {
-    if (x == null)
+  static Expression pushdown(final ConditionalExpression e) {
+    if (e == null)
       return null;
-    final Expression then = core(x.getThenExpression());
-    final Expression elze = core(x.getElseExpression());
-    return wizard.same(then, elze) ? null : pushdown(x, then, elze);
+    final Expression then = core(e.getThenExpression());
+    final Expression elze = core(e.getElseExpression());
+    return wizard.same(then, elze) ? null : pushdown(e, then, elze);
   }
 
-  static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
+  static Expression pushdown(final ConditionalExpression e, final Assignment a1, final Assignment a2) {
     return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
-        : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator()))
-            .into(x.getParent());
+        : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(e.getExpression())).to(a1.getOperator()))
+            .into(e.getParent());
   }
 
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
@@ -53,7 +53,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
-  private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
+  private static Expression pushdown(final ConditionalExpression e, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!wizard.same(e1.getType(), e2.getType()) || !wizard.same(e1.getExpression(), e2.getExpression()))
       return null;
     final List<Expression> es1 = arguments(e1);
@@ -65,40 +65,40 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
       return null;
     final ClassInstanceCreation $ = duplicate.of(e1);
     arguments($).remove(i);
-    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression x, final Expression e1, final Expression e2) {
+  private static Expression pushdown(final ConditionalExpression e, final Expression e1, final Expression e2) {
     if (e1.getNodeType() != e2.getNodeType())
       return null;
     switch (e1.getNodeType()) {
       case SUPER_METHOD_INVOCATION:
-        return pushdown(x, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
+        return pushdown(e, (SuperMethodInvocation) e1, (SuperMethodInvocation) e2);
       case METHOD_INVOCATION:
-        return pushdown(x, (MethodInvocation) e1, (MethodInvocation) e2);
+        return pushdown(e, (MethodInvocation) e1, (MethodInvocation) e2);
       case INFIX_EXPRESSION:
-        return pushdown(x, (InfixExpression) e1, (InfixExpression) e2);
+        return pushdown(e, (InfixExpression) e1, (InfixExpression) e2);
       case ASSIGNMENT:
-        return pushdown(x, (Assignment) e1, (Assignment) e2);
+        return pushdown(e, (Assignment) e1, (Assignment) e2);
       case FIELD_ACCESS:
-        return pushdown(x, (FieldAccess) e1, (FieldAccess) e2);
+        return pushdown(e, (FieldAccess) e1, (FieldAccess) e2);
       case CLASS_INSTANCE_CREATION:
-        return pushdown(x, (ClassInstanceCreation) e1, (ClassInstanceCreation) e2);
+        return pushdown(e, (ClassInstanceCreation) e1, (ClassInstanceCreation) e2);
       default:
         return null;
     }
   }
 
-  private static Expression pushdown(final ConditionalExpression x, final FieldAccess e1, final FieldAccess e2) {
+  private static Expression pushdown(final ConditionalExpression e, final FieldAccess e1, final FieldAccess e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final FieldAccess $ = duplicate.of(e1);
-    $.setExpression(wizard.parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(x.getExpression())));
+    $.setExpression(wizard.parenthesize(subject.pair(e1.getExpression(), e2.getExpression()).toCondition(e.getExpression())));
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
+  private static Expression pushdown(final ConditionalExpression e, final InfixExpression e1, final InfixExpression e2) {
     if (e1.getOperator() != e2.getOperator())
       return null;
     final List<Expression> es1 = hop.operands(e1);
@@ -111,11 +111,11 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final InfixExpression $ = duplicate.of(e1);
     final List<Expression> operands = hop.operands($);
     operands.remove(i);
-    operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression())));
-    return p(x, subject.operands(operands).to($.getOperator()));
+    operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression())));
+    return p(e, subject.operands(operands).to($.getOperator()));
   }
 
-  private static Expression pushdown(final ConditionalExpression x, final MethodInvocation e1, final MethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression e, final MethodInvocation e1, final MethodInvocation e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1);
@@ -127,7 +127,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
         return null;
       final MethodInvocation $ = duplicate.of(e1);
       assert $ != null;
-      $.setExpression(wizard.parenthesize(subject.pair(receiver1, receiver2).toCondition(x.getExpression())));
+      $.setExpression(wizard.parenthesize(subject.pair(receiver1, receiver2).toCondition(e.getExpression())));
       return $;
     }
     if (es1.size() != es2.size())
@@ -137,11 +137,11 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
       return null;
     final MethodInvocation $ = duplicate.of(e1);
     arguments($).remove(i);
-    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression x, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression e, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1);
@@ -153,7 +153,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
       return null;
     final SuperMethodInvocation $ = duplicate.of(e1);
     arguments($).remove(i);
-    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
+    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(e.getExpression()));
     return $;
   }
 
