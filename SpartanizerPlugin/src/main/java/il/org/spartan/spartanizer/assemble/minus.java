@@ -39,7 +39,11 @@ public enum minus {
       $ += minus.level(¢);
     return $;
   }
-
+  
+  private static int level(final PrefixExpression ¢) {
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+  }
+  
   public static Expression peel(final Expression $) {
     return iz.is($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.is($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
@@ -52,6 +56,13 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
+  private static List<Expression> peel(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression ¢ : xs)
+      $.add(peel(¢));
+    return $;
+  }
+
   public static Expression peel(final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
@@ -60,14 +71,18 @@ public enum minus {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 
-  private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
-  }
-
-  private static List<Expression> peel(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      $.add(peel(¢));
-    return $;
+  /** Remove the last statement residing under a given {@link Statement}, if ¢
+   * is empty or has only one statement return empty statement.
+   * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
+   * @return Given {@link Statement} without the last inner statement, if ¢ is
+   *         empty or has only one statement return empty statement. */
+  public static Statement LastStatement(final Statement $) {
+    if (iz.block($)) {
+      final List<Statement> l = az.block($).statements();
+      if (l.size() > 0)
+        l.remove(l.size() - 1);
+      return $;
+    }
+    return make.emptyStatement($);
   }
 }
