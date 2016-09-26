@@ -77,12 +77,11 @@ public enum minus {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement LastStatement(final Statement $) {
-    if (iz.block($)) {
-      final List<Statement> l = az.block($).statements();
-      if (l.size() > 0)
-        l.remove(l.size() - 1);
-      return $;
-    }
-    return make.emptyStatement($);
+    if (!iz.block($))
+      return make.emptyStatement($);
+    final List<Statement> l = az.block($).statements();
+    if (!l.isEmpty())
+      l.remove(l.size() - 1);
+    return $;
   }
 }

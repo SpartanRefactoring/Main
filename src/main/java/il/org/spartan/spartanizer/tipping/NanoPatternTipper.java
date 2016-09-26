@@ -16,7 +16,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> {
     return false;
   }
 
-  abstract protected boolean prerequisite(final N ¢);
+  protected abstract boolean prerequisite(final N ¢);
 
   @Override public Tip tip(@SuppressWarnings("unused") N __) throws TipperException {
     throw new TipperException.TipNotImplementedException();
