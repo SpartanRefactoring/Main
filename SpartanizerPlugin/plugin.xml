@@ -165,6 +165,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <!-- Popup menus 
        Not sure that this is not the one that creates URI exceptions at start. Commented
        out for now // TODO: Ori Roth
+       -->
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Laconization" mnemonic="M">
         <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
@@ -179,7 +180,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         </command>
      </menu>
   </menuContribution>
-  -->
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
