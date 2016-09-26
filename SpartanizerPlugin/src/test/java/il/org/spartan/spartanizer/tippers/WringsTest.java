@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.dispatch.Wrings.*;
+import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -96,7 +96,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Wrings.rename(n, n.getAST().newSimpleName("$"), m, r, null);
+    Tippers.rename(n, n.getAST().newSimpleName("$"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     final String output = Wrap.Method.off(d.get());
@@ -115,7 +115,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final SimpleName b = f.getName();
     azzert.that(Collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Wrings.rename(b, b.getAST().newSimpleName("c"), m, r, null);
+    Tippers.rename(b, b.getAST().newSimpleName("c"), m, r, null);
     final TextEdit e = r.rewriteAST(d, null);
     e.apply(d);
     azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));

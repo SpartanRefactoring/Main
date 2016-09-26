@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class ForRenameInitializerToCent extends EagerWring<VariableDeclarationExpression> implements Kind.Centification {
+public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression> implements Kind.Centification {
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }
@@ -47,7 +47,7 @@ public final class ForRenameInitializerToCent extends EagerWring<VariableDeclara
     final SimpleName ¢ = x.getAST().newSimpleName("¢");
     return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.rename(n, ¢, forStatement, r, g);
+        Tippers.rename(n, ¢, forStatement, r, g);
       }
     };
   }

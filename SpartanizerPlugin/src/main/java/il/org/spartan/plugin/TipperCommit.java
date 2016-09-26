@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public final class WringCommit {
+public final class TipperCommit {
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
@@ -181,7 +181,13 @@ public final class WringCommit {
             return true;
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findTipper(n, w);
           if (x != null) {
-            final Tip make = x.tip(n, exclude);
+            Tip make = null;
+            try {
+              make = x.tip(n, exclude);
+            } catch (TipperException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
             if (make != null) {
               if (LogManager.isActive())
                 LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");

@@ -36,15 +36,15 @@ public abstract class GUI$Applicator extends Refactoring {
   private static final String APPLY_TO_PROJECT = "Apply suggestion to entire project";
 
   public static IMarkerResolution getTipperCommitDeclaration() {
-    return getWringCommit(WringCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
+    return getWringCommit(TipperCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
   }
 
   public static IMarkerResolution getWringCommitFile() {
-    return getWringCommit(WringCommit.Type.FILE, APPLY_TO_FILE);
+    return getWringCommit(TipperCommit.Type.FILE, APPLY_TO_FILE);
   }
 
   public static IMarkerResolution getWringCommitProject() {
-    return getWringCommit(WringCommit.Type.PROJECT, APPLY_TO_PROJECT);
+    return getWringCommit(TipperCommit.Type.PROJECT, APPLY_TO_PROJECT);
   }
 
   static IMarkerResolution getToggle(final SuppressSpartanizationOnOff.Type t, final String l) {
@@ -63,7 +63,7 @@ public abstract class GUI$Applicator extends Refactoring {
     };
   }
 
-  private static IMarkerResolution getWringCommit(final WringCommit.Type t, final String l) {
+  private static IMarkerResolution getWringCommit(final TipperCommit.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return l;
@@ -71,7 +71,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
       @Override public void run(final IMarker m) {
         try {
-          new WringCommit().go(nullProgressMonitor, m, t);
+          new TipperCommit().go(nullProgressMonitor, m, t);
         } catch (IllegalArgumentException | CoreException e) {
           LoggingManner.logEvaluationError(this, e);
         }

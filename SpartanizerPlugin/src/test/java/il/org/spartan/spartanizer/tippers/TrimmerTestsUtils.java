@@ -23,7 +23,7 @@ public final class TrimmerTestsUtils {
     assert u != null;
     final Document d = new Document(from);
     assert d != null;
-    return TESTUtils.rewrite(new WringApplicator(n), u, d).get();
+    return TESTUtils.rewrite(new TipperApplicator(n), u, d).get();
   }
 
   static String applyTrimmer(final Trimmer t, final String from) {

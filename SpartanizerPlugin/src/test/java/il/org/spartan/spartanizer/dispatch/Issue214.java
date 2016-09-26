@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   private final Tipper<?> blockSimplify = new BlockSimplify();
-  private final Tipper<?> tipper = new EagerWring<ASTNode>() {
+  private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
     @Override public String description() {
       return null;
     }

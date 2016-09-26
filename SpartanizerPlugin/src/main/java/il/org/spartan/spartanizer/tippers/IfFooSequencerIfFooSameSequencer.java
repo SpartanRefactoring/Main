@@ -48,7 +48,7 @@ public final class IfFooSequencerIfFooSameSequencer extends ReplaceToNextStateme
     final Statement then = then(s);
     final List<Statement> ss1 = extract.statements(then);
     return !wizard.same(ss1, extract.statements(then(s2))) || !iz.sequencer(last(ss1)) ? null
-        : Wrings.replaceTwoStatements(r, s,
+        : Tippers.replaceTwoStatements(r, s,
             make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), s2.getExpression()).to(CONDITIONAL_OR)),
             g);
   }

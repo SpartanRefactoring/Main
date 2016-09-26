@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class MethodDeclarationRenameSingleParameterToCent extends EagerWring<MethodDeclaration> implements Kind.Centification {
+public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration> implements Kind.Centification {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
@@ -47,7 +47,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerWri
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return new Tip("Rename paraemter " + n + " to ¢ ", d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.rename(n, ¢, d, r, g);
+        Tippers.rename(n, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, n, ¢ + "", r, g);
       }
     };

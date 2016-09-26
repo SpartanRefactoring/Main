@@ -47,6 +47,6 @@ public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStateme
     if (r2 == null)
       return null;
     final Expression e2 = extract.core(r2.getExpression());
-    return e2 == null ? null : Wrings.replaceTwoStatements(r, s, subject.operand(subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
+    return e2 == null ? null : Tippers.replaceTwoStatements(r, s, subject.operand(subject.pair(e1, e2).toCondition(s.getExpression())).toReturn(), g);
   }
 }

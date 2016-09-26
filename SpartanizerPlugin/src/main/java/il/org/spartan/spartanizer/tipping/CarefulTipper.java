@@ -9,7 +9,11 @@ import org.eclipse.jdt.core.dom.*;
  * @year 2016 */
 public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
-    return prerequisite(¢) && tip(¢) != null;
+    try {
+      return prerequisite(¢) && tip(¢) != null;
+    } catch (TipperException e) {
+      return false;
+    }
   }
 
   protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
