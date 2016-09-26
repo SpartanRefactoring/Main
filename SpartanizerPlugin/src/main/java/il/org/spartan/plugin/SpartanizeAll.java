@@ -11,8 +11,8 @@ import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 
-/** A handler for {@link Tips}. This handler executes all safe
- * Tips on all Java files in the current project.
+/** A handler for {@link Tips}. This handler executes all safe Tips on all Java
+ * files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public final class SpartanizeAll extends BaseHandler {
@@ -80,9 +80,9 @@ public final class SpartanizeAll extends BaseHandler {
         LoggingManner.logEvaluationError(this, x);
       }
       final int finalCount = countTips(currentCompilationUnit);
-      return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n"
-          + "Total changes: " + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount
-          + "\n" + message);
+      return eclipse
+          .announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
+              + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + message);
     }
     throw new ExecutionException("Too many iterations");
   }

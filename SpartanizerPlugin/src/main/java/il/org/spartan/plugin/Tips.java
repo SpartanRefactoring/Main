@@ -39,7 +39,7 @@ public final class Tips {
     return map.keySet();
   }
 
-  /** @param t rule 
+  /** @param t rule
    * @return laconization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends GUI$Applicator> T findInstance(final Class<? extends T> ¢) {
@@ -71,7 +71,7 @@ public final class Tips {
     this.value = value;
   }
 
-  /** @return  ? */
+  /** @return ? */
   public GUI$Applicator value() {
     return value;
   }

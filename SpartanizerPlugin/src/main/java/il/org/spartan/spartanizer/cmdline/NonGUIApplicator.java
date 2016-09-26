@@ -27,7 +27,7 @@ public class NonGUIApplicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         try {
           return w == null || w.cantTip(n) || Trimmer.prune(w.tip(n, exclude), $);
-        } catch (TipperException e) {
+        } catch (final TipperException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }

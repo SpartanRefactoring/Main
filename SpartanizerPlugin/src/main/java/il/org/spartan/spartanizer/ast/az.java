@@ -178,14 +178,6 @@ public enum az {
     return !iz.is($, LAMBDA_EXPRESSION) ? null : (LambdaExpression) $;
   }
 
-  /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
-   * @param ¢ ASTNode
-   * @return argument, but down-casted to a {@link MethodRef}, or
-   *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static MethodRef methodRef(final ASTNode ¢) {
-    return !iz.is(¢, MEMBER_REF) ? null : (MethodRef) ¢;
-  }
-
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
    * @param $ result
    * @return argument, but down-casted to a {@link MethodDeclaration}, or
@@ -200,6 +192,14 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static MethodInvocation methodInvocation(final Expression $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
+  }
+
+  /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
+   * @param ¢ ASTNode
+   * @return argument, but down-casted to a {@link MethodRef}, or
+   *         <code><b>null</b></code> if no such down-cast is possible.. */
+  public static MethodRef methodRef(final ASTNode ¢) {
+    return !iz.is(¢, MEMBER_REF) ? null : (MethodRef) ¢;
   }
 
   /** Down-cast, if possible, to {@link Modifier}
