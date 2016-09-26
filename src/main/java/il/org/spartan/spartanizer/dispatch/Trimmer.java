@@ -130,7 +130,7 @@ public class Trimmer extends GUI$Applicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
-        final Tip s = w.suggest(n, exclude);
+        final Tip s = w.tip(n, exclude);
         TrimmerLog.suggestion(w, n);
         if (s != null) {
           if (LogManager.isActive())
@@ -172,7 +172,7 @@ public class Trimmer extends GUI$Applicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w != null)
           progressMonitor.worked(5);
-        return w == null || w.cantTip(n) || prune(w.suggest(n, exclude), $);
+        return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
       }
 
       @Override protected void initialization(final ASTNode ¢) {

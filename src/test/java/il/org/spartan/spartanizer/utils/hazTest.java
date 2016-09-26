@@ -7,11 +7,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.*;
 
-/**
- * Unit tests for                                           {@link haz}
- * @author                                           TODO // Write your name here
- * @since                                           2016 
- */
+/** Unit tests for {@link haz}
+ * @author TODO // Write your name here
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class hazTest {
   @Test public void seriesA_01() {
     assert !haz.variableDefinition(e("0"));

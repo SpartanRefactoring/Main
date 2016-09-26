@@ -14,11 +14,9 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/**
- * Tests for                                           {@Link                                           InfixAdditionZero}
- * @author                                           Yossi Gil
- * @since                                           2016 
- */
+/** Tests for {@Link InfixAdditionZero}
+ * @author Yossi Gil
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue072 {
   @Test public void ma() {
     final String s = "0-x";

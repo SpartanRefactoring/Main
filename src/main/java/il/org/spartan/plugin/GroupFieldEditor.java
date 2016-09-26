@@ -9,6 +9,9 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
+import il.org.spartan.*;
+import il.org.spartan.utils.*;
+
 /** A {@link FieldEditor} designed to store multiple controls within a group
  * panel widget, to be used in conjunction with an
  * {@link FieldEditorPreferencePage} instance.
@@ -124,7 +127,8 @@ public final class GroupFieldEditor extends FieldEditor {
     parent.redraw();
   }
 
-  @Override @SuppressWarnings("unused") protected void doFillIntoGrid(final Composite ____parent, final int ____numColumns) {
+  @Override protected void doFillIntoGrid(final Composite __parent, final int __numColumns) {
+    ___.______unused(__parent, box.it(__numColumns));
   }
 
   @Override protected void doLoad() {
