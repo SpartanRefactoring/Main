@@ -53,4 +53,12 @@ import org.junit.runners.*;
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "continue;"
         + "p = p.getParent();" + "}" + "return false;" + "}").stays();
   }
+
+  @Test public void t05() {
+    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
+        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
+    .gives("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "for (;$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());"
+        + "return $;" + "}")
+    .stays();
+  }
 }
