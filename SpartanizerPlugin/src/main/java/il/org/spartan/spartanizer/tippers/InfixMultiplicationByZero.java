@@ -15,9 +15,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-25
  * @see {@link sideEffects} */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
-  // TODO: Yossi make an issue about this bug: check for usage also in the
-  // generator expressiona
-  // TOOD: Yossi and another issue, allow inlining into generator expression
   private static boolean isContainsSideEffect(final InfixExpression ¢) {
     for (final Expression e : extract.allOperands(¢))
       if (!sideEffects.free(e))
