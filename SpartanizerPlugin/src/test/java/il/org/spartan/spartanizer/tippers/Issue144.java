@@ -25,18 +25,23 @@ import org.junit.runners.*;
   @Test public void t012() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return false;"
         + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + " for (; p != null; p = p.getParent()) {" + "if (dns.contains(p))"
-                + "return false;" + "}" + "return false;" + "}");
+            .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "break;"
+                + "p = p.getParent();" + "}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for (; p != null; p=p.getParent()) {" + "if (dns.contains(p))" + "break;}"
+                + "return false;" + "}");
   }
 
   @Test public void t02() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return false;" + "p = p.getParent();" + "}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
+        + "if (ens.contains(p))" + "break;" + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + " for (; p != null; p = p.getParent()) {" + "if (dns.contains(p))"
-                + "return true;" + "if (ens.contains(p))" + "return false;" + "}" + "return false;" + "}");
+                + "return true;" + "if (ens.contains(p))" + "break;" + "}" + "return false;" + "}")
+            .stays();
   }
 
-  @Test public void t03() {
+  @Ignore @Test public void t03() {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
         + "for (int i = 0; i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
             .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
