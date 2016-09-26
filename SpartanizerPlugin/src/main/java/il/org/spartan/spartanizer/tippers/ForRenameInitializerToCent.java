@@ -30,7 +30,7 @@ public final class ForRenameInitializerToCent extends EagerWring<VariableDeclara
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }
 
-  @Override public Tip suggest(final VariableDeclarationExpression x, final ExclusionManager m) {
+  @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
     final ForStatement forStatement = az.forStatement(parent(x));
     if (forStatement == null)
       return null;

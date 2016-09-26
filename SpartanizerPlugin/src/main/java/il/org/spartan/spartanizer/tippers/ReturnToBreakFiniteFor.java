@@ -95,7 +95,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip suggest(final ForStatement s) {
+  @Override public Tip tip(final ForStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;

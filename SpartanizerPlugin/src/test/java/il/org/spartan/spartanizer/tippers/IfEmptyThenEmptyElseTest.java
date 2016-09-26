@@ -46,7 +46,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    final Tip t = WRING.suggest(s);
+    final Tip t = WRING.tip(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
     assert e != null;

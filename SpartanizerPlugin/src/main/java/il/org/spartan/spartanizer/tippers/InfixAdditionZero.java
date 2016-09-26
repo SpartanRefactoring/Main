@@ -93,7 +93,7 @@ public final class InfixAdditionZero extends EagerWring<InfixExpression> impleme
     return "remove 0 in X + 0 expressions from " + ¢;
   }
 
-  @Override public Tip suggest(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;

@@ -21,7 +21,7 @@ public final class ReturnLastInMethod extends EagerWring<ReturnStatement> implem
     return "Remove redundant return statement";
   }
 
-  @Override public Tip suggest(final ReturnStatement s) {
+  @Override public Tip tip(final ReturnStatement s) {
     if (s.getExpression() != null)
       return null;
     final Block b = az.block(s.getParent());

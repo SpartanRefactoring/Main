@@ -93,8 +93,8 @@ public class TrimmerLog {
       output.put("Named", w.description());
       output.put("Kind", w.wringGroup());
       output.put("Described", w.description(n));
-      output.put("Can suggest", w.canTip(n));
-      output.put("Suggests", w.suggest(n));
+      output.put("Can tip", w.canTip(n));
+      output.put("Suggests", w.tip(n));
       output.nl();
     }
     if (!logToScreen || !logToScreen)
@@ -104,8 +104,8 @@ public class TrimmerLog {
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.wringGroup());
     System.out.println("   Described: " + w.description(n));
-    System.out.println(" Can suggest: " + w.canTip(n));
-    System.out.println("    Suggests: " + w.suggest(n));
+    System.out.println(" Can tip: " + w.canTip(n));
+    System.out.println("    Suggests: " + w.tip(n));
   }
 
   public static void visitation(final ASTNode ¢) {
