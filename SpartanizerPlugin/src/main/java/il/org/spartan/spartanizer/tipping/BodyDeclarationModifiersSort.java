@@ -15,63 +15,11 @@ import il.org.spartan.spartanizer.java.*;
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.
  * @author Alex Kopzon
+ * @author Dor Ma'ayan
  * @since 2016 */
+
 public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements Kind.Sorting {
-  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
-      m2);
-
-  private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
-    IExtendedModifiersOrdering previous = IExtendedModifiersOrdering.Override;
-    for (final IExtendedModifier current : ms) {
-      if (!IExtendedModifiersOrdering.greaterThan(current, previous))
-        return false;
-      previous = IExtendedModifiersOrdering.find(current);
-    }
-    return true;
-  }
-
-  private static boolean pred(final IExtendedModifier m, final boolean[] bitMap) {
-    final boolean $ = !bitMap[IExtendedModifiersOrdering.ordinal(m)];
-    bitMap[IExtendedModifiersOrdering.ordinal(m)] = true;
-    // Can't compare different user defined annotations! So avoid removing them.
-    bitMap[IExtendedModifiersOrdering.userDefinedAnnotationsOrdinal()] = false;
-    return $;
-  }
-
-  private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
-    final boolean[] bitMap = IExtendedModifiersOrdering.bitMap();
-    final List<? extends IExtendedModifier> l = $.stream().filter(m -> pred(m, bitMap)).collect(Collectors.toList());
-    return l;
-  }
-
-  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
-    return ¢.stream().sorted(comp).collect(Collectors.toList());
-  }
-
-  @Override public String description(final N ¢) {
-    return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
-  }
-
-  @Override public N replacement(final N $) {
-    return go(duplicate.of($));
-  }
-
-  @Override protected boolean prerequisite(final N ¢) {
-    return !isSortedAndDistinct(extendedModifiers(¢));
-  }
-
-  N go(final N $) {
-    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
-    extendedModifiers($).clear();
-    extendedModifiers($).addAll(ms);
-    return $;
-  }
-
-  private List<? extends IExtendedModifier> sortedModifiers(final N $) {
-    return sort(removeSame(extendedModifiers($)));
-  }
-
   public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
   }
 
@@ -95,4 +43,63 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
 
   public static final class ofType extends BodyDeclarationModifiersSort<TypeDeclaration> { //
   }
+
+  static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
+      m2);
+
+  private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
+    IExtendedModifiersOrdering previous = IExtendedModifiersOrdering.Override;
+    for (final IExtendedModifier current : ms) {
+      if (!IExtendedModifiersOrdering.greaterThan(current, previous))
+        return false;
+      previous = IExtendedModifiersOrdering.find(current);
+    }
+    return true;
+  }
+
+  private static boolean pred(final IExtendedModifier m, final boolean[] bitMap) {
+    final boolean $ = !bitMap[IExtendedModifiersOrdering.ordinal(m)];
+    bitMap[IExtendedModifiersOrdering.ordinal(m)] = true;
+    // Can't compare different user defined annotations! So avoid removing them.
+    bitMap[IExtendedModifiersOrdering.userDefinedAnnotationsOrdinal()] = false;
+    return $;
+  }
+
+  private static List<? extends IExtendedModifier> removeSame(final List<? extends IExtendedModifier> $) {
+    boolean[] bitMap = IExtendedModifiersOrdering.bitMap();
+    List<? extends IExtendedModifier> l =  $.stream().filter(m -> pred(m, bitMap)).collect(Collectors.toList());
+    return l;
+  }
+
+  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
+    return ¢.stream().sorted(comp).collect(Collectors.toList());
+  }
+
+  @Override public String description(final N ¢) {
+    return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
+  }
+
+  N go(final N $) {
+    final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
+    final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($));
+    extendedModifiers($).clear();
+    extendedModifiers($).addAll(as);
+    extendedModifiers($).addAll(ms);
+    return $;
+  }
+
+  @Override protected boolean prerequisite(final N ¢) {
+    if(extendedModifiers(¢).size() == 0)
+      return false;
+    return !isSortedAndDistinct(extract.modifiers(¢));
+  }
+
+  @Override public N replacement(final N $) {
+    return go(duplicate.of($));
+  }
+
+  private List<? extends IExtendedModifier> sortedModifiers(final N $) {
+    return sort(removeSame(extract.modifiers($)));
+  }
+  
 }

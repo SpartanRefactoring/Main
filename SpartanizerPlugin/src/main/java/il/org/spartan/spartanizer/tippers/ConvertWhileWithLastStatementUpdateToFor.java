@@ -39,8 +39,7 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   }
 
   @Override public String description(final WhileStatement n) {
-    return "Convert the while loop : /n" + n //
-        + "/n to a traditional for loop";
+    return "Convert the while about '(" + n.getExpression() + ")' to a traditional for(;;)";
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
