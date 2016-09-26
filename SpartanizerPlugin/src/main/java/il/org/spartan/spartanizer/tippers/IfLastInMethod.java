@@ -40,7 +40,7 @@ public final class IfLastInMethod extends EagerWring<IfStatement> implements Kin
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
 
-  @Override public Tip suggest(final IfStatement s) {
+  @Override public Tip tip(final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block b = az.block(s.getParent());

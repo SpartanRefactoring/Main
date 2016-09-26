@@ -33,7 +33,7 @@ public final class WringApplicator extends GUI$Applicator {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
-          tipper.suggest(¢).go(r, null);
+          tipper.tip(¢).go(r, null);
       }
     });
   }
@@ -49,7 +49,7 @@ public final class WringApplicator extends GUI$Applicator {
         if (!tipper.canTip(¢))
           return;
         progressMonitor.worked(1);
-        $.add(tipper.suggest(¢));
+        $.add(tipper.tip(¢));
       }
     };
   }

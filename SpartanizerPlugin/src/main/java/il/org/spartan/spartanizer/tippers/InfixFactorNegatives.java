@@ -52,10 +52,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> implements Kind.Sorting {
-  private static List<Expression> gather(final Expression e, final List<Expression> $) {
-    if (e instanceof InfixExpression)
-      return gather(az.infixExpression(e), $);
-    $.add(e);
+  private static List<Expression> gather(final Expression x, final List<Expression> $) {
+    if (x instanceof InfixExpression)
+      return gather(az.infixExpression(x), $);
+    $.add(x);
     return $;
   }
 
@@ -63,22 +63,22 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
     return gather(¢, new ArrayList<Expression>());
   }
 
-  private static List<Expression> gather(final InfixExpression e, final List<Expression> $) {
-    if (e == null)
+  private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
+    if (x == null)
       return $;
-    if (!in(e.getOperator(), TIMES, DIVIDE)) {
-      $.add(e);
+    if (!in(x.getOperator(), TIMES, DIVIDE)) {
+      $.add(x);
       return $;
     }
-    gather(core(left(e)), $);
-    gather(core(right(e)), $);
-    if (e.hasExtendedOperands())
-      gather(extendedOperands(e), $);
+    gather(core(left(x)), $);
+    gather(core(right(x)), $);
+    if (x.hasExtendedOperands())
+      gather(extendedOperands(x), $);
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> es, final List<Expression> $) {
-    for (final Expression ¢ : es)
+  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
+    for (final Expression ¢ : xs)
       gather(¢, $);
     return $;
   }
@@ -87,16 +87,16 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Tip suggest(final InfixExpression e, final ExclusionManager exclude) {
-    final List<Expression> es = gather(e);
+  @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
+    final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;
-    final int totalNegation = minus.level(e);
-    if (totalNegation == 0 || totalNegation == 1 && minus.level(left(e)) == 1)
+    final int totalNegation = minus.level(x);
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1)
       return null;
     if (exclude != null)
-      exclude.exclude(e);
-    return new Tip(description(e), e) {
+      exclude.exclude(x);
+    return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)
