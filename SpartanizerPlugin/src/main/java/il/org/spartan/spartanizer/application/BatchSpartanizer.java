@@ -194,7 +194,7 @@ public final class BatchSpartanizer {
     System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
-  
+ // TODO: Matteo, ain't tis a bug?
   private static Object returnNumber(String $){
     return null;
   }
