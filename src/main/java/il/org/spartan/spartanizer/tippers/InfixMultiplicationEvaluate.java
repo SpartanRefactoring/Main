@@ -23,23 +23,23 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> xs) throws Exception {
+  @Override double evaluateDouble(final List<Expression> es) throws Exception {
     double $ = 1;
-    for (final Expression ¢ : xs)
+    for (final Expression ¢ : es)
       $ *= az.throwing.double¢(¢);
     return $;
   }
 
-  @Override int evaluateInt(final List<Expression> xs) throws Exception {
+  @Override int evaluateInt(final List<Expression> es) throws Exception {
     int $ = 1;
-    for (final Expression ¢ : xs)
+    for (final Expression ¢ : es)
       $ *= az.throwing.int¢(¢);
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs) throws Exception {
+  @Override long evaluateLong(final List<Expression> es) throws Exception {
     long $ = 1;
-    for (final Expression ¢ : xs)
+    for (final Expression ¢ : es)
       $ *= az.throwing.long¢(¢);
     return $;
   }
