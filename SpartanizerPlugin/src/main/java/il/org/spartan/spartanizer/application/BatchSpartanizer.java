@@ -27,6 +27,14 @@ public final class BatchSpartanizer {
     return fileName + ".essence";
   }
 
+  public static void main(final String[] where) {
+    if (where.length == 0)
+      new BatchSpartanizer(".", "current-working-directory").fire();
+    else
+      for (final String ¢ : where)
+        new BatchSpartanizer(¢).fire();
+  }
+
   static String essenceNew(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
@@ -44,20 +52,32 @@ public final class BatchSpartanizer {
     ;
   }
 
-  public static void main(final String[] where) {
-    if (where.length == 0)
-      new BatchSpartanizer(".", "current-working-directory").fire();
-    else
-      for (final String ¢ : where)
-        new BatchSpartanizer(¢).fire();
-  }
-
   static String p(final int n1, final int n2) {
     return Unit.formatRelative(δ(n1, n2));
   }
 
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
+  }
+
+  static int tokens(final String s) {
+    int $ = 0;
+    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+      final Token t = tokenizer.next();
+      if (t == null || t == Token.EOF)
+        return $;
+      if (t.kind == Token.Kind.COMMENT || t.kind == Token.Kind.NONCODE)
+        continue;
+      ++$;
+    }
+  }
+
+  static double δ(final double n1, final double n2) {
+    return 1 - n2 / n1;
+  }
+
+  private static String removePercentChar(final String p) {
+    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
   }
 
   private static String runScript(final String pathname) throws IOException {
@@ -74,24 +94,8 @@ public final class BatchSpartanizer {
     return sb + "";
   }
 
-  static int tokens(final String s) {
-    int $ = 0;
-    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      final Token t = tokenizer.next();
-      if (t == null || t == Token.EOF)
-        return $;
-      if (t.kind == Token.Kind.COMMENT || t.kind == Token.Kind.NONCODE)
-        continue;
-      ++$;
-    }
-  }
-
   private static int wc(final String $) {
     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
-  }
-
-  static double δ(final double n1, final double n2) {
-    return 1 - n2 / n1;
   }
 
   private int classesDone;
@@ -126,6 +130,10 @@ public final class BatchSpartanizer {
     return null;
   }
 
+  public Process shellEssenceMetrics(final String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
+  }
+
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
@@ -146,9 +154,9 @@ public final class BatchSpartanizer {
     befores.print(in);
     afters.print(out);
     report.summaryFileName();
-//    System.out.println(δ(nodes, nodes2));
-//    System.out.println(p(nodes, nodes2));
-//    System.out.println(p(tokens, tokens2));
+    // System.out.println(δ(nodes, nodes2));
+    // System.out.println(p(nodes, nodes2));
+    // System.out.println(p(tokens, tokens2));
     report//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
@@ -193,14 +201,6 @@ public final class BatchSpartanizer {
     report.nl();
     System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
-  }
- // TODO: Matteo, ain't tis a bug?
-  private static Object returnNumber(String $){
-    return null;
-  }
-  
-  private static String removePercentChar(String p) {
-    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
   }
 
   void collect(final CompilationUnit u) {
@@ -298,9 +298,5 @@ public final class BatchSpartanizer {
 
   private void runWordCount() {
     bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
-  }
-
-  public Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 }

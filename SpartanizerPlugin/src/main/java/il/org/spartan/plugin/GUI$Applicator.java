@@ -22,8 +22,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** the base class for all GUI applicators contains common
- * functionality
+/** the base class for all GUI applicators contains common functionality
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
@@ -126,8 +125,8 @@ public abstract class GUI$Applicator extends Refactoring {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
    * @param u what to check
-   * @return a collection of {@link Tip} objects each containing a
-   *         spartanization tip */
+   * @return a collection of {@link Tip} objects each containing a laconic
+   *         tip */
   public final List<Tip> collectSuggesions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
@@ -203,7 +202,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return false;
   }
 
-  /** a quickfix which automatically performs the spartanization
+  /** a quickfix which automatically performs the tip
    * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
    * @since 2013/07/01 */
   /** @return a quick fix for this instance */
@@ -229,8 +228,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** @param s Text for the preview dialog
-   * @return a quickfix which opens a refactoring wizard with the
-   *         tipper */
+   * @return a quickfix which opens a refactoring wizard with the tipper */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
       /** a quickfix which opens a refactoring wizard with the tipper
@@ -288,14 +286,13 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** .
-   * @return True if there are spartanizations which can be performed on the
-   *         compilation unit. */
+   * @return True if there are tipss which can be performed on the compilation
+   *         unit. */
   public final boolean haveTips() {
     return countTips() > 0;
   }
 
-  /** @param m marker which represents the range to apply the Spartanization
-   *        within
+  /** @param m marker which represents the range to apply the tipper within
    * @param n the node which needs to be within the range of
    *        <code><b>m</b></code>
    * @return True if the node is within range */
