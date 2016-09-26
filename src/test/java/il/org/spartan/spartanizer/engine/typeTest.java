@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.engine;
-
+import static 
+il.org.spartan.utils.___.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
@@ -25,9 +26,11 @@ import il.org.spartan.spartanizer.ast.*;
   * @year                                           2016 
   */
   @Ignore public static class NotWorkingYet {
+    // All test work now
   }
 
   @Ignore public static class Pending {
+     // No tests are pending 
   }
 
   /**

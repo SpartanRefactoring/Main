@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") @Ignore public final class EnvironmentTest {
   Environment e0 = Environment.genesis();
@@ -425,12 +424,8 @@ import il.org.spartan.utils.*;
     assert e1.put("Alex", new Information()) != null;
   }
 
-  @SuppressWarnings("unused") @Test public void putTest() {
-    try {
+@Test(expected = IllegalArgumentException.class) public void putTest() {
       e0.nest().put("Dan", new Information());
-    } catch (final IllegalArgumentException __) {
-      ___.______unused(__); 
-    }
   }
 
   @Test public void useTestMethodDefinition() {
