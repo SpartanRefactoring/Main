@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public final class SpartanizeAll extends BaseHandler {
+public final class LaconizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
 
   /** Returns the number of spartanization tips for a compilation unit
@@ -31,11 +31,11 @@ public final class SpartanizeAll extends BaseHandler {
     return $;
   }
 
-  public SpartanizeAll() {
+  public LaconizeProject() {
     this(new Trimmer());
   }
 
-  public SpartanizeAll(final GUI$Applicator inner) {
+  public LaconizeProject(final GUI$Applicator inner) {
     super(inner);
   }
 

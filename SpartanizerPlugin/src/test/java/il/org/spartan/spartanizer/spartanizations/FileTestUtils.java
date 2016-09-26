@@ -62,11 +62,11 @@ import il.org.spartan.spartanizer.engine.*;
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
-  static GUI$Applicator makeSpartanizationObject(final File ¢) {
-    return makeSpartanizationObject(¢.getName());
+  static GUI$Applicator makeLaconizationObject(final File ¢) {
+    return makeLaconizationObject(¢.getName());
   }
 
-  static GUI$Applicator makeSpartanizationObject(final String folderForClass) {
+  static GUI$Applicator makeLaconizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
     final Object $ = getInstance(c);
@@ -148,7 +148,7 @@ import il.org.spartan.spartanizer.engine.*;
     @Override public void go(final List<Object[]> $, final File d) {
       for (final File f : d.listFiles())
         if (f != null && f.isFile() && f.exists()) {
-          final Object[] c = makeCase(makeSpartanizationObject(d), d, f, f.getName());
+          final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
           if (c != null)
             $.add(c);
         }

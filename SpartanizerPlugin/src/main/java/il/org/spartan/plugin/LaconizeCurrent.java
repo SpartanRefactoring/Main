@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * spartanize only specific compilation units.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public final class SpartanizeCurrent extends BaseHandler {
+public final class LaconizeCurrent extends BaseHandler {
   private final int MAX_PASSES = 20;
 
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
