@@ -97,7 +97,7 @@ public interface hop {
   }
 
   /** Find the last statement residing under a given {@link Statement}
-   * @param subject JD
+   * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
    *         <code><b>null</b></code> if not such sideEffects exists. */
   static ASTNode lastStatement(final Statement ¢) {
@@ -134,6 +134,21 @@ public interface hop {
     if (¢.hasExtendedOperands())
       $.addAll(step.extendedOperands(¢));
     return $;
+  }
+
+  /** Remove the last statement residing under a given {@link Statement}, if ¢
+   * is empty or has only one statement return empty statement. 
+   * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
+   * @return Given {@link Statement} without the last inner statement, if ¢
+   * is empty or has only one statement return empty statement.*/
+  static Statement removeLastStatement(final Statement $) {
+    if (iz.block($)) {
+      final List<Statement> l = az.block($).statements();
+      if (l.size() > 0)
+        l.remove(l.size() - 1);
+      return $;
+    }
+    return $.getAST().newEmptyStatement();
   }
 
   static SimpleName simpleName(final Type ¢) {

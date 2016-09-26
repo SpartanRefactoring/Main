@@ -43,11 +43,11 @@ public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> impl
     return "Merge conditionals of nested if staement";
   }
 
-  @Override public Tip suggest(final IfStatement ¢) {
-    return suggest(¢, null);
+  @Override public Tip tip(final IfStatement ¢) {
+    return tip(¢, null);
   }
 
-  @Override public Tip suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
     if (!iz.vacuousElse(s))
       return null;
     final IfStatement then = az.ifStatement(extract.singleThen(s));
