@@ -153,6 +153,7 @@ public final class Application implements IApplication {
   }
 
   @Override public void stop() {
+    ___.nothing();
   }
 
   String determineOutputFilename(final String path) {

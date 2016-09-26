@@ -7,6 +7,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** ??
@@ -21,9 +22,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     listener = new SpartanPropertyListener();
   }
 
-  /**
-   * Build the preferences page by adding controls 
-   */
+  /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));

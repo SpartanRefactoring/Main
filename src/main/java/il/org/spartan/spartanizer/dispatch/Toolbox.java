@@ -7,8 +7,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Singleton containing all {@link Tipper}s which are active, allowing selecting
- * and applying the most appropriate such object for a given {@link ASTNode}.
+/** Singleton containing all {@link Tipper}s which are active, allowing
+ * selecting and applying the most appropriate such object for a given
+ * {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
@@ -39,9 +40,11 @@ public class Toolbox {
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
           .add(ReturnStatement.class, new ReturnLastInMethod()) //
-         // Disabled to protect against infinite loop
-          //.add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
-          //.add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort.ofAnnotation()) //
+          // Disabled to protect against infinite loop
+          // .add(AnnotationTypeMemberDeclaration.class, new
+          // BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
+          // .add(AnnotationTypeDeclaration.class, new
+          // BodyDeclarationModifiersSort.ofAnnotation()) //
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
@@ -49,6 +52,7 @@ public class Toolbox {
           .add(WhileStatement.class, //
               new BlockBreakToReturnInfiniteWhile(), //
               new ReturnToBreakFiniteWhile(), //
+              new ConvertWhileWithLastStatementUpdateToFor(), //
               null) //
           .add(Assignment.class, //
               new AssignmentAndAssignment(), //
@@ -103,6 +107,7 @@ public class Toolbox {
               // Disabled to protect against infinite loop
               new BodyDeclarationModifiersSort.ofMethod() , //
               //new BodyDeclarationAnnotationsSort.ofMethod() , //
+              new BodyDeclarationModifiersSort.ofMethod(), //
               new MethodDeclarationRenameSingleParameterToCent(), //
               null)
           .add(MethodInvocation.class, //
@@ -176,6 +181,7 @@ public class Toolbox {
               new EnumRedundantModifiers(), 
               new BodyDeclarationModifiersSort.ofEnum(), //
               //new BodyDeclarationAnnotationsSort.ofEnum(), //
+              new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
               // new EnumDeclarationModifierCleanEnum(), //
               null) //
           .add(FieldDeclaration.class, //

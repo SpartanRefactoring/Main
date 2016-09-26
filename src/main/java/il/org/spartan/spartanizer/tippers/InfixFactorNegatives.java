@@ -87,7 +87,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Tip suggest(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
     final List<Expression> es = gather(x);
     if (es.size() < 2)
       return null;

@@ -24,6 +24,23 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
 public final class SingleVariableDeclarationAbbreviation extends EagerWring<SingleVariableDeclaration> implements Kind.Abbreviation {
+  static void fixJavadoc(final MethodDeclaration m, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
+    final Javadoc j = m.getJavadoc();
+    if (j == null)
+      return;
+    final List<TagElement> ts = step.tags(j);
+    if (ts != null)
+      for (final TagElement t : ts) {
+        if (!TagElement.TAG_PARAM.equals(t.getTagName()))
+          continue;
+        for (final Object ¢ : t.fragments())
+          if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
+            r.replace((SimpleName) ¢, m.getAST().newSimpleName(newName), g);
+            return;
+          }
+      }
+  }
+
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (int ¢ = d.getExtraDimensions(); ¢ > 0; --¢)
@@ -61,7 +78,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
     return ¢.getName() + "";
   }
 
-  @Override public Tip suggest(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final ASTNode parent = d.getParent();
     if (parent == null || !(parent instanceof MethodDeclaration))
       return null;
@@ -78,23 +95,5 @@ public final class SingleVariableDeclarationAbbreviation extends EagerWring<Sing
         fixJavadoc(m, oldName, newName, r, g);
       }
     };
-  }
-  
-  static void fixJavadoc(final MethodDeclaration m, final SimpleName oldName, final String newName,
-      final ASTRewrite r, final TextEditGroup g) {
-    final Javadoc j = m.getJavadoc();
-    if (j == null)
-      return;
-    final List<TagElement> ts = step.tags(j);
-    if (ts != null)
-      for (final TagElement t : ts) {
-        if (!TagElement.TAG_PARAM.equals(t.getTagName()))
-          continue;
-        for (final Object ¢ : t.fragments())
-          if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-            r.replace((SimpleName) ¢, m.getAST().newSimpleName(newName), g);
-            return;
-          }
-      }
   }
 }

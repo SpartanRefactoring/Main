@@ -21,11 +21,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * * Unit tests for the nesting class Unit test for the containing class. Note our naming convention: a) test methods do not use the redundant "test" prefix. b) test methods begin with the name of the method they check.
- * @author                                           Yossi Gil
- * @since                                           2014-07-10 
- */
+/** * Unit tests for the nesting class Unit test for the containing class. Note
+ * our naming convention: a) test methods do not use the redundant "test"
+ * prefix. b) test methods begin with the name of the method they check.
+ * @author Yossi Gil
+ * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class TrimmerTest {
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)").stays();
@@ -1093,9 +1093,7 @@ import il.org.spartan.spartanizer.tipping.*;
     trimmingOf("int a = 2; return 3*a*4;").gives("return 3 * 2 * 4;");
   }
 
-  /**
-  * START OF STABLING TESTS 
-  */
+  /** START OF STABLING TESTS */
   @Test public void inlineintoInstanceCreation() {
     trimmingOf("public Statement methodBlock(FrameworkMethod m) {\n" + "  final Statement statement = methodBlock(m);\n"
         + "  return new Statement() {\n" + "     public void evaluate() throws Throwable {\n" + "       try {\n" + "         statement.evaluate();\n"
@@ -1524,7 +1522,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void issue54While() {
-    trimmingOf("int a  = f(); while (c) b[i] = a;").stays();
+    trimmingOf("int a  = f(); for(;c; b[i] = a);").stays();
   }
 
   @Test public void issue54WhileNonSideEffect() {
@@ -3112,7 +3110,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void ternarize41() {
     trimmingOf("int a,b,c,d;a = 3;b = 5; d = 7;if (a == 4)while (b == 3) c = a; else while (d == 3)c =a*a; ")
-        .gives("int a=3,b,c,d;b=5;d=7;if(a==4)while(b==3)c=a;else while(d==3)c=a*a;");
+        .gives("int a=3,b,c,d;b=5;d=7;if(a==4)for(;b==3;c=a);else for(;d==3;c=a*a);");
   }
 
   @Test public void ternarize42() {

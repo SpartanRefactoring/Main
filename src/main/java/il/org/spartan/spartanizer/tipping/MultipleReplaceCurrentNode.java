@@ -17,7 +17,7 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipp
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
 
-  @Override public final Tip suggest(final N n) {
+  @Override public final Tip tip(final N n) {
     return new Tip(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<ASTNode> input = new ArrayList<>();
