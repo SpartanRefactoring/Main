@@ -755,7 +755,7 @@ public enum iz {
    * Determine whether an {@link ASTNode} contains as a children a {@link ContinueStatement}
    * @param ¢ JD
    * @return <code> true </code> iff ¢ contains any continue statement
-   * @see {@link convertWhileToFor}
+   * @see {@link ConvertWhileWithLastStatementUpdateToFor}
    */
   @SuppressWarnings("boxing") public static boolean containsContinueStatement(ASTNode ¢){
     return ¢ != null && (new Recurser<>(¢, 0)).postVisit((x) -> {
