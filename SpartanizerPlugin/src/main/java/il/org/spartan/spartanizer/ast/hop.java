@@ -136,20 +136,6 @@ public interface hop {
     return $;
   }
 
-  /** Remove the last statement residing under a given {@link Statement}, if ¢
-   * is empty or has only one statement return empty statement.
-   * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
-   * @return Given {@link Statement} without the last inner statement, if ¢ is
-   *         empty or has only one statement return empty statement. */
-  static Statement removeLastStatement(final Statement $) {
-    if (!iz.block($))
-      return $.getAST().newEmptyStatement();
-    final List<Statement> l = az.block($).statements();
-    if (!l.isEmpty())
-      l.remove(l.size() - 1);
-    return $;
-  }
-
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
   }

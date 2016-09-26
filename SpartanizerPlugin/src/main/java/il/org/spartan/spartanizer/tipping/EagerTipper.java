@@ -9,7 +9,7 @@ public abstract class EagerTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
     try {
       return this.tip(¢) != null;
-    } catch (TipperException e) {
+    } catch (@SuppressWarnings("unused") TipperException __) {
       return false;
     }
   }
