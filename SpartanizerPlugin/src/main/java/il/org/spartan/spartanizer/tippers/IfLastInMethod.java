@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfLastInMethod extends EagerWring<IfStatement> implements Kind.EarlyReturn {
+public final class IfLastInMethod extends EagerTipper<IfStatement> implements Kind.EarlyReturn {
   @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }
@@ -46,7 +46,7 @@ public final class IfLastInMethod extends EagerWring<IfStatement> implements Kin
     final Block b = az.block(s.getParent());
     return b == null || !lastIn(s, statements(b)) || !(b.getParent() instanceof MethodDeclaration) ? null : new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Wrings.insertAfter(s, extract.statements(then(s)), r, g);
+        Tippers.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = duplicate.of(s);
         newIf.setExpression(duplicate.of(make.notOf(s.getExpression())));
         newIf.setThenStatement(s.getAST().newReturnStatement());

@@ -50,7 +50,7 @@ public class Trimmer extends GUI$Applicator {
    * @since 2016/05/13 */
   public static void disabledScan(final ASTNode n) {
     n.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N ¢) {
+      @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (!(¢ instanceof BodyDeclaration) || !isDisabledByIdentifier((BodyDeclaration) ¢))
           return true;
         disable((BodyDeclaration) ¢);
@@ -130,8 +130,14 @@ public class Trimmer extends GUI$Applicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w == null)
           return true;
-        final Tip s = w.tip(n, exclude);
-        TrimmerLog.suggestion(w, n);
+        Tip s = null;
+        try {
+          s = w.tip(n, exclude);
+          TrimmerLog.suggestion(w, n);
+        } catch (TipperException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
         if (s != null) {
           if (LogManager.isActive())
             LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
@@ -172,7 +178,13 @@ public class Trimmer extends GUI$Applicator {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
         if (w != null)
           progressMonitor.worked(5);
-        return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
+        try {
+          return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
+        } catch (TipperException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        return false;
       }
 
       @Override protected void initialization(final ASTNode ¢) {

@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-09-01 */
-public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> implements Kind.CommnoFactoring {
+public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement> implements Kind.CommnoFactoring {
   static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = az.ifStatement(extract.singleThen(s));
     final InfixExpression e = subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND);
@@ -57,7 +57,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerWring<IfStatement> impl
       exclude.exclude(then);
     return new Tip(description(s), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        collapse(Wrings.blockIfNeeded(s, r, g), r, g);
+        collapse(Tippers.blockIfNeeded(s, r, g), r, g);
       }
     };
   }

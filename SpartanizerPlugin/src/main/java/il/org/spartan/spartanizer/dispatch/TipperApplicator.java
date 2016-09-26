@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * into that of {@link GUI$Applicator}. This class must eventually die.
  * @author Yossi Gil
  * @since 2015/07/25 */
-public final class WringApplicator extends GUI$Applicator {
+public final class TipperApplicator extends GUI$Applicator {
   final Tipper<ASTNode> tipper;
   final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
    * @param tipper The tipper we wish to convert
    * @param name The title of the refactoring */
-  @SuppressWarnings("unchecked") public WringApplicator(final Tipper<? extends ASTNode> w) {
+  @SuppressWarnings("unchecked") public TipperApplicator(final Tipper<? extends ASTNode> w) {
     super(w.name());
     tipper = (Tipper<ASTNode>) w;
     clazz = w.myActualOperandsClass();
@@ -33,7 +33,12 @@ public final class WringApplicator extends GUI$Applicator {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
-          tipper.tip(¢).go(r, null);
+          try {
+            tipper.tip(¢).go(r, null);
+          } catch (TipperException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
       }
     });
   }
@@ -49,7 +54,12 @@ public final class WringApplicator extends GUI$Applicator {
         if (!tipper.canTip(¢))
           return;
         progressMonitor.worked(1);
-        $.add(tipper.tip(¢));
+        try {
+          $.add(tipper.tip(¢));
+        } catch (TipperException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
       }
     };
   }

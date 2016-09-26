@@ -72,7 +72,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assert tipper.canTip(focus);
   }
 
-  @Test public void B$040suggestionNotNull() {
+  @Test public void B$040suggestionNotNull() throws TipperException {
     A$040_init();
     assert tipper.tip(focus) != null;
   }
@@ -87,27 +87,27 @@ import il.org.spartan.spartanizer.tipping.*;
     azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(tipper.getClass()));
   }
 
-  @Test public void B$070callSuggest() {
+  @Test public void B$070callSuggest() throws TipperException {
     A$040_init();
     tipper.tip(focus);
   }
 
-  @Test public void B$080descriptionNotNull() {
+  @Test public void B$080descriptionNotNull() throws TipperException {
     A$040_init();
     assert tipper.tip(focus).description != null;
   }
 
-  @Test public void B$090suggestNotNull() {
+  @Test public void B$090suggestNotNull() throws TipperException {
     A$040_init();
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$100descriptionContains() {
+  @Test public void B$100descriptionContains() throws TipperException {
     A$040_init();
     azzert.that(tipper.tip(focus).description, containsString(focus.getType() + ""));
   }
 
-  @Test public void B$110rangeNotEmpty() {
+  @Test public void B$110rangeNotEmpty() throws TipperException {
     A$040_init();
     assert !tipper.tip(focus).isEmpty();
   }

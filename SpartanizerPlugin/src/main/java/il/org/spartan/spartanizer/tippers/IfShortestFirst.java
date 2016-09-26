@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.dispatch.Wrings.*;
+import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -27,6 +27,6 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement> imple
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    return Wrings.thenIsShorter(¢) ? null : invert(¢);
+    return Tippers.thenIsShorter(¢) ? null : invert(¢);
   }
 }

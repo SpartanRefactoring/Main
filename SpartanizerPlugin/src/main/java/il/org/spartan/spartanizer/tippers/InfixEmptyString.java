@@ -20,7 +20,7 @@ public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> 
   }
 
   @Override public ASTNode replacement(final InfixExpression ¢) {
-    return Wrings.eliminateLiteral(¢, true);
+    return Tippers.eliminateLiteral(¢, true);
   }
 
   @Override public WringGroup wringGroup() {

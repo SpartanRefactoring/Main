@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.java.*;
 /** A number of utility functions common to all wrings.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public enum Wrings {
+public enum Tippers {
   ;
   public static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
       final List<Statement> by2) {
@@ -41,16 +41,16 @@ public enum Wrings {
     return (IfStatement) first(statements(b));
   }
 
-  public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
-    final List<Expression> operands = extract.allOperands(x);
+  public static Expression eliminateLiteral(final InfixExpression e, final boolean b) {
+    final List<Expression> operands = extract.allOperands(e);
     wizard.removeAll(b, operands);
     switch (operands.size()) {
       case 0:
-        return x.getAST().newBooleanLiteral(b);
+        return e.getAST().newBooleanLiteral(b);
       case 1:
         return duplicate.of(first(operands));
       default:
-        return subject.operands(operands).to(x.getOperator());
+        return subject.operands(operands).to(e.getOperator());
     }
   }
 
@@ -112,16 +112,16 @@ public enum Wrings {
     final IfStatement main = duplicate.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Wrings.sequencerRank(lisp.last(then));
-    final int rankElse = Wrings.sequencerRank(lisp.last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s) ? $ : main;
+    final int rankThen = Tippers.sequencerRank(lisp.last(then));
+    final int rankElse = Tippers.sequencerRank(lisp.last(elze));
+    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
-  public static boolean mixedLiteralKind(final List<Expression> xs) {
-    if (xs.size() <= 2)
+  public static boolean mixedLiteralKind(final List<Expression> es) {
+    if (es.size() <= 2)
       return false;
     int previousKind = -1;
-    for (final Expression x : xs)
+    for (final Expression x : es)
       if (x instanceof NumberLiteral || x instanceof CharacterLiteral) {
         final int currentKind = new LiteralParser(x + "").type().ordinal();
         assert currentKind >= 0;
@@ -154,7 +154,7 @@ public enum Wrings {
   public static boolean shoudlInvert(final IfStatement s) {
     final int rankThen = sequencerRank(hop.lastStatement(then(s)));
     final int rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > rankThen || rankThen == rankElse && !Wrings.thenIsShorter(s);
+    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(final IfStatement s) {

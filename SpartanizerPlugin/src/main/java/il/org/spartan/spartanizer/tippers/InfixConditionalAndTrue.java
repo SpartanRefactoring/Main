@@ -30,6 +30,6 @@ public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpre
   }
 
   @Override public Expression replacement(final InfixExpression ¢) {
-    return Wrings.eliminateLiteral(¢, true);
+    return Tippers.eliminateLiteral(¢, true);
   }
 }
