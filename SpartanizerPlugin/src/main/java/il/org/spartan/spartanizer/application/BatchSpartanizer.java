@@ -85,8 +85,8 @@ public final class BatchSpartanizer {
     final BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
     String line;
     final StringBuffer sb = new StringBuffer();
-    while ((line = reader.readLine()) != null)
-      sb.append(line);
+    for (; (line = reader.readLine()) != null; sb.append(line))
+      ;
     return sb + "";
   }
 
