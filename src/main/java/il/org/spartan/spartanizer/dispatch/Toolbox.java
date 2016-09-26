@@ -105,8 +105,8 @@ public class Toolbox {
               new MethodDeclarationRenameReturnToDollar(), //
               new MethodDeclarationModifiersRedundant(), //
               // Disabled to protect against infinite loop
-              new BodyDeclarationModifiersSort.ofMethod() , //
-              //new BodyDeclarationAnnotationsSort.ofMethod() , //
+              new BodyDeclarationModifiersSort.ofMethod(), //
+              // new BodyDeclarationAnnotationsSort.ofMethod() , //
               new BodyDeclarationModifiersSort.ofMethod(), //
               new MethodDeclarationRenameSingleParameterToCent(), //
               null)
@@ -175,19 +175,18 @@ public class Toolbox {
               new TypeRedundantModifiers(), //
               // Disabled to protect against infinite loop
               new BodyDeclarationModifiersSort.ofType(), //
-              //new BodyDeclarationAnnotationsSort.ofType(), //
+              // new BodyDeclarationAnnotationsSort.ofType(), //
               null) //
           .add(EnumDeclaration.class, //
-              new EnumRedundantModifiers(), 
-              new BodyDeclarationModifiersSort.ofEnum(), //
-              //new BodyDeclarationAnnotationsSort.ofEnum(), //
+              new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
+              // new BodyDeclarationAnnotationsSort.ofEnum(), //
               new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
               // new EnumDeclarationModifierCleanEnum(), //
               null) //
           .add(FieldDeclaration.class, //
               new FieldRedundantModifiers(), //
               new BodyDeclarationModifiersSort.ofField(), //
-              //new BodyDeclarationAnnotationsSort.ofField(), //
+              // new BodyDeclarationAnnotationsSort.ofField(), //
               null) //
           .add(CastExpression.class, //
               new CastToDouble2Multiply1(), //
@@ -196,7 +195,7 @@ public class Toolbox {
           .add(EnumConstantDeclaration.class, //
               new EnumConstantRedundantModifiers(), //
               new BodyDeclarationModifiersSort.ofEnumConstant(), //
-              //new BodyDeclarationAnnotationsSort.ofEnumConstant(), //
+              // new BodyDeclarationAnnotationsSort.ofEnumConstant(), //
               null) //
           .add(NormalAnnotation.class, //
               new AnnotationDiscardValueName(), //
@@ -213,8 +212,8 @@ public class Toolbox {
           // since the dispatcher does not
           // know about Initializers. Add initializers to DispatchingVisitor if
           // you can provide a test case
-          .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(),  //
-              //new BodyDeclarationAnnotationsSort.ofInitializer(), //
+          .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), //
+              // new BodyDeclarationAnnotationsSort.ofInitializer(), //
               null) //
           .seal();
   }

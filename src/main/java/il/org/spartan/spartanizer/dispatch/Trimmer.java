@@ -43,8 +43,8 @@ public class Trimmer extends GUI$Applicator {
    * <li>Obviously, the visit needs to be pre-order, i.e., visiting the parent
    * before the children.
    * </ol>
-   * The disabling information is used later by the tip/fixing
-   * mechanisms, which should know little about this class.
+   * The disabling information is used later by the tip/fixing mechanisms, which
+   * should know little about this class.
    * @param n an {@link ASTNode}
    * @author Ori Roth
    * @since 2016/05/13 */
@@ -134,7 +134,7 @@ public class Trimmer extends GUI$Applicator {
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
-        } catch (TipperException e) {
+        } catch (final TipperException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
@@ -180,7 +180,7 @@ public class Trimmer extends GUI$Applicator {
           progressMonitor.worked(5);
         try {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
-        } catch (TipperException e) {
+        } catch (final TipperException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
