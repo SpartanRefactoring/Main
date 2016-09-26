@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {
-  @Ignore @Test public void test01() throws TipperException {
+  @Ignore @Test public void test01() throws TipperFailure {
     final Tipper<ASTNode> w = null;
     final ASTNode n = null;
     TrimmerLog.tip(w, n);
