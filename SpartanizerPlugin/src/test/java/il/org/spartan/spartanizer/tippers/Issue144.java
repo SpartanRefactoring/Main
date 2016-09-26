@@ -27,15 +27,15 @@ import org.junit.runners.*;
         + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "break;"
                 + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for (; p != null; p=p.getParent()) {" + "if (dns.contains(p))" + "break;}"
-                + "return false;" + "}");
+            .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for (; p != null; p=p.getParent()) {" + "if (dns.contains(p))"
+                + "break;}" + "return false;" + "}");
   }
 
   @Test public void t02() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return false;" + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
-        + "if (ens.contains(p))" + "break;" + "p = p.getParent();" + "}" + "return false;" + "}")
+                + "if (ens.contains(p))" + "break;" + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + " for (; p != null; p = p.getParent()) {" + "if (dns.contains(p))"
                 + "return true;" + "if (ens.contains(p))" + "break;" + "}" + "return false;" + "}")
             .stays();
@@ -52,5 +52,13 @@ import org.junit.runners.*;
   @Test public void t04() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "continue;"
         + "p = p.getParent();" + "}" + "return false;" + "}").stays();
+  }
+
+  @Test public void t05() {
+    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
+        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
+    .gives("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "for (;$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());"
+        + "return $;" + "}")
+    .stays();
   }
 }

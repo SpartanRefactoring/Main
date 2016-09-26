@@ -137,10 +137,10 @@ public interface hop {
   }
 
   /** Remove the last statement residing under a given {@link Statement}, if ¢
-   * is empty or has only one statement return empty statement. 
+   * is empty or has only one statement return empty statement.
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
-   * @return Given {@link Statement} without the last inner statement, if ¢
-   * is empty or has only one statement return empty statement.*/
+   * @return Given {@link Statement} without the last inner statement, if ¢ is
+   *         empty or has only one statement return empty statement. */
   static Statement removeLastStatement(final Statement $) {
     if (iz.block($)) {
       final List<Statement> l = az.block($).statements();
