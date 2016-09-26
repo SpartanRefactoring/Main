@@ -7,14 +7,17 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jface.text.information.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.Environment.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -215,6 +218,27 @@ public enum iz {
     return iz.literal("", ¢);
   }
 
+  /** JAVA is shallow copy, so have to compare Information carefully.
+   * @param e1 JD
+   * @param e2 JD
+   * @return true iff entries specified, are equally the same.
+   */
+  public static boolean equal(final Entry<String, Information> e1, final Entry<String, Information> e2) {
+    return e1.getKey().equals(e2.getKey());
+  }
+  
+  public static boolean equal(final Information i1, final Information i2) {
+    return equal(i1.prudentType, i2.prudentType);
+  }
+  
+  // TODO: Dan, here the equality falls. Debug until here to see the parameters.
+  // Do you have an idea how to work with this? For now I dissabled the access to here,
+  // to enable it, add  < && equal(e1.getValue(), e2.getValue()) > to the return ofthe function
+  // equal(Entry, Entry) in this file.
+  public static boolean equal(type i1, type i2) {
+    return i1.equals(i2);
+  }
+  
   public static boolean enumConstantDeclaration(final ASTNode ¢) {
     return is(¢, ENUM_CONSTANT_DECLARATION);
   }
