@@ -1524,7 +1524,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void issue54While() {
-    trimmingOf("int a  = f(); while (c) b[i] = a;").stays();
+    trimmingOf("int a  = f(); for(;c; b[i] = a);").stays();
   }
 
   @Test public void issue54WhileNonSideEffect() {
@@ -3112,7 +3112,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void ternarize41() {
     trimmingOf("int a,b,c,d;a = 3;b = 5; d = 7;if (a == 4)while (b == 3) c = a; else while (d == 3)c =a*a; ")
-        .gives("int a=3,b,c,d;b=5;d=7;if(a==4)while(b==3)c=a;else while(d==3)c=a*a;");
+        .gives("int a=3,b,c,d;b=5;d=7;if(a==4)for(;b==3;c=a);else for(;d==3;c=a*a);");
   }
 
   @Test public void ternarize42() {
