@@ -108,6 +108,10 @@ public enum iz {
     return is(¢, BREAK_STATEMENT);
   }
 
+  public static boolean comparison(final Expression e) {
+    return iz.infixExpression(e) && iz.comparison(az.infixExpression(e));
+  }
+
   /** @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
    *         expression. */
