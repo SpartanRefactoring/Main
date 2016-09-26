@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @year 2016 */
 public final class TernaryNullCoallescing extends ReplaceCurrentNode<ConditionalExpression> implements Kind.CommnoFactoring {
   @Override public ASTNode replacement(ConditionalExpression e) {
-    if (!iz.comparison(step.expression(e)))
+    if (!iz.comparison(az.infixExpression(step.expression(e))))
       return null;
     InfixExpression condition = az.comparison((step.expression(e)));
     Expression left = step.left(condition);
