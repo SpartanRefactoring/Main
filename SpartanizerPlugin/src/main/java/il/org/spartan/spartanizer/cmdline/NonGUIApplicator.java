@@ -39,8 +39,8 @@ public class NonGUIApplicator {
   static String read() {
     String $ = "";
     try (Scanner s = new Scanner(System.in).useDelimiter("\\n")) {
-      while (s.hasNext())
-        $ += s.next() + "\n";
+      for (; s.hasNext(); $ += s.next() + "\n")
+        ;
     }
     return $;
   }

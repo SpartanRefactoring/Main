@@ -47,10 +47,6 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {
-    if (lastStatementIsUpdate(¢)) {
-      final ForStatement $ = ¢.getAST().newForStatement();
-      return buildForWhithoutLastStatement($, ¢);
-    }
-    return null;
+    return !lastStatementIsUpdate(¢) ? null : buildForWhithoutLastStatement(¢.getAST().newForStatement(), ¢);
   }
 }

@@ -142,13 +142,12 @@ public interface hop {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   static Statement removeLastStatement(final Statement $) {
-    if (iz.block($)) {
-      final List<Statement> l = az.block($).statements();
-      if (l.size() > 0)
-        l.remove(l.size() - 1);
-      return $;
-    }
-    return $.getAST().newEmptyStatement();
+    if (!iz.block($))
+      return $.getAST().newEmptyStatement();
+    final List<Statement> l = az.block($).statements();
+    if (!l.isEmpty())
+      l.remove(l.size() - 1);
+    return $;
   }
 
   static SimpleName simpleName(final Type ¢) {
