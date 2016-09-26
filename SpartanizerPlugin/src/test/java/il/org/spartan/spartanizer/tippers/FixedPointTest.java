@@ -11,11 +11,11 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 
-/**
- * * Unit tests for the nesting class Unit test for the containing class. Note our naming convention: a) test methods do not use the redundant "test" prefix. b) test methods begin with the name of the method they check.
- * @author                                           Yossi Gil
- * @since                                           2014-07-10 
- */
+/** * Unit tests for the nesting class Unit test for the containing class. Note
+ * our naming convention: a) test methods do not use the redundant "test"
+ * prefix. b) test methods begin with the name of the method they check.
+ * @author Yossi Gil
+ * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Statement);
@@ -230,7 +230,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test(timeout = 2000) public void ternarize40() {
     assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;",
-        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
+        "int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
   }
 
   @Test public void ternarize49a() {

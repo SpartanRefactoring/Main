@@ -333,10 +333,9 @@ public interface wizard {
    * @param ¢ JD
    * @return last nested else statement */
   static Statement recursiveElze(final IfStatement ¢) {
-    Statement $ = ¢.getElseStatement();
-    while ($ instanceof IfStatement)
-      $ = ((IfStatement) $).getElseStatement();
-    return $;
+    for (Statement $ = ¢.getElseStatement();; $ = ((IfStatement) $).getElseStatement())
+      if (!($ instanceof IfStatement))
+        return $;
   }
 
   /** Remove all occurrences of a boolean literal from a list of

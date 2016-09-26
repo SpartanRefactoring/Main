@@ -13,11 +13,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * Unit tests for                                           {@link ThrowNotLastInBlock}
- * @author                                           Yossi Gil
- * @since                                           2016 
- */
+/** Unit tests for {@link ThrowNotLastInBlock}
+ * @author Yossi Gil
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue086 extends Issue___ {
   private static final String INPUT = "{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}";
   Tipper<ThrowStatement> tipper;
@@ -68,7 +66,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$04suggestionNotNull() {
     A$04_init();
-    assert tipper.suggest(focus) != null;
+    assert tipper.tip(focus) != null;
   }
 
   @Test public void B$05toolboxCanFindWring() {
@@ -83,32 +81,32 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$07callSuggest() {
     A$04_init();
-    tipper.suggest(focus);
+    tipper.tip(focus);
   }
 
   @Test public void B$09descriptionNotNull() {
     A$04_init();
-    assert tipper.suggest(focus).description != null;
+    assert tipper.tip(focus).description != null;
   }
 
   @Test public void B$0suggestNotNull() {
     A$04_init();
-    assert tipper.suggest(focus) != null;
+    assert tipper.tip(focus) != null;
   }
 
   @Test public void B$10descriptionContains() {
     A$04_init();
-    azzert.that(tipper.suggest(focus).description, containsString(focus + ""));
+    azzert.that(tipper.tip(focus).description, containsString(focus + ""));
   }
 
   @Test public void B$12rangeNotEmpty() {
     A$04_init();
-    assert !tipper.suggest(focus).isEmpty();
+    assert !tipper.tip(focus).isEmpty();
   }
 
   @Test public void B$13applyWring() {
     A$04_init();
-    tipper.suggest(focus);
+    tipper.tip(focus);
   }
 
   @Test public void B$14applyWring() {

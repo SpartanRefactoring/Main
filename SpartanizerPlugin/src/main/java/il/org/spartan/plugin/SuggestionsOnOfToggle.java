@@ -60,9 +60,8 @@ public final class SuggestionsOnOfToggle extends AbstractHandler {
       enableNature(p);
   }
 
-  /**
-   * the main method of the command handler, runs when the command is called. 
-   */
+  /** the main method of the command handler, runs when the command is
+   * called. */
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     final boolean newValue = !HandlerUtil.toggleCommandState(e.getCommand());
     try {

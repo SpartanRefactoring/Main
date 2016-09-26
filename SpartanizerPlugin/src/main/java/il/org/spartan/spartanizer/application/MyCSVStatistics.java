@@ -8,7 +8,6 @@ import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
 
 public class MyCSVStatistics extends CSVStatistics {
-
   private static final String SUMMARY_EXTENSION = ".summary";
 
   /** @param baseName
@@ -29,7 +28,7 @@ public class MyCSVStatistics extends CSVStatistics {
    * @param keysHeader the name of the column in which the names of the
    *        numerical columns in the principal file
    * @throws IOException */
-  public MyCSVStatistics(String baseName, String keysHeader) throws IOException {
+  public MyCSVStatistics(final String baseName, final String keysHeader) throws IOException {
     // TODO: Yossi: I have a compilation error also for this method (nonnull).
     // nonnull(baseName);
     // nonnull(keysHeader);
@@ -103,5 +102,4 @@ public class MyCSVStatistics extends CSVStatistics {
       return super.put(key, value);
     }
   }
-  
 }
