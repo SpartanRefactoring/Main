@@ -193,7 +193,7 @@ public final class CollectMetricsApp implements IApplication {
       try {
         u = openCompilationUnit(f);
         for (int i = 0; i < optRounds; ++i) {
-          final int n = SpartanizeAll.countSuggestions(u);
+          final int n = SpartanizeAll.countTips(u);
           if (n == 0)
             break;
           new Trimmer().apply(u);

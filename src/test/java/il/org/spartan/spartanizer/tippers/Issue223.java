@@ -72,7 +72,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assert tipper.canTip(focus);
   }
 
-  @Test public void B$040suggestionNotNull() throws TipperException {
+  @Test public void B$040tipNotNull() throws TipperException {
     A$040_init();
     assert tipper.tip(focus) != null;
   }
@@ -208,7 +208,7 @@ import il.org.spartan.spartanizer.tipping.*;
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateSuggestions($, u, (IMarker) null);
+      a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {

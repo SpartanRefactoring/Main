@@ -11,8 +11,8 @@ import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 
-/** A handler for {@link Spartanizations}. This handler executes all safe
- * Spartanizations on all Java files in the current project.
+/** A handler for {@link Tips}. This handler executes all safe
+ * Tips on all Java files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public final class SpartanizeAll extends BaseHandler {
@@ -21,12 +21,12 @@ public final class SpartanizeAll extends BaseHandler {
   /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
    * @return number of tips available for the compilation unit */
-  public static int countSuggestions(final ICompilationUnit u) {
+  public static int countTips(final ICompilationUnit u) {
     int $ = 0;
-    for (final GUI$Applicator ¢ : eclipse.safeSpartanizations) {
+    for (final GUI$Applicator ¢ : eclipse.safeApplicators) {
       ¢.setMarker(null);
       ¢.setICompilationUnit(u);
-      $ += ¢.countSuggestions();
+      $ += ¢.countTips();
     }
     return $;
   }
@@ -47,7 +47,7 @@ public final class SpartanizeAll extends BaseHandler {
     final List<ICompilationUnit> us = eclipse.facade.compilationUnits(currentCompilationUnit);
     message.append("found " + us.size() + " compilation units \n");
     final IWorkbench wb = PlatformUI.getWorkbench();
-    final int initialCount = countSuggestions(currentCompilationUnit);
+    final int initialCount = countTips(currentCompilationUnit);
     message.append("with " + initialCount + " tips");
     if (initialCount == 0)
       return eclipse.announce("No tips for '" + javaProject.getElementName() + "' project\n" + message);
@@ -79,9 +79,9 @@ public final class SpartanizeAll extends BaseHandler {
       } catch (final InterruptedException x) {
         LoggingManner.logEvaluationError(this, x);
       }
-      final int finalCount = countSuggestions(currentCompilationUnit);
+      final int finalCount = countTips(currentCompilationUnit);
       return eclipse.announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n"
-          + "Total changes: " + (initialCount - finalCount) + "\n" + "Suggestions before: " + initialCount + "\n" + "Suggestions after: " + finalCount
+          + "Total changes: " + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount
           + "\n" + message);
     }
     throw new ExecutionException("Too many iterations");
