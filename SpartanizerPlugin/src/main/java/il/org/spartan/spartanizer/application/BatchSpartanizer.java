@@ -195,14 +195,12 @@ public final class BatchSpartanizer {
     return false;
   }
   
-  private Object returnNumber(String $){
-    String temp = removePercentChar($);
-    
+  private static Object returnNumber(String $){
     return null;
   }
   
-  private String removePercentChar(String p) {
-    return p.contains("--") ? p.replace("%", "").replaceAll("--", "-") : p.replace("%", "");
+  private static String removePercentChar(String p) {
+    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
   }
 
   void collect(final CompilationUnit u) {

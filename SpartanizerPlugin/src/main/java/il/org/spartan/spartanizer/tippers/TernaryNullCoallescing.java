@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class TernaryNullCoallescing extends NanoPatternTipper<ConditionalExpression> implements Kind.CommnoFactoring {
-  @Override public boolean prerequisite(ConditionalExpression e) {
-    if (!iz.comparison(az.infixExpression(step.expression(e))))
+  @Override public boolean prerequisite(ConditionalExpression x) {
+    if (!iz.comparison(az.infixExpression(step.expression(x))))
       return false;
-    InfixExpression condition = az.comparison((step.expression(e)));
+    InfixExpression condition = az.comparison((step.expression(x)));
     Expression left = step.left(condition);
     Expression right = step.right(condition);
-    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(e))
-        : step.operator(condition) == NOT_EQUALS && prerequisite(left,right,step.then(e));
+    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
+        : step.operator(condition) == NOT_EQUALS && prerequisite(left,right,step.then(x));
   }
 
   private static boolean prerequisite(Expression left, Expression right, Expression elze) {
