@@ -13,7 +13,6 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public abstract class searchAncestors {
-  
   /** Factory method, returning an instance which can search by a node class
    * @param n JD
    * @return a newly created instance
@@ -30,19 +29,21 @@ public abstract class searchAncestors {
   public static searchAncestors forType(final int type) {
     return new ByNodeType(type);
   }
-  
-  /** Factory method, returning an instance which can search by a node instances.
+
+  /** Factory method, returning an instance which can search by a node
+   * instances.
+   * @param n JD
+   * @return a newly created instance */
+  @SuppressWarnings("unused") public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
+    return new ByNodeInstances<>(¢);
+  }
+
+  /** Factory method, returning an instance which can search by a node
+   * instances.
    * @param n JD
    * @return a newly created instance */
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
     return new ByNodeInstances(as.list(¢));
-  }
-  
-  /** Factory method, returning an instance which can search by a node instances.
-   * @param n JD
-   * @return a newly created instance */
-  @SuppressWarnings("unused") public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
-    return new ByNodeInstances<N>(¢);
   }
 
   public static Until until(final ASTNode ¢) {
@@ -119,6 +120,26 @@ public abstract class searchAncestors {
     }
   }
 
+  static class ByNodeInstances<N extends ASTNode> extends searchAncestors {
+    private final List<N> instances;
+
+    public ByNodeInstances(final List<N> instances) {
+      this.instances = instances;
+    }
+
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if (instances.contains($))
+            return $;
+      return null;
+    }
+
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && instances.contains(¢) ? ¢ : from(¢);
+    }
+  }
+
   static class ByNodeType extends searchAncestors {
     final int type;
 
@@ -136,26 +157,6 @@ public abstract class searchAncestors {
 
     @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
       return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
-    }
-  }
-  
-  static class ByNodeInstances <N extends ASTNode> extends searchAncestors {
-    private final List<N> instances;
-
-    public ByNodeInstances(final List<N> instances) {
-      this.instances = instances;
-    }
-
-    @Override public ASTNode from(final ASTNode ¢) {
-      if (¢ != null)
-        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
-          if (instances.contains($))
-            return $;
-      return null;
-    }
-
-    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
-      return ¢ != null && instances.contains(¢) ? ¢ : from(¢);
     }
   }
 }

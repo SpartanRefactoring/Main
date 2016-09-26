@@ -44,7 +44,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerWring<If
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }
 
-  @Override public Tip suggest(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;

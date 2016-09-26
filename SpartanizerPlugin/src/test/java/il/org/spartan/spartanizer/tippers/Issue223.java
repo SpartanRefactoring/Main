@@ -17,13 +17,12 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
+import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * Unit tests for                                           {@link ClassInstanceCreation}
- * @author                                           Yossi Gil
- * @since                                           2016 
- */
+/** Unit tests for {@link ClassInstanceCreation}
+ * @author Yossi Gil
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue223 {
   private static final Class<ClassInstanceCreation> SUBJECT_CLASS = ClassInstanceCreation.class;
   private static final String INPUT = "return new Integer(f());";
@@ -75,7 +74,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$040suggestionNotNull() {
     A$040_init();
-    assert tipper.suggest(focus) != null;
+    assert tipper.tip(focus) != null;
   }
 
   @Test public void B$050toolboxCanFindWring() {
@@ -90,27 +89,27 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$070callSuggest() {
     A$040_init();
-    tipper.suggest(focus);
+    tipper.tip(focus);
   }
 
   @Test public void B$080descriptionNotNull() {
     A$040_init();
-    assert tipper.suggest(focus).description != null;
+    assert tipper.tip(focus).description != null;
   }
 
   @Test public void B$090suggestNotNull() {
     A$040_init();
-    assert tipper.suggest(focus) != null;
+    assert tipper.tip(focus) != null;
   }
 
   @Test public void B$100descriptionContains() {
     A$040_init();
-    azzert.that(tipper.suggest(focus).description, containsString(focus.getType() + ""));
+    azzert.that(tipper.tip(focus).description, containsString(focus.getType() + ""));
   }
 
   @Test public void B$110rangeNotEmpty() {
     A$040_init();
-    assert !tipper.suggest(focus).isEmpty();
+    assert !tipper.tip(focus).isEmpty();
   }
 
   @Test public void B$120findWringNotEmpty() {

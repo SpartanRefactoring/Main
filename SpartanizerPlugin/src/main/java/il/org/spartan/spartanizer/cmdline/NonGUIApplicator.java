@@ -25,7 +25,7 @@ public class NonGUIApplicator {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Tipper<N> w = Toolbox.defaultInstance().find(n);
-        return w == null || w.cantTip(n) || Trimmer.prune(w.suggest(n, exclude), $);
+        return w == null || w.cantTip(n) || Trimmer.prune(w.tip(n, exclude), $);
       }
     };
   }
