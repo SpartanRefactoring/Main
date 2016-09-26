@@ -114,7 +114,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** Makes an Input file out of a Test file */
-  protected File makeInFile(final File ¢) {
+  protected static File makeInFile(final File ¢) {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
