@@ -467,6 +467,10 @@ public enum iz {
     return type.of(¢) == LONG;
   }
 
+  public static boolean memberRef(final ASTNode ¢) {
+    return is(¢, MEMBER_REF);
+  }
+
   /** Determine whether a node is a {@link MethodDeclaration}
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
