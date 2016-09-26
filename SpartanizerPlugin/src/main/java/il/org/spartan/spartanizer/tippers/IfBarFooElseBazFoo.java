@@ -43,14 +43,13 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implements Kind.Ternarization {
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
-    while (!ss1.isEmpty() && !ss2.isEmpty()) {
+    for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = ss1.get(ss1.size() - 1);
       final Statement s2 = ss2.get(ss2.size() - 1);
       if (!wizard.same(s1, s2))
         break;
       $.add(s1);
       ss1.remove(ss1.size() - 1);
-      ss2.remove(ss2.size() - 1);
     }
     return $;
   }
