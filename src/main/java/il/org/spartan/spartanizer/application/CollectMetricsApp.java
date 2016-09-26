@@ -76,8 +76,8 @@ public final class CollectMetricsApp implements IApplication {
     try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
       final byte[] buf = new byte[1024];
       int length;
-      while ((length = in.read(buf)) > 0)
-        out.write(buf, 0, length);
+      for (; (length = in.read(buf)) > 0; out.write(buf, 0, length))
+        ;
     }
   }
 

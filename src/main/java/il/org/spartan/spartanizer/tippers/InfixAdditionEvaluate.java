@@ -44,7 +44,7 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override String operation() {
-    return "multiplication";
+    return "addition";
   }
 
   @Override Operator operator() {

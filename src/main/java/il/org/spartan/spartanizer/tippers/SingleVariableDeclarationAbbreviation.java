@@ -24,8 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
 public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration> implements Kind.Abbreviation {
-  static void fixJavadoc(final MethodDeclaration m, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
-    final Javadoc j = m.getJavadoc();
+  static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
+    final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
     final List<TagElement> ts = step.tags(j);
@@ -35,7 +35,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
           continue;
         for (final Object ¢ : t.fragments())
           if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-            r.replace((SimpleName) ¢, m.getAST().newSimpleName(newName), g);
+            r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
             return;
           }
       }

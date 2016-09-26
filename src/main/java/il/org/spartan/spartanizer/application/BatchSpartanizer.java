@@ -27,14 +27,6 @@ public final class BatchSpartanizer {
     return fileName + ".essence";
   }
 
-  public static void main(final String[] where) {
-    if (where.length == 0)
-      new BatchSpartanizer(".", "current-working-directory").fire();
-    else
-      for (final String ¢ : where)
-        new BatchSpartanizer(¢).fire();
-  }
-
   static String essenceNew(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
@@ -52,12 +44,34 @@ public final class BatchSpartanizer {
     ;
   }
 
+  public static void main(final String[] where) {
+    if (where.length == 0)
+      new BatchSpartanizer(".", "current-working-directory").fire();
+    else
+      for (final String ¢ : where)
+        new BatchSpartanizer(¢).fire();
+  }
+
   static String p(final int n1, final int n2) {
     return Unit.formatRelative(δ(n1, n2));
   }
 
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
+  }
+
+  private static String runScript(final String pathname) throws IOException {
+    final ProcessBuilder builder = new ProcessBuilder("/bin/bash");
+    builder.command(script, pathname);
+    builder.redirectErrorStream(true);
+    final Process process = builder.start();
+    final InputStream stdout = process.getInputStream();
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+    String line;
+    final StringBuffer sb = new StringBuffer();
+    for (; (line = reader.readLine()) != null; sb.append(line))
+      ;
+    return sb + "";
   }
 
   static int tokens(final String s) {
@@ -72,26 +86,12 @@ public final class BatchSpartanizer {
     }
   }
 
-  static double δ(final double n1, final double n2) {
-    return 1 - n2 / n1;
-  }
-
-  private static String runScript(final String pathname) throws IOException {
-    final ProcessBuilder builder = new ProcessBuilder("/bin/bash");
-    builder.command(script, pathname);
-    builder.redirectErrorStream(true);
-    final Process process = builder.start();
-    final InputStream stdout = process.getInputStream();
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
-    String line;
-    final StringBuffer sb = new StringBuffer();
-    while ((line = reader.readLine()) != null)
-      sb.append(line);
-    return sb + "";
-  }
-
   private static int wc(final String $) {
     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
+  }
+
+  static double δ(final double n1, final double n2) {
+    return 1 - n2 / n1;
   }
 
   private int classesDone;
@@ -126,10 +126,6 @@ public final class BatchSpartanizer {
     return null;
   }
 
-  public Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
-  }
-
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
@@ -150,6 +146,9 @@ public final class BatchSpartanizer {
     befores.print(in);
     afters.print(out);
     report.summaryFileName();
+//    System.out.println(δ(nodes, nodes2));
+//    System.out.println(p(nodes, nodes2));
+//    System.out.println(p(tokens, tokens2));
     report//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
@@ -157,33 +156,33 @@ public final class BatchSpartanizer {
         .put("Nodes2", nodes2)//
         .put("Δ Nodes", nodes - nodes2)//
         .put("δ Nodes", δ(nodes, nodes2))//
-        .put("δ Nodes %", p(nodes, nodes2))//
+        .put("δ Nodes %", Double.parseDouble(removePercentChar(p(nodes, nodes2))))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("Δ Body", body - body2)//
         .put("δ Body", δ(body, body2))//
-        .put("% Body", p(body, body2))//
+        .put("% Body", Double.parseDouble(removePercentChar(p(body, body2))))//
         .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("Δ Tokens", tokens - tokens2)//
-        .put("δ Toknes", δ(tokens, tokens2))//
-        .put("% Toknes", p(tokens, tokens2))//
+        .put("δ Tokens", δ(tokens, tokens2))//
+        .put("% Tokens", Double.parseDouble(removePercentChar(p(tokens, tokens2))))//
         .put("Length1", length)//
         .put("Length2", length2)//
         .put("Δ Length", length - length2)//
         .put("δ Length", δ(length, length2))//
-        .put("% Length", p(length, length2))//
+        .put("% Length", Double.parseDouble(removePercentChar(p(length, length2))))//
         .put("Tide1", tide)//
         .put("Tide2", tide2)//
         .put("Δ Tide2", tide - tide2)//
         .put("δ Tide2", δ(tide, tide2))//
-        .put("δ Tide2", p(tide, tide2))//
+        .put("δ Tide2", Double.parseDouble(removePercentChar(p(tide, tide2))))//
         .put("Essence1", essence)//
         .put("Essence2", essence2)//
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", δ(essence, essence2))//
-        .put("% Essence", p(essence, essence2))//
+        .put("% Essence", Double.parseDouble(removePercentChar(p(essence, essence2))))//
         .put("Essence (wc)", essenceWC) // essence in terms of words (not
                                         // characters)
         .put("R(T/L)", ratio(length, tide)) //
@@ -192,7 +191,16 @@ public final class BatchSpartanizer {
         .put("R(B/S)", ratio(nodes, body)) //
     ;
     report.nl();
+    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
+  }
+  
+  private static Object returnNumber(String $){
+    return null;
+  }
+  
+  private static String removePercentChar(String p) {
+    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
   }
 
   void collect(final CompilationUnit u) {
@@ -290,5 +298,9 @@ public final class BatchSpartanizer {
 
   private void runWordCount() {
     bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
+  }
+
+  public Process shellEssenceMetrics(final String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 }
