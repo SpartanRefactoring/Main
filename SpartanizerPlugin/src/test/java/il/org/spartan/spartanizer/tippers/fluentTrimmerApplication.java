@@ -132,7 +132,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
           Tip make = null;
           try {
             make = w.tip(n, exclude);
-          } catch (final TipperException e) {
+          } catch (final TipperFailure e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
