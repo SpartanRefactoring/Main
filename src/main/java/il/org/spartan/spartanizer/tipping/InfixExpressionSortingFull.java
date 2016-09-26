@@ -13,7 +13,7 @@ public abstract class InfixExpressionSortingFull extends InfixExpressionSorting 
     if (!suitable(x))
       return false;
     final List<Expression> es = extract.allOperands(x);
-    return !Wrings.mixedLiteralKind(es) && sort(es);
+    return !Tippers.mixedLiteralKind(es) && sort(es);
   }
 
   @Override public Expression replacement(final InfixExpression x) {

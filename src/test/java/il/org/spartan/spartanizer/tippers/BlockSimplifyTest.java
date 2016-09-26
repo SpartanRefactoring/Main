@@ -100,7 +100,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assert d != null;
     final Tipper<Block> inner = new BlockSimplify();
     assert inner != null;
-    final WringApplicator s = new WringApplicator(inner);
+    final TipperApplicator s = new TipperApplicator(inner);
     assert s != null;
     emptySimplestE_Aux(u, d, s);
   }
@@ -192,7 +192,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
   }
 
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final WringApplicator a) {
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final TipperApplicator a) {
     try {
       a.rewriterOf(u, (IMarker) null).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {

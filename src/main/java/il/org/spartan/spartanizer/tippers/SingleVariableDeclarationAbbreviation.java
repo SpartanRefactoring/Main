@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.dispatch.Wrings.*;
+import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * This tipper is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
-public final class SingleVariableDeclarationAbbreviation extends EagerWring<SingleVariableDeclaration> implements Kind.Abbreviation {
+public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration> implements Kind.Abbreviation {
   static void fixJavadoc(final MethodDeclaration m, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
     final Javadoc j = m.getJavadoc();
     if (j == null)

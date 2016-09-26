@@ -9,12 +9,12 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link WringApplicator}
+/** Unit tests for {@link TipperApplicator}
  * @author Yossi GIl
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public final class WringApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
-  private final WringApplicator it = new WringApplicator(new BlockSimplify());
+  private final TipperApplicator it = new TipperApplicator(new BlockSimplify());
 
   @Test public void clazzIsCorrect() {
     azzert.that(it.clazz, is(Block.class));
