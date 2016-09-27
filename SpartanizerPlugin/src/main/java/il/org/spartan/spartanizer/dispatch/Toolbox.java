@@ -138,7 +138,7 @@ public class Toolbox {
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), null) //
           .add(IfStatement.class, //
               new IfTrueOrFalse(), //
-              new RemoveRedundentIf(), //
+              new RemoveRedundantIf(), //
               new IfLastInMethodThenEndingWithEmptyReturn(), //
               new IfLastInMethodElseEndingWithEmptyReturn(), //
               new IfLastInMethod(), //
