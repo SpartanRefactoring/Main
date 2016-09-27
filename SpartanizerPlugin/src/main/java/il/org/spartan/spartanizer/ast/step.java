@@ -92,6 +92,8 @@ public enum step {
         return expression((ClassInstanceCreation) ¢);
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) ¢);
+      case ASTNode.ENHANCED_FOR_STATEMENT:
+        return az.enhancedFor(¢).getExpression(); 
       case ASTNode.METHOD_INVOCATION:
         return step.receiver((MethodInvocation) ¢);
       case ASTNode.PARENTHESIZED_EXPRESSION:
