@@ -24,8 +24,15 @@ import il.org.spartan.utils.*;
 public abstract class LaconizeSelection extends BaseHandler {
   private final int MAX_PASSES = 20;
   
+  /**
+   * @param u JD
+   * @return selection chosen for spartanization
+   */
   public abstract Range getSelection(ICompilationUnit u);
   
+  /**
+   * @return true iff the handler runs in a loop, for {@lik LaconizeSelection#MAX_PASSES} times
+   */
   public abstract boolean isRepeating();
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
