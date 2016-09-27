@@ -19,17 +19,11 @@ import il.org.spartan.spartanizer.tipping.*;
  */
 public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> implements Kind.Collapse{
 
-  @Override public ASTNode replacement(WhileStatement n) {
-    if(n==null)
-      return null;
-    boolean condition = sideEffects.free(n.getExpression());
-    boolean body = RemoveRedundent.checkBlock(n.getBody());
-    if(condition && body)
-      return n.getAST().newBlock();
-    return null;
+  @Override public ASTNode replacement(WhileStatement ¢) {
+    return ¢ == null || !sideEffects.free(¢.getExpression()) || !RemoveRedundent.checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 
-  @Override public String description(WhileStatement n) {
-    return "remove :" + n;
+  @Override public String description(WhileStatement ¢) {
+    return "remove :" + ¢;
   }
 }

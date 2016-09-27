@@ -20,21 +20,18 @@ import il.org.spartan.spartanizer.tipping.*;
  */
 public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse{
 
-  @Override public ASTNode replacement(IfStatement n) {
-    if(n==null)
+  @Override public ASTNode replacement(IfStatement s) {
+    if (s == null)
       return null;
-    boolean condition = sideEffects.free(n.getExpression());
-    boolean then = RemoveRedundent.checkBlock(n.getThenStatement());
-    boolean elze = RemoveRedundent.checkBlock(n.getElseStatement());
-    if(condition && then && elze || (condition && then && n.getElseStatement()==null))
-      return n.getAST().newBlock();
-    if(condition && then && !elze && (n.getElseStatement()!=null)){
-      return subject.pair(duplicate.of(n.getElseStatement()),null).toNot(duplicate.of(n.getExpression()));
-    }
-    return null;
+    boolean condition = sideEffects.free(s.getExpression());
+    boolean then = RemoveRedundent.checkBlock(s.getThenStatement());
+    boolean elze = RemoveRedundent.checkBlock(s.getElseStatement());
+    return condition && (then && (elze || s.getElseStatement() == null)) ? s.getAST().newBlock()
+        : !condition || !then || elze || s.getElseStatement() == null ? null
+            : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
   }
 
-  @Override public String description(IfStatement n) {
-    return "remove :" + n;
+  @Override public String description(IfStatement ¢) {
+    return "remove :" + ¢;
   }
 }
