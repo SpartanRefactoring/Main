@@ -85,10 +85,13 @@ public final class BatchSpartanizer {
   }
 
   public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder b = new ProcessBuilder("/bin/bash");
-    b.redirectErrorStream(true);
-    b.command(script, pathname);
-    return b;
+    final ProcessBuilder $ = runScript();
+    $.redirectErrorStream(true);
+    $.command(script, pathname);
+    return $;
+  }
+  public static ProcessBuilder runScript() {
+    return new ProcessBuilder("/bin/bash");
   }
 
   public static String runScript(final Process p) throws IOException {
