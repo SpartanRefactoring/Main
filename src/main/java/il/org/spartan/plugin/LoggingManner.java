@@ -26,7 +26,7 @@ public enum LoggingManner {
       return this;
     }
   };
-  public static final LoggingManner now = LoggingManner.LOG_TO_STDERR;;
+  public static final LoggingManner now = LoggingManner.LOG_TO_STDERR;
 
   public static String beginDump() {
     return "MISSING_CASE: ";
