@@ -23,7 +23,46 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dan Greenstein
  * @author Alex Kopzon */
 public abstract class ENVTestEngineAbstract {
-  protected static LinkedHashSet<Entry<String, Environment.Information>> testSet;
+  protected static LinkedHashSet<Entry<String, Information>> testSetFlat;
+  protected static LinkedHashSet<Entry<String, Information>> testSetNested;
+
+  // change visibility to private.
+  public static void compareFlat(final LinkedHashSet<Entry<String, Information>> ¢) {
+    compareOutOfOrder(¢, testSetFlat);
+    compareInOrder(¢, testSetFlat);
+  }
+
+  // only for testing.
+  public static void compareFlatI(final LinkedHashSet<Entry<String, Information>> ¢) {
+    compareInOrder(¢, testSetFlat);
+  }
+
+  // only for testing.
+  public static void compareFlatO(final LinkedHashSet<Entry<String, Information>> ¢) {
+    compareOutOfOrder(¢, testSetFlat);
+  }
+
+  /** Compares the given {@link LinkedHashSet} with the inner testSet.
+   * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
+   * contained in the same order in the provided set.
+   * @param $ JD
+   * @return true iff the sets specified, are equally the same. */
+  public static void compareInOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
+    assert testSet != null;
+    assert $ != null;
+    final Iterator<Entry<String, Information>> i = testSet.iterator();
+    final Iterator<Entry<String, Information>> j = $.iterator();
+    boolean entryFound = true;
+    while (i.hasNext()) {
+      entryFound = false;
+      while (j.hasNext())
+        if (iz.equal(i.next(), j.next())) {
+          entryFound = true;
+          break;
+        }
+      assert entryFound : "some entry not found in order!";
+    }
+  }
 
   /** Compares the given {@link LinkedHashSet} with the inner testSet.
    * Comparison done out-of-order. Assertion fails <b>iff</b> testSet is not
@@ -33,7 +72,7 @@ public abstract class ENVTestEngineAbstract {
   // TODO: Dan once the method is determined to be working, change to visibility
   // to
   // protected.
-  public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
+  public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
     assert $ != null;
     assert testSet != null;
     boolean entryFound = true;
@@ -77,7 +116,7 @@ public abstract class ENVTestEngineAbstract {
   }
 
   public static void testSetReset() {
-    testSet.clear();
+    testSetFlat.clear();
   }
 
   protected boolean foundTestedAnnotation; // Global flag, used to
@@ -102,33 +141,11 @@ public abstract class ENVTestEngineAbstract {
      * Returning a direct comparison is far too error prone, and would be a bad
      * idea for a debug tool. */
     // add returns true iff the element did not exist in the set already.
-    if (!testSet.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
+    if (!testSetFlat.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
   protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Compares the given {@link LinkedHashSet} with the inner testSet.
-   * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
-   * contained in the same order in the provided set.
-   * @param $ JD
-   * @return true iff the sets specified, are equally the same. */
-  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert testSet != null;
-    assert $ != null;
-    final Iterator<Entry<String, Information>> i = testSet.iterator();
-    final Iterator<Entry<String, Information>> j = $.iterator();
-    boolean entryFound = true;
-    while (i.hasNext()) {
-      entryFound = false;
-      while (j.hasNext())
-        if (iz.equal(i.next(), j.next())) {
-          entryFound = true;
-          break;
-        }
-      assert entryFound : "some entry not found in order!";
-    }
-  }
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
@@ -154,43 +171,43 @@ public abstract class ENVTestEngineAbstract {
           handler(¢);
       }
 
-      @Override public boolean visit(final AnnotationTypeDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final AnnotationTypeMemberDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final EnumConstantDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final EnumDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final FieldDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final Initializer $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final Initializer ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final MethodDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
-      @Override public boolean visit(final TypeDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
         return true;
       }
 
@@ -201,8 +218,8 @@ public abstract class ENVTestEngineAbstract {
         final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
         if (enviromentSet == null)
           return;
-        compareOutOfOrder(enviromentSet);
-        compareInOrder(enviromentSet);
+        compareFlat(enviromentSet);
+        // compareNested(enviromentSet);
         foundTestedAnnotation = false;
       }
     });
