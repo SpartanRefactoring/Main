@@ -34,8 +34,8 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     return $;
   }
 
-  private boolean isContainsZero(final InfixExpression e) {
-    for (final Expression ¢ : extract.allOperands(e))
+  private boolean isContainsZero(final InfixExpression x) {
+    for (final Expression ¢ : extract.allOperands(x))
       if (iz.numberLiteral(¢) && "0".equals(az.numberLiteral(¢).getToken()))
         return true;
     return false;
