@@ -259,7 +259,7 @@ import java.util.*;
     @OutOfOrderFlatENV({ "x" }) class a {
       int a_x;
 
-      @OutOfOrderFlatENV({ "x", "a_x", "b_x" }) void a_func() {
+      @OutOfOrderFlatENV({ "x", "a_x" }) void a_func() {
         @Begin class opening {
           /**/}
         ++a_x;
