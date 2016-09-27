@@ -43,7 +43,7 @@ public abstract class LaconizeSelection extends BaseHandler {
     final GUI$Applicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);
     int i, total = 0;
-    for (i = 0; i < (isRepeating() ? MAX_PASSES : 1); ++i) {
+    for (i = 0; i < (!isRepeating() ? 1 : MAX_PASSES); ++i) {
       final Int n = new Int();
       final IProgressService ps = wb.getProgressService();
       try {
