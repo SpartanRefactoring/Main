@@ -84,14 +84,17 @@ public final class BatchSpartanizer {
     final ProcessBuilder builder = new ProcessBuilder("/bin/bash");
     builder.command(script, pathname);
     builder.redirectErrorStream(true);
-    final Process process = builder.start();
-    final InputStream stdout = process.getInputStream();
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
-    String line;
-    final StringBuffer sb = new StringBuffer();
-    for (; (line = reader.readLine()) != null; sb.append(line))
-      ;
-    return sb + "";
+    return runScript(builder.start());
+  }
+
+  public static String runScript(final Process p) throws IOException {
+    try (final InputStream s = p.getInputStream();
+        final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+      String ¢;
+      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
+        if ((¢ = r.readLine()) == null)
+          return $ + "";
+    }
   }
 
   private static int wc(final String $) {
