@@ -41,5 +41,40 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
   @Test public void t08() {
     trimmingOf("if(b){int i;int j;}else{g();int t;}").gives("if(!b){g();int t;}");
   }
+  
+  @Test public void t09() {
+    trimmingOf("if(b){int i;int j;g();}else{int q;int t;}")//
+    .gives("if(!b){int q;int t;}else{int i;int j;g();}")//
+    .gives("if(b){int i;int j;g();}");
+  }
+  
+  @Test public void t10() {
+    trimmingOf("if(b==true){int i=5;}").gives("{}").gives("").stays();
+  }
+  
+  @Test public void t11() {
+    trimmingOf("if(b==true){int i=g();}").gives("if(b)int i=g();");
+  }
+  
+  @Test public void t12() {
+    trimmingOf("if(b==true){int i=5,q=g();}").gives("if(b)int i=5,q=g();");
+  }
+  
+  @Test public void t13() {
+    trimmingOf("if(b)"
+        + "{int i"
+        + ";int j;"
+        + "if(s){"
+        + "int q;"
+        + "}"
+        + "}else{int q;int t;}")//
+    .gives("if(!b)"
+        +"{int q;int t;}"
+        + "else{int i"
+        + ";int j;"
+        + "if(s){"
+        + "int q;"
+        + "}}");
+  }
     
  }
