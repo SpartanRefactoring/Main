@@ -87,10 +87,6 @@ public abstract class ENVTestEngineAbstract {
     }
   }
 
-  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
-    return new LinkedHashSet<>();
-  }
-
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
   public static ASTNode getCompilationUnit(final String from) {
@@ -119,6 +115,10 @@ public abstract class ENVTestEngineAbstract {
     testSetFlat.clear();
   }
 
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
+  }
+
   protected boolean foundTestedAnnotation; // Global flag, used to
   // determine when to run the
   // test on a node with
@@ -145,13 +145,6 @@ public abstract class ENVTestEngineAbstract {
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
-  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  protected abstract void handler(final Annotation ¢);
-
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
    * which annotations can be defined, and checks if the annotations are of the
@@ -164,13 +157,6 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      /** Iterate over outer annotations of the current declaration and dispatch
-       * them to handlers. otherwise */
-      void checkAnnotations(final List<Annotation> as) {
-        for (final Annotation ¢ : as)
-          handler(¢);
-      }
-
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
@@ -211,6 +197,13 @@ public abstract class ENVTestEngineAbstract {
         return true;
       }
 
+      /** Iterate over outer annotations of the current declaration and dispatch
+       * them to handlers. otherwise */
+      void checkAnnotations(final List<Annotation> as) {
+        for (final Annotation ¢ : as)
+          handler(¢);
+      }
+
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
@@ -224,4 +217,11 @@ public abstract class ENVTestEngineAbstract {
       }
     });
   }
+
+  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
+  protected abstract void handler(final Annotation ¢);
 }
