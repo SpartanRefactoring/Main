@@ -130,6 +130,10 @@ public enum az {
     return !($ instanceof Expression) ? null : (Expression) $;
   }
 
+  public static EnhancedForStatement enhancedFor(final ASTNode $) {
+    return !iz.is($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
+  }
+
   /** Down-cast, if possible, to {@link ExpressionStatement}
    * @param $ result
    * @return parameter down-casted to the returned type, or
