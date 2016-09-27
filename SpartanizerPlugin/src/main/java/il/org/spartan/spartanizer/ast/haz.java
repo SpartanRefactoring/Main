@@ -18,6 +18,8 @@ import il.org.spartan.*;
  * @since 2016-09-12 */
 public enum haz {
   ;
+  private static EnhancedForStatement x;
+
   public static boolean annotation(final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
@@ -128,6 +130,10 @@ public enum haz {
     for (final ASTNode ancestor : hop.ancestors(n)) {
       if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
           return false;
+      if (iz.enhancedFor(ancestor)) {
+        x = az.enhancedFor(ancestor);
+        assert x != null;
+      }
       if (expression(az.enhancedFor(ancestor)) == child)
         continue;
       if (iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
