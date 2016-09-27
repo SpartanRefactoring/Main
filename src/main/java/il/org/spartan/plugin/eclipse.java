@@ -120,6 +120,11 @@ public enum eclipse {
   }
   
   // TODO Ori: do not create a compilation unit
+  /**
+   * @param u JD
+   * @param m JD
+   * @return node marked by the marker in the compilation unit
+   */
   @SuppressWarnings("boxing") static ASTNode getNodeByMarker(ICompilationUnit u, IMarker m) {
     try {
       int s = (int) m.getAttribute(IMarker.CHAR_START), e = (int) m.getAttribute(IMarker.CHAR_END);
