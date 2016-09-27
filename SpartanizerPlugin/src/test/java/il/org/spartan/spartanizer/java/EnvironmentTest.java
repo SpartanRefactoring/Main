@@ -306,16 +306,6 @@ import il.org.spartan.spartanizer.utils.*;
     ENVTestEngineAbstract.compareFlatO(s);
     ENVTestEngineAbstract.testSetsReset();
   }
-  
-  @Test public void EngineTestFlatUnordered06() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {@FlatEnvUse({ @Id(name = \"s\", clazz = \"String\") }) void foo(){@FlatEnvUse({ @Id(name = \"s\", clazz = \"int\") }) class B{ int a;}}"));
-    new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.INT)));
-    ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetsReset();
-  }
 
   @Test public void EngineTestFlatUnordered07() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
@@ -390,16 +380,6 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore @Test public void EngineTestFlatUnordered13() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")));
-    ENVTestEngineAbstract.testSetsReset();
-  }
-
-  @Test public void EngineTestFlatUnordered15() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"String\") }) \n"
-        + "void foo(); \n" + "@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"int\") }) \n" + "void f();}"));
-    new EnvFlatHandler($);
-    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
-    ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
 
