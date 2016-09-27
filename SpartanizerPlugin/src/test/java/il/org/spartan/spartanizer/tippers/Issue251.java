@@ -76,5 +76,38 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
         + "int q;"
         + "}}");
   }
-    
+  
+  @Test public void t14() {
+    trimmingOf("if(b)"
+        + "{int i;"
+        + "int j;"
+        + "while(s){"
+        + "int q;"
+        + "}"
+        + "}else{int q;int t;}")//
+    .gives("if(!b)"
+        +"{int q;int t;}"
+        + "else{int i"
+        + ";int j;"
+        + "while(s){"
+        + "int q;"
+        + "}}");
+  }
+  
+  @Test public void t15() {
+    trimmingOf("if(b==q()){int i;}").gives("if(b==q())int i;");
+  }
+  
+  @Test public void t16() {
+    trimmingOf("while(b==q){int i;}").gives("{}");
+  }
+  
+  @Test public void t17() {
+    trimmingOf("while(b==q){if(t==q()){int i;}}").gives("while(b==q)if(t==q()){int i;}");
+  }
+  
+  @Test public void t18() {
+    trimmingOf("while(b==q){int i;double t; x=t+i;}").gives("for(;b==q;x=t+i){int i;double t;}");
+  }
+  
  }
