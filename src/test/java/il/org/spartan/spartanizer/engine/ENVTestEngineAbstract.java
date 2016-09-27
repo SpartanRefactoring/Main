@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
+import static org.hamcrest.Matchers.*;
 
 import java.io.*;
 import java.util.*;
@@ -75,6 +76,12 @@ public abstract class ENVTestEngineAbstract {
   public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
     assert $ != null;
     assert testSet != null;
+    assert $.containsAll(testSet) : "some entry not found out of order!";
+  }
+  
+  public static void compareOutOfOrderOld(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
+    assert $ != null;
+    assert testSet != null;
     boolean entryFound = true;
     for (final Entry<String, Information> i : testSet) {
       entryFound = false;
@@ -102,7 +109,7 @@ public abstract class ENVTestEngineAbstract {
     assert f.exists();
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
-    azzert.that($, instanceOf(CompilationUnit.class));
+    //azzert.that($, instanceOf(CompilationUnit.class));
     return $;
   }
 
