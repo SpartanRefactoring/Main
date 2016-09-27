@@ -891,7 +891,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ifDegenerateThenInIf() {
-    trimmingOf("if (a) if (b) {} else f(); x();").gives(" if (a) if (!b) f(); x();");
+    trimmingOf("if (a) if (b) {} else f(); x();").gives("if(a)if(!b)f();x();");
   }
 
   @Test public void ifEmptyElsewWithinIf() {
@@ -908,7 +908,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void ifEmptyThenThrowWitinIf() {
     trimmingOf("if (x) if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Excpetion();\n" + "} else { f();f();f();f();f();f();f();f();}")
-        .gives("if (x) { if (!b) \n" + "  throw new Excpetion();" + "} else { f();f();f();f();f();f();f();f();}");
+        .gives("if (x) if (!b) \n" + "  throw new Excpetion();" + " else { f();f();f();f();f();f();f();f();}");
   }
 
   @Test public void ifFunctionCall() {

@@ -67,47 +67,47 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void define_0() {
     final String code = "";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
     azzert.that($.contains("a"), is(false));
     azzert.that($.isEmpty(), is(true));
   }
 
   @Ignore public void define_1() {
-    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
+    azzert.that(Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_10() {
-    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
+    azzert.that(Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_2() {
     final String code = "int a = 0;\n" + "int b;";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
   }
 
   @Ignore public void define_3() {
-    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("public void f(int a){}")).contains("a"), is(true));
+    azzert.that(Environment.declaresDown(makeAST.COMPILATION_UNIT.from("public void f(int a){}")).contains("a"), is(true));
   }
 
   @Ignore public void define_4() {
     final String code = "public void f(int a){String b}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
   }
 
   @Ignore public void define_5() {
-    azzert.that(Environment.declares(makeAST.COMPILATION_UNIT.from("a = 0;")).contains("a"), is(false));
+    azzert.that(Environment.declaresDown(makeAST.COMPILATION_UNIT.from("a = 0;")).contains("a"), is(false));
   }
 
   @Ignore public void define_6() {
     final String code = "int a = 0;\n" + "b = 5";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = Environment.declares(u);
+    final Set<Entry<String, Information>> $ = Environment.declaresDown(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(false));
   }
@@ -116,7 +116,7 @@ import il.org.spartan.spartanizer.utils.*;
     final String code = "class MyClass {\n" + "int a;\n" + "static class Inner {\n" + "void func(MyClass my, int b) {String s = 4;\n"
         + "not_in_env++;}\n" + "}}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
-    final Set<Entry<String, Information>> $ = declares(u);
+    final Set<Entry<String, Information>> $ = declaresDown(u);
     azzert.that($.contains("a"), is(true));
     azzert.that($.contains("b"), is(true));
     azzert.that($.contains("my"), is(true));
@@ -124,15 +124,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_8() {
-    azzert.that(declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
+    azzert.that(declaresDown(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Ignore public void define_9() {
-    azzert.that(declares(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
+    azzert.that(declaresDown(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
   @Test public void defineTestMethodDefinition() {
-    Environment.declares(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
+    Environment.declaresDown(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
   }
 
   @Test public void DoesntHaveFalseResult() {
