@@ -110,4 +110,32 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
     trimmingOf("while(b==q){int i;double t; x=t+i;}").gives("for(;b==q;x=t+i){int i;double t;}");
   }
   
+  @Test public void t19() {
+    trimmingOf("while(b==q){g();if(t==q){int i;int j;}}").gives("while(b==q){g();{}}");
+  }
+  
+  @Test public void t20() {
+    trimmingOf("for(;b==q;){int i;}").gives("{}");
+  }
+  
+  @Test public void t21() {
+    trimmingOf("for(i=1;b==q;++i){if(t==q()){int i;}}").gives("for(i=1;b==q;++i)if(t==q()){int i;}");
+  }
+  
+  @Test public void t22() {
+    trimmingOf("for(;b==q;){g();if(t==q){int i;int j;}}").gives("for(;b==q;){g();{}}");
+  }
+  
+  @Test public void t23() {
+    trimmingOf("for(i=1;b==q();++i){if(t==q()){int i;}}").gives("for(i=1;b==q();++i)if(t==q()){int i;}");
+  }
+  
+  @Test public void t24() {
+    trimmingOf("for(i=t();b==q;++i){if(t==q()){int i;}}").gives("for(i=t();b==q;++i)if(t==q()){int i;}");
+  }
+  
+  @Test public void t25() {
+    trimmingOf("for(i=4;b==q;f=i()){if(t==q()){int i;}}").gives("for(i=4;b==q;f=i())if(t==q()){int i;}");
+  }
+  
  }
