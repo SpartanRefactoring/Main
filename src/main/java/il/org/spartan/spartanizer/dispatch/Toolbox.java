@@ -53,7 +53,7 @@ public class Toolbox {
               new BlockBreakToReturnInfiniteWhile(), //
               new ReturnToBreakFiniteWhile(), //
               new ConvertWhileWithLastStatementUpdateToFor(), //
-              new RemoveRedundentWhile(), //
+              new RemoveRedundantWhile(), //
               null) //
           .add(Assignment.class, //
               new AssignmentAndAssignment(), //
