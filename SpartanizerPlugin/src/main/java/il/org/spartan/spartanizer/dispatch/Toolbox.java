@@ -157,6 +157,7 @@ public class Toolbox {
               new IfDegenerateElse(), //
               new IfEmptyThen(), //
               new IfShortestFirst(), //
+              new IfNullReturnNull(), //
               null)//
           .add(PrefixExpression.class, //
               new PrefixIncrementDecrementReturn(), //
@@ -169,7 +170,9 @@ public class Toolbox {
               new TernaryEliminate(), //
               new TernaryShortestFirst(), //
               new TernaryPushdown(), //
-              new TernaryPushdownStrings(), null) //
+              new TernaryPushdownStrings(), //
+              new TernaryNullCoallescing(), //
+              null) //
           .add(TypeDeclaration.class, //
               // new delmeTypeModifierCleanInterface(), //
               new TypeRedundantModifiers(), //
