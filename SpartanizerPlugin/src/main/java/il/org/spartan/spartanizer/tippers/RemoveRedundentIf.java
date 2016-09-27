@@ -24,14 +24,14 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
   private boolean checkBlock(ASTNode n){
     if(n!= null &&
         (iz.expression(n) && !sideEffects.free(az.expression(n))
-        || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())) || az.throwStatement(n)!=null)
+        || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())) || !iz.block(n)&&!iz.variableDeclarationStatement(n))
       return false;
     if (iz.block(n)) {
       List<Statement> lst = az.block(n).statements();
       for (Statement s : lst) {
         if (iz.expressionStatement(s) && !sideEffects.free(az.expression(az.expressionStatement(s).getExpression())))
             return false;
-        if(az.throwStatement(s)!=null)
+        if(!iz.variableDeclarationStatement(s))
           return false;
       }
     }
