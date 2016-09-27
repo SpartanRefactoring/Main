@@ -128,8 +128,8 @@ Java class which generates quick fix suggestions. -->
 http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fguide%2Fworkbench_cmd_commands.htm 
 -->
 <extension point="org.eclipse.ui.commands">
-     <command id="il.org.spartan.SpartanizeAll" name="Spartanize entire project"/>
-     <command id="il.org.spartan.SpartanizeCurrent" name="Spartanize active window" />
+     <command id="il.org.spartan.LaconizeAll" name="Spartanize entire project"/>
+     <command id="il.org.spartan.LaconizeCurrent" name="Spartanize active window" />
      <command id="il.org.spartan.SuggestionToggle" name="Suggestions on/off">
            <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
     </command>
@@ -140,8 +140,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Handlers of commands: which class to activate -->
 <extension point="org.eclipse.ui.handlers">
-   <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.LaconizeProject"/>
-   <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.LaconizeCurrent"/>
+   <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.LaconizeProject"/>
+   <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.LaconizeCurrent"/>
    <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.TipsOnOfToggle"/>
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
@@ -155,8 +155,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
        <command 
        tooltip="Fully spartanize compilation unit"
-         commandId="il.org.spartan.SpartanizeCurrent" 
-         icon="src/main/icons/spartan-warrior.gif" 
+         commandId="il.org.spartan.LaconizeCurrent" 
+         icon="/src/main/icons/spartan-warrior.gif" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
        </command>
     </toolbar>
@@ -165,10 +165,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <!-- Popup menus -->
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Laconization" mnemonic="M">
-        <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
-        <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
+        <command commandId="il.org.spartan.LaconizeCurrent" style="push"/>       
+        <command commandId="il.org.spartan.LaconizeAll" style="push"/>
         <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/>
-        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
+        <command commandId="il.org.spartan.RefreshAll" style="push"/>
         <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
          <command commandId="il.org.spartan.SuggestionToggle"
               id="il.org.spartan.menus.Toggle"
@@ -187,8 +187,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
    <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
       <menu label="Laconiazation">
-        <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
-        <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
+        <command commandId="il.org.spartan.LaconizeCurrent" style="push"/>       
+        <command commandId="il.org.spartan.LaconizeAll" style="push"/>
         <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/> 
         <command commandId="il.org.spartan.RefreshAll" style="push"/> 
         <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
@@ -200,7 +200,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <!-- Shortcuts -->
 <extension point="org.eclipse.ui.bindings">
 	<key sequence="Ctrl+5"
-		commandId="il.org.spartan.SpartanizeCurrent"
+		commandId="il.org.spartan.LaconizeCurrent"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
