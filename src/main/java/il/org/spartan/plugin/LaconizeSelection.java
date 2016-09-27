@@ -36,6 +36,10 @@ public abstract class LaconizeSelection extends BaseHandler {
   public abstract boolean isRepeating();
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
+    return execute();
+  }
+  
+  public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
     new JOptionPane(status, JOptionPane.INFORMATION_MESSAGE, JOptionPane.NO_OPTION, eclipse.icon, null, Integer.valueOf(0));
@@ -107,7 +111,7 @@ public abstract class LaconizeSelection extends BaseHandler {
     @Override public void run(IMarker m) {
       marker = m;
       try {
-        execute(null);
+        execute();
       } catch (ExecutionException x) {
         // TODO Ori: log it
         x.printStackTrace();
