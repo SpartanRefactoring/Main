@@ -51,13 +51,12 @@ public abstract class ENVTestEngineAbstract {
   public static void compareInOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
     assert testSet != null;
     assert $ != null;
-    final Iterator<Entry<String, Information>> i = testSet.iterator();
     final Iterator<Entry<String, Information>> j = $.iterator();
     boolean entryFound = true;
-    while (i.hasNext()) {
+    for (final Entry<String, Information> i : testSet) {
       entryFound = false;
       while (j.hasNext())
-        if (iz.equal(i.next(), j.next())) {
+        if (i.equals(j.next())) {
           entryFound = true;
           break;
         }
@@ -118,8 +117,11 @@ public abstract class ENVTestEngineAbstract {
     return "Id".equals(n1 + "");
   }
 
-  public static void testSetReset() {
-    testSetFlat.clear();
+  public static void testSetsReset() {
+    if(testSetFlat != null)
+      testSetFlat.clear();
+    if(testSetNested != null)
+      testSetNested.clear();
   }
 
   protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
@@ -220,6 +222,7 @@ public abstract class ENVTestEngineAbstract {
           return;
         compareFlat(enviromentSet);
         // compareNested(enviromentSet);
+        testSetsReset();
         foundTestedAnnotation = false;
       }
     });
