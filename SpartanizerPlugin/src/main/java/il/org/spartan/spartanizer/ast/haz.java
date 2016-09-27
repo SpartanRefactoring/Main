@@ -125,11 +125,13 @@ public enum haz {
 
   public static boolean unknownNumberOfEvaluations(final SimpleName n, final Statement s) {
     ASTNode child = n;
-    for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n)) {
+    for (final ASTNode ancestor : hop.ancestors(n)) {
       if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION)
-          || iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
+          return false;
+      if (expression(az.enhancedFor(ancestor)) == child)
+        continue;
+      if (iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
               || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null)
-          || iz.is(ancestor, ENHANCED_FOR_STATEMENT) && ((EnhancedForStatement) ancestor).getExpression() != child)
         return true;
       child = ancestor;
     }
