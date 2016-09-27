@@ -891,7 +891,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ifDegenerateThenInIf() {
-    trimmingOf("if (a) if (b) {} else f(); x();").gives(" if (a) if (!b) f(); x();");
+    trimmingOf("if (a) if (b) {} else f(); x();").gives("if(a)if(!b)f();x();");
   }
 
   @Test public void ifEmptyElsewWithinIf() {
