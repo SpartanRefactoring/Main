@@ -131,8 +131,6 @@ public enum haz {
           return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))
           continue;
-      if (expression(az.enhancedFor(ancestor)) == child)
-        continue;
       if (iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
               || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
         return true;

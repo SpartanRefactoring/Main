@@ -833,14 +833,11 @@ public enum iz {
   }
 
   public static boolean expressionOfEnhancedFor(final ASTNode child, final ASTNode parent) {
-    if (child == null || parent == null)
+    if (child == null || parent == null || !iz.enhancedFor(parent))
       return false;
-    if (iz.enhancedFor(parent)) {
-      EnhancedForStatement parent1 = az.enhancedFor(parent);
-      assert parent1 != null;
-      assert step.expression(parent1) != null;
-      return step.expression(parent1) == child;
-    }
-    return false;
+    EnhancedForStatement parent1 = az.enhancedFor(parent);
+    assert parent1 != null;
+    assert step.expression(parent1) != null;
+    return step.expression(parent1) == child;
   }
 }
