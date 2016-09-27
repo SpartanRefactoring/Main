@@ -35,6 +35,26 @@ public final class BatchSpartanizer {
         new BatchSpartanizer(¢).fire();
   }
 
+  public static ProcessBuilder runScript() {
+    return new ProcessBuilder("/bin/bash");
+  }
+
+  public static String runScript(final Process p) throws IOException {
+    try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+      String ¢;
+      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
+        if ((¢ = r.readLine()) == null)
+          return $ + "";
+    }
+  }
+
+  public static ProcessBuilder runScript¢(final String pathname) {
+    final ProcessBuilder $ = runScript();
+    $.redirectErrorStream(true);
+    $.command(script, pathname);
+    return $;
+  }
+
   static String essenceNew(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
@@ -82,26 +102,6 @@ public final class BatchSpartanizer {
 
   private static String runScript(final String pathname) throws IOException {
     return runScript(runScript¢(pathname).start());
-  }
-
-  public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder $ = runScript();
-    $.redirectErrorStream(true);
-    $.command(script, pathname);
-    return $;
-  }
-  public static ProcessBuilder runScript() {
-    return new ProcessBuilder("/bin/bash");
-  }
-
-  public static String runScript(final Process p) throws IOException {
-    try (final InputStream s = p.getInputStream();
-        final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
-      String ¢;
-      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
-        if ((¢ = r.readLine()) == null)
-          return $ + "";
-    }
   }
 
   private static int wc(final String $) {
