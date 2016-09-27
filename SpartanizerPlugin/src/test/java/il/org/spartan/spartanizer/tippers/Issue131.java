@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue131 {
   @Test public void A$010() {
-    trimmingOf("for(int i=4; i<s.length() ; ++i){i+=9;return x;}return x;").gives("for(int ¢=4; ¢<s.length() ; ++¢){¢+=9;break;}return x;").stays();
+    trimmingOf("for(int i=4; i<example1step1.length() ; ++i){i+=9;return x;}return x;").gives("for(int ¢=4; ¢<example1step1.length() ; ++¢){¢+=9;break;}return x;").stays();
   }
 
   @Test public void A$020() {
@@ -18,11 +18,11 @@ import org.junit.runners.*;
   }
 
   @Test public void A$030() {
-    trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)return x;return x;").gives("for(int ¢=4 ; ¢<s.length() ; ++¢)break;return x;").stays();
+    trimmingOf("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)return x;return x;").gives("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)break;return x;").stays();
   }
 
   @Test public void A$040() {
-    trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)if(t=4)return x;return x;").gives("for(int ¢=4 ; ¢<s.length() ; ++¢)if(t=4)break;return x;").stays();
+    trimmingOf("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(t=4)return x;return x;").gives("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(t=4)break;return x;").stays();
   }
 
   @Test public void A$050() {
@@ -42,26 +42,26 @@ import org.junit.runners.*;
   }
 
   @Test public void A$090() {
-    trimmingOf("for(int i=4 ; i<s.length() ; ++i)if(i==5)return x;return x;").gives("for(int ¢=4 ; ¢<s.length() ; ++¢)if(¢==5)break;return x;")
+    trimmingOf("for(int i=4 ; i<example1step1.length() ; ++i)if(i==5)return x;return x;").gives("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(¢==5)break;return x;")
         .stays();
   }
 
   @Test public void A$100() {
-    trimmingOf("for(int i=4;i<s.length();++i){i+=9;i++;return x;}return x;").gives("for(int ¢=4;¢<s.length();++¢){¢+=9;¢++;break;}return x;")
-        .gives("for(int ¢=4;¢<s.length();++¢){¢+=9;++¢;break;}return x;").stays();
+    trimmingOf("for(int i=4;i<example1step1.length();++i){i+=9;i++;return x;}return x;").gives("for(int ¢=4;¢<example1step1.length();++¢){¢+=9;¢++;break;}return x;")
+        .gives("for(int ¢=4;¢<example1step1.length();++¢){¢+=9;++¢;break;}return x;").stays();
   }
 
   @Test public void A$110() {
-    trimmingOf("int t=5;int i=2;for(int i=4;i<s.length();++i){if(i==5){t+=9;return x;}y+=15;return x;}return x;")
-        .gives("int t=5;int i=2;for(int ¢=4;¢<s.length();++¢){if(¢==5){t+=9;return x;}y+=15;break;}return x;")
-        .gives("int t=5;int i=2;for(int ¢=4;¢<s.length();++¢){if(¢==5){t+=9; break;}y+=15;break;}return x;").stays();
+    trimmingOf("int t=5;int i=2;for(int i=4;i<example1step1.length();++i){if(i==5){t+=9;return x;}y+=15;return x;}return x;")
+        .gives("int t=5;int i=2;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){t+=9;return x;}y+=15;break;}return x;")
+        .gives("int t=5;int i=2;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){t+=9; break;}y+=15;break;}return x;").stays();
   }
 
   @Test public void A$120() {
-    trimmingOf("boolean b=false;for(int i=4;i<s.length();++i){if(i==5){t+=9;return x;}else return tr;y+=15;return x;}return x;")
-        .gives("boolean b=false;for(int ¢=4;¢<s.length();++¢){if(¢==5){t+=9;return x;}else return tr;y+=15;break;}return x;")
-        .gives("boolean b=false;for(int ¢=4;¢<s.length();++¢){if(¢!=5)return tr;t+=9;return x;y+=15;break;}return x;")
-        .gives("boolean b=false;for(int ¢=4;¢<s.length();++¢){if(¢!=5)return tr;t+=9;break;y+=15;break;}return x;").stays();
+    trimmingOf("boolean b=false;for(int i=4;i<example1step1.length();++i){if(i==5){t+=9;return x;}else return tr;y+=15;return x;}return x;")
+        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){t+=9;return x;}else return tr;y+=15;break;}return x;")
+        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢!=5)return tr;t+=9;return x;y+=15;break;}return x;")
+        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢!=5)return tr;t+=9;break;y+=15;break;}return x;").stays();
   }
 
   @Test public void A$130() {

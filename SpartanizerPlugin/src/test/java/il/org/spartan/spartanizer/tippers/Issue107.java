@@ -59,7 +59,7 @@ import org.junit.*;
   }
 
   @Test public void m() {
-    trimmingOf("s = \"hello\"; \n" + "s += 1;").stays();
+    trimmingOf("example1step1 = \"hello\"; \n" + "example1step1 += 1;").stays();
   }
 
   @Test public void n() {

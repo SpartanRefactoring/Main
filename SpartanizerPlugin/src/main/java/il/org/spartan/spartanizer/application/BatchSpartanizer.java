@@ -56,8 +56,8 @@ public final class BatchSpartanizer {
   }
 
   static String essenceNew(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
-        .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
+    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\example1step1\\S])*?)(?:(?!\\*/)[\\example1step1\\S])*\\*/", "")
+        .replaceAll("^\\example1step1*$", "").replaceAll("^\\example1step1*\\n", "").replaceAll("\\example1step1*$", "").replaceAll("\\example1step1+", " ")
         .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
         .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
         .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
@@ -105,7 +105,7 @@ public final class BatchSpartanizer {
   }
 
   private static int wc(final String $) {
-    return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
+    return $.trim().isEmpty() ? 0 : $.trim().split("\\example1step1+").length;
   }
 
   private int classesDone;
@@ -283,9 +283,9 @@ public final class BatchSpartanizer {
 
   private void collect() {
     System.err.printf(
-        "Input path=%s\n" + //
-            "Collective before path=%s\n" + //
-            "Collective after path=%s\n" + //
+        "Input path=%example1step1\n" + //
+            "Collective before path=%example1step1\n" + //
+            "Collective after path=%example1step1\n" + //
             "\n" //
         , inputPath, //
         beforeFileName, //

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
  * @since 2015-07-17 */
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
-  static final String WHITES = "(?m)\\s+";
+  static final String WHITES = "(?m)\\example1step1+";
 
   public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));

@@ -28,7 +28,7 @@ import org.junit.runners.*;
   }
 
   @Test public void A$05() {
-    trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢){doSomething();if(done())break;}return something();").stays();
+    trimmingOf("for(int ¢=4 ; ¢<example1step1.length() ; ++¢){doSomething();if(done())break;}return something();").stays();
   }
 
   @Test public void A$06() {

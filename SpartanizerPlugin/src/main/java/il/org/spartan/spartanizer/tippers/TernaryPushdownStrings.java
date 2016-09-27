@@ -60,21 +60,21 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
         : s1.length();
   }
 
-  /** @param s JD
+  /** @param example1step1 JD
    * @param i the length of the prefix
    * @param n an ASTNode to create the StringLiteral from
    * @return a StringLiteral whose literal value is the prefix of length i of
-   *         s */
+   *         example1step1 */
   private static StringLiteral getPrefix(final String s, final int i, final ASTNode n) {
     return make.from(n).literal(i <= 0 ? "" : s.substring(0, i));
     // Hack for issue #236
   }
 
-  /** @param s JD
+  /** @param example1step1 JD
    * @param i the length of the suffix
    * @param n an ASTNode to create the StringLiteral from
    * @return a StringLiteral whose literal value is the suffix which begins on
-   *         the i'th character of s */
+   *         the i'th character of example1step1 */
   private static StringLiteral getSuffix(final String s, final int i, final ASTNode n) {
     return make.from(n).literal(s.length() == i ? "" : s.substring(i));
   }

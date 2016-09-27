@@ -243,8 +243,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void bugIntroducingMISSINGWord1() {
-    trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), s, f)")
-        .gives("b.f(a) && As.g(f).h(c) == -1 ? o(s,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,v),s,f) : null");
+    trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), example1step1, f)")
+        .gives("b.f(a) && As.g(f).h(c) == -1 ? o(example1step1,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,v),example1step1,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord1a() {
@@ -252,17 +252,17 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void bugIntroducingMISSINGWord1b() {
-    trimmingOf("b.f(a) && X ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), s, f)")
-        .gives("b.f(a)&&X?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,v),s,f):null");
+    trimmingOf("b.f(a) && X ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), example1step1, f)")
+        .gives("b.f(a)&&X?o(example1step1,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,v),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord1c() {
-    trimmingOf("Y ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), s, f)")
-        .gives("Y?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,v),s,f):null");
+    trimmingOf("Y ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), example1step1, f)")
+        .gives("Y?o(example1step1,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,v),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord1d() {
-    trimmingOf("Y ? Z : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), s, f)").gives("Y?Z:b.f(\".in\")&&!y(d,b)?o(b.z(u,v),s,f):null");
+    trimmingOf("Y ? Z : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, v), example1step1, f)").gives("Y?Z:b.f(\".in\")&&!y(d,b)?o(b.z(u,v),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord1e() {
@@ -271,50 +271,50 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void bugIntroducingMISSINGWord2() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(example1step1, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(example1step1,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2a() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(example1step1, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(example1step1,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2b() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  T ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  T ? objects(example1step1, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
             .gives(
-                "name.endsWith(testSuffix) && T ? objects(s,name,makeInFile(f)): name.endsWith(\".in\") && !dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix) && T ? objects(example1step1,name,makeInFile(f)): name.endsWith(\".in\") && !dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2c() {
     trimmingOf(
-        "X && T ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "X && T ? objects(example1step1, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
             .gives(
-                "X && T ? objects(s,name,makeInFile(f)) : name.endsWith(\".in\") && !dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "X && T ? objects(example1step1,name,makeInFile(f)) : name.endsWith(\".in\") && !dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2d() {
-    trimmingOf("X && T ? E : Y ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-        .gives("X && T ? E : !Y && !dotOutExists(d,name) ? objects(name.replaceAll(\"\\\\.in$\",Z2),s,f) : null");
+    trimmingOf("X && T ? E : Y ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
+        .gives("X && T ? E : !Y && !dotOutExists(d,name) ? objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord2e() {
-    trimmingOf("X &&  T ? E : Y ? null : Z ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
-        .gives("X &&  T ? E : !Y && !Z ? objects(name.replaceAll(\"\\\\.in$\",Z2),s,f) : null");
+    trimmingOf("X &&  T ? E : Y ? null : Z ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
+        .gives("X &&  T ? E : !Y && !Z ? objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord2e1() {
-    trimmingOf("X &&  T ? E : Y ? null : Z ? null : objects(name.replaceAll(x, Z2), s, f)")
-        .gives("X &&  T ? E : !Y && !Z ? objects(name.replaceAll(x,Z2),s,f) : null");
+    trimmingOf("X &&  T ? E : Y ? null : Z ? null : objects(name.replaceAll(x, Z2), example1step1, f)")
+        .gives("X &&  T ? E : !Y && !Z ? objects(name.replaceAll(x,Z2),example1step1,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord2e2() {
-    trimmingOf("X &&  T ? E : Y ? null : Z ? null : objects(name.replaceAll(g, Z2), s, f)")
-        .gives("X &&  T ? E : !Y && !Z ? objects(name.replaceAll(g,Z2),s,f) : null");
+    trimmingOf("X &&  T ? E : Y ? null : Z ? null : objects(name.replaceAll(g, Z2), example1step1, f)")
+        .gives("X &&  T ? E : !Y && !Z ? objects(name.replaceAll(g,Z2),example1step1,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord2f() {
@@ -323,21 +323,21 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void bugIntroducingMISSINGWord3() {
     trimmingOf(
-        "name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), s, f)")
+        "name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(example1step1, name, makeInFile(f)) : !name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), example1step1, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(example1step1,name,makeInFile(f)):name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord3a() {
-    trimmingOf("!name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), s, f)")
-        .gives("name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),s,f):null");
+    trimmingOf("!name.endsWith(x) ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(3, 56), example1step1, f)")
+        .gives("name.endsWith(x)&&!dotOutExists(d,name)?objects(name.replaceAll(3,56),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWordTry1() {
     trimmingOf(
-        "name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) && -1 == MakeAST.stringBuilder(f).indexOf(testKeyword) ? objects(example1step1, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), example1step1, f)")
             .gives(
-                "name.endsWith(testSuffix) && MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix) && MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(example1step1,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWordTry2() {
@@ -426,15 +426,15 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void comaprisonWithBoolean1() {
-    trimmingOf("s.equals(532)==true").gives("s.equals(532)");
+    trimmingOf("example1step1.equals(532)==true").gives("example1step1.equals(532)");
   }
 
   @Test public void comaprisonWithBoolean2() {
-    trimmingOf("s.equals(532)==false ").gives("!s.equals(532)");
+    trimmingOf("example1step1.equals(532)==false ").gives("!example1step1.equals(532)");
   }
 
   @Test public void comaprisonWithBoolean3() {
-    trimmingOf("(false==s.equals(532))").gives("(!s.equals(532))");
+    trimmingOf("(false==example1step1.equals(532))").gives("(!example1step1.equals(532))");
   }
 
   @Test public void comaprisonWithSpecific0() {
@@ -464,11 +464,11 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void comaprisonWithSpecific2a() {
-    trimmingOf("s.equals(532)==false").gives("!s.equals(532)");
+    trimmingOf("example1step1.equals(532)==false").gives("!example1step1.equals(532)");
   }
 
   @Test public void comaprisonWithSpecific3() {
-    trimmingOf("(this==s.equals(532))").gives("(s.equals(532)==this)");
+    trimmingOf("(this==example1step1.equals(532))").gives("(example1step1.equals(532)==this)");
   }
 
   @Test public void comaprisonWithSpecific4() {
@@ -480,7 +480,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void commonPrefixEntirelyIfBranches() {
-    trimmingOf("if (s.equals(532)) S.out.close();else S.out.close();").gives("S.out.close(); ");
+    trimmingOf("if (example1step1.equals(532)) S.out.close();else S.out.close();").gives("S.out.close(); ");
   }
 
   @Test public void commonPrefixIfBranchesInFor() {
@@ -618,7 +618,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void comparisonWithCharacterConstant() {
-    trimmingOf("'d' == s.charAt(i)").gives("s.charAt(i)=='d'");
+    trimmingOf("'d' == example1step1.charAt(i)").gives("example1step1.charAt(i)=='d'");
   }
 
   @Test public void compreaeExpressionToExpression() {
@@ -646,8 +646,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void declarationIfAssignment() {
-    trimmingOf("    String res = s;\n" + "    if (s.equals(y))\n" + "      res = s + blah;\n" + "    S.h(res);")
-        .gives("    String res = s.equals(y) ? s + blah :s;\n" + "    S.h(res);");
+    trimmingOf("    String res = example1step1;\n" + "    if (example1step1.equals(y))\n" + "      res = example1step1 + blah;\n" + "    S.h(res);")
+        .gives("    String res = example1step1.equals(y) ? example1step1 + blah :example1step1;\n" + "    S.h(res);");
   }
 
   @Test public void declarationIfAssignment3() {
@@ -659,8 +659,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void declarationIfUpdateAssignment() {
-    trimmingOf("    String res = s;\n" + "    if (s.equals(y))\n" + "      res += s + blah;\n" + "    S.h(res);")
-        .gives("    String res = s.equals(y) ? s + (s + blah) :s;\n" + "    S.h(res);");
+    trimmingOf("    String res = example1step1;\n" + "    if (example1step1.equals(y))\n" + "      res += example1step1 + blah;\n" + "    S.h(res);")
+        .gives("    String res = example1step1.equals(y) ? example1step1 + (example1step1 + blah) :example1step1;\n" + "    S.h(res);");
   }
 
   @Test public void declarationIfUsesLaterVariable() {
@@ -848,14 +848,14 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void forLoopBug() {
-    trimmingOf("      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else "
-        + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(¢) == 'd')\n" + "          res-=1;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(¢) == 'd')\n" + "          res --;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
-                + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n" + " if (b) i = 3;")
+    trimmingOf("      for (int i = 0;i < example1step1.length();++i)\n" + "       if (example1step1.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else "
+        + "       if (example1step1.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n" + " if (b) i = 3;")
+            .gives("      for (int ¢ = 0;¢ < example1step1.length();++¢)\n" + "       if (example1step1.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
+                + "       if (example1step1.charAt(¢) == 'd')\n" + "          res-=1;\n" + "      return res;\n" + " if (b) i = 3;")
+            .gives("      for (int ¢ = 0;¢ < example1step1.length();++¢)\n" + "       if (example1step1.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
+                + "       if (example1step1.charAt(¢) == 'd')\n" + "          res --;\n" + "      return res;\n" + " if (b) i = 3;")
+            .gives("      for (int ¢ = 0;¢ < example1step1.length();++¢)\n" + "       if (example1step1.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
+                + "       if (example1step1.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n" + " if (b) i = 3;")
             .stays();
   }
 
@@ -1048,17 +1048,17 @@ import il.org.spartan.spartanizer.tipping.*;
   @Test public void infiniteLoopBug2() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(n.modifiers());\n"
         + "    }")
-            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
-                + "      return hasAnnotation(s.modifiers());\n" + "    }");
+            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement example1step1, int abcd) {\n"
+                + "      return hasAnnotation(example1step1.modifiers());\n" + "    }");
   }
 
   @Test public void infiniteLoopBug3() {
     trimmingOf("  boolean f(final VariableDeclarationStatement n) {\n" + "      return false;\n" + "    }")
-        .gives("  boolean f(final VariableDeclarationStatement s) {\n" + "      return false;\n" + "    }");
+        .gives("  boolean f(final VariableDeclarationStatement example1step1) {\n" + "      return false;\n" + "    }");
   }
 
   @Test public void infiniteLoopBug4() {
-    trimmingOf("void f(final VariableDeclarationStatement n) {}").gives(" void f(final VariableDeclarationStatement s) { }");
+    trimmingOf("void f(final VariableDeclarationStatement n) {}").gives(" void f(final VariableDeclarationStatement example1step1) { }");
   }
 
   @Test public void initializer101() {
@@ -1165,7 +1165,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assert tokenWiseGreater;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
-    assert s.canTip(e) : "e=" + e + " s=" + s;
+    assert s.canTip(e) : "e=" + e + " example1step1=" + s;
     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d,e)"));
@@ -1187,7 +1187,7 @@ import il.org.spartan.spartanizer.tipping.*;
     assert !tokenWiseGreater;
     assert ExpressionComparator.moreArguments(e1, e2);
     assert ExpressionComparator.longerFirst(e);
-    assert s.canTip(e) : "e=" + e + " s=" + s;
+    assert s.canTip(e) : "e=" + e + " example1step1=" + s;
     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d)"));
@@ -1341,13 +1341,13 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void issue141_05() {
-    trimmingOf("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+    trimmingOf("public static void go(final String example1step1[]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .gives("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .stays();
   }
 
   @Test public void issue141_06() {
-    trimmingOf("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+    trimmingOf("public static void go(final String example1step1[][][]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .gives("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
             + "}")
         .stays();
@@ -1983,17 +1983,17 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1() {
-    trimmingOf("void m(String string) {" + "String s = null;" + "string.substring(s, 2, 18);}")
+    trimmingOf("void m(String string) {" + "String example1step1 = null;" + "string.substring(example1step1, 2, 18);}")
         .gives("void m(String string){string.substring(null,2,18);}");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1Simplified() {
-    trimmingOf("void m(String string) {" + "String s = X;" + "string.substring(s, 2, 18);}")
+    trimmingOf("void m(String string) {" + "String example1step1 = X;" + "string.substring(example1step1, 2, 18);}")
         .gives("void m(String string){string.substring(X,2,18);}");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1SimplifiedFurther() {
-    trimmingOf("void m(String string) {" + "String s = X;" + "string.f(s);}").gives("void m(String string){string.f(X);}");
+    trimmingOf("void m(String string) {" + "String example1step1 = X;" + "string.f(example1step1);}").gives("void m(String string){string.f(X);}");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal2() {
@@ -2037,15 +2037,15 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
-    trimmingOf("for (int s = i; ++i; ++s);").stays();
+    trimmingOf("for (int example1step1 = i; ++i; ++example1step1);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;").stays();
+    trimmingOf("for (int example1step1 = i++; i < 10; ++example1step1) sum+=example1step1;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
-    trimmingOf("int s = 2;" + "int n = s++;" + "S.out.print(n);").gives("int s=2;S.out.print(s++);");
+    trimmingOf("int example1step1 = 2;" + "int n = example1step1++;" + "S.out.print(n);").gives("int example1step1=2;S.out.print(example1step1++);");
   }
 
   @Test public void postIncrementInFunctionCall() {
@@ -2343,8 +2343,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void pushdownTernaryintoPrintln() {
-    trimmingOf("    if (s.equals(t))\n" + "      S.h(Hey + res);\n" + "    else\n" + "      S.h(Ho + x + a);")
-        .gives("S.h(s.equals(t)?Hey+res:Ho+x+a);");
+    trimmingOf("    if (example1step1.equals(t))\n" + "      S.h(Hey + res);\n" + "    else\n" + "      S.h(Ho + x + a);")
+        .gives("S.h(example1step1.equals(t)?Hey+res:Ho+x+a);");
   }
 
   @Test public void pushdownTernaryLongFieldRefernece() {
@@ -2584,8 +2584,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void shortestBranchInIf() {
-    trimmingOf("   int a=0;\n" + "   if (s.equals(known)){\n" + "     S.console();\n" + "   } else {\n" + "     a=3;\n" + "   }\n")
-        .gives("int a=0; if(!s.equals(known))a=3;else S.console();");
+    trimmingOf("   int a=0;\n" + "   if (example1step1.equals(known)){\n" + "     S.console();\n" + "   } else {\n" + "     a=3;\n" + "   }\n")
+        .gives("int a=0; if(!example1step1.equals(known))a=3;else S.console();");
   }
 
   @Test public void shortestFirstAlignment() {
@@ -2606,47 +2606,47 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void shortestIfBranchFirst01() {
-    trimmingOf("if (s.equals(0xDEAD)) {\n" + " int res=0; " + " for (int i=0; i<s.length(); ++i)     " + " if (s.charAt(i)=='a')      "
-        + "   res += 2;    " + "} else " + " if (s.charAt(i)=='d') " + "  res -= 1;  " + "return res;  ")
-            .gives("if (!s.equals(0xDEAD)) {" + " if(s.charAt(i)=='d')" + "  res-=1;" + "} else {" + "  int res=0;"
-                + "  for(int i=0;i<s.length();++i)" + "   if(s.charAt(i)=='a')" + "     res+=2;" + " }" + " return res;");
+    trimmingOf("if (example1step1.equals(0xDEAD)) {\n" + " int res=0; " + " for (int i=0; i<example1step1.length(); ++i)     " + " if (example1step1.charAt(i)=='a')      "
+        + "   res += 2;    " + "} else " + " if (example1step1.charAt(i)=='d') " + "  res -= 1;  " + "return res;  ")
+            .gives("if (!example1step1.equals(0xDEAD)) {" + " if(example1step1.charAt(i)=='d')" + "  res-=1;" + "} else {" + "  int res=0;"
+                + "  for(int i=0;i<example1step1.length();++i)" + "   if(example1step1.charAt(i)=='a')" + "     res+=2;" + " }" + " return res;");
   }
 
   @Test public void shortestIfBranchFirst02() {
     trimmingOf(
-        "if (!s.equals(0xDEAD)) { " + " int res=0;" + " for (int i=0;i<s.length();++i)     " + "   if (s.charAt(i)=='a')      " + "     res += 2;"
-            + "   else " + "  if (s.charAt(i)=='d')      " + "       res -= 1;" + "  return res;" + "} else {    " + " return 8;" + "}")
-                .gives(" if (s.equals(0xDEAD)) \n" + "    return 8;" + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-                    + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
+        "if (!example1step1.equals(0xDEAD)) { " + " int res=0;" + " for (int i=0;i<example1step1.length();++i)     " + "   if (example1step1.charAt(i)=='a')      " + "     res += 2;"
+            + "   else " + "  if (example1step1.charAt(i)=='d')      " + "       res -= 1;" + "  return res;" + "} else {    " + " return 8;" + "}")
+                .gives(" if (example1step1.equals(0xDEAD)) \n" + "    return 8;" + "      int res = 0;\n" + "      for (int i = 0;i < example1step1.length();++i)\n"
+                    + "       if (example1step1.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (example1step1.charAt(i) == 'd')\n"
                     + "          res -= 1;\n" + "      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02a() {
-    trimmingOf(" if (!s.equals(0xDEAD)) {\n" + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-        + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
+    trimmingOf(" if (!example1step1.equals(0xDEAD)) {\n" + "      int res = 0;\n" + "      for (int i = 0;i < example1step1.length();++i)\n"
+        + "       if (example1step1.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (example1step1.charAt(i) == 'd')\n"
         + "          res -= 1;\n" + "      return res;\n" + "    }\n" + "    return 8;")
-            .gives(" if (s.equals(0xDEAD)) " + "return 8; " + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-                + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
+            .gives(" if (example1step1.equals(0xDEAD)) " + "return 8; " + "      int res = 0;\n" + "      for (int i = 0;i < example1step1.length();++i)\n"
+                + "       if (example1step1.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (example1step1.charAt(i) == 'd')\n"
                 + "          res -= 1;\n" + "      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02b() {
-    trimmingOf("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
-        + "        else " + "       if (s.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n")
-            .gives("      int res = 0;\n" + "      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n"
-                + "          res += 2;\n" + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n")
+    trimmingOf("      int res = 0;\n" + "      for (int i = 0;i < example1step1.length();++i)\n" + "       if (example1step1.charAt(i) == 'a')\n" + "          res += 2;\n"
+        + "        else " + "       if (example1step1.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n")
+            .gives("      int res = 0;\n" + "      for (int ¢ = 0;¢ < example1step1.length();++¢)\n" + "       if (example1step1.charAt(¢) == 'a')\n"
+                + "          res += 2;\n" + "        else " + "       if (example1step1.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n")
             .stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
     final CompilationUnit u = Wrap.Statement
-        .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
+        .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i < example1step1.length();++i)\n" + "       if (example1step1.charAt(i) == 'a')\n"
+            + "          res += 2;\n" + "        else " + "       if (example1step1.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
     assert f != null;
     azzert.that(f, iz(" res = 0"));
-    azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
-        + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n"));
+    azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i < example1step1.length();++i)\n" + "       if (example1step1.charAt(i) == 'a')\n" + "          res += 2;\n"
+        + "        else " + "       if (example1step1.charAt(i) == 'd')\n" + "          res -= 1;\n"));
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
@@ -2663,7 +2663,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void shortestOperand05() {
-    trimmingOf("    W s = new W(\"bob\");\n" + "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
+    trimmingOf("    W example1step1 = new W(\"bob\");\n" + "    return example1step1.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
         .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
@@ -2984,45 +2984,45 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ternarize05() {
-    trimmingOf(" int res = 0; " + "if (s.equals(532))    " + "res += 6;   " + "else    " + "res += 9;      ")
-        .gives("int res=0;res+=s.equals(532)?6:9;");
+    trimmingOf(" int res = 0; " + "if (example1step1.equals(532))    " + "res += 6;   " + "else    " + "res += 9;      ")
+        .gives("int res=0;res+=example1step1.equals(532)?6:9;");
   }
 
   @Test public void ternarize05a() {
-    trimmingOf(" int res = 0; " + "if (s.equals(532))    " + "res += 6;   " + "else    " + "res += 9;      " + "return res; ")
-        .gives("int res=0;res+=s.equals(532)?6:9;return res;");
+    trimmingOf(" int res = 0; " + "if (example1step1.equals(532))    " + "res += 6;   " + "else    " + "res += 9;      " + "return res; ")
+        .gives("int res=0;res+=example1step1.equals(532)?6:9;return res;");
   }
 
   @Test public void ternarize07() {
-    trimmingOf("String res;" + "res = s;   " + "if (res.equals(532)==true)    " + "  res = s + 0xABBA;   " + "S.h(res); ")
-        .gives("String res =s ;" + "if (res.equals(532))    " + "  res = s + 0xABBA;   " + "S.h(res); ");
+    trimmingOf("String res;" + "res = example1step1;   " + "if (res.equals(532)==true)    " + "  res = example1step1 + 0xABBA;   " + "S.h(res); ")
+        .gives("String res =example1step1 ;" + "if (res.equals(532))    " + "  res = example1step1 + 0xABBA;   " + "S.h(res); ");
   }
 
   @Test public void ternarize07a() {
-    trimmingOf("String res;" + "res = s;   " + "if (res==true)    " + "  res = s + 0xABBA;   " + "S.h(res); ")
-        .gives("String res=s;if(res)res=s+0xABBA;S.h(res);");
+    trimmingOf("String res;" + "res = example1step1;   " + "if (res==true)    " + "  res = example1step1 + 0xABBA;   " + "S.h(res); ")
+        .gives("String res=example1step1;if(res)res=example1step1+0xABBA;S.h(res);");
   }
 
   @Test public void ternarize07aa() {
-    trimmingOf("String res=s;if(res==true)res=s+0xABBA;S.h(res);").gives("String res=s==true?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res=example1step1;if(res==true)res=example1step1+0xABBA;S.h(res);").gives("String res=example1step1==true?example1step1+0xABBA:example1step1;S.h(res);");
   }
 
   @Test public void ternarize07b() {
-    trimmingOf("String res =s ;" + "if (res.equals(532)==true)    " + "  res = s + 0xABBA;   " + "S.h(res); ")
-        .gives("String res=s.equals(532)==true?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res =example1step1 ;" + "if (res.equals(532)==true)    " + "  res = example1step1 + 0xABBA;   " + "S.h(res); ")
+        .gives("String res=example1step1.equals(532)==true?example1step1+0xABBA:example1step1;S.h(res);");
   }
 
   @Test public void ternarize09() {
-    trimmingOf("if (s.equals(532)) {    return 6;}else {    return 9;}").gives("return s.equals(532)?6:9; ");
+    trimmingOf("if (example1step1.equals(532)) {    return 6;}else {    return 9;}").gives("return example1step1.equals(532)?6:9; ");
   }
 
   @Test public void ternarize10() {
-    trimmingOf("String res = s, foo = bar;   " + "if (res.equals(532)==true)    " + "res = s + 0xABBA;   " + "S.h(res); ")
-        .gives("String res=s.equals(532)==true?s+0xABBA:s,foo=bar;S.h(res);");
+    trimmingOf("String res = example1step1, foo = bar;   " + "if (res.equals(532)==true)    " + "res = example1step1 + 0xABBA;   " + "S.h(res); ")
+        .gives("String res=example1step1.equals(532)==true?example1step1+0xABBA:example1step1,foo=bar;S.h(res);");
   }
 
   @Test public void ternarize12() {
-    trimmingOf("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ").gives("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res = example1step1;   if (example1step1.equals(532))    res = res + 0xABBA;   S.h(res); ").gives("String res=example1step1.equals(532)?example1step1+0xABBA:example1step1;S.h(res);");
   }
 
   @Test public void ternarize13() {
@@ -3072,24 +3072,24 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   public void ternarize18() {
-    trimmingOf("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);").gives("System.h(s.equals(s)?tH3+res:h2A+s+0);");
+    trimmingOf("final String res=example1step1;System.h(example1step1.equals(res)?tH3+res:h2A+res+0);").gives("System.h(example1step1.equals(example1step1)?tH3+res:h2A+example1step1+0);");
   }
 
   @Test public void ternarize21() {
-    trimmingOf("if (s.equals(532)){    S.h(gG);    S.out.l(kKz);} f(); ").stays();
+    trimmingOf("if (example1step1.equals(532)){    S.h(gG);    S.out.l(kKz);} f(); ").stays();
   }
 
   @Test public void ternarize21a() {
-    trimmingOf("   if (s.equals(known)){\n" + "     S.out.l(gG);\n" + "   } else {\n" + "     S.out.l(kKz);\n" + "   }")
-        .gives("S.out.l(s.equals(known)?gG:kKz);");
+    trimmingOf("   if (example1step1.equals(known)){\n" + "     S.out.l(gG);\n" + "   } else {\n" + "     S.out.l(kKz);\n" + "   }")
+        .gives("S.out.l(example1step1.equals(known)?gG:kKz);");
   }
 
   @Test public void ternarize22() {
-    trimmingOf("int a=0;   if (s.equals(532)){    S.console();    a=3;} f(); ").stays();
+    trimmingOf("int a=0;   if (example1step1.equals(532)){    S.console();    a=3;} f(); ").stays();
   }
 
   @Test public void ternarize26() {
-    trimmingOf("int a=0;   if (s.equals(532)){    a+=2;   a-=2; } f(); ").stays();
+    trimmingOf("int a=0;   if (example1step1.equals(532)){    a+=2;   a-=2; } f(); ").stays();
   }
 
   @Test public void ternarize33() {
@@ -3134,7 +3134,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ternarize49() {
-    trimmingOf("if (s.equals(532)){ S.h(gG); S.out.l(kKz); } f();").stays();
+    trimmingOf("if (example1step1.equals(532)){ S.h(gG); S.out.l(kKz); } f();").stays();
   }
 
   @Test public void ternarize52() {
@@ -3188,7 +3188,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {
-    trimmingOf("1+2+s<3").gives("3+s<3");
+    trimmingOf("1+2+example1step1<3").gives("3+example1step1<3");
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {

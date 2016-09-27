@@ -116,7 +116,7 @@ public enum extract {
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
    * perhaps along with any number of empty sideEffects, then its essence is
    * this single non-empty statement.
-   * @param s JD
+   * @param example1step1 JD
    * @return essence of the parameter, or <code><b>null</b></code>, if there are
    *         no non-empty sideEffects within the parameter. If, however there
    *         are multiple non-empty sideEffects inside the parameter then the
@@ -255,7 +255,7 @@ public enum extract {
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement
-   * @param s JD
+   * @param example1step1 JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement nextStatement(final Statement s) {

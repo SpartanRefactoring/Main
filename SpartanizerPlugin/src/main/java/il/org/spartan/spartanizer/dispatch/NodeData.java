@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.dispatch;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** Black box implementation of data storing in {@link ASTNode}s using Objects
+/** Black box implementation of data storing in {@link ASTNode}example1step1 using Objects
  * map.
  * @author Ori Roth */
 public class NodeData {

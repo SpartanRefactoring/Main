@@ -65,7 +65,7 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void intMethod() {
-    azzert.that(Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(Wrap.Method));
+    azzert.that(Wrap.find("int f() { int example1step1 = 0; for (int i = 0; i < 10; ++i) example1step1 += i; return example1step1;}"), is(Wrap.Method));
   }
 
   @Test public void intoCompilationUnit() {

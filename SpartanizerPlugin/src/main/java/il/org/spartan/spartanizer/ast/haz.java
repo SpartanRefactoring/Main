@@ -34,7 +34,7 @@ public enum haz {
     return false;
   }
 
-  public static boolean hasHidings(final List<Statement> ss) {
+  public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
 

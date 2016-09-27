@@ -78,7 +78,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
 
   @Override public Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
-    if (identical(ss, statements(b)) || haz.hasHidings(ss))
+    if (identical(ss, statements(b)) || haz.hidings(ss))
       return null;
     final ASTNode parent = az.asStatement(parent(b));
     if (parent == null || iz.tryStatement(parent))
