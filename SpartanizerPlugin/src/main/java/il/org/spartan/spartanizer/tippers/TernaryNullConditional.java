@@ -36,7 +36,7 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
     final Expression right = step.right(condition);
     step.then(x);
     step.elze(x);
-    // 
+    //
     //
     //// MemberRef m = ;
     return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
