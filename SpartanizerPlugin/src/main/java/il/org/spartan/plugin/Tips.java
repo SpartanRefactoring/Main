@@ -24,23 +24,23 @@ public final class Tips {
     }
   };
 
-  /** @return all the registered laconization refactoring objects */
+  /** @return all the registered spartanization refactoring objects */
   public static Iterable<GUI$Applicator> all() {
     return map.values();
   }
 
   /** @return Iteration over all {@link @GUIApplicator) class instances */
-  public static Iterable<GUI$Applicator> allAvailablelaconizations() {
+  public static Iterable<GUI$Applicator> allAvailablespartanizations() {
     return as.iterable(all);
   }
 
-  /** @return all the registered laconization refactoring objects names */
+  /** @return all the registered spartanization refactoring objects names */
   public static Set<String> allRulesNames() {
     return map.keySet();
   }
 
   /** @param t rule
-   * @return laconization class rule instance */
+   * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends GUI$Applicator> T findInstance(final Class<? extends T> ¢) {
     for (final GUI$Applicator $ : all)
