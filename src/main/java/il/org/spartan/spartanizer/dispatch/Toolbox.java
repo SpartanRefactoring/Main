@@ -48,11 +48,13 @@ public class Toolbox {
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
+              new RemoveRedundentFor(), //
               null)//
           .add(WhileStatement.class, //
               new BlockBreakToReturnInfiniteWhile(), //
               new ReturnToBreakFiniteWhile(), //
               new ConvertWhileWithLastStatementUpdateToFor(), //
+              new RemoveRedundantWhile(), //
               null) //
           .add(Assignment.class, //
               new AssignmentAndAssignment(), //
@@ -137,7 +139,7 @@ public class Toolbox {
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), null) //
           .add(IfStatement.class, //
               new IfTrueOrFalse(), //
-              new RemoveRedundentIf(), //
+              new RemoveRedundantIf(), //
               new IfLastInMethodThenEndingWithEmptyReturn(), //
               new IfLastInMethodElseEndingWithEmptyReturn(), //
               new IfLastInMethod(), //

@@ -5,7 +5,9 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
@@ -42,6 +44,13 @@ import il.org.spartan.spartanizer.engine.*;
       blockScope = self = null;
       prudentType = null;
       hiding = null;
+    }
+
+    public Information(final ASTNode blockScope, final Information hiding, final ASTNode self, final type prudentType) {
+      this.blockScope = blockScope;
+      this.hiding = hiding;
+      this.self = self;
+      this.prudentType = prudentType;
     }
 
     public Information(final type t) {
@@ -129,9 +138,57 @@ import il.org.spartan.spartanizer.engine.*;
   /** Initializer for EMPTY */
   final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
 
-  /** @return set of entries defined in the node, including all hiding. */
-  static LinkedHashSet<Entry<String, Information>> declares(final ASTNode n) {
-    return new LinkedHashSet<>();
+  /** @return set of entries declared in the node, including all hiding. */
+  static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
+    // Holds the declarations in the subtree and relevant siblings.
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
+    n.accept(new ASTVisitor() {
+      // Holds the current scope full name (Path).
+      String scopePath = "";
+
+      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      private List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement ¢) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(¢.getType()));
+        for (final VariableDeclarationFragment f : step.fragments(¢))
+          $.add(new MapEntry<>(fullName(f.getName()), createInformation(f, t)));
+        return $;
+      }
+
+      Information createInformation(final SingleVariableDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(¢), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
+      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+        return new Information(¢.getParent(), getHidden(¢), ¢, t);
+      }
+
+      String fullName(final SimpleName $) {
+        return scopePath + "." + $;
+      }
+
+      Information getHidden(final SingleVariableDeclaration ¢) {
+        return null;
+      }
+
+      Information getHidden(final VariableDeclarationFragment ¢) {
+        return null;
+      }
+
+      @Override public boolean visit(final MethodDeclaration d) {
+        scopePath += "." + d.getName();
+        for (final SingleVariableDeclaration ¢ : step.parameters(d))
+          $.add(convertToEntry(¢));
+        for (final Statement ¢ : step.statements(d.getBody()))
+          if (¢ instanceof VariableDeclarationStatement)
+            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
+        return true;
+      }
+    });
+    return $;
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
