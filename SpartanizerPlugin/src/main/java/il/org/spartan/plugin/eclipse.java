@@ -127,8 +127,9 @@ public enum eclipse {
    */
   @SuppressWarnings("boxing") static ASTNode getNodeByMarker(ICompilationUnit u, IMarker m) {
     try {
-      int s = (int) m.getAttribute(IMarker.CHAR_START), e = (int) m.getAttribute(IMarker.CHAR_END);
-      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, e-s).getCoveringNode();
+      int s = (int) m.getAttribute(IMarker.CHAR_START);
+      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
+          .getCoveringNode();
     } catch (CoreException x) {
       // TODO Ori: log it
       x.printStackTrace();
