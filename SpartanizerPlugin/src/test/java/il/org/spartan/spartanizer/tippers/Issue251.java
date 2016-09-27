@@ -41,5 +41,5 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
   @Test public void t08() {
     trimmingOf("if(b){int i;int j;}else{g();int t;}").gives("if(!b){g();int t;}");
   }
-  
+    
  }
