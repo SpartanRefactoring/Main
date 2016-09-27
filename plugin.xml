@@ -24,7 +24,7 @@ the program changes: https://goo.gl/sIqIBC
 <!-- Preferences page -->
 <extension point="org.eclipse.ui.preferencePages">
   <page 
-  name="Spartanization"
+  name="Laconization"
   class="il.org.spartan.plugin.PreferencesPage"
   id="il.org.spartan.plugin.PluginPreferencesPage"
   category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
@@ -66,7 +66,7 @@ the program changes: https://goo.gl/sIqIBC
 https://goo.gl/OI2pBd -->
 <extension 
   id="il.org.spartan.tip"
-  name="Spartanization"
+  name="Laconization"
   point="org.eclipse.core.resources.markers" 
 >
   <!-- in the future we may want to break this into several kinds, renaming,
@@ -140,9 +140,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Handlers of commands: which class to activate -->
 <extension point="org.eclipse.ui.handlers">
-   <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.SpartanizeAll"/>
-   <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.SpartanizeCurrent"/>
-   <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.SuggestionsOnOfToggle"/>
+   <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.LaconizeProject"/>
+   <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.LaconizeCurrent"/>
+   <handler commandId="il.org.spartan.SuggestionToggle" class="il.org.spartan.plugin.TipsOnOfToggle"/>
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
 </extension>
@@ -162,11 +162,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </toolbar>
   </menuContribution>
 
-  <!-- Popup menus 
-       Not sure that this is not the one that creates URI exceptions at start. Commented
-       out for now // TODO: Ori Roth
+  <!-- Popup menus -->
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
-     <menu id="il.org.spartan.menus.spartanization" label="Spartanization" mnemonic="S">
+     <menu id="il.org.spartan.menus.spartanization" label="Laconization" mnemonic="M">
         <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
         <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
         <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/>
@@ -177,14 +175,18 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
               style="toggle"
               mnemonic="S">
         </command>
+        <visibleWhen>
+            <with variable="activePartId">
+                <equals value="org.eclipse.ui.views.ProblemView" />
+            </with>
+        </visibleWhen>
      </menu>
   </menuContribution>
-  -->
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
    <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
-      <menu label="Spartanization">
+      <menu label="Laconiazation">
         <command commandId="il.org.spartan.SpartanizeCurrent" style="push"/>       
         <command commandId="il.org.spartan.SpartanizeAll" style="push"/>
         <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/> 

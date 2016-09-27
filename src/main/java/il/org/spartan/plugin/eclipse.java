@@ -24,8 +24,8 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2016 */
 public enum eclipse {
   facade;
-  static final GUI$Applicator[] safeSpartanizations = { new Trimmer() };
-  static final String NAME = "Spartanization";
+  static final GUI$Applicator[] safeApplicators = { new Trimmer() };
+  static final String NAME = "Laconic";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
   static final ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
 

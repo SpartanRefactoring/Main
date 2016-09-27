@@ -247,9 +247,9 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar10() {
     trimmingOf(
-        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization s = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ")
+        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Laconization s = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ")
             .gives(
-                "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Spartanization $ = All.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY)); ");
+                "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Laconization $ = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ");
   }
 
   @Test public void reanmeReturnVariableToDollar11() {

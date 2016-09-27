@@ -12,13 +12,13 @@ import il.org.spartan.spartanizer.java.Environment.*;
 public final class EnvNestedHandler extends ENVTestEngineAbstract {
   public EnvNestedHandler(final ASTNode $) {
     n = $;
-    testSet = generateSet();
+    testSetFlat = generateSet();
     runTest();
   }
 
   public EnvNestedHandler(final String ¢) {
     n = getCompilationUnit(¢);
-    testSet = generateSet();
+    testSetFlat = generateSet();
     runTest();
   }
 

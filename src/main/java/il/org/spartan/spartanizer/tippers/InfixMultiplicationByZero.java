@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
@@ -17,6 +15,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-25
  * @see {@link sideEffects} */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
+  private static boolean isContainsSideEffect(final InfixExpression ¢) {
+    for (final Expression e : extract.allOperands(¢))
+      if (!sideEffects.free(e))
+        return true;
+    return false;
+  }
+
   @Override public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
@@ -27,14 +32,6 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("0");
     return $;
-  }
-// TODO: Yossi make an issue about this bug: check for usage also in the generator expressiona
-  // TOOD: Yossi and another issue, allow inlining into generator expression
-  private static boolean isContainsSideEffect(final InfixExpression ¢) {
-    for (final Expression e : extract.allOperands(¢))
-      if (!sideEffects.free(e))
-        return true;
-    return false;
   }
 
   private boolean isContainsZero(final InfixExpression ¢) {

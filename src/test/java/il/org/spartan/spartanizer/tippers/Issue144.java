@@ -57,8 +57,8 @@ import org.junit.runners.*;
   @Test public void t05() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
         + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
-    .gives("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "for (;$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());"
-        + "return $;" + "}")
-    .stays();
+            .gives("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();"
+                + "for (;$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());" + "return $;" + "}")
+            .stays();
   }
 }

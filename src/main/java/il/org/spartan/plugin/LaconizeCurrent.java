@@ -12,12 +12,12 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** A handler for {@link Spartanizations} This handler executes all safe
- * spartanizations on all Java files in the current project, while exposing
- * static methods to spartanize only specific compilation units.
+/** A handler for {@link Tips} This handler executes all safe spartanizations on
+ * all Java files in the current project, while exposing static methods to
+ * spartanize only specific compilation units.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
-public final class SpartanizeCurrent extends BaseHandler {
+public final class LaconizeCurrent extends BaseHandler {
   private final int MAX_PASSES = 20;
 
   @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
@@ -37,7 +37,7 @@ public final class SpartanizeCurrent extends BaseHandler {
           pm.setTaskName(status + "");
           applicator.parse();
           applicator.scan();
-          n.inner = applicator.suggestionsCount();
+          n.inner = applicator.TipsCount();
           applicator.apply();
         });
       } catch (final InvocationTargetException x) {
