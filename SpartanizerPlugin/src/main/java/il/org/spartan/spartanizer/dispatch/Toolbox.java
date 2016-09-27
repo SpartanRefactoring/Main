@@ -48,6 +48,7 @@ public class Toolbox {
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
+              new RemoveRedundentFor(), //
               null)//
           .add(WhileStatement.class, //
               new BlockBreakToReturnInfiniteWhile(), //

@@ -153,14 +153,9 @@ public final class SuppressWarningsLaconicOnOff {
           default:
             return;
         }
-        final boolean da = disabledByAncestor(d);
-        if (!da) {
-          recursiveUnEnable($, d);
+        recursiveUnEnable($, d);
+        if (!disabledByAncestor(d))
           disable($, d);
-        } else if (!Type.CLASS.equals(t) && !Type.FILE.equals(t))
-          unEnable($, d);
-        else
-          recursiveUnEnable($, d);
         b = true;
       }
     });

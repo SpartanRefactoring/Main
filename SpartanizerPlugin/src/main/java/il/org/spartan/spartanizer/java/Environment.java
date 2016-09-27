@@ -150,11 +150,11 @@ import il.org.spartan.spartanizer.utils.*;
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
 
-      private List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement ¢) {
+      List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(¢.getType()));
-        for (final VariableDeclarationFragment f : step.fragments(¢))
-          $.add(new MapEntry<>(fullName(f.getName()), createInformation(f, t)));
+        final type t = type.baptize(wizard.condense(s.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(s))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
 
