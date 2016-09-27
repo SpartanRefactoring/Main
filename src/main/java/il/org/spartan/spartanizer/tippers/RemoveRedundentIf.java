@@ -20,40 +20,30 @@ import il.org.spartan.spartanizer.tipping.*;
  */
 public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse{
 
+  
+  private boolean checkBlock(ASTNode n){
+    if(n!= null &&
+        (iz.expression(n) && !sideEffects.free(az.expression(n))
+        || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())))
+      return false;
+    if (iz.block(n)) {
+      List<Statement> lst = az.block(n).statements();
+      for (Statement s : lst) {
+        if (az.expressionStatement(s) != null) {
+          if (!sideEffects.free(az.expression(az.expressionStatement(s).getExpression())))
+            return false;
+        }
+      }
+    }
+    return true;
+  }
   @Override public ASTNode replacement(IfStatement n) {
-    boolean condition = true;
-    boolean then = true;
-    boolean elze = true;
     if(n==null)
       return null;
-    if (!sideEffects.free(n.getExpression()))
-      condition=false;
-    if(n.getThenStatement() != null &&
-        (iz.expression(n.getThenStatement()) && !sideEffects.free(az.expression(n.getThenStatement()))
-        || iz.expressionStatement(n.getThenStatement()) && !sideEffects.free(az.expressionStatement(n.getThenStatement()).getExpression())))
-      then=false;
-    if(n.getElseStatement() != null &&
-        (iz.expression(n.getElseStatement()) && !sideEffects.free(az.expression(n.getElseStatement()))
-        || iz.expressionStatement(n.getElseStatement()) && !sideEffects.free(az.expressionStatement(n.getElseStatement()).getExpression())))
-      elze=false;
-    if (iz.block(n.getThenStatement())) {
-      List<Statement> lst = az.block(n.getThenStatement()).statements();
-      for (Statement s : lst) {
-        if (az.expressionStatement(s) != null) {
-          if (!sideEffects.free(az.expression(az.expressionStatement(s).getExpression())))
-            then=false;
-        }
-      }
-    }
-    if (iz.block(n.getElseStatement())) {
-      List<Statement> lst = az.block(n.getElseStatement()).statements();
-      for (Statement s : lst) {
-        if (az.expressionStatement(s) != null) {
-          if (!sideEffects.free(az.expression(az.expressionStatement(s).getExpression())))
-          elze=false;
-        }
-      }
-    }
+    boolean condition = sideEffects.free(n.getExpression());
+    boolean then = checkBlock(n.getThenStatement());
+    boolean elze = checkBlock(n.getElseStatement());
+
     if(condition && then && elze || (condition && then && n.getElseStatement()==null))
       return n.getAST().newBlock();
     if(condition && then && !elze && (n.getElseStatement()!=null)){
