@@ -98,6 +98,8 @@ public enum step {
         return expression((ParenthesizedExpression) ¢);
       case ASTNode.DO_STATEMENT:
         return expression((DoStatement) ¢);
+      case ASTNode.IF_STATEMENT:
+        return expression((IfStatement) ¢);
       default:
         return null;
     }
@@ -120,6 +122,10 @@ public enum step {
   }
 
   public static Expression expression(final ExpressionStatement $) {
+    return $ == null ? null : extract.core($.getExpression());
+  }
+  
+  public static Expression expression(final IfStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
