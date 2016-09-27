@@ -225,28 +225,6 @@ public enum iz {
     return is(¢, ENUM_DECLARATION);
   }
 
-  /** JAVA is shallow copy, so have to compare Information carefully.
-   * @param e1 JD
-   * @param e2 JD
-   * @return true iff entries specified, are equally the same. */
-  public static boolean equal(final Entry<String, Information> e1, final Entry<String, Information> e2) {
-    return e1.getKey().equals(e2.getKey());
-  }
-
-  public static boolean equal(final Information i1, final Information i2) {
-    return equal(i1.prudentType, i2.prudentType);
-  }
-
-  // TODO: Dan, here the equality falls. Debug until here to see the parameters.
-  // Do you have an idea how to work with this? For now I dissabled the access
-  // to here,
-  // to enable it, add < && equal(e1.getValue(), e2.getValue()) > to the return
-  // ofthe function
-  // equal(Entry, Entry) in this file.
-  public static boolean equal(final type i1, final type i2) {
-    return i1.equals(i2);
-  }
-
   /** Determine whether a node is an "expression statement"
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an

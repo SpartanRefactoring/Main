@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
-import static org.hamcrest.Matchers.*;
 
 import java.io.*;
 import java.util.*;
@@ -77,20 +75,9 @@ public abstract class ENVTestEngineAbstract {
     assert testSet != null;
     assert $.containsAll(testSet) : "some entry not found out of order!";
   }
-  
-  public static void compareOutOfOrderOld(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
-    assert $ != null;
-    assert testSet != null;
-    boolean entryFound = true;
-    for (final Entry<String, Information> i : testSet) {
-      entryFound = false;
-      for (final Entry<String, Information> j : $)
-        if (iz.equal(i, j)) {
-          entryFound = true;
-          break;
-        }
-      assert entryFound : "some entry not found out of order!";
-    }
+
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
   }
 
   /** @param from - file path
@@ -104,7 +91,7 @@ public abstract class ENVTestEngineAbstract {
     assert f.exists();
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
-    //azzert.that($, instanceOf(CompilationUnit.class));
+    // azzert.that($, instanceOf(CompilationUnit.class));
     return $;
   }
 
@@ -118,14 +105,10 @@ public abstract class ENVTestEngineAbstract {
   }
 
   public static void testSetsReset() {
-    if(testSetFlat != null)
+    if (testSetFlat != null)
       testSetFlat.clear();
-    if(testSetNested != null)
+    if (testSetNested != null)
       testSetNested.clear();
-  }
-
-  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
-    return new LinkedHashSet<>();
   }
 
   protected boolean foundTestedAnnotation; // Global flag, used to
@@ -154,6 +137,13 @@ public abstract class ENVTestEngineAbstract {
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
+  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
+  protected abstract void handler(final Annotation ¢);
+
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
    * which annotations can be defined, and checks if the annotations are of the
@@ -166,6 +156,13 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
+      /** Iterate over outer annotations of the current declaration and dispatch
+       * them to handlers. otherwise */
+      void checkAnnotations(final List<Annotation> as) {
+        for (final Annotation ¢ : as)
+          handler(¢);
+      }
+
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
@@ -206,13 +203,6 @@ public abstract class ENVTestEngineAbstract {
         return true;
       }
 
-      /** Iterate over outer annotations of the current declaration and dispatch
-       * them to handlers. otherwise */
-      void checkAnnotations(final List<Annotation> as) {
-        for (final Annotation ¢ : as)
-          handler(¢);
-      }
-
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
@@ -227,11 +217,4 @@ public abstract class ENVTestEngineAbstract {
       }
     });
   }
-
-  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  protected abstract void handler(final Annotation ¢);
 }
