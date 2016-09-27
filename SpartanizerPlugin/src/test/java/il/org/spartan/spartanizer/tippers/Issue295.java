@@ -12,6 +12,6 @@ import org.junit.runners.*;
   @Test public void a() {
     trimmingOf("A a = new A();for (A b: as)sum+=b;")//
     .gives("for (A b: new A())sum+=b;") //
-    .stays()
+    .stays();
   }
 }
