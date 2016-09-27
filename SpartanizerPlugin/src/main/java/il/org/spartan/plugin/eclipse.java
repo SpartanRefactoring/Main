@@ -18,6 +18,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Fluent API services for the plugin
  * @author Yossi Gil
@@ -116,6 +117,18 @@ public enum eclipse {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
+  }
+  
+  // TODO Ori: do not create a compilation unit
+  @SuppressWarnings("boxing") static ASTNode getNodeByMarker(ICompilationUnit u, IMarker m) {
+    try {
+      int s = (int) m.getAttribute(IMarker.CHAR_START), e = (int) m.getAttribute(IMarker.CHAR_END);
+      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, e-s).getCoveringNode();
+    } catch (CoreException x) {
+      // TODO Ori: log it
+      x.printStackTrace();
+    }
+    return null;
   }
 
   /** @return List of all compilation units in the current project */
