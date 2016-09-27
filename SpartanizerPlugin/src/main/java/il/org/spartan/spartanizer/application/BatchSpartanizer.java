@@ -81,10 +81,14 @@ public final class BatchSpartanizer {
   }
 
   private static String runScript(final String pathname) throws IOException {
+    return runScript(runScript¢(pathname).start());
+  }
+
+  public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder b = new ProcessBuilder("/bin/bash");
-    b.command(script, pathname);
     b.redirectErrorStream(true);
-    return runScript(b.start());
+    b.command(script, pathname);
+    return b;
   }
 
   public static String runScript(final Process p) throws IOException {
