@@ -30,20 +30,20 @@ public final class TernaryNullCoallescing extends NanoPatternTipper<ConditionalE
     return "replace null coallescing ternary with ??";
   }
 
-  @Override public boolean prerequisite(final ConditionalExpression e) {
-    if (!iz.comparison(az.infixExpression(step.expression(e))))
+  @Override public boolean prerequisite(final ConditionalExpression x) {
+    if (!iz.comparison(az.infixExpression(step.expression(x))))
       return false;
-    final InfixExpression condition = az.comparison(step.expression(e));
+    final InfixExpression condition = az.comparison(step.expression(x));
     final Expression left = step.left(condition);
     final Expression right = step.right(condition);
-    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(e))
-        : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(e));
+    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
+        : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(x));
   }
 
-  @Override public Tip tip(final ConditionalExpression e) {
-    return new Tip(description(e), e) {
+  @Override public Tip tip(final ConditionalExpression x) {
+    return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(e, into.e("If.True(" + az.comparison(step.expression(e)) + ").then(" + step.then(e) + ").elze(" + step.elze(e) + ")"), g);
+        r.replace(x, into.e("If.True(" + az.comparison(step.expression(x)) + ").then(" + step.then(x) + ").elze(" + step.elze(x) + ")"), g);
       }
     };
   }

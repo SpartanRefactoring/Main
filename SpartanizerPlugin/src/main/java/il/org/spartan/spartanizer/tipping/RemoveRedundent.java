@@ -8,12 +8,11 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.java.*;
 
 public class RemoveRedundent {
-  public static boolean checkVariableDecleration(VariableDeclarationStatement n ){    
-    List<VariableDeclarationFragment> lst = n.fragments();
-    for(VariableDeclarationFragment f : lst){
-      if(f.getInitializer()!=null && !sideEffects.free(f.getInitializer()))
+  public static boolean checkVariableDecleration(VariableDeclarationStatement s ){    
+    List<VariableDeclarationFragment> lst = s.fragments();
+    for(VariableDeclarationFragment ¢ : lst)
+      if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))
         return false;
-    }
     return true;
   }
   public static boolean checkBlock(ASTNode n){
@@ -36,8 +35,8 @@ public class RemoveRedundent {
   }
   
   public static boolean checkListOfExpressions(List<Expression> lst){
-    for(Expression e: lst)
-      if(!sideEffects.free(e))
+    for(Expression ¢: lst)
+      if(!sideEffects.free(¢))
         return false;
     return true;
   }
