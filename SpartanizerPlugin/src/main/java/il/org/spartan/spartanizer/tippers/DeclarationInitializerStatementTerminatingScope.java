@@ -19,23 +19,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** convert
- *
- * <pre>
- * int a = 3;
- * b = a;
- * </pre>
- *
- * into
- *
- * <pre>
- * b = a
- * </pre>
- *
+/** Convert <code>int a=3;b=a;</code> into <code>b = a;</code>
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement implements Kind.Inlining {
-  static boolean isPresentOnAnymous(final SimpleName n, final Statement s) {
+  static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.is(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
@@ -73,7 +61,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
         return null;
     }
     for (final SimpleName use : uses)
-      if (never(use, nextStatement) || isPresentOnAnymous(use, nextStatement))
+      if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
         return null;
     final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
     final Statement newStatement = duplicate.of(nextStatement);
