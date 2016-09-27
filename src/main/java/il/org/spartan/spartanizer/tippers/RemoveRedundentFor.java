@@ -10,14 +10,14 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /**
- * Simplify while statements as much as possible (or remove them or parts of them) if and only if </br>
+ * Simplify for statements as much as possible (or remove them or parts of them) if and only if </br>
  * it doesn't have any side-effect.
  * 
  * @author Dor Ma'ayan
  * @since 2016-09-26
  *
  */
-public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> implements Kind.Collapse{
+public class RemoveRedundentFor extends ReplaceCurrentNode<ForStatement> implements Kind.Collapse{
 
   
   @SuppressWarnings("all") private boolean checkVariableDecleration(VariableDeclarationStatement n ){    
@@ -46,17 +46,26 @@ public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> imp
     }
     return true;
   }
-  @Override public ASTNode replacement(WhileStatement n) {
+  
+  private boolean checkListOfExpressions(List<Expression> lst){
+    for(Expression e: lst)
+      if(!sideEffects.free(e))
+        return false;
+    return true;
+  }
+  @Override public ASTNode replacement(ForStatement n) {
     if(n==null)
       return null;
     boolean condition = sideEffects.free(n.getExpression());
+    boolean initializers = checkListOfExpressions(n.initializers());
+    boolean updaters = checkListOfExpressions(n.updaters());
     boolean body = checkBlock(n.getBody());
-    if(condition && body)
+    if(condition && initializers && updaters && body)
       return n.getAST().newBlock();
     return null;
   }
 
-  @Override public String description(WhileStatement n) {
+  @Override public String description(ForStatement n) {
     return "remove :" + n;
   }
 }
