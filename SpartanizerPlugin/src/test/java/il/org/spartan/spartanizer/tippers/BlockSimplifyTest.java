@@ -130,61 +130,61 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void seriesA02() {
-    trimmingOf("public void f() {\n" + "  string s = \"10\";\n" + "  {\n" + "    f c = properformat.parse(s);\n" + "   assert c != null;\n"
+    trimmingOf("public void f() {\n" + "  string example1step1 = \"10\";\n" + "  {\n" + "    f c = properformat.parse(example1step1);\n" + "   assert c != null;\n"
         + "    azzert.assertequals(biginteger.ten, c.getnumerator());\n" + "    azzert.assertequals(biginteger.one, c.getdenominator());\n" + "  }\n"
-        + "  {\n" + "    f c = improperformat.parse(s);\n" + "   assert c != null;\n" + "    azzert.assertequals(biginteger.ten, c.getnumerator());\n"
+        + "  {\n" + "    f c = improperformat.parse(example1step1);\n" + "   assert c != null;\n" + "    azzert.assertequals(biginteger.ten, c.getnumerator());\n"
         + "    azzert.assertequals(biginteger.one, c.getdenominator());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA03() {
-    trimmingOf("public void f() {\n" + "  string s = \"10\";\n" + "  {\n" + "    f c = properformat.parse(s);\n"
+    trimmingOf("public void f() {\n" + "  string example1step1 = \"10\";\n" + "  {\n" + "    f c = properformat.parse(example1step1);\n"
         + "    azzert.assertequals(System.out.ten, c.g());\n" + "    azzert.assertequals(System.out.one, c.g());\n" + "  }\n" + "  {\n"
-        + "    f c = improperformat.parse(s);\n" + "    azzert.assertequals(System.out.ten, c.g());\n"
+        + "    f c = improperformat.parse(example1step1);\n" + "    azzert.assertequals(System.out.ten, c.g());\n"
         + "    azzert.assertequals(System.out.one, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA04() {
-    trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s);\n" + "    azzert.h(System.out.ten, c.g());\n"
-        + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    azzert.h(System.out.ten, c.g());\n"
+    trimmingOf("public void f() {\n" + "  int example1step1 = \"10\";\n" + "  {\n" + "    f c = g.parse(example1step1);\n" + "    azzert.h(System.out.ten, c.g());\n"
+        + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(example1step1);\n" + "    azzert.h(System.out.ten, c.g());\n"
         + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA05() {
-    trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s);\n" + "    azzert.h(System.out.ten, c.g());\n"
-        + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    azzert.h(System.out.ten, c.g());\n"
+    trimmingOf("public void f() {\n" + "  int example1step1 = \"10\";\n" + "  {\n" + "    f c = g.parse(example1step1);\n" + "    azzert.h(System.out.ten, c.g());\n"
+        + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(example1step1);\n" + "    azzert.h(System.out.ten, c.g());\n"
         + "    azzert.h(System.out.one, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA06() {
-    trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s);\n" + "    Y(System.out.ten, c.g());\n"
-        + "    Y(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    Y(System.out.ten, c.g());\n"
+    trimmingOf("public void f() {\n" + "  int example1step1 = \"10\";\n" + "  {\n" + "    f c = g.parse(example1step1);\n" + "    Y(System.out.ten, c.g());\n"
+        + "    Y(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(example1step1);\n" + "    Y(System.out.ten, c.g());\n"
         + "    Y(System.out.one, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA07() {
-    trimmingOf("public void f() {\n" + "  int s = \"10\";\n" + "  {\n" + "    f c = g.parse(s);\n" + "    Y(System.out.ten, c.g());\n"
-        + "    Y(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    Y(System.out.ten, c.g());\n"
+    trimmingOf("public void f() {\n" + "  int example1step1 = \"10\";\n" + "  {\n" + "    f c = g.parse(example1step1);\n" + "    Y(System.out.ten, c.g());\n"
+        + "    Y(System.out.one, c.g());\n" + "  }\n" + "  {\n" + "    f c = X.parse(example1step1);\n" + "    Y(System.out.ten, c.g());\n"
         + "    Y(System.out.one, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA08() {
-    trimmingOf("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    f c = g.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n"
-        + "  }\n" + "  {\n" + "    f c = X.parse(s);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n" + "}").stays();
+    trimmingOf("public void f() {\n" + "  int example1step1 = 10;\n" + "  {\n" + "    f c = g.parse(example1step1);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n"
+        + "  }\n" + "  {\n" + "    f c = X.parse(example1step1);\n" + "    Y(q, c.g());\n" + "    Y(ne, c.g());\n" + "  }\n" + "}").stays();
   }
 
   @Test public void seriesA09() {
-    trimmingOf("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "     g.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n"
-        + "     X.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
+    trimmingOf("public void f() {\n" + "  int example1step1 = 10;\n" + "  {\n" + "     g.parse(example1step1);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n"
+        + "     X.parse(example1step1);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
             .gives(
-                "public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n")
+                "public void f() {\n" + "  int example1step1 = 10;\n" + "  g.parse(example1step1);\n" + "  Y(q, c.g());\n" + "  X.parse(example1step1);\n" + "  Y(q, c.g());\n" + "}\n")
             .stays();
   }
 
   @Test public void seriesA10() {
-    trimmingOf("public void f() {\n" + "  int s = 10;\n" + "  {\n" + "    g.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n"
-        + "    X.parse(s);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
+    trimmingOf("public void f() {\n" + "  int example1step1 = 10;\n" + "  {\n" + "    g.parse(example1step1);\n" + "    Y(q, c.g());\n" + "  }\n" + "  {\n"
+        + "    X.parse(example1step1);\n" + "    Y(q, c.g());\n" + "  }\n" + "}")
             .gives(
-                "public void f() {\n" + "  int s = 10;\n" + "  g.parse(s);\n" + "  Y(q, c.g());\n" + "  X.parse(s);\n" + "  Y(q, c.g());\n" + "}\n")
+                "public void f() {\n" + "  int example1step1 = 10;\n" + "  g.parse(example1step1);\n" + "  Y(q, c.g());\n" + "  X.parse(example1step1);\n" + "  Y(q, c.g());\n" + "}\n")
             .stays();
   }
 

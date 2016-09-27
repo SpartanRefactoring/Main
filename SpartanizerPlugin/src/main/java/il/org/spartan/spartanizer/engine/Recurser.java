@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.*;
 public final class Recurser<T> {
   /** Get a list of the direct children of a ASTNode
    * @param n an ASTNode
-   * @return a list of n's children */
+   * @return a list of n'example1step1 children */
   public static List<? extends ASTNode> children(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();

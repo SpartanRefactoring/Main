@@ -29,7 +29,7 @@ public enum LoggingManner {
   public static final LoggingManner now = LoggingManner.LOG_TO_STDERR;
 
   public static String beginDump() {
-    return "MISSING_CASE: ";
+    return "ASSERTION ERROR: ";
   }
 
   public static String endDump() {

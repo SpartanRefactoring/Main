@@ -150,7 +150,7 @@ public enum makeAST {
   }
 
   /** String -> ASTNode converter
-   * @param s String
+   * @param example1step1 String
    * @return ASTNode */
   public ASTNode from(final String ¢) {
     return makeParser(¢).createAST(null);

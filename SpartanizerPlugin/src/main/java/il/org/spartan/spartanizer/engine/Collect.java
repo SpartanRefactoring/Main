@@ -106,7 +106,7 @@ public enum Collect {
    * name.
    * @param n JD
    * @return A {@link Collector}, with the uses of the provided identifier
-   *         within the provided {@link ASTNode}s array to the in function.. */
+   *         within the provided {@link ASTNode}example1step1 array to the in function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -120,8 +120,8 @@ public enum Collect {
 
   /** Creates an ASTVisitor that adds to the provided SimpleName list all the
    * identifiers of variable declarations expressions, which are identical the
-   * provided ASTNode's.
-   * @param into - The ASTVisitor's output parameter
+   * provided ASTNode'example1step1.
+   * @param into - The ASTVisitor'example1step1 output parameter
    * @param n JD
    * @return <b>ASTVisitor</b> as described above. */
   static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
@@ -148,7 +148,7 @@ public enum Collect {
        * @param candidate to be inserter to the list provided by the closure
        *        (into).
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
-       *         {@SimpleName} is equal to the ASTnode's provided by the closure
+       *         {@SimpleName} is equal to the ASTnode'example1step1 provided by the closure
        *         (n) */
       boolean add(final SimpleName ¢) {
         if (wizard.same(¢, n))
@@ -157,7 +157,7 @@ public enum Collect {
       }
 
       /** Tries to add to the list provided by the closure (into) the names of
-       * the {@VariableDeclarationFragment}s given in the param (fs).
+       * the {@VariableDeclarationFragment}example1step1 given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
       void addFragments(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment ¢ : fs)
@@ -165,12 +165,12 @@ public enum Collect {
       }
 
       /** Tries to add to the list provided by the closure (into) the
-       * identifiers from all the {@link VariableDeclarationExpression}s from
+       * identifiers from all the {@link VariableDeclarationExpression}example1step1 from
        * the given list (es).
        * @param xs is a {@link List} of any type which extends a
        *        {@link Expression}
        * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
-       *         the {@link VariableDeclarationFragment}s from each (extended)
+       *         the {@link VariableDeclarationFragment}example1step1 from each (extended)
        *         Expression in the parameter. */
       boolean consider(final List<? extends Expression> xs) {
         for (final Expression ¢ : xs)
@@ -236,7 +236,7 @@ public enum Collect {
        * declaration form, and then #asVariableDeclarationExpression() will fail
        * @param x JD
        * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
-       *         {@link Expression} is equal to the ASTnode's provided by the
+       *         {@link Expression} is equal to the ASTnode'example1step1 provided by the
        *         closure (n) */
       boolean consider(final Expression ¢) {
         return add(az.simpleName(¢));

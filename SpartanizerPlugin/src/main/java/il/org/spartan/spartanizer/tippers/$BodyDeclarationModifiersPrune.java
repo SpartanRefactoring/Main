@@ -118,7 +118,7 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
   }
 
   @Override public String description(final BodyDeclaration ¢) {
-    return "Remove redundant " + redundants(¢) + " modifier(s) from declaration";
+    return "Remove redundant " + redundants(¢) + " modifier(example1step1) from declaration";
   }
 
   @Override public boolean prerequisite(final BodyDeclaration ¢) {

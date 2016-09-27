@@ -334,7 +334,7 @@ import il.org.spartan.spartanizer.engine.type.*;
       azzert.that(of(into.e("+x")), is(NUMERIC));
     }
 
-    @Ignore("unkown bug, the infix expression's operands are simple names x instead of prefix expressions +x") @Test public void basicExpression31() {
+    @Ignore("unkown bug, the infix expression'example1step1 operands are simple names x instead of prefix expressions +x") @Test public void basicExpression31() {
       azzert.that(of(into.e("+x + +x")), is(NUMERIC));
     }
 
@@ -606,7 +606,7 @@ import il.org.spartan.spartanizer.engine.type.*;
     }
 
     @Test public void conditional17() {
-      azzert.that(of(into.e("s.equals(532)?y(2)+10:r(3)-6")), is(NOTHING));
+      azzert.that(of(into.e("example1step1.equals(532)?y(2)+10:r(3)-6")), is(NOTHING));
     }
 
     @Test public void conditional18() {

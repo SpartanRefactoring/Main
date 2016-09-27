@@ -113,7 +113,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Ignore public void define_7() {
-    final String code = "class MyClass {\n" + "int a;\n" + "static class Inner {\n" + "void func(MyClass my, int b) {String s = 4;\n"
+    final String code = "class MyClass {\n" + "int a;\n" + "static class Inner {\n" + "void func(MyClass my, int b) {String example1step1 = 4;\n"
         + "not_in_env++;}\n" + "}}";
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(code);
     final Set<Entry<String, Information>> $ = declaresDown(u);
@@ -170,10 +170,10 @@ import il.org.spartan.spartanizer.utils.*;
 
   // Should fall because not right ordering!
   @Ignore @Test public void EngineTestFlatOrdered01() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
@@ -188,7 +188,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void EngineTestFlatUnordered000() {
     final ASTNode $ = makeAST.COMPILATION_UNIT
-        .from(new Document("class A { String s; @FlatEnvUse({ @Id(name = \"str\", clazz = \"String\") }) int x;}"));
+        .from(new Document("class A { String example1step1; @FlatEnvUse({ @Id(name = \"str\", clazz = \"String\") }) int x;}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
@@ -196,7 +196,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered001() {
-    makeAST.COMPILATION_UNIT.from(new Document("class S { String s; @FlatEnvUse({ @Id(name = \"stra\", clazz = \"String\") }) int a;}"));
+    makeAST.COMPILATION_UNIT.from(new Document("class S { String example1step1; @FlatEnvUse({ @Id(name = \"stra\", clazz = \"String\") }) int a;}"));
     // new EnvFlatHandler($);
     s.add(new MapEntry<>("stra", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
@@ -231,10 +231,10 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered05() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
@@ -243,19 +243,19 @@ import il.org.spartan.spartanizer.utils.*;
   // Fall because we accept testSet is contained in the specified set.
   // TODO: Dan ATTENTION (Alex), the testSet contains all the Ids!!!
   @Ignore @Test public void EngineTestFlatUnordered05a() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered05b() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
@@ -263,11 +263,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered05c() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlatO(s);
     ENVTestEngineAbstract.testSetsReset();
@@ -276,52 +276,52 @@ import il.org.spartan.spartanizer.utils.*;
   // This test shows that if considering a few annotations in A compilation
   // unit, testSet will contain the union of all Ids specified.
   @Test public void EngineTestFlatUnordered05d() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlatO(s);
     ENVTestEngineAbstract.testSetsReset();
   }
   
   @Test public void EngineTestFlatUnordered05e() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
   
   @Test public void EngineTestFlatUnordered05f() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlatO(s);
     ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered07() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
+        "class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), " + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered08() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
@@ -330,9 +330,9 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void EngineTestFlatUnordered09() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
+        "class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
@@ -341,7 +341,7 @@ import il.org.spartan.spartanizer.utils.*;
   /** This test assumes that the annotation data is cleared after each
    * annotation. This will only be true once we implement uses and declares. */
   @Ignore public void EngineTestFlatUnordered10() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
         + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
     new EnvFlatHandler($);
@@ -365,11 +365,11 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered12() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("example1step1", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlatO(s);
     ENVTestEngineAbstract.testSetsReset();
@@ -378,8 +378,8 @@ import il.org.spartan.spartanizer.utils.*;
   /** This test is meant to fail by azzert, due to double addition of the same
    * values. */
   @Ignore @Test public void EngineTestFlatUnordered13() {
-    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")));
+    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"example1step1\", clazz = \"String\"), "
+        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"example1step1\", clazz = \"int\")})" + "void foo();\n}")));
     ENVTestEngineAbstract.testSetsReset();
   }
 

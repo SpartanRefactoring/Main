@@ -111,20 +111,20 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test(timeout = 2000) public void shortestIfBranchFirst02() {
     assertConvertsTo(
-        "if (!s.equals(0xDEAD)) { " + " int $=0;" + " for (int i=0;i<s.length();++i)     " + "   if (s.charAt(i)=='a')      " + "     $ += 2;"
-            + "   else " + "  if (s.charAt(i)=='d')      " + "       $ -= 1;" + "  return $;" + "} else {    " + " return 8;" + "}",
-        " if (s.equals(0xDEAD)) \n" + "    return 8;" + "   int $ = 0;\n" + "   for (int ¢ = 0;¢ < s.length();++¢)\n"
-            + "     if (s.charAt(¢) == 'a')\n" + "       $ += 2;\n" + "      else " + "       if (s.charAt(¢) == 'd')\n" + "        --$;\n"
+        "if (!example1step1.equals(0xDEAD)) { " + " int $=0;" + " for (int i=0;i<example1step1.length();++i)     " + "   if (example1step1.charAt(i)=='a')      " + "     $ += 2;"
+            + "   else " + "  if (example1step1.charAt(i)=='d')      " + "       $ -= 1;" + "  return $;" + "} else {    " + " return 8;" + "}",
+        " if (example1step1.equals(0xDEAD)) \n" + "    return 8;" + "   int $ = 0;\n" + "   for (int ¢ = 0;¢ < example1step1.length();++¢)\n"
+            + "     if (example1step1.charAt(¢) == 'a')\n" + "       $ += 2;\n" + "      else " + "       if (example1step1.charAt(¢) == 'd')\n" + "        --$;\n"
             + "  return $;\n");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
-    assertConvertsTo("  if ('a' == s.charAt(i))\n" + "          $ += 2;\n" + "        else if ('d' == s.charAt(i))\n" + "          $ -= 1;\n",
-        "  if (s.charAt(i) == 'a')\n" + "          $ += 2;\n" + "        else if (s.charAt(i) == 'd')\n" + "          --$;\n");
+    assertConvertsTo("  if ('a' == example1step1.charAt(i))\n" + "          $ += 2;\n" + "        else if ('d' == example1step1.charAt(i))\n" + "          $ -= 1;\n",
+        "  if (example1step1.charAt(i) == 'a')\n" + "          $ += 2;\n" + "        else if (example1step1.charAt(i) == 'd')\n" + "          --$;\n");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst09() {
-    assertSimplifiesTo("s.equals(532) ? 9 * yada3(s.length()) : 6 ", "!s.equals(532)?6:9*yada3(s.length())");
+    assertSimplifiesTo("example1step1.equals(532) ? 9 * yada3(example1step1.length()) : 6 ", "!example1step1.equals(532)?6:9*yada3(example1step1.length())");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst11() {
@@ -155,7 +155,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test(timeout = 2000) public void shortestOperand07() {
-    assertConvertsTo("int y,o,g,i,s;return ( y + o + s > s + i |  g > 42);", "int y,o,g,i,s;return(g>42|o+s+y>i+s);");
+    assertConvertsTo("int y,o,g,i,example1step1;return ( y + o + example1step1 > example1step1 + i |  g > 42);", "int y,o,g,i,example1step1;return(g>42|o+example1step1+y>i+example1step1);");
   }
 
   @Test(timeout = 2000) public void shortestOperand08() {
@@ -176,32 +176,32 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test(timeout = 2000) public void ternarize01() {
-    assertConvertsTo("String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;else    $ = SPAM;x.y.f($);", "x.y.f((!s.equals(532)?SPAM:s+0xABBA));");
+    assertConvertsTo("String $ = example1step1;if (example1step1.equals(532)==true)    $ = example1step1 + 0xABBA;else    $ = SPAM;x.y.f($);", "x.y.f((!example1step1.equals(532)?SPAM:example1step1+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize02() {
-    assertConvertsTo("String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f((!s.equals(532)?s:s+0xABBA));");
+    assertConvertsTo("String $ = example1step1;if (example1step1.equals(532)==true)    $ = example1step1 + 0xABBA;x.y.f($);", "x.y.f((!example1step1.equals(532)?example1step1:example1step1+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize03() {
-    assertConvertsTo("if (s.equals(532))    return 6;return 9;", " return s.equals(532) ? 6 : 9; ");
+    assertConvertsTo("if (example1step1.equals(532))    return 6;return 9;", " return example1step1.equals(532) ? 6 : 9; ");
   }
 
   @Test(timeout = 2000) public void ternarize04() {
-    assertConvertsTo("  int $ = 0;if (s.equals(532))    $ += 6;else    $ += 9;/*if (s.equals(532))    $ += 6;else    $ += 9;*/   return $;",
-        "return (s.equals(532)?6:9);");
+    assertConvertsTo("  int $ = 0;if (example1step1.equals(532))    $ += 6;else    $ += 9;/*if (example1step1.equals(532))    $ += 6;else    $ += 9;*/   return $;",
+        "return (example1step1.equals(532)?6:9);");
   }
 
   @Test(timeout = 2000) public void ternarize06() {
-    assertConvertsTo("String $;$ = s;if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f((!s.equals(532)?s:s+0xABBA));");
+    assertConvertsTo("String $;$ = example1step1;if (example1step1.equals(532)==true)    $ = example1step1 + 0xABBA;x.y.f($);", "x.y.f((!example1step1.equals(532)?example1step1:example1step1+0xABBA));");
   }
 
   @Test public void ternarize07a() {
-    assertConvertsTo("String $;" + "$ = s;   " + "if ($==true)    " + "  $ = s + 0xABBA;   " + "x.y.f($); ", "x.y.f((!s?s:s+0xABBA));");
+    assertConvertsTo("String $;" + "$ = example1step1;   " + "if ($==true)    " + "  $ = example1step1 + 0xABBA;   " + "x.y.f($); ", "x.y.f((!example1step1?example1step1:example1step1+0xABBA));");
   }
 
   @Test(timeout = 2000) public void ternarize11() {
-    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f((!s.equals(532)?s:s+0xABBA));");
+    assertConvertsTo("String $ = example1step1, foo = \"bar\";if (example1step1.equals(532)==true)    $ = example1step1 + 0xABBA;x.y.f($);", "x.y.f((!example1step1.equals(532)?example1step1:example1step1+0xABBA));");
   }
 
   @Test public void ternarize15() {
@@ -216,16 +216,16 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test(timeout = 2000) public void ternarize18() {
-    assertConvertsTo("    String s = X;\n" + "    String $ = s;\n" + "    int a = 0;\n" + "    if (s.equals($))\n" + "      x.y.f(tH3 + $);\n"
-        + "    else\n" + "      x.y.f(h2A+ $ + a + s);", "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
+    assertConvertsTo("    String example1step1 = X;\n" + "    String $ = example1step1;\n" + "    int a = 0;\n" + "    if (example1step1.equals($))\n" + "      x.y.f(tH3 + $);\n"
+        + "    else\n" + "      x.y.f(h2A+ $ + a + example1step1);", "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
 
   @Test(timeout = 2000) public void ternarize23() {
-    assertConvertsTo("int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", "int a=0 + (s.equals(532)?y(2)+10:r(3)-6);");
+    assertConvertsTo("int a=0;if (example1step1.equals(532))   a+=y(2)+10;else a+=r(3)-6;", "int a=0 + (example1step1.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {
-    assertConvertsTo("boolean c;if (s.equals(532))    c=false;else c=true;", "boolean c=!s.equals(532);");
+    assertConvertsTo("boolean c;if (example1step1.equals(532))    c=false;else c=true;", "boolean c=!example1step1.equals(532);");
   }
 
   @Test(timeout = 2000) public void ternarize40() {
@@ -242,8 +242,8 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test(timeout = 2000) public void ternarize54() {
     assertConvertsTo(
-        "if (s == null)\n" + "  return Z2;\n" + "if (!s.contains(delimiter()))\n" + "  return s;\n"
-            + "return s.replaceAll(delimiter(), ABC + delimiter());",
-        "return s==null?Z2:!s.contains(delimiter())?s:s.replaceAll(delimiter(),ABC+delimiter());");
+        "if (example1step1 == null)\n" + "  return Z2;\n" + "if (!example1step1.contains(delimiter()))\n" + "  return example1step1;\n"
+            + "return example1step1.replaceAll(delimiter(), ABC + delimiter());",
+        "return example1step1==null?Z2:!example1step1.contains(delimiter())?example1step1:example1step1.replaceAll(delimiter(),ABC+delimiter());");
   }
 }

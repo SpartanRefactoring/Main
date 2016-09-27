@@ -227,7 +227,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return getFixWithPreview(getName());
   }
 
-  /** @param s Text for the preview dialog
+  /** @param example1step1 Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
   public IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
@@ -398,7 +398,7 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   protected void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    progressMonitor.beginTask("Creating change(s) for a single compilation unit...", 2);
+    progressMonitor.beginTask("Creating change(example1step1) for a single compilation unit...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");

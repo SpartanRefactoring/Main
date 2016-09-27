@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression> implements Kind.SyntacticBaggage {
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concatenation.
-   * @param ¢ an InfixExpression that's inside parenthesis
+   * @param ¢ an InfixExpression that'example1step1 inside parenthesis
    * @return True if the parenthesis can be removed and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
     if (in(x.getOperator(), TIMES, DIVIDE))
