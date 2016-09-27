@@ -17,13 +17,6 @@ import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings({ "static-method", "unused" }) public final class EnvironmentTest {
-  class S {
-    String s;
-
-    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
-    }
-  }
-
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   Environment ee0 = Environment.genesis();
@@ -603,5 +596,12 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
+  }
+
+  class S {
+    String s;
+
+    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
+    }
   }
 }
