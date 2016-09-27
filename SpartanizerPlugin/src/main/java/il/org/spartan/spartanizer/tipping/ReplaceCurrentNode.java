@@ -14,7 +14,7 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTippe
   public abstract ASTNode replacement(N n);
 
   @Override public final Tip tip(final N n) {
-    assert prerequisite(n) : LoggingManner.dump() + "\n n = " + n + LoggingManner.endDump();
+    assert prerequisite(n) : LoggingManner.beginDump() + "\n n = " + n + LoggingManner.endDump();
     final ASTNode $ = replacement(n);
     return $ == null ? null : new Tip(description(n), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
  * textual, implemented as a JavaDoc comment that can be read by
  * {@link DisabledChecker}.
  * @author Ori Roth */
-public final class SuppressSpartanizationOnOff {
+public final class SuppressWarningsLaconicOnOff {
   static final String disabler = Trimmer.disablers[0];
 
   /** Commit textual change of a certain {@link Type}: adding a disabler comment

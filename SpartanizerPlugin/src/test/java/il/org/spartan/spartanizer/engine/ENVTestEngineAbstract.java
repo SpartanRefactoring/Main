@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 
 import java.io.*;
@@ -23,7 +22,63 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dan Greenstein
  * @author Alex Kopzon */
 public abstract class ENVTestEngineAbstract {
-  protected static LinkedHashSet<Entry<String, Environment.Information>> testSet;
+  protected static LinkedHashSet<Entry<String, Information>> testSetFlat;
+  protected static LinkedHashSet<Entry<String, Information>> testSetNested;
+
+  // change visibility to private.
+  public static void compareFlat(final LinkedHashSet<Entry<String, Information>> ¢) {
+    compareOutOfOrder(¢, testSetFlat);
+    compareInOrder(¢, testSetFlat);
+  }
+
+  // only for testing.
+  public static void compareFlatI(final LinkedHashSet<Entry<String, Information>> ¢) {
+    compareInOrder(¢, testSetFlat);
+  }
+
+  // only for testing.
+  public static void compareFlatO(final LinkedHashSet<Entry<String, Information>> ¢) {
+    compareOutOfOrder(¢, testSetFlat);
+  }
+
+  /** Compares the given {@link LinkedHashSet} with the inner testSet.
+   * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
+   * contained in the same order in the provided set.
+   * @param $ JD
+   * @return true iff the sets specified, are equally the same. */
+  public static void compareInOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
+    assert testSet != null;
+    assert $ != null;
+    final Iterator<Entry<String, Information>> j = $.iterator();
+    boolean entryFound = true;
+    for (final Entry<String, Information> i : testSet) {
+      entryFound = false;
+      while (j.hasNext())
+        if (i.equals(j.next())) {
+          entryFound = true;
+          break;
+        }
+      assert entryFound : "some entry not found in order!";
+    }
+  }
+
+  /** Compares the given {@link LinkedHashSet} with the inner testSet.
+   * Comparison done out-of-order. Assertion fails <b>iff</b> testSet is not
+   * contained in the provided set.
+   * @param $ JD
+   * @return true iff the specified {@link LinkedHashSet} contains testSet. */
+  // TODO: Dan once the method is determined to be working, change to visibility
+  // to
+  // protected.
+  public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
+    assert $ != null;
+    assert testSet != null;
+    assert $.containsAll(testSet) : "some entry not found out of order!";
+  }
+
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
+  }
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
@@ -36,7 +91,7 @@ public abstract class ENVTestEngineAbstract {
     assert f.exists();
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
-    azzert.that($, instanceOf(CompilationUnit.class));
+    // azzert.that($, instanceOf(CompilationUnit.class));
     return $;
   }
 
@@ -49,8 +104,11 @@ public abstract class ENVTestEngineAbstract {
     return "Id".equals(n1 + "");
   }
 
-  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
-    return new LinkedHashSet<>();
+  public static void testSetsReset() {
+    if (testSetFlat != null)
+      testSetFlat.clear();
+    if (testSetNested != null)
+      testSetNested.clear();
   }
 
   protected boolean foundTestedAnnotation; // Global flag, used to
@@ -75,44 +133,16 @@ public abstract class ENVTestEngineAbstract {
      * Returning a direct comparison is far too error prone, and would be a bad
      * idea for a debug tool. */
     // add returns true iff the element did not exist in the set already.
-    if (!testSet.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
+    if (!testSetFlat.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
       azzert.fail("Bad test file - an entity appears twice.");
   }
 
-  /** Compares the set from the annotation with the set that the checked
-   * function generates. Comparison done inorder. Assertion fails <b>iff</b>
-   * testSet is not contained inorder in the provided set.
-   * @param $ */
-  public void compareInOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert testSet != null;
-    assert $ != null;
-    final Iterator<Entry<String, Information>> i = testSet.iterator();
-    final Iterator<Entry<String, Information>> j = $.iterator();
-    boolean entryFound = true;
-    while (i.hasNext()) {
-      final Entry<String, Information> testEntry = i.next();
-      entryFound = false;
-      while (j.hasNext())
-        if (j.next().equals(testEntry)) {
-          entryFound = true;
-          break;
-        }
-    }
-    assert entryFound;
-  }
+  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
 
-  /** Compares the set from the annotation with the set that the checked
-   * function generates. Assertion fails <b>iff</b> testSet is not contained in
-   * the provided set.
-   * @param $ */
-  // TODO: Dan once the method is determined to be working, change to visibility
-  // to
-  // protected.
-  public void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $) {
-    assert $ != null;
-    assert testSet != null;
-    assert $.containsAll(testSet) : "Some of the annotations are not contained in the result.";
-  }
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
+  protected abstract void handler(final Annotation ¢);
 
   /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
    * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
@@ -126,51 +156,51 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final AnnotationTypeDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final AnnotationTypeMemberDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final EnumConstantDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final EnumDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final FieldDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final Initializer $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final MethodDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
-      @Override public boolean visit(final TypeDeclaration $) {
-        visitNodesWithPotentialAnnotations($);
-        return true;
-      }
-
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */
       void checkAnnotations(final List<Annotation> as) {
         for (final Annotation ¢ : as)
           handler(¢);
+      }
+
+      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final Initializer ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        visitNodesWithPotentialAnnotations(¢);
+        return true;
       }
 
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
@@ -180,17 +210,11 @@ public abstract class ENVTestEngineAbstract {
         final LinkedHashSet<Entry<String, Information>> enviromentSet = buildEnvironmentSet($);
         if (enviromentSet == null)
           return;
-        compareOutOfOrder(enviromentSet);
-        compareInOrder(enviromentSet);
+        compareFlat(enviromentSet);
+        // compareNested(enviromentSet);
+        testSetsReset();
         foundTestedAnnotation = false;
       }
     });
   }
-
-  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  protected abstract void handler(final Annotation ¢);
 }

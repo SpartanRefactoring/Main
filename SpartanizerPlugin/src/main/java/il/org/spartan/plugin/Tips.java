@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code> (original /
  *         30.05.2014) (v3)
  * @since 2013/07/01 */
-public final class Spartanizations {
+public final class Tips {
   private static GUI$Applicator[] all = { //
       new Trimmer(), //
   };
@@ -29,8 +29,8 @@ public final class Spartanizations {
     return map.values();
   }
 
-  /** @return Iteration over all Spartanization class instances */
-  public static Iterable<GUI$Applicator> allAvailableSpartanizations() {
+  /** @return Iteration over all {@link @GUIApplicator) class instances */
+  public static Iterable<GUI$Applicator> allAvailablespartanizations() {
     return as.iterable(all);
   }
 
@@ -39,8 +39,8 @@ public final class Spartanizations {
     return map.keySet();
   }
 
-  /** @param t Spartanization rule
-   * @return Spartanization class rule instance */
+  /** @param t rule
+   * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends GUI$Applicator> T findInstance(final Class<? extends T> ¢) {
     for (final GUI$Applicator $ : all)
@@ -49,8 +49,8 @@ public final class Spartanizations {
     return null;
   }
 
-  /** @param name the name of the spartanization
-   * @return an instance of the spartanization */
+  /** @param name the name of the applicator
+   * @return an instance of the class */
   public static GUI$Applicator get(final String name) {
     assert name != null;
     return map.get(name);
@@ -67,11 +67,11 @@ public final class Spartanizations {
 
   private final GUI$Applicator value;
 
-  private Spartanizations(final GUI$Applicator value) {
+  private Tips(final GUI$Applicator value) {
     this.value = value;
   }
 
-  /** @return Spartanization class rule instance */
+  /** @return ? */
   public GUI$Applicator value() {
     return value;
   }

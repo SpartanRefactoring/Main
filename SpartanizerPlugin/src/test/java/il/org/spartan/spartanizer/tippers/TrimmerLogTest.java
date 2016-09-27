@@ -2,7 +2,9 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import static org.junit.Assert.*;
+
 import java.io.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -10,20 +12,22 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.spartanizations.*;
+import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {
-  @Ignore @Test public void test01() throws TipperException {
+  @Ignore @Test public void test01() throws TipperFailure {
     final Tipper<ASTNode> w = null;
     final ASTNode n = null;
-    TrimmerLog.suggestion(w, n);
+    TrimmerLog.tip(w, n);
     assertTrue(false);
   }
 
@@ -40,7 +44,7 @@ public class TrimmerLogTest {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateSuggestions($, u, (IMarker) null);
+      a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {
@@ -64,7 +68,7 @@ public class TrimmerLogTest {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateSuggestions($, u, (IMarker) null);
+      a.consolidateTips($, u, (IMarker) null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException e) {

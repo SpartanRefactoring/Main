@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code> */
 public final class Builder extends IncrementalProjectBuilder {
   /** Long prefix to be used in front of all tips */
-  public static final String SPARTANIZATION_LONG_PREFIX = "Spartanization suggestion: ";
+  public static final String SPARTANIZATION_LONG_PREFIX = "Laconic tip: ";
   /** Short prefix to be used in front of all tips */
   public static final String SPARTANIZATION_SHORT_PREFIX = "Tip: ";
   /** Empty prefix for brevity */
@@ -29,7 +29,7 @@ public final class Builder extends IncrementalProjectBuilder {
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
 
-  /** deletes all spartanization suggestion markers
+  /** deletes all spartanization tip markers
    * @param f the file from which to delete the markers
    * @throws CoreException if this method fails. Reasons include: This resource
    *         does not exist. This resource is a project that is not open.
@@ -67,13 +67,13 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IFile ¢) throws CoreException {
-    Spartanizations.reset();
+    Tips.reset();
     deleteMarkers(¢);
     addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
-    for (final GUI$Applicator s : Spartanizations.all())
+    for (final GUI$Applicator s : Tips.all())
       for (final Tip ¢ : s.collectSuggesions(u))
         if (¢ != null)
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));

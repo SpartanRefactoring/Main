@@ -27,6 +27,34 @@ public final class BatchSpartanizer {
     return fileName + ".essence";
   }
 
+  public static void main(final String[] where) {
+    if (where.length == 0)
+      new BatchSpartanizer(".", "current-working-directory").fire();
+    else
+      for (final String ¢ : where)
+        new BatchSpartanizer(¢).fire();
+  }
+
+  public static ProcessBuilder runScript() {
+    return new ProcessBuilder("/bin/bash");
+  }
+
+  public static String runScript(final Process p) throws IOException {
+    try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+      String ¢;
+      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
+        if ((¢ = r.readLine()) == null)
+          return $ + "";
+    }
+  }
+
+  public static ProcessBuilder runScript¢(final String pathname) {
+    final ProcessBuilder $ = runScript();
+    $.redirectErrorStream(true);
+    $.command(script, pathname);
+    return $;
+  }
+
   static String essenceNew(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
@@ -44,34 +72,12 @@ public final class BatchSpartanizer {
     ;
   }
 
-  public static void main(final String[] where) {
-    if (where.length == 0)
-      new BatchSpartanizer(".", "current-working-directory").fire();
-    else
-      for (final String ¢ : where)
-        new BatchSpartanizer(¢).fire();
-  }
-
   static String p(final int n1, final int n2) {
     return Unit.formatRelative(δ(n1, n2));
   }
 
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
-  }
-
-  private static String runScript(final String pathname) throws IOException {
-    final ProcessBuilder builder = new ProcessBuilder("/bin/bash");
-    builder.command(script, pathname);
-    builder.redirectErrorStream(true);
-    final Process process = builder.start();
-    final InputStream stdout = process.getInputStream();
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
-    String line;
-    final StringBuffer sb = new StringBuffer();
-    for (; (line = reader.readLine()) != null; sb.append(line))
-      ;
-    return sb + "";
   }
 
   static int tokens(final String s) {
@@ -86,12 +92,20 @@ public final class BatchSpartanizer {
     }
   }
 
-  private static int wc(final String $) {
-    return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
-  }
-
   static double δ(final double n1, final double n2) {
     return 1 - n2 / n1;
+  }
+
+  private static String removePercentChar(final String p) {
+    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
+  }
+
+  private static String runScript(final String pathname) throws IOException {
+    return runScript(runScript¢(pathname).start());
+  }
+
+  private static int wc(final String $) {
+    return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 
   private int classesDone;
@@ -126,6 +140,10 @@ public final class BatchSpartanizer {
     return null;
   }
 
+  public Process shellEssenceMetrics(final String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
+  }
+
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
@@ -146,9 +164,9 @@ public final class BatchSpartanizer {
     befores.print(in);
     afters.print(out);
     report.summaryFileName();
-//    System.out.println(δ(nodes, nodes2));
-//    System.out.println(p(nodes, nodes2));
-//    System.out.println(p(tokens, tokens2));
+    // System.out.println(δ(nodes, nodes2));
+    // System.out.println(p(nodes, nodes2));
+    // System.out.println(p(tokens, tokens2));
     report//
         .put("Category", extract.category(in))//
         .put("Name", extract.name(in))//
@@ -193,14 +211,6 @@ public final class BatchSpartanizer {
     report.nl();
     System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
-  }
-  
-  private static Object returnNumber(String $){
-    return null;
-  }
-  
-  private static String removePercentChar(String p) {
-    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
   }
 
   void collect(final CompilationUnit u) {
@@ -298,9 +308,5 @@ public final class BatchSpartanizer {
 
   private void runWordCount() {
     bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
-  }
-
-  public Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 }
