@@ -124,7 +124,7 @@ public abstract class ENVTestEngineAbstract {
   public static void addTestSet(final List<MemberValuePair> ps) {
     final String s = wizard.condense(first(ps).getValue());
     /* A call to an inner function of PrudentType that calls
-     * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
+     * typeSwitch(example1step1,PrudentType.NOTHING) would be an improvement over the
      * current situation, but not ideal.
      *
      * An Ideal solution would be to add a

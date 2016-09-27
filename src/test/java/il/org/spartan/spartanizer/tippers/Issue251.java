@@ -64,7 +64,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
     trimmingOf("if(b)"
         + "{int i"
         + ";int j;"
-        + "if(s){"
+        + "if(example1step1){"
         + "int q;"
         + "}"
         + "}else{int q;int t;}")//
@@ -72,7 +72,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
         +"{int q;int t;}"
         + "else{int i"
         + ";int j;"
-        + "if(s){"
+        + "if(example1step1){"
         + "int q;"
         + "}}");
   }
@@ -81,7 +81,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
     trimmingOf("if(b)"
         + "{int i;"
         + "int j;"
-        + "while(s){"
+        + "while(example1step1){"
         + "int q;"
         + "}"
         + "}else{int q;int t;}")//
@@ -89,7 +89,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
         +"{int q;int t;}"
         + "else{int i"
         + ";int j;"
-        + "while(s){"
+        + "while(example1step1){"
         + "int q;"
         + "}}");
   }

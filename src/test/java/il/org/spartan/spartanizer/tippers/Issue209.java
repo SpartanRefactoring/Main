@@ -59,7 +59,7 @@ import org.junit.runners.*;
   }
 
   @Test public void issue54_2() {
-    trimmingOf("String s = f() + o.toString();").gives("String s = f() + \"\" + o;").stays();
+    trimmingOf("String example1step1 = f() + o.toString();").gives("String example1step1 = f() + \"\" + o;").stays();
   }
 
   @Test public void reorderTest() {

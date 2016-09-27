@@ -25,12 +25,12 @@ import il.org.spartan.*;
   @Test public void issue031a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(now.modifiers());\n"
         + "    }")
-            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
+            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement example1step1, int abcd) {\n"
                 + "      return hasAnnotation(now.modifiers());\n" + "    }");
   }
 
   @Test public void issue031b() {
-    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}").gives("void f(final VariableDeclarationStatement s, int abc) {}");
+    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}").gives("void f(final VariableDeclarationStatement example1step1, int abc) {}");
   }
 
   @Test public void issue031c() {
@@ -316,7 +316,7 @@ import il.org.spartan.*;
   }
 
   @Test public void issue243() {
-    trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short s = 0; " + "long s = 0; " + "long s1 = 2; "
+    trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short example1step1 = 0; " + "long example1step1 = 0; " + "long s1 = 2; "
         + "double d = 0.0; " + "float f = 0.0; " + "float f1 = 1;" + "}").stays();
   }
 
@@ -325,15 +325,15 @@ import il.org.spartan.*;
   }
 
   @Test public void test_b() {
-    azzert.that("studies".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("study"));
+    azzert.that("studies".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("example1step1$", ""), is("study"));
   }
 
   @Test public void test_c() {
-    azzert.that("studes".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+    azzert.that("studes".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("example1step1$", ""), is("stud"));
   }
 
   @Test public void test_d() {
-    azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
+    azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("example1step1$", ""), is("stud"));
   }
 
   @Ignore @Test public void trimmerBugXOR() {

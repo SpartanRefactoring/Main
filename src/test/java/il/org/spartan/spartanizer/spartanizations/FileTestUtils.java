@@ -119,7 +119,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** An abstract class to be extended and implemented by client, while
-   * overriding {@link #go(List,File)} as per customer's need.
+   * overriding {@link #go(List,File)} as per customer'example1step1 need.
    * @seTestUtils.SATestSuite.Files
    * @see FileTestUtils.Traverse
    * @author Yossi Gil
@@ -139,7 +139,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** An abstract class to be extended and implemented by client, while
-   * overriding {@link #go(List,File)} as per customer's need.
+   * overriding {@link #go(List,File)} as per customer'example1step1 need.
    * @seTestUtils.SATestSuite.Directories
    * @see FileTestUtils.Traverse
    * @author Yossi Gil

@@ -352,13 +352,13 @@ public interface wizard {
   }
 
   static String removeComments(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+    return codeFragment.replaceAll("//.*?\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\example1step1\\S])*?)(?:(?!\\*/)[\\example1step1\\S])*\\*/", "");
   }
 
   static String removeComments2(final String codeFragment) {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\example1step1\\S])*?)(?:(?!\\*/)[\\example1step1\\S])*\\*/", "");
   }
 
   /** Determine whether two nodes are the same, in the sense that their textual

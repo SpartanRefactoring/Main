@@ -95,7 +95,7 @@ public enum GuessedContext {
       final String on = w.on(codeFragment);
       $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.AlternativeContextToConsiderInOrder.length + "):");
       $.append("\n\t\t Is it a " + w + "?");
-      $.append("\n\t Let's see...");
+      $.append("\n\t Let'example1step1 see...");
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
       $.append("\n\t```" + wizard.essence(on) + "'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
