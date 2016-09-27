@@ -141,12 +141,12 @@ import il.org.spartan.spartanizer.utils.*;
   /** @return set of entries declared in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
     // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> declarations = new LinkedHashSet<>();
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
     n.accept(new ASTVisitor() {
       // Holds the current scope full name (Path).
       String scopePath = "";
 
-      private Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
+      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
 
@@ -158,41 +158,37 @@ import il.org.spartan.spartanizer.utils.*;
         return $;
       }
 
-      private Information createInformation(final SingleVariableDeclaration ¢) {
+      Information createInformation(final SingleVariableDeclaration ¢) {
         return new Information(¢.getParent(), getHidden(¢), ¢, type.baptize(wizard.condense(¢.getType())));
       }
 
-      private Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
         return new Information(¢.getParent(), getHidden(¢), ¢, t);
       }
 
-      private String fullName(final SimpleName $) {
+      String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
 
-      // TODO implement this.
-      private Information getHidden(final SingleVariableDeclaration ¢) {
-        // TODO Auto-generated method stub
+      Information getHidden(final SingleVariableDeclaration ¢) {
         return null;
       }
 
-      // TODO implement this.
-      private Information getHidden(final VariableDeclarationFragment ¢) {
-        // TODO Auto-generated method stub
+      Information getHidden(final VariableDeclarationFragment ¢) {
         return null;
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
         scopePath += "." + d.getName();
         for (final SingleVariableDeclaration ¢ : step.parameters(d))
-          declarations.add(convertToEntry(¢));
+          $.add(convertToEntry(¢));
         for (final Statement ¢ : step.statements(d.getBody()))
           if (¢ instanceof VariableDeclarationStatement)
-            declarations.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
+            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
         return true;
       }
     });
-    return declarations;
+    return $;
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
