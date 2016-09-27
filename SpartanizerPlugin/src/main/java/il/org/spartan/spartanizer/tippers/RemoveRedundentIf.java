@@ -24,15 +24,15 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
   private boolean checkBlock(ASTNode n){
     if(n!= null &&
         (iz.expression(n) && !sideEffects.free(az.expression(n))
-        || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())))
+        || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())) || az.throwStatement(n)!=null)
       return false;
     if (iz.block(n)) {
       List<Statement> lst = az.block(n).statements();
       for (Statement s : lst) {
-        if (az.expressionStatement(s) != null) {
-          if (!sideEffects.free(az.expression(az.expressionStatement(s).getExpression())))
+        if (iz.expressionStatement(s) && !sideEffects.free(az.expression(az.expressionStatement(s).getExpression())))
             return false;
-        }
+        if(az.throwStatement(s)!=null)
+          return false;
       }
     }
     return true;
@@ -43,7 +43,6 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
     boolean condition = sideEffects.free(n.getExpression());
     boolean then = checkBlock(n.getThenStatement());
     boolean elze = checkBlock(n.getElseStatement());
-
     if(condition && then && elze || (condition && then && n.getElseStatement()==null))
       return n.getAST().newBlock();
     if(condition && then && !elze && (n.getElseStatement()!=null)){
