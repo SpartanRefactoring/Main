@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** IApplication for collecting metrics pre and post Spartanization
+/** IApplication for collecting metrics pre and post spartanization
  * @author Matteo Orru'
  * @year 2016 */
 public final class CollectMetricsApp implements IApplication {
@@ -193,7 +193,7 @@ public final class CollectMetricsApp implements IApplication {
       try {
         u = openCompilationUnit(f);
         for (int i = 0; i < optRounds; ++i) {
-          final int n = SpartanizeAll.countSuggestions(u);
+          final int n = LaconizeProject.countTips(u);
           if (n == 0)
             break;
           new Trimmer().apply(u);
