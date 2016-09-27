@@ -908,7 +908,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void ifEmptyThenThrowWitinIf() {
     trimmingOf("if (x) if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Excpetion();\n" + "} else { f();f();f();f();f();f();f();f();}")
-        .gives("if (x) { if (!b) \n" + "  throw new Excpetion();" + "} else { f();f();f();f();f();f();f();f();}");
+        .gives("if (x) if (!b) \n" + "  throw new Excpetion();" + " else { f();f();f();f();f();f();f();f();}");
   }
 
   @Test public void ifFunctionCall() {
