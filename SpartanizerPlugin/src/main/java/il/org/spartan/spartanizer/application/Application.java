@@ -72,7 +72,7 @@ public final class Application implements IApplication {
     System.out.println("  -L       printout logs");
     System.out.println("");
     System.out.println("Print statistics:");
-    System.out.println("  -l       Show the number of lines before and after laconization");
+    System.out.println("  -l       Show the number of lines before and after spartanization");
     System.out.println("  -r       Show the number of Spartanizaion made in each round");
     System.out.println("");
     System.out.println("Output:");
