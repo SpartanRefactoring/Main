@@ -168,7 +168,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         <command commandId="il.org.spartan.LaconizeCurrent" style="push"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push"/>
         <command commandId="il.org.spartan.SuggestionToggle" style="toggle"/>
-        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
+        <command commandId="il.org.spartan.RefreshAll" style="push"/>
         <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
          <command commandId="il.org.spartan.SuggestionToggle"
               id="il.org.spartan.menus.Toggle"
