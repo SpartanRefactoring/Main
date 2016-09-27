@@ -34,7 +34,7 @@ public abstract class searchAncestors {
    * instances.
    * @param n JD
    * @return a newly created instance */
-  @SuppressWarnings("unused") public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
+  public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
     return new ByNodeInstances<>(¢);
   }
 
