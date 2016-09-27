@@ -20,19 +20,16 @@ import il.org.spartan.spartanizer.tipping.RemoveRedundent;
  */
 public class RemoveRedundentFor extends ReplaceCurrentNode<ForStatement> implements Kind.Collapse{
 
-  @Override public ASTNode replacement(ForStatement n) {
-    if(n==null)
+  @Override public ASTNode replacement(ForStatement s) {
+    if (s == null)
       return null;
-    boolean condition = sideEffects.free(n.getExpression());
-    boolean initializers = RemoveRedundent.checkListOfExpressions(n.initializers());
-    boolean updaters = RemoveRedundent.checkListOfExpressions(n.updaters());
-    boolean body = RemoveRedundent.checkBlock(n.getBody());
-    if(condition && initializers && updaters && body)
-      return n.getAST().newBlock();
-    return null;
+    boolean condition = sideEffects.free(s.getExpression());
+    boolean initializers = RemoveRedundent.checkListOfExpressions(s.initializers());
+    boolean updaters = RemoveRedundent.checkListOfExpressions(s.updaters());
+    return condition && initializers && updaters && RemoveRedundent.checkBlock(s.getBody()) ? s.getAST().newBlock() : null;
   }
 
-  @Override public String description(ForStatement n) {
-    return "remove :" + n;
+  @Override public String description(ForStatement ¢) {
+    return "remove :" + ¢;
   }
 }

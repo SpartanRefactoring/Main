@@ -53,10 +53,10 @@ public abstract class ENVTestEngineAbstract {
    // TODO: Alex and Dan: use or each loop here.
     
     final Iterator<Entry<String, Information>> j = $.iterator();
-    for (final Entry<String, Information> i : testSet) {
+    for (final Entry<String, Information> ¢ : testSet) {
       entryFound = false;
       while (j.hasNext())
-        if (i.equals(j.next())) {
+        if (¢.equals(j.next())) {
           entryFound = true;
           break;
         }
