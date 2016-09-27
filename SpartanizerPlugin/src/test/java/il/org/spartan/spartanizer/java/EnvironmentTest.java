@@ -177,13 +177,13 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered00() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered000() {
@@ -192,7 +192,7 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($);
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered001() {
@@ -200,7 +200,7 @@ import il.org.spartan.spartanizer.utils.*;
     // new EnvFlatHandler($);
     s.add(new MapEntry<>("stra", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered02() {
@@ -208,7 +208,7 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($);
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered03() {
@@ -217,7 +217,7 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($);
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered04() {
@@ -227,7 +227,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("k", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered05() {
@@ -237,7 +237,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   // Fall because we accept testSet is contained in the specified set.
@@ -248,7 +248,7 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered05b() {
@@ -259,7 +259,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered05c() {
@@ -270,16 +270,11 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlatO(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   // This test shows that if considering a few annotations in A compilation
-  // unit, testSet will contain
-  // the union of all Ids specified in the annotations. No problem for us,
-  // because we will check it every
-  // time on one declaration (the environment itself has to scan the code, while
-  // the test engine should just read
-  // the annotation and check for equallity)
+  // unit, testSet will contain the union of all Ids specified.
   @Test public void EngineTestFlatUnordered05d() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
@@ -288,10 +283,30 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
-    ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.compareFlatO(s);
+    ENVTestEngineAbstract.testSetsReset();
   }
-
+  
+  @Test public void EngineTestFlatUnordered05e() {
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+        + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
+    new EnvFlatHandler($);
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
+    ENVTestEngineAbstract.compareFlat(s);
+    ENVTestEngineAbstract.testSetsReset();
+  }
+  
+  @Test public void EngineTestFlatUnordered05f() {
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
+        + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
+    new EnvFlatHandler($);
+    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
+    ENVTestEngineAbstract.compareFlatO(s);
+    ENVTestEngineAbstract.testSetsReset();
+  }
+  
   @Test public void EngineTestFlatUnordered06() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
         "class A {@FlatEnvUse({ @Id(name = \"s\", clazz = \"String\") }) void foo(){@FlatEnvUse({ @Id(name = \"s\", clazz = \"int\") }) class B{ int a;}}"));
@@ -299,7 +314,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered07() {
@@ -309,7 +324,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered08() {
@@ -320,7 +335,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered09() {
@@ -330,7 +345,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   /** This test assumes that the annotation data is cleared after each
@@ -343,7 +358,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.DOUBLE)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   /** This test assumes that the annotation data is cleared after each
@@ -356,7 +371,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered12() {
@@ -367,7 +382,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlatO(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   /** This test is meant to fail by azzert, due to double addition of the same
@@ -375,7 +390,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore @Test public void EngineTestFlatUnordered13() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")));
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFlatUnordered15() {
@@ -385,7 +400,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   // should fall dew to wrong ordering
@@ -396,14 +411,14 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestFromFile() {
     new EnvFlatHandler("EnvironmentTestMoreCodeExamples.java");
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestNested01() {
@@ -414,7 +429,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.C1.i", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void EngineTestNested02() {
@@ -425,7 +440,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.C1.s", new Information(type.Primitive.Certain.STRING)));
     ENVTestEngineAbstract.compareFlat(s);
-    ENVTestEngineAbstract.testSetReset();
+    ENVTestEngineAbstract.testSetsReset();
   }
 
   @Test public void get() {
