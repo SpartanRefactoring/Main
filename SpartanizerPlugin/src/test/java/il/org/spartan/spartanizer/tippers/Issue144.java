@@ -18,36 +18,37 @@ import org.junit.runners.*;
   @Test public void t02() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return false;" + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))" + "return true;"
-                + "if (ens.contains(p))" + "return false;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))" + "return true;"
-                + "if (ens.contains(p))" + "break;" + "}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
+                + "return true;" + "if (ens.contains(p))" + "return false;" + "}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
+                + "return true;" + "if (ens.contains(p))" + "break;" + "}" + "return false;" + "}")
             .stays();
   }
 
-  @Test public void t03() {
-    trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
-        + "for (int i = 0; i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
-                + "for (int i = 0, length = sb.length(); i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');"
-                + "return sb + \"\";");
-  }
-  
   @Test public void t03a() {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
         + "for (int i = 0; i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
             .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
                 + "for (int i = 0, length = sb.length(); i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');"
-                + "return sb + \"\";");
+                + "return sb + \"\";")
+            .stays();
+  }
+  
+  @Test public void t03b() {
+    trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;"
+        + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
+            .gives("private static String toPath(String groupId) {"
+                + "for (int $ = 0, one = 1; $ < one; ++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
+            .stays();
   }
 
   @Test public void t04() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "continue;"
         + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))" + "continue;"
-                + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent())" + "if (dns.contains(p))" + "continue;"
-                + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
+                + "continue;" + "}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent())" + "if (dns.contains(p))"
+                + "continue;" + "return false;" + "}")
             .stays();
   }
 
@@ -61,24 +62,22 @@ import org.junit.runners.*;
 
   @Test public void t06() {
     trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)p=p.getParent();return false;}")
-            .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;p = p.getParent());return false;}")
-            .stays();
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;p = p.getParent());return false;}").stays();
   }
-  
+
   @Test public void t06a() {
     trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)f();return false;}")
-            .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;f());return false;}")
-            .stays();
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;f());return false;}").stays();
   }
-  
+
   @Test public void t06b() {
     trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)if(dns.contains(p))return true;return false;}")
-            .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;)if(dns.contains(p))return true;return false;}")
-            .stays();
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;)if(dns.contains(p))return true;return false;}").stays();
   }
-  
+
   @Test public void t07() {
-    trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null){if(dns.contains(p))return true;if(ens.contains(p))break;p=p.getParent();}return false;}")
+    trimmingOf(
+        "public boolean check(final ASTNode n){ASTNode p=n;while(p!=null){if(dns.contains(p))return true;if(ens.contains(p))break;p=p.getParent();}return false;}")
             .gives("public boolean check(final ASTNode n) {for  ( ASTNode p = n; p != null;p = p.getParent()) {"
                 + "if (dns.contains(p)) return true; if (ens.contains(p)) break;}return false;}")
             .stays();

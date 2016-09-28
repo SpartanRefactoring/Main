@@ -244,26 +244,7 @@ public class Toolbox {
           .seal();
   }
 
-  private final Map<Class<? extends ASTNode>, List<? extends Tipper<? extends ASTNode>>> allTippersKnownToTheProgram = new HashMap<>();
-
-  /** @param c */
-  public void disable(Class<? extends TipperCategory> c) {
-    for (List<? extends Tipper<? extends ASTNode>> ¢ : allTippersKnownToTheProgram.values())
-      disable(¢, c);
-  }
-
-  /** @param ts 
-   * @param c */
-  private static void disable(List<? extends Tipper<? extends ASTNode>> ts, Class<? extends TipperCategory> c) {
-    removing: for (;;) {
-      for (int i = 0; i < ts.size(); ++i)
-        if (c.isAssignableFrom(ts.get(i).getClass())) {
-          ts.remove(i);
-          continue removing;
-        }
-      break removing;
-    }
-  }
+  private final Map<Class<? extends ASTNode>, List<Tipper<? extends ASTNode>>> allActiveTippers = new HashMap<>();
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param pattern JD
@@ -285,12 +266,28 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Tipper<N>> get(final Class<? extends ASTNode> ¢) {
-    if (!allTippersKnownToTheProgram.containsKey(¢))
-      allTippersKnownToTheProgram.put(¢, new ArrayList<>());
-    return (List<Tipper<N>>) (List<?>) allTippersKnownToTheProgram.get(¢);
+    if (!allActiveTippers.containsKey(¢))
+      allActiveTippers.put(¢, new ArrayList<>());
+    return (List<Tipper<N>>) (List<?>) allActiveTippers.get(¢);
   }
 
   <N extends ASTNode> List<Tipper<N>> get(final N ¢) {
     return get(¢.getClass());
+  }
+
+  public void disable(Class<? extends TipperCategory> c) {
+    for (List<Tipper<? extends ASTNode>> x : allActiveTippers.values())
+      disable(x, c);
+  }
+
+  private static void disable(List<Tipper<? extends ASTNode>> ts, Class<? extends TipperCategory> c) {
+    removing: for (;;) {
+      for (int i = 0; i < ts.size(); ++i)
+        if (c.isAssignableFrom(ts.get(i).getClass())) {
+          ts.remove(i);
+          continue removing;
+        }
+      break;
+    }
   }
 }
