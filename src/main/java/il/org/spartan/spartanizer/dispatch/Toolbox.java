@@ -265,7 +265,7 @@ public class Toolbox {
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
-   * @param n JD
+   * @param pattern JD
    * @return first {@link Tipper} for which the parameter is within scope, or
    *         <code><b>null</b></code> if no such {@link Tipper} is found. @ */
   public <N extends ASTNode> Tipper<N> find(final N ¢) {

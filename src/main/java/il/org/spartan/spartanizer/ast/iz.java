@@ -43,7 +43,7 @@ public enum iz {
     return is(¢, ARRAY_INITIALIZER);
   }
 
-  /** @param n the statement or block to check if it is an assignment
+  /** @param pattern the statement or block to check if it is an assignment
    * @return <code><b>true</b></code> if the parameter an assignment or false if
    *         the parameter not or if the block Contains more than one
    *         statement */
@@ -56,7 +56,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a {@link Block}
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   public static boolean block(final ASTNode ¢) {
@@ -105,7 +105,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a boolean literal
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
    *         literal */
   public static boolean booleanLiteral(final ASTNode ¢) {
@@ -219,7 +219,7 @@ public enum iz {
   }
 
   /** Determine whether a node is an {@link EmptyStatement}
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link EmptyStatement} */
   public static boolean emptyStatement(final ASTNode ¢) {
@@ -243,7 +243,7 @@ public enum iz {
   }
 
   /** Determine whether a node is an "expression statement"
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link ExpressionStatement} statement */
   public static boolean expression(final ASTNode ¢) {
@@ -260,7 +260,7 @@ public enum iz {
   }
 
   /** Determine whether a node is an "expression statement"
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link ExpressionStatement} statement */
   public static boolean expressionStatement(final ASTNode ¢) {
@@ -302,7 +302,7 @@ public enum iz {
         null);
   }
 
-  /** @param n the statement or block to check if it is an for statement
+  /** @param pattern the statement or block to check if it is an for statement
    * @return <code><b>true</b></code> if the parameter an for statement or false
    *         if the parameter not or if the block Contains more than one
    *         statement */
@@ -323,7 +323,7 @@ public enum iz {
     return is(¢, IF_STATEMENT);
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
    *         Statement of type Post or Pre Expression with ++ or -- operator
    *         false if node is not an Expression Statement or its a Post or Pre
@@ -484,7 +484,7 @@ public enum iz {
     return last(s, statements(b)) && iz.methodDeclaration(parent(b));
   }
 
-  /** @param n Expression node
+  /** @param pattern Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode ¢) {
     return ¢ != null && intIsIn(¢.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
@@ -534,7 +534,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a {@link MethodDeclaration}
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
    *         invocation. */
   public static boolean methodDeclaration(final ASTNode ¢) {
@@ -542,7 +542,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a {@link MethodInvocation}
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
    *         invocation. */
   public static boolean methodInvocation(final ASTNode ¢) {
@@ -581,7 +581,7 @@ public enum iz {
   }
 
   /** Determine whether a node is the <code><b>null</b></code> keyword
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i>is thee <code><b>null</b></code>
    *         literal */
   public static boolean nullLiteral(final ASTNode ¢) {
@@ -625,7 +625,7 @@ public enum iz {
     return ¢ != null && ¢.getOperator() == ASSIGN;
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a prefix
    *         expression. */
   public static boolean prefixExpression(final ASTNode ¢) {
@@ -641,7 +641,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a return statement
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
    *         statement. */
   public static boolean returnStatement(final ASTNode ¢) {
@@ -651,7 +651,7 @@ public enum iz {
   /** Determine whether a node is a "sequencer", i.e.,
    * <code><b>return</b></code> , <code><b>break</b></code>,
    * <code><b>continue</b></code> or <code><b>throw</b></code>
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   public static boolean sequencer(final ASTNode ¢) {
     return iz.oneOf(¢, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
@@ -675,7 +675,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a simple name
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple
    *         name */
   public static boolean simpleName(final ASTNode ¢) {
@@ -687,7 +687,7 @@ public enum iz {
   }
 
   /** Determine whether a node is a singleton statement, i.e., not a block.
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a singleton
    *         statement. */
   public static boolean singletonStatement(final ASTNode ¢) {
@@ -708,7 +708,7 @@ public enum iz {
     return ¢ instanceof Statement;
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a string
    *         literal */
   public static boolean stringLiteral(final ASTNode ¢) {
@@ -716,7 +716,7 @@ public enum iz {
   }
 
   /** Determine whether a node is the <code><b>this</b></code> keyword
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
    *         keyword */
   public static boolean thisLiteral(final ASTNode ¢) {
@@ -770,7 +770,7 @@ public enum iz {
     return true;
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement. */
   public static boolean variableDeclarationStatement(final ASTNode ¢) {

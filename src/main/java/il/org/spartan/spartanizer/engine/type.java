@@ -244,7 +244,7 @@ public interface type {
       return hasType(¢) ? getType(¢) : setType(¢, lookUp(¢, lookDown(¢)));
     }
 
-    /** @param n JD/
+    /** @param pattern JD/
      * @return the type information stored inside the node n, or null if there
      *         is none */
     private static implementation getType(final ASTNode ¢) {
