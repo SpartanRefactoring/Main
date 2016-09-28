@@ -913,11 +913,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
   
   @Test public void ifEmptyThenThrowVariant1() {
-<<<<<<< HEAD
-    trimmingOf("if (b) {;} throw new Exception();\n").gives("{}throw new Exception();").gives("throw new Exception();");
-=======
     trimmingOf("if (b) {;} throw new Exception();\n").gives(" {} throw new Exception();").gives(" throw new Exception();").stays();
->>>>>>> ce163bb48e8a1ffb50ed4a3154d9f86aeeb07c3c
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
@@ -1467,7 +1463,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void issue54ForPlain() {
     trimmingOf("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;").gives("for (int i = 0; i < 100;  ++i) b[i] = f();")
-        .gives("for (int ¢ = 0; ¢ < 100;  ++¢) b[¢] = f();").stays();
+        .gives("for (int ¢ = 0; ¢ < 100;  ++¢) b[¢] = f();").gives("for (int ¢ = 0; ¢ < 100;  ++¢, b[¢] = f());").stays();
   }
 
   @Test public void issue54ForPlainNonSideEffect() {
@@ -1970,7 +1966,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;").stays();
+    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;").gives("for (int ¢ = i++; i < 10; ++¢, sum+=¢);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
@@ -2017,15 +2013,15 @@ import il.org.spartan.spartanizer.tipping.*;
     azzert.that(new PostfixToPrefix().canTip(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     azzert.that(r, iz("--i"));
-    trimmingOf(from).gives("for(int i=0;i<100;--i)--j;").stays();
+    trimmingOf(from).gives("for(int i=0;i<100;--i)--j;").gives("for(int i=0;i<100;--i,--j);").stays();
   }
 
   @Test public void prefixToPostfixDecrementEssence() {
-    trimmingOf("for(int i=0;i< 100;i--)j--;").gives("for(int i=0;i<100;--i)--j;").stays();
+    trimmingOf("for(int i=0;i< 100;i--)j--;").gives("for(int i=0;i<100;--i,--j);").stays();
   }
 
   @Test public void prefixToPostfixIncreement() {
-    trimmingOf("for (int i = 0; i < 100; i++) i++;").gives("for(int ¢=0;¢<100;¢++)¢++;").gives("for(int ¢=0;¢<100;++¢)++¢;").stays();
+    trimmingOf("for (int i = 0; i < 100; i++) i++;").gives("for(int ¢=0;¢<100;¢++)¢++;").gives("for(int ¢=0;¢<100;++¢,++¢);").stays();
   }
 
   @Test public void preIncrementReturn() {
