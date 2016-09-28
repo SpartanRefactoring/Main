@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
     String s;
 
     @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
+      // Empty block
     }
   }
 
@@ -315,8 +316,8 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered07() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
+        "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
@@ -336,8 +337,8 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered09() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
+        "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
