@@ -97,7 +97,6 @@ public class Toolbox {
               new AssignmentAndReturn(), //
               new AssignmentToFromInfixIncludingTo(), //
               new AssignmentToPostfixIncrement(), //
-              // new AssignmentAndWhileToFor(), // issue 144
               null) //
           .add(Block.class, //
               new BlockSimplify(), //
@@ -174,7 +173,9 @@ public class Toolbox {
               new DeclarationInitializerReturnAssignment(), //
               new DeclarationInitializerReturnUpdateAssignment(), //
               new DeclarationInitializerStatementTerminatingScope(), //
-              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), null) //
+              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
+              new AssignmentAndWhileToFor(), // issue 144
+              null) //
           .add(IfStatement.class, //
               new IfTrueOrFalse(), //
               new RemoveRedundantIf(), //
