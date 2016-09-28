@@ -34,11 +34,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   public static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> lst = extract.allOperands(x);
     int $ = 0;
-    for (int ¢ = lst.size() - 1; ¢ >= 0; --¢) {
+    for (int ¢ = lst.size() - 1; ¢ >= 0; --¢, ++$)
       if (!iz.number(lst.get(¢)))
         return $ > 1 ? $ : 0;
-      ++$;
-    }
     return -1;
   }
 

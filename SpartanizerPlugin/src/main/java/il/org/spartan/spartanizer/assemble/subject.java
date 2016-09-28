@@ -230,8 +230,8 @@ public final class subject {
       assert operands.size() != 1;
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
-      for (int ¢ = 2; ¢ < operands.size(); ++¢)
-        extendedOperands($).add(make.plant(operands.get(¢)).into($));
+      for (int ¢ = 2; ¢ < operands.size(); ++¢, extendedOperands($).add(make.plant(operands.get(¢)).into($)))
+        ;
       return $;
     }
   }

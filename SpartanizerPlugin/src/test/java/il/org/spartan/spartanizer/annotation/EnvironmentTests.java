@@ -11,8 +11,8 @@ import java.util.*;
       String y;
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void f() {
-        for (int ¢ = 0; ¢ < 10; ++¢)
-          x = ¢;
+        for (int ¢ = 0; ¢ < 10; ++¢, x = ¢)
+          ;
       }
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {

@@ -25,8 +25,8 @@ public final class BatchApplicator {
     };
   }
 
-  public BatchApplicator disable(Class<? extends TipperCategory> c) {
-    toolbox.disable(c);
+  public BatchApplicator disable(Class<? extends TipperCategory> ¢) {
+    toolbox.disable(¢);
     return this;
   }
 

@@ -52,15 +52,15 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment a, final Statement nextStatement, final TextEditGroup g) {
-    final Statement parent = az.asStatement(a.getParent());
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    final Statement parent = az.asStatement(f.getParent());
     if (parent == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
       return null;
     r.remove(parent, g);
-    r.replace(s, replace(a, s), g);
+    r.replace(s, replace(f, s), g);
     return r;
   }
 }
