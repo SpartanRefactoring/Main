@@ -70,8 +70,9 @@ import org.junit.runners.*;
 
   @Test public void A$130() {
     trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
-        .gives("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
-        .gives("int i=1;while(i<7){if(i==5){tipper+=9;break;}y+=15;break;}return x;").stays();
+        .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
+        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;return x;}y+=15;break;}return x;")
+        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;break;}y+=15;break;}return x;").stays();
   }
 
   @Test public void A$140() {
