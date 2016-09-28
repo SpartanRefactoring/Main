@@ -35,7 +35,7 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)) || !iz.containsContinueStatement(¢.getBody());
+    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢))) && !iz.containsContinueStatement(¢.getBody());
   }
 
   @Override public String description(final WhileStatement ¢) {
