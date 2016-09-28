@@ -44,10 +44,6 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return $;
   }
 
-  private static boolean goingOut() {
-    return false;
-  }
-
   private static ASTNode lastStatement(final WhileStatement ¢) {
     return hop.lastStatement(¢.getBody());
   }
@@ -74,7 +70,7 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.asStatement(a.getParent());
-    if (goingOut())
+    if (parent == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)

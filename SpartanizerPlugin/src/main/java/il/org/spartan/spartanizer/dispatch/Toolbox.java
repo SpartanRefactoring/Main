@@ -204,7 +204,9 @@ public class Toolbox {
               new DeclarationInitializerReturnUpdateAssignment(), //
               new DeclarationInitializerStatementTerminatingScope(), //
               new DeclarationInitialiazerAssignment(), //
-              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), null) //
+              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
+              new DeclarationAndWhileToFor(), //
+              null) //
           .seal();
   }
 

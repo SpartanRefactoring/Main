@@ -41,6 +41,14 @@ import org.junit.runners.*;
                 + "for (int $ = 0, one = 1; $ < one; ++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
             .stays();
   }
+  
+  @Test public void t03c() {
+    trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;"
+        + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
+            .gives("private static String toPath(String groupId) {"
+                + "for (int $ = 0, one = 1; $ < one; ++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
+            .stays();
+  }
 
   @Test public void t04() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "continue;"
