@@ -8,7 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
-public class LeonidasTest {
+@Ignore public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches1() {
     azzert.expression("X ? y == 17 : Z").matches("x == 7 ? y == 17 : 9");
   }
