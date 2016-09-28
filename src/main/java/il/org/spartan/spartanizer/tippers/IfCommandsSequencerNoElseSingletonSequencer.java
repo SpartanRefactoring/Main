@@ -42,7 +42,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceToNextStatement<IfStatement> implements Kind.EarlyReturn {
+public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceToNextStatement<IfStatement> implements Category.EarlyReturn {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and use next statement)";
   }

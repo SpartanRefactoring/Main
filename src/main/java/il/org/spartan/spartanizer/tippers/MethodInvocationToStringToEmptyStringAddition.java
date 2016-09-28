@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-8-31 */
-public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements Kind.Collapse {
+public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation> implements Category.Collapse {
   @Override public String description(final MethodInvocation i) {
     final Expression receiver = receiver(i);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + (receiver == null ? "x" : receiver);

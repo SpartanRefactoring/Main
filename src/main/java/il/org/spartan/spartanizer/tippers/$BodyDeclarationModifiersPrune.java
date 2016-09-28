@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
+abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Category.SyntacticBaggage {
   private static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
   private static final Predicate<Modifier> isFinal = Modifier::isFinal;
   private static final Predicate<Modifier> isPrivate = Modifier::isPrivate;

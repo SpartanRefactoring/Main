@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Greenstein
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
+public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression> implements Category.InVain {
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(minus(first(prune)), chop(prune));
   }

@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements Kind.Collapse {
+
+public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements Category.CommnoFactoring {
 
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
     ForStatement $ = setExpressionAndInitializers(¢, f);
@@ -46,6 +47,7 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
+
   private static ForStatement forWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     updaters($).add(dupWhileLastStatement(s));
     $.setBody(minus.LastStatement(duplicate.of(body(s))));
@@ -57,6 +59,10 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return $;
   }
 
+  private static boolean goingOut() {
+    return false;
+  }
+
   private static ASTNode lastStatement(final WhileStatement ¢) {
     return hop.lastStatement(¢.getBody());
   }
@@ -66,12 +72,12 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢.getParent()))) + "loop";
+    return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.asStatement(a.getParent());
-    if (parent == null)
+    if (goingOut())
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)

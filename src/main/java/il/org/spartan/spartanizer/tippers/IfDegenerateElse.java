@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-08-01 */
-public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> implements Kind.InVain {
+public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement> implements Category.InVain {
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);
   }
