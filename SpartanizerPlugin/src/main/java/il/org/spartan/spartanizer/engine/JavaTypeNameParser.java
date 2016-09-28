@@ -49,9 +49,9 @@ import org.eclipse.jdt.core.dom.*;
   /** @return an abbreviation of the type name */
   public String abbreviate() {
     String ¢ = "";
-    for (final Matcher m = Pattern.compile("[A-Z]").matcher(typeName); m.find(); ¢ += m.group())
-      ;
-    return ¢.toLowerCase();
+    for (final Matcher m = Pattern.compile("[A-Z]").matcher(typeName); ; ¢ += m.group())
+      if (!m.find())      
+        return ¢.toLowerCase();
   }
 
   public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
