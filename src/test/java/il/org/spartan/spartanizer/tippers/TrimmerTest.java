@@ -913,7 +913,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
   
   @Test public void ifEmptyThenThrowVariant1() {
-    trimmingOf("if (b) {;} throw new Exception();\n").gives("  throw new Exception();");
+    trimmingOf("if (b) {;} throw new Exception();\n").gives(" {} throw new Exception();").gives(" throw new Exception();").stays();
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
@@ -1147,7 +1147,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void inlineSingleUseWithAssignment() {
-    trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;").stays();
+    trimmingOf("int a = 2; for (int a=2;true;) if (f()) f(a);").stays();
   }
 
   @Test public void inlineSingleVariableintoPlusPlus() {
