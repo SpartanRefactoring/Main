@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method") public final class Issue121 {
+@Ignore @SuppressWarnings("static-method") public final class Issue121 {
   @Test public void test01() {
     trimmingOf("class A{ \n" //
         + "static public final class EX13{ \n" //
