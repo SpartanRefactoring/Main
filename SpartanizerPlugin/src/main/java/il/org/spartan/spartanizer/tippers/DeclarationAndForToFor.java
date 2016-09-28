@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class DeclarationAndForToFor extends ReplaceToNextStatement<VariableDeclarationStatement> implements TipperCategory.CommnoFactoring {
+public final class DeclarationAndForToFor extends ReplaceToNextStatement<VariableDeclarationStatement> implements TipperCategory.Collapse {
   private static Expression dupForLastStatement(final ForStatement ¢) {
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
