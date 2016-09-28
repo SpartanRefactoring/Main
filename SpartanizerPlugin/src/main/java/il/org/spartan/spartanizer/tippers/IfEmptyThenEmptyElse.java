@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement> implements Kind.InVain {
+public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement> implements Category.InVain {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove 'if' statement with vacous 'then' and 'else' parts";
   }

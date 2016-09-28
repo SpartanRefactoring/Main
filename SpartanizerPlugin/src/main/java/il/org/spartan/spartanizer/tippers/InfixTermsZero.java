@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
+public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression> implements Category.InVain {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)

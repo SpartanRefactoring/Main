@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>
  * @since 2016-04-24 */
-public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
+public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression> implements Category.Idiomatic {
   private static String description(final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }

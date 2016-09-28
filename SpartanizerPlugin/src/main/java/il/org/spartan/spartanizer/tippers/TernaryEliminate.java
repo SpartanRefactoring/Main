@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpression> implements Kind.InVain {
+public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpression> implements Category.InVain {
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate conditional exprssion with identical branches";
   }

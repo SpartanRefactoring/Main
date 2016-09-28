@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * .
  * @author Yossi Gil
  * @since 2015-08-26 */
-public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
+public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement> implements Category.Collapse {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and remove vacuous 'then' branch";
   }

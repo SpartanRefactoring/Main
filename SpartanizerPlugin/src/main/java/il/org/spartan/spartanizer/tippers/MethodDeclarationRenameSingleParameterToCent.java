@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>void f(int a){}</code> to <code>void f(int ¢){}</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration> implements Kind.Centification {
+public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration> implements Category.Centification {
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }

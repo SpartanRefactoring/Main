@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<VariableDeclarationFragment> implements Kind.SyntacticBaggage {
+public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<VariableDeclarationFragment> implements Category.SyntacticBaggage {
   @Override public String description() {
     return "Remove default values initiliazing field";
   }

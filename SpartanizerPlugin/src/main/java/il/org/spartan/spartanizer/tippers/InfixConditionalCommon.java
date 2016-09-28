@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements Kind.CommnoFactoring {
+public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression> implements Category.CommnoFactoring {
   private static Expression chopHead(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     es.remove(0);
