@@ -95,14 +95,16 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final ForStatement s) {
+  @Override public Tip tip(final ForStatement s, final ExclusionManager exclude) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;
     final Statement body = s.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
-    return $ == null ? null : new Tip(description(), $) {
+   if (exclude != null)
+          exclude.exclude(s); 
+   return $ == null ? null : new Tip(description(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, (ASTNode) az.block(into.s("break;")).statements().get(0), g);
       }

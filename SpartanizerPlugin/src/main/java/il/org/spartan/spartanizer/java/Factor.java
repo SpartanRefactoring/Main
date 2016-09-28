@@ -24,7 +24,7 @@ class Factor {
     divider = divide;
     this.expression = expression;
   }
-
+  
   // doesn'tipper work for division, need to figure out why
   Expression asExpression() {
     if (!divider)
@@ -35,7 +35,7 @@ class Factor {
     $.setRightOperand(!iz.infixExpression(expression) ? duplicate.of(expression) : make.parethesized(duplicate.of(expression)));
     return $;
   }
-
+  
   boolean divider() {
     return divider;
   }
