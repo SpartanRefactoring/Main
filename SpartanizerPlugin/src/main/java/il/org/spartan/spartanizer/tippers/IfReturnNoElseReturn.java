@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </pre>
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
+public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement> implements Category.Ternarization {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'return'";
   }

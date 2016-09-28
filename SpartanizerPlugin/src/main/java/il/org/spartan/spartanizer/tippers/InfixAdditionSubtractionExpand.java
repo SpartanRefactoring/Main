@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * code>a-b-c</code>
  * @author Yossi Gil
  * @since 2016 */
-public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression> implements Kind.Idiomatic {
+public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression> implements Category.Idiomatic {
   @Override public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;
   }

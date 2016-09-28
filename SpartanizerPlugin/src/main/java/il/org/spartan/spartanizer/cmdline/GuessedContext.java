@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.Utils.*;
 
@@ -7,6 +7,7 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -19,43 +20,43 @@ public enum GuessedContext {
       "\n /* END compilation unit */\n"//
   ), OUTER_TYPE_LOOKALIKE(//
       COMPILATION_UNIT_LOOK_ALIKE.before + //
-          "\n\tipper package p; /* BEGIN Outer type in a compilation unit */\n"//
+          "\n\t package p466876; /* BEGIN Outer type in a compilation unit */\n"//
       , //
-      "\n\tipper /* END outer type in a compilation unit */\n" + //
+      "\n\t /* END outer type in a compilation unit */\n" + //
           COMPILATION_UNIT_LOOK_ALIKE.after //
   ), METHOD_LOOKALIKE( //
       OUTER_TYPE_LOOKALIKE.before + //
-          "\n\tipper\tipper public final class C {/* BEGIN Class C*/\n" //
+          "\n\t\t public final class C87456AZ {/* BEGIN Class C*/\n" //
       , //
-      "\n\tipper\tipper } /* END class C */\n" + //
+      "\n\t\t } /* END class C87456AZ */\n" + //
           OUTER_TYPE_LOOKALIKE.after //
   ), STATEMENTS_LOOK_ALIKE(//
       METHOD_LOOKALIKE.before //
-          + "\n\tipper\tipper\tipper public Object m() { /* BEGIN Public function m */\n" //
-          + "\n\tipper\tipper\tipper\tipper while (f4324()) {"//
-          + "\n\tipper\tipper\tipper\tipper g3423436();"//
-      , "\n\tipper\tipper\tipper\tipper h6463634();"), EXPRESSION_LOOK_ALIKE(//
+          + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
+          + "\n\t\t\t\t while (f4324()) {"//
+          + "\n\t\t\t\t g3423436();"//
+      , "\n\t\t\t\t h6463634();"), EXPRESSION_LOOK_ALIKE(//
           STATEMENTS_LOOK_ALIKE.before + //
-              "\n\tipper\tipper\tipper\tipper if (foo("//
+              "\n\t\t\t\t if (foo("//
           , //
           ",0)) return g();\n" //
               + STATEMENTS_LOOK_ALIKE.after //
   ), not_statment_may_occur_in_initializer_block(//
       METHOD_LOOKALIKE.before + //
-          "\n\tipper\tipper\tipper { /* BEGIN Instance initializer block */\n" //
+          "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
       , //
-      "\n\tipper\tipper\tipper } /* END instance initializer block */\n" + //
+      "\n\t\t\t } /* END instance initializer block */\n" + //
           METHOD_LOOKALIKE.after //
   ), not_statment_may_occur_in_static_initializer_block(//
       METHOD_LOOKALIKE.before + //
-          "\n\tipper\tipper\tipper static{ /* BEGIN Instance initializer block */\n" //
+          "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
       , //
-      "\n\tipper\tipper\tipper } /* END instance initializer block */\n" + //
+      "\n\t\t\t } /* END instance initializer block */\n" + //
           METHOD_LOOKALIKE.after //
   ), //
   //
   ;
-  public static final GuessedContext[] AlternativeContextToConsiderInOrder = new GuessedContext[] { //
+  public static final GuessedContext[] alternativeContextsToConsiderInThisOrder = new GuessedContext[] { //
       COMPILATION_UNIT_LOOK_ALIKE, //
       OUTER_TYPE_LOOKALIKE, //
       STATEMENTS_LOOK_ALIKE, //
@@ -67,21 +68,21 @@ public enum GuessedContext {
   static String enumerateFailingAttempts(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
-    for (final GuessedContext w : GuessedContext.AlternativeContextToConsiderInOrder) {
+    for (final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
       final String on = w.on(codeFragment);
-      $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.AlternativeContextToConsiderInOrder.length + "):");
-      $.append("\n\tipper\tipper Is it a " + w + "?");
-      $.append("\n\tipper Let's see...");
-      $.append("\n\tipper\tipper What I tried as input was (essentially) this literal:");
-      $.append("\n\tipper```" + wizard.essence(on) + "'''");
+      $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.alternativeContextsToConsiderInThisOrder.length + "):");
+      $.append("\n\t\t Is it a " + w + "?");
+      $.append("\n\t Let's see...");
+      $.append("\n\t\t What I tried as input was (essentially) this literal:");
+      $.append("\n\t```" + wizard.essence(on) + "'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-      $.append("\n\tipper\tipper Alas, what the parser generated " + u.getProblems().length //
+      $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
           + " on (essentially) this bit of code");
-      $.append("\n\tipper\tipper\tipper```" + wizard.essence(u + "") + "'''");
-      $.append("\n\tipper\tipper Properly formatted, this bit should look like so: ");
-      $.append("\n\tipper\tipper\tipper```" + u + "'''");
-      $.append("\n\tipper\tipper And the full list of problems was: ");
-      $.append("\n\tipper\tipper\tipper```" + u.getProblems() + "'''");
+      $.append("\n\t\t\t```" + wizard.essence(u + "") + "'''");
+      $.append("\n\t\t Properly formatted, this bit should look like so: ");
+      $.append("\n\t\t\t```" + u + "'''");
+      $.append("\n\t\t And the full list of problems was: ");
+      $.append("\n\t\t\t```" + u.getProblems() + "'''");
     }
     return $ + "";
   }
@@ -91,14 +92,14 @@ public enum GuessedContext {
    * @return most appropriate Guess, or null, if the parameter could not be
    *         parsed appropriately. */
   public static GuessedContext find(final String codeFragment) {
-    for (final GuessedContext $ : AlternativeContextToConsiderInOrder)
+    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
     azzert.fail("שימ לב!\n" + //
         "Nota!\n" + //
         "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
         "at a string literal somewhere \n " + //
-        "\tipper\tipper =>  in *your* __צלך__ @Test related Java code  <== \n" + //
+        "\t\t =>  in *your* __צלך__ @Test related Java code  <== \n" + //
         "To fix this problem, copy this trace window (try right clicking __here__). Then,\n" + //
         "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
