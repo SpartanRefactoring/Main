@@ -307,7 +307,8 @@ public final class TrimmerTest {
   }
 
   @Test public void bugIntroducingMISSINGWord1e() {
-    trimmingOf("Y ? Z : R ? null : S ? null : T").gives("Y?Z:!R&&!S?T:null");
+    trimmingOf("Y ? Z : R ? null : S ? null : T")//
+        .gives("Y?Z:!R&&!S?T:null");
   }
 
   @Test public void bugIntroducingMISSINGWord2() {
@@ -359,7 +360,8 @@ public final class TrimmerTest {
   }
 
   @Test public void bugIntroducingMISSINGWord2f() {
-    trimmingOf("X &&  T ? E : Y ? null : Z ? null : F").gives("X&&T?E:!Y&&!Z?F:null");
+    trimmingOf("X &&  T ? E : Y ? null : Z ? null : F")//
+        .gives("X&&T?E:!Y&&!Z?F:null");
   }
 
   @Test public void bugIntroducingMISSINGWord3() {
@@ -387,99 +389,146 @@ public final class TrimmerTest {
   }
 
   @Test public void bugIntroducingMISSINGWordTry3() {
-    trimmingOf("!(f.g(X, false) && !a.b.e(m.h()))").gives("!f.g(X,false)||a.b.e(m.h())");
+    trimmingOf("!(f.g(X, false) && !a.b.e(m.h()))")//
+        .gives("!f.g(X,false)||a.b.e(m.h())");
   }
 
   @Test public void bugOfMissingTry() {
-    trimmingOf("!(A && B && C && true && D)").gives("!A||!B||!C||false||!D");
+    trimmingOf("!(A && B && C && true && D)")//
+        .gives("!A||!B||!C||false||!D");
   }
 
   @Test public void canonicalFragementExample1() {
-    trimmingOf("int a; a = 3;").gives("int a = 3;");
+    trimmingOf("int a; a = 3;")//
+        .gives("int a = 3;");
   }
 
   @Test public void canonicalFragementExample2() {
-    trimmingOf("int a = 2; if (b) a = 3; ").gives("int a = b ? 3 : 2;");
+    trimmingOf("int a = 2; if (b) a = 3; ")//
+        .gives("int a = b ? 3 : 2;");
   }
 
   @Test public void canonicalFragementExample3() {
-    trimmingOf("int a = 2; a += 3; ").gives("int a = 2 + 3;");
+    trimmingOf("int a = 2; a += 3; ")//
+        .gives("int a = 2 + 3;");
   }
 
   @Test public void canonicalFragementExample4() {
-    trimmingOf("int a = 2; a = 3 * a; ").gives("int a = 3 * 2;");
+    trimmingOf("int a = 2; a = 3 * a; ")//
+        .gives("int a = 3 * 2;");
   }
 
   @Test public void canonicalFragementExample5() {
-    trimmingOf("int a = 2; return 3 * a; ").gives("return 3 * 2;");
+    trimmingOf("int a = 2; return 3 * a; ")//
+        .gives("return 3 * 2;");
   }
 
   @Test public void canonicalFragementExample6() {
-    trimmingOf("int a = 2; return a; ").gives("return 2;");
+    trimmingOf("int a = 2; return a; ")//
+        .gives("return 2;");
   }
 
   @Test public void canonicalFragementExamples() {
-    trimmingOf("int a; a = 3;").gives("int a = 3;");
-    trimmingOf("int a = 2; if (b) a = 3; ").gives("int a = b ? 3 : 2;");
-    trimmingOf("int a = 2; a += 3; ").gives("int a = 2 + 3;");
-    trimmingOf("int a = 2; a = 3 * a; ").gives("int a = 3 * 2;");
-    trimmingOf("int a = 2; return 3 * a; ").gives("return 3 * 2;");
-    trimmingOf("int a = 2; return a; ").gives("return 2;");
+    trimmingOf("int a; a = 3;")//
+        .gives("int a = 3;");
+    trimmingOf("int a = 2; if (b) a = 3; ")//
+        .gives("int a = b ? 3 : 2;");
+    trimmingOf("int a = 2; a += 3; ")//
+        .gives("int a = 2 + 3;");
+    trimmingOf("int a = 2; a = 3 * a; ")//
+        .gives("int a = 3 * 2;");
+    trimmingOf("int a = 2; return 3 * a; ")//
+        .gives("return 3 * 2;");
+    trimmingOf("int a = 2; return a; ")//
+        .gives("return 2;");
   }
 
   @Test public void canonicalFragementExamplesWithExraFragments() {
-    trimmingOf("int a = 2; a = 3 * a * b; ").gives("int a = 3 * 2 * b;");
-    trimmingOf("int a = 2; a = 3 * a; ").gives("int a = 3 * 2;");
-    trimmingOf("int a = 2; a += 3; ").gives("int a = 2 + 3;");
-    trimmingOf("int a = 2; a += b; ").gives("int a = 2 + b;");
-    trimmingOf("int a = 2, b = 11; a = 3 * a * b; ").gives("int a=2;a=3*a*11;").gives("int a=3*2*11;").gives("int a=66;");
-    trimmingOf("int a = 2, b=1; a += b; ").gives("int a=2;a+=1;").gives("int a=2+1;");
-    trimmingOf("int a = 2,b=1; if (b) a = 3; ").gives("int a=2;if(1)a=3;").gives("int a=1?3:2;");
-    trimmingOf("int a = 2, b = 1; return a + 3 * b; ").gives("int b=1;return 2+3*b;");
-    trimmingOf("int a =2,b=2; if (x) a = 2*a;").gives("int a=x?2*2:2, b=2;");
-    trimmingOf("int a = 2, b; a = 3 * a * b; ").gives("int a = 2, b; a *= 3 * b; ").stays();
+    trimmingOf("int a = 2; a = 3 * a * b; ")//
+        .gives("int a = 3 * 2 * b;");
+    trimmingOf("int a = 2; a = 3 * a; ")//
+        .gives("int a = 3 * 2;");
+    trimmingOf("int a = 2; a += 3; ")//
+        .gives("int a = 2 + 3;");
+    trimmingOf("int a = 2; a += b; ")//
+        .gives("int a = 2 + b;");
+    trimmingOf("int a = 2, b = 11; a = 3 * a * b; ")//
+        .gives("int a=2;a=3*a*11;")//
+        .gives("int a=3*2*11;")//
+        .gives("int a=66;");
+    trimmingOf("int a = 2, b=1; a += b; ")//
+        .gives("int a=2;a+=1;")//
+        .gives("int a=2+1;");
+    trimmingOf("int a = 2,b=1; if (b) a = 3; ")//
+        .gives("int a=2;if(1)a=3;")//
+        .gives("int a=1?3:2;");
+    trimmingOf("int a = 2, b = 1; return a + 3 * b; ")//
+        .gives("int b=1;return 2+3*b;");
+    trimmingOf("int a =2,b=2; if (x) a = 2*a;")//
+        .gives("int a=x?2*2:2, b=2;");
+    trimmingOf("int a = 2, b; a = 3 * a * b; ")//
+        .gives("int a = 2, b; a *= 3 * b; ").stays();
     trimmingOf("int a = 2, b; a += b; ").stays();
-    trimmingOf("int a =2,b; if (x) a = 2*a;").gives("int a=x?2*2:2, b;");
-    trimmingOf("int a = 2, b; return a + 3 * b; ").gives("return 2 + 3*b;");
-    trimmingOf("int a =2; if (x) a = 3*a;").gives("int a=x?3*2:2;");
-    trimmingOf("int a = 2; return 3 * a * a; ").gives("return 3 * 2 * 2;");
-    trimmingOf("int a = 2; return 3 * a * b; ").gives("return 3 * 2 * b;");
-    trimmingOf("int a = 2; return a; ").gives("return 2;");
-    trimmingOf("int a,b=2; a = b;").gives("int a;a=2;").gives("int a=2;");
-    trimmingOf("int a,b; a = 3;").gives("int a = 3, b;");
-    trimmingOf("int a; if (x) a = 3; else a++;").gives("int a;if(x)a=3;else++a;");
-    trimmingOf("int b=5,a = 2,c=4; return 3 * a * b * c; ").gives("int a=2,c=4;return 3*a*5*c;");
-    trimmingOf("int b=5,a = 2,c; return 3 * a * b * c; ").gives("int a = 2; return 3 * a * 5 * c;");
+    trimmingOf("int a =2,b; if (x) a = 2*a;")//
+        .gives("int a=x?2*2:2, b;");
+    trimmingOf("int a = 2, b; return a + 3 * b; ")//
+        .gives("return 2 + 3*b;");
+    trimmingOf("int a =2; if (x) a = 3*a;")//
+        .gives("int a=x?3*2:2;");
+    trimmingOf("int a = 2; return 3 * a * a; ")//
+        .gives("return 3 * 2 * 2;");
+    trimmingOf("int a = 2; return 3 * a * b; ")//
+        .gives("return 3 * 2 * b;");
+    trimmingOf("int a = 2; return a; ")//
+        .gives("return 2;");
+    trimmingOf("int a,b=2; a = b;")//
+        .gives("int a;a=2;")//
+        .gives("int a=2;");
+    trimmingOf("int a,b; a = 3;")//
+        .gives("int a = 3, b;");
+    trimmingOf("int a; if (x) a = 3; else a++;")//
+        .gives("int a;if(x)a=3;else++a;");
+    trimmingOf("int b=5,a = 2,c=4; return 3 * a * b * c; ")//
+        .gives("int a=2,c=4;return 3*a*5*c;");
+    trimmingOf("int b=5,a = 2,c; return 3 * a * b * c; ")//
+        .gives("int a = 2; return 3 * a * 5 * c;");
   }
 
   @Test public void canonicalFragementExamplesWithExraFragmentsX() {
-    trimmingOf("int a; if (x) a = 3; else a++;").gives("int a;if(x)a=3;else++a;");
+    trimmingOf("int a; if (x) a = 3; else a++;")//
+        .gives("int a;if(x)a=3;else++a;");
   }
 
   @Test public void chainComparison() {
     final InfixExpression e = i("a == true == b == c");
     azzert.that(right(e) + "", is("c"));
-    trimmingOf("a == true == b == c").gives("a == b == c");
+    trimmingOf("a == true == b == c")//
+        .gives("a == b == c");
   }
 
   @Test public void chainCOmparisonTrueLast() {
-    trimmingOf("a == b == c == true").gives("a == b == c");
+    trimmingOf("a == b == c == true")//
+        .gives("a == b == c");
   }
 
   @Test public void comaprisonWithBoolean1() {
-    trimmingOf("s.equals(532)==true").gives("s.equals(532)");
+    trimmingOf("s.equals(532)==true")//
+        .gives("s.equals(532)");
   }
 
   @Test public void comaprisonWithBoolean2() {
-    trimmingOf("s.equals(532)==false ").gives("!s.equals(532)");
+    trimmingOf("s.equals(532)==false ")//
+        .gives("!s.equals(532)");
   }
 
   @Test public void comaprisonWithBoolean3() {
-    trimmingOf("(false==s.equals(532))").gives("(!s.equals(532))");
+    trimmingOf("(false==s.equals(532))")//
+        .gives("(!s.equals(532))");
   }
 
   @Test public void comaprisonWithSpecific0() {
-    trimmingOf("this != a").gives("a != this");
+    trimmingOf("this != a")//
+        .gives("a != this");
   }
 
   @Test public void comaprisonWithSpecific0Legibiliy00() {
@@ -491,41 +540,55 @@ public final class TrimmerTest {
   }
 
   @Test public void comaprisonWithSpecific1() {
-    trimmingOf("null != a").gives("a != null");
+    trimmingOf("null != a")//
+        .gives("a != null");
   }
 
   @Test public void comaprisonWithSpecific2() {
-    trimmingOf("null != a").gives("a != null");
-    trimmingOf("this == a").gives("a == this");
-    trimmingOf("null == a").gives("a == null");
-    trimmingOf("this >= a").gives("a <= this");
-    trimmingOf("null >= a").gives("a <= null");
-    trimmingOf("this <= a").gives("a >= this");
-    trimmingOf("null <= a").gives("a >= null");
+    trimmingOf("null != a")//
+        .gives("a != null");
+    trimmingOf("this == a")//
+        .gives("a == this");
+    trimmingOf("null == a")//
+        .gives("a == null");
+    trimmingOf("this >= a")//
+        .gives("a <= this");
+    trimmingOf("null >= a")//
+        .gives("a <= null");
+    trimmingOf("this <= a")//
+        .gives("a >= this");
+    trimmingOf("null <= a")//
+        .gives("a >= null");
   }
 
   @Test public void comaprisonWithSpecific2a() {
-    trimmingOf("s.equals(532)==false").gives("!s.equals(532)");
+    trimmingOf("s.equals(532)==false")//
+        .gives("!s.equals(532)");
   }
 
   @Test public void comaprisonWithSpecific3() {
-    trimmingOf("(this==s.equals(532))").gives("(s.equals(532)==this)");
+    trimmingOf("(this==s.equals(532))")//
+        .gives("(s.equals(532)==this)");
   }
 
   @Test public void comaprisonWithSpecific4() {
-    trimmingOf("(0 < a)").gives("(a>0)");
+    trimmingOf("(0 < a)")//
+        .gives("(a>0)");
   }
 
   @Test public void comaprisonWithSpecificInParenthesis() {
-    trimmingOf("(null==a)").gives("(a==null)");
+    trimmingOf("(null==a)")//
+        .gives("(a==null)");
   }
 
   @Test public void commonPrefixEntirelyIfBranches() {
-    trimmingOf("if (s.equals(532)) S.out.close();else S.out.close();").gives("S.out.close(); ");
+    trimmingOf("if (s.equals(532)) S.out.close();else S.out.close();")//
+        .gives("S.out.close(); ");
   }
 
   @Test public void commonPrefixIfBranchesInFor() {
-    trimmingOf("for (;;) if (a) {i++;j++;j++;} else { i++;j++; i++;}").gives("for(;;){i++;j++;if(a)j++;else i++;}");
+    trimmingOf("for (;;) if (a) {i++;j++;j++;} else { i++;j++; i++;}")//
+        .gives("for(;;){i++;j++;if(a)j++;else i++;}");
   }
 
   @Test public void commonSuffixIfBranches() {
@@ -534,11 +597,13 @@ public final class TrimmerTest {
   }
 
   @Test public void commonSuffixIfBranchesDisappearingElse() {
-    trimmingOf("if (a) { \n" + "++i;\n" + "f();\n" + "} else {\n" + "f();\n" + "}").gives("if (a)  \n" + "++i;\n" + "\n" + "f();");
+    trimmingOf("if (a) { \n" + "++i;\n" + "f();\n" + "} else {\n" + "f();\n" + "}")//
+        .gives("if (a)  \n" + "++i;\n" + "\n" + "f();");
   }
 
   @Test public void commonSuffixIfBranchesDisappearingThen() {
-    trimmingOf("if (a) { \n" + "f();\n" + "} else {\n" + "++j;\n" + "f();\n" + "}").gives("if (!a)  \n" + "++j;\n" + "\n" + "f();");
+    trimmingOf("if (a) { \n" + "f();\n" + "} else {\n" + "++j;\n" + "f();\n" + "}")//
+        .gives("if (!a)  \n" + "++j;\n" + "\n" + "f();");
   }
 
   @Test public void commonSuffixIfBranchesDisappearingThenWithinIf() {
@@ -547,75 +612,93 @@ public final class TrimmerTest {
   }
 
   @Test public void compareWithBoolean00() {
-    trimmingOf("a == true").gives("a");
+    trimmingOf("a == true")//
+        .gives("a");
   }
 
   @Test public void compareWithBoolean01() {
-    trimmingOf("a == false").gives("!a");
+    trimmingOf("a == false")//
+        .gives("!a");
   }
 
   @Test public void compareWithBoolean10() {
-    trimmingOf("true == a").gives("a");
+    trimmingOf("true == a")//
+        .gives("a");
   }
 
   @Test public void compareWithBoolean100() {
-    trimmingOf("a != true").gives("!a");
+    trimmingOf("a != true")//
+        .gives("!a");
   }
 
   @Test public void compareWithBoolean100a() {
-    trimmingOf("(((a))) != true").gives("!a");
+    trimmingOf("(((a))) != true")//
+        .gives("!a");
   }
 
   @Test public void compareWithBoolean101() {
-    trimmingOf("a != false").gives("a");
+    trimmingOf("a != false")//
+        .gives("a");
   }
 
   @Test public void compareWithBoolean11() {
-    trimmingOf("false == a").gives("!a");
+    trimmingOf("false == a")//
+        .gives("!a");
   }
 
   @Test public void compareWithBoolean110() {
-    trimmingOf("true != a").gives("!a");
+    trimmingOf("true != a")//
+        .gives("!a");
   }
 
   @Test public void compareWithBoolean111() {
-    trimmingOf("false != a").gives("a");
+    trimmingOf("false != a")//
+        .gives("a");
   }
 
   @Test public void compareWithBoolean2() {
-    trimmingOf("false != false").gives("false");
+    trimmingOf("false != false")//
+        .gives("false");
   }
 
   @Test public void compareWithBoolean3() {
-    trimmingOf("false != true").gives("true");
+    trimmingOf("false != true")//
+        .gives("true");
   }
 
   @Test public void compareWithBoolean4() {
-    trimmingOf("false == false").gives("true");
+    trimmingOf("false == false")//
+        .gives("true");
   }
 
   @Test public void compareWithBoolean5() {
-    trimmingOf("false == true").gives("false");
+    trimmingOf("false == true")//
+        .gives("false");
   }
 
   @Test public void compareWithBoolean6() {
-    trimmingOf("false != false").gives("false");
+    trimmingOf("false != false")//
+        .gives("false");
   }
 
   @Test public void compareWithBoolean7() {
-    trimmingOf("true != true").gives("false");
+    trimmingOf("true != true")//
+        .gives("false");
   }
 
   @Test public void compareWithBoolean8() {
-    trimmingOf("true != false").gives("true");
+    trimmingOf("true != false")//
+        .gives("true");
   }
 
   @Test public void compareWithBoolean9() {
-    trimmingOf("true != true").gives("false");
+    trimmingOf("true != true")//
+        .gives("false");
   }
 
   @Test public void comparison01() {
-    trimmingOf("1+2+3<3").gives("6<3").stays();
+    trimmingOf("1+2+3<3")//
+        .gives("6<3").stays();
   }
 
   @Test public void comparison02() {
@@ -627,7 +710,8 @@ public final class TrimmerTest {
   }
 
   @Test public void comparison04() {
-    trimmingOf("6-7<2+1").gives("-1<3");
+    trimmingOf("6-7<2+1")//
+        .gives("-1<3");
   }
 
   @Test public void comparison05() {
@@ -643,15 +727,18 @@ public final class TrimmerTest {
   }
 
   @Test public void comparison09() {
-    trimmingOf("1+2<3&7+4>2+1").gives("3<3&11>3");
+    trimmingOf("1+2<3&7+4>2+1")//
+        .gives("3<3&11>3");
   }
 
   @Test public void comparison11() {
-    trimmingOf("12==this").gives("this==12");
+    trimmingOf("12==this")//
+        .gives("this==12");
   }
 
   @Test public void comparison12() {
-    trimmingOf("1+2<3&7+4>2+1||6-7<2+1").gives("3<3&11>3||-1<3").stays();
+    trimmingOf("1+2<3&7+4>2+1||6-7<2+1")//
+        .gives("3<3&11>3||-1<3").stays();
   }
 
   @Test public void comparison13() {
@@ -659,15 +746,18 @@ public final class TrimmerTest {
   }
 
   @Test public void comparisonWithCharacterConstant() {
-    trimmingOf("'d' == s.charAt(i)").gives("s.charAt(i)=='d'");
+    trimmingOf("'d' == s.charAt(i)")//
+        .gives("s.charAt(i)=='d'");
   }
 
   @Test public void compreaeExpressionToExpression() {
-    trimmingOf("6 - 7 < 2 + 1   ").gives("-1<3");
+    trimmingOf("6 - 7 < 2 + 1   ")//
+        .gives("-1<3");
   }
 
   @Test public void correctSubstitutionInIfAssignment() {
-    trimmingOf("int a = 2+3; if (a+b > a << b) a =(((((a *7 << a)))));").gives("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
+    trimmingOf("int a = 2+3; if (a+b > a << b) a =(((((a *7 << a)))));")//
+        .gives("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
   }
 
   @Test public void declarationAssignmentUpdateWithIncrement() {
@@ -692,11 +782,13 @@ public final class TrimmerTest {
   }
 
   @Test public void declarationIfAssignment3() {
-    trimmingOf("int a =2; if (a != 2) a = 3;").gives("int a = 2 != 2 ? 3 : 2;");
+    trimmingOf("int a =2; if (a != 2) a = 3;")//
+        .gives("int a = 2 != 2 ? 3 : 2;");
   }
 
   @Test public void declarationIfAssignment4() {
-    trimmingOf("int a =2; if (x) a = 2*a;").gives("int a = x ? 2*2: 2;");
+    trimmingOf("int a =2; if (x) a = 2*a;")//
+        .gives("int a = x ? 2*2: 2;");
   }
 
   @Test public void declarationIfUpdateAssignment() {
@@ -705,7 +797,9 @@ public final class TrimmerTest {
   }
 
   @Test public void declarationIfUsesLaterVariable() {
-    trimmingOf("int a=0, b=0;if (b==3)   a=4;").gives(" int a=0;if(0==3)a=4;").gives(" int a=0==3?4:0;");
+    trimmingOf("int a=0, b=0;if (b==3)   a=4;")//
+        .gives(" int a=0;if(0==3)a=4;")//
+        .gives(" int a=0==3?4:0;");
   }
 
   @Test public void declarationIfUsesLaterVariable1() {
@@ -713,11 +807,13 @@ public final class TrimmerTest {
   }
 
   @Test public void declarationInitializeRightShift() {
-    trimmingOf("int a = 3;a>>=2;").gives("int a = 3 >> 2;");
+    trimmingOf("int a = 3;a>>=2;")//
+        .gives("int a = 3 >> 2;");
   }
 
   @Test public void declarationInitializerReturnAssignment() {
-    trimmingOf("int a = 3; return a = 2 * a;").gives("return 2 * 3;");
+    trimmingOf("int a = 3; return a = 2 * a;")//
+        .gives("return 2 * 3;");
   }
 
   @Test public void declarationInitializerReturnExpression() {
@@ -726,27 +822,33 @@ public final class TrimmerTest {
   }
 
   @Test public void declarationInitializesRotate() {
-    trimmingOf("int a = 3;a>>>=2;").gives("int a = 3 >>> 2;");
+    trimmingOf("int a = 3;a>>>=2;")//
+        .gives("int a = 3 >>> 2;");
   }
 
   @Test public void declarationInitializeUpdateAnd() {
-    trimmingOf("int a = 3;a&=2;").gives("int a = 3 & 2;");
+    trimmingOf("int a = 3;a&=2;")//
+        .gives("int a = 3 & 2;");
   }
 
   @Test public void declarationInitializeUpdateAssignment() {
-    trimmingOf("int a = 3;a += 2;").gives("int a = 3+2;");
+    trimmingOf("int a = 3;a += 2;")//
+        .gives("int a = 3+2;");
   }
 
   @Test public void declarationInitializeUpdateAssignmentFunctionCallWithReuse() {
-    trimmingOf("int a = f();a += 2*f();").gives("int a=f()+2*f();");
+    trimmingOf("int a = f();a += 2*f();")//
+        .gives("int a=f()+2*f();");
   }
 
   @Test public void declarationInitializeUpdateAssignmentFunctionCallWIthReuse() {
-    trimmingOf("int a = x;a += a + 2*f();").gives("int a=x+(x+2*f());");
+    trimmingOf("int a = x;a += a + 2*f();")//
+        .gives("int a=x+(x+2*f());");
   }
 
   @Test public void declarationInitializeUpdateAssignmentIncrement() {
-    trimmingOf("int a = ++i;a += j;").gives("int a = ++i + j;");
+    trimmingOf("int a = ++i;a += j;")//
+        .gives("int a = ++i + j;");
   }
 
   @Test public void declarationInitializeUpdateAssignmentIncrementTwice() {
@@ -754,43 +856,53 @@ public final class TrimmerTest {
   }
 
   @Test public void declarationInitializeUpdateAssignmentWithReuse() {
-    trimmingOf("int a = 3;a += 2*a;").gives("int a = 3+2*3;");
+    trimmingOf("int a = 3;a += 2*a;")//
+        .gives("int a = 3+2*3;");
   }
 
   @Test public void declarationInitializeUpdateDividies() {
-    trimmingOf("int a = 3;a/=2;").gives("int a = 3 / 2;");
+    trimmingOf("int a = 3;a/=2;")//
+        .gives("int a = 3 / 2;");
   }
 
   @Test public void declarationInitializeUpdateLeftShift() {
-    trimmingOf("int a = 3;a<<=2;").gives("int a = 3 << 2;");
+    trimmingOf("int a = 3;a<<=2;")//
+        .gives("int a = 3 << 2;");
   }
 
   @Test public void declarationInitializeUpdateMinus() {
-    trimmingOf("int a = 3;a-=2;").gives("int a = 3 - 2;");
+    trimmingOf("int a = 3;a-=2;")//
+        .gives("int a = 3 - 2;");
   }
 
   @Test public void declarationInitializeUpdateModulo() {
-    trimmingOf("int a = 3;a%= 2;").gives("int a = 3 % 2;");
+    trimmingOf("int a = 3;a%= 2;")//
+        .gives("int a = 3 % 2;");
   }
 
   @Test public void declarationInitializeUpdatePlus() {
-    trimmingOf("int a = 3;a+=2;").gives("int a = 3 + 2;");
+    trimmingOf("int a = 3;a+=2;")//
+        .gives("int a = 3 + 2;");
   }
 
   @Test public void declarationInitializeUpdateTimes() {
-    trimmingOf("int a = 3;a*=2;").gives("int a = 3 * 2;");
+    trimmingOf("int a = 3;a*=2;")//
+        .gives("int a = 3 * 2;");
   }
 
   @Test public void declarationInitializeUpdateXor() {
-    trimmingOf("int a = 3;a^=2;").gives("int a = 3 ^ 2;");
+    trimmingOf("int a = 3;a^=2;")//
+        .gives("int a = 3 ^ 2;");
   }
 
   @Test public void declarationInitializeUpdatOr() {
-    trimmingOf("int a = 3;a|=2;").gives("int a = 3 | 2;");
+    trimmingOf("int a = 3;a|=2;")//
+        .gives("int a = 3 | 2;");
   }
 
   @Test public void declarationUpdateReturn() {
-    trimmingOf("int a = 3; return a += 2;").gives("return 3 + 2;");
+    trimmingOf("int a = 3; return a += 2;")//
+        .gives("return 3 + 2;");
   }
 
   @Test public void declarationUpdateReturnNone() {
@@ -798,11 +910,13 @@ public final class TrimmerTest {
   }
 
   @Test public void declarationUpdateReturnTwice() {
-    trimmingOf("int a = 3; return a += 2 * a;").gives("return 3 + 2 *3 ;");
+    trimmingOf("int a = 3; return a += 2 * a;")//
+        .gives("return 3 + 2 *3 ;");
   }
 
   @Test public void delcartionIfAssignmentNotPlain() {
-    trimmingOf("int a=0;   if (y) a+=3; ").gives("int a = y ? 0 + 3 : 0;");
+    trimmingOf("int a=0;   if (y) a+=3; ")//
+        .gives("int a = y ? 0 + 3 : 0;");
   }
 
   @Test public void doNotConsolidateNewArrayActual() {
@@ -827,7 +941,8 @@ public final class TrimmerTest {
   }
 
   @Test public void doNotIntroduceDoubleNegation() {
-    trimmingOf("!Y ? null :!Z ? null : F").gives("Y&&Z?F:null");
+    trimmingOf("!Y ? null :!Z ? null : F")//
+        .gives("Y&&Z?F:null");
   }
 
   @Test public void donotSorMixedTypes() {
@@ -850,15 +965,18 @@ public final class TrimmerTest {
 
   @Test public void duplicatePartialIfBranches() {
     trimmingOf("    if (a) {\n" + "      f();\n" + "      g();\n" + "      ++i;\n" + "    } else {\n" + "      f();\n" + "      g();\n"
-        + "      --i;\n" + "    }").gives("   f();\n" + "   g();\n" + "    if (a) \n" + "      ++i;\n" + "    else \n" + "      --i;");
+        + "      --i;\n" + "    }")//
+            .gives("   f();\n" + "   g();\n" + "    if (a) \n" + "      ++i;\n" + "    else \n" + "      --i;");
   }
 
   @Test public void emptyElse() {
-    trimmingOf("if (x) b = 3; else ;").gives("if (x) b = 3;");
+    trimmingOf("if (x) b = 3; else ;")//
+        .gives("if (x) b = 3;");
   }
 
   @Test public void emptyElseBlock() {
-    trimmingOf("if (x) b = 3; else { ;}").gives("if (x) b = 3;");
+    trimmingOf("if (x) b = 3; else { ;}")//
+        .gives("if (x) b = 3;");
   }
 
   @Test public void emptyIsNotChangedExpression() {
@@ -870,23 +988,28 @@ public final class TrimmerTest {
   }
 
   @Test public void emptyThen1() {
-    trimmingOf("if (b) ; else x();").gives("if (!b) x();");
+    trimmingOf("if (b) ; else x();")//
+        .gives("if (!b) x();");
   }
 
   @Test public void emptyThen2() {
-    trimmingOf("if (b) {;;} else {x() ;}").gives("if (!b) x();");
+    trimmingOf("if (b) {;;} else {x() ;}")//
+        .gives("if (!b) x();");
   }
 
   @Test public void factorOutAnd() {
-    trimmingOf("(a || b) && (a || c)").gives("a || b && c");
+    trimmingOf("(a || b) && (a || c)")//
+        .gives("a || b && c");
   }
 
   @Test public void factorOutOr() {
-    trimmingOf("a && b || a && c").gives("a && (b || c)");
+    trimmingOf("a && b || a && c")//
+        .gives("a && (b || c)");
   }
 
   @Test public void factorOutOr3() {
-    trimmingOf("a && b && x  && f() || a && c && y ").gives("a && (b && x && f() || c && y)");
+    trimmingOf("a && b && x  && f() || a && c && y ")//
+        .gives("a && (b && x && f() || c && y)");
   }
 
   @Test public void forLoopBug() {
@@ -903,9 +1026,10 @@ public final class TrimmerTest {
 
   @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
     trimmingOf("public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.h('!');\n" + "    System.h('!');\n"
-        + "    ++i;\n" + "  } else {\n" + "    i += 2;\n" + "    System.h('@');\n" + "    System.h('@');\n" + "    ++i;\n" + "  }\n" + "}").gives(
-            "public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.h('!');\n" + "    System.h('!');\n"
-                + "  } else {\n" + "    i += 2;\n" + "    System.h('@');\n" + "    System.h('@');\n" + "  }\n" + "  ++i;" + "}");
+        + "    ++i;\n" + "  } else {\n" + "    i += 2;\n" + "    System.h('@');\n" + "    System.h('@');\n" + "    ++i;\n" + "  }\n" + "}")//
+            .gives(
+                "public static void f() {\n" + "  int i = 0;\n" + "  if (f()) {\n" + "    i += 1;\n" + "    System.h('!');\n" + "    System.h('!');\n"
+                    + "  } else {\n" + "    i += 2;\n" + "    System.h('@');\n" + "    System.h('@');\n" + "  }\n" + "  ++i;" + "}");
   }
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
@@ -929,15 +1053,18 @@ public final class TrimmerTest {
   }
 
   @Test public void ifBugWithPlainEmptyElse() {
-    trimmingOf("      if (z)\n" + "        f();\n" + "      else\n" + "         ; \n").gives("      if (z)\n" + "        f();\n");
+    trimmingOf("      if (z)\n" + "        f();\n" + "      else\n" + "         ; \n")//
+        .gives("      if (z)\n" + "        f();\n");
   }
 
   @Test public void ifDegenerateThenInIf() {
-    trimmingOf("if (a) if (b) {} else f(); x();").gives("if(a)if(!b)f();x();");
+    trimmingOf("if (a) if (b) {} else f(); x();")//
+        .gives("if(a)if(!b)f();x();");
   }
 
   @Test public void ifEmptyElsewWithinIf() {
-    trimmingOf("if (a) if (b) {;;;f();} else {}").gives("if(a&&b){;;;f();}");
+    trimmingOf("if (a) if (b) {;;;f();} else {}")//
+        .gives("if(a&&b){;;;f();}");
   }
 
   @Test public void ifEmptyThenThrow() {
@@ -946,7 +1073,8 @@ public final class TrimmerTest {
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimmingOf("if (b) {\n" + " /* empty */" + "; \n" + "} // no else \n" + " throw new Exception();\n").gives("  {}throw new Exception();")
+    trimmingOf("if (b) {\n" + " /* empty */" + "; \n" + "} // no else \n" + " throw new Exception();\n")//
+        .gives("  {}throw new Exception();")//
         .gives("throw new Exception();").stays();
   }
 
@@ -964,11 +1092,13 @@ public final class TrimmerTest {
   }
 
   @Test public void ifFunctionCall() {
-    trimmingOf("if (x) f(a); else f(b);").gives("f(x ? a: b);");
+    trimmingOf("if (x) f(a); else f(b);")//
+        .gives("f(x ? a: b);");
   }
 
   @Test public void ifPlusPlusPost() {
-    trimmingOf("if (x) a++; else b++;").gives("if(x)++a;else++b;");
+    trimmingOf("if (x) a++; else b++;")//
+        .gives("if(x)++a;else++b;");
   }
 
   @Test public void ifPlusPlusPostExpression() {
@@ -992,7 +1122,8 @@ public final class TrimmerTest {
   }
 
   @Test public void ifSequencerNoElseSequencer02() {
-    trimmingOf("if (a) break; break;").gives("break;");
+    trimmingOf("if (a) break; break;")//
+        .gives("break;");
   }
 
   @Test public void ifSequencerNoElseSequencer03() {
@@ -1000,11 +1131,13 @@ public final class TrimmerTest {
   }
 
   @Test public void ifSequencerNoElseSequencer04() {
-    trimmingOf("if (a) break; return;").gives("if (!a) return; break;");
+    trimmingOf("if (a) break; return;")//
+        .gives("if (!a) return; break;");
   }
 
   @Test public void ifSequencerNoElseSequencer04a() {
-    trimmingOf("for (;;) {if (a) break; return;} a =3;").gives("for (;;) {if (!a) return; break;}a=3;").stays();
+    trimmingOf("for (;;) {if (a) break; return;} a =3;")//
+        .gives("for (;;) {if (!a) return; break;}a=3;").stays();
   }
 
   @Test public void ifSequencerNoElseSequencer05() {
@@ -1020,7 +1153,8 @@ public final class TrimmerTest {
   }
 
   @Test public void ifSequencerNoElseSequencer07() {
-    trimmingOf("if (a) break; throw e;").gives("if (!a) throw e; break;");
+    trimmingOf("if (a) break; throw e;")//
+        .gives("if (!a) throw e; break;");
   }
 
   @Test public void ifSequencerNoElseSequencer08() {
@@ -1028,43 +1162,53 @@ public final class TrimmerTest {
   }
 
   @Test public void ifSequencerNoElseSequencer09() {
-    trimmingOf("if (a) break; throw e;").gives("if (!a) throw e; break;");
+    trimmingOf("if (a) break; throw e;")//
+        .gives("if (!a) throw e; break;");
   }
 
   @Test public void ifSequencerNoElseSequencer10() {
-    trimmingOf("if (a) continue; return;").gives("if (!a) return; continue;");
+    trimmingOf("if (a) continue; return;")//
+        .gives("if (!a) return; continue;");
   }
 
   @Test public void ifSequencerThenSequencer0() {
-    trimmingOf("if (a) return 4; else break;").gives("if (a) return 4; break;");
+    trimmingOf("if (a) return 4; else break;")//
+        .gives("if (a) return 4; break;");
   }
 
   @Test public void ifSequencerThenSequencer1() {
-    trimmingOf("if (a) break; else return 2;").gives("if (!a) return 2; break;");
+    trimmingOf("if (a) break; else return 2;")//
+        .gives("if (!a) return 2; break;");
   }
 
   @Test public void ifSequencerThenSequencer3() {
-    trimmingOf("if (a) return 10; else continue;").gives("if (a) return 10; continue;");
+    trimmingOf("if (a) return 10; else continue;")//
+        .gives("if (a) return 10; continue;");
   }
 
   @Test public void ifSequencerThenSequencer4() {
-    trimmingOf("if (a) continue; else return 2;").gives("if (!a) return 2; continue;");
+    trimmingOf("if (a) continue; else return 2;")//
+        .gives("if (!a) return 2; continue;");
   }
 
   @Test public void ifSequencerThenSequencer5() {
-    trimmingOf("if (a) throw e; else break;").gives("if (a) throw e; break;");
+    trimmingOf("if (a) throw e; else break;")//
+        .gives("if (a) throw e; break;");
   }
 
   @Test public void ifSequencerThenSequencer6() {
-    trimmingOf("if (a) break; else throw e;").gives("if (!a) throw e; break;");
+    trimmingOf("if (a) break; else throw e;")//
+        .gives("if (!a) throw e; break;");
   }
 
   @Test public void ifSequencerThenSequencer7() {
-    trimmingOf("if (a) throw e; else continue;").gives("if (a) throw e; continue;");
+    trimmingOf("if (a) throw e; else continue;")//
+        .gives("if (a) throw e; continue;");
   }
 
   @Test public void ifSequencerThenSequencer8() {
-    trimmingOf("if (a) break; else throw e;").gives("if (!a) throw e; break;");
+    trimmingOf("if (a) break; else throw e;")//
+        .gives("if (!a) throw e; break;");
   }
 
   @Test public void ifThrowNoElseThrow() {
@@ -1073,23 +1217,28 @@ public final class TrimmerTest {
   }
 
   @Test public void ifWithCommonNotInBlock() {
-    trimmingOf("for (;;) if (a) {i++;j++;f();} else { i++;j++; g();}").gives("for(;;){i++;j++;if(a)f();else g();}");
+    trimmingOf("for (;;) if (a) {i++;j++;f();} else { i++;j++; g();}")//
+        .gives("for(;;){i++;j++;if(a)f();else g();}");
   }
 
   @Test public void ifWithCommonNotInBlockDegenerate() {
-    trimmingOf("for (;;) if (a) {i++; f();} else { i++;j++; }").gives("for(;;){i++; if(a)f(); else j++;}");
+    trimmingOf("for (;;) if (a) {i++; f();} else { i++;j++; }")//
+        .gives("for(;;){i++; if(a)f(); else j++;}");
   }
 
   @Test public void ifWithCommonNotInBlockiLongerElse() {
-    trimmingOf("for (;;) if (a) {i++;j++;f();} else { i++;j++;  f(); h();}").gives("for(;;){i++;j++; f(); if(!a) h();}");
+    trimmingOf("for (;;) if (a) {i++;j++;f();} else { i++;j++;  f(); h();}")//
+        .gives("for(;;){i++;j++; f(); if(!a) h();}");
   }
 
   @Test public void ifWithCommonNotInBlockiLongerThen() {
-    trimmingOf("for (;;) if (a) {i++;j++;f();} else { i++;j++; }").gives("for(;;){i++;j++; if(a)f();}");
+    trimmingOf("for (;;) if (a) {i++;j++;f();} else { i++;j++; }")//
+        .gives("for(;;){i++;j++; if(a)f();}");
   }
 
   @Test public void ifWithCommonNotInBlockNothingLeft() {
-    trimmingOf("for (;;) if (a) {i++;j++;} else { i++;j++; }").gives("for(;;){i++;j++;}");
+    trimmingOf("for (;;) if (a) {i++;j++;} else { i++;j++; }")//
+        .gives("for(;;){i++;j++;}");
   }
 
   @Test public void infiniteLoopBug1() {
@@ -1110,11 +1259,13 @@ public final class TrimmerTest {
   }
 
   @Test public void infiniteLoopBug4() {
-    trimmingOf("void f(final VariableDeclarationStatement n) {}").gives(" void f(final VariableDeclarationStatement s) { }");
+    trimmingOf("void f(final VariableDeclarationStatement n) {}")//
+        .gives(" void f(final VariableDeclarationStatement s) { }");
   }
 
   @Test public void initializer101() {
-    trimmingOf("int a = b; return a;").gives("return b;").stays();
+    trimmingOf("int a = b; return a;")//
+        .gives("return b;").stays();
   }
 
   @Test public void inline01() {
@@ -1134,15 +1285,18 @@ public final class TrimmerTest {
   }
 
   @Test public void inlineInitializers() {
-    trimmingOf("int b,a = 2; return 3 * a * b; ").gives("return 3*2*b;");
+    trimmingOf("int b,a = 2; return 3 * a * b; ")//
+        .gives("return 3*2*b;");
   }
 
   @Test public void inlineInitializersFirstStep() {
-    trimmingOf("int b=4,a = 2; return 3 * a * b; ").gives("int a = 2; return 3*a*4;");
+    trimmingOf("int b=4,a = 2; return 3 * a * b; ")//
+        .gives("int a = 2; return 3*a*4;");
   }
 
   @Test public void inlineInitializersSecondStep() {
-    trimmingOf("int a = 2; return 3*a*4;").gives("return 3 * 2 * 4;");
+    trimmingOf("int a = 2; return 3*a*4;")//
+        .gives("return 3 * 2 * 4;");
   }
 
   /** START OF STABLING TESTS */
@@ -1165,7 +1319,8 @@ public final class TrimmerTest {
   }
 
   @Test public void inlineSingleUseKillingVariable() {
-    trimmingOf("int a,b=2; a = b;").gives("int a;a=2;");
+    trimmingOf("int a,b=2; a = b;")//
+        .gives("int a;a=2;");
   }
 
   @Test public void inlineSingleUseKillingVariables() {
@@ -1175,25 +1330,32 @@ public final class TrimmerTest {
 
   @Test public void inlineSingleUseKillingVariablesSimplified() {
     trimmingOf("int $=1,xi=0,xj=0,yi=0,yj=0;  if (xi > xj == yi > yj)    $++;   else    $--;")
-        .gives(" int $=1,xj=0,yi=0,yj=0;       if(0>xj==yi>yj)$++;else $--;").gives(" int $=1,yi=0,yj=0;            if(0>0==yi>yj)$++;else $--;")
-        .gives(" int $=1,yj=0;                 if(0>0==0>yj)$++;else $--;").gives(" int $=1;                      if(0>0==0>0)$++;else $--;")
+        .gives(" int $=1,xj=0,yi=0,yj=0;       if(0>xj==yi>yj)$++;else $--;")//
+        .gives(" int $=1,yi=0,yj=0;            if(0>0==yi>yj)$++;else $--;")//
+        .gives(" int $=1,yj=0;                 if(0>0==0>yj)$++;else $--;")//
+        .gives(" int $=1;                      if(0>0==0>0)$++;else $--;")//
         .gives(" int $=1;                      if(0>0==0>0)++$;else--$;");
   }
 
   @Test public void inlineSingleUseTrivial() {
-    trimmingOf(" int $=1,yj=0;                 if(0>0==yj<0)++$;else--$;").gives("  int $=1;                      if(0>0==0<0)++$;else--$;");
+    trimmingOf(" int $=1,yj=0;                 if(0>0==yj<0)++$;else--$;")//
+        .gives("  int $=1;                      if(0>0==0<0)++$;else--$;");
   }
 
   @Test public void inlineSingleUseVanilla() {
-    trimmingOf("int a = f(); if (a) f();").gives("if (f()) f();");
+    trimmingOf("int a = f(); if (a) f();")//
+        .gives("if (f()) f();");
   }
 
   @Test public void inlineSingleUseWithAssignment() {
-    trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;").gives("for (int a = 2;true;) if (f()) f(a); else a = 2;").stays();
+    trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;")//
+        .gives("for (int a = 2;true;) if (f()) f(a); else a = 2;")//
+        .stays();
   }
 
   @Test public void inlineSingleVariableintoPlusPlus() {
-    trimmingOf("int $ = 0;  if (a)  ++$;  else --$;").stays();
+    trimmingOf("int $ = 0;  if (a)  ++$;  else --$;")//
+        .stays();
   }
 
   @Test public void inliningWithVariableAssignedTo() {
@@ -1246,15 +1408,19 @@ public final class TrimmerTest {
   }
 
   @Test public void issue06() {
-    trimmingOf("a*-b").gives("-a * b");
+    trimmingOf("a*-b")//
+        .gives("-a * b");
   }
 
   @Test public void issue06B() {
-    trimmingOf("x/a*-b/-c*- - - d / -d").gives("x/a * b/ c * d/d").gives("d*x/a*b/c/d");
+    trimmingOf("x/a*-b/-c*- - - d / -d")//
+        .gives("x/a * b/ c * d/d")//
+        .gives("d*x/a*b/c/d");
   }
 
   @Test public void issue06C1() {
-    trimmingOf("a*-b/-c*- - - d / d").gives("-a * b/ c * d/d");
+    trimmingOf("a*-b/-c*- - - d / d")//
+        .gives("-a * b/ c * d/d");
   }
 
   @Test public void issue06C4() {
@@ -1262,7 +1428,8 @@ public final class TrimmerTest {
   }
 
   @Test public void issue06D() {
-    trimmingOf("a*b*c*d*-e").gives("-a*b*c*d*e").stays();
+    trimmingOf("a*b*c*d*-e")//
+        .gives("-a*b*c*d*e").stays();
   }
 
   @Test public void issue06E() {
@@ -1270,61 +1437,78 @@ public final class TrimmerTest {
   }
 
   @Test public void issue06F() {
-    trimmingOf("x*a*-b*-c*- - - d * d").gives("-x*a*b*c*d*d").stays();
+    trimmingOf("x*a*-b*-c*- - - d * d")//
+        .gives("-x*a*b*c*d*d").stays();
   }
 
   @Test public void issue06G() {
-    trimmingOf("x*a*-b*-c*- - - d / d").gives("-x*a*b*c*d/d").stays();
+    trimmingOf("x*a*-b*-c*- - - d / d")//
+        .gives("-x*a*b*c*d/d").stays();
   }
 
   @Test public void issue06H() {
-    trimmingOf("x/a*-b/-c*- - - d ").gives("-x/a * b/ c * d");
+    trimmingOf("x/a*-b/-c*- - - d ")//
+        .gives("-x/a * b/ c * d");
   }
 
   @Test public void issue06I() {
-    trimmingOf("41 * - 19").gives("-779 ");
+    trimmingOf("41 * - 19")//
+        .gives("-779 ");
   }
 
   @Test public void issue06J() {
-    trimmingOf("41 * a * - 19").gives("-41*a*19").gives("-41*19*a");
+    trimmingOf("41 * a * - 19")//
+        .gives("-41*a*19")//
+        .gives("-41*19*a");
   }
 
   @Test public void issue110_01() {
-    trimmingOf("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"").gives("\"Eat your meal\" + (polite ? \".\" : \", please\")");
+    trimmingOf("polite ? \"Eat your meal.\" :  \"Eat your meal, please\"")//
+        .gives("\"Eat your meal\" + (polite ? \".\" : \", please\")");
   }
 
   @Test public void issue110_02() {
-    trimmingOf("polite ? \"Eat your meal.\" :  \"Eat your meal\"").gives("\"Eat your meal\" + (polite ? \".\" : \"\")");
+    trimmingOf("polite ? \"Eat your meal.\" :  \"Eat your meal\"")//
+        .gives("\"Eat your meal\" + (polite ? \".\" : \"\")");
   }
 
   @Test public void issue110_03() {
-    trimmingOf("polite ? \"thanks for the meal\" :  \"I hated the meal\"").gives("!polite ? \"I hated the meal\": \"thanks for the meal\"")
+    trimmingOf("polite ? \"thanks for the meal\" :  \"I hated the meal\"")//
+        .gives("!polite ? \"I hated the meal\": \"thanks for the meal\"")//
         .gives("(!polite ? \"I hated\" : \"thanks for\" )+ \" the meal\"");
   }
 
   @Test public void issue110_04() {
-    trimmingOf("polite ? \"thanks.\" :  \"I hated the meal.\"").gives("(polite ? \"thanks\" :  \"I hated the meal\")+\".\"");
+    trimmingOf("polite ? \"thanks.\" :  \"I hated the meal.\"")//
+        .gives("(polite ? \"thanks\" :  \"I hated the meal\")+\".\"");
   }
 
   @Test public void issue110_05() {
-    trimmingOf("a ? \"abracadabra\" : \"abba\"").gives("!a ? \"abba\" : \"abracadabra\"").stays();
+    trimmingOf("a ? \"abracadabra\" : \"abba\"")//
+        .gives("!a ? \"abba\" : \"abracadabra\"")//
+        .stays();
   }
 
   @Test public void issue110_06() {
-    trimmingOf("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver").gives("\"Use \"+(receiver==null ? \"x\" : receiver)").stays();
+    trimmingOf("receiver ==null ? \"Use \" + \"x\" : \"Use \" + receiver")//
+        .gives("\"Use \"+(receiver==null ? \"x\" : receiver)")//
+        .stays();
   }
 
   @Test public void issue110_07() {
-    trimmingOf("receiver ==null ? \"Use x\" : \"Use \" + receiver").gives("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)");
+    trimmingOf("receiver ==null ? \"Use x\" : \"Use \" + receiver")//
+        .gives("\"Use \"+(receiver==null ? \"x\" : \"\"+receiver)");
   }
 
   @Test public void issue110_08() {
-    trimmingOf("receiver ==null ? \"Use\" : receiver + \"Use\"").gives("(receiver==null ? \"\" : receiver+\"\") + \"Use\"").stays();
+    trimmingOf("receiver ==null ? \"Use\" : receiver + \"Use\"")//
+        .gives("(receiver==null ? \"\" : receiver+\"\") + \"Use\"")//
+        .stays();
   }
 
   @Test public void issue110_09() {
-    trimmingOf("receiver ==null ? \"user a\" : receiver + \"something a\"").gives("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"")
-        .stays();
+    trimmingOf("receiver ==null ? \"user a\" : receiver + \"something a\"")//
+        .gives("(receiver==null ? \"user\" : receiver+\"something\") + \" a\"").stays();
   }
 
   @Test public void issue110_10() {
@@ -1356,11 +1540,13 @@ public final class TrimmerTest {
   }
 
   @Test public void issue110_15() {
-    trimmingOf("$.setName(b.simpleName(booleanLiteral ? \"TRU\" : \"TALS\"));").stays();
+    trimmingOf("$.setName(b.simpleName(booleanLiteral ? \"TRU\" : \"TALS\"));")//
+        .stays();
   }
 
   @Test public void issue110_16() {
-    trimmingOf("$.setName(b.simpleName(booleanLiteral ? \"TRUE\" : \"FALSE\"));").stays();
+    trimmingOf("$.setName(b.simpleName(booleanLiteral ? \"TRUE\" : \"FALSE\"));")//
+        .stays();
   }
 
   @Test public void issue110_17() {
@@ -1369,35 +1555,43 @@ public final class TrimmerTest {
   }
 
   @Test public void issue110_18() {
-    trimmingOf("booleanLiteral==0 ? \"asss\" : \"assfad\"").stays();
+    trimmingOf("booleanLiteral==0 ? \"asss\" : \"assfad\"")//
+        .stays();
   }
 
   @Test public void issue21a() {
-    trimmingOf("a.equals(\"a\")").gives("\"a\".equals(a)");
+    trimmingOf("a.equals(\"a\")")//
+        .gives("\"a\".equals(a)");
   }
 
   @Test public void issue21b() {
-    trimmingOf("a.equals(\"ab\")").gives("\"ab\".equals(a)");
+    trimmingOf("a.equals(\"ab\")")//
+        .gives("\"ab\".equals(a)");
   }
 
   @Test public void issue21d() {
-    trimmingOf("a.equalsIgnoreCase(\"a\")").gives("\"a\".equalsIgnoreCase(a)");
+    trimmingOf("a.equalsIgnoreCase(\"a\")")//
+        .gives("\"a\".equalsIgnoreCase(a)");
   }
 
   @Test public void issue21e() {
-    trimmingOf("a.equalsIgnoreCase(\"ab\")").gives("\"ab\".equalsIgnoreCase(a)");
+    trimmingOf("a.equalsIgnoreCase(\"ab\")")//
+        .gives("\"ab\".equalsIgnoreCase(a)");
   }
 
   @Test public void issue37Simplified() {
-    trimmingOf("    int a = 3;\n" + "    a = 31 * a;").gives("int a = 31 * 3; ");
+    trimmingOf("    int a = 3;\n" + "    a = 31 * a;")//
+        .gives("int a = 31 * 3; ");
   }
 
   @Test public void issue37SimplifiedVariant() {
-    trimmingOf("    int a = 3;\n" + "    a += 31 * a;").gives("int a=3+31*3;");
+    trimmingOf("    int a = 3;\n" + "    a += 31 * a;")//
+        .gives("int a=3+31*3;");
   }
 
   @Test public void issue37WithSimplifiedBlock() {
-    trimmingOf("if (a) { {} ; if (b) f(); {} } else { g(); f(); ++i; ++j; }").gives(" if (a) {  if (b) f(); } else { g(); f(); ++i; ++j; }");
+    trimmingOf("if (a) { {} ; if (b) f(); {} } else { g(); f(); ++i; ++j; }")//
+        .gives(" if (a) {  if (b) f(); } else { g(); f(); ++i; ++j; }");
   }
 
   @Test public void issue38() {
@@ -1436,7 +1630,8 @@ public final class TrimmerTest {
   }
 
   @Test public void issue41FunctionCall() {
-    trimmingOf("int a = f();a += 2;").gives("int a = f()+2;");
+    trimmingOf("int a = f();a += 2;")//
+        .gives("int a = f()+2;");
   }
 
   @Test public void issue43() {
@@ -1450,7 +1645,8 @@ public final class TrimmerTest {
   }
 
   @Test public void issue49() {
-    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}").gives("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
+    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")//
+        .gives("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
   }
 
   @Test public void issue51() {
@@ -1459,11 +1655,13 @@ public final class TrimmerTest {
   }
 
   @Test public void issue51g() {
-    trimmingOf("abstract abstract interface a" + "{}").gives("interface a {}");
+    trimmingOf("abstract abstract interface a" + "{}")//
+        .gives("interface a {}");
   }
 
   @Test public void issue53() {
-    trimmingOf("int[] is = f(); for (int i: is) f(i);").gives("for (int i: f()) f(i);");
+    trimmingOf("int[] is = f(); for (int i: is) f(i);")//
+        .gives("for (int i: f()) f(i);");
   }
 
   @Test public void issue53a() {
@@ -1472,64 +1670,81 @@ public final class TrimmerTest {
   }
 
   @Test public void issue54DoNonSideEffect() {
-    trimmingOf("int a  = f; do { b[i] = a; } while (b[i] != a);").gives("do { b[i] = f; } while (b[i] != f);");
+    trimmingOf("int a  = f; do { b[i] = a; } while (b[i] != a);")//
+        .gives("do { b[i] = f; } while (b[i] != f);");
   }
 
   @Test public void issue54DoNonSideEffectEmptyBody() {
-    trimmingOf("int a = f(); do ; while (a != 1);").stays();
+    trimmingOf("int a = f(); do ; while (a != 1);")//
+        .stays();
   }
 
   @Test public void issue54DoWhile() {
-    trimmingOf("int a  = f(); do { b[i] = 2; ++i; } while (b[i] != a);").stays();
+    trimmingOf("int a  = f(); do { b[i] = 2; ++i; } while (b[i] != a);")//
+        .stays();
   }
 
   @Test public void issue54DoWithBlock() {
-    trimmingOf("int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);").stays();
+    trimmingOf("int a  = f(); do { b[i] = a;  ++i; } while (b[i] != a);")//
+        .stays();
   }
 
   @Test public void issue54doWithoutBlock() {
-    trimmingOf("int a  = f(); do b[i] = a; while (b[i] != a);").stays();
+    trimmingOf("int a  = f(); do b[i] = a; while (b[i] != a);")//
+        .stays();
   }
 
   @Test public void issue54ForEnhanced() {
-    trimmingOf("int a  = f(); for (int i: a) b[i] = x;").gives(" for (int i: f()) b[i] = x;");
+    trimmingOf("int a  = f(); for (int i: a) b[i] = x;")//
+        .gives(" for (int i: f()) b[i] = x;");
   }
 
   @Test public void issue54ForEnhancedNonSideEffectLoopHeader() {
-    trimmingOf("int a  = f; for (int i: a) b[i] = b[i-1];").gives("for (int i: f) b[i] = b[i-1];");
+    trimmingOf("int a  = f; for (int i: a) b[i] = b[i-1];")//
+        .gives("for (int i: f) b[i] = b[i-1];");
   }
 
   @Test public void issue54ForEnhancedNonSideEffectWithBody() {
-    trimmingOf("int a  = f; for (int i: j) b[i] = a;").gives(" for(int i:j)b[i]=f; ");
+    trimmingOf("int a  = f; for (int i: j) b[i] = a;")//
+        .gives(" for(int i:j)b[i]=f; ");
   }
 
   @Test public void issue54ForPlain() {
-    trimmingOf("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;").gives("for (int i = 0; i < 100;  ++i) b[i] = f();")
-        .gives("for (int ¢ = 0; ¢ < 100;  ++¢) b[¢] = f();").gives("for (int ¢ = 0; ¢ < 100;  ++¢, b[¢] = f());").stays();
+    trimmingOf("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
+        .gives("for (int i = 0; i < 100;  ++i) b[i] = f();")//
+        .gives("for (int ¢ = 0; ¢ < 100;  ++¢) b[¢] = f();")//
+        .gives("for (int ¢ = 0; ¢ < 100;  ++¢, b[¢] = f());")//
+        .stays();
   }
 
   @Test public void issue54ForPlainNonSideEffect() {
-    trimmingOf("int a  = f; for (int i = 0; i < 100;  ++i) b[i] = a;").gives("for (int i = 0; i < 100;  ++i) b[i] = f;");
+    trimmingOf("int a  = f; for (int i = 0; i < 100;  ++i) b[i] = a;")//
+        .gives("for (int i = 0; i < 100;  ++i) b[i] = f;");
   }
 
   @Test public void issue54ForPlainUseInConditionNonSideEffect() {
-    trimmingOf("int a  = f; for (int i = 0; a < 100;  ++i) b[i] = 3;").gives("for (int i = 0; f < 100;  ++i) b[i] = 3;");
+    trimmingOf("int a  = f; for (int i = 0; a < 100;  ++i) b[i] = 3;")//
+        .gives("for (int i = 0; f < 100;  ++i) b[i] = 3;");
   }
 
   @Test public void issue54ForPlainUseInInitializerNonSideEffect() {
-    trimmingOf("int a  = f; for (int i = a; i < 100; i *= a) b[i] = 3;").gives(" for (int i = f; i < 100; i *= f) b[i] = 3;");
+    trimmingOf("int a  = f; for (int i = a; i < 100; i *= a) b[i] = 3;")//
+        .gives(" for (int i = f; i < 100; i *= f) b[i] = 3;");
   }
 
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
-    trimmingOf("int a  = f; for (int i = 0; i < 100; i *= a) b[i] = 3;").gives("for (int i = 0; i < 100; i *= f) b[i] = 3;");
+    trimmingOf("int a  = f; for (int i = 0; i < 100; i *= a) b[i] = 3;")//
+        .gives("for (int i = 0; i < 100; i *= f) b[i] = 3;");
   }
 
   @Test public void issue54While() {
-    trimmingOf("int a  = f(); for(;c; b[i] = a);").stays();
+    trimmingOf("int a  = f(); for(;c; b[i] = a);")//
+        .stays();
   }
 
   @Test public void issue54WhileNonSideEffect() {
-    trimmingOf("int a  = f; while (c) b[i] = a;").gives("while (c) b[i] = f;");
+    trimmingOf("int a  = f; while (c) b[i] = a;")//
+        .gives("while (c) b[i] = f;");
   }
 
   @Test public void issue54WhileScopeDoesNotInclude() {
@@ -1537,16 +1752,20 @@ public final class TrimmerTest {
   }
 
   @Test public void issue62a() {
-    trimmingOf("int f(int ixx) { for(;;++ixx) if(false) break; return ixx; }").gives("int f(int ixx) { for(;;++ixx){} return ixx; }").stays();
+    trimmingOf("int f(int ixx) { for(;;++ixx) if(false) break; return ixx; }")//
+        .gives("int f(int ixx) { for(;;++ixx){} return ixx; }")//
+        .stays();
   }
 
   @Test public void issue62b_1() {
     trimmingOf("int f(int ixx) { for(;ixx<100;ixx=ixx+1) if(false) break; return ixx; }")
-        .gives("int f(int ixx) { for(;ixx<100;ixx+=1){} return ixx; }").stays();
+        .gives("int f(int ixx) { for(;ixx<100;ixx+=1){} return ixx; }")//
+        .stays();
   }
 
   @Test public void issue62c() {
-    trimmingOf("int f(int ixx) { while(++ixx > 999) if(ixx>99) break; return ixx;}").stays();
+    trimmingOf("int f(int ixx) { while(++ixx > 999) if(ixx>99) break; return ixx;}")//
+        .stays();
   }
 
   @Test public void issue64a() {
@@ -1556,43 +1775,53 @@ public final class TrimmerTest {
   }
 
   @Test public void issue73a() {
-    trimmingOf("void foo(StringBuilder sb) {}").gives("void foo(StringBuilder b) {}");
+    trimmingOf("void foo(StringBuilder sb) {}")//
+        .gives("void foo(StringBuilder b) {}");
   }
 
   @Test public void issue73b() {
-    trimmingOf("void foo(DataOutput dataOutput) {}").gives("void foo(DataOutput o) {}");
+    trimmingOf("void foo(DataOutput dataOutput) {}")//
+        .gives("void foo(DataOutput o) {}");
   }
 
   @Test public void issue73c() {
-    trimmingOf("void foo(Integer integer, ASTNode astn) {}").gives("void foo(Integer i, ASTNode astn) {}");
+    trimmingOf("void foo(Integer integer, ASTNode astn) {}")//
+        .gives("void foo(Integer i, ASTNode astn) {}");
   }
 
   @Test public void issue74d() {
-    trimmingOf("int[] a = new int[] {2,3};").stays();
+    trimmingOf("int[] a = new int[] {2,3};")//
+        .stays();
   }
 
   @Test public void linearTransformation() {
-    trimmingOf("plain * the + kludge").gives("the*plain+kludge");
+    trimmingOf("plain * the + kludge")//
+        .gives("the*plain+kludge");
   }
 
   @Test public void literalVsLiteral() {
-    trimmingOf("1 < 102333").stays();
+    trimmingOf("1 < 102333")//
+        .stays();
   }
 
   @Test public void longChainComparison() {
-    trimmingOf("a == b == c == d").stays();
+    trimmingOf("a == b == c == d")//
+        .stays();
   }
 
   @Test public void longChainParenthesisComparison() {
-    trimmingOf("(a == b == c) == d").stays();
+    trimmingOf("(a == b == c) == d")//
+        .stays();
   }
 
   @Test public void longChainParenthesisNotComparison() {
-    trimmingOf("(a == b == c) != d").stays();
+    trimmingOf("(a == b == c) != d")//
+        .stays();
   }
 
   @Test public void longerChainParenthesisComparison() {
-    trimmingOf("(a == b == c == d == e) == d").stays();
+    trimmingOf("(a == b == c == d == e) == d")//
+        .stays();
   }
 
   @Test public void massiveInlining() {
@@ -1601,71 +1830,88 @@ public final class TrimmerTest {
   }
 
   @Test public void methodWithLastIf() {
-    trimmingOf("int f() { if (a) { f(); g(); h();}}").gives("int f() { if (!a) return;  f(); g(); h();}");
+    trimmingOf("int f() { if (a) { f(); g(); h();}}")//
+        .gives("int f() { if (!a) return;  f(); g(); h();}");
   }
 
   @Test public void nestedIf1() {
-    trimmingOf("if (a) if (b) i++;").gives("if (a && b) i++;");
+    trimmingOf("if (a) if (b) i++;")//
+        .gives("if (a && b) i++;");
   }
 
   @Test public void nestedIf2() {
-    trimmingOf("if (a) if (b) i++; else ; else ; ").gives("if (a && b) i++; else ;");
+    trimmingOf("if (a) if (b) i++; else ; else ; ")//
+        .gives("if (a && b) i++; else ;");
   }
 
   @Test public void nestedIf3() {
-    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}").gives("if(x)if(a&&b)i++;else;else{++y;f();g();z();}");
+    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
+        .gives("if(x)if(a&&b)i++;else;else{++y;f();g();z();}");
   }
 
   @Test public void nestedIf33() {
-    trimmingOf("if(x){if(a&&b)i++;else;}else{++y;f();g();}").gives(" if(x)if(a&&b)i++;else;else{++y;f();g();}")
-        .gives(" if(x){if(a&&b)i++;}else{++y;f();g();}").gives(" if(x){if(a&&b)++i;}else{++y;f();g();}");
+    trimmingOf("if(x){if(a&&b)i++;else;}else{++y;f();g();}")//
+        .gives(" if(x)if(a&&b)i++;else;else{++y;f();g();}")//
+        .gives(" if(x){if(a&&b)i++;}else{++y;f();g();}")//
+        .gives(" if(x){if(a&&b)++i;}else{++y;f();g();}");
   }
 
   @Test public void nestedIf33a() {
-    trimmingOf("if (x) { if (a && b) i++; } else { y++; f(); g(); }").gives(" if (x) {if(a&&b)++i;} else{++y;f();g();}");
+    trimmingOf("if (x) { if (a && b) i++; } else { y++; f(); g(); }")//
+        .gives(" if (x) {if(a&&b)++i;} else{++y;f();g();}");
   }
 
   @Test public void nestedIf33b() {
-    trimmingOf("if (x) if (a && b) i++; else; else { y++; f(); g(); }").gives("if(x){if(a&&b)i++;}else{++y;f();g();}");
+    trimmingOf("if (x) if (a && b) i++; else; else { y++; f(); g(); }")//
+        .gives("if(x){if(a&&b)i++;}else{++y;f();g();}");
   }
 
   @Test public void nestedIf3c() {
-    trimmingOf("if (x) if (a && b) i++; else; else { y++; f(); g(); }").gives(" if(x) {if(a&&b)i++;} else {++y;f();g();}");
+    trimmingOf("if (x) if (a && b) i++; else; else { y++; f(); g(); }")//
+        .gives(" if(x) {if(a&&b)i++;} else {++y;f();g();}");
   }
 
   @Test public void nestedIf3d() {
-    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}").gives("if(x)if(a&&b)i++;else; else{++y;f();g();z();}")
-        .gives("if(x){if(a&&b)i++;} else{++y;f();g();z();}").gives("if(x){if(a&&b)++i;} else{++y;f();g();z();}");
+    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
+        .gives("if(x)if(a&&b)i++;else; else{++y;f();g();z();}")//
+        .gives("if(x){if(a&&b)i++;} else{++y;f();g();z();}")//
+        .gives("if(x){if(a&&b)++i;} else{++y;f();g();z();}");
   }
 
   @Test public void nestedIf3e() {
-    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}").gives(" if(x)if(a&&b)i++;else;else{++y;f();g();z();}")
+    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
+        .gives(" if(x)if(a&&b)i++;else;else{++y;f();g();z();}")//
         .gives(" if(x){if(a&&b)i++;}else{++y;f();g();z();}");
   }
 
   @Test public void nestedIf3f() {
-    trimmingOf("if(x){if(a&&b)i++;else;}else{++y;f();g();}").gives(" if(x)if(a&&b)i++; else; else{++y;f();g();}")
+    trimmingOf("if(x){if(a&&b)i++;else;}else{++y;f();g();}")//
+        .gives(" if(x)if(a&&b)i++; else; else{++y;f();g();}")//
         .gives(" if(x){if(a&&b)i++;}else{++y;f();g();}");
   }
 
   @Test public void nestedIf3f1() {
-    trimmingOf(" if(x)if(a&&b)i++; else; else{++y;f();g();}").gives(" if(x){if(a&&b)i++;}else{++y;f();g();}");
+    trimmingOf(" if(x)if(a&&b)i++; else; else{++y;f();g();}")//
+        .gives(" if(x){if(a&&b)i++;}else{++y;f();g();}");
   }
 
   @Test public void nestedIf3x() {
-    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}").gives("if(x)if(a&&b)i++;else;else{++y;f();g();z();}")
+    trimmingOf("if (x) if (a) if (b) i++; else ; else ; else { y++; f(); g(); z();}")//
+        .gives("if(x)if(a&&b)i++;else;else{++y;f();g();z();}")//
         .gives("if(x){if(a&&b)i++;}else{++y;f();g();z();}");
   }
 
   @Test public void nestedTernaryAlignment() {
-    trimmingOf("int b=3==4?5==3?2:3:5==3?2:3*3;").gives("int b=3==4?5==3?2:3:5!=3?3*3:2;");
+    trimmingOf("int b=3==4?5==3?2:3:5==3?2:3*3;")//
+        .gives("int b=3==4?5==3?2:3:5!=3?3*3:2;");
   }
 
   @Test public void noChange() {
     trimmingOf("12").stays();
     trimmingOf("true").stays();
     trimmingOf("null").stays();
-    trimmingOf("on*of*no*notion*notion").gives("no*of*on*notion*notion");
+    trimmingOf("on*of*no*notion*notion")//
+        .gives("no*of*on*notion*notion");
   }
 
   @Test public void noChange0() {
@@ -1701,23 +1947,28 @@ public final class TrimmerTest {
   }
 
   @Test public void notOfAnd() {
-    trimmingOf("!(A && B)").gives("!A || !B");
+    trimmingOf("!(A && B)")//
+        .gives("!A || !B");
   }
 
   @Test public void oneMultiplication() {
-    trimmingOf("f(a,b,c,d) * f(a,b,c)").gives("f(a,b,c) * f(a,b,c,d)");
+    trimmingOf("f(a,b,c,d) * f(a,b,c)")//
+        .gives("f(a,b,c) * f(a,b,c,d)");
   }
 
   @Test public void oneMultiplicationAlternate() {
-    trimmingOf("f(a,b,c,d,e) * f(a,b,c)").gives("f(a,b,c) * f(a,b,c,d,e)");
+    trimmingOf("f(a,b,c,d,e) * f(a,b,c)")//
+        .gives("f(a,b,c) * f(a,b,c,d,e)");
   }
 
   @Test public void orFalse3ORTRUE() {
-    trimmingOf("false || false || false").gives("false");
+    trimmingOf("false || false || false")//
+        .gives("false");
   }
 
   @Test public void orFalse4ORTRUE() {
-    trimmingOf("false || false || false || false").gives("false");
+    trimmingOf("false || false || false || false")//
+        .gives("false");
   }
 
   @Test public void orFalseANDOf3WithoutBoolean() {
@@ -1729,11 +1980,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseANDOf3WithTrue() {
-    trimmingOf("true && x && true && a && b").gives("x && a && b");
+    trimmingOf("true && x && true && a && b")//
+        .gives("x && a && b");
   }
 
   @Test public void orFalseANDOf3WithTrueA() {
-    trimmingOf("a && b && true").gives("a && b");
+    trimmingOf("a && b && true")//
+        .gives("a && b");
   }
 
   @Test public void orFalseANDOf4WithoutBoolean() {
@@ -1745,11 +1998,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseANDOf4WithTrue() {
-    trimmingOf("x && true && a && b && c").gives("x && a && b && c");
+    trimmingOf("x && true && a && b && c")//
+        .gives("x && a && b && c");
   }
 
   @Test public void orFalseANDOf4WithTrueA() {
-    trimmingOf("a && b && c && true").gives("a && b && c");
+    trimmingOf("a && b && c && true")//
+        .gives("a && b && c");
   }
 
   @Test public void orFalseANDOf5WithoutBoolean() {
@@ -1761,11 +2016,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseANDOf5WithTrue() {
-    trimmingOf("x && a && b && c && true && true && true && d").gives("x && a && b && c && d");
+    trimmingOf("x && a && b && c && true && true && true && d")//
+        .gives("x && a && b && c && d");
   }
 
   @Test public void orFalseANDOf5WithTrueA() {
-    trimmingOf("true && a && b && c && d").gives("a && b && c && d");
+    trimmingOf("true && a && b && c && d")//
+        .gives("a && b && c && d");
   }
 
   @Test public void orFalseANDOf6WithoutBoolean() {
@@ -1781,19 +2038,23 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseANDOf6WithTrue() {
-    trimmingOf("x && a && true && b && c && d && e").gives("x && a && b && c && d && e");
+    trimmingOf("x && a && true && b && c && d && e")//
+        .gives("x && a && b && c && d && e");
   }
 
   @Test public void orFalseANDOf6WithTrueA() {
-    trimmingOf("a && b && c && true && d && e").gives("a && b && c && d && e");
+    trimmingOf("a && b && c && true && d && e")//
+        .gives("a && b && c && d && e");
   }
 
   @Test public void orFalseANDOf6WithTrueWithParenthesis() {
-    trimmingOf("x && (true && (a && b && true)) && (c && (d && e))").gives("x && a && b && c && d && e");
+    trimmingOf("x && (true && (a && b && true)) && (c && (d && e))")//
+        .gives("x && a && b && c && d && e");
   }
 
   @Test public void orFalseANDOf7WithMultipleTrueValue() {
-    trimmingOf("(a && (b && true)) && (c && (d && (e && (true && true))))").gives("a &&b &&c &&d &&e ");
+    trimmingOf("(a && (b && true)) && (c && (d && (e && (true && true))))")//
+        .gives("a &&b &&c &&d &&e ");
   }
 
   @Test public void orFalseANDOf7WithoutBooleanAndMultipleFalseValue() {
@@ -1805,7 +2066,8 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseANDOf7WithTrueWithParenthesis() {
-    trimmingOf("true && (a && b) && (c && (d && (e && true)))").gives("a &&b &&c &&d &&e ");
+    trimmingOf("true && (a && b) && (c && (d && (e && true)))")//
+        .gives("a &&b &&c &&d &&e ");
   }
 
   @Test public void orFalseANDWithFalse() {
@@ -1817,11 +2079,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseANDWithTrue() {
-    trimmingOf("true && b && a").gives("b && a");
+    trimmingOf("true && b && a")//
+        .gives("b && a");
   }
 
   @Test public void orFalseFalseOrFalse() {
-    trimmingOf("false ||false").gives("false");
+    trimmingOf("false ||false")//
+        .gives("false");
   }
 
   @Test public void orFalseORFalseWithSomething() {
@@ -1829,15 +2093,18 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseORFalseWithSomethingB() {
-    trimmingOf("false || a || false").gives("a");
+    trimmingOf("false || a || false")//
+        .gives("a");
   }
 
   @Test public void orFalseOROf3WithFalse() {
-    trimmingOf("x || false || b").gives("x || b");
+    trimmingOf("x || false || b")//
+        .gives("x || b");
   }
 
   @Test public void orFalseOROf3WithFalseB() {
-    trimmingOf("false || a || b || false").gives("a || b");
+    trimmingOf("false || a || b || false")//
+        .gives("a || b");
   }
 
   @Test public void orFalseOROf3WithoutBoolean() {
@@ -1849,11 +2116,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseOROf4WithFalse() {
-    trimmingOf("x || a || b || c || false").gives("x || a || b || c");
+    trimmingOf("x || a || b || c || false")//
+        .gives("x || a || b || c");
   }
 
   @Test public void orFalseOROf4WithFalseB() {
-    trimmingOf("a || b || false || c").gives("a || b || c");
+    trimmingOf("a || b || false || c")//
+        .gives("a || b || c");
   }
 
   @Test public void orFalseOROf4WithoutBoolean() {
@@ -1865,11 +2134,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseOROf5WithFalse() {
-    trimmingOf("x || a || false || c || d").gives("x || a || c || d");
+    trimmingOf("x || a || false || c || d")//
+        .gives("x || a || c || d");
   }
 
   @Test public void orFalseOROf5WithFalseB() {
-    trimmingOf("a || b || c || d || false").gives("a || b || c || d");
+    trimmingOf("a || b || c || d || false")//
+        .gives("a || b || c || d");
   }
 
   @Test public void orFalseOROf5WithoutBoolean() {
@@ -1881,15 +2152,18 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseOROf6WithFalse() {
-    trimmingOf("false || x || a || b || c || d || e").gives("x || a || b || c || d || e");
+    trimmingOf("false || x || a || b || c || d || e")//
+        .gives("x || a || b || c || d || e");
   }
 
   @Test public void orFalseOROf6WithFalseWithParenthesis() {
-    trimmingOf("x || (a || (false) || b) || (c || (d || e))").gives("x || a || b || c || d || e");
+    trimmingOf("x || (a || (false) || b) || (c || (d || e))")//
+        .gives("x || a || b || c || d || e");
   }
 
   @Test public void orFalseOROf6WithFalseWithParenthesisB() {
-    trimmingOf("(a || b) || false || (c || false || (d || e || false))").gives("a || b || c || d || e");
+    trimmingOf("(a || b) || false || (c || false || (d || e || false))")//
+        .gives("a || b || c || d || e");
   }
 
   @Test public void orFalseOROf6WithoutBoolean() {
@@ -1909,11 +2183,13 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseOROf6WithTwoFalse() {
-    trimmingOf("a || false || b || false || c || d || e").gives("a || b || c || d || e");
+    trimmingOf("a || false || b || false || c || d || e")//
+        .gives("a || b || c || d || e");
   }
 
   @Test public void orFalseORSomethingWithFalse() {
-    trimmingOf("false || a || false").gives("a");
+    trimmingOf("false || a || false")//
+        .gives("a");
   }
 
   @Test public void orFalseORSomethingWithTrue() {
@@ -1929,15 +2205,18 @@ public final class TrimmerTest {
   }
 
   @Test public void orFalseTrueAndTrueA() {
-    trimmingOf("true && true").gives("true");
+    trimmingOf("true && true")//
+        .gives("true");
   }
 
   @Test public void overridenDeclaration() {
-    trimmingOf("int a = 3; a = f() ? 3 : 4;").gives("int a = f() ? 3: 4;");
+    trimmingOf("int a = 3; a = f() ? 3 : 4;")//
+        .gives("int a = f() ? 3: 4;");
   }
 
   @Test public void paramAbbreviateBasic1() {
-    trimmingOf("void m(XMLDocument xmlDocument, int abcd) {" + "xmlDocument.exec(p);}").gives("void m(XMLDocument d, int abcd) {" + "d.exec(p);}");
+    trimmingOf("void m(XMLDocument xmlDocument, int abcd) {" + "xmlDocument.exec(p);}")//
+        .gives("void m(XMLDocument d, int abcd) {" + "d.exec(p);}");
   }
 
   @Test public void paramAbbreviateBasic2() {
@@ -1946,7 +2225,8 @@ public final class TrimmerTest {
   }
 
   @Test public void paramAbbreviateCollision() {
-    trimmingOf("void m(Expression exp, Expression expresssion) { }").gives("void m(Expression x, Expression expresssion) { }");
+    trimmingOf("void m(Expression exp, Expression expresssion) { }")//
+        .gives("void m(Expression x, Expression expresssion) { }");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1() {
@@ -1960,7 +2240,8 @@ public final class TrimmerTest {
   }
 
   @Test public void paramAbbreviateConflictingWithLocal1SimplifiedFurther() {
-    trimmingOf("void m(String string) {" + "String s = X;" + "string.f(s);}").gives("void m(String string){string.f(X);}");
+    trimmingOf("void m(String string) {" + "String s = X;" + "string.f(s);}")//
+        .gives("void m(String string){string.f(X);}");
   }
 
   @Test public void paramAbbreviateConflictingWithLocal2() {
@@ -1988,11 +2269,13 @@ public final class TrimmerTest {
   }
 
   @Test public void parenthesizeOfpushdownTernary() {
-    trimmingOf("a ? b+x+e+f:b+y+e+f").gives("b+(a ? x : y)+e+f");
+    trimmingOf("a ? b+x+e+f:b+y+e+f")//
+        .gives("b+(a ? x : y)+e+f");
   }
 
   @Test public void postDecreementReturn() {
-    trimmingOf("a--; return a;").gives("--a;return a;");
+    trimmingOf("a--; return a;")//
+        .gives("--a;return a;");
   }
 
   @Test public void postDecremntInFunctionCall() {
@@ -2000,7 +2283,8 @@ public final class TrimmerTest {
   }
 
   @Test public void postfixToPrefix101() {
-    trimmingOf("i++;").gives("++i;").stays();
+    trimmingOf("i++;")//
+        .gives("++i;").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
@@ -2008,36 +2292,45 @@ public final class TrimmerTest {
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;")
-        .gives("for (int ¢ = i++; i < 10; ++¢, sum+=¢);").stays();
+    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;")//
+        .gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;")//
+        .gives("for (int ¢ = i++; i < 10; ++¢, sum+=¢);")//
+        .stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
-    trimmingOf("int s = 2;" + "int n = s++;" + "S.out.print(n);").gives("int s=2;S.out.print(s++);");
+    trimmingOf("int s = 2;" + "int n = s++;" + "S.out.print(n);")//
+        .gives("int s=2;S.out.print(s++);");
   }
 
   @Test public void postIncrementInFunctionCall() {
-    trimmingOf("f(i++);").stays();
+    trimmingOf("f(i++);")//
+        .stays();
   }
 
   @Test public void postIncrementReturn() {
-    trimmingOf("a++; return a;").gives("++a;return a;");
+    trimmingOf("a++; return a;")//
+        .gives("++a;return a;");
   }
 
   @Test public void preDecreementReturn() {
-    trimmingOf("--a.b.c; return a.b.c;").gives("return--a.b.c;");
+    trimmingOf("--a.b.c; return a.b.c;")//
+        .gives("return--a.b.c;");
   }
 
   @Test public void preDecrementReturn() {
-    trimmingOf("--a; return a;").gives("return --a;");
+    trimmingOf("--a; return a;")//
+        .gives("return --a;");
   }
 
   @Test public void preDecrementReturn1() {
-    trimmingOf("--this.a; return this.a;").gives("return --this.a;");
+    trimmingOf("--this.a; return this.a;")//
+        .gives("return --this.a;");
   }
 
   @Test public void prefixToPosfixIncreementSimple() {
-    trimmingOf("i++").gives("++i");
+    trimmingOf("i++")//
+        .gives("++i");
   }
 
   @Test public void prefixToPostfixDecrement() {
@@ -2056,19 +2349,26 @@ public final class TrimmerTest {
     azzert.that(new PostfixToPrefix().canTip(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     azzert.that(r, iz("--i"));
-    trimmingOf(from).gives("for(int i=0;i<100;i--,j--);").gives("for(int i=0;i<100;--i,--j);").stays();
+    trimmingOf(from)//
+        .gives("for(int i=0;i<100;i--,j--);")//
+        .gives("for(int i=0;i<100;--i,--j);").stays();
   }
 
   @Test public void prefixToPostfixDecrementEssence() {
-    trimmingOf("for(int i=0;i< 100;i--)j--;").gives("for(int i=0;i<100;i--,j--);").gives("for(int i=0;i<100;--i,--j);").stays();
+    trimmingOf("for(int i=0;i< 100;i--)j--;")//
+        .gives("for(int i=0;i<100;i--,j--);")//
+        .gives("for(int i=0;i<100;--i,--j);").stays();
   }
 
   @Test public void prefixToPostfixIncreement() {
-    trimmingOf("for (int i = 0; i < 100; i++) i++;").gives("for(int ¢=0;¢<100;¢++)¢++;").gives("for(int ¢=0;¢<100;++¢,++¢);").stays();
+    trimmingOf("for (int i = 0; i < 100; i++) i++;")//
+        .gives("for(int ¢=0;¢<100;¢++)¢++;")//
+        .gives("for(int ¢=0;¢<100;++¢,++¢);").stays();
   }
 
   @Test public void preIncrementReturn() {
-    trimmingOf("++a; return a;").gives("return ++a;");
+    trimmingOf("++a; return a;")//
+        .gives("return ++a;");
   }
 
   @Test public void pushdowConditionalActualExampleFirstPass() {
@@ -2086,11 +2386,13 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownNot2LevelNotOfFalse() {
-    trimmingOf("!!false").gives("false");
+    trimmingOf("!!false")//
+        .gives("false");
   }
 
   @Test public void pushdownNot2LevelNotOfTrue() {
-    trimmingOf("!!true").gives("true");
+    trimmingOf("!!true")//
+        .gives("true");
   }
 
   @Test public void pushdownNotActualExample() {
@@ -2098,15 +2400,18 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownNotDoubleNot() {
-    trimmingOf("!!f()").gives("f()");
+    trimmingOf("!!f()")//
+        .gives("f()");
   }
 
   @Test public void pushdownNotDoubleNotDeeplyNested() {
-    trimmingOf("!(((!f())))").gives("f()");
+    trimmingOf("!(((!f())))")//
+        .gives("f()");
   }
 
   @Test public void pushdownNotDoubleNotNested() {
-    trimmingOf("!(!f())").gives("f()");
+    trimmingOf("!(!f())")//
+        .gives("f()");
   }
 
   @Test public void pushdownNotEND() {
@@ -2118,67 +2423,83 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownNotNotOfAND() {
-    trimmingOf("!(a && b && c)").gives("!a || !b || !c");
+    trimmingOf("!(a && b && c)")//
+        .gives("!a || !b || !c");
   }
 
   @Test public void pushdownNotNotOfAND2() {
-    trimmingOf("!(f() && f(5))").gives("!f() || !f(5)");
+    trimmingOf("!(f() && f(5))")//
+        .gives("!f() || !f(5)");
   }
 
   @Test public void pushdownNotNotOfANDNested() {
-    trimmingOf("!(f() && (f(5)))").gives("!f() || !f(5)");
+    trimmingOf("!(f() && (f(5)))")//
+        .gives("!f() || !f(5)");
   }
 
   @Test public void pushdownNotNotOfEQ() {
-    trimmingOf("!(3 == 5)").gives("3 != 5");
+    trimmingOf("!(3 == 5)")//
+        .gives("3 != 5");
   }
 
   @Test public void pushdownNotNotOfEQNested() {
-    trimmingOf("!((((3 == 5))))").gives("3 != 5");
+    trimmingOf("!((((3 == 5))))")//
+        .gives("3 != 5");
   }
 
   @Test public void pushdownNotNotOfFalse() {
-    trimmingOf("!false").gives("true");
+    trimmingOf("!false")//
+        .gives("true");
   }
 
   @Test public void pushdownNotNotOfGE() {
-    trimmingOf("!(3 >= 5)").gives("3 < 5");
+    trimmingOf("!(3 >= 5)")//
+        .gives("3 < 5");
   }
 
   @Test public void pushdownNotNotOfGT() {
-    trimmingOf("!(3 > 5)").gives("3 <= 5");
+    trimmingOf("!(3 > 5)")//
+        .gives("3 <= 5");
   }
 
   @Test public void pushdownNotNotOfLE() {
-    trimmingOf("!(3 <= 5)").gives("3 > 5");
+    trimmingOf("!(3 <= 5)")//
+        .gives("3 > 5");
   }
 
   @Test public void pushdownNotNotOfLT() {
-    trimmingOf("!(3 < 5)").gives("3 >= 5");
+    trimmingOf("!(3 < 5)")//
+        .gives("3 >= 5");
   }
 
   @Test public void pushdownNotNotOfNE() {
-    trimmingOf("!(3 != 5)").gives("3 == 5");
+    trimmingOf("!(3 != 5)")//
+        .gives("3 == 5");
   }
 
   @Test public void pushdownNotNotOfOR() {
-    trimmingOf("!(a || b || c)").gives("!a && !b && !c");
+    trimmingOf("!(a || b || c)")//
+        .gives("!a && !b && !c");
   }
 
   @Test public void pushdownNotNotOfOR2() {
-    trimmingOf("!(f() || f(5))").gives("!f() && !f(5)");
+    trimmingOf("!(f() || f(5))")//
+        .gives("!f() && !f(5)");
   }
 
   @Test public void pushdownNotNotOfTrue() {
-    trimmingOf("!true").gives("false");
+    trimmingOf("!true")//
+        .gives("false");
   }
 
   @Test public void pushdownNotNotOfTrue2() {
-    trimmingOf("!!true").gives("true");
+    trimmingOf("!!true")//
+        .gives("true");
   }
 
   @Test public void pushdownNotNotOfWrappedOR() {
-    trimmingOf("!((a) || b || c)").gives("!a && !b && !c");
+    trimmingOf("!((a) || b || c)")//
+        .gives("!a && !b && !c");
   }
 
   @Test public void pushdownNotOR() {
@@ -2202,43 +2523,53 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryActualExample2() {
-    trimmingOf("!inRange(m, e) ? true : inner.go(r, e)").gives("!inRange(m, e) || inner.go(r, e)");
+    trimmingOf("!inRange(m, e) ? true : inner.go(r, e)")//
+        .gives("!inRange(m, e) || inner.go(r, e)");
   }
 
   @Test public void pushdownTernaryAlmostIdentical2Addition() {
-    trimmingOf("a ? b+d :b+ c").gives("b+(a ? d : c)");
+    trimmingOf("a ? b+d :b+ c")//
+        .gives("b+(a ? d : c)");
   }
 
   @Test public void pushdownTernaryAlmostIdentical3Addition() {
-    trimmingOf("a ? b+d +x:b+ c + x").gives("b+(a ? d : c) + x");
+    trimmingOf("a ? b+d +x:b+ c + x")//
+        .gives("b+(a ? d : c) + x");
   }
 
   @Test public void pushdownTernaryAlmostIdentical4AdditionLast() {
-    trimmingOf("a ? b+d+e+y:b+d+e+x").gives("b+d+e+(a ? y : x)");
+    trimmingOf("a ? b+d+e+y:b+d+e+x")//
+        .gives("b+d+e+(a ? y : x)");
   }
 
   @Test public void pushdownTernaryAlmostIdentical4AdditionSecond() {
-    trimmingOf("a ? b+x+e+f:b+y+e+f").gives("b+(a ? x : y)+e+f");
+    trimmingOf("a ? b+x+e+f:b+y+e+f")//
+        .gives("b+(a ? x : y)+e+f");
   }
 
   @Test public void pushdownTernaryAlmostIdenticalAssignment() {
-    trimmingOf("a ? (b=c) :(b=d)").gives("b = a ? c : d");
+    trimmingOf("a ? (b=c) :(b=d)")//
+        .gives("b = a ? c : d");
   }
 
   @Test public void pushdownTernaryAlmostIdenticalFunctionCall() {
-    trimmingOf("a ? f(b) :f(c)").gives("f(a ? b : c)");
+    trimmingOf("a ? f(b) :f(c)")//
+        .gives("f(a ? b : c)");
   }
 
   @Test public void pushdownTernaryAlmostIdenticalMethodCall() {
-    trimmingOf("a ? y.f(b) :y.f(c)").gives("y.f(a ? b : c)");
+    trimmingOf("a ? y.f(b) :y.f(c)")//
+        .gives("y.f(a ? b : c)");
   }
 
   @Test public void pushdownTernaryAlmostIdenticalTwoArgumentsFunctionCall1Div2() {
-    trimmingOf("a ? f(b,x) :f(c,x)").gives("f(a ? b : c,x)");
+    trimmingOf("a ? f(b,x) :f(c,x)")//
+        .gives("f(a ? b : c,x)");
   }
 
   @Test public void pushdownTernaryAlmostIdenticalTwoArgumentsFunctionCall2Div2() {
-    trimmingOf("a ? f(x,b) :f(x,c)").gives("f(x,a ? b : c)");
+    trimmingOf("a ? f(x,b) :f(x,c)")//
+        .gives("f(x,a ? b : c)");
   }
 
   @Test public void pushdownTernaryAMethodCallDistinctReceiver() {
@@ -2246,7 +2577,8 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryDifferentTargetFieldRefernce() {
-    trimmingOf("a ? 1 + x.a : 1 + y.a").gives("1+(a ? x.a : y.a)");
+    trimmingOf("a ? 1 + x.a : 1 + y.a")//
+        .gives("1+(a ? x.a : y.a)");
   }
 
   @Test public void pushdownTernaryFieldReferneceShort() {
@@ -2254,60 +2586,74 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryFunctionCall() {
-    trimmingOf("a ? f(b,c) : f(c)").gives("!a?f(c):f(b,c)");
+    trimmingOf("a ? f(b,c) : f(c)")//
+        .gives("!a?f(c):f(b,c)");
   }
 
   @Test public void pushdownTernaryFX() {
-    trimmingOf("a ? false : c").gives("!a && c");
+    trimmingOf("a ? false : c")//
+        .gives("!a && c");
   }
 
   @Test public void pushdownTernaryIdenticalAddition() {
-    trimmingOf("a ? b+d :b+ d").gives("b+d");
+    trimmingOf("a ? b+d :b+ d")//
+        .gives("b+d");
   }
 
   @Test public void pushdownTernaryIdenticalAdditionWtihParenthesis() {
-    trimmingOf("a ? (b+d) :(b+ d)").gives("b+d");
+    trimmingOf("a ? (b+d) :(b+ d)")//
+        .gives("b+d");
   }
 
   @Test public void pushdownTernaryIdenticalAssignment() {
-    trimmingOf("a ? (b=c) :(b=c)").gives("b = c");
+    trimmingOf("a ? (b=c) :(b=c)")//
+        .gives("b = c");
   }
 
   @Test public void pushdownTernaryIdenticalAssignmentVariant() {
-    trimmingOf("a ? (b=c) :(b=d)").gives("b=a?c:d");
+    trimmingOf("a ? (b=c) :(b=d)")//
+        .gives("b=a?c:d");
   }
 
   @Test public void pushdownTernaryIdenticalFunctionCall() {
-    trimmingOf("a ? f(b) :f(b)").gives("f(b)");
+    trimmingOf("a ? f(b) :f(b)")//
+        .gives("f(b)");
   }
 
   @Test public void pushdownTernaryIdenticalIncrement() {
-    trimmingOf("a ? b++ :b++").gives("b++");
+    trimmingOf("a ? b++ :b++")//
+        .gives("b++");
   }
 
   @Test public void pushdownTernaryIdenticalMethodCall() {
-    trimmingOf("a ? y.f(b) :y.f(b)").gives("y.f(b)");
+    trimmingOf("a ? y.f(b) :y.f(b)")//
+        .gives("y.f(b)");
   }
 
   @Test public void pushdownTernaryintoConstructor1Div1Location() {
-    trimmingOf("a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))").gives("new S(a.equal(b)? new Integer(4): new Ineger(3))");
+    trimmingOf("a.equal(b) ? new S(new Integer(4)) : new S(new Ineger(3))")//
+        .gives("new S(a.equal(b)? new Integer(4): new Ineger(3))");
   }
 
   @Test public void pushdownTernaryintoConstructor1Div3() {
-    trimmingOf("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)").gives("new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
+    trimmingOf("a.equal(b) ? new S(new Integer(4),a,b) : new S(new Ineger(3),a,b)")//
+        .gives("new S(a.equal(b)? new Integer(4): new Ineger(3), a, b)");
   }
 
   @Test public void pushdownTernaryintoConstructor2Div3() {
-    trimmingOf("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)").gives("new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
+    trimmingOf("a.equal(b) ? new S(a,new Integer(4),b) : new S(a, new Ineger(3), b)")//
+        .gives("new S(a,a.equal(b)? new Integer(4): new Ineger(3),b)");
   }
 
   @Test public void pushdownTernaryintoConstructor3Div3() {
-    trimmingOf("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))").gives("new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
+    trimmingOf("a.equal(b) ? new S(a,b,new Integer(4)) : new S(a,b,new Ineger(3))")//
+        .gives("new S(a, b, a.equal(b)? new Integer(4): new Ineger(3))");
   }
 
   @Test public void pushdownTernaryintoConstructorNotSameArity() {
-    trimmingOf("a ? new S(a,new Integer(4),b) : new S(new Ineger(3))").gives(
-        "!a?new S(new Ineger(3)):new S(a,new Integer(4),b)                                                                                                                  ");
+    trimmingOf("a ? new S(a,new Integer(4),b) : new S(new Ineger(3))")//
+        .gives(
+            "!a?new S(new Ineger(3)):new S(a,new Integer(4),b)                                                                                                                  ");
   }
 
   @Test public void pushdownTernaryintoPrintln() {
@@ -2321,7 +2667,8 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryMethodInvocationFirst() {
-    trimmingOf("a?b():c").gives("!a?c:b()");
+    trimmingOf("a?b():c")//
+        .gives("!a?c:b()");
   }
 
   @Test public void pushdownTernaryNoBoolean() {
@@ -2349,7 +2696,8 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryNotOnPLUS() {
-    trimmingOf("a ? +x : +y").gives("a ? x : y").stays();
+    trimmingOf("a ? +x : +y")//
+        .gives("a ? x : y").stays();
   }
 
   @Test public void pushdownTernaryNotOnPLUSPLUS() {
@@ -2365,31 +2713,38 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryOnMethodCall() {
-    trimmingOf("a ? y.f(c,b) :y.f(c)").gives("!a?y.f(c):y.f(c,b)");
+    trimmingOf("a ? y.f(c,b) :y.f(c)")//
+        .gives("!a?y.f(c):y.f(c,b)");
   }
 
   @Test public void pushdownTernaryParFX() {
-    trimmingOf("a ?( false):true").gives("!a && true");
+    trimmingOf("a ?( false):true")//
+        .gives("!a && true");
   }
 
   @Test public void pushdownTernaryParTX() {
-    trimmingOf("a ? (((true ))): c").gives("a || c");
+    trimmingOf("a ? (((true ))): c")//
+        .gives("a || c");
   }
 
   @Test public void pushdownTernaryParXF() {
-    trimmingOf("a ? b : (false)").gives("a && b");
+    trimmingOf("a ? b : (false)")//
+        .gives("a && b");
   }
 
   @Test public void pushdownTernaryParXT() {
-    trimmingOf("a ? b : ((true))").gives("!a || b");
+    trimmingOf("a ? b : ((true))")//
+        .gives("!a || b");
   }
 
   @Test public void pushdownTernaryReceiverNoReceiver() {
-    trimmingOf("a < b ? a.f() : f()").gives("a>=b?f():a.f()");
+    trimmingOf("a < b ? a.f() : f()")//
+        .gives("a>=b?f():a.f()");
   }
 
   @Test public void pushdownTernaryToClasConstrctor() {
-    trimmingOf("a ? new B(a,b,c) : new B(a,x,c)").gives("new B(a,a ? b : x ,c)");
+    trimmingOf("a ? new B(a,b,c) : new B(a,x,c)")//
+        .gives("new B(a,a ? b : x ,c)");
   }
 
   @Test public void pushdownTernaryToClasConstrctorTwoDifferenes() {
@@ -2401,15 +2756,18 @@ public final class TrimmerTest {
   }
 
   @Test public void pushdownTernaryTX() {
-    trimmingOf("a ? true : c").gives("a || c");
+    trimmingOf("a ? true : c")//
+        .gives("a || c");
   }
 
   @Test public void pushdownTernaryXF() {
-    trimmingOf("a ? b : false").gives("a && b");
+    trimmingOf("a ? b : false")//
+        .gives("a && b");
   }
 
   @Test public void pushdownTernaryXT() {
-    trimmingOf("a ? b : true").gives("!a || b");
+    trimmingOf("a ? b : true")//
+        .gives("!a || b");
   }
 
   @Test public void redundantButNecessaryBrackets1() {
@@ -2434,7 +2792,8 @@ public final class TrimmerTest {
   }
 
   @Test public void removeSuper() {
-    trimmingOf("class T {T(){super();}}").gives("class T { T() { }}");
+    trimmingOf("class T {T(){super();}}")//
+        .gives("class T { T() { }}");
   }
 
   @Test public void removeSuperWithArgument() {
@@ -2446,7 +2805,8 @@ public final class TrimmerTest {
   }
 
   @Test public void removeSuperWithStatemen() {
-    trimmingOf("class T { T() { super(); a++;}}").gives("class T { T() { ++a;}}");
+    trimmingOf("class T { T() { super(); a++;}}")//
+        .gives("class T { T() { ++a;}}");
   }
 
   @Test public void renameToDollarActual() {
@@ -2460,7 +2820,8 @@ public final class TrimmerTest {
   }
 
   @Test public void renameToDollarEnhancedFor() {
-    trimmingOf("int f() { for (int a: as) return a; }").gives(" int f() {for(int $:as)return $;}");
+    trimmingOf("int f() { for (int a: as) return a; }")//
+        .gives(" int f() {for(int $:as)return $;}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore1() {
@@ -2472,11 +2833,13 @@ public final class TrimmerTest {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}").gives("void f(@SuppressWarnings({\"unused\"}) int __){}");
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+        .gives("void f(@SuppressWarnings({\"unused\"}) int __){}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}").gives("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
+    trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}")//
+        .gives("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore5() {
@@ -2485,15 +2848,18 @@ public final class TrimmerTest {
   }
 
   @Test public void renameVariableUnderscore1() {
-    trimmingOf("void f(int _) {System.h(_);}").gives("void f(int __) {System.h(__);}");
+    trimmingOf("void f(int _) {System.h(_);}")//
+        .gives("void f(int __) {System.h(__);}");
   }
 
   @Test public void replaceInitializationInReturn() {
-    trimmingOf("int a = 3; return a + 4;").gives("return 3 + 4;");
+    trimmingOf("int a = 3; return a + 4;")//
+        .gives("return 3 + 4;");
   }
 
   @Test public void replaceTwiceInitializationInReturn() {
-    trimmingOf("int a = 3; return a + 4 << a;").gives("return 3 + 4 << 3;");
+    trimmingOf("int a = 3; return a + 4 << a;")//
+        .gives("return 3 + 4 << 3;");
   }
 
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
@@ -2512,7 +2878,8 @@ public final class TrimmerTest {
   }
 
   @Test public void sequencerFirstInElse() {
-    trimmingOf("if (a) {b++; c++; ++d;} else { f++; g++; return x;}").gives("if (!a) {f++; g++; return x;} b++; c++; ++d; ");
+    trimmingOf("if (a) {b++; c++; ++d;} else { f++; g++; return x;}")//
+        .gives("if (!a) {f++; g++; return x;} b++; c++; ++d; ");
   }
 
   @Test public void shorterChainParenthesisComparison() {
@@ -2528,11 +2895,13 @@ public final class TrimmerTest {
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf4() {
-    trimmingOf("if (a) {f(); g(); h(); ++i;} else if (a) ++i; else j++;").gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;}");
+    trimmingOf("if (a) {f(); g(); h(); ++i;} else if (a) ++i; else j++;")//
+        .gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;}");
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf5() {
-    trimmingOf("if (a) {f(); g(); h(); ++i; f();} else if (a) ++i; else j++;").gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();}");
+    trimmingOf("if (a) {f(); g(); h(); ++i; f();} else if (a) ++i; else j++;")//
+        .gives("if(!a)if(a)++i;else j++;else{f();g();h();++i;f();}");
   }
 
   @Test public void shortestBranchIfWithComplexNestedIf7() {
@@ -2546,11 +2915,13 @@ public final class TrimmerTest {
   }
 
   @Test public void shortestBranchIfWithComplexNestedIfPlain() {
-    trimmingOf("if (a) {f(); g(); h();} else { i++; j++;}").gives("if(!a){i++;j++;}else{f();g();h();}");
+    trimmingOf("if (a) {f(); g(); h();} else { i++; j++;}")//
+        .gives("if(!a){i++;j++;}else{f();g();h();}");
   }
 
   @Test public void shortestBranchIfWithComplexSimpler() {
-    trimmingOf("if (a) {f(); g(); h();} else  i++; j++;").gives("if(!a)i++;else{f();g();h();}++j;");
+    trimmingOf("if (a) {f(); g(); h();} else  i++; j++;")//
+        .gives("if(!a)i++;else{f();g();h();}++j;");
   }
 
   @Test public void shortestBranchInIf() {
@@ -2629,7 +3000,8 @@ public final class TrimmerTest {
   }
 
   @Test public void shortestOperand02() {
-    trimmingOf("k = k + 4;if (2 * 6 + 4 == k) return true;").gives("k += 4;if (12 + 4 == k) return true;");
+    trimmingOf("k = k + 4;if (2 * 6 + 4 == k) return true;")//
+        .gives("k += 4;if (12 + 4 == k) return true;");
   }
 
   @Test public void shortestOperand05() {
@@ -2638,47 +3010,58 @@ public final class TrimmerTest {
   }
 
   @Test public void shortestOperand10() {
-    trimmingOf("return b == true;").gives("return b;");
+    trimmingOf("return b == true;")//
+        .gives("return b;");
   }
 
   @Test public void shortestOperand11() {
-    trimmingOf("int h,u,m,a,n;return b == true && n + a > m - u || h > u;").gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
+    trimmingOf("int h,u,m,a,n;return b == true && n + a > m - u || h > u;")//
+        .gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
   }
 
   @Test public void shortestOperand12() {
-    trimmingOf("int k = 15; return 7 < k; ").gives("return 7<15;");
+    trimmingOf("int k = 15; return 7 < k; ")//
+        .gives("return 7<15;");
   }
 
   @Test public void shortestOperand13() {
-    trimmingOf("return (2 > 2 + a) == true;").gives("return 2>a+2;");
+    trimmingOf("return (2 > 2 + a) == true;")//
+        .gives("return 2>a+2;");
   }
 
   @Test public void shortestOperand13a() {
-    trimmingOf("(2 > 2 + a) == true").gives("2>a+2 ");
+    trimmingOf("(2 > 2 + a) == true")//
+        .gives("2>a+2 ");
   }
 
   @Test public void shortestOperand13b() {
-    trimmingOf("(2) == true").gives("2 ");
+    trimmingOf("(2) == true")//
+        .gives("2 ");
   }
 
   @Test public void shortestOperand13c() {
-    trimmingOf("2 == true").gives("2 ");
+    trimmingOf("2 == true")//
+        .gives("2 ");
   }
 
   @Test public void shortestOperand14() {
-    trimmingOf("Integer tipper = new Integer(5);   return (tipper.toString() == null);    ").gives("return((new Integer(5)).toString()==null);");
+    trimmingOf("Integer tipper = new Integer(5);   return (tipper.toString() == null);    ")//
+        .gives("return((new Integer(5)).toString()==null);");
   }
 
   @Test public void shortestOperand17() {
-    trimmingOf("5 ^ a.getNum()").gives("a.getNum() ^ 5");
+    trimmingOf("5 ^ a.getNum()")//
+        .gives("a.getNum() ^ 5");
   }
 
   @Test public void shortestOperand19() {
-    trimmingOf("k.get().operand() ^ a.get()").gives("a.get() ^ k.get().operand()");
+    trimmingOf("k.get().operand() ^ a.get()")//
+        .gives("a.get() ^ k.get().operand()");
   }
 
   @Test public void shortestOperand20() {
-    trimmingOf("k.get() ^ a.get()").gives("a.get() ^ k.get()");
+    trimmingOf("k.get() ^ a.get()")//
+        .gives("a.get() ^ k.get()");
   }
 
   @Test public void shortestOperand22() {
@@ -2690,11 +3073,13 @@ public final class TrimmerTest {
   }
 
   @Test public void shortestOperand24() {
-    trimmingOf("f(a,b,c,d) & 175 & 0").gives("f(a,b,c,d) & 0 & 175");
+    trimmingOf("f(a,b,c,d) & 175 & 0")//
+        .gives("f(a,b,c,d) & 0 & 175");
   }
 
   @Test public void shortestOperand25() {
-    trimmingOf("f(a,b,c,d) & bob & 0 ").gives("bob & f(a,b,c,d) & 0");
+    trimmingOf("f(a,b,c,d) & bob & 0 ")//
+        .gives("bob & f(a,b,c,d) & 0");
   }
 
   @Test public void shortestOperand27() {
@@ -2702,15 +3087,18 @@ public final class TrimmerTest {
   }
 
   @Test public void shortestOperand28() {
-    trimmingOf("return f(a,b,c,d) * f(a,b,c) * f();").gives("return f()*f(a,b,c)*f(a,b,c,d);");
+    trimmingOf("return f(a,b,c,d) * f(a,b,c) * f();")//
+        .gives("return f()*f(a,b,c)*f(a,b,c,d);");
   }
 
   @Test public void shortestOperand29() {
-    trimmingOf("f(a,b,c,d) ^ f() ^ 0").gives("f() ^ f(a,b,c,d) ^ 0");
+    trimmingOf("f(a,b,c,d) ^ f() ^ 0")//
+        .gives("f() ^ f(a,b,c,d) ^ 0");
   }
 
   @Test public void shortestOperand30() {
-    trimmingOf("f(a,b,c,d) & f()").gives("f() & f(a,b,c,d)");
+    trimmingOf("f(a,b,c,d) & f()")//
+        .gives("f() & f(a,b,c,d)");
   }
 
   @Test public void shortestOperand31() {
@@ -2739,107 +3127,133 @@ public final class TrimmerTest {
   }
 
   @Test public void simplifyLogicalNegationNested() {
-    trimmingOf("!((a || b == c) && (d || !(!!c)))").gives("!a && b != c || !d && c");
+    trimmingOf("!((a || b == c) && (d || !(!!c)))")//
+        .gives("!a && b != c || !d && c");
   }
 
   @Test public void simplifyLogicalNegationNested1() {
-    trimmingOf("!(d || !(!!c))").gives("!d && c");
+    trimmingOf("!(d || !(!!c))")//
+        .gives("!d && c");
   }
 
   @Test public void simplifyLogicalNegationNested2() {
-    trimmingOf("!(!d || !!!c)").gives("d && c");
+    trimmingOf("!(!d || !!!c)")//
+        .gives("d && c");
   }
 
   @Test public void simplifyLogicalNegationOfAnd() {
-    trimmingOf("!(f() && f(5))").gives("!f() || !f(5)");
+    trimmingOf("!(f() && f(5))")//
+        .gives("!f() || !f(5)");
   }
 
   @Test public void simplifyLogicalNegationOfEquality() {
-    trimmingOf("!(3 == 5)").gives("3!=5");
+    trimmingOf("!(3 == 5)")//
+        .gives("3!=5");
   }
 
   @Test public void simplifyLogicalNegationOfGreater() {
-    trimmingOf("!(3 > 5)").gives("3 <= 5");
+    trimmingOf("!(3 > 5)")//
+        .gives("3 <= 5");
   }
 
   @Test public void simplifyLogicalNegationOfGreaterEquals() {
-    trimmingOf("!(3 >= 5)").gives("3 < 5");
+    trimmingOf("!(3 >= 5)")//
+        .gives("3 < 5");
   }
 
   @Test public void simplifyLogicalNegationOfInequality() {
-    trimmingOf("!(3 != 5)").gives("3 == 5");
+    trimmingOf("!(3 != 5)")//
+        .gives("3 == 5");
   }
 
   @Test public void simplifyLogicalNegationOfLess() {
-    trimmingOf("!(3 < 5)").gives("3 >= 5");
+    trimmingOf("!(3 < 5)")//
+        .gives("3 >= 5");
   }
 
   @Test public void simplifyLogicalNegationOfLessEquals() {
-    trimmingOf("!(3 <= 5)").gives("3 > 5");
+    trimmingOf("!(3 <= 5)")//
+        .gives("3 > 5");
   }
 
   @Test public void simplifyLogicalNegationOfMultipleAnd() {
-    trimmingOf("!(a && b && c)").gives("!a || !b || !c");
+    trimmingOf("!(a && b && c)")//
+        .gives("!a || !b || !c");
   }
 
   @Test public void simplifyLogicalNegationOfMultipleOr() {
-    trimmingOf("!(a || b || c)").gives("!a && !b && !c");
+    trimmingOf("!(a || b || c)")//
+        .gives("!a && !b && !c");
   }
 
   @Test public void simplifyLogicalNegationOfNot() {
-    trimmingOf("!!f()").gives("f()");
+    trimmingOf("!!f()")//
+        .gives("f()");
   }
 
   @Test public void simplifyLogicalNegationOfOr() {
-    trimmingOf("!(f() || f(5))").gives("!f() && !f(5)");
+    trimmingOf("!(f() || f(5))")//
+        .gives("!f() && !f(5)");
   }
 
   @Test public void sortAddition1() {
-    trimmingOf("1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9  + A> k + 4").gives("8*9+1+2-3-4+5 / 6-7+A>k+4");
+    trimmingOf("1 + 2 - 3 - 4 + 5 / 6 - 7 + 8 * 9  + A> k + 4")//
+        .gives("8*9+1+2-3-4+5 / 6-7+A>k+4");
   }
 
   @Test public void sortAddition2() {
-    trimmingOf("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1").gives("3 <3&11>3||-1<3");
+    trimmingOf("1 + 2 < 3 & 7 + 4 > 2 + 1 || 6 - 7 < 2 + 1")//
+        .gives("3 <3&11>3||-1<3");
   }
 
   @Test public void sortAddition3() {
-    trimmingOf("6 - 7 < 1 + 2").gives("-1<3").stays();
+    trimmingOf("6 - 7 < 1 + 2")//
+        .gives("-1<3").stays();
   }
 
   @Test public void sortAddition4() {
-    trimmingOf("a + 11 + 2 < 3 & 7 + 4 > 2 + 1").gives("7 + 4 > 2 + 1 & a + 11 + 2 < 3");
+    trimmingOf("a + 11 + 2 < 3 & 7 + 4 > 2 + 1")//
+        .gives("7 + 4 > 2 + 1 & a + 11 + 2 < 3");
   }
 
   @Test public void sortAdditionClassConstantAndLiteral() {
-    trimmingOf("1+A< 12").gives("A+1<12");
+    trimmingOf("1+A< 12")//
+        .gives("A+1<12");
   }
 
   @Test public void sortAdditionFunctionClassConstantAndLiteral() {
-    trimmingOf("1+A+f()< 12").gives("f()+A+1<12");
+    trimmingOf("1+A+f()< 12")//
+        .gives("f()+A+1<12");
   }
 
   @Test public void sortAdditionThreeOperands1() {
-    trimmingOf("1.0+2222+3").gives("2226.0").stays();
+    trimmingOf("1.0+2222+3")//
+        .gives("2226.0").stays();
   }
 
   @Test public void sortAdditionThreeOperands2() {
-    trimmingOf("1.0+1+124+1").gives("127.0");
+    trimmingOf("1.0+1+124+1")//
+        .gives("127.0");
   }
 
   @Test public void sortAdditionThreeOperands3() {
-    trimmingOf("1+2F+33+142+1").gives("1+2F+176").stays();
+    trimmingOf("1+2F+33+142+1")//
+        .gives("1+2F+176").stays();
   }
 
   @Test public void sortAdditionThreeOperands4() {
-    trimmingOf("1+2+'a'").gives("3+'a'");
+    trimmingOf("1+2+'a'")//
+        .gives("3+'a'");
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_a() {
-    trimmingOf("1111+211").gives("1322");
+    trimmingOf("1111+211")//
+        .gives("1322");
   }
 
   @Test public void sortAdditionTwoOperands0CheckThatWeSortByLength_b() {
-    trimmingOf("211+1111").gives("1322").stays();
+    trimmingOf("211+1111")//
+        .gives("1322").stays();
   }
 
   @Test public void sortAdditionTwoOperands1() {
@@ -2847,15 +3261,18 @@ public final class TrimmerTest {
   }
 
   @Test public void sortAdditionTwoOperands2() {
-    trimmingOf("2.0+1").gives("3.0");
+    trimmingOf("2.0+1")//
+        .gives("3.0");
   }
 
   @Test public void sortAdditionTwoOperands3() {
-    trimmingOf("1+2L").gives("3L");
+    trimmingOf("1+2L")//
+        .gives("3L");
   }
 
   @Test public void sortAdditionTwoOperands4() {
-    trimmingOf("2L+1").gives("3L");
+    trimmingOf("2L+1")//
+        .gives("3L");
   }
 
   @Test public void sortAdditionUncertain() {
@@ -2863,19 +3280,23 @@ public final class TrimmerTest {
   }
 
   @Test public void sortAdditionVariableClassConstantAndLiteral() {
-    trimmingOf("1+A+a< 12").gives("a+A+1<12");
+    trimmingOf("1+A+a< 12")//
+        .gives("a+A+1<12");
   }
 
   @Test public void sortConstantMultiplication() {
-    trimmingOf("a*2").gives("2*a");
+    trimmingOf("a*2")//
+        .gives("2*a");
   }
 
   @Test public void sortDivision() {
-    trimmingOf("2.1/34.2/1.0").gives("2.1/1.0/34.2");
+    trimmingOf("2.1/34.2/1.0")//
+        .gives("2.1/1.0/34.2");
   }
 
   @Test public void sortDivisionLetters() {
-    trimmingOf("x/b/a").gives("x/a/b");
+    trimmingOf("x/b/a")//
+        .gives("x/a/b");
   }
 
   @Test public void sortDivisionNo() {
@@ -2883,27 +3304,33 @@ public final class TrimmerTest {
   }
 
   @Test public void sortThreeOperands1() {
-    trimmingOf("1.0*2222*3").gives("6666.0");
+    trimmingOf("1.0*2222*3")//
+        .gives("6666.0");
   }
 
   @Test public void sortThreeOperands2() {
-    trimmingOf("1.0*11*124").gives("1364.0");
+    trimmingOf("1.0*11*124")//
+        .gives("1364.0");
   }
 
   @Test public void sortThreeOperands3() {
-    trimmingOf("2*2F*33*142").gives("2*2F*4686").stays();
+    trimmingOf("2*2F*33*142")//
+        .gives("2*2F*4686").stays();
   }
 
   @Test public void sortThreeOperands4() {
-    trimmingOf("2*3*'a'").gives("6*'a'");
+    trimmingOf("2*3*'a'")//
+        .gives("6*'a'");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_a() {
-    trimmingOf("1111*211").gives("234421");
+    trimmingOf("1111*211")//
+        .gives("234421");
   }
 
   @Test public void sortTwoOperands0CheckThatWeSortByLength_b() {
-    trimmingOf("211*1111").gives("234421");
+    trimmingOf("211*1111")//
+        .gives("234421");
   }
 
   @Test public void sortTwoOperands1() {
@@ -2911,15 +3338,18 @@ public final class TrimmerTest {
   }
 
   @Test public void sortTwoOperands2() {
-    trimmingOf("2.0*2").gives("4.0");
+    trimmingOf("2.0*2")//
+        .gives("4.0");
   }
 
   @Test public void sortTwoOperands3() {
-    trimmingOf("2*3L").gives("6L");
+    trimmingOf("2*3L")//
+        .gives("6L");
   }
 
   @Test public void sortTwoOperands4() {
-    trimmingOf("2L*1L").gives("2L");
+    trimmingOf("2L*1L")//
+        .gives("2L");
   }
 
   @Ignore @Test public void SwitchFewCasesReplaceWithIf1() {
@@ -2974,7 +3404,8 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarize07aa() {
-    trimmingOf("String res=s;if(res==true)res=s+0xABBA;S.h(res);").gives("String res=s==true?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res=s;if(res==true)res=s+0xABBA;S.h(res);")//
+        .gives("String res=s==true?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize07b() {
@@ -2983,7 +3414,8 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarize09() {
-    trimmingOf("if (s.equals(532)) {    return 6;}else {    return 9;}").gives("return s.equals(532)?6:9; ");
+    trimmingOf("if (s.equals(532)) {    return 6;}else {    return 9;}")//
+        .gives("return s.equals(532)?6:9; ");
   }
 
   @Test public void ternarize10() {
@@ -2992,40 +3424,49 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarize12() {
-    trimmingOf("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ").gives("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ")//
+        .gives("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize13() {
-    trimmingOf("String res = m, foo;  if (m.equals(f())==true)   foo = M; ").gives("String foo;if(m.equals(f())==true)foo=M;")
+    trimmingOf("String res = m, foo;  if (m.equals(f())==true)   foo = M; ")//
+        .gives("String foo;if(m.equals(f())==true)foo=M;")//
         .gives("String foo;if(m.equals(f()))foo=M;");
   }
 
   @Test public void ternarize13Simplified() {
-    trimmingOf("String r = m, f;  if (m.e(f()))   f = M; ").gives("String f;if(m.e(f()))f=M;");
+    trimmingOf("String r = m, f;  if (m.e(f()))   f = M; ")//
+        .gives("String f;if(m.e(f()))f=M;");
   }
 
   @Test public void ternarize13SimplifiedMore() {
-    trimmingOf("if (m.equals(f())==true)   foo = M; ").gives("if (m.equals(f())) foo=M;");
+    trimmingOf("if (m.equals(f())==true)   foo = M; ")//
+        .gives("if (m.equals(f())) foo=M;");
   }
 
   @Test public void ternarize13SimplifiedMoreAndMore() {
-    trimmingOf("f (m.equals(f())==true); foo = M; ").gives("f (m.equals(f())); foo=M;");
+    trimmingOf("f (m.equals(f())==true); foo = M; ")//
+        .gives("f (m.equals(f())); foo=M;");
   }
 
   @Test public void ternarize13SimplifiedMoreAndMoreAndMore() {
-    trimmingOf("f (m.equals(f())==true);  ").gives("f (m.equals(f()));");
+    trimmingOf("f (m.equals(f())==true);  ")//
+        .gives("f (m.equals(f()));");
   }
 
   @Test public void ternarize13SimplifiedMoreVariant() {
-    trimmingOf("if (m==true)   foo = M; ").gives("if (m) foo=M;");
+    trimmingOf("if (m==true)   foo = M; ")//
+        .gives("if (m) foo=M;");
   }
 
   @Test public void ternarize13SimplifiedMoreVariantShorter() {
-    trimmingOf("if (m==true)   f(); ").gives("if (m) f();");
+    trimmingOf("if (m==true)   f(); ")//
+        .gives("if (m) f();");
   }
 
   @Test public void ternarize13SimplifiedMoreVariantShorterAsExpression() {
-    trimmingOf("f (m==true);   f(); ").gives("f (m); f();");
+    trimmingOf("f (m==true);   f(); ")//
+        .gives("f (m); f();");
   }
 
   @Test public void ternarize14() {
@@ -3038,11 +3479,13 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarize16a() {
-    trimmingOf("int n1, n2 = 0, n3;\n" + "  if (d)\n" + "    n2 = 2;").gives("int n1, n2 = d ? 2: 0, n3;");
+    trimmingOf("int n1, n2 = 0, n3;\n" + "  if (d)\n" + "    n2 = 2;")//
+        .gives("int n1, n2 = d ? 2: 0, n3;");
   }
 
   public void ternarize18() {
-    trimmingOf("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);").gives("System.h(s.equals(s)?tH3+res:h2A+s+0);");
+    trimmingOf("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);")//
+        .gives("System.h(s.equals(s)?tH3+res:h2A+s+0);");
   }
 
   @Test public void ternarize21() {
@@ -3063,15 +3506,19 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarize33() {
-    trimmingOf("int a, b=0;   if (b==3){    a=4; } ").gives("int a;if(0==3){a=4;}").gives("int a;if(0==3)a=4;").stays();
+    trimmingOf("int a, b=0;   if (b==3){    a=4; } ")//
+        .gives("int a;if(0==3){a=4;}")//
+        .gives("int a;if(0==3)a=4;").stays();
   }
 
   @Test public void ternarize35() {
-    trimmingOf("int a,b=0,c=0;a=4;if(c==3){b=2;}").gives("int a=4,b=0,c=0;if(c==3)b=2;");
+    trimmingOf("int a,b=0,c=0;a=4;if(c==3){b=2;}")//
+        .gives("int a=4,b=0,c=0;if(c==3)b=2;");
   }
 
   @Test public void ternarize36() {
-    trimmingOf("int a,b=0,c=0;a=4;if (c==3){  b=2;   a=6; } f();").gives("int a=4,b=0,c=0;if(c==3){b=2;a=6;} f();");
+    trimmingOf("int a,b=0,c=0;a=4;if (c==3){  b=2;   a=6; } f();")//
+        .gives("int a=4,b=0,c=0;if(c==3){b=2;a=6;} f();");
   }
 
   @Test public void ternarize38() {
@@ -3112,7 +3559,8 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarize54() {
-    trimmingOf("int $=1,xi=0,xj=0,yi=0,yj=0; if(xi > xj == yi > yj)++$;else--$;").gives(" int $=1,xj=0,yi=0,yj=0;      if(0>xj==yi>yj)++$;else--$;");
+    trimmingOf("int $=1,xi=0,xj=0,yi=0,yj=0; if(xi > xj == yi > yj)++$;else--$;")//
+        .gives(" int $=1,xj=0,yi=0,yj=0;      if(0>xj==yi>yj)++$;else--$;");
   }
 
   @Test public void ternarize55() {
@@ -3126,11 +3574,13 @@ public final class TrimmerTest {
   }
 
   @Test public void ternarizeintoSuperMethodInvocation() {
-    trimmingOf("a ? super.f(a, b, c) : super.f(a, x, c)").gives("super.f(a, a ? b : x, c)");
+    trimmingOf("a ? super.f(a, b, c) : super.f(a, x, c)")//
+        .gives("super.f(a, a ? b : x, c)");
   }
 
   @Test public void ternaryPushdownOfReciever() {
-    trimmingOf("a ? b.f():c.f()").gives("(a?b:c).f()");
+    trimmingOf("a ? b.f():c.f()")//
+        .gives("(a?b:c).f()");
   }
 
   @Test public void testPeel() {
@@ -3139,7 +3589,8 @@ public final class TrimmerTest {
   }
 
   @Test public void twoMultiplication1() {
-    trimmingOf("f(a,b,c,d) * f()").gives("f() * f(a,b,c,d)");
+    trimmingOf("f(a,b,c,d) * f()")//
+        .gives("f() * f(a,b,c,d)");
   }
 
   @Test public void twoOpportunityExample() {
@@ -3158,7 +3609,8 @@ public final class TrimmerTest {
   }
 
   @Test public void useOutcontextToManageStringAmbiguity() {
-    trimmingOf("1+2+s<3").gives("3+s<3");
+    trimmingOf("1+2+s<3")//
+        .gives("3+s<3");
   }
 
   @Test public void vanillaShortestFirstConditionalNoChange() {
