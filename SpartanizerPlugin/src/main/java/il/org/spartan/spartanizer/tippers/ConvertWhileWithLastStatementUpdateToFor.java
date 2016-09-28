@@ -13,7 +13,6 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
-    // minus.LastStatement(dupWhileBody(s));
     $.setBody(minus.LastStatement(dupWhileBody(s)));
     return $;
   }
@@ -30,6 +29,8 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
+  // TODO: Alex, (Alex) find how to use haz.sideEffects(Expression).
+  // the problem is how to convert statement into expression?
   private static boolean fitting(final WhileStatement ¢) {
     return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());

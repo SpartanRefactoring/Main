@@ -38,7 +38,7 @@ import org.junit.runners.*;
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;p = p.getParent());" + "return false;" + "}").stays();
   }
 
-  @Test public void initializers_for_1() {
+  @Ignore @Test public void initializers_for_1() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for(;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;"
         + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;++i;" + "}"
@@ -50,19 +50,19 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void initializers_for_2() {
+  @Ignore @Test public void initializers_for_2() {
     trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;++p) ;" + "return false;" + "}").stays();
   }
 
-  @Test public void initializers_for_3() {
+  @Ignore @Test public void initializers_for_3() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "for(;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;++p);" + "return false;" + "}").stays();
   }
   
-  @Test public void initializers_for_4() {
+  @Ignore @Test public void initializers_for_4() {
     trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "for(;p < 10;) p = p.getParent();" + "return false;" + "}")
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;) p = p.getParent();" + "return false;" + "}")
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;p = p.getParent());" + "return false;" + "}").stays();
@@ -205,4 +205,59 @@ import org.junit.runners.*;
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;++i) {" + "if (dns.contains(p))" + "return true;" + "}"
                 + "return false;" + "}");
   }
+  
+  @Test public void challenge_while_1() {
+    trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
+        "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
+        "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}")
+    .gives("for (;start < il_string.length() && matcher.find(start);start = endExpr) {final int startExpr = matcher.start();" + //
+        "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
+        "if ((c == null) || c.checkCode(match)) matches.add(match);}").stays();    
+  }
+  
+  @Test public void challenge_while_2() {
+    trimmingOf("index = 1;while (signature.charAt(index) != ')') {final int coded = getTypeSize(signature.substring(index));" + //
+        "$ += size(coded);index += consumed(coded);}")
+    .gives("index = 1;for (;signature.charAt(index) != ')';index += consumed(coded)) {final int coded = getTypeSize(signature.substring(index));" + //
+      "$ += size(coded);}")
+    .gives("index = 1;for (;signature.charAt(index) != ')';index += consumed(coded),$ += size(coded)) {final int coded = getTypeSize(signature.substring(index));" + //
+        "}").stays();
+  }
+  
+  @Test public void challenge_while_3() {
+    trimmingOf("for (int i = 0; i < 20; i++) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
+    .gives("for (int i = 0; i < 20; i++,assertTrue(newFolder.exists())) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+    "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();}")
+    .gives("for (int i = 0; i < 20; i++,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile()) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+        "createdFiles[i] = newFolder;}")
+    .gives("for (int i = 0; i < 20; i++,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile(),createdFiles[i] = newFolder) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+        "}")
+    .gives("for (int i = 0; i < 20; i++,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile(),createdFiles[i] = newFolder,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)))) {File newFolder = folder.newFolder();}")
+    .gives("for (int i = 0; i < 20; ++i,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile(),createdFiles[i] = newFolder,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)))) {File newFolder = folder.newFolder();}")
+    .stays();
+  }
+  
+  @Test public void challenge_while_4() {
+    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
+    "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}")
+    .gives("static Statement recursiveElze(final IfStatement ¢) {" + //
+    "for (Statement $ = ¢.getElseStatement();$ instanceof IfStatement;)$ = ((IfStatement) $).getElseStatement();return $;}")
+    .gives("static Statement recursiveElze(final IfStatement ¢) {" + //
+        "for (Statement $ = ¢.getElseStatement();$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());return $;}").stays();
+  }
+  
+  @Test public void challenge_while_5_Modifiers_in_initializers() {
+    trimmingOf("public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);" + //
+        "while (m.find())a += m.group();return a.toLowerCase();}")
+    .gives("public String abbreviate() {String a = \"\";" + //
+        "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find())a += m.group();return a.toLowerCase();}");
+  }
+  
+  @Test public void challenge_while_6() {
+    trimmingOf("while (!es.isEmpty()) {$ = $.underBinaryOperator(o, lookDown(lisp.first(es)));lisp.chop(es);}return $;")
+    .gives("for(;!es.isEmpty();lisp.chop(es)) {$ = $.underBinaryOperator(o, lookDown(lisp.first(es)));}return $;")
+    .gives("for(;!es.isEmpty();lisp.chop(es),$ = $.underBinaryOperator(o, lookDown(lisp.first(es)))){}return $;").stays();
+  }
+  
 }
