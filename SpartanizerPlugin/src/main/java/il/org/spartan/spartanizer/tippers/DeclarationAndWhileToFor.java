@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -23,22 +25,25 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.Collapse {
+public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForStatement(f, ¢);
   }
 
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+  @SuppressWarnings("unchecked") private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(duplicate.of(expression(¢)));
     $.setBody(duplicate.of(body(¢)));
-    initializers($).add(dupInitializer(f));
+    $.initializers().add(dupInitializers(f));
     return $;
   }
-
-  private static Expression dupInitializer(final VariableDeclarationFragment ¢) {
-    final VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
-    final VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
+  
+  @SuppressWarnings("unchecked") private static Expression dupInitializers(final VariableDeclarationFragment ¢) {
+    final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
+    final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
+    List<VariableDeclarationFragment> fragments = new ArrayList<>();
+    duplicate.into(step.fragments(parent), fragments);
+    $.fragments().addAll(minus.firstElem(fragments));
     $.setType(duplicate.of(parent.getType()));
     return $;
   }
@@ -53,13 +58,16 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g, final ExclusionManager exclude) {
+    if (f == null || r == null || nextStatement == null || exclude == null)
+      return null;
     final Statement parent = az.asStatement(f.getParent());
     if (parent == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
       return null;
+    exclude.excludeAll(step.fragments(az.variableDeclrationStatement(f.getParent())));
     r.remove(parent, g);
     r.replace(s, replace(f, s), g);
     return r;

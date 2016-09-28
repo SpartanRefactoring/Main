@@ -35,6 +35,11 @@ public enum minus {
     return $;
   }
 
+  public static <E> List<E> firstElem(List<E> ¢) {
+    ¢.remove(0);
+    return ¢;
+  }
+  
   public static int level(final Expression ¢) {
     return iz.is(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
         : iz.is(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
