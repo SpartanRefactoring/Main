@@ -9,6 +9,10 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-07-16 */
 public enum associativity {
   ;
+  static boolean isLeftToRigh(final Expression ¢) {
+    return !isRightToLeft(precedence.of(¢));
+  }
+
   /** Determine whether associativity is left-to-right
    * @param o JD
    * @return <code><b>true</b></code> <i>iff</i> the associativity of the
@@ -23,10 +27,6 @@ public enum associativity {
    *         present on the parameter is right-to-left. */
   public static boolean isRightToLeft(final Expression ¢) {
     return isRightToLeft(precedence.of(¢));
-  }
-
-  static boolean isLeftToRigh(final Expression ¢) {
-    return !isRightToLeft(precedence.of(¢));
   }
 
   private static boolean isRightToLeft(final int precedence) {

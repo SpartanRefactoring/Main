@@ -21,6 +21,7 @@ import il.org.spartan.*;
   @Test public void additionZeroTest_b() {
     trimmingOf("b=0+a;").stays();
   }
+
   @Test public void issue070_01() {
     trimmingOf("(double)5").gives("1.*5");
   }
