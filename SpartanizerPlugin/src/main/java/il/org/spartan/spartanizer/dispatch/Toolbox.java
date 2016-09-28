@@ -37,7 +37,7 @@ public class Toolbox {
           .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
           .add(VariableDeclarationExpression.class, //
               new ForRenameInitializerToCent(), //
-              new DeclarationAndForToFor(), //
+              //new DeclarationAndForToFor(), // issue 144
               null) //
           .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
@@ -58,6 +58,7 @@ public class Toolbox {
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
+              new ConvertForWithLastStatementUpdateToFor(), //
               new RemoveRedundentFor(), //
               null)//
           .add(WhileStatement.class, //
@@ -208,7 +209,7 @@ public class Toolbox {
               new DeclarationInitializerStatementTerminatingScope(), //
               new DeclarationInitialiazerAssignment(), //
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-              new DeclarationAndWhileToFor(), //
+              //new DeclarationAndWhileToFor(), // issue 144
               null) //
           .seal();
   }
