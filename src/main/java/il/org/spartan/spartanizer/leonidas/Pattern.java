@@ -36,22 +36,6 @@ public class Pattern<N extends ASTNode> {
     };
   }
 
-  @SuppressWarnings("unchecked") public static List<ASTNode> getChildren(ASTNode n) {
-    if (n instanceof Block)
-      return ((Block) n).statements();
-    List<ASTNode> $ = new ArrayList<>();
-    List<?> list = n.structuralPropertiesForType();
-    for (int i = 0; i < list.size(); ++i) {
-      Object child = n.getStructuralProperty((StructuralPropertyDescriptor) list.get(i));
-      if (child instanceof ASTNode) {
-        $.add((ASTNode) child);
-        // System.out.println(child.toString() + " " + (child instanceof Name));
-        getChildren((ASTNode) child);
-      }
-    }
-    return $;
-  }
-
   public boolean matches(ASTNode n) {
     return matches(pattern, n);
   }
@@ -67,43 +51,38 @@ class Matcher {
   public Matcher() {
   }
 
-  @SuppressWarnings("unchecked") public static List<ASTNode> getChildren(ASTNode n) {
-    if (n instanceof Block)
-      return ((Block) n).statements();
-    List<ASTNode> $ = new ArrayList<>();
-    List<?> list = n.structuralPropertiesForType();
-    for (int i = 0; i < list.size(); ++i) {
-      Object child = n.getStructuralProperty((StructuralPropertyDescriptor) list.get(i));
-      if (child instanceof ASTNode) {
-        $.add((ASTNode) child);
-        // System.out.println(child.toString() + " " + (child instanceof Name));
-        getChildren((ASTNode) child);
-      }
-    }
-    return $;
-  }
-
   public boolean matches(ASTNode p, ASTNode n) {
     if (p instanceof Name) {
       String id = ((Name) p).getFullyQualifiedName();
-      if (!ids.containsKey(id))
-        ids.put(id, new ArrayList<>());
-      for (ASTNode other : ids.get(id))
-        if (!n.toString().equals(other.toString()))
-          return false;
-      ids.get(id).add(n);
-      return n instanceof Expression;
+      if (id.startsWith("$")) {
+        if (id.startsWith("$X"))
+          return (n instanceof Expression) && consistent(n, id);
+        if (id.startsWith("$M")) {
+          return (n instanceof MethodInvocation) && consistent(n, id);
+        }
+      }
+      return (n instanceof Name) && id.equals(((Name) p).getFullyQualifiedName());
     }
     if (n.getNodeType() != p.getNodeType())
       return false;
     if (iz.literal(p))
       return p.toString().equals(n.toString());
-    List<ASTNode> nChildren = getChildren(n);
-    List<ASTNode> pChildren = getChildren(p);
+    List<? extends ASTNode> nChildren = Recurser.children(n);
+    List<? extends ASTNode> pChildren = Recurser.children(p);
     if (nChildren.size() != pChildren.size())
       return false;
     for (int i = 0; i < pChildren.size(); ++i)
       if (!matches(pChildren.get(i), nChildren.get(i)))
+        return false;
+    return true;
+  }
+
+  private boolean consistent(ASTNode n, String id) {
+    if (!ids.containsKey(id))
+      ids.put(id, new ArrayList<>());
+    ids.get(id).add(n);
+    for (ASTNode other : ids.get(id))
+      if (!n.toString().equals(other.toString()))
         return false;
     return true;
   }
