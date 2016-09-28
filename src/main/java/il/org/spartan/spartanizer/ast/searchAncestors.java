@@ -146,8 +146,8 @@ public abstract class searchAncestors {
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode inclusiveLastFrom(final ASTNode n) {
     ASTNode $ = inclusiveFrom(n);
-    for (ASTNode p = $; p != null; p = from(p))
-      $ = p;
+    for (ASTNode p = $; p != null; p = from(p), $ = p)
+      ;
     return $;
   }
 
@@ -155,8 +155,8 @@ public abstract class searchAncestors {
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode lastFrom(final ASTNode n) {
     ASTNode $ = from(n);
-    for (ASTNode p = $; p != null; p = from(p))
-      $ = p;
+    for (ASTNode p = $; p != null; p = from(p), $ = p)
+      ;
     return $;
   }
 }

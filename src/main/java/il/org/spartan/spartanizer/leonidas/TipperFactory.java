@@ -72,16 +72,16 @@ public class TipperFactory {
     };
   }
 
-  public boolean matches(ASTNode n) {
-    return matches(pattern, n);
+  public boolean matches(ASTNode ¢) {
+    return matches(pattern, ¢);
   }
 
   public static boolean matches(ASTNode p, ASTNode n) {
     return new Matcher().matches(p, n);
   }
 
-  Map<String, ASTNode> collectEnviroment(ASTNode n) {
-    return collectEnviroment(pattern, n, new HashMap<>());
+  Map<String, ASTNode> collectEnviroment(ASTNode ¢) {
+    return collectEnviroment(pattern, ¢, new HashMap<>());
   }
 
   private Map<String, ASTNode> collectEnviroment(ASTNode p, ASTNode n, Map<String, ASTNode> enviroment) {
@@ -92,8 +92,8 @@ public class TipperFactory {
     } else {
       List<? extends ASTNode> nChildren = Recurser.children(n);
       List<? extends ASTNode> pChildren = Recurser.children(p);
-      for (int i = 0; i < pChildren.size(); ++i)
-        collectEnviroment(pChildren.get(i), nChildren.get(i), enviroment);
+      for (int ¢ = 0; ¢ < pChildren.size(); ++¢, collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment))
+        ;
     }
     return enviroment;
   }
@@ -111,15 +111,15 @@ class Matcher {
     if (n.getNodeType() != p.getNodeType())
       return false;
     if (iz.literal(p))
-      return p.toString().equals(n.toString());
+      return (p + "").equals((n + ""));
     if (iz.containsOperator(p) && !sameOperator(p, n))
       return false;
     List<? extends ASTNode> nChildren = Recurser.children(n);
     List<? extends ASTNode> pChildren = Recurser.children(p);
     if (nChildren.size() != pChildren.size())
       return false;
-    for (int i = 0; i < pChildren.size(); ++i)
-      if (!matches(pChildren.get(i), nChildren.get(i)))
+    for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+      if (!matches(pChildren.get(¢), nChildren.get(¢)))
         return false;
     return true;
   }
@@ -164,7 +164,7 @@ class Matcher {
       ids.put(id, new ArrayList<>());
     ids.get(id).add(n);
     for (ASTNode other : ids.get(id))
-      if (!n.toString().equals(other.toString()))
+      if (!(n + "").equals((other + "")))
         return false;
     return true;
   }

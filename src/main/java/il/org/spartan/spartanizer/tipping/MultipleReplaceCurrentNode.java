@@ -29,8 +29,8 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipp
           for (final ASTNode ¢ : input)
             r.replace(¢, output.get(0), g);
         else if (input.size() == output.size())
-          for (int ¢ = 0; ¢ < input.size(); ++¢)
-            r.replace(input.get(¢), output.get(¢), g);
+          for (int ¢ = 0; ¢ < input.size(); ++¢, r.replace(input.get(¢), output.get(¢), g))
+            ;
       }
     };
   }
