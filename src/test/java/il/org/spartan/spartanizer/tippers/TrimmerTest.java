@@ -1544,35 +1544,6 @@ import il.org.spartan.spartanizer.tipping.*;
   @Test public void issue57b() {
     trimmingOf("void m(Expression... expression) { }").gives("void m(Expression... xs) {}");
   }
-
-  @Test public void issue58a() {
-    trimmingOf("X f(List<List<Expression>> expressions){}").gives("X f(List<List<Expression>> xss){}");
-  }
-
-  @Test public void issue58b() {
-    trimmingOf("X f(List<Expression>[] expressions){}").gives("X f(List<Expression>[] xss){}");
-  }
-
-  @Test public void issue58c() {
-    trimmingOf("X f(List<Expression>[] expressions){}").gives("X f(List<Expression>[] xss){}");
-  }
-
-  @Test public void issue58d() {
-    trimmingOf("X f(List<Expression>... expressions){}").gives("X f(List<Expression>... xss){}");
-  }
-
-  @Test public void issue58e() {
-    trimmingOf("X f(Expression[]... expressions){}").gives("X f(Expression[]... xss){}");
-  }
-
-  @Test public void issue58f() {
-    trimmingOf("X f(Expression[][]... expressions){}").gives("X f(Expression[][]... xsss){}");
-  }
-
-  @Test public void issue58g() {
-    trimmingOf("X f(List<Expression[][]>... expressions){}").gives("X f(List<Expression[][]>... xssss){}");
-  }
-
   @Test public void issue62a() {
     trimmingOf("int f(int ixx) { for(;;++ixx) if(false) break; return ixx; }").gives("int f(int ixx) { for(;;++ixx){} return ixx; }").stays();
   }
