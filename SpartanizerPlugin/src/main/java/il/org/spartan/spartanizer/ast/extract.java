@@ -156,7 +156,7 @@ public enum extract {
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
-   * @param n a statement or a block to extract the expression statement from
+   * @param pattern a statement or a block to extract the expression statement from
    * @return expression statement if n is a block or an expression statement or
    *         null if it not an expression statement or if the block contains
    *         more than one statement */
@@ -164,24 +164,24 @@ public enum extract {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
 
-  public static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
-    if (x == null)
+  public static void findOperators(final InfixExpression e, final List<InfixExpression.Operator> $) {
+    if (e == null)
       return;
-    $.add(x.getOperator());
-    findOperators(az.infixExpression(x.getLeftOperand()), $);
-    findOperators(az.infixExpression(x.getRightOperand()), $);
+    $.add(e.getOperator());
+    findOperators(az.infixExpression(e.getLeftOperand()), $);
+    findOperators(az.infixExpression(e.getRightOperand()), $);
   }
 
   /** Extract the single {@link ReturnStatement} embedded in a node.
-   * @param n JD
+   * @param pattern JD
    * @return single {@link IfStatement} embedded in the parameter or
    *         <code><b>null</b></code> if not such sideEffects exists. */
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
   }
 
-  /** @param n JD
-   * @return method invocation if it exists or null if it doesn'tipper or if the
+  /** @param pattern JD
+   * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
   public static MethodInvocation methodInvocation(final ASTNode ¢) {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
@@ -252,7 +252,7 @@ public enum extract {
   }
 
   /** Find the {@link Assignment} that follows a given node.
-   * @param n JD
+   * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
    *         <code><b>null</b></code> if not such value exists. */
   public static Assignment nextAssignment(final ASTNode ¢) {
@@ -260,7 +260,7 @@ public enum extract {
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
-   * @param n JD
+   * @param pattern JD
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static IfStatement nextIfStatement(final ASTNode ¢) {
@@ -268,7 +268,7 @@ public enum extract {
   }
 
   /** Extract the {@link ReturnStatement} that immediately follows a given node
-   * @param n JD
+   * @param pattern JD
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static ReturnStatement nextReturn(final ASTNode ¢) {
@@ -276,7 +276,7 @@ public enum extract {
   }
 
   /** Extract the {@link Statement} that immediately follows a given node.
-   * @param n JD
+   * @param pattern JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement nextStatement(final ASTNode ¢) {
@@ -312,7 +312,7 @@ public enum extract {
   }
 
   /** Finds the expression returned by a return statement
-   * @param n a node to extract an expression from
+   * @param pattern a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
   public static Expression returnExpression(final ASTNode ¢) {
@@ -321,7 +321,7 @@ public enum extract {
   }
 
   /** Extract the single {@link ReturnStatement} embedded in a node.
-   * @param n JD
+   * @param pattern JD
    * @return single {@link ReturnStatement} embedded in the parameter, and
    *         return it; <code><b>null</b></code> if not such sideEffects
    *         exists. */
@@ -339,7 +339,7 @@ public enum extract {
     return extract.singleStatement(elze(¢));
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode ¢) {
@@ -355,7 +355,7 @@ public enum extract {
   }
 
   /** Extract the {@link Statement} that contains a given node.
-   * @param n JD
+   * @param pattern JD
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement statement(final ASTNode ¢) {
@@ -367,13 +367,14 @@ public enum extract {
 
   /** Extract the list of non-empty sideEffects embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
-   * @param n JD
+   * @param pattern JD
    * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
     final List<Statement> $ = new ArrayList<>();
     return ¢ == null || !(¢ instanceof Statement) ? $ : //
         extract.statementsInto((Statement) ¢, $);
   }
+
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Statement ¢ : step.statements(b))

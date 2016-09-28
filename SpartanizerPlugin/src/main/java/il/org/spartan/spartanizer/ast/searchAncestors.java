@@ -98,7 +98,7 @@ public abstract class searchAncestors {
   }
 
   /** Factory method, returning an instance which can search by a node class
-   * @param n JD
+   * @param pattern JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
   public static <N extends ASTNode> searchAncestors forClass(final Class<N> ¢) {
@@ -116,7 +116,7 @@ public abstract class searchAncestors {
 
   /** Factory method, returning an instance which can search by a node
    * instances.
-   * @param n JD
+   * @param pattern JD
    * @return a newly created instance */
   public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
     return new ByNodeInstances<>(¢);
@@ -124,7 +124,7 @@ public abstract class searchAncestors {
 
   /** Factory method, returning an instance which can search by a node
    * instances.
-   * @param n JD
+   * @param pattern JD
    * @return a newly created instance */
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
     return new ByNodeInstances(as.list(¢));
