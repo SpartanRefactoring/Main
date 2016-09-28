@@ -17,7 +17,9 @@ import il.org.spartan.spartanizer.tipping.*;
  *    ++OS.is.in.denger;
  * }
  * </code> to <code>
- * for(int a = 3; Panic; ++OS.is.in.denger) {}
+ * for(int a = 3; Panic;) {
+ *    ++OS.is.in.denger;
+ * }
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
@@ -29,39 +31,21 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return $;
   }
 
-  private static Expression dupWhileLastStatement(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
-  }
-
-  private static ForStatement forWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
-    updaters($).add(dupWhileLastStatement(s));
-    $.setBody(minus.LastStatement(duplicate.of(body(s))));
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    final ForStatement $ = ¢.getAST().newForStatement();
+    $.setExpression(duplicate.of(expression(¢)));
+    $.setBody(duplicate.of(body(¢)));
+    initializers($).add(dupInitializer(f));
     return $;
   }
 
-  private static ForStatement forWithLastStatement(final ForStatement $, final WhileStatement s) {
-    $.setBody(duplicate.of(body(s)));
-    return $;
-  }
-
-  private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatement(¢.getBody());
-  }
-
-  private static boolean lastStatementIsUpdate(final WhileStatement ¢) {
-    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢));
+  private static boolean fitting(final WhileStatement ¢) {
+    //TODO: check that the variables declared before the loop doesn't in use after the scope.
+    return true;
   }
 
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    final ForStatement $ = setExpressionAndInitializers(¢, f);
-    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
-  }
-
-  private static ForStatement setExpressionAndInitializers(final WhileStatement ¢, final VariableDeclarationFragment f) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setExpression(duplicate.of(expression(¢)));
-    initializers($).add(dupInitializer(f));
-    return $;
+    return !fitting(¢) ? null : buildForStatement(f, ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
