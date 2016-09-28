@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
     String s;
 
     @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
+      // Empty block
     }
   }
 
