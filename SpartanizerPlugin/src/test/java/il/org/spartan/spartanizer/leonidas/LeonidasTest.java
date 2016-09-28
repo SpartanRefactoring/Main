@@ -3,60 +3,83 @@ package il.org.spartan.spartanizer.leonidas;
 /** @author Ori Marcovitch
  * @year 2016 */
 import static org.junit.Assert.*;
+
 import org.junit.*;
 
-public class LeonidasTest {
+import il.org.spartan.spartanizer.engine.*;
+
+@Ignore public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches1() {
-    azzert.that("$X1 ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");
+    azzert.expression("X ? y == 17 : Z").matches("x == 7 ? y == 17 : 9");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches2() {
-    azzert.that("$X1 ? 8 : $X2").notmatches("x == 7 ? y == 17 : 9");
+    azzert.expression("X ? 8 : Z").notmatches("x == 7 ? y == 17 : 9");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches3() {
-    azzert.that("w = $X ? y == 17 : $X2;").matches("w = x == 7 ? y == 17 : 9;");
+    azzert.statement("X ? y == 17 : Z;").matches("x == 7 ? y == 17 : 9;");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches4() {
-    azzert.that("w = $X1 ? 8 : $X2;").notmatches("w = x == 7 ? y == 17 : 9;");
+    azzert.statement("w = X ? 8 : Z;").notmatches("w = x == 7 ? y == 17 : 9;");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches5() {
-    azzert.that("x == $X1 ? $X2 : $X1").matches("x == null ? 17 : null");
+    azzert.expression("x == Y ? X : Y").matches("x == null ? 17 : null");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches6() {
-    azzert.that("x == $X1 ? $X2 : $X1").notmatches("x == null ? 17 : 18");
+    azzert.expression("x == Y ? X : Y").notmatches("x == null ? 17 : 18");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches7() {
-    azzert.that("x == $X ? $X : $X").notmatches("x == null ? 17 : null");
+    azzert.expression("x == Y ? Y : Y").notmatches("x == null ? 17 : null");
   }
 
   @SuppressWarnings("static-method") @Test public void testMatches8() {
-    azzert.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : x()");
+    azzert.expression("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : 9");
   }
 }
 
 class azzert {
-  public static that that(String ¢) {
-    return new that(¢);
+  public static expression expression(String ¢) {
+    return new expression(¢);
+  }
+
+  public static statement statement(String ¢) {
+    return new statement(¢);
   }
 }
 
-class that {
+class expression {
   final String s;
 
-  public that(String s) {
+  public expression(String s) {
     this.s = s;
   }
 
   public void matches(String s2) {
-    assertTrue(TipperFactory.matches(TipperFactory.toAST(this.s), TipperFactory.toAST(s2)));
+    assertTrue(Pattern.matches(makeAST.EXPRESSION.from(this.s), makeAST.EXPRESSION.from(s2)));
   }
 
   public void notmatches(String s2) {
-    assertFalse(TipperFactory.matches(TipperFactory.toAST(this.s), TipperFactory.toAST(s2)));
+    assertFalse(Pattern.matches(makeAST.EXPRESSION.from(this.s), makeAST.EXPRESSION.from(s2)));
+  }
+}
+
+class statement {
+  final String s;
+
+  public statement(String s) {
+    this.s = s;
+  }
+
+  public void matches(String s2) {
+    assertTrue(Pattern.matches(makeAST.STATEMENTS.from(this.s), makeAST.STATEMENTS.from(s2)));
+  }
+
+  public void notmatches(String s2) {
+    assertFalse(Pattern.matches(makeAST.STATEMENTS.from(this.s), makeAST.STATEMENTS.from(s2)));
   }
 }
