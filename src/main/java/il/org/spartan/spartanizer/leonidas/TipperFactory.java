@@ -43,8 +43,6 @@ public class TipperFactory {
 
   public UserDefinedTipper<ASTNode> get() {
     return new UserDefinedTipper<ASTNode>() {
-      Map<String, ASTNode> enviroment = new HashMap<>();
-
       @Override protected boolean prerequisite(ASTNode ¢) {
         return matches(pattern, ¢);
       }
@@ -60,16 +58,14 @@ public class TipperFactory {
             ASTNode $ = duplicate.of(replacement);
             $.accept(new ASTVisitor() {
               @Override public void preVisit(final ASTNode ¢) {
-                if(iz.name(¢)){
-                  String id = ((Name) ¢).getFullyQualifiedName();
-                  if (id.startsWith("$")) {
-//                    wizard.rebase(¢, enviroment.get(id));
-                  }
-                }
+                if (!iz.name(¢))
+                  return;
+                String id = ((Name) ¢).getFullyQualifiedName();
+                if (id.startsWith("$"))
+                  wizard.replace(¢, enviroment.get(id));
               }
             });
-//            r.replace(e, ,g);
-            
+            r.replace(n, $, g);
           }
         };
       }
@@ -84,16 +80,16 @@ public class TipperFactory {
     return new Matcher().matches(p, n);
   }
 
-  private Map<String, ASTNode> collectEnviroment(ASTNode n){
-    return collectEnviroment(pattern, n, new HashMap<>());    
+  Map<String, ASTNode> collectEnviroment(ASTNode n) {
+    return collectEnviroment(pattern, n, new HashMap<>());
   }
-  
-  private Map<String, ASTNode> collectEnviroment(ASTNode p, ASTNode n, Map<String, ASTNode> enviroment){
-    if (iz.name(p)){
+
+  private Map<String, ASTNode> collectEnviroment(ASTNode p, ASTNode n, Map<String, ASTNode> enviroment) {
+    if (iz.name(p)) {
       String id = ((Name) p).getFullyQualifiedName();
       if (id.startsWith("$"))
         enviroment.put(id, n);
-    }else{
+    } else {
       List<? extends ASTNode> nChildren = Recurser.children(n);
       List<? extends ASTNode> pChildren = Recurser.children(p);
       for (int i = 0; i < pChildren.size(); ++i)
