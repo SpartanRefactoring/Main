@@ -28,15 +28,15 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
     return "replace null coallescing ternary with ??";
   }
 
-  @Override public boolean prerequisite(final ConditionalExpression e) {
-    if (!iz.comparison(az.infixExpression(step.expression(e))))
+  @Override public boolean prerequisite(final ConditionalExpression x) {
+    if (!iz.comparison(az.infixExpression(step.expression(x))))
       return false;
-    final InfixExpression condition = az.comparison(step.expression(e));
+    final InfixExpression condition = az.comparison(step.expression(x));
     final Expression left = step.left(condition);
     final Expression right = step.right(condition);
-    step.then(e);
-    step.elze(e);
-    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(e))
-        : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(e));
+    step.then(x);
+    step.elze(x);
+    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
+        : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(x));
   }
 }

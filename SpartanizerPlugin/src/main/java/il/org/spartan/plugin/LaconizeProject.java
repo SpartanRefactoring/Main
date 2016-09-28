@@ -53,11 +53,14 @@ public final class LaconizeProject extends BaseHandler {
       return eclipse.announce("No tips for '" + javaProject.getElementName() + "' project\n" + message);
     eclipse.announce(message);
     final GUI$Applicator a = new Trimmer();
-    for (int i = 0; i < MAX_PASSES; ++i) {
+    int i;
+    for (i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
+      final AtomicBoolean cancled = new AtomicBoolean(false);
       try {
         ps.run(true, true, pm -> {
+//          a.setProgressMonitor(pm);
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
               us.size());
@@ -65,7 +68,7 @@ public final class LaconizeProject extends BaseHandler {
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
             if (pm.isCanceled())
-              break;
+              cancled.set(true);
             pm.worked(1);
             pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
             if (!a.apply(¢))
@@ -79,11 +82,14 @@ public final class LaconizeProject extends BaseHandler {
       } catch (final InterruptedException x) {
         LoggingManner.logEvaluationError(this, x);
       }
-      final int finalCount = countTips(currentCompilationUnit);
-      return eclipse
-          .announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
-              + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + message);
+      if (cancled.get() || us.isEmpty())
+        break;
     }
-    throw new ExecutionException("Too many iterations");
+    if (i == MAX_PASSES)
+      throw new ExecutionException("Too many iterations");
+    final int finalCount = countTips(currentCompilationUnit);
+    return eclipse
+        .announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
+            + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + message);
   }
 }
