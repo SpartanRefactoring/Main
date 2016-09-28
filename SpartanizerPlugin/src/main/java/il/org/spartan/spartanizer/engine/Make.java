@@ -23,7 +23,7 @@ public enum Make {
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
   /** Converts the {@link makeAST} value to its corresponding {@link Make} enum
    * value
-   * @param t The {@link makeAST} type
+   * @param tipper The {@link makeAST} type
    * @return corresponding {@link Make} value to the argument */
   public static Make of(final makeAST ¢) {
     switch (¢) {

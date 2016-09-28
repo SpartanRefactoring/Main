@@ -82,7 +82,7 @@ import il.org.spartan.*;
   }
 
   @Test public void methodAccess() {
-    azzert.that(precedence.of(e("t.f()")), is(1));
+    azzert.that(precedence.of(e("tipper.f()")), is(1));
   }
 
   @Test public void methodInvocation() {

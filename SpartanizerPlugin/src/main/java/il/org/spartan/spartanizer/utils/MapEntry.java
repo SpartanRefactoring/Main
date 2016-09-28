@@ -15,7 +15,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     return ¢ != null && ¢.getClass() == getClass()
         && (((MapEntry<?, ?>) ¢).getKey() == null && key == null || key.equals(((MapEntry<?, ?>) ¢).getKey()))
         && (((MapEntry<?, ?>) ¢).getValue() == null && value == null || value.equals(((MapEntry<?, ?>) ¢).getValue()));
-    //return iz.equal(this, az.mapEntry(¢));
+    // return iz.equal(this, az.mapEntry(¢));
   }
 
   @Override public K getKey() {

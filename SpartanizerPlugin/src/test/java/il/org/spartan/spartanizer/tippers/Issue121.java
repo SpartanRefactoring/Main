@@ -40,10 +40,10 @@ import org.junit.*;
   @Test public void test02() {
     trimmingOf("class A{ \n" //
         + "class B{} \n" //
-        + "B f(int t){ \n" //
+        + "B f(int tipper){ \n" //
         + "return new B(){ \n" //
         + "public int g(){ \n" //
-        + "return t; \n" //
+        + "return tipper; \n" //
         + "} \n" //
         + "}; \n" //
         + "} \n" //
@@ -63,10 +63,10 @@ import org.junit.*;
   @Test public void test03() {
     trimmingOf("class A{ \n" //
         + "class B{} \n" //
-        + "B f(int t){ \n" //
+        + "B f(int tipper){ \n" //
         + "return new B(){ \n" //
         + "public int g(){ \n" //
-        + "return t; \n" //
+        + "return tipper; \n" //
         + "} \n" //
         + "}; \n" //
         + "} \n" //
@@ -87,30 +87,30 @@ import org.junit.*;
   @Ignore public void test04() {
     trimmingOf("class A{"//
         + "class B{"//
-        + "int t;"//
-        + "B(int t){"//
-        + "this.t = t;"//
+        + "int tipper;"//
+        + "B(int tipper){"//
+        + "this.t = tipper;"//
         + "}"//
         + "}"//
-        + "B f(int t){"//
-        + "return new B(t){"//
+        + "B f(int tipper){"//
+        + "return new B(tipper){"//
         + "int omigod(){"//
-        + "return t*t;"//
+        + "return tipper*tipper;"//
         + "}"//
         + "};"//
         + "}"//
         + "}")
             .gives("class A{"//
                 + "class B{"//
-                + "int t;"//
-                + "B(int t){"//
-                + "this.t = t;"//
+                + "int tipper;"//
+                + "B(int tipper){"//
+                + "this.t = tipper;"//
                 + "}"//
                 + "}"//
                 + "B f(int ¢){"//
                 + "return new B(¢){"//
                 + "int omigod(){"//
-                + "return t*t;"//
+                + "return tipper*tipper;"//
                 + "}"//
                 + "};"//
                 + "}"//
@@ -120,30 +120,30 @@ import org.junit.*;
   @Test public void test05() {
     trimmingOf("class A{"//
         + "class B{"//
-        + "int t;"//
-        + "B(int t){"//
-        + "this.t = t;"//
+        + "int tipper;"//
+        + "B(int tipper){"//
+        + "this.t = tipper;"//
         + "}"//
         + "}"//
-        + "B f(int t){"//
-        + "return new B(t){"//
-        + "int omigod(int t){"//
-        + "return t*t;"//
+        + "B f(int tipper){"//
+        + "return new B(tipper){"//
+        + "int omigod(int tipper){"//
+        + "return tipper*tipper;"//
         + "}"//
         + "};"//
         + "}"//
         + "}")
             .gives("class A{"//
                 + "class B{"//
-                + "int t;"//
-                + "B(int t){"//
-                + "this.t = t;"//
+                + "int tipper;"//
+                + "B(int tipper){"//
+                + "this.t = tipper;"//
                 + "}"//
                 + "}"//
                 + "B f(int i){"//
                 + "return new B(i){"//
-                + "int omigod(int t){"//
-                + "return t*t;"//
+                + "int omigod(int tipper){"//
+                + "return tipper*tipper;"//
                 + "}"//
                 + "};"//
                 + "}"//

@@ -38,14 +38,6 @@ public abstract class GUI$Applicator extends Refactoring {
     return getWringCommit(TipperCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
   }
 
-  public static IMarkerResolution getWringCommitFile() {
-    return getWringCommit(TipperCommit.Type.FILE, APPLY_TO_FILE);
-  }
-
-  public static IMarkerResolution getWringCommitProject() {
-    return getWringCommit(TipperCommit.Type.PROJECT, APPLY_TO_PROJECT);
-  }
-
   static IMarkerResolution getToggle(final SuppressWarningsLaconicOnOff.Type t, final String l) {
     return new IMarkerResolution() {
       @Override public String getLabel() {
@@ -78,6 +70,14 @@ public abstract class GUI$Applicator extends Refactoring {
     };
   }
 
+  public static IMarkerResolution getWringCommitFile() {
+    return getWringCommit(TipperCommit.Type.FILE, APPLY_TO_FILE);
+  }
+
+  public static IMarkerResolution getWringCommitProject() {
+    return getWringCommit(TipperCommit.Type.PROJECT, APPLY_TO_PROJECT);
+  }
+
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
@@ -92,6 +92,10 @@ public abstract class GUI$Applicator extends Refactoring {
    * @param name a short name of this instance */
   protected GUI$Applicator(final String name) {
     this.name = name;
+  }
+
+  boolean apply() {
+    return apply(iCompilationUnit, new Range(0, 0));
   }
 
   public boolean apply(final ICompilationUnit cu) {
@@ -122,6 +126,12 @@ public abstract class GUI$Applicator extends Refactoring {
     return $;
   }
 
+  void collectAllTips() throws JavaModelException, CoreException {
+    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
+    scanCompilationUnits(getUnits());
+    progressMonitor.done();
+  }
+
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
    * @param u what to check
@@ -133,6 +143,12 @@ public abstract class GUI$Applicator extends Refactoring {
     return $;
   }
 
+  void collectTips() {
+    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
+    scan();
+    progressMonitor.done();
+  }
+
   public IFile compilatinUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
@@ -140,6 +156,8 @@ public abstract class GUI$Applicator extends Refactoring {
   public String compilationUnitName() {
     return iCompilationUnit.getElementName();
   }
+
+  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m);
 
   /** Count the number of tips offered by this instance.
    * <p>
@@ -169,6 +187,16 @@ public abstract class GUI$Applicator extends Refactoring {
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final CompilationUnit ¢) {
     return rewriterOf(¢, (IMarker) null);
+  }
+
+  /** creates an ASTRewrite, under the context of a text marker, which contains
+   * the changes
+   * @param pm a progress monitor in which to display the progress of the
+   *        refactoring
+   * @param m the marker
+   * @return an ASTRewrite which contains the changes */
+  private ASTRewrite createRewrite(final IMarker ¢) {
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢);
   }
 
   public boolean follow() throws CoreException {
@@ -272,6 +300,14 @@ public abstract class GUI$Applicator extends Refactoring {
     return tips;
   }
 
+  private List<ICompilationUnit> getUnits() throws JavaModelException {
+    if (!isTextSelected())
+      return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
+    final List<ICompilationUnit> $ = new ArrayList<>();
+    $.add(iCompilationUnit);
+    return $;
+  }
+
   public boolean go() throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilatinUnitIFile());
@@ -292,12 +328,43 @@ public abstract class GUI$Applicator extends Refactoring {
     return countTips() > 0;
   }
 
+  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+    marker = m;
+    progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
+    scanCompilationUnitForMarkerFix(m, preview);
+    marker = null;
+    progressMonitor.done();
+    return new RefactoringStatus();
+  }
+
   /** @param m marker which represents the range to apply the tipper within
    * @param n the node which needs to be within the range of
    *        <code><b>m</b></code>
    * @return True if the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+  }
+
+  /** Determines if the node is outside of the selected text.
+   * @return true if the node is not inside selection. If there is no selection
+   *         at all will return false.
+   * @DisableSpartan */
+  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
+    return !isSelected(¢.getStartPosition());
+  }
+
+  private boolean isSelected(final int offset) {
+    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
+  }
+
+  private boolean isTextSelected() {
+    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+  }
+
+  protected abstract ASTVisitor makeTipsCollector(final List<Tip> $);
+
+  protected void parse() {
+    compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   /** Performs the current tipper on the provided compilation unit
@@ -333,49 +400,6 @@ public abstract class GUI$Applicator extends Refactoring {
    * @throws CoreException the JDT core throws it */
   public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
     return innerRunAsMarkerFix(¢, false);
-  }
-
-  /** @param iCompilationUnit the compilationUnit to set */
-  public void setICompilationUnit(final ICompilationUnit ¢) {
-    iCompilationUnit = ¢;
-  }
-
-  /** @param marker the marker to set for the refactoring */
-  public final void setMarker(final IMarker ¢) {
-    marker = ¢;
-  }
-
-  public void setProgressMonitor(final IProgressMonitor ¢) {
-    progressMonitor = ¢;
-  }
-
-  /** @param subject the selection to set */
-  public void setSelection(final ITextSelection ¢) {
-    selection = ¢;
-  }
-
-  public int TipsCount() {
-    return tips.size();
-  }
-
-  @Override public String toString() {
-    return name;
-  }
-
-  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m);
-
-  /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false.
-   * @DisableSpartan */
-  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
-    return !isSelected(¢.getStartPosition());
-  }
-
-  protected abstract ASTVisitor makeTipsCollector(final List<Tip> $);
-
-  protected void parse() {
-    compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   protected void scan() {
@@ -422,54 +446,30 @@ public abstract class GUI$Applicator extends Refactoring {
     progressMonitor.done();
   }
 
-  boolean apply() {
-    return apply(iCompilationUnit, new Range(0, 0));
+  /** @param iCompilationUnit the compilationUnit to set */
+  public void setICompilationUnit(final ICompilationUnit ¢) {
+    iCompilationUnit = ¢;
   }
 
-  void collectAllTips() throws JavaModelException, CoreException {
-    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnits(getUnits());
-    progressMonitor.done();
+  /** @param marker the marker to set for the refactoring */
+  public final void setMarker(final IMarker ¢) {
+    marker = ¢;
   }
 
-  void collectTips() {
-    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
-    scan();
-    progressMonitor.done();
+  public void setProgressMonitor(final IProgressMonitor ¢) {
+    progressMonitor = ¢;
   }
 
-  /** creates an ASTRewrite, under the context of a text marker, which contains
-   * the changes
-   * @param pm a progress monitor in which to display the progress of the
-   *        refactoring
-   * @param m the marker
-   * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢);
+  /** @param subject the selection to set */
+  public void setSelection(final ITextSelection ¢) {
+    selection = ¢;
   }
 
-  private List<ICompilationUnit> getUnits() throws JavaModelException {
-    if (!isTextSelected())
-      return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    $.add(iCompilationUnit);
-    return $;
+  public int TipsCount() {
+    return tips.size();
   }
 
-  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    marker = m;
-    progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnitForMarkerFix(m, preview);
-    marker = null;
-    progressMonitor.done();
-    return new RefactoringStatus();
-  }
-
-  private boolean isSelected(final int offset) {
-    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
-  }
-
-  private boolean isTextSelected() {
-    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+  @Override public String toString() {
+    return name;
   }
 }

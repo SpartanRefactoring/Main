@@ -203,8 +203,8 @@ import il.org.spartan.spartanizer.utils.*;
     return new LinkedHashSet<>();
   }
 
-  /** Return true iff {@link Environment} doesn't have an entry with a given
-   * name. */
+  /** Return true iff {@link Environment} doesn'tipper have an entry with a
+   * given name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }

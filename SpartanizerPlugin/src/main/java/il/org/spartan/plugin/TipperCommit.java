@@ -22,103 +22,6 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public final class TipperCommit {
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
-    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
-    pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t, w);
-    pm.done();
-    return $;
-  }
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Tipper w, final IFile f) {
-    return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
-        m, t, w);
-  }
-
-  private static Tipper<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
-    Toolbox.refresh();
-    final WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
-    if (w == null)
-      u.accept(v);
-    else
-      v.applyLocal(w, u);
-    return v.tipper;
-  }
-
-  public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
-    if (Type.PROJECT.equals(t)) {
-      goProject(pm, m);
-      return;
-    }
-    final ICompilationUnit u = makeAST.iCompilationUnit(m);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
-    textChange.setTextType("java");
-    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
-      textChange.perform(pm);
-    if (Type.FILE.equals(t))
-      eclipse.announce("Done apllying " + w.description() + " tip to " + u.getElementName());
-    pm.done();
-  }
-
-  public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
-    final ICompilationUnit cu = eclipse.currentCompilationUnit();
-    assert cu != null;
-    final List<ICompilationUnit> us = eclipse.facade.compilationUnits();
-    assert us != null;
-    pm.beginTask("Spartanizing project", us.size());
-    final IJavaProject jp = cu.getJavaProject();
-    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    assert w != null;
-    for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
-      final IWorkbench wb = PlatformUI.getWorkbench();
-      final IProgressService ps = wb.getProgressService();
-      final AtomicInteger pn = new AtomicInteger(i + 1);
-      final AtomicBoolean cancled = new AtomicBoolean(false);
-      try {
-        ps.run(true, true, px -> {
-          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
-          int n = 0;
-          final List<ICompilationUnit> es = new LinkedList<>();
-          for (final ICompilationUnit u : us) {
-            if (px.isCanceled()) {
-              cancled.set(true);
-              break;
-            }
-            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-            textChange.setTextType("java");
-            try {
-              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException x) {
-              LoggingManner.logEvaluationError(this, x);
-            }
-            if (textChange.getEdit().getLength() == 0)
-              es.add(u);
-            else
-              try {
-                textChange.perform(pm);
-              } catch (final CoreException e) {
-                LoggingManner.logEvaluationError(this, e);
-              }
-            px.worked(1);
-            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
-          }
-          us.removeAll(es);
-          px.done();
-        });
-      } catch (InvocationTargetException | InterruptedException e) {
-        LoggingManner.logEvaluationError(this, e);
-      }
-      if (us.isEmpty() || cancled.get())
-        break;
-    }
-    pm.done();
-    eclipse.announce("Done apllying " + w.description() + " tip to " + jp.getElementName());
-  }
-
   public enum Type {
     DECLARATION, FILE, PROJECT
   }
@@ -214,5 +117,102 @@ public final class TipperCommit {
       doneTraversing = true;
       return false;
     }
+  }
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
+    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
+    pm.beginTask("Creating rewrite operation...", 1);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m, t, w);
+    pm.done();
+    return $;
+  }
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Tipper w, final IFile f) {
+    return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
+        m, t, w);
+  }
+
+  private static Tipper<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
+    Toolbox.refresh();
+    final WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
+    if (w == null)
+      u.accept(v);
+    else
+      v.applyLocal(w, u);
+    return v.tipper;
+  }
+
+  public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+    if (Type.PROJECT.equals(t)) {
+      goProject(pm, m);
+      return;
+    }
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
+    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
+    textChange.setTextType("java");
+    textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
+    if (textChange.getEdit().getLength() != 0)
+      textChange.perform(pm);
+    if (Type.FILE.equals(t))
+      eclipse.announce("Done apllying " + w.description() + " tip to " + u.getElementName());
+    pm.done();
+  }
+
+  public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
+    final ICompilationUnit cu = eclipse.currentCompilationUnit();
+    assert cu != null;
+    final List<ICompilationUnit> us = eclipse.facade.compilationUnits();
+    assert us != null;
+    pm.beginTask("Spartanizing project", us.size());
+    final IJavaProject jp = cu.getJavaProject();
+    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    assert w != null;
+    for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      final IProgressService ps = wb.getProgressService();
+      final AtomicInteger pn = new AtomicInteger(i + 1);
+      final AtomicBoolean cancled = new AtomicBoolean(false);
+      try {
+        ps.run(true, true, px -> {
+          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          int n = 0;
+          final List<ICompilationUnit> es = new LinkedList<>();
+          for (final ICompilationUnit u : us) {
+            if (px.isCanceled()) {
+              cancled.set(true);
+              break;
+            }
+            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+            textChange.setTextType("java");
+            try {
+              textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
+            } catch (JavaModelException | IllegalArgumentException x) {
+              LoggingManner.logEvaluationError(this, x);
+            }
+            if (textChange.getEdit().getLength() == 0)
+              es.add(u);
+            else
+              try {
+                textChange.perform(pm);
+              } catch (final CoreException e) {
+                LoggingManner.logEvaluationError(this, e);
+              }
+            px.worked(1);
+            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+          }
+          us.removeAll(es);
+          px.done();
+        });
+      } catch (InvocationTargetException | InterruptedException e) {
+        LoggingManner.logEvaluationError(this, e);
+      }
+      if (us.isEmpty() || cancled.get())
+        break;
+    }
+    pm.done();
+    eclipse.announce("Done apllying " + w.description() + " tip to " + jp.getElementName());
   }
 }

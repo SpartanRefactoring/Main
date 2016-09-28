@@ -14,8 +14,110 @@ import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public final class TrimmerTestsUtils {
-  public static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
-    return a.collectSuggesions(u).size();
+  static class Operand extends Wrapper<String> {
+    public Operand(final String inner) {
+      super(inner);
+    }
+
+    void checkExpected(final String expected) {
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        azzert.fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
+      if (tide.clean(peeled).equals(tide.clean(get())))
+        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
+      assertSimilar(expected, peeled);
+    }
+
+    private void checkSame() {
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        return;
+      final String peeled = w.off(unpeeled);
+      if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
+        assertSimilar(get(), peeled);
+    }
+
+    public Operand gives(final String expected) {
+      assert expected != null;
+      final Wrap w = Wrap.find(get());
+      final String wrap = w.on(get());
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
+      if (wrap.equals(unpeeled))
+        azzert.fail("Nothing done on " + get());
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()))
+        azzert.that("No trimming of " + get(), peeled, is(not(get())));
+      if (tide.clean(peeled).equals(tide.clean(get())))
+        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
+      assertSimilar(expected, peeled);
+      return new Operand(expected);
+    }
+
+    public void stays() {
+      checkSame();
+    }
+  }
+
+  static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
+    final Class<N> clazz;
+
+    public OperandToWring(final String from, final Class<N> clazz) {
+      super(from);
+      this.clazz = clazz;
+    }
+
+    private N findNode(final Tipper<N> n) {
+      assert n != null;
+      final Wrap wrap = Wrap.find(get());
+      assert wrap != null;
+      final CompilationUnit u = wrap.intoCompilationUnit(get());
+      assert u != null;
+      final N $ = firstInstance(u);
+      assert $ != null;
+      return $;
+    }
+
+    private N firstInstance(final CompilationUnit u) {
+      final Wrapper<N> $ = new Wrapper<>();
+      u.accept(new ASTVisitor() {
+        /** The implementation of the visitation procedure in the JDT seems to
+         * be buggy. Each time we find a node which is an instance of the sought
+         * class, we return false. Hence, we do not anticipate any further calls
+         * to this function after the first such node is found. However, this
+         * does not seem to be the case. So, in the case our wrapper is not
+         * null, we do not carry out any further tests.
+         * @param pattern the node currently being visited.
+         * @return <code><b>true</b></code> <i>iff</i> the sought node is
+         *         found. */
+        @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
+          if ($.get() != null)
+            return false;
+          if (!clazz.isAssignableFrom(¢.getClass()))
+            return true;
+          $.set((N) ¢);
+          return false;
+        }
+      });
+      return $.get();
+    }
+
+    public OperandToWring<N> in(final Tipper<N> n) {
+      final N findNode = findNode(n);
+      azzert.that(n.canTip(findNode), is(true));
+      return this;
+    }
+
+    public OperandToWring<N> notIn(final Tipper<N> ¢) {
+      azzert.that(¢.canTip(findNode(¢)), is(false));
+      return this;
+    }
   }
 
   static String apply(final Tipper<? extends ASTNode> n, final String from) {
@@ -49,117 +151,15 @@ public final class TrimmerTestsUtils {
     assertSimilar(expected, peeled);
   }
 
+  public static int countOpportunities(final GUI$Applicator a, final CompilationUnit u) {
+    return a.collectSuggesions(u).size();
+  }
+
   static <N extends ASTNode> OperandToWring<N> included(final String from, final Class<N> clazz) {
     return new OperandToWring<>(from, clazz);
   }
 
   static Operand trimmingOf(final String from) {
     return new Operand(from);
-  }
-
-  static class Operand extends Wrapper<String> {
-    public Operand(final String inner) {
-      super(inner);
-    }
-
-    public Operand gives(final String expected) {
-      assert expected != null;
-      final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        azzert.fail("Nothing done on " + get());
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()))
-        azzert.that("No trimming of " + get(), peeled, is(not(get())));
-      if (tide.clean(peeled).equals(tide.clean(get())))
-        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-      assertSimilar(expected, peeled);
-      return new Operand(expected);
-    }
-
-    public void stays() {
-      checkSame();
-    }
-
-    void checkExpected(final String expected) {
-      final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        azzert.fail("Nothing done on " + get());
-      final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()))
-        azzert.that("No trimming of " + get(), peeled, is(not(get())));
-      if (tide.clean(peeled).equals(tide.clean(get())))
-        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-      assertSimilar(expected, peeled);
-    }
-
-    private void checkSame() {
-      final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
-      if (wrap.equals(unpeeled))
-        return;
-      final String peeled = w.off(unpeeled);
-      if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
-        assertSimilar(get(), peeled);
-    }
-  }
-
-  static class OperandToWring<N extends ASTNode> extends TrimmerTestsUtils.Operand {
-    final Class<N> clazz;
-
-    public OperandToWring(final String from, final Class<N> clazz) {
-      super(from);
-      this.clazz = clazz;
-    }
-
-    public OperandToWring<N> in(final Tipper<N> n) {
-      final N findNode = findNode(n);
-      azzert.that(n.canTip(findNode), is(true));
-      return this;
-    }
-
-    public OperandToWring<N> notIn(final Tipper<N> ¢) {
-      azzert.that(¢.canTip(findNode(¢)), is(false));
-      return this;
-    }
-
-    private N findNode(final Tipper<N> n) {
-      assert n != null;
-      final Wrap wrap = Wrap.find(get());
-      assert wrap != null;
-      final CompilationUnit u = wrap.intoCompilationUnit(get());
-      assert u != null;
-      final N $ = firstInstance(u);
-      assert $ != null;
-      return $;
-    }
-
-    private N firstInstance(final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
-      u.accept(new ASTVisitor() {
-        /** The implementation of the visitation procedure in the JDT seems to
-         * be buggy. Each time we find a node which is an instance of the sought
-         * class, we return false. Hence, we do not anticipate any further calls
-         * to this function after the first such node is found. However, this
-         * does not seem to be the case. So, in the case our wrapper is not
-         * null, we do not carry out any further tests.
-         * @param n the node currently being visited.
-         * @return <code><b>true</b></code> <i>iff</i> the sought node is
-         *         found. */
-        @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-          if ($.get() != null)
-            return false;
-          if (!clazz.isAssignableFrom(¢.getClass()))
-            return true;
-          $.set((N) ¢);
-          return false;
-        }
-      });
-      return $.get();
-    }
   }
 }

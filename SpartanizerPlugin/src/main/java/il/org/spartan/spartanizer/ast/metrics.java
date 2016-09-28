@@ -85,7 +85,7 @@ public interface metrics {
   }
 
   /** Counts the number of non-space characters in a tree rooted at a given node
-   * @param n JD
+   * @param pattern JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int countNonWhites(final ASTNode ¢) {
     return removeWhites(wizard.body(¢)).length();
@@ -106,7 +106,7 @@ public interface metrics {
     });
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return */
   static Set<String> dictionary(final ASTNode u) {
     final Set<String> $ = new LinkedHashSet<>();
@@ -141,7 +141,7 @@ public interface metrics {
     });
   }
 
-  /** @param n JD
+  /** @param pattern JD
    * @return The total number of leaves in the AST */
   static int leaves(final ASTNode ¢) {
     return nodes(¢) - internals(¢);
@@ -160,11 +160,6 @@ public interface metrics {
   static int lineCount(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode child) {
-        if (Statement.class.isAssignableFrom(child.getClass()))
-          addWeight($, child);
-      }
-
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
@@ -181,6 +176,11 @@ public interface metrics {
             if (elze(az.ifStatement(¢)) != null)
               ++a.inner;
           }
+      }
+
+      @Override public void preVisit(final ASTNode child) {
+        if (Statement.class.isAssignableFrom(child.getClass()))
+          addWeight($, child);
       }
     });
     return $.inner;
