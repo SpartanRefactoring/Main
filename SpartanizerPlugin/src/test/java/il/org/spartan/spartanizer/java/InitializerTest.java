@@ -41,7 +41,8 @@ public final class InitializerTest {
     azzert.that(InitializerTest.a, is(0));
   }
 }
-// TODO: Yossi, I played with initializers, and that's my observation:
+// TODO: Yossi, I played with initializers, and that's my
+// observation:
 // STATIC: Called before creating the instance, have access only to outer DS and
 // static fields.
 // INSTANCE: Called each time an instance is created, have access to everything.

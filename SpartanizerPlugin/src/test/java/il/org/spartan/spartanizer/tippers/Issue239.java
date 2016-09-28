@@ -11,7 +11,6 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** @author TODO: Matteo???
  * @year 2016 */
@@ -82,7 +81,7 @@ import il.org.spartan.spartanizer.java.*;
     assert name != null;
     final Expression initializer = f.getInitializer();
     assert initializer != null;
-    assert !sideEffects.free(f.getInitializer());
+    assert haz.sideEffects(f.getInitializer());
     final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);

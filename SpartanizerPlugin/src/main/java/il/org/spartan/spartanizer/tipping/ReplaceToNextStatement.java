@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
+  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
+
   @Override public final boolean prerequisite(final N current) {
     final Statement next = extract.nextStatement(current);
     return next != null && go(ASTRewrite.create(current.getAST()), current, next, null) != null;
@@ -16,8 +18,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
 
   @Override public Tip tip(final N n, final ExclusionManager exclude) {
     final Statement nextStatement = extract.nextStatement(n);
-    if (nextStatement == null)
-      return null;
+    assert nextStatement != null;
     if (exclude != null)
       exclude.exclude(nextStatement);
     return new Tip(description(n), n, nextStatement) {
@@ -26,6 +27,4 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
       }
     };
   }
-
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

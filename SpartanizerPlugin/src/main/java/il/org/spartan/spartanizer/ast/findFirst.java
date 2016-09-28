@@ -14,7 +14,7 @@ import il.org.spartan.*;
 public interface findFirst {
   /** Search for an {@link AssertStatement} in the tree rooted at an
    * {@link ASTNode}.
-   * @param n JD
+   * @param pattern JD
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode ¢) {
@@ -27,7 +27,7 @@ public interface findFirst {
 
   /** Search for an {@link ForStatement} in the tree rooted at an
    * {@link ASTNode}.
-   * @param n JD
+   * @param pattern JD
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static ForStatement forStatement(final ASTNode ¢) {
@@ -36,7 +36,7 @@ public interface findFirst {
 
   /** Search for an {@link IfStatement} in the tree rooted at an
    * {@link ASTNode}.
-   * @param n JD
+   * @param pattern JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static IfStatement ifStatement(final ASTNode ¢) {
@@ -85,7 +85,7 @@ public interface findFirst {
 
   /** Search for an {@link MethodDeclaration} in the tree rooted at an
    * {@link ASTNode}.
-   * @param n JD
+   * @param pattern JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static MethodDeclaration methodDeclaration(final ASTNode ¢) {
@@ -94,7 +94,7 @@ public interface findFirst {
 
   /** Search for a {@link PrefixExpression} in the tree rooted at an
    * {@link ASTNode}.
-   * @param n JD
+   * @param pattern JD
    * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static PostfixExpression postfixExpression(final ASTNode ¢) {
@@ -107,7 +107,7 @@ public interface findFirst {
 
   /** Return the first {@link VariableDeclarationFragment} encountered in a
    * visit of the tree rooted a the parameter.
-   * @param n JD
+   * @param pattern JD
    * @return first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code> */
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
@@ -116,7 +116,7 @@ public interface findFirst {
 
   /** Search for an {@link WhileStatement} in the tree rooted at an
    * {@link ASTNode}.
-   * @param n JD
+   * @param pattern JD
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {

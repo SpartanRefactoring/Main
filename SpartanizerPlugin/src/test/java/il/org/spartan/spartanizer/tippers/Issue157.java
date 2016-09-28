@@ -84,7 +84,8 @@ import org.junit.*;
                 + "}");
   }
 
-  // Parameterized that are not of some Collection type, don't get an 's' if
+  // Parameterized that are not of some Collection type, don'tipper get an
+  // 's' if
   // they're not an array.
   @Test public void test06() {
     trimmingOf(" public static String combine(final Many<Paranoid> paranoid) {  \n" //

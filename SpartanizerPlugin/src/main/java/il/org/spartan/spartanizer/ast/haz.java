@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -18,13 +19,16 @@ import il.org.spartan.*;
  * @since 2016-09-12 */
 public enum haz {
   ;
-
   public static boolean annotation(final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
 
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return !extract.annotations(¢).isEmpty();
+  }
+
+  static boolean binding(final ASTNode ¢) {
+    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
@@ -34,16 +38,20 @@ public enum haz {
     return false;
   }
 
-  public static boolean hasHidings(final List<Statement> ss) {
+  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
+        return true;
+    return false;
+  }
+
+  public static boolean hasNoModifiers(final BodyDeclaration ¢) {
+    return !¢.modifiers().isEmpty();
+  }
+
+  public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
 
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
@@ -117,22 +125,29 @@ public enum haz {
             return true;
         return false;
       }
+
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
     }.test(ss);
   }
 
-  public static boolean hasNoModifiers(final BodyDeclaration ¢) {
-    return !¢.modifiers().isEmpty();
+  public static boolean sideEffects(final Expression ¢) {
+    return !sideEffects.free(¢);
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {
       if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
-          return true;
+        return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))
-          continue;
+        continue;
       if (iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
-              || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
+          || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
         return true;
       child = ancestor;
     }
@@ -142,6 +157,20 @@ public enum haz {
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
+      boolean continue¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment ¢ : fs)
+          if (!continue¢(¢.getName()))
+            return false;
+        return true;
+      }
+
+      boolean continue¢(final SimpleName ¢) {
+        if (iz.identifier("$", ¢))
+          return false;
+        $.set(Boolean.TRUE);
+        return true;
+      }
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return continue¢(¢.getName());
       }
@@ -165,32 +194,7 @@ public enum haz {
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         return continue¢(fragments(¢));
       }
-
-      boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          if (!continue¢(¢.getName()))
-            return false;
-        return true;
-      }
-
-      boolean continue¢(final SimpleName ¢) {
-        if (iz.identifier("$", ¢))
-          return false;
-        $.set(Boolean.TRUE);
-        return true;
-      }
     });
     return $.get().booleanValue();
-  }
-
-  static boolean binding(final ASTNode ¢) {
-    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
-  }
-
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
   }
 }

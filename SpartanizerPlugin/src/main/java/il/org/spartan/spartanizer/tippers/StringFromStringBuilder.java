@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"
  * <code>String s = new StringBuilder(myName).append("'s grade is ").append(100).toString();</code>
- * can be replaced with <code>String s = myName + "'s grade is " + 100;</code>
+ * can be replaced with
+ * <code>String s = myName + "'s grade is " + 100;</code>
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
 public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation> implements Kind.SyntacticBaggage {
@@ -43,8 +44,35 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   // when put out of method arguments list
   private final Class<?>[] np = { InfixExpression.class };
 
+  /** Adds parenthesis to expression if needed.
+   * @param x an Expression
+   * @return e itself if no parenthesis needed, otherwise a
+   *         ParenthesisExpression containing e */
+  private Expression addParenthesisIfNeeded(final Expression x) {
+    final AST a = x.getAST();
+    if (!isParethesisNeeded(x))
+      return x;
+    final ParenthesizedExpression $ = a.newParenthesizedExpression();
+    $.setExpression((Expression) ASTNode.copySubtree(a, x));
+    return $;
+  }
+
   @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use \"+\" operator to concatenate strings";
+  }
+
+  /** Checks if an expression need parenthesis in order to interpreted correctly
+   * @param x an Expression
+   * @return whether or not this expression need parenthesis when put together
+   *         with other expressions in infix expression. There could be non
+   *         explicit parenthesis if the expression is located in an arguments
+   *         list, so making it a part of infix expression require additional
+   *         parenthesis */
+  private boolean isParethesisNeeded(final Expression x) {
+    for (final Class<?> ¢ : np)
+      if (¢.isInstance(x))
+        return true;
+    return false;
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
@@ -76,32 +104,5 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       r = (MethodInvocation) e;
     }
     return replacement(i, terms);
-  }
-
-  /** Adds parenthesis to expression if needed.
-   * @param x an Expression
-   * @return e itself if no parenthesis needed, otherwise a
-   *         ParenthesisExpression containing e */
-  private Expression addParenthesisIfNeeded(final Expression x) {
-    final AST a = x.getAST();
-    if (!isParethesisNeeded(x))
-      return x;
-    final ParenthesizedExpression $ = a.newParenthesizedExpression();
-    $.setExpression((Expression) ASTNode.copySubtree(a, x));
-    return $;
-  }
-
-  /** Checks if an expression need parenthesis in order to interpreted correctly
-   * @param x an Expression
-   * @return whether or not this expression need parenthesis when put together
-   *         with other expressions in infix expression. There could be non
-   *         explicit parenthesis if the expression is located in an arguments
-   *         list, so making it a part of infix expression require additional
-   *         parenthesis */
-  private boolean isParethesisNeeded(final Expression x) {
-    for (final Class<?> ¢ : np)
-      if (¢.isInstance(x))
-        return true;
-    return false;
   }
 }

@@ -18,8 +18,8 @@ import org.junit.runners.*;
   }
 
   @Test public void A$03() {
-    trimmingOf("while(true){doSomething();if(done()){t+=2;break;}}return something();")
-        .gives("while(true){doSomething();if(done()){t+=2;return something();}}").stays();
+    trimmingOf("while(true){doSomething();if(done()){tipper+=2;break;}}return something();")
+        .gives("while(true){doSomething();if(done()){tipper+=2;return something();}}").stays();
   }
 
   @Test public void A$04() {
@@ -32,7 +32,7 @@ import org.junit.runners.*;
   }
 
   @Test public void A$06() {
-    trimmingOf("for(int ¢=4 ; true ; ++¢){doSomething();if(done()){t+=2;break;}}return something();")
-        .gives("for(int ¢=4 ; true ; ++¢){doSomething();if(done()){t+=2;return something();}}").stays();
+    trimmingOf("for(int ¢=4 ; true ; ++¢){doSomething();if(done()){tipper+=2;break;}}return something();")
+        .gives("for(int ¢=4 ; true ; ++¢){doSomething();if(done()){tipper+=2;return something();}}").stays();
   }
 }

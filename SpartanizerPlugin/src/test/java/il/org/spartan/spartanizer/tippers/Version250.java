@@ -22,67 +22,6 @@ import il.org.spartan.*;
     trimmingOf("b=0+a;").stays();
   }
 
-  @Test public void issue031a() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(now.modifiers());\n"
-        + "    }")
-            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
-                + "      return hasAnnotation(now.modifiers());\n" + "    }");
-  }
-
-  @Test public void issue031b() {
-    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}").gives("void f(final VariableDeclarationStatement s, int abc) {}");
-  }
-
-  @Test public void issue031c() {
-    trimmingOf(" void f(final VariableDeclarationAtatement n, int abc) {}").gives("void f(final VariableDeclarationAtatement a, int abc) {}");
-  }
-
-  @Test public void issue031d() {
-    trimmingOf(" void f(final Expression n) {}").gives("void f(final Expression x) {}");
-  }
-
-  @Test public void issue031e() {
-    trimmingOf(" void f(final Exception n) {}").gives("void f(final Exception x) {}");
-  }
-
-  @Test public void issue031f() {
-    trimmingOf(" void f(final Exception exception, Expression expression) {}").gives("void f(final Exception x, Expression expression) {}");
-  }
-
-  @Test public void issue031g() {
-    trimmingOf("void foo(TestExpression exp,TestAssignment testAssignment)").gives("void foo(TestExpression x,TestAssignment testAssignment)")
-        .gives("void foo(TestExpression x,TestAssignment a)");
-  }
-
-  @Test public void issue031h() {
-    trimmingOf(" void f(final Exception n) {}").gives("void f(final Exception x) {}");
-  }
-
-  @Test public void issue031i() {
-    trimmingOf(" void f(final Exception n) {}").gives("void f(final Exception x) {}");
-  }
-
-  @Test public void issue031j() {
-    trimmingOf("void foo(Exception exception, Assignment assignment)").gives("void foo(Exception x, Assignment assignment)")
-        .gives("void foo(Exception x, Assignment a)").stays();
-  }
-
-  @Test public void issue031k() {
-    trimmingOf("String tellTale(Example example)").gives("String tellTale(Example x)");
-  }
-
-  @Test public void issue031l() {
-    trimmingOf("String tellTale(Example examp)").gives("String tellTale(Example x)");
-  }
-
-  @Test public void issue031m() {
-    trimmingOf("String tellTale(ExamplyExamplar lyEx)").gives("String tellTale(ExamplyExamplar x)");
-  }
-
-  @Test public void issue031n() {
-    trimmingOf("String tellTale(ExamplyExamplar foo)").stays();
-  }
-
   @Test public void issue070_01() {
     trimmingOf("(double)5").gives("1.*5");
   }
@@ -316,8 +255,8 @@ import il.org.spartan.*;
   }
 
   @Test public void issue243() {
-    trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short s = 0; " + "long s = 0; " + "long s1 = 2; "
-        + "double d = 0.0; " + "float f = 0.0; " + "float f1 = 1;" + "}").stays();
+    trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short s = 0; " + "long s = 0; "
+        + "long s1 = 2; " + "double d = 0.0; " + "float f = 0.0; " + "float f1 = 1;" + "}").stays();
   }
 
   @Test public void simpleForLoop() {
