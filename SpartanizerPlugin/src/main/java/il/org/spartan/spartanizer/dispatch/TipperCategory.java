@@ -2,11 +2,20 @@ package il.org.spartan.spartanizer.dispatch;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 
-/**
- * Classification of tippers 
- * @author Yossi Gil 
+/** Classification of tippers
+ * @author Yossi Gil
  * @year 2016 */
 public interface TipperCategory {
+  String description();
+
+  /** Returns the preference group to which the tipper belongs to. This method
+   * should be overridden for each tipper and should return one of the values of
+   * {@link WringGroup}
+   * @return preference group this tipper belongs to */
+  default WringGroup wringGroup() {
+    return WringGroup.find(this);
+  }
+
   interface Abbreviation extends Nominal {
     final String label = "Abbreviation";
 
@@ -14,15 +23,6 @@ public interface TipperCategory {
       return label;
     }
   }
-
-interface Nanos extends Modular {
-    final String label = "Tippers such as defualts.to(X) that rely on the standard nano libraries";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-
 
   interface Annonimization extends Nominal {
     final String label = "Unused arguments";
@@ -85,7 +85,7 @@ interface Nanos extends Modular {
     }
   }
 
-  interface Inlining extends Structural { 
+  interface Inlining extends Structural {
     final String label = "Eliminates a variable by inlining";
 
     @Override default String description() {
@@ -93,7 +93,7 @@ interface Nanos extends Modular {
     }
   }
 
-  interface InVain extends Structural { 
+  interface InVain extends Structural {
     final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
 
     @Override default String description() {
@@ -101,7 +101,15 @@ interface Nanos extends Modular {
     }
   }
 
-  interface ScopeReduction extends Structural { 
+  interface Nanos extends Modular {
+    final String label = "Tippers such as defualts.to(X) that rely on the standard nano libraries";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
+  interface ScopeReduction extends Structural {
     final String label = "Scope reduction";
 
     @Override default String description() {
@@ -134,15 +142,5 @@ interface Nanos extends Modular {
     @Override default String description() {
       return label;
     }
-  }
-
-  String description();
-
-  /** Returns the preference group to which the tipper belongs to. This method
-   * should be overridden for each tipper and should return one of the values of
-   * {@link WringGroup}
-   * @return preference group this tipper belongs to */
-  default WringGroup wringGroup() {
-    return WringGroup.find(this);
   }
 }

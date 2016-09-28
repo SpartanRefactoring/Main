@@ -22,103 +22,6 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public final class TipperCommit {
-  public enum Type {
-    DECLARATION, FILE, PROJECT
-  }
-
-  static class WringCommitVisitor extends DispatchingVisitor {
-    final IMarker marker;
-    final ASTRewrite rewrite;
-    final Type type;
-    final CompilationUnit compilationUnit;
-    Tipper<?> tipper;
-    /** A boolean flag indicating end of traverse. Set true after required
-     * operation has been made. */
-    boolean doneTraversing;
-
-    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
-      this.rewrite = rewrite;
-      this.marker = marker;
-      this.type = type;
-      this.compilationUnit = compilationUnit;
-      tipper = null;
-      doneTraversing = false;
-    }
-
-    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
-        final Tipper<?> wring) {
-      this.rewrite = rewrite;
-      this.marker = marker;
-      this.type = type;
-      this.compilationUnit = compilationUnit;
-      tipper = wring;
-    }
-
-    protected void apply(final Tipper<?> w, final ASTNode n) {
-      tipper = w;
-      switch (type) {
-        case DECLARATION:
-          applyDeclaration(w, n);
-          break;
-        case FILE:
-          applyFile(w, n);
-          break;
-        case PROJECT:
-        default:
-          break;
-      }
-    }
-
-    protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
-      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
-    }
-
-    protected void applyFile(final Tipper<?> w, final ASTNode n) {
-      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
-    }
-
-    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode n) {
-      n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
-          if (Trimmer.isDisabled(n))
-            return true;
-          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findTipper(n, w);
-          if (x != null) {
-            Tip make = null;
-            try {
-              make = x.tip(n, exclude);
-            } catch (final TipperFailure e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-            }
-            if (make != null) {
-              if (LogManager.isActive())
-                LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
-              make.go(rewrite, null);
-            }
-          }
-          return true;
-        }
-
-        @Override protected void initialization(final ASTNode ¢) {
-          Trimmer.disabledScan(¢);
-        }
-      });
-    }
-
-    @Override protected <N extends ASTNode> boolean go(final N n) {
-      if (doneTraversing)
-        return false;
-      if (eclipse.facade.isNodeOutsideMarker(n, marker))
-        return true;
-      final Tipper<N> w = Toolbox.defaultInstance().find(n);
-      if (w != null)
-        apply(w, n);
-      doneTraversing = true;
-      return false;
-    }
-  }
-
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
@@ -214,5 +117,102 @@ public final class TipperCommit {
     }
     pm.done();
     eclipse.announce("Done apllying " + w.description() + " tip to " + jp.getElementName());
+  }
+
+  public enum Type {
+    DECLARATION, FILE, PROJECT
+  }
+
+  static class WringCommitVisitor extends DispatchingVisitor {
+    final IMarker marker;
+    final ASTRewrite rewrite;
+    final Type type;
+    final CompilationUnit compilationUnit;
+    Tipper<?> tipper;
+    /** A boolean flag indicating end of traverse. Set true after required
+     * operation has been made. */
+    boolean doneTraversing;
+
+    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
+      this.rewrite = rewrite;
+      this.marker = marker;
+      this.type = type;
+      this.compilationUnit = compilationUnit;
+      tipper = null;
+      doneTraversing = false;
+    }
+
+    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
+        final Tipper<?> wring) {
+      this.rewrite = rewrite;
+      this.marker = marker;
+      this.type = type;
+      this.compilationUnit = compilationUnit;
+      tipper = wring;
+    }
+
+    protected void apply(final Tipper<?> w, final ASTNode n) {
+      tipper = w;
+      switch (type) {
+        case DECLARATION:
+          applyDeclaration(w, n);
+          break;
+        case FILE:
+          applyFile(w, n);
+          break;
+        case PROJECT:
+        default:
+          break;
+      }
+    }
+
+    protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
+      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n));
+    }
+
+    protected void applyFile(final Tipper<?> w, final ASTNode n) {
+      applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
+    }
+
+    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode n) {
+      n.accept(new DispatchingVisitor() {
+        @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
+          if (Trimmer.isDisabled(n))
+            return true;
+          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findTipper(n, w);
+          if (x != null) {
+            Tip make = null;
+            try {
+              make = x.tip(n, exclude);
+            } catch (final TipperFailure e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+            if (make != null) {
+              if (LogManager.isActive())
+                LogManager.getLogWriter().printRow(compilationUnit.getJavaElement().getElementName(), make.description, make.lineNumber + "");
+              make.go(rewrite, null);
+            }
+          }
+          return true;
+        }
+
+        @Override protected void initialization(final ASTNode ¢) {
+          Trimmer.disabledScan(¢);
+        }
+      });
+    }
+
+    @Override protected <N extends ASTNode> boolean go(final N n) {
+      if (doneTraversing)
+        return false;
+      if (eclipse.facade.isNodeOutsideMarker(n, marker))
+        return true;
+      final Tipper<N> w = Toolbox.defaultInstance().find(n);
+      if (w != null)
+        apply(w, n);
+      doneTraversing = true;
+      return false;
+    }
   }
 }

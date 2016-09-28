@@ -31,8 +31,7 @@ import il.org.spartan.spartanizer.ast.*;
    * @param n original {@link ASTNode} containing the method invocation. Used in
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
-   * @return method's binding if it is visible from context, else
-   *         null */
+   * @return method's binding if it is visible from context, else null */
   public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String methodName, final ITypeBinding[] bs, final ASTNode n,
       final CompilationUnit u) {
     if (b == null)

@@ -32,11 +32,11 @@ public enum step {
     return ¢.arguments();
   }
 
-  public static Statement body(final WhileStatement ¢) {
+  public static Statement body(final ForStatement ¢) {
     return ¢.getBody();
   }
-  
-  public static Statement body(final ForStatement ¢) {
+
+  public static Statement body(final WhileStatement ¢) {
     return ¢.getBody();
   }
 

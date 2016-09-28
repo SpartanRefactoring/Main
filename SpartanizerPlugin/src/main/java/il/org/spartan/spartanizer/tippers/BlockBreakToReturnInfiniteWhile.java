@@ -90,7 +90,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final WhileStatement b,final ExclusionManager exclude) {
+  @Override public Tip tip(final WhileStatement b, final ExclusionManager exclude) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || !isInfiniteLoop(b) || nextReturn == null)
       return null;
@@ -98,7 +98,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     final Statement $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
     if (exclude != null)
-          exclude.exclude(b);
+      exclude.exclude(b);
     return $ == null ? null : new Tip(description(b), b) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
