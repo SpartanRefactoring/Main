@@ -92,3 +92,74 @@ public class TipperFactory {
 //    return $;
 //  }
 }
+
+class Matcher {
+  Map<String, ArrayList<ASTNode>> ids = new HashMap<>();
+
+  public Matcher() {
+  }
+
+  public boolean matches(ASTNode p, ASTNode n) {
+    if (iz.name(p))
+      return sameName(p, n);
+    if (n.getNodeType() != p.getNodeType())
+      return false;
+    if (iz.literal(p))
+      return p.toString().equals(n.toString());
+    if (iz.containsOperator(p) && !sameOperator(p, n))
+      return false;
+    List<? extends ASTNode> nChildren = Recurser.children(n);
+    List<? extends ASTNode> pChildren = Recurser.children(p);
+    if (nChildren.size() != pChildren.size())
+      return false;
+    for (int i = 0; i < pChildren.size(); ++i)
+      if (!matches(pChildren.get(i), nChildren.get(i)))
+        return false;
+    return true;
+  }
+
+  private boolean sameName(ASTNode p, ASTNode n) {
+    String id = ((Name) p).getFullyQualifiedName();
+    if (id.startsWith("$")) {
+      if (id.startsWith("$X"))
+        return (n instanceof Expression) && consistent(n, id);
+      if (id.startsWith("$M"))
+        return (n instanceof MethodInvocation) && consistent(n, id);
+    }
+    return (n instanceof Name) && id.equals(((Name) p).getFullyQualifiedName());
+  }
+
+  private static boolean sameOperator(ASTNode p, ASTNode n) {
+    switch (p.getNodeType()) {
+      case ASTNode.PREFIX_EXPRESSION:
+        if (!step.operator((PrefixExpression) p).equals(step.operator((PrefixExpression) n)))
+          return false;
+        break;
+      case ASTNode.INFIX_EXPRESSION:
+        if (!step.operator((InfixExpression) p).equals(step.operator((InfixExpression) n)))
+          return false;
+        break;
+      case ASTNode.POSTFIX_EXPRESSION:
+        if (!step.operator((PostfixExpression) p).equals(step.operator((PostfixExpression) n)))
+          return false;
+        break;
+      case ASTNode.ASSIGNMENT:
+        if (!step.operator((Assignment) p).equals(step.operator((Assignment) n)))
+          return false;
+        break;
+      default:
+        return true;
+    }
+    return true;
+  }
+
+  private boolean consistent(ASTNode n, String id) {
+    if (!ids.containsKey(id))
+      ids.put(id, new ArrayList<>());
+    ids.get(id).add(n);
+    for (ASTNode other : ids.get(id))
+      if (!n.toString().equals(other.toString()))
+        return false;
+    return true;
+  }
+}
