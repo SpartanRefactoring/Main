@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** abbreviates the name of a method parameter that is a viable candidate for
- * abbreviation (meaning that its name is suitable for renaming, and isn't the
+ * abbreviation (meaning that its name is suitable for renaming, and isn'tipper the
  * desired name). The abbreviated name is the first character in the last word
  * of the variable'example1step1 name.
  * <p>

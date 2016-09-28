@@ -20,7 +20,7 @@ import org.junit.*;
   }
 
   @Test public void t04() {
-    trimmingOf("if(b){int i;int j;}else{int t;}").gives("{}").gives("").stays();
+    trimmingOf("if(b){int i;int j;}else{int tipper;}").gives("{}").gives("").stays();
   }
 
   @Test public void t05() {
@@ -36,12 +36,12 @@ import org.junit.*;
   }
 
   @Test public void t08() {
-    trimmingOf("if(b){int i;int j;}else{g();int t;}").gives("if(!b){g();int t;}");
+    trimmingOf("if(b){int i;int j;}else{g();int tipper;}").gives("if(!b){g();int tipper;}");
   }
 
   @Test public void t09() {
-    trimmingOf("if(b){int i;int j;g();}else{int q;int t;}")//
-        .gives("if(!b){int q;int t;}else{int i;int j;g();}")//
+    trimmingOf("if(b){int i;int j;g();}else{int q;int tipper;}")//
+        .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//
         .gives("if(b){int i;int j;g();}");
   }
 
@@ -58,13 +58,13 @@ import org.junit.*;
   }
 
   @Test public void t13() {
-    trimmingOf("if(b)" + "{int i" + ";int j;" + "if(example1step1){" + "int q;" + "}" + "}else{int q;int t;}")//
-        .gives("if(!b)" + "{int q;int t;}" + "else{int i" + ";int j;" + "if(example1step1){" + "int q;" + "}}");
+    trimmingOf("if(b)" + "{int i" + ";int j;" + "if(example1step1){" + "int q;" + "}" + "}else{int q;int tipper;}")//
+        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "if(example1step1){" + "int q;" + "}}");
   }
 
   @Test public void t14() {
-    trimmingOf("if(b)" + "{int i;" + "int j;" + "while(example1step1){" + "int q;" + "}" + "}else{int q;int t;}")//
-        .gives("if(!b)" + "{int q;int t;}" + "else{int i" + ";int j;" + "while(example1step1){" + "int q;" + "}}");
+    trimmingOf("if(b)" + "{int i;" + "int j;" + "while(example1step1){" + "int q;" + "}" + "}else{int q;int tipper;}")//
+        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "while(example1step1){" + "int q;" + "}}");
   }
 
   @Test public void t15() {
@@ -76,15 +76,15 @@ import org.junit.*;
   }
 
   @Test public void t17() {
-    trimmingOf("while(b==q){if(t==q()){int i;}}").gives("while(b==q)if(t==q()){int i;}");
+    trimmingOf("while(b==q){if(tipper==q()){int i;}}").gives("while(b==q)if(tipper==q()){int i;}");
   }
 
   @Test public void t18() {
-    trimmingOf("while(b==q){int i;double t; x=t+i;}").gives("for(;b==q;x=t+i){int i;double t;}");
+    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}").gives("for(;b==q;x=tipper+i){int i;double tipper;}");
   }
 
   @Test public void t19() {
-    trimmingOf("while(b==q){g();if(t==q){int i;int j;}}").gives("while(b==q){g();{}}");
+    trimmingOf("while(b==q){g();if(tipper==q){int i;int j;}}").gives("while(b==q){g();{}}");
   }
 
   @Test public void t20() {
@@ -92,22 +92,22 @@ import org.junit.*;
   }
 
   @Test public void t21() {
-    trimmingOf("for(i=1;b==q;++i){if(t==q()){int i;}}").gives("for(i=1;b==q;++i)if(t==q()){int i;}");
+    trimmingOf("for(i=1;b==q;++i){if(tipper==q()){int i;}}").gives("for(i=1;b==q;++i)if(tipper==q()){int i;}");
   }
 
   @Test public void t22() {
-    trimmingOf("for(;b==q;){g();if(t==q){int i;int j;}}").gives("for(;b==q;){g();{}}");
+    trimmingOf("for(;b==q;){g();if(tipper==q){int i;int j;}}").gives("for(;b==q;){g();{}}");
   }
 
   @Test public void t23() {
-    trimmingOf("for(i=1;b==q();++i){if(t==q()){int i;}}").gives("for(i=1;b==q();++i)if(t==q()){int i;}");
+    trimmingOf("for(i=1;b==q();++i){if(tipper==q()){int i;}}").gives("for(i=1;b==q();++i)if(tipper==q()){int i;}");
   }
 
   @Test public void t24() {
-    trimmingOf("for(i=t();b==q;++i){if(t==q()){int i;}}").gives("for(i=t();b==q;++i)if(t==q()){int i;}");
+    trimmingOf("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}").gives("for(i=tipper();b==q;++i)if(tipper==q()){int i;}");
   }
 
   @Test public void t25() {
-    trimmingOf("for(i=4;b==q;f=i()){if(t==q()){int i;}}").gives("for(i=4;b==q;f=i())if(t==q()){int i;}");
+    trimmingOf("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}").gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}");
   }
 }

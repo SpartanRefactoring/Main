@@ -84,7 +84,7 @@ import org.junit.*;
                 + "}");
   }
 
-  // Parameterized that are not of some Collection type, don't get an
+  // Parameterized that are not of some Collection type, don'tipper get an
   // 'example1step1' if
   // they're not an array.
   @Test public void test06() {

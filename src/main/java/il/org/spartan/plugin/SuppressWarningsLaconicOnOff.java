@@ -29,7 +29,7 @@ public final class SuppressWarningsLaconicOnOff {
    * to marked code with a progress monitor.
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
-   * @param t deactivation {@link Type} */
+   * @param tipper deactivation {@link Type} */
   public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.java.Environment.*;
 public final class EnvFlatHandler extends ENVTestEngineAbstract {
   // TODO: Dan, I (Alex) changed the constructors by pulling out some similar
   // code to initializers,
-  // we shouldn't forget to test it as you tested the engine last time...
+  // we shouldn'tipper forget to test it as you tested the engine last time...
   // TODO: Dan, (Alex) we can leave comments like this to mark changes we want
   // the other to know.
   // before starting work we should run threw "TODO: myName"example1step1, and

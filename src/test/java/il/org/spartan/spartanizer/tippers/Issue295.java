@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -91,14 +92,14 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B03() {
-    trimmingOf("void  f(V v) { " + //
-        "List<U> lst = step.fragments(v); " + //
+    trimmingOf("void  f(V variableDeclarationFragment) { " + //
+        "List<U> lst = step.fragments(variableDeclarationFragment); " + //
         "for (U ¢ : lst) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
-        "}").gives("void f(U v) { " + //
-            "for (U ¢ : step.fragments(v);) " + //
+        "}").gives("void f(U variableDeclarationFragment) { " + //
+            "for (U ¢ : step.fragments(variableDeclarationFragment);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -107,14 +108,14 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B05() {
-    trimmingOf("boolean  f(V v) { " + //
-        "V x= step.fragments(v); " + //
+    trimmingOf("boolean  f(V variableDeclarationFragment) { " + //
+        "V x= step.fragments(variableDeclarationFragment); " + //
         "for (U ¢ : x) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
-        "}").gives("boolean f(U v) { " + //
-            "for (U ¢ : step.fragments(v);) " + //
+        "}").gives("boolean f(U variableDeclarationFragment) { " + //
+            "for (U ¢ : step.fragments(variableDeclarationFragment);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -124,13 +125,13 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B06() {
     trimmingOf("boolean f() { " + //
-        "V x= g(v); " + //
+        "V x= g(variableDeclarationFragment); " + //
         "for (U ¢ : x) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
         "}").gives("boolean f() { " + //
-            "for (U ¢ : g(v))" + //
+            "for (U ¢ : g(variableDeclarationFragment))" + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -190,51 +191,45 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B16() {
-    final VariableDeclarationFragment v = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
-    assert v != null;
-    azzert.that(v, iz("var=f(1)"));
+    assert variableDeclarationFragment != null;
+    azzert.that(variableDeclarationFragment, iz("var=f(1)"));
   }
 
   @Test public void B17() {
-    final DeclarationInitializerStatementTerminatingScope t = new DeclarationInitializerStatementTerminatingScope();
-    final VariableDeclarationFragment v = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
-    assert t.canTip(v) : LoggingManner.beginDump() + //
-        "\n v = " + v + //
-        "\n forr = " + forr + //
+    assert tipper.canTip(variableDeclarationFragment) : LoggingManner.beginDump() + //
+        "\n variableDeclarationFragment = " + variableDeclarationFragment + //
+        "\n for = " + forr + //
         LoggingManner.endDump();
   }
 
   @Test public void B18() throws TipperFailure {
-    final DeclarationInitializerStatementTerminatingScope t = new DeclarationInitializerStatementTerminatingScope();
-    final VariableDeclarationFragment v = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
-    assert t.tip(v) != null : LoggingManner.beginDump() + //
-        "\n v = " + v + //
-        "\n forr = " + forr + //
+    assert tipper.tip(variableDeclarationFragment) != null : LoggingManner.beginDump() + //
+        "\n variableDeclarationFragment = " + variableDeclarationFragment + //
+        "\n for = " + forr + //
         LoggingManner.endDump();
   }
 
   @Test public void B19() {
-    final DeclarationInitializerStatementTerminatingScope t = new DeclarationInitializerStatementTerminatingScope();
-    final VariableDeclarationFragment v = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
-    assert t.tip(v, null) != null : LoggingManner.beginDump() + //
-        "\n v = " + v + //
-        "\n forr = " + forr + //
+    assert tipper.tip(variableDeclarationFragment, null) != null : LoggingManner.beginDump() + //
+        "\n variableDeclarationFragment = " + variableDeclarationFragment + //
+        "\n for = " + forr + //
         LoggingManner.endDump();
   }
 
+    final DeclarationInitializerStatementTerminatingScope tipper = new DeclarationInitializerStatementTerminatingScope();
   @Test public void B20() throws TipperFailure {
-    final DeclarationInitializerStatementTerminatingScope t = new DeclarationInitializerStatementTerminatingScope();
-    final VariableDeclarationFragment v = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
-    assert v != null;
-    azzert.that(t.tip(v), iz("a"));
+    assert variableDeclarationFragment != null;
+    azzert.that(tipper.tip(variableDeclarationFragment), iz("a"));
   }
+    final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
 
   @Test public void B21() {
-    final DeclarationInitializerStatementTerminatingScope t = new DeclarationInitializerStatementTerminatingScope();
-    final VariableDeclarationFragment v = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
-    assert t.prerequisite(v) : LoggingManner.beginDump() + //
-        "\n v = " + v + //
-        "\n forr = " + forr + //
+    assert tipper.prerequisite(variableDeclarationFragment) : LoggingManner.beginDump() + //
+        "\n variableDeclarationFragment = " + variableDeclarationFragment + //
+        "\n for = " + forr + //
         LoggingManner.endDump();
   }
+
+  @Test public void B22() {
+}
 }

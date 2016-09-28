@@ -253,7 +253,7 @@ public enum Collect {
     };
   }
 
-  // didn't find any use case in which it will be different of usesCollector
+  // didn'tipper find any use case in which it will be different of usesCollector
   /** Creates an ASTVisitor that adds all explicit uses (by name) of a
    * SimpleName to the provided list.
    * @param into JD
