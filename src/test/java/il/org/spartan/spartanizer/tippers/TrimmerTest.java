@@ -1484,14 +1484,6 @@ import il.org.spartan.spartanizer.tipping.*;
   @Test public void issue54WhileScopeDoesNotInclude() {
     included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class).notIn(new DeclarationInitializerStatementTerminatingScope());
   }
-
-  @Test public void issue57a() {
-    trimmingOf("void m(List<Expression>... expressions) { }").gives("void m(List<Expression>... xss) {}");
-  }
-
-  @Test public void issue57b() {
-    trimmingOf("void m(Expression... expression) { }").gives("void m(Expression... xs) {}");
-  }
   @Test public void issue62a() {
     trimmingOf("int f(int ixx) { for(;;++ixx) if(false) break; return ixx; }").gives("int f(int ixx) { for(;;++ixx){} return ixx; }").stays();
   }
