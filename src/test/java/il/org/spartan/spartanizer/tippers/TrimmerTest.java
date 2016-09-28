@@ -26,9 +26,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class TrimmerTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) //
+public final class TrimmerTest {
   @Test public void actualExampleForSortAddition() {
-    trimmingOf("1 + b.statements().indexOf(declarationStmt)").stays();
+    trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
+        .stays();
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
@@ -51,12 +53,15 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void andWithCLASS_CONSTANT() {
-    trimmingOf("(x >> 18) & MASK_BITS").stays();
-    trimmingOf("(x >> 18) & MASK_6BITS").stays();
+    trimmingOf("(x >> 18) & MASK_BITS")//
+        .stays();
+    trimmingOf("(x >> 18) & MASK_6BITS")//
+        .stays();
   }
 
   @Test public void annotationDoNotRemoveSingleMemberNotCalledValue() {
-    trimmingOf("@SuppressWarnings(sky = \"blue\") void m() {}").stays();
+    trimmingOf("@SuppressWarnings(sky = \"blue\") void m() {}")//
+        .stays();
   }
 
   @Test public void annotationDoNotRemoveValueAndSomethingElse() {
@@ -64,7 +69,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void annotationRemoveEmptyParentheses() {
-    trimmingOf("@Override() void m() {}").gives("@Override void m() {}");
+    trimmingOf("@Override() void m() {}")//
+        .gives("@Override void m() {}");
   }
 
   @Ignore("Issue #230") @Test public void annotationRemoveValueFromMultipleAnnotations() {
@@ -78,51 +84,63 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void annotationRemoveValueMemberSingleValue() {
-    trimmingOf("@SuppressWarnings(value = \"something\") void m() {}").gives("@SuppressWarnings(\"something\") void m() {}");
+    trimmingOf("@SuppressWarnings(value = \"something\") void m() {}")//
+        .gives("@SuppressWarnings(\"something\") void m() {}");
   }
 
   @Test public void assignmentAssignmentChain1() {
-    trimmingOf("c = a = 13; b = 13;").gives("b = c = a = 13;");
+    trimmingOf("c = a = 13; b = 13;")//
+        .gives("b = c = a = 13;");
   }
 
   @Test public void assignmentAssignmentChain2() {
-    trimmingOf("a = 13; b= c = 13;").gives("b = c = a = 13;");
+    trimmingOf("a = 13; b= c = 13;")//
+        .gives("b = c = a = 13;");
   }
 
   @Test public void assignmentAssignmentChain3() {
-    trimmingOf("a = b = 13; c = d = 13;").gives("c = d = a = b = 13;");
+    trimmingOf("a = b = 13; c = d = 13;")//
+        .gives("c = d = a = b = 13;");
   }
 
   @Test public void assignmentAssignmentChain4() {
-    trimmingOf("a1 = a2 = a3 = a4 = 13; b1 = b2 = b3 = b4 = b5 = 13;").gives("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
+    trimmingOf("a1 = a2 = a3 = a4 = 13; b1 = b2 = b3 = b4 = b5 = 13;")//
+        .gives("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
   }
 
   @Test public void assignmentAssignmentChain5() {
-    trimmingOf("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));").gives("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
+    trimmingOf("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));")//
+        .gives("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
   }
 
   @Test public void assignmentAssignmentNew() {
-    trimmingOf("a = new B(); b= new B();").stays();
+    trimmingOf("a = new B(); b= new B();")//
+        .stays();
   }
 
   @Test public void assignmentAssignmentNewArray() {
-    trimmingOf("a = new A[3]; b= new A[3];").stays();
+    trimmingOf("a = new A[3]; b= new A[3];")//
+        .stays();
   }
 
   @Test public void assignmentAssignmentNull() {
-    trimmingOf("c = a = null; b = null;").stays();
+    trimmingOf("c = a = null; b = null;")//
+        .stays();
   }
 
   @Test public void assignmentAssignmentSideEffect() {
-    trimmingOf("a = f(); b= f();").stays();
+    trimmingOf("a = f(); b= f();")//
+        .stays();
   }
 
   @Test public void assignmentAssignmentVanilla() {
-    trimmingOf("a = 13; b= 13;").gives("b = a = 13;");
+    trimmingOf("a = 13; b= 13;")//
+        .gives("b = a = 13;");
   }
 
   @Test public void assignmentAssignmentVanilla0() {
-    trimmingOf("a = 0; b = 0;").gives("b = a = 0;");
+    trimmingOf("a = 0; b = 0;")//
+        .gives("b = a = 0;");
   }
 
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
@@ -134,40 +152,50 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void assignmentReturn0() {
-    trimmingOf("a = 3; return a;").gives("return a = 3;");
+    trimmingOf("a = 3; return a;")//
+        .gives("return a = 3;");
   }
 
   @Test public void assignmentReturn1() {
-    trimmingOf("a = 3; return (a);").gives("return a = 3;");
+    trimmingOf("a = 3; return (a);")//
+        .gives("return a = 3;");
   }
 
   @Test public void assignmentReturn2() {
-    trimmingOf("a += 3; return a;").gives("return a += 3;");
+    trimmingOf("a += 3; return a;")//
+        .gives("return a += 3;");
   }
 
   @Test public void assignmentReturn3() {
-    trimmingOf("a *= 3; return a;").gives("return a *= 3;");
+    trimmingOf("a *= 3; return a;")//
+        .gives("return a *= 3;");
   }
 
   @Test public void assignmentReturniNo() {
-    trimmingOf("b = a = 3; return a;").stays();
+    trimmingOf("b = a = 3; return a;")//
+        .stays();
   }
 
   @Test public void blockSimplifyVanilla() {
-    trimmingOf("if (a) {f(); }").gives("if (a) f();");
+    trimmingOf("if (a) {f(); }")//
+        .gives("if (a) f();");
   }
 
   @Test public void blockSimplifyVanillaSimplified() {
-    trimmingOf(" {f(); }").gives("f();");
+    trimmingOf(" {f(); }")//
+        .gives("f();");
   }
 
   @Test public void booleanChangeValueOfToConstant() {
-    trimmingOf("Boolean b = Boolean.valueOf(true);").gives("Boolean b = Boolean.TRUE;");
-    trimmingOf("Boolean b = Boolean.valueOf(false);").gives("Boolean b = Boolean.FALSE;");
+    trimmingOf("Boolean b = Boolean.valueOf(true);")//
+        .gives("Boolean b = Boolean.TRUE;");
+    trimmingOf("Boolean b = Boolean.valueOf(false);")//
+        .gives("Boolean b = Boolean.FALSE;");
   }
 
   @Test public void booleanChangeValueOfToConstantNotConstant() {
-    trimmingOf("Boolean.valueOf(expected);").stays();
+    trimmingOf("Boolean.valueOf(expected);")//
+        .stays();
   }
 
   @Ignore("Issue #230") @Test public void bugInLastIfInMethod() {
@@ -175,8 +203,9 @@ import il.org.spartan.spartanizer.tipping.*;
         + "          if (!isMessageSuppressed(myMessage)) {\n" + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n"
         + "            messages.add(myMessage);\n" + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
-            "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+            .gives(
+                "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Ignore("Issue #230") @Test public void bugInLastIfInMethod1() {
@@ -184,8 +213,9 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
-            "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+            .gives(
+                "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod2() {
@@ -193,8 +223,9 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
-            "public void f(){if(g(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+            .gives(
+                "public void f(){if(g(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod3() {
@@ -202,8 +233,9 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
-            "public void f(){if(g(a))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+            .gives(
+                "public void f(){if(g(a))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod4() {
@@ -211,48 +243,56 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
-            "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+            .gives(
+                "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod5() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n"
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }").gives(
-            "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
+        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
+            .gives(
+                "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod6() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n" + "            final int messages = 3;\n"
         + "            messages.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }").gives(
-            "public void f(){if(g)return;final int messages=3;messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
+        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
+            .gives(
+                "public void f(){if(g)return;final int messages=3;messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod7() {
     trimmingOf(
         "        public void f() {\n" + "          if (!g) {\n" + "            foo();\n" + "            bar();\n" + "          }\n" + "        }")
+            //
             .gives("public void f(){if(g)return;foo();bar();}");
   }
 
   @Test public void bugInLastIfInMethod8() {
     trimmingOf(
         "        public void f() {\n" + "          if (g) {\n" + "            foo();\n" + "            bar();\n" + "          }\n" + "        }")
+            //
             .gives("public void f(){if(!g)return;foo();bar();}");
   }
 
   @Test public void bugIntroducingMISSINGWord1() {
     trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
+        //
         .gives("b.f(a) && As.g(f).h(c) == -1 ? o(s,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),s,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord1a() {
-    trimmingOf("-1 == As.g(f).h(c)").gives("As.g(f).h(c)==-1");
+    trimmingOf("-1 == As.g(f).h(c)")//
+        .gives("As.g(f).h(c)==-1");
   }
 
   @Test public void bugIntroducingMISSINGWord1b() {
     trimmingOf("b.f(a) && X ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
+        //
         .gives("b.f(a)&&X?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),s,f):null");
   }
 
