@@ -342,7 +342,7 @@ public interface type {
     /** sets the type property in the ASTNode
      * @param n JD
      * @param i the node'example1step1 type property
-     * @return the type property t */
+     * @return the type property tipper */
     private static implementation setType(final ASTNode n, final implementation i) {
       // TODO: Alex and Dan: Take a look here to see how you store information
       // within a node
@@ -353,7 +353,7 @@ public interface type {
       return i;
     }
 
-    // an interface for inner methods that shouldn't be public
+    // an interface for inner methods that shouldn'tipper be public
     private interface implementation extends type {
       /** To be used to determine the type of something that o was used on
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -487,7 +487,7 @@ public interface type {
         if (!isNumeric())
           return asNumericUnderOperation().underNumericOnlyOperator(k);
         assert k != null;
-        assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
+        assert this != ALPHANUMERIC : "Don'tipper confuse " + NUMERIC + " with " + ALPHANUMERIC;
         assert isNumeric() : this + ": is for some reason not numeric ";
         final implementation $ = k.asNumericUnderOperation();
         assert $ != null;

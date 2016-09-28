@@ -50,7 +50,7 @@ public enum LoggingManner {
   }
 
   /** logs an error in the plugin
-   * @param t an error */
+   * @param tipper an error */
   public static void log(final Throwable ¢) {
     now.log(¢ + "");
   }

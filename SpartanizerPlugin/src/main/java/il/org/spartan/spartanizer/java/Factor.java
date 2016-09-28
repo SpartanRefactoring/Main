@@ -29,7 +29,7 @@ class Factor {
     return !divider;
   }
 
-  // doesn't work for division, need to figure out why
+  // doesn'tipper work for division, need to figure out why
   Expression asExpression() {
     if (!divider)
       return expression;
