@@ -238,7 +238,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assertConvertsTo(
         "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (int ¢=0; ¢ < size; ¢++){\n" + "       sum += ¢;\n" + "     }\n"
             + "   else\n" + "     for (int i=0; ¢ < size; ¢++){\n" + "       S.out.l('f',i);\n" + "     }",
-        "if(m.equals(153))" + "for(int ¢=0;¢<17;++¢," + "       sum += ¢);\n" + "else " + "  for(int ¢=0;¢<17;++¢) " + "    S.out.l('f',¢);");
+        "if(m.equals(153))" + "for(int ¢=0;¢<17;++¢," + "       sum += ¢){}\n" + "else " + "  for(int ¢=0;¢<17;++¢) " + "    S.out.l('f',¢){}");
   }
 
   @Test(timeout = 2000) public void ternarize54() {
