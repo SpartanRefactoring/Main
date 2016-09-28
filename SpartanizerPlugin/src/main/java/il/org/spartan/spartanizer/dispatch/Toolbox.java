@@ -209,9 +209,10 @@ public class Toolbox {
   }
 
   private static void disable(final List<Tipper<? extends ASTNode>> ts, final Class<? extends TipperCategory> c) {
+    if (false)
     removing: for (;;) {
       for (int i = 0; i < ts.size(); ++i)
-        if (c.isAssignableFrom(ts.get(i).getClass())) {
+        if (DeclarationInitialiazelUpdateAssignment.class.isAssignableFrom(ts.get(i).getClass())) {
           ts.remove(i);
           continue removing;
         }
@@ -226,10 +227,10 @@ public class Toolbox {
     return null;
   }
 
-  private final Map<Class<? extends ASTNode>, List<Tipper<? extends ASTNode>>> allActiveTippers = new HashMap<>();
+  private final Map<Class<? extends ASTNode>, List<Tipper<? extends ASTNode>>> activeTippers = new HashMap<>();
 
   public void disable(final Class<? extends TipperCategory> c) {
-    for (final List<Tipper<? extends ASTNode>> x : allActiveTippers.values())
+    for (final List<Tipper<? extends ASTNode>> x : activeTippers.values())
       disable(x, c);
   }
 
@@ -253,20 +254,20 @@ public class Toolbox {
   }
 
   public int hooksCount() {
-    return allActiveTippers.keySet().size();
+    return activeTippers.keySet().size();
   }
 
   public int tippersCount() {
     int $ = 0;
-    for (final List<Tipper<? extends ASTNode>> ts : allActiveTippers.values())
+    for (final List<Tipper<? extends ASTNode>> ts : activeTippers.values())
       $ += ts.size();
     return $;
   }
 
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Tipper<N>> get(final Class<? extends ASTNode> ¢) {
-    if (!allActiveTippers.containsKey(¢))
-      allActiveTippers.put(¢, new ArrayList<>());
-    return (List<Tipper<N>>) (List<?>) allActiveTippers.get(¢);
+    if (!activeTippers.containsKey(¢))
+      activeTippers.put(¢, new ArrayList<>());
+    return (List<Tipper<N>>) (List<?>) activeTippers.get(¢);
   }
 
   <N extends ASTNode> List<Tipper<N>> get(final N ¢) {
