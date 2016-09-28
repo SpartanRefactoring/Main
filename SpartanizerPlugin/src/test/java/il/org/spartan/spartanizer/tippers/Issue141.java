@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue141 {
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue141 {
   @Test public void b$01() {
     trimmingOf("public static void go(final Object os[], final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
         + "out(\"elements\", os);   \n" + "}").stays();

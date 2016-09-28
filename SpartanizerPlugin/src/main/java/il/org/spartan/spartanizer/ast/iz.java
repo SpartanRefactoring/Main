@@ -844,4 +844,8 @@ public enum iz {
   public static boolean name(ASTNode ¢) {
     return ¢ instanceof Name;
   }
+
+  public static boolean containsOperator(ASTNode ¢) {
+    return oneOf(¢, ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT);
+  }
 }

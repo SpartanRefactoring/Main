@@ -92,9 +92,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside " + ¢ + " to return";
   }
 
-  public Tip make(final ForStatement vor, final ReturnStatement nextReturn) {
+  public Tip make(final ForStatement vor, final ReturnStatement nextReturn,final ExclusionManager exclude) {
     final Statement $ = make(vor.getBody(), nextReturn);
-    return $ == null ? null : new Tip(description(), $) {
+    if (exclude != null)
+      exclude.exclude(vor); 
+    return $ == null ? null : new Tip(description(), vor, nextReturn) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
@@ -106,10 +108,10 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final ForStatement vor) {
+  @Override public Tip tip(final ForStatement vor, final ExclusionManager exclude) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     final ReturnStatement nextReturn = extract.nextReturn(vor);
-    return nextReturn == null ? null : make(vor, nextReturn);
+    return nextReturn == null ? null : make(vor, nextReturn,exclude);
   }
 }
