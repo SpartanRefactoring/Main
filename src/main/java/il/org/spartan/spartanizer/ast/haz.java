@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -32,6 +33,10 @@ public enum haz {
       if ("$".equals(identifier(¢)))
         return true;
     return false;
+  }
+
+  public static boolean hasNoModifiers(final BodyDeclaration ¢) {
+    return !¢.modifiers().isEmpty();
   }
 
   public static boolean hidings(final List<Statement> ss) {
@@ -120,8 +125,8 @@ public enum haz {
     }.test(ss);
   }
 
-  public static boolean hasNoModifiers(final BodyDeclaration ¢) {
-    return !¢.modifiers().isEmpty();
+  public static boolean sideEffects(final Expression e) {
+    return !sideEffects.free(e);
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {

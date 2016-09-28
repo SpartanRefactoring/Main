@@ -55,7 +55,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
-    if (!sideEffects.free(initializer)) {
+    if (haz.sideEffects(initializer)) {
       final SimpleName use = onlyOne(uses);
       if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
         return null;

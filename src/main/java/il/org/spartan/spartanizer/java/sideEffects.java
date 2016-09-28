@@ -51,7 +51,7 @@ public enum sideEffects {
   };
 
   public static boolean deterministic(final Expression x) {
-    if (!free(x))
+    if (haz.sideEffects(x))
       return false;
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.TRUE);
     x.accept(new ASTVisitor() {
@@ -63,10 +63,10 @@ public enum sideEffects {
     return $.get().booleanValue();
   }
 
-  public static boolean free(final ConditionalExpression ¢) {
+  private static boolean free(final ConditionalExpression ¢) {
     return free(expression(¢), then(¢), elze(¢));
   }
-
+  
   public static boolean free(final Expression ¢) {
     if (¢ == null || iz.is(¢, alwaysFree))
       return true;
@@ -78,13 +78,13 @@ public enum sideEffects {
       case ARRAY_ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
       case CAST_EXPRESSION:
-        return free(step.expression(¢));
+        return !haz.sideEffects(step.expression(¢));
       case INSTANCEOF_EXPRESSION:
-        return free(left(az.instanceofExpression(¢)));
+        return !haz.sideEffects(left(az.instanceofExpression(¢)));
       case PREFIX_EXPRESSION:
         return free(az.prefixExpression(¢));
       case PARENTHESIZED_EXPRESSION:
-        return free(core(¢));
+        return !haz.sideEffects(core(¢));
       case INFIX_EXPRESSION:
         return free(extract.allOperands(az.infixExpression(¢)));
       case CONDITIONAL_EXPRESSION:
@@ -104,19 +104,19 @@ public enum sideEffects {
 
   private static boolean free(final Expression... xs) {
     for (final Expression ¢ : xs)
-      if (!free(¢))
+      if (haz.sideEffects(¢))
         return false;
     return true;
   }
 
   private static boolean free(final List<?> os) {
     for (final Object ¢ : os)
-      if (¢ == null || !free(az.expression((ASTNode) ¢)))
+      if (¢ == null || haz.sideEffects(az.expression((ASTNode) ¢)))
         return false;
     return true;
   }
 
   private static boolean free(final PrefixExpression ¢) {
-    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && free(step.operand(¢));
+    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && !haz.sideEffects(step.operand(¢));
   }
 }
