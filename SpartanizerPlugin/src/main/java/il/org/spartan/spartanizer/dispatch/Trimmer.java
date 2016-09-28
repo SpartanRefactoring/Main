@@ -18,6 +18,12 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends GUI$Applicator {
+  public abstract class With {
+    public Trimmer trimmer() {
+      return Trimmer.this;
+    }
+  }
+
   /** Disable spartanization markers, used to indicate that no spartanization
    * should be made to node */
   public static final String disablers[] = { "[[SuppressWarningsSpartan]]", //
@@ -26,6 +32,22 @@ public class Trimmer extends GUI$Applicator {
   public static final String enablers[] = { "[[EnableWarningsSpartan]]", //
   };
   static final String disabledPropertyId = "Trimmer_disabled_id";
+
+  /** The recursive disabling process. Returns to {@link Trimmer#disabledScan}
+   * upon reaching an enabler.
+   * @param d disabled {@link BodyDeclaration} */
+  static void disable(final BodyDeclaration d) {
+    d.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N ¢) {
+        if (¢ instanceof BodyDeclaration && isEnabledByIdentifier((BodyDeclaration) ¢)) {
+          disabledScan(¢);
+          return false;
+        }
+        NodeData.set(¢, disabledPropertyId);
+        return true;
+      }
+    });
+  }
 
   /** A recursive scan for disabled nodes. Adds disabled property to disabled
    * nodes and their sub trees.
@@ -59,35 +81,6 @@ public class Trimmer extends GUI$Applicator {
     });
   }
 
-  /** @param pattern an {@link ASTNode}
-   * @return true iff the node is spartanization disabled */
-  public static boolean isDisabled(final ASTNode ¢) {
-    return NodeData.has(¢, disabledPropertyId);
-  }
-
-  public static boolean prune(final Tip r, final List<Tip> rs) {
-    if (r != null) {
-      r.pruneIncluders(rs);
-      rs.add(r);
-    }
-    return true;
-  }
-
-  /** The recursive disabling process. Returns to {@link Trimmer#disabledScan}
-   * upon reaching an enabler.
-   * @param d disabled {@link BodyDeclaration} */
-  static void disable(final BodyDeclaration d) {
-    d.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (¢ instanceof BodyDeclaration && isEnabledByIdentifier((BodyDeclaration) ¢)) {
-          disabledScan(¢);
-          return false;
-        }
-        NodeData.set(¢, disabledPropertyId);
-        return true;
-      }
-    });
-  }
 
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
     if (d == null || d.getJavadoc() == null)
@@ -99,12 +92,26 @@ public class Trimmer extends GUI$Applicator {
     return false;
   }
 
+  /** @param n an {@link ASTNode}
+   * @return true iff the node is spartanization disabled */
+  public static boolean isDisabled(final ASTNode ¢) {
+    return NodeData.has(¢, disabledPropertyId);
+  }
+
   static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {
     return hasJavaDocIdentifier(¢, disablers);
   }
 
   static boolean isEnabledByIdentifier(final BodyDeclaration ¢) {
     return !hasJavaDocIdentifier(¢, disablers) && hasJavaDocIdentifier(¢, enablers);
+  }
+
+  public static boolean prune(final Tip r, final List<Tip> rs) {
+    if (r != null) {
+      r.pruneIncluders(rs);
+      rs.add(r);
+    }
+    return true;
   }
 
   public final Toolbox toolbox;
@@ -191,11 +198,5 @@ public class Trimmer extends GUI$Applicator {
         disabledScan(¢);
       }
     };
-  }
-
-  public abstract class With {
-    public Trimmer trimmer() {
-      return Trimmer.this;
-    }
   }
 }

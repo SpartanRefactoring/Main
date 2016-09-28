@@ -29,7 +29,7 @@ public enum LoggingManner {
   public static final LoggingManner now = LoggingManner.LOG_TO_STDERR;
 
   public static String beginDump() {
-    return "MISSING_CASE: ";
+    return "ASSERTION ERROR: ";
   }
 
   public static String endDump() {
@@ -50,7 +50,7 @@ public enum LoggingManner {
   }
 
   /** logs an error in the plugin
-   * @param t an error */
+   * @param tipper an error */
   public static void log(final Throwable ¢) {
     now.log(¢ + "");
   }

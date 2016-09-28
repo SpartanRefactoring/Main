@@ -2,6 +2,7 @@ package il.org.spartan.plugin;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
 
 /** A quickfix generator for spartanization refactoring
@@ -24,7 +25,9 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     try {
       final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
       assert $ != null;
-      return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(), GUI$Applicator.getTipperCommitDeclaration(),
+      return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(),
+          new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize entire function"),
+          new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize entire class"), GUI$Applicator.getTipperCommitDeclaration(),
           GUI$Applicator.getWringCommitFile(), GUI$Applicator.getWringCommitProject(), QuickFixer.disableFunctionFix(), QuickFixer.disableClassFix(),
           QuickFixer.disableFileFix() };
     } catch (final CoreException x) {

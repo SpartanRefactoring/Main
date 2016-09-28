@@ -23,13 +23,30 @@ import il.org.spartan.spartanizer.engine.*;
  * {@link DisabledChecker}.
  * @author Ori Roth */
 public final class SuppressWarningsLaconicOnOff {
+  public enum Type {
+    FUNCTION, CLASS, FILE
+  }
+
   static final String disabler = Trimmer.disablers[0];
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
+    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
+    pm.beginTask("Creating rewrite operation...", 1);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    fillRewrite($, u, m, t);
+    pm.done();
+    return $;
+  }
+
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
+    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
+  }
 
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
-   * @param t deactivation {@link Type} */
+   * @param tipper deactivation {@link Type} */
   public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
@@ -58,7 +75,8 @@ public final class SuppressWarningsLaconicOnOff {
       cd.setJavadoc(cj);
       $.replace(d, cd, null);
     }
-    // $.replace(d, $.createStringPlaceholder(s + "\n" + (d + "").trim(),
+    // $.replace(d, $.createStringPlaceholder(s + "\n" + (d +
+    // "").trim(),
     // d.getNodeType()), null);
   }
 
@@ -90,6 +108,35 @@ public final class SuppressWarningsLaconicOnOff {
     return $;
   }
 
+  private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
+    u.accept(new ASTVisitor() {
+      boolean b;
+
+      @Override public void preVisit(final ASTNode n) {
+        if (b || eclipse.facade.isNodeOutsideMarker(n, m))
+          return;
+        BodyDeclaration d;
+        switch (t) {
+          case FUNCTION:
+            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
+            break;
+          case CLASS:
+            d = (BodyDeclaration) searchAncestors.forClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
+            break;
+          case FILE:
+            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n);
+            break;
+          default:
+            return;
+        }
+        recursiveUnEnable($, d);
+        if (!disabledByAncestor(d))
+          disable($, d);
+        b = true;
+      }
+    });
+  }
+
   static Set<String> getDisablers(final String ¢) {
     return getKeywords(¢, Trimmer.disablers);
   }
@@ -119,59 +166,8 @@ public final class SuppressWarningsLaconicOnOff {
     unEnable($, d.getJavadoc());
   }
 
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
-    assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
-    pm.beginTask("Creating rewrite operation...", 1);
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    fillRewrite($, u, m, t);
-    pm.done();
-    return $;
-  }
-
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
-  }
-
-  private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
-    u.accept(new ASTVisitor() {
-      boolean b;
-
-      @Override public void preVisit(final ASTNode n) {
-        if (b || eclipse.facade.isNodeOutsideMarker(n, m))
-          return;
-        BodyDeclaration d;
-        switch (t) {
-          case FUNCTION:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveFrom(n);
-            break;
-          case CLASS:
-            d = (BodyDeclaration) searchAncestors.forClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
-            break;
-          case FILE:
-            d = (BodyDeclaration) searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n);
-            break;
-          default:
-            return;
-        }
-        final boolean da = disabledByAncestor(d);
-        if (!da) {
-          recursiveUnEnable($, d);
-          disable($, d);
-        } else if (!Type.CLASS.equals(t) && !Type.FILE.equals(t))
-          unEnable($, d);
-        else
-          recursiveUnEnable($, d);
-        b = true;
-      }
-    });
-  }
-
   private static void unEnable(final ASTRewrite $, final Javadoc j) {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);
-  }
-
-  public enum Type {
-    FUNCTION, CLASS, FILE
   }
 }
