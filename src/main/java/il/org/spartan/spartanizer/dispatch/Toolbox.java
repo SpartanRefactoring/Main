@@ -61,6 +61,7 @@ public class Toolbox {
               new AssignmentAndReturn(), //
               new AssignmentToFromInfixIncludingTo(), //
               new AssignmentToPostfixIncrement(), //
+              //new AssignmentAndWhileToFor(), // issue 144
               null) //
           .add(Block.class, //
               new BlockSimplify(), //
