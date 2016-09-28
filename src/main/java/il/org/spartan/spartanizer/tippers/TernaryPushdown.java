@@ -20,19 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.CommnoFactoring {
-  private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
-    int $ = -1;
-    for (int ¢ = 0; ¢ < es1.size(); ++¢)
-      if (!wizard.same(es1.get(¢), es2.get(¢))) {
-        if ($ >= 0)
-          return -1;
-        $ = ¢;
-      }
-    return $;
-  }
-
-  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
-    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
+  public static Expression right(final Assignment a1) {
+    return a1.getRightHandSide();
   }
 
   static Expression pushdown(final ConditionalExpression x) {
@@ -47,6 +36,21 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return a1.getOperator() != a2.getOperator() || !wizard.same(to(a1), to(a2)) ? null
         : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(x.getExpression())).to(a1.getOperator()))
             .into(x.getParent());
+  }
+
+  private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
+    int $ = -1;
+    for (int ¢ = 0; ¢ < es1.size(); ++¢)
+      if (!wizard.same(es1.get(¢), es2.get(¢))) {
+        if ($ >= 0)
+          return -1;
+        $ = ¢;
+      }
+    return $;
+  }
+
+  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
+    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
@@ -151,10 +155,6 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     arguments($).remove(i);
     arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(x.getExpression()));
     return $;
-  }
-
-  public static Expression right(final Assignment a1) {
-    return a1.getRightHandSide();
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {

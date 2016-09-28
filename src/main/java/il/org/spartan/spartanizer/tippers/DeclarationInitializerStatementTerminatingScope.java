@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
 /** Convert <code>int a=3;b=a;</code> into <code>b = a;</code>
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement implements TipperCategory.Inlining {
+public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
+    implements TipperCategory.Inlining {
   static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
       if (iz.is(ancestor, ANONYMOUS_CLASS_DECLARATION))

@@ -42,8 +42,8 @@ public interface hop {
   }
 
   /** @param ¢ JD
-   * @return ASTNode of the type if one of ¢'s parent ancestors is a
-   *         container type and null otherwise */
+   * @return ASTNode of the type if one of ¢'s parent ancestors is a container
+   *         type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
       if (iz.is($//

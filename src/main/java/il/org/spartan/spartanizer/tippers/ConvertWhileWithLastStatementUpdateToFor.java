@@ -30,12 +30,13 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatement(¢.getBody());
+  private static boolean fitting(final WhileStatement ¢) {
+    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)))
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
-  private static boolean fitting(final WhileStatement ¢) {
-    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢))) && !iz.containsContinueStatement(¢.getBody());
+  private static ASTNode lastStatement(final WhileStatement ¢) {
+    return hop.lastStatement(¢.getBody());
   }
 
   @Override public String description(final WhileStatement ¢) {
@@ -45,7 +46,7 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   }
-  
+
   @Override public ASTNode replacement(final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢.getAST().newForStatement(), ¢);
   }

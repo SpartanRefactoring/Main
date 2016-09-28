@@ -14,6 +14,171 @@ import il.org.spartan.spartanizer.utils.*;
 /* TODO Wrings to improve once Environment is complete:
  * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
+  /** The Environment structure is in some like a Linked list, where EMPTY is
+   * like the NULL at the end. */
+  final Environment EMPTY = new Environment() {
+    // This class is intentionally empty
+  };
+  /** Initializer for EMPTY */
+  final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
+  /** Initializer for EMPTY */
+  final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
+
+  /** @return set of entries declared in the node, including all hiding. */
+  static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
+    // Holds the declarations in the subtree and relevant siblings.
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
+    n.accept(new ASTVisitor() {
+      // Holds the current scope full name (Path).
+      String scopePath = "";
+
+      @Override public boolean visit(final MethodDeclaration d) {
+        scopePath += "." + d.getName();
+        for (final SingleVariableDeclaration ¢ : step.parameters(d))
+          $.add(convertToEntry(¢));
+        for (final Statement ¢ : step.statements(d.getBody()))
+          if (¢ instanceof VariableDeclarationStatement)
+            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
+        return true;
+      }
+
+      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(s.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(s))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      Information createInformation(final SingleVariableDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(¢), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
+      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+        return new Information(¢.getParent(), getHidden(¢), ¢, t);
+      }
+
+      String fullName(final SimpleName $) {
+        return scopePath + "." + $;
+      }
+
+      Information getHidden(final SingleVariableDeclaration ¢) {
+        return null;
+      }
+
+      Information getHidden(final VariableDeclarationFragment ¢) {
+        return null;
+      }
+    });
+    return $;
+  }
+
+  /** Spawns the first nested {@link Environment}. Should be used when the first
+   * block is opened. */
+  static Environment genesis() {
+    return EMPTY.spawn();
+  }
+
+  /** @return set of entries used in a given node. this includes the list of
+   *         entries that were defined in the node */
+  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
+    return new LinkedHashSet<>();
+  }
+
+  /** Return true iff {@link Environment} doesn'tipper have an entry with a
+   * given name. */
+  default boolean doesntHave(final String name) {
+    return !has(name);
+  }
+
+  /** Return true iff {@link Environment} is empty. */
+  default boolean empty() {
+    return true;
+  }
+
+  default LinkedHashSet<Entry<String, Information>> entries() {
+    return emptyEntries;
+  }
+
+  default LinkedHashSet<Entry<String, Information>> fullEntries() {
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
+    if (nest() != null)
+      $.addAll(nest().fullEntries());
+    return $;
+  }
+
+  /** Get full path of the current {@link Environment} (all scope hierarchy).
+   * Used for full names of the variables. */
+  default String fullName() {
+    final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
+    return ($ == null ? "" : $ + ".") + name();
+  }
+
+  /** @return all the full names of the {@link Environment}. */
+  default LinkedHashSet<String> fullNames() {
+    final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
+    if (nest() != null)
+      $.addAll(nest().fullNames());
+    return $;
+  }
+
+  default int fullSize() {
+    return size() + (nest() == null ? 0 : nest().fullSize());
+  }
+
+  /** @return null iff the name is not in use in the {@link Environment} */
+  default Information get(final String name) {
+    return null;
+  }
+
+  /** Answer the question whether the name is in use in the current
+   * {@link Environment} */
+  default boolean has(final String name) {
+    return false;
+  }
+
+  /** @return null iff the name is not hiding anything from outer scopes,
+   *         otherwise ?? TODO */
+  default Information hiding(final String name) {
+    return nest().get(name);
+  }
+
+  default String name() {
+    return "";
+  }
+
+  /** @return The names used in the current scope. */
+  default Set<String> names() {
+    return emptySet;
+  }
+
+  /** @return null at the most outer block. This method is similar to the
+   *         'next()' method in a linked list. */
+  default Environment nest() {
+    return null;
+  }
+
+  /** Should return the hidden entry, or null if no entry hidden by this one.
+   * Note: you will have to assume multiple definitions in the same block, this
+   * is a compilation error, but nevertheless, let a later entry with of a
+   * certain name to "hide" a former entry with the same name. */
+  default Information put(final String name, final Information i) {
+    throw new IllegalArgumentException(name + "/" + i);
+  }
+
+  default int size() {
+    return 0;
+  }
+
+  /** Used when new block (scope) is opened. */
+  default Environment spawn() {
+    return new Nested(this);
+  }
+
   /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
    * for now, this class is intentionally package level, and intenationally
    * defined local. For now, clients should not be messing with it */
@@ -126,170 +291,5 @@ import il.org.spartan.spartanizer.utils.*;
       assert !flat.isEmpty();
       return hiding(name);
     }
-  }
-
-  /** The Environment structure is in some like a Linked list, where EMPTY is
-   * like the NULL at the end. */
-  final Environment EMPTY = new Environment() {
-    // This class is intentionally empty
-  };
-  /** Initializer for EMPTY */
-  final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
-  /** Initializer for EMPTY */
-  final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
-
-  /** @return set of entries declared in the node, including all hiding. */
-  static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
-    // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
-    n.accept(new ASTVisitor() {
-      // Holds the current scope full name (Path).
-      String scopePath = "";
-
-      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
-        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
-      }
-
-      List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
-        final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(s.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(s))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
-        return $;
-      }
-
-      Information createInformation(final SingleVariableDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(¢), ¢, type.baptize(wizard.condense(¢.getType())));
-      }
-
-      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-        return new Information(¢.getParent(), getHidden(¢), ¢, t);
-      }
-
-      String fullName(final SimpleName $) {
-        return scopePath + "." + $;
-      }
-
-      Information getHidden(final SingleVariableDeclaration ¢) {
-        return null;
-      }
-
-      Information getHidden(final VariableDeclarationFragment ¢) {
-        return null;
-      }
-
-      @Override public boolean visit(final MethodDeclaration d) {
-        scopePath += "." + d.getName();
-        for (final SingleVariableDeclaration ¢ : step.parameters(d))
-          $.add(convertToEntry(¢));
-        for (final Statement ¢ : step.statements(d.getBody()))
-          if (¢ instanceof VariableDeclarationStatement)
-            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
-        return true;
-      }
-    });
-    return $;
-  }
-
-  /** Spawns the first nested {@link Environment}. Should be used when the first
-   * block is opened. */
-  static Environment genesis() {
-    return EMPTY.spawn();
-  }
-
-  /** @return set of entries used in a given node. this includes the list of
-   *         entries that were defined in the node */
-  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
-    return new LinkedHashSet<>();
-  }
-
-  /** Return true iff {@link Environment} doesn'tipper have an entry with a
-   * given name. */
-  default boolean doesntHave(final String name) {
-    return !has(name);
-  }
-
-  /** Return true iff {@link Environment} is empty. */
-  default boolean empty() {
-    return true;
-  }
-
-  default LinkedHashSet<Entry<String, Information>> entries() {
-    return emptyEntries;
-  }
-
-  default LinkedHashSet<Entry<String, Information>> fullEntries() {
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
-    if (nest() != null)
-      $.addAll(nest().fullEntries());
-    return $;
-  }
-
-  /** Get full path of the current {@link Environment} (all scope hierarchy).
-   * Used for full names of the variables. */
-  default String fullName() {
-    final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
-    return ($ == null ? "" : $ + ".") + name();
-  }
-
-  /** @return all the full names of the {@link Environment}. */
-  default LinkedHashSet<String> fullNames() {
-    final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
-    if (nest() != null)
-      $.addAll(nest().fullNames());
-    return $;
-  }
-
-  default int fullSize() {
-    return size() + (nest() == null ? 0 : nest().fullSize());
-  }
-
-  /** @return null iff the name is not in use in the {@link Environment} */
-  default Information get(final String name) {
-    return null;
-  }
-
-  /** Answer the question whether the name is in use in the current
-   * {@link Environment} */
-  default boolean has(final String name) {
-    return false;
-  }
-
-  /** @return null iff the name is not hiding anything from outer scopes,
-   *         otherwise ?? TODO */
-  default Information hiding(final String name) {
-    return nest().get(name);
-  }
-
-  default String name() {
-    return "";
-  }
-
-  /** @return The names used in the current scope. */
-  default Set<String> names() {
-    return emptySet;
-  }
-
-  /** @return null at the most outer block. This method is similar to the
-   *         'next()' method in a linked list. */
-  default Environment nest() {
-    return null;
-  }
-
-  /** Should return the hidden entry, or null if no entry hidden by this one.
-   * Note: you will have to assume multiple definitions in the same block, this
-   * is a compilation error, but nevertheless, let a later entry with of a
-   * certain name to "hide" a former entry with the same name. */
-  default Information put(final String name, final Information i) {
-    throw new IllegalArgumentException(name + "/" + i);
-  }
-
-  default int size() {
-    return 0;
-  }
-
-  /** Used when new block (scope) is opened. */
-  default Environment spawn() {
-    return new Nested(this);
   }
 }

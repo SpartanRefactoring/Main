@@ -39,16 +39,6 @@ public enum extract {
     return annotations(step.extendedModifiers(¢));
   }
 
-  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : ms) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
-  }
-
   public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(step.extendedModifiers(¢));
   }
@@ -107,18 +97,6 @@ public enum extract {
     }
   }
 
-  private static String category(final TypeDeclaration ¢) {
-    final StringBuilder $ = new StringBuilder();
-    if (!¢.isPackageMemberTypeDeclaration())
-      $.append("internal ");
-    if (¢.isMemberTypeDeclaration())
-      $.append("member ");
-    if (¢.isLocalTypeDeclaration())
-      $.append("local ");
-    $.append(!¢.isInterface() ? "class" : "interface");
-    return $ + "";
-  }
-
   /** Peels any parenthesis that may wrap an {@Link Expression}
    * @param $ JD
    * @return the parameter if not parenthesized, or the unparenthesized this
@@ -156,7 +134,8 @@ public enum extract {
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
-   * @param pattern a statement or a block to extract the expression statement from
+   * @param pattern a statement or a block to extract the expression statement
+   *        from
    * @return expression statement if n is a block or an expression statement or
    *         null if it not an expression statement or if the block contains
    *         more than one statement */
@@ -242,13 +221,6 @@ public enum extract {
             + LoggingManner.endDump();
         return ¢.getClass().getSimpleName();
     }
-  }
-
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
-      if (ss.get(¢) == s)
-        return ss.get(¢ + 1);
-    return null;
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -375,6 +347,50 @@ public enum extract {
         extract.statementsInto((Statement) ¢, $);
   }
 
+  /** @param n a node to extract an expression from
+   * @return null if the statement is not an expression or return statement or
+   *         the expression if they are */
+  public static Expression throwExpression(final ASTNode ¢) {
+    final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
+    return $ == null ? null : $.getExpression();
+  }
+
+  /** Extract the single {@link ThrowStatement} embedded in a node.
+   * @param n JD
+   * @return single {@link ThrowStatement} embedded in the parameter, and return
+   *         it; <code><b>null</b></code> if not such sideEffects exists. */
+  public static ThrowStatement throwStatement(final ASTNode ¢) {
+    return az.throwStatement(extract.singleStatement(¢));
+  }
+
+  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : ms) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
+  private static String category(final TypeDeclaration ¢) {
+    final StringBuilder $ = new StringBuilder();
+    if (!¢.isPackageMemberTypeDeclaration())
+      $.append("internal ");
+    if (¢.isMemberTypeDeclaration())
+      $.append("member ");
+    if (¢.isLocalTypeDeclaration())
+      $.append("local ");
+    $.append(!¢.isInterface() ? "class" : "interface");
+    return $ + "";
+  }
+
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+      if (ss.get(¢) == s)
+        return ss.get(¢ + 1);
+    return null;
+  }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Statement ¢ : step.statements(b))
@@ -392,21 +408,5 @@ public enum extract {
         $.add(¢);
         return $;
     }
-  }
-
-  /** @param n a node to extract an expression from
-   * @return null if the statement is not an expression or return statement or
-   *         the expression if they are */
-  public static Expression throwExpression(final ASTNode ¢) {
-    final ThrowStatement $ = az.throwStatement(extract.singleStatement(¢));
-    return $ == null ? null : $.getExpression();
-  }
-
-  /** Extract the single {@link ThrowStatement} embedded in a node.
-   * @param n JD
-   * @return single {@link ThrowStatement} embedded in the parameter, and return
-   *         it; <code><b>null</b></code> if not such sideEffects exists. */
-  public static ThrowStatement throwStatement(final ASTNode ¢) {
-    return az.throwStatement(extract.singleStatement(¢));
   }
 }

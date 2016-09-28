@@ -8,22 +8,6 @@ import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
 
 public class MyCSVStatistics extends CSVStatistics {
-  public class Line extends CSVLine.Ordered {
-    public void close() {
-      inner.writeFlush(this);
-    }
-
-    @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
-      getStatistics(key).record(value);
-      return super.put(key, value, ss);
-    }
-
-    @Override public CSVLine put(final String key, final long value) {
-      getStatistics(key).record(value);
-      return super.put(key, value);
-    }
-  }
-
   private static final String SUMMARY_EXTENSION = ".summary";
 
   /** @param baseName
@@ -70,12 +54,6 @@ public class MyCSVStatistics extends CSVStatistics {
     return summarizer.close();
   }
 
-  RealStatistics getStatistics(final String key) {
-    if (stats.get(key) == null)
-      stats.put(key, new RealStatistics());
-    return stats.get(key);
-  }
-
   @Override public String mainFileName() {
     return inner.fileName();
   }
@@ -101,5 +79,27 @@ public class MyCSVStatistics extends CSVStatistics {
 
   @Override public String summaryFileName() {
     return summarizer.fileName();
+  }
+
+  RealStatistics getStatistics(final String key) {
+    if (stats.get(key) == null)
+      stats.put(key, new RealStatistics());
+    return stats.get(key);
+  }
+
+  public class Line extends CSVLine.Ordered {
+    public void close() {
+      inner.writeFlush(this);
+    }
+
+    @Override public CSVLine put(final String key, final double value, final FormatSpecifier... ss) {
+      getStatistics(key).record(value);
+      return super.put(key, value, ss);
+    }
+
+    @Override public CSVLine put(final String key, final long value) {
+      getStatistics(key).record(value);
+      return super.put(key, value);
+    }
   }
 }

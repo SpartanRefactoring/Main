@@ -65,8 +65,7 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void intMethod() {
-    azzert.that(Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"),
-        is(Wrap.Method));
+    azzert.that(Wrap.find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(Wrap.Method));
   }
 
   @Test public void intoCompilationUnit() {
@@ -98,11 +97,11 @@ import il.org.spartan.spartanizer.ast.*;
         "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar(final String s1, final String s2) {
-    azzert.that(essence(s2), is(essence(s1)));
-  }
-
   @Test public void statement() {
     azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
+  }
+
+  private void similar(final String s1, final String s2) {
+    azzert.that(essence(s2), is(essence(s1)));
   }
 }

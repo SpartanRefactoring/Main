@@ -1968,7 +1968,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;").gives("for (int ¢ = i++; i < 10; ++¢, sum+=¢);").stays();
+    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;").gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;")
+        .gives("for (int ¢ = i++; i < 10; ++¢, sum+=¢);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {

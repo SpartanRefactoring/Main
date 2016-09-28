@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.leonidas;
 /** @author Ori Marcovitch
  * @year 2016 */
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -13,19 +14,13 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public class TipperFactory {
-  ASTNode pattern;
-  ASTNode replacement;
-  String description;
-
-  public TipperFactory(final String pattern, final String replacement, final String description) {
-    this.pattern = toAST(pattern);
-    this.replacement = toAST(replacement);
-    this.description = description;
+  public static boolean matches(final ASTNode p, final ASTNode n) {
+    return new Matcher().matches(p, n);
   }
 
   /** @param p string to convert
    * @return AST */
-  static ASTNode toAST(String p) {
+  static ASTNode toAST(final String p) {
     switch (GuessedContext.find(p)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
@@ -41,26 +36,32 @@ public class TipperFactory {
     return null;
   }
 
+  ASTNode pattern;
+  ASTNode replacement;
+  String description;
+
+  public TipperFactory(final String pattern, final String replacement, final String description) {
+    this.pattern = toAST(pattern);
+    this.replacement = toAST(replacement);
+    this.description = description;
+  }
+
   public UserDefinedTipper<ASTNode> get() {
     return new UserDefinedTipper<ASTNode>() {
-      @Override protected boolean prerequisite(ASTNode ¢) {
-        return matches(pattern, ¢);
-      }
-
-      @Override public String description(@SuppressWarnings("unused") ASTNode __) {
+      @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
         return description;
       }
 
       @Override public Tip tip(final ASTNode n) {
         return new Tip(description(n), n) {
-          @Override public void go(ASTRewrite r, TextEditGroup g) {
-            Map<String, ASTNode> enviroment = collectEnviroment(n);
-            ASTNode $ = duplicate.of(replacement);
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            final Map<String, ASTNode> enviroment = collectEnviroment(n);
+            final ASTNode $ = duplicate.of(replacement);
             $.accept(new ASTVisitor() {
               @Override public void preVisit(final ASTNode ¢) {
                 if (!iz.name(¢))
                   return;
-                String id = ((Name) ¢).getFullyQualifiedName();
+                final String id = ((Name) ¢).getFullyQualifiedName();
                 if (id.startsWith("$"))
                   wizard.replace(¢, enviroment.get(id));
               }
@@ -69,29 +70,29 @@ public class TipperFactory {
           }
         };
       }
+
+      @Override protected boolean prerequisite(final ASTNode ¢) {
+        return matches(pattern, ¢);
+      }
     };
   }
 
-  public boolean matches(ASTNode ¢) {
+  public boolean matches(final ASTNode ¢) {
     return matches(pattern, ¢);
   }
 
-  public static boolean matches(ASTNode p, ASTNode n) {
-    return new Matcher().matches(p, n);
-  }
-
-  Map<String, ASTNode> collectEnviroment(ASTNode ¢) {
+  Map<String, ASTNode> collectEnviroment(final ASTNode ¢) {
     return collectEnviroment(pattern, ¢, new HashMap<>());
   }
 
-  private Map<String, ASTNode> collectEnviroment(ASTNode p, ASTNode n, Map<String, ASTNode> enviroment) {
+  private Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
     if (iz.name(p)) {
-      String id = ((Name) p).getFullyQualifiedName();
+      final String id = ((Name) p).getFullyQualifiedName();
       if (id.startsWith("$"))
         enviroment.put(id, n);
     } else {
-      List<? extends ASTNode> nChildren = Recurser.children(n);
-      List<? extends ASTNode> pChildren = Recurser.children(p);
+      final List<? extends ASTNode> nChildren = Recurser.children(n);
+      final List<? extends ASTNode> pChildren = Recurser.children(p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢, collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment))
         ;
     }
@@ -100,42 +101,7 @@ public class TipperFactory {
 }
 
 class Matcher {
-  Map<String, ArrayList<ASTNode>> ids = new HashMap<>();
-
-  public Matcher() {
-  }
-
-  public boolean matches(ASTNode p, ASTNode n) {
-    if (iz.name(p))
-      return sameName(p, n);
-    if (n.getNodeType() != p.getNodeType())
-      return false;
-    if (iz.literal(p))
-      return (p + "").equals((n + ""));
-    if (iz.containsOperator(p) && !sameOperator(p, n))
-      return false;
-    List<? extends ASTNode> nChildren = Recurser.children(n);
-    List<? extends ASTNode> pChildren = Recurser.children(p);
-    if (nChildren.size() != pChildren.size())
-      return false;
-    for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-      if (!matches(pChildren.get(¢), nChildren.get(¢)))
-        return false;
-    return true;
-  }
-
-  private boolean sameName(ASTNode p, ASTNode n) {
-    String id = ((Name) p).getFullyQualifiedName();
-    if (id.startsWith("$")) {
-      if (id.startsWith("$X"))
-        return (n instanceof Expression) && consistent(n, id);
-      if (id.startsWith("$M"))
-        return (n instanceof MethodInvocation) && consistent(n, id);
-    }
-    return (n instanceof Name) && id.equals(((Name) p).getFullyQualifiedName());
-  }
-
-  private static boolean sameOperator(ASTNode p, ASTNode n) {
+  private static boolean sameOperator(final ASTNode p, final ASTNode n) {
     switch (p.getNodeType()) {
       case ASTNode.PREFIX_EXPRESSION:
         if (!step.operator((PrefixExpression) p).equals(step.operator((PrefixExpression) n)))
@@ -159,13 +125,48 @@ class Matcher {
     return true;
   }
 
-  private boolean consistent(ASTNode n, String id) {
+  Map<String, ArrayList<ASTNode>> ids = new HashMap<>();
+
+  public Matcher() {
+  }
+
+  public boolean matches(final ASTNode p, final ASTNode n) {
+    if (iz.name(p))
+      return sameName(p, n);
+    if (n.getNodeType() != p.getNodeType())
+      return false;
+    if (iz.literal(p))
+      return (p + "").equals(n + "");
+    if (iz.containsOperator(p) && !sameOperator(p, n))
+      return false;
+    final List<? extends ASTNode> nChildren = Recurser.children(n);
+    final List<? extends ASTNode> pChildren = Recurser.children(p);
+    if (nChildren.size() != pChildren.size())
+      return false;
+    for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+      if (!matches(pChildren.get(¢), nChildren.get(¢)))
+        return false;
+    return true;
+  }
+
+  private boolean consistent(final ASTNode n, final String id) {
     if (!ids.containsKey(id))
       ids.put(id, new ArrayList<>());
     ids.get(id).add(n);
-    for (ASTNode other : ids.get(id))
-      if (!(n + "").equals((other + "")))
+    for (final ASTNode other : ids.get(id))
+      if (!(n + "").equals(other + ""))
         return false;
     return true;
+  }
+
+  private boolean sameName(final ASTNode p, final ASTNode n) {
+    final String id = ((Name) p).getFullyQualifiedName();
+    if (id.startsWith("$")) {
+      if (id.startsWith("$X"))
+        return n instanceof Expression && consistent(n, id);
+      if (id.startsWith("$M"))
+        return n instanceof MethodInvocation && consistent(n, id);
+    }
+    return n instanceof Name && id.equals(((Name) p).getFullyQualifiedName());
   }
 }

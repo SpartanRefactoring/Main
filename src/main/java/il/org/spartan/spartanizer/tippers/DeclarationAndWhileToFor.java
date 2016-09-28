@@ -24,11 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  private static Expression dupInitializer(final VariableDeclarationFragment ¢) {
-    final VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
-    final VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
-    $.setType(duplicate.of(parent.getType()));
-    return $;
+  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    return !fitting(¢) ? null : buildForStatement(f, ¢);
   }
 
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
@@ -39,13 +36,17 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return $;
   }
 
-  private static boolean fitting(final WhileStatement ¢) {
-    //TODO: check that the variables declared before the loop doesn't in use after the scope.
-    return true;
+  private static Expression dupInitializer(final VariableDeclarationFragment ¢) {
+    final VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
+    final VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
+    $.setType(duplicate.of(parent.getType()));
+    return $;
   }
 
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(f, ¢);
+  private static boolean fitting(final WhileStatement ¢) {
+    // TODO: check that the variables declared before the loop doesn't in use
+    // after the scope.
+    return true;
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

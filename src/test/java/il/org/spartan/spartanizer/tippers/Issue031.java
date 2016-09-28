@@ -16,8 +16,7 @@ import org.junit.runners.*;
   }
 
   @Test public void b() {
-    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}")
-        .gives("void f(final VariableDeclarationStatement s, int abc) {}");
+    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}").gives("void f(final VariableDeclarationStatement s, int abc) {}");
   }
 
   @Test public void c() {

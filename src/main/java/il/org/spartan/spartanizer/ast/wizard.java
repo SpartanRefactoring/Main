@@ -327,15 +327,6 @@ public interface wizard {
   @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
-  
-  /**
-   * replaces an ASTNode with another
-   * @param n
-   * @param with
-   */
-  static <N extends ASTNode> void replace(final N n, final N with) {
-    ASTRewrite.create(n.getAST()).replace(n, with, null);
-  }
 
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
    * in "if - else if - ... - else" statement
@@ -368,6 +359,13 @@ public interface wizard {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+  }
+
+  /** replaces an ASTNode with another
+   * @param n
+   * @param with */
+  static <N extends ASTNode> void replace(final N n, final N with) {
+    ASTRewrite.create(n.getAST()).replace(n, with, null);
   }
 
   /** Determine whether two nodes are the same, in the sense that their textual
