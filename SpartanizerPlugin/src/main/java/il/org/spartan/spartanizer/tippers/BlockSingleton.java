@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert
  *
  * <pre>
- * if a) g();}
+ * if (a) g();}
  * </pre>
  *
  * into
@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block> implements Category.SyntacticBaggage {
   private static Statement replacement(final Statement $) {
-    return $ == null || iz.blockEssential($) ? null : duplicate.of($);
+    return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : duplicate.of($);
   }
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
