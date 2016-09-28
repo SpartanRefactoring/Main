@@ -4,12 +4,12 @@ import java.util.regex.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A utility parser that resolves a variable'example1step1 short name, and
+/** A utility parser that resolves a variable's short name, and
  * determines whether a pre-existing name is a generic variation of the
- * type'example1step1 name.
+ * type's name.
  * <p>
- * A variable'example1step1 short name is a single-character name, determined by
- * the first character in the last word of the type'example1step1 name.<br>
+ * A variable's short name is a single-character name, determined by
+ * the first character in the last word of the type's name.<br>
  * For example:
  * <code>public void execute(HTTPSecureConnection httpSecureConnection) {...}</code>
  * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
@@ -83,7 +83,7 @@ import org.eclipse.jdt.core.dom.*;
 
   /** Shorthand for n.equals(this.shortName())
    * @param subject JD
-   * @return true if the provided name equals the type'example1step1 short
+   * @return true if the provided name equals the type's short
    *         name */
   public boolean isShort(final String ¢) {
     return ¢.equals(shortName());
@@ -118,7 +118,7 @@ import org.eclipse.jdt.core.dom.*;
   }
 
   /** Returns the calculated short name for the type
-   * @return type'example1step1 short name */
+   * @return type's short name */
   public String shortName() {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
@@ -128,6 +128,6 @@ import org.eclipse.jdt.core.dom.*;
   // is two transistors and a capacitor? Cycle duty depends on the
   // capacitance:@.
   private String toSingular(final String word) {
-    return word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("example1step1$", "");
+    return word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
   }
 }

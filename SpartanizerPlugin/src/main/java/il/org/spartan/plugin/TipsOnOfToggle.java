@@ -53,7 +53,7 @@ public final class TipsOnOfToggle extends AbstractHandler {
 
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when
-    // it'example1step1
+    // it's
     // already associated with the project, when asked to add the nature
     // first try to remove it and then proceed by adding it
     disableNature(p);

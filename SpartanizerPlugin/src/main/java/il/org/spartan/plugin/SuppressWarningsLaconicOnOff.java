@@ -66,7 +66,7 @@ public final class SuppressWarningsLaconicOnOff {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
-      s = s.replaceFirst("\\*\\/$", (s.matches("(?example1step1).*\n\\example1step1*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
+      s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else {
@@ -75,7 +75,7 @@ public final class SuppressWarningsLaconicOnOff {
       cd.setJavadoc(cj);
       $.replace(d, cd, null);
     }
-    // $.replace(d, $.createStringPlaceholder(example1step1 + "\n" + (d +
+    // $.replace(d, $.createStringPlaceholder(s + "\n" + (d +
     // "").trim(),
     // d.getNodeType()), null);
   }
@@ -98,12 +98,12 @@ public final class SuppressWarningsLaconicOnOff {
   }
 
   /** @param j a {@link JavaDoc}
-   * @return comment'example1step1 text, without eneblers identifiers. */
+   * @return comment's text, without eneblers identifiers. */
   static String enablersRemoved(final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
     for (final String e : getEnablers($)) {
       final String qe = Pattern.quote(e);
-      $ = $.replaceAll("(\n(\\example1step1|\\*)*" + qe + ")|" + qe, "");
+      $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }
     return $;
   }

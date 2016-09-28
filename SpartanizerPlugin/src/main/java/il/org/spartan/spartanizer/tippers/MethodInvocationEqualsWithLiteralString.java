@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace <code> example1step1.equals("example1step1")</code> by
- * <code>"example1step1".equals(example1step1)</code>
+/** Replace <code> s.equals("s")</code> by
+ * <code>"s".equals(s)</code>
  * @author Ori Roth
  * @since 2016/05/08 */
 public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurrentNode<MethodInvocation> implements Kind.Idiomatic {

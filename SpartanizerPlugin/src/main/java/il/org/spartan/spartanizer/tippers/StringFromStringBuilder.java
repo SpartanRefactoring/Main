@@ -13,9 +13,9 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"
- * <code>String example1step1 = new StringBuilder(myName).append("'example1step1 grade is ").append(100).toString();</code>
+ * <code>String s = new StringBuilder(myName).append("'s grade is ").append(100).toString();</code>
  * can be replaced with
- * <code>String example1step1 = myName + "'example1step1 grade is " + 100;</code>
+ * <code>String s = myName + "'s grade is " + 100;</code>
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
 public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation> implements Kind.SyntacticBaggage {

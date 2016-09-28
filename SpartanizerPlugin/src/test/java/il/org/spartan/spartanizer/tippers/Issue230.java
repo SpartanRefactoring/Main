@@ -110,8 +110,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void i() {
-    trimmingOf("public @interface hand_made { String[] value(); }" + "final @hand_made({}) String example1step1 = \"a\";")
-        .gives("public @interface hand_made { String[] value(); }" + "@hand_made({}) final String example1step1 = \"a\";").stays();
+    trimmingOf("public @interface hand_made { String[] value(); }" + "final @hand_made({}) String s = \"a\";")
+        .gives("public @interface hand_made { String[] value(); }" + "@hand_made({}) final String s = \"a\";").stays();
   }
 
   @Test public void j() {

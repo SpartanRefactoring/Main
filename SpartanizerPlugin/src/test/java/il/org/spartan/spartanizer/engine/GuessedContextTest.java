@@ -92,12 +92,12 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void intMethod() {
-    azzert.that(find("int f() { int example1step1 = 0; for (int i = 0; i < 10; ++i) example1step1 += i; return example1step1;}"),
+    azzert.that(find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"),
         is(METHOD_LOOKALIKE));
   }
 
   @Test public void intMethod0() {
-    azzert.that(find("int f() { return example1step1;}"), is(METHOD_LOOKALIKE));
+    azzert.that(find("int f() { return s;}"), is(METHOD_LOOKALIKE));
   }
 
   @Test public void intMethod1() {

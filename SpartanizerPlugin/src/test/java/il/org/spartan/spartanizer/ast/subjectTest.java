@@ -49,15 +49,15 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   @Test public void makeIfNotStatement() {
-    final Statement s = s("example1step1();");
-    azzert.that(s, iz("{example1step1();}"));
-    azzert.that(subject.pair(s, s("f();")).toNot(e("a")), iz("if(!a)example1step1(); else f();"));
+    final Statement s = s("s();");
+    azzert.that(s, iz("{s();}"));
+    azzert.that(subject.pair(s, s("f();")).toNot(e("a")), iz("if(!a)s(); else f();"));
   }
 
   @Test public void makeIfStatement() {
-    final Statement s = s("example1step1();");
-    azzert.that(s, iz("{example1step1();}"));
-    azzert.that(subject.pair(s, s("f();")).toIf(e("a")), iz("if(a)example1step1(); else f();"));
+    final Statement s = s("s();");
+    azzert.that(s, iz("{s();}"));
+    azzert.that(subject.pair(s, s("f();")).toIf(e("a")), iz("if(a)s(); else f();"));
   }
 
   @Test public void makeIfStatementOfNestedIf() {

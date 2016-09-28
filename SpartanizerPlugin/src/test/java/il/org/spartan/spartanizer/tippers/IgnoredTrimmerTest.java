@@ -70,7 +70,7 @@ import org.junit.runners.*;
   }
 
   @Test public void ifToSwitch1() {
-    trimmingOf("if (\"1\".equals(example1step1))\n").gives("switch (example1step1) {\n");
+    trimmingOf("if (\"1\".equals(s))\n").gives("switch (s) {\n");
   }
 
   @Test public void inline00() {
@@ -247,7 +247,7 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar10() {
     trimmingOf(
-        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Laconization example1step1 = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ")
+        "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Laconization s = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ")
             .gives(
                 "@Override public IMarkerResolution[] getResolutions(final IMarker m) {   try {    final Laconization $ = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ");
   }
@@ -269,7 +269,7 @@ import org.junit.runners.*;
   }
 
   @Test public void shortestOperand05() {
-    trimmingOf("    final W example1step1 = new W(\"bob\");\n" + "    return example1step1.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
+    trimmingOf("    final W s = new W(\"bob\");\n" + "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
         .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
@@ -286,8 +286,8 @@ import org.junit.runners.*;
   }
 
   @Test public void stringFromBuilderGeneral() {
-    trimmingOf("new StringBuilder(myName).append(\"\'example1step1 grade is \").append(100).toString()")
-        .gives("myName + \"\'example1step1 grade is \" + 100");
+    trimmingOf("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()")
+        .gives("myName + \"\'s grade is \" + 100");
   }
 
   @Test public void stringFromBuilderNoStringComponents() {

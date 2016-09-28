@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Sort the {@link Modifier}example1step1 of an entity by the order specified
+/** Sort the {@link Modifier}s of an entity by the order specified
  * in Modifier.class binary.
  * @author Alex Kopzon
  * @author Dor Ma'ayan

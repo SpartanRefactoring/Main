@@ -9,7 +9,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue129 {
   @Test public void issue129_01() {
-    trimmingOf("$ += example1step1 + (new Integer(i) + \"\")").gives("$ += example1step1 + (Integer.valueOf(i) + \"\")").stays();
+    trimmingOf("$ += s + (new Integer(i) + \"\")").gives("$ += s + (Integer.valueOf(i) + \"\")").stays();
   }
 
   @Test public void issue129_02() {
