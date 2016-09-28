@@ -64,7 +64,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void annotationRemoveEmptyParentheses() {
-    trimmingOf("@Override() void m() {}").gives("@Override void m() {}");
+    trimmingOf("@Override() void m() {}")//
+    .gives("@Override void m() {}");
   }
 
   @Ignore("Issue #230") @Test public void annotationRemoveValueFromMultipleAnnotations() {
@@ -78,27 +79,33 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void annotationRemoveValueMemberSingleValue() {
-    trimmingOf("@SuppressWarnings(value = \"something\") void m() {}").gives("@SuppressWarnings(\"something\") void m() {}");
+    trimmingOf("@SuppressWarnings(value = \"something\") void m() {}")//
+    .gives("@SuppressWarnings(\"something\") void m() {}");
   }
 
   @Test public void assignmentAssignmentChain1() {
-    trimmingOf("c = a = 13; b = 13;").gives("b = c = a = 13;");
+    trimmingOf("c = a = 13; b = 13;")//
+    .gives("b = c = a = 13;");
   }
 
   @Test public void assignmentAssignmentChain2() {
-    trimmingOf("a = 13; b= c = 13;").gives("b = c = a = 13;");
+    trimmingOf("a = 13; b= c = 13;")//
+    .gives("b = c = a = 13;");
   }
 
   @Test public void assignmentAssignmentChain3() {
-    trimmingOf("a = b = 13; c = d = 13;").gives("c = d = a = b = 13;");
+    trimmingOf("a = b = 13; c = d = 13;")//
+    .gives("c = d = a = b = 13;");
   }
 
   @Test public void assignmentAssignmentChain4() {
-    trimmingOf("a1 = a2 = a3 = a4 = 13; b1 = b2 = b3 = b4 = b5 = 13;").gives("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
+    trimmingOf("a1 = a2 = a3 = a4 = 13; b1 = b2 = b3 = b4 = b5 = 13;")//
+    .gives("b1 = b2 = b3 = b4 = b5 = a1 = a2 = a3 = a4 = 13;");
   }
 
   @Test public void assignmentAssignmentChain5() {
-    trimmingOf("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));").gives("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
+    trimmingOf("a1 = (a2 = (a3 = (a4 = 13))); b1 = b2 = b3 = ((((b4 = (b5 = 13)))));")//
+    .gives("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
   }
 
   @Test public void assignmentAssignmentNew() {
@@ -118,11 +125,13 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void assignmentAssignmentVanilla() {
-    trimmingOf("a = 13; b= 13;").gives("b = a = 13;");
+    trimmingOf("a = 13; b= 13;")//
+    .gives("b = a = 13;");
   }
 
   @Test public void assignmentAssignmentVanilla0() {
-    trimmingOf("a = 0; b = 0;").gives("b = a = 0;");
+    trimmingOf("a = 0; b = 0;")//
+    .gives("b = a = 0;");
   }
 
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
@@ -134,19 +143,23 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void assignmentReturn0() {
-    trimmingOf("a = 3; return a;").gives("return a = 3;");
+    trimmingOf("a = 3; return a;")//
+    .gives("return a = 3;");
   }
 
   @Test public void assignmentReturn1() {
-    trimmingOf("a = 3; return (a);").gives("return a = 3;");
+    trimmingOf("a = 3; return (a);")//
+    .gives("return a = 3;");
   }
 
   @Test public void assignmentReturn2() {
-    trimmingOf("a += 3; return a;").gives("return a += 3;");
+    trimmingOf("a += 3; return a;")//
+    .gives("return a += 3;");
   }
 
   @Test public void assignmentReturn3() {
-    trimmingOf("a *= 3; return a;").gives("return a *= 3;");
+    trimmingOf("a *= 3; return a;")//
+    .gives("return a *= 3;");
   }
 
   @Test public void assignmentReturniNo() {
@@ -154,16 +167,20 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void blockSimplifyVanilla() {
-    trimmingOf("if (a) {f(); }").gives("if (a) f();");
+    trimmingOf("if (a) {f(); }")//
+    .gives("if (a) f();");
   }
 
   @Test public void blockSimplifyVanillaSimplified() {
-    trimmingOf(" {f(); }").gives("f();");
+    trimmingOf(" {f(); }")//
+    .gives("f();");
   }
 
   @Test public void booleanChangeValueOfToConstant() {
-    trimmingOf("Boolean b = Boolean.valueOf(true);").gives("Boolean b = Boolean.TRUE;");
-    trimmingOf("Boolean b = Boolean.valueOf(false);").gives("Boolean b = Boolean.FALSE;");
+    trimmingOf("Boolean b = Boolean.valueOf(true);")//
+    .gives("Boolean b = Boolean.TRUE;");
+    trimmingOf("Boolean b = Boolean.valueOf(false);")//
+    .gives("Boolean b = Boolean.FALSE;");
   }
 
   @Test public void booleanChangeValueOfToConstantNotConstant() {
@@ -175,7 +192,8 @@ import il.org.spartan.spartanizer.tipping.*;
         + "          if (!isMessageSuppressed(myMessage)) {\n" + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n"
         + "            messages.add(myMessage);\n" + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+    .gives(
             "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
@@ -184,7 +202,8 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+    .gives(
             "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
@@ -193,7 +212,8 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+    .gives(
             "public void f(){if(g(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
@@ -202,7 +222,8 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+    .gives(
             "public void f(){if(g(a))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
@@ -211,7 +232,8 @@ import il.org.spartan.spartanizer.tipping.*;
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }").gives(
+        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+    .gives(
             "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
@@ -219,41 +241,48 @@ import il.org.spartan.spartanizer.tipping.*;
     trimmingOf("        public void f() {\n" + "          if (!g) {\n"
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }").gives(
+        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
+    .gives(
             "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod6() {
     trimmingOf("        public void f() {\n" + "          if (!g) {\n" + "            final int messages = 3;\n"
         + "            messages.add(message);\n" + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }").gives(
+        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "          }\n" + "        }")//
+    .gives(
             "public void f(){if(g)return;final int messages=3;messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod7() {
     trimmingOf(
         "        public void f() {\n" + "          if (!g) {\n" + "            foo();\n" + "            bar();\n" + "          }\n" + "        }")
-            .gives("public void f(){if(g)return;foo();bar();}");
+            //
+    .gives("public void f(){if(g)return;foo();bar();}");
   }
 
   @Test public void bugInLastIfInMethod8() {
     trimmingOf(
         "        public void f() {\n" + "          if (g) {\n" + "            foo();\n" + "            bar();\n" + "          }\n" + "        }")
-            .gives("public void f(){if(!g)return;foo();bar();}");
+            //
+    .gives("public void f(){if(!g)return;foo();bar();}");
   }
 
   @Test public void bugIntroducingMISSINGWord1() {
     trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
-        .gives("b.f(a) && As.g(f).h(c) == -1 ? o(s,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),s,f) : null");
+        //
+    .gives("b.f(a) && As.g(f).h(c) == -1 ? o(s,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),s,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord1a() {
-    trimmingOf("-1 == As.g(f).h(c)").gives("As.g(f).h(c)==-1");
+    trimmingOf("-1 == As.g(f).h(c)")//
+    .gives("As.g(f).h(c)==-1");
   }
 
   @Test public void bugIntroducingMISSINGWord1b() {
     trimmingOf("b.f(a) && X ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
-        .gives("b.f(a)&&X?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),s,f):null");
+        //
+    .gives("b.f(a)&&X?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord1c() {
