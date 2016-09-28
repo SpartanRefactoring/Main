@@ -5,7 +5,9 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
@@ -22,13 +24,24 @@ public final class LaconizeProject extends BaseHandler {
    * @param u JD
    * @return number of tips available for the compilation unit */
   public static int countTips(final ICompilationUnit u) {
-    int $ = 0;
-    for (final GUI$Applicator ¢ : eclipse.safeApplicators) {
-      ¢.setMarker(null);
-      ¢.setICompilationUnit(u);
-      $ += ¢.countTips();
+    AtomicInteger $ = new AtomicInteger(0);
+    try {
+      PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
+        @Override public void run(IProgressMonitor pm) {
+          pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+          for (final GUI$Applicator ¢ : eclipse.safeApplicators) {
+            ¢.setMarker(null);
+            ¢.setICompilationUnit(u);
+            $.addAndGet(¢.countTips());
+          }
+          pm.done();
+        }
+      });
+    } catch (InvocationTargetException | InterruptedException x) {
+      // TODO Ori: log in
+      x.printStackTrace();
     }
-    return $;
+    return $.get();
   }
 
   public LaconizeProject() {
@@ -67,8 +80,10 @@ public final class LaconizeProject extends BaseHandler {
           int n = 0;
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
-            if (pm.isCanceled())
+            if (pm.isCanceled()) {
               cancled.set(true);
+              break;
+            }
             pm.worked(1);
             pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
             if (!a.apply(¢))
