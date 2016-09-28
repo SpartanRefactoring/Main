@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentAndWhileToFor extends ReplaceToNextStatement<Assignment> implements Kind.Collapse {
+public final class AssignmentAndWhileToFor extends ReplaceToNextStatement<Assignment> implements Category.Collapse {
   // @Override public boolean prerequisite(final WhileStatement ¢) {
   // return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   // }

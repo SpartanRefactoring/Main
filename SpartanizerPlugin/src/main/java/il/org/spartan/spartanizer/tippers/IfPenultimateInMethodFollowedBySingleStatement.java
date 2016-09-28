@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><b>if</b></code> statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2016 */
-public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement> implements Kind.EarlyReturn {
+public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement> implements Category.EarlyReturn {
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }

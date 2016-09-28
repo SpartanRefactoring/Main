@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implements Kind.Collapse {
+public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implements Category.Collapse {
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))

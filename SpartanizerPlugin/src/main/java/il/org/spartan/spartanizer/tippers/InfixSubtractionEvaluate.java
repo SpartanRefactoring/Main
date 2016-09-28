@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.ast.*;
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */
-public final class InfixSubractionEvaluate extends $EvaluateInfixExpression {
+public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) throws Exception {
     double $ = az.throwing.double¢(first(xs));
     for (final Expression ¢ : rest(xs))
