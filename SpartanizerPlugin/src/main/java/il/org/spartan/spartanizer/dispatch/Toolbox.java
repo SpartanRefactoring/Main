@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Singleton containing all {@link Tipper}s which are active,
- * allowing selecting and applying the most appropriate such object for a given
+/** Singleton containing all {@link Tipper}s which are active, allowing
+ * selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
@@ -81,6 +81,13 @@ public class Toolbox {
           // BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
           // .add(AnnotationTypeDeclaration.class, new
           // BodyDeclarationModifiersSort.ofAnnotation()) //
+          .add(SingleVariableDeclaration.class, //
+              new SingleVariableDeclarationAbbreviation(), //
+              new SingelVariableDeclarationUnderscoreDoubled(), //
+              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<SingleVariableDeclaration>(), //
+              // new
+              // SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
+              null)//
           .add(ForStatement.class, //
               new BlockBreakToReturnInfiniteFor(), //
               new ReturnToBreakFiniteFor(), //
@@ -121,9 +128,6 @@ public class Toolbox {
               new InfixConcatenationEmptyStringLeft(), //
               new InfixFactorNegatives(), //
               new InfixAdditionEvaluate(), //
-              // new ConcatStrings(), //removed for now so it won'tipper break
-              // tests,
-              // see issue #120
               new InfixSubtractionEvaluate(), //
               new InfixTermsZero(), //
               new InfixPlusRemoveParenthesis(), //
@@ -153,29 +157,7 @@ public class Toolbox {
               new MethodInvocationEqualsWithLiteralString(), //
               new MethodInvocationValueOfBooleanConstant(), //
               new MethodInvocationToStringToEmptyStringAddition(), //
-              null)
-          .add(SingleVariableDeclaration.class, //
-              new SingleVariableDeclarationAbbreviation(), //
-              new SingelVariableDeclarationUnderscoreDoubled(), //
-              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
-              // new
-              // SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
               null)//
-          .add(VariableDeclarationFragment.class, //
-              new DeclarationRedundantInitializer(), //
-              new DeclarationAssignment(), //
-              new DeclarationInitialiazerAssignment(), //
-              new DeclarationInitialiazelUpdateAssignment(), //
-              new DeclarationInitializerIfAssignment(), //
-              new DeclarationInitializerIfUpdateAssignment(), //
-              new DeclarationInitializerReturnVariable(), //
-              new DeclarationInitializerReturnExpression(), //
-              new DeclarationInitializerReturnAssignment(), //
-              new DeclarationInitializerReturnUpdateAssignment(), //
-              new DeclarationInitializerStatementTerminatingScope(), //
-              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
-              new AssignmentAndWhileToFor(), // issue 144
-              null) //
           .add(IfStatement.class, //
               new IfTrueOrFalse(), //
               new RemoveRedundantIf(), //
@@ -199,7 +181,6 @@ public class Toolbox {
               new IfDegenerateElse(), //
               new IfEmptyThen(), //
               new IfShortestFirst(), //
-              // new IfNullReturnNull(), //
               null)//
           .add(PrefixExpression.class, //
               new PrefixIncrementDecrementReturn(), //
@@ -246,19 +227,20 @@ public class Toolbox {
               new AnnotationDiscardValueName(), //
               new AnnotationRemoveEmptyParentheses(), //
               null) //
-          // TODO: Yossi, No, as I understood, initializers in java can have
-          // annotations and modifiers,
-          // just like every declaration. Even private class field which is
-          // const
-          // assigned at the class body
-          // is called initializer, and there I know could be some modifiers.
-          // TODO: Alex, I could not place an annotation on an initializer.
-          // Suppose we can, then still, that this could not have been tested,
-          // since the dispatcher does not
-          // know about Initializers. Add initializers to DispatchingVisitor if
-          // you can provide a test case
           .add(Initializer.class, new BodyDeclarationModifiersSort.ofInitializer(), //
-              // new BodyDeclarationAnnotationsSort.ofInitializer(), //
+              null) //
+          .add(VariableDeclarationFragment.class, new DeclarationRedundantInitializer(), //
+              new DeclarationAssignment(), //
+              new DeclarationInitialiazelUpdateAssignment(), //
+              new DeclarationInitializerIfAssignment(), //
+              new DeclarationInitializerIfUpdateAssignment(), //
+              new DeclarationInitializerReturnVariable(), //
+              new DeclarationInitializerReturnExpression(), //
+              new DeclarationInitializerReturnAssignment(), //
+              new DeclarationInitializerReturnUpdateAssignment(), //
+              new DeclarationInitializerStatementTerminatingScope(), //
+              new DeclarationInitialiazerAssignment(), //
+              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(),
               null) //
           .seal();
   }
