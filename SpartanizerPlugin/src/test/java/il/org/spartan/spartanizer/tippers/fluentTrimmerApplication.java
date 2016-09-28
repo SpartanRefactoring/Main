@@ -179,7 +179,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
        * to this function after the first such node is found. However, this does
        * not seem to be the case. So, in the case our wrapper is not null, we do
        * not carry out any further tests.
-       * @param n the node currently being visited.
+       * @param pattern the node currently being visited.
        * @return <code><b>true</b></code> <i>iff</i> the sought node is
        *         found. */
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {

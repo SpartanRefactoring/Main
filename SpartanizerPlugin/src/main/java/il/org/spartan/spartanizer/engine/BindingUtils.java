@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 @SuppressWarnings("restriction") public final class BindingUtils {
-  /** @param n an {@link ASTNode}
+  /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode ¢) {
     final ASTNode $ = hop.containerType(¢);
