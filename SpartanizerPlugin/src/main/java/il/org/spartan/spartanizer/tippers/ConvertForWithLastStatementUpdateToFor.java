@@ -10,20 +10,14 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final ForStatement s) {
-    $.setExpression(dupWhileExpression(s));
-    $.updaters().add(dupWhileLastStatement(s));
-    // minus.LastStatement(dupWhileBody(s));
-    $.setBody(minus.LastStatement(dupWhileBody(s)));
+  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $) {
+    $.updaters().add(dupWhileLastStatement($));
+    $.setBody(minus.LastStatement(dupForBody($)));
     return $;
   }
 
-  private static Statement dupWhileBody(final ForStatement ¢) {
+  private static Statement dupForBody(final ForStatement ¢) {
     return duplicate.of(¢.getBody());
-  }
-
-  private static Expression dupWhileExpression(final ForStatement ¢) {
-    return duplicate.of(¢.getExpression());
   }
 
   private static Expression dupWhileLastStatement(final ForStatement ¢) {
@@ -35,7 +29,7 @@ public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<F
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)) || !iz.containsContinueStatement(¢.getBody());
+    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢))) && !iz.containsContinueStatement(¢.getBody());
   }
 
   @Override public String description(final ForStatement ¢) {
@@ -47,6 +41,6 @@ public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<F
   }
   
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutLastStatement(¢.getAST().newForStatement(), ¢);
+    return !fitting(¢) ? null : buildForWhithoutLastStatement(duplicate.of(¢));
   }
 }
