@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> implements Kind.Collapse {
+public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> implements Category.Collapse {
   @Override public String description(final WhileStatement ¢) {
     return "remove :" + ¢;
   }

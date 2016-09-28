@@ -6,6 +6,10 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
+// TODO: Author
+// TODO: classes in the test folder
+// TODO: NO WARNINGS. USe Suppress, copy from somewhere
+// TODO: Split into zillion tests, each in a function.
 public class LeonidasTest {
   @Test public void testMatches() {
     Pattern.getChildren(into.e("x == 7 ? y == 17 : 9"));

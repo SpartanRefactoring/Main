@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class BlockSingleton extends ReplaceCurrentNode<Block> implements Kind.SyntacticBaggage {
+public final class BlockSingleton extends ReplaceCurrentNode<Block> implements Category.SyntacticBaggage {
   private static Statement replacement(final Statement $) {
     return $ == null || iz.blockEssential($) ? null : duplicate.of($);
   }

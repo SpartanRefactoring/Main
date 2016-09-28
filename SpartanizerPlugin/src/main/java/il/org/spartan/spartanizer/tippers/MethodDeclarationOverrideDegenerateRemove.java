@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * class, e.g., <code>@Override void foo(){super.foo();}</code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
-public final class MethodDeclarationOverrideDegenerateRemove extends EagerTipper<MethodDeclaration> implements Kind.Collapse {
+public final class MethodDeclarationOverrideDegenerateRemove extends EagerTipper<MethodDeclaration> implements Category.Collapse {
   private static boolean shouldRemove(final MethodDeclaration d, final SuperMethodInvocation i) {
     for (final Object m : d.modifiers())
       if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))

@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Kind.SyntacticBaggage {
+public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> extends ReplaceCurrentNode<N> implements Category.SyntacticBaggage {
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "remove redundant modifier";
   }

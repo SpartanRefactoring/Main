@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * .
  * @author Matteo Orru'
  * @since 2015-07-17 */
-public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements Kind.CommnoFactoring {
+public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression> implements Category.CommnoFactoring {
   private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
