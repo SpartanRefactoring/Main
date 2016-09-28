@@ -62,8 +62,8 @@ public enum into {
   /** Convert an array of {@link String} into a {@link List} of
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
-   * @param expressions an array of {@link String}s, each representing a Java
-   *        expression
+   * @param expressions an array of {@link String}s, each
+   *        representing a Java expression
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
   public static List<Expression> es(final String... expressions) {

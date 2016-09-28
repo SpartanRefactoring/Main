@@ -27,110 +27,6 @@ import il.org.spartan.spartanizer.java.*;
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
-  static inner.implementation baptize(final String name) {
-    return baptize(name, "anonymously born");
-  }
-
-  static inner.implementation baptize(final String name, final String description) {
-    return have(name) ? bring(name) : new inner.implementation() {
-      @Override public String description() {
-        return description;
-      }
-
-      @Override public String key() {
-        return name;
-      }
-    }.join();
-  }
-
-  @SuppressWarnings("synthetic-access") static inner.implementation bring(final String name) {
-    return inner.types.get(name);
-  }
-
-  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
-    return inner.types.containsKey(name);
-  }
-
-  static boolean isDouble(final Expression ¢) {
-    return of(¢) == Certain.DOUBLE;
-  }
-
-  static boolean isInt(final Expression ¢) {
-    return type.of(¢) == Certain.INT;
-  }
-
-  static boolean isLong(final Expression ¢) {
-    return of(¢) == Certain.LONG;
-  }
-
-  /** @param x JD
-   * @return <code><b>true</b></code> <i>if</i> the parameter is an expression
-   *         whose type is provably not of type {@link String}, in the sense
-   *         used in applying the <code>+</code> operator to concatenate
-   *         strings. concatenation. */
-  static boolean isNotString(final Expression ¢) {
-    return !in(of(¢), STRING, ALPHANUMERIC);
-  }
-
-  static boolean isString(final Expression ¢) {
-    return of(¢) == Certain.STRING;
-  }
-
-  // TODO: Matteo. Nano-pattern of values: not implemented
-  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
-    return inner.get(¢);
-  }
-
-  default Certain asPrimitiveCertain() {
-    return null;
-  }
-
-  default Uncertain asPrimitiveUncertain() {
-    return null;
-  }
-
-  default boolean canB(@SuppressWarnings("unused") final Certain __) {
-    return false;
-  }
-
-  String description();
-
-  default String fullName() {
-    return this + "=" + key() + " (" + description() + ")";
-  }
-
-  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
-   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
-   *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
-   *         {@link #ALPHANUMERIC} or false otherwise */
-  default boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
-  }
-
-  /** @return true if either a Primitive.Certain, Primitive.Odd.NULL or a
-   *         baptized type */
-  default boolean isCertain() {
-    return this == NULL || have(key()) || asPrimitiveCertain() != null;
-  }
-
-  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
-   *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
-   *         otherwise */
-  default boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
-  }
-
-  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
-   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
-   *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
-  default boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
-  }
-
-  /** @return the formal name of this type, the key under which it is stored in
-   *         {@link #types}, e.g., "Object", "int", "String", etc. */
-  String key();
-
   // TOOD: Ori, types are deterministic, everything is known at compile time.
   // See here.
   /** An interface with one method- type, overloaded for many different
@@ -182,178 +78,7 @@ public interface type {
   }
 
   static class inner {
-    private static String propertyName = "spartan type";
-    /** All type that were ever born , as well as all primitive types */
-    private static Map<String, implementation> types = new LinkedHashMap<>();
-
-    private static implementation get(final Expression ¢) {
-      return hasType(¢) ? getType(¢) : setType(¢, lookUp(¢, lookDown(¢)));
-    }
-
-    /** @param n JD/
-     * @return the type information stored inside the node n, or null if there
-     *         is none */
-    private static implementation getType(final ASTNode ¢) {
-      return (implementation) ¢.getProperty(propertyName);
-    }
-
-    /** @param ¢ JD
-     * @return true if n has a type property and false otherwise */
-    private static boolean hasType(final ASTNode ¢) {
-      return getType(¢) != null;
-    }
-
-    private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
-      if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
-        return false;
-      final NumberLiteral l = az.numberLiteral(x);
-      final int n = Integer.parseInt(step.token(l));
-      return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
-    }
-
-    private static implementation lookDown(final Assignment x) {
-      final implementation $ = get(step.to(x));
-      return !$.isNoInfo() ? $ : get(step.from(x)).isNumeric() ? NUMERIC : get(step.from(x));
-    }
-
-    private static implementation lookDown(final CastExpression ¢) {
-      return get(step.expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
-    }
-
-    private static implementation lookDown(final ClassInstanceCreation ¢) {
-      return baptize(step.type(¢) + "");
-    }
-
-    private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = get(step.then(x));
-      final implementation ¢ = get(step.elze(x));
-      return $ == ¢ ? $
-          : isCastedToShort($, ¢, step.elze(x)) || isCastedToShort(¢, $, step.then(x)) ? SHORT
-              : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
-    }
-
-    /** @param x JD
-     * @return The most specific Type information that can be deduced about the
-     *         expression from it's structure, or {@link #NOTHING} if it cannot
-     *         decide. Will never return null */
-    private static implementation lookDown(final Expression ¢) {
-      switch (¢.getNodeType()) {
-        case NULL_LITERAL:
-          return NULL;
-        case CHARACTER_LITERAL:
-          return CHAR;
-        case STRING_LITERAL:
-          return STRING;
-        case BOOLEAN_LITERAL:
-          return BOOLEAN;
-        case NUMBER_LITERAL:
-          return lookDown((NumberLiteral) ¢);
-        case CAST_EXPRESSION:
-          return lookDown((CastExpression) ¢);
-        case PREFIX_EXPRESSION:
-          return lookDown((PrefixExpression) ¢);
-        case INFIX_EXPRESSION:
-          return lookDown((InfixExpression) ¢);
-        case POSTFIX_EXPRESSION:
-          return lookDown((PostfixExpression) ¢);
-        case PARENTHESIZED_EXPRESSION:
-          return lookDown((ParenthesizedExpression) ¢);
-        case CLASS_INSTANCE_CREATION:
-          return lookDown((ClassInstanceCreation) ¢);
-        case METHOD_INVOCATION:
-          return lookDown((MethodInvocation) ¢);
-        case CONDITIONAL_EXPRESSION:
-          return lookDown((ConditionalExpression) ¢);
-        case ASSIGNMENT:
-          return lookDown((Assignment) ¢);
-        case VARIABLE_DECLARATION_EXPRESSION:
-          return lookDown((VariableDeclarationExpression) ¢);
-        default:
-          return NOTHING;
-      }
-    }
-
-    private static implementation lookDown(final InfixExpression x) {
-      final InfixExpression.Operator o = step.operator(x);
-      final List<Expression> es = hop.operands(x);
-      assert es.size() >= 2;
-      implementation $ = get(first(es));
-      for (final Expression ¢ : rest(es))
-        $ = $.underBinaryOperator(o, get(¢));
-      return $;
-    }
-
-    private static implementation lookDown(final MethodInvocation ¢) {
-      return "toString".equals(step.name(¢) + "") && step.arguments(¢).isEmpty() ? STRING : NOTHING;
-    }
-
-    private static implementation lookDown(final NumberLiteral ¢) {
-      return new LiteralParser(step.token(¢)).type();
-    }
-
-    private static implementation lookDown(final ParenthesizedExpression ¢) {
-      return get(core(¢));
-    }
-
-    private static implementation lookDown(final PostfixExpression ¢) {
-      return get(step.operand(¢)).asNumeric(); // see
-                                               // testInDecreamentSemantics
-    }
-
-    private static implementation lookDown(final PrefixExpression ¢) {
-      return get(step.operand(¢)).under(step.operator(¢));
-    }
-
-    private static implementation lookDown(final VariableDeclarationExpression ¢) {
-      return baptize(step.type(¢) + "");
-    }
-
-    private static implementation lookUp(final Expression x, final implementation i) {
-      if (i.isCertain())
-        return i;
-      for (final ASTNode base : hop.ancestors(x)) {
-        final ASTNode context = base.getParent();
-        if (context != null)
-          switch (context.getNodeType()) {
-            case INFIX_EXPRESSION:
-              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
-            case ARRAY_ACCESS:
-              return i.asIntegral();
-            case PREFIX_EXPRESSION:
-              return i.above(az.prefixExpression(context).getOperator());
-            case POSTFIX_EXPRESSION:
-              return i.asNumeric();
-            case ASSERT_STATEMENT:
-              return base.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
-            case FOR_STATEMENT:
-              return base.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
-            // case WHILE_STATEMENT:
-            case IF_STATEMENT:
-              return BOOLEAN;
-            case PARENTHESIZED_EXPRESSION:
-              continue;
-            default:
-              return i;
-          }
-      }
-      return i;
-    }
-
-    /** sets the type property in the ASTNode
-     * @param n JD
-     * @param i the node's type property
-     * @return the type property t */
-    private static implementation setType(final ASTNode n, final implementation i) {
-      // TODO: Alex and Dan: Take a look here to see how you store information
-      // within a node
-      // TODO: Ori, Matteo this is for you too
-      // TODO Ori: use {@link NodeData}
-      assert !hasType(n);
-      n.setProperty(propertyName, i);
-      return i;
-    }
-
-    // an interface for inner methods that shouldn't be public
+    // an interface for inner methods that shouldn'tipper be public
     private interface implementation extends type {
       /** To be used to determine the type of something that o was used on
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -487,7 +212,7 @@ public interface type {
         if (!isNumeric())
           return asNumericUnderOperation().underNumericOnlyOperator(k);
         assert k != null;
-        assert this != ALPHANUMERIC : "Don't confuse " + NUMERIC + " with " + ALPHANUMERIC;
+        assert this != ALPHANUMERIC : "Don'tipper confuse " + NUMERIC + " with " + ALPHANUMERIC;
         assert isNumeric() : this + ": is for some reason not numeric ";
         final implementation $ = k.asNumericUnderOperation();
         assert $ != null;
@@ -509,6 +234,177 @@ public interface type {
         // unless both operands are numeric, the result is alphanumeric
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
+    }
+
+    private static String propertyName = "spartan type";
+    /** All type that were ever born , as well as all primitive types */
+    private static Map<String, implementation> types = new LinkedHashMap<>();
+
+    private static implementation get(final Expression ¢) {
+      return hasType(¢) ? getType(¢) : setType(¢, lookUp(¢, lookDown(¢)));
+    }
+
+    /** @param pattern JD/
+     * @return the type information stored inside the node n, or null if there
+     *         is none */
+    private static implementation getType(final ASTNode ¢) {
+      return (implementation) ¢.getProperty(propertyName);
+    }
+
+    /** @param ¢ JD
+     * @return true if n has a type property and false otherwise */
+    private static boolean hasType(final ASTNode ¢) {
+      return getType(¢) != null;
+    }
+
+    private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
+      if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
+        return false;
+      final NumberLiteral l = az.numberLiteral(x);
+      final int n = Integer.parseInt(step.token(l));
+      return n < Short.MAX_VALUE && n > Short.MIN_VALUE;
+    }
+
+    private static implementation lookDown(final Assignment x) {
+      final implementation $ = get(step.to(x));
+      return !$.isNoInfo() ? $ : get(step.from(x)).isNumeric() ? NUMERIC : get(step.from(x));
+    }
+
+    private static implementation lookDown(final CastExpression ¢) {
+      return get(step.expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
+    }
+
+    private static implementation lookDown(final ClassInstanceCreation ¢) {
+      return baptize(step.type(¢) + "");
+    }
+
+    private static implementation lookDown(final ConditionalExpression x) {
+      final implementation $ = get(step.then(x));
+      final implementation ¢ = get(step.elze(x));
+      return $ == ¢ ? $
+          : isCastedToShort($, ¢, step.elze(x)) || isCastedToShort(¢, $, step.then(x)) ? SHORT
+              : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
+    }
+
+    /** @param x JD
+     * @return The most specific Type information that can be deduced about the
+     *         expression from it's structure, or {@link #NOTHING}
+     *         if it cannot decide. Will never return null */
+    private static implementation lookDown(final Expression ¢) {
+      switch (¢.getNodeType()) {
+        case NULL_LITERAL:
+          return NULL;
+        case CHARACTER_LITERAL:
+          return CHAR;
+        case STRING_LITERAL:
+          return STRING;
+        case BOOLEAN_LITERAL:
+          return BOOLEAN;
+        case NUMBER_LITERAL:
+          return lookDown((NumberLiteral) ¢);
+        case CAST_EXPRESSION:
+          return lookDown((CastExpression) ¢);
+        case PREFIX_EXPRESSION:
+          return lookDown((PrefixExpression) ¢);
+        case INFIX_EXPRESSION:
+          return lookDown((InfixExpression) ¢);
+        case POSTFIX_EXPRESSION:
+          return lookDown((PostfixExpression) ¢);
+        case PARENTHESIZED_EXPRESSION:
+          return lookDown((ParenthesizedExpression) ¢);
+        case CLASS_INSTANCE_CREATION:
+          return lookDown((ClassInstanceCreation) ¢);
+        case METHOD_INVOCATION:
+          return lookDown((MethodInvocation) ¢);
+        case CONDITIONAL_EXPRESSION:
+          return lookDown((ConditionalExpression) ¢);
+        case ASSIGNMENT:
+          return lookDown((Assignment) ¢);
+        case VARIABLE_DECLARATION_EXPRESSION:
+          return lookDown((VariableDeclarationExpression) ¢);
+        default:
+          return NOTHING;
+      }
+    }
+
+    private static implementation lookDown(final InfixExpression x) {
+      final InfixExpression.Operator o = step.operator(x);
+      final List<Expression> es = hop.operands(x);
+      assert es.size() >= 2;
+      implementation $ = get(first(es));
+      for (final Expression ¢ : rest(es))
+        $ = $.underBinaryOperator(o, get(¢));
+      return $;
+    }
+
+    private static implementation lookDown(final MethodInvocation ¢) {
+      return "toString".equals(step.name(¢) + "") && step.arguments(¢).isEmpty() ? STRING : NOTHING;
+    }
+
+    private static implementation lookDown(final NumberLiteral ¢) {
+      return new LiteralParser(step.token(¢)).type();
+    }
+
+    private static implementation lookDown(final ParenthesizedExpression ¢) {
+      return get(core(¢));
+    }
+
+    private static implementation lookDown(final PostfixExpression ¢) {
+      return get(step.operand(¢)).asNumeric(); // see
+                                               // testInDecreamentSemantics
+    }
+
+    private static implementation lookDown(final PrefixExpression ¢) {
+      return get(step.operand(¢)).under(step.operator(¢));
+    }
+
+    private static implementation lookDown(final VariableDeclarationExpression ¢) {
+      return baptize(step.type(¢) + "");
+    }
+
+    private static implementation lookUp(final Expression x, final implementation i) {
+      if (i.isCertain())
+        return i;
+      for (final ASTNode base : hop.ancestors(x)) {
+        final ASTNode context = base.getParent();
+        if (context != null)
+          switch (context.getNodeType()) {
+            case INFIX_EXPRESSION:
+              return i.aboveBinaryOperator(az.infixExpression(context).getOperator());
+            case ARRAY_ACCESS:
+              return i.asIntegral();
+            case PREFIX_EXPRESSION:
+              return i.above(az.prefixExpression(context).getOperator());
+            case POSTFIX_EXPRESSION:
+              return i.asNumeric();
+            case ASSERT_STATEMENT:
+              return base.getLocationInParent() != AssertStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
+            case FOR_STATEMENT:
+              return base.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
+            // case WHILE_STATEMENT:
+            case IF_STATEMENT:
+              return BOOLEAN;
+            case PARENTHESIZED_EXPRESSION:
+              continue;
+            default:
+              return i;
+          }
+      }
+      return i;
+    }
+
+    /** sets the type property in the ASTNode
+     * @param n JD
+     * @param i the node's type property
+     * @return the type property tipper */
+    private static implementation setType(final ASTNode n, final implementation i) {
+      // TODO: Alex and Dan: Take a look here to see how you store information
+      // within a node
+      // TODO: Ori, Matteo this is for you too
+      // TODO Ori: use {@link NodeData}
+      assert !hasType(n);
+      n.setProperty(propertyName, i);
+      return i;
     }
   }
 
@@ -547,10 +443,6 @@ public interface type {
    * @author Yossi Gil
    * @since 2016 */
   interface Primitive extends inner.implementation {
-    /** @return All {@link Certain} types that an expression of this type can
-     *         be **/
-    Iterable<Certain> options();
-
     /** Primitive types known for certain. {@link String} is also considered
      * {@link Primitive.Certain}
      * @author Yossi Gil
@@ -641,5 +533,113 @@ public interface type {
         return options;
       }
     }
+
+    /** @return All {@link Certain} types that an expression of this type can
+     *         be **/
+    Iterable<Certain> options();
   }
+
+  static inner.implementation baptize(final String name) {
+    return baptize(name, "anonymously born");
+  }
+
+  static inner.implementation baptize(final String name, final String description) {
+    return have(name) ? bring(name) : new inner.implementation() {
+      @Override public String description() {
+        return description;
+      }
+
+      @Override public String key() {
+        return name;
+      }
+    }.join();
+  }
+
+  @SuppressWarnings("synthetic-access") static inner.implementation bring(final String name) {
+    return inner.types.get(name);
+  }
+
+  @SuppressWarnings("synthetic-access") static boolean have(final String name) {
+    return inner.types.containsKey(name);
+  }
+
+  static boolean isDouble(final Expression ¢) {
+    return of(¢) == Certain.DOUBLE;
+  }
+
+  static boolean isInt(final Expression ¢) {
+    return type.of(¢) == Certain.INT;
+  }
+
+  static boolean isLong(final Expression ¢) {
+    return of(¢) == Certain.LONG;
+  }
+
+  /** @param x JD
+   * @return <code><b>true</b></code> <i>if</i> the parameter is an expression
+   *         whose type is provably not of type {@link String}, in the sense
+   *         used in applying the <code>+</code> operator to concatenate
+   *         strings. concatenation. */
+  static boolean isNotString(final Expression ¢) {
+    return !in(of(¢), STRING, ALPHANUMERIC);
+  }
+
+  static boolean isString(final Expression ¢) {
+    return of(¢) == Certain.STRING;
+  }
+
+  // TODO: Matteo. Nano-pattern of values: not implemented
+  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
+    return inner.get(¢);
+  }
+
+  default Certain asPrimitiveCertain() {
+    return null;
+  }
+
+  default Uncertain asPrimitiveUncertain() {
+    return null;
+  }
+
+  default boolean canB(@SuppressWarnings("unused") final Certain __) {
+    return false;
+  }
+
+  String description();
+
+  default String fullName() {
+    return this + "=" + key() + " (" + description() + ")";
+  }
+
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
+   *         {@link #ALPHANUMERIC} or false otherwise */
+  default boolean isAlphaNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+  }
+
+  /** @return true if either a Primitive.Certain, Primitive.Odd.NULL or a
+   *         baptized type */
+  default boolean isCertain() {
+    return this == NULL || have(key()) || asPrimitiveCertain() != null;
+  }
+
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
+   *         otherwise */
+  default boolean isIntegral() {
+    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+  }
+
+  /** @return true if one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
+  default boolean isNumeric() {
+    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
+  }
+
+  /** @return the formal name of this type, the key under which it is stored in
+   *         {@link #types}, e.g., "Object", "int", "String", etc. */
+  String key();
 } // end of interface type

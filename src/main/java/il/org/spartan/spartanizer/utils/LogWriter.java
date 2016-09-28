@@ -6,12 +6,12 @@ public final class LogWriter extends Writer {
     initializeWriter();
   }
 
+  private void initializeWriter() {
+    initializeWriter(outputPath + "/tips.csv");
+  }
+
   public void printRow(final String a, final String b, final String c) {
     writer.println(a + "," + b + "," + c);
     writer.flush();
-  }
-
-  private void initializeWriter() {
-    initializeWriter(outputPath + "/tips.csv");
   }
 }

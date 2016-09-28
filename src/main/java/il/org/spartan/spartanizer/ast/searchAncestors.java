@@ -13,93 +13,6 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public abstract class searchAncestors {
-  /** Factory method, returning an instance which can search by a node class
-   * @param n JD
-   * @return a newly created instance
-   * @see ASTNode#getNodeType() */
-  public static <N extends ASTNode> searchAncestors forClass(final Class<N> ¢) {
-    return new ByNodeClass(¢);
-  }
-
-  /** Factory method, returning an instance which can search by the integer
-   * present on a node.
-   * @param type JD
-   * @return a newly created instance
-   * @see ASTNode#getNodeType() */
-  public static searchAncestors forType(final int type) {
-    return new ByNodeType(type);
-  }
-
-  /** Factory method, returning an instance which can search by a node
-   * instances.
-   * @param n JD
-   * @return a newly created instance */
-  public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
-    return new ByNodeInstances<>(¢);
-  }
-
-  /** Factory method, returning an instance which can search by a node
-   * instances.
-   * @param n JD
-   * @return a newly created instance */
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
-    return new ByNodeInstances(as.list(¢));
-  }
-
-  public static Until until(final ASTNode ¢) {
-    return new Until(¢);
-  }
-
-  /** @param n JD
-   * @return closest ancestor whose type matches the given type. */
-  public abstract ASTNode from(final ASTNode n);
-
-  /** @param n JD
-   * @return closest ancestor whose type matches the given type. */
-  public abstract ASTNode inclusiveFrom(final ASTNode n);
-
-  /** @param n JD
-   * @return furtherest ancestor whose type matches the given type. */
-  public ASTNode inclusiveLastFrom(final ASTNode n) {
-    ASTNode $ = inclusiveFrom(n);
-    for (ASTNode p = $; p != null; p = from(p))
-      $ = p;
-    return $;
-  }
-
-  /** @param n JD
-   * @return furtherest ancestor whose type matches the given type. */
-  public ASTNode lastFrom(final ASTNode n) {
-    ASTNode $ = from(n);
-    for (ASTNode p = $; p != null; p = from(p))
-      $ = p;
-    return $;
-  }
-
-  public static class Until {
-    final ASTNode until;
-
-    Until(final ASTNode until) {
-      this.until = until;
-    }
-
-    public Iterable<ASTNode> ancestors(final SimpleName n) {
-      return () -> new Iterator<ASTNode>() {
-        ASTNode next = n;
-
-        @Override public boolean hasNext() {
-          return next != null;
-        }
-
-        @Override public ASTNode next() {
-          final ASTNode $ = next;
-          next = eval(() -> next.getParent()).unless(next == until);
-          return $;
-        }
-      };
-    }
-  }
-
   static class ByNodeClass extends searchAncestors {
     private final Class<? extends ASTNode> clazz;
 
@@ -158,5 +71,92 @@ public abstract class searchAncestors {
     @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
       return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
     }
+  }
+
+  public static class Until {
+    final ASTNode until;
+
+    Until(final ASTNode until) {
+      this.until = until;
+    }
+
+    public Iterable<ASTNode> ancestors(final SimpleName n) {
+      return () -> new Iterator<ASTNode>() {
+        ASTNode next = n;
+
+        @Override public boolean hasNext() {
+          return next != null;
+        }
+
+        @Override public ASTNode next() {
+          final ASTNode $ = next;
+          next = eval(() -> next.getParent()).unless(next == until);
+          return $;
+        }
+      };
+    }
+  }
+
+  /** Factory method, returning an instance which can search by a node class
+   * @param pattern JD
+   * @return a newly created instance
+   * @see ASTNode#getNodeType() */
+  public static <N extends ASTNode> searchAncestors forClass(final Class<N> ¢) {
+    return new ByNodeClass(¢);
+  }
+
+  /** Factory method, returning an instance which can search by the integer
+   * present on a node.
+   * @param type JD
+   * @return a newly created instance
+   * @see ASTNode#getNodeType() */
+  public static searchAncestors forType(final int type) {
+    return new ByNodeType(type);
+  }
+
+  /** Factory method, returning an instance which can search by a node
+   * instances.
+   * @param pattern JD
+   * @return a newly created instance */
+  public static <N extends ASTNode> searchAncestors specificallyFor(final List<N> ¢) {
+    return new ByNodeInstances<>(¢);
+  }
+
+  /** Factory method, returning an instance which can search by a node
+   * instances.
+   * @param pattern JD
+   * @return a newly created instance */
+  @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
+    return new ByNodeInstances(as.list(¢));
+  }
+
+  public static Until until(final ASTNode ¢) {
+    return new Until(¢);
+  }
+
+  /** @param n JD
+   * @return closest ancestor whose type matches the given type. */
+  public abstract ASTNode from(final ASTNode n);
+
+  /** @param n JD
+   * @return closest ancestor whose type matches the given type. */
+  public abstract ASTNode inclusiveFrom(final ASTNode n);
+
+  /** @param n JD
+   * @return furtherest ancestor whose type matches the given type. */
+  public ASTNode inclusiveLastFrom(final ASTNode n) {
+    ASTNode $ = inclusiveFrom(n);
+    for (ASTNode p = $; p != null; p = from(p))
+      $ = p;
+    return $;
+  }
+
+  /** @param n JD
+   * @return furtherest ancestor whose type matches the given type. */
+  public ASTNode lastFrom(final ASTNode n) {
+    ASTNode $ = from(n);
+    for (ASTNode p = $; p != null; p = from(p))
+      $ = p;
+    return $;
   }
 }

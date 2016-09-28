@@ -61,4 +61,20 @@ import org.junit.runners.*;
                 + "for (;$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());" + "return $;" + "}")
             .stays();
   }
+
+  @Test public void t06() {
+    trimmingOf("public boolean check(final ASTNode n) { ASTNode p = n; while (p != null) {"
+        + "if (dns.contains(p)) return true; if (ens.contains(p)) return false;" + "p = p.getParent();} return false;}")
+            .gives("public boolean check(final ASTNode n) {for  ( ASTNode p = n; p != null) {"
+                + "if (dns.contains(p)) return true; if (ens.contains(p)) return false;p = p.getParent();}return false;}")
+            .stays();
+  }
+
+  @Test public void t07() {
+    trimmingOf("static Statement recursiveElze(final IfStatement ¢) { Statement $ = ¢.getElseStatement();"
+        + "while ($ instanceof IfStatement) $ = ((IfStatement) $).getElseStatement(); return $;}")
+            .gives("static Statement recursiveElze(final IfStatement ¢) { for(Statement $ = ¢.getElseStatement();"
+                + "$ instanceof IfStatement; $ = ((IfStatement) $).getElseStatement()) {} return $;}")
+            .stays();
+  }
 }

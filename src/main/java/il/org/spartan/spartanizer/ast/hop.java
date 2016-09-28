@@ -15,7 +15,8 @@ import static il.org.spartan.spartanizer.ast.step.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface hop {
-  /** Provides a {@link Iterable} access to the ancestors of an {@link ASTNode}, including the node itself.
+  /** Provides a {@link Iterable} access to the ancestors of an {@link ASTNode},
+   * including the node itself.
    * @param ¢ JD
    * @return an {@link Iterable} that traverses the ancestors of the ASTNode.
    *         Use case: Counting the number of Expressions among a given
@@ -41,8 +42,8 @@ public interface hop {
   }
 
   /** @param ¢ JD
-   * @return ASTNode of the type if one of ¢'s parent ancestors is a container
-   *         type and null otherwise */
+   * @return ASTNode of the type if one of ¢'s parent ancestors is a
+   *         container type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
       if (iz.is($//
@@ -105,7 +106,7 @@ public interface hop {
   }
 
   /** Extract the {@link MethodDeclaration} that contains a given node.
-   * @param n JD
+   * @param pattern JD
    * @return inner most {@link MethodDeclaration} in which the parameter is
    *         nested, or <code><b>null</b></code>, if no such statement
    *         exists. */

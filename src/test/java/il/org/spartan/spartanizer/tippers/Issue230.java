@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit tests for {@link BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue230 {
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue230 {
   @Test public void a() {
     trimmingOf("protected public final class A{volatile static int a;}").gives("public protected final class A{volatile static int a;}")
         .gives("public protected final class A{static volatile int a;}").stays();

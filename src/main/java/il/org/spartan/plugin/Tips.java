@@ -39,7 +39,7 @@ public final class Tips {
     return map.keySet();
   }
 
-  /** @param t rule
+  /** @param tipper rule
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends GUI$Applicator> T findInstance(final Class<? extends T> ¢) {

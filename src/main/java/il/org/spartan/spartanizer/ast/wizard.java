@@ -286,7 +286,7 @@ public interface wizard {
 
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
-   * @param n JD
+   * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
    *         is an infix expression whose operator is */
   static boolean nonAssociative(final ASTNode ¢) {

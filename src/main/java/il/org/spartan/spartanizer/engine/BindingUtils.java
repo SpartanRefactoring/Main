@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 @SuppressWarnings("restriction") public final class BindingUtils {
-  /** @param n an {@link ASTNode}
+  /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   public static ITypeBinding container(final ASTNode ¢) {
     final ASTNode $ = hop.containerType(¢);
@@ -31,7 +31,8 @@ import il.org.spartan.spartanizer.ast.*;
    * @param n original {@link ASTNode} containing the method invocation. Used in
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
-   * @return method's binding if it is visible from context, else null */
+   * @return method's binding if it is visible from context, else
+   *         null */
   public static IMethodBinding getVisibleMethod(final ITypeBinding b, final String methodName, final ITypeBinding[] bs, final ASTNode n,
       final CompilationUnit u) {
     if (b == null)
