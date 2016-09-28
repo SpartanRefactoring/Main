@@ -288,7 +288,7 @@ public final class BatchSpartanizer {
     collect();
     runEssence();
     runWordCount();
-    System.err.printf("Our batch applicator had %d tippers dispersed over %d hooks\n", //
+    System.err.printf("\n Our batch applicator had %d tippers dispersed over %d hooks\n", //
         box.it(batchApplicator.toolbox.tippersCount()), //
         box.it(batchApplicator.toolbox.hooksCount())//
     );

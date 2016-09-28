@@ -243,10 +243,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void bugIntroducingMISSINGWord1() {
-    trimmingOf(
-        "b.f(a) && -1 == As.g(f).h(c) ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
-            .gives(
-                "b.f(a) && As.g(f).h(c) == -1 ? o(s,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),s,f) : null");
+    trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
+        .gives("b.f(a) && As.g(f).h(c) == -1 ? o(s,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),s,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord1a() {
@@ -254,9 +252,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void bugIntroducingMISSINGWord1b() {
-    trimmingOf(
-        "b.f(a) && X ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
-            .gives("b.f(a)&&X?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),s,f):null");
+    trimmingOf("b.f(a) && X ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
+        .gives("b.f(a)&&X?o(s,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord1c() {
@@ -853,14 +850,14 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void forLoopBug() {
-    trimmingOf("      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
-        + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n"
-                + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          res-=1;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n"
-                + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          res --;\n" + "      return res;\n" + " if (b) i = 3;")
-            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n"
-                + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n" + " if (b) i = 3;")
+    trimmingOf("      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else "
+        + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n" + " if (b) i = 3;")
+            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
+                + "       if (s.charAt(¢) == 'd')\n" + "          res-=1;\n" + "      return res;\n" + " if (b) i = 3;")
+            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
+                + "       if (s.charAt(¢) == 'd')\n" + "          res --;\n" + "      return res;\n" + " if (b) i = 3;")
+            .gives("      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n" + "          res += 2;\n" + "        else "
+                + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n" + " if (b) i = 3;")
             .stays();
   }
 
@@ -905,15 +902,20 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void ifEmptyThenThrow() {
     trimmingOf("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Excpetion();\n" + "}")//
-    .gives("if (!b) " + "  throw new Excpetion();");
+        .gives("if (!b) " + "  throw new Excpetion();");
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimmingOf("if (b) {\n" + " /* empty */" + "; \n" + "} // no else \n" + " throw new Exception();\n").gives("  {}throw new Exception();").gives("throw new Exception();").stays();
+    trimmingOf("if (b) {\n" + " /* empty */" + "; \n" + "} // no else \n" + " throw new Exception();\n").gives("  {}throw new Exception();")
+        .gives("throw new Exception();").stays();
   }
-  
+
   @Test public void ifEmptyThenThrowVariant1() {
-    trimmingOf("if (b) {;} throw new Exception();\n").gives(" {} throw new Exception();").gives(" throw new Exception();").stays();
+    trimmingOf("if (b) {;} throw new Exception();\n")//
+        .gives("{}throw new Exception();") //
+        .gives("throw new Exception();")//
+        .stays()//
+    ;
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
@@ -1147,7 +1149,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void inlineSingleUseWithAssignment() {
-    trimmingOf("int a = 2; for (int a=2;true;) if (f()) f(a);").stays();
+    trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;").stays();
   }
 
   @Test public void inlineSingleVariableintoPlusPlus() {
@@ -2533,49 +2535,47 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void shortestIfBranchFirst01() {
-    trimmingOf("if (s.equals(0xDEAD)) {\n" + " int res=0; " + " for (int i=0; i<s.length(); ++i)     "
-        + " if (s.charAt(i)=='a')      " + "   res += 2;    " + "} else " + " if (s.charAt(i)=='d') " + "  res -= 1;  "
-        + "return res;  ")
+    trimmingOf("if (s.equals(0xDEAD)) {\n" + " int res=0; " + " for (int i=0; i<s.length(); ++i)     " + " if (s.charAt(i)=='a')      "
+        + "   res += 2;    " + "} else " + " if (s.charAt(i)=='d') " + "  res -= 1;  " + "return res;  ")
             .gives("if (!s.equals(0xDEAD)) {" + " if(s.charAt(i)=='d')" + "  res-=1;" + "} else {" + "  int res=0;"
                 + "  for(int i=0;i<s.length();++i)" + "   if(s.charAt(i)=='a')" + "     res+=2;" + " }" + " return res;");
   }
 
   @Test public void shortestIfBranchFirst02() {
-    trimmingOf("if (!s.equals(0xDEAD)) { " + " int res=0;" + " for (int i=0;i<s.length();++i)     "
-        + "   if (s.charAt(i)=='a')      " + "     res += 2;" + "   else " + "  if (s.charAt(i)=='d')      "
-        + "       res -= 1;" + "  return res;" + "} else {    " + " return 8;" + "}")
-            .gives(" if (s.equals(0xDEAD)) \n" + "    return 8;" + "      int res = 0;\n"
-                + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
-                + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
+    trimmingOf(
+        "if (!s.equals(0xDEAD)) { " + " int res=0;" + " for (int i=0;i<s.length();++i)     " + "   if (s.charAt(i)=='a')      " + "     res += 2;"
+            + "   else " + "  if (s.charAt(i)=='d')      " + "       res -= 1;" + "  return res;" + "} else {    " + " return 8;" + "}")
+                .gives(" if (s.equals(0xDEAD)) \n" + "    return 8;" + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
+                    + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
+                    + "          res -= 1;\n" + "      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02a() {
     trimmingOf(" if (!s.equals(0xDEAD)) {\n" + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
         + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
         + "          res -= 1;\n" + "      return res;\n" + "    }\n" + "    return 8;")
-            .gives(" if (s.equals(0xDEAD)) " + "return 8; " + "      int res = 0;\n"
-                + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
-                + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
+            .gives(" if (s.equals(0xDEAD)) " + "return 8; " + "      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
+                + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
+                + "          res -= 1;\n" + "      return res;\n");
   }
 
   @Test public void shortestIfBranchFirst02b() {
-    trimmingOf("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-        + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n")
+    trimmingOf("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
+        + "        else " + "       if (s.charAt(i) == 'd')\n" + "          --res;\n" + "      return res;\n")
             .gives("      int res = 0;\n" + "      for (int ¢ = 0;¢ < s.length();++¢)\n" + "       if (s.charAt(¢) == 'a')\n"
-                + "          res += 2;\n" + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n"
-                + "      return res;\n")
+                + "          res += 2;\n" + "        else " + "       if (s.charAt(¢) == 'd')\n" + "          --res;\n" + "      return res;\n")
             .stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final CompilationUnit u = Wrap.Statement.intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n"
-        + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n"
-        + "          res -= 1;\n" + "      return res;\n");
+    final CompilationUnit u = Wrap.Statement
+        .intoCompilationUnit("      int res = 0;\n" + "      for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
+            + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n" + "      return res;\n");
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
     assert f != null;
     azzert.that(f, iz(" res = 0"));
-    azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n"
-        + "          res += 2;\n" + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n"));
+    azzert.that(extract.nextStatement(f), iz(" for (int i = 0;i < s.length();++i)\n" + "       if (s.charAt(i) == 'a')\n" + "          res += 2;\n"
+        + "        else " + "       if (s.charAt(i) == 'd')\n" + "          res -= 1;\n"));
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
@@ -2933,8 +2933,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ternarize07aa() {
-    trimmingOf("String res=s;if(res==true)res=s+0xABBA;S.h(res);")
-        .gives("String res=s==true?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res=s;if(res==true)res=s+0xABBA;S.h(res);").gives("String res=s==true?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize07b() {
@@ -2952,8 +2951,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ternarize12() {
-    trimmingOf("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ")
-        .gives("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
+    trimmingOf("String res = s;   if (s.equals(532))    res = res + 0xABBA;   S.h(res); ").gives("String res=s.equals(532)?s+0xABBA:s;S.h(res);");
   }
 
   @Test public void ternarize13() {
@@ -3003,8 +3001,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   public void ternarize18() {
-    trimmingOf("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);")
-        .gives("System.h(s.equals(s)?tH3+res:h2A+s+0);");
+    trimmingOf("final String res=s;System.h(s.equals(res)?tH3+res:h2A+res+0);").gives("System.h(s.equals(s)?tH3+res:h2A+s+0);");
   }
 
   @Test public void ternarize21() {
