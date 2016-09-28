@@ -228,7 +228,4 @@ import il.org.spartan.spartanizer.tipping.*;
         "\n for = " + forr + //
         LoggingManner.endDump();
   }
-
-  @Test public void B22() {
-  }
 }
