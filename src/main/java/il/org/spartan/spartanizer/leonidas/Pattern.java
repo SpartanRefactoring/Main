@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.leonidas;
 
+/** @author Ori Marcovitch
+ * @year 2016 */
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.*;
@@ -52,14 +54,13 @@ class Matcher {
   }
 
   public boolean matches(ASTNode p, ASTNode n) {
-    if (p instanceof Name) {
+    if (iz.name(p)) {
       String id = ((Name) p).getFullyQualifiedName();
       if (id.startsWith("$")) {
         if (id.startsWith("$X"))
           return (n instanceof Expression) && consistent(n, id);
-        if (id.startsWith("$M")) {
+        if (id.startsWith("$M"))
           return (n instanceof MethodInvocation) && consistent(n, id);
-        }
       }
       return (n instanceof Name) && id.equals(((Name) p).getFullyQualifiedName());
     }
