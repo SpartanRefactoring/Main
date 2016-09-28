@@ -9,8 +9,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
+public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
+  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final ForStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
     // minus.LastStatement(dupWhileBody(s));
@@ -18,35 +18,35 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
     return $;
   }
 
-  private static Statement dupWhileBody(final WhileStatement ¢) {
+  private static Statement dupWhileBody(final ForStatement ¢) {
     return duplicate.of(¢.getBody());
   }
 
-  private static Expression dupWhileExpression(final WhileStatement ¢) {
+  private static Expression dupWhileExpression(final ForStatement ¢) {
     return duplicate.of(¢.getExpression());
   }
 
-  private static Expression dupWhileLastStatement(final WhileStatement ¢) {
+  private static Expression dupWhileLastStatement(final ForStatement ¢) {
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ASTNode lastStatement(final WhileStatement ¢) {
+  private static ASTNode lastStatement(final ForStatement ¢) {
     return hop.lastStatement(¢.getBody());
   }
 
-  private static boolean fitting(final WhileStatement ¢) {
+  private static boolean fitting(final ForStatement ¢) {
     return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)) || !iz.containsContinueStatement(¢.getBody());
   }
 
-  @Override public String description(final WhileStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
-  @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   }
   
-  @Override public ASTNode replacement(final WhileStatement ¢) {
+  @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢.getAST().newForStatement(), ¢);
   }
 }
