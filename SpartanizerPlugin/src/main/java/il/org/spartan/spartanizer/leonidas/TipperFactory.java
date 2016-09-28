@@ -53,9 +53,10 @@ public class TipperFactory {
         return description;
       }
 
-      @Override public Tip tip(final ASTNode e) {
-        return new Tip(description(e), e) {
+      @Override public Tip tip(final ASTNode n) {
+        return new Tip(description(n), n) {
           @Override public void go(ASTRewrite r, TextEditGroup g) {
+            Map<String, ASTNode> enviroment = collectEnviroment(n);
             ASTNode $ = duplicate.of(replacement);
             $.accept(new ASTVisitor() {
               @Override public void preVisit(final ASTNode ¢) {
@@ -83,14 +84,23 @@ public class TipperFactory {
     return new Matcher().matches(p, n);
   }
 
-//  private ASTNode replacement(ASTNode n) {
-//    ASTNode $ = duplicate.of(replacement);
-//    $.accept(new ASTVisitor() {
-//      @Override public void preVisit(final ASTNode ¢) {
-//      }
-//    });
-//    return $;
-//  }
+  private Map<String, ASTNode> collectEnviroment(ASTNode n){
+    return collectEnviroment(pattern, n, new HashMap<>());    
+  }
+  
+  private Map<String, ASTNode> collectEnviroment(ASTNode p, ASTNode n, Map<String, ASTNode> enviroment){
+    if (iz.name(p)){
+      String id = ((Name) p).getFullyQualifiedName();
+      if (id.startsWith("$"))
+        enviroment.put(id, n);
+    }else{
+      List<? extends ASTNode> nChildren = Recurser.children(n);
+      List<? extends ASTNode> pChildren = Recurser.children(p);
+      for (int i = 0; i < pChildren.size(); ++i)
+        collectEnviroment(pChildren.get(i), nChildren.get(i), enviroment);
+    }
+    return enviroment;
+  }
 }
 
 class Matcher {
