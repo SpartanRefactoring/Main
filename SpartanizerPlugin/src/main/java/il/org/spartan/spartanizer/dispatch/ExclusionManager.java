@@ -18,6 +18,10 @@ public final class ExclusionManager {
     inner.add(¢);
   }
 
+  public void excludeAll(final List<? extends ASTNode> ¢) {
+    inner.addAll(¢);
+  }
+  
   public boolean isExcluded(final ASTNode n) {
     for (final ASTNode ancestor : hop.ancestors(n))
       if (inner.contains(ancestor))
