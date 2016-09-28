@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> implements Category.Collapse {
+public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))

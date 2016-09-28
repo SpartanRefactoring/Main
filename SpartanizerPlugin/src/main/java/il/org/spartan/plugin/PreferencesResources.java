@@ -8,30 +8,30 @@ public final class PreferencesResources {
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum WringGroup {
-    Abbreviation(Category.Abbreviation.class), //
-    Annonimaization(Category.Annonimization.class), //
-    Canonicalization(Category.Collapse.class), //
-    CommonFactoring(Category.CommnoFactoring.class), //
-    Centification(Category.Centification.class), //
-    Dollarization(Category.Dollarization.class), //
-    EarlyReturn(Category.EarlyReturn.class), //
-    Idiomatic(Category.Idiomatic.class), //
-    Inlining(Category.Inlining.class), //
-    InVain(Category.InVain.class), //
-    ScopeReduction(Category.ScopeReduction.class), //
-    Sorting(Category.Sorting.class), //
-    SyntacticBaggage(Category.SyntacticBaggage.class), //
-    Ternarization(Category.Ternarization.class), //
-    Nanopatterns(Category.Nanos.class), //
+    Abbreviation(TipperCategory.Abbreviation.class), //
+    Annonimaization(TipperCategory.Annonimization.class), //
+    Canonicalization(TipperCategory.Collapse.class), //
+    CommonFactoring(TipperCategory.CommnoFactoring.class), //
+    Centification(TipperCategory.Centification.class), //
+    Dollarization(TipperCategory.Dollarization.class), //
+    EarlyReturn(TipperCategory.EarlyReturn.class), //
+    Idiomatic(TipperCategory.Idiomatic.class), //
+    Inlining(TipperCategory.Inlining.class), //
+    InVain(TipperCategory.InVain.class), //
+    ScopeReduction(TipperCategory.ScopeReduction.class), //
+    Sorting(TipperCategory.Sorting.class), //
+    SyntacticBaggage(TipperCategory.SyntacticBaggage.class), //
+    Ternarization(TipperCategory.Ternarization.class), //
+    Nanopatterns(TipperCategory.Nanos.class), //
     ;
-    private static WringGroup find(final Class<? extends Category> ¢) {
+    private static WringGroup find(final Class<? extends TipperCategory> ¢) {
       for (final WringGroup $ : WringGroup.values())
         if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;
     }
 
-    public static WringGroup find(final Category ¢) {
+    public static WringGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
     }
 
@@ -39,17 +39,17 @@ public final class PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private final Class<? extends Category> clazz;
+    private final Class<? extends TipperCategory> clazz;
     final String id;
     final String label;
 
-    private WringGroup(final Class<? extends Category> clazz) {
+    private WringGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = getLabel(clazz) + "";
     }
 
-    private Object getLabel(final Class<? extends Category> k) {
+    private Object getLabel(final Class<? extends TipperCategory> k) {
       try {
         return k.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {

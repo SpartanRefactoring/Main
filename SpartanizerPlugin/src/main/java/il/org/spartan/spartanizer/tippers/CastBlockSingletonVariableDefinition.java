@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code> {int a=0;} </code> </br>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Block> implements Category.Collapse {
+public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Block> implements TipperCategory.Collapse {
   @Override public String description() {
     return "remove the block";
   }

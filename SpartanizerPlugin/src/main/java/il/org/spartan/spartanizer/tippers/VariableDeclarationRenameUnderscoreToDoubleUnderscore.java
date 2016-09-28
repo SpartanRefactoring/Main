@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */
 public final class VariableDeclarationRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
-    extends AbstractVariableDeclarationChangeName<N> implements Category.Annonimization {
+    extends AbstractVariableDeclarationChangeName<N> implements TipperCategory.Annonimization {
   @Override protected boolean change(final N ¢) {
     return "_".equals(¢.getName() + "");
   }

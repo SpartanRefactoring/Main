@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement> implements Category.Centification {
+public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement> implements TipperCategory.Centification {
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }

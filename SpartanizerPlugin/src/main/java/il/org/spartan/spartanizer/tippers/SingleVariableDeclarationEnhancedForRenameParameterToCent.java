@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
-    implements Category.Centification {
+    implements TipperCategory.Centification {
   @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }

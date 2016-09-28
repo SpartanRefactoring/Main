@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * operator.
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment> implements Category.SyntacticBaggage {
+public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment> implements TipperCategory.SyntacticBaggage {
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)

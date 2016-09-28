@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
-public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpression> implements Category.InVain {
+public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'true' argument to '&&'";
   }

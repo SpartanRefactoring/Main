@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * of {@link String}s.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixSubtractionSort extends InfixExpressionSortingRest implements Category.Sorting {
+public final class InfixSubtractionSort extends InfixExpressionSortingRest implements TipperCategory.Sorting {
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }

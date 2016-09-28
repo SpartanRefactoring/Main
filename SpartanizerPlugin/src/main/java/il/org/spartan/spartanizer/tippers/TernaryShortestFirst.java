@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
  *
  * @author Yossi Gil
  * @since 2015-08-14 */
-public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression> implements Category.Sorting {
+public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Sorting {
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1 + "", e2 + "").similarity();
   }

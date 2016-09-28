@@ -240,12 +240,30 @@ public class Toolbox {
               new DeclarationInitializerReturnUpdateAssignment(), //
               new DeclarationInitializerStatementTerminatingScope(), //
               new DeclarationInitialiazerAssignment(), //
-              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(),
-              null) //
+              new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), null) //
           .seal();
   }
 
-  private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
+  private final Map<Class<? extends ASTNode>, List<? extends Tipper<? extends ASTNode>>> allTippersKnownToTheProgram = new HashMap<>();
+
+  /** @param c */
+  public void disable(Class<? extends TipperCategory> c) {
+    for (List<? extends Tipper<? extends ASTNode>> ¢ : allTippersKnownToTheProgram.values())
+      disable(¢, c);
+  }
+
+  /** @param ts 
+   * @param c */
+  private static void disable(List<? extends Tipper<? extends ASTNode>> ts, Class<? extends TipperCategory> c) {
+    removing: for (;;) {
+      for (int i = 0; i < ts.size(); ++i)
+        if (c.isAssignableFrom(ts.get(i).getClass())) {
+          ts.remove(i);
+          continue removing;
+        }
+      break removing;
+    }
+  }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param pattern JD
@@ -267,9 +285,9 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Tipper<N>> get(final Class<? extends ASTNode> ¢) {
-    if (!inner.containsKey(¢))
-      inner.put(¢, new ArrayList<>());
-    return (List<Tipper<N>>) (List<?>) inner.get(¢);
+    if (!allTippersKnownToTheProgram.containsKey(¢))
+      allTippersKnownToTheProgram.put(¢, new ArrayList<>());
+    return (List<Tipper<N>>) (List<?>) allTippersKnownToTheProgram.get(¢);
   }
 
   <N extends ASTNode> List<Tipper<N>> get(final N ¢) {

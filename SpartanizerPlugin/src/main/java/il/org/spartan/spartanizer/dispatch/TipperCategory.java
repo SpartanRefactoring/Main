@@ -2,7 +2,11 @@ package il.org.spartan.spartanizer.dispatch;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 
-public interface Category {
+/**
+ * Classification of tippers 
+ * @author Yossi Gil 
+ * @year 2016 */
+public interface TipperCategory {
   interface Abbreviation extends Nominal {
     final String label = "Abbreviation";
 
@@ -81,7 +85,7 @@ interface Nanos extends Modular {
     }
   }
 
-  interface Inlining extends Structural { // S5
+  interface Inlining extends Structural { 
     final String label = "Eliminates a variable by inlining";
 
     @Override default String description() {
@@ -89,7 +93,7 @@ interface Nanos extends Modular {
     }
   }
 
-  interface InVain extends Structural { // S0
+  interface InVain extends Structural { 
     final String label = "0+x, 1*y, 0*y, true, false, and other neutral elements and null impact operations";
 
     @Override default String description() {
@@ -97,7 +101,7 @@ interface Nanos extends Modular {
     }
   }
 
-  interface ScopeReduction extends Structural { // S6
+  interface ScopeReduction extends Structural { 
     final String label = "Scope reduction";
 
     @Override default String description() {
@@ -141,25 +145,4 @@ interface Nanos extends Modular {
   default WringGroup wringGroup() {
     return WringGroup.find(this);
   }
-}
-
-/** Auxiliary type: non public intentionally; currently unused, will be used
- * when we have categories of nano-patterns */
-interface Nanos extends Category {
-  /* Empty intentionally */
-}
-
-/** Auxiliary type: non public intentionally */
-interface Modular extends Category {
-  /* Empty intentionally */
-}
-
-/** Auxiliary type: non public intentionally */
-interface Nominal extends Category {
-  /* Empty intentionally */
-}
-
-/** Auxiliary type: non public intentionally */
-interface Structural extends Category {
-  /* Empty intentionally */
 }

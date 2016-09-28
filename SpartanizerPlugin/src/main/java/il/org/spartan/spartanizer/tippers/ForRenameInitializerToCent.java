@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @since 2016-09 */
-public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression> implements Category.Centification {
+public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression> implements TipperCategory.Centification {
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }

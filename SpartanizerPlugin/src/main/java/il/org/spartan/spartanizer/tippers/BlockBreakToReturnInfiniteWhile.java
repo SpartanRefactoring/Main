@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement> implements Category.Collapse {
+public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     final List<Statement> blockStatements = body.statements();
