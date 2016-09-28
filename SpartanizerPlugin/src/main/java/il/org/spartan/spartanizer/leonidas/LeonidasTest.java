@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.engine.*;
 
 public class LeonidasTest {
   @Test public void testMatches() {
-    Pattern.getChildren(into.e("x == 7 ? y == 17 : 9"));
     azzert.expression("X ? y == 17 : Z").matches("x == 7 ? y == 17 : 9");
     azzert.expression("X ? 8 : Z").notmatches("x == 7 ? y == 17 : 9");
     azzert.statement("X ? y == 17 : Z;").matches("x == 7 ? y == 17 : 9;");
@@ -16,6 +15,7 @@ public class LeonidasTest {
     azzert.expression("x == Y ? X : Y").matches("x == null ? 17 : null");
     azzert.expression("x == Y ? X : Y").notmatches("x == null ? 17 : 18");
     azzert.expression("x == Y ? Y : Y").notmatches("x == null ? 17 : null");
+    azzert.expression("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : 9");
 
   }
 }
