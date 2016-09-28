@@ -1149,7 +1149,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void inlineSingleUseWithAssignment() {
-    trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;").stays();
+    trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;").gives("for (int a = 2;true;) if (f()) f(a); else a = 2;").stays();
   }
 
   @Test public void inlineSingleVariableintoPlusPlus() {
@@ -2016,11 +2016,11 @@ import il.org.spartan.spartanizer.tipping.*;
     azzert.that(new PostfixToPrefix().canTip(e), is(true));
     final Expression r = new PostfixToPrefix().replacement(e);
     azzert.that(r, iz("--i"));
-    trimmingOf(from).gives("for(int i=0;i<100;--i)--j;").gives("for(int i=0;i<100;--i,--j);").stays();
+    trimmingOf(from).gives("for(int i=0;i<100;i--,j--);").gives("for(int i=0;i<100;--i,--j);").stays();
   }
 
   @Test public void prefixToPostfixDecrementEssence() {
-    trimmingOf("for(int i=0;i< 100;i--)j--;").gives("for(int i=0;i<100;--i,--j);").stays();
+    trimmingOf("for(int i=0;i< 100;i--)j--;").gives("for(int i=0;i<100;i--,j--);").gives("for(int i=0;i<100;--i,--j);").stays();
   }
 
   @Test public void prefixToPostfixIncreement() {

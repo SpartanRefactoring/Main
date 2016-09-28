@@ -10,11 +10,11 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue212 {
   @Test public void chocolate1() {
-    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;").stays();
+    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;").gives("for(int $=0;$<a.length;++$,sum +=$);").stays();
   }
 
   @Test public void chocolate2() {
-    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;").stays();
+    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;").gives("for(int i=0, j=0;i<a.length;++j,sum +=i+j);").stays();
   }
 
   @Test public void vanilla01() {
