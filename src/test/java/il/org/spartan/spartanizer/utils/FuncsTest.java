@@ -90,10 +90,6 @@ import il.org.spartan.spartanizer.engine.*;
     assert iz.deMorgan(CONDITIONAL_OR);
   }
 
-  @Test public void listOfInts() {
-    azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
-  }
-
   @Test public void sameOfNullAndSomething() {
     assert !wizard.same(null, e("a"));
   }
