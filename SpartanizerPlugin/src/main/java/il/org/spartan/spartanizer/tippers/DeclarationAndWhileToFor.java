@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.CommnoFactoring {
+public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.Collapse {
   private static Expression dupInitializer(final VariableDeclarationFragment ¢) {
     final VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
     final VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
