@@ -122,10 +122,6 @@ import il.org.spartan.spartanizer.tipping.*;
             .gives("int f(){g(i);throw new RuntimeException();return 2;}").gives("int f(){g(i);throw new RuntimeException();}").stays();
   }
 
-  private ThrowNotLastInBlock makeWring() {
-    return new ThrowNotLastInBlock();
-  }
-
   @Test public void vanilla() {
     trimmingOf("{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}").gives("throw Something();f(); a=3; return 2;")
         .gives("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
@@ -133,5 +129,9 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void vanilla01() {
     trimmingOf("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
+  }
+
+  private ThrowNotLastInBlock makeWring() {
+    return new ThrowNotLastInBlock();
   }
 }

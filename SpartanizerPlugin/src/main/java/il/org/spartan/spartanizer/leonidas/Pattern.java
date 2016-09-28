@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.leonidas;
 
-/** @author Ori Marcovitch
- * @year 2016 */
-import java.util.*;
 import org.eclipse.jdt.core.dom.*;
-import il.org.spartan.spartanizer.ast.*;
+
 import il.org.spartan.spartanizer.engine.*;
 
 public class Pattern<N extends ASTNode> {
+  public static boolean matches(final ASTNode p, final ASTNode n) {
+    return new Matcher().matches(p, n);
+  }
+
   ASTNode pattern;
   ASTNode replacement;
   String description;
@@ -20,11 +21,7 @@ public class Pattern<N extends ASTNode> {
 
   public UserDefinedTipper<N> getTipper() {
     return new UserDefinedTipper<N>() {
-      @Override protected boolean prerequisite(N ¢) {
-        return matches(pattern, ¢);
-      }
-
-      @Override public String description(@SuppressWarnings("unused") N __) {
+      @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }
       // @Override public Tip tip(final N e) {
@@ -35,14 +32,14 @@ public class Pattern<N extends ASTNode> {
       // }
       // };
       // }
+
+      @Override protected boolean prerequisite(final N ¢) {
+        return matches(pattern, ¢);
+      }
     };
   }
 
-  public boolean matches(ASTNode ¢) {
+  public boolean matches(final ASTNode ¢) {
     return matches(pattern, ¢);
-  }
-
-  public static boolean matches(ASTNode p, ASTNode n) {
-    return new Matcher().matches(p, n);
   }
 }

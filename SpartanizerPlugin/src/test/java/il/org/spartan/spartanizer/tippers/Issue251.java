@@ -7,6 +7,10 @@ import org.junit.*;
 /** @author Dor Ma'ayan
  * @since 2016-09-26 */
 @SuppressWarnings({ "static-method", "javadoc" }) public class Issue251 {
+  @Test public void Issue302_test() {
+    trimmingOf("if(b()){int i;}").stays();
+  }
+
   @Test public void t01() {
     trimmingOf("if(b==true){int i;}").gives("{}").gives("").stays();
   }
@@ -109,9 +113,5 @@ import org.junit.*;
 
   @Test public void t25() {
     trimmingOf("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}").gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}");
-  }
-  
-  @Test public void Issue302_test() {
-    trimmingOf("if(b()){int i;}").stays();
   }
 }

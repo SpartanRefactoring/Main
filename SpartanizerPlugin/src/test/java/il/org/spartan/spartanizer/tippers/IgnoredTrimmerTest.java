@@ -286,8 +286,7 @@ import org.junit.runners.*;
   }
 
   @Test public void stringFromBuilderGeneral() {
-    trimmingOf("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()")
-        .gives("myName + \"\'s grade is \" + 100");
+    trimmingOf("new StringBuilder(myName).append(\"\'s grade is \").append(100).toString()").gives("myName + \"\'s grade is \" + 100");
   }
 
   @Test public void stringFromBuilderNoStringComponents() {

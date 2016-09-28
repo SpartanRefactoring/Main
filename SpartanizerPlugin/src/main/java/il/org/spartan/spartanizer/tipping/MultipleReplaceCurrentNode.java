@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
 abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
-  abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
-
   @Override public boolean prerequisite(final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
@@ -34,4 +32,6 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipp
       }
     };
   }
+
+  abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
 }

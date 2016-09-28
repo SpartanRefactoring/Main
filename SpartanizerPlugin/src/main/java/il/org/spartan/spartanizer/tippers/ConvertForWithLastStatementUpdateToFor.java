@@ -24,12 +24,13 @@ public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<F
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ASTNode lastStatement(final ForStatement ¢) {
-    return hop.lastStatement(¢.getBody());
+  private static boolean fitting(final ForStatement ¢) {
+    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)))
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
-  private static boolean fitting(final ForStatement ¢) {
-    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢))) && !iz.containsContinueStatement(¢.getBody());
+  private static ASTNode lastStatement(final ForStatement ¢) {
+    return hop.lastStatement(¢.getBody());
   }
 
   @Override public String description(final ForStatement ¢) {
@@ -39,7 +40,7 @@ public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<F
   @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   }
-  
+
   @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(duplicate.of(¢));
   }

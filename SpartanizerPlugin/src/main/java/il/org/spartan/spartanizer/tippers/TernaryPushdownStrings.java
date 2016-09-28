@@ -29,6 +29,19 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon
  * @since 2016-09-1 */
 public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Ternarization {
+  public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
+    return iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
+        : iz.stringLiteral(then) && iz.infixExpression(elze) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
+            : iz.infixExpression(then) && iz.stringLiteral(elze)
+                ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
+                : iz.infixExpression(then) && iz.infixExpression(elze) ? simplify(condition, az.infixExpression(then), az.infixExpression(elze))
+                    : null; //
+  }
+
+  static String longer(final String s1, final String s2) {
+    return s1 == shorter(s1, s2) ? s2 : s1;
+  }
+
   private static int firstDifference(final String s1, final String s2) {
     if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);
@@ -83,19 +96,6 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     }
     return s1.length() != s2.length() && Character.isAlphabetic(last(s2, s1.length())) && Character.isAlphabetic(last(s2, s1.length() - 1)) ? 0
         : s1.length();
-  }
-
-  static String longer(final String s1, final String s2) {
-    return s1 == shorter(s1, s2) ? s2 : s1;
-  }
-
-  public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
-    return iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
-        : iz.stringLiteral(then) && iz.infixExpression(elze) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
-            : iz.infixExpression(then) && iz.stringLiteral(elze)
-                ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
-                : iz.infixExpression(then) && iz.infixExpression(elze) ? simplify(condition, az.infixExpression(then), az.infixExpression(elze))
-                    : null; //
   }
 
   private static Expression replacementPrefix(final String then, final String elze, final int commonPrefixIndex, final Expression condition) {

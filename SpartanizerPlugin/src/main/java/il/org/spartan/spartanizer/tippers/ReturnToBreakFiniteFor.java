@@ -102,9 +102,9 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement> im
     final Statement body = s.getBody();
     final Statement $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
-   if (exclude != null)
-          exclude.exclude(s); 
-   return $ == null ? null : new Tip(description(), s) {
+    if (exclude != null)
+      exclude.exclude(s);
+    return $ == null ? null : new Tip(description(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, (ASTNode) az.block(into.s("break;")).statements().get(0), g);
       }

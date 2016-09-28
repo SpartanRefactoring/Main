@@ -13,6 +13,10 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @since 2016 */
 public final class LaconizeCurrent extends LaconizeSelection implements IMarkerResolution {
+  @Override public String getLabel() {
+    return "Laconize file";
+  }
+
   @Override public Range getSelection(@SuppressWarnings("unused") final ICompilationUnit __) {
     return new Range(0, 0);
   }
@@ -21,14 +25,10 @@ public final class LaconizeCurrent extends LaconizeSelection implements IMarkerR
     return true;
   }
 
-  @Override public String getLabel() {
-    return "Laconize file";
-  }
-
-  @Override public void run(@SuppressWarnings("unused") IMarker __) {
+  @Override public void run(@SuppressWarnings("unused") final IMarker __) {
     try {
       execute();
-    } catch (ExecutionException x) {
+    } catch (final ExecutionException x) {
       // TODO Ori: log it
       x.printStackTrace();
     }

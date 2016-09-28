@@ -43,11 +43,11 @@ import il.org.spartan.spartanizer.engine.*;
 }
 
 class azzert {
-  public static expression expression(String ¢) {
+  public static expression expression(final String ¢) {
     return new expression(¢);
   }
 
-  public static statement statement(String ¢) {
+  public static statement statement(final String ¢) {
     return new statement(¢);
   }
 }
@@ -55,31 +55,31 @@ class azzert {
 class expression {
   final String s;
 
-  public expression(String s) {
+  public expression(final String s) {
     this.s = s;
   }
 
-  public void matches(String s2) {
-    assertTrue(Pattern.matches(makeAST.EXPRESSION.from(this.s), makeAST.EXPRESSION.from(s2)));
+  public void matches(final String s2) {
+    assertTrue(Pattern.matches(makeAST.EXPRESSION.from(s), makeAST.EXPRESSION.from(s2)));
   }
 
-  public void notmatches(String s2) {
-    assertFalse(Pattern.matches(makeAST.EXPRESSION.from(this.s), makeAST.EXPRESSION.from(s2)));
+  public void notmatches(final String s2) {
+    assertFalse(Pattern.matches(makeAST.EXPRESSION.from(s), makeAST.EXPRESSION.from(s2)));
   }
 }
 
 class statement {
   final String s;
 
-  public statement(String s) {
+  public statement(final String s) {
     this.s = s;
   }
 
-  public void matches(String s2) {
-    assertTrue(Pattern.matches(makeAST.STATEMENTS.from(this.s), makeAST.STATEMENTS.from(s2)));
+  public void matches(final String s2) {
+    assertTrue(Pattern.matches(makeAST.STATEMENTS.from(s), makeAST.STATEMENTS.from(s2)));
   }
 
-  public void notmatches(String s2) {
-    assertFalse(Pattern.matches(makeAST.STATEMENTS.from(this.s), makeAST.STATEMENTS.from(s2)));
+  public void notmatches(final String s2) {
+    assertFalse(Pattern.matches(makeAST.STATEMENTS.from(s), makeAST.STATEMENTS.from(s2)));
   }
 }
