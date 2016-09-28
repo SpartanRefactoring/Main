@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> implements Category.CommnoFactoring {
+public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "replace with #default #deault x";
   }

@@ -43,7 +43,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Category.InVain {
+public final class BlockSimplify extends ReplaceCurrentNode<Block> implements TipperCategory.InVain {
   private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     if (os1.size() != os2.size())
       return false;

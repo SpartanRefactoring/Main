@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName //
-    extends ReplaceCurrentNode<NormalAnnotation> implements Category.SyntacticBaggage {
+    extends ReplaceCurrentNode<NormalAnnotation> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final NormalAnnotation ¢) {
     return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }

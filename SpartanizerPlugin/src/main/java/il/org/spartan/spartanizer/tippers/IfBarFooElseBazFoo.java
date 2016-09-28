@@ -40,7 +40,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-09-05 */
-public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implements Category.Ternarization {
+public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implements TipperCategory.Ternarization {
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
     private final Statement[] l;

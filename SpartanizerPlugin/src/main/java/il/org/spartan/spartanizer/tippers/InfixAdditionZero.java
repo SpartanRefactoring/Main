@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Matteo Orrù
  * @since 2016 */
-public final class InfixAdditionZero extends EagerTipper<InfixExpression> implements Category.InVain {
+public final class InfixAdditionZero extends EagerTipper<InfixExpression> implements TipperCategory.InVain {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);

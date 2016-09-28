@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement> implements Category.Ternarization {
+public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Ternarization {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate 'if' into a 'throw' statement of a conditional expression";
   }

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @see InfixAdditionSort
  * @author Yossi Gil
  * @since 2015-07-17 */
-public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull implements Category.Sorting {
+public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull implements TipperCategory.Sorting {
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
