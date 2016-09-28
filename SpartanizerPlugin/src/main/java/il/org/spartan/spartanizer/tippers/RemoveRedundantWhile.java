@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Simplify if statements as much as possible (or remove them or parts of them)
  * if and only if </br>
- * it doesn't have any side-effect.
+ * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> implements Kind.Collapse {

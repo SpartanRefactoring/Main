@@ -441,7 +441,7 @@ public enum iz {
   }
 
   /** Determine whether an item is the last one in a list
-   * @param t a list item
+   * @param tipper a list item
    * @param ts a list
    * @return <code><b>true</b></code> <i>iff</i> the item is found in the list
    *         and it is the last one in it. */

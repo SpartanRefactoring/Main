@@ -35,7 +35,7 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   private static boolean pred(final IExtendedModifier m, final boolean[] bitMap) {
     final boolean $ = !bitMap[IExtendedModifiersOrdering.ordinal(m)];
     bitMap[IExtendedModifiersOrdering.ordinal(m)] = true;
-    // Can't compare different user defined annotations! So avoid removing them.
+    // Can'tipper compare different user defined annotations! So avoid removing them.
     bitMap[IExtendedModifiersOrdering.userDefinedAnnotationsOrdinal()] = false;
     return $;
   }

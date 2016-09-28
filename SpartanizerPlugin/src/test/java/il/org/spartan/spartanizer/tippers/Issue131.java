@@ -24,8 +24,8 @@ import org.junit.runners.*;
   }
 
   @Test public void A$040() {
-    trimmingOf("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(t=4)return x;return x;")
-        .gives("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(t=4)break;return x;").stays();
+    trimmingOf("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(tipper=4)return x;return x;")
+        .gives("for(int ¢=4 ; ¢<example1step1.length() ; ++¢)if(tipper=4)break;return x;").stays();
   }
 
   @Test public void A$050() {
@@ -41,7 +41,7 @@ import org.junit.runners.*;
   }
 
   @Test public void A$080() {
-    trimmingOf("while(i>5)if(t=4)return x;return x;").gives("while(i>5)if(t=4)break;return x;").stays();
+    trimmingOf("while(i>5)if(tipper=4)return x;return x;").gives("while(i>5)if(tipper=4)break;return x;").stays();
   }
 
   @Test public void A$090() {
@@ -56,29 +56,29 @@ import org.junit.runners.*;
   }
 
   @Test public void A$110() {
-    trimmingOf("int t=5;int i=2;for(int i=4;i<example1step1.length();++i){if(i==5){t+=9;return x;}y+=15;return x;}return x;")
-        .gives("int t=5;int i=2;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){t+=9;return x;}y+=15;break;}return x;")
-        .gives("int t=5;int i=2;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){t+=9; break;}y+=15;break;}return x;").stays();
+    trimmingOf("int tipper=5;int i=2;for(int i=4;i<example1step1.length();++i){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
+        .gives("int tipper=5;int i=2;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){tipper+=9;return x;}y+=15;break;}return x;")
+        .gives("int tipper=5;int i=2;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){tipper+=9; break;}y+=15;break;}return x;").stays();
   }
 
   @Test public void A$120() {
-    trimmingOf("boolean b=false;for(int i=4;i<example1step1.length();++i){if(i==5){t+=9;return x;}else return tr;y+=15;return x;}return x;")
-        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){t+=9;return x;}else return tr;y+=15;break;}return x;")
-        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢!=5)return tr;t+=9;return x;y+=15;break;}return x;")
-        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢!=5)return tr;t+=9;break;y+=15;break;}return x;").stays();
+    trimmingOf("boolean b=false;for(int i=4;i<example1step1.length();++i){if(i==5){tipper+=9;return x;}else return tr;y+=15;return x;}return x;")
+        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢==5){tipper+=9;return x;}else return tr;y+=15;break;}return x;")
+        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢!=5)return tr;tipper+=9;return x;y+=15;break;}return x;")
+        .gives("boolean b=false;for(int ¢=4;¢<example1step1.length();++¢){if(¢!=5)return tr;tipper+=9;break;y+=15;break;}return x;").stays();
   }
 
   @Test public void A$130() {
-    trimmingOf("int i=1;while(i<7){if(i==5){t+=9;return x;}y+=15;return x;}return x;")
-        .gives("int i=1;while(i<7){if(i==5){t+=9;return x;}y+=15;break;}return x;")
-        .gives("int i=1;while(i<7){if(i==5){t+=9;break;}y+=15;break;}return x;").stays();
+    trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
+        .gives("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
+        .gives("int i=1;while(i<7){if(i==5){tipper+=9;break;}y+=15;break;}return x;").stays();
   }
 
   @Test public void A$140() {
-    trimmingOf("public static void main(){while(i<7){if(i==5){t+=9;return x;}else return tr;y+=15;return x;}return x;}")
-        .gives("public static void main(){while(i<7){if(i!=5)return tr;t+=9;return x;y+=15;return x;}return x;}")
-        .gives("public static void main(){while(i<7){if(i!=5)return tr;t+=9;break;y+=15;return x;}return x;}")
-        .gives("public static void main(){while(i<7){if(i!=5)return tr;t+=9;break;y+=15;break;}return x;}").stays();
+    trimmingOf("public static void main(){while(i<7){if(i==5){tipper+=9;return x;}else return tr;y+=15;return x;}return x;}")
+        .gives("public static void main(){while(i<7){if(i!=5)return tr;tipper+=9;return x;y+=15;return x;}return x;}")
+        .gives("public static void main(){while(i<7){if(i!=5)return tr;tipper+=9;break;y+=15;return x;}return x;}")
+        .gives("public static void main(){while(i<7){if(i!=5)return tr;tipper+=9;break;y+=15;break;}return x;}").stays();
   }
 
   @Test public void A$150() {

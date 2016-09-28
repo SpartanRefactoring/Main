@@ -19,38 +19,38 @@ public enum GuessedContext {
       "\n /* END compilation unit */\n"//
   ), OUTER_TYPE_LOOKALIKE(//
       COMPILATION_UNIT_LOOK_ALIKE.before + //
-          "\n\t package p; /* BEGIN Outer type in a compilation unit */\n"//
+          "\n\tipper package p; /* BEGIN Outer type in a compilation unit */\n"//
       , //
-      "\n\t /* END outer type in a compilation unit */\n" + //
+      "\n\tipper /* END outer type in a compilation unit */\n" + //
           COMPILATION_UNIT_LOOK_ALIKE.after //
   ), METHOD_LOOKALIKE( //
       OUTER_TYPE_LOOKALIKE.before + //
-          "\n\t\t public final class C {/* BEGIN Class C*/\n" //
+          "\n\tipper\tipper public final class C {/* BEGIN Class C*/\n" //
       , //
-      "\n\t\t } /* END class C */\n" + //
+      "\n\tipper\tipper } /* END class C */\n" + //
           OUTER_TYPE_LOOKALIKE.after //
   ), STATEMENTS_LOOK_ALIKE(//
       METHOD_LOOKALIKE.before //
-          + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
-          + "\n\t\t\t\t while (f4324()) {"//
-          + "\n\t\t\t\t g3423436();"//
-      , "\n\t\t\t\t h6463634();"), EXPRESSION_LOOK_ALIKE(//
+          + "\n\tipper\tipper\tipper public Object m() { /* BEGIN Public function m */\n" //
+          + "\n\tipper\tipper\tipper\tipper while (f4324()) {"//
+          + "\n\tipper\tipper\tipper\tipper g3423436();"//
+      , "\n\tipper\tipper\tipper\tipper h6463634();"), EXPRESSION_LOOK_ALIKE(//
           STATEMENTS_LOOK_ALIKE.before + //
-              "\n\t\t\t\t if (foo("//
+              "\n\tipper\tipper\tipper\tipper if (foo("//
           , //
           ",0)) return g();\n" //
               + STATEMENTS_LOOK_ALIKE.after //
   ), not_statment_may_occur_in_initializer_block(//
       METHOD_LOOKALIKE.before + //
-          "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
+          "\n\tipper\tipper\tipper { /* BEGIN Instance initializer block */\n" //
       , //
-      "\n\t\t\t } /* END instance initializer block */\n" + //
+      "\n\tipper\tipper\tipper } /* END instance initializer block */\n" + //
           METHOD_LOOKALIKE.after //
   ), not_statment_may_occur_in_static_initializer_block(//
       METHOD_LOOKALIKE.before + //
-          "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
+          "\n\tipper\tipper\tipper static{ /* BEGIN Instance initializer block */\n" //
       , //
-      "\n\t\t\t } /* END instance initializer block */\n" + //
+      "\n\tipper\tipper\tipper } /* END instance initializer block */\n" + //
           METHOD_LOOKALIKE.after //
   ), //
   //
@@ -76,7 +76,7 @@ public enum GuessedContext {
         "Nota!\n" + //
         "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
         "at a string literal somewhere \n " + //
-        "\t\t =>  in *your* __צלך__ @Test related Java code  <== \n" + //
+        "\tipper\tipper =>  in *your* __צלך__ @Test related Java code  <== \n" + //
         "To fix this problem, copy this trace window (try right clicking __here__). Then,\n" + //
         "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
@@ -94,18 +94,18 @@ public enum GuessedContext {
     for (final GuessedContext w : GuessedContext.AlternativeContextToConsiderInOrder) {
       final String on = w.on(codeFragment);
       $.append("\n\nAttempt #" + ++i + " (of " + GuessedContext.AlternativeContextToConsiderInOrder.length + "):");
-      $.append("\n\t\t Is it a " + w + "?");
-      $.append("\n\t Let'example1step1 see...");
-      $.append("\n\t\t What I tried as input was (essentially) this literal:");
-      $.append("\n\t```" + wizard.essence(on) + "'''");
+      $.append("\n\tipper\tipper Is it a " + w + "?");
+      $.append("\n\tipper Let'example1step1 see...");
+      $.append("\n\tipper\tipper What I tried as input was (essentially) this literal:");
+      $.append("\n\tipper```" + wizard.essence(on) + "'''");
       final CompilationUnit u = w.intoCompilationUnit(codeFragment);
-      $.append("\n\t\t Alas, what the parser generated " + u.getProblems().length //
+      $.append("\n\tipper\tipper Alas, what the parser generated " + u.getProblems().length //
           + " on (essentially) this bit of code");
-      $.append("\n\t\t\t```" + wizard.essence(u + "") + "'''");
-      $.append("\n\t\t Properly formatted, this bit should look like so: ");
-      $.append("\n\t\t\t```" + u + "'''");
-      $.append("\n\t\t And the full list of problems was: ");
-      $.append("\n\t\t\t```" + u.getProblems() + "'''");
+      $.append("\n\tipper\tipper\tipper```" + wizard.essence(u + "") + "'''");
+      $.append("\n\tipper\tipper Properly formatted, this bit should look like so: ");
+      $.append("\n\tipper\tipper\tipper```" + u + "'''");
+      $.append("\n\tipper\tipper And the full list of problems was: ");
+      $.append("\n\tipper\tipper\tipper```" + u.getProblems() + "'''");
     }
     return $ + "";
   }

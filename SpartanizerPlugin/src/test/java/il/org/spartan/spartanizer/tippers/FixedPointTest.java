@@ -97,7 +97,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void issue43() {
-    assertConvertsTo("String t = Z2;  " + " t = t.f(A).f(b) + t.f(c);   " + "return (t + 3);    ", "return(Z2.f(A).f(b)+Z2.f(c)+3);");
+    assertConvertsTo("String tipper = Z2;  " + " tipper = tipper.f(A).f(b) + tipper.f(c);   " + "return (tipper + 3);    ", "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
   @Test(timeout = 2000) public void multipleIfDeclarationAssignment() {

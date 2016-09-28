@@ -159,7 +159,7 @@ public enum extract {
   }
 
   /** @param n JD
-   * @return method invocation if it exists or null if it doesn't or if the
+   * @return method invocation if it exists or null if it doesn'tipper or if the
    *         block contains more than one statement */
   public static MethodInvocation methodInvocation(final ASTNode ¢) {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
