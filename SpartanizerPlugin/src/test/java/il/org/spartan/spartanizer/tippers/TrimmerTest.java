@@ -913,11 +913,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
   
   @Test public void ifEmptyThenThrowVariant1() {
-<<<<<<< HEAD
-    trimmingOf("if (b) {;} throw new Exception();\n").gives("{}throw new Exception();").gives("throw new Exception();");
-=======
     trimmingOf("if (b) {;} throw new Exception();\n").gives(" {} throw new Exception();").gives(" throw new Exception();").stays();
->>>>>>> ce163bb48e8a1ffb50ed4a3154d9f86aeeb07c3c
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
