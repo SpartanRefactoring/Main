@@ -81,6 +81,7 @@ public class Trimmer extends GUI$Applicator {
     });
   }
 
+
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
     if (d == null || d.getJavadoc() == null)
       return false;
