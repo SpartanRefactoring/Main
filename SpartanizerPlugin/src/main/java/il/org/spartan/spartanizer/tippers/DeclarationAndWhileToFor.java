@@ -26,10 +26,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(f, ¢);
-  }
-
   @SuppressWarnings("unchecked") private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(duplicate.of(expression(¢)));
@@ -37,11 +33,11 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     $.initializers().add(dupInitializers(f));
     return $;
   }
-  
+
   @SuppressWarnings("unchecked") private static Expression dupInitializers(final VariableDeclarationFragment ¢) {
     final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
     final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
-    List<VariableDeclarationFragment> fragments = new ArrayList<>();
+    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
     duplicate.into(step.fragments(parent), fragments);
     $.fragments().addAll(minus.firstElem(fragments));
     $.setType(duplicate.of(parent.getType()));
@@ -54,11 +50,16 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return true;
   }
 
+  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    return !fitting(¢) ? null : buildForStatement(f, ¢);
+  }
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g, final ExclusionManager exclude) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
+      final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)
       return null;
     final Statement parent = az.asStatement(f.getParent());
