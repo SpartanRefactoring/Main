@@ -72,6 +72,7 @@ public class Toolbox {
       instance = new Maker()//
           .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
           .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
+          //.add(VariableDeclarationStatement.class, new DeclarationAndForToFor()) // issue 144
           .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
@@ -174,7 +175,7 @@ public class Toolbox {
               new DeclarationInitializerReturnUpdateAssignment(), //
               new DeclarationInitializerStatementTerminatingScope(), //
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
-              new AssignmentAndWhileToFor(), // issue 144
+              new DeclarationAndWhileToFor(), // issue 144
               null) //
           .add(IfStatement.class, //
               new IfTrueOrFalse(), //
