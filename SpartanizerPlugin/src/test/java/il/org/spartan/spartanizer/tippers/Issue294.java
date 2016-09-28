@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue294 {
-  private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
-  private static final String OUTPUT = "for (A b: g.f((new A()),true))sum+=b;";
+  private static final String INPUT = "A a=new A();for (A b: g.f(a,true))sum+=b;";
+  private static final String OUTPUT = "for(A b: g.f((new A()),true))sum+=b;";
   Statement s = into.s(INPUT);
   EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
   BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
@@ -46,5 +46,10 @@ import il.org.spartan.spartanizer.engine.*;
 
   @Test public void e() {
     assert !haz.unknownNumberOfEvaluations(truex, s);
+  }
+
+  @Test public void f() {
+    trimmingOf("for (int a: f(¢)) g(a);") //
+        .stays();
   }
 }

@@ -24,7 +24,8 @@ import org.junit.runners.*;
 
   @Test public void A$04() {
     trimmingOf("for(int i=4 ; true ; ++i){doSomething(i);if(done())break;}return something();")
-        .gives("for(int ¢=4 ; true ; ++¢){doSomething(¢);if(done())return something();}").stays();
+        .gives("for(int ¢=4 ; true ; ++¢){doSomething(¢);if(done())return something();}")//
+        .stays();
   }
 
   @Test public void A$05() {
