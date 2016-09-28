@@ -22,7 +22,8 @@ import org.junit.runners.*;
 
   @Test public void A$c_2() {
     trimmingOf("public final class A{" + "synchronized public void fun(final int a) {}" + "final private String example1step1 = \"Alex\";" + "}")
-        .gives("public final class A{" + "public synchronized void fun(final int a) {}" + "private final String example1step1 = \"Alex\";" + "}").stays();
+        .gives("public final class A{" + "public synchronized void fun(final int a) {}" + "private final String example1step1 = \"Alex\";" + "}")
+        .stays();
   }
 
   public void A$d() {

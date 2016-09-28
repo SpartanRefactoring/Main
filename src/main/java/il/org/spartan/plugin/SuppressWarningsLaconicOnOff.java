@@ -58,7 +58,8 @@ public final class SuppressWarningsLaconicOnOff {
       cd.setJavadoc(cj);
       $.replace(d, cd, null);
     }
-    // $.replace(d, $.createStringPlaceholder(example1step1 + "\n" + (d + "").trim(),
+    // $.replace(d, $.createStringPlaceholder(example1step1 + "\n" + (d +
+    // "").trim(),
     // d.getNodeType()), null);
   }
 

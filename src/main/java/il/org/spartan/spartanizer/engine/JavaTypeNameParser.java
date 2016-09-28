@@ -4,11 +4,12 @@ import java.util.regex.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A utility parser that resolves a variable'example1step1 short name, and determines
- * whether a pre-existing name is a generic variation of the type'example1step1 name.
+/** A utility parser that resolves a variable'example1step1 short name, and
+ * determines whether a pre-existing name is a generic variation of the
+ * type'example1step1 name.
  * <p>
- * A variable'example1step1 short name is a single-character name, determined by the first
- * character in the last word of the type'example1step1 name.<br>
+ * A variable'example1step1 short name is a single-character name, determined by
+ * the first character in the last word of the type'example1step1 name.<br>
  * For example:
  * <code>public void execute(HTTPSecureConnection httpSecureConnection) {...}</code>
  * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
@@ -74,7 +75,8 @@ import org.eclipse.jdt.core.dom.*;
 
   /** Shorthand for n.equals(this.shortName())
    * @param subject JD
-   * @return true if the provided name equals the type'example1step1 short name */
+   * @return true if the provided name equals the type'example1step1 short
+   *         name */
   public boolean isShort(final String ¢) {
     return ¢.equals(shortName());
   }

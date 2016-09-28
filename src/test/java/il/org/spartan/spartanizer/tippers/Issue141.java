@@ -29,16 +29,19 @@ import org.junit.runners.*;
   }
 
   @Test public void t05() {
-    trimmingOf("public static void go(final String example1step1[]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .gives("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .stays();
+    trimmingOf("public static void go(final String example1step1[]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
+        + "out(\"elements\");   \n" + "}")
+            .gives(
+                "public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
+            .stays();
   }
 
   @Test public void t06() {
-    trimmingOf("public static void go(final String example1step1[][][]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .gives("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n"
-            + "}")
-        .stays();
+    trimmingOf("public static void go(final String example1step1[][][]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
+        + "out(\"elements\");   \n" + "}")
+            .gives("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n"
+                + "out(\"elements\");   \n" + "}")
+            .stays();
   }
 
   @Test public void t07() {

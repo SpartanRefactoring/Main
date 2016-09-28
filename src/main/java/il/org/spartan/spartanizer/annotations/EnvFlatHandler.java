@@ -16,7 +16,8 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
   // we shouldn't forget to test it as you tested the engine last time...
   // TODO: Dan, (Alex) we can leave comments like this to mark changes we want
   // the other to know.
-  // before starting work we should run threw "TODO: myName"example1step1, and afterwards
+  // before starting work we should run threw "TODO: myName"example1step1, and
+  // afterwards
   // remove it them:)
   static {
     testSetFlat = generateSet();
@@ -51,14 +52,14 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
-      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
-        return ¢.values();
-      }
-
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(values(¢));
         return true;
+      }
+
+      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
+        return ¢.values();
       }
     });
   }

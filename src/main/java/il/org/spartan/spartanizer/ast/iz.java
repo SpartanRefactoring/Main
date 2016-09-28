@@ -234,6 +234,15 @@ public enum iz {
     return ¢ != null && ¢ instanceof Expression;
   }
 
+  public static boolean expressionOfEnhancedFor(final ASTNode child, final ASTNode parent) {
+    if (child == null || parent == null || !iz.enhancedFor(parent))
+      return false;
+    final EnhancedForStatement parent1 = az.enhancedFor(parent);
+    assert parent1 != null;
+    assert step.expression(parent1) != null;
+    return step.expression(parent1) == child;
+  }
+
   /** Determine whether a node is an "expression statement"
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
@@ -830,14 +839,5 @@ public enum iz {
       LoggingManner.logEvaluationError(this, x);
       return false;
     }
-  }
-
-  public static boolean expressionOfEnhancedFor(final ASTNode child, final ASTNode parent) {
-    if (child == null || parent == null || !iz.enhancedFor(parent))
-      return false;
-    EnhancedForStatement parent1 = az.enhancedFor(parent);
-    assert parent1 != null;
-    assert step.expression(parent1) != null;
-    return step.expression(parent1) == child;
   }
 }
