@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.spartanizations.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class WringsTest {
@@ -42,7 +41,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
 
   @Test public void inlineExpressionWithSideEffect() {
     final Expression e = into.e("f()");
-    azzert.that(sideEffects.free(e), is(false));
+    azzert.that(!haz.sideEffects(e), is(false));
     final String input = "int a = f(); return a += 2 * a;";
     final CompilationUnit u = Wrap.Statement.intoCompilationUnit(input);
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(u);
@@ -51,7 +50,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     azzert.that(n, iz("a"));
     final Expression initializer = f.getInitializer();
     azzert.that(initializer, iz("f()"));
-    azzert.that(sideEffects.free(initializer), is(false));
+    azzert.that(!haz.sideEffects(initializer), is(false));
     final ASTNode parent = f.getParent();
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
@@ -63,7 +62,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     azzert.that(o, iz("+="));
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
-    azzert.that(sideEffects.free(initializer), is(false));
+    azzert.that(!haz.sideEffects(initializer), is(false));
     azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }

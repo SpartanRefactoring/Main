@@ -60,16 +60,15 @@ public final class LaconizeProject extends BaseHandler {
       final AtomicBoolean cancled = new AtomicBoolean(false);
       try {
         ps.run(true, true, pm -> {
-//          a.setProgressMonitor(pm);
+          // a.setProgressMonitor(pm);
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
               us.size());
           int n = 0;
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
-            if (pm.isCanceled()) {
+            if (pm.isCanceled())
               cancled.set(true);
-            }
             pm.worked(1);
             pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
             if (!a.apply(¢))
@@ -86,7 +85,7 @@ public final class LaconizeProject extends BaseHandler {
       if (cancled.get() || us.isEmpty())
         break;
     }
-    if (MAX_PASSES == i)
+    if (i == MAX_PASSES)
       throw new ExecutionException("Too many iterations");
     final int finalCount = countTips(currentCompilationUnit);
     return eclipse

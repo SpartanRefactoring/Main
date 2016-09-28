@@ -22,6 +22,10 @@ import il.org.spartan.spartanizer.engine.*;
     azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }
 
+  @Test public void listOfIntsa() {
+    azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
+  }
+
   @Test public void shortNameASTRewriter() {
     azzert.that(spartan.shorten(t("ASTRewriter __;")), equalTo("r"));
   }

@@ -13,14 +13,6 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue177 {
   @SuppressWarnings("unused") @Test public void BitWiseAnd_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) & 1;
-        azzert.that(x, is(0));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -46,6 +38,14 @@ import il.org.spartan.*;
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) & 1;
+        azzert.that(x, is(0));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -77,14 +77,6 @@ import il.org.spartan.*;
 
   @SuppressWarnings("unused") @Test public void BitWiseOr_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -110,6 +102,14 @@ import il.org.spartan.*;
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) | 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -118,14 +118,6 @@ import il.org.spartan.*;
 
   @SuppressWarnings("unused") @Test public void BitWiseXor_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) ^ 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -151,6 +143,14 @@ import il.org.spartan.*;
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) ^ 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -188,14 +188,6 @@ import il.org.spartan.*;
 
   @SuppressWarnings("unused") @Test public void logicalAnd_withSideEffectsEX() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
-        azzert.aye(in.a == 1);
-      }
-
       class Inner {
         int a;
 
@@ -209,6 +201,14 @@ import il.org.spartan.*;
           return false;
         }
       }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(true) & true;
+        azzert.nay(x);
+        azzert.aye(in.a == 1);
+      }
     }
     new Class();
     trimmingOf("a=a && b").gives("a&=b");
@@ -216,14 +216,6 @@ import il.org.spartan.*;
 
   @SuppressWarnings("unused") @Test public void logicalAnd_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final boolean x = in.f(true) & true;
-        azzert.nay(x);
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -249,6 +241,14 @@ import il.org.spartan.*;
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(true) & true;
+        azzert.nay(x);
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -286,14 +286,6 @@ import il.org.spartan.*;
 
   @SuppressWarnings("unused") @Test public void logicalOr_withSideEffectsEX() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final boolean x = in.f(false) | false;
-        azzert.aye(x);
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -307,6 +299,14 @@ import il.org.spartan.*;
           return true;
         }
       }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final boolean x = in.f(false) | false;
+        azzert.aye(x);
+        azzert.that(in.a, is(1));
+      }
     }
     new Class();
     trimmingOf("a=a||b").gives("a|=b");
@@ -314,14 +314,6 @@ import il.org.spartan.*;
 
   @SuppressWarnings("unused") @Test public void LogicalOr_withSideEffectsEXT() {
     class Class {
-      Inner in = new Inner(0);
-
-      Class() {
-        final int x = in.f(1) | 1;
-        azzert.that(x, is(3));
-        azzert.that(in.a, is(1));
-      }
-
       class Inner {
         int a;
 
@@ -347,6 +339,14 @@ import il.org.spartan.*;
           }
           return new C().h();
         }
+      }
+
+      Inner in = new Inner(0);
+
+      Class() {
+        final int x = in.f(1) | 1;
+        azzert.that(x, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();

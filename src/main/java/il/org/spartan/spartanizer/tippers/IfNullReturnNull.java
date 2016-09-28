@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -20,8 +21,8 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> imple
   }
 
   @Override public boolean prerequisite(final IfStatement x) {
-    Expression then = step.expression(step.then(x));
-    InfixExpression e = az.infixExpression(step.expression(x));
+    final Expression then = step.expression(step.then(x));
+    final InfixExpression e = az.infixExpression(step.expression(x));
     if (!iz.comparison(e))
       return false;
     final InfixExpression condition = az.comparison(e);

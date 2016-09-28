@@ -18,6 +18,7 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Fluent API services for the plugin
  * @author Yossi Gil
@@ -57,10 +58,10 @@ public enum eclipse {
   /** @param u A compilation unit for reference - you give me an arbitrary
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
-   * @param pm A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link wizard@nullProgressMonitor{
+   * @param pm A standard {@link IProgressMonitor} - if you don'tipper care
+   *        about operation times use {@link wizard@nullProgressMonitor{
    * @return List of all compilation units in the current project
-   * @throws JavaModelException don't forget to catch */
+   * @throws JavaModelException don'tipper forget to catch */
   static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
     pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
@@ -102,6 +103,22 @@ public enum eclipse {
    * @return current {@link IWorkbenchWindow} */
   static IWorkbenchWindow currentWorkbenchWindow() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+  }
+
+  // TODO Ori: do not create a compilation unit
+  /** @param u JD
+   * @param m JD
+   * @return node marked by the marker in the compilation unit */
+  @SuppressWarnings("boxing") static ASTNode getNodeByMarker(final ICompilationUnit u, final IMarker m) {
+    try {
+      final int s = (int) m.getAttribute(IMarker.CHAR_START);
+      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
+          .getCoveringNode();
+    } catch (final CoreException x) {
+      // TODO Ori: log it
+      x.printStackTrace();
+    }
+    return null;
   }
 
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {

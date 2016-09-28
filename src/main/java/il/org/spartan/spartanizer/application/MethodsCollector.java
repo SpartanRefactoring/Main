@@ -19,21 +19,6 @@ import il.org.spartan.utils.*;
 public final class MethodsCollector {
   static Set<String> methods = new LinkedHashSet<>();
 
-  public static void main(final String[] where) throws IOException {
-    collect(where.length != 0 ? where : new String[] { "." });
-    int n = 0;
-    final CSVStatistics w = new CSVStatistics("methods.csv", "property");
-    for (final String ¢ : methods) {
-      if (++n % 10 != 0)
-        continue;
-      w.put("Body", ¢);
-      w.put("Characters", ¢.length());
-      w.put("Tokens", metrics.tokens(¢));
-      w.nl();
-    }
-    System.err.println("Look for your output here: " + w.close());
-  }
-
   private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
@@ -65,5 +50,20 @@ public final class MethodsCollector {
   private static void collect(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where))
       collect(¢);
+  }
+
+  public static void main(final String[] where) throws IOException {
+    collect(where.length != 0 ? where : new String[] { "." });
+    int n = 0;
+    final CSVStatistics w = new CSVStatistics("methods.csv", "property");
+    for (final String ¢ : methods) {
+      if (++n % 10 != 0)
+        continue;
+      w.put("Body", ¢);
+      w.put("Characters", ¢.length());
+      w.put("Tokens", metrics.tokens(¢));
+      w.nl();
+    }
+    System.err.println("Look for your output here: " + w.close());
   }
 }

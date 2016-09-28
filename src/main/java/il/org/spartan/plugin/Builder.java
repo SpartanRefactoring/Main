@@ -25,36 +25,9 @@ public final class Builder extends IncrementalProjectBuilder {
   /** the ID under which this builder is registered */
   public static final String BUILDER_ID = "spartan.tipper";
   private static final String MARKER_TYPE = "il.org.spartan.tip";
-  /** the key in the marker's properties map under which the type of the
-   * spartanization is stored */
+  /** the key in the marker's properties map under which the type of
+   * the spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
-
-  /** deletes all spartanization tip markers
-   * @param f the file from which to delete the markers
-   * @throws CoreException if this method fails. Reasons include: This resource
-   *         does not exist. This resource is a project that is not open.
-   *         Resource changes are disallowed during certain types of resource
-   *         change event notification¢ See {@link IResourceChangeEvent}¢for
-   *         more details. */
-  public static void deleteMarkers(final IFile ¢) throws CoreException {
-    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
-  }
-
-  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
-    d.accept(internalDelta -> {
-      final int k = internalDelta.getKind();
-      // return true to continue visiting children.
-      if (k != IResourceDelta.ADDED && k != IResourceDelta.CHANGED)
-        return true;
-      addMarkers(internalDelta.getResource());
-      return true;
-    });
-  }
-
-  static void addMarkers(final IResource ¢) throws CoreException {
-    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
-      addMarkers((IFile) ¢);
-  }
 
   private static void addMarker(final GUI$Applicator a, final Tip r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
@@ -79,8 +52,50 @@ public final class Builder extends IncrementalProjectBuilder {
           addMarker(s, ¢, f.createMarker(MARKER_TYPE));
   }
 
+  static void addMarkers(final IResource ¢) throws CoreException {
+    if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
+      addMarkers((IFile) ¢);
+  }
+
+  /** deletes all spartanization tip markers
+   * @param f the file from which to delete the markers
+   * @throws CoreException if this method fails. Reasons include: This resource
+   *         does not exist. This resource is a project that is not open.
+   *         Resource changes are disallowed during certain types of resource
+   *         change event notification¢ See {@link IResourceChangeEvent}¢for
+   *         more details. */
+  public static void deleteMarkers(final IFile ¢) throws CoreException {
+    ¢.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ONE);
+  }
+
+  public static void incrementalBuild(final IResourceDelta d) throws CoreException {
+    d.accept(internalDelta -> {
+      final int k = internalDelta.getKind();
+      // return true to continue visiting children.
+      if (k != IResourceDelta.ADDED && k != IResourceDelta.CHANGED)
+        return true;
+      addMarkers(internalDelta.getResource());
+      return true;
+    });
+  }
+
   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
+  }
+
+  private void build() throws CoreException {
+    final IResourceDelta d = getDelta(getProject());
+    if (d == null)
+      fullBuild();
+    else
+      incrementalBuild(d);
+  }
+
+  private void build(final int kind) throws CoreException {
+    if (kind != FULL_BUILD)
+      build();
+    else
+      fullBuild();
   }
 
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
@@ -103,20 +118,5 @@ public final class Builder extends IncrementalProjectBuilder {
     } catch (final CoreException x) {
       LoggingManner.logCancellationRequest(this, x);
     }
-  }
-
-  private void build() throws CoreException {
-    final IResourceDelta d = getDelta(getProject());
-    if (d == null)
-      fullBuild();
-    else
-      incrementalBuild(d);
-  }
-
-  private void build(final int kind) throws CoreException {
-    if (kind != FULL_BUILD)
-      build();
-    else
-      fullBuild();
   }
 }

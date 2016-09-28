@@ -436,7 +436,7 @@ import il.org.spartan.spartanizer.ast.*;
   }
 
   @Test public void test74() {
-    final InfixExpression i = i("a * (b * (d *(x*y)*(s*t*(u*w))* c*(y*z)*(y*z)))");
+    final InfixExpression i = i("a * (b * (d *(x*y)*(s*tipper*(u*w))* c*(y*z)*(y*z)))");
     c.collect(i);
     azzert.that(c.multipliers().size(), is(14));
     azzert.that(c.dividers().size(), is(0));

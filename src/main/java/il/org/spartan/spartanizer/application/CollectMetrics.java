@@ -24,20 +24,6 @@ public final class CollectMetrics {
   private static CSVStatistics output = init(OUTPUT, "property");
   private static CSVStatistics Tips = init(OUTPUT_Tips, "tips");
 
-  public static void main(final String[] where) {
-    go(where.length != 0 ? where : new String[] { "." });
-    System.err.println("Your output should be here: " + output.close());
-  }
-
-  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
-    try {
-      a.createRewrite(u).rewriteAST($, null).apply($);
-      return $;
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
-  }
-
   private static void collectTips(final String javaCode, final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggesions(before));
   }
@@ -77,6 +63,11 @@ public final class CollectMetrics {
     }
   }
 
+  public static void main(final String[] where) {
+    go(where.length != 0 ? where : new String[] { "." });
+    System.err.println("Your output should be here: " + output.close());
+  }
+
   /** Bug, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on
@@ -110,6 +101,15 @@ public final class CollectMetrics {
       Tips.put("to", $.to);
       Tips.put("linenumber", $.lineNumber);
       Tips.nl();
+    }
+  }
+
+  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
+    try {
+      a.createRewrite(u).rewriteAST($, null).apply($);
+      return $;
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
     }
   }
 
