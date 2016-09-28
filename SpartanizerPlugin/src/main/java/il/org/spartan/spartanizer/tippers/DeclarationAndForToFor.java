@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,33 +24,18 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class DeclarationAndForToFor extends ReplaceToNextStatement<VariableDeclarationStatement> implements TipperCategory.CommnoFactoring {
-
-  public static ASTNode replace(final VariableDeclarationStatement f, final ForStatement ¢) {
-    ForStatement $ = setExpressionAndInitializers(¢, f);
-    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
+  private static Expression dupForLastStatement(final ForStatement ¢) {
+    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ForStatement setExpressionAndInitializers(final ForStatement ¢, final VariableDeclarationStatement f) {
-    ForStatement $ = duplicate.of(¢);
-    List<Expression> initializers = initializers($);
-    if(initializers.isEmpty())
-      initializers.add(dupInitializer(f));
-    // TODO: Alex, else have to compare initializers identifiers to given VariableDeclarationStatement names. 
-    return $;
-  }
-  
   private static Expression dupInitializer(final VariableDeclarationStatement ¢) {
-    List<VariableDeclarationFragment> fragments = new ArrayList<>(); 
-    for(VariableDeclarationFragment f : step.fragments(¢))    
+    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
+    for (final VariableDeclarationFragment f : step.fragments(¢))
       fragments.add(duplicate.of(f));
-    VariableDeclarationExpression $ = duplicate.of(¢.getAST().newVariableDeclarationExpression(fragments.get(0)));
+    final VariableDeclarationExpression $ = duplicate.of(¢.getAST().newVariableDeclarationExpression(fragments.get(0)));
     step.fragments($).clear();
     step.fragments($).addAll(fragments);
     return $;
-  }
-
-  private static Expression dupForLastStatement(final ForStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
   private static ForStatement forWhithoutLastStatement(final ForStatement $, final ForStatement s) {
@@ -69,6 +55,21 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatement<Variabl
 
   private static boolean lastStatementIsUpdate(final ForStatement ¢) {
     return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢));
+  }
+
+  public static ASTNode replace(final VariableDeclarationStatement f, final ForStatement ¢) {
+    final ForStatement $ = setExpressionAndInitializers(¢, f);
+    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
+  }
+
+  private static ForStatement setExpressionAndInitializers(final ForStatement ¢, final VariableDeclarationStatement f) {
+    final ForStatement $ = duplicate.of(¢);
+    final List<Expression> initializers = initializers($);
+    if (initializers.isEmpty())
+      initializers.add(dupInitializer(f));
+    // TODO: Alex, else have to compare initializers identifiers to given
+    // VariableDeclarationStatement names.
+    return $;
   }
 
   @Override public String description(final VariableDeclarationStatement ¢) {
