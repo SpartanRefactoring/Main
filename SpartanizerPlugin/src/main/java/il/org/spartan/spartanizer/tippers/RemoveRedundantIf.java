@@ -22,21 +22,6 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
     return true;
   }
 
-  @Override public String description(final IfStatement ¢) {
-    return "remove :" + ¢;
-  }
-
-  @Override public ASTNode replacement(final IfStatement s) {
-    if (s == null)
-      return null;
-    final boolean condition = !haz.sideEffects(s.getExpression());
-    final boolean then = checkBlock(s.getThenStatement());
-    final boolean elze = checkBlock(s.getElseStatement());
-    return condition && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
-        : !condition || !then || elze || s.getElseStatement() == null ? null
-            : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
-  }
-
   private boolean checkBlock(final ASTNode n) {
     if (n != null
         && (iz.expression(n) && haz.sideEffects(az.expression(n))
@@ -51,5 +36,20 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
             || iz.variableDeclarationStatement(¢) && !checkVariableDecleration(az.variableDeclrationStatement(¢)))
           return false;
     return true;
+  }
+
+  @Override public String description(final IfStatement ¢) {
+    return "remove :" + ¢;
+  }
+
+  @Override public ASTNode replacement(final IfStatement s) {
+    if (s == null)
+      return null;
+    final boolean condition = !haz.sideEffects(s.getExpression());
+    final boolean then = checkBlock(s.getThenStatement());
+    final boolean elze = checkBlock(s.getElseStatement());
+    return condition && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
+        : !condition || !then || elze || s.getElseStatement() == null ? null
+            : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
   }
 }

@@ -132,11 +132,11 @@ import il.org.spartan.spartanizer.ast.*;
     similar(wizard.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 
-  @Test public void statement() {
-    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
-  }
-
   private void similar(final String s1, final String s2) {
     azzert.that(wizard.essence(s2), is(wizard.essence(s1)));
+  }
+
+  @Test public void statement() {
+    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
   }
 }

@@ -105,6 +105,14 @@ import il.org.spartan.spartanizer.tipping.*;
     emptySimplestE_Aux(u, d, s);
   }
 
+  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final TipperApplicator a) {
+    try {
+      a.rewriterOf(u, (IMarker) null).rewriteAST(d, null).apply(d);
+    } catch (MalformedTreeException | BadLocationException e) {
+      throw new AssertionError(e);
+    }
+  }
+
   @Test public void expressionVsExpression() {
     trimmingOf("6 - 7 < a * 3").gives("-1 < 3 * a");
   }
@@ -194,13 +202,5 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void threeStatements() {
     assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
-  }
-
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final TipperApplicator a) {
-    try {
-      a.rewriterOf(u, (IMarker) null).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
   }
 }

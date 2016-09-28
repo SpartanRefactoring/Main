@@ -37,11 +37,31 @@ public abstract class Tipper<N extends ASTNode> implements Kind {
     return !canTip(¢);
   }
 
+  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
+    return (Class<N>) c2;
+  }
+
   @Override public String description() {
     return getClass().getSimpleName();
   }
 
   public abstract String description(N n);
+
+  private Class<N> initializeMyOperandsClass() {
+    Class<N> $ = null;
+    for (final Method ¢ : getClass().getMethods())
+      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
+        $ = lowest($, ¢.getParameterTypes()[0]);
+    return $ != null ? $ : castClass(ASTNode.class);
+  }
+
+  private boolean isDefinedHere(final Method ¢) {
+    return ¢.getDeclaringClass() == getClass();
+  }
+
+  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
+    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
+  }
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
@@ -64,25 +84,5 @@ public abstract class Tipper<N extends ASTNode> implements Kind {
 
   public Tip tip(final N n, final ExclusionManager m) throws TipperFailure {
     return m != null && m.isExcluded(n) ? null : tip(n);
-  }
-
-  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
-    return (Class<N>) c2;
-  }
-
-  private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
-    for (final Method ¢ : getClass().getMethods())
-      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
-        $ = lowest($, ¢.getParameterTypes()[0]);
-    return $ != null ? $ : castClass(ASTNode.class);
-  }
-
-  private boolean isDefinedHere(final Method ¢) {
-    return ¢.getDeclaringClass() == getClass();
-  }
-
-  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
-    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 }

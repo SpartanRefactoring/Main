@@ -243,8 +243,10 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void bugIntroducingMISSINGWord1() {
-    trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), example1step1, f)")
-        .gives("b.f(a) && As.g(f).h(c) == -1 ? o(example1step1,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),example1step1,f) : null");
+    trimmingOf(
+        "b.f(a) && -1 == As.g(f).h(c) ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), example1step1, f)")
+            .gives(
+                "b.f(a) && As.g(f).h(c) == -1 ? o(example1step1,b,g(f)) : b.f(\".in\") && !y(d,b)? o(b.z(u,variableDeclarationFragment),example1step1,f) : null");
   }
 
   @Test public void bugIntroducingMISSINGWord1a() {
@@ -252,8 +254,9 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void bugIntroducingMISSINGWord1b() {
-    trimmingOf("b.f(a) && X ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), example1step1, f)")
-        .gives("b.f(a)&&X?o(example1step1,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),example1step1,f):null");
+    trimmingOf(
+        "b.f(a) && X ? o(example1step1, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), example1step1, f)")
+            .gives("b.f(a)&&X?o(example1step1,b,g(f)):b.f(\".in\")&&!y(d,b)?o(b.z(u,variableDeclarationFragment),example1step1,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord1c() {
@@ -681,7 +684,8 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void declarationInitializerReturnExpression() {
-    trimmingOf("String tipper = Bob + Wants + To + \"Sleep \"; " + "  return (right_now + tipper);    ").gives("return(right_now+(Bob+Wants+To+\"Sleep \"));");
+    trimmingOf("String tipper = Bob + Wants + To + \"Sleep \"; " + "  return (right_now + tipper);    ")
+        .gives("return(right_now+(Bob+Wants+To+\"Sleep \"));");
   }
 
   @Test public void declarationInitializesRotate() {
@@ -1484,6 +1488,7 @@ import il.org.spartan.spartanizer.tipping.*;
   @Test public void issue54WhileScopeDoesNotInclude() {
     included("int a  = f(); while (c) b[i] = a;", VariableDeclarationFragment.class).notIn(new DeclarationInitializerStatementTerminatingScope());
   }
+
   @Test public void issue62a() {
     trimmingOf("int f(int ixx) { for(;;++ixx) if(false) break; return ixx; }").gives("int f(int ixx) { for(;;++ixx){} return ixx; }").stays();
   }
@@ -2360,16 +2365,18 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void redundantButNecessaryBrackets1() {
-    trimmingOf("if (windowSize != INFINITE_WINDOW) {\n" + "  if (getN() == windowSize)\n" + "    eDA.addElementRolling(variableDeclarationFragment);\n"
-        + "  else if (getN() < windowSize)\n" + "    eDA.addElement(variableDeclarationFragment);\n" + "} else {\n" + "  System.h('!');\n" + "  System.h('!');\n"
-        + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  eDA.addElement(variableDeclarationFragment);\n"
-        + "}").stays();
+    trimmingOf(
+        "if (windowSize != INFINITE_WINDOW) {\n" + "  if (getN() == windowSize)\n" + "    eDA.addElementRolling(variableDeclarationFragment);\n"
+            + "  else if (getN() < windowSize)\n" + "    eDA.addElement(variableDeclarationFragment);\n" + "} else {\n" + "  System.h('!');\n"
+            + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n"
+            + "  eDA.addElement(variableDeclarationFragment);\n" + "}").stays();
   }
 
   @Test public void redundantButNecessaryBrackets2() {
-    trimmingOf("if (windowSize != INFINITE_WINDOW) {\n" + "  if (getN() == windowSize)\n" + "    eDA.addElementRolling(variableDeclarationFragment);\n" + "} else {\n"
-        + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n"
-        + "  System.h('!');\n" + "  eDA.addElement(variableDeclarationFragment);\n" + "}").stays();
+    trimmingOf(
+        "if (windowSize != INFINITE_WINDOW) {\n" + "  if (getN() == windowSize)\n" + "    eDA.addElementRolling(variableDeclarationFragment);\n"
+            + "} else {\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n" + "  System.h('!');\n"
+            + "  System.h('!');\n" + "  System.h('!');\n" + "  eDA.addElement(variableDeclarationFragment);\n" + "}").stays();
   }
 
   @Test public void redundantButNecessaryBrackets3() {

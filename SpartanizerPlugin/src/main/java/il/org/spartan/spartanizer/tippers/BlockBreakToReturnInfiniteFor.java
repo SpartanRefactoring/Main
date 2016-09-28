@@ -29,8 +29,23 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements Kind.Collapse {
+  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
+    Statement $ = null;
+    for (final Statement ¢ : statements(b)) {
+      if (iz.ifStatement(¢))
+        $ = handleIf(az.ifStatement(¢), nextReturn);
+      if (iz.breakStatement(¢))
+        return ¢;
+    }
+    return $;
+  }
+
   public static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
+  }
+
+  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+    return handleIf(az.ifStatement(s), nextReturn);
   }
 
   public static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
@@ -58,30 +73,15 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
   }
 
+  private static boolean isInfiniteLoop(final ForStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
+  }
+
   public static Statement make(final Statement s, final ReturnStatement nextReturn) {
     return iz.breakStatement(s) ? s //
         : iz.ifStatement(s) ? handleIf(s, nextReturn) //
             : iz.block(s) ? handleBlock(az.block(s), nextReturn) //
                 : null;
-  }
-
-  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
-    Statement $ = null;
-    for (final Statement ¢ : statements(b)) {
-      if (iz.ifStatement(¢))
-        $ = handleIf(az.ifStatement(¢), nextReturn);
-      if (iz.breakStatement(¢))
-        return ¢;
-    }
-    return $;
-  }
-
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
-    return handleIf(az.ifStatement(s), nextReturn);
-  }
-
-  private static boolean isInfiniteLoop(final ForStatement ¢) {
-    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
