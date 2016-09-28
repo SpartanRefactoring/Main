@@ -26,10 +26,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
       assert $ != null;
       return new IMarkerResolution[] { $.getFix(), $.getFixWithPreview(),
-          new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize entire function"),
-          new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize entire class"), GUI$Applicator.getTipperCommitDeclaration(),
-          GUI$Applicator.getWringCommitFile(), GUI$Applicator.getWringCommitProject(), QuickFixer.disableFunctionFix(), QuickFixer.disableClassFix(),
-          QuickFixer.disableFileFix() };
+          new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize function"),
+          new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize class"), new LaconizeCurrent(),
+          GUI$Applicator.getTipperCommitDeclaration(), GUI$Applicator.getWringCommitFile(), GUI$Applicator.getWringCommitProject(),
+          QuickFixer.disableFunctionFix(), QuickFixer.disableClassFix(), QuickFixer.disableFileFix() };
     } catch (final CoreException x) {
       LoggingManner.logEvaluationError(this, x);
       return new IMarkerResolution[] {};

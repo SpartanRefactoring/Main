@@ -54,8 +54,8 @@ public class Pattern<N extends ASTNode> {
     return $;
   }
 
-  public boolean matches(ASTNode n) {
-    return matches(pattern, n);
+  public boolean matches(ASTNode ¢) {
+    return matches(pattern, ¢);
   }
 
   public static boolean matches(ASTNode p, ASTNode n) {
@@ -91,7 +91,7 @@ class Matcher {
       if (!ids.containsKey(id))
         ids.put(id, new ArrayList<>());
       for (ASTNode other : ids.get(id))
-        if (!n.toString().equals(other.toString()))
+        if (!(n + "").equals((other + "")))
           return false;
       ids.get(id).add(n);
       return n instanceof Expression;
@@ -99,13 +99,13 @@ class Matcher {
     if (n.getNodeType() != p.getNodeType())
       return false;
     if (iz.literal(p))
-      return p.toString().equals(n.toString());
+      return (p + "").equals((n + ""));
     List<ASTNode> nChildren = getChildren(n);
     List<ASTNode> pChildren = getChildren(p);
     if (nChildren.size() != pChildren.size())
       return false;
-    for (int i = 0; i < pChildren.size(); ++i)
-      if (!matches(pChildren.get(i), nChildren.get(i)))
+    for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+      if (!matches(pChildren.get(¢), nChildren.get(¢)))
         return false;
     return true;
   }

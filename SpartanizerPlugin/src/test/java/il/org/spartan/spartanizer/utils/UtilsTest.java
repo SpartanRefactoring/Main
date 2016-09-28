@@ -65,5 +65,6 @@ import il.org.spartan.*;
     azzert.that(removeWhites("AB\rC\n"), is("ABC"));
     azzert.that(removeWhites("A\fB\rC\n"), is("ABC"));
     azzert.that(removeWhites("\t\t\nA\tA\fB\rC\n"), is("AABC"));
+
   }
 }
