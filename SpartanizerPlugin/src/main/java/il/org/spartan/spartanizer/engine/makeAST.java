@@ -95,7 +95,7 @@ public enum makeAST {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
       final StringBuilder $ = new StringBuilder();
       for (String line = r.readLine(); ; line = r.readLine(), $.append(line).append(System.lineSeparator()))
-        if (line != null)
+        if (line == null)
           return $ + "";
     } catch (final IOException e) {
       throw new RuntimeException(e);
