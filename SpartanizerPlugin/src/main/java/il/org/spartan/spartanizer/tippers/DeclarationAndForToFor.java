@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class DeclarationAndForToFor extends ReplaceToNextStatement<VariableDeclarationStatement> implements Kind.Collapse {
+public final class DeclarationAndForToFor extends ReplaceToNextStatement<VariableDeclarationStatement> implements Category.CommnoFactoring {
 
   public static ASTNode replace(final VariableDeclarationStatement f, final ForStatement ¢) {
     ForStatement $ = setExpressionAndInitializers(¢, f);

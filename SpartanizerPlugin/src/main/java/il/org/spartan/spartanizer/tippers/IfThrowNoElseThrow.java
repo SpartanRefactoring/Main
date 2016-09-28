@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement> implements Kind.Ternarization {
+public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement> implements Category.Ternarization {
   static Expression getThrowExpression(final Statement ¢) {
     final ThrowStatement $ = extract.throwStatement(¢);
     return $ == null ? null : extract.core($.getExpression());

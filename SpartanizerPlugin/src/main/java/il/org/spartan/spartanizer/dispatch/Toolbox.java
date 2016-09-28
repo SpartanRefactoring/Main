@@ -125,7 +125,7 @@ public class Toolbox {
               // new ConcatStrings(), //removed for now so it won'tipper break
               // tests,
               // see issue #120
-              new InfixSubractionEvaluate(), //
+              new InfixSubtractionEvaluate(), //
               new InfixTermsZero(), //
               new InfixPlusRemoveParenthesis(), //
               new InfixAdditionSort(), //
