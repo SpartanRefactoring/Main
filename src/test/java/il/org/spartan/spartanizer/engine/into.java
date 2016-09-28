@@ -62,8 +62,8 @@ public enum into {
   /** Convert an array of {@link String} into a {@link List} of
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
-   * @param expressions an array of {@link String}s, each
-   *        representing a Java expression
+   * @param expressions an array of {@link String}s, each representing a Java
+   *        expression
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
   public static List<Expression> es(final String... expressions) {
@@ -106,5 +106,12 @@ public enum into {
 
   public static Type t(final String codeFragment) {
     return findFirst.firstType(s(codeFragment));
+  }
+
+  /** @param p a {@link String} that represents a Java Compilation unit
+   * @return {@link CompilationUnit} data structure representing the
+   *         parameter. */
+  public static CompilationUnit cu(String cu) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from((cu));
   }
 }
