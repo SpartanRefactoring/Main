@@ -276,8 +276,8 @@ public final class BatchSpartanizer {
 
   Process dumpOutput(final Process p) {
     try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-      for (String line = in.readLine(); line != null; line = in.readLine())
-        System.out.println(line);
+      for (String line = in.readLine(); line != null; line = in.readLine(), System.out.println(line))
+        ;
     } catch (final IOException x) {
       LoggingManner.logProbableBug(this, x);
     }

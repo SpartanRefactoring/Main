@@ -211,12 +211,11 @@ public class Toolbox {
           .seal();
   }
 
-  private static void disable(final List<Tipper<? extends ASTNode>> ts, final Class<? extends TipperCategory> c) {
-    if (false)
+  private static void disable(final List<Tipper<? extends ASTNode>> ns, final Class<? extends TipperCategory> c) {
     removing: for (;;) {
-      for (int i = 0; i < ts.size(); ++i)
-        if (DeclarationInitialiazelUpdateAssignment.class.isAssignableFrom(ts.get(i).getClass())) {
-          ts.remove(i);
+      for (int ¢ = 0; ¢ < ns.size(); ++¢)
+        if (DeclarationInitialiazelUpdateAssignment.class.isAssignableFrom(ns.get(¢).getClass())) {
+          ns.remove(¢);
           continue removing;
         }
       break;
@@ -233,8 +232,8 @@ public class Toolbox {
   private final Map<Class<? extends ASTNode>, List<Tipper<? extends ASTNode>>> activeTippers = new HashMap<>();
 
   public void disable(final Class<? extends TipperCategory> c) {
-    for (final List<Tipper<? extends ASTNode>> x : activeTippers.values())
-      disable(x, c);
+    for (final List<Tipper<? extends ASTNode>> ¢ : activeTippers.values())
+      disable(¢, c);
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -262,8 +261,8 @@ public class Toolbox {
 
   public int tippersCount() {
     int $ = 0;
-    for (final List<Tipper<? extends ASTNode>> ts : activeTippers.values())
-      $ += ts.size();
+    for (final List<?> ¢ : activeTippers.values())
+      $ += ¢.size();
     return $;
   }
 

@@ -38,8 +38,8 @@ public class Pattern<N extends ASTNode> {
     };
   }
 
-  public boolean matches(ASTNode n) {
-    return matches(pattern, n);
+  public boolean matches(ASTNode ¢) {
+    return matches(pattern, ¢);
   }
 
   public static boolean matches(ASTNode p, ASTNode n) {
