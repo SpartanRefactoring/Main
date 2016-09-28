@@ -9,11 +9,13 @@ import org.junit.runners.*;
  * @since 2016 */
 @Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue111 {
   @Test public void A$a_1() {
-    trimmingOf("public final class A {" + "static public int a;" + "}").gives("public final class A {" + "public static int a;" + "}");
+    trimmingOf("public final class A {" + "static public int a;" + "}")//
+        .gives("public final class A {" + "public static int a;" + "}");
   }
 
   @Test public void A$b_1() {
-    trimmingOf("public final class A {" + "static final public int a;" + "}").gives("public final class A {" + "public static final int a;" + "}");
+    trimmingOf("public final class A {" + "static final public int a;" + "}")//
+        .gives("public final class A {" + "public static final int a;" + "}");
   }
 
   @Test public void A$c() {
@@ -26,7 +28,8 @@ import org.junit.runners.*;
   }
 
   public void A$d() {
-    trimmingOf("protected public final class A{}").gives("public protected class A{}");
+    trimmingOf("protected public final class A{}")//
+        .gives("public protected class A{}");
   }
 
   @Test public void A$d_1() {
@@ -34,37 +37,43 @@ import org.junit.runners.*;
   }
 
   @Test public void A$e() {
-    trimmingOf("protected public final class A{volatile static int a;}").gives("public protected final class A{volatile static int a;}")
-        .gives("public protected final class A{static volatile int a;}").stays();
+    trimmingOf("protected public final class A{volatile static int a;}")//
+        .gives("public protected final class A{volatile static int a;}").gives("public protected final class A{static volatile int a;}").stays();
   }
 
   @Test public void A$g() {
-    trimmingOf("protected public final public enum Level { " + "HIGH, MEDIUM, LOW" + "}")
-        .gives(" protected public public enum Level { " + "HIGH, MEDIUM, LOW" + "}")
-        .gives("public protected enum Level { \n" + "HIGH, MEDIUM, LOW\n" + "}");
+    trimmingOf("protected public final public enum Level { HIGH, MEDIUM, LOW}").gives("protected public public enum Level { " + "HIGH, MEDIUM, LOW}")
+        .gives("public protected enum Level {HIGH, MEDIUM, LOW}")//
+        .stays();
   }
 
   public void A$h() {
-    trimmingOf("protected public int a;").gives("public protected int a;");
+    trimmingOf("protected public int a;")//
+        .gives("public protected int a;");
   }
 
   public void A$i() {
-    trimmingOf("protected public int a;").gives("public protected int a;");
+    trimmingOf("protected public int a;")//
+        .gives("public protected int a;");
   }
 
   public void A$q() {
-    trimmingOf("protected public int a;").gives("public protected int a;");
+    trimmingOf("protected public int a;")//
+        .gives("public protected int a;");
   }
 
   public void A$w() {
-    trimmingOf("protected public int a;").gives("public protected int a;");
+    trimmingOf("protected public int a;")//
+        .gives("public protected int a;");
   }
 
   public void A$y() {
-    trimmingOf("synchronized volatile public int a;").gives("public volatile synchronized int a;");
+    trimmingOf("synchronized volatile public int a;")//
+        .gives("public volatile synchronized int a;");
   }
 
   public void A$z() {
-    trimmingOf("volatile private int a;").gives("private volatile int a;");
+    trimmingOf("volatile private int a;")//
+        .gives("private volatile int a;");
   }
 }
