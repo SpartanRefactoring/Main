@@ -21,21 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-
-public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.CommnoFactoring {
-
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    ForStatement $ = setExpressionAndInitializers(¢, f);
-    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
-  }
-
-  private static ForStatement setExpressionAndInitializers(final WhileStatement ¢, final VariableDeclarationFragment f) {
-    ForStatement $ = ¢.getAST().newForStatement();
-    $.setExpression(duplicate.of(expression(¢)));
-    initializers($).add(dupInitializer(f));
-    return $;
-  }
-  
+public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.Collapse {
   private static Expression dupInitializer(final VariableDeclarationFragment ¢) {
     final VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
     final VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
@@ -46,7 +32,6 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
   private static Expression dupWhileLastStatement(final WhileStatement ¢) {
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
-
 
   private static ForStatement forWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     updaters($).add(dupWhileLastStatement(s));
@@ -59,10 +44,6 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return $;
   }
 
-  private static boolean goingOut() {
-    return false;
-  }
-
   private static ASTNode lastStatement(final WhileStatement ¢) {
     return hop.lastStatement(¢.getBody());
   }
@@ -71,13 +52,25 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
     return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢));
   }
 
+  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    final ForStatement $ = setExpressionAndInitializers(¢, f);
+    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
+  }
+
+  private static ForStatement setExpressionAndInitializers(final WhileStatement ¢, final VariableDeclarationFragment f) {
+    final ForStatement $ = ¢.getAST().newForStatement();
+    $.setExpression(duplicate.of(expression(¢)));
+    initializers($).add(dupInitializer(f));
+    return $;
+  }
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.asStatement(a.getParent());
-    if (goingOut())
+    if (parent == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
