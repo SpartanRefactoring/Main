@@ -48,7 +48,7 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return $;
   }
 
-  private static boolean fitting(final WhileStatement ¢) {
+  private static boolean fitting(@SuppressWarnings("unused") final WhileStatement ¢) {
     // TODO: check that the variables declared before the loop doesn't in use
     // after the scope.
     return true;
