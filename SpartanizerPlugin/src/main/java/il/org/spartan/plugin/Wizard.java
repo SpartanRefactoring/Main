@@ -3,6 +3,8 @@ package il.org.spartan.plugin;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 
+import il.org.spartan.utils.*;
+
 /** @author Artium Nihamkin
  * @since 2013/01/01 */
 public final class Wizard extends RefactoringWizard {
@@ -12,5 +14,6 @@ public final class Wizard extends RefactoringWizard {
   }
 
   @Override protected void addUserInputPages() {
+    ___.______unused(this); 
   }
 }
