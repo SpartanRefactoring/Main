@@ -13,7 +13,6 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
-    // minus.LastStatement(dupWhileBody(s));
     $.setBody(minus.LastStatement(dupWhileBody(s)));
     return $;
   }
