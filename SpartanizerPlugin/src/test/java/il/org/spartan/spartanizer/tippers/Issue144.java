@@ -25,7 +25,7 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void t03a() {
+  @Ignore @Test public void t03a() {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
         + "for (int i = 0; i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
             .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
@@ -34,7 +34,7 @@ import org.junit.runners.*;
             .stays();
   }
   
-  @Test public void t03b() {
+  @Ignore @Test public void t03b() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;"
         + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
             .gives("private static String toPath(String groupId) {"
@@ -42,7 +42,7 @@ import org.junit.runners.*;
             .stays();
   }
   
-  @Test public void t03c() {
+  @Ignore @Test public void t03c() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;"
         + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
             .gives("private static String toPath(String groupId) {"
