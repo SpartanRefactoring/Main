@@ -37,9 +37,7 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
   @SuppressWarnings("unchecked") private static Expression dupInitializers(final VariableDeclarationFragment ¢) {
     final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
     final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
-    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
-    duplicate.into(step.fragments(parent), fragments);
-    $.fragments().addAll(minus.firstElem(fragments));
+    $.fragments().addAll(nextFragments(parent));
     $.setType(duplicate.of(parent.getType()));
     return $;
   }
@@ -48,6 +46,12 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     // TODO: check that the variables declared before the loop doesn't in use
     // after the scope.
     return true;
+  }
+
+  private static List<VariableDeclarationFragment> nextFragments(final VariableDeclarationStatement parent) {
+    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
+    duplicate.into(step.fragments(parent), fragments);
+    return minus.firstElem(fragments);
   }
 
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
