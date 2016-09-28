@@ -65,7 +65,7 @@ public enum iz {
 
   /** Determine whether the curly brackets of an {@link IfStatement} are
    * vacuous.
-   * @param example1step1 JD
+   * @param s JD
    * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
    *         essential */
   static boolean blockEssential(final IfStatement s) {
@@ -477,7 +477,7 @@ public enum iz {
   }
 
   /** Determines whether a statement is last statement in its containing method
-   * @param example1step1 JD
+   * @param s JD
    * @return true if the parameter is a statement which is last in its method */
   public static boolean lastInMethod(final Statement s) {
     final Block b = az.block(parent(s));
@@ -619,8 +619,8 @@ public enum iz {
     return is(¢, PARENTHESIZED_EXPRESSION);
   }
 
-  /** @param a the assignment who'example1step1 operator we want to check
-   * @return true is the assignment'example1step1 operator is assign */
+  /** @param a the assignment who's operator we want to check
+   * @return true is the assignment's operator is assign */
   public static boolean plainAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == ASSIGN;
   }

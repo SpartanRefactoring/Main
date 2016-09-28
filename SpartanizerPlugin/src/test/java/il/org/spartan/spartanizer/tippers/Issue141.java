@@ -29,7 +29,7 @@ import org.junit.runners.*;
   }
 
   @Test public void b$05() {
-    trimmingOf("public static void go(final String example1step1[]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
+    trimmingOf("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
             .gives(
                 "public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
@@ -37,7 +37,7 @@ import org.junit.runners.*;
   }
 
   @Test public void b$06() {
-    trimmingOf("public static void go(final String example1step1[][][]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
+    trimmingOf("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
             .gives("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n"
                 + "out(\"elements\");   \n" + "}")
@@ -81,7 +81,7 @@ import org.junit.runners.*;
   }
 
   @Test public void t05() {
-    trimmingOf("public static void go(final String example1step1[]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
+    trimmingOf("public static void go(final String s[]) {  \n" + "for (final String a : s) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
             .gives(
                 "public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
@@ -89,7 +89,7 @@ import org.junit.runners.*;
   }
 
   @Test public void t06() {
-    trimmingOf("public static void go(final String example1step1[][][]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
+    trimmingOf("public static void go(final String s[][][]) {  \n" + "for (final String a : s) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
             .gives("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n"
                 + "out(\"elements\");   \n" + "}")

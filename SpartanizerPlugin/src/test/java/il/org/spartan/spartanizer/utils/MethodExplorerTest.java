@@ -55,7 +55,7 @@ import il.org.spartan.spartanizer.engine.*;
 
   @Test public void localVariablesTryClause() {
     azzert.that(new MethodExplorer(into.d("  void f() {\n" + "    final File f = new File(\"f\");\n"
-        + "    try (final InputStream example1step1 = new FileInputStream(f); final InputStreamReader is = new InputStreamReader(example1step1)) {\n"
+        + "    try (final InputStream s = new FileInputStream(f); final InputStreamReader is = new InputStreamReader(s)) {\n"
         + "      f();\n" + "    } catch (final FileNotFoundException e) {\n" + "      e.printStackTrace();\n"
         + "    } catch (final IOException e) {\n" + "      e.printStackTrace();\n" + "    } finally {\n" + "      f();\n" + "    }\n" + "  }\n"))
             .localVariables().size(),

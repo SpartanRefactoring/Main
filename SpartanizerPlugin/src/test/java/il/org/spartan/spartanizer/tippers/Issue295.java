@@ -61,14 +61,14 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B01() {
-    trimmingOf("  public static boolean checkVariableDecleration(VariableDeclarationStatement example1step1) { " + //
-        "List<VariableDeclarationFragment> lst = step.fragments(example1step1); " + //
+    trimmingOf("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { " + //
+        "List<VariableDeclarationFragment> lst = step.fragments(s); " + //
         "for (VariableDeclarationFragment ¢ : lst) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
-        "}").gives("  public static boolean checkVariableDecleration(VariableDeclarationStatement example1step1) { " + //
-            "for (VariableDeclarationFragment ¢ : step.fragments(example1step1);) " + //
+        "}").gives("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { " + //
+            "for (VariableDeclarationFragment ¢ : step.fragments(s);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -77,14 +77,14 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B02() {
-    trimmingOf("void  f(V example1step1) { " + //
-        "List<U> lst = step.fragments(example1step1); " + //
+    trimmingOf("void  f(V s) { " + //
+        "List<U> lst = step.fragments(s); " + //
         "for (U ¢ : lst) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
-        "}").gives(" f(U example1step1) { " + //
-            "for (U ¢ : step.fragments(example1step1);) " + //
+        "}").gives(" f(U s) { " + //
+            "for (U ¢ : step.fragments(s);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //

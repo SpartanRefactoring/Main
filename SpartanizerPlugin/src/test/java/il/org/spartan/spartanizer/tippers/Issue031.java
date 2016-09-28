@@ -11,13 +11,13 @@ import org.junit.runners.*;
   @Test public void a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(now.modifiers());\n"
         + "    }")
-            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement example1step1, int abcd) {\n"
+            .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
                 + "      return hasAnnotation(now.modifiers());\n" + "    }");
   }
 
   @Test public void b() {
     trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}")
-        .gives("void f(final VariableDeclarationStatement example1step1, int abc) {}");
+        .gives("void f(final VariableDeclarationStatement s, int abc) {}");
   }
 
   @Test public void c() {

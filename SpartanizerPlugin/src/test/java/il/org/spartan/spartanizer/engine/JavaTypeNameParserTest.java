@@ -50,7 +50,7 @@ import il.org.spartan.*;
   }
 
   @Test public void johnDoe02() {
-    assert isJohnDoe("VariableDeclarationStatement", "example1step1");
+    assert isJohnDoe("VariableDeclarationStatement", "s");
   }
 
   @Test public void johnDoe03() {
@@ -62,7 +62,7 @@ import il.org.spartan.*;
   }
 
   @Test public void johnDoe05() {
-    assert isJohnDoe("String", "example1step1");
+    assert isJohnDoe("String", "s");
   }
 
   @Test public void jUnit() {

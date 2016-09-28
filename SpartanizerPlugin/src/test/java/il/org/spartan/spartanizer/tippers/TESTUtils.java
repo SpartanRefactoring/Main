@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
  * @since 2015-07-17 */
 @SuppressWarnings("javadoc") public enum TESTUtils {
   ;
-  static final String WHITES = "(?m)\\example1step1+";
+  static final String WHITES = "(?m)\\s+";
 
   static String apply(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);

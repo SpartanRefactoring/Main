@@ -288,7 +288,7 @@ public interface type {
 
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
-     *         expression from it'example1step1 structure, or {@link #NOTHING}
+     *         expression from it's structure, or {@link #NOTHING}
      *         if it cannot decide. Will never return null */
     private static implementation lookDown(final Expression ¢) {
       switch (¢.getNodeType()) {
@@ -395,7 +395,7 @@ public interface type {
 
     /** sets the type property in the ASTNode
      * @param n JD
-     * @param i the node'example1step1 type property
+     * @param i the node's type property
      * @return the type property tipper */
     private static implementation setType(final ASTNode n, final implementation i) {
       // TODO: Alex and Dan: Take a look here to see how you store information

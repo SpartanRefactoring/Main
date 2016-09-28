@@ -58,13 +58,13 @@ import org.junit.*;
   }
 
   @Test public void t13() {
-    trimmingOf("if(b)" + "{int i" + ";int j;" + "if(example1step1){" + "int q;" + "}" + "}else{int q;int tipper;}")//
-        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "if(example1step1){" + "int q;" + "}}");
+    trimmingOf("if(b)" + "{int i" + ";int j;" + "if(s){" + "int q;" + "}" + "}else{int q;int tipper;}")//
+        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "if(s){" + "int q;" + "}}");
   }
 
   @Test public void t14() {
-    trimmingOf("if(b)" + "{int i;" + "int j;" + "while(example1step1){" + "int q;" + "}" + "}else{int q;int tipper;}")//
-        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "while(example1step1){" + "int q;" + "}}");
+    trimmingOf("if(b)" + "{int i;" + "int j;" + "while(s){" + "int q;" + "}" + "}else{int q;int tipper;}")//
+        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "while(s){" + "int q;" + "}}");
   }
 
   @Test public void t15() {

@@ -34,8 +34,8 @@ public final class subject {
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
-     * @param example1step1 a Statement
-     * @return a copy of the statement example1step1 if it is'nt null, else
+     * @param s a Statement
+     * @return a copy of the statement s if it is'nt null, else
      *         returns null
      * @see rebase
      * @see duplicate */
@@ -260,13 +260,13 @@ public final class subject {
       return $;
     }
 
-    /** Transform the inner into a block if it'example1step1 possible
+    /** Transform the inner into a block if it's possible
      * @return a Block statement <code>or</code> a <code>null</code> */
     public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
 
-    /** use the inner list to make a block depending on it'example1step1 size
+    /** use the inner list to make a block depending on it's size
      * (only in case there are more than 2 elements)
      * @return
      *         <ol>

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-// TODO: Niv, what'example1step1 going on here?
+// TODO: Niv, what's going on here?
 // TODO: Yossi, I think we never managed to get this to work. Stav was the last
 // one working on it
 // so I don'tipper know how it is right now or why it is commented out.

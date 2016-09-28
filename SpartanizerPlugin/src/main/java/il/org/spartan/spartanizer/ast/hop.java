@@ -20,7 +20,7 @@ public interface hop {
    * @param ¢ JD
    * @return an {@link Iterable} that traverses the ancestors of the ASTNode.
    *         Use case: Counting the number of Expressions among a given
-   *         ASTNode'example1step1 ancestors */
+   *         ASTNode's ancestors */
   static Iterable<ASTNode> ancestors(final ASTNode ¢) {
     return () -> new Iterator<ASTNode>() {
       ASTNode current = ¢;
@@ -42,7 +42,7 @@ public interface hop {
   }
 
   /** @param ¢ JD
-   * @return ASTNode of the type if one of ¢'example1step1 parent ancestors is a
+   * @return ASTNode of the type if one of ¢'s parent ancestors is a
    *         container type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))

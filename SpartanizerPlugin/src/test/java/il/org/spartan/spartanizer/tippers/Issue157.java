@@ -85,7 +85,7 @@ import org.junit.*;
   }
 
   // Parameterized that are not of some Collection type, don'tipper get an
-  // 'example1step1' if
+  // 's' if
   // they're not an array.
   @Test public void test06() {
     trimmingOf(" public static String combine(final Many<Paranoid> paranoid) {  \n" //
@@ -102,7 +102,7 @@ import org.junit.*;
                 + "}");
   }
 
-  // Parameterized Collections do get an additional 'example1step1'.
+  // Parameterized Collections do get an additional 's'.
   @Test public void test07() {
     trimmingOf(" public static String combine(final List<Paranoid> paranoid) {  \n" //
         + "final String[] ss = new String[paranoid.length()];  \n" //
