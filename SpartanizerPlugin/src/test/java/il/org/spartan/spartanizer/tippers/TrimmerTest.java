@@ -909,7 +909,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimmingOf("if (b) {\n" + " /* empty */" + "; \n" + "} // no else \n" + " throw new Exception();\n").gives("  throw new Exception();");
+    trimmingOf("if (b) {;} throw new Exception();\n").gives("  throw new Exception();");
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
