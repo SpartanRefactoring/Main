@@ -49,12 +49,14 @@ public abstract class ENVTestEngineAbstract {
   public static void compareInOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
     assert testSet != null;
     assert $ != null;
-    final Iterator<Entry<String, Information>> j = $.iterator();
     boolean entryFound = true;
-    for (final Entry<String, Information> i : testSet) {
+   // TODO: Alex and Dan: use or each loop here.
+    
+    final Iterator<Entry<String, Information>> j = $.iterator();
+    for (final Entry<String, Information> ¢ : testSet) {
       entryFound = false;
       while (j.hasNext())
-        if (i.equals(j.next())) {
+        if (¢.equals(j.next())) {
           entryFound = true;
           break;
         }
@@ -119,7 +121,7 @@ public abstract class ENVTestEngineAbstract {
 
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */
-  public void addTestSet(final List<MemberValuePair> ps) {
+  public static void addTestSet(final List<MemberValuePair> ps) {
     final String s = wizard.condense(first(ps).getValue());
     /* A call to an inner function of PrudentType that calls
      * typeSwitch(s,PrudentType.NOTHING) would be an improvement over the
@@ -144,12 +146,12 @@ public abstract class ENVTestEngineAbstract {
    * @param $ JD */
   protected abstract void handler(final Annotation ¢);
 
-  /* define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin, End.
-   * define: inner annotation = Id. ASTVisitor that goes over the ASTNodes in
-   * which annotations can be defined, and checks if the annotations are of the
-   * kind that interests us. An array of inner annotations is defined inside of
-   * each outer annotation of interest. I think it will be less error prone and
-   * more scalable to implement another, internal, ASTVisitor that goes over
+  /** define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin,
+   * End. define: inner annotation = Id. ASTVisitor that goes over the ASTNodes
+   * in which annotations can be defined, and checks if the annotations are of
+   * the kind that interests us. An array of inner annotations is defined inside
+   * of each outer annotation of interest. I think it will be less error prone
+   * and more scalable to implement another, internal, ASTVisitor that goes over
    * each inner annotation node, and send everything to an outside function to
    * add to the Sets as required. That means that each inner annotation will be
    * visited twice from the same outer annotation, but that should not cause

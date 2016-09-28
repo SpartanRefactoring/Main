@@ -15,9 +15,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-25
  * @see {@link sideEffects} */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
-  private static boolean isContainsSideEffect(final InfixExpression ¢) {
-    for (final Expression e : extract.allOperands(¢))
-      if (!sideEffects.free(e))
+  private static boolean isContainsSideEffect(final InfixExpression x) {
+    for (final Expression ¢ : extract.allOperands(x))
+      if (!sideEffects.free(¢))
         return true;
     return false;
   }
@@ -34,9 +34,9 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     return $;
   }
 
-  private boolean isContainsZero(final InfixExpression ¢) {
-    for (final Expression e : extract.allOperands(¢))
-      if (iz.numberLiteral(e) && "0".equals(az.numberLiteral(e).getToken()))
+  private boolean isContainsZero(final InfixExpression e) {
+    for (final Expression ¢ : extract.allOperands(e))
+      if (iz.numberLiteral(¢) && "0".equals(az.numberLiteral(¢).getToken()))
         return true;
     return false;
   }
