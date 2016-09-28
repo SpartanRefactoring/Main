@@ -67,7 +67,7 @@ class Matcher {
     if (n.getNodeType() != p.getNodeType())
       return false;
     if (iz.literal(p))
-      return p.toString().equals(n.toString());
+      return p.toString().equals(("" + n));
     List<? extends ASTNode> nChildren = Recurser.children(n);
     List<? extends ASTNode> pChildren = Recurser.children(p);
     if (nChildren.size() != pChildren.size())
