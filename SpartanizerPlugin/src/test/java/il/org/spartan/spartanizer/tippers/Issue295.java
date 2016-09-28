@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * the case of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */
+@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue295 {
   private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
