@@ -25,12 +25,12 @@ public class LeonidasTest {
 }
 
 class azzert {
-  public static expression expression(String s) {
-    return new expression(s);
+  public static expression expression(String ¢) {
+    return new expression(¢);
   }
 
-  public static statement statement(String s) {
-    return new statement(s);
+  public static statement statement(String ¢) {
+    return new statement(¢);
   }
 }
 
