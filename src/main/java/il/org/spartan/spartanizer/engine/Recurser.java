@@ -15,11 +15,11 @@ public final class Recurser<T> {
   /** Get a list of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  public static List<ASTNode> children(final ASTNode n) {
+  public static List<? extends ASTNode> children(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
-      return az.block(n).statements();
+      return step.statements(az.block(n));
     final InfixExpression ¢ = az.infixExpression(n);
     if (¢ != null) {
       // We must have this weird special case of adding right before left
@@ -66,7 +66,7 @@ public final class Recurser<T> {
   }
 
   public void postVisit(final Consumer<Recurser<T>> f) {
-    final List<ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty()) {
       f.accept(this);
       return;
@@ -84,7 +84,7 @@ public final class Recurser<T> {
   }
 
   public T postVisit(final Function<Recurser<T>, T> t) {
-    final List<ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return this.current = t.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
@@ -101,7 +101,7 @@ public final class Recurser<T> {
 
   public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
-    final List<ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return;
     final List<Recurser<T>> rs = new ArrayList<>();
@@ -113,7 +113,7 @@ public final class Recurser<T> {
 
   public T preVisit(final Function<Recurser<T>, T> t) {
     this.current = t.apply(this);
-    final List<ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(this.root);
     if (children == null || children.isEmpty())
       return this.current;
     final List<Recurser<T>> rs = new ArrayList<>();
