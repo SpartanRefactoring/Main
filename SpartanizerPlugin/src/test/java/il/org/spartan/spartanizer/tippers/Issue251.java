@@ -28,7 +28,7 @@ import org.junit.*;
   }
 
   @Test public void t06() {
-    trimmingOf("if(b()){int i;}").gives("if(b())int i;");
+    trimmingOf("if(b()){int i;}").stays();
   }
 
   @Test public void t07() {
@@ -50,11 +50,11 @@ import org.junit.*;
   }
 
   @Test public void t11() {
-    trimmingOf("if(b==true){int i=g();}").gives("if(b)int i=g();");
+    trimmingOf("if(b==true){int i=g();}").gives("if(b){int i=g();}").stays();
   }
 
   @Test public void t12() {
-    trimmingOf("if(b==true){int i=5,q=g();}").gives("if(b)int i=5,q=g();");
+    trimmingOf("if(b==true){int i=5,q=g();}").gives("if(b){int i=5,q=g();}").stays();
   }
 
   @Test public void t13() {
@@ -68,7 +68,7 @@ import org.junit.*;
   }
 
   @Test public void t15() {
-    trimmingOf("if(b==q()){int i;}").gives("if(b==q())int i;");
+    trimmingOf("if(b==q()){int i;}").stays();
   }
 
   @Test public void t16() {
@@ -109,5 +109,9 @@ import org.junit.*;
 
   @Test public void t25() {
     trimmingOf("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}").gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}");
+  }
+  
+  @Test public void Issue302_test() {
+    trimmingOf("if(b()){int i;}").stays();
   }
 }
