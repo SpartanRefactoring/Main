@@ -13,35 +13,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Tipper} with a given sub-class of
-     * {@link ASTNode}.
-     * @param n JD
-     * @param ns JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Tipper<N>... ns) {
-      final List<Tipper<N>> l = get(n);
-      for (final Tipper<N> ¢ : ns) {
-        if (¢ == null)
-          break;
-        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
-        if (!¢.wringGroup().isEnabled())
-          continue;
-        l.add(¢);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
-  }
-
   /** The default instance of this class */
   static Toolbox instance;
 
@@ -49,13 +20,6 @@ public class Toolbox {
     if (instance == null)
       refresh();
     return instance;
-  }
-
-  private static <N extends ASTNode> Tipper<N> find(final N n, final List<Tipper<N>> ns) {
-    for (final Tipper<N> $ : ns)
-      if ($.canTip(n))
-        return $;
-    return null;
   }
 
   /** Make a {@link Toolbox} for a specific kind of wrings
@@ -244,7 +208,30 @@ public class Toolbox {
           .seal();
   }
 
+  private static void disable(final List<Tipper<? extends ASTNode>> ts, final Class<? extends TipperCategory> c) {
+    removing: for (;;) {
+      for (int i = 0; i < ts.size(); ++i)
+        if (c.isAssignableFrom(ts.get(i).getClass())) {
+          ts.remove(i);
+          continue removing;
+        }
+      break;
+    }
+  }
+
+  private static <N extends ASTNode> Tipper<N> find(final N n, final List<Tipper<N>> ns) {
+    for (final Tipper<N> $ : ns)
+      if ($.canTip(n))
+        return $;
+    return null;
+  }
+
   private final Map<Class<? extends ASTNode>, List<Tipper<? extends ASTNode>>> allActiveTippers = new HashMap<>();
+
+  public void disable(final Class<? extends TipperCategory> c) {
+    for (final List<Tipper<? extends ASTNode>> x : allActiveTippers.values())
+      disable(x, c);
+  }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param pattern JD
@@ -265,6 +252,17 @@ public class Toolbox {
     return null;
   }
 
+  public int hooksCount() {
+    return allActiveTippers.keySet().size();
+  }
+
+  public int tippersCount() {
+    int $ = 0;
+    for (final List<Tipper<? extends ASTNode>> ts : allActiveTippers.values())
+      $ += ts.size();
+    return $;
+  }
+
   @SuppressWarnings("unchecked") <N extends ASTNode> List<Tipper<N>> get(final Class<? extends ASTNode> ¢) {
     if (!allActiveTippers.containsKey(¢))
       allActiveTippers.put(¢, new ArrayList<>());
@@ -275,19 +273,32 @@ public class Toolbox {
     return get(¢.getClass());
   }
 
-  public void disable(Class<? extends TipperCategory> c) {
-    for (List<Tipper<? extends ASTNode>> x : allActiveTippers.values())
-      disable(x, c);
-  }
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Tipper} with a given sub-class of
+     * {@link ASTNode}.
+     * @param n JD
+     * @param ns JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Tipper<N>... ns) {
+      final List<Tipper<N>> l = get(n);
+      for (final Tipper<N> ¢ : ns) {
+        if (¢ == null)
+          break;
+        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+        if (!¢.wringGroup().isEnabled())
+          continue;
+        l.add(¢);
+      }
+      return this;
+    }
 
-  private static void disable(List<Tipper<? extends ASTNode>> ts, Class<? extends TipperCategory> c) {
-    removing: for (;;) {
-      for (int i = 0; i < ts.size(); ++i)
-        if (c.isAssignableFrom(ts.get(i).getClass())) {
-          ts.remove(i);
-          continue removing;
-        }
-      break;
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
     }
   }
 }
