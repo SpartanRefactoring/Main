@@ -6,6 +6,10 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
+// TODO: Author
+// TODO: classes in the test folder
+// TODO: NO WARNINGS. USe Suppress, copy from somewhere
+// TODO: Split into zillion tests, each in a function.
 public class LeonidasTest {
   @Test public void testMatches() {
     azzert.expression("X ? y == 17 : Z").matches("x == 7 ? y == 17 : 9");
@@ -21,12 +25,12 @@ public class LeonidasTest {
 }
 
 class azzert {
-  public static expression expression(String s) {
-    return new expression(s);
+  public static expression expression(String ¢) {
+    return new expression(¢);
   }
 
-  public static statement statement(String s) {
-    return new statement(s);
+  public static statement statement(String ¢) {
+    return new statement(¢);
   }
 }
 

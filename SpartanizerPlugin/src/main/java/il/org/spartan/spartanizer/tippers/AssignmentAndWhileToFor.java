@@ -21,40 +21,36 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements Kind.Collapse {
+public final class AssignmentAndWhileToFor extends ReplaceToNextStatement<Assignment> implements Category.Collapse {
   // @Override public boolean prerequisite(final WhileStatement ¢) {
   // return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   // }
-  public static ASTNode convert(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !lastStatementIsUpdate(¢) ? forWithLastStatement(¢.getAST().newForStatement(), ¢, f)
-        : forWhithoutLastStatement(¢.getAST().newForStatement(), ¢, f);
+  public static ASTNode convert(final Assignment a, final WhileStatement ¢) {
+    return !lastStatementIsUpdate(¢) ? forWithLastStatement(¢.getAST().newForStatement(), ¢, a)
+        : forWhithoutLastStatement(¢.getAST().newForStatement(), ¢, a);
   }
 
   private static Expression dupWhileLastStatement(final WhileStatement ¢) {
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ForStatement forWhithoutLastStatement(final ForStatement $, final WhileStatement s, final VariableDeclarationFragment f) {
+  private static ForStatement forWhithoutLastStatement(final ForStatement $, final WhileStatement s, final Assignment a) {
     $.setExpression(duplicate.of(expression(s)));
     updaters($).add(dupWhileLastStatement(s));
-    initializers($).add(dupInitializer(f));
+    initializers($).add(duplicate.of(a));
     $.setBody(minus.LastStatement(duplicate.of(body(s))));
     return $;
   }
 
-  private static Expression dupInitializer(VariableDeclarationFragment ¢) {
-    // Parent type is VariableDeclarationStatement.
-    VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
-    VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
-    $.setType(duplicate.of(parent.getType()));
-    return $;
-  }
-  
-  @SuppressWarnings("unchecked") private static ForStatement forWithLastStatement(final ForStatement $, final WhileStatement s, final VariableDeclarationFragment f) {
+  @SuppressWarnings("unchecked") private static ForStatement forWithLastStatement(final ForStatement $, final WhileStatement s, final Assignment a) {
     $.setExpression(duplicate.of(expression(s)));
-    $.initializers().add(dupInitializer(f));
+    $.initializers().add(duplicate.of(a));
     $.setBody(duplicate.of(body(s)));
     return $;
+  }
+
+  private static boolean goingOut() {
+    return false;
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
@@ -65,13 +61,13 @@ public final class AssignmentAndWhileToFor extends ReplaceToNextStatement<Variab
     return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢));
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢.getParent()))) + "loop";
+  @Override public String description(final Assignment ¢) {
+    return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextAssignment(¢))) + "loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.asStatement(a.getParent());
-    if (parent == null)
+    if (goingOut())
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
