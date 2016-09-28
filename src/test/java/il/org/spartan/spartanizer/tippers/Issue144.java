@@ -86,61 +86,48 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Ignore @Test public void t03c() {
+  @Test public void t03c() {
     trimmingOf(
         "private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
             .gives(
-                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one; ++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
+                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;)" + "{if ($ == 0)" + "$ = 7;++$;}" + "return $;}")
+            .gives(
+                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;++$)" + "{if ($ == 0)" + "$ = 7;}" + "return $;}")
+            .gives(
+                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
             .stays();
   }
 
-  @Ignore @Test public void t04() {
+  @Test public void t04() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "continue;"
         + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
-                + "continue;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent())" + "if (dns.contains(p))"
-                + "continue;" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))"
+                + "continue;" + "p = p.getParent();}" + "return false;" + "}")
             .stays();
   }
 
-  @Ignore @Test public void t05() {
+  @Test public void t05() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
         + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
+            .gives("static Statement recursiveElze(final IfStatement ¢) {"
+                + "for (Statement $ = ¢.getElseStatement();$ instanceof IfStatement;)$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
             .gives("static Statement recursiveElze(final IfStatement ¢) {"
                 + "for (Statement $ = ¢.getElseStatement();$ instanceof IfStatement;$ = ((IfStatement) $).getElseStatement());" + "return $;" + "}")
             .stays();
   }
 
-  @Ignore @Test public void t06() {
-    trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)p=p.getParent();return false;}")
-        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;p = p.getParent());return false;}").stays();
-  }
-
-  @Ignore @Test public void t06a() {
+  @Test public void t06a() {
     trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)f();return false;}")
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;)f();return false;}")
         .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;f());return false;}").stays();
   }
 
-  @Ignore @Test public void t06b() {
-    trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)if(dns.contains(p))return true;return false;}")
-        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;)if(dns.contains(p))return true;return false;}").stays();
-  }
-
-  @Ignore @Test public void t07() {
-    trimmingOf(
-        "public boolean check(final ASTNode n){ASTNode p=n;while(p!=null){if(dns.contains(p))return true;if(ens.contains(p))break;p=p.getParent();}return false;}")
-            .gives("public boolean check(final ASTNode n) {for  ( ASTNode p = n; p != null;p = p.getParent()) {"
-                + "if (dns.contains(p)) return true; if (ens.contains(p)) break;}return false;}")
-            .stays();
-  }
-
-  @Ignore @Test public void t08() {
-    trimmingOf("static Statement recursiveElze(final IfStatement ¢) { Statement $ = ¢.getElseStatement();"
-        + "while ($ instanceof IfStatement) $ = ((IfStatement) $).getElseStatement(); return $;}")
-            .gives("static Statement recursiveElze(final IfStatement ¢) { for(Statement $ = ¢.getElseStatement();"
-                + "$ instanceof IfStatement; $ = ((IfStatement) $).getElseStatement()); return $;}")
-            .stays();
+  @Test public void t06b() {
+    trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null){f();g();h();}return false;}")
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;){f();g();h();}return false;}")
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;h()){f();g();}return false;}")
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;h(),g()){f();}return false;}")
+        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;h(),g(),f()){}return false;}").stays();
   }
 
   @Test public void updaters_for_1() {
