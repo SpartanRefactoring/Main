@@ -206,7 +206,6 @@ public class Toolbox {
               new DeclarationInitializerStatementTerminatingScope(), //
               new DeclarationInitialiazerAssignment(), //
               new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-              new DeclarationAndWhileToFor(), // issue 144
               null) //
           .seal();
   }
