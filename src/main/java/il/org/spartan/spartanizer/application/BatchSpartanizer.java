@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.application;
-import java.util.*;
+
 import static il.org.spartan.tide.*;
 
 import java.io.*;
@@ -10,7 +10,6 @@ import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
-import il.org.spartan.java.Token.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -30,9 +29,8 @@ public final class BatchSpartanizer {
   }
 
   static String essenceNew(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\r\n", "\n")
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "").replaceAll("^\\s*$", "")
-        .replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
+    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
+        .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
         .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
         .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
         .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
@@ -119,6 +117,7 @@ public final class BatchSpartanizer {
   private PrintWriter afters;
   private CSVStatistics report;
   private final String reportFileName;
+  private static final BatchApplicator batchApplicator = new BatchApplicator().disable(Nominal.class).disable(Nanos.class);
 
   private BatchSpartanizer(final String path) {
     this(path, folder2File(path));
@@ -135,8 +134,8 @@ public final class BatchSpartanizer {
     try {
       final String essentializedCodeBefore = runScript(beforeFileName);
       final String essentializedCodeAfter = runScript(afterFileName);
-      final int numWordEssentialBefore = essentializedCodeBefore.trim().length(); 
-      final int numWordEssentialAfter = essentializedCodeAfter.trim().length(); 
+      final int numWordEssentialBefore = essentializedCodeBefore.trim().length();
+      final int numWordEssentialAfter = essentializedCodeAfter.trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
@@ -189,10 +188,7 @@ public final class BatchSpartanizer {
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = essenceNew(in + "").length();
-    BatchApplicator a = new BatchApplicator();
-    a.disable(Nominal.class);
-    a.disable(Nanos.class);
-    final String out = a.fixedPoint(in + "");
+    final String out = batchApplicator.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -239,8 +235,7 @@ public final class BatchSpartanizer {
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", δ(essence, essence2))//
         .put("% Essence", Double.parseDouble(removePercentChar(p(essence, essence2))))//
-        .put("Words)", wordCount) 
-        .put("R(T/L)", ratio(length, tide)) //
+        .put("Words)", wordCount).put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //
         .put("R(B/S)", ratio(nodes, body)) //
@@ -293,6 +288,10 @@ public final class BatchSpartanizer {
     collect();
     runEssence();
     runWordCount();
+    System.err.printf("Our batch applicator had %d tippers dispersed over %d hooks\n", //
+        box.it(batchApplicator.toolbox.tippersCount()), //
+        box.it(batchApplicator.toolbox.hooksCount())//
+    );
   }
 
   void runEssence() {

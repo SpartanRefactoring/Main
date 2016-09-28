@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public final class BatchApplicator {
-  final Toolbox toolbox = new Toolbox();
+  public final Toolbox toolbox = new Toolbox();
 
   ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
