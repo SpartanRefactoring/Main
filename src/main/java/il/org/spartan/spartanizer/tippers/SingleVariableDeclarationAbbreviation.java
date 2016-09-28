@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * This tipper is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
-public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration> implements Kind.Abbreviation {
+public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration> implements Category.Abbreviation {
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
     final Javadoc j = d.getJavadoc();
     if (j == null)

@@ -8,29 +8,30 @@ public final class PreferencesResources {
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum WringGroup {
-    Abbreviation(Kind.Abbreviation.class), //
-    Annonimaization(Kind.Annonimization.class), //
-    Canonicalization(Kind.Collapse.class), //
-    CommonFactoring(Kind.CommnoFactoring.class), //
-    Centification(Kind.Centification.class), //
-    Dollarization(Kind.Dollarization.class), //
-    EarlyReturn(Kind.EarlyReturn.class), //
-    Idiomatic(Kind.Idiomatic.class), //
-    Inlining(Kind.Inlining.class), //
-    InVain(Kind.InVain.class), //
-    ScopeReduction(Kind.ScopeReduction.class), //
-    Sorting(Kind.Sorting.class), //
-    SyntacticBaggage(Kind.SyntacticBaggage.class), //
-    Ternarization(Kind.Ternarization.class), //
+    Abbreviation(Category.Abbreviation.class), //
+    Annonimaization(Category.Annonimization.class), //
+    Canonicalization(Category.Collapse.class), //
+    CommonFactoring(Category.CommnoFactoring.class), //
+    Centification(Category.Centification.class), //
+    Dollarization(Category.Dollarization.class), //
+    EarlyReturn(Category.EarlyReturn.class), //
+    Idiomatic(Category.Idiomatic.class), //
+    Inlining(Category.Inlining.class), //
+    InVain(Category.InVain.class), //
+    ScopeReduction(Category.ScopeReduction.class), //
+    Sorting(Category.Sorting.class), //
+    SyntacticBaggage(Category.SyntacticBaggage.class), //
+    Ternarization(Category.Ternarization.class), //
+    Nanopatterns(Category.Nanos.class), //
     ;
-    private static WringGroup find(final Class<? extends Kind> ¢) {
+    private static WringGroup find(final Class<? extends Category> ¢) {
       for (final WringGroup $ : WringGroup.values())
         if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;
     }
 
-    public static WringGroup find(final Kind ¢) {
+    public static WringGroup find(final Category ¢) {
       return find(¢.getClass());
     }
 
@@ -38,17 +39,17 @@ public final class PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private final Class<? extends Kind> clazz;
+    private final Class<? extends Category> clazz;
     final String id;
     final String label;
 
-    private WringGroup(final Class<? extends Kind> clazz) {
+    private WringGroup(final Class<? extends Category> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = getLabel(clazz) + "";
     }
 
-    private Object getLabel(final Class<? extends Kind> k) {
+    private Object getLabel(final Class<? extends Category> k) {
       try {
         return k.getField("label").get(null);
       } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
@@ -63,7 +64,7 @@ public final class PreferencesResources {
   }
 
   /** Page description **/
-  public static final String PAGE_DESCRIPTION = "Preferences for the Spartan Refactoring plug-in";
+  public static final String PAGE_DESCRIPTION = "Preferences for the laconization plug-in";
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
@@ -74,6 +75,6 @@ public final class PreferencesResources {
           "always_on" }, //
       { "Disable for all projects", //
           "always_off" } };
-  public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "pref_enable_by_default_for_new_projects";
+  public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "Preference_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
 }

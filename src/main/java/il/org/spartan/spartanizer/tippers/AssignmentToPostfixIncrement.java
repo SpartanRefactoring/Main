@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code>x -= 1 </code> by <code> x-- </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assignment> implements Kind.SyntacticBaggage {
+public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assignment> implements Category.SyntacticBaggage {
   private static boolean isIncrement(final Assignment ¢) {
     return ¢.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }

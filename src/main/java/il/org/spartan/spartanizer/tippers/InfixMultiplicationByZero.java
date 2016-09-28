@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-25
  * @see {@link sideEffects} */
-public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression> implements Kind.InVain {
+public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression> implements Category.InVain {
   private static boolean isContainsSideEffect(final InfixExpression x) {
     for (final Expression ¢ : extract.allOperands(x))
       if (haz.sideEffects(¢))

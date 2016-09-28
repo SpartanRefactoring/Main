@@ -164,12 +164,12 @@ public enum extract {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
 
-  public static void findOperators(final InfixExpression e, final List<InfixExpression.Operator> $) {
-    if (e == null)
+  public static void findOperators(final InfixExpression x, final List<InfixExpression.Operator> $) {
+    if (x == null)
       return;
-    $.add(e.getOperator());
-    findOperators(az.infixExpression(e.getLeftOperand()), $);
-    findOperators(az.infixExpression(e.getRightOperand()), $);
+    $.add(x.getOperator());
+    findOperators(az.infixExpression(x.getLeftOperand()), $);
+    findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
   /** Extract the single {@link ReturnStatement} embedded in a node.
