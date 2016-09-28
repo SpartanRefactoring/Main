@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression> implements Kind.Idiomatic {
+public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression> implements Category.Idiomatic {
   private static Expression comparison(final InfixExpression ¢) {
     return subject.pair(left(¢), right(¢)).to(conjugate(¢.getOperator()));
   }

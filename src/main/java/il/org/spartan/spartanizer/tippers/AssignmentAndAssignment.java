@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements Kind.CommnoFactoring {
+public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment> implements Category.CommnoFactoring {
   static Expression extractRight(final Assignment ¢) {
     final Expression $ = extract.core(from(¢));
     return !($ instanceof Assignment) || ((Assignment) $).getOperator() != ASSIGN ? $ : extractRight((Assignment) $);

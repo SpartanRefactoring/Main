@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfLastInMethod extends EagerTipper<IfStatement> implements Kind.EarlyReturn {
+public final class IfLastInMethod extends EagerTipper<IfStatement> implements Category.EarlyReturn {
   @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + ¢.getExpression() + " for early return";
   }

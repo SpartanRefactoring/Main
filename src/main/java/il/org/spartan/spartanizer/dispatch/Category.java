@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.dispatch;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 
-public interface Kind {
+public interface Category {
   interface Abbreviation extends Nominal {
     final String label = "Abbreviation";
 
@@ -10,6 +10,15 @@ public interface Kind {
       return label;
     }
   }
+
+interface Nanos extends Modular {
+    final String label = "Tippers such as defualts.to(X) that rely on the standard nano libraries";
+
+    @Override default String description() {
+      return label;
+    }
+  }
+
 
   interface Annonimization extends Nominal {
     final String label = "Unused arguments";
@@ -134,17 +143,23 @@ public interface Kind {
   }
 }
 
-/** Auxiliary type: non public intentionally */
-interface Modular extends Kind {
+/** Auxiliary type: non public intentionally; currently unused, will be used
+ * when we have categories of nano-patterns */
+interface Nanos extends Category {
   /* Empty intentionally */
 }
 
 /** Auxiliary type: non public intentionally */
-interface Nominal extends Kind {
+interface Modular extends Category {
   /* Empty intentionally */
 }
 
 /** Auxiliary type: non public intentionally */
-interface Structural extends Kind {
+interface Nominal extends Category {
+  /* Empty intentionally */
+}
+
+/** Auxiliary type: non public intentionally */
+interface Structural extends Category {
   /* Empty intentionally */
 }

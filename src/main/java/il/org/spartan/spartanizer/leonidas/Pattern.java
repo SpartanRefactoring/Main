@@ -25,6 +25,7 @@ public class Pattern<N extends ASTNode> {
       @Override public String description(@SuppressWarnings("unused") N __) {
         return description;
       }
+      // TODO: No comments in pushed code, except for rare cases. 
       // @Override public Tip tip(final N e) {
       // return new Tip(description(e), e) {
       // @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -41,6 +42,7 @@ public class Pattern<N extends ASTNode> {
       return ((Block) n).statements();
     List<ASTNode> $ = new ArrayList<>();
     List<?> list = n.structuralPropertiesForType();
+    // TOOD: Use a utility function in class Recurser
     for (int i = 0; i < list.size(); ++i) {
       Object child = n.getStructuralProperty((StructuralPropertyDescriptor) list.get(i));
       if (child instanceof ASTNode) {
