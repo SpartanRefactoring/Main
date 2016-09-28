@@ -28,7 +28,7 @@ public final class MethodsCollector {
         $.setJavadoc(null);
         $.setName($.getAST().newSimpleName("f"));
         $.setFlags(0);
-        final String s = BatchApplicator.fixedPoint($ + "");
+        final String s = new BatchApplicator().fixedPoint($ + "");
         methods.add(tide.clean(s));
         return false;
       }

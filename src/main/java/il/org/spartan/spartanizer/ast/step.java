@@ -35,6 +35,10 @@ public enum step {
   public static Statement body(final WhileStatement ¢) {
     return ¢.getBody();
   }
+  
+  public static Statement body(final ForStatement ¢) {
+    return ¢.getBody();
+  }
 
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
