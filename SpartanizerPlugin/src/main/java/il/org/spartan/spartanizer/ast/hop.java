@@ -105,7 +105,7 @@ public interface hop {
   }
 
   /** Extract the {@link MethodDeclaration} that contains a given node.
-   * @param n JD
+   * @param pattern JD
    * @return inner most {@link MethodDeclaration} in which the parameter is
    *         nested, or <code><b>null</b></code>, if no such statement
    *         exists. */
