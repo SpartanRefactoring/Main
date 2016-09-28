@@ -25,18 +25,18 @@ import il.org.spartan.spartanizer.java.*;
   }
 
   @Test public void freeFunctionCall() {
-    assert !sideEffects.free(e("f()"));
+    assert haz.sideEffects(e("f()"));
   }
 
   @Test public void freeFunctionCalla() {
-    assert !sideEffects.free(e("i =f()"));
+    assert haz.sideEffects(e("i =f()"));
   }
 
   @Test public void seriesA01() {
-    assert sideEffects.free(e("a"));
+    assert !haz.sideEffects(e("a"));
   }
 
   @Test public void seriesA02() {
-    assert sideEffects.free(e("this.a"));
+    assert !haz.sideEffects(e("this.a"));
   }
 }

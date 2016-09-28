@@ -44,6 +44,15 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Kind.InVain {
+  private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
+    if (os1.size() != os2.size())
+      return false;
+    for (int ¢ = 0; ¢ < os1.size(); ++¢)
+      if (os1.get(¢) != os2.get(¢))
+        return false;
+    return true;
+  }
+
   static Statement reorganizeNestedStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     switch (ss.size()) {
@@ -54,15 +63,6 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
       default:
         return reorganizeStatement(s);
     }
-  }
-
-  private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
-    if (os1.size() != os2.size())
-      return false;
-    for (int ¢ = 0; ¢ < os1.size(); ++¢)
-      if (os1.get(¢) != os2.get(¢))
-        return false;
-    return true;
   }
 
   private static Block reorganizeStatement(final Statement s) {
@@ -78,7 +78,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block> implements Ki
 
   @Override public Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
-    if (identical(ss, statements(b)) || haz.hasHidings(ss))
+    if (identical(ss, statements(b)) || haz.hidings(ss))
       return null;
     final ASTNode parent = az.asStatement(parent(b));
     if (parent == null || iz.tryStatement(parent))

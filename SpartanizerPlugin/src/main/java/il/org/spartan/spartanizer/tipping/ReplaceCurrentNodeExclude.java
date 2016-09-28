@@ -11,6 +11,12 @@ import il.org.spartan.spartanizer.engine.*;
 /** Similar to {@link ReplaceCurrentNode}, but with an
  * {@link ExclusionManager} */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
+  @Override protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
+    return true;
+  }
+
+  protected abstract ASTNode replacement(N n, final ExclusionManager m);
+
   @Override public final Tip tip(final N n, final ExclusionManager m) {
     assert prerequisite(n) : LoggingManner.beginDump() + "\n n = " + n + "\n m = " + m + LoggingManner.endDump();
     final ASTNode $ = replacement(n, m);
@@ -20,10 +26,4 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
       }
     };
   }
-
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
-    return true;
-  }
-
-  protected abstract ASTNode replacement(N n, final ExclusionManager m);
 }

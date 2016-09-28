@@ -17,6 +17,13 @@ import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings({ "static-method", "unused" }) public final class EnvironmentTest {
+  class S {
+    String s;
+
+    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
+    }
+  }
+
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   Environment ee0 = Environment.genesis();
@@ -286,7 +293,7 @@ import il.org.spartan.spartanizer.utils.*;
     ENVTestEngineAbstract.compareFlatO(s);
     ENVTestEngineAbstract.testSetsReset();
   }
-  
+
   @Test public void EngineTestFlatUnordered05e() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
@@ -296,7 +303,7 @@ import il.org.spartan.spartanizer.utils.*;
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
-  
+
   @Test public void EngineTestFlatUnordered05f() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\") })"
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
@@ -308,8 +315,8 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered07() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+        + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
@@ -329,8 +336,8 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void EngineTestFlatUnordered09() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
+        + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
@@ -591,12 +598,5 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
-  }
-
-  class S {
-    String s;
-
-    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
-    }
   }
 }

@@ -22,7 +22,7 @@ import il.org.spartan.*;
   }
 
   @Test public void ast() {
-    azzert.that(new JavaTypeNameParser("AST").shortName(), is("t"));
+    azzert.that(new JavaTypeNameParser("AST").shortName(), is("tipper"));
   }
 
   @Test public void astNode() {
@@ -46,7 +46,7 @@ import il.org.spartan.*;
   }
 
   @Test public void johnDoe01() {
-    assert isJohnDoe("Type", "t");
+    assert isJohnDoe("Type", "tipper");
   }
 
   @Test public void johnDoe02() {
@@ -82,7 +82,7 @@ import il.org.spartan.*;
   }
 
   @Test public void some_name_an_electrical_engineer_can_give() {
-    azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("v"));
+    azzert.that(new JavaTypeNameParser("very_low_voltage").shortName(), is("variableDeclarationFragment"));
   }
 
   @Test public void stringBuilder() {
