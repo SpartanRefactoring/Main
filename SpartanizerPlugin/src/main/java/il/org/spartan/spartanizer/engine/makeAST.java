@@ -97,8 +97,9 @@ public enum makeAST {
       for (String ¢ = r.readLine(); ; ¢ = r.readLine(), $.append(¢).append(System.lineSeparator()))
         if (¢ == null)
           return $ + "";
-    } catch (final IOException e) {
-      throw new RuntimeException(e);
+    } catch (final IOException ¢) {
+      LoggingManner.infoIOException(¢, f + "");
+      return null;
     }
   }
 
