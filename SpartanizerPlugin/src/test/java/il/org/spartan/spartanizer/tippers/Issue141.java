@@ -45,9 +45,9 @@ import org.junit.runners.*;
   }
 
   @Test public void b$07() {
-    trimmingOf("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
+    trimmingOf("public static void go(final S ssss[]) {  \n" + "for (final S a : ssss) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
-            .gives("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
+            .gives("public static void go(final S ss[]) {  \n" + "for (final S a : ss) \n" + "out(a);  \n"
                 + "out(\"elements\");   \n" + "}")
             .stays();
   }
@@ -97,9 +97,9 @@ import org.junit.runners.*;
   }
 
   @Test public void t07() {
-    trimmingOf("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
+    trimmingOf("public static void go(final S ssss[]) {  \n" + "for (final S a : ssss) \n" + "out(a);  \n"
         + "out(\"elements\");   \n" + "}")
-            .gives("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
+            .gives("public static void go(final S ss[]) {  \n" + "for (final S a : ss) \n" + "out(a);  \n"
                 + "out(\"elements\");   \n" + "}")
             .stays();
   }
