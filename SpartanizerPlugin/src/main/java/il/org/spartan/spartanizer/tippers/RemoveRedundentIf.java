@@ -23,7 +23,7 @@ public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement> implement
   @Override public ASTNode replacement(IfStatement s) {
     if (s == null)
       return null;
-    boolean condition = sideEffects.free(s.getExpression());
+    boolean condition = !haz.sideEffects(s.getExpression());
     boolean then = RemoveRedundent.checkBlock(s.getThenStatement());
     boolean elze = RemoveRedundent.checkBlock(s.getElseStatement());
     return condition && (then && (elze || s.getElseStatement() == null)) ? s.getAST().newBlock()

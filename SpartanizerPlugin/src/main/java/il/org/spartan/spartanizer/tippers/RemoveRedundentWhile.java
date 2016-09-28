@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement> implements Kind.Collapse{
 
   @Override public ASTNode replacement(WhileStatement ¢) {
-    return ¢ == null || !sideEffects.free(¢.getExpression()) || !RemoveRedundent.checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
+    return ¢ == null || haz.sideEffects(¢.getExpression()) || !RemoveRedundent.checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 
   @Override public String description(WhileStatement ¢) {

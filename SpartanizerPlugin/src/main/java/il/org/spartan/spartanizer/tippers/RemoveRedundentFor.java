@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.RemoveRedundent;
 public class RemoveRedundentFor extends ReplaceCurrentNode<ForStatement> implements Kind.Collapse{
 
   @Override public ASTNode replacement(ForStatement ¢) {
-    return ¢ == null || !sideEffects.free(¢.getExpression()) || !RemoveRedundent.checkListOfExpressions(¢.initializers())
+    return ¢ == null || haz.sideEffects(¢.getExpression()) || !RemoveRedundent.checkListOfExpressions(¢.initializers())
         || !RemoveRedundent.checkListOfExpressions(¢.updaters()) || !RemoveRedundent.checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 

@@ -57,7 +57,7 @@ public final class Inliner {
     }
 
     public boolean canInlineinto(final ASTNode... ¢) {
-      return Collect.definitionsOf(name).in(¢).isEmpty() && (sideEffects.free(get()) || uses(¢).size() <= 1);
+      return Collect.definitionsOf(name).in(¢).isEmpty() && (!haz.sideEffects(get()) || uses(¢).size() <= 1);
     }
 
     public boolean canSafelyInlineinto(final ASTNode... ¢) {
