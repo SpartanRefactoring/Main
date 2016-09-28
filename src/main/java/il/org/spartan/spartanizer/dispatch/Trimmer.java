@@ -59,7 +59,7 @@ public class Trimmer extends GUI$Applicator {
     });
   }
 
-  /** @param n an {@link ASTNode}
+  /** @param pattern an {@link ASTNode}
    * @return true iff the node is spartanization disabled */
   public static boolean isDisabled(final ASTNode ¢) {
     return NodeData.has(¢, disabledPropertyId);
