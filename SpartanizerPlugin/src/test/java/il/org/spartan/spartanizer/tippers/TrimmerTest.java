@@ -1321,58 +1321,6 @@ import il.org.spartan.spartanizer.tipping.*;
     trimmingOf("booleanLiteral==0 ? \"asss\" : \"assfad\"").stays();
   }
 
-  @Test public void issue141_01() {
-    trimmingOf("public static void go(final Object os[], final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
-  }
-
-  @Test public void issue141_02() {
-    trimmingOf("public static void go(final List<Object> os, final String... ss) {  \n" + "for (final String saa : ss) \n" + "out(saa);  \n"
-        + "out(\"elements\", os);   \n" + "}").stays();
-  }
-
-  @Test public void issue141_03() {
-    trimmingOf("public static void go(final String ss[],String abracadabra) {  \n" + "for (final String a : ss) \n" + "out(a);  \n"
-        + "out(\"elements\",abracadabra);   \n" + "}").stays();
-  }
-
-  @Test public void issue141_04() {
-    trimmingOf("public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .stays();
-  }
-
-  @Test public void issue141_05() {
-    trimmingOf("public static void go(final String example1step1[]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
-        + "out(\"elements\");   \n" + "}")
-            .gives(
-                "public static void go(final String ss[]) {  \n" + "for (final String a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-            .stays();
-  }
-
-  @Test public void issue141_06() {
-    trimmingOf("public static void go(final String example1step1[][][]) {  \n" + "for (final String a : example1step1) \n" + "out(a);  \n"
-        + "out(\"elements\");   \n" + "}")
-            .gives("public static void go(final String ssss[][][]) {  \n" + "for (final String a : ssss) \n" + "out(a);  \n"
-                + "out(\"elements\");   \n" + "}")
-            .stays();
-  }
-
-  @Test public void issue141_07() {
-    trimmingOf("public static void go(final Stringssssss ssss[]) {  \n" + "for (final Stringssssss a : ssss) \n" + "out(a);  \n"
-        + "out(\"elements\");   \n" + "}")
-            .gives("public static void go(final Stringssssss ss[]) {  \n" + "for (final Stringssssss a : ss) \n" + "out(a);  \n"
-                + "out(\"elements\");   \n" + "}")
-            .stays();
-  }
-
-  @Test public void issue141_08() {
-    trimmingOf(
-        "public static void go(final Integer ger[]) {  \n" + "for (final Integer a : ger) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-            .gives(
-                "public static void go(final Integer is[]) {  \n" + "for (final Integer a : is) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-            .stays();
-  }
-
   @Test public void issue21a() {
     trimmingOf("a.equals(\"a\")").gives("\"a\".equals(a)");
   }
