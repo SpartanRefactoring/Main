@@ -35,7 +35,10 @@ public class Toolbox {
     if (instance == null)
       instance = new Maker()//
           .add(EnhancedForStatement.class, new EnhancedForParameterRenameToCent())//
-          .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
+          .add(VariableDeclarationExpression.class, //
+              new ForRenameInitializerToCent(), //
+              new DeclarationAndForToFor(), //
+              null) //
           .add(ThrowStatement.class, new ThrowNotLastInBlock()) //
           .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
           .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
