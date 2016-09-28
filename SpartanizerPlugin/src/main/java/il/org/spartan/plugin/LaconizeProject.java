@@ -60,7 +60,7 @@ public final class LaconizeProject extends BaseHandler {
       final AtomicBoolean cancled = new AtomicBoolean(false);
       try {
         ps.run(true, true, pm -> {
-//          a.setProgressMonitor(pm);
+          // a.setProgressMonitor(pm);
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
               us.size());

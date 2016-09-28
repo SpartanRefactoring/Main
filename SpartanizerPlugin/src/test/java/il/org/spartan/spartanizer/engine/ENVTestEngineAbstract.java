@@ -25,6 +25,26 @@ public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Information>> testSetFlat;
   protected static LinkedHashSet<Entry<String, Information>> testSetNested;
 
+  /** Adds a new Entry to testSet from the inner annotation.
+   * @param ps JD. */
+  public static void addTestSet(final List<MemberValuePair> ps) {
+    final String s = wizard.condense(first(ps).getValue());
+    /* A call to an inner function of PrudentType that calls
+     * typeSwitch(example1step1,PrudentType.NOTHING) would be an improvement
+     * over the current situation, but not ideal.
+     *
+     * An Ideal solution would be to add a
+     * "boolean contains(PrudentType t1,PrudentType t2)" function, that will
+     * return true iff type t1 is contained in type t2 - for example,
+     * PrudentType.NUMERIC is contained in PrudentType.NOTNULL.
+     *
+     * Returning a direct comparison is far too error prone, and would be a bad
+     * idea for a debug tool. */
+    // add returns true iff the element did not exist in the set already.
+    if (!testSetFlat.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
+      azzert.fail("Bad test file - an entity appears twice.");
+  }
+
   // change visibility to private.
   public static void compareFlat(final LinkedHashSet<Entry<String, Information>> ¢) {
     compareOutOfOrder(¢, testSetFlat);
@@ -50,8 +70,7 @@ public abstract class ENVTestEngineAbstract {
     assert testSet != null;
     assert $ != null;
     boolean entryFound = true;
-   // TODO: Alex and Dan: use or each loop here.
-    
+    // TODO: Alex and Dan: use or each loop here.
     final Iterator<Entry<String, Information>> j = $.iterator();
     for (final Entry<String, Information> ¢ : testSet) {
       entryFound = false;
@@ -76,10 +95,6 @@ public abstract class ENVTestEngineAbstract {
     assert $ != null;
     assert testSet != null;
     assert $.containsAll(testSet) : "some entry not found out of order!";
-  }
-
-  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
-    return new LinkedHashSet<>();
   }
 
   /** @param from - file path
@@ -113,38 +128,15 @@ public abstract class ENVTestEngineAbstract {
       testSetNested.clear();
   }
 
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
+  }
+
   protected boolean foundTestedAnnotation; // Global flag, used to
   // determine when to run the
   // test on a node with
   // potential annotations.
   protected ASTNode n;
-
-  /** Adds a new Entry to testSet from the inner annotation.
-   * @param ps JD. */
-  public static void addTestSet(final List<MemberValuePair> ps) {
-    final String s = wizard.condense(first(ps).getValue());
-    /* A call to an inner function of PrudentType that calls
-     * typeSwitch(example1step1,PrudentType.NOTHING) would be an improvement over the
-     * current situation, but not ideal.
-     *
-     * An Ideal solution would be to add a
-     * "boolean contains(PrudentType t1,PrudentType t2)" function, that will
-     * return true iff type t1 is contained in type t2 - for example,
-     * PrudentType.NUMERIC is contained in PrudentType.NOTNULL.
-     *
-     * Returning a direct comparison is far too error prone, and would be a bad
-     * idea for a debug tool. */
-    // add returns true iff the element did not exist in the set already.
-    if (!testSetFlat.add(new MapEntry<>(s.substring(1, s.length() - 1), new Information(type.baptize(wizard.condense(second(ps).getValue()))))))
-      azzert.fail("Bad test file - an entity appears twice.");
-  }
-
-  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  protected abstract void handler(final Annotation ¢);
 
   /** define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin,
    * End. define: inner annotation = Id. ASTVisitor that goes over the ASTNodes
@@ -158,13 +150,6 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
-      /** Iterate over outer annotations of the current declaration and dispatch
-       * them to handlers. otherwise */
-      void checkAnnotations(final List<Annotation> as) {
-        for (final Annotation ¢ : as)
-          handler(¢);
-      }
-
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
@@ -205,6 +190,13 @@ public abstract class ENVTestEngineAbstract {
         return true;
       }
 
+      /** Iterate over outer annotations of the current declaration and dispatch
+       * them to handlers. otherwise */
+      void checkAnnotations(final List<Annotation> as) {
+        for (final Annotation ¢ : as)
+          handler(¢);
+      }
+
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
@@ -219,4 +211,11 @@ public abstract class ENVTestEngineAbstract {
       }
     });
   }
+
+  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
+  protected abstract void handler(final Annotation ¢);
 }

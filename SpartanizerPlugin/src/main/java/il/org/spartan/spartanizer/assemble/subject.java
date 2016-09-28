@@ -104,7 +104,8 @@ public final class subject {
 
     /** A deep copy of statement and assign it to ast, if the statement exists
      * @param example1step1 a Statement
-     * @return a copy of the statement example1step1 if it is'nt null, else returns null
+     * @return a copy of the statement example1step1 if it is'nt null, else
+     *         returns null
      * @see rebase
      * @see duplicate */
     Statement claim(final Statement s) {
@@ -334,8 +335,8 @@ public final class subject {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
 
-    /** use the inner list to make a block depending on it'example1step1 size (only in case
-     * there are more than 2 elements)
+    /** use the inner list to make a block depending on it'example1step1 size
+     * (only in case there are more than 2 elements)
      * @return
      *         <ol>
      *         <li>empty statement, if inner is empty

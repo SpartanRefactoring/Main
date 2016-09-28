@@ -122,16 +122,16 @@ public enum az {
     return !($ instanceof ConditionalExpression) ? null : (ConditionalExpression) $;
   }
 
+  public static EnhancedForStatement enhancedFor(final ASTNode $) {
+    return !iz.is($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
+  }
+
   /** Down-cast, if possible, to {@link Expression}
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Expression expression(final ASTNode $) {
     return !($ instanceof Expression) ? null : (Expression) $;
-  }
-
-  public static EnhancedForStatement enhancedFor(final ASTNode $) {
-    return !iz.is($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
   }
 
   /** Down-cast, if possible, to {@link ExpressionStatement}

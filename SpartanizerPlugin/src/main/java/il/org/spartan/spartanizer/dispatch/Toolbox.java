@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Singleton containing all {@link Tipper}example1step1 which are active, allowing
- * selecting and applying the most appropriate such object for a given
+/** Singleton containing all {@link Tipper}example1step1 which are active,
+ * allowing selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
  * @author Yossi Gil
  * @since 2015-08-22 */
@@ -61,7 +61,7 @@ public class Toolbox {
               new AssignmentAndReturn(), //
               new AssignmentToFromInfixIncludingTo(), //
               new AssignmentToPostfixIncrement(), //
-              //new AssignmentAndWhileToFor(), // issue 144
+              // new AssignmentAndWhileToFor(), // issue 144
               null) //
           .add(Block.class, //
               new BlockSimplify(), //
@@ -161,7 +161,7 @@ public class Toolbox {
               new IfDegenerateElse(), //
               new IfEmptyThen(), //
               new IfShortestFirst(), //
-//              new IfNullReturnNull(), //
+              // new IfNullReturnNull(), //
               null)//
           .add(PrefixExpression.class, //
               new PrefixIncrementDecrementReturn(), //
@@ -175,7 +175,7 @@ public class Toolbox {
               new TernaryShortestFirst(), //
               new TernaryPushdown(), //
               new TernaryPushdownStrings(), //
-//              new TernaryNullCoallescing(), //
+              // new TernaryNullCoallescing(), //
               null) //
           .add(TypeDeclaration.class, //
               // new delmeTypeModifierCleanInterface(), //

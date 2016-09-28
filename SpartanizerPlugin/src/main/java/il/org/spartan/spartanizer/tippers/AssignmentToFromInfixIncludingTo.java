@@ -15,7 +15,6 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace <code>x = x # a </code> by <code> x #= a </code> where # can be any

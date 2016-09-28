@@ -11,7 +11,6 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** @author TODO: Matteo???
  * @year 2016 */

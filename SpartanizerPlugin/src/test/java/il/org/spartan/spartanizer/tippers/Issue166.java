@@ -31,7 +31,8 @@ import org.junit.runners.*;
   }
 
   @Test public void statementBlock() {
-    trimmingOf("for(final Statement example1step1:as){f(example1step1);g(example1step1);sum+=i;}").gives("for(final Statement ¢:as){f(¢);g(¢);sum+=i;}").stays();
+    trimmingOf("for(final Statement example1step1:as){f(example1step1);g(example1step1);sum+=i;}")
+        .gives("for(final Statement ¢:as){f(¢);g(¢);sum+=i;}").stays();
   }
 
   @Test public void string() {

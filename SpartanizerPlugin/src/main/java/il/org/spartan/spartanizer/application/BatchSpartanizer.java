@@ -56,8 +56,9 @@ public final class BatchSpartanizer {
   }
 
   static String essenceNew(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\example1step1\\S])*?)(?:(?!\\*/)[\\example1step1\\S])*\\*/", "")
-        .replaceAll("^\\example1step1*$", "").replaceAll("^\\example1step1*\\n", "").replaceAll("\\example1step1*$", "").replaceAll("\\example1step1+", " ")
+    return codeFragment.replaceAll("//.*?\r\n", "\n")
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\example1step1\\S])*?)(?:(?!\\*/)[\\example1step1\\S])*\\*/", "").replaceAll("^\\example1step1*$", "")
+        .replaceAll("^\\example1step1*\\n", "").replaceAll("\\example1step1*$", "").replaceAll("\\example1step1+", " ")
         .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
         .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
         .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");

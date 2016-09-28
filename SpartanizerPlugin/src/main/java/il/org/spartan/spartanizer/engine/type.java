@@ -234,8 +234,8 @@ public interface type {
 
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
-     *         expression from it'example1step1 structure, or {@link #NOTHING} if it cannot
-     *         decide. Will never return null */
+     *         expression from it'example1step1 structure, or {@link #NOTHING}
+     *         if it cannot decide. Will never return null */
     private static implementation lookDown(final Expression ¢) {
       switch (¢.getNodeType()) {
         case NULL_LITERAL:
