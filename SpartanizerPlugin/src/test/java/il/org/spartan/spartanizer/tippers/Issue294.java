@@ -16,6 +16,9 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue294 {
   private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String OUTPUT = "for (A b: g.f((new A()),true))sum+=b;";
+  Statement s = into.s(INPUT);
+  EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
+  BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
 
   /** Correct way of trimming does not change */
   @Test public void a() {
@@ -23,12 +26,6 @@ import il.org.spartan.spartanizer.engine.*;
         .gives(OUTPUT) //
         .stays();
   }
-
-  Statement s = into.s(
-      INPUT
-      );
-  EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
-  BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
 
   @Test public void b() {
     assert iz.expressionOfEnhancedFor(forr.getExpression(), forr);
@@ -46,7 +43,8 @@ import il.org.spartan.spartanizer.engine.*;
   @Test public void d() {
     assert iz.expressionOfEnhancedFor(truex.getParent(), forr);
   }
+
   @Test public void e() {
-    assert !haz.unknownNumberOfEvaluations(truex, s); 
+    assert !haz.unknownNumberOfEvaluations(truex, s);
   }
 }

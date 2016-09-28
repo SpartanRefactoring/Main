@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2016-09-12 */
 public enum haz {
   ;
-
   public static boolean annotation(final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
@@ -125,19 +124,19 @@ public enum haz {
     }.test(ss);
   }
 
-  public static boolean sideEffects(final Expression e) {
-    return !sideEffects.free(e);
+  public static boolean sideEffects(final Expression ¢) {
+    return !sideEffects.free(¢);
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {
       if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
-          return true;
+        return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))
-          continue;
+        continue;
       if (iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
-              || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
+          || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
         return true;
       child = ancestor;
     }

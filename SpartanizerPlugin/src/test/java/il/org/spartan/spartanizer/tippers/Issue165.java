@@ -10,8 +10,9 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue165 {
   @Test public void seriesA_01_vanilla() {
-    trimmingOf(" public static boolean f(final VariableDeclarationStatement example1step1) {\n" + "return (Modifier.FINAL & example1step1.getModifiers()) != 0;}")
-        .gives(" public static boolean f(final VariableDeclarationStatement ¢) {\n" + "return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
+    trimmingOf(" public static boolean f(final VariableDeclarationStatement example1step1) {\n"
+        + "return (Modifier.FINAL & example1step1.getModifiers()) != 0;}")
+            .gives(" public static boolean f(final VariableDeclarationStatement ¢) {\n" + "return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
   }
 
   @Test public void seriesA_02_dollar() {

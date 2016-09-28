@@ -105,6 +105,22 @@ public enum eclipse {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
+  // TODO Ori: do not create a compilation unit
+  /** @param u JD
+   * @param m JD
+   * @return node marked by the marker in the compilation unit */
+  @SuppressWarnings("boxing") static ASTNode getNodeByMarker(final ICompilationUnit u, final IMarker m) {
+    try {
+      final int s = (int) m.getAttribute(IMarker.CHAR_START);
+      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
+          .getCoveringNode();
+    } catch (final CoreException x) {
+      // TODO Ori: log it
+      x.printStackTrace();
+    }
+    return null;
+  }
+
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
   }
@@ -117,24 +133,6 @@ public enum eclipse {
     final IEditorPart ep = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
     final ISelection s = ep.getEditorSite().getSelectionProvider().getSelection();
     return !(s instanceof ITextSelection) ? null : (ITextSelection) s;
-  }
-  
-  // TODO Ori: do not create a compilation unit
-  /**
-   * @param u JD
-   * @param m JD
-   * @return node marked by the marker in the compilation unit
-   */
-  @SuppressWarnings("boxing") static ASTNode getNodeByMarker(ICompilationUnit u, IMarker m) {
-    try {
-      int s = (int) m.getAttribute(IMarker.CHAR_START);
-      return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
-          .getCoveringNode();
-    } catch (CoreException x) {
-      // TODO Ori: log it
-      x.printStackTrace();
-    }
-    return null;
   }
 
   /** @return List of all compilation units in the current project */

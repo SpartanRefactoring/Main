@@ -32,6 +32,10 @@ public enum step {
     return ¢.arguments();
   }
 
+  public static Statement body(final WhileStatement ¢) {
+    return ¢.getBody();
+  }
+
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
@@ -79,11 +83,11 @@ public enum step {
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
   public static Expression expression(final ASTNode ¢) {
-    if (¢ == null)
-      return null;
     switch (¢.getNodeType()) {
       case ASTNode.EXPRESSION_STATEMENT:
         return expression((ExpressionStatement) ¢);
+      case ASTNode.WHILE_STATEMENT:
+        return expression((WhileStatement) ¢);
       case ASTNode.RETURN_STATEMENT:
         return expression((ReturnStatement) ¢);
       case ASTNode.THROW_STATEMENT:
@@ -93,7 +97,7 @@ public enum step {
       case ASTNode.CAST_EXPRESSION:
         return expression((CastExpression) ¢);
       case ASTNode.ENHANCED_FOR_STATEMENT:
-        return az.enhancedFor(¢).getExpression(); 
+        return az.enhancedFor(¢).getExpression();
       case ASTNode.METHOD_INVOCATION:
         return step.receiver((MethodInvocation) ¢);
       case ASTNode.PARENTHESIZED_EXPRESSION:
@@ -126,7 +130,7 @@ public enum step {
   public static Expression expression(final ExpressionStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
-  
+
   public static Expression expression(final IfStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
@@ -141,6 +145,10 @@ public enum step {
 
   public static Expression expression(final ThrowStatement $) {
     return extract.core($.getExpression());
+  }
+
+  public static Expression expression(final WhileStatement ¢) {
+    return ¢.getExpression();
   }
 
   @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
