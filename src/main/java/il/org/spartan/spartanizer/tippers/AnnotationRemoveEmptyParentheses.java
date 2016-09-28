@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><pre>@Override</pre></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
-public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<NormalAnnotation> implements Category.SyntacticBaggage {
+public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<NormalAnnotation> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final NormalAnnotation ¢) {
     return "Remove redundant parentheses from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }

@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements Category.Ternarization {
+public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Ternarization {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }

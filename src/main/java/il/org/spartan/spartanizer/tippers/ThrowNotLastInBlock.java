@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>throw X;statement;</code> to <code>throw X;</code>.
  * @author Yossi Gil
  * @since 2016 */
-public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowStatement> implements Category.InVain {
+public final class ThrowNotLastInBlock extends ReplaceToNextStatement<ThrowStatement> implements TipperCategory.InVain {
   @Override public String description(final ThrowStatement ¢) {
     return "Remove dead statement after " + ¢;
   }

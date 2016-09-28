@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpression> implements Category.InVain {
+public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpression> implements TipperCategory.InVain {
   private static NumberLiteral literal(final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1L");

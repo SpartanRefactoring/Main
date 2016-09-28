@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
-    extends ReplaceCurrentNode<N> implements Category.Sorting {
+    extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
   public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
   }
 

@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements Category.Collapse {
+public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement> implements TipperCategory.Collapse {
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {

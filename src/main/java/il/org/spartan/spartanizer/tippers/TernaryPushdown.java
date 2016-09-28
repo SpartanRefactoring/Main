@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Pushdown a ternary as far down as possible
  * @author Yossi Gil
  * @year 2015 */
-public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements Category.CommnoFactoring {
+public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.CommnoFactoring {
   private static int findSingleDifference(final List<Expression> es1, final List<Expression> es2) {
     int $ = -1;
     for (int ¢ = 0; ¢ < es1.size(); ++¢)

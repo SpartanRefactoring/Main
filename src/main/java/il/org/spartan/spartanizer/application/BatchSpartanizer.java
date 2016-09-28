@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.application;
-
+import java.util.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
@@ -10,9 +10,11 @@ import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
+import il.org.spartan.java.Token.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -133,12 +135,8 @@ public final class BatchSpartanizer {
     try {
       final String essentializedCodeBefore = runScript(beforeFileName);
       final String essentializedCodeAfter = runScript(afterFileName);
-      final int numWordEssentialBefore = essentializedCodeBefore.trim().length(); // essenceNew((essentializedCodeBefore
-                                                                                  // +
-                                                                                  // "")).trim().length();
-      final int numWordEssentialAfter = essentializedCodeAfter.trim().length(); // essenceNew((essentializedCodeBefore
-                                                                                // +
-                                                                                // "")).trim().length();
+      final int numWordEssentialBefore = essentializedCodeBefore.trim().length(); 
+      final int numWordEssentialAfter = essentializedCodeAfter.trim().length(); 
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
@@ -190,13 +188,16 @@ public final class BatchSpartanizer {
     final int nodes = metrics.nodesCount(in);
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
-    final int essence = BatchSpartanizer.essenceNew(in + "").length();
-    final String out = NonGUIApplicator.fixedPoint(in + "");
+    final int essence = essenceNew(in + "").length();
+    BatchApplicator a = new BatchApplicator();
+    a.disable(Nominal.class);
+    a.disable(Nanos.class);
+    final String out = a.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
     final int essence2 = BatchSpartanizer.essenceNew(out + "").length();
-    final int essenceWC = wc(BatchSpartanizer.essenceNew(out + ""));
+    final int wordCount = wc(BatchSpartanizer.essenceNew(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
@@ -204,11 +205,8 @@ public final class BatchSpartanizer {
     befores.print(in);
     afters.print(out);
     report.summaryFileName();
-    // System.out.println(δ(nodes, nodes2));
-    // System.out.println(p(nodes, nodes2));
-    // System.out.println(p(tokens, tokens2));
     report//
-        .put("Category", extract.category(in))//
+        .put("TipperCategory", extract.category(in))//
         .put("Name", extract.name(in))//
         .put("Nodes1", nodes)//
         .put("Nodes2", nodes2)//
@@ -241,8 +239,7 @@ public final class BatchSpartanizer {
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", δ(essence, essence2))//
         .put("% Essence", Double.parseDouble(removePercentChar(p(essence, essence2))))//
-        .put("Essence (wc)", essenceWC) // essence in terms of words (not
-                                        // characters)
+        .put("Words)", wordCount) 
         .put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
         .put("R(E/T)", ratio(tide, essence)) //

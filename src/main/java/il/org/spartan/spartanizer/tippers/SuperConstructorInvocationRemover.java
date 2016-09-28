@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * created by Eclipse's template for constructors.
  * @author Daniel Mittelman
  * @since 2015-08-26 */
-public final class SuperConstructorInvocationRemover extends CarefulTipper<SuperConstructorInvocation> implements Category.SyntacticBaggage {
+public final class SuperConstructorInvocationRemover extends CarefulTipper<SuperConstructorInvocation> implements TipperCategory.SyntacticBaggage {
   @Override public String description(final SuperConstructorInvocation ¢) {
     return "Remove vacuous 'super()' invocation";
   }

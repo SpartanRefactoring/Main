@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */
-public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression> implements Category.Ternarization {
+public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression> implements TipperCategory.Ternarization {
   private static int firstDifference(final String s1, final String s2) {
     if (s1 != shorter(s1, s2))
       return firstDifference(s2, s1);

@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * expression like <code> "" + X </code> but ONLY if X is a String.
  * @author Matteo Orru' <code><matt.orru [at] gmail.com></code>
  * @since 2016-08-14 */
-public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> implements Category.InVain {
+public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @Override public String description() {
     return null;
   }

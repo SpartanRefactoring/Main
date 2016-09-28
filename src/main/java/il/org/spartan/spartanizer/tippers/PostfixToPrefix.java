@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * increment/decrement
  * @author Yossi Gil
  * @since 2015-7-17 */
-public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression> implements Category.Idiomatic {
+public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression> implements TipperCategory.Idiomatic {
   private static String description(final Operator ¢) {
     return (¢ == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }

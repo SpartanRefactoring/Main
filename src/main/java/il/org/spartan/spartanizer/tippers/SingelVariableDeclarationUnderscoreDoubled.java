@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
 public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
-    implements Category.Annonimization {
+    implements TipperCategory.Annonimization {
   public static class IsUsed extends ASTVisitor {
     boolean c = true;
     String n;
