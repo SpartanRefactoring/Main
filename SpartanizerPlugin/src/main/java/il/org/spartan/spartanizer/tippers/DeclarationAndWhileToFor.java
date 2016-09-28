@@ -21,21 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-
 public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<VariableDeclarationFragment> implements TipperCategory.CommnoFactoring {
-
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    ForStatement $ = setExpressionAndInitializers(¢, f);
-    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
-  }
-
-  private static ForStatement setExpressionAndInitializers(final WhileStatement ¢, final VariableDeclarationFragment f) {
-    ForStatement $ = ¢.getAST().newForStatement();
-    $.setExpression(duplicate.of(expression(¢)));
-    initializers($).add(dupInitializer(f));
-    return $;
-  }
-  
   private static Expression dupInitializer(final VariableDeclarationFragment ¢) {
     final VariableDeclarationStatement parent = az.variableDeclrationStatement(¢.getParent());
     final VariableDeclarationExpression $ = duplicate.of(parent.getAST().newVariableDeclarationExpression(duplicate.of(¢)));
@@ -46,7 +32,6 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
   private static Expression dupWhileLastStatement(final WhileStatement ¢) {
     return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
-
 
   private static ForStatement forWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     updaters($).add(dupWhileLastStatement(s));
@@ -69,6 +54,18 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatement<Varia
 
   private static boolean lastStatementIsUpdate(final WhileStatement ¢) {
     return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢));
+  }
+
+  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    final ForStatement $ = setExpressionAndInitializers(¢, f);
+    return lastStatementIsUpdate(¢) ? forWhithoutLastStatement($, ¢) : forWithLastStatement($, ¢);
+  }
+
+  private static ForStatement setExpressionAndInitializers(final WhileStatement ¢, final VariableDeclarationFragment f) {
+    final ForStatement $ = ¢.getAST().newForStatement();
+    $.setExpression(duplicate.of(expression(¢)));
+    initializers($).add(dupInitializer(f));
+    return $;
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
