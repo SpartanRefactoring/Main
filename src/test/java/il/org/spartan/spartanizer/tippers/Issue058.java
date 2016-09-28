@@ -8,7 +8,6 @@ import org.junit.runners.*;
 /** @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue058 {
-
   @Test public void a() {
     trimmingOf("X f(List<List<Expression>> expressions){}").gives("X f(List<List<Expression>> xss){}");
   }
@@ -36,5 +35,4 @@ import org.junit.runners.*;
   @Test public void g() {
     trimmingOf("X f(List<Expression[][]>... expressions){}").gives("X f(List<Expression[][]>... xssss){}");
   }
-
 }

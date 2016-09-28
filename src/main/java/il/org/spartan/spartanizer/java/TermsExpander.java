@@ -19,10 +19,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil
  * @since 2016-08 */
 public final class TermsExpander {
-  public static Expression simplify(final InfixExpression ¢) {
-    return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
-  }
-
   /** @see #recurse(List, InfixExpression) */
   private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
     return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
@@ -86,6 +82,10 @@ public final class TermsExpander {
     final Term first = first(ts);
     assert first != null;
     return recurse(chop(ts), o == PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
+  }
+
+  public static Expression simplify(final InfixExpression ¢) {
+    return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
   private static Expression step(final List<Term> ¢, final Expression $) {

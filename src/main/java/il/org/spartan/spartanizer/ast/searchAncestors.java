@@ -13,6 +13,90 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public abstract class searchAncestors {
+  static class ByNodeClass extends searchAncestors {
+    private final Class<? extends ASTNode> clazz;
+
+    public ByNodeClass(final Class<? extends ASTNode> clazz) {
+      this.clazz = clazz;
+    }
+
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
+            return $;
+      return null;
+    }
+
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && (¢.getClass().equals(clazz) || clazz.isAssignableFrom(¢.getClass())) ? ¢ : from(¢);
+    }
+  }
+
+  static class ByNodeInstances<N extends ASTNode> extends searchAncestors {
+    private final List<N> instances;
+
+    public ByNodeInstances(final List<N> instances) {
+      this.instances = instances;
+    }
+
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if (instances.contains($))
+            return $;
+      return null;
+    }
+
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && instances.contains(¢) ? ¢ : from(¢);
+    }
+  }
+
+  static class ByNodeType extends searchAncestors {
+    final int type;
+
+    public ByNodeType(final int type) {
+      this.type = type;
+    }
+
+    @Override public ASTNode from(final ASTNode ¢) {
+      if (¢ != null)
+        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+          if (type == $.getNodeType())
+            return $;
+      return null;
+    }
+
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
+      return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
+    }
+  }
+
+  public static class Until {
+    final ASTNode until;
+
+    Until(final ASTNode until) {
+      this.until = until;
+    }
+
+    public Iterable<ASTNode> ancestors(final SimpleName n) {
+      return () -> new Iterator<ASTNode>() {
+        ASTNode next = n;
+
+        @Override public boolean hasNext() {
+          return next != null;
+        }
+
+        @Override public ASTNode next() {
+          final ASTNode $ = next;
+          next = eval(() -> next.getParent()).unless(next == until);
+          return $;
+        }
+      };
+    }
+  }
+
   /** Factory method, returning an instance which can search by a node class
    * @param n JD
    * @return a newly created instance
@@ -74,89 +158,5 @@ public abstract class searchAncestors {
     for (ASTNode p = $; p != null; p = from(p))
       $ = p;
     return $;
-  }
-
-  public static class Until {
-    final ASTNode until;
-
-    Until(final ASTNode until) {
-      this.until = until;
-    }
-
-    public Iterable<ASTNode> ancestors(final SimpleName n) {
-      return () -> new Iterator<ASTNode>() {
-        ASTNode next = n;
-
-        @Override public boolean hasNext() {
-          return next != null;
-        }
-
-        @Override public ASTNode next() {
-          final ASTNode $ = next;
-          next = eval(() -> next.getParent()).unless(next == until);
-          return $;
-        }
-      };
-    }
-  }
-
-  static class ByNodeClass extends searchAncestors {
-    private final Class<? extends ASTNode> clazz;
-
-    public ByNodeClass(final Class<? extends ASTNode> clazz) {
-      this.clazz = clazz;
-    }
-
-    @Override public ASTNode from(final ASTNode ¢) {
-      if (¢ != null)
-        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
-          if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
-            return $;
-      return null;
-    }
-
-    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
-      return ¢ != null && (¢.getClass().equals(clazz) || clazz.isAssignableFrom(¢.getClass())) ? ¢ : from(¢);
-    }
-  }
-
-  static class ByNodeInstances<N extends ASTNode> extends searchAncestors {
-    private final List<N> instances;
-
-    public ByNodeInstances(final List<N> instances) {
-      this.instances = instances;
-    }
-
-    @Override public ASTNode from(final ASTNode ¢) {
-      if (¢ != null)
-        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
-          if (instances.contains($))
-            return $;
-      return null;
-    }
-
-    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
-      return ¢ != null && instances.contains(¢) ? ¢ : from(¢);
-    }
-  }
-
-  static class ByNodeType extends searchAncestors {
-    final int type;
-
-    public ByNodeType(final int type) {
-      this.type = type;
-    }
-
-    @Override public ASTNode from(final ASTNode ¢) {
-      if (¢ != null)
-        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
-          if (type == $.getNodeType())
-            return $;
-      return null;
-    }
-
-    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
-      return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
-    }
   }
 }

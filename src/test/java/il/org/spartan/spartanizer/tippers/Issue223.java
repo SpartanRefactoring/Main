@@ -137,6 +137,14 @@ import il.org.spartan.spartanizer.tipping.*;
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).replacement(focus) != null;
   }
 
+  private ClassInstanceCreation findMe(final Statement c) {
+    return findFirst.instanceOf(SUBJECT_CLASS, c);
+  }
+
+  private ClassInstanceCreationValueTypes makeWring() {
+    return new ClassInstanceCreationValueTypes();
+  }
+
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);").gives("Integer x = Integer.valueOf(1+9);").gives("Integer x = Integer.valueOf(10);").stays();
   }
@@ -217,13 +225,5 @@ import il.org.spartan.spartanizer.tipping.*;
     assert d != null;
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
-  }
-
-  private ClassInstanceCreation findMe(final Statement c) {
-    return findFirst.instanceOf(SUBJECT_CLASS, c);
-  }
-
-  private ClassInstanceCreationValueTypes makeWring() {
-    return new ClassInstanceCreationValueTypes();
   }
 }

@@ -8,7 +8,6 @@ import org.junit.runners.*;
 /** @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue031 {
- 
   @Test public void a() {
     trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(now.modifiers());\n"
         + "    }")
@@ -70,5 +69,4 @@ import org.junit.runners.*;
   @Test public void n() {
     trimmingOf("String tellTale(ExamplyExamplar foo)").stays();
   }
-
 }

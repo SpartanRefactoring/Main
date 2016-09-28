@@ -15,10 +15,10 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** abbreviates the name of a method parameter that is a viable candidate for
- * abbreviation (meaning that its name is suitable for renaming, and isn'tipper the
- * desired name). The abbreviated name is the first character in the last word
- * of the variable'example1step1 name.
+/** Abbreviates the name of a method parameter that is a viable candidate for
+ * abbreviation (meaning that its name is suitable for renaming, and isn'tipper
+ * the desired name). The abbreviated name is the first character in the last
+ * word of the variable's name.
  * <p>
  * This tipper is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
@@ -44,7 +44,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (int ¢ = d.getExtraDimensions(); ¢ > 0; --¢)
-      $ += "example1step1";
+      $ += ¢;
     return $;
   }
 
@@ -67,7 +67,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {
-    return ¢.isVarargs() ? "example1step1" : getExtraDimensions(¢);
+    return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
   private static boolean suitable(final SingleVariableDeclaration ¢) {

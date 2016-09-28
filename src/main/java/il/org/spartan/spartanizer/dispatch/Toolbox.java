@@ -13,6 +13,35 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
+  /** A builder for the enclosing class.
+   * @author Yossi Gil
+   * @since 2015-08-22 */
+  public static class Maker extends Toolbox {
+    /** Associate a bunch of{@link Tipper} with a given sub-class of
+     * {@link ASTNode}.
+     * @param n JD
+     * @param ns JD
+     * @return <code><b>this</b></code>, for easy chaining. */
+    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Tipper<N>... ns) {
+      final List<Tipper<N>> l = get(n);
+      for (final Tipper<N> ¢ : ns) {
+        if (¢ == null)
+          break;
+        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+        if (!¢.wringGroup().isEnabled())
+          continue;
+        l.add(¢);
+      }
+      return this;
+    }
+
+    /** Terminate a fluent API chain.
+     * @return newly created object */
+    public Toolbox seal() {
+      return this;
+    }
+  }
+
   /** The default instance of this class */
   static Toolbox instance;
 
@@ -20,6 +49,13 @@ public class Toolbox {
     if (instance == null)
       refresh();
     return instance;
+  }
+
+  private static <N extends ASTNode> Tipper<N> find(final N n, final List<Tipper<N>> ns) {
+    for (final Tipper<N> $ : ns)
+      if ($.canTip(n))
+        return $;
+    return null;
   }
 
   /** Make a {@link Toolbox} for a specific kind of wrings
@@ -86,7 +122,8 @@ public class Toolbox {
               new InfixConcatenationEmptyStringLeft(), //
               new InfixFactorNegatives(), //
               new InfixAdditionEvaluate(), //
-              // new ConcatStrings(), //removed for now so it won'tipper break tests,
+              // new ConcatStrings(), //removed for now so it won'tipper break
+              // tests,
               // see issue #120
               new InfixSubractionEvaluate(), //
               new InfixTermsZero(), //
@@ -225,13 +262,6 @@ public class Toolbox {
           .seal();
   }
 
-  private static <N extends ASTNode> Tipper<N> find(final N n, final List<Tipper<N>> ns) {
-    for (final Tipper<N> $ : ns)
-      if ($.canTip(n))
-        return $;
-    return null;
-  }
-
   private final Map<Class<? extends ASTNode>, List<Object>> inner = new HashMap<>();
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -261,34 +291,5 @@ public class Toolbox {
 
   <N extends ASTNode> List<Tipper<N>> get(final N ¢) {
     return get(¢.getClass());
-  }
-
-  /** A builder for the enclosing class.
-   * @author Yossi Gil
-   * @since 2015-08-22 */
-  public static class Maker extends Toolbox {
-    /** Associate a bunch of{@link Tipper} with a given sub-class of
-     * {@link ASTNode}.
-     * @param n JD
-     * @param ns JD
-     * @return <code><b>this</b></code>, for easy chaining. */
-    @SafeVarargs public final <N extends ASTNode> Maker add(final Class<N> n, final Tipper<N>... ns) {
-      final List<Tipper<N>> l = get(n);
-      for (final Tipper<N> ¢ : ns) {
-        if (¢ == null)
-          break;
-        assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
-        if (!¢.wringGroup().isEnabled())
-          continue;
-        l.add(¢);
-      }
-      return this;
-    }
-
-    /** Terminate a fluent API chain.
-     * @return newly created object */
-    public Toolbox seal() {
-      return this;
-    }
   }
 }

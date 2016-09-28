@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -18,8 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * the case of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */
-@Ignore
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue295 {
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue295 {
   private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
   private static final String OUTPUT = "for (A b: g.f((new A()),true))sum+=b;";
@@ -31,6 +29,8 @@ import il.org.spartan.spartanizer.tipping.*;
   EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
   BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
+  final DeclarationInitializerStatementTerminatingScope tipper = new DeclarationInitializerStatementTerminatingScope();
+  final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
 
   /** Correct way of trimming does not change */
   @Test public void A$a() {
@@ -217,12 +217,10 @@ import il.org.spartan.spartanizer.tipping.*;
         LoggingManner.endDump();
   }
 
-    final DeclarationInitializerStatementTerminatingScope tipper = new DeclarationInitializerStatementTerminatingScope();
   @Test public void B20() throws TipperFailure {
     assert variableDeclarationFragment != null;
     azzert.that(tipper.tip(variableDeclarationFragment), iz("a"));
   }
-    final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
 
   @Test public void B21() {
     assert tipper.prerequisite(variableDeclarationFragment) : LoggingManner.beginDump() + //
@@ -232,5 +230,5 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B22() {
-}
+  }
 }
