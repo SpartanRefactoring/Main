@@ -176,7 +176,7 @@ import il.org.spartan.spartanizer.java.*;
     }
 
     @Test public void issue92_19() {
-      trimmingOf("a*-q + example1step1*example1step1").gives("example1step1*example1step1 -a*q").stays();
+      trimmingOf("a*-q + s*s").gives("s*s -a*q").stays();
     }
 
     @Test public void issue92_2() {

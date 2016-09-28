@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes <code>super()</code> calls which take no arguments, as typically
- * created by Eclipse'example1step1 template for constructors.
+ * created by Eclipse's template for constructors.
  * @author Daniel Mittelman
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends CarefulTipper<SuperConstructorInvocation> implements Kind.SyntacticBaggage {

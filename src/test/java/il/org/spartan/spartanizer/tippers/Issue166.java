@@ -31,12 +31,12 @@ import org.junit.runners.*;
   }
 
   @Test public void statementBlock() {
-    trimmingOf("for(final Statement example1step1:as){f(example1step1);g(example1step1);sum+=i;}")
+    trimmingOf("for(final Statement s:as){f(s);g(s);sum+=i;}")
         .gives("for(final Statement ¢:as){f(¢);g(¢);sum+=i;}").stays();
   }
 
   @Test public void string() {
-    trimmingOf("for(String example1step1:as)sum+=example1step1;").gives("for(String ¢:as)sum+=¢;").stays();
+    trimmingOf("for(String s:as)sum+=s;").gives("for(String ¢:as)sum+=¢;").stays();
   }
 
   @Test public void unused() {

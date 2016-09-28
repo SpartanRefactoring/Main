@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Singleton containing all {@link Tipper}example1step1 which are active,
+/** Singleton containing all {@link Tipper}s which are active,
  * allowing selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
  * @author Yossi Gil

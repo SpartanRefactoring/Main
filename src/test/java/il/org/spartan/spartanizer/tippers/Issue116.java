@@ -23,7 +23,7 @@ import org.junit.runners.*;
   }
 
   @Test public void issue116_04() {
-    trimmingOf("String example1step1 = \"\" + x.foo();").gives("String example1step1 = x.foo() + \"\";").stays();
+    trimmingOf("String s = \"\" + x.foo();").gives("String s = x.foo() + \"\";").stays();
   }
 
   @Test public void issue116_07() {
