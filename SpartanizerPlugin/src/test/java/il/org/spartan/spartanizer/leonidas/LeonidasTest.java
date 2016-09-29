@@ -1,16 +1,6 @@
 package il.org.spartan.spartanizer.leonidas;
 
-/** @author Ori Marcovitch
- * @since 2016 */
-import static org.junit.Assert.*;
-
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
-
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches1() {
@@ -45,13 +35,13 @@ public class LeonidasTest {
     azzert.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : foo()");
   }
 
-  @Ignore @SuppressWarnings("static-method") @Test public void testMutation1() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
+  @SuppressWarnings("static-method") @Test public void testMutation1() {
+    azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
   }
 
-  @Ignore @SuppressWarnings("static-method") @Test public void testMutation2() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
-        .into("a(b(), c.d()).e.defaultsTo(2*3 + 4*z().x)");
+  @SuppressWarnings("static-method") @Test public void testMutation2() {
+    azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
+        .into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
   }
 
   @SuppressWarnings("static-method") @Test public void testNotTips1() {
@@ -84,77 +74,5 @@ public class LeonidasTest {
 
   @SuppressWarnings("static-method") @Test public void testTips5() {
     azzert.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
-  }
-}
-
-class azzert {
-  public static expression that(final String ¢) {
-    return new expression(¢);
-  }
-
-  public static tipper tipper(final String p, final String s, final String d) {
-    return new tipper(p, s, d);
-  }
-}
-
-class expression {
-  final String s;
-
-  public expression(final String s) {
-    this.s = s;
-  }
-
-  public void matches(final String s2) {
-    assertTrue(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
-  }
-
-  public void notmatches(final String s2) {
-    assertFalse(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
-  }
-}
-
-class tipper {
-  private final UserDefinedTipper<ASTNode> tipper;
-
-  public tipper(final String p, final String r, final String d) {
-    tipper = TipperFactory.tipper(p, r, d);
-  }
-
-  public void nottips(final String ¢) {
-    assertFalse(tipper.canTip(wizard.ast(¢)));
-  }
-
-  public void tips(final String ¢) {
-    assertTrue(tipper.canTip(wizard.ast(¢)));
-  }
-
-  public turns turns(final String ¢) {
-    return new turns(tipper, ¢);
-  }
-}
-
-class turns {
-  private final UserDefinedTipper<ASTNode> tipper;
-  private final ASTNode n;
-
-  public turns(final UserDefinedTipper<ASTNode> tipper, final String s) {
-    this.tipper = tipper;
-    n = wizard.ast(s);
-  }
-
-  public void into(final String s) {
-    try {
-      final ASTRewrite r = ASTRewrite.create(n.getAST());
-      tipper.tip(n).go(r, null);
-      r.rewriteAST();
-      assertEquals(s, n + "");
-    } catch (final TipperFailure e) {
-      e.printStackTrace();
-      fail();
-    } catch (final JavaModelException e) {
-      e.printStackTrace();
-    } catch (final IllegalArgumentException e) {
-      e.printStackTrace();
-    }
   }
 }
