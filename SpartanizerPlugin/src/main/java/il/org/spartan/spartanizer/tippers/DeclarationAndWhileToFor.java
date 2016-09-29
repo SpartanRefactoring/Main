@@ -35,16 +35,6 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return $;
   }
 
-  private static Expression Initializers(final VariableDeclarationFragment ¢, final List<VariableDeclarationFragment> expressionFragments) {
-    final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
-    final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
-    step.fragments($).addAll(nextFragmentsOf(parent));
-    step.fragments($).addAll(expressionFragments);
-    $.setType(duplicate.of(parent.getType()));
-    step.extendedModifiers($).addAll(modifiersOf(parent));
-    return $;
-  }
-
   private static Expression dupWhileExpression(final WhileStatement ¢) {
     return duplicate.of(expression(¢));
   }
@@ -53,6 +43,21 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     // TODO: check that the variables declared before the loop doesn't in use
     // after the scope.
     return true;
+  }
+
+  private static Expression handleAssignment(final Expression from, final List<VariableDeclarationFragment> to, final VariableDeclarationFragment f) {
+    Assignment a = extract.assignment(from);
+    return from;
+  }
+
+  private static Expression Initializers(final VariableDeclarationFragment ¢, final List<VariableDeclarationFragment> expressionFragments) {
+    final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
+    final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
+    step.fragments($).addAll(nextFragmentsOf(parent));
+    step.fragments($).addAll(expressionFragments);
+    $.setType(duplicate.of(parent.getType()));
+    step.extendedModifiers($).addAll(modifiersOf(parent));
+    return $;
   }
 
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
@@ -80,12 +85,6 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
       return handleAssignment(from, to, f);
     }
     return from; // TODO: handle other side effects.
-  }
-  
-  private static Expression handleAssignment(final Expression from, final List<VariableDeclarationFragment> to,
-      final VariableDeclarationFragment f) {
-    Assignment a = extract.assignment(from);
-    return from;
   }
 
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
