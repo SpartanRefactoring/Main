@@ -72,7 +72,8 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
           }
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
-    return subject.append($, minus.firstElem(minus.firstElem(operands)));
+    //return subject.append($, minus.firstElem(minus.firstElem(operands)));
+    return $;
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
@@ -135,6 +136,7 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
     if (s == null || !fitting(parent, s))
       return null;
     exclude.excludeAll(step.fragments(az.variableDeclrationStatement(f.getParent())));
+    //exclude.exclude(s.getExpression());
     r.remove(parent, g);
     r.replace(s, replace(parent, s), g);
     return r;
