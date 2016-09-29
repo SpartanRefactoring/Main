@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.spartanizations.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public class LeonidasTest {
@@ -45,8 +47,20 @@ public class LeonidasTest {
     azzert.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : foo()");
   }
 
-  @Ignore @SuppressWarnings("static-method") @Test public void testMutation1() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
+  @SuppressWarnings("static-method") @Test public void testMutation1() {
+    Tipper<ASTNode> t = TipperFactory.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo");
+    try {
+      CompilationUnit n = Wrap.Expression.intoCompilationUnit("a == null ? y : a");
+      final ASTRewrite r = ASTRewrite.create(n.getAST());
+      t.tip(n).go(r, null);
+      r.rewriteAST();
+      System.out.println(n.toString());
+    } catch (TipperFailure | JavaModelException | IllegalArgumentException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    // azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)",
+    // "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
   }
 
   @Ignore @SuppressWarnings("static-method") @Test public void testMutation2() {

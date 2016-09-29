@@ -180,7 +180,6 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            // new TernaryNullCoallescing(), //
             null) //
         .add(TypeDeclaration.class, //
             // new delmeTypeModifierCleanInterface(), //
