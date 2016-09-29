@@ -94,7 +94,7 @@ public enum makeAST {
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
       final StringBuilder $ = new StringBuilder();
-      for (String ¢ = r.readLine(); ; ¢ = r.readLine(), $.append(¢).append(System.lineSeparator()))
+      for (String ¢ = r.readLine();; ¢ = r.readLine(), $.append(¢).append(System.lineSeparator()))
         if (¢ == null)
           return $ + "";
     } catch (final IOException ¢) {

@@ -49,8 +49,8 @@ import org.eclipse.jdt.core.dom.*;
   /** @return an abbreviation of the type name */
   public String abbreviate() {
     String $ = "";
-    for (final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName); ; $ += ¢.group())
-      if (!¢.find())      
+    for (final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName);; $ += ¢.group())
+      if (!¢.find())
         return $.toLowerCase();
   }
 
