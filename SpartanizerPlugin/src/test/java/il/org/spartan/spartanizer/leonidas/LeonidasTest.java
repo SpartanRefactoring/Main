@@ -108,11 +108,11 @@ class tipper {
     tipper = TipperFactory.tipper(p, r, d);
   }
 
-  public void tips(final String s) {
-    assertTrue(tipper.canTip(wizard.ast(s)));
+  public void tips(final String ¢) {
+    assertTrue(tipper.canTip(wizard.ast(¢)));
   }
 
-  public void nottips(final String s) {
-    assertFalse(tipper.canTip(wizard.ast(s)));
+  public void nottips(final String ¢) {
+    assertFalse(tipper.canTip(wizard.ast(¢)));
   }
 }

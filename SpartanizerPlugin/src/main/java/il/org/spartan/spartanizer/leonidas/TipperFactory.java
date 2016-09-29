@@ -47,7 +47,7 @@ public class TipperFactory {
         return collectEnviroment(pattern, ¢, new HashMap<>());
       }
 
-      private Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
+      Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
         if (iz.name(p)) {
           final String id = ((Name) p).getFullyQualifiedName();
           if (id.startsWith("$X") || id.startsWith("$M"))
