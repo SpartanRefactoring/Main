@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 
 <plugin>
-<!-- Which program to run at startup -->
+<!-- Which class to run at startup -->
 <extension point="org.eclipse.ui.startup">
   <startup class="il.org.spartan.plugin.Plugin"/>
 </extension>
