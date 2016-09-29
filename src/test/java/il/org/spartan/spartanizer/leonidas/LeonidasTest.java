@@ -5,6 +5,8 @@ package il.org.spartan.spartanizer.leonidas;
 import static org.junit.Assert.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.*;
+
 public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches1() {
     azzert.that("$X ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");
@@ -53,10 +55,10 @@ class expression {
   }
 
   public void matches(final String s2) {
-    assertTrue(Matcher.matches(TipperFactory.toAST(s), TipperFactory.toAST(s2)));
+    assertTrue(Matcher.matches(wizard.AST(s), wizard.AST(s2)));
   }
 
   public void notmatches(final String s2) {
-    assertFalse(Matcher.matches(TipperFactory.toAST(s), TipperFactory.toAST(s2)));
+    assertFalse(Matcher.matches(wizard.AST(s), wizard.AST(s2)));
   }
 }
