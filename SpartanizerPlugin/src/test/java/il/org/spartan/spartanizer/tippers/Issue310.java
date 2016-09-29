@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Dor Ma'ayan & Alex Kopzon
  * @since 2016-09-23 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue144 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue310 {
   @Test public void challenge_while_a() {
     trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
