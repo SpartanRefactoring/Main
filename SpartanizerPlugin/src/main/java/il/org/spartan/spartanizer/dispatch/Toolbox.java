@@ -270,11 +270,11 @@ public class Toolbox {
    * @param n JD
    * @param ns JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ns) {
-    final Integer nodeType = classToNodeType.get(c);
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
+    final Integer nodeType = classToNodeType.get(n);
     assert nodeType != null : LoggingManner.beginDump() + //
-        "\n c = " + c + //
-        "\n c.getSimpleName() = " + c.getSimpleName() + //
+        "\n c = " + n + //
+        "\n c.getSimpleName() = " + n.getSimpleName() + //
         "\n classForNodeType.keySet() = " + classToNodeType.keySet() + // 
         "\n classForNodeType = " + classToNodeType + // 
         LoggingManner.endDump();
@@ -309,11 +309,10 @@ public class Toolbox {
     return firstTipper(¢, get(¢));
   }
 
-  public List<Tipper<? extends ASTNode>> get(final int t) {
-    if (implementation[t] == null)
-      implementation[t] = new ArrayList<>();
-    final List<Tipper<? extends ASTNode>> $ = implementation[t];
-    return $;
+  public List<Tipper<? extends ASTNode>> get(final int ¢) {
+    if (implementation[¢] == null)
+      implementation[¢] = new ArrayList<>();
+    return implementation[¢];
   }
 
   public int hooksCount() {
