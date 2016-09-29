@@ -62,7 +62,8 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
           }
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
-    return subject.append($, minus.firstElem(minus.firstElem(operands)));
+    //return subject.append($, minus.firstElem(minus.firstElem(operands)));
+    return $;
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
@@ -92,8 +93,8 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    if (!haz.sideEffects(from))
-      return from;
+    //if (!haz.sideEffects(from))
+      //return from;
     if (iz.infix(from))
       return handleInfix(duplicate.of(az.infixExpression(from)), f);
     return from; // TODO: handle other side effects.

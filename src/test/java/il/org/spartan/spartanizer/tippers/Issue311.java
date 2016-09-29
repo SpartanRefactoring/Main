@@ -166,6 +166,13 @@ import org.junit.runners.*;
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;p = p.getParent());" + "return false;" + "}").stays();
   }
 
+  @Test public void initializers_for_5() {
+    trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(int k = 2;p < 10;) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(int k=2, p = i;p < 10;) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(int k=2, p = i;p < 10;++p) ;" + "return false;" + "}").stays();
+  }
+
+
   @Test public void initializers_while_1() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while(p != null) {" + "if (dns.contains(p))" + "return true;" + "++i;"
         + "}" + "return false;" + "}")
