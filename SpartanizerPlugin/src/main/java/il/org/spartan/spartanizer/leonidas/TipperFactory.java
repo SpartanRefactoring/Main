@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.leonidas;
 
 /** @author Ori Marcovitch
- * @year 2016 */
+ * @since 2016 */
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;

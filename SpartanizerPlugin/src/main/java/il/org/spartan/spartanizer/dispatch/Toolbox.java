@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -214,6 +215,8 @@ public class Toolbox {
   private static void disable(final List<Tipper<? extends ASTNode>> ns, final Class<? extends TipperCategory> c) {
     removing: for (;;) {
       for (int ¢ = 0; ¢ < ns.size(); ++¢)
+        // TODO: DeclarationInitialiazelUpdateAssignment should be replaced with
+        // c.getClass()? //
         if (DeclarationInitialiazelUpdateAssignment.class.isAssignableFrom(ns.get(¢).getClass())) {
           ns.remove(¢);
           continue removing;
