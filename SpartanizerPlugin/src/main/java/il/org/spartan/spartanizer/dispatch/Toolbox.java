@@ -138,6 +138,7 @@ public class Toolbox {
             // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
+//            new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -227,6 +228,7 @@ public class Toolbox {
             new DeclarationInitialiazerAssignment(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new DeclarationAndWhileToFor(), //
+            new DeclarationAndForToFor(), //
             null) //
     //
     ;

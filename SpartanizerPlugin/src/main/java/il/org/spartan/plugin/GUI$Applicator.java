@@ -30,9 +30,9 @@ import il.org.spartan.utils.*;
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class GUI$Applicator extends Refactoring {
-  private static final String APPLY_TO_FILE = "Apply tip to compilation unit";
-  private static final String APPLY_TO_FUNCTION = "Apply tip to enclosing function";
-  private static final String APPLY_TO_PROJECT = "Apply tip to entire project";
+  private static final String APPLY_TO_FILE = "Apply to compilation unit";
+  private static final String APPLY_TO_FUNCTION = "Apply to enclosing function";
+  private static final String APPLY_TO_PROJECT = "Apply to entire project";
 
   public static IMarkerResolution getTipperCommitDeclaration() {
     return getWringCommit(TipperCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
@@ -118,7 +118,7 @@ public abstract class GUI$Applicator extends Refactoring {
   @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
     if (iCompilationUnit == null && marker == null)
-      $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to refactor."));
+      $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
     return $;
   }
 
@@ -386,10 +386,10 @@ public abstract class GUI$Applicator extends Refactoring {
   /** @param u JD
    * @throws CoreException */
   protected void scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
-    m.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+    m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(progressMonitor);
+    final CompilationUnit cu = (CompilationUnit) Make.COMPILATION_UNIT.parser(u).createAST(m);
     textChange.setEdit(createRewrite(cu).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
@@ -398,17 +398,22 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   protected void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    progressMonitor.beginTask("Creating change(s) for a single compilation unit...", 2);
+    progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
+    progressMonitor.done();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
+    progressMonitor.beginTask("Collecting tips for " + m, IProgressMonitor.UNKNOWN);
     textChange.setEdit(createRewrite(m).rewriteAST());
+    progressMonitor.done();
     if (textChange.getEdit().getLength() != 0)
       if (preview)
         changes.add(textChange);
-      else
+      else {
+        progressMonitor.beginTask("Applying tips", IProgressMonitor.UNKNOWN);
         textChange.perform(progressMonitor);
-    progressMonitor.done();
+        progressMonitor.done();
+      }
   }
 
   /** Creates a change from each compilation unit and stores it in the changes
@@ -416,7 +421,7 @@ public abstract class GUI$Applicator extends Refactoring {
    * @throws IllegalArgumentException
    * @throws CoreException */
   protected void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
-    progressMonitor.beginTask("Iterating over gathered compilation units...", us.size());
+    progressMonitor.beginTask("Iterating over laconizeable compilation units...", us.size());
     for (final ICompilationUnit ¢ : us)
       scanCompilationUnit(¢, newSubMonitor(progressMonitor));
     progressMonitor.done();

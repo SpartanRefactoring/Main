@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
@@ -148,5 +150,9 @@ public interface findFirst {
    *         <code><b>null</b> if there is no such statement. */
   static Expression expression(final ASTNode ¢) {
     return findFirst.instanceOf(Expression.class, ¢);
+  }
+
+  static <E> E elementOf(List<E> ¢) {
+    return ¢ == null ? null : ¢.get(0);
   }
 }

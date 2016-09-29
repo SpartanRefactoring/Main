@@ -11,11 +11,12 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code>
  * int a = 3;
- * while(Panic) {
+ * for(;Panic;) {
  *    ++OS.is.in.denger;
  * }
  * </code> to <code>
@@ -25,23 +26,32 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Alex Kopzon
  * @since 2016 */
-public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  private static ForStatement buildForStatement(final VariableDeclarationStatement s, final WhileStatement ¢) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setBody(duplicate.of(body(¢)));
-    $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), s));
+public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+  private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
+    final ForStatement $ = duplicate.of(¢);
+    $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
     step.initializers($).add(Initializers(findFirst.elementOf(step.fragments(s))));
     return $;
   }
 
-  private static Expression dupWhileExpression(final WhileStatement ¢) {
+  private static boolean compareModifiers(final List<IExtendedModifier> l1, final List<IExtendedModifier> l2) {
+    for (final IExtendedModifier ¢ : l1)
+      if (!isIn(¢, l2))
+        return false;
+    return true;
+  }
+
+  private static Expression dupForExpression(final ForStatement ¢) {
     return duplicate.of(expression(¢));
   }
 
-  private static boolean fitting(@SuppressWarnings("unused") final WhileStatement __) {
+  private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
     // TODO: check that the variables declared before the loop doesn't in use
     // after the scope.
-    return true;
+    if (step.initializers(¢).isEmpty())
+      return true;
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(step.initializers(¢).get(0));
+    return e.getType() == s.getType() && compareModifiers(step.extendedModifiers(e), step.extendedModifiers(s)) ? true : false;
   }
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
@@ -75,6 +85,13 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return $;
   }
 
+  private static boolean isIn(final IExtendedModifier m, final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (IExtendedModifiersOrdering.compare(m, ¢) == 0)
+        return true;
+    return false;
+  }
+
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
     final List<IExtendedModifier> modifiers = new ArrayList<>();
     duplicate.modifiers(step.extendedModifiers(parent), modifiers);
@@ -93,34 +110,35 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    //if (!haz.sideEffects(from))
-      //return from;
+    if (!haz.sideEffects(from))
+      return from;
     if (iz.infix(from))
       return handleInfix(duplicate.of(az.infixExpression(from)), f);
     return from; // TODO: handle other side effects.
   }
 
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(az.variableDeclrationStatement(f.getParent()), ¢);
+  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
+    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
+    return "Merge with subequent 'for', making a for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "loop";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)
       return null;
-    final Statement parent = az.asStatement(f.getParent());
+    final VariableDeclarationStatement parent = az.variableDeclrationStatement(f.getParent());
     if (parent == null)
       return null;
-    final WhileStatement s = az.whileStatement(nextStatement);
-    if (s == null)
+    final ForStatement s = az.forStatement(nextStatement);
+    if (s == null || !fitting(parent, s))
       return null;
     exclude.excludeAll(step.fragments(az.variableDeclrationStatement(f.getParent())));
+    //exclude.exclude(s.getExpression());
     r.remove(parent, g);
-    r.replace(s, replace(f, s), g);
+    r.replace(s, replace(parent, s), g);
     return r;
   }
 }
