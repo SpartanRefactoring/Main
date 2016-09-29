@@ -51,12 +51,13 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     if (!"toString".equals(i.getName() + ""))
       return null;
     final List<Expression> terms = new ArrayList<>();
+    MethodInvocation r = i;
     boolean hs = false;
-    for (MethodInvocation ¢ = i;;) {
-      final Expression e = i.getExpression();
+    while (true) {
+      final Expression e = r.getExpression();
       if (e instanceof ClassInstanceCreation) {
         final String t = ((ClassInstanceCreation) e).getType() + "";
-        if (!"StringBuffer".equals(t))
+        if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
           return null;
         if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
           final Expression a = (Expression) ((ClassInstanceCreation) e).arguments().get(0);
@@ -72,7 +73,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       final Expression a = (Expression) ((MethodInvocation) e).arguments().get(0);
       terms.add(0, addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
-      ¢ = (MethodInvocation) e;
+      r = (MethodInvocation) e;
     }
     return replacement(i, terms);
   }
