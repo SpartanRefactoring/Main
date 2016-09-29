@@ -138,7 +138,7 @@ public class Toolbox {
             // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new ExtractMethodSuffix(), //
+//            new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
