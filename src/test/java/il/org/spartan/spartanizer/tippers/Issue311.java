@@ -5,9 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Dor Ma'ayan & Alex Kopzon
+/** @author Alex Kopzon
  * @since 2016-09-23 */
-@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
   @Test public void challenge_while_a() {
     trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
@@ -96,22 +96,34 @@ import org.junit.runners.*;
 .stays();
   }
   
-  @Test public void challenge_while_i_initialization_expression_wrong() {
-    trimmingOf("String line;while ((line = reader.readLine()) != null)$.append(line).append(ls);")
-    .gives("for (String line;(line = reader.readLine()) != null;)$.append(line).append(ls);")
-    .gives("for (String line;(line = reader.readLine()) != null;$.append(line).append(ls));").stays();
-  }
-  
-  @Test public void challenge_while_i_initialization_expression_right() {
+  @Test public void challenge_while_i_initialization_expression_1() {
     trimmingOf("String line;while ((line = reader.readLine()) != null)$.append(line).append(ls);")
     .gives("for (String line = reader.readLine(); line != null;)$.append(line).append(ls);")
     .gives("for (String line = reader.readLine(); line != null;$.append(line).append(ls));").stays();
   }
   
+  @Ignore @Test public void challenge_while_i_initialization_expression_2() {
+    trimmingOf("String line;while (null != (line = reader.readLine()))$.append(line).append(ls);")
+    .gives("for (String line = reader.readLine(); null != line;)$.append(line).append(ls);")
+    .gives("for (String line = reader.readLine(); null != line;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_3() {
+    trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (c=true))$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c=true;b && a && c;)$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c=true;b && a && c;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_4() {
+    trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (d=true))$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c;b && a && (d=true);)$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c;b && a && (d=true);$.append(line).append(ls));").stays();
+  }
+  
   @Test public void challenge_while_j() {
     trimmingOf("public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);while (m.find())a += m.group();return a.toLowerCase();}")
     .gives("public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}")
-    .gives("public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();a += m.group());return a.toLowerCase();}").stays();
+    .gives("public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();a += m.group());return a.toLowerCase();}");
   }
   
   @Test public void challenge_while_k() {
@@ -124,7 +136,7 @@ import org.junit.runners.*;
     trimmingOf("").stays();
   }
   
-  @Ignore @Test public void initializers_for_1() {
+  @Test public void initializers_for_1() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for(;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;"
         + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;++i;" + "}"
@@ -136,23 +148,30 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Ignore @Test public void initializers_for_2() {
+  @Test public void initializers_for_2() {
     trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;++p) ;" + "return false;" + "}").stays();
   }
 
-  @Ignore @Test public void initializers_for_3() {
+  @Test public void initializers_for_3() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "for(;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;++p);" + "return false;" + "}").stays();
   }
 
-  @Ignore @Test public void initializers_for_4() {
+  @Test public void initializers_for_4() {
     trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "for(;p < 10;) p = p.getParent();" + "return false;" + "}")
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;) p = p.getParent();" + "return false;" + "}")
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;p = p.getParent());" + "return false;" + "}").stays();
   }
+
+  @Test public void initializers_for_5() {
+    trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(int k = 2;p < 10;) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(int k=2, p = i;p < 10;) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(int k=2, p = i;p < 10;++p) ;" + "return false;" + "}").stays();
+  }
+
 
   @Test public void initializers_while_1() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while(p != null) {" + "if (dns.contains(p))" + "return true;" + "++i;"
@@ -184,18 +203,20 @@ import org.junit.runners.*;
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;p = p.getParent());" + "return false;" + "}").stays();
   }
 
-  @Ignore @Test public void t03a() {
+  @Test public void t03a() {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
         + "for (int i = 0; i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
-                + "for (int i = 0, length = sb.length(); i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');"
-                + "return sb + \"\";")
-            .stays();
+            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
+        + "for (int ¢ = 0; ¢ < length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');" + "return sb + \"\";").stays();
   }
 
-  @Ignore @Test public void t03b() {
+  @Test public void t03b() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
         + "return $;}")
+            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
+        + "return $;}")
+            .gives(
+                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one; ++$)" + "{if ($ == 0)" + "$ = 7;}" + "return $;}")
             .gives(
                 "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one; ++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
             .stays();
