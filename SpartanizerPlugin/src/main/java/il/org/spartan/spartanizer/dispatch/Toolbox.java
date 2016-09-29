@@ -40,7 +40,7 @@ public class Toolbox {
   static Toolbox defaultInstance;
   public static Toolbox defaultInstance() {
     // Lazy evaluation pattern.
-    return defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance;
+    return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
   public static Toolbox emptyToolboox() {
@@ -251,10 +251,9 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    for (final Tipper<?> t : ts) {
-      if (((Tipper<N>) t).canTip(n))
-        return (Tipper<N>) t;
-    }
+    for (final Tipper<?> ¢ : ts)
+      if (((Tipper<N>) ¢).canTip(n))
+        return (Tipper<N>) ¢;
     return null;
   }
 
@@ -291,8 +290,8 @@ public class Toolbox {
   }
 
   public void disable(final Class<? extends TipperCategory> c) {
-    for (final List<Tipper<? extends ASTNode>> a : implementation)
-      disable(a, c);
+    for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
+      disable(¢, c);
   }
 
   public static <N extends ASTNode> Tipper<N> findTipper(N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
@@ -313,14 +312,14 @@ public class Toolbox {
   public List<Tipper<? extends ASTNode>> get(final int t) {
     if (implementation[t] == null)
       implementation[t] = new ArrayList<>();
-    final List<Tipper<? extends ASTNode>> a = implementation[t];
-    return a;
+    final List<Tipper<? extends ASTNode>> $ = implementation[t];
+    return $;
   }
 
   public int hooksCount() {
     int $ = 0;
-    for (final List<Tipper<? extends ASTNode>> x : implementation)
-      $ += as.bit(x != null && !x.isEmpty());
+    for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
+      $ += as.bit(¢ != null && !¢.isEmpty());
     return $;
   }
 
@@ -332,7 +331,7 @@ public class Toolbox {
     return $;
   }
 
-  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N n) {
-    return get(n.getNodeType());
+  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
+    return get(¢.getNodeType());
   }
 }
