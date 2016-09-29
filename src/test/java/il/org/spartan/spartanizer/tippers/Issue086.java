@@ -71,12 +71,12 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$05toolboxCanFindWring() {
     A$04_init();
-    assert Toolbox.defaultInstance().find(focus) != null;
+    assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$06toolboxCanFindFindCorrectWring() {
     A$04_init();
-    azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(tipper.getClass()));
+    azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
   @Test public void B$07callSuggest() throws TipperFailure {
@@ -111,7 +111,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$14applyWring() {
     A$04_init();
-    Toolbox.defaultInstance().find(focus);
+    Toolbox.defaultInstance().firstTipper(focus);
   }
 
   @Test public void doubleVanillaThrow() {

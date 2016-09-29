@@ -87,8 +87,11 @@ public enum sideEffects {
         return free(az.conditionalExpression(¢));
       case ARRAY_INITIALIZER:
         return free(step.expressions(az.arrayInitializer(¢)));
+      case VARIABLE_DECLARATION_EXPRESSION:
+        return free(step.fragments(az.variableDeclarationExpression(¢)));
       default:
-        LoggingManner.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing handler for class: " + ¢.getClass().getSimpleName()));
+        LoggingManner.logProbableBug(//
+            sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
     }
   }
