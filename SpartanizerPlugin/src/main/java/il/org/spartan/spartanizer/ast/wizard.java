@@ -114,6 +114,27 @@ public interface wizard {
     return removeWhites(wizard.body(¢));
   }
 
+  /** Converts a string into an AST, depending on it's form, as determined
+   * by @link{GuessedContext.find}.
+   * @param p string to convert
+   * @return AST, if string is not a valid AST according to any form, then
+   *         null */
+  static ASTNode ast(final String p) {
+    switch (GuessedContext.find(p)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        return into.cu(p);
+      case EXPRESSION_LOOK_ALIKE:
+        return into.e(p);
+      case OUTER_TYPE_LOOKALIKE:
+        return into.t(p);
+      case STATEMENTS_LOOK_ALIKE:
+        return into.s(p);
+      default:
+        break;
+    }
+    return null;
+  }
+
   static String body(final ASTNode ¢) {
     return tide.clean(¢ + "");
   }
@@ -344,9 +365,12 @@ public interface wizard {
    * @param ¢ JD
    * @param xs JD */
   static void removeAll(final boolean b, final List<Expression> xs) {
-    for (final Expression ¢ = find(b, xs);; xs.remove(¢))
+    for (;;) {
+      final Expression ¢ = find(b, xs);
       if (¢ == null)
         return;
+      xs.remove(¢);
+    }
   }
 
   static String removeComments(final String codeFragment) {
@@ -404,29 +428,7 @@ public interface wizard {
         return false;
     return true;
   }
-
   static boolean unreachable() {
     return false;
-  }
-
-  /** Converts a string into an AST, depending on it's form, as determined
-   * by @link{GuessedContext.find}.
-   * @param p string to convert
-   * @return AST, if string is not a valid AST according to any form, then
-   *         null */
-  static ASTNode ast(final String p) {
-    switch (GuessedContext.find(p)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return into.cu(p);
-      case EXPRESSION_LOOK_ALIKE:
-        return into.e(p);
-      case OUTER_TYPE_LOOKALIKE:
-        return into.t(p);
-      case STATEMENTS_LOOK_ALIKE:
-        return into.s(p);
-      default:
-        break;
-    }
-    return null;
   }
 }
