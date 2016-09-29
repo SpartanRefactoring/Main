@@ -92,12 +92,14 @@ Java class which generates quick fix for tips. -->
   />
 </extension>
 
+<!-- Marker annotation: This is where the markers are we get from the build of
+files of our nature -->
 <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
   <specification
      annotationType="il.org.spartan.tip"
      colorPreferenceKey="il.org.spartan.spartanizationMarker.color"
-     colorPreferenceValue="0,0,180"
-     contributesToHeader="false"
+     colorPreferenceValue="255,69,0"
+     contributesToHeader="true"
      includeOnPreferencePage="true"
      label="Tip"
      overviewRulerPreferenceKey="il.org.spartan.plugin.spartanizationMarker.overview"
@@ -128,15 +130,14 @@ Java class which generates quick fix for tips. -->
 http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fguide%2Fworkbench_cmd_commands.htm 
 -->
 <extension point="org.eclipse.ui.commands">
-     <command id="il.org.spartan.LaconizeAll" name="Spartanize entire project"/>
-     <command id="il.org.spartan.LaconizeCurrent" name="Spartanize active window" />
+     <command id="il.org.spartan.LaconizeCurrent" name="active Window"/>
+     <command id="il.org.spartan.LaconizeAll" name="entire Project"/>
      <command id="il.org.spartan.LaconizeToggle" name="Tips on/off">
            <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
     </command>
-     <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)" />
+     <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)" mnemonic="R" />
      <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
 </extension>
-
 
 <!-- Handlers of commands: which class to activate for each command id -->
 <extension point="org.eclipse.ui.handlers">
@@ -154,7 +155,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
        <command 
-       tooltip="Fully spartanize compilation unit"
+       tooltip="Fully laconize compilation unit"
          commandId="il.org.spartan.LaconizeCurrent" 
          icon="/src/main/icons/spartan-warrior.gif" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
@@ -165,10 +166,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <!-- Popup menus -->
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Laconize..." mnemonic="L">
-        <command commandId="il.org.spartan.LaconizeCurrent" style="push"/>       
-        <command commandId="il.org.spartan.LaconizeAll" style="push"/>
-        <command commandId="il.org.spartan.RefreshAll" style="push"/>
-        <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
+        <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
+        <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
+        <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
+        <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
          <command commandId="il.org.spartan.TipsToggle"
               id="il.org.spartan.menus.Toggle"
               style="toggle"
@@ -185,12 +186,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
    <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
-      <menu label="Laconiazation">
-        <command commandId="il.org.spartan.LaconizeCurrent" style="push"/>       
-        <command commandId="il.org.spartan.LaconizeAll" style="push"/>
-        <command commandId="il.org.spartan.LaconizeToggle" style="toggle"/> 
-        <command commandId="il.org.spartan.RefreshAll" style="push"/> 
-        <command commandId="il.org.spartan.SpartanizeableAll" style="push"/> 
+      <menu label="Laconize..." mnemonic="L">
+        <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
+        <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
+        <command commandId="il.org.spartan.LaconizeToggle" style="toggle" mnemonic="O"/> 
+        <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
+        <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
    </menu>
    </menu>
 </menuContribution>
