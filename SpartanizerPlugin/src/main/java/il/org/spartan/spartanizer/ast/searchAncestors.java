@@ -61,7 +61,7 @@ public abstract class searchAncestors {
   /** @param ¢ JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode inclusiveLastFrom(final ASTNode ¢) {
-    for (ASTNode $ = inclusiveFrom(¢), p = $; ; p = from(p), $ = p)
+    for (ASTNode $ = inclusiveFrom(¢), p = $;; p = from(p), $ = p)
       if (p == null)
         return $;
   }

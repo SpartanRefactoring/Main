@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -43,6 +45,13 @@ public class Toolbox {
 
   public static Toolbox emptyToolboox() {
     return new Toolbox();
+  }
+
+  public static <N extends ASTNode> Tipper<N> findTipper(final N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
+    for (final Tipper<N> $ : ns)
+      if ($.canTip(n))
+        return $;
+    return null;
   }
 
   public static Toolbox freshCopyOfAllTippers() {
@@ -276,7 +285,7 @@ public class Toolbox {
         "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
         "\n classForNodeType = " + classToNodeType + //
         LoggingManner.endDump();
-    List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
+    final List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
@@ -290,13 +299,6 @@ public class Toolbox {
   public void disable(final Class<? extends TipperCategory> c) {
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
       disable(¢, c);
-  }
-
-  public static <N extends ASTNode> Tipper<N> findTipper(N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
-    for (final Tipper<N> $ : ns)
-      if ($.canTip(n))
-        return $;
-    return null;
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}

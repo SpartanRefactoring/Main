@@ -10,6 +10,10 @@ import il.org.spartan.spartanizer.engine.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Matcher {
+  public static boolean matches(final ASTNode p, final ASTNode n) {
+    return new Matcher().matchesAux(p, n);
+  }
+
   private static boolean sameOperator(final ASTNode p, final ASTNode n) {
     switch (p.getNodeType()) {
       case ASTNode.PREFIX_EXPRESSION:
@@ -39,8 +43,14 @@ public class Matcher {
   private Matcher() {
   }
 
-  public static boolean matches(final ASTNode p, final ASTNode n) {
-    return new Matcher().matchesAux(p, n);
+  private boolean consistent(final ASTNode n, final String id) {
+    if (!ids.containsKey(id))
+      ids.put(id, new ArrayList<>());
+    ids.get(id).add(n);
+    for (final ASTNode other : ids.get(id))
+      if (!(n + "").equals(other + ""))
+        return false;
+    return true;
   }
 
   private boolean matchesAux(final ASTNode p, final ASTNode n) {
@@ -58,16 +68,6 @@ public class Matcher {
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
       if (!matchesAux(pChildren.get(¢), nChildren.get(¢)))
-        return false;
-    return true;
-  }
-
-  private boolean consistent(final ASTNode n, final String id) {
-    if (!ids.containsKey(id))
-      ids.put(id, new ArrayList<>());
-    ids.get(id).add(n);
-    for (final ASTNode other : ids.get(id))
-      if (!(n + "").equals(other + ""))
         return false;
     return true;
   }

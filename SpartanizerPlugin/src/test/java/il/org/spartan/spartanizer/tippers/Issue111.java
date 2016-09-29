@@ -52,8 +52,7 @@ import org.junit.runners.*;
 
   @Test public void A$g() {
     trimmingOf("protected public final public enum Level {HIGH, MEDIUM, LOW}")//
-        .gives("protected public public enum Level {HIGH, MEDIUM, LOW}")
-        .gives("public protected enum Level {HIGH, MEDIUM, LOW}")//
+        .gives("protected public public enum Level {HIGH, MEDIUM, LOW}").gives("public protected enum Level {HIGH, MEDIUM, LOW}")//
         .stays();
   }
 

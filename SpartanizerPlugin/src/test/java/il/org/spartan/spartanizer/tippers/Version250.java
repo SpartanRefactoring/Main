@@ -24,83 +24,83 @@ import il.org.spartan.*;
 
   @Test public void issue070_01() {
     trimmingOf("(double)5")//
-    .gives("1.*5");
+        .gives("1.*5");
   }
 
   @Test public void issue070_02() {
     trimmingOf("(double)4")//
-    .gives("1.*4");
+        .gives("1.*4");
   }
 
   @Test public void issue070_03() {
     trimmingOf("(double)1.2")//
-    .gives("1.*1.2");
+        .gives("1.*1.2");
   }
 
   @Test public void issue070_04() {
     trimmingOf("(double)'a'")//
-    .gives("1.*'a'");
+        .gives("1.*'a'");
   }
 
   @Test public void issue070_05() {
     trimmingOf("(double)A")//
-    .gives("1.*A");
+        .gives("1.*A");
   }
 
   @Test public void issue070_06() {
     trimmingOf("(double)a.b")//
-    .gives("1.*a.b");
+        .gives("1.*a.b");
   }
 
   @Test public void issue070_07() {
     trimmingOf("(double)(double)5")//
-    .gives("1.*(double)5")//
-    .gives("1.*1.*5");
+        .gives("1.*(double)5")//
+        .gives("1.*1.*5");
   }
 
   @Test public void issue070_08() {
     trimmingOf("(double)((double)5)")//
-    .gives("1.*(double)5")//
-    .gives("1.*1.*5");
+        .gives("1.*(double)5")//
+        .gives("1.*1.*5");
   }
 
   @Test public void issue070_09() {
     trimmingOf("(double) 2. * (double)5")//
-    .gives("(double)5 * (double)2.")//
-    .gives("1. * 5  * 1. * 2.")//
-    .gives("10.0");
+        .gives("(double)5 * (double)2.")//
+        .gives("1. * 5  * 1. * 2.")//
+        .gives("10.0");
   }
 
   @Test public void issue070_10() {
     trimmingOf("(double)5 - (double)3")//
-    .gives("1.*5-1.*3");
+        .gives("1.*5-1.*3");
   }
 
   @Test public void issue070_11() {
     trimmingOf("(double)f + (int)g")//
-    .gives("(int)g+(double)f")//
-    .gives("(int)g + 1.*f")//
-    .gives("1.*f + (int)g").stays();
+        .gives("(int)g+(double)f")//
+        .gives("(int)g + 1.*f")//
+        .gives("1.*f + (int)g").stays();
   }
 
   @Test public void issue070_12() {
     trimmingOf("foo((double)18)")//
-    .gives("foo(1.*18)");
+        .gives("foo(1.*18)");
   }
 
   @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076a() {
     trimmingOf("a*b + a*c")//
-    .gives("a*(b+c)");
+        .gives("a*(b+c)");
   }
 
   @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076b() {
     trimmingOf("b*a + c*a")//
-    .gives("a*(b+c)");
+        .gives("a*(b+c)");
   }
 
   @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076c() {
     trimmingOf("b*a + c*a + d*a")//
-    .gives("a*(b+c+d)");
+        .gives("a*(b+c+d)");
   }
 
   @Test public void issue076d() {
@@ -109,17 +109,17 @@ import il.org.spartan.*;
 
   @Test public void issue083a() {
     trimmingOf("if(x.size()>=0) return a;")//
-    .gives("if(true) return a;");
+        .gives("if(true) return a;");
   }
 
   @Test public void issue083b() {
     trimmingOf("if(x.size()<0) return a;")//
-    .gives("if(false) return a;");
+        .gives("if(false) return a;");
   }
 
   @Test public void issue083c() {
     trimmingOf("if(x.size()>0)return a;")//
-    .gives("if(!x.isEmpty())return a;");
+        .gives("if(!x.isEmpty())return a;");
   }
 
   @Test public void issue083d() {
@@ -132,7 +132,7 @@ import il.org.spartan.*;
 
   @Test public void issue083f() {
     trimmingOf("if(2==x.size()) return a;")//
-    .gives("if(x.size()==2) return a;");
+        .gives("if(x.size()==2) return a;");
   }
 
   @Test public void issue083g() {
@@ -141,7 +141,7 @@ import il.org.spartan.*;
 
   @Test public void issue083h() {
     trimmingOf("if(x.size()==0) return a;")//
-    .gives("if(x.isEmpty()) return a;");
+        .gives("if(x.isEmpty()) return a;");
   }
 
   @Test public void issue083i() {
@@ -162,32 +162,32 @@ import il.org.spartan.*;
 
   @Test public void issue083m() {
     trimmingOf("if(a.size() >= -3) ++a;")//
-    .gives("if(true) ++a;")//
-    .gives("++a;");
+        .gives("if(true) ++a;")//
+        .gives("++a;");
   }
 
   @Test public void issue083n() {
     trimmingOf("if(a.size() <= -9) ++a;a+=1;")//
-    .gives("if(false) ++a;a+=1;")//
-    .gives("{}a+=1;")//
-    .gives("a+=1;").stays();
+        .gives("if(false) ++a;a+=1;")//
+        .gives("{}a+=1;")//
+        .gives("a+=1;").stays();
   }
 
   @Test public void issue085_86a() {
     trimmingOf("if(true){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}")//
-    .gives("{x();}")//
-    .gives("x();");
+        .gives("{x();}")//
+        .gives("x();");
   }
 
   @Test public void issue085_86b() {
     trimmingOf("if(false){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}")//
-    .gives("{y();}")//
-    .gives("y();");
+        .gives("{y();}")//
+        .gives("y();");
   }
 
   @Test public void issue085_86c() {
     trimmingOf("if(false)   \n" + "x();    \n" + "else   \n" + "y();   \n")//
-    .gives("y();");
+        .gives("y();");
   }
 
   @Test public void issue085_86d() {
@@ -297,7 +297,7 @@ import il.org.spartan.*;
 
   @Test public void simpleForLoop() {
     trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
-    .gives("for(int ¢=0;¢<100;++¢)sum+=¢;").stays();
+        .gives("for(int ¢=0;¢<100;++¢)sum+=¢;").stays();
   }
 
   @Test public void test_b() {
@@ -314,11 +314,11 @@ import il.org.spartan.*;
 
   @Ignore @Test public void trimmerBugXOR() {
     trimmingOf("j=j^k")//
-    .gives("j^=k");
+        .gives("j^=k");
   }
 
   @Test public void trimmerBugXORCompiling() {
     trimmingOf("j = j ^ k")//
-    .gives("j ^= k");
+        .gives("j ^= k");
   }
 }

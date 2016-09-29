@@ -91,8 +91,7 @@ public enum sideEffects {
         return free(step.fragments(az.variableDeclarationExpression(¢)));
       default:
         LoggingManner.logProbableBug(//
-            sideEffects.MISSING_CASE, 
-            new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
+            sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
     }
   }
