@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 // TODO Ori: choose more suitable category
-// TODO Ori: add tests
+// TODO Ori: add tests for tipper
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
@@ -164,10 +164,13 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     for (final VariableDeclaration v : m.keySet())
       ns.add(v.getName() + "");
     boolean hasParamTags = false;
+    int tagPosition = -1;
     final List<TagElement> xs = new LinkedList<>();
     for (final TagElement t : ts)
       if (TagElement.TAG_PARAM.equals(t.getTagName()) && t.fragments().size() == 1 && t.fragments().get(0) instanceof SimpleName) {
         hasParamTags = true;
+        if (tagPosition < 0)
+          tagPosition = ts.indexOf(t);
         if (!ns.contains(t.fragments().get(0)))
           xs.add(t);
         else
@@ -180,7 +183,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
       TagElement e = j.getAST().newTagElement();
       e.setTagName(TagElement.TAG_PARAM);
       e.fragments().add(j.getAST().newSimpleName(s));
-      ts.add(e);
+      ts.add(tagPosition, e);
     }
   }
 }
