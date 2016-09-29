@@ -20,6 +20,13 @@ public final class subject {
     extendedOperands($).add(make.plant(duplicate.of(add)).into($));
     return $;
   }
+  
+  public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
+    InfixExpression $ = duplicate.of(base);
+    for(final Expression ¢ : adds)
+      $ = append($, ¢);
+    return $;
+  }
 
   /** Create a new Operand
    * @param inner the expression of the operand
@@ -298,8 +305,8 @@ public final class subject {
       assert operands.size() != 1;
       assert operands.size() >= 2;
       final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
-      for (int ¢ = 2; ¢ < operands.size(); ++¢)
-        extendedOperands($).add(make.plant(operands.get(¢)).into($));
+      for (int ¢ = 2; ¢ < operands.size(); ++¢, extendedOperands($).add(make.plant(operands.get(¢)).into($)))
+        ;
       return $;
     }
   }
