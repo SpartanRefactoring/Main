@@ -138,6 +138,7 @@ public class Toolbox {
             // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
+//            new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -180,7 +181,6 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            // new TernaryNullCoallescing(), //
             null) //
         .add(TypeDeclaration.class, //
             // new delmeTypeModifierCleanInterface(), //
