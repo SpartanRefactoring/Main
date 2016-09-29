@@ -26,12 +26,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationStatement s, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(duplicate.of(body(¢)));
-    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
-    $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), fragments, f));
-    step.initializers($).add(Initializers(f, fragments));
+    $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), s));
+    step.initializers($).add(Initializers(findFirst.elementOf(step.fragments(s))));
     return $;
   }
 
@@ -45,16 +44,30 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return true;
   }
 
-  private static Expression handleAssignment(final Expression from, final List<VariableDeclarationFragment> to, final VariableDeclarationFragment f) {
-    Assignment a = extract.assignment(from);
-    return from;
+  private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
+    return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
 
-  private static Expression Initializers(final VariableDeclarationFragment ¢, final List<VariableDeclarationFragment> expressionFragments) {
-    final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
+  private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
+    final List<Expression> operands = hop.operands(from);
+    for (final Expression ¢ : operands)
+      if (iz.parenthesizeExpression(¢) && iz.assignment(az.parenthesizedExpression(¢).getExpression())) {
+        final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
+        final SimpleName var = az.simpleName(step.left(a));
+        for (final VariableDeclarationFragment f : step.fragments(s))
+          if (f.getName().toString().equals(var.toString())) {
+            f.setInitializer(duplicate.of(step.right(a)));
+            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var.toString()));
+          }
+      }
+    final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
+    return subject.append($, minus.firstElem(minus.firstElem(operands)));
+  }
+
+  private static Expression Initializers(final VariableDeclarationFragment ¢) {
+    final VariableDeclarationStatement parent = fragmentParent(¢);
     final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
     step.fragments($).addAll(nextFragmentsOf(parent));
-    step.fragments($).addAll(expressionFragments);
     $.setType(duplicate.of(parent.getType()));
     step.extendedModifiers($).addAll(modifiersOf(parent));
     return $;
@@ -77,18 +90,16 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
-  private static Expression pullInitializersFromExpression(final Expression from, final List<VariableDeclarationFragment> to,
-      final VariableDeclarationFragment f) {
+  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
     if (!haz.sideEffects(from))
       return from;
-    if (iz.assignment(from)) {
-      return handleAssignment(from, to, f);
-    }
+    if (iz.infix(from))
+      return handleInfix(duplicate.of(az.infixExpression(from)), f);
     return from; // TODO: handle other side effects.
   }
 
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(f, ¢);
+    return !fitting(¢) ? null : buildForStatement(az.variableDeclrationStatement(f.getParent()), ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
