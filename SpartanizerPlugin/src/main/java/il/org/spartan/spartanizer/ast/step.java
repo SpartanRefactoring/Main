@@ -167,6 +167,10 @@ public enum step {
     return ¢.modifiers();
   }
 
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationExpression ¢) {
+    return ¢.modifiers();
+  }
+  
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();
   }
