@@ -167,6 +167,10 @@ public enum step {
     return ¢.modifiers();
   }
 
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationExpression ¢) {
+    return ¢.modifiers();
+  }
+  
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationStatement ¢) {
     return ¢.modifiers();
   }
@@ -317,6 +321,20 @@ public enum step {
    * @return right operand of the parameter */
   public static Expression right(final InfixExpression ¢) {
     return ¢.getRightOperand();
+  }
+  
+  /** Shorthand for {@link Assignment#getRightHandSide()}
+   * @param ¢ JD
+   * @return right side of the assignment */
+  public static Expression right(final Assignment ¢) {
+    return ¢.getRightHandSide();
+  }
+  
+  /** Shorthand for {@link Assignment#getLeftHandSide()}
+   * @param ¢ JD
+   * @return left side of the assignment */
+  public static Expression left(final Assignment ¢) {
+    return ¢.getLeftHandSide();
   }
 
   /** Expose the list of sideEffects contained in a {@link Block}

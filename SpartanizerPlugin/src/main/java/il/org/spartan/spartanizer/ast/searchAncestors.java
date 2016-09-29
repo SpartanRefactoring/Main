@@ -108,7 +108,7 @@ public abstract class searchAncestors {
 
     @Override public ASTNode from(final ASTNode ¢) {
       if (¢ != null)
-        for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
+        for (ASTNode $ = ¢; $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
             return $;
       return null;

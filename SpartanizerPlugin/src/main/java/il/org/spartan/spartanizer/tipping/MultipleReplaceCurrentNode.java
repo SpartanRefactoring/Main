@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
  * multiple nodes (or a single node).
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
-abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
+public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   @Override public boolean prerequisite(final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
   }
@@ -29,9 +29,18 @@ abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipp
         else if (input.size() == output.size())
           for (int ¢ = 0; ¢ < input.size(); ++¢, r.replace(input.get(¢), output.get(¢), g))
             ;
+        else if (input.size() == 1) {
+          ASTNode[] ds = new ASTNode[output.size()];
+          for (int i=0 ; i<ds.length ; ++i) {
+            ASTNode o = output.get(i);
+            ds[i] = r.createStringPlaceholder(o.toString().trim() + (i != ds.length - 1 && o instanceof BodyDeclaration ? "\n\n" : ""),
+                o.getNodeType());
+          }
+          r.replace(input.get(0), r.createGroupNode(ds), g);
+        }
       }
     };
   }
 
-  abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
+  public abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
 }
