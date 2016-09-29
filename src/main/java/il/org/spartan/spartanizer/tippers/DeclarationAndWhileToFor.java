@@ -37,8 +37,9 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
   @SuppressWarnings("unchecked") private static Expression dupInitializers(final VariableDeclarationFragment ¢) {
     final VariableDeclarationStatement parent = duplicate.of(az.variableDeclrationStatement(¢.getParent()));
     final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
-    $.fragments().addAll(nextFragments(parent));
+    $.fragments().addAll(nextFragmentsOf(parent));
     $.setType(duplicate.of(parent.getType()));
+    step.extendedModifiers($).addAll(modifiersOf(parent));
     return $;
   }
 
@@ -48,7 +49,13 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return true;
   }
 
-  private static List<VariableDeclarationFragment> nextFragments(final VariableDeclarationStatement parent) {
+  private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
+    final List<IExtendedModifier> modifiers = new ArrayList<>();
+    duplicate.modifiers(step.extendedModifiers(parent), modifiers);
+    return modifiers;
+  }
+  
+  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement parent) {
     final List<VariableDeclarationFragment> fragments = new ArrayList<>();
     duplicate.into(step.fragments(parent), fragments);
     return minus.firstElem(fragments);

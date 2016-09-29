@@ -8,7 +8,7 @@ import org.junit.runners.*;
 /** @author Dor Ma'ayan & Alex Kopzon
  * @since 2016-09-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue144 {
-  @Test public void challenge_while_1() {
+  @Test public void challenge_while_a() {
     trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
         "if ((c == null) || c.checkCode(match)) matches.add(match); start = endExpr;}")
@@ -19,7 +19,7 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void challenge_while_2() {
+  @Test public void challenge_while_b() {
     trimmingOf("index = 1;while (signature.charAt(index) != ')') {final int coded = getTypeSize(signature.substring(index));" + //
         "$ += size(coded);index += consumed(coded);}").gives(
             "index = 1;for (;signature.charAt(index) != ')';index += consumed(coded)) {final int coded = getTypeSize(signature.substring(index));" + //
@@ -31,7 +31,7 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void challenge_while_3() {
+  @Test public void challenge_while_c() {
     trimmingOf("for (int i = 0; i < 20; i++) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
         "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}").gives(
             "for (int i = 0; i < 20; i++,assertTrue(newFolder.exists())) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));"
@@ -52,7 +52,7 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void challenge_while_4() {
+  @Test public void challenge_while_d() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
         "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}")
             .gives("static Statement recursiveElze(final IfStatement ¢) {" + //
@@ -62,18 +62,66 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void challenge_while_5_Modifiers_in_initializers() {
+  @Test public void challenge_while_e_Modifiers_in_initializers_1() {
     trimmingOf("public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);" + //
         "while (m.find())a += m.group();return a.toLowerCase();}").gives("public String abbreviate() {String a = \"\";" + //
-            "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find())a += m.group();return a.toLowerCase();}");
+            "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}");
+  }
+  
+  @Test public void challenge_while_e_Modifiers_in_initializers_2() {
+    trimmingOf("public boolean check(int i) {" + "final int p = i;" + "while(p < 10) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(final int p = i;p < 10;) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(final int p = i;p < 10;++p) ;" + "return false;" + "}").stays();
   }
 
-  @Test public void challenge_while_6() {
+  @Test public void challenge_while_f() {
     trimmingOf("while (!es.isEmpty()) {$ = $.underBinaryOperator(o, lookDown(lisp.first(es)));lisp.chop(es);}return $;")
         .gives("for(;!es.isEmpty();lisp.chop(es)) {$ = $.underBinaryOperator(o, lookDown(lisp.first(es)));}return $;")
         .gives("for(;!es.isEmpty();lisp.chop(es),$ = $.underBinaryOperator(o, lookDown(lisp.first(es)))){}return $;").stays();
   }
-
+  
+  @Test public void challenge_while_g() {
+    trimmingOf("while (!es.isEmpty()) {$ = $.underBinaryOperator(o, lookDown(lisp.first(es)));lisp.chop(es);}return $;")
+    .gives("for (;!es.isEmpty();lisp.chop(es)) {$ = $.underBinaryOperator(o, lookDown(lisp.first(es)));}return $;")
+    .gives("for (;!es.isEmpty();lisp.chop(es),$ = $.underBinaryOperator(o, lookDown(lisp.first(es)))) {}return $;").stays();
+  }
+  
+  @Test public void challenge_while_h() {
+    trimmingOf("int i = 0;while (i < operands.size() - 1)if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)" + //
+        "++i;else {isChanged = true;final StringLiteral l = x.getAST().newStringLiteral();" + //
+        "l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());operands.remove(i);operands.remove(i);operands.add(i, l);}")
+    .gives("for (int i = 0;i < operands.size() - 1;)if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)" + //
+      "++i;else {isChanged = true;final StringLiteral l = x.getAST().newStringLiteral();" + //
+      "l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());operands.remove(i);operands.remove(i);operands.add(i, l);}")
+.stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_wrong() {
+    trimmingOf("String line;while ((line = reader.readLine()) != null)$.append(line).append(ls);")
+    .gives("for (String line;(line = reader.readLine()) != null;)$.append(line).append(ls);")
+    .gives("for (String line;(line = reader.readLine()) != null;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_right() {
+    trimmingOf("String line;while ((line = reader.readLine()) != null)$.append(line).append(ls);")
+    .gives("for (String line = reader.readLine(); line != null;)$.append(line).append(ls);")
+    .gives("for (String line = reader.readLine(); line != null;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_j() {
+    trimmingOf("public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);while (m.find())a += m.group();return a.toLowerCase();}")
+    .gives("public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}")
+    .gives("public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();a += m.group());return a.toLowerCase();}").stays();
+  }
+  
+  @Test public void challenge_while_k() {
+    trimmingOf("").stays();
+  }
+  
+  @Test public void challenge_while_l() {
+    trimmingOf("").stays();
+  }
+  
   @Ignore @Test public void initializers_for_1() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for(;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;"
         + "}" + "return false;" + "}")
