@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
@@ -24,18 +23,16 @@ public final class LaconizeProject extends BaseHandler {
    * @param u JD
    * @return number of tips available for the compilation unit */
   public static int countTips(final ICompilationUnit u) {
-    AtomicInteger $ = new AtomicInteger(0);
+    final AtomicInteger $ = new AtomicInteger(0);
     try {
-      PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
-        @Override public void run(IProgressMonitor pm) {
-          pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-          for (final GUI$Applicator ¢ : eclipse.safeApplicators) {
-            ¢.setMarker(null);
-            ¢.setICompilationUnit(u);
-            $.addAndGet(¢.countTips());
-          }
-          pm.done();
+      PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
+        pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+        for (final GUI$Applicator ¢ : eclipse.safeApplicators) {
+          ¢.setMarker(null);
+          ¢.setICompilationUnit(u);
+          $.addAndGet(¢.countTips());
         }
+        pm.done();
       });
     } catch (InvocationTargetException | InterruptedException x) {
       // TODO Ori: log in
