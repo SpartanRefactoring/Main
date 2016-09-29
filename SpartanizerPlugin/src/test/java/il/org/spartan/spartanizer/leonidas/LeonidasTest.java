@@ -4,10 +4,13 @@ package il.org.spartan.spartanizer.leonidas;
  * @year 2016 */
 import static org.junit.Assert.*;
 
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches1() {
@@ -73,6 +76,17 @@ public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testNotTips3() {
     azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).f");
   }
+  // @SuppressWarnings("static-method") @Test public void testMutation1() {
+  // azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)",
+  // "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
+  // }
+  //
+  // @SuppressWarnings("static-method") @Test public void testMutation2() {
+  // azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)",
+  // "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),
+  // c.d()).e")
+  // .into("a(b(), c.d()).e.defaultsTo(2*3 + 4*z().x)");
+  // }
 }
 
 class azzert {
@@ -102,7 +116,7 @@ class expression {
 }
 
 class tipper {
-  final UserDefinedTipper<ASTNode> tipper;
+  final private UserDefinedTipper<ASTNode> tipper;
 
   public tipper(final String p, final String r, final String d) {
     tipper = TipperFactory.tipper(p, r, d);
@@ -114,5 +128,35 @@ class tipper {
 
   public void nottips(final String ¢) {
     assertFalse(tipper.canTip(wizard.ast(¢)));
+  }
+
+  public turns turns(String s) {
+    return new turns(tipper, s);
+  }
+}
+
+class turns {
+  final private UserDefinedTipper<ASTNode> tipper;
+  final private ASTNode n;
+
+  public turns(UserDefinedTipper<ASTNode> tipper, String s) {
+    this.tipper = tipper;
+    this.n = wizard.ast(s);
+  }
+
+  public void into(String s) {
+    try {
+      ASTRewrite r = ASTRewrite.create(n.getAST());
+      tipper.tip(n).go(r, null);
+      r.rewriteAST();
+      assertEquals(s, n.toString());
+    } catch (TipperFailure e) {
+      e.printStackTrace();
+      fail();
+    } catch (JavaModelException e) {
+      e.printStackTrace();
+    } catch (IllegalArgumentException e) {
+      e.printStackTrace();
+    }
   }
 }
