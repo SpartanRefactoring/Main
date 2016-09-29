@@ -55,7 +55,7 @@ public class TipperFactory {
         } else {
           final List<? extends ASTNode> nChildren = Recurser.children(n);
           final List<? extends ASTNode> pChildren = Recurser.children(p);
-          for (int ¢ = 0; ¢ < pChildren.size(); ++¢, collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment))
+          for (int ¢ = 0; ¢ < pChildren.size(); collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment), ++¢)
             ;
         }
         return enviroment;
