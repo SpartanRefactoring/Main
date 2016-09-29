@@ -79,12 +79,12 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$050toolboxCanFindWring() {
     A$040_init();
-    assert Toolbox.defaultInstance().find(focus) != null;
+    assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$060toolboxCanFindFindCorrectWring() {
     A$040_init();
-    azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(tipper.getClass()));
+    azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
   @Test public void B$070callSuggest() throws TipperFailure {
@@ -114,27 +114,27 @@ import il.org.spartan.spartanizer.tipping.*;
 
   @Test public void B$120findWringNotEmpty() {
     A$040_init();
-    assert Toolbox.defaultInstance().find(focus) != null;
+    assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$130findWringOfCorretType() {
     A$040_init();
-    azzert.that(Toolbox.defaultInstance().find(focus), instanceOf(ReplaceCurrentNode.class));
+    azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
   }
 
   @Test public void B$140findWringDemands() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canTip(focus);
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
   }
 
   @Test public void B$150findWringCanSuggest() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).canTip(focus);
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
   }
 
   @Test public void B$160findWringReplacmenentNotNull() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().find(focus)).replacement(focus) != null;
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {

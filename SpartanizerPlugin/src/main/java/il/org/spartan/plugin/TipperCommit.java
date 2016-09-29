@@ -179,7 +179,8 @@ public final class TipperCommit {
         @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
           if (Trimmer.isDisabled(n))
             return true;
-          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.defaultInstance().findTipper(n, w);
+          Toolbox.defaultInstance();
+          @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x != null) {
             Tip make = null;
             try {
@@ -208,7 +209,7 @@ public final class TipperCommit {
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
-      final Tipper<N> w = Toolbox.defaultInstance().find(n);
+      final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
       if (w != null)
         apply(w, n);
       doneTraversing = true;
