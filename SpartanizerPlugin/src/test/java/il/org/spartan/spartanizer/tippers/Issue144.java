@@ -115,7 +115,9 @@ import org.junit.runners.*;
   }
   
   @Test public void challenge_while_k() {
-    trimmingOf("").stays();
+    trimmingOf("static void removeAll(final boolean b, final List<Expression> xs) {for (final Expression ¢ = find(b, xs);;) {if (¢ == null)return;xs.remove(¢);}}")
+    .gives("static void removeAll(final boolean b, final List<Expression> xs) {for (final Expression ¢ = find(b, xs);;xs.remove(¢)) {if (¢ == null)return;}}")
+    .gives("static void removeAll(final boolean b, final List<Expression> xs) {for (final Expression ¢ = find(b, xs);;xs.remove(¢)) if (¢ == null)return;}").stays();
   }
   
   @Test public void challenge_while_l() {
