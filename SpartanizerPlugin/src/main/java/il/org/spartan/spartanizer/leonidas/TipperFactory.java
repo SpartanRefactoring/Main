@@ -3,12 +3,9 @@ package il.org.spartan.spartanizer.leonidas;
 /** @author Ori Marcovitch
  * @since 2016 */
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -16,7 +13,7 @@ public class TipperFactory {
   public static UserDefinedTipper<ASTNode> tipper(final String _pattern, final String _replacement, final String description) {
     return new UserDefinedTipper<ASTNode>() {
       final ASTNode pattern = wizard.ast(_pattern);
-      final ASTNode replacement = wizard.ast(_replacement);
+      final String replacement = _replacement;
 
       @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
         return description;
@@ -26,17 +23,10 @@ public class TipperFactory {
         return new Tip(description(n), n) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final Map<String, ASTNode> enviroment = collectEnviroment(n);
-            final ASTNode $ = duplicate.of(replacement);
-            $.accept(new ASTVisitor() {
-              @Override public void preVisit(final ASTNode ¢) {
-                if (!iz.name(¢))
-                  return;
-                final String id = ((Name) ¢).getFullyQualifiedName();
-                if (enviroment.containsKey(id))
-                  wizard.replace(¢, enviroment.get(id));
-              }
-            });
-            r.replace(n, $, g);
+            String $ = replacement;
+            for (String var : enviroment.keySet())
+              $ = $.replace(var, enviroment.get(var).toString());
+            r.replace(n, wizard.ast($), g);
           }
         };
       }
