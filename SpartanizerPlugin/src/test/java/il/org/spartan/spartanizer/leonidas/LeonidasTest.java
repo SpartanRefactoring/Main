@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.leonidas;
 /** @author Ori Marcovitch
  * @year 2016 */
 import static org.junit.Assert.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.*;
@@ -39,11 +41,47 @@ public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches8() {
     azzert.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : foo()");
   }
+
+  @SuppressWarnings("static-method") @Test public void testTips1() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("x17 == null ? 2*3 + 4*z().x : x17");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testTips2() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).e");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testTips3() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("x17 == null ? 2*3 + 4*z().x : x17");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testTips4() {
+    azzert.tipper("$X1 == $X2 && $X1 == $X3", "$X1.equals($X2, $X3)", "equalsToFew").tips("x1 == x2 && x1 == 789");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testTips5() {
+    azzert.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testNotTips1() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("x17 == 7 ? 2*3 + 4*z().x : x17");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testNotTips2() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("null == x ? 2*3 + 4*z().x : x17");
+  }
+
+  @SuppressWarnings("static-method") @Test public void testNotTips3() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).f");
+  }
 }
 
 class azzert {
   public static expression that(final String ¢) {
     return new expression(¢);
+  }
+
+  public static tipper tipper(final String p, final String s, final String d) {
+    return new tipper(p, s, d);
   }
 }
 
@@ -55,10 +93,26 @@ class expression {
   }
 
   public void matches(final String s2) {
-    assertTrue(Matcher.matches(wizard.AST(s), wizard.AST(s2)));
+    assertTrue(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
   }
 
   public void notmatches(final String s2) {
-    assertFalse(Matcher.matches(wizard.AST(s), wizard.AST(s2)));
+    assertFalse(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
+  }
+}
+
+class tipper {
+  final UserDefinedTipper<ASTNode> tipper;
+
+  public tipper(final String p, final String r, final String d) {
+    tipper = TipperFactory.tipper(p, r, d);
+  }
+
+  public void tips(final String s) {
+    assertTrue(tipper.canTip(wizard.ast(s)));
+  }
+
+  public void nottips(final String s) {
+    assertFalse(tipper.canTip(wizard.ast(s)));
   }
 }
