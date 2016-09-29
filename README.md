@@ -1,8 +1,9 @@
-# The spartanizer: 
+# Status
 - Build status: [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
-- [![Stories in Ready](https://badge.waffle.io/SpartanRefactoring/Spartanizer.svg?label=ready&title=Ready)](http://waffle.io/SpartanRefactoring/Spartanizer)
+- Issues ready for execution:  [![Stories in Ready](https://badge.waffle.io/SpartanRefactoring/Spartanizer.svg?label=ready&title=Ready)](http://waffle.io/SpartanRefactoring/Spartanizer)
 
-The laconizer is an  Eclipse plugin that automatically applies the principles
+# What is this?
+The laconizer or spartnizer is an  Eclipse plugin that automatically applies the principles
 of *[Spartan Programming]* to your Java code. It applies many different tippers,
    which are little rules that provide suggestions on how to shorten and
    simplify your code, e.g, by using fewer variables, factoring out common
