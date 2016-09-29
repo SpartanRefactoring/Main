@@ -417,7 +417,7 @@ public interface wizard {
    * @param p string to convert
    * @return AST, if string is not a valid AST according to any form, then
    *         null */
-  static ASTNode AST(final String p) {
+  static ASTNode ast(final String p) {
     switch (GuessedContext.find(p)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(p);
