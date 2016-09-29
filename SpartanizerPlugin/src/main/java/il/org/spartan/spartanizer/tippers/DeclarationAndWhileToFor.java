@@ -26,10 +26,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(f, ¢);
-  }
-
   @SuppressWarnings("unchecked") private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(duplicate.of(expression(¢)));
@@ -58,11 +54,15 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     duplicate.modifiers(step.extendedModifiers(parent), modifiers);
     return modifiers;
   }
-  
+
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement parent) {
     final List<VariableDeclarationFragment> fragments = new ArrayList<>();
     duplicate.into(step.fragments(parent), fragments);
     return minus.firstElem(fragments);
+  }
+
+  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    return !fitting(¢) ? null : buildForStatement(f, ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
