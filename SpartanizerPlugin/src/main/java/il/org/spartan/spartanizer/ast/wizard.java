@@ -17,6 +17,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 
@@ -409,5 +410,26 @@ public interface wizard {
 
   static boolean unreachable() {
     return false;
+  }
+
+  /** Converts a string into an AST, depending on it's form, as determined
+   * by @link{GuessedContext.find}.
+   * @param p string to convert
+   * @return AST, if string is not a valid AST according to any form, then
+   *         null */
+  static ASTNode AST(final String p) {
+    switch (GuessedContext.find(p)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        return into.cu(p);
+      case EXPRESSION_LOOK_ALIKE:
+        return into.e(p);
+      case OUTER_TYPE_LOOKALIKE:
+        return into.t(p);
+      case STATEMENTS_LOOK_ALIKE:
+        return into.s(p);
+      default:
+        break;
+    }
+    return null;
   }
 }

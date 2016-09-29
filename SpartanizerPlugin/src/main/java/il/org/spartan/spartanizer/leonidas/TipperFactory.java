@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public class TipperFactory {
@@ -18,31 +17,15 @@ public class TipperFactory {
     return Matcher.matches(p, n);
   }
 
-  /** @param p string to convert
-   * @return AST */
-  static ASTNode toAST(final String p) {
-    switch (GuessedContext.find(p)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return into.cu(p);
-      case EXPRESSION_LOOK_ALIKE:
-        return into.e(p);
-      case OUTER_TYPE_LOOKALIKE:
-        return into.t(p);
-      case STATEMENTS_LOOK_ALIKE:
-        return into.s(p);
-      default:
-        break;
-    }
-    return null;
-  }
+
 
   ASTNode pattern;
   ASTNode replacement;
   String description;
 
   public TipperFactory(final String pattern, final String replacement, final String description) {
-    this.pattern = toAST(pattern);
-    this.replacement = toAST(replacement);
+    this.pattern = wizard.AST(pattern);
+    this.replacement = wizard.AST(replacement);
     this.description = description;
   }
 
@@ -99,4 +82,3 @@ public class TipperFactory {
     return enviroment;
   }
 }
-
