@@ -34,6 +34,13 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
     return $;
   }
 
+  private static boolean compareModifiers(final List<IExtendedModifier> l1, final List<IExtendedModifier> l2) {
+    for (final IExtendedModifier ¢ : l1)
+      if (!isIn(¢, l2))
+        return false;
+    return true;
+  }
+
   private static Expression dupForExpression(final ForStatement ¢) {
     return duplicate.of(expression(¢));
   }
@@ -43,24 +50,10 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
     // after the scope.
     if (step.initializers(¢).isEmpty())
       return true;
-    VariableDeclarationExpression e = az.variableDeclarationExpression(step.initializers(¢).get(0));
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(step.initializers(¢).get(0));
     return e.getType() == s.getType() && compareModifiers(step.extendedModifiers(e), step.extendedModifiers(s)) ? true : false;
   }
 
-  private static boolean compareModifiers(List<IExtendedModifier> l1, List<IExtendedModifier> l2) {
-    for(final IExtendedModifier ¢ : l1)
-      if(!isIn(¢, l2))
-        return false;
-    return true;
-  }
-  
-  private static boolean isIn(IExtendedModifier m, List<IExtendedModifier> ms) {
-    for(final IExtendedModifier ¢ : ms)
-      if (IExtendedModifiersOrdering.compare(m, ¢) == 0)
-        return true;
-    return false;
-  }
-  
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
@@ -89,6 +82,13 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
     $.setType(duplicate.of(parent.getType()));
     step.extendedModifiers($).addAll(modifiersOf(parent));
     return $;
+  }
+
+  private static boolean isIn(final IExtendedModifier m, final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (IExtendedModifiersOrdering.compare(m, ¢) == 0)
+        return true;
+    return false;
   }
 
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
