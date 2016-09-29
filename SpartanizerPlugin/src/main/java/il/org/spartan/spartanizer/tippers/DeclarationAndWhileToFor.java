@@ -26,11 +26,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
-    $.setExpression(duplicate.of(expression(¢)));
     $.setBody(duplicate.of(body(¢)));
-    $.initializers().add(dupInitializers(f));
+    step.initializers($).add(dupInitializers(f));
+    final List<VariableDeclarationFragment> intoFragments = new ArrayList<>();
+    $.setExpression(pullInitializers(ofType(f), withModifiers(f), fromWhileExpression(¢), intoFragments));
     return $;
   }
 
@@ -49,6 +50,10 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return true;
   }
 
+  private static Expression fromWhileExpression(final WhileStatement ¢) {
+    return duplicate.of(expression(¢));
+  }
+
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
     final List<IExtendedModifier> modifiers = new ArrayList<>();
     duplicate.modifiers(step.extendedModifiers(parent), modifiers);
@@ -61,8 +66,26 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
     return minus.firstElem(fragments);
   }
 
+  private static Type ofType(final VariableDeclarationFragment ¢) {
+    return az.variableDeclrationStatement(¢.getParent()).getType();
+  }
+
+  /** @param t JD
+   * @param from JD (already duplicated)
+   * @param to is the list that will contain the pulled out initializations from
+   *        the given expression.
+   * @return expression to the new for loop, without the initializers. */
+  private static Expression pullInitializers(final Type t, final List<IExtendedModifier> ms, final Expression from,
+      final List<VariableDeclarationFragment> to) {
+    return from;
+  }
+
   public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForStatement(f, ¢);
+  }
+
+  private static List<IExtendedModifier> withModifiers(final VariableDeclarationFragment ¢) {
+    return step.extendedModifiers(az.variableDeclrationStatement(¢.getParent()));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
