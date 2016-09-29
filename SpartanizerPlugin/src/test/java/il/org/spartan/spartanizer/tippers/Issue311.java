@@ -5,9 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Dor Ma'ayan & Alex Kopzon
+/** @author Alex Kopzon
  * @since 2016-09-23 */
-@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
   @Test public void challenge_while_a() {
     trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
@@ -96,16 +96,28 @@ import org.junit.runners.*;
 .stays();
   }
   
-  @Test public void challenge_while_i_initialization_expression_wrong() {
-    trimmingOf("String line;while ((line = reader.readLine()) != null)$.append(line).append(ls);")
-    .gives("for (String line;(line = reader.readLine()) != null;)$.append(line).append(ls);")
-    .gives("for (String line;(line = reader.readLine()) != null;$.append(line).append(ls));").stays();
-  }
-  
-  @Test public void challenge_while_i_initialization_expression_right() {
+  @Test public void challenge_while_i_initialization_expression_1() {
     trimmingOf("String line;while ((line = reader.readLine()) != null)$.append(line).append(ls);")
     .gives("for (String line = reader.readLine(); line != null;)$.append(line).append(ls);")
     .gives("for (String line = reader.readLine(); line != null;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_2() {
+    trimmingOf("String line;while (null != (line = reader.readLine()))$.append(line).append(ls);")
+    .gives("for (String line = reader.readLine(); null != line;)$.append(line).append(ls);")
+    .gives("for (String line = reader.readLine(); null != line;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_3() {
+    trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (c=true))$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c=true;b && a && c;)$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c=true;b && a && c;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_4() {
+    trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (d=true))$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c;b && a && (d=true);)$.append(line).append(ls);")
+    .gives("for(boolean a=true,b=true,c;b && a && (d=true);$.append(line).append(ls));").stays();
   }
   
   @Test public void challenge_while_j() {

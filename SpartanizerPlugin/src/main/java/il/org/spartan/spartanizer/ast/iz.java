@@ -490,6 +490,14 @@ public enum iz {
     return iz.literal(¢, true);
   }
 
+  public static boolean leftOfAssignment(final Expression ¢) {
+    return step.left(az.assignment(¢.getParent())).equals(¢);
+  }
+  
+  public static boolean rightOfAssignment(final Expression ¢) {
+    return step.right(az.assignment(¢.getParent())).equals(¢);
+  }
+  
   public static boolean longType(final Expression ¢) {
     return type.of(¢) == LONG;
   }
