@@ -196,18 +196,20 @@ import org.junit.runners.*;
         .gives("public boolean check(ASTNode i) {" + "for(ASTNode p = i, a = null;p < 10;p = p.getParent());" + "return false;" + "}").stays();
   }
 
-  @Ignore @Test public void t03a() {
+  @Test public void t03a() {
     trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
         + "for (int i = 0; i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
-                + "for (int i = 0, length = sb.length(); i < length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');"
-                + "return sb + \"\";")
-            .stays();
+            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
+        + "for (int ¢ = 0; ¢ < length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');" + "return sb + \"\";").stays();
   }
 
-  @Ignore @Test public void t03b() {
+  @Test public void t03b() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
         + "return $;}")
+            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
+        + "return $;}")
+            .gives(
+                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one; ++$)" + "{if ($ == 0)" + "$ = 7;}" + "return $;}")
             .gives(
                 "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one; ++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
             .stays();
