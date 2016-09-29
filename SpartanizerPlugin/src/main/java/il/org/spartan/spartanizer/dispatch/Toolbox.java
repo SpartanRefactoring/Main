@@ -1,9 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -15,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  @SuppressWarnings({"serial", "unchecked"}) //
+  @SuppressWarnings({ "serial", "unchecked" }) //
   static final Map<Class<? extends ASTNode>, Integer> //
   classToNodeType //
       = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
@@ -35,9 +33,9 @@ public class Toolbox {
             }
         }
       };
-
   /** The default defaultInstance of this class */
   static Toolbox defaultInstance;
+
   public static Toolbox defaultInstance() {
     // Lazy evaluation pattern.
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
@@ -275,8 +273,8 @@ public class Toolbox {
     assert nodeType != null : LoggingManner.beginDump() + //
         "\n c = " + n + //
         "\n c.getSimpleName() = " + n.getSimpleName() + //
-        "\n classForNodeType.keySet() = " + classToNodeType.keySet() + // 
-        "\n classForNodeType = " + classToNodeType + // 
+        "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
+        "\n classForNodeType = " + classToNodeType + //
         LoggingManner.endDump();
     List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {

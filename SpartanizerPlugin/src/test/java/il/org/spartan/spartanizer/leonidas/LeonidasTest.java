@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.leonidas;
 
 /** @author Ori Marcovitch
- * @year 2016 */
+ * @since 2016 */
 import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.*;
@@ -76,17 +76,15 @@ public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testNotTips3() {
     azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).f");
   }
-  // @SuppressWarnings("static-method") @Test public void testMutation1() {
-  // azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)",
-  // "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
-  // }
-  //
-  // @SuppressWarnings("static-method") @Test public void testMutation2() {
-  // azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)",
-  // "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),
-  // c.d()).e")
-  // .into("a(b(), c.d()).e.defaultsTo(2*3 + 4*z().x)");
-  // }
+
+  @Ignore @SuppressWarnings("static-method") @Test public void testMutation1() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
+  }
+
+  @Ignore @SuppressWarnings("static-method") @Test public void testMutation2() {
+    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
+        .into("a(b(), c.d()).e.defaultsTo(2*3 + 4*z().x)");
+  }
 }
 
 class azzert {
