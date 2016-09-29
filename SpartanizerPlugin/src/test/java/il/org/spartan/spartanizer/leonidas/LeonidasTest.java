@@ -116,28 +116,28 @@ class expression {
 }
 
 class tipper {
-  final private UserDefinedTipper<ASTNode> tipper;
+  private final UserDefinedTipper<ASTNode> tipper;
 
   public tipper(final String p, final String r, final String d) {
     tipper = TipperFactory.tipper(p, r, d);
   }
 
-  public void tips(final String s) {
-    assertTrue(tipper.canTip(wizard.ast(s)));
+  public void tips(final String ¢) {
+    assertTrue(tipper.canTip(wizard.ast(¢)));
   }
 
-  public void nottips(final String s) {
-    assertFalse(tipper.canTip(wizard.ast(s)));
+  public void nottips(final String ¢) {
+    assertFalse(tipper.canTip(wizard.ast(¢)));
   }
 
-  public turns turns(String s) {
-    return new turns(tipper, s);
+  public turns turns(String ¢) {
+    return new turns(tipper, ¢);
   }
 }
 
 class turns {
-  final private UserDefinedTipper<ASTNode> tipper;
-  final private ASTNode n;
+  private final UserDefinedTipper<ASTNode> tipper;
+  private final ASTNode n;
 
   public turns(UserDefinedTipper<ASTNode> tipper, String s) {
     this.tipper = tipper;
@@ -149,7 +149,7 @@ class turns {
       ASTRewrite r = ASTRewrite.create(n.getAST());
       tipper.tip(n).go(r, null);
       r.rewriteAST();
-      assertEquals(s, n.toString());
+      assertEquals(s, (n + ""));
     } catch (TipperFailure e) {
       e.printStackTrace();
       fail();
