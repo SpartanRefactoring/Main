@@ -48,7 +48,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
   }
 
   private static boolean isValid(final MethodDeclaration d) {
-    return d.getBody() != null && d.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
+    return !d.isConstructor() && d.getBody() != null && d.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
   }
   
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final Statement s) {
@@ -149,8 +149,8 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(duplicate.of(v.getName()));
         sv.setType(duplicate.of(p.getType()));
-        for (Modifier md : (List<Modifier>) p.modifiers())
-          sv.modifiers().add(duplicate.of(md));
+        for (IExtendedModifier md : (List<IExtendedModifier>) p.modifiers())
+          sv.modifiers().add(duplicate.of((ASTNode) md));
         d2.parameters().add(sv);
       }
   }
