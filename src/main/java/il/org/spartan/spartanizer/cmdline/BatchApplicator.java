@@ -40,7 +40,7 @@ public final class BatchApplicator {
   ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        final Tipper<N> t = toolbox.find(n);
+        final Tipper<N> t = toolbox.firstTipper(n);
         try {
           return t == null || t.cantTip(n) || Trimmer.prune(t.tip(n, exclude), $);
         } catch (final TipperFailure e) {

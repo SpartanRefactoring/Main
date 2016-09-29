@@ -344,12 +344,9 @@ public interface wizard {
    * @param ¢ JD
    * @param xs JD */
   static void removeAll(final boolean b, final List<Expression> xs) {
-    for (;;) {
-      final Expression ¢ = find(b, xs);
+    for (final Expression ¢ = find(b, xs);; xs.remove(¢))
       if (¢ == null)
         return;
-      xs.remove(¢);
-    }
   }
 
   static String removeComments(final String codeFragment) {

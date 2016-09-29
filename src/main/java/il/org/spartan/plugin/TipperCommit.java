@@ -208,7 +208,7 @@ public final class TipperCommit {
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
-      final Tipper<N> w = Toolbox.defaultInstance().find(n);
+      final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
       if (w != null)
         apply(w, n);
       doneTraversing = true;
