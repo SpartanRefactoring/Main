@@ -29,8 +29,7 @@ public final class LaconizeCurrent extends LaconizeSelection implements IMarkerR
     try {
       execute();
     } catch (final ExecutionException x) {
-      // TODO Ori: log it
-      x.printStackTrace();
+      LoggingManner.logEvaluationError(this, x);
     }
   }
 }
