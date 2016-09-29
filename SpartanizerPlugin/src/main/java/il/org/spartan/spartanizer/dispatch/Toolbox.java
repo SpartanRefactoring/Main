@@ -15,18 +15,29 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
+  @SuppressWarnings({"serial", "unchecked"}) //
+  static final Map<Class<? extends ASTNode>, Integer> //
+  classToNodeType //
+      = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+        {
+          for (int nodeType = 1;; ++nodeType)
+            try {
+              LoggingManner.info("Searching for " + nodeType);
+              final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
+              LoggingManner.info("Found for " + nodeClassForType);
+              put(nodeClassForType, Integer.valueOf(nodeType));
+            } catch (final IllegalArgumentException x) {
+              LoggingManner.logEvaluationError(this, x);
+              break;
+            } catch (final Exception x) {
+              LoggingManner.logEvaluationError(this, x);
+              break;
+            }
+        }
+      };
+
   /** The default defaultInstance of this class */
   static Toolbox defaultInstance;
-  private static Map<Class<? extends ASTNode>, Integer> classToNodeType = new LinkedHashMap<>();
-  static {
-    for (int nodeType = 0;; ++nodeType)
-      try {
-        classToNodeType.put(ASTNode.nodeClassForType(nodeType), Integer.valueOf(nodeType));
-      } catch (final IllegalArgumentException x) {
-        break;
-      }
-  }
-
   public static Toolbox defaultInstance() {
     // Lazy evaluation pattern.
     return defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance;
@@ -84,7 +95,7 @@ public class Toolbox {
             /* The following line was intentionally commented: Matteo, I believe
              * this generates many bugs --yg Bug Fixed, but not integrated, as
              * per request. Waiting for the enhancement (Term, Factor, etc.) --
-             * mo */
+             * -- mo */
             // new InfixMultiplicationDistributive(), //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
@@ -241,8 +252,8 @@ public class Toolbox {
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
     for (final Tipper<?> t : ts) {
-      if (((Tipper<N>)t).canTip(n))
-        return (Tipper<N>)t;
+      if (((Tipper<N>) t).canTip(n))
+        return (Tipper<N>) t;
     }
     return null;
   }
@@ -263,15 +274,18 @@ public class Toolbox {
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ns) {
     final Integer nodeType = classToNodeType.get(c);
     assert nodeType != null : LoggingManner.beginDump() + //
-        "c=" + c + //
+        "\n c = " + c + //
+        "\n c.getSimpleName() = " + c.getSimpleName() + //
+        "\n classForNodeType.keySet() = " + classToNodeType.keySet() + // 
+        "\n classForNodeType = " + classToNodeType + // 
         LoggingManner.endDump();
-    get(nodeType.intValue());
+    List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
       assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
       if (¢.wringGroup().isEnabled())
-        continue;
+        ts.add(¢);
     }
     return this;
   }
@@ -283,8 +297,8 @@ public class Toolbox {
 
   public static <N extends ASTNode> Tipper<N> findTipper(N n, @SuppressWarnings("unchecked") final Tipper<N>... ns) {
     for (final Tipper<N> $ : ns)
-        if ($.canTip(n))
-          return $;
+      if ($.canTip(n))
+        return $;
     return null;
   }
 
