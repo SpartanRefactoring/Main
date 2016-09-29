@@ -20,6 +20,13 @@ public final class subject {
     extendedOperands($).add(make.plant(duplicate.of(add)).into($));
     return $;
   }
+  
+  public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
+    InfixExpression $ = duplicate.of(base);
+    for(final Expression ¢ : adds)
+      $ = append($, ¢);
+    return $;
+  }
 
   /** Create a new Operand
    * @param inner the expression of the operand
