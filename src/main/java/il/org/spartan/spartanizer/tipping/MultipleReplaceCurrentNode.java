@@ -38,7 +38,6 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
           }
           r.replace(input.get(0), r.createGroupNode(ds), g);
         }
-//          r.replace(input.get(0), r.createGroupNode(output.toArray(new ASTNode[output.size()])), g);
       }
     };
   }
