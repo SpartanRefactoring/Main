@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 // TODO Ori: choose more suitable category
-// TODO Ori: add tests
+// TODO Ori: add tests for tipper
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
