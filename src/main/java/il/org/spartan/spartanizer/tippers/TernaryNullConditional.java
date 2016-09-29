@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * replace null != X ? X.Y : null with X?.Y <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> implements TipperCategory.CommnoFactoring {
+public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> implements TipperCategory.Nanos {
   private static boolean prerequisite(final Expression left, final Expression right, final Expression elze) {
     if (!iz.nullLiteral(left) && iz.nullLiteral(right) && wizard.same(left, elze))
       Counter.count(TernaryNullConditional.class);

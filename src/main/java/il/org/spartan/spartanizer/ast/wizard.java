@@ -386,8 +386,8 @@ public interface wizard {
   /** replaces an ASTNode with another
    * @param n
    * @param with */
-  static <N extends ASTNode> void replace(final N n, final N with) {
-    ASTRewrite.create(n.getAST()).replace(n, with, null);
+  static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
+    r.replace(n, with, null);
   }
 
   /** Determine whether two nodes are the same, in the sense that their textual
