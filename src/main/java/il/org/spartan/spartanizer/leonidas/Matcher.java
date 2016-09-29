@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** @author Ori Marcovitch
- * @year 2016 */
+ * @since 2016 */
 public class Matcher {
   private static boolean sameOperator(final ASTNode p, final ASTNode n) {
     switch (p.getNodeType()) {
