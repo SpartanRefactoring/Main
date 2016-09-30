@@ -127,6 +127,13 @@ public enum haz {
   public static boolean sideEffects(final Expression ¢) {
     return !sideEffects.free(¢);
   }
+  
+  public static boolean sideEffects(final Statement s) {
+    ExpressionStatement ¢ = az.expressionStatement(s);
+    if (¢ == null)
+      return false;
+    return sideEffects(¢.getExpression());
+  }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;

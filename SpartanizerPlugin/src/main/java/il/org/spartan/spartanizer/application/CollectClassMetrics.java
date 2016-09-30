@@ -67,7 +67,7 @@ public final class CollectClassMetrics {
     }
   }
 
-  /** Bug, what happens if we have many classes in the same file? Also, we do
+  /** fault, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on
    * these. Note that you have to print the file name which is common to all

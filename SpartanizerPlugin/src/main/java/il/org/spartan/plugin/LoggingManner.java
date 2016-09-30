@@ -4,17 +4,20 @@ package il.org.spartan.plugin;
  * @author Yossi Gil
  * @year 2016 */
 public enum LoggingManner {
-  ABORT_ON_ERROR {
+  /** Used for debugging; program aborts with the first logged message */ 
+  TOUCHY {
     @Override public LoggingManner log(final String message) {
       throw new RuntimeException(message);
     }
   },
-  IGNORE {
+  /** Used for  real headless run; logs are simply ignore */
+  OBLIVIOUS {
     @Override public LoggingManner log(@SuppressWarnings("unused") final String __) {
       return this;
     }
   },
-  LOG_TO_STDERR {
+  /** For release versions, we keep a log of errors in stderr, but try to proceed */
+  PRODUCTION {
     @Override public LoggingManner log(final String message) {
       System.err.println(message);
       return this;
@@ -26,15 +29,7 @@ public enum LoggingManner {
       return this;
     }
   };
-  public static final LoggingManner now = LoggingManner.LOG_TO_STDERR;
-
-  public static String beginDump() {
-    return "ASSERTION ERROR: ";
-  }
-
-  public static String endDump() {
-    return "\n-----this is all I know.";
-  }
+  public static final LoggingManner now = LoggingManner.PRODUCTION;
 
   public static LoggingManner info(final String message) {
     return nonAbortingManner().log(message);
@@ -87,7 +82,7 @@ public enum LoggingManner {
   }
 
   public static LoggingManner nonAbortingManner() {
-    return now != ABORT_ON_ERROR ? now : LOG_TO_STDOUT;
+    return now != TOUCHY ? now : LOG_TO_STDOUT;
   }
 
   public abstract LoggingManner log(String message);

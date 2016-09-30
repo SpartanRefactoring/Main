@@ -16,7 +16,7 @@ the program changes: https://goo.gl/sIqIBC
   point="org.eclipse.core.resources.builders"
 >
 
-<!-- the most time ocnsuming part, which Java class to run on changes -->
+<!-- the central part of tipping: which Java class to run on changes -->
   <builder hasNature="true"> 
     <run class="il.org.spartan.plugin.Builder"/> 
   </builder>
@@ -67,7 +67,7 @@ the program changes: https://goo.gl/sIqIBC
 https://goo.gl/OI2pBd -->
 <extension 
   id="il.org.spartan.tip"
-  name="Tip"
+  name="Laconize"
   point="org.eclipse.core.resources.markers" 
 >
   <!-- in the future we may want to break this into several kinds, renaming,

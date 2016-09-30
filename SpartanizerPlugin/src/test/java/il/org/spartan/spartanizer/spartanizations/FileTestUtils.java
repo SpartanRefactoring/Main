@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
   public static final File location = new File("src/test/resources");
 
   /** Instantiates a {@link Class} object if possible, otherwise generate an
-   * assertion failure
+   * assertion fault
    * @param c an arbitrary class object
    * @return an instance of the parameter */
   public static Object getInstance(final Class<?> c) {
@@ -75,7 +75,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   /** Convert a canonical name of a class into a {@link Class} object, if
-   * possible, otherwise generate an assertion failure
+   * possible, otherwise generate an assertion fault
    * @param name the canonical name of some class
    * @return object representing this class
    * @since 2014/05/23 */
