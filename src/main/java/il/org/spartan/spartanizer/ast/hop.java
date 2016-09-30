@@ -152,16 +152,16 @@ public interface hop {
     return $;
   }
 
-  /** @param s current {@link Statement}.
+  /** @param n current {@link Statement}.
    * @return the previous {@link Statement} in the parent {@link Block}. If
    *         parent is not {@link Block} return null, if n is first
    *         {@link Statement} also null. */
-  static Statement previousStatementInBody(final Statement s) {
-    final Block b = az.block(s.getParent());
+  static Statement previousStatementInBody(final Statement n) {
+    final Block b = az.block(n.getParent());
     if (b == null)
       return null;
     final List<Statement> statements = step.statements(b);
-    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
+    return statements.indexOf(n) < 1 ? null : statements.get(statements.indexOf(n) - 1);
   }
 
   static SimpleName simpleName(final Type ¢) {

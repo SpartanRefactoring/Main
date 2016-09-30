@@ -33,13 +33,15 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
     if (renameInitializerTipper.canTip(forExpression(¢)) || inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
       return false;
-    return ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+    final boolean $ = ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());
+    return $;
   }
 
   private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
     final Expression e = findFirst.elementOf(step.initializers(¢));
-    return az.variableDeclarationExpression(e);
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(e);
+    return $;
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
