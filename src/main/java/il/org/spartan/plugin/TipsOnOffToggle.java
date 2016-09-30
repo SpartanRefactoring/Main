@@ -14,7 +14,7 @@ import org.eclipse.ui.handlers.*;
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
-public final class TipsOnOfToggle extends AbstractHandler {
+public final class TipsOnOffToggle extends AbstractHandler {
   private static void disableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
