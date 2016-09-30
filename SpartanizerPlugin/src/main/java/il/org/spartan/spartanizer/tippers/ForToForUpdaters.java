@@ -29,11 +29,10 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    final ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
-    return renameInitializerTipper.canTip(forExpression(¢))
-        || (new DeclarationInitializerStatementTerminatingScope()).canTip(prevToFirstLastExpressionFragment(¢)) ? false
-            : ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-                && !iz.containsContinueStatement(¢.getBody());
+    return !(new ForRenameInitializerToCent()).canTip(forExpression(¢))
+        && !(new DeclarationInitializerStatementTerminatingScope()).canTip(prevToFirstLastExpressionFragment(¢)) && ¢ != null
+        && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
   private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
