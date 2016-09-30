@@ -1738,6 +1738,7 @@ public final class TrimmerTest {
 
   @Test public void issue54While() {
     trimmingOf("int a  = f(); for(;c; b[i] = a);")//
+        .gives("for(int a  = f();c; b[i] = a);")
         .stays();
   }
 
@@ -2292,7 +2293,7 @@ public final class TrimmerTest {
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
     trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;")//
-        .gives("for (int ¢ = i++; i < 10; ++¢) sum+=¢;")//
+        .gives("for (int s = i++; i < 10; ++s, sum+=s);")//
         .gives("for (int ¢ = i++; i < 10; ++¢, sum+=¢);")//
         .stays();
   }
