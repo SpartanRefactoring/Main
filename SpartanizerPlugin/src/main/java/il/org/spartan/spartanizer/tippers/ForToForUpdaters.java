@@ -31,9 +31,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   private static boolean fitting(final ForStatement ¢) {
     final ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
     final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
-    if (renameInitializerTipper.canTip(forExpression(¢)))
-      return false;
-    if (inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
+    if (renameInitializerTipper.canTip(forExpression(¢)) || inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
       return false;
     final boolean $ = ¢ == null ? false
         : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))

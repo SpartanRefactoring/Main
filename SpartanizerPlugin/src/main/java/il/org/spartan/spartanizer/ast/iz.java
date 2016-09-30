@@ -827,9 +827,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    if (token == null)
-      return false;
-    if (LiteralParser.of(token) != type.Primitive.Certain.DOUBLE)
+    if (token == null || LiteralParser.of(token) != type.Primitive.Certain.DOUBLE)
       return false;
     return new iz() {
     }.parsesTo(token, d);
@@ -840,9 +838,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    if (token == null)
-      return false;
-    if (LiteralParser.of(token) != type.Primitive.Certain.INT)
+    if (token == null || LiteralParser.of(token) != type.Primitive.Certain.INT)
       return false;
     return new iz() {
     }.parsesTo(token, i);
@@ -853,9 +849,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    if (token == null)
-      return false;
-    if (LiteralParser.of(token) != type.Primitive.Certain.LONG)
+    if (token == null || LiteralParser.of(token) != type.Primitive.Certain.LONG)
       return false;
     return new iz() {
     }.parsesTo(token, l);
