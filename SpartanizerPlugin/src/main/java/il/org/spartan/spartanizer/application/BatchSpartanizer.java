@@ -123,20 +123,19 @@ public final class BatchSpartanizer {
 
   /** @param args */
   private static void parseCommandLineArgs(final String[] args) {
-    int i = 0;
-    while (i < args.length)
-      if (args[i].equals("-o")) {
-        outputDir = args[i + 1];
+    for (int ¢ = 0; ¢ < args.length;)
+      if ("-o".equals(args[¢])) {
+        outputDir = args[¢ + 1];
         System.out.println(outputDir);
-        i += 2;
-      } else if (args[i].equals("-i")) {
-        inputDir = args[i + 1];
+        ¢ += 2;
+      } else if ("-i".equals(args[¢])) {
+        inputDir = args[¢ + 1];
         System.out.println(inputDir);
-        i += 2;
+        ¢ += 2;
       } else {
-        System.out.println(args[i]);
+        System.out.println(args[¢]);
         System.out.println("something went wrong!");
-        i++;
+        ++¢;
       }
   }
 

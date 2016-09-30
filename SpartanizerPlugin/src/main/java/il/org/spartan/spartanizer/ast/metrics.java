@@ -168,13 +168,13 @@ public interface metrics {
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
-        if (iz.is(¢, BLOCK)) {
+        if (!iz.not(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)
             ++a.inner;
-        } else if (!iz.is(¢, EMPTY_STATEMENT))
+        } else if (iz.not(¢, EMPTY_STATEMENT))
           if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT))
             a.inner += 4;
-          else if (!iz.is(¢, IF_STATEMENT))
+          else if (iz.not(¢, IF_STATEMENT))
             a.inner += 3;
           else {
             a.inner += 4;
