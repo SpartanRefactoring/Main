@@ -73,7 +73,7 @@ public final class TrimmerTest {
         .gives("@Override void m() {}");
   }
 
-  @Ignore("Issue #230") @Test public void annotationRemoveValueFromMultipleAnnotations() {
+  @Test public void annotationRemoveValueFromMultipleAnnotations() {
     trimmingOf("@SuppressWarnings(value = \"javadoc\") @TargetApi(value = 23) void m() {}")
         .gives("@SuppressWarnings(\"javadoc\") @TargetApi(23) void m() {}");
   }
@@ -198,7 +198,7 @@ public final class TrimmerTest {
         .stays();
   }
 
-  @Ignore("Issue #230") @Test public void bugInLastIfInMethod() {
+  @Test public void bugInLastIfInMethod() {
     trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
         + "          if (!isMessageSuppressed(myMessage)) {\n" + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n"
         + "            messages.add(myMessage);\n" + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
