@@ -53,66 +53,30 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   }
 
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
-    // TODO: check that the variables declared before the loop doesn't in use
-    // after the scope.
-    assert ¢ != null : fault.dump() + //
-        "\n s = " + s + //
-        fault.done();
+    assert ¢ != null : fault.dump() + "\n s = " + s + fault.done();
     final List<Expression> initializers = step.initializers(¢);
-    assert initializers != null : fault.dump() + //
-        "\n s = " + s + //
-        "\n ¢ = " + ¢ + //
-        fault.done();
+    assert initializers != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + fault.done();
     if (initializers.isEmpty())
       return true;
     final Expression first = first(initializers);
-    assert first != null : fault.dump() + //
-        "\n s = " + s + //
-        "\n ¢ = " + ¢ + //
-        "\n initializers = " + initializers + //
-        fault.done();
+    assert first != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + fault.done();
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
     if (e == null)
       return false;
-    assert e != null : fault.dump() + //
-        "\n s = " + s + //
-        "\n ¢ = " + ¢ + //
-        "\n initializers = " + initializers + //
-        "\n first = " + first + //
-        "\n first.getClass().getSimpleName() = " + first.getClass().getSimpleName() + //
-        fault.done();
+    assert e != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
+        + "\n first.getClass().getSimpleName() = " + first.getClass().getSimpleName() + fault.done();
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     if (extendedModifiers == null)
       return false;
-    assert extendedModifiers != null : fault.dump() + //
-        "\n s = " + s + //
-        "\n ¢ = " + ¢ + //
-        "\n initializers = " + initializers + //
-        "\n first = " + first + //
-        "\n e = " + e + //
-        fault.done();
-    assert s != null : fault.dump() + //
-        "\n s = " + s + //
-        "\n ¢ = " + ¢ + //
-        "\n initializers = " + initializers + //
-        "\n first = " + first + //
-        "\n e = " + e + //
-        "\n extendedModifiers = " + extendedModifiers + //
-        fault.done();
+    assert extendedModifiers != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
+        + "\n e = " + e + fault.done();
+    assert s != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first + "\n e = " + e
+        + "\n extendedModifiers = " + extendedModifiers + fault.done();
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
-    if (extendedModifiers2 == extendedModifiers)
+    if (extendedModifiers2 == extendedModifiers || extendedModifiers == null || extendedModifiers2 == null)
       return false;
-    if (extendedModifiers == null || extendedModifiers2 == null)
-      return false;
-    assert extendedModifiers2 != null : fault.dump() + //
-        "\n s = " + s + //
-        "\n ¢ = " + ¢ + //
-        "\n initializers = " + initializers + //
-        "\n first = " + first + //
-        "\n e = " + e + //
-        "\n extendedModifiers = " + extendedModifiers + //
-        "\n s = " + e + //
-        fault.done();
+    assert extendedModifiers2 != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
+        + "\n e = " + e + "\n extendedModifiers = " + extendedModifiers + "\n s = " + e + fault.done();
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
@@ -124,14 +88,12 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
         for (final VariableDeclarationFragment f : step.fragments(s))
-          if (f.getName().toString().equals(var.toString())) {
+          if ((f.getName() + "").equals((var + ""))) {
             f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var.toString()));
+            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName((var + "")));
           }
       }
-    final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
-    // return subject.append($, minus.firstElem(minus.firstElem(operands)));
-    return $;
+    return subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
   }
 
   private static Expression Initializers(final VariableDeclarationStatement ¢) {
@@ -151,11 +113,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    if (!haz.sideEffects(from))
-      return from;
-    if (iz.infix(from))
-      return handleInfix(duplicate.of(az.infixExpression(from)), f);
-    return from; // TODO: handle other side effects.
+    return !haz.sideEffects(from) ? from : !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), f);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

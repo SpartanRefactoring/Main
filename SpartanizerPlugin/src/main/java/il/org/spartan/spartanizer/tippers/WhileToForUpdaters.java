@@ -12,38 +12,34 @@ import il.org.spartan.spartanizer.tipping.*;
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
-    $.updaters().add(dupWhileFirstLastStatement(s));
+    $.updaters().add(dupWhileLastStatement(s));
     $.setBody(minus.firstLastStatement(dupWhileBody(s)));
     return $;
   }
 
   private static Statement dupWhileBody(final WhileStatement ¢) {
-    return duplicate.of(step.body(¢));
+    return duplicate.of(¢.getBody());
   }
 
   private static Expression dupWhileExpression(final WhileStatement ¢) {
     return duplicate.of(¢.getExpression());
   }
 
-  private static Expression dupWhileFirstLastStatement(final WhileStatement ¢) {
+  private static Expression dupWhileLastStatement(final WhileStatement ¢) {
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
   private static ASTNode firstLastStatement(final WhileStatement ¢) {
-    return hop.firstLastStatement(step.body(¢));
+    return hop.firstLastStatement(¢.getBody());
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ == null ? false
-        : lastStatementIsFitting(¢) && !haz.ContinueStatement(step.body(¢)) && cantTip.declarationInitializerStatementTerminatingScope(¢);
+    return ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
   private static Statement lastStatement(final WhileStatement ¢) {
-    return az.asStatement(hop.lastStatement(step.body(¢)));
-  }
-
-  private static boolean lastStatementIsFitting(final WhileStatement ¢) {
-    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢));
+    return az.asStatement(hop.lastStatement(¢.getBody()));
   }
 
   @Override public String description(final WhileStatement ¢) {
@@ -51,7 +47,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && fitting(¢);
+    return ¢ != null && !iz.containsContinueStatement(¢.getBody());
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {
