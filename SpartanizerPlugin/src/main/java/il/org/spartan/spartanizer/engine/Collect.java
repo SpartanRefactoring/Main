@@ -112,6 +112,7 @@ public enum Collect {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         for (final ASTNode ¢ : ns)
+          if (¢ != null)
           ¢.accept(new UsesCollector($, name));
         return $;
       }
