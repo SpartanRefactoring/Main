@@ -120,11 +120,11 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return ss.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * ss.size()) + 1, ss.size()));
   }
 
-  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> s) {
-    if (d.parameters().size() != s.size())
+  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> ds) {
+    if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = new LinkedList<>();
-    for (final VariableDeclaration ¢ : s)
+    for (final VariableDeclaration ¢ : ds)
       ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
           : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
@@ -135,8 +135,8 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
 
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final List<Statement> ss,
       final int starting) {
-    for (int i = starting; i < ss.size(); ++i)
-      setUsesMapping(m, d, ss.get(i));
+    for (int ¢ = starting; ¢ < ss.size(); ++¢)
+      setUsesMapping(m, d, ss.get(¢));
   }
 
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final Statement s) {
@@ -163,8 +163,8 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return uses.isEmpty();
   }
 
-  @Override public String description(final MethodDeclaration d) {
-    return "Split " + d.getName() + " into two logical parts";
+  @Override public String description(final MethodDeclaration ¢) {
+    return "Split " + ¢.getName() + " into two logical parts";
   }
 
   @SuppressWarnings("unchecked") @Override public ASTRewrite go(final ASTRewrite r, final MethodDeclaration d,
