@@ -92,10 +92,18 @@ import org.junit.runners.*;
         .gives("for (String line = reader.readLine(); line != null;$.append(line).append(ls));").stays();
   }
 
-  @Ignore @Test public void challenge_while_i_initialization_expression_2() {
+  @Test public void challenge_while_i_initialization_expression_2a() {
     trimmingOf("String line;while (null != (line = reader.readLine()))$.append(line).append(ls);")
         .gives("for (String line = reader.readLine(); null != line;)$.append(line).append(ls);")
-        .gives("for (String line = reader.readLine(); null != line;$.append(line).append(ls));").stays();
+        .gives("for (String line = reader.readLine(); null != line;$.append(line).append(ls));")
+        .gives("for (String line = reader.readLine(); line != null;$.append(line).append(ls));").stays();
+  }
+  
+  @Test public void challenge_while_i_initialization_expression_2b() {
+    trimmingOf("int line;while (0 < (line = 1))++line;")
+        .gives("for (int line = 1; 0 < line;)++line;")
+        .gives("for (int line = 1; 0 < line;++line);")
+        .gives("for (int line = 1; line > 0;++line);").stays();
   }
 
   @Test public void challenge_while_i_initialization_expression_3() {

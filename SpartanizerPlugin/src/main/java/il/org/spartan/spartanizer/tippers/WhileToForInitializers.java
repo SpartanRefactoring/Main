@@ -26,15 +26,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(az.variableDeclrationStatement(f.getParent()), ¢);
-  }
-
-  private static ForStatement buildForStatement(final VariableDeclarationStatement s, final WhileStatement ¢) {
+    private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(duplicate.of(body(¢)));
-    $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), s));
-    step.initializers($).add(Initializers(findFirst.elementOf(step.fragments(s))));
+    $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), parent(f)));
+    step.initializers($).add(Initializers(f));
     return $;
   }
 
@@ -79,27 +75,37 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
-  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    return !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), f);
+  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+    if (!haz.sideEffects(from))
+      return from;
+    if (iz.infix(from))
+      return handleInfix(duplicate.of(az.infixExpression(from)), s);
+    return from; // TODO: handle other side effects.
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
+  private static VariableDeclarationStatement parent(VariableDeclarationFragment ¢) {
+    return az.variableDeclrationStatement(¢.getParent());
+  }
+  
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)
       return null;
-    final VariableDeclarationStatement parent = az.variableDeclrationStatement(f.getParent());
+    final VariableDeclarationStatement parent = parent(f);
     if (parent == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
       return null;
     exclude.excludeAll(step.fragments(parent));
+    if (!fitting(s))
+      return null;
     r.remove(parent, g);
-    r.replace(s, replace(f, s), g);
+    r.replace(s, buildForStatement(f, s), g);
     return r;
   }
 }
