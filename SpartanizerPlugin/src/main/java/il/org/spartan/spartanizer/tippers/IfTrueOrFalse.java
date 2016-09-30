@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.iz.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -21,10 +22,10 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement> impleme
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {
-    return ¢ != null && (iz.literal¢true(¢.getExpression()) || iz.literal¢false(¢.getExpression()));
+    return ¢ != null && (literal.true¢(¢.getExpression()) || literal.false¢(¢.getExpression()));
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    return iz.literal¢true(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
+    return literal.true¢(¢.getExpression()) ? then(¢) : elze(¢) != null ? elze(¢) : ¢.getAST().newBlock();
   }
 }

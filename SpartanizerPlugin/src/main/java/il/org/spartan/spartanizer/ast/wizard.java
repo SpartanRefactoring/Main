@@ -17,6 +17,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.ast.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -285,7 +286,7 @@ public interface wizard {
   }
 
   static boolean isDefaultLiteral(final Expression ¢) {
-    return !iz.nullLiteral(¢) && !iz.parsed.literal0(¢) && !iz.literal¢false(¢) && !iz.parsed.literal(¢, 0.0) && !iz.parsed.literal(¢, 0L);
+    return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not

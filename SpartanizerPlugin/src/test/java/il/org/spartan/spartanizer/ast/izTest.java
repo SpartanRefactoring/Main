@@ -11,6 +11,7 @@ import org.junit.*;
 import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.iz.*;
 
 /** Test class for class {@link iz}
  * @author Yossi Gil
