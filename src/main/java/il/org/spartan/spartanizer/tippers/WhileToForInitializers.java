@@ -56,9 +56,9 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
         final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
         for (final VariableDeclarationFragment f : step.fragments(s))
-          if (f.getName().toString().equals(var.toString())) {
+          if ((f.getName() + "").equals((var + ""))) {
             f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var.toString()));
+            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName((var + "")));
           }
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
