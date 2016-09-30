@@ -33,11 +33,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
-    assert receiver != null : LoggingManner.beginDump() + //
+    assert receiver != null : fault.dump() + //
         "\n threshold='" + threshold + //
         "\n receiver ='" + receiver + //
         "\n operator ='" + o + //
-        LoggingManner.endDump();
+        fault.done();
     final MethodInvocation $ = subject.operand(receiver).toMethod("isEmpty");
     assert $ != null : "All I know is that threshould=" + threshold + ", receiver = " + $ + ", and o=" + o;
     return replacement(o, threshold, $);
@@ -57,10 +57,10 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       return threshold != 0 ? null : make.notOf($);
     if (o == LESS)
       return threshold == 0 ? ast.newBooleanLiteral(false) : threshold != 1 ? null : $;
-    assert unreachable() : LoggingManner.beginDump() + //
+    assert unreachable() : fault.dump() + //
         "\n threshold='" + threshold + //
         "\n operator ='" + o + //
-        LoggingManner.endDump();
+        fault.done();
     return null;
   }
 

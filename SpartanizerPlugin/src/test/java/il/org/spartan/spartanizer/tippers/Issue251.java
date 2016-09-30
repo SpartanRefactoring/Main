@@ -83,7 +83,7 @@ import org.junit.*;
     trimmingOf("while(b==q){if(tipper==q()){int i;}}").gives("while(b==q)if(tipper==q()){int i;}");
   }
 
-  @Test public void t18() {
+  @Test @Ignore("Pending Issue") public void t18() {
     trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}").gives("for(;b==q;x=tipper+i){int i;double tipper;}");
   }
 

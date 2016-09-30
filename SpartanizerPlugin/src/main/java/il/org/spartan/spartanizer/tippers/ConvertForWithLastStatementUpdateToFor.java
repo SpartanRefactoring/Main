@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-23 */
 public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $) {
-    $.updaters().add(dupWhileLastStatement($));
-    $.setBody(minus.LastStatement(dupForBody($)));
+    $.updaters().add(dupWhileStatement($));
+    $.setBody(minus.firstLastStatement(dupForBody($)));
     return $;
   }
 
@@ -20,8 +20,8 @@ public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<F
     return duplicate.of(¢.getBody());
   }
 
-  private static Expression dupWhileLastStatement(final ForStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
+  private static Expression dupWhileStatement(final ForStatement ¢) {
+    return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
   private static boolean fitting(final ForStatement ¢) {
@@ -29,6 +29,11 @@ public class ConvertForWithLastStatementUpdateToFor extends ReplaceCurrentNode<F
         && !iz.containsContinueStatement(¢.getBody());
   }
 
+  private static ASTNode firstLastStatement(final ForStatement ¢) {
+    return hop.firstLastStatement(¢.getBody());
+  }
+
+  
   private static ASTNode lastStatement(final ForStatement ¢) {
     return hop.lastStatement(¢.getBody());
   }

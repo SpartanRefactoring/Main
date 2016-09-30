@@ -76,13 +76,13 @@ public class Toolbox {
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ConvertForWithLastStatementUpdateToFor(), //
+            //new ConvertForWithLastStatementUpdateToFor(), //
             new RemoveRedundentFor(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            new ConvertWhileWithLastStatementUpdateToFor(), //
+            //new ConvertWhileWithLastStatementUpdateToFor(), //
             new RemoveRedundantWhile(), //
             null) //
         .add(Assignment.class, //
@@ -100,7 +100,7 @@ public class Toolbox {
             null) //
         .add(InfixExpression.class, //
             /* The following line was intentionally commented: Matteo, I believe
-             * this generates many bugs --yg Bug Fixed, but not integrated, as
+             * this generates many bugs --yg fault Fixed, but not integrated, as
              * per request. Waiting for the enhancement (Term, Factor, etc.) --
              * -- mo */
             // new InfixMultiplicationDistributive(), //
@@ -138,7 +138,7 @@ public class Toolbox {
             // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-//            new ExtractMethodSuffix(), //
+            // new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -247,7 +247,7 @@ public class Toolbox {
     defaultInstance = freshCopyOfAllTippers();
   }
 
-  private static void disable(final List<Tipper<? extends ASTNode>> ns, final Class<? extends TipperCategory> c) {
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
     removing: for (;;) {
       for (int ¢ = 0; ¢ < ns.size(); ++¢)
         if (c.isAssignableFrom(ns.get(¢).getClass())) {
@@ -280,12 +280,12 @@ public class Toolbox {
    * @return <code><b>this</b></code>, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> n, final Tipper<N>... ns) {
     final Integer nodeType = classToNodeType.get(n);
-    assert nodeType != null : LoggingManner.beginDump() + //
+    assert nodeType != null : fault.dump() + //
         "\n c = " + n + //
         "\n c.getSimpleName() = " + n.getSimpleName() + //
         "\n classForNodeType.keySet() = " + classToNodeType.keySet() + //
         "\n classForNodeType = " + classToNodeType + //
-        LoggingManner.endDump();
+        fault.done();
     final List<Tipper<? extends ASTNode>> ts = get(nodeType.intValue());
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
@@ -299,7 +299,8 @@ public class Toolbox {
 
   public void disable(final Class<? extends TipperCategory> c) {
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
-      disable(¢, c);
+      if (¢ != null)
+        disable(c, ¢);
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
