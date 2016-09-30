@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.application;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -24,17 +25,57 @@ public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
   private static final String script = "./essence";
   private static final BatchApplicator batchApplicator = new BatchApplicator().disable(Nominal.class).disable(Nanos.class);
+  private static boolean defaultDir = false;
+  private static String outputDir = null;
+  private static String inputDir = null;
 
   public static String essenced(final String fileName) {
     return fileName + ".essence";
   }
 
-  public static void main(final String[] where) {
-    if (where.length == 0)
-      new BatchSpartanizer(".", "current-working-directory").fire();
-    else
-      for (final String ¢ : where)
-        new BatchSpartanizer(¢).fire();
+  public static void main(final String[] args) {
+    if (args.length == 0)
+      printHelpPrompt();
+    else {
+      parseCommandLineArgs(args);
+      if(inputDir != null && outputDir != null){
+//        new BatchSpartanizer(inputDir, outputDir).fire();
+        File iDir = new File(inputDir);
+        File[] files = iDir.listFiles();
+        for(File file: files){
+          System.out.println(file.getAbsolutePath());
+          new BatchSpartanizer(file.getAbsolutePath()).fire();
+        }
+      } 
+      if(defaultDir){
+        new BatchSpartanizer(".", "current-working-directory").fire();
+        for (final String ¢ : args)
+          new BatchSpartanizer(¢).fire();
+      }
+    }
+  }
+
+  /**
+   * @param args
+   */
+  private static void parseCommandLineArgs(final String[] args) {
+    int i = 0;
+    while(i < args.length)
+      if(args[i].equals("-o")){
+        outputDir = args[i+1];
+        System.out.println(outputDir);
+        i+=2;
+//        continue;
+      } else if(args[i].equals("-i")) {
+        inputDir = args[i+1];
+        System.out.println(inputDir);
+        i+=2;
+//        continue;
+      } else {
+        System.out.println(args[i]);
+        System.out.println("something went wrong!");
+        i++;
+      }
   }
 
   public static ProcessBuilder runScript() {
@@ -206,7 +247,7 @@ public final class BatchSpartanizer {
         .put("R(B/S)", ratio(nodes, body)) //
     ;
     report.nl();
-    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
+//    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
 
@@ -305,5 +346,30 @@ public final class BatchSpartanizer {
 
   private void runWordCount() {
     bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
+  }
+  
+  static void printHelpPrompt() {
+    System.out.println("Batch Spartanizer");
+    System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
+    System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "
+        + "within the given PATH. Files are spartanized in place by default.");
+    System.out.println("");
+    System.out.println("Options:");
+    System.out.println("  -d       default directory: use the current directory for the analysis");
+    System.out.println("  -o       output directory: here go the results of the analysis");
+    System.out.println("  -i       input directory: place here the projects that you want to analyze.");
+//    System.out.println("  -N       Do not overwrite existing files (writes the Spartanized output to a new file in the same directory)");
+//    System.out.println("  -C<num>  Maximum number of Spartanizaion rounds for each file (default: 20)");
+//    System.out.println("  -E       Display statistics for each file separately");
+//    System.out.println("  -V       Be verbose");
+//    System.out.println("  -L       printout logs");
+//    System.out.println("");
+//    System.out.println("Print statistics:");
+//    System.out.println("  -l       Show the number of lines before and after spartanization");
+//    System.out.println("  -r       Show the number of Spartanizaion made in each round");
+//    System.out.println("");
+//    System.out.println("Output:");
+//    System.out.println("  -logPath Output dir for logs");
+    System.out.println("");
   }
 }
