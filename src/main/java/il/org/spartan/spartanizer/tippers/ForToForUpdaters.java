@@ -30,16 +30,14 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
 
   private static boolean fitting(final ForStatement ¢) {
     final ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
-    final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
-    if (renameInitializerTipper.canTip(forExpression(¢)) || inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
-      return false;
-    return ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-        && !iz.containsContinueStatement(¢.getBody());
+    return renameInitializerTipper.canTip(forExpression(¢))
+        || (new DeclarationInitializerStatementTerminatingScope()).canTip(prevToFirstLastExpressionFragment(¢)) ? false
+            : ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+                && !iz.containsContinueStatement(¢.getBody());
   }
 
   private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
-    final Expression e = findFirst.elementOf(step.initializers(¢));
-    return az.variableDeclarationExpression(e);
+    return az.variableDeclarationExpression(findFirst.elementOf(step.initializers(¢)));
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
