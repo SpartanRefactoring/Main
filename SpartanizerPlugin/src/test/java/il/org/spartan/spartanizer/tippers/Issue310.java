@@ -2,9 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -93,12 +90,6 @@ import org.junit.runners.*;
                 + "return false;" + "}");
   }
   
-  @Test public void updaters_ordering_check_1_a() {
-    trimmingOf("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;) {arr[i] = 0;++i;}")
-            .gives("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;arr[i] = 0) {++i;}")
-            .gives("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;arr[i] = 0,++i) {}").stays();
-  }
-  
   @Test public void updaters_ordering_check_1_b() {
     trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}")
             .gives("for(int i = 0;;arr[i] = 0) {++i;}")
@@ -111,4 +102,17 @@ import org.junit.runners.*;
             .gives("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int i = 0;;m = modifiers.get(i),++i) {}").stays();
   }
   
-}
+  @Ignore @Test public void OrisCode() { //is not parsing well
+    trimmingOf("int i;for (i=0; i < MAX_PASSES; ++i) {final IProgressService ps=wb.getProgressService();final AtomicInteger passNum=new AtomicInteger(i + 1);final AtomicBoolean cancled=new AtomicBoolean(false);try {ps.run(true,true,pm -> {" +
+        "pm.beginTask(\"Spartanizing project '\" + javaProject.getElementName() + \"' - \"+ \"Pass \"+ passNum.get()+ \" out of maximum of \"+ MAX_PASSES,us.size());int n=0;final List<ICompilationUnit> dead=new ArrayList<>();for (final ICompilationUnit ¢ : us) {if (pm.isCanceled()) {cancled.set(true);break;" +
+        "}pm.worked(1);pm.subTask(¢.getElementName() + \" \" + ++n+ \"/\"+ us.size());if (!a.apply(¢)) dead.add(¢);}us.removeAll(dead);pm.done();});}" +
+        "catch (  final InvocationTargetException x) {LoggingManner.logEvaluationError(this,x);}catch (  final InterruptedException x) {LoggingManner.logEvaluationError(this,x);}if (cancled.get() || us.isEmpty()) break;}")
+            .stays();
+  }
+  
+  @Test public void OrisCode_check_a() {
+    trimmingOf("int i = 0;for(;i < 10;++i) if(i=5)break;")
+            .gives("for(int i = 0;i < 10;++i) if(i=5)break;")
+            .gives("for(int ¢ = 0;¢ < 10;++¢) if(¢=5)break;").stays();
+  }
+ }

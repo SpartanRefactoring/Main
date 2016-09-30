@@ -29,15 +29,18 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
         else if (input.size() == output.size())
           for (int ¢ = 0; ¢ < input.size(); ++¢, r.replace(input.get(¢), output.get(¢), g))
             ;
-        else if (input.size() == 1) {
-          ASTNode[] ds = new ASTNode[output.size()];
-          for (int i=0 ; i<ds.length ; ++i) {
-            ASTNode o = output.get(i);
-            ds[i] = r.createStringPlaceholder(o.toString().trim() + (i != ds.length - 1 && o instanceof BodyDeclaration ? "\n\n" : ""),
-                o.getNodeType());
-          }
-          r.replace(input.get(0), r.createGroupNode(ds), g);
-        }
+//        else if (input.size() == 1) {
+////          ASTNode[] ds = new ASTNode[output.size()];
+////          for (int i=0 ; i<ds.length ; ++i) {
+////            ASTNode o = output.get(i);
+////            ds[i] = r.createStringPlaceholder(o.toString().trim() + (i != ds.length - 1 && o instanceof BodyDeclaration ? "\n\n" : ""),
+////                o.getNodeType());
+////          }
+////          r.replace(input.get(0), r.createGroupNode(ds), g);
+//          ListRewrite l = r.getListRewrite(input.get(0).getParent(), TypeDeclaration.BODY_DECLARATIONS_PROPERTY);
+//          l.replace(input.get(0), output.get(0), g);
+//          l.insertAfter(output.get(1), output.get(0), g);
+//        }
       }
     };
   }

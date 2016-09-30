@@ -43,7 +43,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
 
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
-    for (int ¢ = d.getExtraDimensions(); ¢ > 0; --¢, $ += ¢)
+    for (String ¢ = d + ""; ¢.endsWith("[]"); $ += "s",¢ = ¢.substring(0, ¢.length() - 2))
       ;
     return $;
   }
@@ -79,10 +79,9 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
-    final ASTNode parent = d.getParent();
-    if (parent == null || !(parent instanceof MethodDeclaration))
+    final MethodDeclaration m = az.methodDeclaration(parent(d));
+    if (m == null)
       return null;
-    final MethodDeclaration m = (MethodDeclaration) parent;
     if (m.isConstructor() || !suitable(d) || isShort(d) || !legal(d, m))
       return null;
     if (exclude != null)
