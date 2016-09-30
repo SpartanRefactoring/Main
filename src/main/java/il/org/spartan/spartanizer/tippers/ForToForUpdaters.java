@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $) {
+  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     $.updaters().add(dupWhileStatement($));
     $.setBody(minus.firstLastStatement(dupForBody($)));
     return $;
@@ -68,6 +68,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutLastStatement(duplicate.of(¢));
+    return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(duplicate.of(¢));
   }
 }
