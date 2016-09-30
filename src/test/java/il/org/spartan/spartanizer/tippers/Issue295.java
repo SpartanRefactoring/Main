@@ -146,17 +146,17 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B08() {
-    assert one != null : LoggingManner.beginDump() + //
+    assert one != null : fault.dump() + //
         "\n input1 = " + input1 + //
         "\n AST = " + input1.getAST() + //
-        LoggingManner.endDump();
+        fault.done();
   }
 
   @Test public void B09() {
-    assert forr != null : LoggingManner.beginDump() + //
+    assert forr != null : fault.dump() + //
         "\n input1 = " + input1 + //
         "\n AST = " + input1.getAST() + //
-        LoggingManner.endDump();
+        fault.done();
   }
 
   @Test public void B10() {
@@ -197,24 +197,24 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B17() {
-    assert tipper.canTip(variableDeclarationFragment) : LoggingManner.beginDump() + //
+    assert tipper.canTip(variableDeclarationFragment) : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
-        LoggingManner.endDump();
+        fault.done();
   }
 
   @Test public void B18() throws TipperFailure {
-    assert tipper.tip(variableDeclarationFragment) != null : LoggingManner.beginDump() + //
+    assert tipper.tip(variableDeclarationFragment) != null : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
-        LoggingManner.endDump();
+        fault.done();
   }
 
   @Test public void B19() {
-    assert tipper.tip(variableDeclarationFragment, null) != null : LoggingManner.beginDump() + //
+    assert tipper.tip(variableDeclarationFragment, null) != null : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
-        LoggingManner.endDump();
+        fault.done();
   }
 
   @Test public void B20() throws TipperFailure {
@@ -223,9 +223,9 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void B21() {
-    assert tipper.prerequisite(variableDeclarationFragment) : LoggingManner.beginDump() + //
+    assert tipper.prerequisite(variableDeclarationFragment) : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
-        LoggingManner.endDump();
+        fault.done();
   }
 }
