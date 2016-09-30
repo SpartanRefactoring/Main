@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
   /** @return set of entries declared in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
     // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
+    final LinkedHashSet<Entry<String, Information>> result = new LinkedHashSet<>();
     n.accept(new ASTVisitor() {
       // Holds the current scope full name (Path).
       String scopePath = "";
@@ -35,10 +35,10 @@ import il.org.spartan.spartanizer.utils.*;
       @Override public boolean visit(final MethodDeclaration d) {
         scopePath += "." + d.getName();
         for (final SingleVariableDeclaration ¢ : step.parameters(d))
-          $.add(convertToEntry(¢));
+          result.add(convertToEntry(¢));
         for (final Statement ¢ : step.statements(d.getBody()))
           if (¢ instanceof VariableDeclarationStatement)
-            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
+            result.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
         return true;
       }
 
@@ -55,26 +55,48 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       Information createInformation(final SingleVariableDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(¢), ¢, type.baptize(wizard.condense(¢.getType())));
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
       }
 
       Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-        return new Information(¢.getParent(), getHidden(¢), ¢, t);
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
-
-      Information getHidden(final SingleVariableDeclaration ¢) {
-        return null;
+      
+      String parentNameScope(final String ¢){
+        return "".equals(¢) ? ¢ : ¢.substring(¢.lastIndexOf("."));
       }
 
-      Information getHidden(final VariableDeclarationFragment ¢) {
+      /**
+       * Returns the {@link Information} of the declaration the current declaration is hiding.
+       * @param ¢ the fullName of the declaration.
+       * @return The hidden node's Information
+       */
+      /*
+       * Implementation notes:
+       * Should go over result set, and search for declaration which shares the same variable name in the parents.
+       * Should return the closest match: 
+       * for example, if we search for a match to .A.B.C.x, and result set contains .A.B.x and .A.x, we should return .A.B.x.
+       * 
+       * If a result is found in the result set, return said result. 
+       * 
+       * To consider: what if said hidden declaration will not appear in 'declaresDown', but will appear in 'declaresUp'?
+       * Should we search for it in 'declaresUp' result set? Should we leave the result as it is? I (Dan) lean towards searching 'declaresUp'.
+       * 
+       * If no match is found, return null.
+       */
+      Information getHidden(final String ¢) {
+        /*String s = parentNameScope(¢);
+        while(!"".equals(s)){
+          
+        }*/
         return null;
       }
     });
-    return $;
+    return result;
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
