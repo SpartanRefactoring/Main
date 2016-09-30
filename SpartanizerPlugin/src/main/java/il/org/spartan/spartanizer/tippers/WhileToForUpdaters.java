@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
-    $.updaters().add(dupWhileLastStatement(s));
+    $.updaters().add(dupWhileFirstLastStatement(s));
     $.setBody(minus.firstLastStatement(dupWhileBody(s)));
     return $;
   }
@@ -25,7 +25,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
     return duplicate.of(¢.getExpression());
   }
 
-  private static Expression dupWhileLastStatement(final WhileStatement ¢) {
+  private static Expression dupWhileFirstLastStatement(final WhileStatement ¢) {
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
@@ -35,12 +35,15 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
 
   private static boolean fitting(final WhileStatement ¢) {
     return ¢ == null ? false
-        : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-            && !haz.ContinueStatement(step.body(¢));
+        : lastStatementIsFitting(¢) && !haz.ContinueStatement(step.body(¢)) && cantTip.declarationInitializerStatementTerminatingScope(¢);
   }
 
   private static Statement lastStatement(final WhileStatement ¢) {
     return az.asStatement(hop.lastStatement(step.body(¢)));
+  }
+
+  private static boolean lastStatementIsFitting(final WhileStatement ¢) {
+    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢));
   }
 
   @Override public String description(final WhileStatement ¢) {
@@ -48,7 +51,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && !haz.ContinueStatement(step.body(¢));
+    return ¢ != null && fitting(¢);
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {
