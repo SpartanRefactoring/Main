@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-    private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(duplicate.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), parent(f)));
@@ -56,9 +56,9 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
         final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
         for (final VariableDeclarationFragment f : step.fragments(s))
-          if ((f.getName() + "").equals((var + ""))) {
+          if ((f.getName() + "").equals(var + "")) {
             f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName((var + "")));
+            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var + ""));
           }
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
@@ -70,7 +70,12 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return az.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  /** @param t JD
+  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+    return az.variableDeclrationStatement(¢.getParent());
+  }
+
+  /** Pulls matching initializers from forExpression, and pushes it to the
+   * declarationStatement which is previous to the for loop.
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
@@ -87,10 +92,6 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
   }
 
-  private static VariableDeclarationStatement parent(VariableDeclarationFragment ¢) {
-    return az.variableDeclrationStatement(¢.getParent());
-  }
-  
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)
