@@ -410,6 +410,8 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
+    if (¢ == null)
+      return null;
     final VariableDeclarationExpression $ = ¢.getAST()
         .newVariableDeclarationExpression(duplicate.of(findFirst.elementOf(step.fragments(duplicate.of(¢)))));
     step.fragments($).addAll(nextFragmentsOf(¢));
