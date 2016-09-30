@@ -80,9 +80,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
 
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final MethodDeclaration m = az.methodDeclaration(parent(d));
-    if (m == null)
-      return null;
-    if (m.isConstructor() || !suitable(d) || isShort(d) || !legal(d, m))
+    if (m == null || m.isConstructor() || !suitable(d) || isShort(d) || !legal(d, m))
       return null;
     if (exclude != null)
       exclude.exclude(m);
