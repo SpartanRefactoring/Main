@@ -123,14 +123,14 @@ class turns {
   }
 
   private final UserDefinedTipper<ASTNode> tipper;
-  private final String s;
+  private final String name;
 
   public turns(final UserDefinedTipper<ASTNode> tipper, final String _s) {
     this.tipper = tipper;
-    s = _s;
+    this.name = _s;
   }
 
-  public void into(final String res) {
+  public void into(final String s) {
     final Document document = new Document(wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(document.get().toCharArray());
@@ -152,11 +152,11 @@ class turns {
       e.printStackTrace();
       fail();
     }
-    azzertEquals(res, document);
+    azzertEquals(s, document);
   }
 
   private void azzertEquals(final String res, final Document document) {
-    switch (GuessedContext.find(s)) {
+    switch (GuessedContext.find(name)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
         assertEquals(res, document.get());
         break;
