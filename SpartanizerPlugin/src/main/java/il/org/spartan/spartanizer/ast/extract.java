@@ -89,7 +89,7 @@ public enum extract {
       case TYPE_DECLARATION:
         return category((TypeDeclaration) ¢);
       default:
-        assert wizard.unreachable() : fault.dump() //
+        assert fault.unreachable() : fault.dump() //
             + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
             + fault.done();
@@ -215,7 +215,7 @@ public enum extract {
       case TYPE_DECLARATION:
         return ((TypeDeclaration) ¢).getName() + "";
       default:
-        assert wizard.unreachable() : fault.dump() //
+        assert fault.unreachable() : fault.dump() //
             + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
             + fault.done();

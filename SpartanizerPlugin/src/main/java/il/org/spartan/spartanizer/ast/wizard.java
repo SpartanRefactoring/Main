@@ -428,8 +428,4 @@ public interface wizard {
         return false;
     return true;
   }
-
-  static boolean unreachable() {
-    return false;
-  }
 }
