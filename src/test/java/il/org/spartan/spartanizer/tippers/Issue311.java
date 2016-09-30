@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-@Ignore("Pending Issue")@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
   @Test public void challenge_while_a() {
     trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
@@ -20,36 +20,23 @@ import org.junit.runners.*;
   }
 
   @Test public void challenge_while_b() {
-    trimmingOf("index = 1;while (signature.charAt(index) != ')') {final int coded = getTypeSize(signature.substring(index));" + //
-        "$ += size(coded);index += consumed(coded);}").gives(
-            "index = 1;for (;signature.charAt(index) != ')';index += consumed(coded)) {final int coded = getTypeSize(signature.substring(index));" + //
-                "$ += size(coded);}")
-            .gives(
-                "index = 1;for (;signature.charAt(index) != ')';index += consumed(coded),$ += size(coded)) {final int coded = getTypeSize(signature.substring(index));"
-                    + //
-                    "}")
-            .stays();
+    trimmingOf("index = 1;while (signature.charAt(index) != ')') {final int coded = getTypeSize(signature.substring(index));$ += size(coded);index += consumed(coded);}")
+        .gives("index = 1;for   (;signature.charAt(index) != ')';$ += size(coded)) {final int coded = getTypeSize(signature.substring(index));index += consumed(coded);}");
   }
-
+  
   @Test public void challenge_while_c() {
     trimmingOf("for (int i = 0; i < 20; i++) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
-        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}").gives(
-            "for (int i = 0; i < 20; i++,assertTrue(newFolder.exists())) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));"
-                + //
-                "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();}")
-            .gives(
-                "for (int i = 0; i < 20; i++,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile()) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));"
-                    + //
-                    "createdFiles[i] = newFolder;}")
-            .gives(
-                "for (int i = 0; i < 20; i++,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile(),createdFiles[i] = newFolder) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));"
-                    + //
-                    "}")
-            .gives(
-                "for (int i = 0; i < 20; i++,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile(),createdFiles[i] = newFolder,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)))) {File newFolder = folder.newFolder();}")
-            .gives(
-                "for (int i = 0; i < 20; ++i,assertTrue(newFolder.exists()),new File(newFolder, \"a.txt\").createNewFile(),createdFiles[i] = newFolder,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)))) {File newFolder = folder.newFolder();}")
-            .stays();
+        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
+    .gives("for (int i = 0; i < 20; i++,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)))) {File newFolder = folder.newFolder();" + //
+        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
+    .gives("for (int i = 0; i < 20; i++,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder))),createdFiles[i] = newFolder) {File newFolder = folder.newFolder();" + //
+        "new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
+    .gives("for (int i = 0; i < 20; i++,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder))),createdFiles[i] = newFolder,new File(newFolder, \"a.txt\").createNewFile()) {File newFolder = folder.newFolder();" + //
+        "assertTrue(newFolder.exists());}")
+    .gives("for (int i = 0; i < 20; i++,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder))),createdFiles[i] = newFolder,new File(newFolder, \"a.txt\").createNewFile(),assertTrue(newFolder.exists())) {File newFolder = folder.newFolder();" + //
+        "}")
+    .gives("for (int i = 0; i < 20; ++i,assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder))),createdFiles[i] = newFolder,new File(newFolder, \"a.txt\").createNewFile(),assertTrue(newFolder.exists())) {File newFolder = folder.newFolder();" + //
+        "}").stays();
   }
 
   @Test public void challenge_while_d() {
@@ -264,5 +251,11 @@ import org.junit.runners.*;
         .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;h()){f();g();}return false;}")
         .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;h(),g()){f();}return false;}")
         .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;h(),g(),f()){}return false;}").stays();
+  }
+  
+  @Ignore @Test public void initializers_with_array_a() {
+    trimmingOf("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;) {arr[i] = 0;++i;}")
+            .gives("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;arr[i] = 0) {++i;}")
+            .gives("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;arr[i] = 0,++i) {}").stays();
   }
 }
