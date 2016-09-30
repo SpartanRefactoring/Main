@@ -4,19 +4,20 @@ package il.org.spartan.plugin;
  * @author Yossi Gil
  * @year 2016 */
 public enum LoggingManner {
-  /** Used for debugging; program aborts with the first logged message */ 
+  /** Used for debugging; program aborts with the first logged message */
   TOUCHY {
     @Override public LoggingManner log(final String message) {
       throw new RuntimeException(message);
     }
   },
-  /** Used for  real headless run; logs are simply ignore */
+  /** Used for real headless run; logs are simply ignore */
   OBLIVIOUS {
     @Override public LoggingManner log(@SuppressWarnings("unused") final String __) {
       return this;
     }
   },
-  /** For release versions, we keep a log of errors in stderr, but try to proceed */
+  /** For release versions, we keep a log of errors in stderr, but try to
+   * proceed */
   PRODUCTION {
     @Override public LoggingManner log(final String message) {
       System.err.println(message);

@@ -26,6 +26,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    return !fitting(¢) ? null : buildForStatement(az.variableDeclrationStatement(f.getParent()), ¢);
+  }
+
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(duplicate.of(body(¢)));
@@ -63,7 +67,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
     return subject.append($, minus.firstElem(minus.firstElem(operands)));
-    //return $;
+    // return $;
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
@@ -93,15 +97,11 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    //if (!haz.sideEffects(from))
-      //return from;
+    // if (!haz.sideEffects(from))
+    // return from;
     if (iz.infix(from))
       return handleInfix(duplicate.of(az.infixExpression(from)), f);
     return from; // TODO: handle other side effects.
-  }
-
-  public static ASTNode replace(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForStatement(az.variableDeclrationStatement(f.getParent()), ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
