@@ -20,8 +20,13 @@ import org.junit.runners.*;
   }
 
   @Test public void vanilla01() {
-    trimmingOf("for(int i=0;i<a.length;++i)if(a)sum+=i;")//
-        .gives("for(int ¢=0;¢<a.length;++¢)if(a)sum+=¢;")//
-        .stays();
+    trimmingOf("for(int i=0;i<a.length;++i)sum+=i;")//
+        .gives("for(int ¢=0;¢<a.length;++¢)sum+=¢;").gives("for(int ¢=0;¢<a.length;++¢,sum+=¢);").stays();
+  }
+
+  @Test public void vanilla02() {
+    trimmingOf(" for (int i = 2; i < xs.size(); ++i)\n" + "    step.extendedOperands($).add(duplicate.of(xs.get(i)));")
+        .gives(" for (int ¢ = 2; ¢ < xs.size(); ++¢)\n" + "    step.extendedOperands($).add(duplicate.of(xs.get(¢)));")
+        .gives(" for (int ¢ = 2; ¢ < xs.size(); ++¢,\n" + "    step.extendedOperands($).add(duplicate.of(xs.get(¢))));").stays();
   }
 }
