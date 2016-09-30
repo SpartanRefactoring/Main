@@ -60,7 +60,7 @@ public abstract class searchAncestors {
 
   /** @param ¢ JD
    * @return furtherest ancestor whose type matches the given type.
-   * [[SuppressWarningsSpartan]] */
+   *         [[SuppressWarningsSpartan]] */
   public ASTNode inclusiveLastFrom(final ASTNode ¢) {
     ASTNode $ = inclusiveFrom(¢);
     for (ASTNode p = $;; p = from(p.getParent())) {
