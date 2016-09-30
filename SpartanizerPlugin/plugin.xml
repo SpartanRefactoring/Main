@@ -15,7 +15,8 @@ the program changes: https://goo.gl/sIqIBC
   id="spartan.tipper" 
   point="org.eclipse.core.resources.builders"
 >
-  <!-- the most important part, which Java class to run on changes -->
+
+<!-- the most time ocnsuming part, which Java class to run on changes -->
   <builder hasNature="true"> 
     <run class="il.org.spartan.plugin.Builder"/> 
   </builder>
@@ -40,7 +41,7 @@ the program changes: https://goo.gl/sIqIBC
   <initializer class="il.org.spartan.plugin.PreferencesDefaultValuesInitializer"/>
 </extension>
 
-<!-- Daniel Mittleman' application-->
+<!-- Daniel Mittleman' application, used to produce the PLATEAU submission-->
 <extension 
   point="org.eclipse.core.runtime.applications" 
   name="Batch spartanization"
@@ -51,7 +52,7 @@ the program changes: https://goo.gl/sIqIBC
   </application>
 </extension>
 
-<!-- Matteo Orru's application-->
+<!-- Matteo Orru's application, work in progres-->
 <extension
   point="org.eclipse.core.runtime.applications"
   name="Metrics collector by Matteo Orru"
@@ -83,8 +84,8 @@ https://goo.gl/OI2pBd -->
   />
 </extension>
 
-<!-- Marker resolution: This is where the quick fixing menus gets bound to the 
-Java class which generates quick fix for tips. -->
+<!-- Marker resolution: this is where the quick fixg menus gets bound to the 
+Java class which generates several quick fix for tips. -->
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip"
@@ -92,8 +93,8 @@ Java class which generates quick fix for tips. -->
   />
 </extension>
 
-<!-- Marker annotation: This is where the markers are we get from the build of
-files of our nature -->
+<!-- Marker annotation: This defines the contents of markers (tips) collected by
+applying the build to files of our nature -->
 <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
   <specification
      annotationType="il.org.spartan.tip"
@@ -114,7 +115,7 @@ files of our nature -->
 </extension>
 
 <!-- Nature: trust us, without this mystery, there would be no tips 
-     shown/generated, manual is a bit vague, but that's the bottom line -->
+shown/generated, manual is a bit vague, but that's the bottom line -->
 <extension 
   point = "org.eclipse.core.resources.natures" 
   name = "Spartanizable" 
@@ -132,7 +133,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.commands">
      <command id="il.org.spartan.LaconizeCurrent" name="active Window"/>
      <command id="il.org.spartan.LaconizeAll" name="entire Project"/>
-     <command id="il.org.spartan.TipsToggle" name="Tips on/off">
+     <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off">
            <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
     </command>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
@@ -143,7 +144,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.handlers">
    <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.LaconizeProject"/>
    <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.LaconizeCurrent"/>
-   <handler commandId="il.org.spartan.TipsToggle" class="il.org.spartan.plugin.TipsOnOfToggle" />
+   <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
 </extension>
@@ -170,8 +171,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
         <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
         <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
-       <command commandId="il.org.spartan.TipsToggle"
-              id="il.org.spartan.menus.Toggle"
+       <command commandId="il.org.spartan.TipsToggleOnOff"
+              id="il.org.spartan.menus.TipsToggleOnOff"
               style="toggle"
               mnemonic="O">
         </command>
@@ -189,7 +190,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <menu label="Laconize..." mnemonic="L">
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
-        <command commandId="il.org.spartan.TipsToggle" style="toggle" mnemonic="O"/> 
+        <command commandId="il.org.spartan.TipsToggleOnOff" style="toggle" mnemonic="O"/> 
         <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
         <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
    </menu>
