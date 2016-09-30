@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.application;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -38,41 +37,20 @@ public final class BatchSpartanizer {
       printHelpPrompt();
     else {
       parseCommandLineArgs(args);
-      if(inputDir != null && outputDir != null){
-        File iDir = new File(inputDir);
-        File[] files = iDir.listFiles();
-        for(File file: files){
+      if (inputDir != null && outputDir != null) {
+        final File iDir = new File(inputDir);
+        final File[] files = iDir.listFiles();
+        for (final File file : files) {
           System.out.println(file.getAbsolutePath());
           new BatchSpartanizer(file.getAbsolutePath()).fire();
         }
-      } 
-      if(defaultDir){
+      }
+      if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
         for (final String ¢ : args)
           new BatchSpartanizer(¢).fire();
       }
     }
-  }
-
-  /**
-   * @param args
-   */
-  private static void parseCommandLineArgs(final String[] args) {
-    int i = 0;
-    while(i < args.length)
-      if(args[i].equals("-o")){
-        outputDir = args[i+1];
-        System.out.println(outputDir);
-        i+=2;
-      } else if(args[i].equals("-i")) {
-        inputDir = args[i+1];
-        System.out.println(inputDir);
-        i+=2;
-      } else {
-        System.out.println(args[i]);
-        System.out.println("something went wrong!");
-        i++;
-      }
   }
 
   public static ProcessBuilder runScript() {
@@ -116,6 +94,16 @@ public final class BatchSpartanizer {
     return Unit.formatRelative(δ(n1, n2));
   }
 
+  static void printHelpPrompt() {
+    System.out.println("Batch Spartanizer");
+    System.out.println("");
+    System.out.println("Options:");
+    System.out.println("  -d       default directory: use the current directory for the analysis");
+    System.out.println("  -o       output directory: here go the results of the analysis");
+    System.out.println("  -i       input directory: place here the projects that you want to analyze.");
+    System.out.println("");
+  }
+
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
   }
@@ -134,6 +122,25 @@ public final class BatchSpartanizer {
 
   static double δ(final double n1, final double n2) {
     return 1 - n2 / n1;
+  }
+
+  /** @param args */
+  private static void parseCommandLineArgs(final String[] args) {
+    int i = 0;
+    while (i < args.length)
+      if (args[i].equals("-o")) {
+        outputDir = args[i + 1];
+        System.out.println(outputDir);
+        i += 2;
+      } else if (args[i].equals("-i")) {
+        inputDir = args[i + 1];
+        System.out.println(inputDir);
+        i += 2;
+      } else {
+        System.out.println(args[i]);
+        System.out.println("something went wrong!");
+        i++;
+      }
   }
 
   private static String removePercentChar(final String p) {
@@ -244,7 +251,7 @@ public final class BatchSpartanizer {
         .put("R(B/S)", ratio(nodes, body)) //
     ;
     report.nl();
-//    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
+    // System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
 
@@ -343,15 +350,5 @@ public final class BatchSpartanizer {
 
   private void runWordCount() {
     bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
-  }
-  
-  static void printHelpPrompt() {
-    System.out.println("Batch Spartanizer");
-    System.out.println("");
-    System.out.println("Options:");
-    System.out.println("  -d       default directory: use the current directory for the analysis");
-    System.out.println("  -o       output directory: here go the results of the analysis");
-    System.out.println("  -i       input directory: place here the projects that you want to analyze.");
-    System.out.println("");
   }
 }

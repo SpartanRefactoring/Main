@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.ast.extract.*;
 
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.ast.iz.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -42,7 +41,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   private static boolean isUnused(final Expression ¢) {
-    return iz.literal("unused", ¢); 
+    return iz.literal("unused", ¢);
   }
 
   private static ASTNode replace(final SingleVariableDeclaration ¢) {

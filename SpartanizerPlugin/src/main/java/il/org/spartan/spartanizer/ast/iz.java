@@ -208,7 +208,7 @@ public interface iz {
   }
 
   public static boolean emptyStringLiteral(final StringLiteral ¢) {
-    return ¢!= null && ¢.getLiteralValue().length() == 0;
+    return ¢ != null && ¢.getLiteralValue().length() == 0;
   }
 
   public static boolean enhancedFor(final ASTNode ¢) {
@@ -585,17 +585,6 @@ public interface iz {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
-  /** @param ¢ JD
-   * @return true if the given node is a literal or false otherwise */
-  default public boolean parsesTo(final String token, final double d) {
-    try {
-      return Double.parseDouble(token) == d;
-    } catch (final IllegalArgumentException x) {
-      LoggingManner.logEvaluationError(this, x);
-      return false;
-    }
-  }
-
   /** Determine whether a node is a return statement
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
@@ -784,38 +773,41 @@ public interface iz {
 
   static boolean literal(final ASTNode ¢, final double d) {
     final NumberLiteral numberLiteral = az.numberLiteral(¢);
-    if (numberLiteral == null) 
+    if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
     if (token == null)
       return false;
     if (LiteralParser.of(token) != type.Primitive.Certain.DOUBLE)
       return false;
-    return  new iz(){}.parsesTo(token, d);
+    return new iz() {
+    }.parsesTo(token, d);
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
     final NumberLiteral numberLiteral = az.numberLiteral(¢);
-    if (numberLiteral == null) 
+    if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
     if (token == null)
       return false;
     if (LiteralParser.of(token) != type.Primitive.Certain.INT)
       return false;
-    return  new iz(){}.parsesTo(token, i);
-}
+    return new iz() {
+    }.parsesTo(token, i);
+  }
 
   static boolean literal(final ASTNode ¢, final long l) {
     final NumberLiteral numberLiteral = az.numberLiteral(¢);
-    if (numberLiteral == null) 
+    if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
     if (token == null)
       return false;
     if (LiteralParser.of(token) != type.Primitive.Certain.LONG)
       return false;
-    return  new iz(){}.parsesTo(token, l);
+    return new iz() {
+    }.parsesTo(token, l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
@@ -829,8 +821,31 @@ public interface iz {
     return literal(¢.getExpression());
   }
 
-  static boolean literal(String literal, ASTNode ¢) {
+  static boolean literal(final String literal, final ASTNode ¢) {
     return literal(literal, az.stringLiteral(¢));
+  }
+
+  static boolean literal(final String literal, final StringLiteral ¢) {
+    return ¢ != null && ¢.getLiteralValue().equals(literal);
+  }
+
+  static boolean literal(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.getLiteralValue().equals(s);
+  }
+
+  static boolean prefixMinus(final Expression ¢) {
+    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal or false otherwise */
+  default public boolean parsesTo(final String token, final double d) {
+    try {
+      return Double.parseDouble(token) == d;
+    } catch (final IllegalArgumentException x) {
+      LoggingManner.logEvaluationError(this, x);
+      return false;
+    }
   }
 
   default boolean parsesTo(final String token, final int i) {
@@ -849,18 +864,6 @@ public interface iz {
       LoggingManner.logEvaluationError(this, x);
       return false;
     }
-  }
-
-  static boolean literal(String literal, StringLiteral ¢) {
-    return ¢ != null && ¢.getLiteralValue().equals(literal); 
-  }
-
-  static boolean literal(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.getLiteralValue().equals(s);
-  }
-
-  static boolean prefixMinus(final Expression ¢) {
-    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
   }
 
   interface literal {

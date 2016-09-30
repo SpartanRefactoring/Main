@@ -577,7 +577,7 @@ import il.org.spartan.spartanizer.engine.type.*;
       azzert.that(of(into.e("f() ? f() : false")), is(NOTHING));
     }
 
- @Test public void conditional10() {
+    @Test public void conditional10() {
       azzert.that(of(into.e("f() ? f() : 2")), is(NOTHING));
     }
 
@@ -753,8 +753,7 @@ import il.org.spartan.spartanizer.engine.type.*;
       azzert.that(of((Expression) lisp.first(fs.updaters())), is(NUMERIC));
     }
 
-    @Ignore("cancled to avoid harming tests, see issue #119 for more info") 
-    @Test public void context21() {
+    @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
       azzert.that(of(findFirst.whileStatement(into.s("while(x) somthing();")).getExpression()), is(BOOLEAN));
     }
 
