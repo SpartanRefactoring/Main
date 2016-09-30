@@ -49,7 +49,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && !haz.ContinueStatement(step.body(¢));
+    return ¢ != null && fitting(¢);
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {

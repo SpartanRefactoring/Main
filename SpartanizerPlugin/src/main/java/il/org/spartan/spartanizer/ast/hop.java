@@ -185,6 +185,25 @@ public interface hop {
     return findFirst.elementOf(step.fragments(vds));
   }
 
+  /** @param ¢ JD
+   * @return converssion of {@link Statement}, which is previous to the
+   *         firstLastStatement in the loop body. */
+  public static VariableDeclarationFragment prevToFirstLastExpressionFragment(final WhileStatement ¢) {
+    final ASTNode n = firstLastStatement(step.body(¢));
+    if (n == null)
+      return null;
+    final Statement current = az.asStatement(n);
+    if (current == null)
+      return null;
+    final Statement previous = previousStatementInBody(current);
+    if (previous == null)
+      return null;
+    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
+    if (vds == null)
+      return null;
+    return findFirst.elementOf(step.fragments(vds));
+  }
+
   
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
