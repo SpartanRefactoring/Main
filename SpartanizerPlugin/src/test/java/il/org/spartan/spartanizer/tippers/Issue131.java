@@ -63,22 +63,10 @@ import org.junit.runners.*;
         .gives("boolean b=false;for(int i=4;i<s.length();++i){if(i==5){tipper+=9;break;}else return tr;y+=15;break;}return x;");
   }
 
-  @Test @Ignore("Finish the issues with the for") public void A$130() {
-    trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
-        .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
-        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;return x;}y+=15;break;}return x;")
-        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;break;}y+=15;break;}return x;").stays();
-  }
-
   @Test public void A$140() {
     trimmingOf("public static void main(){while(i<7){if(i==5){tipper+=9;return x;}else return tr;y+=15;return x;}return x;}")
         .gives("public static void main(){while(i<7){if(i==5){tipper+=9;return x;}else return tr;y+=15;break;}return x;}");
   }
 
-  @Test @Ignore("Pending Issue") public void A$150() {
-    trimmingOf("  private int free(int max) {" + "int $ = 0;" + "for (; $ < max; ++$) {" + "Entry<T> entry = queue.poll();" + "if (entry == null)"
-        + "return $;" + "freeEntry(entry);" + "}" + "return $;" + "}")
-            .gives("  private int free(int max) {" + "int $ = 0;" + "for (; $ < max; ++$) {" + "Entry<T> entry = queue.poll();" + "if (entry == null)"
-                + "break;" + "freeEntry(entry);" + "}" + "return $;" + "}");
-  }
+
 }
