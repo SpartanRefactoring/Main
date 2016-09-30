@@ -120,11 +120,11 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return ss.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * ss.size()) + 1, ss.size()));
   }
 
-  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> s) {
-    if (d.parameters().size() != s.size())
+  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> ds) {
+    if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = new LinkedList<>();
-    for (final VariableDeclaration t : s)
+    for (final VariableDeclaration t : ds)
       ts.add((t instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) t).getType()
           : az.variableDeclrationStatement(t.getParent()).getType()) + "");
     for (final SingleVariableDeclaration v : (List<SingleVariableDeclaration>) d.parameters())
@@ -147,12 +147,12 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     }
   }
 
-  @SuppressWarnings("unchecked") private static void updateUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final List<Statement> ss,
+  @SuppressWarnings("unchecked") private static void updateUsesMapping(final Map<VariableDeclaration, List<Statement>> d, final List<Statement> ss,
       final int i) {
     if (!(ss.get(i) instanceof VariableDeclarationStatement))
       return;
     for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) ss.get(i)).fragments())
-      setUsesMapping(m, f, ss, i + 1);
+      setUsesMapping(d, f, ss, i + 1);
   }
 
   private static boolean validForkPoint(final Map<VariableDeclaration, List<Statement>> uses,
