@@ -80,17 +80,19 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
-  // Ugly one...
+  /** XXX: This is a bug in autospartanization
+   * [[SuppressWarningsSpartan]]
+   */
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
-    for (final Expression ¢ : operands)
-      if (iz.parenthesizeExpression(¢) && iz.assignment(az.parenthesizedExpression(¢).getExpression())) {
-        final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
+    for (final Expression ¢¢ : operands)
+      if (iz.parenthesizeExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
+        final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
         for (final VariableDeclarationFragment f : step.fragments(s))
           if ((f.getName() + "").equals((var + ""))) {
             f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName((var + "")));
+            operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName((var + "")));
           }
       }
     return subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
