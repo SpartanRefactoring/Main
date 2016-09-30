@@ -2265,7 +2265,7 @@ public final class Version230 {
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopCondition() {
-    trimmingOf("for (int s = i; ++i; ++s);").stays();
+    trimmingOf("for (int ¢ = i; ++i; ++¢);").stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
