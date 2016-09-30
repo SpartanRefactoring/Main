@@ -76,13 +76,13 @@ public class Toolbox {
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ConvertForWithLastStatementUpdateToFor(), //
+            //new ConvertForWithLastStatementUpdateToFor(), //
             new RemoveRedundentFor(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            new ConvertWhileWithLastStatementUpdateToFor(), //
+            //new ConvertWhileWithLastStatementUpdateToFor(), //
             new RemoveRedundantWhile(), //
             null) //
         .add(Assignment.class, //
