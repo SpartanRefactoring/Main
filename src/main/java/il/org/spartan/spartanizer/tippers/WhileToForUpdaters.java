@@ -9,11 +9,11 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
+public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
-    $.setBody(minus.lastStatement(dupWhileBody(s)));
+    $.setBody(minus.firstLastStatement(dupWhileBody(s)));
     return $;
   }
 
@@ -26,20 +26,22 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   }
 
   private static Expression dupWhileLastStatement(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
+    return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
-  // TODO: Alex, (Alex) find how to use haz.sideEffects(Expression).
-  // the problem is how to convert statement into expression?
   private static boolean fitting(final WhileStatement ¢) {
-    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)))
+    return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());
   }
 
-  private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatement(¢.getBody());
+  private static Statement lastStatement(final WhileStatement ¢) {
+    return az.asStatement(hop.lastStatement(¢.getBody()));
   }
 
+  private static ASTNode firstLastStatement(final WhileStatement ¢) {
+    return hop.firstLastStatement(¢.getBody());
+  }
+  
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
