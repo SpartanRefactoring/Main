@@ -31,8 +31,8 @@ public class TipperFactory {
             $.set(replacement);
             wizard.ast(replacement).accept(new ASTVisitor() {
               @Override public boolean preVisit2(final ASTNode ¢) {
-                if (iz.name(¢) && enviroment.containsKey((¢ + "")))
-                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), (enviroment.get((¢ + "")) + "")));
+                if (iz.name(¢) && enviroment.containsKey(¢.toString()))
+                  $.set($.get().replaceFirst(¢.toString().replace("$", "\\$"), enviroment.get(¢.toString()).toString()));
                 return true;
               }
             });
