@@ -29,8 +29,8 @@ import org.junit.runners.*;
                 + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
                 + "return true;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) " + "if (dns.contains(p))"
-                + "return true;" + "" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) " + "if (dns.contains(p))" + "return true;"
+                + "return false;" + "}")
             .stays();
   }
 
@@ -43,8 +43,7 @@ import org.junit.runners.*;
                 + "return true;" + "if (ens.contains(p))" + "return true;" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {"
                 + "if (dns.contains(p) || ens.contains(p))" + "return true;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) "
-                + "if (dns.contains(p) || ens.contains(p))" + "return true;" + "" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {for (ASTNode p = n;p != null;p = p.getParent()) if (dns.contains(p) || ens.contains(p))return true;return false;}")
             .stays();
   }
 

@@ -65,7 +65,7 @@ class turns {
     if (n == null)
       return null;
     final Wrapper<Boolean> foundFirst = new Wrapper<>();
-    foundFirst.set(new Boolean(false));
+    foundFirst.set(Boolean.FALSE);
     final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -78,7 +78,7 @@ class turns {
           assert $.get() == ¢;
           return false;
         }
-        foundFirst.set(new Boolean(true));
+        foundFirst.set(Boolean.TRUE);
         return true;
       }
     });
