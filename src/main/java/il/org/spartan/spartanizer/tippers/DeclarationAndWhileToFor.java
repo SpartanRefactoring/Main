@@ -62,8 +62,8 @@ public final class DeclarationAndWhileToFor extends ReplaceToNextStatementExclud
           }
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
-    //return subject.append($, minus.firstElem(minus.firstElem(operands)));
-    return $;
+    return subject.append($, minus.firstElem(minus.firstElem(operands)));
+    //return $;
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
