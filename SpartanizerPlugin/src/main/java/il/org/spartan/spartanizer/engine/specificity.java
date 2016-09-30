@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.iz.*;
 
 /** @author Yossi Gil
  * @since 2015-08-23 */
@@ -62,24 +63,22 @@ public final class specificity implements Comparator<Expression> {
     },
     ZERO_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        final NumberLiteral ¢1 = az.numberLiteral(¢);
-        return ¢1 != null && iz.parsed.literal(¢1.getToken(), 0);
+        return iz.literal0(¢);
       }
     },
     ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        final NumberLiteral ¢1 = az.numberLiteral(¢);
-        return ¢1 != null && iz.parsed.literal(¢1.getToken(), 1);
+            return iz.literal1(¢);
       }
     },
     ZERO_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.parsed.literal(¢, 0.0);
+        return iz.literal(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.parsed.literal(¢, 1.0);
+        return iz.literal(¢, 1.0);
       }
     },
     EMPTY_STRING {
@@ -89,12 +88,12 @@ public final class specificity implements Comparator<Expression> {
     },
     TRUE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literal¢true(¢);
+        return literal.true¢(¢);
       }
     },
     FALSE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.literal¢false(¢);
+        return literal.false¢(¢);
       }
     },;
     static boolean defined(final Expression ¢) {

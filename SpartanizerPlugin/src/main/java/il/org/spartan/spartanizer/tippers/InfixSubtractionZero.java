@@ -31,7 +31,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   private static List<Expression> prune(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     for (final Expression ¢ : xs)
-      if (!iz.parsed.literal0(¢))
+      if (!iz.literal0(¢))
         $.add(¢);
     return $.size() != xs.size() ? $ : null;
   }
@@ -45,9 +45,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
       return make.from(first).literal(0);
     assert !prune.isEmpty();
     if (prune.size() == 1)
-      return !iz.parsed.literal0(first) ? first : minus(first(prune));
+      return !iz.literal0(first) ? first : minus(first(prune));
     assert prune.size() >= 2;
-    return subject.operands(!iz.parsed.literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
+    return subject.operands(!iz.literal0(first) ? prune : minusFirst(prune)).to(MINUS2);
   }
 
   @Override public String description(final InfixExpression ¢) {
