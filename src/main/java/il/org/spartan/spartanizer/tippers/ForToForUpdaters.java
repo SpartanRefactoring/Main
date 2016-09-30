@@ -17,7 +17,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static Statement dupForBody(final ForStatement ¢) {
-    return duplicate.of(¢.getBody());
+    return duplicate.of(step.body(¢));
   }
 
   private static Expression dupWhileStatement(final ForStatement ¢) {
@@ -25,49 +25,23 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static ASTNode firstLastStatement(final ForStatement ¢) {
-    return hop.firstLastStatement(¢.getBody());
+    return hop.firstLastStatement(step.body(¢));
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    final ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
-    final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
-    if (renameInitializerTipper.canTip(forExpression(¢)))
-      return false;
-    if (inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
-      return false;
-    final boolean b = ¢ == null ? false
-        : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-            && !iz.containsContinueStatement(¢.getBody());
-    return b;
-  }
-
-  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
-    final Expression e = findFirst.elementOf(step.initializers(¢));
-    final VariableDeclarationExpression $ = az.variableDeclarationExpression(e);
-    return $;
+    return ¢ == null ? false : lastStatementIsFitting(¢) && !haz.ContinueStatement(step.body(¢)) && otherTippersNotColliding(¢);
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
-    return az.asStatement(hop.lastStatement(¢.getBody()));
+    return az.asStatement(hop.lastStatement(step.body(¢)));
   }
 
-  /** @param ¢ JD
-   * @return converssion of {@link Statement}, which is previous to the
-   *         firstLastStatement in the loop body. */
-  private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    final ASTNode n = hop.firstLastStatement(¢.getBody());
-    if (n == null)
-      return null;
-    final Statement current = az.asStatement(n);
-    if (current == null)
-      return null;
-    final Statement previous = hop.previousStatementInBody(current);
-    if (previous == null)
-      return null;
-    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    if (vds == null)
-      return null;
-    return findFirst.elementOf(step.fragments(vds));
+  private static boolean lastStatementIsFitting(final ForStatement ¢) {
+    return iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢));
+  }
+
+  private static boolean otherTippersNotColliding(final ForStatement ¢) {
+    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
   @Override public String description(final ForStatement ¢) {
@@ -75,7 +49,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(¢.getBody());
+    return ¢ != null && !haz.ContinueStatement(step.body(¢));
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
