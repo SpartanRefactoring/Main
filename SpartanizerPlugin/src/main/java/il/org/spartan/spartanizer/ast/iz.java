@@ -169,17 +169,6 @@ public interface iz {
         || is(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
   }
 
-  /** Determine whether an {@link ASTNode} contains as a children a
-   * {@link ContinueStatement}
-   * @param ¢ JD
-   * @return <code> true </code> iff ¢ contains any continue statement
-   * @see {@link convertWhileToFor} */
-  @SuppressWarnings("boxing") public static boolean containsContinueStatement(final ASTNode ¢) {
-    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
-      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
-    }) > 0;
-  }
-
   public static boolean containsOperator(final ASTNode ¢) {
     return oneOf(¢, ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT);
   }
