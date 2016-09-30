@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -48,9 +49,20 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
     // TODO: check that the variables declared before the loop doesn't in use
     // after the scope.
+    assert ¢ != null : fault.dump() + //
+        "\n s = " + s + //
+        fault.done();
+    assert step.initializers(¢) != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        fault.done();
     if (step.initializers(¢).isEmpty())
       return true;
     final VariableDeclarationExpression e = az.variableDeclarationExpression(step.initializers(¢).get(0));
+    assert e != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        fault.done();
     return e.getType() == s.getType() && compareModifiers(step.extendedModifiers(e), step.extendedModifiers(s)) ? true : false;
   }
 
@@ -72,7 +84,7 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
           }
       }
     final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
-    //return subject.append($, minus.firstElem(minus.firstElem(operands)));
+    // return subject.append($, minus.firstElem(minus.firstElem(operands)));
     return $;
   }
 
@@ -136,7 +148,7 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
     if (s == null || !fitting(parent, s))
       return null;
     exclude.excludeAll(step.fragments(az.variableDeclrationStatement(f.getParent())));
-    //exclude.exclude(s.getExpression());
+    // exclude.exclude(s.getExpression());
     r.remove(parent, g);
     r.replace(s, replace(parent, s), g);
     return r;
