@@ -62,8 +62,7 @@ public enum minus {
     return !iz.not(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
         : !iz.not(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
             : !iz.not(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
-                : !iz.not(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
-                    : 0;
+                : iz.not(¢, NUMBER_LITERAL) ? 0 : az.bit(az.numberLiteral(¢).getToken().startsWith("-"));
   }
 
   public static int level(final InfixExpression ¢) {
@@ -81,8 +80,7 @@ public enum minus {
     return !iz.not($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : !iz.not($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
             : !iz.not($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
-                : !iz.not($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
-                    : $;
+                : iz.not($, NUMBER_LITERAL) ? $ : peel((NumberLiteral) $);
   }
 
   public static Expression peel(final InfixExpression ¢) {
