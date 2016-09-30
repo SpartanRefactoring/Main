@@ -138,7 +138,7 @@ public class Toolbox {
             // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-//            new ExtractMethodSuffix(), //
+            // new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -247,7 +247,7 @@ public class Toolbox {
     defaultInstance = freshCopyOfAllTippers();
   }
 
-  private static void disable(final List<Tipper<? extends ASTNode>> ns, final Class<? extends TipperCategory> c) {
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
     removing: for (;;) {
       for (int ¢ = 0; ¢ < ns.size(); ++¢)
         if (c.isAssignableFrom(ns.get(¢).getClass())) {
@@ -299,7 +299,8 @@ public class Toolbox {
 
   public void disable(final Class<? extends TipperCategory> c) {
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
-      disable(¢, c);
+      if (¢ != null)
+        disable(c, ¢);
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
