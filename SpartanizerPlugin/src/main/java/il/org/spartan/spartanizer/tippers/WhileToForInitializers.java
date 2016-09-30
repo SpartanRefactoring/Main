@@ -80,7 +80,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    return iz.infix(from) ? handleInfix(duplicate.of(az.infixExpression(from)), f) : from;
+    return !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), f);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

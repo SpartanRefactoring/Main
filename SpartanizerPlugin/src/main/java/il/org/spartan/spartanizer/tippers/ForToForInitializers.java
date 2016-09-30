@@ -115,7 +115,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
-    return !haz.sideEffects(from) ? from : iz.infix(from) ? handleInfix(duplicate.of(az.infixExpression(from)), f) : from;
+    return !haz.sideEffects(from) ? from : !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), f);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
