@@ -25,7 +25,7 @@ public final class AnnotationDiscardValueName //
     if (p == null || !"value".equals(p.getName() + ""))
       return null;
     final SingleMemberAnnotation $ = a.getAST().newSingleMemberAnnotation();
-    $.setTypeName(make.newSimpleName(a, a.getTypeName().getFullyQualifiedName()));
+    $.setTypeName(duplicate.of(a.getTypeName()));
     $.setValue(duplicate.of(p.getValue()));
     return $;
   }

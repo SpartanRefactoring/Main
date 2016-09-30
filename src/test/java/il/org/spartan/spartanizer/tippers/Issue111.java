@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Alex Kopzon
  * @since 2016 */
-@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue111 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue111 {
   @Test public void A$a_1() {
     trimmingOf("public final class A {" + "static public int a;" + "}")//
         .gives("public final class A {" + "public static int a;" + "}")//
@@ -32,9 +32,9 @@ import org.junit.runners.*;
         .stays();
   }
 
-  public void A$d() {
+  @Test public void A$d() {
     trimmingOf("protected public final class A{}")//
-        .gives("public protected class A{}")//
+        .gives("public protected final class A{}")//
         .stays();
   }
 
@@ -52,7 +52,8 @@ import org.junit.runners.*;
 
   @Test public void A$g() {
     trimmingOf("protected public final public enum Level {HIGH, MEDIUM, LOW}")//
-        .gives("protected public public enum Level {HIGH, MEDIUM, LOW}").gives("public protected enum Level {HIGH, MEDIUM, LOW}")//
+        .gives("protected public public enum Level {HIGH, MEDIUM, LOW}")//
+        .gives("public public protected enum Level {HIGH, MEDIUM, LOW}")//
         .stays();
   }
 
