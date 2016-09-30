@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -52,16 +54,27 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
     assert ¢ != null : fault.dump() + //
         "\n s = " + s + //
         fault.done();
-    assert step.initializers(¢) != null : fault.dump() + //
+    final List<Expression> initializers = step.initializers(¢);
+    assert initializers != null : fault.dump() + //
         "\n s = " + s + //
         "\n ¢ = " + ¢ + //
         fault.done();
-    if (step.initializers(¢).isEmpty())
+    if (initializers.isEmpty())
       return true;
-    final VariableDeclarationExpression e = az.variableDeclarationExpression(step.initializers(¢).get(0));
+    final Expression first = first(initializers);
+    
+    assert first != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        fault.done();
+     
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
     assert e != null : fault.dump() + //
         "\n s = " + s + //
         "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        "\n first = " + first + //
         fault.done();
     return e.getType() == s.getType() && compareModifiers(step.extendedModifiers(e), step.extendedModifiers(s)) ? true : false;
   }
@@ -134,7 +147,7 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Merge with subequent 'for', making a for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "loop";
+    return "Merge with subequent 'for' loop, rewrite as (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "loop";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
