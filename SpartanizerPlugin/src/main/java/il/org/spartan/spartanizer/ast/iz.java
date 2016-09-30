@@ -863,7 +863,7 @@ public interface iz {
   }
 
   static boolean literal(String literal, StringLiteral ¢) {
-    return ¢.getLiteralValue().equals(literal); 
+    return ¢ != null && ¢.getLiteralValue().equals(literal); 
   }
 
   static boolean literal(final StringLiteral ¢, final String s) {
