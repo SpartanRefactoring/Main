@@ -89,10 +89,10 @@ public enum extract {
       case TYPE_DECLARATION:
         return category((TypeDeclaration) ¢);
       default:
-        assert wizard.unreachable() : LoggingManner.beginDump() //
+        assert wizard.unreachable() : fault.dump() //
             + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
-            + LoggingManner.endDump();
+            + fault.done();
         return ¢.getClass().getSimpleName();
     }
   }
@@ -215,10 +215,10 @@ public enum extract {
       case TYPE_DECLARATION:
         return ((TypeDeclaration) ¢).getName() + "";
       default:
-        assert wizard.unreachable() : LoggingManner.beginDump() //
+        assert wizard.unreachable() : fault.dump() //
             + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() //
             + "\n d.getNodeType() = " + ¢.getNodeType() //
-            + LoggingManner.endDump();
+            + fault.done();
         return ¢.getClass().getSimpleName();
     }
   }
