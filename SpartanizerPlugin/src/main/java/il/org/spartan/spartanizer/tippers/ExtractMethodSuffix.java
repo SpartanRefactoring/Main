@@ -149,10 +149,9 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
 
   @SuppressWarnings("unchecked") private static void updateUsesMapping(final Map<VariableDeclaration, List<Statement>> d, final List<Statement> ss,
       final int i) {
-    if (!(ss.get(i) instanceof VariableDeclarationStatement))
-      return;
-    for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) ss.get(i)).fragments())
-      setUsesMapping(d, ¢, ss, i + 1);
+    if (ss.get(i) instanceof VariableDeclarationStatement)
+      for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) ss.get(i)).fragments())
+        setUsesMapping(d, ¢, ss, i + 1);
   }
 
   private static boolean validForkPoint(final Map<VariableDeclaration, List<Statement>> uses,

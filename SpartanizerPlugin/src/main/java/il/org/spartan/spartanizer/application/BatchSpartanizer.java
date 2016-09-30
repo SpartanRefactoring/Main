@@ -37,13 +37,11 @@ public final class BatchSpartanizer {
       printHelpPrompt();
     else {
       parseCommandLineArgs(args);
-      if (inputDir != null && outputDir != null) {
-        final File iDir = new File(inputDir);
-        for (final File ¢ : iDir.listFiles()) {
+      if (inputDir != null && outputDir != null)
+        for (final File ¢ : (new File(inputDir)).listFiles()) {
           System.out.println(¢.getAbsolutePath());
           new BatchSpartanizer(¢.getAbsolutePath()).fire();
         }
-      }
       if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
         for (final String ¢ : args)
