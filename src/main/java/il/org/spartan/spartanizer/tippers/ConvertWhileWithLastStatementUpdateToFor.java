@@ -29,15 +29,13 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
-  // TODO: Alex, (Alex) find how to use haz.sideEffects(Expression).
-  // the problem is how to convert statement into expression?
   private static boolean fitting(final WhileStatement ¢) {
-    return (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || iz.expressionStatement(lastStatement(¢)))
+    return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());
   }
 
-  private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatement(¢.getBody());
+  private static Statement lastStatement(final WhileStatement ¢) {
+    return az.asStatement(hop.lastStatement(¢.getBody()));
   }
 
   private static ASTNode firstLastStatement(final WhileStatement ¢) {
