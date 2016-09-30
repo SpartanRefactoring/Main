@@ -9,7 +9,7 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) //
 
-public class Issue233 {
+public class Issue312 {
   @Test public void bugInLastIfInMethod1() {
     trimmingOf("        @Override public void f() {\n" + "          if (!isMessageSuppressed(message)) {\n"
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
