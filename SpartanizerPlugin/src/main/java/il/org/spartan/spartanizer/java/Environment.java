@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
   /** @return set of entries declared in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
     // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
+    final LinkedHashSet<Entry<String, Information>> result = new LinkedHashSet<>();
     n.accept(new ASTVisitor() {
       // Holds the current scope full name (Path).
       String scopePath = "";
@@ -35,10 +35,10 @@ import il.org.spartan.spartanizer.utils.*;
       @Override public boolean visit(final MethodDeclaration d) {
         scopePath += "." + d.getName();
         for (final SingleVariableDeclaration ¢ : step.parameters(d))
-          $.add(convertToEntry(¢));
+          result.add(convertToEntry(¢));
         for (final Statement ¢ : step.statements(d.getBody()))
           if (¢ instanceof VariableDeclarationStatement)
-            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
+            result.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
         return true;
       }
 
@@ -65,6 +65,10 @@ import il.org.spartan.spartanizer.utils.*;
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
+      
+      String parentNameScope(final String ¢){
+        return "".equals(¢) ? ¢ : ¢.substring(¢.lastIndexOf("."));
+      }
 
       /**
        * Returns the {@link Information} of the declaration the current declaration is hiding.
@@ -75,7 +79,7 @@ import il.org.spartan.spartanizer.utils.*;
        * Implementation notes:
        * Should go over result set, and search for declaration which shares the same variable name in the parents.
        * Should return the closest match: 
-       * for example, if we search for a match to A.B.c, and result set contains A.c and c, we should return A.c.
+       * for example, if we search for a match to .A.B.C.x, and result set contains .A.B.x and .A.x, we should return .A.B.x.
        * 
        * If a result is found in the result set, return said result. 
        * 
@@ -85,10 +89,14 @@ import il.org.spartan.spartanizer.utils.*;
        * If no match is found, return null.
        */
       Information getHidden(final String ¢) {
+        /*String s = parentNameScope(¢);
+        while(!"".equals(s)){
+          
+        }*/
         return null;
       }
     });
-    return $;
+    return result;
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
