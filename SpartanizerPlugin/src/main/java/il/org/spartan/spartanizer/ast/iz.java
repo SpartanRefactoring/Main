@@ -219,7 +219,7 @@ public interface iz {
   }
 
   public static boolean emptyStringLiteral(final StringLiteral ¢) {
-    return ¢.getLiteralValue().length() == 0;
+    return ¢!= null && ¢.getLiteralValue().length() == 0;
   }
 
   public static boolean enhancedFor(final ASTNode ¢) {
