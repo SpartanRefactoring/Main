@@ -43,7 +43,7 @@ public interface findFirst {
   }
 
   static <E> E elementOf(final List<E> ¢) {
-    return ¢ == null ? null : ¢.get(0);
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
 
   /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
