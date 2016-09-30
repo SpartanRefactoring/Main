@@ -113,7 +113,7 @@ public enum eclipse {
     try {
       final int s = (int) m.getAttribute(IMarker.CHAR_START);
       return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
-          .getCoveringNode();
+          .getCoveredNode();
     } catch (final CoreException x) {
       // TODO Ori: log it
       x.printStackTrace();
