@@ -23,7 +23,6 @@ public enum cantTip {
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
-    final ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
-    return renameInitializerTipper.cantTip(az.variableDeclarationExpression(¢));
+    return (new ForRenameInitializerToCent()).cantTip(az.variableDeclarationExpression(¢));
   }
 }
