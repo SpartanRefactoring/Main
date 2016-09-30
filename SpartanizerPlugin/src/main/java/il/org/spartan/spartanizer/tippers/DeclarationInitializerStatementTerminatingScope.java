@@ -25,7 +25,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     implements TipperCategory.Inlining {
   static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     for (final ASTNode ancestor : searchAncestors.until(s).ancestors(n))
-      if (iz.is(ancestor, ANONYMOUS_CLASS_DECLARATION))
+      if (!iz.not(ancestor, ANONYMOUS_CLASS_DECLARATION))
         return true;
     return false;
   }

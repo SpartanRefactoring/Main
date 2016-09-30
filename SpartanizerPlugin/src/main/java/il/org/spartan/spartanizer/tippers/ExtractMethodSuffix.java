@@ -125,7 +125,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
       return false;
     final List<String> ts = new LinkedList<>();
     for (final VariableDeclaration ¢ : ds)
-      ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
+      ts.add((iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType()
           : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
@@ -133,6 +133,9 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return true;
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final List<Statement> ss,
       final int starting) {
     for (int ¢ = starting; ¢ < ss.size(); ++¢)
