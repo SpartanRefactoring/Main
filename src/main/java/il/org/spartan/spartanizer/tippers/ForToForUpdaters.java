@@ -63,9 +63,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     if (previous == null)
       return null;
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    if (vds == null)
-      return null;
-    return findFirst.elementOf(step.fragments(vds));
+    return vds == null ? null : findFirst.elementOf(step.fragments(vds));
   }
 
   @Override public String description(final ForStatement ¢) {
