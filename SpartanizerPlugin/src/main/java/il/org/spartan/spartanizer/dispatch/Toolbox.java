@@ -134,7 +134,6 @@ public class Toolbox {
             new MethodDeclarationRenameReturnToDollar(), //
             new MethodDeclarationModifiersRedundant(), //
             // Disabled to protect against infinite loop
-            new BodyDeclarationModifiersSort.ofMethod(), //
             // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
