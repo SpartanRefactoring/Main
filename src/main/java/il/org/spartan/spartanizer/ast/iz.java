@@ -215,11 +215,11 @@ public interface iz {
   }
 
   public static boolean emptyStringLiteral(final ASTNode ¢) {
-    return emptyStatement(az.stringLiteral(¢));
+    return emptyStringLiteral(az.stringLiteral(¢));
   }
 
   public static boolean emptyStringLiteral(final StringLiteral ¢) {
-    return "".equals(¢.getLiteralValue());
+    return ¢.getLiteralValue().length() == 0;
   }
 
   public static boolean enhancedFor(final ASTNode ¢) {
@@ -863,7 +863,7 @@ public interface iz {
   }
 
   static boolean literal(String literal, StringLiteral ¢) {
-    return ¢.equals(literal); 
+    return ¢.getLiteralValue().equals(literal); 
   }
 
   static boolean literal(final StringLiteral ¢, final String s) {
