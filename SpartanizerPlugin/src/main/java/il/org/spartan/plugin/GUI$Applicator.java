@@ -30,54 +30,6 @@ import il.org.spartan.utils.*;
  * @since 2013/01/01 */
 // TODO: Ori, check if we can eliminate this dependency on Refactoring...
 public abstract class GUI$Applicator extends Refactoring {
-  private static final String APPLY_TO_FILE = "Apply to compilation unit";
-  private static final String APPLY_TO_FUNCTION = "Apply to enclosing function";
-  private static final String APPLY_TO_PROJECT = "Apply to entire project";
-
-  public static IMarkerResolution getTipperCommitDeclaration() {
-    return getWringCommit(TipperCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
-  }
-
-  public static IMarkerResolution getWringCommitFile() {
-    return getWringCommit(TipperCommit.Type.FILE, APPLY_TO_FILE);
-  }
-
-  public static IMarkerResolution getWringCommitProject() {
-    return getWringCommit(TipperCommit.Type.PROJECT, APPLY_TO_PROJECT);
-  }
-
-  static IMarkerResolution getToggle(final SuppressWarningsLaconicOnOff.Type t, final String l) {
-    return new IMarkerResolution() {
-      @Override public String getLabel() {
-        return l;
-      }
-
-      @Override public void run(final IMarker m) {
-        try {
-          SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);
-        } catch (IllegalArgumentException | CoreException x) {
-          LoggingManner.logEvaluationError(this, x);
-        }
-      }
-    };
-  }
-
-  private static IMarkerResolution getWringCommit(final TipperCommit.Type t, final String l) {
-    return new IMarkerResolution() {
-      @Override public String getLabel() {
-        return l;
-      }
-
-      @Override public void run(final IMarker m) {
-        try {
-          new TipperCommit().go(nullProgressMonitor, m, t);
-        } catch (IllegalArgumentException | CoreException e) {
-          LoggingManner.logEvaluationError(this, e);
-        }
-      }
-    };
-  }
-
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;

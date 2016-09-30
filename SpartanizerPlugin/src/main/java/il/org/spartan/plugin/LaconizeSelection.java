@@ -21,8 +21,9 @@ import il.org.spartan.utils.*;
  * compilation units.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
+
 public abstract class LaconizeSelection extends BaseHandler {
-  /** A handler for {@link Tips} This handler executes all safe spartanizations
+  /** A handler for {@link Tips} executing all safe spartanizations
    * on marker enclosure, while exposing static methods to spartanize only
    * specific compilation units.
    * @author Ori Roth
