@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -27,9 +28,31 @@ public enum haz {
     return !extract.annotations(¢).isEmpty();
   }
 
+  static boolean binding(final ASTNode ¢) {
+    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
+  }
+
+  /** Determine whether an {@link ASTNode} contains as a children a
+   * {@link ContinueStatement}
+   * @param ¢ JD
+   * @return <code> true </code> iff ¢ contains any continue statement
+   * @see {@link convertWhileToFor} */
+  @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
+    return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
+      return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
+    }) > 0;
+  }
+  
   public static boolean dollar(final List<SimpleName> ns) {
     for (final SimpleName ¢ : ns)
       if ("$".equals(identifier(¢)))
+        return true;
+    return false;
+  }
+
+  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (¢.isAnnotation())
         return true;
     return false;
   }
@@ -41,13 +64,6 @@ public enum haz {
   public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
-
-      @Override public boolean test(final List<Statement> ¢¢) {
-        for (final Statement ¢ : ¢¢)
-          if (¢(¢))
-            return true;
-        return false;
-      }
 
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
@@ -121,6 +137,13 @@ public enum haz {
             return true;
         return false;
       }
+
+      @Override public boolean test(final List<Statement> ¢¢) {
+        for (final Statement ¢ : ¢¢)
+          if (¢(¢))
+            return true;
+        return false;
+      }
     }.test(ss);
   }
 
@@ -151,6 +174,20 @@ public enum haz {
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
+      boolean continue¢(final List<VariableDeclarationFragment> fs) {
+        for (final VariableDeclarationFragment ¢ : fs)
+          if (!continue¢(¢.getName()))
+            return false;
+        return true;
+      }
+
+      boolean continue¢(final SimpleName ¢) {
+        if (iz.identifier("$", ¢))
+          return false;
+        $.set(Boolean.TRUE);
+        return true;
+      }
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return continue¢(¢.getName());
       }
@@ -174,32 +211,7 @@ public enum haz {
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         return continue¢(fragments(¢));
       }
-
-      boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        for (final VariableDeclarationFragment ¢ : fs)
-          if (!continue¢(¢.getName()))
-            return false;
-        return true;
-      }
-
-      boolean continue¢(final SimpleName ¢) {
-        if (iz.identifier("$", ¢))
-          return false;
-        $.set(Boolean.TRUE);
-        return true;
-      }
     });
     return $.get().booleanValue();
-  }
-
-  static boolean binding(final ASTNode ¢) {
-    return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
-  }
-
-  static boolean hasAnnotation(final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (¢.isAnnotation())
-        return true;
-    return false;
   }
 }
