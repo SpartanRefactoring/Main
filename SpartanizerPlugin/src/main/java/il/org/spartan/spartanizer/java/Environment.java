@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
   /** @return set of entries declared in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
     // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> result = new LinkedHashSet<>();
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
     n.accept(new ASTVisitor() {
       // Holds the current scope full name (Path).
       String scopePath = "";
@@ -35,10 +35,10 @@ import il.org.spartan.spartanizer.utils.*;
       @Override public boolean visit(final MethodDeclaration d) {
         scopePath += "." + d.getName();
         for (final SingleVariableDeclaration ¢ : step.parameters(d))
-          result.add(convertToEntry(¢));
+          $.add(convertToEntry(¢));
         for (final Statement ¢ : step.statements(d.getBody()))
           if (¢ instanceof VariableDeclarationStatement)
-            result.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
+            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
         return true;
       }
 
@@ -91,7 +91,7 @@ import il.org.spartan.spartanizer.utils.*;
         return null;
       }
     });
-    return result;
+    return $;
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first

@@ -35,10 +35,10 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
       return false;
     if (inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
       return false;
-    final boolean b = ¢ == null ? false
+    final boolean $ = ¢ == null ? false
         : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
             && !iz.containsContinueStatement(¢.getBody());
-    return b;
+    return $;
   }
 
   private static VariableDeclarationExpression forExpression(final ForStatement ¢) {

@@ -357,9 +357,9 @@ public enum az {
   }
 
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
-    final List<IExtendedModifier> modifiers = new ArrayList<>();
-    duplicate.modifiers(step.extendedModifiers(¢), modifiers);
-    return modifiers;
+    final List<IExtendedModifier> $ = new ArrayList<>();
+    duplicate.modifiers(step.extendedModifiers(¢), $);
+    return $;
   }
 
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
