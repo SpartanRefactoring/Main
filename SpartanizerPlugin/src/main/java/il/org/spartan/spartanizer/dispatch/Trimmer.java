@@ -153,7 +153,8 @@ public class Trimmer extends GUI$Applicator {
   }
 
   public String fixed(final String from) {
-    for (final Document $ = new Document(from);;) {
+    final Document $ = new Document(from);
+    for (;;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
       final ASTRewrite r = createRewrite(u);
       final TextEdit e = r.rewriteAST($, null);

@@ -48,9 +48,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  // Ugly one...
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢ : operands)
