@@ -34,9 +34,8 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ == null ? false
-        : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-            && !iz.containsContinueStatement(¢.getBody());
+    return ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
   private static Statement lastStatement(final WhileStatement ¢) {
