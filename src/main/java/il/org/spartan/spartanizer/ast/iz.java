@@ -15,14 +15,14 @@ import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
+/** An empty <code><b>interface</b></code> for fluent programming. The name
+ * should say it all: The name, followed by a dot, followed by a method name,
+ * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum iz {
-  parsed;
+public interface iz {
   public static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -215,7 +215,11 @@ public enum iz {
   }
 
   public static boolean emptyStringLiteral(final ASTNode ¢) {
-    return iz.literal("", ¢);
+    return emptyStatement(az.stringLiteral(¢));
+  }
+
+  public static boolean emptyStringLiteral(final StringLiteral ¢) {
+    return "".equals(¢.getLiteralValue());
   }
 
   public static boolean enhancedFor(final ASTNode ¢) {
@@ -465,33 +469,16 @@ public enum iz {
     return step.left(az.assignment(¢.getParent())).equals(¢);
   }
 
-  /** @param pattern Expression node
-   * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
-  public static boolean literal(final ASTNode ¢) {
-    return ¢ != null && intIsIn(¢.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
-  }
-
-  /** @param subject JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter return a
-   *         literal */
-  public static boolean literal(final ReturnStatement ¢) {
-    return literal(¢.getExpression());
-  }
-
-  public static boolean literal(final String s, final ASTNode ¢) {
-    return literal(az.stringLiteral(¢), s);
+  /** @param ¢ JD
+   * @return true if the given node is a literal 0 or false otherwise */
+  public static boolean literal0(final ASTNode ¢) {
+    return literal(¢, 0);
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a literal false or false otherwise */
-  public static boolean literal¢false(final ASTNode ¢) {
-    return iz.literal(¢, false);
-  }
-
-  /** @param ¢ JD
-   * @return true if the given node is a literal true or false otherwise */
-  public static boolean literal¢true(final ASTNode ¢) {
-    return iz.literal(¢, true);
+   * @return true if the given node is a literal 1 or false otherwise */
+  public static boolean literal1(final ASTNode ¢) {
+    return literal(¢, 1);
   }
 
   public static boolean longType(final Expression ¢) {
@@ -607,6 +594,17 @@ public enum iz {
 
   public static boolean pseudoNumber(final Expression ¢) {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
+  }
+
+  /** @param ¢ JD
+   * @return true if the given node is a literal or false otherwise */
+  default public boolean parsesTo(final String token, final double d) {
+    try {
+      return Double.parseDouble(token) == d;
+    } catch (final IllegalArgumentException x) {
+      LoggingManner.logEvaluationError(this, x);
+      return false;
+    }
   }
 
   /** Determine whether a node is a return statement
@@ -774,72 +772,79 @@ public enum iz {
         && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
   }
 
-  static boolean literal(final ASTNode ¢, final boolean b) {
-    return literal(az.booleanLiteral(¢), b);
-  }
-
-  static boolean literal(final BooleanLiteral ¢, final boolean b) {
-    return ¢ != null && ¢.booleanValue() == b;
-  }
-
-  static boolean literal(final StringLiteral ¢, final String s) {
-    return ¢ != null && ¢.getLiteralValue().equals(s);
-  }
-
-  private static boolean is(final ASTNode n, final int type) {
+  static boolean is(final ASTNode n, final int type) {
     return n != null && type == n.getNodeType();
   }
 
-  private static boolean isOneOf(final int i, final int... is) {
+  static boolean isOneOf(final int i, final int... is) {
     for (final int j : is)
       if (i == j)
         return true;
     return false;
   }
 
-  private static boolean prefixMinus(final Expression ¢) {
-    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
+  /** @param pattern Expression node
+   * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
+  static boolean literal(final ASTNode ¢) {
+    return ¢ != null && intIsIn(¢.getNodeType(), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
-  public boolean literal(final ASTNode ¢, final double d) {
-    final NumberLiteral ¢1 = az.numberLiteral(¢);
-    return ¢1 != null && literal(¢1.getToken(), d);
+  static boolean literal(final ASTNode ¢, final boolean b) {
+    return literal(az.booleanLiteral(¢), b);
   }
 
-  /** @param ¢ JD
-   * @return true if the given node is a literal or false otherwise */
-  public boolean literal(final String token, final double d) {
-    try {
-      return Double.parseDouble(token) == d;
-    } catch (final IllegalArgumentException x) {
-      LoggingManner.logEvaluationError(this, x);
+  static boolean literal(final ASTNode ¢, final double d) {
+    final NumberLiteral numberLiteral = az.numberLiteral(¢);
+    if (numberLiteral == null) 
       return false;
-    }
+    final String token = numberLiteral.getToken();
+    if (token == null)
+      return false;
+    if (LiteralParser.of(token) != type.Primitive.Certain.DOUBLE)
+      return false;
+    return  new iz(){}.parsesTo(token, d);
   }
 
-  /** @param ¢ JD
-   * @return true if the given node is a literal 0 or false otherwise */
-  public boolean literal0(final ASTNode ¢) {
-    return literal(¢, 0);
+  static boolean literal(final ASTNode ¢, final int i) {
+    final NumberLiteral numberLiteral = az.numberLiteral(¢);
+    if (numberLiteral == null) 
+      return false;
+    final String token = numberLiteral.getToken();
+    if (token == null)
+      return false;
+    if (LiteralParser.of(token) != type.Primitive.Certain.INT)
+      return false;
+    return  new iz(){}.parsesTo(token, i);
+}
+
+  static boolean literal(final ASTNode ¢, final long l) {
+    final NumberLiteral numberLiteral = az.numberLiteral(¢);
+    if (numberLiteral == null) 
+      return false;
+    final String token = numberLiteral.getToken();
+    if (token == null)
+      return false;
+    if (LiteralParser.of(token) != type.Primitive.Certain.LONG)
+      return false;
+    return  new iz(){}.parsesTo(token, l);
   }
 
-  /** @param ¢ JD
-   * @return true if the given node is a literal 1 or false otherwise */
-  public boolean literal1(final ASTNode ¢) {
-    return literal(¢, 1);
+  static boolean literal(final BooleanLiteral ¢, final boolean b) {
+    return ¢ != null && ¢.booleanValue() == b;
   }
 
-  boolean literal(final ASTNode ¢, final int i) {
-    final NumberLiteral ¢1 = az.numberLiteral(¢);
-    return ¢1 != null && literal(¢1.getToken(), i);
+  /** @param subject JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter return a
+   *         literal */
+  static boolean literal(final ReturnStatement ¢) {
+    return literal(¢.getExpression());
   }
 
-  boolean literal(final ASTNode ¢, final long l) {
-    final NumberLiteral ¢1 = az.numberLiteral(¢);
-    return ¢1 != null && literal(¢1.getToken(), l);
+  static boolean literal(String literal, ASTNode ¢) {
+    return literal(literal, az.stringLiteral(¢));
   }
 
-  boolean literal(final String token, final int i) {
+  default boolean parsesTo(final String token, final int i) {
     try {
       return Integer.parseInt(token) == i;
     } catch (final IllegalArgumentException x) {
@@ -848,12 +853,42 @@ public enum iz {
     }
   }
 
-  boolean literal(final String token, final long l) {
+  default boolean parsesTo(final String token, final long l) {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
       LoggingManner.logEvaluationError(this, x);
       return false;
+    }
+  }
+
+  static boolean literal(String literal, StringLiteral ¢) {
+    return ¢.equals(literal); 
+  }
+
+  static boolean literal(final StringLiteral ¢, final String s) {
+    return ¢ != null && ¢.getLiteralValue().equals(s);
+  }
+
+  static boolean prefixMinus(final Expression ¢) {
+    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
+  }
+
+  interface literal {
+    /** @param ¢ JD
+     * @return true if the given node is a literal false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return true if the given node is a literal true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
     }
   }
 }
