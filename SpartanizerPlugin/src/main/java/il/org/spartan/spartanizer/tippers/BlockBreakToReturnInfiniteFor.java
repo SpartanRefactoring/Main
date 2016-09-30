@@ -34,7 +34,6 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   public static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
-    // TODO: Dor, I think you can both cases then/elze with one statement
     if (then == null)
       return null;
     if (iz.breakStatement(then))
