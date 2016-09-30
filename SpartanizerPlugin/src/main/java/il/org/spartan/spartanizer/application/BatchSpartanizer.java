@@ -39,9 +39,9 @@ public final class BatchSpartanizer {
       parseCommandLineArgs(args);
       if (inputDir != null && outputDir != null) {
         final File iDir = new File(inputDir);
-        for (final File file : iDir.listFiles()) {
-          System.out.println(file.getAbsolutePath());
-          new BatchSpartanizer(file.getAbsolutePath()).fire();
+        for (final File ¢ : iDir.listFiles()) {
+          System.out.println(¢.getAbsolutePath());
+          new BatchSpartanizer(¢.getAbsolutePath()).fire();
         }
       }
       if (defaultDir) {
