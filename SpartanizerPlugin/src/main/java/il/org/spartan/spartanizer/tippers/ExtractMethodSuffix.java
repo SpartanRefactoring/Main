@@ -111,8 +111,8 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return r;
   }
 
-  private static boolean isValid(final MethodDeclaration d) {
-    return !d.isConstructor() && d.getBody() != null && d.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
+  private static boolean isValid(final MethodDeclaration ¢) {
+    return !¢.isConstructor() && ¢.getBody() != null && ¢.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
   }
 
   private static List<Statement> optionalForkPoints(final MethodDeclaration d) {
@@ -147,16 +147,16 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     m.get(d).add(s);
   }
 
-  @SuppressWarnings("unchecked") private static void updateUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final List<Statement> ss,
+  @SuppressWarnings("unchecked") private static void updateUsesMapping(final Map<VariableDeclaration, List<Statement>> d, final List<Statement> ss,
       final int i) {
     if (!(ss.get(i) instanceof VariableDeclarationStatement))
       return;
     for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) ss.get(i)).fragments())
-      setUsesMapping(m, f, ss, i + 1);
+      setUsesMapping(d, f, ss, i + 1);
   }
 
   private static boolean validForkPoint(final Map<VariableDeclaration, List<Statement>> uses,
-      @SuppressWarnings("unused") final List<SingleVariableDeclaration> ps) {
+      @SuppressWarnings("unused") final List<SingleVariableDeclaration> __) {
     // for (final SingleVariableDeclaration p : ps)
     // if (uses.containsKey(p))
     // return false;

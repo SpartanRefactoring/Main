@@ -24,9 +24,9 @@ public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
   private static final String script = "./essence";
   private static final BatchApplicator batchApplicator = new BatchApplicator().disable(Nominal.class).disable(Nanos.class);
-  private static boolean defaultDir = false;
-  private static String outputDir = null;
-  private static String inputDir = null;
+  private static boolean defaultDir;
+  private static String outputDir;
+  private static String inputDir;
 
   public static String essenced(final String fileName) {
     return fileName + ".essence";
