@@ -4,11 +4,15 @@ import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
+
+import il.org.spartan.spartanizer.assemble.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -316,7 +320,27 @@ public enum az {
   public static VariableDeclarationExpression variableDeclarationExpression(final Expression $) {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
+  
+  public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
+    VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(duplicate.of(findFirst.elementOf(step.fragments(duplicate.of(¢)))));
+    step.fragments($).addAll(nextFragmentsOf(¢));
+    $.setType(duplicate.of(¢.getType()));
+    step.extendedModifiers($).addAll(modifiersOf(¢));
+    return $;
+  }
 
+  private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+    final List<IExtendedModifier> modifiers = new ArrayList<>();
+    duplicate.modifiers(step.extendedModifiers(¢), modifiers);
+    return modifiers;
+  }
+  
+  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
+    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
+    duplicate.into(step.fragments(¢), fragments);
+    return minus.firstElem(fragments);
+  }
+  
   public static VariableDeclarationStatement variableDeclrationStatement(final ASTNode $) {
     return !iz.is($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
   }

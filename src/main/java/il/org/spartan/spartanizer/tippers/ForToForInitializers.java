@@ -33,7 +33,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
     $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
-    step.initializers($).add(Initializers(findFirst.elementOf(step.fragments(s))));
+    step.initializers($).add(Initializers(s));
     return $;
   }
 
@@ -79,11 +79,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return e.getType() == s.getType() && compareModifiers(step.extendedModifiers(e), step.extendedModifiers(s)) ? true : false;
   }
 
-  private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
-    return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
-  }
-
-  // Ugly one...
+    // Ugly one...
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢ : operands)
@@ -101,13 +97,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return $;
   }
 
-  private static Expression Initializers(final VariableDeclarationFragment ¢) {
-    final VariableDeclarationStatement parent = fragmentParent(¢);
-    final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
-    step.fragments($).addAll(nextFragmentsOf(parent));
-    $.setType(duplicate.of(parent.getType()));
-    step.extendedModifiers($).addAll(modifiersOf(parent));
-    return $;
+  private static Expression Initializers(final VariableDeclarationStatement ¢) {
+    return az.variableDeclarationExpression(¢);
   }
 
   private static boolean isIn(final IExtendedModifier m, final List<IExtendedModifier> ms) {
@@ -115,18 +106,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       if (IExtendedModifiersOrdering.compare(m, ¢) == 0)
         return true;
     return false;
-  }
-
-  private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
-    final List<IExtendedModifier> modifiers = new ArrayList<>();
-    duplicate.modifiers(step.extendedModifiers(parent), modifiers);
-    return modifiers;
-  }
-
-  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement parent) {
-    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
-    duplicate.into(step.fragments(parent), fragments);
-    return minus.firstElem(fragments);
   }
 
   /** @param t JD
@@ -160,7 +139,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final ForStatement s = az.forStatement(nextStatement);
     if (s == null || !fitting(parent, s))
       return null;
-    exclude.excludeAll(step.fragments(az.variableDeclrationStatement(f.getParent())));
+    exclude.excludeAll(step.fragments(parent));
     // exclude.exclude(s.getExpression());
     r.remove(parent, g);
     r.replace(s, replace(parent, s), g);

@@ -67,24 +67,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
-    final VariableDeclarationStatement parent = fragmentParent(¢);
-    final VariableDeclarationExpression $ = parent.getAST().newVariableDeclarationExpression(duplicate.of(¢));
-    step.fragments($).addAll(nextFragmentsOf(parent));
-    $.setType(duplicate.of(parent.getType()));
-    step.extendedModifiers($).addAll(modifiersOf(parent));
-    return $;
-  }
-
-  private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement parent) {
-    final List<IExtendedModifier> modifiers = new ArrayList<>();
-    duplicate.modifiers(step.extendedModifiers(parent), modifiers);
-    return modifiers;
-  }
-
-  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement parent) {
-    final List<VariableDeclarationFragment> fragments = new ArrayList<>();
-    duplicate.into(step.fragments(parent), fragments);
-    return minus.firstElem(fragments);
+    return az.variableDeclarationExpression(fragmentParent(¢));
   }
 
   /** @param t JD
@@ -112,13 +95,13 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)
       return null;
-    final Statement parent = az.asStatement(f.getParent());
+    final VariableDeclarationStatement parent = az.variableDeclrationStatement(f.getParent());
     if (parent == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
       return null;
-    exclude.excludeAll(step.fragments(az.variableDeclrationStatement(f.getParent())));
+    exclude.excludeAll(step.fragments(parent));
     r.remove(parent, g);
     r.replace(s, replace(f, s), g);
     return r;
