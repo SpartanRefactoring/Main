@@ -24,25 +24,35 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
-  private static VariableDeclarationExpression firstLastExpression(final ForStatement ¢) {
+  private static VariableDeclarationFragment firstLastExpressionFragment(final ForStatement ¢) {
     ASTNode s = hop.firstLastStatement(¢.getBody());
     if (s == null)
       return null;
     VariableDeclarationStatement vds = az.variableDeclrationStatement(s);
     if (vds == null)
       return null;
-    return az.variableDeclarationExpression(vds);
+    return findFirst.elementOf(step.fragments(vds));
   }
   
   private static ASTNode firstLastStatement(final ForStatement ¢) {
     return hop.firstLastStatement(¢.getBody());
   }
-
+  
+  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
+    Expression e = findFirst.elementOf(step.initializers(¢));
+    VariableDeclarationExpression $ = az.variableDeclarationExpression(e);
+    return $;
+  }
+  
   private static boolean fitting(final ForStatement ¢) {
     ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
     DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
+    if(renameInitializerTipper.canTip(forExpression(¢)))
+      return false;
+    if(inliningTipper.canTip(firstLastExpressionFragment(¢)))
+        return false;
     return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-        && !iz.containsContinueStatement(¢.getBody()) && renameInitializerTipper.cantTip(firstLastExpression(¢));
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
   
