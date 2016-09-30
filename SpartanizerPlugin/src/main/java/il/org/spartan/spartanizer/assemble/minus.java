@@ -52,7 +52,7 @@ public enum minus {
       return $;
     Block b = az.block($);
     if (b == null)
-      return $;
+      return make.emptyStatement(¢);
     final List<Statement> ss = step.statements(b);
     ss.remove(¢);
     return $;

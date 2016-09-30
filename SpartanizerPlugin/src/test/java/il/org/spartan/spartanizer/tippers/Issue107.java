@@ -14,7 +14,7 @@ import org.junit.*;
     trimmingOf("a+=1;").stays();
   }
 
-  @Test public void b() {
+  @Test @Ignore("Pending Issue") public void b() {
     trimmingOf("for(int c = 0; c < 5; c-=1)\n" + "c*=2;").gives("for(int c = 0; c < 5; c-=1,c*=2);");
   }
 
