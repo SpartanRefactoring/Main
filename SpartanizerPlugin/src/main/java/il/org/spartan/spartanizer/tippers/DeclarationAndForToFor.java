@@ -76,7 +76,40 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
         "\n initializers = " + initializers + //
         "\n first = " + first + //
         fault.done();
-    return e.getType() == s.getType() && compareModifiers(step.extendedModifiers(e), step.extendedModifiers(s)) ? true : false;
+    final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
+    if (extendedModifiers == null)
+      return false;
+    assert extendedModifiers != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        "\n first = " + first + //
+        "\n e = " + e + //
+        fault.done();
+    assert s != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        "\n first = " + first + //
+        "\n e = " + e + //
+        "\n extendedModifiers = " + extendedModifiers + //
+        fault.done();
+      
+    final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
+    if (extendedModifiers2 == extendedModifiers)
+      return false;
+    if (extendedModifiers == null || extendedModifiers2 == null)
+      return false;
+    assert extendedModifiers2 != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        "\n first = " + first + //
+        "\n e = " + e + //
+        "\n extendedModifiers = " + extendedModifiers + //
+        "\n s = " + e + //
+        fault.done();  
+    return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
