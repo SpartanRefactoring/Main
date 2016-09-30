@@ -262,6 +262,9 @@ public final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   private void printChangeStatistics(final List<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (optIndividualStatistics)
