@@ -39,7 +39,6 @@ public final class BatchSpartanizer {
     else {
       parseCommandLineArgs(args);
       if(inputDir != null && outputDir != null){
-//        new BatchSpartanizer(inputDir, outputDir).fire();
         File iDir = new File(inputDir);
         File[] files = iDir.listFiles();
         for(File file: files){
@@ -65,12 +64,10 @@ public final class BatchSpartanizer {
         outputDir = args[i+1];
         System.out.println(outputDir);
         i+=2;
-//        continue;
       } else if(args[i].equals("-i")) {
         inputDir = args[i+1];
         System.out.println(inputDir);
         i+=2;
-//        continue;
       } else {
         System.out.println(args[i]);
         System.out.println("something went wrong!");
