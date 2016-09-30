@@ -112,7 +112,8 @@ class UnsafeUsesCollector extends UsesCollector {
   }
 
   @Override void consider(final SimpleName n) {
-    for (ASTNode p = n.getParent(); p != null; p = p.getParent())
+    ASTNode p = n.getParent();
+    for (; p != null; p = p.getParent())
       if (unsafe(p)) {
         super.consider(n);
         return;
