@@ -38,7 +38,7 @@ public final class TipperCommit {
 
   private static Tipper<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
     Toolbox.refresh();
-    final WringCommitVisitor v = new WringCommitVisitor($, m, t, u, w);
+    final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
       u.accept(v);
     else
@@ -123,7 +123,7 @@ public final class TipperCommit {
     DECLARATION, FILE, PROJECT
   }
 
-  static class WringCommitVisitor extends DispatchingVisitor {
+  static class TipperApplyVisitor extends DispatchingVisitor {
     final IMarker marker;
     final ASTRewrite rewrite;
     final Type type;
@@ -133,7 +133,7 @@ public final class TipperCommit {
      * operation has been made. */
     boolean doneTraversing;
 
-    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
+    public TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
       this.rewrite = rewrite;
       this.marker = marker;
       this.type = type;
@@ -142,16 +142,16 @@ public final class TipperCommit {
       doneTraversing = false;
     }
 
-    public WringCommitVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
-        final Tipper<?> wring) {
+    public TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
+        final Tipper<?> tipper) {
       this.rewrite = rewrite;
       this.marker = marker;
       this.type = type;
       this.compilationUnit = compilationUnit;
-      tipper = wring;
+      this.tipper = tipper;
     }
 
-    protected void apply(final Tipper<?> w, final ASTNode n) {
+    protected final void apply(final Tipper<?> w, final ASTNode n) {
       tipper = w;
       switch (type) {
         case DECLARATION:
@@ -209,9 +209,9 @@ public final class TipperCommit {
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
-      final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
-      if (w != null)
-        apply(w, n);
+      final Tipper<N> t = Toolbox.defaultInstance().firstTipper(n);
+      if (t != null)
+        apply(t, n);
       doneTraversing = true;
       return false;
     }
