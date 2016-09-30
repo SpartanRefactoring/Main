@@ -67,15 +67,15 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     }
 
     static IMarkerResolution disableClassFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Disable spartanization for class");
+      return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress laconize tips on A. Class");
     }
 
     static IMarkerResolution disableFileFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Disable spartanization for file");
+      return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "                           B. File ");
     }
 
     static IMarkerResolution disableFunctionFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Disable spartanization for scope");
+      return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "                       C. Function ");
     }
 
     static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, final String label) {
