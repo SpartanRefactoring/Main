@@ -111,12 +111,10 @@ import org.junit.runners.*;
   }
 
   @Test public void challenge_while_j() {
-    trimmingOf(
-        "public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);while (m.find())a += m.group();return a.toLowerCase();}")
-            .gives(
-                "public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}")
-            .gives(
-                "public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();a += m.group());return a.toLowerCase();}");
+    trimmingOf("public String abbreviate() {String a = \"\";final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);while (m.find())a += m.group();return a.toLowerCase();}")
+    .gives("public String abbreviate() {String a = \"\";for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}")
+    .gives("public String abbreviate() {String a = \"\";for(final Matcher ¢ = Pattern.compile(\"[A-Z]\").matcher(typeName);¢.find();)a += ¢.group();return a.toLowerCase();}")
+    .gives("public String abbreviate() {String a = \"\";for(final Matcher ¢ = Pattern.compile(\"[A-Z]\").matcher(typeName);¢.find();a += ¢.group());return a.toLowerCase();}");
   }
 
   @Test public void challenge_while_k() {

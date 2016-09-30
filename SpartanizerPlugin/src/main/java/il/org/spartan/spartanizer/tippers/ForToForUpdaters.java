@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $) {
+  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     $.updaters().add(dupWhileStatement($));
     $.setBody(minus.firstLastStatement(dupForBody($)));
     return $;
@@ -24,14 +24,35 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
+  private static VariableDeclarationFragment firstLastExpressionFragment(final ForStatement ¢) {
+    ASTNode s = hop.firstLastStatement(¢.getBody());
+    if (s == null)
+      return null;
+    VariableDeclarationStatement vds = az.variableDeclrationStatement(s);
+    if (vds == null)
+      return null;
+    return findFirst.elementOf(step.fragments(vds));
+  }
+  
   private static ASTNode firstLastStatement(final ForStatement ¢) {
     return hop.firstLastStatement(¢.getBody());
   }
-
+  
+  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
+    Expression e = findFirst.elementOf(step.initializers(¢));
+    VariableDeclarationExpression $ = az.variableDeclarationExpression(e);
+    return $;
+  }
+  
   private static boolean fitting(final ForStatement ¢) {
-    return ¢ == null ? false
-        : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-            && !iz.containsContinueStatement(¢.getBody());
+    ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
+    DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
+    if(renameInitializerTipper.canTip(forExpression(¢)))
+      return false;
+    if(inliningTipper.canTip(firstLastExpressionFragment(¢)))
+        return false;
+    return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+        && !iz.containsContinueStatement(¢.getBody());
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
@@ -47,6 +68,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutLastStatement(duplicate.of(¢));
+    return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(duplicate.of(¢));
   }
 }
