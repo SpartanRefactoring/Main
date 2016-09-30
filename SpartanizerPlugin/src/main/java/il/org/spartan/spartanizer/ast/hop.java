@@ -152,22 +152,21 @@ public interface hop {
     return $;
   }
 
-  static SimpleName simpleName(final Type ¢) {
-    return lastComponent(hop.name(¢));
-  }
-
-  /**
-   * @param n current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}.
-   *  If parent is not {@link Block} return null, if n is first {@link Statement} also null. 
-   */
-  static Statement previousStatementInBody(Statement n) {
-    Block b = az.block(n.getParent());
+  /** @param n current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  static Statement previousStatementInBody(final Statement n) {
+    final Block b = az.block(n.getParent());
     if (b == null)
       return null;
-    List<Statement> statements = step.statements(b);
+    final List<Statement> statements = step.statements(b);
     if (statements.indexOf(n) < 1)
       return null;
     return statements.get(statements.indexOf(n) - 1);
+  }
+
+  static SimpleName simpleName(final Type ¢) {
+    return lastComponent(hop.name(¢));
   }
 }

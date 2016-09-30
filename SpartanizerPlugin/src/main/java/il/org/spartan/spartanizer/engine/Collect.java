@@ -113,7 +113,7 @@ public enum Collect {
         final List<SimpleName> $ = new ArrayList<>();
         for (final ASTNode ¢ : ns)
           if (¢ != null)
-          ¢.accept(new UsesCollector($, name));
+            ¢.accept(new UsesCollector($, name));
         return $;
       }
     };

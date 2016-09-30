@@ -67,6 +67,4 @@ import org.junit.runners.*;
     trimmingOf("public static void main(){while(i<7){if(i==5){tipper+=9;return x;}else return tr;y+=15;return x;}return x;}")
         .gives("public static void main(){while(i<7){if(i==5){tipper+=9;return x;}else return tr;y+=15;break;}return x;}");
   }
-
-
 }
