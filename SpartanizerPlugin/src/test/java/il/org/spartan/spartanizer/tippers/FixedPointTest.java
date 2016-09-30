@@ -229,12 +229,12 @@ import il.org.spartan.spartanizer.spartanizations.*;
     assertConvertsTo("boolean c;if (s.equals(532))    c=false;else c=true;", "boolean c=!s.equals(532);");
   }
 
-  @Test (timeout = 2000) @Ignore ("Pending Issue") public void ternarize40() {
+  @Test(timeout = 2000) @Ignore("Pending Issue") public void ternarize40() {
     assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;",
         "int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
   }
 
-  @Test(timeout = 2000) @Ignore ("Pending Issue") public void ternarize49a() {
+  @Test(timeout = 2000) @Ignore("Pending Issue") public void ternarize49a() {
     assertConvertsTo(
         "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (int ¢=0; ¢ < size; ¢++){\n" + "       sum += ¢;\n" + "     }\n"
             + "   else\n" + "     for (int ¢=0; ¢ < size; ¢++){\n" + "       S.out.l('f',¢);\n" + "     }",

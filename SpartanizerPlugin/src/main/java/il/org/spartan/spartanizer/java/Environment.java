@@ -65,34 +65,29 @@ import il.org.spartan.spartanizer.utils.*;
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
-      
-      String parentNameScope(final String ¢){
-        return "".equals(¢) ? ¢ : ¢.substring(¢.lastIndexOf("."));
-      }
 
-      /**
-       * Returns the {@link Information} of the declaration the current declaration is hiding.
+      /** Returns the {@link Information} of the declaration the current
+       * declaration is hiding.
        * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information
-       */
-      /*
-       * Implementation notes:
-       * Should go over result set, and search for declaration which shares the same variable name in the parents.
-       * Should return the closest match: 
-       * for example, if we search for a match to .A.B.C.x, and result set contains .A.B.x and .A.x, we should return .A.B.x.
-       * 
-       * If a result is found in the result set, return said result. 
-       * 
-       * To consider: what if said hidden declaration will not appear in 'declaresDown', but will appear in 'declaresUp'?
-       * Should we search for it in 'declaresUp' result set? Should we leave the result as it is? I (Dan) lean towards searching 'declaresUp'.
-       * 
-       * If no match is found, return null.
-       */
+       * @return The hidden node's Information */
+      /* Implementation notes: Should go over result set, and search for
+       * declaration which shares the same variable name in the parents. Should
+       * return the closest match: for example, if we search for a match to
+       * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
+       * .A.B.x.
+       *
+       * If a result is found in the result set, return said result.
+       *
+       * To consider: what if said hidden declaration will not appear in
+       * 'declaresDown', but will appear in 'declaresUp'? Should we search for
+       * it in 'declaresUp' result set? Should we leave the result as it is? I
+       * (Dan) lean towards searching 'declaresUp'.
+       *
+       * If no match is found, return null. */
       Information getHidden(final String ¢) {
-        /*String s = parentNameScope(¢);
-        while(!"".equals(s)){
-          
-        }*/
+        /* String s = parentNameScope(¢); while(!"".equals(s)){
+         * 
+         * } */
         return null;
       }
     });
