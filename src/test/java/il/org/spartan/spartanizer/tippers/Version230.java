@@ -208,16 +208,6 @@ public final class Version230 {
                 "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
-  @Ignore("Issue #230") @Test public void bugInLastIfInMethod1() {
-    trimmingOf("        @Override public void f() {\n" + "          if (!isMessageSuppressed(message)) {\n"
-        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
-        + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
-            .gives(
-                "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
-  }
-
   @Test public void bugInLastIfInMethod2() {
     trimmingOf("        public void f() {\n" + "          if (!g(message)) {\n"
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
@@ -1709,13 +1699,6 @@ public final class Version230 {
         .gives(" for(int i:j)b[i]=f; ");
   }
 
-  @Test @Ignore("Pending Issue") public void issue54ForPlain() {
-    trimmingOf("int a  = f(); for (int i = 0; i < 100;  ++i) b[i] = a;")//
-        .gives("for (int i = 0; i < 100;  ++i) b[i] = f();")//
-        .gives("for (int i = 0; i < 100;  ++i,b[i] = f());")//
-        .stays();
-  }
-
   @Test public void issue54ForPlainNonSideEffect() {
     trimmingOf("int a  = f; for (int i = 0; i < 100;  ++i) b[i] = a;")//
         .gives("for (int i = 0; i < 100;  ++i) b[i] = f;");
@@ -1734,11 +1717,6 @@ public final class Version230 {
   @Test public void issue54ForPlainUseInUpdatersNonSideEffect() {
     trimmingOf("int a  = f; for (int i = 0; i < 100; i *= a) b[i] = 3;")//
         .gives("for (int i = 0; i < 100; i *= f) b[i] = 3;");
-  }
-
-  @Test @Ignore("Pending Issue") public void issue54While() {
-    trimmingOf("int a  = f(); for(;c; b[i] = a);")//
-        .stays();
   }
 
   @Test public void issue54WhileNonSideEffect() {
@@ -2290,12 +2268,6 @@ public final class Version230 {
     trimmingOf("for (int s = i; ++i; ++s);").stays();
   }
 
-  @Test @Ignore("Pending Issue") public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i < 10; ++s) sum+=s;")//
-        .gives("for (int s = i++; i < 10; ++s,sum+=s);")//
-        .stays();
-  }
-
   @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
     trimmingOf("int s = 2;" + "int n = s++;" + "S.out.print(n);")//
         .gives("int s=2;S.out.print(s++);");
@@ -2329,39 +2301,6 @@ public final class Version230 {
   @Test public void prefixToPosfixIncreementSimple() {
     trimmingOf("i++")//
         .gives("++i");
-  }
-
-  @Test @Ignore("Pending Issue") public void prefixToPostfixDecrement() {
-    final String from = "for (int i = 0; i < 100;  i--)  j--;";
-    final Statement s = s(from);
-    azzert.that(s, iz("{" + from + "}"));
-    assert s != null;
-    final PostfixExpression e = findFirst.postfixExpression(s);
-    assert e != null;
-    azzert.that(e, iz("i--"));
-    final ASTNode parent = e.getParent();
-    assert parent != null;
-    azzert.that(parent, iz(from));
-    azzert.that(parent, is(not(instanceOf(Expression.class))));
-    azzert.that(new PostfixToPrefix().canTip(e), is(true));
-    azzert.that(new PostfixToPrefix().canTip(e), is(true));
-    final Expression r = new PostfixToPrefix().replacement(e);
-    azzert.that(r, iz("--i"));
-    trimmingOf(from)//
-        .gives("for(int i=0;i<100;i--,j--);")//
-        .gives("for(int i=0;i<100;--i,--j);").stays();
-  }
-
-  @Test @Ignore("Pending Issue") public void prefixToPostfixDecrementEssence() {
-    trimmingOf("for(int i=0;i< 100;i--)j--;")//
-        .gives("for(int i=0;i<100;i--,j--);")//
-        .gives("for(int i=0;i<100;--i,--j);").stays();
-  }
-
-  @Test @Ignore("Pending Issue") public void prefixToPostfixIncreement() {
-    trimmingOf("for (int i = 0; i < 100; i++) i++;")//
-        .gives("for(int ¢=0;¢<100;¢++)¢++;")//
-        .gives("for(int ¢=0;¢<100;++¢,++¢);").stays();
   }
 
   @Test public void preIncrementReturn() {
@@ -3350,12 +3289,6 @@ public final class Version230 {
         .gives("2L");
   }
 
-  @Ignore @Test public void SwitchFewCasesReplaceWithIf1() {
-    trimmingOf(" int x;\n" + " switch (x) {\n" + " case 1:\n" + "   System.h(\"1\");\n" + "   break;\n" + " default:\n" + "   System.h(\"error\");\n"
-        + "   break;\n" + " }\n")
-            .gives(" int x;\n" + " if (x == 1) {\n" + "   System.h(\"1\");\n" + "   return 2;\n" + " } else\n" + "   System.h(\"3\");\n");
-  }
-
   @Test public void switchSimplifyCaseAfterDefault() {
     trimmingOf(
         "switch (n.getNodeType()) {\n" + "default:\n" + "  return -1;\n" + "case BREAK_STATEMENT:\n" + "  return 0;\n" + "case CONTINUE_STATEMENT:\n"
@@ -3521,11 +3454,6 @@ public final class Version230 {
 
   @Test public void ternarize38() {
     trimmingOf("int a, b=0;if (b==3){    a+=2+r();a-=6;} f();").stays();
-  }
-
-  @Test @Ignore("Pending Issue") public void ternarize41() {
-    trimmingOf("int a,b,c,d;a = 3;b = 5; d = 7;if (a == 4)while (b == 3) c = a; else while (d == 3)c =a*a; ")
-        .gives("int a=3,b,c,d;b=5;d=7;if(a==4)for(;b==3;c=a);else for(;d==3;c=a*a);");
   }
 
   @Test public void ternarize42() {
