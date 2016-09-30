@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tipping;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -27,7 +29,7 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
         MultipleReplaceCurrentNode.this.go(r, n, g, input, output);
         if (output.size() == 1)
           for (final ASTNode ¢ : input)
-            r.replace(¢, output.get(0), g);
+            r.replace(¢, first(output), g);
         else if (input.size() == output.size())
           for (int ¢ = 0; ¢ < input.size(); ++¢, r.replace(input.get(¢), output.get(¢), g))
             ;
