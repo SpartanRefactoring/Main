@@ -317,7 +317,7 @@ public enum az {
    * @return argument, but down-casted to a
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
-  public static VariableDeclarationExpression variableDeclarationExpression(final Expression $) {
+  public static VariableDeclarationExpression variableDeclarationExpression(final ASTNode $) {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 
