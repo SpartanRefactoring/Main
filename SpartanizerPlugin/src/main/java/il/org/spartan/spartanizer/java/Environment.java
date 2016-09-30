@@ -55,22 +55,36 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       Information createInformation(final SingleVariableDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(¢), ¢, type.baptize(wizard.condense(¢.getType())));
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
       }
 
       Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-        return new Information(¢.getParent(), getHidden(¢), ¢, t);
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
 
-      Information getHidden(final SingleVariableDeclaration ¢) {
-        return null;
-      }
-
-      Information getHidden(final VariableDeclarationFragment ¢) {
+      /**
+       * Returns the {@link Information} of the declaration the current declaration is hiding.
+       * @param ¢ the fullName of the declaration.
+       * @return The hidden node's Information
+       */
+      /*
+       * Implementation notes:
+       * Should go over result set, and search for declaration which shares the same variable name in the parents.
+       * Should return the closest match: 
+       * for example, if we search for a match to A.B.c, and result set contains A.c and c, we should return A.c.
+       * 
+       * If a result is found in the result set, return said result. 
+       * 
+       * To consider: what if said hidden declaration will not appear in 'declaresDown', but will appear in 'declaresUp'?
+       * Should we search for it in 'declaresUp' result set? Should we leave the result as it is? I (Dan) lean towards searching 'declaresUp'.
+       * 
+       * If no match is found, return null.
+       */
+      Information getHidden(final String ¢) {
         return null;
       }
     });
