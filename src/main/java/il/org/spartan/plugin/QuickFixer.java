@@ -34,6 +34,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   }
 
   interface fixers {
+    String APPLY_TO_FILE = "Apply to compilation unit";
+    String APPLY_TO_FUNCTION = "Apply to enclosing function";
+    String APPLY_TO_PROJECT = "Apply to entire project";
+
     static IMarkerResolution apply(final TipperCommit.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
@@ -89,9 +93,5 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         }
       };
     }
-
-    String APPLY_TO_FILE = "Apply to compilation unit";
-    String APPLY_TO_FUNCTION = "Apply to enclosing function";
-    String APPLY_TO_PROJECT = "Apply to entire project";
   }
 }

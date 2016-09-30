@@ -29,19 +29,20 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
+  private static ASTNode firstLastStatement(final WhileStatement ¢) {
+    return hop.firstLastStatement(¢.getBody());
+  }
+
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-        && !iz.containsContinueStatement(¢.getBody());
+    return ¢ == null ? false
+        : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+            && !iz.containsContinueStatement(¢.getBody());
   }
 
   private static Statement lastStatement(final WhileStatement ¢) {
     return az.asStatement(hop.lastStatement(¢.getBody()));
   }
 
-  private static ASTNode firstLastStatement(final WhileStatement ¢) {
-    return hop.firstLastStatement(¢.getBody());
-  }
-  
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
