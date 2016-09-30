@@ -140,11 +140,11 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
   }
 
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final Statement s) {
-    if (!Collect.usesOf(d.getName()).in(s).isEmpty()) {
-      if (!m.containsKey(d))
-        m.put(d, new LinkedList<>());
-      m.get(d).add(s);
-    }
+    if (Collect.usesOf(d.getName()).in(s).isEmpty())
+      return;
+    if (!m.containsKey(d))
+      m.put(d, new LinkedList<>());
+    m.get(d).add(s);
   }
 
   @SuppressWarnings("unchecked") private static void updateUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final List<Statement> ss,
