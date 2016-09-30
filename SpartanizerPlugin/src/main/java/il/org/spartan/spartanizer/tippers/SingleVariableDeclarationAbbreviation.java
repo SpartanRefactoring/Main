@@ -43,7 +43,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
 
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
-    for (String ¢ = d + ""; ¢.endsWith("[]"); $ += "s",¢ = ¢.substring(0, ¢.length() - 2))
+    for (String ¢ = d + ""; ¢.endsWith("[]"); $ += "s", ¢ = ¢.substring(0, ¢.length() - 2))
       ;
     return $;
   }

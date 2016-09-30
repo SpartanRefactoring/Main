@@ -30,6 +30,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
+    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
+  }
+
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
     $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
@@ -62,13 +66,11 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (initializers.isEmpty())
       return true;
     final Expression first = first(initializers);
-    
     assert first != null : fault.dump() + //
         "\n s = " + s + //
         "\n ¢ = " + ¢ + //
         "\n initializers = " + initializers + //
         fault.done();
-     
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
     if (e == null)
       return false;
@@ -97,7 +99,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         "\n e = " + e + //
         "\n extendedModifiers = " + extendedModifiers + //
         fault.done();
-      
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
     if (extendedModifiers2 == extendedModifiers)
       return false;
@@ -111,11 +112,11 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         "\n e = " + e + //
         "\n extendedModifiers = " + extendedModifiers + //
         "\n s = " + e + //
-        fault.done();  
+        fault.done();
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
-    // Ugly one...
+  // Ugly one...
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢ : operands)
@@ -155,10 +156,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (iz.infix(from))
       return handleInfix(duplicate.of(az.infixExpression(from)), f);
     return from; // TODO: handle other side effects.
-  }
-
-  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
-    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

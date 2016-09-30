@@ -83,6 +83,21 @@ public interface hop {
     return null;
   }
 
+  /** Find the first statement, residing under a given {@link Statement}, for
+   * which all next statements are side effects.
+   * @param ¢ JD
+   * @return last statement residing under a given {@link Statement}, or
+   *         <code><b>null</b></code> if not such sideEffects exists. */
+  static ASTNode firstLastStatement(final Statement ¢) {
+    Statement $ = null;
+    final ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));
+    Collections.reverse(tempElements);
+    for (final Statement s : tempElements)
+      if (haz.sideEffects(s) || iz.assignment(s) || iz.incrementOrDecrement(s))
+        $ = s;
+    return $;
+  }
+
   /** @param n the node from which to extract the proper fragment
    * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
@@ -103,21 +118,6 @@ public interface hop {
    *         <code><b>null</b></code> if not such sideEffects exists. */
   static ASTNode lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
-  }
-  
-  /** Find the first statement, residing under a given {@link Statement},
-   * for which all next statements are side effects.
-   * @param ¢ JD
-   * @return last statement residing under a given {@link Statement}, or
-   *         <code><b>null</b></code> if not such sideEffects exists. */
-  static ASTNode firstLastStatement(final Statement ¢) {
-    Statement $ = null;
-    ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));
-    Collections.reverse(tempElements);
-    for(final Statement s : tempElements)
-      if (haz.sideEffects(s) || iz.assignment(s) || iz.incrementOrDecrement(s))
-        $ = s;
-    return $;
   }
 
   /** Extract the {@link MethodDeclaration} that contains a given node.
