@@ -13,13 +13,11 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
-    return inliningTipper.cantTip(hop.prevToFirstLastExpressionFragment(¢));
+    return (new DeclarationInitializerStatementTerminatingScope()).cantTip(hop.prevToFirstLastExpressionFragment(¢));
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
-    return inliningTipper.cantTip(hop.prevToFirstLastExpressionFragment(¢));
+    return (new DeclarationInitializerStatementTerminatingScope()).cantTip(hop.prevToFirstLastExpressionFragment(¢));
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {

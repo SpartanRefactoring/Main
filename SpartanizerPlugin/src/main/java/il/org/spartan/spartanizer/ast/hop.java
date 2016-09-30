@@ -164,10 +164,9 @@ public interface hop {
     return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
   }
 
-  /**
-   * @param ¢  JD
-   * @return  converssion of  {@link Statement} , which is previous to the firstLastStatement in the loop body. 
-   */
+  /** @param ¢ JD
+   * @return converssion of {@link Statement} , which is previous to the
+   *         firstLastStatement in the loop body. */
   static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
     final ASTNode n = firstLastStatement(step.body(¢));
     if (n == null)
@@ -183,9 +182,9 @@ public interface hop {
   }
 
   /** @param ¢ JD
-   * @return converssion of {@link Statement}, which is previous to the
+   * @return conversion of {@link Statement}, which is previous to the
    *         firstLastStatement in the loop body. */
-  public static VariableDeclarationFragment prevToFirstLastExpressionFragment(final WhileStatement ¢) {
+  static VariableDeclarationFragment prevToFirstLastExpressionFragment(final WhileStatement ¢) {
     final ASTNode n = firstLastStatement(step.body(¢));
     if (n == null)
       return null;
@@ -196,12 +195,9 @@ public interface hop {
     if (previous == null)
       return null;
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    if (vds == null)
-      return null;
-    return findFirst.elementOf(step.fragments(vds));
+    return vds == null ? null : findFirst.elementOf(step.fragments(vds));
   }
 
-  
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
   }
