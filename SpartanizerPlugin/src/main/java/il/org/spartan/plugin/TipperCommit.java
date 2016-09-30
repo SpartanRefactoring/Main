@@ -151,7 +151,7 @@ public final class TipperCommit {
       this.tipper = tipper;
     }
 
-    protected void apply(final Tipper<?> w, final ASTNode n) {
+    protected final void apply(final Tipper<?> w, final ASTNode n) {
       tipper = w;
       switch (type) {
         case DECLARATION:
