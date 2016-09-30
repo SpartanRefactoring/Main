@@ -153,6 +153,6 @@ public interface findFirst {
   }
 
   static <E> E elementOf(List<E> ¢) {
-    return ¢ == null ? null : ¢.get(0);
+    return (¢ == null || ¢.isEmpty()) ? null : ¢.get(0);
   }
 }

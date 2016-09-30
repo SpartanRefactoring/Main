@@ -92,14 +92,16 @@ import org.junit.runners.*;
   
   @Test public void updaters_ordering_check_1_b() {
     trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}")
-            .gives("for(int i = 0;;arr[i] = 0) {++i;}")
-            .gives("for(int i = 0;;arr[i] = 0,++i) {}").stays();
+            .gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}")
+            .gives("for(int ¢ = 0;;arr[¢] = 0) {++¢;}")
+            .gives("for(int ¢ = 0;;arr[¢] = 0,++¢) {}").stays();
   }
   
   @Test public void updaters_ordering_check_2_right() {
     trimmingOf("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int i = 0;;) {m = modifiers.get(i);++i;}")
-            .gives("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int i = 0;;m = modifiers.get(i)) {++i;}")
-            .gives("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int i = 0;;m = modifiers.get(i),++i) {}").stays();
+            .gives("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;) {m = modifiers.get(¢);++¢;}")
+            .gives("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;m = modifiers.get(¢)) {++¢;}")
+            .gives("List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;m = modifiers.get(¢),++¢) {}").stays();
   }
   
   @Ignore @Test public void OrisCode() { //is not parsing well
