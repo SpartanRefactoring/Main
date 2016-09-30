@@ -70,11 +70,14 @@ public final class DeclarationAndForToFor extends ReplaceToNextStatementExclude<
         fault.done();
      
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
+    if (e == null)
+      return false;
     assert e != null : fault.dump() + //
         "\n s = " + s + //
         "\n ¢ = " + ¢ + //
         "\n initializers = " + initializers + //
         "\n first = " + first + //
+        "\n first.getClass().getSimpleName() = " + first.getClass().getSimpleName() + //
         fault.done();
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     if (extendedModifiers == null)
