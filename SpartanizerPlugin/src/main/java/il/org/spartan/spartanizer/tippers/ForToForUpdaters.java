@@ -24,11 +24,21 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
-  private static VariableDeclarationFragment firstLastExpressionFragment(final ForStatement ¢) {
-    ASTNode s = hop.firstLastStatement(¢.getBody());
-    if (s == null)
+  /**
+   * @param ¢ JD
+   * @return converssion of {@link Statement}, which is previous to the firstLastStatement in the loop body.
+   */
+  private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
+    ASTNode n = hop.firstLastStatement(¢.getBody());
+    if (n == null)
       return null;
-    VariableDeclarationStatement vds = az.variableDeclrationStatement(s);
+    Statement current = az.asStatement(n);
+    if (current == null)
+      return null;
+    Statement previous = hop.previousStatementInBody(current);
+    if (previous == null)
+      return null;
+    VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
     if (vds == null)
       return null;
     return findFirst.elementOf(step.fragments(vds));
@@ -49,10 +59,11 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
     if(renameInitializerTipper.canTip(forExpression(¢)))
       return false;
-    if(inliningTipper.canTip(firstLastExpressionFragment(¢)))
+    if(inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
         return false;
-    return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+    boolean b = ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());
+    return b;
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
