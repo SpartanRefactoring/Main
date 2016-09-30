@@ -161,9 +161,7 @@ public interface hop {
     if (b == null)
       return null;
     final List<Statement> statements = step.statements(b);
-    if (statements.indexOf(n) < 1)
-      return null;
-    return statements.get(statements.indexOf(n) - 1);
+    return statements.indexOf(n) < 1 ? null : statements.get(statements.indexOf(n) - 1);
   }
 
   static SimpleName simpleName(final Type ¢) {
