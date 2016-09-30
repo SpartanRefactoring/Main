@@ -347,9 +347,6 @@ public final class BatchSpartanizer {
   
   static void printHelpPrompt() {
     System.out.println("Batch Spartanizer");
-    System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
-    System.out.println("Executes the Spartan Refactoring Eclipse plug-in from the command line on all the Java source files "
-        + "within the given PATH. Files are spartanized in place by default.");
     System.out.println("");
     System.out.println("Options:");
     System.out.println("  -d       default directory: use the current directory for the analysis");
