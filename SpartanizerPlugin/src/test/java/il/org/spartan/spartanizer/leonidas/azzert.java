@@ -130,7 +130,7 @@ class turns {
     s = _s;
   }
 
-  public void into(final String s) {
+  public void into(final String res) {
     final Document document = new Document(wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(document.get().toCharArray());
@@ -152,25 +152,25 @@ class turns {
       e.printStackTrace();
       fail();
     }
-    azzertEquals(s, document);
+    azzertEquals(res, document);
   }
 
-  private void azzertEquals(final String s, final Document d) {
+  private void azzertEquals(final String res, final Document document) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(s, d.get());
+        assertEquals(res, document.get());
         break;
       case EXPRESSION_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(23, d.get().length() - 3));
+        assertEquals(res, document.get().substring(23, document.get().length() - 3));
         break;
       case METHOD_LOOKALIKE:
-        assertEquals(s, d.get().substring(9, d.get().length() - 2));
+        assertEquals(res, document.get().substring(9, document.get().length() - 2));
         break;
       case OUTER_TYPE_LOOKALIKE:
-        assertEquals(s, d.get());
+        assertEquals(res, document.get());
         break;
       case STATEMENTS_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(16, d.get().length() - 3));
+        assertEquals(res, document.get().substring(16, document.get().length() - 3));
         break;
       default:
         break;
