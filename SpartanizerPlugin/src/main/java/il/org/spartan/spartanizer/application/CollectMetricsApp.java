@@ -192,7 +192,7 @@ public final class CollectMetricsApp implements IApplication {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-        for (int i = 0; i < optRounds; ++i, new Trimmer().apply(u))
+        for (int ¢ = 0; ¢ < optRounds; ++¢, new Trimmer().apply(u))
           if (LaconizeProject.countTips(u) == 0)
             break;
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
