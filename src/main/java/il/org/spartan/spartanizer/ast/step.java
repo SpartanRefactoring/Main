@@ -174,6 +174,7 @@ public enum step {
   }
 
   @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationExpression ¢) {
+    assert ¢ != null;
     return ¢.modifiers();
   }
 
