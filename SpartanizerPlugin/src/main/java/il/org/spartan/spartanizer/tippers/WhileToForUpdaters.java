@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
+public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
