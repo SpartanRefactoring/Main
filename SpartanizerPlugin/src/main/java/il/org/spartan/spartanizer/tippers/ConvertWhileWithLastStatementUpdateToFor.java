@@ -13,7 +13,7 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
     $.setExpression(dupWhileExpression(s));
     $.updaters().add(dupWhileLastStatement(s));
-    $.setBody(minus.lastStatement(dupWhileBody(s)));
+    $.setBody(minus.firstLastStatement(dupWhileBody(s)));
     return $;
   }
 
@@ -26,7 +26,7 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
   }
 
   private static Expression dupWhileLastStatement(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
+    return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
   // TODO: Alex, (Alex) find how to use haz.sideEffects(Expression).
@@ -40,6 +40,10 @@ public class ConvertWhileWithLastStatementUpdateToFor extends ReplaceCurrentNode
     return hop.lastStatement(¢.getBody());
   }
 
+  private static ASTNode firstLastStatement(final WhileStatement ¢) {
+    return hop.firstLastStatement(¢.getBody());
+  }
+  
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
