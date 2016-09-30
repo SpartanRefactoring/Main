@@ -25,10 +25,10 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
   private static void clearUsesMapping(final Map<VariableDeclaration, List<Statement>> uses, final Statement s) {
     final List<VariableDeclaration> vs = new LinkedList<>();
     vs.addAll(uses.keySet());
-    for (final VariableDeclaration d : vs) {
-      uses.get(d).remove(s);
-      if (uses.get(d).isEmpty())
-        uses.remove(d);
+    for (final VariableDeclaration ¢ : vs) {
+      uses.get(¢).remove(s);
+      if (uses.get(¢).isEmpty())
+        uses.remove(¢);
     }
   }
 
@@ -38,20 +38,20 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
       return;
     final List<TagElement> ts = j.tags();
     final List<String> ns = new LinkedList<>();
-    for (final VariableDeclaration v : m.keySet())
-      ns.add(v.getName() + "");
+    for (final VariableDeclaration ¢ : m.keySet())
+      ns.add(¢.getName() + "");
     boolean hasParamTags = false;
     int tagPosition = -1;
     final List<TagElement> xs = new LinkedList<>();
-    for (final TagElement t : ts)
-      if (TagElement.TAG_PARAM.equals(t.getTagName()) && t.fragments().size() == 1 && t.fragments().get(0) instanceof SimpleName) {
+    for (final TagElement ¢ : ts)
+      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && ¢.fragments().get(0) instanceof SimpleName) {
         hasParamTags = true;
         if (tagPosition < 0)
-          tagPosition = ts.indexOf(t);
-        if (!ns.contains(t.fragments().get(0)))
-          xs.add(t);
+          tagPosition = ts.indexOf(¢);
+        if (!ns.contains(¢.fragments().get(0)))
+          xs.add(¢);
         else
-          ns.remove(t.fragments().get(0));
+          ns.remove(¢.fragments().get(0));
       }
     if (!hasParamTags)
       return;
@@ -92,8 +92,8 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     d1.getBody().statements().subList(d.getBody().statements().indexOf(forkPoint) + 1, d.getBody().statements().size()).clear();
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(duplicate.of(d.getName()));
-    for (final VariableDeclaration v : m.keySet())
-      i.arguments().add(duplicate.of(v.getName()));
+    for (final VariableDeclaration ¢ : m.keySet())
+      i.arguments().add(duplicate.of(¢.getName()));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       d1.getBody().statements().add(d.getAST().newExpressionStatement(i));
     else {
@@ -124,11 +124,11 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     if (d.parameters().size() != s.size())
       return false;
     final List<String> ts = new LinkedList<>();
-    for (final VariableDeclaration t : s)
-      ts.add((t instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) t).getType()
-          : az.variableDeclrationStatement(t.getParent()).getType()) + "");
-    for (final SingleVariableDeclaration v : (List<SingleVariableDeclaration>) d.parameters())
-      if (!ts.contains(v.getType() + ""))
+    for (final VariableDeclaration ¢ : s)
+      ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
+          : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
+    for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
+      if (!ts.contains(¢.getType() + ""))
         return false;
     return true;
   }
@@ -151,8 +151,8 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
       final int i) {
     if (!(ss.get(i) instanceof VariableDeclarationStatement))
       return;
-    for (final VariableDeclarationFragment f : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) ss.get(i)).fragments())
-      setUsesMapping(d, f, ss, i + 1);
+    for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) ss.get(i)).fragments())
+      setUsesMapping(d, ¢, ss, i + 1);
   }
 
   private static boolean validForkPoint(final Map<VariableDeclaration, List<Statement>> uses,
@@ -176,15 +176,15 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     final List<Statement> ss = d.getBody().statements();
     final Map<VariableDeclaration, List<Statement>> uses = new HashMap<>();
     final List<SingleVariableDeclaration> ps = d.parameters();
-    for (final SingleVariableDeclaration v : ps)
-      setUsesMapping(uses, v, ss, 0);
-    for (final Statement s : optionalForkPoints(d)) {
-      clearUsesMapping(uses, s);
+    for (final SingleVariableDeclaration ¢ : ps)
+      setUsesMapping(uses, ¢, ss, 0);
+    for (final Statement ¢ : optionalForkPoints(d)) {
+      clearUsesMapping(uses, ¢);
       if (validForkPoint(uses, ps)) {
-        updateUsesMapping(uses, ss, ss.indexOf(s));
-        return go(r, d, uses, s, crs, sameParameters(d, uses.keySet()));
+        updateUsesMapping(uses, ss, ss.indexOf(¢));
+        return go(r, d, uses, ¢, crs, sameParameters(d, uses.keySet()));
       }
-      updateUsesMapping(uses, ss, ss.indexOf(s));
+      updateUsesMapping(uses, ss, ss.indexOf(¢));
     }
     return null;
   }
