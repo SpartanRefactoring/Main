@@ -461,6 +461,10 @@ public enum iz {
     return last(s, statements(b)) && iz.methodDeclaration(parent(b));
   }
 
+  public static boolean leftOfAssignment(final Expression ¢) {
+    return step.left(az.assignment(¢.getParent())).equals(¢);
+  }
+
   /** @param pattern Expression node
    * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   public static boolean literal(final ASTNode ¢) {
@@ -490,14 +494,6 @@ public enum iz {
     return iz.literal(¢, true);
   }
 
-  public static boolean leftOfAssignment(final Expression ¢) {
-    return step.left(az.assignment(¢.getParent())).equals(¢);
-  }
-  
-  public static boolean rightOfAssignment(final Expression ¢) {
-    return step.right(az.assignment(¢.getParent())).equals(¢);
-  }
-  
   public static boolean longType(final Expression ¢) {
     return type.of(¢) == LONG;
   }
@@ -619,6 +615,10 @@ public enum iz {
    *         statement. */
   public static boolean returnStatement(final ASTNode ¢) {
     return is(¢, RETURN_STATEMENT);
+  }
+
+  public static boolean rightOfAssignment(final Expression ¢) {
+    return step.right(az.assignment(¢.getParent())).equals(¢);
   }
 
   /** Determine whether a node is a "sequencer", i.e.,

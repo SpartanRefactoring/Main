@@ -23,6 +23,37 @@ public interface findFirst {
     return instanceOf(AssertStatement.class, ¢);
   }
 
+  /** Find the first {@link ConditionalExpression}, under a given node, as found
+   * in the usual visitation order.
+   * @param n First node to visit
+   * @return first {@link ConditionalExpression} representing an addition under
+   *         the parameter given node, or <code><b>null</b></code> if no such
+   *         value could be found. */
+  static ConditionalExpression conditionalExpression(final ASTNode n) {
+    final Wrapper<ConditionalExpression> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final ConditionalExpression ¢) {
+        if ($.get() != null)
+          return false;
+        $.set(¢);
+        return false;
+      }
+    });
+    return $.get();
+  }
+
+  static <E> E elementOf(final List<E> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  }
+
+  /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
+   * @param pattern JD
+   * @return first {@link Expression} found in an {@link ASTNode n}, or
+   *         <code><b>null</b> if there is no such statement. */
+  static Expression expression(final ASTNode ¢) {
+    return findFirst.instanceOf(Expression.class, ¢);
+  }
+
   static Type firstType(final Statement ¢) {
     return instanceOf(Type.class, ¢);
   }
@@ -59,25 +90,6 @@ public interface findFirst {
           return false;
         if (¢.getOperator() != PLUS2)
           return true;
-        $.set(¢);
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Find the first {@link ConditionalExpression}, under a given node, as found
-   * in the usual visitation order.
-   * @param n First node to visit
-   * @return first {@link ConditionalExpression} representing an addition under
-   *         the parameter given node, or <code><b>null</b></code> if no such
-   *         value could be found. */
-  static ConditionalExpression conditionalExpression(final ASTNode n) {
-    final Wrapper<ConditionalExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final ConditionalExpression ¢) {
-        if ($.get() != null)
-          return false;
         $.set(¢);
         return false;
       }
@@ -142,17 +154,5 @@ public interface findFirst {
    *         <code><b>null</b> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
     return instanceOf(WhileStatement.class, ¢);
-  }
-
-  /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
-   * @param pattern JD
-   * @return first {@link Expression} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static Expression expression(final ASTNode ¢) {
-    return findFirst.instanceOf(Expression.class, ¢);
-  }
-
-  static <E> E elementOf(List<E> ¢) {
-    return (¢ == null || ¢.isEmpty()) ? null : ¢.get(0);
   }
 }

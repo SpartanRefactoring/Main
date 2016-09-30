@@ -55,7 +55,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
         && !iz.containsContinueStatement(¢.getBody());
   }
 
-  
   private static Statement lastStatement(final ForStatement ¢) {
     return az.asStatement(hop.lastStatement(¢.getBody()));
   }

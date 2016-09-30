@@ -61,98 +61,7 @@ class tipper {
 }
 
 class turns {
-  private final UserDefinedTipper<ASTNode> tipper;
-  private final String s;
-
-  public turns(final UserDefinedTipper<ASTNode> tipper, final String _s) {
-    this.tipper = tipper;
-    s = _s;
-  }
-
-  public void into(final String res) {
-    Document document = new Document(wrapCode(s));
-    ASTParser parser = ASTParser.newParser(AST.JLS8);
-    parser.setSource(document.get().toCharArray());
-    CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-    AST ast = cu.getAST();
-    ASTRewrite r = ASTRewrite.create(ast);
-    ASTNode n = extractASTNode(s, cu);
-    try {
-      assertTrue(tipper.canTip(n));
-      tipper.tip(n).go(r, null);
-    } catch (TipperFailure e) {
-      e.printStackTrace();
-      fail();
-    }
-    TextEdit edits = r.rewriteAST(document, null);
-    try {
-      edits.apply(document);
-    } catch (MalformedTreeException | BadLocationException e) {
-      e.printStackTrace();
-      fail();
-    }
-    azzertEquals(res, document);
-  }
-
-  private void azzertEquals(final String res, Document document) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(res, document.get());
-        break;
-      case EXPRESSION_LOOK_ALIKE:
-        assertEquals(res, document.get().substring(23, document.get().length() - 3));
-        break;
-      case METHOD_LOOKALIKE:
-        assertEquals(res, document.get().substring(9, document.get().length() - 2));
-        break;
-      case OUTER_TYPE_LOOKALIKE:
-        assertEquals(res, document.get());
-        break;
-      case STATEMENTS_LOOK_ALIKE:
-        assertEquals(res, document.get().substring(16, document.get().length() - 3));
-        break;
-      default:
-        break;
-    }
-  }
-
-  private static String wrapCode(String s) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return s;
-      case EXPRESSION_LOOK_ALIKE:
-        return "class X{int f(){return " + s + ";}}";
-      case METHOD_LOOKALIKE:
-        return "class X{" + s + "}";
-      case OUTER_TYPE_LOOKALIKE:
-        return s;
-      case STATEMENTS_LOOK_ALIKE:
-        return "class X{int f(){" + s + "}}";
-      default:
-        fail(s + " is not like anything I know...");
-    }
-    return null;
-  }
-
-  private static ASTNode extractASTNode(final String s, CompilationUnit u) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return u;
-      case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.methodDeclaration(u));
-      case METHOD_LOOKALIKE:
-        return findSecond(MethodDeclaration.class, u);
-      case OUTER_TYPE_LOOKALIKE:
-        return u;
-      case STATEMENTS_LOOK_ALIKE:
-        return findSecond(Block.class, u);
-      default:
-        break;
-    }
-    return null;
-  }
-
-  static <N extends ASTNode> N findSecond(Class<?> c, ASTNode n) {
+  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;
     final Wrapper<Boolean> foundFirst = new Wrapper<>();
@@ -175,5 +84,96 @@ class turns {
     });
     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
+  }
+
+  private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        return u;
+      case EXPRESSION_LOOK_ALIKE:
+        return findSecond(Expression.class, findFirst.methodDeclaration(u));
+      case METHOD_LOOKALIKE:
+        return findSecond(MethodDeclaration.class, u);
+      case OUTER_TYPE_LOOKALIKE:
+        return u;
+      case STATEMENTS_LOOK_ALIKE:
+        return findSecond(Block.class, u);
+      default:
+        break;
+    }
+    return null;
+  }
+
+  private static String wrapCode(final String s) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        return s;
+      case EXPRESSION_LOOK_ALIKE:
+        return "class X{int f(){return " + s + ";}}";
+      case METHOD_LOOKALIKE:
+        return "class X{" + s + "}";
+      case OUTER_TYPE_LOOKALIKE:
+        return s;
+      case STATEMENTS_LOOK_ALIKE:
+        return "class X{int f(){" + s + "}}";
+      default:
+        fail(s + " is not like anything I know...");
+    }
+    return null;
+  }
+
+  private final UserDefinedTipper<ASTNode> tipper;
+  private final String s;
+
+  public turns(final UserDefinedTipper<ASTNode> tipper, final String _s) {
+    this.tipper = tipper;
+    s = _s;
+  }
+
+  public void into(final String res) {
+    final Document document = new Document(wrapCode(s));
+    final ASTParser parser = ASTParser.newParser(AST.JLS8);
+    parser.setSource(document.get().toCharArray());
+    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+    final AST ast = cu.getAST();
+    final ASTRewrite r = ASTRewrite.create(ast);
+    final ASTNode n = extractASTNode(s, cu);
+    try {
+      assertTrue(tipper.canTip(n));
+      tipper.tip(n).go(r, null);
+    } catch (final TipperFailure e) {
+      e.printStackTrace();
+      fail();
+    }
+    final TextEdit edits = r.rewriteAST(document, null);
+    try {
+      edits.apply(document);
+    } catch (MalformedTreeException | BadLocationException e) {
+      e.printStackTrace();
+      fail();
+    }
+    azzertEquals(res, document);
+  }
+
+  private void azzertEquals(final String res, final Document document) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        assertEquals(res, document.get());
+        break;
+      case EXPRESSION_LOOK_ALIKE:
+        assertEquals(res, document.get().substring(23, document.get().length() - 3));
+        break;
+      case METHOD_LOOKALIKE:
+        assertEquals(res, document.get().substring(9, document.get().length() - 2));
+        break;
+      case OUTER_TYPE_LOOKALIKE:
+        assertEquals(res, document.get());
+        break;
+      case STATEMENTS_LOOK_ALIKE:
+        assertEquals(res, document.get().substring(16, document.get().length() - 3));
+        break;
+      default:
+        break;
+    }
   }
 }
