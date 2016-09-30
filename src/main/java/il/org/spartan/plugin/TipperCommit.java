@@ -53,7 +53,7 @@ public final class TipperCommit {
     }
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
@@ -120,7 +120,7 @@ public final class TipperCommit {
   }
 
   public enum Type {
-    DECLARATION, FILE, PROJECT
+    DECLARATION, FILE, PROJECT, SEARCH_TIPPER
   }
 
   static class TipperApplyVisitor extends DispatchingVisitor {
@@ -174,10 +174,10 @@ public final class TipperCommit {
       applyLocal(w, searchAncestors.forClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
-    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode n) {
-      n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(@SuppressWarnings("hiding") final N n) {
-          if (Trimmer.isDisabled(n))
+    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
+      b.accept(new DispatchingVisitor() {
+        @Override protected <N extends ASTNode> boolean go(final N n) {
+          if (Trimmer.isDisabled(n) || !w.myAbstractOperandsClass().isInstance(n))
             return true;
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
