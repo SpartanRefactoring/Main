@@ -86,7 +86,7 @@ import il.org.spartan.spartanizer.utils.*;
        * If no match is found, return null. */
       Information getHidden(final String ¢) {
         /* String s = parentNameScope(¢); while(!"".equals(s)){
-         * 
+         *
          * } */
         return null;
       }

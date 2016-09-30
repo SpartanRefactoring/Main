@@ -116,7 +116,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
-    // Ugly one...
+  // Ugly one...
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢ : operands)
