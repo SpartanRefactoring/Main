@@ -185,6 +185,7 @@ public interface hop {
     return findFirst.elementOf(step.fragments(vds));
   }
 
+  
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
   }

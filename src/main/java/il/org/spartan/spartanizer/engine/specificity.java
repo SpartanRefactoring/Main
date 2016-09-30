@@ -68,7 +68,7 @@ public final class specificity implements Comparator<Expression> {
     },
     ONE_LITERAL {
       @Override boolean includes(final ASTNode ¢) {
-            return iz.literal1(¢);
+        return iz.literal1(¢);
       }
     },
     ZERO_DOUBLE_LITERAL {

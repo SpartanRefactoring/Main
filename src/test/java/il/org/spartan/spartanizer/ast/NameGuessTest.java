@@ -82,9 +82,8 @@ import il.org.spartan.*;
   @Test public void dollar3() {
     azzert.that(NameGuess.of("$$$"), is(NameGuess.DOLLAR));
   }
+
   @Test public void variable1() {
     azzert.that(NameGuess.of("multiset1"), is(NameGuess.METHOD_OR_VARIABLE));
   }
-
-
 }

@@ -33,7 +33,6 @@ public final class AssignmentToPostfixIncrement extends ReplaceCurrentNode<Assig
   }
 
   @Override public ASTNode replacement(final Assignment ¢) {
-    return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(¢.getRightHandSide()) || !provablyNotString(¢) ? null
-        : replace(¢);
+    return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(¢.getRightHandSide()) || !provablyNotString(¢) ? null : replace(¢);
   }
 }

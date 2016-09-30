@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.engine.type.*;
  * @author Yossi Gil
  * @since 2015-08-30 */
 public final class LiteralParser {
-  public static    Primitive.Certain of(String literal) {
+  public static Primitive.Certain of(final String literal) {
     return new LiteralParser(literal).type();
   }
 
