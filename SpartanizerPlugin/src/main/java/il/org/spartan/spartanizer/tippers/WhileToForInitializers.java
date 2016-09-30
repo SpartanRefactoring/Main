@@ -61,9 +61,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
             operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var + ""));
           }
       }
-    final InfixExpression $ = subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
-    return subject.append($, minus.firstElem(minus.firstElem(operands)));
-    // return $;
+    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElem(minus.firstElem(operands)));
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {

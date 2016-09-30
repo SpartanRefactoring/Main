@@ -104,20 +104,20 @@ class turns {
     return null;
   }
 
-  private static String wrapCode(final String s) {
-    switch (GuessedContext.find(s)) {
+  private static String wrapCode(final String ¢) {
+    switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
-        return s;
+        return ¢;
       case EXPRESSION_LOOK_ALIKE:
-        return "class X{int f(){return " + s + ";}}";
+        return "class X{int f(){return " + ¢ + ";}}";
       case METHOD_LOOKALIKE:
-        return "class X{" + s + "}";
+        return "class X{" + ¢ + "}";
       case OUTER_TYPE_LOOKALIKE:
-        return s;
+        return ¢;
       case STATEMENTS_LOOK_ALIKE:
-        return "class X{int f(){" + s + "}}";
+        return "class X{int f(){" + ¢ + "}}";
       default:
-        fail(s + " is not like anything I know...");
+        fail(¢ + " is not like anything I know...");
     }
     return null;
   }
