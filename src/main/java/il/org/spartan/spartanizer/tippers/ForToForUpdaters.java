@@ -24,14 +24,14 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
+  private static ASTNode firstLastStatement(final ForStatement ¢) {
+    return hop.firstLastStatement(¢.getBody());
+  }
+
   private static boolean fitting(final ForStatement ¢) {
     ForRenameInitializerToCent renameInitializer = new ForRenameInitializerToCent();
     return ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());
-  }
-
-  private static ASTNode firstLastStatement(final ForStatement ¢) {
-    return hop.firstLastStatement(¢.getBody());
   }
 
   
