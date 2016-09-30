@@ -24,50 +24,50 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
   }
 
-  /**
-   * @param ¢ JD
-   * @return converssion of {@link Statement}, which is previous to the firstLastStatement in the loop body.
-   */
-  private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    ASTNode n = hop.firstLastStatement(¢.getBody());
-    if (n == null)
-      return null;
-    Statement current = az.asStatement(n);
-    if (current == null)
-      return null;
-    Statement previous = hop.previousStatementInBody(current);
-    if (previous == null)
-      return null;
-    VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    if (vds == null)
-      return null;
-    return findFirst.elementOf(step.fragments(vds));
-  }
-  
   private static ASTNode firstLastStatement(final ForStatement ¢) {
     return hop.firstLastStatement(¢.getBody());
   }
-  
-  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
-    Expression e = findFirst.elementOf(step.initializers(¢));
-    VariableDeclarationExpression $ = az.variableDeclarationExpression(e);
-    return $;
-  }
-  
+
   private static boolean fitting(final ForStatement ¢) {
-    ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
-    DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
-    if(renameInitializerTipper.canTip(forExpression(¢)))
+    final ForRenameInitializerToCent renameInitializerTipper = new ForRenameInitializerToCent();
+    final DeclarationInitializerStatementTerminatingScope inliningTipper = new DeclarationInitializerStatementTerminatingScope();
+    if (renameInitializerTipper.canTip(forExpression(¢)))
       return false;
-    if(inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
-        return false;
-    boolean b = ¢ == null ? false : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-        && !iz.containsContinueStatement(¢.getBody());
+    if (inliningTipper.canTip(prevToFirstLastExpressionFragment(¢)))
+      return false;
+    final boolean b = ¢ == null ? false
+        : (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
+            && !iz.containsContinueStatement(¢.getBody());
     return b;
+  }
+
+  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
+    final Expression e = findFirst.elementOf(step.initializers(¢));
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(e);
+    return $;
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
     return az.asStatement(hop.lastStatement(¢.getBody()));
+  }
+
+  /** @param ¢ JD
+   * @return converssion of {@link Statement}, which is previous to the
+   *         firstLastStatement in the loop body. */
+  private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
+    final ASTNode n = hop.firstLastStatement(¢.getBody());
+    if (n == null)
+      return null;
+    final Statement current = az.asStatement(n);
+    if (current == null)
+      return null;
+    final Statement previous = hop.previousStatementInBody(current);
+    if (previous == null)
+      return null;
+    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
+    if (vds == null)
+      return null;
+    return findFirst.elementOf(step.fragments(vds));
   }
 
   @Override public String description(final ForStatement ¢) {
