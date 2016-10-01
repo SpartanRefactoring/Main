@@ -859,10 +859,7 @@ public interface iz {
    * returns false if the parent is not a for loop.
    */
   static boolean usingForInitializer(Statement ¢) {
-    ForStatement parent = az.forStatement(¢.getParent());
-    if (parent == null)
-      return false;
-    return true;
+    return az.forStatement(¢.getParent()) != null;
   }
   
   interface literal {
