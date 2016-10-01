@@ -82,24 +82,7 @@ public interface hop {
         return $;
     return null;
   }
-
-  /** Find the first statement, residing under a given {@link Statement}, for
-   * which all next statements are side effects.
-   * <p>
-   * XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]]
-   * @param ¢ JD
-   * @return last statement residing under a given {@link Statement}, or
-   *         <code><b>null</b></code> if not such sideEffects exists. */
-  static ASTNode firstLastStatement(final Statement ¢) {
-    Statement $ = null;
-    final ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));
-    Collections.reverse(tempElements);
-    for (final Statement s : tempElements)
-      if (haz.sideEffects(s) || iz.assignment(s) || iz.incrementOrDecrement(s))
-        $ = s;
-    return $;
-  }
-
+  
   /** @param n the node from which to extract the proper fragment
    * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
@@ -170,7 +153,7 @@ public interface hop {
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
   static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    final ASTNode n = firstLastStatement(step.body(¢));
+    final ASTNode n = findFirst.statementCanBePushedToForUpdaters(step.body(¢));
     if (n == null)
       return null;
     final Statement current = az.asStatement(n);
@@ -187,7 +170,7 @@ public interface hop {
    * @return conversion of {@link Statement}, which is previous to the
    *         firstLastStatement in the loop body. */
   static VariableDeclarationFragment prevToFirstLastExpressionFragment(final WhileStatement ¢) {
-    final ASTNode n = firstLastStatement(step.body(¢));
+    final ASTNode n = findFirst.statementCanBePushedToForUpdaters(step.body(¢));
     if (n == null)
       return null;
     final Statement current = az.asStatement(n);

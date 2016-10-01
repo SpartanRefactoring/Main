@@ -6,8 +6,8 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase. Generally here comes all the checks, and coercions related to
- * tips ordering and collisions.
+ * read like a sentence phrase. Generally here comes all the checks, and
+ * coercions related to tips ordering and collisions.
  * @author Alex Kopzon
  * @since 2.5 */
 public enum cantTip {
@@ -20,7 +20,35 @@ public enum cantTip {
     return new DeclarationInitializerStatementTerminatingScope().cantTip(hop.prevToFirstLastExpressionFragment(¢));
   }
 
+  public static boolean declarationRedundantInitializer(final ForStatement ¢) {
+    for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
+      if (new DeclarationRedundantInitializer().canTip(f))
+        return false;
+    return true;
+  }
+
+  public static boolean declarationRedundantInitializer(final WhileStatement ¢) {
+    for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
+      if (new DeclarationRedundantInitializer().canTip(f))
+        return false;
+    return true;
+  }
+
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
     return new ForRenameInitializerToCent().cantTip(az.variableDeclarationExpression(¢));
+  }
+
+  public static boolean remvoeRedundantIf(final ForStatement ¢) {
+    for (final IfStatement s : extract.ifStatements(step.body(¢)))
+      if (new RemoveRedundantIf().canTip(s))
+        return false;
+    return true;
+  }
+
+  public static boolean remvoeRedundantIf(final WhileStatement ¢) {
+    for (final IfStatement s : extract.ifStatements(step.body(¢)))
+      if (new RemoveRedundantIf().canTip(s))
+        return false;
+    return true;
   }
 }

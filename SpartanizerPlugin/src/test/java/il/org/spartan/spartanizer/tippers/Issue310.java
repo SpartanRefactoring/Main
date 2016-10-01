@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue310 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue310 {
   @Ignore @Test public void OrisCode() { // is not parsing well
     trimmingOf(
         "int i;for (i=0; i < MAX_PASSES; ++i) {final IProgressService ps=wb.getProgressService();final AtomicInteger passNum=new AtomicInteger(i + 1);final AtomicBoolean cancled=new AtomicBoolean(false);try {ps.run(true,true,pm -> {"
@@ -27,37 +27,28 @@ import org.junit.runners.*;
         + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
                 + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
-                + "return true;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) " + "if (dns.contains(p))"
-                + "return true;" + "return false;" + "}")
             .stays();
   }
 
   @Test public void updaters_for_2() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for (;p != null;) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
-                + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
-                + "return true;" + "if (ens.contains(p))" + "return true;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {"
-                + "if (dns.contains(p) || ens.contains(p))" + "return true;" + "}" + "return false;" + "}")
-            .gives(
-                "public boolean check(final ASTNode n) {for (ASTNode p = n;p != null;p = p.getParent()) if (dns.contains(p) || ens.contains(p))return true;return false;}")
-            .stays();
+    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
+        + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
+    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p) || ens.contains(p))" + "return true;"
+            + "p = p.getParent();" + "}" + "return false;" + "}")
+    .stays();
   }
 
   @Test public void updaters_for_3a() {
-    trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;x = 5;}")
-    .gives("for (int i = 0; i < 10;i += x) {int x = 1;x = 5;}").stays();
+    trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;x = 5;}").stays();
   }
   
   @Test public void updaters_for_3b() {
     trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;}")
     .gives("for (int i = 0; i < 10;) {i += 1;}")
     .gives("for (int ¢ = 0; ¢ < 10;){¢ += 1;}")
-    .gives("for (int ¢ = 0; ¢ < 10;¢ += 1) {}")
+    .gives("for (int ¢ = 0; ¢ < 10;)¢ += 1;")
     .stays();
   }
   
@@ -74,8 +65,11 @@ import org.junit.runners.*;
   }
 
   @Test public void updaters_ordering_check_1_b() {
-    trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}").gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}").gives("for(int ¢ = 0;;arr[¢] = 0) {++¢;}")
-        .gives("for(int ¢ = 0;;arr[¢] = 0,++¢) {}").stays();
+    trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}")
+    .gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}")
+    .gives("for(int ¢ = 0;;++¢) {arr[¢] = 0;}")
+    .gives("for(int ¢ = 0;;++¢) arr[¢] = 0;")
+    .stays();
   }
 
   @Test public void updaters_ordering_check_2_right() {
@@ -84,9 +78,9 @@ import org.junit.runners.*;
             .gives(
                 "List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;) {m = modifiers.get(¢);++¢;}")
             .gives(
-                "List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;m = modifiers.get(¢)) {++¢;}")
+                "List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;++¢) {m = modifiers.get(¢);}")
             .gives(
-                "List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;m = modifiers.get(¢),++¢) {}")
+                "List<IExtendedModifier> modifiers = new ArrayList<>();IExtendedModifier m = modifiers.get(0);for(int ¢ = 0;;++¢) m = modifiers.get(¢);")
             .stays();
   }
 
@@ -95,30 +89,23 @@ import org.junit.runners.*;
         + "p = p.getParent();" + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;"
                 + "p = p.getParent();}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;p = p.getParent()) {" + "if (dns.contains(p))"
-                + "return true;" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;p = p.getParent()) " + "if (dns.contains(p))"
-                + "return true;" + "return false;" + "}")
             .stays();
   }
 
   @Test public void updaters_while_2() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
-                + "if (ens.contains(p))" + "return true;" + "p = p.getParent();}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;p = p.getParent()) {" + "if (dns.contains(p))"
-                + "return true;" + "if (ens.contains(p))" + "return true;" + "}" + "return false;" + "}");
+    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
+        + "if (ens.contains(p))" + "return true;" + "p = p.getParent();}" + "return false;" + "}")        
+    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p) || ens.contains(p))" + "return true;"
+                + "p = p.getParent();}" + "return false;" + "}")
+    .stays();
   }
 
   @Test public void updaters_while_3() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;" + "f();"
         + "}" + "return false;" + "}")
             .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;" + "f();}"
-                + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;f()) {" + "if (dns.contains(p))" + "return true;}"
-                + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;f()) " + "if (dns.contains(p))" + "return true;"
                 + "return false;" + "}")
             .stays();
   }

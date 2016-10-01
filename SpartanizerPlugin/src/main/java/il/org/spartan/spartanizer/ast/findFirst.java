@@ -23,6 +23,26 @@ public interface findFirst {
     return instanceOf(AssertStatement.class, ¢);
   }
 
+  /** Find the first statement, residing under a given {@link Statement}, for
+   * which all next statements are side effects.
+   * @param ¢ JD
+   * @return last statement residing under a given {@link Block}, or
+   *         <code><b>null</b></code> if not such sideEffects exists, or if ¢ is not Block. */
+  static ASTNode statementCanBePushedToForUpdaters(final Statement ¢) {
+    Statement $ = null;
+    final ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));
+    if (tempElements.size() <= 1)
+      return null;
+    Collections.reverse(tempElements);
+    for (final Statement s : tempElements)
+      if (iz.incrementOrDecrement(s))
+        $ = s;
+    return $;
+  }
+
+  //iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢))
+
+  
   /** Find the first {@link ConditionalExpression}, under a given node, as found
    * in the usual visitation order.
    * @param n First node to visit
