@@ -361,12 +361,10 @@ public interface wizard {
         return $;
   }
 
-  /** 
-   * Remove all occurrences of a boolean literal from a list of {@link Expression}¢
+  /** Remove all occurrences of a boolean literal from a list of
+   * {@link Expression}¢
    * @param ¢ JD
-   * @param xs JD 
-   * [[SuppressWarningsSpartan]]
-   */
+   * @param xs JD */
   static void removeAll(final boolean b, final List<Expression> xs) {
     for (;;) {
       final Expression ¢ = find(b, xs);

@@ -103,8 +103,9 @@ public enum extract {
    *         version of it */
   public static Expression core(final Expression $) {
     return $ == null ? $ //
-        : !iz.not($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
-            : iz.not($, PREFIX_EXPRESSION) ? $ : core(az.prefixExpression($));
+        : iz.is($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
+            : iz.is($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
+                : $;
   }
 
   public static Expression core(final PrefixExpression $) {

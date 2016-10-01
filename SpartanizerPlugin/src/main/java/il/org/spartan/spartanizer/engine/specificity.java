@@ -48,12 +48,12 @@ public final class specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode ¢) {
-        return !iz.not(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
+        return iz.is(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
       @Override boolean includes(final ASTNode ¢) {
-        return !iz.not(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
+        return iz.is(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
     THIS {

@@ -59,10 +59,10 @@ public enum minus {
   }
 
   public static int level(final Expression ¢) {
-    return !iz.not(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
-        : !iz.not(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
-            : !iz.not(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
-                : !iz.not(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
+    return iz.is(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
+        : iz.is(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
+            : iz.is(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
+                : iz.is(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
                     : 0;
   }
 
@@ -78,10 +78,10 @@ public enum minus {
   }
 
   public static Expression peel(final Expression $) {
-    return !iz.not($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
-        : !iz.not($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
-            : !iz.not($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
-                : !iz.not($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
+    return iz.is($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
+        : iz.is($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
+            : iz.is($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
+                : iz.is($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
                     : $;
   }
 
