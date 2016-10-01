@@ -47,13 +47,15 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return "Use \"+\" operator to concatenate strings";
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
     final List<Expression> terms = new ArrayList<>();
     MethodInvocation r = i;
-    boolean hs = false;
-    while (true) {
+    for (boolean hs = false; true;) {
       final Expression e = r.getExpression();
       if (e instanceof ClassInstanceCreation) {
         final String t = ((ClassInstanceCreation) e).getType() + "";
