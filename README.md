@@ -1,4 +1,5 @@
-# Status
+# Install latest release: <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2617709" class="drag" title="Drag to your running Eclipse workspace to install Spartan Refactoring"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install Spartan Refactoring" /></a>
+# Development Status
 - Build status: [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
 - Issues ready for execution:  [![Stories in Ready](https://badge.waffle.io/SpartanRefactoring/Spartanizer.svg?label=ready&title=Ready)](http://waffle.io/SpartanRefactoring/Spartanizer)
 
@@ -17,6 +18,13 @@ different students and members of the Computer Science faculty.
 The refactorings made by this plug-in are based on the concept of Spartan
 Programming, which suggests guidelines for writing short, clean code. There's a
 lot of reading material on the subject in the [project wiki].
+
+## Stable version
+### Installing from a jar file
+1. Download the jar file from the latest [Release].
+2. Close Eclipse.
+3. Put the jar file in eclipse/dropin folder.
+4. Start Eclipse. 
 
 ## Compiling from source
 #### Using Maven and Git in command line(recommended)
@@ -102,6 +110,7 @@ written back to the source code.
 ## License
 The project is available under the **[MIT License]**
 
+[Release]: https://github.com/SpartanRefactoring/Spartanizer/releases/tag/2.5.0.1
 [Spartan Programming]: http://blog.codinghorror.com/spartan-programming/
 [project wiki]: https://github.com/SpartanRefactoring/spartan-refactoring/wiki/Spartan-Programming
 [Technion - Israel Institute of Technology]: http://www.technion.ac.il/en/
