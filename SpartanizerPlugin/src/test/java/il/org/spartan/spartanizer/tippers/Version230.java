@@ -257,12 +257,13 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod7() {
-    trimmingOf( "public void f() {\n" + //
-            "          if (!g) {\n" + "            foo();\n" + //
-            "            bar();\n" + "          }\n" + "        }")
-                //
-                .gives("public void f(){if(g)return;foo();bar();}");
+    trimmingOf("public void f() {\n" + //
+        "          if (!g) {\n" + "            foo();\n" + //
+        "            bar();\n" + "          }\n" + "        }")
+            //
+            .gives("public void f(){if(g)return;foo();bar();}");
   }
+
   @Test public void bugIntroducingMISSINGWord1() {
     trimmingOf("b.f(a) && -1 == As.g(f).h(c) ? o(s, b, g(f)) : !b.f(\".in\") ? null : y(d, b) ? null : o(b.z(u, variableDeclarationFragment), s, f)")
         //
