@@ -25,44 +25,28 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static ASTNode firstLastStatement(final ForStatement ¢) {
-    return hop.firstLastStatement(step.body(¢));
+    return findFirst.statementCanBePushedToForUpdaters(step.body(¢));
   }
-
+  
   private static boolean fitting(final ForStatement ¢) {
     return cantTip.declarationInitializerStatementTerminatingScope(¢)
         && cantTip.forRenameInitializerToCent(¢) && ¢ != null
+        && cantTip.declarationRedundantInitializer(¢)
+        && cantTip.remvoeRedundantIf(¢)
+        && fittingUpdater(¢)
         && !iz.containsContinueStatement(step.body(¢));
   }
-
-  private static boolean statementFitts(final Statement ¢) {
-    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
+  
+  private static boolean fittingUpdater(final ForStatement ¢) {
+    final Statement updater = az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢)));
+    return updater != null && updatesOnlyForInitializers(¢, updater);
   }
   
-  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
-    return az.variableDeclarationExpression(findFirst.elementOf(step.initializers(¢)));
+  private static boolean updatesOnlyForInitializers(final ForStatement ¢, final Statement updater) {
+    return true;
+    // TODO: Alex and Dan, implement after uses, declares and defines.
   }
-
-  private static Statement lastStatement(final ForStatement ¢) {
-    return az.asStatement(hop.lastStatement(step.body(¢)));
-  }
-
-  /** @param ¢ JD
-   * @return converssion of {@link Statement}, which is previous to the
-   *         firstLastStatement in the loop body. */
-  private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    final ASTNode n = hop.firstLastStatement(step.body(¢));
-    if (n == null)
-      return null;
-    final Statement current = az.asStatement(n);
-    if (current == null)
-      return null;
-    final Statement previous = hop.previousStatementInBody(current);
-    if (previous == null)
-      return null;
-    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    return vds == null ? null : findFirst.elementOf(step.fragments(vds));
-  }
-
+  
   @Override public String description(final ForStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }

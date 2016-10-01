@@ -324,6 +324,10 @@ public enum az {
   public static VariableDeclarationExpression variableDeclarationExpression(final ASTNode $) {
     return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
+  
+  public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
+    return az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)));
+  }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)

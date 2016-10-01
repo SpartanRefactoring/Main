@@ -203,7 +203,7 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression ¢) {
     return ¢ != null ? ¢.fragments() : new ArrayList<>();
   }
-
+  
   /** Expose the list of fragments in a {@link VariableDeclarationStatement}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
