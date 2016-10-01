@@ -98,9 +98,6 @@ public final class Application implements IApplication {
   int optRounds = 20;
   String optPath;
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;

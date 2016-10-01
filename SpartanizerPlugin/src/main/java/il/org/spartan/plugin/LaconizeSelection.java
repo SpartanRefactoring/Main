@@ -24,9 +24,6 @@ import il.org.spartan.utils.*;
 public abstract class LaconizeSelection extends BaseHandler {
   private final int MAX_PASSES = 20;
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());

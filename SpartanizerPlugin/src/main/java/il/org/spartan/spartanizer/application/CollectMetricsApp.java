@@ -72,14 +72,11 @@ public final class CollectMetricsApp implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
   private static void copyFile(final File source, final File target) throws IOException {
-    try (InputStream in = new FileInputStream(source);
-        OutputStream out = new FileOutputStream(target)) {
+    try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
       final byte[] buf = new byte[1024];
-      for (int length = in.read(buf); length > 0; out.write(buf, 0, length))
+      int length;
+      for (; (length = in.read(buf)) > 0; out.write(buf, 0, length))
         ;
     }
   }
