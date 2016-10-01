@@ -42,7 +42,7 @@ public enum haz {
       return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
     }) > 0;
   }
-  
+
   public static boolean dollar(final List<SimpleName> ns) {
     for (final SimpleName ¢ : ns)
       if ("$".equals(identifier(¢)))

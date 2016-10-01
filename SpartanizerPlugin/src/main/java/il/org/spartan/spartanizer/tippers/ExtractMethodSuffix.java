@@ -123,7 +123,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
   @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> ds) {
     if (step.parameters(d).size() != ds.size())
       return false;
-    final List<String> ts = new  ArrayList<>();
+    final List<String> ts = new ArrayList<>();
     for (final VariableDeclaration ¢ : ds)
       ts.add(extract.type(iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢) : az.variableDeclrationStatement(¢.getParent())) + "");
     for (final SingleVariableDeclaration ¢ : step.parameters(d))
@@ -132,9 +132,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return true;
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final List<Statement> ss,
       final int starting) {
     for (int ¢ = starting; ¢ < ss.size(); ++¢)

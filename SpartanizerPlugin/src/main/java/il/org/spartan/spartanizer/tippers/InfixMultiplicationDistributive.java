@@ -43,22 +43,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return $;
   }
 
-  @Override public String description() {
-    return "a*b + a*c => a * (b + c)";
-  }
-
-  @Override public String description(final InfixExpression ¢) {
-    return "Apply the distributive rule to " + ¢;
-  }
-
-  @Override public boolean prerequisite(final InfixExpression $) {
-    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
-  }
-
-  @Override public ASTNode replacement(final InfixExpression ¢) {
-    return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
-  }
-
   private void addCommon(final Expression op, final List<Expression> common) {
     addNewInList(op, common);
   }
@@ -72,6 +56,14 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       xs.add(item);
   }
 
+  @Override public String description() {
+    return "a*b + a*c => a * (b + c)";
+  }
+
+  @Override public String description(final InfixExpression ¢) {
+    return "Apply the distributive rule to " + ¢;
+  }
+
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
     for (final Expression $ : allOperands)
       if (wizard.same(op, $))
@@ -79,9 +71,17 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return false;
   }
 
+  @Override public boolean prerequisite(final InfixExpression $) {
+    return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
+  }
+
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
     for (final Expression item : items)
       from.remove(item);
+  }
+
+  @Override public ASTNode replacement(final InfixExpression ¢) {
+    return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {

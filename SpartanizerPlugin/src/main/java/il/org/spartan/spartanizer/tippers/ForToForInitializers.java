@@ -30,10 +30,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
-    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
-  }
-
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
     $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
@@ -80,9 +76,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
-  /** XXX: This is a bug in autospartanization
-   * [[SuppressWarningsSpartan]]
-   */
+  /** XXX: This is a bug in autospartanization [[SuppressWarningsSpartan]] */
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢¢ : operands)
@@ -90,9 +84,9 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
         for (final VariableDeclarationFragment f : step.fragments(s))
-          if ((f.getName() + "").equals((var + ""))) {
+          if ((f.getName() + "").equals(var + "")) {
             f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName((var + "")));
+            operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
           }
       }
     return subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
@@ -116,6 +110,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
     return !haz.sideEffects(from) || !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), f);
+  }
+
+  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
+    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

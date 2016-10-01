@@ -19,6 +19,30 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2016 */
 public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     extends ReplaceCurrentNode<N> implements TipperCategory.Sorting {
+  public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
+  }
+
+  public static final class ofAnnotationTypeMember extends BodyDeclarationModifiersSort<AnnotationTypeMemberDeclaration> { //
+  }
+
+  public static final class ofEnum extends BodyDeclarationModifiersSort<EnumDeclaration> { //
+  }
+
+  public static final class ofEnumConstant extends BodyDeclarationModifiersSort<EnumConstantDeclaration> { //
+  }
+
+  public static final class ofField extends BodyDeclarationModifiersSort<FieldDeclaration> { //
+  }
+
+  public static final class ofInitializer extends BodyDeclarationModifiersSort<Initializer> { //
+  }
+
+  public static final class ofMethod extends BodyDeclarationModifiersSort<MethodDeclaration> { //
+  }
+
+  public static final class ofType extends BodyDeclarationModifiersSort<TypeDeclaration> { //
+  }
+
   static final Comparator<IExtendedModifier> comp = (final IExtendedModifier m1, final IExtendedModifier m2) -> IExtendedModifiersOrdering.compare(m1,
       m2);
 
@@ -53,14 +77,6 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
   }
 
-  @Override public N replacement(final N $) {
-    return go(duplicate.of($));
-  }
-
-  @Override protected boolean prerequisite(final N ¢) {
-    return !extendedModifiers(¢).isEmpty() && !isSortedAndDistinct(extract.modifiers(¢));
-  }
-
   N go(final N $) {
     final List<IExtendedModifier> ms = new ArrayList<>(sortedModifiers($));
     final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($));
@@ -70,31 +86,15 @@ public abstract class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return $;
   }
 
+  @Override protected boolean prerequisite(final N ¢) {
+    return !extendedModifiers(¢).isEmpty() && !isSortedAndDistinct(extract.modifiers(¢));
+  }
+
+  @Override public N replacement(final N $) {
+    return go(duplicate.of($));
+  }
+
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(removeSame(extract.modifiers($)));
-  }
-
-  public static final class ofAnnotation extends BodyDeclarationModifiersSort<AnnotationTypeDeclaration> { //
-  }
-
-  public static final class ofAnnotationTypeMember extends BodyDeclarationModifiersSort<AnnotationTypeMemberDeclaration> { //
-  }
-
-  public static final class ofEnum extends BodyDeclarationModifiersSort<EnumDeclaration> { //
-  }
-
-  public static final class ofEnumConstant extends BodyDeclarationModifiersSort<EnumConstantDeclaration> { //
-  }
-
-  public static final class ofField extends BodyDeclarationModifiersSort<FieldDeclaration> { //
-  }
-
-  public static final class ofInitializer extends BodyDeclarationModifiersSort<Initializer> { //
-  }
-
-  public static final class ofMethod extends BodyDeclarationModifiersSort<MethodDeclaration> { //
-  }
-
-  public static final class ofType extends BodyDeclarationModifiersSort<TypeDeclaration> { //
   }
 }

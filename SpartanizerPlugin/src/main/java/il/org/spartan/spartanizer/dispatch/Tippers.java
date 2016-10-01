@@ -133,6 +133,10 @@ public enum Tippers {
     return false;
   }
 
+  private static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
+  }
+
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName)//
         .inlineInto(Collect.usesOf(oldName).in(region).toArray(new Expression[] {}));
@@ -149,6 +153,10 @@ public enum Tippers {
     duplicate.into(siblings, step.statements($));
     r.replace(parent, $, g);
     return r;
+  }
+
+  private static int sequencerRank(final ASTNode ¢) {
+    return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
   public static boolean shoudlInvert(final IfStatement s) {
@@ -178,13 +186,5 @@ public enum Tippers {
     assert n1 == n2;
     final IfStatement $ = invert(s);
     return positivePrefixLength($) >= positivePrefixLength(invert($));
-  }
-
-  private static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
-  }
-
-  private static int sequencerRank(final ASTNode ¢) {
-    return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 }

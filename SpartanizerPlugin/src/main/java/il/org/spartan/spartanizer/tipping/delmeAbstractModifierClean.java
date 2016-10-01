@@ -14,15 +14,9 @@ public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> exte
     return "remove redundant modifier";
   }
 
-  @Override public boolean prerequisite(final N ¢) {
-    return firstBad(¢) != null;
+  private Modifier firstBad(final N n) {
+    return firstThat(n, (final Modifier ¢) -> redundant(¢));
   }
-
-  @Override public N replacement(final N $) {
-    return go(duplicate.of($));
-  }
-
-  protected abstract boolean redundant(Modifier m);
 
   Modifier firstThat(final N n, final Predicate<Modifier> m) {
     for (final Modifier $ : extract.modifiers(n))
@@ -31,18 +25,24 @@ public abstract class delmeAbstractModifierClean<N extends BodyDeclaration> exte
     return null;
   }
 
-  boolean has(final N ¢, final Predicate<Modifier> m) {
-    return firstThat(¢, m) != null;
-  }
-
-  private Modifier firstBad(final N n) {
-    return firstThat(n, (final Modifier ¢) -> redundant(¢));
-  }
-
   private N go(final N $) {
     for (final Iterator<Modifier> ¢ = extract.modifiers($).iterator(); ¢.hasNext();)
       if (redundant(¢.next()))
         ¢.remove();
     return $;
+  }
+
+  boolean has(final N ¢, final Predicate<Modifier> m) {
+    return firstThat(¢, m) != null;
+  }
+
+  @Override public boolean prerequisite(final N ¢) {
+    return firstBad(¢) != null;
+  }
+
+  protected abstract boolean redundant(Modifier m);
+
+  @Override public N replacement(final N $) {
+    return go(duplicate.of($));
   }
 }

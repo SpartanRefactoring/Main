@@ -383,7 +383,7 @@ public enum az {
     return !($ instanceof SingleMemberAnnotation) ? null : (SingleMemberAnnotation) $;
   }
 
-  public static SingleVariableDeclaration singleVariableDeclaration(ASTNode $) {
+  public static SingleVariableDeclaration singleVariableDeclaration(final ASTNode $) {
     return !iz.singleVariableDeclaration($) ? null : (SingleVariableDeclaration) $;
   }
 
@@ -424,6 +424,12 @@ public enum az {
     return $;
   }
 
+  /** @param $
+   * @return */
+  public static VariableDeclarationFragment variableDeclrationFragment(final ASTNode $) {
+    return !iz.variableDeclarationFragment($) ? null : (VariableDeclarationFragment) $;
+  }
+
   public static VariableDeclarationStatement variableDeclrationStatement(final ASTNode $) {
     return !iz.is($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
   }
@@ -442,13 +448,5 @@ public enum az {
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.is($, WILDCARD_TYPE) ? null : (WildcardType) $;
-  }
-
-  /**
-   * @param $
-   * @return
-   */
-  public static VariableDeclarationFragment variableDeclrationFragment(ASTNode $) {
-    return !iz.variableDeclarationFragment($) ? null : (VariableDeclarationFragment) $;
   }
 }
