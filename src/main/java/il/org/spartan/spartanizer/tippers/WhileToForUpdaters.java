@@ -30,20 +30,19 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static ASTNode firstLastStatement(final WhileStatement ¢) {
-    return hop.firstLastStatement(step.body(¢));
+    return findFirst.statementCanBePushedToForUpdaters(step.body(¢));
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ != null && statementFitts(lastStatement(¢)) && !haz.ContinueStatement(step.body(¢))
-        && cantTip.declarationInitializerStatementTerminatingScope(¢);
-  }
-
-  private static boolean statementFitts(final Statement ¢) {
-    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
+    return cantTip.declarationInitializerStatementTerminatingScope(¢)
+        && cantTip.declarationRedundantInitializer(¢)
+        && cantTip.remvoeRedundantIf(¢)
+        && fittingUpdater(¢)
+        && !iz.containsContinueStatement(step.body(¢));
   }
   
-  private static Statement lastStatement(final WhileStatement ¢) {
-    return az.asStatement(hop.lastStatement(step.body(¢)));
+  private static boolean fittingUpdater(final WhileStatement ¢) {
+    return az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢))) != null; 
   }
 
   @Override public String description(final WhileStatement ¢) {

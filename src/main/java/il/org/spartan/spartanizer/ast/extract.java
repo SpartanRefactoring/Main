@@ -207,7 +207,7 @@ public enum extract {
       case ENUM_CONSTANT_DECLARATION:
         return ((EnumConstantDeclaration) ¢).getName() + "";
       case FIELD_DECLARATION:
-        return separate.these(fragments((FieldDeclaration) ¢)).by("/");
+        return separate.these(step.fragments((FieldDeclaration) ¢)).by("/");
       case INITIALIZER:
         return "";
       case METHOD_DECLARATION:
@@ -275,7 +275,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    final VariableDeclarationFragment onlyOne = lisp.onlyOne(fragments(¢));
+    final VariableDeclarationFragment onlyOne = lisp.onlyOne(step.fragments(¢));
     return onlyOne == null ? null : onlyOne.getName();
   }
 
@@ -409,7 +409,7 @@ public enum extract {
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
     for (final Statement ¢ : step.statements(b))
-      extract.statementsInto(¢, $);
+      statementsInto(¢, $);
     return $;
   }
 
@@ -418,9 +418,73 @@ public enum extract {
       case EMPTY_STATEMENT:
         return $;
       case BLOCK:
-        return extract.statementsInto((Block) ¢, $);
+        return statementsInto((Block) ¢, $);
       default:
         $.add(¢);
+        return $;
+    }
+  }
+
+  private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
+    for (final Statement ¢ : step.statements(b))
+      ifsInto(¢, $);
+    return $;
+  }
+
+  private static List<IfStatement> ifsInto(final Statement ¢, final List<IfStatement> $) {
+    switch (¢.getNodeType()) {
+      case IF_STATEMENT:
+        $.add(az.ifStatement(¢));
+        return $;
+      case BLOCK:
+        return ifsInto((Block) ¢, $);
+      default:
+        return $;
+    }
+  }
+
+  
+  private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
+    for (final Statement ¢ : step.statements(b))
+      if (iz.variableDeclarationStatement(¢))
+        extract.fragmentsInto(az.variableDeclrationStatement(¢), $);
+    return $;
+  }
+
+  private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+      $.add(¢);
+    return $;
+  }
+
+  /** Extract list of fragments in a {@link Statement}.
+   * @param ¢ JD
+   * @return reference to the list of fragments in the argument */
+  public static List<VariableDeclarationFragment> fragments(final Statement ¢) {
+    List<VariableDeclarationFragment> $ = new ArrayList<>();
+    switch (¢.getNodeType()) {
+      case BLOCK:
+        return fragmentsInto((Block) ¢, $);
+      case VARIABLE_DECLARATION_STATEMENT:
+        $.addAll(step.fragments(az.variableDeclrationStatement(¢)));
+        return $;
+      default:
+        return $;
+    }
+  }
+
+  /** Extract list of {@link IfStatement}s in a {@link Statement}.
+   * @param ¢ JD
+   * @return reference to the list of fragments in the argument */
+  public static List<IfStatement> ifStatements(final Statement ¢) {
+    List<IfStatement> $ = new ArrayList<>();
+    switch (¢.getNodeType()) {
+      case BLOCK:
+        return ifsInto((Block) ¢, $);
+      case IF_STATEMENT:
+        $.add((IfStatement) ¢);
+        return $;
+      default:
         return $;
     }
   }

@@ -33,7 +33,7 @@ public enum minus {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement firstLastStatement(final Statement $) {
-    final Statement ¢ = az.asStatement(hop.firstLastStatement($));
+    final Statement ¢ = az.asStatement(findFirst.statementCanBePushedToForUpdaters($));
     if (¢ == null)
       return $;
     final Block b = az.block($);
