@@ -63,15 +63,6 @@ public enum sideEffects {
     return $.get().booleanValue();
   }
 
-  private static boolean free(final ArrayCreation c) {
-    final ArrayInitializer i = c.getInitializer();
-    return free(c.dimensions()) && (i == null || free(step.expressions(i)));
-  }
-
-  private static boolean free(final ConditionalExpression ¢) {
-    return free(expression(¢), then(¢), elze(¢));
-  }
-
   public static boolean free(final Expression ¢) {
     if (¢ == null || iz.is(¢, alwaysFree))
       return true;
@@ -103,6 +94,15 @@ public enum sideEffects {
             sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
     }
+  }
+
+  private static boolean free(final ArrayCreation c) {
+    final ArrayInitializer i = c.getInitializer();
+    return free(c.dimensions()) && (i == null || free(step.expressions(i)));
+  }
+
+  private static boolean free(final ConditionalExpression ¢) {
+    return free(expression(¢), then(¢), elze(¢));
   }
 
   private static boolean free(final Expression... xs) {

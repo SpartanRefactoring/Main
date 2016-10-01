@@ -24,40 +24,6 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
   private static final Predicate<Modifier> isStatic = Modifier::isStatic;
   private static final Predicate<Modifier> isPublic = Modifier::isPublic;
 
-  private static boolean hasSafeVarags(final MethodDeclaration d) {
-    for (final Annotation ¢ : extract.annotations(d))
-      if (iz.identifier("SafeVarargs", ¢.getTypeName()))
-        return true;
-    return false;
-  }
-
-  private static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d))
-      if (test(¢, ms))
-        $.add((Modifier) ¢);
-    return $;
-  }
-
-  private static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    final Set<Modifier> $ = new LinkedHashSet<>();
-    for (final IExtendedModifier ¢ : ms)
-      if (test(¢, ps))
-        $.add((Modifier) ¢);
-    return $;
-  }
-
-  private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
-    return matches(extendedModifiers(¢), ms);
-  }
-
-  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
-    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
-      if (test(¢.next(), ms))
-        ¢.remove();
-    return $;
-  }
-
   static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢).isEmpty())
@@ -99,6 +65,40 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
     }
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
+    return $;
+  }
+
+  private static boolean hasSafeVarags(final MethodDeclaration d) {
+    for (final Annotation ¢ : extract.annotations(d))
+      if (iz.identifier("SafeVarargs", ¢.getTypeName()))
+        return true;
+    return false;
+  }
+
+  private static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
+    final Set<Modifier> $ = new LinkedHashSet<>();
+    for (final IExtendedModifier ¢ : extendedModifiers(d))
+      if (test(¢, ms))
+        $.add((Modifier) ¢);
+    return $;
+  }
+
+  private static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
+    final Set<Modifier> $ = new LinkedHashSet<>();
+    for (final IExtendedModifier ¢ : ms)
+      if (test(¢, ps))
+        $.add((Modifier) ¢);
+    return $;
+  }
+
+  private static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
+    return matches(extendedModifiers(¢), ms);
+  }
+
+  private static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
+    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
+      if (test(¢.next(), ms))
+        ¢.remove();
     return $;
   }
 

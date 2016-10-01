@@ -61,24 +61,6 @@ class tipper {
 }
 
 class turns {
-  private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return u;
-      case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.methodDeclaration(u));
-      case METHOD_LOOKALIKE:
-        return findSecond(MethodDeclaration.class, u);
-      case OUTER_TYPE_LOOKALIKE:
-        return u;
-      case STATEMENTS_LOOK_ALIKE:
-        return findSecond(Block.class, u);
-      default:
-        break;
-    }
-    return null;
-  }
-
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;
@@ -102,6 +84,24 @@ class turns {
     });
     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
+  }
+
+  private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        return u;
+      case EXPRESSION_LOOK_ALIKE:
+        return findSecond(Expression.class, findFirst.methodDeclaration(u));
+      case METHOD_LOOKALIKE:
+        return findSecond(MethodDeclaration.class, u);
+      case OUTER_TYPE_LOOKALIKE:
+        return u;
+      case STATEMENTS_LOOK_ALIKE:
+        return findSecond(Block.class, u);
+      default:
+        break;
+    }
+    return null;
   }
 
   private static String wrapCode(final String ¢) {
@@ -130,28 +130,6 @@ class turns {
     s = _s;
   }
 
-  private void azzertEquals(final String s, final Document d) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(s, d.get());
-        break;
-      case EXPRESSION_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(23, d.get().length() - 3));
-        break;
-      case METHOD_LOOKALIKE:
-        assertEquals(s, d.get().substring(9, d.get().length() - 2));
-        break;
-      case OUTER_TYPE_LOOKALIKE:
-        assertEquals(s, d.get());
-        break;
-      case STATEMENTS_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(16, d.get().length() - 3));
-        break;
-      default:
-        break;
-    }
-  }
-
   /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   public void into(final String res) {
     final Document document = new Document(wrapCode(s));
@@ -176,5 +154,27 @@ class turns {
       fail();
     }
     azzertEquals(res, document);
+  }
+
+  private void azzertEquals(final String s, final Document d) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        assertEquals(s, d.get());
+        break;
+      case EXPRESSION_LOOK_ALIKE:
+        assertEquals(s, d.get().substring(23, d.get().length() - 3));
+        break;
+      case METHOD_LOOKALIKE:
+        assertEquals(s, d.get().substring(9, d.get().length() - 2));
+        break;
+      case OUTER_TYPE_LOOKALIKE:
+        assertEquals(s, d.get());
+        break;
+      case STATEMENTS_LOOK_ALIKE:
+        assertEquals(s, d.get().substring(16, d.get().length() - 3));
+        break;
+      default:
+        break;
+    }
   }
 }
