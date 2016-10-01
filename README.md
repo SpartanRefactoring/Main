@@ -1,4 +1,5 @@
-# Status
+# Install latest release: <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2617709" class="drag" title="Drag to your running Eclipse workspace to install Spartan Refactoring"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install Spartan Refactoring" /></a>
+# Development Status
 - Build status: [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
 - Issues ready for execution:  [![Stories in Ready](https://badge.waffle.io/SpartanRefactoring/Spartanizer.svg?label=ready&title=Ready)](http://waffle.io/SpartanRefactoring/Spartanizer)
 
