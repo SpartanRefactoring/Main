@@ -748,7 +748,7 @@ public interface iz {
   }
   
   static boolean is(final ASTNode n, final int type) {
-    return n != null && type == n.getNodeType();
+    return !(n == null || type != n.getNodeType());
   }
 
   static boolean isOneOf(final int i, final int... is) {

@@ -13,11 +13,18 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** 
- * convert <code> int a = 3; while(Panic) { ++OS.is.in.denger; } </code> to <code> for(int a = 3; Panic;) { ++OS.is.in.denger; } </code>
+/** convert <code>
+ * int a = 3;
+ * while(Panic) {
+ *    ++OS.is.in.denger;
+ * }
+ * </code> to <code>
+ * for(int a = 3; Panic;) {
+ *    ++OS.is.in.denger;
+ * }
+ * </code>
  * @author Alex Kopzon
- * @since 2016 
- */
+ * @since 2016 */
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
@@ -40,7 +47,8 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
-  /** [[SuppressWarningsSpartan]] */
+
+  // Ugly one...
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢ : operands)
@@ -64,12 +72,12 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return az.variableDeclrationStatement(¢.getParent());
   }
 
-  /** 
-   * Pulls matching initializers from forExpression, and pushes it to the declarationStatement which is previous to the for loop.
+  /** Pulls matching initializers from forExpression, and pushes it to the
+   * declarationStatement which is previous to the for loop.
    * @param from JD (already duplicated)
-   * @param to is the list that will contain the pulled out initializations fromthe given expression.
-   * @return expression to the new for loop, without the initializers. 
-   */
+   * @param to is the list that will contain the pulled out initializations from
+   *        the given expression.
+   * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return !haz.sideEffects(from) || !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), s);
   }
