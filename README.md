@@ -18,6 +18,13 @@ The refactorings made by this plug-in are based on the concept of Spartan
 Programming, which suggests guidelines for writing short, clean code. There's a
 lot of reading material on the subject in the [project wiki].
 
+## Stable version
+### Installing from a jar file
+1. Download the jar file from the latest [Release].
+2. Close Eclipse.
+3. Put the jar file in eclipse/dropin folder.
+4. Start Eclipse. 
+
 ## Compiling from source
 #### Using Maven and Git in command line(recommended)
 By asuming that the current derectory is at relative path "?", Clone the repository by:
@@ -102,6 +109,7 @@ written back to the source code.
 ## License
 The project is available under the **[MIT License]**
 
+[Release]: https://github.com/SpartanRefactoring/Spartanizer/releases/tag/2.5.0.1
 [Spartan Programming]: http://blog.codinghorror.com/spartan-programming/
 [project wiki]: https://github.com/SpartanRefactoring/spartan-refactoring/wiki/Spartan-Programming
 [Technion - Israel Institute of Technology]: http://www.technion.ac.il/en/
