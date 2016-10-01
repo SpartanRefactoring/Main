@@ -200,8 +200,9 @@ public final class Version230 {
 
   @Test public void bugInLastIfInMethod() {
     trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
-        + "          if (!isMessageSuppressed(myMessage)) {\n" + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n"
-        + "            messages.add(myMessage);\n" + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
+        + "          if (!isMessageSuppressed(myMessage)) {\n" + //
+        "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(myMessage);\n"
+        + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
         + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
             .gives(
@@ -256,17 +257,11 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod7() {
-    trimmingOf(
-        "        public void f() {\n" + "          if (!g) {\n" + "            foo();\n" + "            bar();\n" + "          }\n" + "        }")
+    trimmingOf("public void f() {\n" + //
+        "          if (!g) {\n" + "            foo();\n" + //
+        "            bar();\n" + "          }\n" + "        }")
             //
             .gives("public void f(){if(g)return;foo();bar();}");
-  }
-
-  @Test public void bugInLastIfInMethod8() {
-    trimmingOf(
-        "        public void f() {\n" + "          if (g) {\n" + "            foo();\n" + "            bar();\n" + "          }\n" + "        }")
-            //
-            .gives("public void f(){if(!g)return;foo();bar();}");
   }
 
   @Test public void bugIntroducingMISSINGWord1() {

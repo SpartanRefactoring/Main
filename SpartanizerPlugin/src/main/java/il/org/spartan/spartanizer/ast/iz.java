@@ -23,24 +23,6 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
-  interface literal {
-    /** @param ¢ JD
-     * @return true if the given node is a literal false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return true if the given node is a literal true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
-    }
-  }
-
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -881,5 +863,23 @@ public interface iz {
     if (parent == null)
       return false;
     return true;
+  }
+  
+  interface literal {
+    /** @param ¢ JD
+     * @return true if the given node is a literal false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return true if the given node is a literal true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
+    }
   }
 }

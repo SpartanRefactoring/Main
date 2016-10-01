@@ -39,16 +39,6 @@ public enum extract {
     return annotations(step.extendedModifiers(¢));
   }
 
-  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : ms) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
-  }
-
   public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(step.extendedModifiers(¢));
   }
@@ -105,18 +95,6 @@ public enum extract {
             + fault.done();
         return ¢.getClass().getSimpleName();
     }
-  }
-
-  private static String category(final TypeDeclaration ¢) {
-    final StringBuilder $ = new StringBuilder();
-    if (!¢.isPackageMemberTypeDeclaration())
-      $.append("internal ");
-    if (¢.isMemberTypeDeclaration())
-      $.append("member ");
-    if (¢.isLocalTypeDeclaration())
-      $.append("local ");
-    $.append(!¢.isInterface() ? "class" : "interface");
-    return $ + "";
   }
 
   /** Peels any parenthesis that may wrap an {@Link Expression}
@@ -245,13 +223,6 @@ public enum extract {
     }
   }
 
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
-      if (ss.get(¢) == s)
-        return ss.get(¢ + 1);
-    return null;
-  }
-
   /** Find the {@link Assignment} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
@@ -376,24 +347,6 @@ public enum extract {
         extract.statementsInto((Statement) ¢, $);
   }
 
-  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement ¢ : step.statements(b))
-      extract.statementsInto(¢, $);
-    return $;
-  }
-
-  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
-    switch (¢.getNodeType()) {
-      case EMPTY_STATEMENT:
-        return $;
-      case BLOCK:
-        return extract.statementsInto((Block) ¢, $);
-      default:
-        $.add(¢);
-        return $;
-    }
-  }
-
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
@@ -422,6 +375,53 @@ public enum extract {
         return type(az.variableDeclrationFragment($).getParent());
       default:
         return null;
+    }
+  }
+
+  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : ms) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
+  private static String category(final TypeDeclaration ¢) {
+    final StringBuilder $ = new StringBuilder();
+    if (!¢.isPackageMemberTypeDeclaration())
+      $.append("internal ");
+    if (¢.isMemberTypeDeclaration())
+      $.append("member ");
+    if (¢.isLocalTypeDeclaration())
+      $.append("local ");
+    $.append(!¢.isInterface() ? "class" : "interface");
+    return $ + "";
+  }
+
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+      if (ss.get(¢) == s)
+        return ss.get(¢ + 1);
+    return null;
+  }
+
+  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
+    for (final Statement ¢ : step.statements(b))
+      extract.statementsInto(¢, $);
+    return $;
+  }
+
+  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
+    switch (¢.getNodeType()) {
+      case EMPTY_STATEMENT:
+        return $;
+      case BLOCK:
+        return extract.statementsInto((Block) ¢, $);
+      default:
+        $.add(¢);
+        return $;
     }
   }
 }

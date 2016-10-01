@@ -62,6 +62,27 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $ - metrics.size(newParent);
   }
 
+  protected static int removalSaving(final VariableDeclarationFragment f) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    final int $ = metrics.size(parent);
+    if (parent.fragments().size() <= 1)
+      return $;
+    final VariableDeclarationStatement newParent = duplicate.of(parent);
+    newParent.fragments().remove(parent.fragments().indexOf(f));
+    return $ - metrics.size(newParent);
+  }
+
+  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
+   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
+   * Still, if the containing node is left empty, it is removed as well.
+   * @param f
+   * @param r
+   * @param g */
+  protected static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    r.remove(parent.fragments().size() > 1 ? f : parent, g);
+  }
+
   static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
@@ -85,25 +106,11 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $;
   }
 
-  protected static int removalSaving(final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final int $ = metrics.size(parent);
-    if (parent.fragments().size() <= 1)
-      return $;
-    final VariableDeclarationStatement newParent = duplicate.of(parent);
-    newParent.fragments().remove(parent.fragments().indexOf(f));
-    return $ - metrics.size(newParent);
-  }
-
-  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
-   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
-   * Still, if the containing node is left empty, it is removed as well.
-   * @param f
-   * @param r
-   * @param g */
-  protected static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    r.remove(parent.fragments().size() > 1 ? f : parent, g);
+  @Override public Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
+    final Tip $ = super.tip(f, exclude);
+    if ($ != null && exclude != null)
+      exclude.exclude(f.getParent());
+    return $;
   }
 
   protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
@@ -115,12 +122,5 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
       return null;
     final SimpleName n = f.getName();
     return n == null ? null : go(r, f, n, f.getInitializer(), nextStatement, g);
-  }
-
-  @Override public Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Tip $ = super.tip(f, exclude);
-    if ($ != null && exclude != null)
-      exclude.exclude(f.getParent());
-    return $;
   }
 }

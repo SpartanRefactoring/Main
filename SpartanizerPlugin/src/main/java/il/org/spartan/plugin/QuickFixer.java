@@ -11,6 +11,28 @@ import static il.org.spartan.spartanizer.ast.wizard.*;
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @since 2013/07/01 */
 public final class QuickFixer implements IMarkerResolutionGenerator {
+  @Override public IMarkerResolution[] getResolutions(final IMarker m) {
+    try {
+      final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
+      assert $ != null;
+      return new IMarkerResolution[] { //
+          $.getFix(), //
+          $.getFixWithPreview(), //
+          new LaconizeCurrent(), //
+          new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize function"),
+          new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize class"), //
+          fixers.applyFunction(), //
+          fixers.applyFile(), //
+          fixers.applyProject(), //
+          fixers.disableFunctionFix(), //
+          fixers.disableClassFix(), //
+          fixers.disableFileFix() };//
+    } catch (final CoreException x) {
+      LoggingManner.logEvaluationError(this, x);
+      return new IMarkerResolution[] {};
+    }
+  }
+
   interface fixers {
     String APPLY_TO_FILE = "Apply to compilation unit";
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
@@ -45,15 +67,15 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     }
 
     static IMarkerResolution disableClassFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress laconize tips on A. Class");
+      return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress laconize tips on class");
     }
 
     static IMarkerResolution disableFileFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "                           B. File ");
+      return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Suppress laconize tips on file");
     }
 
     static IMarkerResolution disableFunctionFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "                       C. Function ");
+      return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress laconize tips on function");
     }
 
     static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, final String label) {
@@ -70,28 +92,6 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           }
         }
       };
-    }
-  }
-
-  @Override public IMarkerResolution[] getResolutions(final IMarker m) {
-    try {
-      final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-      assert $ != null;
-      return new IMarkerResolution[] { //
-          $.getFix(), //
-          $.getFixWithPreview(), //
-          new LaconizeCurrent(), //
-          new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize function"),
-          new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize class"), //
-          fixers.applyFunction(), //
-          fixers.applyFile(), //
-          fixers.applyProject(), //
-          fixers.disableFunctionFix(), //
-          fixers.disableClassFix(), //
-          fixers.disableFileFix() };//
-    } catch (final CoreException x) {
-      LoggingManner.logEvaluationError(this, x);
-      return new IMarkerResolution[] {};
     }
   }
 }
