@@ -43,6 +43,17 @@ public class Toolbox {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
+    removing: for (;;) {
+      for (int ¢ = 0; ¢ < ns.size(); ++¢)
+        if (c.isAssignableFrom(ns.get(¢).getClass())) {
+          ns.remove(¢);
+          continue removing;
+        }
+      break;
+    }
+  }
+
   public static Toolbox emptyToolboox() {
     return new Toolbox();
   }
@@ -51,6 +62,13 @@ public class Toolbox {
     for (final Tipper<N> $ : ns)
       if ($.canTip(n))
         return $;
+    return null;
+  }
+
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
+    for (final Tipper<?> ¢ : ts)
+      if (((Tipper<N>) ¢).canTip(n))
+        return (Tipper<N>) ¢;
     return null;
   }
 
@@ -246,24 +264,6 @@ public class Toolbox {
     defaultInstance = freshCopyOfAllTippers();
   }
 
-  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
-    removing: for (;;) {
-      for (int ¢ = 0; ¢ < ns.size(); ++¢)
-        if (c.isAssignableFrom(ns.get(¢).getClass())) {
-          ns.remove(¢);
-          continue removing;
-        }
-      break;
-    }
-  }
-
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    for (final Tipper<?> ¢ : ts)
-      if (((Tipper<N>) ¢).canTip(n))
-        return (Tipper<N>) ¢;
-    return null;
-  }
-
   /** Implementation */
   @SuppressWarnings("unchecked") private final List<Tipper<? extends ASTNode>>[] implementation = (List<Tipper<? extends ASTNode>>[]) new List<?>[2
       * ASTNode.TYPE_METHOD_REFERENCE];
@@ -316,6 +316,10 @@ public class Toolbox {
     return implementation[¢];
   }
 
+  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
+    return get(¢.getNodeType());
+  }
+
   public int hooksCount() {
     int $ = 0;
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
@@ -329,9 +333,5 @@ public class Toolbox {
       if (¢ != null)
         $ += ¢.size();
     return $;
-  }
-
-  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
-    return get(¢.getNodeType());
   }
 }

@@ -17,12 +17,31 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** 
- * convert <pre> if (X) { foo(); bar(); } else { foo(); baz(); } </pre> into <pre> foo(); if (X) bar(); else baz(); </pre>
+/** convert
+ *
+ * <pre>
+ * if (X) {
+ *   foo();
+ *   bar();
+ * } else {
+ *   foo();
+ *   baz();
+ * }
+ * </pre>
+ *
+ * into
+ *
+ * <pre>
+ * foo();
+ * if (X)
+ *   bar();
+ * else
+ *   baz();
+ * </pre>
+ *
  * @author Yossi Gil
- * @since 2015-07-29 
- * [[SuppressWarningsSpartan]]
- */
+ * @since 2015-07-29 XXX: This is a bug of auto-laconize
+ *        [[SuppressWarningsSpartan]] */
 public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();

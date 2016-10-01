@@ -43,13 +43,38 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   // when put out of method arguments list
   private final Class<?>[] np = { InfixExpression.class };
 
+  /** Adds parenthesis to expression if needed.
+   * @param x an Expression
+   * @return e itself if no parenthesis needed, otherwise a
+   *         ParenthesisExpression containing e */
+  private Expression addParenthesisIfNeeded(final Expression x) {
+    final AST a = x.getAST();
+    if (!isParethesisNeeded(x))
+      return x;
+    final ParenthesizedExpression $ = a.newParenthesizedExpression();
+    $.setExpression((Expression) ASTNode.copySubtree(a, x));
+    return $;
+  }
+
   @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "Use \"+\" operator to concatenate strings";
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** Checks if an expression need parenthesis in order to interpreted correctly
+   * @param x an Expression
+   * @return whether or not this expression need parenthesis when put together
+   *         with other expressions in infix expression. There could be non
+   *         explicit parenthesis if the expression is located in an arguments
+   *         list, so making it a part of infix expression require additional
+   *         parenthesis */
+  private boolean isParethesisNeeded(final Expression x) {
+    for (final Class<?> ¢ : np)
+      if (¢.isInstance(x))
+        return true;
+    return false;
+  }
+
+  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
@@ -78,32 +103,5 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       r = (MethodInvocation) e;
     }
     return replacement(i, terms);
-  }
-
-  /** Adds parenthesis to expression if needed.
-   * @param x an Expression
-   * @return e itself if no parenthesis needed, otherwise a
-   *         ParenthesisExpression containing e */
-  private Expression addParenthesisIfNeeded(final Expression x) {
-    final AST a = x.getAST();
-    if (!isParethesisNeeded(x))
-      return x;
-    final ParenthesizedExpression $ = a.newParenthesizedExpression();
-    $.setExpression((Expression) ASTNode.copySubtree(a, x));
-    return $;
-  }
-
-  /** Checks if an expression need parenthesis in order to interpreted correctly
-   * @param x an Expression
-   * @return whether or not this expression need parenthesis when put together
-   *         with other expressions in infix expression. There could be non
-   *         explicit parenthesis if the expression is located in an arguments
-   *         list, so making it a part of infix expression require additional
-   *         parenthesis */
-  private boolean isParethesisNeeded(final Expression x) {
-    for (final Class<?> ¢ : np)
-      if (¢.isInstance(x))
-        return true;
-    return false;
   }
 }
