@@ -44,10 +44,6 @@ public class TrimmerLog {
     System.out.println("       After: " + r);
   }
 
-  private static String clazz(final Object n) {
-    return n.getClass().getSimpleName();
-  }
-
   public static void fileProperties() {
     // TODO Auto-generated method stub
   }
@@ -62,15 +58,6 @@ public class TrimmerLog {
 
   public static int getMaxVisitations() {
     return maxVisitations;
-  }
-
-  private static CSVStatistics init() {
-    try {
-      output = new CSVStatistics(outputDir, "Tips");
-    } catch (final IOException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   public static void setFileName(final String $) {
@@ -126,5 +113,18 @@ public class TrimmerLog {
       System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + clazz(¢) + ")" + " parent = " + clazz(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
+  }
+
+  private static String clazz(final Object n) {
+    return n.getClass().getSimpleName();
+  }
+
+  private static CSVStatistics init() {
+    try {
+      output = new CSVStatistics(outputDir, "Tips");
+    } catch (final IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

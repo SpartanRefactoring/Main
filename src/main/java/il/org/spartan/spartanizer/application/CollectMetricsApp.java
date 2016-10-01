@@ -30,15 +30,6 @@ public final class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
   private static boolean optDoNotOverwrite;
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
-  private static void copyFile(final File source, final File target) throws IOException {
-    try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
-      final byte[] buf = new byte[1024];
-      for (final int length = in.read(buf); length > 0; out.write(buf, 0, length))
-        ;
-    }
-  }
-
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
@@ -47,24 +38,6 @@ public final class CollectMetricsApp implements IApplication {
     final ASTParser p = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     p.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), p.createAST(null));
-  }
-
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final PackageDeclaration ¢) {
-        $.set(¢.getName() + "");
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  private static CSVStatistics init(final String outputReportDir) {
-    try {
-      return new CSVStatistics(outputReportDir, "property");
-    } catch (final IOException e) {
-      throw new RuntimeException(outputReportDir, e);
-    }
   }
 
   static ICompilationUnit openCompilationUnit(final File f) throws IOException, JavaModelException {
@@ -93,6 +66,37 @@ public final class CollectMetricsApp implements IApplication {
     final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
+  }
+
+  static void setPackage(final String name) throws JavaModelException {
+    pack = srcRoot.createPackageFragment(name, false, null);
+  }
+
+  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
+  private static void copyFile(final File source, final File target) throws IOException {
+    try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
+      final byte[] buf = new byte[1024];
+      for (final int length = in.read(buf); length > 0; out.write(buf, 0, length))
+        ;
+    }
+  }
+
+  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final PackageDeclaration ¢) {
+        $.set(¢.getName() + "");
+        return false;
+      }
+    });
+    return $.get();
+  }
+
+  private static CSVStatistics init(final String outputReportDir) {
+    try {
+      return new CSVStatistics(outputReportDir, "property");
+    } catch (final IOException e) {
+      throw new RuntimeException(outputReportDir, e);
+    }
   }
 
   private static void printStatistics(final String prefix, final String outputPath) {
@@ -134,10 +138,6 @@ public final class CollectMetricsApp implements IApplication {
     output.nl();
   }
 
-  static void setPackage(final String name) throws JavaModelException {
-    pack = srcRoot.createPackageFragment(name, false, null);
-  }
-
   public void copy(final File sourceLocation, final File targetLocation) throws IOException {
     if (!sourceLocation.isDirectory())
       copyFile(sourceLocation, targetLocation);
@@ -145,11 +145,18 @@ public final class CollectMetricsApp implements IApplication {
       copyDirectory(sourceLocation, targetLocation);
   }
 
-  private void copyDirectory(final File source, final File target) throws IOException {
-    if (!target.exists())
-      target.mkdir();
-    for (final String f : source.list())
-      copy(new File(source, f), new File(target, f));
+  @Override public Object start(final IApplicationContext arg0) {
+    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
+    System.out.println(path);
+    path = args[0];
+    printStatistics("Before-", OUTPUT);
+    spartanize();
+    printStatistics("After-", SPARTAN_OUTPUT);
+    return IApplication.EXIT_OK;
+  }
+
+  @Override public void stop() {
+    ___.nothing();
   }
 
   // app methods
@@ -162,6 +169,13 @@ public final class CollectMetricsApp implements IApplication {
     } catch (final NullPointerException e) {
       LoggingManner.logProbableBug(this, e);
     }
+  }
+
+  private void copyDirectory(final File source, final File target) throws IOException {
+    if (!target.exists())
+      target.mkdir();
+    for (final String f : source.list())
+      copy(new File(source, f), new File(target, f));
   }
 
   private void spartanize() { // final CompilationUnit u) {
@@ -193,19 +207,5 @@ public final class CollectMetricsApp implements IApplication {
         discardCompilationUnit(u);
       }
     }
-  }
-
-  @Override public Object start(final IApplicationContext arg0) {
-    final String[] args = (String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS);
-    System.out.println(path);
-    path = args[0];
-    printStatistics("Before-", OUTPUT);
-    spartanize();
-    printStatistics("After-", SPARTAN_OUTPUT);
-    return IApplication.EXIT_OK;
-  }
-
-  @Override public void stop() {
-    ___.nothing();
   }
 }

@@ -32,23 +32,6 @@ public final class BatchSpartanizer {
     return fileName + ".essence";
   }
 
-  static String essenceNew(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
-        .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
-        .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
-        .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
-        .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
-  }
-
-  static String folder2File(final String path) {
-    return path//
-        .replaceAll("[\\ /.]", "-")//
-        .replaceAll("-+", "-")//
-        .replaceAll("^-", "")//
-        .replaceAll("-$", "")//
-    ;
-  }
-
   public static void main(final String[] args) {
     if (args.length == 0)
       printHelpPrompt();
@@ -67,8 +50,75 @@ public final class BatchSpartanizer {
     }
   }
 
+  public static ProcessBuilder runScript() {
+    return new ProcessBuilder("/bin/bash");
+  }
+
+  public static String runScript(final Process p) throws IOException {
+    try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+      String ¢;
+      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
+        if ((¢ = r.readLine()) == null)
+          return $ + "";
+    }
+  }
+
+  public static ProcessBuilder runScript¢(final String pathname) {
+    final ProcessBuilder $ = runScript();
+    $.redirectErrorStream(true);
+    $.command(script, pathname);
+    return $;
+  }
+
+  static String essenceNew(final String codeFragment) {
+    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
+        .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
+        .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
+        .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
+        .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
+  }
+
+  static String folder2File(final String path) {
+    return path//
+        .replaceAll("[\\ /.]", "-")//
+        .replaceAll("-+", "-")//
+        .replaceAll("^-", "")//
+        .replaceAll("-$", "")//
+    ;
+  }
+
   static String p(final int n1, final int n2) {
     return Unit.formatRelative(δ(n1, n2));
+  }
+
+  static void printHelpPrompt() {
+    System.out.println("Batch Spartanizer");
+    System.out.println("");
+    System.out.println("Options:");
+    System.out.println("  -d       default directory: use the current directory for the analysis");
+    System.out.println("  -o       output directory: here go the results of the analysis");
+    System.out.println("  -i       input directory: place here the projects that you want to analyze.");
+    System.out.println("");
+  }
+
+  static double ratio(final double n1, final double n2) {
+    return n2 / n1;
+  }
+
+  static int tokens(final String s) {
+    int $ = 0;
+    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+      final Token t = tokenizer.next();
+      if (t == null || t == Token.EOF)
+        return $;
+      if (t.kind == Token.Kind.COMMENT || t.kind == Token.Kind.NONCODE)
+        continue;
+      ++$;
+    }
+  }
+
+  static double δ(final double n1, final double n2) {
+    return 1 - n2 / n1;
   }
 
   /** @param args */
@@ -89,66 +139,16 @@ public final class BatchSpartanizer {
       }
   }
 
-  static void printHelpPrompt() {
-    System.out.println("Batch Spartanizer");
-    System.out.println("");
-    System.out.println("Options:");
-    System.out.println("  -d       default directory: use the current directory for the analysis");
-    System.out.println("  -o       output directory: here go the results of the analysis");
-    System.out.println("  -i       input directory: place here the projects that you want to analyze.");
-    System.out.println("");
-  }
-
-  static double ratio(final double n1, final double n2) {
-    return n2 / n1;
-  }
-
   private static String removePercentChar(final String p) {
     return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
-  }
-
-  public static ProcessBuilder runScript() {
-    return new ProcessBuilder("/bin/bash");
-  }
-
-  public static String runScript(final Process p) throws IOException {
-    try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
-      String ¢;
-      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
-        if ((¢ = r.readLine()) == null)
-          return $ + "";
-    }
   }
 
   private static String runScript(final String pathname) throws IOException {
     return runScript(runScript¢(pathname).start());
   }
 
-  public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder $ = runScript();
-    $.redirectErrorStream(true);
-    $.command(script, pathname);
-    return $;
-  }
-
-  static int tokens(final String s) {
-    int $ = 0;
-    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      final Token t = tokenizer.next();
-      if (t == null || t == Token.EOF)
-        return $;
-      if (t.kind == Token.Kind.COMMENT || t.kind == Token.Kind.NONCODE)
-        continue;
-      ++$;
-    }
-  }
-
   private static int wc(final String $) {
     return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
-  }
-
-  static double δ(final double n1, final double n2) {
-    return 1 - n2 / n1;
   }
 
   private int classesDone;
@@ -171,20 +171,6 @@ public final class BatchSpartanizer {
     reportFileName = folder + name + ".CSV";
   }
 
-  private void applyEssenceCommandLine() {
-    try {
-      final String essentializedCodeBefore = runScript(beforeFileName);
-      final String essentializedCodeAfter = runScript(afterFileName);
-      final int numWordEssentialBefore = essentializedCodeBefore.trim().length();
-      final int numWordEssentialAfter = essentializedCodeAfter.trim().length();
-      System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
-      System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
-      System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
-    }
-  }
-
   public Process bash(final String shellCommand) {
     final String[] command = { "/bin/bash", "-c", shellCommand };
     try {
@@ -197,29 +183,8 @@ public final class BatchSpartanizer {
     return null;
   }
 
-  private void collect() {
-    System.err.printf(
-        "Input path=%s\n" + //
-            "Collective before path=%s\n" + //
-            "Collective after path=%s\n" + //
-            "\n" //
-        , inputPath, //
-        beforeFileName, //
-        afterFileName);
-    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-      befores = b;
-      afters = a;
-      report = new CSVStatistics(reportFileName);
-      for (final File ¢ : new FilesGenerator(".java").from(inputPath))
-        collect(¢);
-    } catch (final IOException x) {
-      x.printStackTrace();
-      System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
-    }
-    applyEssenceCommandLine();
-    System.err.print("\n Done: " + classesDone + " files processed.");
-    System.err.print("\n Summary: " + report.close());
+  public Process shellEssenceMetrics(final String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
@@ -340,11 +305,46 @@ public final class BatchSpartanizer {
     shellEssenceMetrics(afterFileName);
   }
 
-  private void runWordCount() {
-    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
+  private void applyEssenceCommandLine() {
+    try {
+      final String essentializedCodeBefore = runScript(beforeFileName);
+      final String essentializedCodeAfter = runScript(afterFileName);
+      final int numWordEssentialBefore = essentializedCodeBefore.trim().length();
+      final int numWordEssentialAfter = essentializedCodeAfter.trim().length();
+      System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
+      System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
+      System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
+    } catch (final IOException e) {
+      System.err.println(e.getMessage());
+    }
   }
 
-  public Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
+  private void collect() {
+    System.err.printf(
+        "Input path=%s\n" + //
+            "Collective before path=%s\n" + //
+            "Collective after path=%s\n" + //
+            "\n" //
+        , inputPath, //
+        beforeFileName, //
+        afterFileName);
+    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+      befores = b;
+      afters = a;
+      report = new CSVStatistics(reportFileName);
+      for (final File ¢ : new FilesGenerator(".java").from(inputPath))
+        collect(¢);
+    } catch (final IOException x) {
+      x.printStackTrace();
+      System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
+    }
+    applyEssenceCommandLine();
+    System.err.print("\n Done: " + classesDone + " files processed.");
+    System.err.print("\n Summary: " + report.close());
+  }
+
+  private void runWordCount() {
+    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 }
