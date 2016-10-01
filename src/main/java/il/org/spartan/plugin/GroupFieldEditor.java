@@ -56,45 +56,6 @@ public final class GroupFieldEditor extends FieldEditor {
     members.add(¢);
   }
 
-  @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
-    this.numColumns = numColumns;
-  }
-
-  /* (non-Javadoc) Method declared on FieldEditor. */
-  protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
-    int c = numColumns;
-    if (members == null || members.isEmpty())
-      return;
-    if (c == 0)
-      for (final FieldEditor ¢ : members)
-        c = Math.max(c, ¢.getNumberOfControls());
-    gridData(c);
-    gridLayout(c);
-    for (final FieldEditor ¢ : members)
-      ¢.fillIntoGrid(parentParam, c);
-    parent.layout();
-    parent.redraw();
-  }
-
-  @Override protected void doFillIntoGrid(final Composite __parent, final int __numColumns) {
-    ___.______unused(__parent, box.it(__numColumns));
-  }
-
-  @Override protected void doLoad() {
-    for (final FieldEditor ¢ : members)
-      ¢.load();
-  }
-
-  @Override protected void doLoadDefault() {
-    for (final FieldEditor ¢ : members)
-      ¢.loadDefault();
-  }
-
-  @Override protected void doStore() {
-    for (final FieldEditor ¢ : members)
-      ¢.store();
-  }
-
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
    * @return parent {@link Composite} object */
@@ -104,21 +65,6 @@ public final class GroupFieldEditor extends FieldEditor {
 
   @Override public int getNumberOfControls() {
     return members.size();
-  }
-
-  private void gridData(final int i) {
-    final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
-    data.horizontalIndent = 2;
-    data.verticalIndent = GROUP_PADDING;
-    data.horizontalSpan = i;
-    group.setLayoutData(data);
-  }
-
-  private void gridLayout(final int i) {
-    final GridLayout groupLayout = new GridLayout();
-    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
-    groupLayout.numColumns = i;
-    group.setLayout(groupLayout);
   }
 
   /** Initializes using the currently added field editors. */
@@ -159,5 +105,59 @@ public final class GroupFieldEditor extends FieldEditor {
 
   @Override public void store() {
     doStore();
+  }
+
+  @Override protected void adjustForNumColumns(@SuppressWarnings("hiding") final int numColumns) {
+    this.numColumns = numColumns;
+  }
+
+  /* (non-Javadoc) Method declared on FieldEditor. */
+  protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
+    int c = numColumns;
+    if (members == null || members.isEmpty())
+      return;
+    if (c == 0)
+      for (final FieldEditor ¢ : members)
+        c = Math.max(c, ¢.getNumberOfControls());
+    gridData(c);
+    gridLayout(c);
+    for (final FieldEditor ¢ : members)
+      ¢.fillIntoGrid(parentParam, c);
+    parent.layout();
+    parent.redraw();
+  }
+
+  @Override protected void doFillIntoGrid(final Composite __parent, final int __numColumns) {
+    ___.______unused(__parent, box.it(__numColumns));
+  }
+
+  @Override protected void doLoad() {
+    for (final FieldEditor ¢ : members)
+      ¢.load();
+  }
+
+  @Override protected void doLoadDefault() {
+    for (final FieldEditor ¢ : members)
+      ¢.loadDefault();
+  }
+
+  @Override protected void doStore() {
+    for (final FieldEditor ¢ : members)
+      ¢.store();
+  }
+
+  private void gridData(final int i) {
+    final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+    data.horizontalIndent = 2;
+    data.verticalIndent = GROUP_PADDING;
+    data.horizontalSpan = i;
+    group.setLayoutData(data);
+  }
+
+  private void gridLayout(final int i) {
+    final GridLayout groupLayout = new GridLayout();
+    groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
+    groupLayout.numColumns = i;
+    group.setLayout(groupLayout);
   }
 }

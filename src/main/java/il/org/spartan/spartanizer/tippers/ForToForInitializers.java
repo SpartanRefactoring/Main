@@ -30,6 +30,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
+    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
+  }
+
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
     $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
@@ -110,10 +114,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement f) {
     return !haz.sideEffects(from) || !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), f);
-  }
-
-  public static ASTNode replace(final VariableDeclarationStatement s, final ForStatement ¢) {
-    return !fitting(s, ¢) ? null : buildForStatement(s, ¢);
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
