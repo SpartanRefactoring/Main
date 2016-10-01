@@ -2,7 +2,8 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
 
-import java.net.*;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.*;
 
 import javax.swing.*;
@@ -28,15 +29,8 @@ public enum eclipse {
   facade;
   static final GUI$Applicator[] safeApplicators = { new Trimmer() };
   static final String NAME = "Laconic";
-  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  static ImageIcon icon;
-  static {
-    try {
-      icon = new ImageIcon(new URL(ICON_PATH));
-    } catch (@SuppressWarnings("unused") MalformedURLException x) {
-      icon = null;
-    }
-  }
+  static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
+  static ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(eclipse.class.getResource(ICON_PATH)).getScaledInstance(64, 64, Image.SCALE_SMOOTH));
 
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {
