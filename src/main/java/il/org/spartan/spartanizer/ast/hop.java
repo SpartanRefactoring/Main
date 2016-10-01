@@ -83,12 +83,11 @@ public interface hop {
     return null;
   }
 
-  /** 
-   * Find the first statement, residing under a given  {@link Statement}, for which all next statements are side effects.
+  /** Find the first statement, residing under a given {@link Statement}, for
+   * which all next statements are side effects.
    * @param ¢ JD
-   * @return last statement residing under a given {@link Statement}, or <code><b>null</b></code> if not such sideEffects exists. 
-   * [[SuppressWarningsSpartan]]
-   */
+   * @return last statement residing under a given {@link Statement}, or
+   *         <code><b>null</b></code> if not such sideEffects exists. */
   static ASTNode firstLastStatement(final Statement ¢) {
     Statement $ = null;
     final ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));

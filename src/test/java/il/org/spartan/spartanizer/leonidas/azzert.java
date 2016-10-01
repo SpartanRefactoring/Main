@@ -130,7 +130,7 @@ class turns {
     s = _s;
   }
 
-  public void into(final String s) {
+  public void into(final String res) {
     final Document document = new Document(wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(document.get().toCharArray());
@@ -152,12 +152,9 @@ class turns {
       e.printStackTrace();
       fail();
     }
-    azzertEquals(s, document);
+    azzertEquals(res, document);
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
   private void azzertEquals(final String res, final Document document) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:

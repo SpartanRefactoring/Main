@@ -43,9 +43,6 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return description();
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
   @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
@@ -58,8 +55,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
         for (; iz.parenthesizeExpression(¢); ¢ = az.parenthesizedExpression(¢).getExpression(), replace(es, ¢, i))
           ;
-        final ASTNode n = ¢;
-        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditional(¢) || !iz.not(n, ASTNode.LAMBDA_EXPRESSION))
+        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
         replace(es, ¢, i);
       }
