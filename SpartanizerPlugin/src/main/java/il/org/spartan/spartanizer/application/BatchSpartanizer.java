@@ -135,7 +135,7 @@ public final class BatchSpartanizer {
       } else {
         System.out.println(args[¢]);
         System.out.println("something went wrong!");
-        ¢++;
+        ++¢;
       }
   }
 
