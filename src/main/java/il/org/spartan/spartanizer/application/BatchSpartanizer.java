@@ -88,7 +88,7 @@ public final class BatchSpartanizer {
   }
 
   static String p(final int n1, final int n2) {
-    return Unit.formatRelative(δ(n1, n2));
+    return Unit.formatRelative(d(n1, n2));
   }
 
   static void printHelpPrompt() {
@@ -117,7 +117,7 @@ public final class BatchSpartanizer {
     }
   }
 
-  static double δ(final double n1, final double n2) {
+  static double d(final double n1, final double n2) {
     return 1 - n2 / n1;
   }
 
@@ -213,33 +213,33 @@ public final class BatchSpartanizer {
         .put("Nodes1", nodes)//
         .put("Nodes2", nodes2)//
         .put("Δ Nodes", nodes - nodes2)//
-        .put("δ Nodes", δ(nodes, nodes2))//
+        .put("δ Nodes", d(nodes, nodes2))//
         .put("δ Nodes %", Double.parseDouble(removePercentChar(p(nodes, nodes2))))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("Δ Body", body - body2)//
-        .put("δ Body", δ(body, body2))//
+        .put("δ Body", d(body, body2))//
         .put("% Body", Double.parseDouble(removePercentChar(p(body, body2))))//
         .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("Δ Tokens", tokens - tokens2)//
-        .put("δ Tokens", δ(tokens, tokens2))//
+        .put("δ Tokens", d(tokens, tokens2))//
         .put("% Tokens", Double.parseDouble(removePercentChar(p(tokens, tokens2))))//
         .put("Length1", length)//
         .put("Length2", length2)//
         .put("Δ Length", length - length2)//
-        .put("δ Length", δ(length, length2))//
+        .put("δ Length", d(length, length2))//
         .put("% Length", Double.parseDouble(removePercentChar(p(length, length2))))//
         .put("Tide1", tide)//
         .put("Tide2", tide2)//
         .put("Δ Tide2", tide - tide2)//
-        .put("δ Tide2", δ(tide, tide2))//
+        .put("δ Tide2", d(tide, tide2))//
         .put("δ Tide2", Double.parseDouble(removePercentChar(p(tide, tide2))))//
         .put("Essence1", essence)//
         .put("Essence2", essence2)//
         .put("Δ Essence", essence - essence2)//
-        .put("δ Essence", δ(essence, essence2))//
+        .put("δ Essence", d(essence, essence2))//
         .put("% Essence", Double.parseDouble(removePercentChar(p(essence, essence2))))//
         .put("Words)", wordCount).put("R(T/L)", ratio(length, tide)) //
         .put("R(E/L)", ratio(length, essence)) //
