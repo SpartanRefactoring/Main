@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.*;
 
 import javax.swing.*;
@@ -25,8 +27,8 @@ import il.org.spartan.spartanizer.engine.*;
 public enum eclipse {
   facade;
   static final String NAME = "Laconic";
-  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  static final ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
+  static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
+  static ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(eclipse.class.getResource(ICON_PATH)).getScaledInstance(64, 64, Image.SCALE_SMOOTH));
 
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {
