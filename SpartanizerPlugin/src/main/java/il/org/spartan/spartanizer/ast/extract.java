@@ -409,4 +409,19 @@ public enum extract {
         return $;
     }
   }
+
+  public static Type type(ASTNode $) {
+    switch ($.getNodeType()) {
+      case VARIABLE_DECLARATION_EXPRESSION:
+        return az.variableDeclarationExpression($).getType();
+      case SINGLE_VARIABLE_DECLARATION:
+        return az.singleVariableDeclaration($).getType();
+      case VARIABLE_DECLARATION_STATEMENT:
+        return az.variableDeclrationStatement($).getType();
+      case VARIABLE_DECLARATION_FRAGMENT:
+        return type(az.variableDeclrationFragment($).getParent());
+      default:
+        return null;
+    }
+  }
 }
