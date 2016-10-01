@@ -155,22 +155,22 @@ class turns {
     azzertEquals(res, document);
   }
 
-  private void azzertEquals(final String res, final Document document) {
+  private void azzertEquals(final String s, final Document document) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(res, document.get());
+        assertEquals(s, document.get());
         break;
       case EXPRESSION_LOOK_ALIKE:
-        assertEquals(res, document.get().substring(23, document.get().length() - 3));
+        assertEquals(s, document.get().substring(23, document.get().length() - 3));
         break;
       case METHOD_LOOKALIKE:
-        assertEquals(res, document.get().substring(9, document.get().length() - 2));
+        assertEquals(s, document.get().substring(9, document.get().length() - 2));
         break;
       case OUTER_TYPE_LOOKALIKE:
-        assertEquals(res, document.get());
+        assertEquals(s, document.get());
         break;
       case STATEMENTS_LOOK_ALIKE:
-        assertEquals(res, document.get().substring(16, document.get().length() - 3));
+        assertEquals(s, document.get().substring(16, document.get().length() - 3));
         break;
       default:
         break;
