@@ -29,39 +29,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢)
-        && cantTip.forRenameInitializerToCent(¢) && ¢ != null
+    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢) && ¢ != null
         && !iz.containsContinueStatement(step.body(¢));
-  }
-
-  private static boolean statementFitts(final Statement ¢) {
-    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
-  }
-  
-  private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
-    return az.variableDeclarationExpression(findFirst.elementOf(step.initializers(¢)));
-  }
-
-  // TODO: Erase this function
-  private static Statement lastStatement(final ForStatement ¢) {
-    return az.asStatement(hop.lastStatement(step.body(¢)));
-  }
-
-  /** @param ¢ JD
-   * @return conversion of {@link Statement}, which is previous to the
-   *         firstLastStatement in the loop body. */
-  private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    final ASTNode n = hop.firstLastStatement(step.body(¢));
-    if (n == null)
-      return null;
-    final Statement current = az.asStatement(n);
-    if (current == null)
-      return null;
-    final Statement previous = hop.previousStatementInBody(current);
-    if (previous == null)
-      return null;
-    final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
-    return vds == null ? null : findFirst.elementOf(step.fragments(vds));
   }
 
   @Override public String description(final ForStatement ¢) {

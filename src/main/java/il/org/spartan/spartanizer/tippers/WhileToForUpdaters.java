@@ -38,12 +38,12 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
         && cantTip.declarationInitializerStatementTerminatingScope(¢);
   }
 
-  private static boolean statementFitts(final Statement ¢) {
-    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
-  }
-  
   private static Statement lastStatement(final WhileStatement ¢) {
     return az.asStatement(hop.lastStatement(step.body(¢)));
+  }
+
+  private static boolean statementFitts(final Statement ¢) {
+    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
   }
 
   @Override public String description(final WhileStatement ¢) {

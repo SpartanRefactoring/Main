@@ -70,6 +70,10 @@ public final class BatchSpartanizer {
     return $;
   }
 
+  static double d(final double n1, final double n2) {
+    return 1 - n2 / n1;
+  }
+
   static String essenceNew(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
         .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
@@ -115,10 +119,6 @@ public final class BatchSpartanizer {
         continue;
       ++$;
     }
-  }
-
-  static double d(final double n1, final double n2) {
-    return 1 - n2 / n1;
   }
 
   /** @param args */
