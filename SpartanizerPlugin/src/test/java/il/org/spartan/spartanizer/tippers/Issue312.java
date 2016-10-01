@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) //
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue312 {
   @Test public void A$130() {
     trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")

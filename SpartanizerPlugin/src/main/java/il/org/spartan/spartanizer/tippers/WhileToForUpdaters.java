@@ -18,7 +18,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static Statement dupWhileBody(final WhileStatement ¢) {
-    return duplicate.of(¢.getBody());
+    return duplicate.of(step.body(¢));
   }
 
   private static Expression dupWhileExpression(final WhileStatement ¢) {
@@ -30,16 +30,20 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static ASTNode firstLastStatement(final WhileStatement ¢) {
-    return hop.firstLastStatement(¢.getBody());
+    return hop.firstLastStatement(step.body(¢));
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ != null && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-        && !iz.containsContinueStatement(¢.getBody());
+    return ¢ != null && statementFitts(lastStatement(¢)) && !haz.ContinueStatement(step.body(¢))
+        && cantTip.declarationInitializerStatementTerminatingScope(¢);
   }
 
+  private static boolean statementFitts(final Statement ¢) {
+    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
+  }
+  
   private static Statement lastStatement(final WhileStatement ¢) {
-    return az.asStatement(hop.lastStatement(¢.getBody()));
+    return az.asStatement(hop.lastStatement(step.body(¢)));
   }
 
   @Override public String description(final WhileStatement ¢) {
@@ -47,7 +51,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(¢.getBody());
+    return ¢ != null && fitting(¢);
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {

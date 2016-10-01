@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** @author Alex Kopzon
  * @since 2016-09-23 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue310 {
+@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue310 {
   @Ignore @Test public void OrisCode() { // is not parsing well
     trimmingOf(
         "int i;for (i=0; i < MAX_PASSES; ++i) {final IProgressService ps=wb.getProgressService();final AtomicInteger passNum=new AtomicInteger(i + 1);final AtomicBoolean cancled=new AtomicBoolean(false);try {ps.run(true,true,pm -> {"
@@ -48,10 +48,19 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Test public void updaters_for_3() {
-    trimmingOf("").stays();
+  @Test public void updaters_for_3a() {
+    trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;x = 5;}")
+    .gives("for (int i = 0; i < 10;i += x) {int x = 1;x = 5;}").stays();
   }
-
+  
+  @Test public void updaters_for_3b() {
+    trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;}")
+    .gives("for (int i = 0; i < 10;) {i += 1;}")
+    .gives("for (int ¢ = 0; ¢ < 10;){¢ += 1;}")
+    .gives("for (int ¢ = 0; ¢ < 10;¢ += 1) {}")
+    .stays();
+  }
+  
   @Test public void updaters_for_4() {
     trimmingOf("public boolean check(final ASTNode n) {" + "for(ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;++j;"
         + "}" + "return false;" + "}")
