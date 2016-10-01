@@ -79,11 +79,11 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   }
 
   @Override public String description() {
-    return "Convert the break inside the loop to return";
+    return "Convert the break inside 'while()' loop to 'return'";
   }
 
   @Override public String description(final WhileStatement ¢) {
-    return "Convert the break inside " + ¢ + " to return";
+    return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {

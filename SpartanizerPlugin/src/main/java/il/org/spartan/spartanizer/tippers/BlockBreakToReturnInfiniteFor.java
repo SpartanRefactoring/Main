@@ -84,11 +84,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   @Override public String description() {
-    return "Convert the break inside the loop to return";
+    return "Convert the break inside 'for(;;)' to 'return'";
   }
 
   @Override public String description(final ForStatement ¢) {
-    return "Convert the break inside " + ¢ + " to return";
+    return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
   public Tip make(final ForStatement vor, final ReturnStatement nextReturn, final ExclusionManager exclude) {
