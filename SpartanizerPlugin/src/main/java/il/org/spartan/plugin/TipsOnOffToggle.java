@@ -5,7 +5,7 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.ui.*;
 import org.eclipse.ui.handlers.*;
 
 /** A command handler which toggles the spartanization nature
@@ -37,20 +37,6 @@ public final class TipsOnOffToggle extends AbstractHandler {
     p.setDescription(description, null);
   }
 
-  private static Void execute(final ISelection s, final boolean state) throws CoreException {
-    if (s instanceof IStructuredSelection)
-      for (final Object o : ((IStructuredSelection) s).toList()) {
-        final IProject p = extractProject(o);
-        if (p != null)
-          toggleNature(p, state);
-      }
-    return null;
-  }
-
-  private static IProject extractProject(final Object ¢) {
-    return ¢ instanceof IProject ? (IProject) ¢ : ¢ instanceof IAdaptable ? (IProject) ((IAdaptable) ¢).getAdapter(IProject.class) : null;
-  }
-
   private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when
     // it's
@@ -63,12 +49,23 @@ public final class TipsOnOffToggle extends AbstractHandler {
 
   /** the main method of the command handler, runs when the command is
    * called. */
-  @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
-    final boolean newValue = !HandlerUtil.toggleCommandState(e.getCommand());
-    try {
-      return execute(HandlerUtil.getCurrentSelectionChecked(e), newValue);
-    } catch (final CoreException x) {
-      throw new ExecutionException(x.getMessage());
+  @Override public Void execute(final ExecutionEvent e) {
+    IEditorPart ep = HandlerUtil.getActiveEditor(e);
+    if (ep == null)
+      return null;
+    IEditorInput i = ep.getEditorInput();
+    if (i == null)
+      return null;
+    if (i instanceof IFileEditorInput) {
+      final IProject p = ((IFileEditorInput) i).getFile().getProject();
+      if (p != null)
+        try {
+          toggleNature(p, !p.hasNature(Nature.NATURE_ID));
+        } catch (CoreException x) {
+          // TODO Ori: log it
+          x.printStackTrace();
+        }
     }
+    return null;
   }
 }
