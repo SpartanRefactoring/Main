@@ -23,26 +23,6 @@ public interface findFirst {
     return instanceOf(AssertStatement.class, ¢);
   }
 
-  /** Find the first statement, residing under a given {@link Statement}, for
-   * which all next statements are side effects.
-   * @param ¢ JD
-   * @return last statement residing under a given {@link Block}, or
-   *         <code><b>null</b></code> if not such sideEffects exists, or if ¢ is not Block. */
-  static ASTNode statementCanBePushedToForUpdaters(final Statement ¢) {
-    Statement $ = null;
-    final ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));
-    if (tempElements.size() <= 1)
-      return null;
-    Collections.reverse(tempElements);
-    for (final Statement s : tempElements)
-      if (iz.incrementOrDecrement(s))
-        $ = s;
-    return $;
-  }
-
-  //iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢))
-
-  
   /** Find the first {@link ConditionalExpression}, under a given node, as found
    * in the usual visitation order.
    * @param n First node to visit
@@ -61,6 +41,9 @@ public interface findFirst {
     });
     return $.get();
   }
+  // iz.assignment(lastStatement(¢)) ||
+  // iz.incrementOrDecrement(lastStatement(¢)) ||
+  // haz.sideEffects(lastStatement(¢))
 
   static <E> E elementOf(final List<E> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
@@ -152,6 +135,24 @@ public interface findFirst {
    *         <code><b>null</b> if there is no such statement. */
   static PostfixExpression postfixExpression(final ASTNode ¢) {
     return instanceOf(PostfixExpression.class, ¢);
+  }
+
+  /** Find the first statement, residing under a given {@link Statement}, for
+   * which all next statements are side effects.
+   * @param ¢ JD
+   * @return last statement residing under a given {@link Block}, or
+   *         <code><b>null</b></code> if not such sideEffects exists, or if ¢ is
+   *         not Block. */
+  static ASTNode statementCanBePushedToForUpdaters(final Statement ¢) {
+    Statement $ = null;
+    final ArrayList<Statement> tempElements = new ArrayList<>(extract.statements(¢));
+    if (tempElements.size() <= 1)
+      return null;
+    Collections.reverse(tempElements);
+    for (final Statement s : tempElements)
+      if (iz.incrementOrDecrement(s))
+        $ = s;
+    return $;
   }
 
   static ThrowStatement throwStatement(final ASTNode ¢) {

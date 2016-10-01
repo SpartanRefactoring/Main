@@ -27,32 +27,29 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   private static ASTNode firstLastStatement(final ForStatement ¢) {
     return findFirst.statementCanBePushedToForUpdaters(step.body(¢));
   }
-  
+
   private static boolean fitting(final ForStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢)
-        && cantTip.forRenameInitializerToCent(¢) && ¢ != null
-        && cantTip.declarationRedundantInitializer(¢)
-        && cantTip.remvoeRedundantIf(¢)
-        && fittingUpdater(¢)
+    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢) && ¢ != null
+        && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢) && fittingUpdater(¢)
         && !iz.containsContinueStatement(step.body(¢));
   }
-  
+
   private static boolean fittingUpdater(final ForStatement ¢) {
     final Statement updater = az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢)));
     return updater != null && updatesOnlyForInitializers(¢, updater);
   }
-  
+
   private static boolean updatesOnlyForInitializers(final ForStatement ¢, final Statement updater) {
     return true;
     // TODO: Alex and Dan, implement after uses, declares and defines.
   }
-  
+
   @Override public String description(final ForStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(step.body(¢));
+    return ¢ != null && fitting(¢);
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {

@@ -34,15 +34,12 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢)
-        && cantTip.declarationRedundantInitializer(¢)
-        && cantTip.remvoeRedundantIf(¢)
-        && fittingUpdater(¢)
-        && !iz.containsContinueStatement(step.body(¢));
+    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢)
+        && fittingUpdater(¢) && !iz.containsContinueStatement(step.body(¢));
   }
-  
+
   private static boolean fittingUpdater(final WhileStatement ¢) {
-    return az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢))) != null; 
+    return az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢))) != null;
   }
 
   @Override public String description(final WhileStatement ¢) {
