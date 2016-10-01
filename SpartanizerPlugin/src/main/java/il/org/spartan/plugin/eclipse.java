@@ -33,7 +33,7 @@ public enum eclipse {
   static {
     try {
       icon = new ImageIcon(new URL(ICON_PATH));
-    } catch (@SuppressWarnings("unused") MalformedURLException __) {
+    } catch (@SuppressWarnings("unused") MalformedURLException x) {
       icon = null;
     }
   }
