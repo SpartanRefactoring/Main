@@ -870,4 +870,16 @@ public interface iz {
       return false;
     }
   }
+
+  /**
+   * @param ¢ JD
+   * @return true iff the statement is side effect and updating an initializer from the for initializers.
+   * returns false if the parent is not a for loop.
+   */
+  static boolean usingForInitializer(Statement ¢) {
+    ForStatement parent = az.forStatement(¢.getParent());
+    if (parent == null)
+      return false;
+    return true;
+  }
 }

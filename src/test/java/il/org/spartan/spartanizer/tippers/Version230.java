@@ -1337,7 +1337,7 @@ public final class Version230 {
         .gives("if (f()) f();");
   }
 
-  @Test public void inlineSingleUseWithAssignment() {
+  @Ignore @Test public void inlineSingleUseWithAssignment() {
     trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;")//
         .gives("for (int a = 2;true;) if (f()) f(a); else a = 2;")//
         .stays();
