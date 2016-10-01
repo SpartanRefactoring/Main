@@ -43,6 +43,9 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return description();
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
