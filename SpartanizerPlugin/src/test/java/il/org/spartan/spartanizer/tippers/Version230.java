@@ -266,12 +266,8 @@ public final class Version230 {
             "  }\n" + //
             "}"//
     ).gives("// Here I place what I expect to see" + //
-        "public void f(){"
-        +"if(g)"
-        + " return;"
-        + "foo();"
-        + "bar();}").//
-    stays();
+        "public void f(){" + "if(g)" + " return;" + "foo();" + "bar();}").//
+        stays();
   }
 
   @Test public void bugInLastIfInMethod8() {

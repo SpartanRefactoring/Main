@@ -25,6 +25,18 @@ public final class BatchApplicator {
 
   public final Toolbox toolbox = new Toolbox();
 
+  public BatchApplicator disable(final Class<? extends TipperCategory> ¢) {
+    toolbox.disable(¢);
+    return this;
+  }
+
+  /** Apply trimming repeatedly, until no more changes
+   * @param from what to process
+   * @return trimmed text */
+  public String fixedPoint(final String from) {
+    return new Trimmer(toolbox).fixed(from);
+  }
+
   ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -37,17 +49,5 @@ public final class BatchApplicator {
         return false;
       }
     };
-  }
-
-  public BatchApplicator disable(final Class<? extends TipperCategory> ¢) {
-    toolbox.disable(¢);
-    return this;
-  }
-
-  /** Apply trimming repeatedly, until no more changes
-   * @param from what to process
-   * @return trimmed text */
-  public String fixedPoint(final String from) {
-    return new Trimmer(toolbox).fixed(from);
   }
 }
