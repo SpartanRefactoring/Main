@@ -17,7 +17,6 @@ import org.eclipse.ui.*;
 import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Fluent API services for the plugin
@@ -42,7 +41,8 @@ public enum eclipse {
   /** @param message What to announce
    * @return <code><b>null</b></code> */
   static Void announce(final Object message) {
-    // JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    // JOptionPane.showMessageDialog(null, message, NAME,
+    // JOptionPane.INFORMATION_MESSAGE, icon);
     JOptionPane.showMessageDialog(null, message);
     return null;
   }

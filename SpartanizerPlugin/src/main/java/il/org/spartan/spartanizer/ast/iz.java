@@ -769,6 +769,14 @@ public interface iz {
     return is(¢, TRY_STATEMENT);
   }
 
+  /** @param ¢ JD
+   * @return true iff the statement is side effect and updating an initializer
+   *         from the for initializers. returns false if the parent is not a for
+   *         loop. */
+  static boolean usingForInitializer(final Statement ¢) {
+    return az.forStatement(¢.getParent()) != null;
+  }
+
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
    * or has nothing but empty sideEffects in it.
    * @param subject JD
@@ -853,15 +861,6 @@ public interface iz {
     }
   }
 
-  /**
-   * @param ¢ JD
-   * @return true iff the statement is side effect and updating an initializer from the for initializers.
-   * returns false if the parent is not a for loop.
-   */
-  static boolean usingForInitializer(Statement ¢) {
-    return az.forStatement(¢.getParent()) != null;
-  }
-  
   interface literal {
     /** @param ¢ JD
      * @return true if the given node is a literal false or false otherwise */
