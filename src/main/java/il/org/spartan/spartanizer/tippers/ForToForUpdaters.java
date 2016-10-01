@@ -29,8 +29,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    return !(new ForRenameInitializerToCent()).canTip(forExpression(¢))
-        && !(new DeclarationInitializerStatementTerminatingScope()).canTip(prevToFirstLastExpressionFragment(¢)) && ¢ != null
+    return !new ForRenameInitializerToCent().canTip(forExpression(¢))
+        && !new DeclarationInitializerStatementTerminatingScope().canTip(prevToFirstLastExpressionFragment(¢)) && ¢ != null
         && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
         && !iz.containsContinueStatement(¢.getBody());
   }

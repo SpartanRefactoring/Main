@@ -14,6 +14,19 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Daniel Mittelman
  * @year 2016 */
 public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+  /** An event handler used to re-initialize the {@link Trimmer} spartanization
+   * once a tipper preference was modified. */
+  static class SpartanPropertyListener implements IPropertyChangeListener {
+    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
+      Toolbox.refresh();
+      try {
+        RefreshAll.go();
+      } catch (final Exception e) {
+        LoggingManner.logEvaluationError(this, e);
+      }
+    }
+  }
+
   public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
@@ -37,18 +50,5 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     setPreferenceStore(WringGroup.store());
     setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
-  }
-
-  /** An event handler used to re-initialize the {@link Trimmer} spartanization
-   * once a tipper preference was modified. */
-  static class SpartanPropertyListener implements IPropertyChangeListener {
-    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
-      Toolbox.refresh();
-      try {
-        RefreshAll.go();
-      } catch (final Exception e) {
-        LoggingManner.logEvaluationError(this, e);
-      }
-    }
   }
 }

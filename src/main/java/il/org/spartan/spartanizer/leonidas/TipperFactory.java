@@ -19,32 +19,6 @@ public class TipperFactory {
       final ASTNode pattern = wizard.ast(_pattern);
       final String replacement = _replacement;
 
-      @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
-        return description;
-      }
-
-      @Override public Tip tip(final ASTNode n) {
-        return new Tip(description(n), n) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final Map<String, ASTNode> enviroment = collectEnviroment(n);
-            final Wrapper<String> $ = new Wrapper<>();
-            $.set(replacement);
-            wizard.ast(replacement).accept(new ASTVisitor() {
-              @Override public boolean preVisit2(final ASTNode ¢) {
-                if (iz.name(¢) && enviroment.containsKey((¢ + "")))
-                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), (enviroment.get((¢ + "")) + "")));
-                return true;
-              }
-            });
-            r.replace(n, wizard.ast($.get()), g);
-          }
-        };
-      }
-
-      @Override protected boolean prerequisite(final ASTNode ¢) {
-        return Matcher.matches(pattern, ¢);
-      }
-
       Map<String, ASTNode> collectEnviroment(final ASTNode ¢) {
         return collectEnviroment(pattern, ¢, new HashMap<>());
       }
@@ -61,6 +35,32 @@ public class TipperFactory {
             ;
         }
         return enviroment;
+      }
+
+      @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
+        return description;
+      }
+
+      @Override protected boolean prerequisite(final ASTNode ¢) {
+        return Matcher.matches(pattern, ¢);
+      }
+
+      @Override public Tip tip(final ASTNode n) {
+        return new Tip(description(n), n) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            final Map<String, ASTNode> enviroment = collectEnviroment(n);
+            final Wrapper<String> $ = new Wrapper<>();
+            $.set(replacement);
+            wizard.ast(replacement).accept(new ASTVisitor() {
+              @Override public boolean preVisit2(final ASTNode ¢) {
+                if (iz.name(¢) && enviroment.containsKey(¢ + ""))
+                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "") + ""));
+                return true;
+              }
+            });
+            r.replace(n, wizard.ast($.get()), g);
+          }
+        };
       }
     };
   }

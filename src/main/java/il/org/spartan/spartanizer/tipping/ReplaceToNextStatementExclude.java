@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
+  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
+
   @Override public boolean prerequisite(final N current) {
     final Statement next = extract.nextStatement(current);
     return next != null && go(ASTRewrite.create(current.getAST()), current, next, null, new ExclusionManager()) != null;
@@ -25,6 +27,4 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
       }
     };
   }
-
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
 }

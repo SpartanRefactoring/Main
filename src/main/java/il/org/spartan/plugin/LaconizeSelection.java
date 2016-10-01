@@ -22,8 +22,52 @@ import il.org.spartan.utils.*;
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @since 2015/08/01 */
 public abstract class LaconizeSelection extends BaseHandler {
+  /** A handler for {@link Tips} executing all safe spartanizations on marker
+   * enclosure, while exposing static methods to spartanize only specific
+   * compilation units.
+   * @author Ori Roth
+   * @since 2016 */
+  public static final class Enclosure extends LaconizeSelection implements IMarkerResolution {
+    IMarker marker;
+    Class<? extends ASTNode> clazz;
+    String label;
+
+    public Enclosure(final Class<? extends ASTNode> clazz, final String label) {
+      this.clazz = clazz;
+      this.label = label;
+    }
+
+    @Override public String getLabel() {
+      return label;
+    }
+
+    @Override public Range getSelection(final ICompilationUnit u) {
+      final ASTNode n = eclipse.getNodeByMarker(u, marker);
+      if (n == null)
+        return new Range(0, 0); // TODO Ori: replace with empty range
+      final ASTNode a = searchAncestors.forClass(clazz).from(n);
+      return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
+          : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());
+    }
+
+    @Override public boolean isRepeating() {
+      return false;
+    }
+
+    @Override public void run(final IMarker m) {
+      marker = m;
+      try {
+        execute();
+      } catch (final ExecutionException x) {
+        // TODO Ori: log it
+        x.printStackTrace();
+      }
+    }
+  }
+
   private final int MAX_PASSES = 20;
 
+  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
@@ -74,49 +118,6 @@ public abstract class LaconizeSelection extends BaseHandler {
   public abstract Range getSelection(ICompilationUnit u);
 
   /** @return true iff the handler runs in a loop, for
-   *         {@lik LaconizeSelection#MAX_PASSES} times */
+   *         {@link LaconizeSelection#MAX_PASSES} times */
   public abstract boolean isRepeating();
-
-  /** A handler for {@link Tips} executing all safe spartanizations on marker
-   * enclosure, while exposing static methods to spartanize only specific
-   * compilation units.
-   * @author Ori Roth
-   * @since 2016 */
-  public static final class Enclosure extends LaconizeSelection implements IMarkerResolution {
-    IMarker marker;
-    Class<? extends ASTNode> clazz;
-    String label;
-
-    public Enclosure(final Class<? extends ASTNode> clazz, final String label) {
-      this.clazz = clazz;
-      this.label = label;
-    }
-
-    @Override public String getLabel() {
-      return label;
-    }
-
-    @Override public Range getSelection(final ICompilationUnit u) {
-      final ASTNode n = eclipse.getNodeByMarker(u, marker);
-      if (n == null)
-        return new Range(0, 0); // TODO Ori: replace with empty range
-      final ASTNode a = searchAncestors.forClass(clazz).from(n);
-      return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
-          : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());
-    }
-
-    @Override public boolean isRepeating() {
-      return false;
-    }
-
-    @Override public void run(final IMarker m) {
-      marker = m;
-      try {
-        execute();
-      } catch (final ExecutionException x) {
-        // TODO Ori: log it
-        x.printStackTrace();
-      }
-    }
-  }
 }

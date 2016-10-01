@@ -20,25 +20,6 @@ public final class CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static CSVStatistics output = init();
 
-  public static void main(final String[] where) {
-    go(where.length != 0 ? where : new String[] { "." });
-    System.err.println("Your output should be here: " + output.close());
-  }
-
-  static CompilationUnit spartanize(final CompilationUnit before) {
-    final Trimmer tr = new Trimmer();
-    assert tr != null;
-    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
-    tr.setICompilationUnit($);
-    assert $ != null;
-    try {
-      tr.checkAllConditions(null);
-    } catch (OperationCanceledException | CoreException e) {
-      e.printStackTrace();
-    }
-    return before;
-  }
-
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -67,6 +48,11 @@ public final class CollectClassMetrics {
     }
   }
 
+  public static void main(final String[] where) {
+    go(where.length != 0 ? where : new String[] { "." });
+    System.err.println("Your output should be here: " + output.close());
+  }
+
   /** fault, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on
@@ -91,5 +77,19 @@ public final class CollectClassMetrics {
     output.put(prefix + "Imports", metrics.countImports(¢));
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
     output.nl();
+  }
+
+  static CompilationUnit spartanize(final CompilationUnit before) {
+    final Trimmer tr = new Trimmer();
+    assert tr != null;
+    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    tr.setICompilationUnit($);
+    assert $ != null;
+    try {
+      tr.checkAllConditions(null);
+    } catch (OperationCanceledException | CoreException e) {
+      e.printStackTrace();
+    }
+    return before;
   }
 }
