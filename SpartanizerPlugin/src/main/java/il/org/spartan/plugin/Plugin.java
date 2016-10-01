@@ -31,6 +31,18 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     startSpartan();
   }
 
+  @Override public void start(final BundleContext ¢) throws Exception {
+    super.start(¢);
+    LoggingManner.info("START: spartnizer");
+    startSpartan();
+  }
+
+  @Override public void stop(final BundleContext ¢) throws Exception {
+    LoggingManner.info("STOP: spartnizer");
+    plugin = null;
+    super.stop(¢);
+  }
+
   @Override protected void loadDialogSettings() {
     LoggingManner.info("LDS: spartanizer");
     super.loadDialogSettings();
@@ -44,17 +56,5 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   @Override protected void saveDialogSettings() {
     LoggingManner.info("SDS: spartanizer");
     super.saveDialogSettings();
-  }
-
-  @Override public void start(final BundleContext ¢) throws Exception {
-    super.start(¢);
-    LoggingManner.info("START: spartnizer");
-    startSpartan();
-  }
-
-  @Override public void stop(final BundleContext ¢) throws Exception {
-    LoggingManner.info("STOP: spartnizer");
-    plugin = null;
-    super.stop(¢);
   }
 }

@@ -6,6 +6,16 @@ import il.org.spartan.plugin.PreferencesResources.*;
  * @author Yossi Gil
  * @year 2016 */
 public interface TipperCategory {
+  String description();
+
+  /** Returns the preference group to which the tipper belongs to. This method
+   * should be overridden for each tipper and should return one of the values of
+   * {@link WringGroup}
+   * @return preference group this tipper belongs to */
+  default WringGroup wringGroup() {
+    return WringGroup.find(this);
+  }
+
   interface Abbreviation extends Nominal {
     final String label = "Abbreviation";
 
@@ -132,15 +142,5 @@ public interface TipperCategory {
     @Override default String description() {
       return label;
     }
-  }
-
-  String description();
-
-  /** Returns the preference group to which the tipper belongs to. This method
-   * should be overridden for each tipper and should return one of the values of
-   * {@link WringGroup}
-   * @return preference group this tipper belongs to */
-  default WringGroup wringGroup() {
-    return WringGroup.find(this);
   }
 }

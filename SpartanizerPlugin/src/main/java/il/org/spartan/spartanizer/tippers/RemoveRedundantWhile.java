@@ -19,6 +19,14 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> imp
     return true;
   }
 
+  @Override public String description(final WhileStatement ¢) {
+    return "remove :" + ¢;
+  }
+
+  @Override public ASTNode replacement(final WhileStatement ¢) {
+    return ¢ == null || haz.sideEffects(¢.getExpression()) || !checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
+  }
+
   private boolean checkBlock(final ASTNode n) {
     if (n != null
         && (iz.expression(n) && haz.sideEffects(az.expression(n))
@@ -32,13 +40,5 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> imp
             || !iz.isVariableDeclarationStatement(¢) || !checkVariableDecleration(az.variableDeclrationStatement(¢)))
           return false;
     return true;
-  }
-
-  @Override public String description(final WhileStatement ¢) {
-    return "remove :" + ¢;
-  }
-
-  @Override public ASTNode replacement(final WhileStatement ¢) {
-    return ¢ == null || haz.sideEffects(¢.getExpression()) || !checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 }

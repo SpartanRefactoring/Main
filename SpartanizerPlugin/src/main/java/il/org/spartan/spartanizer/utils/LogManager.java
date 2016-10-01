@@ -36,16 +36,16 @@ public final class LogManager {
     // printWriter = new Writer();
   }
 
-  private static void initializeWriters() {
-    logWriter = new LogWriter(logDir);
-  }
-
   public static boolean isActive() {
     return ACTIVE;
   }
 
   public static void setLogDir(final String dir) {
     logDir = dir;
+  }
+
+  private static void initializeWriters() {
+    logWriter = new LogWriter(logDir);
   }
 
   public LogManager(final String dir) {

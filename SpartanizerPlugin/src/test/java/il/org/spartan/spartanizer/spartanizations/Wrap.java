@@ -72,14 +72,6 @@ public enum Wrap {
     this.after = after;
   }
 
-  private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap);
-    final String essence = essence(inner);
-    final String essence2 = essence(off);
-    assert essence2 != null;
-    return essence2.contains(essence);
-  }
-
   /** Wrap a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    * @param codeFragment JD
@@ -109,5 +101,13 @@ public enum Wrap {
    * @return wrapped phrase */
   public final String on(final String codeFragment) {
     return before + codeFragment + after;
+  }
+
+  private boolean contains(final String wrap, final String inner) {
+    final String off = off(wrap);
+    final String essence = essence(inner);
+    final String essence2 = essence(off);
+    assert essence2 != null;
+    return essence2.contains(essence);
   }
 }

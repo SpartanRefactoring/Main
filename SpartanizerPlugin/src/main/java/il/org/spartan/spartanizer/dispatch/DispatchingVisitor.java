@@ -14,16 +14,6 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   protected final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
-  private boolean cautiousGo(final ASTNode ¢) {
-    return !exclude.isExcluded(¢) && go(¢);
-  }
-
-  protected abstract <N extends ASTNode> boolean go(final N n);
-
-  protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
-    // overridden
-  }
-
   @Override public void preVisit(final ASTNode ¢) {
     if (initialized)
       return;
@@ -129,5 +119,15 @@ public abstract class DispatchingVisitor extends ASTVisitor {
 
   @Override public final boolean visit(final WhileStatement ¢) {
     return cautiousGo(¢);
+  }
+
+  protected abstract <N extends ASTNode> boolean go(final N n);
+
+  protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
+    // overridden
+  }
+
+  private boolean cautiousGo(final ASTNode ¢) {
+    return !exclude.isExcluded(¢) && go(¢);
   }
 }
