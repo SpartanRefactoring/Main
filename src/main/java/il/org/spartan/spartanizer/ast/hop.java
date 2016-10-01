@@ -82,7 +82,7 @@ public interface hop {
         return $;
     return null;
   }
-  
+
   /** @param n the node from which to extract the proper fragment
    * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or

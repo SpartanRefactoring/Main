@@ -39,6 +39,16 @@ public enum extract {
     return annotations(step.extendedModifiers(¢));
   }
 
+  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
+    final ArrayList<Annotation> $ = new ArrayList<>();
+    for (final IExtendedModifier ¢ : ms) {
+      final Annotation a = az.annotation(¢);
+      if (a != null)
+        $.add(a);
+    }
+    return $;
+  }
+
   public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(step.extendedModifiers(¢));
   }
@@ -97,6 +107,18 @@ public enum extract {
     }
   }
 
+  private static String category(final TypeDeclaration ¢) {
+    final StringBuilder $ = new StringBuilder();
+    if (!¢.isPackageMemberTypeDeclaration())
+      $.append("internal ");
+    if (¢.isMemberTypeDeclaration())
+      $.append("member ");
+    if (¢.isLocalTypeDeclaration())
+      $.append("local ");
+    $.append(!¢.isInterface() ? "class" : "interface");
+    return $ + "";
+  }
+
   /** Peels any parenthesis that may wrap an {@Link Expression}
    * @param $ JD
    * @return the parameter if not parenthesized, or the unparenthesized this
@@ -151,12 +173,75 @@ public enum extract {
     findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
+  /** Extract list of fragments in a {@link Statement}.
+   * @param ¢ JD
+   * @return reference to the list of fragments in the argument */
+  public static List<VariableDeclarationFragment> fragments(final Statement ¢) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    switch (¢.getNodeType()) {
+      case BLOCK:
+        return fragmentsInto((Block) ¢, $);
+      case VARIABLE_DECLARATION_STATEMENT:
+        $.addAll(step.fragments(az.variableDeclrationStatement(¢)));
+        return $;
+      default:
+        return $;
+    }
+  }
+
+  private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
+    for (final Statement ¢ : step.statements(b))
+      if (iz.variableDeclarationStatement(¢))
+        extract.fragmentsInto(az.variableDeclrationStatement(¢), $);
+    return $;
+  }
+
+  private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+      $.add(¢);
+    return $;
+  }
+
+  private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
+    for (final Statement ¢ : step.statements(b))
+      ifsInto(¢, $);
+    return $;
+  }
+
+  private static List<IfStatement> ifsInto(final Statement ¢, final List<IfStatement> $) {
+    switch (¢.getNodeType()) {
+      case IF_STATEMENT:
+        $.add(az.ifStatement(¢));
+        return $;
+      case BLOCK:
+        return ifsInto((Block) ¢, $);
+      default:
+        return $;
+    }
+  }
+
   /** Extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link IfStatement} embedded in the parameter or
    *         <code><b>null</b></code> if not such sideEffects exists. */
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
+  }
+
+  /** Extract list of {@link IfStatement}s in a {@link Statement}.
+   * @param ¢ JD
+   * @return reference to the list of fragments in the argument */
+  public static List<IfStatement> ifStatements(final Statement ¢) {
+    final List<IfStatement> $ = new ArrayList<>();
+    switch (¢.getNodeType()) {
+      case BLOCK:
+        return ifsInto((Block) ¢, $);
+      case IF_STATEMENT:
+        $.add((IfStatement) ¢);
+        return $;
+      default:
+        return $;
+    }
   }
 
   /** @param pattern JD
@@ -221,6 +306,13 @@ public enum extract {
             + fault.done();
         return ¢.getClass().getSimpleName();
     }
+  }
+
+  private static Statement next(final Statement s, final List<Statement> ss) {
+    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
+      if (ss.get(¢) == s)
+        return ss.get(¢ + 1);
+    return null;
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -347,6 +439,24 @@ public enum extract {
         extract.statementsInto((Statement) ¢, $);
   }
 
+  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
+    for (final Statement ¢ : step.statements(b))
+      statementsInto(¢, $);
+    return $;
+  }
+
+  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
+    switch (¢.getNodeType()) {
+      case EMPTY_STATEMENT:
+        return $;
+      case BLOCK:
+        return statementsInto((Block) ¢, $);
+      default:
+        $.add(¢);
+        return $;
+    }
+  }
+
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression or return statement or
    *         the expression if they are */
@@ -375,117 +485,6 @@ public enum extract {
         return type(az.variableDeclrationFragment($).getParent());
       default:
         return null;
-    }
-  }
-
-  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : ms) {
-      final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
-  }
-
-  private static String category(final TypeDeclaration ¢) {
-    final StringBuilder $ = new StringBuilder();
-    if (!¢.isPackageMemberTypeDeclaration())
-      $.append("internal ");
-    if (¢.isMemberTypeDeclaration())
-      $.append("member ");
-    if (¢.isLocalTypeDeclaration())
-      $.append("local ");
-    $.append(!¢.isInterface() ? "class" : "interface");
-    return $ + "";
-  }
-
-  private static Statement next(final Statement s, final List<Statement> ss) {
-    for (int ¢ = 0; ¢ < ss.size() - 1; ++¢)
-      if (ss.get(¢) == s)
-        return ss.get(¢ + 1);
-    return null;
-  }
-
-  private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement ¢ : step.statements(b))
-      statementsInto(¢, $);
-    return $;
-  }
-
-  private static List<Statement> statementsInto(final Statement ¢, final List<Statement> $) {
-    switch (¢.getNodeType()) {
-      case EMPTY_STATEMENT:
-        return $;
-      case BLOCK:
-        return statementsInto((Block) ¢, $);
-      default:
-        $.add(¢);
-        return $;
-    }
-  }
-
-  private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
-    for (final Statement ¢ : step.statements(b))
-      ifsInto(¢, $);
-    return $;
-  }
-
-  private static List<IfStatement> ifsInto(final Statement ¢, final List<IfStatement> $) {
-    switch (¢.getNodeType()) {
-      case IF_STATEMENT:
-        $.add(az.ifStatement(¢));
-        return $;
-      case BLOCK:
-        return ifsInto((Block) ¢, $);
-      default:
-        return $;
-    }
-  }
-
-  
-  private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    for (final Statement ¢ : step.statements(b))
-      if (iz.variableDeclarationStatement(¢))
-        extract.fragmentsInto(az.variableDeclrationStatement(¢), $);
-    return $;
-  }
-
-  private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      $.add(¢);
-    return $;
-  }
-
-  /** Extract list of fragments in a {@link Statement}.
-   * @param ¢ JD
-   * @return reference to the list of fragments in the argument */
-  public static List<VariableDeclarationFragment> fragments(final Statement ¢) {
-    List<VariableDeclarationFragment> $ = new ArrayList<>();
-    switch (¢.getNodeType()) {
-      case BLOCK:
-        return fragmentsInto((Block) ¢, $);
-      case VARIABLE_DECLARATION_STATEMENT:
-        $.addAll(step.fragments(az.variableDeclrationStatement(¢)));
-        return $;
-      default:
-        return $;
-    }
-  }
-
-  /** Extract list of {@link IfStatement}s in a {@link Statement}.
-   * @param ¢ JD
-   * @return reference to the list of fragments in the argument */
-  public static List<IfStatement> ifStatements(final Statement ¢) {
-    List<IfStatement> $ = new ArrayList<>();
-    switch (¢.getNodeType()) {
-      case BLOCK:
-        return ifsInto((Block) ¢, $);
-      case IF_STATEMENT:
-        $.add((IfStatement) ¢);
-        return $;
-      default:
-        return $;
     }
   }
 }

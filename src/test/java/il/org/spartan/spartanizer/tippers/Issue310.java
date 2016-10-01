@@ -33,25 +33,22 @@ import org.junit.runners.*;
   @Test public void updaters_for_2() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for (;p != null;) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
-    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
-        + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
-    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p) || ens.contains(p))" + "return true;"
-            + "p = p.getParent();" + "}" + "return false;" + "}")
-    .stays();
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
+                + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p) || ens.contains(p))"
+                + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
+            .stays();
   }
 
   @Test public void updaters_for_3a() {
     trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;x = 5;}").stays();
   }
-  
+
   @Test public void updaters_for_3b() {
-    trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;}")
-    .gives("for (int i = 0; i < 10;) {i += 1;}")
-    .gives("for (int ¢ = 0; ¢ < 10;){¢ += 1;}")
-    .gives("for (int ¢ = 0; ¢ < 10;)¢ += 1;")
-    .stays();
+    trimmingOf("for (int i = 0; i < 10;) {int x = 1;i += x;}").gives("for (int i = 0; i < 10;) {i += 1;}").gives("for (int ¢ = 0; ¢ < 10;){¢ += 1;}")
+        .gives("for (int ¢ = 0; ¢ < 10;)¢ += 1;").stays();
   }
-  
+
   @Test public void updaters_for_4() {
     trimmingOf("public boolean check(final ASTNode n) {" + "for(ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;++j;"
         + "}" + "return false;" + "}")
@@ -65,11 +62,8 @@ import org.junit.runners.*;
   }
 
   @Test public void updaters_ordering_check_1_b() {
-    trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}")
-    .gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}")
-    .gives("for(int ¢ = 0;;++¢) {arr[¢] = 0;}")
-    .gives("for(int ¢ = 0;;++¢) arr[¢] = 0;")
-    .stays();
+    trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}").gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}").gives("for(int ¢ = 0;;++¢) {arr[¢] = 0;}")
+        .gives("for(int ¢ = 0;;++¢) arr[¢] = 0;").stays();
   }
 
   @Test public void updaters_ordering_check_2_right() {
@@ -95,11 +89,11 @@ import org.junit.runners.*;
   @Test public void updaters_while_2() {
     trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;"
         + "if (ens.contains(p))" + "return true;" + "p = p.getParent();" + "}" + "return false;" + "}")
-    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
-        + "if (ens.contains(p))" + "return true;" + "p = p.getParent();}" + "return false;" + "}")        
-    .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p) || ens.contains(p))" + "return true;"
-                + "p = p.getParent();}" + "return false;" + "}")
-    .stays();
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;"
+                + "if (ens.contains(p))" + "return true;" + "p = p.getParent();}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p) || ens.contains(p))"
+                + "return true;" + "p = p.getParent();}" + "return false;" + "}")
+            .stays();
   }
 
   @Test public void updaters_while_3() {
