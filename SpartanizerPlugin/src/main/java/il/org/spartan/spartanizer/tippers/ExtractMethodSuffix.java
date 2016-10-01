@@ -133,6 +133,9 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return true;
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   private static void setUsesMapping(final Map<VariableDeclaration, List<Statement>> m, final VariableDeclaration d, final List<Statement> ss,
       final int starting) {
     for (int ¢ = starting; ¢ < ss.size(); ++¢)
