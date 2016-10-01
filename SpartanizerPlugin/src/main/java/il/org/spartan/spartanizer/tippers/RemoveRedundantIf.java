@@ -15,6 +15,22 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implements TipperCategory.Collapse {
+  private static boolean checkBlock(final ASTNode n) {
+    if (n != null
+        && (iz.expression(n) && haz.sideEffects(az.expression(n))
+            || iz.expressionStatement(n) && haz.sideEffects(az.expressionStatement(n).getExpression())) //
+        || !iz.block(n) && !iz.isVariableDeclarationStatement(n) //
+        || iz.variableDeclarationStatement(n) && !checkVariableDecleration(az.variableDeclrationStatement(n)))
+      return false;
+    if (iz.block(n))
+      for (final Statement ¢ : statements(az.block(n)))
+        if (iz.expressionStatement(¢) && haz.sideEffects(az.expression(az.expressionStatement(¢).getExpression()))
+            || !iz.isVariableDeclarationStatement(¢)
+            || iz.variableDeclarationStatement(¢) && !checkVariableDecleration(az.variableDeclrationStatement(¢)))
+          return false;
+    return true;
+  }
+
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
@@ -35,21 +51,5 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
     return condition && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
         : !condition || !then || elze || s.getElseStatement() == null ? null
             : subject.pair(duplicate.of(s.getElseStatement()), null).toNot(duplicate.of(s.getExpression()));
-  }
-
-  private boolean checkBlock(final ASTNode n) {
-    if (n != null
-        && (iz.expression(n) && haz.sideEffects(az.expression(n))
-            || iz.expressionStatement(n) && haz.sideEffects(az.expressionStatement(n).getExpression())) //
-        || !iz.block(n) && !iz.isVariableDeclarationStatement(n) //
-        || iz.variableDeclarationStatement(n) && !checkVariableDecleration(az.variableDeclrationStatement(n)))
-      return false;
-    if (iz.block(n))
-      for (final Statement ¢ : statements(az.block(n)))
-        if (iz.expressionStatement(¢) && haz.sideEffects(az.expression(az.expressionStatement(¢).getExpression()))
-            || !iz.isVariableDeclarationStatement(¢)
-            || iz.variableDeclarationStatement(¢) && !checkVariableDecleration(az.variableDeclrationStatement(¢)))
-          return false;
-    return true;
   }
 }

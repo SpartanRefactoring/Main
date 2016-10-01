@@ -6,8 +6,8 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase. Generally here comes all the checks, and coercions related to
- * tips ordering and collisions.
+ * read like a sentence phrase. Generally here comes all the checks, and
+ * coercions related to tips ordering and collisions.
  * @author Alex Kopzon
  * @since 2.5 */
 public enum cantTip {
