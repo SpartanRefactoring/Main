@@ -42,12 +42,13 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return az.variableDeclarationExpression(findFirst.elementOf(step.initializers(¢)));
   }
 
+  // TODO: Erase this function
   private static Statement lastStatement(final ForStatement ¢) {
     return az.asStatement(hop.lastStatement(step.body(¢)));
   }
 
   /** @param ¢ JD
-   * @return converssion of {@link Statement}, which is previous to the
+   * @return conversion of {@link Statement}, which is previous to the
    *         firstLastStatement in the loop body. */
   private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
     final ASTNode n = hop.firstLastStatement(step.body(¢));
@@ -64,7 +65,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public String description(final ForStatement ¢) {
-    return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
+    return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {

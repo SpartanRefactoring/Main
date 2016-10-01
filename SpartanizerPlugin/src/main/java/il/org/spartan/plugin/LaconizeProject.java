@@ -27,11 +27,10 @@ public final class LaconizeProject extends BaseHandler {
     try {
       PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
         pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-        for (final GUI$Applicator ¢ : eclipse.safeApplicators) {
-          ¢.setMarker(null);
-          ¢.setICompilationUnit(u);
-          $.addAndGet(¢.countTips());
-        }
+        GUI$Applicator ¢ = new Trimmer();
+        ¢.setMarker(null);
+        ¢.setICompilationUnit(u);
+        $.addAndGet(¢.countTips());
         pm.done();
       });
     } catch (InvocationTargetException | InterruptedException x) {
