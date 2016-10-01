@@ -23,6 +23,24 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
+  interface literal {
+    /** @param ¢ JD
+     * @return true if the given node is a literal false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return true if the given node is a literal true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
+    }
+  }
+
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -769,6 +787,17 @@ public interface iz {
     return is(¢, TRY_STATEMENT);
   }
 
+  /** @param ¢ JD
+   * @return true iff the statement is side effect and updating an initializer
+   *         from the for initializers. returns false if the parent is not a for
+   *         loop. */
+  static boolean usingForInitializer(final Statement ¢) {
+    final ForStatement parent = az.forStatement(¢.getParent());
+    if (parent == null)
+      return false;
+    return true;
+  }
+
   /** Determine whether a given {@link Statement} is an {@link EmptyStatement}
    * or has nothing but empty sideEffects in it.
    * @param subject JD
@@ -850,36 +879,6 @@ public interface iz {
     } catch (final IllegalArgumentException x) {
       LoggingManner.logEvaluationError(this, x);
       return false;
-    }
-  }
-
-  /**
-   * @param ¢ JD
-   * @return true iff the statement is side effect and updating an initializer from the for initializers.
-   * returns false if the parent is not a for loop.
-   */
-  static boolean usingForInitializer(Statement ¢) {
-    ForStatement parent = az.forStatement(¢.getParent());
-    if (parent == null)
-      return false;
-    return true;
-  }
-  
-  interface literal {
-    /** @param ¢ JD
-     * @return true if the given node is a literal false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return true if the given node is a literal true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
     }
   }
 }
