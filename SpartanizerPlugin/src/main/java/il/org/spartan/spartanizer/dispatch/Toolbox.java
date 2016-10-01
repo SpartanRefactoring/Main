@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -76,13 +77,13 @@ public class Toolbox {
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            //new ForToForUpdaters(), //
+            // new ForToForUpdaters(), //
             new RemoveRedundentFor(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            //new WhileToForUpdaters(), //
+            // new WhileToForUpdaters(), //
             new RemoveRedundantWhile(), //
             null) //
         .add(Assignment.class, //
@@ -226,8 +227,8 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-            //new WhileToForInitializers(), //
-            //new ForToForInitializers(), //
+            // new WhileToForInitializers(), //
+            // new ForToForInitializers(), //
             null) //
     //
     ;
