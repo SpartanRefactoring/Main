@@ -54,6 +54,8 @@ public final class TipperCommit {
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+    if (w == null)
+      return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
@@ -66,13 +68,18 @@ public final class TipperCommit {
 
   public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
-    assert cu != null;
+    if (cu == null)
+      return;
     final List<ICompilationUnit> us = eclipse.facade.compilationUnits();
-    assert us != null;
+    if (us == null)
+      return;
     pm.beginTask("Spartanizing project", us.size());
     final IJavaProject jp = cu.getJavaProject();
     final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    assert w != null;
+    if (w == null) {
+      pm.done();
+      return;
+    }
     for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
