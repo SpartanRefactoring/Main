@@ -17,7 +17,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static Statement dupForBody(final ForStatement ¢) {
-    return duplicate.of(¢.getBody());
+    return duplicate.of(step.body(¢));
   }
 
   private static Expression dupWhileStatement(final ForStatement ¢) {
@@ -25,29 +25,32 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static ASTNode firstLastStatement(final ForStatement ¢) {
-    return hop.firstLastStatement(¢.getBody());
+    return hop.firstLastStatement(step.body(¢));
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    return !new ForRenameInitializerToCent().canTip(forExpression(¢))
-        && !new DeclarationInitializerStatementTerminatingScope().canTip(prevToFirstLastExpressionFragment(¢)) && ¢ != null
-        && (iz.assignment(lastStatement(¢)) || iz.incrementOrDecrement(lastStatement(¢)) || haz.sideEffects(lastStatement(¢)))
-        && !iz.containsContinueStatement(¢.getBody());
+    return cantTip.declarationInitializerStatementTerminatingScope(¢)
+        && cantTip.forRenameInitializerToCent(¢) && ¢ != null
+        && !iz.containsContinueStatement(step.body(¢));
   }
 
+  private static boolean statementFitts(final Statement ¢) {
+    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
+  }
+  
   private static VariableDeclarationExpression forExpression(final ForStatement ¢) {
     return az.variableDeclarationExpression(findFirst.elementOf(step.initializers(¢)));
   }
 
   private static Statement lastStatement(final ForStatement ¢) {
-    return az.asStatement(hop.lastStatement(¢.getBody()));
+    return az.asStatement(hop.lastStatement(step.body(¢)));
   }
 
   /** @param ¢ JD
    * @return converssion of {@link Statement}, which is previous to the
    *         firstLastStatement in the loop body. */
   private static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    final ASTNode n = hop.firstLastStatement(¢.getBody());
+    final ASTNode n = hop.firstLastStatement(step.body(¢));
     if (n == null)
       return null;
     final Statement current = az.asStatement(n);
@@ -65,7 +68,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(¢.getBody());
+    return ¢ != null && !iz.containsContinueStatement(step.body(¢));
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {

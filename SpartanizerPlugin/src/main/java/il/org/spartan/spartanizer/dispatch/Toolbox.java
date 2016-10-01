@@ -94,13 +94,13 @@ public class Toolbox {
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ForToForUpdaters(), //
+            //new ForToForUpdaters(), //
             new RemoveRedundentFor(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            new WhileToForUpdaters(), //
+            //new WhileToForUpdaters(), //
             new RemoveRedundantWhile(), //
             null) //
         .add(Assignment.class, //
@@ -244,8 +244,8 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-            new WhileToForInitializers(), //
-            new ForToForInitializers(), //
+            //new WhileToForInitializers(), //
+            //new ForToForInitializers(), //
             null) //
     //
     ;
