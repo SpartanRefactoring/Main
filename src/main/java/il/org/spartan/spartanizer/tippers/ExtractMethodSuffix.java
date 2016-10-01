@@ -120,13 +120,16 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return ss.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * ss.size()) + 1, ss.size()));
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = new LinkedList<>();
     for (final VariableDeclaration ¢ : ds)
-      ts.add((iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType()
-          : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
+      ts.add((iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(¢.getParent()).getType())
+          + "");
     for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
