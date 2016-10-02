@@ -62,9 +62,9 @@ public enum sideEffects {
   }
 
   public static boolean free(final Expression ¢) {
-    if (¢ == null || iz.is(¢, alwaysFree))
+    if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))
       return true;
-    if (iz.is(¢, alwaysHave))
+    if (iz.nodeTypeIn(¢, alwaysHave))
       return false;
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:
