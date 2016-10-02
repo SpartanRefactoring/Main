@@ -50,10 +50,10 @@ public final class TipsOnOffToggle extends AbstractHandler {
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(final ExecutionEvent e) {
-    IEditorPart ep = HandlerUtil.getActiveEditor(e);
+    final IEditorPart ep = HandlerUtil.getActiveEditor(e);
     if (ep == null)
       return null;
-    IEditorInput i = ep.getEditorInput();
+    final IEditorInput i = ep.getEditorInput();
     if (i == null)
       return null;
     if (i instanceof IFileEditorInput) {
@@ -61,8 +61,8 @@ public final class TipsOnOffToggle extends AbstractHandler {
       if (p != null)
         try {
           toggleNature(p, !p.hasNature(Nature.NATURE_ID));
-        } catch (CoreException x) {
-          // TODO Ori: log it 
+        } catch (final CoreException x) {
+          // TODO Ori: log it
           x.printStackTrace();
         }
     }

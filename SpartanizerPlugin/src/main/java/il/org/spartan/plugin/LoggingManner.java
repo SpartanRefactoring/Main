@@ -56,7 +56,7 @@ public enum LoggingManner {
    * @param x JD */
   public static void logCancellationRequest(final Object o, final Exception x) {
     now.log(//
-        "An instane of " + o.getClass().getSimpleName() + //
+        "An instance of " + o.getClass().getSimpleName() + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
@@ -65,7 +65,7 @@ public enum LoggingManner {
 
   public static void logEvaluationError(final Object o, final Exception x) {
     System.err.println(//
-        "An instane of " + o.getClass().getSimpleName() + //
+        "An instance of " + o.getClass().getSimpleName() + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
             "\n      exeption, probably due to unusual " + //
             "\n      Java constructs in the input " + //
@@ -75,7 +75,7 @@ public enum LoggingManner {
 
   public static void logProbableBug(final Object o, final Throwable t) {
     now.log(//
-        "An instane of " + o.getClass().getSimpleName() + //
+        "An instance of " + o.getClass().getSimpleName() + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + t + "'" + //
