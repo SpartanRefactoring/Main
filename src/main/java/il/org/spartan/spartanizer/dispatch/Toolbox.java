@@ -27,7 +27,7 @@ public class Toolbox {
               monitor.debug("Found for " + nodeClassForType);
               put(nodeClassForType, Integer.valueOf(nodeType));
             } catch (final IllegalArgumentException x) {
-              monitor.logEvaluationError(this, x);
+              monitor.debug(this, x);
               break;
             } catch (final Exception x) {
               monitor.logEvaluationError(this, x);

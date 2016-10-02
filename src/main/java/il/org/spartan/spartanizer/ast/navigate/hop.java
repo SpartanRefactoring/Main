@@ -45,7 +45,7 @@ public interface hop {
    *         type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
-      if (iz.is($//
+      if (iz.nodeTypeIn($//
           , ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //

@@ -14,10 +14,10 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] args) {
-    if (args.length == 0)
-      System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
-    else
+    if (args.length != 0)
       BatchSpartanizer.main(args);
+    else
+      System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
   }
 
   static String read() {
