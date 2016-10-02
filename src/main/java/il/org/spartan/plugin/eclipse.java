@@ -43,10 +43,10 @@ public enum eclipse {
     p.setDescription(d, null);
   }
   static final Shell parent = null;
-  static final int shellStyle = SWT.TOOL | SWT.ON_TOP | SWT.RESIZE;
+  static final int shellStyle = SWT.TOOL;
   static final boolean takeFocusOnOpen = false;
-  static final boolean persistSize = true;
-  static final boolean persistLocation = true;
+  static final boolean persistSize = false;
+  static final boolean persistLocation = false;
   static final boolean showDialogMenu = true;
   private static boolean showPersistActions;
   static Void announce(final Object message) {
