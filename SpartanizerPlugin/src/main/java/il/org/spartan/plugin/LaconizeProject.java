@@ -62,7 +62,7 @@ public final class LaconizeProject extends BaseHandler {
     return go();
   }
 
-  public Void go() throws ExecutionException {
+  public Void go() {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");

@@ -211,9 +211,8 @@ public final class SingleTipperApplicator {
             Tip make = null;
             try {
               make = x.tip(n, exclude);
-            } catch (final TipperFailure e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
+            } catch (final TipperFailure f) {
+              monitor.debug(this, f);
             }
             if (make != null) {
               if (LogManager.isActive())
