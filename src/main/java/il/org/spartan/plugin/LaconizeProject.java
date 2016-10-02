@@ -104,15 +104,15 @@ public final class LaconizeProject extends BaseHandler {
       if (cancelled.get() || todo.isEmpty())
         break;
     }
-    if (i == MAX_PASSES)
-      throw new ExecutionException(status + "Too many iterations");
     final int finalCount = countTips(currentCompilationUnit);
-    return eclipse.announce(status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
+    return eclipse.announce(//
+        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
         "Completed in " + (1 + i) + " passes. \n" + //
-        "Total changes: " + (initialCount - finalCount) + "\n" + //
+        (i >= MAX_PASSES ?  "   === too many passes\n" : "") + //
+        "Tips followed: " + (initialCount - finalCount) + "\n" + //
         "Tips before: " + initialCount + "\n" + //
-        "Tips after: " + finalCount + "\n" + //
-        status);
+        "Tips after: " + finalCount + "\n" //
+        );
   }
 
   public void start() {
