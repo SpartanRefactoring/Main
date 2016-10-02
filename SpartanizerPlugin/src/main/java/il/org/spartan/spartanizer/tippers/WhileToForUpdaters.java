@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
   @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
-    ForStatement $ = ¢.getAST().newForStatement();
+    final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(dupWhileExpression(¢));
     $.updaters().add(updaterFromBody(¢));
     $.setBody(minus.lastStatement(dupWhileBody(¢)));
@@ -26,23 +26,24 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
     return duplicate.of(¢.getExpression());
   }
 
-  private static Expression updaterFromBody(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(hop.lastStatement(step.body(¢))).getExpression());
-  }
-
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
+    return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢)
+        && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    Block bodyBlock = az.block(step.body(¢));
+    final Block bodyBlock = az.block(step.body(¢));
     return iz.incrementOrDecrement(lastStatement(¢)) && bodyBlock != null && step.statements(az.block(step.body(¢))).size() >= 2;
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
     return hop.lastStatement(step.body(¢));
   }
-  
+
+  private static Expression updaterFromBody(final WhileStatement ¢) {
+    return duplicate.of(az.expressionStatement(hop.lastStatement(step.body(¢))).getExpression());
+  }
+
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
