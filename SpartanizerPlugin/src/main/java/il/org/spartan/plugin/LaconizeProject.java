@@ -8,6 +8,7 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
+import org.eclipse.ui.internal.handlers.WizardHandler.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,6 +19,11 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2015/08/01 */
 public final class LaconizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
+  private final StringBuilder status = new StringBuilder();
+  private ICompilationUnit currentCompilationUnit;
+  private IJavaProject javaProject;
+  private List<ICompilationUnit> todo;
+  private int initialCount;
 
   /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
@@ -50,20 +56,30 @@ public final class LaconizeProject extends BaseHandler {
   }
 
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
-    final StringBuilder message = new StringBuilder();
-    final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
-    final IJavaProject javaProject = currentCompilationUnit.getJavaProject();
-    message.append("starting at " + currentCompilationUnit.getElementName() + "\n");
-    final List<ICompilationUnit> us = eclipse.facade.compilationUnits(currentCompilationUnit);
-    message.append("found " + us.size() + " compilation units \n");
-    final IWorkbench wb = PlatformUI.getWorkbench();
-    final int initialCount = countTips(currentCompilationUnit);
-    message.append("with " + initialCount + " tips");
+    status.setLength(0);
+    return go();
+  }
+  
+  public void start() {
+    currentCompilationUnit = eclipse.currentCompilationUnit();
+    status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
+    javaProject = currentCompilationUnit.getJavaProject();
+    status.append("Java project is: " + javaProject + "\n");
+    todo = eclipse.facade.compilationUnits(currentCompilationUnit);
+    status.append("Found " + todo.size() + " compilation units, ");
+    initialCount = countTips(currentCompilationUnit);
+    status.append("with " + initialCount + " tips.\n");
+  }
+
+  public Void go() throws ExecutionException {
+    start();
     if (initialCount == 0)
-      return eclipse.announce("No tips for '" + javaProject.getElementName() + "' project\n" + message);
-    eclipse.announce(message);
+      return eclipse.announce(status + "No tips for '" + javaProject.getElementName() + "' project\n" + status);
+    eclipse.announce(status);
+
     final GUI$Applicator a = new Trimmer();
     int i;
+    final IWorkbench wb = PlatformUI.getWorkbench();
     for (i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
@@ -73,20 +89,22 @@ public final class LaconizeProject extends BaseHandler {
           // a.setProgressMonitor(pm);
           pm.beginTask(
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
-              us.size());
+              todo.size());
           int n = 0;
           final List<ICompilationUnit> dead = new ArrayList<>();
-          for (final ICompilationUnit ¢ : us) {
+          for (final ICompilationUnit ¢ : todo) {
             if (pm.isCanceled()) {
               cancelled.set(true);
               break;
             }
             pm.worked(1);
-            pm.subTask("Compilation unit #" + ++n + "/" + us.size() + " (" + ¢.getElementName() + ")");
+            pm.subTask("Compilation unit #" + ++n + "/" + todo.size() + " (" + ¢.getElementName() + ")");
             if (!a.apply(¢))
               dead.add(¢);
           }
-          us.removeAll(dead);
+          if (dead.size() == 0)
+            status.append(dead.size() + " compilation  units remain unchanged; will not be processed again\n");
+          todo.removeAll(dead);
           pm.done();
         });
       } catch (final InvocationTargetException x) {
@@ -94,14 +112,14 @@ public final class LaconizeProject extends BaseHandler {
       } catch (final InterruptedException x) {
         LoggingManner.logEvaluationError(this, x);
       }
-      if (cancelled.get() || us.isEmpty())
+      if (cancelled.get() || todo.isEmpty())
         break;
     }
     if (i == MAX_PASSES)
-      throw new ExecutionException("Too many iterations");
+      throw new ExecutionException(status + "Too many iterations");
     final int finalCount = countTips(currentCompilationUnit);
     return eclipse
-        .announce("Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
-            + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + message);
+        .announce(status + "Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
+            + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + status);
   }
 }
