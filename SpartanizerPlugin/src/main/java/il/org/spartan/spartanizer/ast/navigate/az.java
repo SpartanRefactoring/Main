@@ -1,17 +1,18 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.create.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.create.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should

@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.ast.create;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 

@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.junit.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -77,7 +78,7 @@ public final class izTest {
   }
 
   @Test public void isOneOf() {
-    int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION };
+    final int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION };
     azzert.that(iz.nodeTypeIn(e("this"), types), is(true));
   }
 

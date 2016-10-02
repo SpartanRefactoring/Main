@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.ast.create;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 

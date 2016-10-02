@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.ast.create;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
