@@ -1,14 +1,13 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
@@ -168,13 +167,13 @@ public interface metrics {
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
-        if (iz.is(¢, BLOCK)) {
+        if (iz.nodeTypeEquals(¢, BLOCK)) {
           if (extract.statements(¢).size() > 1)
             ++a.inner;
-        } else if (!iz.is(¢, EMPTY_STATEMENT))
-          if (iz.is(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT))
+        } else if (!iz.nodeTypeEquals(¢, EMPTY_STATEMENT))
+          if (iz.nodeTypeIn(¢, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT))
             a.inner += 4;
-          else if (!iz.is(¢, IF_STATEMENT))
+          else if (!iz.nodeTypeEquals(¢, IF_STATEMENT))
             a.inner += 3;
           else {
             a.inner += 4;

@@ -8,7 +8,7 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) @Ignore public final class GuessedContextTest {

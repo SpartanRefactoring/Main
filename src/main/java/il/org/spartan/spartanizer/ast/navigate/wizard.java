@@ -1,6 +1,7 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -13,11 +14,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.iz.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -324,7 +323,7 @@ public interface wizard {
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a
-   *         {@link il.org.spartan.spartanizer.assemble.duplicate#duplicate(Expression)}
+   *         {@link il.org.spartan.spartanizer.ast.create.duplicate#duplicate(Expression)}
    *         of the parameter wrapped in parenthesis. */
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? duplicate.of(¢) : make.parethesized(¢);

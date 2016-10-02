@@ -1,15 +1,15 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import il.org.spartan.spartanizer.ast.create.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Collects the {@link Term} found in an {@link InfixExpression}, organizing
  * them in three output fields: {@link #plus}, {@link #minus} and {@link #all}.

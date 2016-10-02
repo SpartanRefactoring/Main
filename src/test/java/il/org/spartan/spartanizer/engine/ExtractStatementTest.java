@@ -8,7 +8,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class ExtractStatementTest {
   @Test public void declarationCorrectSize() {
