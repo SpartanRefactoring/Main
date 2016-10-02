@@ -181,7 +181,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   /** @return null iff the name is not hiding anything from outer scopes,
-   *         otherwise ?? TODO */
+   *         otherwise ?? TODO Alex*/
   default Information hiding(final String name) {
     return nest().get(name);
   }
