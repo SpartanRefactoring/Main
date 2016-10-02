@@ -29,7 +29,7 @@ public final class LaconizeCurrent extends LaconizeSelection implements IMarkerR
     try {
       execute();
     } catch (final ExecutionException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
     }
   }
 }

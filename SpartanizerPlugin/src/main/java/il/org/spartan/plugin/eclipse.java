@@ -44,9 +44,8 @@ public enum eclipse {
   /** @param message What to announce
    * @return <code><b>null</b></code> */
   static Void announce(final Object message) {
-    // JOptionPane.showMessageDialog(null, message, NAME,
-    // JOptionPane.INFORMATION_MESSAGE, icon);
-    JOptionPane.showMessageDialog(null, message);
+     JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    // JOptionPane.showMessageDialog(null, message);
     return null;
   }
 
@@ -143,7 +142,7 @@ public enum eclipse {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
     }
     return null;
   }
@@ -152,7 +151,7 @@ public enum eclipse {
     try {
       return compilationUnits(u, nullProgressMonitor);
     } catch (final JavaModelException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return null;
     }
   }
@@ -162,7 +161,7 @@ public enum eclipse {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return true;
     }
   }

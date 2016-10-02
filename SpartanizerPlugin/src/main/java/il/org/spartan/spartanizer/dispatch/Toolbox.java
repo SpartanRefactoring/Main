@@ -22,15 +22,15 @@ public class Toolbox {
         {
           for (int nodeType = 1;; ++nodeType)
             try {
-              LoggingManner.info("Searching for " + nodeType);
+              monitor.debug("Searching for " + nodeType);
               final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
-              LoggingManner.info("Found for " + nodeClassForType);
+              monitor.debug("Found for " + nodeClassForType);
               put(nodeClassForType, Integer.valueOf(nodeType));
             } catch (final IllegalArgumentException x) {
-              LoggingManner.logEvaluationError(this, x);
+              monitor.logEvaluationError(this, x);
               break;
             } catch (final Exception x) {
-              LoggingManner.logEvaluationError(this, x);
+              monitor.logEvaluationError(this, x);
               break;
             }
         }

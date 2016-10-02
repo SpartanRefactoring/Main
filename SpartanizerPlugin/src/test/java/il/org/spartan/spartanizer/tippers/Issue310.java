@@ -13,7 +13,7 @@ import org.junit.runners.*;
         "int i;for (i=0; i < MAX_PASSES; ++i) {final IProgressService ps=wb.getProgressService();final AtomicInteger passNum=new AtomicInteger(i + 1);final AtomicBoolean cancled=new AtomicBoolean(false);try {ps.run(true,true,pm -> {"
             + "pm.beginTask(\"Spartanizing project '\" + javaProject.getElementName() + \"' - \"+ \"Pass \"+ passNum.get()+ \" out of maximum of \"+ MAX_PASSES,us.size());int n=0;final List<ICompilationUnit> dead=new ArrayList<>();for (final ICompilationUnit ¢ : us) {if (pm.isCanceled()) {cancled.set(true);break;"
             + "}pm.worked(1);pm.subTask(¢.getElementName() + \" \" + ++n+ \"/\"+ us.size());if (!a.apply(¢)) dead.add(¢);}us.removeAll(dead);pm.done();});}"
-            + "catch (  final InvocationTargetException x) {LoggingManner.logEvaluationError(this,x);}catch (  final InterruptedException x) {LoggingManner.logEvaluationError(this,x);}if (cancled.get() || us.isEmpty()) break;}")
+            + "catch (  final InvocationTargetException x) {monitor.logEvaluationError(this,x);}catch (  final InterruptedException x) {monitor.logEvaluationError(this,x);}if (cancled.get() || us.isEmpty()) break;}")
                 .stays();
   }
 

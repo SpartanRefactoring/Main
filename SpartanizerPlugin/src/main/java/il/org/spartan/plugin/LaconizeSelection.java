@@ -46,9 +46,9 @@ public abstract class LaconizeSelection extends BaseHandler {
           applicator.apply(currentCompilationUnit, getSelection(currentCompilationUnit));
         });
       } catch (final InvocationTargetException x) {
-        LoggingManner.logEvaluationError(this, x);
+        monitor.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        LoggingManner.logCancellationRequest(this, x);
+        monitor.logCancellationRequest(this, x);
         return null;
       }
       if (n.inner <= 0) {

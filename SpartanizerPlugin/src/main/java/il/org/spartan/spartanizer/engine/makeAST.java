@@ -98,7 +98,7 @@ public enum makeAST {
         if (¢ == null)
           return $ + "";
     } catch (final IOException ¢) {
-      LoggingManner.infoIOException(¢, f + "");
+      monitor.infoIOException(¢, f + "");
       return null;
     }
   }
@@ -117,7 +117,7 @@ public enum makeAST {
     try (final Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception e) {
-      LoggingManner.logEvaluationError(this, e);
+      monitor.logEvaluationError(this, e);
       return new StringBuilder();
     }
   }

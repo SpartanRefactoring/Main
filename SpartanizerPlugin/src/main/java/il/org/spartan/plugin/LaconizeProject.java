@@ -40,9 +40,9 @@ public final class LaconizeProject extends BaseHandler {
         pm.done();
       });
     } catch (InvocationTargetException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
     } catch (InterruptedException x) {
-      LoggingManner.logCancellationRequest(this, x);
+      monitor.logCancellationRequest(this, x);
     }
     return $.get();
   }
@@ -102,15 +102,15 @@ public final class LaconizeProject extends BaseHandler {
             if (!a.apply(¢))
               dead.add(¢);
           }
-          if (dead.size() == 0)
+          if (dead.isEmpty())
             status.append(dead.size() + " compilation  units remain unchanged; will not be processed again\n");
           todo.removeAll(dead);
           pm.done();
         });
       } catch (final InvocationTargetException x) {
-        LoggingManner.logEvaluationError(this, x);
+        monitor.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        LoggingManner.logEvaluationError(this, x);
+        monitor.logEvaluationError(this, x);
       }
       if (cancelled.get() || todo.isEmpty())
         break;

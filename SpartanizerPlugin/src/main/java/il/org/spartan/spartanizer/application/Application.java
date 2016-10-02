@@ -120,7 +120,7 @@ public final class Application implements IApplication {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
         for (int i = 0; i < optRounds; ++i) {
-          final int n = LaconizeProject.countTips(u);
+          final int n = new LaconizeProject().countTips(u);
           if (n == 0)
             break;
           s.addRoundStat(n);
@@ -168,9 +168,9 @@ public final class Application implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
-      LoggingManner.logEvaluationError(this, e);
+      monitor.logEvaluationError(this, e);
     } catch (final NullPointerException e) {
-      LoggingManner.logEvaluationError(this, e);
+      monitor.logEvaluationError(this, e);
     }
   }
 

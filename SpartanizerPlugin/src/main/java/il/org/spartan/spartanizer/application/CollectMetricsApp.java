@@ -165,9 +165,9 @@ public final class CollectMetricsApp implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final JavaModelException e) {
-      LoggingManner.logEvaluationError(this, e);
+      monitor.logEvaluationError(this, e);
     } catch (final NullPointerException e) {
-      LoggingManner.logProbableBug(this, e);
+      monitor.logProbableBug(this, e);
     }
   }
 
@@ -193,7 +193,7 @@ public final class CollectMetricsApp implements IApplication {
       try {
         u = openCompilationUnit(f);
         for (int ¢ = 0; ¢ < optRounds; ++¢, new Trimmer().apply(u))
-          if (LaconizeProject.countTips(u) == 0)
+          if (new LaconizeProject().countTips(u) == 0)
             break;
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         System.out.println("Spartanized file " + f.getAbsolutePath());
