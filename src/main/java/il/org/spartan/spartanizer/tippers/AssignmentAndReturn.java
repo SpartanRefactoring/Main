@@ -1,15 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import il.org.spartan.spartanizer.ast.create.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;

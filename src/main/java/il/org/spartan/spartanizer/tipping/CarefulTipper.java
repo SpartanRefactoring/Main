@@ -14,7 +14,7 @@ public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
     try {
       return prerequisite(¢) && tip(¢) != null;
     } catch (final TipperFailure f) {
-      monitor.debug(this, f); 
+      monitor.debug(this, f);
       return false;
     }
   }

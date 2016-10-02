@@ -14,23 +14,40 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class TestFactory {
-  public static String testcase(String raw) {
+  public static String testcase(final String raw) {
     return linify(shortenIdentifiers(eliminateSpaces(raw)));
   }
 
-  /**
-   * Actually, implementing this might be trivial, I think  applying toString()
+  /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
+  static String renderIdentifier(final String old) {
+    if (old.length() == 0)
+      return "a";
+    if (old.equals("z"))
+      return "X1";
+    if (old.length() == 1)
+      return String.valueOf((char) (old.charAt(0) + 1));
+    return "X" + String.valueOf(old.charAt(1) + 1);
+  }
+
+  /** Actually, implementing this might be trivial, I think applying toString()
    * on an AST does this automatically.
-   * 
    * @param s
-   * @return
-   */
-  private static String eliminateSpaces(String s) {
+   * @return */
+  private static String eliminateSpaces(final String s) {
     return s;
   }
 
-  private static String shortenIdentifiers(String s) {
-    Map<String, String> renaming = new HashMap<>();
+  /** Separate the string to lines, like: trimmingOf("// From use case of
+   * issue#1593\n" + // "public void f(){\n" + // " if(!g){\n" + // " foo();\n"
+   * + // " bar();\n" + // " }\n" + // "}"//
+   * @param s string to linify
+   * @return */
+  private static String linify(final String s) {
+    return s;
+  }
+
+  private static String shortenIdentifiers(final String s) {
+    final Map<String, String> renaming = new HashMap<>();
     final Wrapper<String> id = new Wrapper<>();
     id.set("");
     final Document document = new Document(ASTutils.wrapCode(s));
@@ -43,7 +60,7 @@ public class TestFactory {
     n.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.simpleName(¢)) {
-          String name = ((SimpleName) ¢).getFullyQualifiedName();
+          final String name = ((SimpleName) ¢).getFullyQualifiedName();
           if (!renaming.containsKey(name)) {
             id.set(renderIdentifier(id.get()));
             renaming.put(name, id.get());
@@ -60,34 +77,4 @@ public class TestFactory {
     }
     return ASTutils.extractCode(s, document);
   }
-
-  /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
-  static String renderIdentifier(String old) {
-    if (old.length() == 0)
-      return "a";
-    if (old.equals("z"))
-      return "X1";
-    if (old.length() == 1)
-      return String.valueOf((char)(old.charAt(0) + 1));
-    return "X" + String.valueOf(old.charAt(1) + 1);
-  }
-
-  /**
-   * Separate the string to lines, like:
-   * 
-   * trimmingOf("// From use case of issue#1593\n" + //
-   *        "public void f(){\n" + //
-   *        "  if(!g){\n" + //
-   *        "    foo();\n" + //
-   *        "    bar();\n" + //
-   *        "  }\n" + //
-   *        "}"//
-   * 
-   * @param s string to linify
-   * @return
-   */
-  private static String linify(String s) {
-    return s;
-  }
-
 }
