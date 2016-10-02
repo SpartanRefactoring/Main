@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * in javadoc is changed with dollar/cent renaming.
  * @author Ori Roth
  * @since 2016
- * @see SingleVariableDeclarationAbbreviation#fixJavadoc TODO Ori: add testing
+ * @see SingleVariableDeclarationAbbreviation#fixJavadoc TODO Ori Roth: add testing
  *      for comments */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") public class Issue180 {
   @Test public void renameToCent() {

@@ -126,7 +126,7 @@ public enum eclipse {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
-  // TODO Ori: do not create a compilation unit
+  // TODO Ori Roth: do not create a compilation unit
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
@@ -136,8 +136,7 @@ public enum eclipse {
       return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
           .getCoveredNode();
     } catch (final CoreException x) {
-      // TODO Ori: log it
-      x.printStackTrace();
+      monitor.logEvaluationError(this, x);
     }
     return null;
   }
