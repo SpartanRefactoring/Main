@@ -667,7 +667,7 @@ public interface iz {
     return n != null && isOneOf(n.getNodeType(), types);
   }
 
-  static boolean parenthesizeExpression(final Expression ¢) {
+  static boolean parenthesizedExpression(final Expression ¢) {
     return is(¢, PARENTHESIZED_EXPRESSION);
   }
 

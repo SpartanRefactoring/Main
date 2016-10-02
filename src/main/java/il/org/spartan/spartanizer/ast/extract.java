@@ -244,6 +244,11 @@ public enum extract {
     }
   }
 
+  public static InfixExpression infixExpression(final ASTNode ¢) {
+    final ExpressionStatement s = expressionStatement(¢);
+    return ¢ == null || s == null ? null : az.infixExpression(s.getExpression());
+  }
+
   /** @param pattern JD
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
