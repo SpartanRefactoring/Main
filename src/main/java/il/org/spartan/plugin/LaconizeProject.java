@@ -27,10 +27,12 @@ public final class LaconizeProject extends BaseHandler {
 
   public LaconizeProject() {
     this(new Trimmer());
+    dead = new LinkedList<>();
   }
 
   public LaconizeProject(final GUI$Applicator inner) {
     super(inner);
+    dead = new LinkedList<>();
   }
 
   /** Returns the number of spartanization tips for a compilation unit
@@ -119,7 +121,10 @@ public final class LaconizeProject extends BaseHandler {
     todo = eclipse.facade.compilationUnits(currentCompilationUnit);
     status.append("Found " + todo.size() + " compilation units, ");
     dead.clear();
-    initialCount = countTips(currentCompilationUnit);
+    if (todo.isEmpty())
+      initialCount = 0;
+    else
+      initialCount = countTips(currentCompilationUnit);
     status.append("with " + initialCount + " tips.\n");
   }
 }
