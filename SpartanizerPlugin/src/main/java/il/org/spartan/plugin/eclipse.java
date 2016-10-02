@@ -13,8 +13,11 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.swt.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
@@ -39,11 +42,20 @@ public enum eclipse {
     d.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(d, null);
   }
-
-  /** @param message What to announce
-   * @return <code><b>null</b></code> */
+  static final Shell parent = null;
+  static final int shellStyle = SWT.TOOL;
+  static final boolean takeFocusOnOpen = false;
+  static final boolean persistSize = false;
+  static final boolean persistLocation = false;
+  static final boolean showDialogMenu = true;
+  private static boolean showPersistActions;
   static Void announce(final Object message) {
-    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+
+    new PopupDialog(parent, //
+        shellStyle, takeFocusOnOpen, persistSize, persistLocation, showDialogMenu, showPersistActions, //
+        message + "", "Spartan Plugin").open();
+
+    // JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }
@@ -67,16 +79,24 @@ public enum eclipse {
     pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {
+      pm.done();
       announce("Cannot find current compilation unit " + u);
       return $;
     }
     final IJavaProject javaProject = u.getJavaProject();
     if (javaProject == null) {
+      pm.done();
       announce("Cannot find project of " + u);
+      return $;
+    }
+    if (!javaProject.isOpen()) {
+      pm.done();
+      announce(javaProject.getElementName() + " is not open");
       return $;
     }
     final IPackageFragmentRoot[] packageFragmentRoots = javaProject.getPackageFragmentRoots();
     if (packageFragmentRoots == null) {
+      pm.done();
       announce("Cannot find roots of " + javaProject);
       return $;
     }

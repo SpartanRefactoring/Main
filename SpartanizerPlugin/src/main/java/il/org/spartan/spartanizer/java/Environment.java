@@ -46,7 +46,7 @@ import il.org.spartan.spartanizer.utils.*;
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
 
-      List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(s.getType()));
         for (final VariableDeclarationFragment ¢ : step.fragments(s))
@@ -66,10 +66,12 @@ import il.org.spartan.spartanizer.utils.*;
         return scopePath + "." + $;
       }
 
-      /** Returns the {@link Information} of the declaration the current
-       * declaration is hiding.
+      /** 
+       * Returns the  {@link Information} of the declaration the currentdeclaration is hiding.
        * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information */
+       * @return The hidden node's Information 
+       * [[SuppressWarningsSpartan]]
+       */
       /* Implementation notes: Should go over result set, and search for
        * declaration which shares the same variable name in the parents. Should
        * return the closest match: for example, if we search for a match to
@@ -81,14 +83,34 @@ import il.org.spartan.spartanizer.utils.*;
        * To consider: what if said hidden declaration will not appear in
        * 'declaresDown', but will appear in 'declaresUp'? Should we search for
        * it in 'declaresUp' result set? Should we leave the result as it is? I
-       * (Dan) lean towards searching 'declaresUp'.
+       * (Dan) lean towards searching 'declaresUp'. 
+       * Current implementation only searches declaresDown.
        *
        * If no match is found, return null. */
       Information getHidden(final String ¢) {
-        /* String s = parentNameScope(¢); while(!"".equals(s)){
-         *
-         * } */
+        String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
+        for(String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)){
+          Information i = get($, s + "." + shortName);
+          if(i != null)
+            return i;
+        } 
         return null;
+      }
+      
+      Information get(LinkedHashSet<Entry<String,Information>> ss, String s){
+        for(Entry<String,Information> ¢ : ss)
+          if (s.equals(¢.getKey()))
+            return ¢.getValue();
+        return null;
+      }
+
+      String parentNameScope(String ¢) {
+        assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
+        return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+      }
+      
+      @Override public void endVisit(MethodDeclaration __){
+        scopePath = parentNameScope(scopePath);
       }
     });
     return $;

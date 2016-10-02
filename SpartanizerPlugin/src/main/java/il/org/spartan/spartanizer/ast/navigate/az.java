@@ -51,7 +51,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ArrayInitializer arrayInitializer(final Expression $) {
-    return !iz.is($, ARRAY_INITIALIZER) ? null : (ArrayInitializer) $;
+    return !iz.nodeTypeEquals($, ARRAY_INITIALIZER) ? null : (ArrayInitializer) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to an {@link Assignment}
@@ -59,7 +59,7 @@ public enum az {
    * @return argument, but down-casted to a {@link Assignment}, or
    *         <code><b>null</b></code> if the downcast is impossible. */
   public static Assignment assignment(final ASTNode $) {
-    return !iz.is($, ASSIGNMENT) ? null : (Assignment) $;
+    return !iz.nodeTypeEquals($, ASSIGNMENT) ? null : (Assignment) $;
   }
 
   /** Down-cast, if possible, to {@link Statement}
@@ -91,7 +91,7 @@ public enum az {
    * @return argument, but down-casted to a {@link Block}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static Block block(final ASTNode $) {
-    return !iz.is($, BLOCK) ? null : (Block) $;
+    return !iz.nodeTypeEquals($, BLOCK) ? null : (Block) $;
   }
 
   /** Down-cast, if possible, to {@link BooleanLiteral}
@@ -99,7 +99,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
-    return !iz.is($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
+    return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
@@ -126,7 +126,7 @@ public enum az {
   }
 
   public static EnhancedForStatement enhancedFor(final ASTNode $) {
-    return !iz.is($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
+    return !iz.nodeTypeEquals($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
   }
 
   /** Down-cast, if possible, to {@link Expression}
@@ -142,11 +142,11 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ExpressionStatement expressionStatement(final ASTNode $) {
-    return !iz.is($, EXPRESSION_STATEMENT) ? null : (ExpressionStatement) $;
+    return !iz.nodeTypeEquals($, EXPRESSION_STATEMENT) ? null : (ExpressionStatement) $;
   }
 
   public static FieldDeclaration fieldDeclaration(final ASTNode ¢) {
-    return !iz.is(¢, FIELD_DECLARATION) ? null : (FieldDeclaration) ¢;
+    return !iz.nodeTypeEquals(¢, FIELD_DECLARATION) ? null : (FieldDeclaration) ¢;
   }
 
   /** Down-cast, if possible, to {@link ForStatement}
@@ -154,7 +154,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ForStatement forStatement(final ASTNode $) {
-    return !iz.is($, FOR_STATEMENT) ? null : (ForStatement) $;
+    return !iz.nodeTypeEquals($, FOR_STATEMENT) ? null : (ForStatement) $;
   }
 
   /** Down-cast, if possible, to {@link IfStatement}
@@ -162,7 +162,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static IfStatement ifStatement(final ASTNode $) {
-    return !iz.is($, IF_STATEMENT) ? null : (IfStatement) $;
+    return !iz.nodeTypeEquals($, IF_STATEMENT) ? null : (IfStatement) $;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -178,11 +178,11 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static InstanceofExpression instanceofExpression(final Expression $) {
-    return !iz.is($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
+    return !iz.nodeTypeEquals($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
   }
 
   public static LambdaExpression lambdaExpression(final ASTNode $) {
-    return !iz.is($, LAMBDA_EXPRESSION) ? null : (LambdaExpression) $;
+    return !iz.nodeTypeEquals($, LAMBDA_EXPRESSION) ? null : (LambdaExpression) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodDeclaration}
@@ -206,7 +206,7 @@ public enum az {
    * @return argument, but down-casted to a {@link MethodRef}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static MethodRef methodRef(final ASTNode ¢) {
-    return !iz.is(¢, MEMBER_REF) ? null : (MethodRef) ¢;
+    return !iz.nodeTypeEquals(¢, MEMBER_REF) ? null : (MethodRef) ¢;
   }
 
   /** Down-cast, if possible, to {@link Modifier}
@@ -251,7 +251,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ParenthesizedExpression parenthesizedExpression(final Expression $) {
-    return !iz.is($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
+    return !iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
   }
 
   /** Down-cast, if possible, to {@link InfixExpression}
@@ -275,7 +275,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static ReturnStatement returnStatement(final ASTNode $) {
-    return !iz.is($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
+    return !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
@@ -303,7 +303,7 @@ public enum az {
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static StringLiteral stringLiteral(final ASTNode $) {
-    return !iz.is($, STRING_LITERAL) ? null : (StringLiteral) $;
+    return !iz.nodeTypeEquals($, STRING_LITERAL) ? null : (StringLiteral) $;
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ThrowStatement}
@@ -311,7 +311,7 @@ public enum az {
    * @return argument, but down-casted to a {@link ThrowStatement}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static ThrowStatement throwStatement(final ASTNode $) {
-    return !iz.is($, THROW_STATEMENT) ? null : (ThrowStatement) $;
+    return !iz.nodeTypeEquals($, THROW_STATEMENT) ? null : (ThrowStatement) $;
   }
 
   /** Convert, if possible, an {@link Expression} to a
@@ -321,7 +321,7 @@ public enum az {
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final ASTNode $) {
-    return !iz.is($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
+    return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
@@ -342,7 +342,7 @@ public enum az {
   }
 
   public static VariableDeclarationStatement variableDeclrationStatement(final ASTNode $) {
-    return !iz.is($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
+    return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_STATEMENT) ? null : (VariableDeclarationStatement) $;
   }
 
   /** Down-cast, if possible, to {@link WhileStatement}
@@ -358,7 +358,7 @@ public enum az {
    * @return argument, but down-casted to a {@link WildcardType}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
-    return !iz.is($, WILDCARD_TYPE) ? null : (WildcardType) $;
+    return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 
   static Name name(final ASTNode ¢) {

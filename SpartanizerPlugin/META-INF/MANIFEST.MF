@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Spartan Refactoring
 Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
-Bundle-Version: 2.5.0
+Bundle-Version: 2.5.0.1
 Bundle-Activator: il.org.spartan.plugin.Plugin
 Bundle-Vendor: Technion--Israel Institute of Technology
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.ltk.core.refactoring,
- org.eclipse.ltk.ui.refactoring,
- org.eclipse.jdt.core,
- org.eclipse.jdt.ui,
- org.eclipse.jface.text,
- org.eclipse.core.resources,
+Require-Bundle: org.eclipse.ui;bundle-version="3.108.0",
+ org.eclipse.core.runtime;bundle-version="3.12.0",
+ org.eclipse.ltk.core.refactoring;bundle-version="3.7.0",
+ org.eclipse.ltk.ui.refactoring;bundle-version="3.8.0",
+ org.eclipse.jdt.core;bundle-version="3.12.1",
+ org.eclipse.jdt.ui;bundle-version="3.12.1",
+ org.eclipse.jface.text;bundle-version="3.11.1",
+ org.eclipse.core.resources;bundle-version="3.11.0",
  org.eclipse.ui.ide;bundle-version="3.7.0",
- org.junit
+ org.junit;bundle-version="4.12.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
@@ -23,8 +23,24 @@ Bundle-ClassPath: .,
  lib/mockito-all-2.0.2-beta.jar,
  lib/spartan-1.2.jar
 Export-Package: il.org.spartan.plugin;
-  uses:="org.osgi.framework,
+  uses:="il.org.spartan.spartanizer.tipping,
+   org.eclipse.jdt.core,
+   org.eclipse.jdt.core.dom.rewrite,
+   org.eclipse.ltk.core.refactoring,
+   org.eclipse.jdt.core.dom,
+   org.eclipse.jface.text,
+   org.eclipse.swt.widgets,
+   org.eclipse.core.runtime.preferences,
+   org.eclipse.jface.dialogs,
+   org.eclipse.core.commands,
+   org.eclipse.ui.plugin,
+   il.org.spartan.utils,
+   org.osgi.framework,
    org.eclipse.ui,
    org.eclipse.core.runtime,
+   org.eclipse.jface.util,
+   il.org.spartan.spartanizer.dispatch,
+   org.eclipse.jface.preference,
    org.eclipse.core.resources,
-   org.eclipse.ui.plugin"
+   org.eclipse.ltk.ui.refactoring,
+   javax.swing"
