@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -8,13 +10,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
-import static il.org.spartan.spartanizer.ast.extract.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 public enum sideEffects {
   MISSING_CASE;
@@ -64,9 +62,9 @@ public enum sideEffects {
   }
 
   public static boolean free(final Expression ¢) {
-    if (¢ == null || iz.is(¢, alwaysFree))
+    if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))
       return true;
-    if (iz.is(¢, alwaysHave))
+    if (iz.nodeTypeIn(¢, alwaysHave))
       return false;
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:

@@ -6,8 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.ast.iz.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.iz.*;
 
 /** @author Yossi Gil
  * @since 2015-08-23 */
@@ -48,12 +48,12 @@ public final class specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.is(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
+        return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.is(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
+        return iz.nodeTypeEquals(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
     THIS {

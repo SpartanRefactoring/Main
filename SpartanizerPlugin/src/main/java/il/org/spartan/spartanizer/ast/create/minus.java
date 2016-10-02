@@ -1,6 +1,7 @@
-package il.org.spartan.spartanizer.assemble;
+package il.org.spartan.spartanizer.ast.create;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
@@ -8,9 +9,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
  * <p>
@@ -59,10 +58,10 @@ public enum minus {
   }
 
   public static int level(final Expression ¢) {
-    return iz.is(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
-        : iz.is(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
-            : iz.is(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
-                : iz.is(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
+    return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
+        : iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
+            : iz.nodeTypeEquals(¢, INFIX_EXPRESSION) ? level((InfixExpression) ¢) //
+                : iz.nodeTypeEquals(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
                     : 0;
   }
 
@@ -78,10 +77,10 @@ public enum minus {
   }
 
   public static Expression peel(final Expression $) {
-    return iz.is($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
-        : iz.is($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
-            : iz.is($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
-                : iz.is($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
+    return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
+        : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
+            : iz.nodeTypeEquals($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
+                : iz.nodeTypeEquals($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
                     : $;
   }
 

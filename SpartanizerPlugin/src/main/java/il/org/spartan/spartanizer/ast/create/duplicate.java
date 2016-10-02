@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.assemble;
+package il.org.spartan.spartanizer.ast.create;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -7,7 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> functions for restructuring expressions.

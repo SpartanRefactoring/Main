@@ -1,13 +1,12 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -148,11 +147,11 @@ public enum haz {
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {
-      if (iz.is(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
+      if (iz.nodeTypeIn(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
         return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))
         continue;
-      if (iz.is(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
+      if (iz.nodeTypeEquals(ancestor, FOR_STATEMENT) && (searchAncestors.specificallyFor(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
           || searchAncestors.specificallyFor(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
         return true;
       child = ancestor;

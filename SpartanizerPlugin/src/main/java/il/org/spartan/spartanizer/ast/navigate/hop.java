@@ -1,13 +1,12 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.step.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -46,7 +45,7 @@ public interface hop {
    *         type and null otherwise */
   static ASTNode containerType(final ASTNode ¢) {
     for (final ASTNode $ : hop.ancestors(¢.getParent()))
-      if (iz.is($//
+      if (iz.nodeTypeIn($//
           , ANONYMOUS_CLASS_DECLARATION //
           , ANNOTATION_TYPE_DECLARATION //
           , ENUM_DECLARATION //

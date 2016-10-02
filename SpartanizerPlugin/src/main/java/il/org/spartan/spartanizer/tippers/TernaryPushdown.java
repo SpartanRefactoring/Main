@@ -1,17 +1,17 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import il.org.spartan.spartanizer.ast.create.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
-import static il.org.spartan.spartanizer.ast.extract.*;
-
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
