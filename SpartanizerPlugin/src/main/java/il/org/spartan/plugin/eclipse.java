@@ -67,16 +67,24 @@ public enum eclipse {
     pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {
+      pm.done();
       announce("Cannot find current compilation unit " + u);
       return $;
     }
     final IJavaProject javaProject = u.getJavaProject();
     if (javaProject == null) {
+      pm.done();
       announce("Cannot find project of " + u);
+      return $;
+    }
+    if (!javaProject.isOpen()) {
+      pm.done();
+      announce(javaProject.getElementName() + " is not open");
       return $;
     }
     final IPackageFragmentRoot[] packageFragmentRoots = javaProject.getPackageFragmentRoots();
     if (packageFragmentRoots == null) {
+      pm.done();
       announce("Cannot find roots of " + javaProject);
       return $;
     }
