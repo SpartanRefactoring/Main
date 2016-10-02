@@ -8,6 +8,21 @@ import org.junit.runners.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue311 {
+  @Test public void challenge_for_i_initialization_expression_3a() {
+    trimmingOf("boolean b;for (;b=true;)$.append(line).append(ls);").gives("for(boolean b=true;b;)$.append(line).append(ls);")
+        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);").stays();
+  }
+
+  @Test public void challenge_for_i_initialization_expression_3b() {
+    trimmingOf("boolean b;for (;b=true;)$.append(line).append(ls);").gives("for(boolean b=true;b;)$.append(line).append(ls);")
+        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);").stays();
+  }
+
+  @Test public void challenge_for_i_initialization_expression_3c() {
+    trimmingOf("boolean b;for (;(b=true);)$.append(line).append(ls);").gives("for(boolean b=true;b;)$.append(line).append(ls);")
+        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);").stays();
+  }
+
   @Test public void challenge_while_a() {
     trimmingOf("while (start < il_string.length() && matcher.find(start)) {final int startExpr = matcher.start();" + //
         "final int endExpr = matcher.end();final int lenExpr = endExpr - startExpr;final InstructionHandle[] match = getMatch(startExpr, lenExpr);" + //
@@ -113,14 +128,24 @@ import org.junit.runners.*;
         .gives("for (int ¢ = 1; ¢ > 0;++¢){a=¢;}").stays();
   }
 
-  @Test public void challenge_while_i_initialization_expression_3() {
+  @Test public void challenge_while_i_initialization_expression_3a() {
+    trimmingOf("boolean b;while (b=true)$.append(line).append(ls);").gives("for(boolean b=true;b;)$.append(line).append(ls);")
+        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);").stays();
+  }
+
+  @Test public void challenge_while_i_initialization_expression_3b() {
+    trimmingOf("boolean b;while (b=true)$.append(line).append(ls);").gives("for(boolean b=true;b;)$.append(line).append(ls);")
+        .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);").stays();
+  }
+
+  @Test public void challenge_while_i_initialization_expression_3e() {
     trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (c=true))$.append(line).append(ls);")
         .gives("for(boolean a=true,b=true,c=true;b && a && c;)$.append(line).append(ls);").stays();
   }
 
   @Test public void challenge_while_i_initialization_expression_4() {
-    trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (d=true))$.append(line).append(ls);")
-        .gives("for(boolean a=true,b=true,c;b && a && (d=true);)$.append(line).append(ls);").stays();
+    trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (d=true))$.append(c).append(ls);")
+        .gives("for(boolean a=true,b=true,c;b && a && (d=true);)$.append(c).append(ls);").stays();
   }
 
   @Test public void challenge_while_j() {

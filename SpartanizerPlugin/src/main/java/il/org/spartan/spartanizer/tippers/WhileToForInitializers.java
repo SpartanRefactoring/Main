@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -56,22 +54,6 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return true;
   }
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
-  private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
-    final List<Expression> operands = hop.operands(from);
-    for (final Expression ¢ : operands)
-      if (iz.parenthesizeExpression(¢) && iz.assignment(az.parenthesizedExpression(¢).getExpression())) {
-        final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
-        final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment f : step.fragments(s))
-          if ((f.getName() + "").equals(var + "")) {
-            f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var + ""));
-          }
-      }
-    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElem(minus.firstElem(operands)));
-  }
-
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return az.variableDeclarationExpression(fragmentParent(¢));
   }
@@ -80,14 +62,10 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return az.variableDeclrationStatement(¢.getParent());
   }
 
-  /** Pulls matching initializers from forExpression, and pushes it to the
-   * declarationStatement which is previous to the for loop.
-   * @param from JD (already duplicated)
-   * @param to is the list that will contain the pulled out initializations from
-   *        the given expression.
-   * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return !haz.sideEffects(from) || !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), s);
+    return iz.infix(from) ? ForToForInitializers.handleInfix(duplicate.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? ForToForInitializers.handleAssignment(az.assignment(from), s)
+            : iz.parenthesizedExpression(from) ? ForToForInitializers.handleParenthesis(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Determines whether a specific SimpleName was used in a
