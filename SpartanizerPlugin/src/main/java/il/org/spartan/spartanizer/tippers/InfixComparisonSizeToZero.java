@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Converts <code>x.size()==0</code> to <code>x.isEmpty()</code>,
  * <code>x.size()!=0 </code> and <code>x.size()>=1</code>

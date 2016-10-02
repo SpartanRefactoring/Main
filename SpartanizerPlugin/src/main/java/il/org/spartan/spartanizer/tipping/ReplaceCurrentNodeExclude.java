@@ -7,6 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an
  * {@link ExclusionManager} */

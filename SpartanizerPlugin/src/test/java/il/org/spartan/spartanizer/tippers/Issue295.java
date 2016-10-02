@@ -12,6 +12,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Unit test for {@link DeclarationInitializerStatementTerminatingScope} for
  * the case of inlining into the expression of an enhanced for
