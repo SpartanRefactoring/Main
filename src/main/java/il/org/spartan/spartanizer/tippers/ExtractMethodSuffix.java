@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.step.*;
+
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -23,7 +25,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
   private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 2.0 / 3.0;
 
   private static void clearUsesMapping(final Map<VariableDeclaration, List<Statement>> uses, final Statement s) {
-    final List<VariableDeclaration> vs = new LinkedList<>();
+    final List<VariableDeclaration> vs = new ArrayList<>();
     vs.addAll(uses.keySet());
     for (final VariableDeclaration ¢ : vs) {
       uses.get(¢).remove(s);
@@ -37,12 +39,12 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     if (j == null)
       return;
     final List<TagElement> ts = j.tags();
-    final List<String> ns = new LinkedList<>();
+    final List<String> ns = new ArrayList<>();
     for (final VariableDeclaration ¢ : m.keySet())
       ns.add(¢.getName() + "");
     boolean hasParamTags = false;
     int tagPosition = -1;
-    final List<TagElement> xs = new LinkedList<>();
+    final List<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && ¢.fragments().get(0) instanceof SimpleName) {
         hasParamTags = true;
@@ -120,13 +122,13 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     return ss.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * ss.size()) + 1, ss.size()));
   }
 
-  @SuppressWarnings("unchecked") private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> ds) {
-    if (step.parameters(d).size() != ds.size())
+  private static boolean sameParameters(final MethodDeclaration d, final Set<VariableDeclaration> ds) {
+    if (parameters(d).size() != ds.size())
       return false;
     final List<String> ts = new ArrayList<>();
     for (final VariableDeclaration ¢ : ds)
       ts.add(extract.type(iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢) : az.variableDeclrationStatement(¢.getParent())) + "");
-    for (final SingleVariableDeclaration ¢ : step.parameters(d))
+    for (final SingleVariableDeclaration ¢ : parameters(d))
       if (!ts.contains(¢.getType() + ""))
         return false;
     return true;
@@ -143,7 +145,7 @@ public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclar
     if (Collect.usesOf(d.getName()).in(s).isEmpty())
       return;
     if (!m.containsKey(d))
-      m.put(d, new LinkedList<>());
+      m.put(d, new ArrayList<>());
     m.get(d).add(s);
   }
 
