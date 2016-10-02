@@ -32,11 +32,11 @@ class expression {
   }
 
   public void matches(final String s2) {
-    assertTrue(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
+    assert (Matcher.matches(wizard.ast(s), wizard.ast(s2)));
   }
 
   public void notmatches(final String s2) {
-    assertFalse(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
+    assert !(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
   }
 }
 
@@ -48,11 +48,11 @@ class tipper {
   }
 
   public void nottips(final String ¢) {
-    assertFalse(tipper.canTip(wizard.ast(¢)));
+    assert !(tipper.canTip(wizard.ast(¢)));
   }
 
   public void tips(final String ¢) {
-    assertTrue(tipper.canTip(wizard.ast(¢)));
+    assert (tipper.canTip(wizard.ast(¢)));
   }
 
   public turns turns(final String ¢) {
@@ -140,7 +140,7 @@ class turns {
     final ASTRewrite r = ASTRewrite.create(ast);
     final ASTNode n = extractASTNode(s, cu);
     try {
-      assertTrue(tipper.canTip(n));
+      assert (tipper.canTip(n));
       tipper.tip(n).go(r, null);
     } catch (final TipperFailure e) {
       e.printStackTrace();
@@ -155,6 +155,7 @@ class turns {
     }
     azzertEquals(res, document);
   }
+
 
   private void azzertEquals(final String s, final Document d) {
     switch (GuessedContext.find(s)) {

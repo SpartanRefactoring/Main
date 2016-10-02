@@ -22,7 +22,7 @@ Bundle-ClassPath: .,
  lib/junit-4.12.jar,
  lib/mockito-all-2.0.2-beta.jar,
  lib/spartan-1.2.jar
-Export-Package: il.org.spartan.plugin;
+Export-Package: il.org.spartan.plugin;version="2.5.0";
   uses:="il.org.spartan.spartanizer.tipping,
    org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
