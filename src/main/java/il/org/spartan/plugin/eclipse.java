@@ -13,8 +13,11 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.swt.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
@@ -39,11 +42,20 @@ public enum eclipse {
     d.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(d, null);
   }
-
-  /** @param message What to announce
-   * @return <code><b>null</b></code> */
+  static final Shell parent = null;
+  static final int shellStyle = SWT.ON_TOP | SWT.TOOL | SWT.RESIZE;
+  static final boolean takeFocusOnOpen = false;
+  static final boolean persistSize = true;
+  static final boolean persistLocation = true;
+  static final boolean showDialogMenu = true;
+  private static boolean showPersistActions;
   static Void announce(final Object message) {
-    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+
+    new PopupDialog(parent, //
+        shellStyle, takeFocusOnOpen, persistSize, persistLocation, showDialogMenu, showPersistActions, //
+        message + "", "Spartan Plugin").open();
+
+    // JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }
