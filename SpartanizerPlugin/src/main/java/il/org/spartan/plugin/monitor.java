@@ -58,12 +58,12 @@ public enum monitor {
   };
   public static final monitor now = monitor.PRODUCTION;
 
-  public static String className(final Class<?> c) {
-    return c.getSimpleName() + "[" + c.getCanonicalName() + "]";
+  public static String className(final Class<?> ¢) {
+    return ¢.getSimpleName() + "[" + ¢.getCanonicalName() + "]";
   }
 
-  public static String className(final Object o) {
-    return className(o.getClass());
+  public static String className(final Object ¢) {
+    return className(¢.getClass());
   }
 
   public static void debug(Object o, Throwable t) {
