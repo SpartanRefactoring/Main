@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.application;
+package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
@@ -12,7 +12,6 @@ import il.org.spartan.collections.*;
 import il.org.spartan.java.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
@@ -23,7 +22,7 @@ import il.org.spartan.utils.*;
 public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
   private static final String script = "./essence";
-  private static final BatchApplicator batchApplicator = new BatchApplicator().disable(Nominal.class).disable(Nanos.class);
+  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static boolean defaultDir;
   private static String outputDir;
   private static String inputDir;
@@ -194,7 +193,7 @@ public final class BatchSpartanizer {
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = essenceNew(in + "").length();
-    final String out = batchApplicator.fixedPoint(in + "");
+    final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -295,8 +294,8 @@ public final class BatchSpartanizer {
     runEssence();
     runWordCount();
     System.err.printf("\n Our batch applicator had %d tippers dispersed over %d hooks\n", //
-        box.it(batchApplicator.toolbox.tippersCount()), //
-        box.it(batchApplicator.toolbox.hooksCount())//
+        box.it(interactiveSpartanizer.toolbox.tippersCount()), //
+        box.it(interactiveSpartanizer.toolbox.hooksCount())//
     );
   }
 

@@ -8,7 +8,7 @@ public enum monitor {
   /** Used for debugging; program exits immediately with the first logged
    * message */
   SUPER_TOUCHY {
-    @Override public monitor debugMessage(String message) {
+    @Override public monitor debugMessage(final String message) {
       return info(message);
     }
 
@@ -21,9 +21,10 @@ public enum monitor {
   /** Used for debugging; program throws a {@link RuntimeException} with the
    * first logged message */
   TOUCHY {
-    @Override public monitor debugMessage(String message) {
+    @Override public monitor debugMessage(final String message) {
       return info(message);
     }
+
     @Override public monitor error(final String message) {
       throw new RuntimeException(message);
     }
@@ -44,9 +45,10 @@ public enum monitor {
   },
   /** Not clear why we need this */
   LOG_TO_STDOUT {
-    @Override public monitor debugMessage(String message) {
+    @Override public monitor debugMessage(final String message) {
       return info(message);
     }
+
     @Override public monitor error(final String message) {
       System.out.println(message);
       return this;
@@ -54,9 +56,10 @@ public enum monitor {
   };
   public static final monitor now = monitor.PRODUCTION;
 
-  public monitor info(final String message) {
-    System.out.println(message);
-    return this;
+  /** @param string
+   * @return */
+  public static monitor debug(final String message) {
+    return now.debugMessage(message);
   }
 
   public static monitor infoIOException(final Exception x, final String message) {
@@ -111,17 +114,14 @@ public enum monitor {
 
   public abstract monitor error(String message);
 
-  /** @param string
-   * @return */
-  public static monitor debug(String message) {
-    return now.debugMessage(message); 
+  public monitor info(final String message) {
+    System.out.println(message);
+    return this;
   }
 
-  /**
-   * @param message
-   * @return
-   */
-  monitor debugMessage(@SuppressWarnings("unused") String __) {
+  /** @param message
+   * @return */
+  monitor debugMessage(@SuppressWarnings("unused") final String __) {
     return this;
   }
 }

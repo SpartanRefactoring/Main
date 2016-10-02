@@ -43,7 +43,7 @@ public final class MethodsCollector {
         $.setJavadoc(null);
         $.setName($.getAST().newSimpleName("f"));
         $.setFlags(0);
-        final String s = new BatchApplicator().fixedPoint($ + "");
+        final String s = new InteractiveSpartanizer().fixedPoint($ + "");
         methods.add(tide.clean(s));
         return false;
       }

@@ -8,7 +8,6 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
-import org.eclipse.ui.internal.handlers.WizardHandler.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
@@ -24,6 +23,15 @@ public final class LaconizeProject extends BaseHandler {
   private IJavaProject javaProject;
   private List<ICompilationUnit> todo;
   private int initialCount;
+  private List<ICompilationUnit> dead;
+
+  public LaconizeProject() {
+    this(new Trimmer());
+  }
+
+  public LaconizeProject(final GUI$Applicator inner) {
+    super(inner);
+  }
 
   /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
@@ -39,44 +47,25 @@ public final class LaconizeProject extends BaseHandler {
         $.addAndGet(¢.countTips());
         pm.done();
       });
-    } catch (InvocationTargetException x) {
+    } catch (final InvocationTargetException x) {
       monitor.logEvaluationError(this, x);
-    } catch (InterruptedException x) {
+    } catch (final InterruptedException x) {
       monitor.logCancellationRequest(this, x);
     }
     return $.get();
   }
 
-  public LaconizeProject() {
-    this(new Trimmer());
-  }
-
-  public LaconizeProject(final GUI$Applicator inner) {
-    super(inner);
-  }
-
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) throws ExecutionException {
+  @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
     status.setLength(0);
+    status.append("Event is = " + e);
     return go();
-  }
-  
-  public void start() {
-    currentCompilationUnit = eclipse.currentCompilationUnit();
-    status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
-    javaProject = currentCompilationUnit.getJavaProject();
-    status.append("Java project is: " + javaProject + "\n");
-    todo = eclipse.facade.compilationUnits(currentCompilationUnit);
-    status.append("Found " + todo.size() + " compilation units, ");
-    initialCount = countTips(currentCompilationUnit);
-    status.append("with " + initialCount + " tips.\n");
   }
 
   public Void go() throws ExecutionException {
     start();
     if (initialCount == 0)
-      return eclipse.announce(status + "No tips for '" + javaProject.getElementName() + "' project\n" + status);
+      return eclipse.announce(status + "No tips found.");
     eclipse.announce(status);
-
     final GUI$Applicator a = new Trimmer();
     int i;
     final IWorkbench wb = PlatformUI.getWorkbench();
@@ -91,7 +80,6 @@ public final class LaconizeProject extends BaseHandler {
               "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
               todo.size());
           int n = 0;
-          final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : todo) {
             if (pm.isCanceled()) {
               cancelled.set(true);
@@ -118,8 +106,20 @@ public final class LaconizeProject extends BaseHandler {
     if (i == MAX_PASSES)
       throw new ExecutionException(status + "Too many iterations");
     final int finalCount = countTips(currentCompilationUnit);
-    return eclipse
-        .announce(status + "Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
+    return eclipse.announce(
+        status + "Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
             + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + status);
+  }
+
+  public void start() {
+    currentCompilationUnit = eclipse.currentCompilationUnit();
+    status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
+    javaProject = currentCompilationUnit.getJavaProject();
+    status.append("Java project is: " + javaProject.getElementName() + "\n");
+    todo = eclipse.facade.compilationUnits(currentCompilationUnit);
+    status.append("Found " + todo.size() + " compilation units, ");
+    dead.clear();
+    initialCount = countTips(currentCompilationUnit);
+    status.append("with " + initialCount + " tips.\n");
   }
 }
