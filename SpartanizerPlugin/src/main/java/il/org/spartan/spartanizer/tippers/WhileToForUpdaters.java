@@ -10,10 +10,11 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final ForStatement $, final WhileStatement s) {
-    $.setExpression(dupWhileExpression(s));
-    $.updaters().add(dupWhileLastStatement(s));
-    $.setBody(minus.firstLastStatement(dupWhileBody(s)));
+  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
+    ForStatement $ = ¢.getAST().newForStatement();
+    $.setExpression(dupWhileExpression(¢));
+    $.updaters().add(updaterFromBody(¢));
+    $.setBody(minus.lastStatement(dupWhileBody(¢)));
     return $;
   }
 
@@ -25,23 +26,23 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
     return duplicate.of(¢.getExpression());
   }
 
-  private static Expression dupWhileLastStatement(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
-  }
-
-  private static ASTNode firstLastStatement(final WhileStatement ¢) {
-    return findFirst.statementCanBePushedToForUpdaters(step.body(¢));
+  private static Expression updaterFromBody(final WhileStatement ¢) {
+    return duplicate.of(az.expressionStatement(hop.lastStatement(step.body(¢))).getExpression());
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢)
-        && fittingUpdater(¢) && !iz.containsContinueStatement(step.body(¢));
+    return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
 
-  private static boolean fittingUpdater(final WhileStatement ¢) {
-    return az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢))) != null;
+  private static boolean hasFittingUpdater(final WhileStatement ¢) {
+    Block bodyBlock = az.block(step.body(¢));
+    return iz.incrementOrDecrement(lastStatement(¢)) && bodyBlock != null && step.statements(az.block(step.body(¢))).size() >= 2;
   }
 
+  private static ASTNode lastStatement(final WhileStatement ¢) {
+    return hop.lastStatement(step.body(¢));
+  }
+  
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
@@ -51,6 +52,6 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutLastStatement(¢.getAST().newForStatement(), ¢);
+    return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

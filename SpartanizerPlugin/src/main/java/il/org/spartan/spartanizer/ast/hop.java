@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.step.*;
 
+import il.org.spartan.spartanizer.assemble.*;
+
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
  * should read like a sentence phrase.
@@ -152,8 +154,8 @@ public interface hop {
   /** @param ¢ JD
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
-  static VariableDeclarationFragment prevToFirstLastExpressionFragment(final ForStatement ¢) {
-    final ASTNode n = findFirst.statementCanBePushedToForUpdaters(step.body(¢));
+  static VariableDeclarationFragment prevToLastExpressionFragment(final ForStatement ¢) {
+    final ASTNode n = hop.lastStatement(minus.lastStatement(duplicate.of(step.body(¢))));
     if (n == null)
       return null;
     final Statement current = az.asStatement(n);
@@ -168,9 +170,9 @@ public interface hop {
 
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
-   *         firstLastStatement in the loop body. */
-  static VariableDeclarationFragment prevToFirstLastExpressionFragment(final WhileStatement ¢) {
-    final ASTNode n = findFirst.statementCanBePushedToForUpdaters(step.body(¢));
+   *         LastStatement in the loop body. */
+  static VariableDeclarationFragment prevToLastExpressionFragment(final WhileStatement ¢) {
+    final ASTNode n = hop.lastStatement(minus.lastStatement(duplicate.of(step.body(¢))));
     if (n == null)
       return null;
     final Statement current = az.asStatement(n);

@@ -13,11 +13,17 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    return new DeclarationInitializerStatementTerminatingScope().cantTip(hop.prevToFirstLastExpressionFragment(¢));
+    VariableDeclarationFragment f = hop.prevToLastExpressionFragment(¢);
+    if (f == null)
+      return true;
+    return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    return new DeclarationInitializerStatementTerminatingScope().cantTip(hop.prevToFirstLastExpressionFragment(¢));
+    VariableDeclarationFragment f = hop.prevToLastExpressionFragment(¢);
+    if (f == null)
+      return true;
+    return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement ¢) {
@@ -35,7 +41,10 @@ public enum cantTip {
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
-    return new ForRenameInitializerToCent().cantTip(az.variableDeclarationExpression(¢));
+    VariableDeclarationExpression e = az.variableDeclarationExpression(¢);
+    if (e == null)
+      return true;
+    return new ForRenameInitializerToCent().cantTip(e);
   }
 
   public static boolean remvoeRedundantIf(final ForStatement ¢) {

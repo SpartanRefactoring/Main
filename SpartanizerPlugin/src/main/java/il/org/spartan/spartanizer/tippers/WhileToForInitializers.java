@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.step.*;
 import il.org.spartan.spartanizer.assemble.*;
 import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code>
@@ -38,12 +39,30 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return duplicate.of(expression(¢));
   }
 
-  private static boolean fitting(@SuppressWarnings("unused") final WhileStatement __) {
-    // TODO: check that the variables declared before the loop doesn't in use
-    // after the scope.
-    return true;
+  private static boolean fitting(final VariableDeclarationStatement s, final WhileStatement ¢) {
+    return fragmentsUseFitting(s, ¢);
   }
 
+//TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
+ // may want to change it.
+ private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final WhileStatement s) {
+   for (final VariableDeclarationFragment f : step.fragments(¢))
+     if (!variableUsedInWhile(s, f.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), f.getName()))
+       return false;
+   return true;
+ }
+ 
+ /** Determines whether a specific SimpleName was used in a
+  * {@link ForStatement}.
+  * @param s JD
+  * @param n JD
+  * @return true <b>iff</b> the SimpleName is used in a ForStatement's
+  *         condition, updaters, or body. */
+ private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
+   return !Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty();
+ }
+
+  
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
@@ -90,16 +109,16 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
       final ExclusionManager exclude) {
     if (f == null || r == null || nextStatement == null || exclude == null)
       return null;
-    final VariableDeclarationStatement parent = parent(f);
-    if (parent == null)
+    final VariableDeclarationStatement vds = parent(f);
+    if (vds == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null)
       return null;
-    exclude.excludeAll(step.fragments(parent));
-    if (!fitting(s))
+    exclude.excludeAll(step.fragments(vds));
+    if (!fitting(vds, s))
       return null;
-    r.remove(parent, g);
+    r.remove(vds, g);
     r.replace(s, buildForStatement(f, s), g);
     return r;
   }
