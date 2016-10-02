@@ -193,7 +193,7 @@ public final class CollectMetricsApp implements IApplication {
       try {
         u = openCompilationUnit(f);
         for (int ¢ = 0; ¢ < optRounds; ++¢, new Trimmer().apply(u))
-          if (new LaconizeProject().countTips(u) == 0)
+          if (new LaconizeProject().countTips() == 0)
             break;
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         System.out.println("Spartanized file " + f.getAbsolutePath());
