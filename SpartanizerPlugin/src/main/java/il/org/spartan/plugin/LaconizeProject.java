@@ -21,44 +21,39 @@ public final class LaconizeProject extends BaseHandler {
   private final StringBuilder status = new StringBuilder();
   private ICompilationUnit currentCompilationUnit;
   private IJavaProject javaProject;
-  private List<ICompilationUnit> todo;
+  private final List<ICompilationUnit> todo = new ArrayList<>();
   private int initialCount;
-  private List<ICompilationUnit> dead;
-
-  public LaconizeProject() {
-    this(new Trimmer());
-    dead = new LinkedList<>();
-  }
-
-  public LaconizeProject(final GUI$Applicator inner) {
-    super(inner);
-    dead = new LinkedList<>();
-  }
+  private final List<ICompilationUnit> dead = new ArrayList<>();
 
   /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
    * @return number of tips available for the compilation unit */
-  public int countTips(final ICompilationUnit u) {
+  public int countTips() {
     final AtomicInteger $ = new AtomicInteger(0);
-    try {
-      PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
-        pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-        final GUI$Applicator ¢ = new Trimmer();
-        ¢.setMarker(null);
-        ¢.setICompilationUnit(u);
-        $.addAndGet(¢.countTips());
-        pm.done();
-      });
-    } catch (final InvocationTargetException x) {
-      monitor.logEvaluationError(this, x);
-    } catch (final InterruptedException x) {
-      monitor.logCancellationRequest(this, x);
-    }
+    for (ICompilationUnit u : todo)
+      try {
+        PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
+          pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+          final GUI$Applicator ¢ = new Trimmer();
+          ¢.setProgressMonitor(pm);
+          ¢.setMarker(null);
+          ¢.setICompilationUnit(u);
+          $.addAndGet(¢.countTips());
+          pm.done();
+        });
+      } catch (final InvocationTargetException x) {
+        monitor.logEvaluationError(this, x);
+      } catch (final InterruptedException x) {
+        monitor.logCancellationRequest(this, x);
+      }
     return $.get();
   }
 
-  @Override public Void execute(final ExecutionEvent ¢) throws ExecutionException {
+  @Override public Void execute(final ExecutionEvent ¢) {
     status.setLength(0);
+    todo.clear();
+    dead.clear();
+    initialCount = 0;
     return go();
   }
 
@@ -91,9 +86,10 @@ public final class LaconizeProject extends BaseHandler {
             if (!a.apply(¢))
               dead.add(¢);
           }
-          if (dead.isEmpty())
-            status.append(dead.size() + " compilation did not change; will not be processed further\n");
+          if (!dead.isEmpty())
+            status.append(dead.size() + " CUs did not change; will not be processed further\n");
           todo.removeAll(dead);
+          dead.clear();
           pm.done();
         });
       } catch (final InvocationTargetException x) {
@@ -104,7 +100,7 @@ public final class LaconizeProject extends BaseHandler {
       if (cancelled.get() || todo.isEmpty())
         break;
     }
-    final int finalCount = countTips(currentCompilationUnit);
+    final int finalCount = countTips();
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
             "Completed in " + (1 + i) + " passes. \n" + //
@@ -120,10 +116,9 @@ public final class LaconizeProject extends BaseHandler {
     status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
     javaProject = currentCompilationUnit.getJavaProject();
     status.append("Java project is: " + javaProject.getElementName() + "\n");
-    todo = eclipse.facade.compilationUnits(currentCompilationUnit);
+    todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     status.append("Found " + todo.size() + " compilation units, ");
-    dead.clear();
-    initialCount = todo.isEmpty() ? 0 : countTips(currentCompilationUnit);
+    initialCount = todo.isEmpty() ? 0 : countTips();
     status.append("with " + initialCount + " tips.\n");
   }
 }
