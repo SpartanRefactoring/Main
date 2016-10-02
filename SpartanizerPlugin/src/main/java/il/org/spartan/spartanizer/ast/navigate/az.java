@@ -1,18 +1,17 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.create.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
-import static il.org.spartan.spartanizer.ast.step.*;
-
-import il.org.spartan.spartanizer.assemble.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -387,45 +386,45 @@ public enum az {
       return ¢.substring(0, ¢.length() - 1);
     }
 
-    static double double¢(final Expression ¢) throws Exception {
+    static double double¢(final Expression ¢) throws MyException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
           : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
               : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
     }
 
-    static double double¢(final String token) throws Exception {
+    static double double¢(final String token) throws MyException {
       try {
         return Double.parseDouble(token);
       } catch (final NumberFormatException x) {
-        throw new Exception(token, x);
+        throw new MyException(token, x);
       }
     }
 
-    static int int¢(final Expression ¢) throws Exception {
+    static int int¢(final Expression ¢) throws MyException {
       assert iz.pseudoNumber(¢);
       return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
     }
 
-    static int int¢(final String token) throws Exception {
+    static int int¢(final String token) throws MyException {
       try {
         return Integer.parseInt(token);
       } catch (final NumberFormatException x) {
-        throw new Exception(token, x);
+        throw new MyException(token, x);
       }
     }
 
-    static long long¢(final Expression ¢) throws Exception {
+    static long long¢(final Expression ¢) throws MyException {
       assert iz.pseudoNumber(¢);
       return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
           : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
     }
 
-    static long long¢(final String token) throws Exception {
+    static long long¢(final String token) throws MyException {
       try {
         return Long.parseLong(token);
       } catch (final NumberFormatException x) {
-        throw new Exception(token, x);
+        throw new MyException(token, x);
       }
     }
 
