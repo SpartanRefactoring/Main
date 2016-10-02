@@ -36,7 +36,7 @@ public class Toolbox {
             }
         }
       };
-  /** The default defaultInstance of this class */
+  /** The default Instance of this class */
   static Toolbox defaultInstance;
 
   public static Toolbox defaultInstance() {
@@ -63,11 +63,6 @@ public class Toolbox {
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        // Disabled to protect against infinite loop
-        // .add(AnnotationTypeMemberDeclaration.class, new
-        // BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
-        // .add(AnnotationTypeDeclaration.class, new
-        // BodyDeclarationModifiersSort.ofAnnotation()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
@@ -77,7 +72,6 @@ public class Toolbox {
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            // new ForToForUpdaters(), //
             new RemoveRedundentFor(), //
             null)//
         .add(WhileStatement.class, //
