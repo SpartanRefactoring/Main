@@ -178,7 +178,7 @@ public final class BatchSpartanizer {
       if (p != null)
         return dumpOutput(p);
     } catch (final IOException x) {
-      LoggingManner.logProbableBug(this, x);
+      monitor.logProbableBug(this, x);
     }
     return null;
   }
@@ -272,7 +272,7 @@ public final class BatchSpartanizer {
       try {
         collect(FileUtils.read(f));
       } catch (final IOException e) {
-        LoggingManner.infoIOException(e, "File = " + f);
+        monitor.infoIOException(e, "File = " + f);
       }
   }
 
@@ -285,7 +285,7 @@ public final class BatchSpartanizer {
       for (String line = in.readLine(); line != null; line = in.readLine(), System.out.println(line))
         ;
     } catch (final IOException x) {
-      LoggingManner.logProbableBug(this, x);
+      monitor.logProbableBug(this, x);
     }
     return p;
   }

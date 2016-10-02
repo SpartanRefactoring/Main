@@ -838,7 +838,7 @@ public interface iz {
     try {
       return Double.parseDouble(token) == d;
     } catch (final IllegalArgumentException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return false;
     }
   }
@@ -847,7 +847,7 @@ public interface iz {
     try {
       return Integer.parseInt(token) == i;
     } catch (final IllegalArgumentException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return false;
     }
   }
@@ -856,7 +856,7 @@ public interface iz {
     try {
       return Long.parseLong(token) == l;
     } catch (final IllegalArgumentException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return false;
     }
   }
