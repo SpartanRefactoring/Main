@@ -1,13 +1,10 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -61,67 +58,6 @@ class tipper {
 }
 
 class turns {
-  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<Boolean> foundFirst = new Wrapper<>();
-    foundFirst.set(Boolean.FALSE);
-    final Wrapper<ASTNode> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
-          return false;
-        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
-          return true;
-        if (foundFirst.get().booleanValue()) {
-          $.set(¢);
-          assert $.get() == ¢;
-          return false;
-        }
-        foundFirst.set(Boolean.TRUE);
-        return true;
-      }
-    });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
-    return $$;
-  }
-
-  private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return u;
-      case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.methodDeclaration(u));
-      case METHOD_LOOKALIKE:
-        return findSecond(MethodDeclaration.class, u);
-      case OUTER_TYPE_LOOKALIKE:
-        return u;
-      case STATEMENTS_LOOK_ALIKE:
-        return findSecond(Block.class, u);
-      default:
-        break;
-    }
-    return null;
-  }
-
-  private static String wrapCode(final String ¢) {
-    switch (GuessedContext.find(¢)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return ¢;
-      case EXPRESSION_LOOK_ALIKE:
-        return "class X{int f(){return " + ¢ + ";}}";
-      case METHOD_LOOKALIKE:
-        return "class X{" + ¢ + "}";
-      case OUTER_TYPE_LOOKALIKE:
-        return ¢;
-      case STATEMENTS_LOOK_ALIKE:
-        return "class X{int f(){" + ¢ + "}}";
-      default:
-        fail(¢ + " is not like anything I know...");
-    }
-    return null;
-  }
-
   private final UserDefinedTipper<ASTNode> tipper;
   private final String s;
 
@@ -132,13 +68,13 @@ class turns {
 
   /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   public void into(final String res) {
-    final Document document = new Document(wrapCode(s));
+    final Document document = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(document.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
+    final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
-    final ASTNode n = extractASTNode(s, cu);
     try {
       assertTrue(tipper.canTip(n));
       tipper.tip(n).go(r, null);
@@ -156,25 +92,7 @@ class turns {
     azzertEquals(res, document);
   }
 
-  private void azzertEquals(final String s, final Document d) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(s, d.get());
-        break;
-      case EXPRESSION_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(23, d.get().length() - 3));
-        break;
-      case METHOD_LOOKALIKE:
-        assertEquals(s, d.get().substring(9, d.get().length() - 2));
-        break;
-      case OUTER_TYPE_LOOKALIKE:
-        assertEquals(s, d.get());
-        break;
-      case STATEMENTS_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(16, d.get().length() - 3));
-        break;
-      default:
-        break;
-    }
+  private static void azzertEquals(final String s, final Document d) {
+    assertEquals(s, ASTutils.extractCode(s, d));
   }
 }

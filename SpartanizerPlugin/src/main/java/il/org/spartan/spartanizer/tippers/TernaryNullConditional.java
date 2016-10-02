@@ -40,7 +40,3 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
         : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(x));
   }
 }
-
-//$X1 == null ? null : $X1.$X2
-// * $X1?$X2?$X3:$X4:$X4 replace to $X1&&$X2?$X3:$X4
-
