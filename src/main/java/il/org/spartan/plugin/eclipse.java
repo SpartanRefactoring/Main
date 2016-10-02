@@ -136,7 +136,7 @@ public enum eclipse {
       return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
           .getCoveredNode();
     } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
+      monitor.logEvaluationError(x);
     }
     return null;
   }
