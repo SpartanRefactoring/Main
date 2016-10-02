@@ -121,10 +121,7 @@ public final class LaconizeProject extends BaseHandler {
     todo = eclipse.facade.compilationUnits(currentCompilationUnit);
     status.append("Found " + todo.size() + " compilation units, ");
     dead.clear();
-    if (todo.isEmpty())
-      initialCount = 0;
-    else
-      initialCount = countTips(currentCompilationUnit);
+    initialCount = todo.isEmpty() ? 0 : countTips(currentCompilationUnit);
     status.append("with " + initialCount + " tips.\n");
   }
 }
