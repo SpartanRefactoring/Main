@@ -90,7 +90,7 @@ public enum sideEffects {
       case VARIABLE_DECLARATION_EXPRESSION:
         return free(step.fragments(az.variableDeclarationExpression(¢)));
       default:
-        LoggingManner.logProbableBug(//
+        monitor.logProbableBug(//
             sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
     }

@@ -1,43 +1,66 @@
 package il.org.spartan.plugin;
 
-/** Our way of dealing with logging,
+/** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
+ * unusual situations.
  * @author Yossi Gil
  * @year 2016 */
-public enum LoggingManner {
-  /** Used for debugging; program aborts with the first logged message */
+public enum monitor {
+  /** Used for debugging; program exits immediately with the first logged
+   * message */
+  SUPER_TOUCHY {
+    @Override public monitor debugMessage(String message) {
+      return info(message);
+    }
+
+    @Override public monitor error(final String message) {
+      System.err.println(message);
+      System.exit(1);
+      throw new RuntimeException(message);
+    }
+  },
+  /** Used for debugging; program throws a {@link RuntimeException} with the
+   * first logged message */
   TOUCHY {
-    @Override public LoggingManner log(final String message) {
+    @Override public monitor debugMessage(String message) {
+      return info(message);
+    }
+    @Override public monitor error(final String message) {
       throw new RuntimeException(message);
     }
   },
   /** Used for real headless run; logs are simply ignore */
   OBLIVIOUS {
-    @Override public LoggingManner log(@SuppressWarnings("unused") final String __) {
+    @Override public monitor error(@SuppressWarnings("unused") final String __) {
       return this;
     }
   },
   /** For release versions, we keep a log of errors in stderr, but try to
    * proceed */
   PRODUCTION {
-    @Override public LoggingManner log(final String message) {
+    @Override public monitor error(final String message) {
       System.err.println(message);
       return this;
     }
   },
+  /** Not clear why we need this */
   LOG_TO_STDOUT {
-    @Override public LoggingManner log(final String message) {
+    @Override public monitor debugMessage(String message) {
+      return info(message);
+    }
+    @Override public monitor error(final String message) {
       System.out.println(message);
       return this;
     }
   };
-  public static final LoggingManner now = LoggingManner.PRODUCTION;
+  public static final monitor now = monitor.PRODUCTION;
 
-  public static LoggingManner info(final String message) {
-    return nonAbortingManner().log(message);
+  public monitor info(final String message) {
+    System.out.println(message);
+    return this;
   }
 
-  public static LoggingManner infoIOException(final Exception x, final String message) {
-    return info(//
+  public static monitor infoIOException(final Exception x, final String message) {
+    return now.info(//
         "   Got an exception of type : " + x.getClass().getSimpleName() + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
@@ -48,14 +71,14 @@ public enum LoggingManner {
   /** logs an error in the plugin
    * @param tipper an error */
   public static void log(final Throwable ¢) {
-    now.log(¢ + "");
+    now.error(¢ + "");
   }
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
   public static void logCancellationRequest(final Object o, final Exception x) {
-    now.log(//
+    now.info(//
         "An instance of " + o.getClass().getSimpleName() + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
             " (probably cancellation) exception." + //
@@ -74,7 +97,7 @@ public enum LoggingManner {
   }
 
   public static void logProbableBug(final Object o, final Throwable t) {
-    now.log(//
+    now.error(//
         "An instance of " + o.getClass().getSimpleName() + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
             " exception, which may indicate a bug somwhwere." + //
@@ -82,9 +105,23 @@ public enum LoggingManner {
             "\n o = " + o + "'");
   }
 
-  public static LoggingManner nonAbortingManner() {
+  public static monitor nonAbortingManner() {
     return now != TOUCHY ? now : LOG_TO_STDOUT;
   }
 
-  public abstract LoggingManner log(String message);
+  public abstract monitor error(String message);
+
+  /** @param string
+   * @return */
+  public static monitor debug(String message) {
+    return now.debugMessage(message); 
+  }
+
+  /**
+   * @param message
+   * @return
+   */
+  monitor debugMessage(@SuppressWarnings("unused") String __) {
+    return this;
+  }
 }

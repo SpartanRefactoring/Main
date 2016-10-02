@@ -116,7 +116,7 @@ public final class SingleTipperApplicator {
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
             } catch (JavaModelException | IllegalArgumentException x) {
-              LoggingManner.logEvaluationError(this, x);
+              monitor.logEvaluationError(this, x);
               exhausted.add(u);
             }
             if (textChange.getEdit().getLength() == 0)
@@ -125,7 +125,7 @@ public final class SingleTipperApplicator {
               try {
                 textChange.perform(pm);
               } catch (final CoreException e) {
-                LoggingManner.logEvaluationError(this, e);
+                monitor.logEvaluationError(this, e);
               }
             px.worked(1);
             px.subTask(u.getElementName() + " " + ++n + "/" + todo.size());
@@ -134,9 +134,9 @@ public final class SingleTipperApplicator {
           px.done();
         });
       } catch (final InvocationTargetException e) {
-        LoggingManner.logEvaluationError(this, e);
+        monitor.logEvaluationError(this, e);
       } catch (final InterruptedException x) {
-        LoggingManner.logCancellationRequest(this, x);
+        monitor.logCancellationRequest(this, x);
       }
       if (todo.isEmpty() || canelled.get())
         break;
