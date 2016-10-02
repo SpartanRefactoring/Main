@@ -82,7 +82,6 @@ public class Toolbox {
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            // new WhileToForUpdaters(), //
             new RemoveRedundantWhile(), //
             null) //
         .add(Assignment.class, //
@@ -99,11 +98,6 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
-            /* The following line was intentionally commented: Matteo, I believe
-             * this generates many bugs --yg fault Fixed, but not integrated, as
-             * per request. Waiting for the enhancement (Term, Factor, etc.) --
-             * -- mo */
-            // new InfixMultiplicationDistributive(), //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
@@ -133,11 +127,8 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
             new MethodDeclarationModifiersRedundant(), //
-            // Disabled to protect against infinite loop
-            // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            // new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -190,14 +181,11 @@ public class Toolbox {
             null) //
         .add(EnumDeclaration.class, //
             new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
-            // new BodyDeclarationAnnotationsSort.ofEnum(), //
             new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
-            // new EnumDeclarationModifierCleanEnum(), //
             null) //
         .add(FieldDeclaration.class, //
             new FieldRedundantModifiers(), //
             new BodyDeclarationModifiersSort.ofField(), //
-            // new BodyDeclarationAnnotationsSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -226,8 +214,6 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-            // new WhileToForInitializers(), //
-            // new ForToForInitializers(), //
             null) //
     //
     ;

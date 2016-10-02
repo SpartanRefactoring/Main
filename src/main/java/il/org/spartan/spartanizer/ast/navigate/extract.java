@@ -1,17 +1,16 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.ast.create.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should

@@ -8,7 +8,7 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) public final class WrapTest {
   @Test public void dealWithBothKindsOfComment() {

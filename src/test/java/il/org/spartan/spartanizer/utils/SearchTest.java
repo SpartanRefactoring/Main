@@ -2,15 +2,14 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Collect.*;
 

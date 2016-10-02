@@ -8,9 +8,16 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public final class BatchApplicator {
+/** TODO: ORI: Document
+ * @author Ori Marcovitch
+ * @since 2016 */
+public final class InteractiveSpartanizer {
+  /** @param fileNames if present, will process these as batch */
   public static void main(final String[] args) {
-    System.out.println(new BatchApplicator().fixedPoint(read()));
+    if (args.length == 0)
+      System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
+    else
+      BatchSpartanizer.main(args);
   }
 
   static String read() {
@@ -25,7 +32,7 @@ public final class BatchApplicator {
 
   public final Toolbox toolbox = new Toolbox();
 
-  public BatchApplicator disable(final Class<? extends TipperCategory> ¢) {
+  public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
     return this;
   }
