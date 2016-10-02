@@ -22,7 +22,12 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public final class SingleTipperApplicator {
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
+  private static ASTRewrite createRewrite(//
+      final IProgressMonitor pm, //
+      final CompilationUnit u, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -31,12 +36,21 @@ public final class SingleTipperApplicator {
     return $;
   }
 
-  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t, final Tipper w, final IFile f) {
+  private static ASTRewrite createRewrite(//
+      final IProgressMonitor pm, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w, //
+      final IFile f) {
     return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
         m, t, w);
   }
 
-  private static Tipper<?> fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
+  private static Tipper<?> fillRewrite(final ASTRewrite $, //
+      final CompilationUnit u, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w) {
     Toolbox.refresh();
     final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
@@ -53,7 +67,9 @@ public final class SingleTipperApplicator {
     }
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+    if (w == null)
+      return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t, null, null).rewriteAST());
@@ -66,13 +82,20 @@ public final class SingleTipperApplicator {
 
   public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
+    if (cu == null)
+      return;
     assert cu != null;
     final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
-    final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
-    assert w != null;
+    // TODO: Ori, why do you search for the tipper, don't you get it by
+    // parameter?
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    if (w == null) {
+      pm.done();
+      return;
+    }
     for (int i = 0; i < LaconizeProject.MAX_PASSES; ++i) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
