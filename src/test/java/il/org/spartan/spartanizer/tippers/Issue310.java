@@ -18,10 +18,8 @@ import org.junit.runners.*;
   }
 
   @Test public void OrisCode_check_a() {
-    trimmingOf("void foo() {int i = 0;for(;i < 10;++i) if(i=5)break;}")
-        .gives("void foo() {for(int i = 0;i < 10;++i) if(i=5)break;}")
-        .gives("void foo() {for(int ¢ = 0;¢ < 10;++¢) if(¢=5)break;}")
-        .stays();
+    trimmingOf("void foo() {int i = 0;for(;i < 10;++i) if(i=5)break;}").gives("void foo() {for(int i = 0;i < 10;++i) if(i=5)break;}")
+        .gives("void foo() {for(int ¢ = 0;¢ < 10;++¢) if(¢=5)break;}").stays();
   }
 
   @Test public void updaters_for_1() {
@@ -53,16 +51,12 @@ import org.junit.runners.*;
 
   @Test public void updaters_for_4() {
     trimmingOf("public boolean check(final ASTNode n) {" + "for(ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;++j;"
-        + "}" + "return false;" + "}")
-            .stays();
+        + "}" + "return false;" + "}").stays();
   }
 
   @Test public void updaters_ordering_check_1_b() {
-    trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}")
-    .gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}")
-    .gives("for(int ¢ = 0;;++¢) {arr[¢] = 0;}")
-    .gives("for(int ¢ = 0;;++¢) arr[¢] = 0;")
-    .stays();
+    trimmingOf("for(int i = 0;;) {arr[i] = 0;++i;}").gives("for(int ¢ = 0;;) {arr[¢] = 0;++¢;}").gives("for(int ¢ = 0;;++¢) {arr[¢] = 0;}")
+        .gives("for(int ¢ = 0;;++¢) arr[¢] = 0;").stays();
   }
 
   @Test public void updaters_ordering_check_2_right() {

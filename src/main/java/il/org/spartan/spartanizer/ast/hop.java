@@ -139,22 +139,10 @@ public interface hop {
     return $;
   }
 
-  /** @param s current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
-  static Statement previousStatementInBody(final Statement s) {
-    final Block b = az.block(s.getParent());
-    if (b == null)
-      return null;
-    final List<Statement> statements = step.statements(b);
-    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
-  }
-
   /** @param ¢ JD
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
-  static VariableDeclarationFragment prevToLastExpressionFragment(final ForStatement ¢) {
+  static VariableDeclarationFragment precidingFragmentToLastExpression(final ForStatement ¢) {
     final ASTNode n = hop.lastStatement(minus.lastStatement(duplicate.of(step.body(¢))));
     if (n == null)
       return null;
@@ -171,7 +159,7 @@ public interface hop {
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
-  static VariableDeclarationFragment prevToLastExpressionFragment(final WhileStatement ¢) {
+  static VariableDeclarationFragment prevFragmentToLastExpression(final WhileStatement ¢) {
     final ASTNode n = hop.lastStatement(minus.lastStatement(duplicate.of(step.body(¢))));
     if (n == null)
       return null;
@@ -183,6 +171,18 @@ public interface hop {
       return null;
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
     return vds == null ? null : findFirst.elementOf(step.fragments(vds));
+  }
+
+  /** @param s current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  static Statement previousStatementInBody(final Statement s) {
+    final Block b = az.block(s.getParent());
+    if (b == null)
+      return null;
+    final List<Statement> statements = step.statements(b);
+    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
   }
 
   static SimpleName simpleName(final Type ¢) {

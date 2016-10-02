@@ -46,8 +46,7 @@ import org.junit.runners.*;
 
   @Test public void challenge_while_d() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();" + //
-        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}")
-            .stays();
+        "while ($ instanceof IfStatement)$ = ((IfStatement) $).getElseStatement();return $;}").stays();
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_1() {
@@ -56,17 +55,17 @@ import org.junit.runners.*;
             "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}");
   }
 
-  //Ignored due to compilation error, trying to increment final variable.
+  // Ignored due to compilation error, trying to increment final variable.
   @Ignore @Test public void challenge_while_e_Modifiers_in_initializers_2() {
     trimmingOf("public boolean check(int i) {" + "final int p = i;" + "while(p < 10) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(final int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
-  
+
   @Test public void challenge_while_e_Modifiers_in_initializers_2a() {
     trimmingOf("public boolean check(int i) {" + "int p = i;" + "while(p < 10) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
-  
+
   @Test public void challenge_while_e_Modifiers_in_initializers_2b() {
     trimmingOf("public boolean check(int i) {" + "final int p = i;" + "while(p < 10) ++i;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(final int p = i;p < 10;) ++i;" + "return false;" + "}").stays();
@@ -104,17 +103,16 @@ import org.junit.runners.*;
 
   @Test public void challenge_while_i_initialization_expression_2c() {
     trimmingOf("int line;while (0 < (line = 1)){--a;++line;}").gives("for (int line = 1; 0 < line;){--a;++line;}")
-    .gives("for (int line = 1; 0 < line;++line){--a;}").gives("for (int line = 1; line > 0;++line)--a;")
-        .stays();
+        .gives("for (int line = 1; 0 < line;++line){--a;}").gives("for (int line = 1; line > 0;++line)--a;").stays();
   }
-  
+
   // the last conversion not working.. centification problem?
   @Ignore @Test public void challenge_while_i_initialization_expression_2d() {
     trimmingOf("int line;while (0 < (line = 1)){a=line;++line;}").gives("for (int line = 1; 0 < line;){a=line;++line;}")
-    .gives("for (int line = 1; 0 < line;++line){a=line;}").gives("for (int line = 1; line > 0;++line)a=line;").gives("for (int ¢ = 1; ¢ > 0;++¢){a=¢;}")
-        .stays();
+        .gives("for (int line = 1; 0 < line;++line){a=line;}").gives("for (int line = 1; line > 0;++line)a=line;")
+        .gives("for (int ¢ = 1; ¢ > 0;++¢){a=¢;}").stays();
   }
-  
+
   @Test public void challenge_while_i_initialization_expression_3() {
     trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (c=true))$.append(line).append(ls);")
         .gives("for(boolean a=true,b=true,c=true;b && a && c;)$.append(line).append(ls);").stays();
@@ -155,8 +153,7 @@ import org.junit.runners.*;
 
   @Test public void initializers_for_2() {
     trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(;p < 10;) ++p;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}")
-        .stays();
+        .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
   @Test public void initializers_for_3a() {
@@ -165,11 +162,10 @@ import org.junit.runners.*;
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;--a) {++p;}" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;--a) ++p;" + "return false;" + "}").stays();
   }
-  
+
   @Test public void initializers_for_3b() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "for(;p < 10;) {++p;--a;k+=p+a;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) {++p;--a;k+=p+a;}" + "return false;" + "}")
-        .stays();
+        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) {++p;--a;k+=p+a;}" + "return false;" + "}").stays();
   }
 
   @Test public void initializers_for_4() {
@@ -196,15 +192,14 @@ import org.junit.runners.*;
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
-  // Ignored until treatment of each fragment alone will be implemented. 
+  // Ignored until treatment of each fragment alone will be implemented.
   @Ignore @Test public void initializers_while_3() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "while(p < 10) ++p;" + "return false;" + "}")
         .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
   @Test public void initializers_while_4() {
-    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "while(p < 10) p = p.getParent();" + "return false;" + "}")
-        .stays();
+    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "while(p < 10) p = p.getParent();" + "return false;" + "}").stays();
   }
 
   @Ignore @Test public void initializers_with_array_a() {
@@ -228,23 +223,25 @@ import org.junit.runners.*;
 
   @Test public void t03b() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
-        + "return $;}")
-    .stays();
+        + "return $;}").stays();
   }
 
   @Test public void t03c() {
     trimmingOf(
         "private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
-    .gives("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$){" + "if ($ == 0)" + "$ = 7;}" + "return $;}")
-    .gives("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
+            .gives("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$){" + "if ($ == 0)" + "$ = 7;}"
+                + "return $;}")
+            .gives("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$)" + "if ($ == 0)" + "$ = 7;"
+                + "return $;}")
             .stays();
   }
 
   @Test public void t03d() {
-    trimmingOf(
-        "private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return groupId;}")
-            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;)" + "{if ($ == 0)" + "$ = 7;++$;}return groupId;}")
-            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;++$)" + "{if ($ == 0)" + "$ = 7;}return groupId;}")
+    trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}"
+        + "return groupId;}").gives(
+            "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;)" + "{if ($ == 0)" + "$ = 7;++$;}return groupId;}")
+            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;++$)" + "{if ($ == 0)"
+                + "$ = 7;}return groupId;}")
             .gives(
                 "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ < one;++$)" + "if ($ == 0)" + "$ = 7;return groupId;}")
             .stays();
@@ -260,8 +257,7 @@ import org.junit.runners.*;
 
   @Test public void t05() {
     trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")
-            .stays();
+        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}").stays();
   }
 
   @Test public void t06a() {
@@ -276,7 +272,6 @@ import org.junit.runners.*;
 
   @Test public void t06c() {
     trimmingOf("public boolean check(int i){int p=i;while(p!=null){++p;--i;h(p);}return false;}")
-        .gives("public boolean check(int i) {for(int p = i; p != null;){++p;--i;h(p);}return false;}")
-        .stays();
+        .gives("public boolean check(int i) {for(int p = i; p != null;){++p;--i;h(p);}return false;}").stays();
   }
 }
