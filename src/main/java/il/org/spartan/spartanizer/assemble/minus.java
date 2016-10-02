@@ -26,30 +26,13 @@ public enum minus {
     return ¢;
   }
 
-  /** Remove the first statement with side effects residing under a given
-   * {@link Statement}, for which all next statements are side effects. if ¢ is
-   * empty or has only one statement return empty statement.
-   * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
-   * @return Given {@link Statement} without the last inner statement, if ¢ is
-   *         empty or has only one statement return empty statement. */
-  public static Statement firstLastStatement(final Statement $) {
-    final Statement ¢ = az.asStatement(findFirst.statementCanBePushedToForUpdaters($));
-    if (¢ == null)
-      return $;
-    final Block b = az.block($);
-    if (b == null)
-      return make.emptyStatement(¢);
-    final List<Statement> ss = step.statements(b);
-    ss.remove(¢);
-    return $;
-  }
-
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  public static Statement lastStatement(final Statement $) {
+  public static Statement lastStatement(final Statement ¢) {
+    Statement $ = duplicate.of(¢);
     if (!iz.block($))
       return make.emptyStatement($);
     final List<Statement> ss = step.statements(az.block($));

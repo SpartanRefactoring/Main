@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.assemble.*;
@@ -10,40 +12,60 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
-    $.updaters().add(dupWhileStatement($));
-    $.setBody(minus.firstLastStatement(dupForBody($)));
+  private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
+    setUpdaters($);
+ // TODO Alex, minus should return void, and then no need to duplicate.
+    $.setBody(minus.lastStatement(dupForBody($)));
     return $;
   }
 
+  private static void setUpdaters(ForStatement $) {
+    List<Expression> oldUpdaters = new ArrayList <>(step.updaters($));
+    step.updaters($).clear();
+    step.updaters($).add(updaterFromBody($));
+    step.updaters($).addAll(oldUpdaters);
+  }
+  
   private static Statement dupForBody(final ForStatement ¢) {
     return duplicate.of(step.body(¢));
   }
 
-  private static Expression dupWhileStatement(final ForStatement ¢) {
-    return duplicate.of(az.expressionStatement(firstLastStatement(¢)).getExpression());
+  private static Expression updaterFromBody(final ForStatement ¢) {
+    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  private static ASTNode firstLastStatement(final ForStatement ¢) {
-    return findFirst.statementCanBePushedToForUpdaters(step.body(¢));
+  private static ASTNode lastStatement(final ForStatement ¢) {
+    return hop.lastStatement(step.body(¢));
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢) && ¢ != null
-        && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢) && fittingUpdater(¢)
-        && !iz.containsContinueStatement(step.body(¢));
+    return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
+        && cantTip.forRenameInitializerToCent(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
-
-  private static boolean fittingUpdater(final ForStatement ¢) {
-    final Statement updater = az.asStatement(findFirst.statementCanBePushedToForUpdaters(step.body(¢)));
-    return updater != null && updatesOnlyForInitializers(¢, updater);
+  
+  private static boolean hasFittingUpdater(final ForStatement ¢) {
+    Block bodyBlock = az.block(step.body(¢));
+    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2)
+      return false;
+    final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
+    assert updater != null : "updater is not expressionStatement";
+    //if (updater == null)
+    //  return false;
+    final Expression e = updater.getExpression();
+    PrefixExpression pre = az.prefixExpression(e);
+    PostfixExpression post = az.postfixExpression(e);
+    SimpleName n = pre == null ? az.simpleName(post.getOperand()) : az.simpleName(pre.getOperand());
+    return updaterDeclaredInFor(¢, n);
   }
-
-  private static boolean updatesOnlyForInitializers(final ForStatement ¢, final Statement updater) {
-    return true;
-    // TODO: Alex and Dan, implement after uses, declares and defines.
+   
+  private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
+    VariableDeclarationExpression vde = az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)));
+    for (VariableDeclarationFragment f : step.fragments(vde))
+      if (f.getName().toString().equals(n.toString()))
+        return true;
+    return false;
   }
-
+  
   @Override public String description(final ForStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
