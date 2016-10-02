@@ -51,7 +51,7 @@ public class TipperFactory {
       Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
         if (iz.name(p)) {
           final String id = ((Name) p).getFullyQualifiedName();
-          if (id.startsWith("$X") || id.startsWith("$M"))
+          if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$B"))
             enviroment.put(id, n);
         } else {
           final List<? extends ASTNode> nChildren = Recurser.children(n);
