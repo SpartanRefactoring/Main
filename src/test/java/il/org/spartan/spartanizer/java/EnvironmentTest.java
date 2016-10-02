@@ -610,27 +610,15 @@ import il.org.spartan.spartanizer.utils.*;
   }
   
   @Test public void declaresDownMethodDeclaration02(){
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {\n"//
-        + "void f(int a){}\n"//
-        + "void g(int a){}\n"//
-        + "void h(){ int a; }\n"//
-        + "}"));
-    for(Entry<String, Information> e : Environment.declaresDown($))
-      assert (".f.a".equals(e.getKey()) || ".g.a".equals(e.getKey()) || ".h.a".equals(e.getKey())) && e.getValue().hiding == null;
+    for (Entry<String, Information> ¢ : Environment.declaresDown(
+        makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){}\n" + "void g(int a){}\n" + "void h(){ int a; }\n" + "}"))))
+      assert (".f.a".equals(¢.getKey()) || ".g.a".equals(¢.getKey()) || ".h.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
   }
   
   @Test public void declaresDownMethodDeclaration03(){
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {\n"//
-        + "void f(int a){\n"//
-        + "class B{"
-        + "void g(int a){}"
-        + "}"//
-        + "}\n"//
-        + "}"));
-    for(Entry<String, Information> e : Environment.declaresDown($))
-      assert ".f.a".equals(e.getKey()) || (".f.g.a".equals(e.getKey()) && e.getValue().hiding != null);
+    for (Entry<String, Information> ¢ : Environment.declaresDown(
+        makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){\n" + "class B{" + "void g(int a){}" + "}" + "}\n" + "}"))))
+      assert ".f.a".equals(¢.getKey()) || (".f.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null);
   }
   
   

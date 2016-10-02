@@ -57,9 +57,8 @@ public final class LaconizeProject extends BaseHandler {
     return $.get();
   }
 
-  @Override public Void execute(final ExecutionEvent e) throws ExecutionException {
+  @Override public Void execute(final ExecutionEvent ¢) throws ExecutionException {
     status.setLength(0);
-    status.append("Event is = " + e);
     return go();
   }
 
@@ -93,7 +92,7 @@ public final class LaconizeProject extends BaseHandler {
               dead.add(¢);
           }
           if (dead.isEmpty())
-            status.append(dead.size() + " compilation  units remain unchanged; will not be processed again\n");
+            status.append(dead.size() + " compilation did not change; will not be processed further\n");
           todo.removeAll(dead);
           pm.done();
         });
@@ -108,9 +107,12 @@ public final class LaconizeProject extends BaseHandler {
     if (i == MAX_PASSES)
       throw new ExecutionException(status + "Too many iterations");
     final int finalCount = countTips(currentCompilationUnit);
-    return eclipse.announce(
-        status + "Spartanizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + (1 + i) + " passes. \n" + "Total changes: "
-            + (initialCount - finalCount) + "\n" + "Tips before: " + initialCount + "\n" + "Tips after: " + finalCount + "\n" + status);
+    return eclipse.announce(status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
+        "Completed in " + (1 + i) + " passes. \n" + //
+        "Total changes: " + (initialCount - finalCount) + "\n" + //
+        "Tips before: " + initialCount + "\n" + //
+        "Tips after: " + finalCount + "\n" + //
+        status);
   }
 
   public void start() {
