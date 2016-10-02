@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
+import il.org.spartan.spartanizer.ast.create.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 

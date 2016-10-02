@@ -1,14 +1,13 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 abstract class HidingDepth extends ScopeManager {
   private int depth;

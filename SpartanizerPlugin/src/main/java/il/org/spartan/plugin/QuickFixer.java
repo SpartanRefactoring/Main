@@ -1,11 +1,11 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
-
-import static il.org.spartan.spartanizer.ast.wizard.*;
 
 /** A quickfix generator for spartanization refactoring
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>

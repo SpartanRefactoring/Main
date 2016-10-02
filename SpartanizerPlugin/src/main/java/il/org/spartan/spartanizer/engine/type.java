@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -14,11 +15,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
