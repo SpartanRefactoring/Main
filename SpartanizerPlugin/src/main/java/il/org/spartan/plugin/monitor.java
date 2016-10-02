@@ -1,9 +1,5 @@
 package il.org.spartan.plugin;
 
-import org.eclipse.core.runtime.*;
-
-import il.org.spartan.spartanizer.tipping.*;
-
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
  * @author Yossi Gil
@@ -68,7 +64,7 @@ public enum monitor {
     return className(¢.getClass());
   }
 
-  public static void debug(Object o, Throwable t) {
+  public static void debug(final Object o, final Throwable t) {
     debug(//
         "An instance of " + className(o) + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
@@ -121,7 +117,7 @@ public enum monitor {
     return now;
   }
 
-  public static monitor logEvaluationError(Throwable t) {
+  public static monitor logEvaluationError(final Throwable t) {
     return logEvaluationError(now, t);
   }
 

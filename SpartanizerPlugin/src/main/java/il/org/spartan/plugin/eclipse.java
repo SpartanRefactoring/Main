@@ -1,7 +1,6 @@
 package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.awt.*;
 import java.util.*;
@@ -20,6 +19,8 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -32,6 +33,13 @@ public enum eclipse {
   static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
   static ImageIcon icon = new ImageIcon(
       Toolkit.getDefaultToolkit().getImage(eclipse.class.getResource(ICON_PATH)).getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+  static final Shell parent = null;
+  static final int shellStyle = SWT.TOOL;
+  static final boolean takeFocusOnOpen = false;
+  static final boolean persistSize = false;
+  static final boolean persistLocation = false;
+  static final boolean showDialogMenu = true;
+  private static boolean showPersistActions;
 
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {
@@ -42,20 +50,13 @@ public enum eclipse {
     d.setNatureIds(append(natures, Nature.NATURE_ID));
     p.setDescription(d, null);
   }
-  static final Shell parent = null;
-  static final int shellStyle = SWT.TOOL;
-  static final boolean takeFocusOnOpen = false;
-  static final boolean persistSize = false;
-  static final boolean persistLocation = false;
-  static final boolean showDialogMenu = true;
-  private static boolean showPersistActions;
-  static Void announce(final Object message) {
 
+  static Void announce(final Object message) {
     new PopupDialog(parent, //
         shellStyle, takeFocusOnOpen, persistSize, persistLocation, showDialogMenu, showPersistActions, //
         message + "", "Spartan Plugin").open();
-
-    // JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    // JOptionPane.showMessageDialog(null, message, NAME,
+    // JOptionPane.INFORMATION_MESSAGE, icon);
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }
