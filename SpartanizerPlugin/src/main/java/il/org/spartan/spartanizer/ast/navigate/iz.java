@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -11,7 +11,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -36,11 +36,11 @@ public interface iz {
   }
 
   static boolean anonymousClassDeclaration(final ASTNode ¢) {
-    return is(¢, ANONYMOUS_CLASS_DECLARATION);
+    return nodeTypeEquals(¢, ANONYMOUS_CLASS_DECLARATION);
   }
 
   static boolean arrayInitializer(final ASTNode ¢) {
-    return is(¢, ARRAY_INITIALIZER);
+    return nodeTypeEquals(¢, ARRAY_INITIALIZER);
   }
 
   /** @param pattern the statement or block to check if it is an assignment
@@ -48,7 +48,7 @@ public interface iz {
    *         the parameter not or if the block Contains more than one
    *         statement */
   static boolean assignment(final ASTNode ¢) {
-    return is(¢, ASSIGNMENT);
+    return nodeTypeEquals(¢, ASSIGNMENT);
   }
 
   static boolean astNode(final Object ¢) {
@@ -60,7 +60,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean block(final ASTNode ¢) {
-    return is(¢, BLOCK);
+    return nodeTypeEquals(¢, BLOCK);
   }
 
   /** Determine whether the curly brackets of an {@link IfStatement} are
@@ -109,18 +109,18 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
    *         literal */
   static boolean booleanLiteral(final ASTNode ¢) {
-    return is(¢, BOOLEAN_LITERAL);
+    return nodeTypeEquals(¢, BOOLEAN_LITERAL);
   }
 
   /** @param ¢ node to check
    * @return true if the given node is a boolean or null literal or false
    *         otherwise */
   static boolean booleanOrNullLiteral(final ASTNode ¢) {
-    return is(¢, BOOLEAN_LITERAL, NULL_LITERAL);
+    return nodeTypeIn(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
 
   static boolean breakStatement(final Statement ¢) {
-    return is(¢, BREAK_STATEMENT);
+    return nodeTypeEquals(¢, BREAK_STATEMENT);
   }
 
   static boolean comparison(final Expression ¢) {
@@ -143,7 +143,7 @@ public interface iz {
    *         conditional or parenthesized conditional expression */
   static boolean conditional(final Expression... xs) {
     for (final Expression ¢ : xs)
-      if (is(extract.core(¢), CONDITIONAL_EXPRESSION))
+      if (nodeTypeEquals(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
     return false;
   }
@@ -181,8 +181,8 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a
    *         "specific" */
   static boolean constant(final Expression ¢) {
-    return is(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
-        || is(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
+    return nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
+        || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a
@@ -197,7 +197,8 @@ public interface iz {
   }
 
   static boolean containsOperator(final ASTNode ¢) {
-    return oneOf(¢, ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT);
+    final int[] types = { ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT };
+    return nodeTypeIn(¢, types);
   }
 
   /** Check whether the operator of an expression is susceptible for applying
@@ -227,7 +228,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link EmptyStatement} */
   static boolean emptyStatement(final ASTNode ¢) {
-    return is(¢, EMPTY_STATEMENT);
+    return nodeTypeEquals(¢, EMPTY_STATEMENT);
   }
 
   static boolean emptyStringLiteral(final ASTNode ¢) {
@@ -239,15 +240,15 @@ public interface iz {
   }
 
   static boolean enhancedFor(final ASTNode ¢) {
-    return iz.is(¢, ENHANCED_FOR_STATEMENT);
+    return iz.nodeTypeEquals(¢, ENHANCED_FOR_STATEMENT);
   }
 
   static boolean enumConstantDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM_CONSTANT_DECLARATION);
+    return nodeTypeEquals(¢, ENUM_CONSTANT_DECLARATION);
   }
 
   static boolean enumDeclaration(final ASTNode ¢) {
-    return is(¢, ENUM_DECLARATION);
+    return nodeTypeEquals(¢, ENUM_DECLARATION);
   }
 
   /** Determine whether a node is an "expression statement"
@@ -272,11 +273,11 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link ExpressionStatement} statement */
   static boolean expressionStatement(final ASTNode ¢) {
-    return is(¢, EXPRESSION_STATEMENT);
+    return nodeTypeEquals(¢, EXPRESSION_STATEMENT);
   }
 
   static boolean fieldDeclaration(final BodyDeclaration ¢) {
-    return is(¢, FIELD_DECLARATION);
+    return nodeTypeEquals(¢, FIELD_DECLARATION);
   }
 
   static boolean final¢(final BodyDeclaration ¢) {
@@ -303,7 +304,7 @@ public interface iz {
    *         if the parameter not or if the block Contains more than one
    *         statement */
   static boolean forStatement(final ASTNode ¢) {
-    return is(¢, FOR_STATEMENT);
+    return nodeTypeEquals(¢, FOR_STATEMENT);
   }
 
   static boolean identifier(final String identifier, final Name typeName) {
@@ -316,7 +317,7 @@ public interface iz {
   }
 
   static boolean ifStatement(final Statement ¢) {
-    return is(¢, IF_STATEMENT);
+    return nodeTypeEquals(¢, IF_STATEMENT);
   }
 
   /** @param pattern JD
@@ -349,7 +350,7 @@ public interface iz {
   /** @param ¢ JD
    * @return true if the given node is an infix expression or false otherwise */
   static boolean infix(final ASTNode ¢) {
-    return is(¢, INFIX_EXPRESSION);
+    return nodeTypeEquals(¢, INFIX_EXPRESSION);
   }
 
   static boolean infixDivide(final Expression ¢) {
@@ -357,7 +358,7 @@ public interface iz {
   }
 
   static boolean infixExpression(final ASTNode ¢) {
-    return is(¢, INFIX_EXPRESSION);
+    return nodeTypeEquals(¢, INFIX_EXPRESSION);
   }
 
   static boolean infixMinus(final ASTNode ¢) {
@@ -375,19 +376,11 @@ public interface iz {
   /** @param ¢ JD
    * @return true if the given node is an interface or false otherwise */
   static boolean interface¢(final ASTNode ¢) {
-    return is(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
+    return nodeTypeEquals(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
   static boolean intType(final Expression ¢) {
     return type.of(¢) == INT;
-  }
-
-  static boolean is(final ASTNode ¢, final int... types) {
-    return ¢ != null && intIsIn(¢.getNodeType(), types);
-  }
-
-  static boolean is(final ASTNode n, final int type) {
-    return n != null && type == n.getNodeType();
   }
 
   /** Determine whether a declaration is final or not
@@ -408,13 +401,13 @@ public interface iz {
    * @return true if the given node is a method decleration or false
    *         otherwise */
   static boolean isMethodDeclaration(final ASTNode ¢) {
-    return is(¢, METHOD_DECLARATION);
+    return nodeTypeEquals(¢, METHOD_DECLARATION);
   }
 
   /** @param ¢ node to check
    * @return true if the given node is a method invocation or false otherwise */
   static boolean isMethodInvocation(final ASTNode ¢) {
-    return is(¢, METHOD_INVOCATION);
+    return nodeTypeEquals(¢, METHOD_INVOCATION);
   }
 
   /** @param a the assignment whose operator we want to check
@@ -460,7 +453,12 @@ public interface iz {
    * @return true if the given node is a variable declaration statement or false
    *         otherwise */
   static boolean isVariableDeclarationStatement(final ASTNode ¢) {
-    return is(¢, VARIABLE_DECLARATION_STATEMENT);
+    return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
+  }
+
+  static iz izParser() {
+    return new iz() {
+    };
   }
 
   /** Determine whether an item is the last one in a list
@@ -499,8 +497,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return token != null && LiteralParser.of(token) == type.Primitive.Certain.DOUBLE && new iz() {
-    }.parsesTo(token, d);
+    return token != null && LiteralParser.of(token) == type.Primitive.Certain.DOUBLE && izParser().parsesTo(token, d);
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
@@ -508,8 +505,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return token != null && LiteralParser.of(token) == type.Primitive.Certain.INT && new iz() {
-    }.parsesTo(token, i);
+    return token != null && LiteralParser.of(token) == type.Primitive.Certain.INT && izParser().parsesTo(token, i);
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
@@ -517,8 +513,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return token != null && LiteralParser.of(token) == type.Primitive.Certain.LONG && new iz() {
-    }.parsesTo(token, l);
+    return token != null && LiteralParser.of(token) == type.Primitive.Certain.LONG && izParser().parsesTo(token, l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
@@ -561,7 +556,7 @@ public interface iz {
   }
 
   static boolean memberRef(final ASTNode ¢) {
-    return is(¢, MEMBER_REF);
+    return nodeTypeEquals(¢, MEMBER_REF);
   }
 
   /** Determine whether a node is a {@link MethodDeclaration}
@@ -569,7 +564,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
    *         invocation. */
   static boolean methodDeclaration(final ASTNode ¢) {
-    return is(¢, METHOD_DECLARATION);
+    return nodeTypeEquals(¢, METHOD_DECLARATION);
   }
 
   /** Determine whether a node is a {@link MethodInvocation}
@@ -577,11 +572,11 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a method
    *         invocation. */
   static boolean methodInvocation(final ASTNode ¢) {
-    return is(¢, METHOD_INVOCATION);
+    return nodeTypeEquals(¢, METHOD_INVOCATION);
   }
 
   static boolean modifier(final ASTNode ¢) {
-    return is(¢, MODIFIER);
+    return nodeTypeEquals(¢, MODIFIER);
   }
 
   static boolean name(final ASTNode ¢) {
@@ -600,19 +595,32 @@ public interface iz {
     return ¢ != null && ¢.getOperator() == PrefixExpression.Operator.MINUS;
   }
 
+  static boolean nodeTypeEquals(final ASTNode n, final int type) {
+    return n != null && type == n.getNodeType();
+  }
+
+  /** Determine whether the type of an {@link ASTNode} node is one of given list
+   * @param n a node
+   * @param types a list of types
+   * @return <code><b>true</b></code> <i>iff</i> function #ASTNode.getNodeType
+   *         returns one of the types provided as parameters */
+  static boolean nodeTypeIn(final ASTNode n, final int... types) {
+    return n != null && intIsIn(n.getNodeType(), types);
+  }
+
   /** Determine whether an {@link Expression} is so basic that it never needs to
    * be placed in parenthesis.
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is so basic that
    *         it never needs to be placed in parenthesis. */
   static boolean noParenthesisRequired(final Expression ¢) {
-    return is(¢, ARRAY_ACCESS, ARRAY_CREATION, BOOLEAN_LITERAL, CAST_EXPRESSION, CHARACTER_LITERAL, CLASS_INSTANCE_CREATION, FIELD_ACCESS,
+    return nodeTypeIn(¢, ARRAY_ACCESS, ARRAY_CREATION, BOOLEAN_LITERAL, CAST_EXPRESSION, CHARACTER_LITERAL, CLASS_INSTANCE_CREATION, FIELD_ACCESS,
         INSTANCEOF_EXPRESSION, METHOD_INVOCATION, NULL_LITERAL, NUMBER_LITERAL, PARAMETERIZED_TYPE, PARENTHESIZED_EXPRESSION, QUALIFIED_NAME,
         SIMPLE_NAME, STRING_LITERAL, SUPER_CONSTRUCTOR_INVOCATION, SUPER_FIELD_ACCESS, SUPER_METHOD_INVOCATION, THIS_EXPRESSION, TYPE_LITERAL);
   }
 
   static boolean normalAnnotations(final ASTNode ¢) {
-    return is(¢, NORMAL_ANNOTATION);
+    return nodeTypeEquals(¢, NORMAL_ANNOTATION);
   }
 
   /** Determine whether a node is the <code><b>null</b></code> keyword
@@ -620,7 +628,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i>is thee <code><b>null</b></code>
    *         literal */
   static boolean nullLiteral(final ASTNode ¢) {
-    return is(¢, NULL_LITERAL);
+    return nodeTypeEquals(¢, NULL_LITERAL);
   }
 
   static boolean number(final Expression ¢) {
@@ -628,7 +636,7 @@ public interface iz {
   }
 
   static boolean numberLiteral(final ASTNode ¢) {
-    return is(¢, NUMBER_LITERAL);
+    return nodeTypeEquals(¢, NUMBER_LITERAL);
   }
 
   /** Determine whether a node is <code><b>this</b></code> or
@@ -637,20 +645,12 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean numericLiteral(final Expression ¢) {
-    return iz.oneOf(¢, CHARACTER_LITERAL, NUMBER_LITERAL);
-  }
-
-  /** Determine whether the type of an {@link ASTNode} node is one of given list
-   * @param n a node
-   * @param types a list of types
-   * @return <code><b>true</b></code> <i>iff</i> function #ASTNode.getNodeType
-   *         returns one of the types provided as parameters */
-  static boolean oneOf(final ASTNode n, final int... types) {
-    return n != null && isOneOf(n.getNodeType(), types);
+    final int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL };
+    return iz.nodeTypeIn(¢, types);
   }
 
   static boolean parenthesizeExpression(final Expression ¢) {
-    return is(¢, PARENTHESIZED_EXPRESSION);
+    return nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
 
   /** @param a the assignment who's operator we want to check
@@ -663,7 +663,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a prefix
    *         expression. */
   static boolean prefixExpression(final ASTNode ¢) {
-    return is(¢, PREFIX_EXPRESSION);
+    return nodeTypeEquals(¢, PREFIX_EXPRESSION);
   }
 
   static boolean prefixMinus(final Expression ¢) {
@@ -679,7 +679,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
    *         statement. */
   static boolean returnStatement(final ASTNode ¢) {
-    return is(¢, RETURN_STATEMENT);
+    return nodeTypeEquals(¢, RETURN_STATEMENT);
   }
 
   static boolean rightOfAssignment(final Expression ¢) {
@@ -692,15 +692,16 @@ public interface iz {
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   static boolean sequencer(final ASTNode ¢) {
-    return iz.oneOf(¢, RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT);
+    final int[] types = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
+    return iz.nodeTypeIn(¢, types);
   }
 
   /** Checks if expression is simple.
    * @param x an expression
    * @return true iff argument is simple */
   static boolean simple(final Expression ¢) {
-    return is(¢, BOOLEAN_LITERAL, CHARACTER_LITERAL, NULL_LITERAL, NUMBER_LITERAL, QUALIFIED_NAME, SIMPLE_NAME, STRING_LITERAL, THIS_EXPRESSION,
-        TYPE_LITERAL);
+    return nodeTypeIn(¢, BOOLEAN_LITERAL, CHARACTER_LITERAL, NULL_LITERAL, NUMBER_LITERAL, QUALIFIED_NAME, SIMPLE_NAME, STRING_LITERAL,
+        THIS_EXPRESSION, TYPE_LITERAL);
   }
 
   /** Determine whether a node is a simple name
@@ -708,11 +709,11 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple
    *         name */
   static boolean simpleName(final ASTNode ¢) {
-    return is(¢, SIMPLE_NAME);
+    return nodeTypeEquals(¢, SIMPLE_NAME);
   }
 
   static boolean singleMemberAnnotation(final ASTNode ¢) {
-    return is(¢, SINGLE_MEMBER_ANNOTATION);
+    return nodeTypeEquals(¢, SINGLE_MEMBER_ANNOTATION);
   }
 
   /** Determine whether a node is a singleton statement, i.e., not a block.
@@ -732,7 +733,7 @@ public interface iz {
   }
 
   static boolean singleVariableDeclaration(final ASTNode ¢) {
-    return is(¢, SINGLE_VARIABLE_DECLARATION);
+    return nodeTypeEquals(¢, SINGLE_VARIABLE_DECLARATION);
   }
 
   /** @param ¢ JD
@@ -753,7 +754,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> is the <code><b>this</b></code>
    *         keyword */
   static boolean thisLiteral(final ASTNode ¢) {
-    return is(¢, THIS_EXPRESSION);
+    return nodeTypeEquals(¢, THIS_EXPRESSION);
   }
 
   /** Determine whether a node is <code><b>this</b></code> or
@@ -762,11 +763,12 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean thisOrNull(final Expression ¢) {
-    return iz.oneOf(¢, NULL_LITERAL, THIS_EXPRESSION);
+    final int[] types = { NULL_LITERAL, THIS_EXPRESSION };
+    return iz.nodeTypeIn(¢, types);
   }
 
   static boolean tryStatement(final ASTNode ¢) {
-    return is(¢, TRY_STATEMENT);
+    return nodeTypeEquals(¢, TRY_STATEMENT);
   }
 
   /** @param ¢ JD
@@ -814,14 +816,14 @@ public interface iz {
   /** @param $
    * @return */
   static boolean variableDeclarationFragment(final ASTNode $) {
-    return iz.is($, VARIABLE_DECLARATION_FRAGMENT);
+    return iz.nodeTypeEquals($, VARIABLE_DECLARATION_FRAGMENT);
   }
 
   /** @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a variable
    *         declaration statement. */
   static boolean variableDeclarationStatement(final ASTNode ¢) {
-    return is(¢, VARIABLE_DECLARATION_STATEMENT);
+    return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
   static boolean whileStatement(final ASTNode x) {
@@ -829,7 +831,7 @@ public interface iz {
   }
 
   static boolean wildcardType(final ASTNode ¢) {
-    return is(¢, WILDCARD_TYPE);
+    return nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
   /** @param ¢ JD

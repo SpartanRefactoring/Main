@@ -5,27 +5,15 @@ package il.org.spartan.plugin;
  * @author Yossi Gil
  * @year 2016 */
 public enum monitor {
-  /** Used for debugging; program exits immediately with the first logged
-   * message */
-  SUPER_TOUCHY {
-    @Override public monitor debugMessage(String message) {
+  /** Not clear why we need this */
+  LOG_TO_STDOUT {
+    @Override public monitor debugMessage(final String message) {
       return info(message);
     }
 
     @Override public monitor error(final String message) {
-      System.err.println(message);
-      System.exit(1);
-      throw new RuntimeException(message);
-    }
-  },
-  /** Used for debugging; program throws a {@link RuntimeException} with the
-   * first logged message */
-  TOUCHY {
-    @Override public monitor debugMessage(String message) {
-      return info(message);
-    }
-    @Override public monitor error(final String message) {
-      throw new RuntimeException(message);
+      System.out.println(message);
+      return this;
     }
   },
   /** Used for real headless run; logs are simply ignore */
@@ -42,21 +30,44 @@ public enum monitor {
       return this;
     }
   },
-  /** Not clear why we need this */
-  LOG_TO_STDOUT {
-    @Override public monitor debugMessage(String message) {
+  /** Used for debugging; program exits immediately with the first logged
+   * message */
+  SUPER_TOUCHY {
+    @Override public monitor debugMessage(final String message) {
       return info(message);
     }
+
     @Override public monitor error(final String message) {
-      System.out.println(message);
-      return this;
+      System.err.println(message);
+      System.exit(1);
+      throw new RuntimeException(message);
+    }
+  },
+  /** Used for debugging; program throws a {@link RuntimeException} with the
+   * first logged message */
+  TOUCHY {
+    @Override public monitor debugMessage(final String message) {
+      return info(message);
+    }
+
+    @Override public monitor error(final String message) {
+      throw new RuntimeException(message);
     }
   };
   public static final monitor now = monitor.PRODUCTION;
 
-  public monitor info(final String message) {
-    System.out.println(message);
-    return this;
+  public static String className(final Class<?> c) {
+    return c.getSimpleName() + "[" + c.getCanonicalName() + "]";
+  }
+
+  public static String className(final Object o) {
+    return className(o.getClass());
+  }
+
+  /** @param string
+   * @return */
+  public static monitor debug(final String message) {
+    return now.debugMessage(message);
   }
 
   public static monitor infoIOException(final Exception x, final String message) {
@@ -79,7 +90,7 @@ public enum monitor {
    * @param x JD */
   public static void logCancellationRequest(final Object o, final Exception x) {
     now.info(//
-        "An instance of " + o.getClass().getSimpleName() + //
+        "An instance of " + className(o) + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
@@ -88,7 +99,7 @@ public enum monitor {
 
   public static void logEvaluationError(final Object o, final Exception x) {
     System.err.println(//
-        "An instance of " + o.getClass().getSimpleName() + //
+        "An instance of " + className(o) + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
             "\n      exeption, probably due to unusual " + //
             "\n      Java constructs in the input " + //
@@ -98,30 +109,23 @@ public enum monitor {
 
   public static void logProbableBug(final Object o, final Throwable t) {
     now.error(//
-        "An instance of " + o.getClass().getSimpleName() + //
+        "An instance of " + className(o) + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
   }
 
-  public static monitor nonAbortingManner() {
-    return now != TOUCHY ? now : LOG_TO_STDOUT;
-  }
-
   public abstract monitor error(String message);
 
-  /** @param string
-   * @return */
-  public static monitor debug(String message) {
-    return now.debugMessage(message); 
+  public monitor info(final String message) {
+    System.out.println(message);
+    return this;
   }
 
-  /**
-   * @param message
-   * @return
-   */
-  monitor debugMessage(@SuppressWarnings("unused") String __) {
+  /** @param message
+   * @return */
+  monitor debugMessage(@SuppressWarnings("unused") final String __) {
     return this;
   }
 }

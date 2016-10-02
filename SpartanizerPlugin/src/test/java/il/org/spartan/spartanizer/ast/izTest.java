@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -8,9 +9,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for class {@link iz}
  * @author Yossi Gil
@@ -105,7 +105,8 @@ public final class izTest {
   }
 
   @Test public void isOneOf() {
-    azzert.that(iz.oneOf(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION), is(true));
+    int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION };
+    azzert.that(iz.nodeTypeIn(e("this"), types), is(true));
   }
 
   @Test public void isThisFalse1() {

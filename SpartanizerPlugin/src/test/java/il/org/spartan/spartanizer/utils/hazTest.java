@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Unit tests for {@link haz}
  * @author TODO // Write your name here

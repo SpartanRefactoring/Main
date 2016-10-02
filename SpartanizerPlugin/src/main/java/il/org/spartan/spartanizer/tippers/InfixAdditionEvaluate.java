@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
-
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Evaluate the addition of numbers according to the following rules <br/>
  * <br/>

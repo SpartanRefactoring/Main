@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
 
@@ -39,7 +39,7 @@ public enum have {
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.iz.literal.false¢(¢))
+      if (il.org.spartan.spartanizer.ast.navigate.iz.literal.false¢(¢))
         return true;
     return false;
   }
@@ -50,7 +50,7 @@ public enum have {
    *         that is a literal. */
   public static boolean literal(final Expression... xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.iz.literal(¢))
+      if (il.org.spartan.spartanizer.ast.navigate.iz.literal(¢))
         return true;
     return false;
   }
@@ -61,7 +61,7 @@ public enum have {
    *         that is a literal. */
   public static boolean literal(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.iz.literal(¢))
+      if (il.org.spartan.spartanizer.ast.navigate.iz.literal(¢))
         return true;
     return false;
   }
@@ -94,7 +94,7 @@ public enum have {
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.iz.literal.true¢(¢))
+      if (il.org.spartan.spartanizer.ast.navigate.iz.literal.true¢(¢))
         return true;
     return false;
   }

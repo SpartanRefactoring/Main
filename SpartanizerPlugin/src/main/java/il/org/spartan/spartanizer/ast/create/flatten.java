@@ -1,13 +1,13 @@
-package il.org.spartan.spartanizer.assemble;
+package il.org.spartan.spartanizer.ast.create;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
-
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
