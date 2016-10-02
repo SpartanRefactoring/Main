@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 
 @SuppressWarnings({ "static-method", "javadoc" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public final class sideEffectsTest {

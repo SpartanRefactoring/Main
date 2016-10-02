@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import org.eclipse.jdt.core.dom.*;
 

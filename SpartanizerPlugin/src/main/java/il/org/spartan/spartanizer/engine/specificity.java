@@ -6,8 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.*;
-import il.org.spartan.spartanizer.ast.iz.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.iz.*;
 
 /** @author Yossi Gil
  * @since 2015-08-23 */
