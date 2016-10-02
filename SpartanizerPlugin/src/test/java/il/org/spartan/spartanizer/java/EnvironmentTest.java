@@ -592,12 +592,46 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
   }
-
-  class S {
-    String s;
-
-    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
-      // Empty block
-    }
+  
+  //==================================declaresDown Tests================
+  
+  
+  //Primitive, manual tests, to root out the rough bugs. 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  @Test public void declaresDownMethodDeclaration01() {
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
+        "class A {\n"//
+        + "void foo(int a, int b){}\n"// 
+        + "}"));
+    for (Entry<String, Information> e : Environment.declaresDown($))
+      assert ".foo.a".equals(e.getKey()) || ".foo.b".equals(e.getKey());
   }
+  
+  @Test public void declaresDownMethodDeclaration02(){
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
+        "class A {\n"//
+        + "void f(int a){}\n"//
+        + "void g(int a){}\n"//
+        + "void h(){ int a; }\n"//
+        + "}"));
+    for(Entry<String, Information> e : Environment.declaresDown($))
+      assert (".f.a".equals(e.getKey()) || ".g.a".equals(e.getKey()) || ".h.a".equals(e.getKey())) && e.getValue().hiding == null;
+  }
+  
+  @Test public void declaresDownMethodDeclaration03(){
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
+        "class A {\n"//
+        + "void f(int a){\n"//
+        + "class B{"
+        + "void g(int a){}"
+        + "}"//
+        + "}\n"//
+        + "}"));
+    for(Entry<String, Information> e : Environment.declaresDown($))
+      assert ".f.a".equals(e.getKey()) || (".f.g.a".equals(e.getKey()) && e.getValue().hiding != null);
+  }
+  
+  
 }
