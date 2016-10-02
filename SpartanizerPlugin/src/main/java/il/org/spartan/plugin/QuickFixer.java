@@ -38,7 +38,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";
 
-    static IMarkerResolution apply(final TipperCommit.Type t, final String label) {
+    static IMarkerResolution apply(final SingleTipperApplicator.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
@@ -46,7 +46,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
         @Override public void run(final IMarker m) {
           try {
-            new TipperCommit().go(nullProgressMonitor, m, t);
+            new SingleTipperApplicator().go(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException e) {
             LoggingManner.logEvaluationError(this, e);
           }
@@ -55,15 +55,15 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     }
 
     static IMarkerResolution applyFile() {
-      return apply(TipperCommit.Type.FILE, APPLY_TO_FILE);
+      return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
 
     static IMarkerResolution applyFunction() {
-      return apply(TipperCommit.Type.DECLARATION, APPLY_TO_FUNCTION);
+      return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
 
     static IMarkerResolution applyProject() {
-      return apply(TipperCommit.Type.PROJECT, APPLY_TO_PROJECT);
+      return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
 
     static IMarkerResolution disableClassFix() {

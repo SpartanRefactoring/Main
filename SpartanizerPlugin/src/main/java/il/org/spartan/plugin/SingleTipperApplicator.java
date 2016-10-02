@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public final class TipperCommit {
+public final class SingleTipperApplicator {
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t, final Tipper w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
@@ -60,16 +60,16 @@ public final class TipperCommit {
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(pm);
     if (Type.FILE.equals(t))
-      eclipse.announce("Done apllying " + w.description() + " tip to " + u.getElementName());
+      eclipse.announce("Done applying " + w.description() + " tip to " + u.getElementName());
     pm.done();
   }
 
   public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     assert cu != null;
-    final List<ICompilationUnit> us = eclipse.facade.compilationUnits();
-    assert us != null;
-    pm.beginTask("Spartanizing project", us.size());
+    final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
+    assert todo != null;
+    pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
     final Tipper w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     assert w != null;
@@ -77,15 +77,15 @@ public final class TipperCommit {
       final IWorkbench wb = PlatformUI.getWorkbench();
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger pn = new AtomicInteger(i + 1);
-      final AtomicBoolean cancled = new AtomicBoolean(false);
+      final AtomicBoolean canelled = new AtomicBoolean(false);
       try {
         ps.run(true, true, px -> {
-          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), us.size());
+          px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
           int n = 0;
-          final List<ICompilationUnit> es = new LinkedList<>();
-          for (final ICompilationUnit u : us) {
+          final List<ICompilationUnit> exhausted = new ArrayList<>();
+          for (final ICompilationUnit u : todo) {
             if (px.isCanceled()) {
-              cancled.set(true);
+              canelled.set(true);
               break;
             }
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -94,9 +94,10 @@ public final class TipperCommit {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
             } catch (JavaModelException | IllegalArgumentException x) {
               LoggingManner.logEvaluationError(this, x);
+              exhausted.add(u);
             }
             if (textChange.getEdit().getLength() == 0)
-              es.add(u);
+              exhausted.add(u);
             else
               try {
                 textChange.perform(pm);
@@ -104,19 +105,21 @@ public final class TipperCommit {
                 LoggingManner.logEvaluationError(this, e);
               }
             px.worked(1);
-            px.subTask(u.getElementName() + " " + ++n + "/" + us.size());
+            px.subTask(u.getElementName() + " " + ++n + "/" + todo.size());
           }
-          us.removeAll(es);
+          todo.removeAll(exhausted);
           px.done();
         });
-      } catch (InvocationTargetException | InterruptedException e) {
+      } catch (final InvocationTargetException e) {
         LoggingManner.logEvaluationError(this, e);
+      } catch (final InterruptedException x) {
+        LoggingManner.logCancellationRequest(this, x);
       }
-      if (us.isEmpty() || cancled.get())
+      if (todo.isEmpty() || canelled.get())
         break;
     }
     pm.done();
-    eclipse.announce("Done apllying " + w.description() + " tip to " + jp.getElementName());
+    eclipse.announce("Done applying " + w.description() + " tip to " + jp.getElementName());
   }
 
   public enum Type {
@@ -129,7 +132,7 @@ public final class TipperCommit {
     final Type type;
     final CompilationUnit compilationUnit;
     Tipper<?> tipper;
-    /** A boolean flag indicating end of traverse. Set true after required
+    /** A boolean flag indicating end of traversal. Set true after required
      * operation has been made. */
     boolean doneTraversing;
 
