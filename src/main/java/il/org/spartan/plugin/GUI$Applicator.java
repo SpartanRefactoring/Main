@@ -187,7 +187,7 @@ public abstract class GUI$Applicator extends Refactoring {
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
        *         (v2) */
       @Override public String getLabel() {
-        return "Laconication preview";
+        return "Apply after preview";
       }
 
       @Override public void run(final IMarker m) {
