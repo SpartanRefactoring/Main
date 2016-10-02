@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.spartanizer.utils;
 
 /** Fluent API
  * @author Yossi Gil
