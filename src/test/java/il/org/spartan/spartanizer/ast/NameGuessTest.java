@@ -6,6 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests of {@link NameGuess}
  * @author Yossi Gil
