@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    VariableDeclarationFragment f = hop.prevToLastExpressionFragment(¢);
+    final VariableDeclarationFragment f = hop.precidingFragmentToLastExpression(¢);
     if (f == null)
       return true;
     return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    VariableDeclarationFragment f = hop.prevToLastExpressionFragment(¢);
+    final VariableDeclarationFragment f = hop.prevFragmentToLastExpression(¢);
     if (f == null)
       return true;
     return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
@@ -41,7 +41,7 @@ public enum cantTip {
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
-    VariableDeclarationExpression e = az.variableDeclarationExpression(¢);
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(¢);
     if (e == null)
       return true;
     return new ForRenameInitializerToCent().cantTip(e);

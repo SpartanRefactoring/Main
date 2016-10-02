@@ -43,28 +43,17 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return fragmentsUseFitting(s, ¢);
   }
 
-//TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
- // may want to change it.
- private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final WhileStatement s) {
-   for (final VariableDeclarationFragment f : step.fragments(¢))
-     if (!variableUsedInWhile(s, f.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), f.getName()))
-       return false;
-   return true;
- }
- 
- /** Determines whether a specific SimpleName was used in a
-  * {@link ForStatement}.
-  * @param s JD
-  * @param n JD
-  * @return true <b>iff</b> the SimpleName is used in a ForStatement's
-  *         condition, updaters, or body. */
- private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
-   return !Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty();
- }
-
-  
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
+  }
+
+  // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
+  // may want to change it.
+  private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final WhileStatement s) {
+    for (final VariableDeclarationFragment f : step.fragments(¢))
+      if (!variableUsedInWhile(s, f.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), f.getName()))
+        return false;
+    return true;
   }
 
   /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
@@ -99,6 +88,16 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * @return expression to the new for loop, without the initializers. */
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return !haz.sideEffects(from) || !iz.infix(from) ? from : handleInfix(duplicate.of(az.infixExpression(from)), s);
+  }
+
+  /** Determines whether a specific SimpleName was used in a
+   * {@link ForStatement}.
+   * @param s JD
+   * @param n JD
+   * @return true <b>iff</b> the SimpleName is used in a ForStatement's
+   *         condition, updaters, or body. */
+  private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
+    return !Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty();
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
