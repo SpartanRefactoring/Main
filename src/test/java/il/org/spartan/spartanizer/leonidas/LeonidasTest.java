@@ -75,4 +75,8 @@ public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testTips5() {
     azzert.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
   }
+  
+  @SuppressWarnings("static-method") @Test public void testBlockMutation1() {
+//    azzert.tipper("if(!$X1) $B1; else $B2;", "if($X1) $B2; else $B1;", "change If order").turns("if(!(x==0)) return;").into("a.defaultsTo(y)");
+  }
 }
