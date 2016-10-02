@@ -15,9 +15,16 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2016 */
 public class TestFactory {
   public static String testcase(String raw) {
-    return shortenIdentifiers(eliminateSpaces(raw));
+    return linify(shortenIdentifiers(eliminateSpaces(raw)));
   }
 
+  /**
+   * Actually, implementing this might be trivial, I think  applying toString()
+   * on an AST does this automatically.
+   * 
+   * @param s
+   * @return
+   */
   private static String eliminateSpaces(String s) {
     return s;
   }
@@ -65,11 +72,22 @@ public class TestFactory {
     return "X" + String.valueOf(old.charAt(1) + 1);
   }
 
-  private static String format(String s) {
+  /**
+   * Separate the string to lines, like:
+   * 
+   * trimmingOf("// From use case of issue#1593\n" + //
+   *        "public void f(){\n" + //
+   *        "  if(!g){\n" + //
+   *        "    foo();\n" + //
+   *        "    bar();\n" + //
+   *        "  }\n" + //
+   *        "}"//
+   * 
+   * @param s string to linify
+   * @return
+   */
+  private static String linify(String s) {
     return s;
   }
 
-  private static String toTest(String s) {
-    return s;
-  }
 }
