@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Unit tests for {@link haz}
- * @author TODO // Write your name here
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class hazTest {
   @Test public void seriesA_01() {

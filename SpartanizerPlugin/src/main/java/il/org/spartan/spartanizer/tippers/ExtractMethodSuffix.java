@@ -15,13 +15,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO Ori: choose more suitable category
-// TODO Ori: add tests for tipper
+// TODO Ori Roth: choose more suitable category, maybe modular
+// TODO Ori Roth: add tests for tipper
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
 public class ExtractMethodSuffix extends MultipleReplaceCurrentNode<MethodDeclaration> implements TipperCategory.EarlyReturn {
-  // TODO Ori: get more suitable names for constants
+  // TODO Ori Roth: find more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
   private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 2.0 / 3.0;
 

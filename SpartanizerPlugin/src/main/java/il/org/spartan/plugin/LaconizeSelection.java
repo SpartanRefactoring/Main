@@ -100,7 +100,8 @@ public abstract class LaconizeSelection extends BaseHandler {
     @Override public Range getSelection(final ICompilationUnit u) {
       final ASTNode n = eclipse.getNodeByMarker(u, marker);
       if (n == null)
-        return new Range(0, 0); // TODO Ori: replace with empty range
+        return new Range(0, 0); // TODO Ori Roth: replace with empty range. Is
+                                // this done?
       final ASTNode a = searchAncestors.forClass(clazz).from(n);
       return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
           : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());
@@ -115,8 +116,8 @@ public abstract class LaconizeSelection extends BaseHandler {
       try {
         execute();
       } catch (final ExecutionException x) {
-        // TODO Ori: log it
-        x.printStackTrace();
+        monitor.logEvaluationError(this, x);
+        ;
       }
     }
   }

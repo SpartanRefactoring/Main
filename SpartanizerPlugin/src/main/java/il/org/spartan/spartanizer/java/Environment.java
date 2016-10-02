@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
-/* TODO Wrings to improve once Environment is complete:
+/* TODO Tippers to improve once Environment is complete:
  * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
   /** The Environment structure is in some like a Linked list, where EMPTY is

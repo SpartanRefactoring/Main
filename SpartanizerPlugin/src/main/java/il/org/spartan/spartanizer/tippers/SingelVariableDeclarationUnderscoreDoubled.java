@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Rename unused variable to double underscore "__" TODO Ori: (maybe) inherent
+/** Rename unused variable to double underscore "__" 
  * VariableChangeName instead of ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */

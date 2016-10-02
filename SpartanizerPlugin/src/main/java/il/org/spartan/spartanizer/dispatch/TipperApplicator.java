@@ -35,9 +35,8 @@ public final class TipperApplicator extends GUI$Applicator {
         if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
           try {
             tipper.tip(¢).go(r, null);
-          } catch (final TipperFailure e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+          } catch (final TipperFailure f) { 
+            monitor.debug(this, f);
           }
       }
     });
@@ -56,9 +55,8 @@ public final class TipperApplicator extends GUI$Applicator {
         progressMonitor.worked(1);
         try {
           $.add(tipper.tip(¢));
-        } catch (final TipperFailure e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
         }
       }
     };
