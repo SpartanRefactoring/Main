@@ -458,6 +458,7 @@ public interface iz {
 
   static iz izParser() {
     return new iz() {
+      // This anonymous class is intentionally left empty
     };
   }
 
