@@ -44,7 +44,7 @@ public enum eclipse {
   /** @param message What to announce
    * @return <code><b>null</b></code> */
   static Void announce(final Object message) {
-     JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }
