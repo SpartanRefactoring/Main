@@ -22,7 +22,7 @@ public final class LaconizeProject extends BaseHandler {
   /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
    * @return number of tips available for the compilation unit */
-  public static int countTips(final ICompilationUnit u) {
+  public int countTips(final ICompilationUnit u) {
     final AtomicInteger $ = new AtomicInteger(0);
     try {
       PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
@@ -33,9 +33,10 @@ public final class LaconizeProject extends BaseHandler {
         $.addAndGet(¢.countTips());
         pm.done();
       });
-    } catch (InvocationTargetException | InterruptedException x) {
-      // TODO Ori: log in
-      x.printStackTrace();
+    } catch (InvocationTargetException x) {
+      LoggingManner.logEvaluationError(this, x);
+    } catch (InterruptedException x) {
+      LoggingManner.logCancellationRequest(this, x);
     }
     return $.get();
   }
@@ -66,7 +67,7 @@ public final class LaconizeProject extends BaseHandler {
     for (i = 0; i < MAX_PASSES; ++i) {
       final IProgressService ps = wb.getProgressService();
       final AtomicInteger passNum = new AtomicInteger(i + 1);
-      final AtomicBoolean cancled = new AtomicBoolean(false);
+      final AtomicBoolean cancelled = new AtomicBoolean(false);
       try {
         ps.run(true, true, pm -> {
           // a.setProgressMonitor(pm);
@@ -77,11 +78,11 @@ public final class LaconizeProject extends BaseHandler {
           final List<ICompilationUnit> dead = new ArrayList<>();
           for (final ICompilationUnit ¢ : us) {
             if (pm.isCanceled()) {
-              cancled.set(true);
+              cancelled.set(true);
               break;
             }
             pm.worked(1);
-            pm.subTask(¢.getElementName() + " " + ++n + "/" + us.size());
+            pm.subTask("Compilation unit #" + ++n + "/" + us.size() + " (" + ¢.getElementName() + ")");
             if (!a.apply(¢))
               dead.add(¢);
           }
@@ -93,7 +94,7 @@ public final class LaconizeProject extends BaseHandler {
       } catch (final InterruptedException x) {
         LoggingManner.logEvaluationError(this, x);
       }
-      if (cancled.get() || us.isEmpty())
+      if (cancelled.get() || us.isEmpty())
         break;
     }
     if (i == MAX_PASSES)
