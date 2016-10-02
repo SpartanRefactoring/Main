@@ -1,19 +1,17 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
-
-import static il.org.spartan.spartanizer.ast.extract.*;
-
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 @SuppressWarnings("static-method") public final class FactorsCollectorTest {
   private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");

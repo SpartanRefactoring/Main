@@ -1,10 +1,10 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.navigate;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.wizard.*;
 
 import il.org.spartan.*;
 
