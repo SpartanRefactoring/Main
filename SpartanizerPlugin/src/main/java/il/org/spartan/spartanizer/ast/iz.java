@@ -357,6 +357,21 @@ public interface iz {
     }
   }
 
+  public static boolean variableNotUsedAfterStatement(final Statement ¢, final SimpleName n) {
+    final Block b = az.block(¢.getParent());
+    assert b != null : "For loop's parent is null";
+    final List<Statement> statements = step.statements(b);
+    boolean passedFor = false;
+    for (final Statement s : statements) {
+      if (passedFor && !Collect.usesOf(n).in(s).isEmpty())
+        return false;
+      if (s.equals(¢))
+        passedFor = true;
+    }
+    return true;
+  }
+
+  
   static int index(final int i, final int... is) {
     for (int $ = 0; $ < is.length; ++$)
       if (is[$] == i)
