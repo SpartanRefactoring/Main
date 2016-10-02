@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.leonidas;
 
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.engine.*;
+
 public class LeonidasTest {
   @SuppressWarnings("static-method") @Test public void testMatches1() {
     azzert.that("$X ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");
@@ -74,5 +77,10 @@ public class LeonidasTest {
 
   @SuppressWarnings("static-method") @Test public void testTips5() {
     azzert.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
+  }
+  
+  @SuppressWarnings("static-method") @Test public void testBlockMutation1() {
+    wizard.ast("if(!$X1) $B1();");
+//    azzert.tipper("if(!$X1) $B1; else $B2;", "if($X1) $B2; else $B1;", "change If order").turns("if(!(x==0)) return;").into("a.defaultsTo(y)");
   }
 }
