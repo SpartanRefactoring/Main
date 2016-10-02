@@ -102,8 +102,8 @@ public enum extract {
    *         version of it */
   public static Expression core(final Expression $) {
     return $ == null ? $ //
-        : iz.is($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
-            : iz.is($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
+        : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
+            : iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;
   }
 
