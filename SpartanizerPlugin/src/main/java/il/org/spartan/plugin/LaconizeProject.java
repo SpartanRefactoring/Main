@@ -34,6 +34,9 @@ public final class LaconizeProject extends BaseHandler {
     final GUI$Applicator ¢ = new Trimmer();
     try {
       PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
+        /** XXX: This is a bug of centification
+         * [[SuppressWarningsSpartan]]
+         */
         @Override public void run(IProgressMonitor pm) {
           pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
           System.out.println(todo.size());
@@ -42,7 +45,6 @@ public final class LaconizeProject extends BaseHandler {
               $.set(0);
               break;
             }
-            // ¢.setProgressMonitor(pm);
             ¢.setMarker(null);
             ¢.setICompilationUnit(u);
             $.addAndGet(¢.countTips());
@@ -58,7 +60,7 @@ public final class LaconizeProject extends BaseHandler {
     return $.get();
   }
 
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent ¢) {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
     dead.clear();
@@ -113,7 +115,7 @@ public final class LaconizeProject extends BaseHandler {
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
             "Completed in " + (1 + i) + " passes. \n" + //
-            (i >= MAX_PASSES ? "   === too many passes\n" : "") + //
+            (i < MAX_PASSES ? "" : "   === too many passes\n") + //
             "Tips followed: " + (initialCount - finalCount) + "\n" + //
             "Tips before: " + initialCount + "\n" + //
             "Tips after: " + finalCount + "\n" //
