@@ -7,6 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** Tests of {@link NameGuess}
  * @author Yossi Gil
