@@ -6,10 +6,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** A parent tipper for changing variables names TODO Ori: check safety of
+/** A parent tipper for changing variables names TODO Ori Roth: check safety of
  * Collect.usesOf(n.getName()).in(p)
  * @author Ori Roth
  * @since 2016/05/08

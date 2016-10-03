@@ -4,15 +4,13 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -29,10 +27,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SingleVariableDeclaration> ps = parameters(d);
-    if (ps.size() != 1)
-      return null;
-    final SingleVariableDeclaration parameter = first(ps);
+    final SingleVariableDeclaration parameter = onlyOne(parameters(d));
     if (!isJohnDoe(parameter))
       return null;
     final SimpleName n = parameter.getName();

@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -38,7 +38,7 @@ public abstract class LaconizeSelection extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       try {
         ps.busyCursorWhile(pm -> {
-          applicator.setProgressMonitor(pm);
+//          applicator.setProgressMonitor(pm);
           pm.setTaskName(status + "");
           applicator.parse();
           applicator.scan();
@@ -46,9 +46,9 @@ public abstract class LaconizeSelection extends BaseHandler {
           applicator.apply(currentCompilationUnit, getSelection(currentCompilationUnit));
         });
       } catch (final InvocationTargetException x) {
-        LoggingManner.logEvaluationError(this, x);
+        monitor.logEvaluationError(this, x);
       } catch (final InterruptedException x) {
-        LoggingManner.logCancellationRequest(this, x);
+        monitor.logCancellationRequest(this, x);
         return null;
       }
       if (n.inner <= 0) {
@@ -100,7 +100,8 @@ public abstract class LaconizeSelection extends BaseHandler {
     @Override public Range getSelection(final ICompilationUnit u) {
       final ASTNode n = eclipse.getNodeByMarker(u, marker);
       if (n == null)
-        return new Range(0, 0); // TODO Ori: replace with empty range
+        return new Range(0, 0); // TODO Ori Roth: replace with empty range. Is
+                                // this done?
       final ASTNode a = searchAncestors.forClass(clazz).from(n);
       return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
           : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());
@@ -115,8 +116,7 @@ public abstract class LaconizeSelection extends BaseHandler {
       try {
         execute();
       } catch (final ExecutionException x) {
-        // TODO Ori: log it
-        x.printStackTrace();
+        monitor.logEvaluationError(this, x);
       }
     }
   }

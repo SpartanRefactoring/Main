@@ -101,7 +101,7 @@ public final class Builder extends IncrementalProjectBuilder {
         return true; // to continue visiting children.
       });
     } catch (final CoreException x) {
-      LoggingManner.logCancellationRequest(this, x);
+      monitor.logCancellationRequest(this, x);
     }
   }
 

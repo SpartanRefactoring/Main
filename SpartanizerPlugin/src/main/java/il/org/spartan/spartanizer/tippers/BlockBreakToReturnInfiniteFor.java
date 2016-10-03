@@ -4,9 +4,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -84,11 +84,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   @Override public String description() {
-    return "Convert the break inside the loop to return";
+    return "Convert the break inside 'for(;;)' to 'return'";
   }
 
   @Override public String description(final ForStatement ¢) {
-    return "Convert the break inside " + ¢ + " to return";
+    return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
   public Tip make(final ForStatement vor, final ReturnStatement nextReturn, final ExclusionManager exclude) {

@@ -8,7 +8,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -32,27 +32,30 @@ class expression {
   }
 
   public void matches(final String s2) {
-    assertTrue(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
+    assert Matcher.matches(wizard.ast(s), wizard.ast(s2));
   }
 
   public void notmatches(final String s2) {
-    assertFalse(Matcher.matches(wizard.ast(s), wizard.ast(s2)));
+    assert !Matcher.matches(wizard.ast(s), wizard.ast(s2));
   }
 }
 
 class tipper {
   private final UserDefinedTipper<ASTNode> tipper;
 
+  /** @param p // TODO: Ori Machovitch: these are not JD.
+   * @param r
+   * @param d */
   public tipper(final String p, final String r, final String d) {
     tipper = TipperFactory.tipper(p, r, d);
   }
 
   public void nottips(final String ¢) {
-    assertFalse(tipper.canTip(wizard.ast(¢)));
+    assert !tipper.canTip(wizard.ast(¢));
   }
 
   public void tips(final String ¢) {
-    assertTrue(tipper.canTip(wizard.ast(¢)));
+    assert tipper.canTip(wizard.ast(¢));
   }
 
   public turns turns(final String ¢) {
@@ -84,6 +87,28 @@ class turns {
     });
     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
+  }
+
+  private static void azzertEquals(final String s, final Document d) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        assertEquals(s, d.get());
+        break;
+      case EXPRESSION_LOOK_ALIKE:
+        assertEquals(s, d.get().substring(23, d.get().length() - 3));
+        break;
+      case METHOD_LOOKALIKE:
+        assertEquals(s, d.get().substring(9, d.get().length() - 2));
+        break;
+      case OUTER_TYPE_LOOKALIKE:
+        assertEquals(s, d.get());
+        break;
+      case STATEMENTS_LOOK_ALIKE:
+        assertEquals(s, d.get().substring(16, d.get().length() - 3));
+        break;
+      default:
+        break;
+    }
   }
 
   private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
@@ -140,7 +165,7 @@ class turns {
     final ASTRewrite r = ASTRewrite.create(ast);
     final ASTNode n = extractASTNode(s, cu);
     try {
-      assertTrue(tipper.canTip(n));
+      assert tipper.canTip(n);
       tipper.tip(n).go(r, null);
     } catch (final TipperFailure e) {
       e.printStackTrace();
@@ -154,27 +179,5 @@ class turns {
       fail();
     }
     azzertEquals(res, document);
-  }
-
-  private void azzertEquals(final String s, final Document d) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(s, d.get());
-        break;
-      case EXPRESSION_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(23, d.get().length() - 3));
-        break;
-      case METHOD_LOOKALIKE:
-        assertEquals(s, d.get().substring(9, d.get().length() - 2));
-        break;
-      case OUTER_TYPE_LOOKALIKE:
-        assertEquals(s, d.get());
-        break;
-      case STATEMENTS_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(16, d.get().length() - 3));
-        break;
-      default:
-        break;
-    }
   }
 }

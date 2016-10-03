@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -33,9 +33,7 @@ public enum GuessedContext {
   ), STATEMENTS_LOOK_ALIKE(//
       METHOD_LOOKALIKE.before //
           + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
-          + "\n\t\t\t\t while (f4324()) {"//
-          + "\n\t\t\t\t g3423436();"//
-      , "\n\t\t\t\t h6463634(); } }" + METHOD_LOOKALIKE.after), EXPRESSION_LOOK_ALIKE(//
+      , " }" + METHOD_LOOKALIKE.after), EXPRESSION_LOOK_ALIKE(//
           STATEMENTS_LOOK_ALIKE.before + //
               "\n\t\t\t\t if (foo("//
           , //
@@ -63,7 +61,8 @@ public enum GuessedContext {
       METHOD_LOOKALIKE, //
       EXPRESSION_LOOK_ALIKE, //
       not_statment_may_occur_in_initializer_block, //
-      not_statment_may_occur_in_static_initializer_block, };
+      not_statment_may_occur_in_static_initializer_block, //
+  };
 
   /** Finds the most appropriate Guess for a given code fragment
    * @param codeFragment JD

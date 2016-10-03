@@ -9,7 +9,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -134,9 +134,8 @@ public class Trimmer extends GUI$Applicator {
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
-        } catch (final TipperFailure e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
         }
         if (s != null) {
           if (LogManager.isActive())
@@ -160,7 +159,7 @@ public class Trimmer extends GUI$Applicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        LoggingManner.logEvaluationError(this, x);
+        monitor.logEvaluationError(this, x);
         throw new AssertionError(x);
       }
       if (!e.hasChildren())
@@ -179,9 +178,8 @@ public class Trimmer extends GUI$Applicator {
           progressMonitor.worked(5);
         try {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
-        } catch (final TipperFailure e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
         }
         return false;
       }

@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Replace a variable with an expression
  * @author Yossi Gil

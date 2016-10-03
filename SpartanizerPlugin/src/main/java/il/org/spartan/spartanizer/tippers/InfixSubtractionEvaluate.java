@@ -7,9 +7,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>

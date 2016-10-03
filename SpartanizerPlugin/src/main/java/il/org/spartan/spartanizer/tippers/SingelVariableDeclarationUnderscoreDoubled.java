@@ -2,15 +2,15 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Rename unused variable to double underscore "__" TODO Ori: (maybe) inherent
- * VariableChangeName instead of ReplaceCurrentNodeExclude
+/** Rename unused variable to double underscore "__" VariableChangeName instead
+ * of ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
 public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>

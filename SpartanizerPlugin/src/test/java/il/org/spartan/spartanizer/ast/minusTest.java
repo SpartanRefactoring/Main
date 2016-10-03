@@ -8,7 +8,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** A test suite for class {@link minus}
  * @author Yossi Gil

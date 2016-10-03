@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** @author Ori Marcovitch
@@ -15,6 +15,7 @@ public class Matcher {
   }
 
   private static boolean sameOperator(final ASTNode p, final ASTNode n) {
+    // I really hope these are the only options for operators
     switch (p.getNodeType()) {
       case ASTNode.PREFIX_EXPRESSION:
         if (!step.operator((PrefixExpression) p).equals(step.operator((PrefixExpression) n)))
@@ -54,6 +55,8 @@ public class Matcher {
   }
 
   private boolean matchesAux(final ASTNode p, final ASTNode n) {
+    if (p == null || n == null)
+      return false;
     if (iz.name(p))
       return sameName(p, n);
     if (n.getNodeType() != p.getNodeType())
@@ -79,6 +82,8 @@ public class Matcher {
         return n instanceof Expression && consistent(n, id);
       if (id.startsWith("$M"))
         return n instanceof MethodInvocation && consistent(n, id);
+      if (id.startsWith("$B"))
+        return n instanceof Block && consistent(n, id);
     }
     return n instanceof Name && id.equals(((Name) p).getFullyQualifiedName());
   }
