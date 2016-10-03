@@ -36,8 +36,8 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    final Block bodyBlock = az.block(step.body(¢));
-    return bodyBlock != null && iz.incrementOrDecrement(lastStatement(¢)) && step.statements(az.block(step.body(¢))).size() >= 2;
+    return az.block(step.body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && step.statements(az.block(step.body(¢))).size() >= 2
+        && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
