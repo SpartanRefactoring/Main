@@ -43,11 +43,9 @@ class expression {
 class tipper {
   private final UserDefinedTipper<ASTNode> tipper;
 
-  /**
-   * @param p // TODO: Ori Machovitch: these are not JD.
+  /** @param p // TODO: Ori Machovitch: these are not JD.
    * @param r
-   * @param d
-   */
+   * @param d */
   public tipper(final String p, final String r, final String d) {
     tipper = TipperFactory.tipper(p, r, d);
   }
@@ -89,6 +87,28 @@ class turns {
     });
     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
+  }
+
+  private static void azzertEquals(final String s, final Document d) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        assertEquals(s, d.get());
+        break;
+      case EXPRESSION_LOOK_ALIKE:
+        assertEquals(s, d.get().substring(23, d.get().length() - 3));
+        break;
+      case METHOD_LOOKALIKE:
+        assertEquals(s, d.get().substring(9, d.get().length() - 2));
+        break;
+      case OUTER_TYPE_LOOKALIKE:
+        assertEquals(s, d.get());
+        break;
+      case STATEMENTS_LOOK_ALIKE:
+        assertEquals(s, d.get().substring(16, d.get().length() - 3));
+        break;
+      default:
+        break;
+    }
   }
 
   private static ASTNode extractASTNode(final String s, final CompilationUnit u) {
@@ -159,27 +179,5 @@ class turns {
       fail();
     }
     azzertEquals(res, document);
-  }
-
-  private static void azzertEquals(final String s, final Document d) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        assertEquals(s, d.get());
-        break;
-      case EXPRESSION_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(23, d.get().length() - 3));
-        break;
-      case METHOD_LOOKALIKE:
-        assertEquals(s, d.get().substring(9, d.get().length() - 2));
-        break;
-      case OUTER_TYPE_LOOKALIKE:
-        assertEquals(s, d.get());
-        break;
-      case STATEMENTS_LOOK_ALIKE:
-        assertEquals(s, d.get().substring(16, d.get().length() - 3));
-        break;
-      default:
-        break;
-    }
   }
 }

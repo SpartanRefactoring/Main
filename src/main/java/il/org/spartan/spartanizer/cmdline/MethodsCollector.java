@@ -29,7 +29,7 @@ public final class MethodsCollector {
   }
 
   public static void main(final String[] args) {
-    for (String s:(args.length != 0 ? args: new String[] {".."}))
+    for (final String s : args.length != 0 ? args : new String[] { ".." })
       new MethodsCollector(s).fire();
   }
 
@@ -128,7 +128,6 @@ public final class MethodsCollector {
     reportFileName = folder + name + ".CSV";
   }
 
-
   public Process bash(final String shellCommand) {
     final String[] command = { "/bin/bash", "-c", shellCommand };
     try {
@@ -143,6 +142,23 @@ public final class MethodsCollector {
 
   public Process shellEssenceMetrics(final String fileName) {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
+  }
+
+  void collect(final CompilationUnit u) {
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        return collect(¢);
+      }
+    });
+  }
+
+  void collect(final File f) {
+    if (!f.getPath().contains("src/test"))
+      try {
+        collect(FileUtils.read(f));
+      } catch (final IOException e) {
+        monitor.infoIOException(e, "File = " + f);
+      }
   }
 
   boolean collect(final MethodDeclaration ¢) {
@@ -207,23 +223,6 @@ public final class MethodsCollector {
     report.nl();
     // System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
-  }
-
-  void collect(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration ¢) {
-        return collect(¢);
-      }
-    });
-  }
-
-  void collect(final File f) {
-    if (!f.getPath().contains("src/test"))
-      try {
-        collect(FileUtils.read(f));
-      } catch (final IOException e) {
-        monitor.infoIOException(e, "File = " + f);
-      }
   }
 
   void collect(final String javaCode) {

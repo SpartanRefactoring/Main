@@ -51,10 +51,10 @@ public enum eclipse {
 
   static Void announce(final Object message) {
     // new PopupDialog(parent, //
-      //   shellStyle, takeFocusOnOpen, persistSize, persistLocation, showDialogMenu, showPersistActions, //
-        // message + "", "Spartan Plugin").open();
-     JOptionPane.showMessageDialog(null, message, NAME,
-     JOptionPane.INFORMATION_MESSAGE, icon);
+    // shellStyle, takeFocusOnOpen, persistSize, persistLocation,
+    // showDialogMenu, showPersistActions, //
+    // message + "", "Spartan Plugin").open();
+    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }
