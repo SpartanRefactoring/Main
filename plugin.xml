@@ -48,7 +48,7 @@ the program changes: https://goo.gl/sIqIBC
   id="il.org.spartan.spartanizer.application"
 >
   <application>
-  <run class="il.org.spartan.spartanizer.application.Application"/>
+  <run class="il.org.spartan.spartanizer.cmdline.Application"/>
   </application>
 </extension>
 
@@ -59,7 +59,7 @@ the program changes: https://goo.gl/sIqIBC
  id="il.org.spartan.spartanizer.collectmetricsapp"
 >
   <application>
-  <run class="il.org.spartan.spartanizer.application.CollectMetricsApp"></run>
+  <run class="il.org.spartan.spartanizer.cmdline.CollectMetricsApp"></run>
   </application>
 </extension>
 
