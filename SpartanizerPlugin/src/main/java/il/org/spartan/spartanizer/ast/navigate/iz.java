@@ -456,9 +456,19 @@ public interface iz {
     return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  static iz izParser() {
+  static iz izParser(final String name) {
     return new iz() {
-      // This anonymous class is intentionally left empty
+      @Override public String toString() {
+        return name;
+      }
+    };
+  }
+
+  static iz izParser(final Throwable t) {
+    return new iz() {
+      @Override public String toString() {
+        return t.getStackTrace() + "";
+      }
     };
   }
 
@@ -498,7 +508,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return token != null && LiteralParser.of(token) == type.Primitive.Certain.DOUBLE && izParser().parsesTo(token, d);
+    return LiteralParser.of(token) == type.Primitive.Certain.DOUBLE && izParser("Searching for double").parsesTo(token, d);
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
@@ -506,7 +516,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return token != null && LiteralParser.of(token) == type.Primitive.Certain.INT && izParser().parsesTo(token, i);
+    return LiteralParser.of(token) == type.Primitive.Certain.INT && izParser("Searching for int").parsesTo(token, i);
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
@@ -514,7 +524,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String token = numberLiteral.getToken();
-    return token != null && LiteralParser.of(token) == type.Primitive.Certain.LONG && izParser().parsesTo(token, l);
+    return LiteralParser.of(token) == type.Primitive.Certain.LONG && izParser("Seaching for LONG").parsesTo(token, l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
@@ -525,7 +535,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter return a
    *         literal */
   static boolean literal(final ReturnStatement ¢) {
-    return literal(¢.getExpression());
+    return ¢ != null && literal(¢.getExpression());
   }
 
   static boolean literal(final String literal, final ASTNode ¢) {
