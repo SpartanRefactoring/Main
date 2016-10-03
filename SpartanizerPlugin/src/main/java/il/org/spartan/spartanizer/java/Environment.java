@@ -66,7 +66,6 @@ import il.org.spartan.spartanizer.utils.*;
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
-      // TODO: Alex - do not define short names for fields.
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
@@ -180,9 +179,9 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   /** @return null iff the name is not hiding anything from outer scopes,
-   *         otherwise ?? TODO Alex */
+   *         otherwise Information about hided instance (with same name) */
   default Information hiding(final String name) {
-    return nest().get(name);
+    return nest() == null ? null : nest().get(name);
   }
 
   default String name() {

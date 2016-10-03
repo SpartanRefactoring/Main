@@ -53,7 +53,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   }
 
   // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
-  // may want to change it.
+  // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final ForStatement s) {
     for (final VariableDeclarationFragment f : step.fragments(¢))
       if (!variableUsedInFor(s, f.getName()) || !iz.variableNotUsedAfterStatement(s, f.getName()))

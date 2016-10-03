@@ -25,6 +25,16 @@ public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Information>> testSetFlat;
   protected static LinkedHashSet<Entry<String, Information>> testSetNested;
 
+  private static void action(final Entry<String, Information> ¢, final Iterator<Entry<String, Information>> iterator) {
+    boolean entryFound = false;
+    while (iterator.hasNext())
+      if (¢.equals(iterator.next())) {
+        entryFound = true;
+        break;
+      }
+    assert entryFound : "some entry not found in order!";
+  }
+
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */
   public static void addTestSet(final List<MemberValuePair> ps) {
@@ -69,18 +79,15 @@ public abstract class ENVTestEngineAbstract {
   public static void compareInOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
     assert testSet != null;
     assert $ != null;
-    boolean entryFound = true;
-    // TODO: Alex and Dan: use or each loop here.
-    final Iterator<Entry<String, Information>> j = $.iterator();
-    for (final Entry<String, Information> ¢ : testSet) {
-      entryFound = false;
-      while (j.hasNext())
-        if (¢.equals(j.next())) {
-          entryFound = true;
-          break;
-        }
-      assert entryFound : "some entry not found in order!";
-    }
+    // TODO: Alex and Dan: use for each loop here.
+    // TODO Yossi, for(x:xs) considered a for each loop, and the while can not
+    // be replaced
+    // with for each loop just because we don't want to make anything "for each"
+    // element.
+    // I replaced the for(x:xs) to forEach(consumer) just to practice that java
+    // ficher.
+    final Iterator<Entry<String, Information>> iterator = $.iterator();
+    testSet.forEach(¢ -> action(¢, iterator));
   }
 
   /** Compares the given {@link LinkedHashSet} with the inner testSet.
@@ -95,6 +102,10 @@ public abstract class ENVTestEngineAbstract {
     assert $ != null;
     assert testSet != null;
     assert $.containsAll(testSet) : "some entry not found out of order!";
+  }
+
+  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
+    return new LinkedHashSet<>();
   }
 
   /** @param from - file path
@@ -128,15 +139,18 @@ public abstract class ENVTestEngineAbstract {
       testSetNested.clear();
   }
 
-  protected static LinkedHashSet<Entry<String, Environment.Information>> generateSet() {
-    return new LinkedHashSet<>();
-  }
-
   protected boolean foundTestedAnnotation; // Global flag, used to
   // determine when to run the
   // test on a node with
   // potential annotations.
   protected ASTNode n;
+
+  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
+
+  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
+   * Compare uses() and declares() output to the flat Set.
+   * @param $ JD */
+  protected abstract void handler(final Annotation ¢);
 
   /** define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin,
    * End. define: inner annotation = Id. ASTVisitor that goes over the ASTNodes
@@ -150,6 +164,13 @@ public abstract class ENVTestEngineAbstract {
    * worry, since the outside visitor will do nothing. */
   public void runTest() {
     n.accept(new ASTVisitor() {
+      /** Iterate over outer annotations of the current declaration and dispatch
+       * them to handlers. otherwise */
+      void checkAnnotations(final List<Annotation> as) {
+        for (final Annotation ¢ : as)
+          handler(¢);
+      }
+
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         visitNodesWithPotentialAnnotations(¢);
         return true;
@@ -190,13 +211,6 @@ public abstract class ENVTestEngineAbstract {
         return true;
       }
 
-      /** Iterate over outer annotations of the current declaration and dispatch
-       * them to handlers. otherwise */
-      void checkAnnotations(final List<Annotation> as) {
-        for (final Annotation ¢ : as)
-          handler(¢);
-      }
-
       void visitNodesWithPotentialAnnotations(final BodyDeclaration $) {
         checkAnnotations(extract.annotations($));
         if (!foundTestedAnnotation)
@@ -211,11 +225,4 @@ public abstract class ENVTestEngineAbstract {
       }
     });
   }
-
-  protected abstract LinkedHashSet<Entry<String, Information>> buildEnvironmentSet(BodyDeclaration $);
-
-  /** Parse the outer annotation to get the inner ones. Add to the flat Set.
-   * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
-  protected abstract void handler(final Annotation ¢);
 }

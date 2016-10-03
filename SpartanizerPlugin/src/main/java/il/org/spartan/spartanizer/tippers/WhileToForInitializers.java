@@ -46,7 +46,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
-  // may want to change it.
+  // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final WhileStatement s) {
     for (final VariableDeclarationFragment f : step.fragments(¢))
       if (!variableUsedInWhile(s, f.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), f.getName()))
