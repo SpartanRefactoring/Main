@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
-    $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
+    $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));
     setInitializers($, duplicate.of(s));
     return $;
   }
@@ -61,7 +61,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return true;
   }
 
-  public static Expression handleAssignment(final Assignment from, final VariableDeclarationStatement s) {
+  public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     final SimpleName var = az.simpleName(step.left(from));
     for (final VariableDeclarationFragment f : step.fragments(s))
       if ((f.getName() + "").equals(var + ""))
@@ -70,7 +70,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   }
 
   /** XXX: This is a bug in autospartanization [[SuppressWarningsSpartan]] */
-  public static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
+  public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢¢ : operands)
       if (iz.parenthesizedExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
@@ -85,11 +85,11 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElem(minus.firstElem(operands)));
   }
 
-  public static Expression handleParenthesis(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
+  public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment a = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(from.getExpression());
     final ParenthesizedExpression pe = az.parenthesizedExpression(from.getExpression());
-    return a != null ? handleAssignment(a, s) : e != null ? handleInfix(e, s) : pe != null ? handleParenthesis(pe, s) : from;
+    return a != null ? handleAssignmentCondition(a, s) : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
   }
 
   private static boolean isIn(final IExtendedModifier m, final List<IExtendedModifier> ms) {
@@ -104,10 +104,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
-  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? handleInfix(duplicate.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? handleAssignment(az.assignment(from), s)
-            : iz.parenthesizedExpression(from) ? handleParenthesis(az.parenthesizedExpression(from), s) : from;
+  private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+    return iz.infix(from) ? handleInfixCondition(duplicate.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s)
+            : iz.parenthesizedExpression(from) ? handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {

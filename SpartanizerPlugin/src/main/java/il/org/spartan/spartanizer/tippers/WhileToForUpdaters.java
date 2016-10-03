@@ -7,15 +7,19 @@ import il.org.spartan.spartanizer.ast.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Alex Kopzon
+/** @author Ale Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
-  @SuppressWarnings("unchecked") private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
+  private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(dupWhileExpression(¢));
-    $.updaters().add(updaterFromBody(¢));
+    step.updaters($).add(dupUpdaterFromBody(¢));
     $.setBody(minus.lastStatement(dupWhileBody(¢)));
     return $;
+  }
+
+  private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
+    return duplicate.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
   private static Statement dupWhileBody(final WhileStatement ¢) {
@@ -33,15 +37,11 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
     final Block bodyBlock = az.block(step.body(¢));
-    return iz.incrementOrDecrement(lastStatement(¢)) && bodyBlock != null && step.statements(az.block(step.body(¢))).size() >= 2;
+    return bodyBlock != null && iz.incrementOrDecrement(lastStatement(¢)) && step.statements(az.block(step.body(¢))).size() >= 2;
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
     return hop.lastStatement(step.body(¢));
-  }
-
-  private static Expression updaterFromBody(final WhileStatement ¢) {
-    return duplicate.of(az.expressionStatement(hop.lastStatement(step.body(¢))).getExpression());
   }
 
   @Override public String description(final WhileStatement ¢) {
