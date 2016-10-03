@@ -29,8 +29,8 @@ public final class MethodsCollector {
   }
 
   public static void main(final String[] args) {
-    for (final String s : args.length != 0 ? args : new String[] { ".." })
-      new MethodsCollector(s).fire();
+    for (final String ¢ : args.length != 0 ? args : new String[] { ".." })
+      new MethodsCollector(¢).fire();
   }
 
   public static ProcessBuilder runScript() {
