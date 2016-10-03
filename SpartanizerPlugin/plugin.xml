@@ -158,7 +158,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        <command 
        tooltip="Fully laconize compilation unit shown in editor"
          commandId="il.org.spartan.LaconizeCurrent" 
-         icon="/src/main/icons/spartan-warrior.gif" 
+         icon="platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
        </command>
     </toolbar>
