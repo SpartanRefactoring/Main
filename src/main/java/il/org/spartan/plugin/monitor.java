@@ -58,7 +58,7 @@ public enum monitor {
 
   public static String className(final Class<?> ¢) {
     final String canonicalName = ¢.getCanonicalName();
-    return ¢.getSimpleName() + "[" + (canonicalName != null ? canonicalName: ¢ )+ "]";
+    return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName )+ "]";
   }
 
   public static String className(final Object ¢) {
@@ -118,8 +118,8 @@ public enum monitor {
     return now;
   }
 
-  public static monitor logEvaluationError(final Throwable t) {
-    return logEvaluationError(now, t);
+  public static monitor logEvaluationError(final Throwable ¢) {
+    return logEvaluationError(now, ¢);
   }
 
   public static void logProbableBug(final Object o, final Throwable t) {

@@ -34,12 +34,23 @@ public final class LaconizeProject extends BaseHandler {
     final GUI$Applicator ¢ = new Trimmer();
     try {
       PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
+        /** XXX: This is a bug of centification
+         * [[SuppressWarningsSpartan]]
+         */
         @Override public void run(IProgressMonitor pm) {
           pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
-          // ¢.setProgressMonitor(pm);
-          ¢.setMarker(null);
-          ¢.setICompilationUnit(todo.get(0));
-          $.addAndGet(¢.countTips());
+          System.out.println(todo.size());
+          for (final ICompilationUnit u : todo) {
+            if (pm.isCanceled()) {
+              $.set(0);
+              break;
+            }
+            ¢.setMarker(null);
+            ¢.setICompilationUnit(u);
+            $.addAndGet(¢.countTips());
+          }
+          if (pm.isCanceled())
+            $.set(0);
           pm.done();
         }
       });
@@ -49,7 +60,7 @@ public final class LaconizeProject extends BaseHandler {
     return $.get();
   }
 
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent ¢) {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
     dead.clear();
@@ -100,13 +111,11 @@ public final class LaconizeProject extends BaseHandler {
       if (cancelled.get() || todo.isEmpty())
         break;
     }
-    todo.clear();
-    todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int finalCount = countTips();
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
             "Completed in " + (1 + i) + " passes. \n" + //
-            (i >= MAX_PASSES ? "   === too many passes\n" : "") + //
+            (i < MAX_PASSES ? "" : "   === too many passes\n") + //
             "Tips followed: " + (initialCount - finalCount) + "\n" + //
             "Tips before: " + initialCount + "\n" + //
             "Tips after: " + finalCount + "\n" //
@@ -118,6 +127,7 @@ public final class LaconizeProject extends BaseHandler {
     status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
     javaProject = currentCompilationUnit.getJavaProject();
     status.append("Java project is: " + javaProject.getElementName() + "\n");
+    todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     status.append("Found " + todo.size() + " compilation units, ");
     initialCount = todo.isEmpty() ? 0 : countTips();
