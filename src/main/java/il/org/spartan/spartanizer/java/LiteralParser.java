@@ -8,6 +8,8 @@ import il.org.spartan.spartanizer.engine.type.*;
  * @since 2015-08-30 */
 public final class LiteralParser {
   public static Primitive.Certain of(final String literal) {
+    if (literal == null)
+      return null;
     return new LiteralParser(literal).type();
   }
 
