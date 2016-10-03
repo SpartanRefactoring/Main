@@ -36,19 +36,10 @@ public final class LaconizeProject extends BaseHandler {
       PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
         @Override public void run(IProgressMonitor pm) {
           pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
-          System.out.println(todo.size());
-          for (final ICompilationUnit u : todo) {
-            if (pm.isCanceled()) {
-              $.set(0);
-              break;
-            }
-            // ¢.setProgressMonitor(pm);
-            ¢.setMarker(null);
-            ¢.setICompilationUnit(u);
-            $.addAndGet(¢.countTips());
-          }
-          if (pm.isCanceled())
-            $.set(0);
+          // ¢.setProgressMonitor(pm);
+          ¢.setMarker(null);
+          ¢.setICompilationUnit(todo.get(0));
+          $.addAndGet(¢.countTips());
           pm.done();
         }
       });
@@ -109,6 +100,8 @@ public final class LaconizeProject extends BaseHandler {
       if (cancelled.get() || todo.isEmpty())
         break;
     }
+    todo.clear();
+    todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int finalCount = countTips();
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
@@ -125,7 +118,6 @@ public final class LaconizeProject extends BaseHandler {
     status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
     javaProject = currentCompilationUnit.getJavaProject();
     status.append("Java project is: " + javaProject.getElementName() + "\n");
-    todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     status.append("Found " + todo.size() + " compilation units, ");
     initialCount = todo.isEmpty() ? 0 : countTips();
