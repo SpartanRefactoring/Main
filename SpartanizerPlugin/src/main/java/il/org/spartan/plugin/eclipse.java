@@ -31,7 +31,7 @@ public enum eclipse {
   facade;
   static final String NAME = "Laconic";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
-  static private boolean iconInitialized = false;
+  private static boolean iconInitialized;
   static ImageIcon icon;
   static final Shell parent = null;
   static final int shellStyle = SWT.TOOL;
