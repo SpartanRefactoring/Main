@@ -20,30 +20,25 @@ public class TestFactory {
 
   /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
   static String renderIdentifier(final String old) {
-    if (old.length() == 0)
-      return "a";
-    if (old.equals("z"))
-      return "X1";
-    if (old.length() == 1)
-      return String.valueOf((char) (old.charAt(0) + 1));
-    return "X" + String.valueOf(old.charAt(1) + 1);
+    return old.length() == 0 ? "a"
+        : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
   }
 
   /** Actually, implementing this might be trivial, I think applying toString()
    * on an AST does this automatically.
-   * @param s
+   * @param ¢
    * @return */
-  private static String eliminateSpaces(final String s) {
-    return s;
+  private static String eliminateSpaces(final String ¢) {
+    return ¢;
   }
 
   /** Separate the string to lines, like: trimmingOf("// From use case of
    * issue#1593\n" + // "public void f(){\n" + // " if(!g){\n" + // " foo();\n"
    * + // " bar();\n" + // " }\n" + // "}"//
-   * @param s string to linify
+   * @param ¢ string to linify
    * @return */
-  private static String linify(final String s) {
-    return s;
+  private static String linify(final String ¢) {
+    return ¢;
   }
 
   private static String shortenIdentifiers(final String s) {
