@@ -30,7 +30,7 @@ public final class LaconizeProject extends BaseHandler {
    * @return number of tips available for the compilation unit */
   public int countTips() {
     final AtomicInteger $ = new AtomicInteger(0);
-    for (ICompilationUnit u : todo)
+    for (final ICompilationUnit u : todo)
       try {
         PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
           pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
