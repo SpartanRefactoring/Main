@@ -7,9 +7,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.spartanizer.assemble.*;
+import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Expands terms of +/- expressions without reordering, e.g., convert

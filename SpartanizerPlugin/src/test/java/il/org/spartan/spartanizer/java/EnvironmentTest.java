@@ -23,6 +23,28 @@ import il.org.spartan.spartanizer.utils.*;
   Environment ee1 = ee0.spawn();
   private LinkedHashSet<Entry<String, Information>> s;
 
+  // Primitive, manual tests, to root out the rough bugs.
+  /** [[SuppressWarningsSpartan]] */
+  @Test public void declaresDownMethodDeclaration01() {
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n"//
+        + "void foo(int a, int b){}\n"//
+        + "}"));
+    for (final Entry<String, Information> e : Environment.declaresDown($))
+      assert ".foo.a".equals(e.getKey()) || ".foo.b".equals(e.getKey());
+  }
+
+  @Test public void declaresDownMethodDeclaration02() {
+    for (final Entry<String, Information> ¢ : Environment.declaresDown(
+        makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){}\n" + "void g(int a){}\n" + "void h(){ int a; }\n" + "}"))))
+      assert (".f.a".equals(¢.getKey()) || ".g.a".equals(¢.getKey()) || ".h.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
+  }
+
+  @Test public void declaresDownMethodDeclaration03() {
+    for (final Entry<String, Information> ¢ : Environment.declaresDown(
+        makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){\n" + "class B{" + "void g(int a){}" + "}" + "}\n" + "}"))))
+      assert ".f.a".equals(¢.getKey()) || ".f.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
+  }
+
   @Test public void defaultDoesntHave() {
     azzert.that(e0.nest().doesntHave("Alex"), is(true));
   }
@@ -574,6 +596,7 @@ import il.org.spartan.spartanizer.utils.*;
   @Ignore public void useTestWithUsesOnly2() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x)").get())).contains("x"), is(true));
   }
+  // ==================================declaresDown Tests================
 
   @Ignore public void useTestWithUsesOnly3() {
     final Set<Map.Entry<String, Information>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
@@ -591,13 +614,5 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Ignore public void useTestWithUsesOnly5() {
     azzert.that(Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x.foo()").get())).contains("x"), is(true));
-  }
-
-  class S {
-    String s;
-
-    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void f() {
-      // Empty block
-    }
   }
 }

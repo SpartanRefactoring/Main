@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -98,7 +98,7 @@ public enum makeAST {
         if (¢ == null)
           return $ + "";
     } catch (final IOException ¢) {
-      LoggingManner.infoIOException(¢, f + "");
+      monitor.infoIOException(¢, f + "");
       return null;
     }
   }
@@ -117,7 +117,7 @@ public enum makeAST {
     try (final Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception e) {
-      LoggingManner.logEvaluationError(this, e);
+      monitor.logEvaluationError(this, e);
       return new StringBuilder();
     }
   }

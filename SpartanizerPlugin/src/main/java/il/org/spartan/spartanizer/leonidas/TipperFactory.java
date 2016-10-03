@@ -9,21 +9,20 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-// import il.org.spartan.strings.*;
 
 public class TipperFactory {
-  public static UserDefinedTipper<ASTNode> tipper(final String _pattern, final String _replacement, final String description) {
-    return new UserDefinedTipper<ASTNode>() {
+  public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
+    return new UserDefinedTipper<N>() {
       final ASTNode pattern = wizard.ast(_pattern);
       final String replacement = _replacement;
 
-      @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
+      @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }
 
-      @Override public Tip tip(final ASTNode n) {
+      @Override public Tip tip(final N n) {
         return new Tip(description(n), n) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final Map<String, ASTNode> enviroment = collectEnviroment(n);
@@ -41,7 +40,7 @@ public class TipperFactory {
         };
       }
 
-      @Override protected boolean prerequisite(final ASTNode ¢) {
+      @Override protected boolean prerequisite(final N ¢) {
         return Matcher.matches(pattern, ¢);
       }
 
@@ -52,7 +51,7 @@ public class TipperFactory {
       Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
         if (iz.name(p)) {
           final String id = ((Name) p).getFullyQualifiedName();
-          if (id.startsWith("$X") || id.startsWith("$M"))
+          if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$B"))
             enviroment.put(id, n);
         } else {
           final List<? extends ASTNode> nChildren = Recurser.children(n);

@@ -10,12 +10,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.assemble.subject.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.create.subject.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "javadoc", "static-method" }) public final class SubjectTest {

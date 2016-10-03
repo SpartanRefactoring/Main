@@ -8,8 +8,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -56,7 +56,8 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
         Expression ¢ = az.parenthesizedExpression(es.get(i)).getExpression();
         for (; iz.parenthesizedExpression(¢); ¢ = az.parenthesizedExpression(¢).getExpression(), replace(es, ¢, i))
           ;
-        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditional(¢) || iz.is(¢, ASTNode.LAMBDA_EXPRESSION))
+        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditional(¢)
+            || iz.nodeTypeEquals(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
         replace(es, ¢, i);
       }

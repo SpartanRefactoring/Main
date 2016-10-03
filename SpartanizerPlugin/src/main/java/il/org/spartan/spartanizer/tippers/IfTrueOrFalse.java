@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.iz.*;
+import il.org.spartan.spartanizer.ast.navigate.iz.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 

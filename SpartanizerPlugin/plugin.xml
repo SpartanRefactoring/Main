@@ -48,7 +48,7 @@ the program changes: https://goo.gl/sIqIBC
   id="il.org.spartan.spartanizer.application"
 >
   <application>
-  <run class="il.org.spartan.spartanizer.application.Application"/>
+  <run class="il.org.spartan.spartanizer.cmdline.Application"/>
   </application>
 </extension>
 
@@ -59,7 +59,7 @@ the program changes: https://goo.gl/sIqIBC
  id="il.org.spartan.spartanizer.collectmetricsapp"
 >
   <application>
-  <run class="il.org.spartan.spartanizer.application.CollectMetricsApp"></run>
+  <run class="il.org.spartan.spartanizer.cmdline.CollectMetricsApp"></run>
   </application>
 </extension>
 
@@ -134,7 +134,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.LaconizeCurrent" name="active Window"/>
      <command id="il.org.spartan.LaconizeAll" name="entire Project"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off">
-           <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggle"/>
+           <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggleState"/>
     </command>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
      <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
@@ -190,7 +190,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <menu label="Laconize..." mnemonic="L">
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
-        <command commandId="il.org.spartan.TipsToggleOnOff" style="toggle" mnemonic="O"/> 
+        <command commandId="il.org.spartan.TipsToggleOnOff" style="push" mnemonic="O"/> 
         <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
         <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
    </menu>

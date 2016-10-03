@@ -5,13 +5,13 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
-/* TODO Wrings to improve once Environment is complete:
+/* TODO Tippers to improve once Environment is complete:
  * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
   /** The Environment structure is in some like a Linked list, where EMPTY is
@@ -32,6 +32,10 @@ import il.org.spartan.spartanizer.utils.*;
       // Holds the current scope full name (Path).
       String scopePath = "";
 
+      @Override public void endVisit(final MethodDeclaration __) {
+        scopePath = parentNameScope(scopePath);
+      }
+
       @Override public boolean visit(final MethodDeclaration d) {
         scopePath += "." + d.getName();
         for (final SingleVariableDeclaration ¢ : step.parameters(d))
@@ -46,7 +50,7 @@ import il.org.spartan.spartanizer.utils.*;
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
 
-      List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(s.getType()));
         for (final VariableDeclarationFragment ¢ : step.fragments(s))
@@ -62,14 +66,22 @@ import il.org.spartan.spartanizer.utils.*;
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
+      // TODO: Alex - do not define short names for fields.
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
 
-      /** Returns the {@link Information} of the declaration the current
-       * declaration is hiding.
+      Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
+        for (final Entry<String, Information> ¢ : ss)
+          if (s.equals(¢.getKey()))
+            return ¢.getValue();
+        return null;
+      }
+
+      /** Returns the {@link Information} of the declaration the
+       * currentdeclaration is hiding.
        * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information */
+       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
       /* Implementation notes: Should go over result set, and search for
        * declaration which shares the same variable name in the parents. Should
        * return the closest match: for example, if we search for a match to
@@ -81,14 +93,23 @@ import il.org.spartan.spartanizer.utils.*;
        * To consider: what if said hidden declaration will not appear in
        * 'declaresDown', but will appear in 'declaresUp'? Should we search for
        * it in 'declaresUp' result set? Should we leave the result as it is? I
-       * (Dan) lean towards searching 'declaresUp'.
+       * (Dan) lean towards searching 'declaresUp'. Current implementation only
+       * searches declaresDown.
        *
        * If no match is found, return null. */
       Information getHidden(final String ¢) {
-        /* String s = parentNameScope(¢); while(!"".equals(s)){
-         *
-         * } */
+        final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
+        for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+          final Information i = get($, s + "." + shortName);
+          if (i != null)
+            return i;
+        }
         return null;
+      }
+
+      String parentNameScope(final String ¢) {
+        assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
+        return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
       }
     });
     return $;
@@ -159,7 +180,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   /** @return null iff the name is not hiding anything from outer scopes,
-   *         otherwise ?? TODO */
+   *         otherwise ?? TODO Alex */
   default Information hiding(final String name) {
     return nest().get(name);
   }
