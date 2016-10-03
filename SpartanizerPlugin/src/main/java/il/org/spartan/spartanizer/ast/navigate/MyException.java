@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-/** @author Yossi Gil 
+/** @author Yossi Gil
  * @since 2016 */
 public class MyException extends Exception {
   private static final long serialVersionUID = 1L;
