@@ -349,9 +349,12 @@ public interface iz {
       case EXPRESSION_STATEMENT:
         return incrementOrDecrement(step.expression(¢));
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) ¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+        return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(az.prefixExpression(¢).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+      case ASSIGNMENT:
+        return in(az.assignment(¢).getOperator(), PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
+            BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN);
       default:
         return false;
     }
@@ -675,6 +678,10 @@ public interface iz {
    * @return true is the assignment's operator is assign */
   static boolean plainAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == ASSIGN;
+  }
+
+  static boolean postfixExpression(final ASTNode ¢) {
+    return is(¢, POSTFIX_EXPRESSION);
   }
 
   /** @param pattern JD

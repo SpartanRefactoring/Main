@@ -375,6 +375,14 @@ public enum az {
     return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
 
+  public static SimpleName simpleName(final PostfixExpression $) {
+    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
+  }
+
+  public static SimpleName simpleName(final PrefixExpression $) {
+    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
+  }
+
   /** Down-cast, if possible, to {@link SingleMemberAnnotation}
    * @param $ result
    * @return parameter down-casted to the returned type, or
