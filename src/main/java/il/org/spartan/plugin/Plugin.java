@@ -27,34 +27,34 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
-    LoggingManner.info("EARLY STATRTUP: spartanizer");
+    monitor.debug("EARLY STATRTUP: spartanizer");
     startSpartan();
   }
 
   @Override public void start(final BundleContext ¢) throws Exception {
     super.start(¢);
-    LoggingManner.info("START: spartnizer");
+    monitor.debug("START: spartanizer");
     startSpartan();
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
-    LoggingManner.info("STOP: spartnizer");
+    monitor.debug("STOP: spartnizer");
     plugin = null;
     super.stop(¢);
   }
 
   @Override protected void loadDialogSettings() {
-    LoggingManner.info("LDS: spartanizer");
+    monitor.debug("LDS: spartanizer");
     super.loadDialogSettings();
   }
 
   @Override protected void refreshPluginActions() {
-    LoggingManner.info("RPA: spartanizer");
+    monitor.debug("RPA: spartanizer");
     super.refreshPluginActions();
   }
 
   @Override protected void saveDialogSettings() {
-    LoggingManner.info("SDS: spartanizer");
+    monitor.debug("SDS: spartanizer");
     super.saveDialogSettings();
   }
 }

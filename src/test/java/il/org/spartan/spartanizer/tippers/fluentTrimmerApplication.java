@@ -7,9 +7,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -133,9 +134,8 @@ public class fluentTrimmerApplication extends Trimmer.With {
           Tip make = null;
           try {
             make = w.tip(n, exclude);
-          } catch (final TipperFailure e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+          } catch (final TipperFailure f) {
+            monitor.debug(this, f);
           }
           if (make != null)
             make.go(r, null);

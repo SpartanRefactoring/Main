@@ -47,7 +47,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       try {
         RefreshAll.go();
       } catch (final Exception e) {
-        LoggingManner.logEvaluationError(this, e);
+        monitor.logEvaluationError(this, e);
       }
     }
   }

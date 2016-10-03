@@ -6,9 +6,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Various methods for comparing
  * @author Yossi Gil

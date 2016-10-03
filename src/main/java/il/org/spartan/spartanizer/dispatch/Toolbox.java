@@ -8,6 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
@@ -22,20 +23,20 @@ public class Toolbox {
         {
           for (int nodeType = 1;; ++nodeType)
             try {
-              LoggingManner.info("Searching for " + nodeType);
+              monitor.debug("Searching for " + nodeType);
               final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
-              LoggingManner.info("Found for " + nodeClassForType);
+              monitor.debug("Found for " + nodeClassForType);
               put(nodeClassForType, Integer.valueOf(nodeType));
             } catch (final IllegalArgumentException x) {
-              LoggingManner.logEvaluationError(this, x);
+              monitor.debug(this, x);
               break;
             } catch (final Exception x) {
-              LoggingManner.logEvaluationError(this, x);
+              monitor.logEvaluationError(this, x);
               break;
             }
         }
       };
-  /** The default defaultInstance of this class */
+  /** The default Instance of this class */
   static Toolbox defaultInstance;
 
   public static Toolbox defaultInstance() {
@@ -80,11 +81,6 @@ public class Toolbox {
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ReturnStatement.class, new ReturnLastInMethod()) //
-        // Disabled to protect against infinite loop
-        // .add(AnnotationTypeMemberDeclaration.class, new
-        // BodyDeclarationModifiersSort.ofAnnotationTypeMember()) //
-        // .add(AnnotationTypeDeclaration.class, new
-        // BodyDeclarationModifiersSort.ofAnnotation()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
@@ -117,11 +113,6 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
-            /* The following line was intentionally commented: Matteo, I believe
-             * this generates many bugs --yg fault Fixed, but not integrated, as
-             * per request. Waiting for the enhancement (Term, Factor, etc.) --
-             * -- mo */
-            // new InfixMultiplicationDistributive(), //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
@@ -151,11 +142,8 @@ public class Toolbox {
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
             new MethodDeclarationModifiersRedundant(), //
-            // Disabled to protect against infinite loop
-            // new BodyDeclarationAnnotationsSort.ofMethod() , //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            // new ExtractMethodSuffix(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -208,14 +196,11 @@ public class Toolbox {
             null) //
         .add(EnumDeclaration.class, //
             new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
-            // new BodyDeclarationAnnotationsSort.ofEnum(), //
             new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
-            // new EnumDeclarationModifierCleanEnum(), //
             null) //
         .add(FieldDeclaration.class, //
             new FieldRedundantModifiers(), //
             new BodyDeclarationModifiersSort.ofField(), //
-            // new BodyDeclarationAnnotationsSort.ofField(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //

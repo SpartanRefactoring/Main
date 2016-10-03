@@ -2,7 +2,9 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -12,12 +14,13 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.swt.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Fluent API services for the plugin
@@ -25,10 +28,16 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public enum eclipse {
   facade;
-  static final GUI$Applicator[] safeApplicators = { new Trimmer() };
   static final String NAME = "Laconic";
-  static final String ICON_PATH = "/src/main/icons/spartan-warrior64.gif";
-  static final ImageIcon icon = new ImageIcon(eclipse.class.getResource(ICON_PATH));
+  static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
+  static ImageIcon icon = new ImageIcon(
+      Toolkit.getDefaultToolkit().getImage(eclipse.class.getResource(ICON_PATH)).getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+  static final Shell parent = null;
+  static final int shellStyle = SWT.TOOL;
+  static final boolean takeFocusOnOpen = false;
+  static final boolean persistSize = false;
+  static final boolean persistLocation = false;
+  static final boolean showDialogMenu = true;
 
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {
@@ -40,10 +49,13 @@ public enum eclipse {
     p.setDescription(d, null);
   }
 
-  /** @param message What to announce
-   * @return <code><b>null</b></code> */
   static Void announce(final Object message) {
+    // new PopupDialog(parent, //
+    // shellStyle, takeFocusOnOpen, persistSize, persistLocation,
+    // showDialogMenu, showPersistActions, //
+    // message + "", "Spartan Plugin").open();
     JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    // JOptionPane.showMessageDialog(null, message);
     return null;
   }
 
@@ -66,16 +78,24 @@ public enum eclipse {
     pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {
+      pm.done();
       announce("Cannot find current compilation unit " + u);
       return $;
     }
     final IJavaProject javaProject = u.getJavaProject();
     if (javaProject == null) {
+      pm.done();
       announce("Cannot find project of " + u);
+      return $;
+    }
+    if (!javaProject.isOpen()) {
+      pm.done();
+      announce(javaProject.getElementName() + " is not open");
       return $;
     }
     final IPackageFragmentRoot[] packageFragmentRoots = javaProject.getPackageFragmentRoots();
     if (packageFragmentRoots == null) {
+      pm.done();
       announce("Cannot find roots of " + javaProject);
       return $;
     }
@@ -105,7 +125,7 @@ public enum eclipse {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
-  // TODO Ori: do not create a compilation unit
+  // TODO Ori Roth: do not create a compilation unit
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
@@ -115,8 +135,7 @@ public enum eclipse {
       return new NodeFinder(Make.COMPILATION_UNIT.parser(u).createAST(new NullProgressMonitor()), s, (int) m.getAttribute(IMarker.CHAR_END) - s)
           .getCoveredNode();
     } catch (final CoreException x) {
-      // TODO Ori: log it
-      x.printStackTrace();
+      monitor.logEvaluationError(x);
     }
     return null;
   }
@@ -140,7 +159,7 @@ public enum eclipse {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
     }
     return null;
   }
@@ -149,7 +168,7 @@ public enum eclipse {
     try {
       return compilationUnits(u, nullProgressMonitor);
     } catch (final JavaModelException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return null;
     }
   }
@@ -159,7 +178,7 @@ public enum eclipse {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException x) {
-      LoggingManner.logEvaluationError(this, x);
+      monitor.logEvaluationError(this, x);
       return true;
     }
   }

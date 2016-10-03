@@ -16,7 +16,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2015-08-25 */
 @SuppressWarnings("static-method") public final class JavaTypeNameParser {
   public static boolean isJohnDoe(final SingleVariableDeclaration ¢) {
-    return isJohnDoe(¢.getType(), ¢.getName());
+    return ¢ != null && isJohnDoe(¢.getType(), ¢.getName());
   }
 
   public static boolean isJohnDoe(final String typeName, final String variableName) {
@@ -24,7 +24,7 @@ import org.eclipse.jdt.core.dom.*;
   }
 
   public static boolean isJohnDoe(final Type t, final SimpleName n) {
-    return isJohnDoe(t + "", n.getIdentifier());
+    return n != null && isJohnDoe(t + "", n.getIdentifier());
   }
 
   /** The type name managed by this instance */

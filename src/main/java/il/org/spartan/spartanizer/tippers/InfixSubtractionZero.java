@@ -1,19 +1,19 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.assemble.make.*;
+import static il.org.spartan.spartanizer.ast.create.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.wizard.*;
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import static il.org.spartan.spartanizer.ast.hop.*;
+import static il.org.spartan.spartanizer.ast.navigate.hop.*;
 
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 

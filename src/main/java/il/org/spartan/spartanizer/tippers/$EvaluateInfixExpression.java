@@ -10,8 +10,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.PreferencesResources.*;
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -88,7 +88,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         }
       }
     } catch (final Exception e) {
-      LoggingManner.logEvaluationError(this, e);
+      monitor.logEvaluationError(this, e);
     }
     return null;
   }

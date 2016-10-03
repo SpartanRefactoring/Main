@@ -8,13 +8,13 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.extract.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 public enum sideEffects {
   MISSING_CASE;
@@ -64,9 +64,9 @@ public enum sideEffects {
   }
 
   public static boolean free(final Expression ¢) {
-    if (¢ == null || iz.is(¢, alwaysFree))
+    if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))
       return true;
-    if (iz.is(¢, alwaysHave))
+    if (iz.nodeTypeIn(¢, alwaysHave))
       return false;
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:
@@ -90,7 +90,7 @@ public enum sideEffects {
       case VARIABLE_DECLARATION_EXPRESSION:
         return free(step.fragments(az.variableDeclarationExpression(¢)));
       default:
-        LoggingManner.logProbableBug(//
+        monitor.logProbableBug(//
             sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
     }

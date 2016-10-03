@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -79,11 +79,11 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   }
 
   @Override public String description() {
-    return "Convert the break inside the loop to return";
+    return "Convert the break inside 'while()' loop to 'return'";
   }
 
   @Override public String description(final WhileStatement ¢) {
-    return "Convert the break inside " + ¢ + " to return";
+    return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {

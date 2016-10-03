@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.engine.type.*;
  * @since 2015-08-30 */
 public final class LiteralParser {
   public static Primitive.Certain of(final String literal) {
-    return new LiteralParser(literal).type();
+    return literal == null ? null : new LiteralParser(literal).type();
   }
 
   /** An <code><b>enum</b></code> to give symbolic names to the literal types.

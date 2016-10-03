@@ -4,10 +4,10 @@ import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -37,7 +37,7 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block> implements T
 
   @Override public Statement replacement(final Block b) {
     final ASTNode parent = step.parent(b);
-    return !(parent instanceof Statement) || iz.is(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
+    return !(parent instanceof Statement) || iz.nodeTypeIn(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(onlyOne(statements(b)));
   }
 }

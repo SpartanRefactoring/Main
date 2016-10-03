@@ -4,8 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.assemble.*;
-import il.org.spartan.spartanizer.ast.*;
+import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -78,7 +78,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   @Override public String description(final ForStatement ¢) {
-    return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
+    return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
