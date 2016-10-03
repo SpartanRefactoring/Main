@@ -73,7 +73,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     assert s != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first + "\n e = " + e
         + "\n extendedModifiers = " + extendedModifiers + fault.done();
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
-    // TODO: alex: Null comparison always yields false: The variable extendedModifiers cannot be null at this location
+    // TODO: alex: Null comparison always yields false: The variable
+    // extendedModifiers cannot be null at this location
     if (extendedModifiers2 == extendedModifiers || extendedModifiers == null || extendedModifiers2 == null)
       return false;
     assert extendedModifiers2 != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
