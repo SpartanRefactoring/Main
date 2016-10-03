@@ -38,7 +38,7 @@ public abstract class LaconizeSelection extends BaseHandler {
       final IProgressService ps = wb.getProgressService();
       try {
         ps.busyCursorWhile(pm -> {
-          applicator.setProgressMonitor(pm);
+//          applicator.setProgressMonitor(pm);
           pm.setTaskName(status + "");
           applicator.parse();
           applicator.scan();
