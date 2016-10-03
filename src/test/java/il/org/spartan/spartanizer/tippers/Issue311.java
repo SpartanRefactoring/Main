@@ -227,10 +227,12 @@ import org.junit.runners.*;
     trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i, a = null;" + "while(p < 10) p = p.getParent();" + "return false;" + "}").stays();
   }
 
-  @Ignore @Test public void initializers_with_array_a() {
+  @Test public void initializers_with_array_a() {
     trimmingOf("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;) {arr[i] = 0;++i;}")
-        .gives("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;arr[i] = 0) {++i;}")
-        .gives("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;arr[i] = 0,++i) {}").stays();
+        .gives("for(int i = 0;;) {(new int[]{1,2,3,4,5})[i] = 0;++i;}")
+        .gives("for(int ¢ = 0;;) {(new int[]{1,2,3,4,5})[¢] = 0;++¢;}")
+        .gives("for(int ¢ = 0;;++¢) {(new int[]{1,2,3,4,5})[¢] = 0;}")
+        .gives("for(int ¢ = 0;;++¢) (new int[]{1,2,3,4,5})[¢] = 0;").stays();
   }
 
   @Test public void t03a() {
