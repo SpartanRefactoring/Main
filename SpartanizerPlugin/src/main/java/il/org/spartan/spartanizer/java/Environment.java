@@ -66,6 +66,7 @@ import il.org.spartan.spartanizer.utils.*;
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
+      // TODO: Alex - do not define short names for fields.
       String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
