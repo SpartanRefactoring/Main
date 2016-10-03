@@ -1,15 +1,13 @@
-package il.org.spartan.spartanizer.application;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
-import java.util.*;
 
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -18,35 +16,33 @@ import il.org.spartan.utils.*;
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
  * @year 2016 */
-public final class CollectMetrics {
-  private static String OUTPUT = "/tmp/test.csv";
-  private static String OUTPUT_Tips = "/tmp/tips.csv";
-  private static CSVStatistics output = init(OUTPUT, "property");
-  private static CSVStatistics Tips = init(OUTPUT_Tips, "tips");
+public final class CollectClassMetrics {
+  private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
+  private static CSVStatistics output = init();
 
   public static void main(final String[] where) {
     go(where.length != 0 ? where : new String[] { "." });
     System.err.println("Your output should be here: " + output.close());
   }
 
-  public static Document rewrite(final GUI$Applicator a, final CompilationUnit u, final Document $) {
+  static CompilationUnit spartanize(final CompilationUnit before) {
+    final Trimmer tr = new Trimmer();
+    assert tr != null;
+    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    tr.setICompilationUnit($);
+    assert $ != null;
     try {
-      a.createRewrite(u).rewriteAST($, null).apply($);
-      return $;
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
+      tr.checkAllConditions(null);
+    } catch (OperationCanceledException | CoreException e) {
+      e.printStackTrace();
     }
-  }
-
-  private static void collectTips(final String javaCode, final CompilationUnit before) {
-    reportTips(new Trimmer().collectSuggesions(before));
+    return before;
   }
 
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
-      Tips.put("File", f.getName());
       go(FileUtils.read(f));
     } catch (final IOException e) {
       System.err.println(e.getMessage());
@@ -55,13 +51,7 @@ public final class CollectMetrics {
 
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
-    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    report("Before-", before);
-    collectTips(javaCode, before);
-    final CompilationUnit after = spartanize(javaCode, before);
-    assert after != null;
-    report("After-", after);
-    output.nl();
+    report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   private static void go(final String[] where) {
@@ -69,9 +59,9 @@ public final class CollectMetrics {
       go(¢);
   }
 
-  private static CSVStatistics init(final String outputDir, final String property) {
+  private static CSVStatistics init() {
     try {
-      return new CSVStatistics(outputDir, property);
+      return new CSVStatistics(OUTPUT, "property");
     } catch (final IOException e) {
       throw new RuntimeException(OUTPUT, e);
     }
@@ -100,24 +90,6 @@ public final class CollectMetrics {
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.put(prefix + "Imports", metrics.countImports(¢));
     output.put(prefix + "No Imports", metrics.countNoImport(¢));
-  }
-
-  private static void reportTips(final List<Tip> ¢) {
-    // tips = new CSVStatistics("/tmp/tips.csv");
-    for (final Tip $ : ¢) {
-      Tips.put("description", $.description);
-      Tips.put("from", $.from);
-      Tips.put("to", $.to);
-      Tips.put("linenumber", $.lineNumber);
-      Tips.nl();
-    }
-  }
-
-  private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
-    final Trimmer t = new Trimmer();
-    assert t != null;
-    final String spartanized = t.fixed(javaCode);
-    output.put("Characters", spartanized.length());
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);
+    output.nl();
   }
 }
