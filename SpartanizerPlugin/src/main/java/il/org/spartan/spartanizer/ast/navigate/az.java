@@ -362,7 +362,7 @@ public enum az {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 
-  static Name name(final ASTNode ¢) {
+  public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;
   }
 
