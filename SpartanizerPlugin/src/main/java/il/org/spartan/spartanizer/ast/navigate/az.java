@@ -218,6 +218,10 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
+  public static Name name(final ASTNode ¢) {
+    return ¢ instanceof Name ? (Name) ¢ : null;
+  }
+
   /** Down-cast, if possible, to {@link NormalAnnotation}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -360,10 +364,6 @@ public enum az {
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
-  }
-
-  public static Name name(final ASTNode ¢) {
-    return ¢ instanceof Name ? (Name) ¢ : null;
   }
 
   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
