@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.operation.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
@@ -20,8 +21,8 @@ public final class LaconizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
   private final StringBuilder status = new StringBuilder();
   private ICompilationUnit currentCompilationUnit;
-  private IJavaProject javaProject;
-  private final List<ICompilationUnit> todo = new ArrayList<>();
+  IJavaProject javaProject;
+  final List<ICompilationUnit> todo = new ArrayList<>();
   private int initialCount;
   private final List<ICompilationUnit> dead = new ArrayList<>();
 
@@ -30,26 +31,34 @@ public final class LaconizeProject extends BaseHandler {
    * @return number of tips available for the compilation unit */
   public int countTips() {
     final AtomicInteger $ = new AtomicInteger(0);
-    for (final ICompilationUnit u : todo)
-      try {
-        PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
-          pm.beginTask("Looking for tips in " + u.getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-          final GUI$Applicator ¢ = new Trimmer();
-          ¢.setProgressMonitor(pm);
-          ¢.setMarker(null);
-          ¢.setICompilationUnit(u);
-          $.addAndGet(¢.countTips());
+    final GUI$Applicator ¢ = new Trimmer();
+    try {
+      PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress() {
+        @Override public void run(IProgressMonitor pm) {
+          pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
+          System.out.println(todo.size());
+          for (final ICompilationUnit u : todo) {
+            if (pm.isCanceled()) {
+              $.set(0);
+              break;
+            }
+            // ¢.setProgressMonitor(pm);
+            ¢.setMarker(null);
+            ¢.setICompilationUnit(u);
+            $.addAndGet(¢.countTips());
+          }
+          if (pm.isCanceled())
+            $.set(0);
           pm.done();
-        });
-      } catch (final InvocationTargetException x) {
-        monitor.logEvaluationError(this, x);
-      } catch (final InterruptedException x) {
-        monitor.logCancellationRequest(this, x);
-      }
+        }
+      });
+    } catch (InvocationTargetException | InterruptedException e) {
+      e.printStackTrace();
+    }
     return $.get();
   }
 
-  @Override public Void execute(final ExecutionEvent ¢) {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent ¢) {
     status.setLength(0);
     todo.clear();
     dead.clear();
@@ -116,6 +125,7 @@ public final class LaconizeProject extends BaseHandler {
     status.append("Starting at compilation unit: " + currentCompilationUnit.getElementName() + "\n");
     javaProject = currentCompilationUnit.getJavaProject();
     status.append("Java project is: " + javaProject.getElementName() + "\n");
+    todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     status.append("Found " + todo.size() + " compilation units, ");
     initialCount = todo.isEmpty() ? 0 : countTips();
