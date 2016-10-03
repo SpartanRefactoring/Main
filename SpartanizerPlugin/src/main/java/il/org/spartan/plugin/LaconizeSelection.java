@@ -117,7 +117,6 @@ public abstract class LaconizeSelection extends BaseHandler {
         execute();
       } catch (final ExecutionException x) {
         monitor.logEvaluationError(this, x);
-        ;
       }
     }
   }

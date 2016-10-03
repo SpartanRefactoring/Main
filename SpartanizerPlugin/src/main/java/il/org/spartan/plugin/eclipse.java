@@ -12,7 +12,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.*;
@@ -39,7 +38,6 @@ public enum eclipse {
   static final boolean persistSize = false;
   static final boolean persistLocation = false;
   static final boolean showDialogMenu = true;
-  private static boolean showPersistActions;
 
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {
@@ -52,11 +50,11 @@ public enum eclipse {
   }
 
   static Void announce(final Object message) {
-    new PopupDialog(parent, //
-        shellStyle, takeFocusOnOpen, persistSize, persistLocation, showDialogMenu, showPersistActions, //
-        message + "", "Spartan Plugin").open();
-    // JOptionPane.showMessageDialog(null, message, NAME,
-    // JOptionPane.INFORMATION_MESSAGE, icon);
+    // new PopupDialog(parent, //
+      //   shellStyle, takeFocusOnOpen, persistSize, persistLocation, showDialogMenu, showPersistActions, //
+        // message + "", "Spartan Plugin").open();
+     JOptionPane.showMessageDialog(null, message, NAME,
+     JOptionPane.INFORMATION_MESSAGE, icon);
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }

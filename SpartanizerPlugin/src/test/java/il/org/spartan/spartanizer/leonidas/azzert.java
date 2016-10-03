@@ -43,6 +43,11 @@ class expression {
 class tipper {
   private final UserDefinedTipper<ASTNode> tipper;
 
+  /**
+   * @param p // TODO: Ori Machovitch: these are not JD.
+   * @param r
+   * @param d
+   */
   public tipper(final String p, final String r, final String d) {
     tipper = TipperFactory.tipper(p, r, d);
   }
@@ -156,7 +161,7 @@ class turns {
     azzertEquals(res, document);
   }
 
-  private void azzertEquals(final String s, final Document d) {
+  private static void azzertEquals(final String s, final Document d) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
         assertEquals(s, d.get());
