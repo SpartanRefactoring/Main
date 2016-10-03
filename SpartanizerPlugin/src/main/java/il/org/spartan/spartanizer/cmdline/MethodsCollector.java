@@ -4,7 +4,7 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 
-import org.eclipse.jdt.core.domC
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -23,7 +23,6 @@ public final class MethodsCollector {
   private static final String folder = "/tmp/";
   private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
-  private static String inputDir;
 
   public static String essenced(final String fileName) {
     return fileName + ".essence";
