@@ -16,7 +16,8 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
   // we shouldn'tipper forget to test it as you tested the engine last time...
   // TODO: Dan Greenstein, (Alex) we can leave comments like this to mark changes we want
   // the other to know.
-  // before starting work we should system threw "TODO: myName"s, and
+  // before starting work we should system threw //
+  //TODO: Dan Greenstein: "s, and
   // afterwards
   // remove it them:)
   static {

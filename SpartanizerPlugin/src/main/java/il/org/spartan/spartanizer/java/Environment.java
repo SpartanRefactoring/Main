@@ -515,7 +515,7 @@ import il.org.spartan.spartanizer.utils.*;
     return new Nested(this);
   }
 
-  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
+  /** TODO Dan Greenstein: document Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
    * for now, this class is intentionally package level, and intenationally
    * defined local. For now, clients should not be messing with it */
   static class Information {
@@ -561,10 +561,11 @@ import il.org.spartan.spartanizer.utils.*;
     }
 
     public boolean equals(final Information ¢) {
-      // TODO: Yossi Gil: we wanted to use the prudentType, so we wrote a comparison
+      // Yossi Gil: we wanted to use the prudentType, so we wrote a comparison
       // function to it.
       // Some one changed it and all our tests fell. When the API to "type" will
       // be ready we will
+      // TODO Dan Greenstein: it should be ready now.
       return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
     }
 
