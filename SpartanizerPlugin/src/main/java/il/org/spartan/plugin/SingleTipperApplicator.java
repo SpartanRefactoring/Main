@@ -89,7 +89,7 @@ public final class SingleTipperApplicator {
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
-    // TODO Ori Roth, why do you search for the tipper, don't you get it by
+    // TODO Ori Roth: why do you search for the tipper, don't you get it by
     // parameter?
     final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
