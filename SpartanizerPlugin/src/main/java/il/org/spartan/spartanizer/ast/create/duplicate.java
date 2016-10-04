@@ -15,6 +15,15 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2015-07-21 */
 public enum duplicate {
   ;
+  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
+    if (o != wizard.MINUS2)
+      return xs;
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression ¢ : xs)
+      $.add(subject.operand(¢).to(wizard.MINUS1));
+    return $;
+  }
+
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
@@ -46,12 +55,13 @@ public enum duplicate {
     return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
   }
 
-  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
-    if (o != wizard.MINUS2)
-      return xs;
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      $.add(subject.operand(¢).to(wizard.MINUS1));
+  /** Make a duplicate, suitable for tree rewrite, of the parameter
+   * @param ¢ JD
+   * @return a duplicate of the parameter, downcasted to the returned type. */
+  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢) {
+    final List<¢> $ = new ArrayList<>();
+    for (final ¢ cent : ¢)
+      $.add((¢) copySubtree(cent.getAST(), cent));
     return $;
   }
 }

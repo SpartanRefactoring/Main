@@ -13,14 +13,51 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    return new DeclarationInitializerStatementTerminatingScope().cantTip(hop.prevToFirstLastExpressionFragment(¢));
+    final VariableDeclarationFragment f = hop.precidingFragmentToLastExpression(¢);
+    if (f == null)
+      return true;
+    return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    return new DeclarationInitializerStatementTerminatingScope().cantTip(hop.prevToFirstLastExpressionFragment(¢));
+    final VariableDeclarationFragment f = hop.prevFragmentToLastExpression(¢);
+    if (f == null)
+      return true;
+    return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
+  }
+
+  public static boolean declarationRedundantInitializer(final ForStatement ¢) {
+    for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
+      if (new DeclarationRedundantInitializer().canTip(f))
+        return false;
+    return true;
+  }
+
+  public static boolean declarationRedundantInitializer(final WhileStatement ¢) {
+    for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
+      if (new DeclarationRedundantInitializer().canTip(f))
+        return false;
+    return true;
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
-    return new ForRenameInitializerToCent().cantTip(az.variableDeclarationExpression(¢));
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(¢);
+    if (e == null)
+      return true;
+    return new ForRenameInitializerToCent().cantTip(e);
+  }
+
+  public static boolean remvoeRedundantIf(final ForStatement ¢) {
+    for (final IfStatement s : extract.ifStatements(step.body(¢)))
+      if (new RemoveRedundantIf().canTip(s))
+        return false;
+    return true;
+  }
+
+  public static boolean remvoeRedundantIf(final WhileStatement ¢) {
+    for (final IfStatement s : extract.ifStatements(step.body(¢)))
+      if (new RemoveRedundantIf().canTip(s))
+        return false;
+    return true;
   }
 }

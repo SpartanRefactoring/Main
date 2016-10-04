@@ -23,6 +23,24 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
+  interface literal {
+    /** @param ¢ JD
+     * @return true if the given node is a literal false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return true if the given node is a literal true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
+    }
+  }
+
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -332,9 +350,12 @@ public interface iz {
       case EXPRESSION_STATEMENT:
         return incrementOrDecrement(step.expression(¢));
       case POSTFIX_EXPRESSION:
-        return in(((PostfixExpression) ¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+        return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
         return in(az.prefixExpression(¢).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+      case ASSIGNMENT:
+        return in(az.assignment(¢).getOperator(), PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
+            BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN);
       default:
         return false;
     }
@@ -660,7 +681,7 @@ public interface iz {
     return iz.nodeTypeIn(¢, types);
   }
 
-  static boolean parenthesizeExpression(final Expression ¢) {
+  static boolean parenthesizedExpression(final Expression ¢) {
     return nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
 
@@ -668,6 +689,10 @@ public interface iz {
    * @return true is the assignment's operator is assign */
   static boolean plainAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == ASSIGN;
+  }
+
+  static boolean postfixExpression(final ASTNode ¢) {
+    return nodeTypeEquals(¢, POSTFIX_EXPRESSION);
   }
 
   /** @param pattern JD
@@ -837,6 +862,20 @@ public interface iz {
     return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
+  public static boolean variableNotUsedAfterStatement(final Statement ¢, final SimpleName n) {
+    final Block b = az.block(¢.getParent());
+    assert b != null : "For loop's parent is null";
+    final List<Statement> statements = step.statements(b);
+    boolean passedFor = false;
+    for (final Statement s : statements) {
+      if (passedFor && !Collect.usesOf(n).in(s).isEmpty())
+        return false;
+      if (s.equals(¢))
+        passedFor = true;
+    }
+    return true;
+  }
+
   static boolean whileStatement(final ASTNode x) {
     return x instanceof WhileStatement;
   }
@@ -872,23 +911,5 @@ public interface iz {
       monitor.logEvaluationError(this, x);
       return false;
     }
-  }
-
-  interface literal {
-    /** @param ¢ JD
-     * @return true if the given node is a literal false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return true if the given node is a literal true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
-    }
-  }
+  }  
 }

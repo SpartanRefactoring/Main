@@ -52,9 +52,21 @@ import org.junit.runners.*;
   }
 
   @Test public void A$110() {
-    trimmingOf("int tipper=5;int i=2;for(int i=4;i<s.length();++i){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
-        .gives("int tipper=5;int i=2;for(int i=4;i<s.length();++i){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
-        .gives("int tipper=5;int i=2;for(int i=4;i<s.length();++i){if(i==5){tipper+=9; break;}y+=15;break;}return x;");
+    trimmingOf("void foo() {int tipper=5;int z=2;for(int i=4;i<s.length();++i){if(z==i){tipper+=9;return x;}y+=15;return x;}return x;}")
+        .gives("void foo() {int tipper=5;int z=2;for(int i=4;i<s.length();++i){if(z==i){tipper+=9;return x;}y+=15;break;}return x;}")
+        .gives("void foo() {int tipper=5;int z=2;for(int i=4;i<s.length();++i){if(z==i){tipper+=9;break;}y+=15;break;}return x;}")
+        .gives("void foo() {int tipper=5;int z=2;for(int ¢=4;¢<s.length();++¢){if(z==¢){tipper+=9;break;}y+=15;break;}return x;}")
+        .gives("void foo() {int tipper=5;for(int z=2, ¢=4;¢<s.length();++¢){if(z==¢){tipper+=9;break;}y+=15;break;}return x;}")
+        .gives("void foo() {for(int tipper=5, z=2, ¢=4;¢<s.length();++¢){if(z==¢){tipper+=9;break;}y+=15;break;}return x;}").stays();
+    // .gives("void foo() {int tipper=5;int z=2;for(int
+    // ¢=4;¢<s.length();++¢){if(z==¢){tipper+=9;return x;}y+=15;return x;}return
+    // x;}")
+    // .gives("void foo() {int tipper=5;for(int z=2,
+    // i=4;i<s.length();++i){if(z==¢){tipper+=9;return x;}y+=15;break;}return
+    // x;}")
+    // .gives("void foo() {int tipper=5;for(int z=2,
+    // i=4;i<s.length();++i){if(z==¢){tipper+=9; break;}y+=15;break;}return
+    // x;}");
   }
 
   @Test public void A$120() {
