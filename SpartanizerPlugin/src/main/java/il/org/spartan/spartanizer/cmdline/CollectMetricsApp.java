@@ -124,7 +124,7 @@ public final class CollectMetricsApp implements IApplication {
     // TODO Matteo make sure that the counting does not include comments. Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
-    // TODO: Yossi, make this even more clever, by using function interfaces..
+    // TODO: Yossi Gil: make this even more clever, by using function interfaces..
     output.put(prefix + "Count", metrics.count(¢));
     output.put(prefix + "Non whites", metrics.countNonWhites(¢));
     output.put(prefix + "Condensed size", metrics.condensedSize(¢));
