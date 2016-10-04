@@ -16,120 +16,6 @@ import il.org.spartan.spartanizer.utils.*;
 /* TODO Tippers to improve once Environment is complete:
  * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
-  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
-   * for now, this class is intentionally package level, and intenationally
-   * defined local. For now, clients should not be messing with it */
-  static class Information {
-    public static boolean eq(final Object o1, final Object o2) {
-      return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
-    }
-
-    // TODO: Dan & Alex implement this.
-    static boolean eq(final type t1, final type t2) {
-      return true;
-      // return t1 == null ? t2 == null : t2 != null && t1 == t2;
-    }
-
-    /** The containing block, whose death marks the death of this entry; not
-     * sure, but I think this entry can be shared by many nodes at the same
-     * level */
-    public final ASTNode blockScope;
-    /** What do we know about an entry hidden by this one */
-    public final Information hiding;
-    /** The node at which this entry was created */
-    public final ASTNode self;
-    /** What do we know about the type of this definition */
-    public final type prudentType;
-
-    // For now, nothing is known, we only maintain lists
-    public Information() {
-      blockScope = self = null;
-      prudentType = null;
-      hiding = null;
-    }
-
-    public Information(final ASTNode blockScope, final Information hiding, final ASTNode self, final type prudentType) {
-      this.blockScope = blockScope;
-      this.hiding = hiding;
-      this.self = self;
-      this.prudentType = prudentType;
-    }
-
-    public Information(final type t) {
-      blockScope = self = null;
-      prudentType = t;
-      hiding = null;
-    }
-
-    public boolean equals(final Information ¢) {
-      // TODO: Yossi, we wanted to use the prudentType, so we wrote a comparison
-      // function to it.
-      // Some one changed it and all our tests fell. When the API to "type" will
-      // be ready we will
-      return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
-    }
-
-    @Override public boolean equals(final Object ¢) {
-      return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Information) ¢);
-    }
-
-    @Override public int hashCode() {
-      return (self == null ? 0 : self.hashCode())
-          + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
-    }
-  }
-
-  /** Dictionary with a parent. Insertions go the current node, searches start
-   * at the current note and Delegate to the parent unless it is null. */
-  final class Nested implements Environment {
-    public final Map<String, Information> flat = new LinkedHashMap<>();
-    public final Environment nest;
-
-    Nested(final Environment parent) {
-      nest = parent;
-    }
-
-    /** @return true iff {@link Environment} is empty. */
-    @Override public boolean empty() {
-      return flat.isEmpty() && nest.empty();
-    }
-
-    /** @return Map entries used in the current scope. */
-    @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
-      return new LinkedHashSet<>(flat.entrySet());
-    }
-
-    /** @return The information about the name in current {@link Environment}
-     *         . */
-    @Override public Information get(final String name) {
-      final Information $ = flat.get(name);
-      return $ != null ? $ : nest.get(name);
-    }
-
-    /** Check whether the {@link Environment} already has the name. */
-    @Override public boolean has(final String name) {
-      return flat.containsKey(name) || nest.has(name);
-    }
-
-    /** @return Names used the {@link Environment} . */
-    @Override public LinkedHashSet<String> names() {
-      return new LinkedHashSet<>(flat.keySet());
-    }
-
-    /** One step up in the {@link Environment} tree. Funny but it even sounds
-     * like next(). */
-    @Override public Environment nest() {
-      return nest;
-    }
-
-    /** Add name to the current scope in the {@link Environment} . */
-    @Override public Information put(final String name, final Information value) {
-      flat.put(name, value);
-      assert !flat.isEmpty();
-      return hiding(name);
-    }
-  }
-
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
   final Environment EMPTY = new Environment() {
@@ -179,60 +65,6 @@ import il.org.spartan.spartanizer.utils.*;
     n.accept(new ASTVisitor() {
       // Holds the current scope full name (Path).
       String scopePath = "";
-
-      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
-        // As of JSL3, AnonymousClassDeclaration's parent can be either
-        // ClassInstanceCreation or EnumConstantDeclaration
-        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
-        if (n instanceof ClassInstanceCreation)
-          return az.classInstanceCreation(n).getType() + "";
-        assert n instanceof EnumConstantDeclaration;
-        return az.enumConstantDeclaration(n).getName() + "";
-      }
-
-      Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
-        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
-      }
-
-      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
-        final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(d.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(d))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
-        return $;
-      }
-
-      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
-        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
-      }
-
-      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
-        final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(x.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(x))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
-        return $;
-      }
-
-      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
-        final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(s.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(s))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
-        return $;
-      }
-
-      Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
-      }
-
-      Information createInformation(final SingleVariableDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
-      }
-
-      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
-      }
 
       @Override public void endVisit(final AnnotationTypeDeclaration __) {
         restoreScopeName();
@@ -292,90 +124,6 @@ import il.org.spartan.spartanizer.utils.*;
 
       @Override public void endVisit(final WhileStatement __) {
         restoreScopeName();
-      }
-
-      @SuppressWarnings("hiding") String fullName(final SimpleName $) {
-        return scopePath + "." + $;
-      }
-
-      Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
-        for (final Entry<String, Information> ¢ : ss)
-          if (s.equals(¢.getKey()))
-            return ¢.getValue();
-        return null;
-      }
-
-      /** Returns the {@link Information} of the declaration the current
-       * declaration is hiding.
-       * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
-      /* Implementation notes: Should go over result set, and search for
-       * declaration which shares the same variable name in the parents. Should
-       * return the closest match: for example, if we search for a match to
-       * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
-       * .A.B.x.
-       *
-       * If a result is found in the result set, return said result.
-       *
-       * To consider: what if said hidden declaration will not appear in
-       * 'declaresDown', but will appear in 'declaresUp'? Should we search for
-       * it in 'declaresUp' result set? Should we leave the result as it is? I
-       * (Dan) lean towards searching 'declaresUp'. Current implementation only
-       * searches declaresDown.
-       *
-       * If no match is found, return null. */
-      Information getHidden(final String ¢) {
-        final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
-        for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-          final Information i = get($, s + "." + shortName);
-          if (i != null)
-            return i;
-        }
-        return null;
-      }
-
-      int orderOfCatchInTryParent(final CatchClause c) {
-        assert c.getParent() instanceof TryStatement;
-        @SuppressWarnings("hiding") int $ = 0;
-        for (final CatchClause ¢ : step.catchClauses((TryStatement) c.getParent())) {
-          if (¢ == c)
-            break;
-          ++$;
-        }
-        return $;
-      }
-
-      String parentNameScope(final String ¢) {
-        assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
-        return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
-      }
-
-      void restoreScopeName() {
-        scopePath = parentNameScope(scopePath);
-      }
-
-      /** Order of the searched {@link Statement} in its parent {@link ASTNode},
-       * among nodes of the same kind. Zero based.
-       * @param s
-       * @return The nodes index, according to order of appearance, among nodes
-       *         of the same type. */
-      int statementOrderAmongTypeInParent(final Statement s) {
-        // extract.statements wouldn't work here - we need a shallow extract,
-        // not a deep one.
-        @SuppressWarnings("hiding") final ASTNode n = s.getParent();
-        if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
-          return 0;
-        @SuppressWarnings("hiding") int $ = 0;
-        for (final Statement ¢ : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
-          // This is intentionally '==' and not equals, meaning the exact same
-          // Statement,
-          // not just equivalence.
-          if (¢ == s)
-            break;
-          if (¢.getNodeType() == s.getNodeType())
-            ++$;
-        }
-        return $;
       }
 
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
@@ -477,6 +225,144 @@ import il.org.spartan.spartanizer.utils.*;
         scopePath += "." + "#while" + statementOrderAmongTypeInParent(¢);
         return true;
       }
+
+      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
+        // As of JSL3, AnonymousClassDeclaration's parent can be either
+        // ClassInstanceCreation or EnumConstantDeclaration
+        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
+        if (n instanceof ClassInstanceCreation)
+          return az.classInstanceCreation(n).getType() + "";
+        assert n instanceof EnumConstantDeclaration;
+        return az.enumConstantDeclaration(n).getName() + "";
+      }
+
+      Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(d.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(d))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(x.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(x))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(s.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(s))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
+      Information createInformation(final SingleVariableDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
+      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+      }
+
+      @SuppressWarnings("hiding") String fullName(final SimpleName $) {
+        return scopePath + "." + $;
+      }
+
+      Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
+        for (final Entry<String, Information> ¢ : ss)
+          if (s.equals(¢.getKey()))
+            return ¢.getValue();
+        return null;
+      }
+
+      /** Returns the {@link Information} of the declaration the current
+       * declaration is hiding.
+       * @param ¢ the fullName of the declaration.
+       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
+      /* Implementation notes: Should go over result set, and search for
+       * declaration which shares the same variable name in the parents. Should
+       * return the closest match: for example, if we search for a match to
+       * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
+       * .A.B.x.
+       *
+       * If a result is found in the result set, return said result.
+       *
+       * To consider: what if said hidden declaration will not appear in
+       * 'declaresDown', but will appear in 'declaresUp'? Should we search for
+       * it in 'declaresUp' result set? Should we leave the result as it is? I
+       * (Dan) lean towards searching 'declaresUp'. Current implementation only
+       * searches declaresDown.
+       *
+       * If no match is found, return null. */
+      Information getHidden(final String ¢) {
+        final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
+        for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+          final Information i = get($, s + "." + shortName);
+          if (i != null)
+            return i;
+        }
+        return null;
+      }
+
+      int orderOfCatchInTryParent(final CatchClause c) {
+        assert c.getParent() instanceof TryStatement;
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final CatchClause ¢ : step.catchClauses((TryStatement) c.getParent())) {
+          if (¢ == c)
+            break;
+          ++$;
+        }
+        return $;
+      }
+
+      String parentNameScope(final String ¢) {
+        assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
+        return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+      }
+
+      void restoreScopeName() {
+        scopePath = parentNameScope(scopePath);
+      }
+
+      /** Order of the searched {@link Statement} in its parent {@link ASTNode},
+       * among nodes of the same kind. Zero based.
+       * @param s
+       * @return The nodes index, according to order of appearance, among
+       *         nodesof the same type. [[SuppressWarningsSpartan]] */
+      int statementOrderAmongTypeInParent(final Statement s) {
+        // extract.statements wouldn't work here - we need a shallow extract,
+        // not a deep one.
+        @SuppressWarnings("hiding") final ASTNode n = s.getParent();
+        if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
+          return 0;
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final Statement ¢ : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
+          // This is intentionally '==' and not equals, meaning the exact same
+          // Statement,
+          // not just equivalence.
+          if (¢ == s)
+            break;
+          if (¢.getNodeType() == s.getNodeType())
+            ++$;
+        }
+        return $;
+      }
     });
     return $;
   }
@@ -505,6 +391,7 @@ import il.org.spartan.spartanizer.utils.*;
     return null;
   }
 
+  /** [[SuppressWarningsSpartan]] */
   static Information getHidden(final String ¢) {
     final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
     for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
@@ -626,5 +513,119 @@ import il.org.spartan.spartanizer.utils.*;
   /** Used when new block (scope) is opened. */
   default Environment spawn() {
     return new Nested(this);
+  }
+
+  /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
+   * for now, this class is intentionally package level, and intenationally
+   * defined local. For now, clients should not be messing with it */
+  static class Information {
+    public static boolean eq(final Object o1, final Object o2) {
+      return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
+    }
+
+    // TODO: Dan & Alex implement this.
+    static boolean eq(final type t1, final type t2) {
+      return true;
+      // return t1 == null ? t2 == null : t2 != null && t1 == t2;
+    }
+
+    /** The containing block, whose death marks the death of this entry; not
+     * sure, but I think this entry can be shared by many nodes at the same
+     * level */
+    public final ASTNode blockScope;
+    /** What do we know about an entry hidden by this one */
+    public final Information hiding;
+    /** The node at which this entry was created */
+    public final ASTNode self;
+    /** What do we know about the type of this definition */
+    public final type prudentType;
+
+    // For now, nothing is known, we only maintain lists
+    public Information() {
+      blockScope = self = null;
+      prudentType = null;
+      hiding = null;
+    }
+
+    public Information(final ASTNode blockScope, final Information hiding, final ASTNode self, final type prudentType) {
+      this.blockScope = blockScope;
+      this.hiding = hiding;
+      this.self = self;
+      this.prudentType = prudentType;
+    }
+
+    public Information(final type t) {
+      blockScope = self = null;
+      prudentType = t;
+      hiding = null;
+    }
+
+    public boolean equals(final Information ¢) {
+      // TODO: Yossi, we wanted to use the prudentType, so we wrote a comparison
+      // function to it.
+      // Some one changed it and all our tests fell. When the API to "type" will
+      // be ready we will
+      return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
+    }
+
+    @Override public boolean equals(final Object ¢) {
+      return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Information) ¢);
+    }
+
+    @Override public int hashCode() {
+      return (self == null ? 0 : self.hashCode())
+          + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
+    }
+  }
+
+  /** Dictionary with a parent. Insertions go the current node, searches start
+   * at the current note and Delegate to the parent unless it is null. */
+  final class Nested implements Environment {
+    public final Map<String, Information> flat = new LinkedHashMap<>();
+    public final Environment nest;
+
+    Nested(final Environment parent) {
+      nest = parent;
+    }
+
+    /** @return true iff {@link Environment} is empty. */
+    @Override public boolean empty() {
+      return flat.isEmpty() && nest.empty();
+    }
+
+    /** @return Map entries used in the current scope. */
+    @Override public LinkedHashSet<Map.Entry<String, Information>> entries() {
+      return new LinkedHashSet<>(flat.entrySet());
+    }
+
+    /** @return The information about the name in current {@link Environment}
+     *         . */
+    @Override public Information get(final String name) {
+      final Information $ = flat.get(name);
+      return $ != null ? $ : nest.get(name);
+    }
+
+    /** Check whether the {@link Environment} already has the name. */
+    @Override public boolean has(final String name) {
+      return flat.containsKey(name) || nest.has(name);
+    }
+
+    /** @return Names used the {@link Environment} . */
+    @Override public LinkedHashSet<String> names() {
+      return new LinkedHashSet<>(flat.keySet());
+    }
+
+    /** One step up in the {@link Environment} tree. Funny but it even sounds
+     * like next(). */
+    @Override public Environment nest() {
+      return nest;
+    }
+
+    /** Add name to the current scope in the {@link Environment} . */
+    @Override public Information put(final String name, final Information value) {
+      flat.put(name, value);
+      assert !flat.isEmpty();
+      return hiding(name);
+    }
   }
 }
