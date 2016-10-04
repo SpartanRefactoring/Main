@@ -45,10 +45,10 @@ public enum Collect {
   };
   static final ASTMatcher matcher = new ASTMatcher();
 
-  /** Creates a new Collector which holds the occurrences of the provided name
+  /** Creates a new spartanizer which holds the occurrences of the provided name
    * in declarations.
    * @param n JD
-   * @return A {@link Collector}, with the uses of the provided identifier
+   * @return A {@link spartanizer}, with the uses of the provided identifier
    *         within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
@@ -75,7 +75,7 @@ public enum Collect {
 
   /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
-   * @return {@link Collector} of all occurrences which are not definitions. */
+   * @return {@link spartanizer} of all occurrences which are not definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -90,7 +90,7 @@ public enum Collect {
   /** finds all the occurrences of the given name (n) in which it is a
    * {@link ClassInstanceCreation}
    * @param n JD
-   * @return a Collector with all unsafe uses of the identifier (n) */
+   * @return a spartanizer with all unsafe uses of the identifier (n) */
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -102,10 +102,10 @@ public enum Collect {
     };
   }
 
-  /** Creates a new Collector which holds all the occurrences of the provided
+  /** Creates a new spartanizer which holds all the occurrences of the provided
    * name.
    * @param n JD
-   * @return A {@link Collector}, with the uses of the provided identifier
+   * @return A {@link spartanizer}, with the uses of the provided identifier
    *         within the provided {@link ASTNode}s array to the in function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
