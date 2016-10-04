@@ -12,7 +12,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author TODO Matteo Orru
+/** @author TODO Matteo Orru: is that you?
  * @year 2016 */
 @SuppressWarnings("static-method") public class Issue239 {
   @Test public void a$01() {
