@@ -25,24 +25,24 @@ import il.org.spartan.spartanizer.utils.*;
 
   // Primitive, manual tests, to root out the rough bugs.
   /** [[SuppressWarningsSpartan]] */
-  @Ignore @Test public void declaresDownMethodDeclaration01() {
+  @Test public void declaresDownMethodDeclaration01() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n"//
         + "void foo(int a, int b){}\n"//
         + "}"));
     for (final Entry<String, Information> e : Environment.declaresDown($))
-      assert ".foo.a".equals(e.getKey()) || ".foo.b".equals(e.getKey());
+      assert ".A.foo.a".equals(e.getKey()) || ".A.foo.b".equals(e.getKey());
   }
 
-  @Ignore @Test public void declaresDownMethodDeclaration02() {
+  @Test public void declaresDownMethodDeclaration02() {
     for (final Entry<String, Information> ¢ : Environment.declaresDown(
         makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){}\n" + "void g(int a){}\n" + "void h(){ int a; }\n" + "}"))))
-      assert (".f.a".equals(¢.getKey()) || ".g.a".equals(¢.getKey()) || ".h.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
+      assert (".A.f.a".equals(¢.getKey()) || ".A.g.a".equals(¢.getKey()) || ".A.h.#block0.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
   }
 
-  @Ignore @Test public void declaresDownMethodDeclaration03() {
+  @Test public void declaresDownMethodDeclaration03() {
     for (final Entry<String, Information> ¢ : Environment.declaresDown(
         makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){\n" + "class B{" + "void g(int a){}" + "}" + "}\n" + "}"))))
-      assert ".f.a".equals(¢.getKey()) || ".f.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
+      assert ".A.f.a".equals(¢.getKey()) || ".A.f.#block0.B.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
   }
 
   @Test public void defaultDoesntHave() {
