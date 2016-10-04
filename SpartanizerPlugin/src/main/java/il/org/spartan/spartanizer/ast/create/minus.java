@@ -26,36 +26,18 @@ public enum minus {
     return ¢;
   }
 
-  /** Remove the first statement with side effects residing under a given
-   * {@link Statement}, for which all next statements are side effects. if ¢ is
-   * empty or has only one statement return empty statement.
-   * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
-   * @return Given {@link Statement} without the last inner statement, if ¢ is
-   *         empty or has only one statement return empty statement. */
-  public static Statement firstLastStatement(final Statement $) {
-    final Statement ¢ = az.asStatement(hop.firstLastStatement($));
-    if (¢ == null)
-      return $;
-    final Block b = az.block($);
-    if (b == null)
-      return make.emptyStatement(¢);
-    final List<Statement> ss = statements(b);
-    ss.remove(¢);
-    return $;
-  }
-
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  public static Statement lastStatement(final Statement $) {
-    if (!iz.block($))
-      return make.emptyStatement($);
-    final List<Statement> ss = statements(az.block($));
+  public static Statement lastStatement(final Statement ¢) {
+    if (!iz.block(¢))
+      return make.emptyStatement(¢);
+    final List<Statement> ss = step.statements(az.block(¢));
     if (!ss.isEmpty())
       ss.remove(ss.size() - 1);
-    return $;
+    return ¢;
   }
 
   public static int level(final Expression ¢) {
@@ -77,6 +59,10 @@ public enum minus {
     return $;
   }
 
+  private static int level(final PrefixExpression ¢) {
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+  }
+
   public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
@@ -89,22 +75,18 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
+  private static List<Expression> peel(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>();
+    for (final Expression ¢ : xs)
+      $.add(peel(¢));
+    return $;
+  }
+
   public static Expression peel(final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
   public static Expression peel(final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
-  }
-
-  private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
-  }
-
-  private static List<Expression> peel(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    for (final Expression ¢ : xs)
-      $.add(peel(¢));
-    return $;
   }
 }
