@@ -1,12 +1,11 @@
-﻿#
-# This file holds the complete list of people who contributed to this repository.
-# Please keep this file maintained, and new contributors should be added
-# in an alphabetical order.
+﻿# This file holds the complete list of people who contributed to this
+# repository. Please keep this file maintained, and new contributors should be
+# added in an alphabetical order.
 #
 # Contributions can be found in individual files by the @author annotation.
 #
 
-# Keep this list alphabetically sorted VIM: +,$!sort -u
+# Keep this list alphabetically sorted, on VIM: +,$!sort -u
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>

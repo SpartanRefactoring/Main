@@ -21,16 +21,13 @@ public final class TrimmerTestsUtils {
   static String apply(final Tipper<? extends ASTNode> n, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document d = new Document(from);
-    assert d != null;
-    return TESTUtils.rewrite(new TipperApplicator(n), u, d).get();
+    return TESTUtils.rewrite(new TipperApplicator(n), u, (new Document(from))).get();
   }
 
   static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document d = new Document(from);
-    assert d != null;
     final Document $ = TESTUtils.rewrite(t, u, d);
     assert $ != null;
     return $.get();
