@@ -1,9 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-// TODO: Niv, what's going on here?
-// TODO: Yossi Gil: I think we never managed to get this to work. Stav was the last
-// one working on it
-// so I don'tipper know how it is right now or why it is commented out.
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tipping.*;
+
+// This code is not working: we never managed to get this to work. Stav was the
+// last one working on it
 /** Remove unnecessary ',' from array initialization list
  * <code>"int[] a = new int[] {..,..,..,};"</code> to :
  *
@@ -14,18 +19,19 @@ package il.org.spartan.spartanizer.tippers;
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon<code><shalmon.niv [at] gmail.com></code>
  * @since 2016-8-27 */
-/* public final class InitializationListRemoveComma extends
- * ReplaceCurrentNode<ArrayInitializer> implements Kind.SyntacticBaggage {
- *
- * @Override public String description() { return "Remove Unecessary ','"; }
- *
- * @Override String description(ArrayInitializer n) { return
- * "Remove Unecessary ','"; }
- *
- * @Override ASTNode replacement(final ArrayInitializer $) { List<?> expressions
- * = $.expressions(); if(!expressions.isEmpty())
- * expressions.remove(expressions.size()-1); return $; }
- *
- * @Override public boolean scopeIncludes(final ArrayInitializer n){ List<?>
- * expressions = n.expressions(); return expressions.isEmpty() ? false :
- * expressions.get(expressions.size()-1) == null; } } */
+public final class InitializationListRemoveComma extends ReplaceCurrentNode<ArrayInitializer> implements TipperCategory.SyntacticBaggage {
+  @Override public String description() {
+    return "Remove Unecessary ','";
+  }
+
+  @Override public String description(ArrayInitializer i) {
+    return "Remove Unecessary ','";
+  }
+
+  @Override public ASTNode replacement(final ArrayInitializer $) {
+    List<?> expressions = $.expressions();
+    if (!expressions.isEmpty())
+      expressions.remove(expressions.size() - 1);
+    return $;
+  }
+}
