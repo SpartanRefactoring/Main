@@ -114,7 +114,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
     };
   }
 
-  @Override public WringGroup wringGroup() {
-    return WringGroup.Abbreviation;
+  @Override public TipperGroup tipperGroup() {
+    return TipperGroup.Abbreviation;
   }
 }

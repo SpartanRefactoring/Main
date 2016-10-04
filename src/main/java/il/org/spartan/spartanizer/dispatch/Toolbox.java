@@ -214,10 +214,10 @@ public class Toolbox {
     ;
   }
 
-  /** Make a {@link Toolbox} for a specific kind of wrings
+  /** Make a {@link Toolbox} for a specific kind of tippers
    * @param clazz JD
    * @param w JS
-   * @return a new defaultInstance containing only the wrings passed as
+   * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
   @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
     return emptyToolboox().add(clazz, ns);
@@ -270,8 +270,8 @@ public class Toolbox {
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
-      assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
-      if (¢.wringGroup().isEnabled())
+      assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+      if (¢.tipperGroup().isEnabled())
         ts.add(¢);
     }
     return this;

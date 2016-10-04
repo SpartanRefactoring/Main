@@ -1,7 +1,7 @@
 package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.PreferencesResources.*;
-import static il.org.spartan.plugin.PreferencesResources.WringGroup.*;
+import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Daniel Mittelman
  * @year 2016 */
 public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  public static final String WRING_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
+  public static final String TIPPER_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
 
   public PreferencesPage() {
@@ -27,14 +27,14 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
-    for (final WringGroup ¢ : WringGroup.values())
-      g.add(new ComboFieldEditor(¢.id, ¢.label, WRING_COMBO_OPTIONS, g.getFieldEditor()));
+    for (final TipperGroup ¢ : TipperGroup.values())
+      g.add(new ComboFieldEditor(¢.id, ¢.label, TIPPER_COMBO_OPTIONS, g.getFieldEditor()));
     addField(g);
     g.init();
   }
 
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
-    setPreferenceStore(WringGroup.store());
+    setPreferenceStore(TipperGroup.store());
     setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
   }
