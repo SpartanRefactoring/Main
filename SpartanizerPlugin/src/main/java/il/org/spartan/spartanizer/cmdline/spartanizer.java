@@ -19,13 +19,13 @@ import il.org.spartan.utils.*;
 /** Scans files named by folder, ignore test files, and collect statistics.
  * @author Yossi Gil
  * @year 2015 */
-public final class Collector {
+public final class spartanizer {
   private static final String folder = "/tmp/";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new Collector(¢).fire();
+      new spartanizer(¢).fire();
   }
 
   static double d(final double n1, final double n2) {
@@ -49,11 +49,11 @@ public final class Collector {
   private CSVStatistics report;
   private final String reportFileName;
 
-  private Collector(final String path) {
+  private spartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  private Collector(final String inputPath, final String name) {
+  private spartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
