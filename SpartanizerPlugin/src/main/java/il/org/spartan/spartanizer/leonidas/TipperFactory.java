@@ -49,7 +49,6 @@ public class TipperFactory {
       }
 
       @SuppressWarnings("unchecked") Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
-        System.out.println(p + " " + iz.name(p) + " " + p.getNodeType());
         if (iz.name(p)) {
           final String id = ((Name) p).getFullyQualifiedName();
           if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$B"))
