@@ -44,8 +44,8 @@ import il.org.spartan.spartanizer.utils.*;
   @Test public void A$b() {
     assert seriesA$step1 != null;
     assert seriesA$step2 != null;
-    assert iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step1);
-    assert iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step1);
+    assert iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step2);
+    assert !iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step1);
   }
 
   @Test public void A$c() {

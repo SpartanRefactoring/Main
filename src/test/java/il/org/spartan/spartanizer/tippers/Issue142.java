@@ -8,7 +8,7 @@ import org.junit.runners.*;
 /** Unit tests for {@link DisabledChecker}
  * @author Ori Roth
  * @since 2016 */
-@Ignore @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue142 {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue142 {
   @Test public void disableSpartanizaionInClass() {
     trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n" + "  /***/ int f() {\n" + "    int $ = 1;\n" + "    return $;\n" + "  }\n"
         + "  /***/ int g() {\n" + "    int $ = 2;\n" + "    return $;\n" + "  }\n" + "}").stays();
