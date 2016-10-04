@@ -173,17 +173,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     assert c.multipliers().isEmpty();
   }
 
-  @Ignore("no similar case fo multification") @Test public void test23() {
-    c.collect(i("+a - b"));
-    azzert.that(c.multipliers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test24() {
-    c.collect(i("-a + b"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
   @Test public void test25() {
     azzert.that(core(e("(a)")), iz("a"));
   }
@@ -212,88 +201,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
     c.collect(i("-+  -+ -+-+-+(a) * b"));
     azzert.that(c.multipliers(), iz("[-a,b]"));
     azzert.that(c.dividers(), iz("[]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test32() {
-    c.collect(i("-a - b"));
-    azzert.that(c.multipliers(), iz("[]"));
-    azzert.that(c.dividers(), iz("[a,b]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test33() {
-    c.collect(i("-a - (-b)"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test34() {
-    c.collect(i("-a - ((-b))"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test35() {
-    c.collect(i("-a - +((-b))"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test36() {
-    c.collect(i("-a - ((-3))"));
-    azzert.that(c.multipliers(), iz("[3]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test37() {
-    c.collect(i("+-a - b"));
-    azzert.that(c.multipliers(), iz("[]"));
-    azzert.that(c.dividers(), iz("[a,b]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test38() {
-    c.collect(i("+(-a) - (-b)"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test39() {
-    c.collect(i("+(+(-a)) - ((-b))"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test40() {
-    c.collect(i("-(-(-a)) - +((-b))"));
-    azzert.that(c.multipliers(), iz("[b]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test41() {
-    c.collect(i("-(-(-(+(-(+-(+a)))))) - ((-3))"));
-    azzert.that(c.multipliers(), iz("[3]"));
-    azzert.that(c.dividers(), iz("[a]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test42() {
-    c.collect(i("-a + + - - - (b -c)"));
-    azzert.that(c.dividers(), iz("[a,b]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test43() {
-    c.collect(i("-a + + - - - (b -c)"));
-    azzert.that(c.multipliers(), iz("[c]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test44() {
-    c.collect(i("-a- b -c"));
-    azzert.that(c.multipliers(), iz("[]"));
-    azzert.that(c.dividers(), iz("[a,b,c]"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test45() {
-    c.collect(i("-a- b"));
-    azzert.that(c.multipliers(), iz("[]"));
-    azzert.that(c.dividers(), iz("[a,b]"));
   }
 
   @Test public void test46() {

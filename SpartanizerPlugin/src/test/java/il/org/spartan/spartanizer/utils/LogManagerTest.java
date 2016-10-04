@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-@Ignore @SuppressWarnings("static-method") public final class LogManagerTest {
+@SuppressWarnings("static-method") public final class LogManagerTest {
   @Test public void testActive() {
     LogManager.activateLog();
     assert LogManager.isActive();
@@ -30,7 +30,7 @@ import org.junit.*;
     assert !LogManager.isActive();
   }
 
-  @Test public void testPrintRow() {
+  @Ignore @Test public void testPrintRow() {
     LogManager.initialize("/home/matteo/SpartanLog");
     final LogWriter lw = LogManager.getLogWriter();
     assert LogManager.getLogWriter() != null;
