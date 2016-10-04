@@ -38,7 +38,7 @@ public final class CollectMetrics {
     }
   }
 
-// TODO Yossi Gil: eliminate warning
+  // TODO Yossi Gil: eliminate warning
   private static void collectTips(final String javaCode, final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggesions(before));
   }
@@ -86,7 +86,8 @@ public final class CollectMetrics {
    * @param string */
   // TODO: Yossi Gil: make this even more clever, by using function interfaces..
   private static void report(final String prefix, final CompilationUnit ¢) {
-    // TODO Matteo Orru: make sure that the counting does not include comments. Do
+    // TODO Matteo Orru: make sure that the counting does not include comments.
+    // Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
     output.put(prefix + "Count", metrics.count(¢));
@@ -113,7 +114,8 @@ public final class CollectMetrics {
       Tips.nl();
     }
   }
-// TODO Yossi Gil: eliminate warning
+
+  // TODO Yossi Gil: eliminate warning
   private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
     final Trimmer t = new Trimmer();
     assert t != null;

@@ -77,7 +77,7 @@ public final class CollectMetricsApp implements IApplication {
   private static void copyFile(final File source, final File target) throws IOException {
     try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
       final byte[] buf = new byte[1024];
-  // TODO: Alex and Dan - restore this loop, created by buggy tipper.
+      // TODO: Alex and Dan - restore this loop, created by buggy tipper.
       for (final int length = in.read(buf); length > 0; out.write(buf, 0, length))
         ;
     }
@@ -123,10 +123,12 @@ public final class CollectMetricsApp implements IApplication {
    * classes. Turn this if you like into a documentation
    * @param string */
   private static void report(final String prefix, final CompilationUnit ¢) {
-    // TODO Matteo Orru: make sure that the counting does not include comments. Do
+    // TODO Matteo Orru: make sure that the counting does not include comments.
+    // Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
-    // TODO: Yossi Gil: make this even more clever, by using function interfaces..
+    // TODO: Yossi Gil: make this even more clever, by using function
+    // interfaces..
     output.put(prefix + "Count", metrics.count(¢));
     output.put(prefix + "Non whites", metrics.countNonWhites(¢));
     output.put(prefix + "Condensed size", metrics.condensedSize(¢));
