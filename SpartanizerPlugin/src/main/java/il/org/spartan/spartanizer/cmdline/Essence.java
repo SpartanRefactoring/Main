@@ -12,7 +12,7 @@ public class Essence {
     }
   }
 
-  static String of(final String codeFragment) {
+  public static String of(final String codeFragment) {
     return codeFragment//
         .replaceAll("\\r\\n", "\\n") // DOS Junk
         .replaceAll("\\n\\r", "\\n") // Mac Junk
