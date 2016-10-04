@@ -70,7 +70,7 @@ public abstract class ENVTestEngineAbstract {
     assert testSet != null;
     assert $ != null;
     boolean entryFound = true;
-    // TODO: Alex and Dan: use or each loop here.
+    // TODO: Dan Greenstein:  use or each loop here.
     final Iterator<Entry<String, Information>> j = $.iterator();
     for (final Entry<String, Information> ¢ : testSet) {
       entryFound = false;
