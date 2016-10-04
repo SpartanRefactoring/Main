@@ -24,7 +24,7 @@ public final class InitializationListRemoveComma extends ReplaceCurrentNode<Arra
     return "Remove Unecessary ','";
   }
 
-  @Override public String description(ArrayInitializer i) {
+  @Override public String description(@SuppressWarnings("unused") ArrayInitializer __) {
     return "Remove Unecessary ','";
   }
 
