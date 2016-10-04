@@ -79,7 +79,6 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     return make.from(n).literal(s.length() == i ? "" : s.substring(i));
   }
 
-  // TODO: Yossi: the swap nano
   private static int lastDifference(final String s1, final String s2) {
     if (s1 != shorter(s1, s2))
       return lastDifference(s2, s1);
