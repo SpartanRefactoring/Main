@@ -48,7 +48,8 @@ public class TipperFactory {
         return collectEnviroment(pattern, ¢, new HashMap<>());
       }
 
-      Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
+      @SuppressWarnings("unchecked") Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
+        System.out.println(p + " " + iz.name(p) + " " + p.getNodeType());
         if (iz.name(p)) {
           final String id = ((Name) p).getFullyQualifiedName();
           if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$B"))
@@ -56,6 +57,10 @@ public class TipperFactory {
         } else {
           final List<? extends ASTNode> nChildren = Recurser.children(n);
           final List<? extends ASTNode> pChildren = Recurser.children(p);
+          if (iz.methodInvocation(p)) {
+            nChildren.addAll(az.methodInvocation((Expression) n).arguments());
+            pChildren.addAll(az.methodInvocation((Expression) p).arguments());
+          }
           // TODO: Alex and Dan - fix this empty loop, created by buggy tipper.
           for (int ¢ = 0; ¢ < pChildren.size(); collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment), ++¢)
             ;
