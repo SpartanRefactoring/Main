@@ -44,10 +44,6 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
     return hop.lastStatement(step.body(¢));
   }
 
-  private static boolean statementFitts(final Statement ¢) {
-    return iz.incrementOrDecrement(¢) || haz.sideEffects(¢);
-  }
-
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }

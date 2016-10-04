@@ -44,17 +44,6 @@ public class Toolbox {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
-    removing: for (;;) {
-      for (int ¢ = 0; ¢ < ns.size(); ++¢)
-        if (c.isAssignableFrom(ns.get(¢).getClass())) {
-          ns.remove(¢);
-          continue removing;
-        }
-      break;
-    }
-  }
-
   public static Toolbox emptyToolboox() {
     return new Toolbox();
   }
@@ -63,13 +52,6 @@ public class Toolbox {
     for (final Tipper<N> $ : ns)
       if ($.canTip(n))
         return $;
-    return null;
-  }
-
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    for (final Tipper<?> ¢ : ts)
-      if (((Tipper<N>) ¢).canTip(n))
-        return (Tipper<N>) ¢;
     return null;
   }
 
@@ -90,14 +72,14 @@ public class Toolbox {
         .add(ForStatement.class, //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ForToForUpdaters(), //
             new RemoveRedundentFor(), //
+            new ForToForUpdaters(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            new WhileToForUpdaters(), //
             new RemoveRedundantWhile(), //
+            new WhileToForUpdaters(), //
             null) //
         .add(Assignment.class, //
             new AssignmentAndAssignment(), //
@@ -229,17 +211,17 @@ public class Toolbox {
             new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
-            new WhileToForInitializers(), //
             new ForToForInitializers(), //
+            new WhileToForInitializers(), //
             null) //
     //
     ;
   }
 
-  /** Make a {@link Toolbox} for a specific kind of wrings
+  /** Make a {@link Toolbox} for a specific kind of tippers
    * @param clazz JD
    * @param w JS
-   * @return a new defaultInstance containing only the wrings passed as
+   * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
   @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ns) {
     return emptyToolboox().add(clazz, ns);
@@ -247,6 +229,24 @@ public class Toolbox {
 
   public static void refresh() {
     defaultInstance = freshCopyOfAllTippers();
+  }
+
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
+    removing: for (;;) {
+      for (int ¢ = 0; ¢ < ns.size(); ++¢)
+        if (c.isAssignableFrom(ns.get(¢).getClass())) {
+          ns.remove(¢);
+          continue removing;
+        }
+      break;
+    }
+  }
+
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
+    for (final Tipper<?> ¢ : ts)
+      if (((Tipper<N>) ¢).canTip(n))
+        return (Tipper<N>) ¢;
+    return null;
   }
 
   /** Implementation */
@@ -274,8 +274,8 @@ public class Toolbox {
     for (final Tipper<N> ¢ : ns) {
       if (¢ == null)
         break;
-      assert ¢.wringGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
-      if (¢.wringGroup().isEnabled())
+      assert ¢.tipperGroup() != null : "Did you forget to use a specific kind for " + ¢.getClass().getSimpleName();
+      if (¢.tipperGroup().isEnabled())
         ts.add(¢);
     }
     return this;
@@ -301,10 +301,6 @@ public class Toolbox {
     return implementation[¢];
   }
 
-  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
-    return get(¢.getNodeType());
-  }
-
   public int hooksCount() {
     int $ = 0;
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
@@ -318,5 +314,9 @@ public class Toolbox {
       if (¢ != null)
         $ += ¢.size();
     return $;
+  }
+
+  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
+    return get(¢.getNodeType());
   }
 }

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link TipperApplicator}
  * @author Yossi GIl
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public final class WringApplicatorTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc" }) public final class TipperApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
   private final TipperApplicator it = new TipperApplicator(new BlockSimplify());
 
@@ -32,11 +32,11 @@ import il.org.spartan.spartanizer.tippers.*;
     azzert.that(it.tipper, instanceOf(BLOCK_SIMPLIFY));
   }
 
-  @Test public void wring() {
+  @Test public void tipper() {
     azzert.notNull(it.tipper);
   }
 
-  @Test public void wringIsCorrect() {
+  @Test public void tipperIsCorrect() {
     azzert.that(it.tipper, instanceOf(BLOCK_SIMPLIFY));
   }
 }

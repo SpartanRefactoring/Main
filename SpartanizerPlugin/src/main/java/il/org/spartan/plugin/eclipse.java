@@ -3,6 +3,7 @@ package il.org.spartan.plugin;
 import static il.org.spartan.Utils.*;
 
 import java.awt.*;
+import java.net.*;
 import java.util.*;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public enum eclipse {
   facade;
   static final String NAME = "Laconic";
   static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
-  static ImageIcon icon = new ImageIcon(
-      Toolkit.getDefaultToolkit().getImage(eclipse.class.getResource(ICON_PATH)).getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+  private static boolean iconInitialized;
+  static ImageIcon icon;
   static final Shell parent = null;
   static final int shellStyle = SWT.TOOL;
   static final boolean takeFocusOnOpen = false;
@@ -54,7 +55,7 @@ public enum eclipse {
     // shellStyle, takeFocusOnOpen, persistSize, persistLocation,
     // showDialogMenu, showPersistActions, //
     // message + "", "Spartan Plugin").open();
-    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon);
+    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon());
     // JOptionPane.showMessageDialog(null, message);
     return null;
   }
@@ -138,6 +139,23 @@ public enum eclipse {
       monitor.logEvaluationError(x);
     }
     return null;
+  }
+
+  static ImageIcon icon() {
+    if (!iconInitialized) {
+      iconInitialized = true;
+      URL u;
+      try {
+        u = new URL("platform:/plugin/org.eclipse.pde.ua.ui/icons/wizban/new_cheatsheet_wiz.png");
+        final Image i = Toolkit.getDefaultToolkit().getImage(u);
+        if (i != null)
+          icon = new ImageIcon(
+              i/* .getScaledInstance(64, 64, Image.SCALE_SMOOTH) */);
+      } catch (final MalformedURLException x) {
+        x.printStackTrace();
+      }
+    }
+    return icon;
   }
 
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
