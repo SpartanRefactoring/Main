@@ -24,7 +24,8 @@ public class TestFactory {
         : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
   }
 
-  /** @param ¢ string to be eliminated
+  /** maybe i should use http://stackoverflow.com/questions/2876204/java-code-formating 
+   * @param ¢ string to be eliminated
    * @return string without junk */
   private static String eliminateSpaces(final String ¢) {
     return Essence.of(¢);
@@ -38,7 +39,7 @@ public class TestFactory {
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
-        $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "//" : " + //");
+        $ += "\"" + line + "\"" + ((!scanner.hasNextLine() ? "" : " + ") + "//");
       }
     }
     return $;
