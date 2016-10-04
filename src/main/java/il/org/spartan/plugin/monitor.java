@@ -16,7 +16,7 @@ public enum monitor {
       return this;
     }
   },
-  /** Used for real headless run; logs are simply ignore */
+  /** Used for real headless system; logs are simply ignore */
   OBLIVIOUS {
     @Override public monitor error(@SuppressWarnings("unused") final String __) {
       return this;
@@ -58,7 +58,7 @@ public enum monitor {
 
   public static String className(final Class<?> ¢) {
     final String canonicalName = ¢.getCanonicalName();
-    return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName )+ "]";
+    return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName) + "]";
   }
 
   public static String className(final Object ¢) {

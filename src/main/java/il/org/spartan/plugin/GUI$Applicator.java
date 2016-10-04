@@ -280,7 +280,7 @@ public abstract class GUI$Applicator extends Refactoring {
 
   /** @param pm a progress monitor in which to display the progress of the
    *        refactoring
-   * @param m the marker for which the refactoring needs to run
+   * @param m the marker for which the refactoring needs to system
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */
   public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {

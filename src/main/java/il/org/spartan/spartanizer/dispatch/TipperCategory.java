@@ -10,10 +10,10 @@ public interface TipperCategory {
 
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
-   * {@link WringGroup}
+   * {@link TipperGroup}
    * @return preference group this tipper belongs to */
-  default WringGroup wringGroup() {
-    return WringGroup.find(this);
+  default TipperGroup tipperGroup() {
+    return TipperGroup.find(this);
   }
 
   interface Abbreviation extends Nominal {

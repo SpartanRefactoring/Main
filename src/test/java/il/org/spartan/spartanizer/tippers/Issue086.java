@@ -22,8 +22,8 @@ import il.org.spartan.spartanizer.tipping.*;
   Statement context;
   ThrowStatement focus;
 
-  @Test public void A$01_createWring() {
-    tipper = makeWring();
+  @Test public void A$01_createTipper() {
+    tipper = makeTipper();
     assert tipper != null;
   }
 
@@ -39,7 +39,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void A$04_init() {
-    A$01_createWring();
+    A$01_createTipper();
     A$02_CreateContext();
     A$03_FindFocus();
     Toolbox.refresh();
@@ -69,12 +69,12 @@ import il.org.spartan.spartanizer.tipping.*;
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$05toolboxCanFindWring() {
+  @Test public void B$05toolboxCanFindTipper() {
     A$04_init();
     assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
-  @Test public void B$06toolboxCanFindFindCorrectWring() {
+  @Test public void B$06toolboxCanFindFindCorrectTipper() {
     A$04_init();
     azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
@@ -104,12 +104,12 @@ import il.org.spartan.spartanizer.tipping.*;
     assert !tipper.tip(focus).isEmpty();
   }
 
-  @Test public void B$13applyWring() throws TipperFailure {
+  @Test public void B$13applyTipper() throws TipperFailure {
     A$04_init();
     tipper.tip(focus);
   }
 
-  @Test public void B$14applyWring() {
+  @Test public void B$14applyTipper() {
     A$04_init();
     Toolbox.defaultInstance().firstTipper(focus);
   }
@@ -131,7 +131,7 @@ import il.org.spartan.spartanizer.tipping.*;
     trimmingOf("throw Something();a=3; return 2;").gives("throw Something(); return 2;").gives("throw Something();").stays();
   }
 
-  private ThrowNotLastInBlock makeWring() {
+  private ThrowNotLastInBlock makeTipper() {
     return new ThrowNotLastInBlock();
   }
 }
