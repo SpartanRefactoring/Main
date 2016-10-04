@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: ORI: Document
+/** TODO: Ori Marcovtich: Document
  * @author Ori Marcovitch
  * @since 2016 */
 public final class InteractiveSpartanizer {
