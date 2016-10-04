@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 
-// TODO Yossi: review class, functionality added by Ori
+// TODO Yossi Gil: review class, functionality added by Ori
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil
  * @since 2015-08-22 */
