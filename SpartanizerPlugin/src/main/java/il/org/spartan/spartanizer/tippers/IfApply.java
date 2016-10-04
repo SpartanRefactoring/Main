@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -15,6 +17,6 @@ public final class IfApply extends NanoPatternTipper<IfStatement> implements Tip
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {
-    return step.elze(¢) == null && !iz.block(step.then(¢));
+    return elze(¢) == null && !iz.block(step.then(¢));
   }
 }

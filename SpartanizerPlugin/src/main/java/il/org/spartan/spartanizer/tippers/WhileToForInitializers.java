@@ -29,7 +29,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(duplicate.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), parent(f)));
-    step.initializers($).add(Initializers(f));
+    initializers($).add(Initializers(f));
     return $;
   }
 
@@ -47,9 +47,9 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
 
   // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
-  private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final WhileStatement s) {
-    for (final VariableDeclarationFragment f : step.fragments(¢))
-      if (!variableUsedInWhile(s, f.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), f.getName()))
+  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(vds))
+      if (!variableUsedInWhile(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), ¢.getName()))
         return false;
     return true;
   }

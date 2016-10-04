@@ -54,7 +54,7 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
-  public String name() {
+  public String myName() {
     return getClass().getSimpleName();
   }
 

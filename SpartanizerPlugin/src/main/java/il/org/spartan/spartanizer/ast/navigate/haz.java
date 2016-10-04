@@ -159,6 +159,8 @@ public enum haz {
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {
+      if (s == n)
+        break;
       if (iz.nodeTypeIn(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
         return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))

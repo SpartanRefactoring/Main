@@ -4,6 +4,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -32,11 +34,11 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
     if (!iz.comparison(az.infixExpression(step.expression(x))))
       return false;
     final InfixExpression condition = az.comparison(step.expression(x));
-    final Expression left = step.left(condition);
-    final Expression right = step.right(condition);
-    step.then(x);
-    step.elze(x);
-    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
-        : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(x));
+    final Expression left = left(condition);
+    final Expression right = right(condition);
+    then(x);
+    elze(x);
+    return operator(condition) == EQUALS ? prerequisite(left, right, elze(x))
+        : operator(condition) == NOT_EQUALS && prerequisite(left, right, then(x));
   }
 }

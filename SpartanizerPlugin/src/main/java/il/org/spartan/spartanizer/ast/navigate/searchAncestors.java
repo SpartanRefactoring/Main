@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 
-// TODO Yossi: review class, functionality added by Ori
+// TODO Yossi Gil: review class, functionality added by Ori
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil
  * @since 2015-08-22 */
@@ -42,7 +42,8 @@ public abstract class searchAncestors {
    * instances.
    * @param pattern JD
    * @return a newly created instance */
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) //
+  public static <N extends ASTNode> searchAncestors specificallyFor(final N... ¢) {
     return new ByNodeInstances(as.list(¢));
   }
 
@@ -74,6 +75,7 @@ public abstract class searchAncestors {
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode lastFrom(final ASTNode n) {
     ASTNode $ = from(n);
+    // TODO: Alex and Dan - fix this empty loop, created by buggy tipper.
     for (ASTNode p = $; p != null; p = from(p), $ = p)
       ;
     return $;

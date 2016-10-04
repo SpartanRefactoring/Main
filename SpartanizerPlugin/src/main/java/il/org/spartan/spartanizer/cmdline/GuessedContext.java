@@ -149,10 +149,6 @@ public enum GuessedContext {
     return before + codeFragment + after;
   }
 
-  public void stays() {
-    // TODO Auto-generated method stub
-  }
-
   private boolean contains(final String wrap, final String inner) {
     final String off = off(wrap);
     final String essence = wizard.essence(inner);

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Daniel Mittelman
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends CarefulTipper<SuperConstructorInvocation> implements TipperCategory.SyntacticBaggage {
-  @Override public String description(final SuperConstructorInvocation ¢) {
+  @Override public String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove vacuous 'super()' invocation";
   }
 

@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 public class RemoveRedundent {
@@ -15,7 +17,7 @@ public class RemoveRedundent {
         || iz.variableDeclarationStatement(n) && !checkVariableDecleration(az.variableDeclrationStatement(n)))
       return false;
     if (iz.block(n))
-      for (final Statement ¢ : step.statements(az.block(n)))
+      for (final Statement ¢ : statements(az.block(n)))
         if (iz.expressionStatement(¢) && haz.sideEffects(az.expression(az.expressionStatement(¢).getExpression()))
             || !iz.isVariableDeclarationStatement(¢)
             || iz.variableDeclarationStatement(¢) && !checkVariableDecleration(az.variableDeclrationStatement(¢)))
@@ -31,7 +33,7 @@ public class RemoveRedundent {
   }
 
   public static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
-    final List<VariableDeclarationFragment> lst = step.fragments(s);
+    final List<VariableDeclarationFragment> lst = fragments(s);
     for (final VariableDeclarationFragment ¢ : lst)
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
         return false;

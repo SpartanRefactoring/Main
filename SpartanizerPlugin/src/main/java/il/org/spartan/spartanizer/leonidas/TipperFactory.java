@@ -56,6 +56,7 @@ public class TipperFactory {
         } else {
           final List<? extends ASTNode> nChildren = Recurser.children(n);
           final List<? extends ASTNode> pChildren = Recurser.children(p);
+          // TODO: Alex and Dan - fix this empty loop, created by buggy tipper.
           for (int ¢ = 0; ¢ < pChildren.size(); collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment), ++¢)
             ;
         }

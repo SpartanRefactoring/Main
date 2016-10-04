@@ -126,7 +126,7 @@ public interface metrics {
   }
 
   static int horizontalComplexity(final int base, final Statement s) {
-    return s == null ? 0 : iz.emptyStatement(s) ? 1 : !iz.block(s) ? 13443 : 2 + metrics.horizontalComplexity(base + 1, step.statements(az.block(s)));
+    return s == null ? 0 : iz.emptyStatement(s) ? 1 : !iz.block(s) ? 13443 : 2 + metrics.horizontalComplexity(base + 1, statements(az.block(s)));
   }
 
   static int horizontalComplexity(final Statement ¢) {
