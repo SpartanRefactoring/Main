@@ -354,6 +354,13 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
     return ¢.statements();
   }
+  
+  /** Expose the list of sideEffects contained in a {@link SwitchStatement}
+   * @param ¢ JD
+   * @return reference to the list of sideEffects contained in the argument */
+  @SuppressWarnings("unchecked") public static List<Statement> statements(final SwitchStatement ¢) {
+    return ¢.statements();
+  }
 
   @SuppressWarnings("unchecked") public static List<TagElement> tags(final Javadoc ¢) {
     return ¢.tags();

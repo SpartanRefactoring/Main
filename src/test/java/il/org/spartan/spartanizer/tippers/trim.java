@@ -43,7 +43,7 @@ public interface trim {
    * <code>trimming.repeatedly.of("a+(b-c)").gives("a+b-c")</code>, or <br/>
    * <code>trimming // See {@link trim} <br/>
    * .repeatedly //  See {@link trim.repeatedely} <br/>
-   * .withWring(new InfixTermsExpand() // See {@link #withWring(Tipper)} <br/>
+   * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} <br/>
    * .of("a+(b-c)") //  See {@link #of(String)} <br/>
    * .gives("a+b-c")</code> */
   interface repeatedly {

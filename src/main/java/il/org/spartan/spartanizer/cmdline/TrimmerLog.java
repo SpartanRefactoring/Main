@@ -91,7 +91,7 @@ public class TrimmerLog {
       output.put("File", fileName);
       output.put("Tipper", clazz(w));
       output.put("Named", w.description());
-      output.put("Kind", w.wringGroup());
+      output.put("Kind", w.tipperGroup());
       output.put("Described", w.description(n));
       output.put("Can tip", w.canTip(n));
       output.put("Suggests", w.tip(n));
@@ -102,7 +102,7 @@ public class TrimmerLog {
     System.out.println("        File: " + fileName);
     System.out.println("       Tipper: " + clazz(w));
     System.out.println("       Named: " + w.description());
-    System.out.println("        Kind: " + w.wringGroup());
+    System.out.println("        Kind: " + w.tipperGroup());
     System.out.println("   Described: " + w.description(n));
     System.out.println(" Can tip: " + w.canTip(n));
     System.out.println("    Suggests: " + w.tip(n));

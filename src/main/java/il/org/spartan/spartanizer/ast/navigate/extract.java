@@ -78,7 +78,7 @@ public enum extract {
     return e == null ? null : az.assignment(e.getExpression());
   }
 
-  public static String category(final BodyDeclaration ¢) {
+  public static String category(final ASTNode ¢) {
     switch (¢.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
         return "@interface";
@@ -134,12 +134,12 @@ public enum extract {
     return $.getOperator() != wizard.PLUS1 ? $ : core($.getOperand());
   }
 
-  /** Computes the "essence" of a statement, i.e., if a statement is essentially
+  /** Computes the "Essence" of a statement, i.e., if a statement is essentially
    * a single, non-empty, non-block statement, possibly wrapped in brackets,
-   * perhaps along with any number of empty sideEffects, then its essence is
+   * perhaps along with any number of empty sideEffects, then its Essence is
    * this single non-empty statement.
    * @param s JD
-   * @return essence of the parameter, or <code><b>null</b></code>, if there are
+   * @return Essence of the parameter, or <code><b>null</b></code>, if there are
    *         no non-empty sideEffects within the parameter. If, however there
    *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
@@ -299,7 +299,7 @@ public enum extract {
       case FIELD_DECLARATION:
         return separate.these(step.fragments((FieldDeclaration) ¢)).by("/");
       case INITIALIZER:
-        return "";
+        return "initializer";
       case METHOD_DECLARATION:
         return ((MethodDeclaration) ¢).getName() + "";
       case TYPE_DECLARATION:

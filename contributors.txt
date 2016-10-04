@@ -1,12 +1,11 @@
-﻿#
-# This file holds the complete list of people who contributed to this repository.
-# Please keep this file maintained, and new contributors should be added
-# in an alphabetical order.
+﻿# This file holds the complete list of people who contributed to this
+# repository. Please keep this file maintained, and new contributors should be
+# added in an alphabetical order.
 #
 # Contributions can be found in individual files by the @author annotation.
 #
 
-# Keep this list alphabetically sorted VIM: +,$!sort -u
+# Keep this list alphabetically sorted, on VIM: +,$!sort -u
 Alexander Kopzon <alexkopzon [at] gmail.com>
 Artium Nihamkin <artium [at] nihamkin.com>
 Boris van Sosin <boris.van.sosin [at] gmail.com>
@@ -15,6 +14,7 @@ Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
 Niv Shalmon <shalmon.niv [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
+Ori Roth <ori.rothh [at] gmail.com>
 Stav Namir <stav1472 [at] gmail.com>
 Tomer Zeltzer <tomerr90 [at] gmail.com>
 Yossi Gil <yossi.gil [at] gmail.com>

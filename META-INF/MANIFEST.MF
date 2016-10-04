@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Spartan Refactoring
 Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
-Bundle-Version: 2.5.0
+Bundle-Version: 2.5.3
 Bundle-Activator: il.org.spartan.plugin.Plugin
 Bundle-Vendor: Technion--Israel Institute of Technology
 Require-Bundle: org.eclipse.ui,
@@ -22,7 +22,7 @@ Bundle-ClassPath: .,
  lib/junit-4.12.jar,
  lib/mockito-all-2.0.2-beta.jar,
  lib/spartan-1.2.jar
-Export-Package: il.org.spartan.plugin;version="2.5.0";
+Export-Package: il.org.spartan.plugin;version="2.5.3";
   uses:="il.org.spartan.spartanizer.tipping,
    org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
