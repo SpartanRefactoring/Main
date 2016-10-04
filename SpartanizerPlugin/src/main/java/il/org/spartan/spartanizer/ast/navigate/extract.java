@@ -168,7 +168,7 @@ public enum extract {
 
   public static List<Modifier> modifiers(final BodyDeclaration d) {
     final ArrayList<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.extendedModifiers(d)) {
+    for (final IExtendedModifier ¢ : extendedModifiers(d)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
         $.add(a);
@@ -178,7 +178,7 @@ public enum extract {
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
     final ArrayList<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.extendedModifiers(d)) {
+    for (final IExtendedModifier ¢ : extendedModifiers(d)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
         $.add(a);
@@ -188,7 +188,7 @@ public enum extract {
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
     final ArrayList<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : step.extendedModifiers(s)) {
+    for (final IExtendedModifier ¢ : extendedModifiers(s)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
         $.add(a);
@@ -408,7 +408,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement ¢ : step.statements(b))
+    for (final Statement ¢ : statements(b))
       extract.statementsInto(¢, $);
     return $;
   }

@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.create.*;
@@ -50,12 +52,12 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(duplicate.of(¢.getType()));
-    duplicate.modifiers(step.extendedModifiers(¢), step.extendedModifiers($));
+    duplicate.modifiers(step.extendedModifiers(¢), extendedModifiers($));
     return $;
   }
 
   private static boolean suppressing(final ArrayInitializer i) {
-    for (final Expression ¢ : step.expressions(i))
+    for (final Expression ¢ : expressions(i))
       if (isUnused(¢))
         return true;
     return false;
@@ -68,7 +70,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   private static boolean suppressing(final NormalAnnotation a) {
     if (a == null)
       return false;
-    for (final MemberValuePair ¢ : step.values(a)) {
+    for (final MemberValuePair ¢ : values(a)) {
       if (!iz.identifier("value", ¢.getName()))
         continue;
       if (isUnused(¢.getValue()))
@@ -97,13 +99,13 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     final MethodDeclaration d = getMethod(n);
     if (d == null)
       return null;
-    for (final SingleVariableDeclaration ¢ : step.parameters(d))
+    for (final SingleVariableDeclaration ¢ : parameters(d))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressing(n) || isUsed(d, n.getName()))
       return null;
     if (m != null)
-      for (final SingleVariableDeclaration ¢ : step.parameters(d))
+      for (final SingleVariableDeclaration ¢ : parameters(d))
         if (!n.equals(¢))
           m.exclude(¢);
     return replace(n);

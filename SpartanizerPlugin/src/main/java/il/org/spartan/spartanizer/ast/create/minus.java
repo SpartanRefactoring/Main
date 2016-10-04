@@ -39,7 +39,7 @@ public enum minus {
     final Block b = az.block($);
     if (b == null)
       return make.emptyStatement(¢);
-    final List<Statement> ss = step.statements(b);
+    final List<Statement> ss = statements(b);
     ss.remove(¢);
     return $;
   }
@@ -52,7 +52,7 @@ public enum minus {
   public static Statement lastStatement(final Statement $) {
     if (!iz.block($))
       return make.emptyStatement($);
-    final List<Statement> ss = step.statements(az.block($));
+    final List<Statement> ss = statements(az.block($));
     if (!ss.isEmpty())
       ss.remove(ss.size() - 1);
     return $;

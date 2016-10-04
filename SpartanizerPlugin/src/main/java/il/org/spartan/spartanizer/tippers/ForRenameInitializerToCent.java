@@ -35,7 +35,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
   private static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
     if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
       return true;
-    for (final Expression ¢ : step.updaters(s))
+    for (final Expression ¢ : updaters(s))
       if (!Collect.usesOf(n).in(¢).isEmpty())
         return true;
     return false;

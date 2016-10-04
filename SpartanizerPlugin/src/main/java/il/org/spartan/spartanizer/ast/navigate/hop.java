@@ -162,7 +162,7 @@ public interface hop {
     final Block b = az.block(s.getParent());
     if (b == null)
       return null;
-    final List<Statement> statements = step.statements(b);
+    final List<Statement> statements = statements(b);
     return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
   }
 
