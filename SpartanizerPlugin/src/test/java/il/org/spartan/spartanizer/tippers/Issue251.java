@@ -106,16 +106,12 @@ import org.junit.*;
         .stays();
   }
 
-
-
   @Test public void t19() {
     trimmingOf("while(b==q){g();if(tipper==q){int i;int j;}}")//
         .gives("while(b==q){g();{}}")//
         .gives("while(b==q)g();")//
         .stays();
   }
-
-
 
   @Test public void t21() {
     trimmingOf("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//

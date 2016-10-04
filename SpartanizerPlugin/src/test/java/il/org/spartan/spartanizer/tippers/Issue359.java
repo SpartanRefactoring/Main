@@ -17,17 +17,17 @@ import org.junit.runners.*;
     ;
   }
 
-  @Test public void t20() {
-    trimmingOf("for(;b==q;){int i;}")//
-        .gives("for(;b==q;);")//
-        .stays();
-  }
-
   @Test public void t09() {
     trimmingOf("if(b){int i;int j;g();}else{int q;int tipper;}")//
         .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//
         .gives("if(b){int i;int j;g();}")//
         .stays() //
     ;
+  }
+
+  @Test public void t20() {
+    trimmingOf("for(;b==q;){int i;}")//
+        .gives("for(;b==q;);")//
+        .stays();
   }
 }

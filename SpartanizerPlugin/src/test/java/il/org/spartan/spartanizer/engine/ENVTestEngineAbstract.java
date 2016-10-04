@@ -70,7 +70,7 @@ public abstract class ENVTestEngineAbstract {
     assert testSet != null;
     assert $ != null;
     boolean entryFound = true;
-    // TODO: Dan Greenstein:  use or each loop here.
+    // TODO: Dan Greenstein: use or each loop here.
     final Iterator<Entry<String, Information>> j = $.iterator();
     for (final Entry<String, Information> ¢ : testSet) {
       entryFound = false;
@@ -88,7 +88,8 @@ public abstract class ENVTestEngineAbstract {
    * contained in the provided set.
    * @param $ JD
    * @return true iff the specified {@link LinkedHashSet} contains testSet. */
-  // TODO: Dan Greeenstein: once the method is determined to be working, change to visibility
+  // TODO: Dan Greeenstein: once the method is determined to be working, change
+  // to visibility
   // to
   // protected.
   public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
