@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.spartanizer.cmdline.run.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
@@ -24,56 +25,13 @@ public final class MethodsCollector {
   private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
 
-  public static String essenced(final String fileName) {
-    return fileName + ".essence";
-  }
-
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { ".." })
       new MethodsCollector(¢).fire();
   }
 
-  public static ProcessBuilder runScript() {
-    return new ProcessBuilder("/bin/bash");
-  }
-
-  public static String runScript(final Process p) throws IOException {
-    try (final InputStream s = p.getInputStream(); final BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
-      String ¢;
-      for (final StringBuffer $ = new StringBuffer();; $.append(¢))
-        if ((¢ = r.readLine()) == null)
-          return $ + "";
-    }
-  }
-
-  public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder $ = runScript();
-    $.redirectErrorStream(true);
-    $.command(script, pathname);
-    return $;
-  }
-
   static double d(final double n1, final double n2) {
     return 1 - n2 / n1;
-  }
-
-  static String essenceNew(final String codeFragment) {
-    return codeFragment.replaceAll("//.*?\r\n", "\n").replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
-        .replaceAll("^\\s*$", "").replaceAll("^\\s*\\n", "").replaceAll("\\s*$", "").replaceAll("\\s+", " ")
-        .replaceAll("\\([^a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
-        .replaceAll("\\([^a-zA-Z]\\) \\([a-zA-Z]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
-        .replaceAll("\\([a-zA-Z]\\) \\([^a-zA-Z]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
-  }
-
-  static String folder2File(final String path) {
-    return path//
-        .replaceAll("[\\ /.]", "-")//
-        .replaceAll("-+", "-")//
-        .replaceAll("^-", "")//
-        .replaceAll("-$", "")//
-        .replaceAll("^[.]$", "CWD")//
-        .replaceAll("^[.][.]$", "DOT-DOT")//
-    ;
   }
 
   static String p(final int n1, final int n2) {
@@ -82,26 +40,6 @@ public final class MethodsCollector {
 
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
-  }
-
-  static int tokens(final String s) {
-    int $ = 0;
-    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      final Token t = tokenizer.next();
-      if (t == null || t == Token.EOF)
-        return $;
-      if (t.kind == Token.Kind.COMMENT || t.kind == Token.Kind.NONCODE)
-        continue;
-      ++$;
-    }
-  }
-
-  private static String removePercentChar(final String p) {
-    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
-  }
-
-  private static String runScript(final String pathname) throws IOException {
-    return runScript(runScript¢(pathname).start());
   }
 
   private static int wc(final String $) {
@@ -118,7 +56,7 @@ public final class MethodsCollector {
   private final String reportFileName;
 
   private MethodsCollector(final String path) {
-    this(path, folder2File(path));
+    this(path, run.folder2File(path));
   }
 
   private MethodsCollector(final String inputPath, final String name) {
@@ -167,13 +105,13 @@ public final class MethodsCollector {
     final int nodes = metrics.nodesCount(¢);
     final int body = metrics.bodySize(¢);
     final int tide = clean(¢ + "").length();
-    final int essence = essenceNew(¢ + "").length();
+    final int essence = il.org.spartan.spartanizer.cmdline.essence.essence(¢ + "").length();
     final String out = interactiveSpartanizer.fixedPoint(¢ + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
-    final int essence2 = MethodsCollector.essenceNew(out + "").length();
-    final int wordCount = wc(MethodsCollector.essenceNew(out + ""));
+    final int essence2 = il.org.spartan.spartanizer.cmdline.essence.essence(out + "").length();
+    final int wordCount = wc(il.org.spartan.spartanizer.cmdline.essence.essence(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
