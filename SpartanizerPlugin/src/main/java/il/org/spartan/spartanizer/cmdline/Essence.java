@@ -6,9 +6,9 @@ import java.util.*;
  * @since 2016 */
 public class Essence {
   public static void main(final String[] args) {
-    for (final Scanner s = new Scanner(System.in);;) {
+    for (final Scanner ¢ = new Scanner(System.in);;) {
       System.out.print("Enter some code: ");
-      System.out.println(Essence.of(s.nextLine()));
+      System.out.println(Essence.of(¢.nextLine()));
     }
   }
 
