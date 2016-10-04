@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @year 2015 */
 public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
-  private static final String script = "./essence";
+  private static final String script = "./Essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static boolean defaultDir;
   private static String outputDir;
@@ -45,7 +45,7 @@ public final class BatchSpartanizer {
   }
 
   public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder $ = run.runScript();
+    final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
@@ -67,10 +67,6 @@ public final class BatchSpartanizer {
     System.out.println("  -o       output directory: here go the results of the analysis");
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
-  }
-
-  static double ratio(final double n1, final double n2) {
-    return n2 / n1;
   }
 
   /** @param args */
@@ -101,7 +97,7 @@ public final class BatchSpartanizer {
   private final String reportFileName;
 
   private BatchSpartanizer(final String path) {
-    this(path, run.folder2File(path));
+    this(path, system.folder2File(path));
   }
 
   private BatchSpartanizer(final String inputPath, final String name) {
@@ -116,7 +112,7 @@ public final class BatchSpartanizer {
     try {
       final Process p = Runtime.getRuntime().exec(command);
       if (p != null)
-        return run.dumpOutput(p);
+        return system.dumpOutput(p);
     } catch (final IOException x) {
       monitor.logProbableBug(this, x);
     }
@@ -124,7 +120,7 @@ public final class BatchSpartanizer {
   }
 
   public Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + run.essenced(fileName));
+    return bash("./Essence < " + fileName + " >" + system.essenced(fileName));
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
@@ -133,13 +129,13 @@ public final class BatchSpartanizer {
     final int nodes = metrics.nodesCount(in);
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
-    final int essence = run.essenceNew(in + "").length();
+    final int essence = code.essenceNew(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
-    final int essence2 = run.essenceNew(out + "").length();
-    final int wordCount = run.wc(run.essenceNew(out + ""));
+    final int essence2 = code.essenceNew(out + "").length();
+    final int wordCount = code.wc(code.essenceNew(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
@@ -154,37 +150,37 @@ public final class BatchSpartanizer {
         .put("Nodes2", nodes2)//
         .put("Δ Nodes", nodes - nodes2)//
         .put("δ Nodes", d(nodes, nodes2))//
-        .put("δ Nodes %", Double.parseDouble(run.removePercentChar(p(nodes, nodes2))))//
+        .put("δ Nodes %", Double.parseDouble(system.removePercentChar(p(nodes, nodes2))))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("Δ Body", body - body2)//
         .put("δ Body", d(body, body2))//
-        .put("% Body", Double.parseDouble(run.removePercentChar(p(body, body2))))//
+        .put("% Body", Double.parseDouble(system.removePercentChar(p(body, body2))))//
         .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("Δ Tokens", tokens - tokens2)//
         .put("δ Tokens", d(tokens, tokens2))//
-        .put("% Tokens", Double.parseDouble(run.removePercentChar(p(tokens, tokens2))))//
+        .put("% Tokens", Double.parseDouble(system.removePercentChar(p(tokens, tokens2))))//
         .put("Length1", length)//
         .put("Length2", length2)//
         .put("Δ Length", length - length2)//
         .put("δ Length", d(length, length2))//
-        .put("% Length", Double.parseDouble(run.removePercentChar(p(length, length2))))//
+        .put("% Length", Double.parseDouble(system.removePercentChar(p(length, length2))))//
         .put("Tide1", tide)//
         .put("Tide2", tide2)//
         .put("Δ Tide2", tide - tide2)//
         .put("δ Tide2", d(tide, tide2))//
-        .put("δ Tide2", Double.parseDouble(run.removePercentChar(p(tide, tide2))))//
+        .put("δ Tide2", Double.parseDouble(system.removePercentChar(p(tide, tide2))))//
         .put("Essence1", essence)//
         .put("Essence2", essence2)//
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", d(essence, essence2))//
-        .put("% Essence", Double.parseDouble(run.removePercentChar(p(essence, essence2))))//
-        .put("Words)", wordCount).put("R(T/L)", ratio(length, tide)) //
-        .put("R(E/L)", ratio(length, essence)) //
-        .put("R(E/T)", ratio(tide, essence)) //
-        .put("R(B/S)", ratio(nodes, body)) //
+        .put("% Essence", Double.parseDouble(system.removePercentChar(p(essence, essence2))))//
+        .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
+        .put("R(E/L)", system.ratio(length, essence)) //
+        .put("R(E/T)", system.ratio(tide, essence)) //
+        .put("R(B/S)", system.ratio(nodes, body)) //
     ;
     report.nl();
     // System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
@@ -237,8 +233,8 @@ public final class BatchSpartanizer {
 
   private void applyEssenceCommandLine() {
     try {
-      final String essentializedCodeBefore = run.runScript(beforeFileName);
-      final String essentializedCodeAfter = run.runScript(afterFileName);
+      final String essentializedCodeBefore = system.runScript(beforeFileName);
+      final String essentializedCodeAfter = system.runScript(afterFileName);
       final int numWordEssentialBefore = essentializedCodeBefore.trim().length();
       final int numWordEssentialAfter = essentializedCodeAfter.trim().length();
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
@@ -275,6 +271,6 @@ public final class BatchSpartanizer {
   }
 
   private void runWordCount() {
-    bash("wc " + separate.these(beforeFileName, afterFileName, run.essenced(beforeFileName), run.essenced(afterFileName)));
+    bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 }

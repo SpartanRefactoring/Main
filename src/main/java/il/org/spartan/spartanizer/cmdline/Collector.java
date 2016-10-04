@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.cmdline.run.*;
+import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.java.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -20,14 +19,13 @@ import il.org.spartan.utils.*;
 /** Scans files named by folder, ignore test files, and collect statistics.
  * @author Yossi Gil
  * @year 2015 */
-public final class MethodsCollector {
+public final class Collector {
   private static final String folder = "/tmp/";
-  private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
 
   public static void main(final String[] args) {
-    for (final String ¢ : args.length != 0 ? args : new String[] { ".." })
-      new MethodsCollector(¢).fire();
+    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
+      new Collector(¢).fire();
   }
 
   static double d(final double n1, final double n2) {
@@ -42,11 +40,7 @@ public final class MethodsCollector {
     return n2 / n1;
   }
 
-  private static int wc(final String $) {
-    return $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
-  }
-
-  private int classesDone;
+  private int done;
   private final String inputPath;
   private final String beforeFileName;
   private final String afterFileName;
@@ -55,11 +49,11 @@ public final class MethodsCollector {
   private CSVStatistics report;
   private final String reportFileName;
 
-  private MethodsCollector(final String path) {
-    this(path, run.folder2File(path));
+  private Collector(final String path) {
+    this(path, system.folder2File(path));
   }
 
-  private MethodsCollector(final String inputPath, final String name) {
+  private Collector(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
@@ -71,7 +65,7 @@ public final class MethodsCollector {
     try {
       final Process p = Runtime.getRuntime().exec(command);
       if (p != null)
-        return dumpOutput(p);
+        return system.dumpOutput(p);
     } catch (final IOException x) {
       monitor.logProbableBug(this, x);
     }
@@ -79,7 +73,7 @@ public final class MethodsCollector {
   }
 
   public Process shellEssenceMetrics(final String fileName) {
-    return bash("./essence < " + fileName + " >" + essenced(fileName));
+    return bash("./Essence < " + fileName + " >" + essenced(fileName));
   }
 
   void collect(final CompilationUnit u) {
@@ -99,23 +93,23 @@ public final class MethodsCollector {
       }
   }
 
-  boolean collect(final MethodDeclaration ¢) {
+  boolean collect(final BodyDeclaration ¢) {
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
     final int nodes = metrics.nodesCount(¢);
     final int body = metrics.bodySize(¢);
     final int tide = clean(¢ + "").length();
-    final int essence = il.org.spartan.spartanizer.cmdline.essence.essence(¢ + "").length();
+    final int essence = Essence.of(¢ + "").length();
     final String out = interactiveSpartanizer.fixedPoint(¢ + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
-    final int essence2 = il.org.spartan.spartanizer.cmdline.essence.essence(out + "").length();
-    final int wordCount = wc(il.org.spartan.spartanizer.cmdline.essence.essence(out + ""));
+    final int essence2 = il.org.spartan.spartanizer.cmdline.Essence.of(out + "").length();
+    final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
-    System.err.println(++classesDone + " " + extract.category(¢) + " " + extract.name(¢));
+    System.err.println(++done + " " + extract.category(¢) + " " + extract.name(¢));
     befores.print(¢);
     afters.print(out);
     report.summaryFileName();
@@ -167,16 +161,6 @@ public final class MethodsCollector {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  Process dumpOutput(final Process p) {
-    try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-      for (String line = in.readLine(); line != null; line = in.readLine(), System.out.println(line))
-        ;
-    } catch (final IOException x) {
-      monitor.logProbableBug(this, x);
-    }
-    return p;
-  }
-
   void fire() {
     collect();
     runEssence();
@@ -207,14 +191,16 @@ public final class MethodsCollector {
   }
 
   private void collect() {
-    System.err.printf(
-        "Input path=%s\n" + //
-            "Collective before path=%s\n" + //
-            "Collective after path=%s\n" + //
-            "\n" //
-        , inputPath, //
+    System.err.printf( //
+            " Input path=%s\n" + //
+            "Before path=%s\n" + //
+            " After path=%s\n" + //
+            "Report path=%s\n" + //
+            "\n", //
+        inputPath, //
         beforeFileName, //
-        afterFileName);
+        afterFileName, //
+        reportFileName);
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
@@ -224,10 +210,10 @@ public final class MethodsCollector {
         collect(¢);
     } catch (final IOException x) {
       x.printStackTrace();
-      System.err.println(classesDone + " files processed; processing of " + inputPath + " failed for some I/O reason");
+      System.err.println(done + " files processed; processing of " + inputPath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();
-    System.err.print("\n Done: " + classesDone + " files processed.");
+    System.err.print("\n Done: " + done + " files processed.");
     System.err.print("\n Summary: " + report.close());
   }
 
