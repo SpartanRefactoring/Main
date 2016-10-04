@@ -58,7 +58,7 @@ public enum monitor {
 
   public static String className(final Class<?> ¢) {
     final String canonicalName = ¢.getCanonicalName();
-    return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName )+ "]";
+    return ¢.getSimpleName() + "[" + (canonicalName == null ? ¢ : canonicalName) + "]";
   }
 
   public static String className(final Object ¢) {
