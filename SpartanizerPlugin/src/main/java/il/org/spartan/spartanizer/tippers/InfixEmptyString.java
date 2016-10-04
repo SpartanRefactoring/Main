@@ -23,7 +23,7 @@ public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression> 
     return Tippers.eliminateLiteral(¢, true);
   }
 
-  @Override public WringGroup wringGroup() {
+  @Override public TipperGroup tipperGroup() {
     return null;
   }
 }

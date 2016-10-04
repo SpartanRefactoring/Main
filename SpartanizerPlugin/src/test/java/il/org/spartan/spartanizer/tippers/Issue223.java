@@ -30,8 +30,8 @@ import il.org.spartan.spartanizer.tipping.*;
   Statement context;
   ClassInstanceCreation focus;
 
-  @Test public void A$010_createWring() {
-    tipper = makeWring();
+  @Test public void A$010_createTipper() {
+    tipper = makeTipper();
     assert tipper != null;
   }
 
@@ -47,7 +47,7 @@ import il.org.spartan.spartanizer.tipping.*;
   }
 
   @Test public void A$040_init() {
-    A$010_createWring();
+    A$010_createTipper();
     A$020_CreateContext();
     A$030_FindFocus();
     Toolbox.refresh();
@@ -77,12 +77,12 @@ import il.org.spartan.spartanizer.tipping.*;
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$050toolboxCanFindWring() {
+  @Test public void B$050toolboxCanFindTipper() {
     A$040_init();
     assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
-  @Test public void B$060toolboxCanFindFindCorrectWring() {
+  @Test public void B$060toolboxCanFindFindCorrectTipper() {
     A$040_init();
     azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
@@ -112,27 +112,27 @@ import il.org.spartan.spartanizer.tipping.*;
     assert !tipper.tip(focus).isEmpty();
   }
 
-  @Test public void B$120findWringNotEmpty() {
+  @Test public void B$120findTipperNotEmpty() {
     A$040_init();
     assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
-  @Test public void B$130findWringOfCorretType() {
+  @Test public void B$130findTipperOfCorretType() {
     A$040_init();
     azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
   }
 
-  @Test public void B$140findWringDemands() {
+  @Test public void B$140findTipperDemands() {
     A$040_init();
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
   }
 
-  @Test public void B$150findWringCanSuggest() {
+  @Test public void B$150findTipperCanSuggest() {
     A$040_init();
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
   }
 
-  @Test public void B$160findWringReplacmenentNotNull() {
+  @Test public void B$160findTipperReplacmenentNotNull() {
     A$040_init();
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
@@ -223,7 +223,7 @@ import il.org.spartan.spartanizer.tipping.*;
     return findFirst.instanceOf(SUBJECT_CLASS, c);
   }
 
-  private ClassInstanceCreationValueTypes makeWring() {
+  private ClassInstanceCreationValueTypes makeTipper() {
     return new ClassInstanceCreationValueTypes();
   }
 }

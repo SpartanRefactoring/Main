@@ -1,7 +1,7 @@
 package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.PreferencesResources.*;
-import static il.org.spartan.plugin.PreferencesResources.WringGroup.*;
+import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
 
 import org.eclipse.core.runtime.preferences.*;
 import org.eclipse.jface.preference.*;
@@ -17,7 +17,7 @@ public final class PreferencesDefaultValuesInitializer extends AbstractPreferenc
     final IPreferenceStore s = store();
     s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
     s.setDefault(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
-    for (final WringGroup ¢ : WringGroup.values())
+    for (final TipperGroup ¢ : TipperGroup.values())
       s.setDefault(¢.id, "on");
   }
 }
