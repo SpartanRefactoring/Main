@@ -8,6 +8,6 @@ import org.junit.*;
  * @since 2016 */
 public class TestFactoryTest {
   @SuppressWarnings("static-method") @Test public void testRenaming() {
-    assertEquals("if(a == b) return oomph(a);", TestFactory.testcase("if(omg == val) return oomph(omg);"));
+    assertEquals("if(a == b) return c(a, d());", TestFactory.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"));
   }
 }
