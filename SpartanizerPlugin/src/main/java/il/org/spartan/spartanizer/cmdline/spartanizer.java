@@ -12,7 +12,6 @@ import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -21,7 +20,7 @@ import il.org.spartan.utils.*;
  * @year 2015 */
 public final class spartanizer {
   private static final String folder = "/tmp/";
-  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
+  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer();
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
@@ -77,24 +76,6 @@ public final class spartanizer {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
-  void collect(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration ¢) {
-        return collect(¢);
-      }
-    });
-  }
-
-  void collect(final File f) {
-    if (!f.getPath().contains("src/test"))
-      try {
-        currentFile = f;
-        collect(FileUtils.read(f));
-      } catch (final IOException e) {
-        monitor.infoIOException(e, "File = " + f);
-      }
-  }
-
   boolean collect(final BodyDeclaration ¢) {
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
@@ -106,7 +87,7 @@ public final class spartanizer {
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
-    final int essence2 = il.org.spartan.spartanizer.cmdline.Essence.of(out + "").length();
+    final int essence2 = Essence.of(out + "").length();
     final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
@@ -160,6 +141,24 @@ public final class spartanizer {
     return false;
   }
 
+  void collect(final CompilationUnit u) {
+    u.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        return collect(¢);
+      }
+    });
+  }
+
+  void collect(final File f) {
+    if (!f.getPath().contains("src/test"))
+      try {
+        currentFile = f;
+        collect(FileUtils.read(f));
+      } catch (final IOException e) {
+        monitor.infoIOException(e, "File = " + f);
+      }
+  }
+
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
@@ -195,7 +194,7 @@ public final class spartanizer {
 
   private void collect() {
     System.err.printf( //
-            " Input path=%s\n" + //
+        " Input path=%s\n" + //
             "Before path=%s\n" + //
             " After path=%s\n" + //
             "Report path=%s\n" + //

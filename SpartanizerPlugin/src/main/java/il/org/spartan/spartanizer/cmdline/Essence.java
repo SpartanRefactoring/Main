@@ -1,27 +1,36 @@
 package il.org.spartan.spartanizer.cmdline;
 
-/**
- * @author Yossi Gil 
+import java.util.*;
+
+/** @author Yossi Gil
  * @since 2016 */
 public class Essence {
-  public static void main(String[] args) {
-   // TODO Yossi 
+  public static void main(final String[] args) {
+    for (final Scanner s = new Scanner(System.in);;) {
+      System.out.print("Enter some code: ");
+      System.out.println(Essence.of(s.nextLine()));
+    }
   }
 
   static String of(final String codeFragment) {
     return codeFragment//
-        .replaceAll("\\r\\n","\\n") // DOS Junk
-        .replaceAll("\\n\\r","\\n") // Mac Junk
-        .replaceAll("\\s+", " ")    // Runs of spaces
-        .replaceAll("\\s*$", "")    // Spaces at EOLN
-        .replaceAll("^\\s*$", "")   // Erase spaces of empty lines
+        .replaceAll("\\r\\n", "\\n") // DOS Junk
+        .replaceAll("\\n\\r", "\\n") // Mac Junk
+        .replaceAll("\\s+", " ") // Runs of spaces
+        .replaceAll("\\s$", "") // Spaces at EOLN
+        .replaceAll("^\\s+", "") // Spaces at BOLN
+        .replaceAll("^\\s*$", "") // Erase spaces of empty lines
         .replaceAll("^\\s*\\n", "") // Erase all empty lines
-        .replaceAll("\\n\\n","\\n") // Consecutive new lines 
-        .replaceAll("//.*?\n", "\n") // Line comments
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")// All comments?
-        .replaceAll("\\([[:letter:]]\\) \\([[:letter:]]\\)", "\\1\\2") // Space between two non-letters
-        .replaceAll("\\([^[:letter:]]\\) \\([[:letter:]]\\)","\\1\\2") // Non-letter then letter
-        .replaceAll("\\([[:letter:]]\\) \\([^[:letter:]]\\)", "\\1\\2") // Letter then non-letter
-        ;
+        .replaceAll("\\n\\n", "\\n") // Consecutive new lines
+        .replaceAll("//.*$", "") // Line comments
+        // All comments?
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
+        // Space between two non-letters:
+        .replaceAll("([^\\p{L}]) ([^\\p{L}])", "$1$2")//
+        // Letter, then non-letter
+        .replaceAll("([\\p{L}]) ([^\\p{L}])", "$1$2")//
+        // Non letter, then letter
+        .replaceAll("([^\\p{L}]) ([\\p{L}])", "$1$2")//
+    ;
   }
 }
