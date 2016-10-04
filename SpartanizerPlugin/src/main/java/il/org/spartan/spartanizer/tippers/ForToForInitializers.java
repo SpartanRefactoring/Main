@@ -37,7 +37,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
     $.setExpression(pullInitializersFromExpression(dupForExpression(¢), s));
-    step.initializers($).add(Initializers(s));
+    initializers($).add(Initializers(s));
     return $;
   }
 
@@ -54,7 +54,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
     assert ¢ != null : fault.dump() + "\n s = " + s + fault.done();
-    final List<Expression> initializers = step.initializers(¢);
+    final List<Expression> initializers = initializers(¢);
     assert initializers != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + fault.done();
     if (initializers.isEmpty())
       return true;
@@ -70,7 +70,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         "\n first = " + first + //
         "\n first.getClass().getSimpleName() = " + first.getClass().getSimpleName() //
         + fault.done();
-    final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
+    final List<IExtendedModifier> extendedModifiers = extendedModifiers(e);
     if (extendedModifiers == null)
       return false;
     assert extendedModifiers != null : fault.dump() + //
@@ -82,7 +82,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         fault.done();
     assert s != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first + "\n e = " + e
         + "\n extendedModifiers = " + extendedModifiers + fault.done();
-    final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
+    final List<IExtendedModifier> extendedModifiers2 = extendedModifiers(s);
     // TODO Alex: Null comparison always yields false: The variable
     // extendedModifiers cannot be null at this location
     if (extendedModifiers2 == extendedModifiers || extendedModifiers == null || extendedModifiers2 == null)
@@ -100,7 +100,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       if (iz.parenthesizeExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
         final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment f : step.fragments(s))
+        for (final VariableDeclarationFragment f : fragments(s))
           if ((f.getName() + "").equals(var + "")) {
             f.setInitializer(duplicate.of(step.right(a)));
             operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));

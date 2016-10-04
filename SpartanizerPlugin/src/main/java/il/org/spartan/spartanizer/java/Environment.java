@@ -7,6 +7,8 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -53,7 +55,7 @@ import il.org.spartan.spartanizer.utils.*;
     final List<Entry<String, Information>> $ = new ArrayList<>();
     final type t = type.baptize(wizard.condense(s.getType()));
     final String path = fullName(s);
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+    for (final VariableDeclarationFragment ¢ : fragments(s))
       $.add(new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t)));
     return $;
   }
@@ -243,7 +245,7 @@ import il.org.spartan.spartanizer.utils.*;
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(d.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(d))
+        for (final VariableDeclarationFragment ¢ : fragments(d))
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
@@ -255,7 +257,7 @@ import il.org.spartan.spartanizer.utils.*;
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(x.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(x))
+        for (final VariableDeclarationFragment ¢ : fragments(x))
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
@@ -263,7 +265,7 @@ import il.org.spartan.spartanizer.utils.*;
       @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
         final type t = type.baptize(wizard.condense(s.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(s))
+        for (final VariableDeclarationFragment ¢ : fragments(s))
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
@@ -323,7 +325,7 @@ import il.org.spartan.spartanizer.utils.*;
       int orderOfCatchInTryParent(final CatchClause c) {
         assert c.getParent() instanceof TryStatement;
         @SuppressWarnings("hiding") int $ = 0;
-        for (final CatchClause ¢ : step.catchClauses((TryStatement) c.getParent())) {
+        for (final CatchClause ¢ : catchClauses((TryStatement) c.getParent())) {
           if (¢ == c)
             break;
           ++$;
@@ -352,7 +354,7 @@ import il.org.spartan.spartanizer.utils.*;
         if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
           return 0;
         @SuppressWarnings("hiding") int $ = 0;
-        for (final Statement ¢ : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
+        for (final Statement ¢ : n instanceof Block ? statements((Block) n) : statements((SwitchStatement) n)) {
           // This is intentionally '==' and not equals, meaning the exact same
           // Statement,
           // not just equivalence.
@@ -369,7 +371,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
-      for (final Statement ¢ : step.statements(PB))
+      for (final Statement ¢ : statements(PB))
         currentEnvironment.addAll(declarationsOf(¢));
     return currentEnvironment;
   }

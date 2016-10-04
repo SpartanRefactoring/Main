@@ -33,7 +33,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
-    final SimpleName n = step.name(i);
+    final SimpleName n = name(i);
     if (!mns.contains(n + ""))
       return null;
     final Expression ¢ = onlyOne(arguments(i));

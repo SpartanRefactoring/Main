@@ -28,7 +28,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    final List<TagElement> ts = step.tags(j);
+    final List<TagElement> ts = tags(j);
     if (ts != null)
       for (final TagElement t : ts) {
         if (!TagElement.TAG_PARAM.equals(t.getTagName()))
