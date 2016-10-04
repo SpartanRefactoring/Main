@@ -174,7 +174,7 @@ public enum az {
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
-  
+
   /** Down-cast, if possible, to {@link ClassInstanceCreation}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -182,14 +182,6 @@ public enum az {
   public static ClassInstanceCreation classInstanceCreation(final ASTNode $) {
     return !($ instanceof ClassInstanceCreation) ? null : (ClassInstanceCreation) $;
   }
-  
-  /** Down-cast, if possible, to {@link EnumConstantDeclaration}
-   * @param $ result
-   * @return parameter down-casted to the returned type, or
-   *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static EnumConstantDeclaration enumConstantDeclaration(final ASTNode $) {
-    return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
-  }  
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
    * is one of the six comparison operators: <code><</code>, <code><=</code>,
@@ -216,6 +208,14 @@ public enum az {
 
   public static EnhancedForStatement enhancedFor(final ASTNode $) {
     return !iz.nodeTypeEquals($, ENHANCED_FOR_STATEMENT) ? null : (EnhancedForStatement) $;
+  }
+
+  /** Down-cast, if possible, to {@link EnumConstantDeclaration}
+   * @param $ result
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static EnumConstantDeclaration enumConstantDeclaration(final ASTNode $) {
+    return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
   }
 
   /** Down-cast, if possible, to {@link Expression}
@@ -446,9 +446,9 @@ public enum az {
       return null;
     final VariableDeclarationExpression $ = ¢.getAST()
         .newVariableDeclarationExpression(duplicate.of(findFirst.elementOf(step.fragments(duplicate.of(¢)))));
-    step.fragments($).addAll(nextFragmentsOf(¢));
+    fragments($).addAll(nextFragmentsOf(¢));
     $.setType(duplicate.of(¢.getType()));
-    step.extendedModifiers($).addAll(modifiersOf(¢));
+    extendedModifiers($).addAll(modifiersOf(¢));
     return $;
   }
 

@@ -54,18 +54,18 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
-  private static boolean fragmentsUseFitting(final VariableDeclarationStatement ¢, final ForStatement s) {
-    for (final VariableDeclarationFragment f : step.fragments(¢))
-      if (!variableUsedInFor(s, f.getName()) || !iz.variableNotUsedAfterStatement(s, f.getName()))
+  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(vds))
+      if (!variableUsedInFor(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(s, ¢.getName()))
         return false;
     return true;
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     final SimpleName var = az.simpleName(step.left(from));
-    for (final VariableDeclarationFragment f : step.fragments(s))
-      if ((f.getName() + "").equals(var + ""))
-        f.setInitializer(duplicate.of(step.right(from)));
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+      if ((¢.getName() + "").equals(var + ""))
+        ¢.setInitializer(duplicate.of(step.right(from)));
     return duplicate.of(step.left(from));
   }
 
@@ -76,7 +76,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       if (iz.parenthesizedExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
         final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment f : step.fragments(s))
+        for (final VariableDeclarationFragment f : fragments(s))
           if ((f.getName() + "").equals(var + "")) {
             f.setInitializer(duplicate.of(step.right(a)));
             operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
@@ -118,9 +118,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
-    if (extendedModifiers2 == extendedModifiers || extendedModifiers == null || extendedModifiers2 == null)
-      return false;
-    return e.getType().toString().equals(s.getType().toString()) && compareModifiers(extendedModifiers, extendedModifiers2);
+    return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null
+        && (e.getType() + "").equals((s.getType() + "")) && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

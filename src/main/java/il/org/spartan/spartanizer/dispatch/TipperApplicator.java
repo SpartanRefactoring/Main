@@ -22,10 +22,10 @@ public final class TipperApplicator extends GUI$Applicator {
    * @param tipper The tipper we wish to convert
    * @param name The title of the refactoring */
   @SuppressWarnings("unchecked") public TipperApplicator(final Tipper<? extends ASTNode> w) {
-    super(w.name());
+    super(w.myName());
     tipper = (Tipper<ASTNode>) w;
     clazz = w.myActualOperandsClass();
-    assert clazz != null : "Oops, cannot find kind of operands of " + w.name();
+    assert clazz != null : "Oops, cannot find kind of operands of " + w.myName();
   }
 
   @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {

@@ -14,6 +14,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
@@ -23,7 +25,7 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
- ** @author Dor Maayan
+ * @author Dor Maayan
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
@@ -52,7 +54,7 @@ public interface type {
   }
 
   static boolean isDouble(final Expression ¢) {
-    return of(¢) == Certain.DOUBLE;
+    return type.of(¢) == Certain.DOUBLE;
   }
 
   static boolean isInt(final Expression ¢) {
@@ -60,7 +62,7 @@ public interface type {
   }
 
   static boolean isLong(final Expression ¢) {
-    return of(¢) == Certain.LONG;
+    return type.of(¢) == Certain.LONG;
   }
 
   /** @param x JD
@@ -76,7 +78,7 @@ public interface type {
     return of(¢) == Certain.STRING;
   }
 
-  // TODO: Matteo. Nano-pattern of values: not implemented
+  // TODO: Matteo Orru: Nano-pattern of values: not implemented
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
@@ -228,7 +230,7 @@ public interface type {
       final implementation $ = get(step.then(x));
       final implementation ¢ = get(step.elze(x));
       return $ == ¢ ? $
-          : isCastedToShort($, ¢, step.elze(x)) || isCastedToShort(¢, $, step.then(x)) ? SHORT
+          : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
 
@@ -274,7 +276,7 @@ public interface type {
     }
 
     private static implementation lookDown(final InfixExpression x) {
-      final InfixExpression.Operator o = step.operator(x);
+      final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
       assert es.size() >= 2;
       implementation $ = get(first(es));
@@ -284,7 +286,7 @@ public interface type {
     }
 
     private static implementation lookDown(final MethodInvocation ¢) {
-      return "toString".equals(step.name(¢) + "") && step.arguments(¢).isEmpty() ? STRING : NOTHING;
+      return "toString".equals(step.name(¢) + "") && arguments(¢).isEmpty() ? STRING : NOTHING;
     }
 
     private static implementation lookDown(final NumberLiteral ¢) {
@@ -344,9 +346,9 @@ public interface type {
      * @param i the node's type property
      * @return the type property tipper */
     private static implementation setType(final ASTNode n, final implementation i) {
-      // TODO: Alex and Dan: Take a look here to see how you store information
+      // TODO Dan Greenstein: Take a look here to see how you store information
       // within a node
-      // TODO: Ori Roth, Matteo this is for you too
+      // TODO Matteo Orru: this is for you too
       // TODO Ori Roth: use {@link NodeData}
       assert !hasType(n);
       n.setProperty(propertyName, i);

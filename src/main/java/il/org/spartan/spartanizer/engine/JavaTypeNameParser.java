@@ -120,7 +120,8 @@ import org.eclipse.jdt.core.dom.*;
     return s.toLowerCase().contains(substring.toLowerCase());
   }
 
-  // TODO: Yossi, looks better :). I want to die with this Mitug stuff. Did you
+  // TODO: Yossi Gil: looks better :). I want to die with this Mitug stuff. Did
+  // you
   // know that clock
   // is two transistors and a capacitor? Cycle duty depends on the
   // capacitance:@.

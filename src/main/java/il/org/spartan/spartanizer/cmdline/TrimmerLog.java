@@ -45,7 +45,7 @@ public class TrimmerLog {
   }
 
   public static void fileProperties() {
-    // TODO Auto-generated method stub
+    // TODO Matteo Orru: Auto-generated method stub do we need this?
   }
 
   public static int getMaxApplications() {

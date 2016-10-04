@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -32,7 +32,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement> implement
   }
 
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+    for (final VariableDeclarationFragment ¢ : fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
         return false;
     return true;

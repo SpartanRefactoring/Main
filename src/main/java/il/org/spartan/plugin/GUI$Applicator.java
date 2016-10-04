@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-// TODO: Ori, check if we can eliminate this dependency on Refactoring...
+// TODO: Ori Roth: check if we can eliminate this dependency on Refactoring...
 public abstract class GUI$Applicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();
