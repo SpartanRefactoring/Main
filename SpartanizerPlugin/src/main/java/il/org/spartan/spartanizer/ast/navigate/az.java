@@ -174,6 +174,22 @@ public enum az {
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
+  
+  /** Down-cast, if possible, to {@link ClassInstanceCreation}
+   * @param $ result
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static ClassInstanceCreation classInstanceCreation(final ASTNode $) {
+    return !($ instanceof ClassInstanceCreation) ? null : (ClassInstanceCreation) $;
+  }
+  
+  /** Down-cast, if possible, to {@link EnumConstantDeclaration}
+   * @param $ result
+   * @return parameter down-casted to the returned type, or
+   *         <code><b>null</b></code> if no such down-casting is possible. */
+  public static EnumConstantDeclaration enumConstantDeclaration(final ASTNode $) {
+    return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
+  }  
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
    * is one of the six comparison operators: <code><</code>, <code><=</code>,

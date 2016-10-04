@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import java.util.*;
 import java.util.Map.*;
 
@@ -14,208 +16,6 @@ import il.org.spartan.spartanizer.utils.*;
 /* TODO Tippers to improve once Environment is complete:
  * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
-  /** The Environment structure is in some like a Linked list, where EMPTY is
-   * like the NULL at the end. */
-  final Environment EMPTY = new Environment() {
-    // This class is intentionally empty
-  };
-  /** Initializer for EMPTY */
-  final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
-  /** Initializer for EMPTY */
-  final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
-
-  /** @return set of entries declared in the node, including all hiding. */
-  static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
-    // Holds the declarations in the subtree and relevant siblings.
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
-    n.accept(new ASTVisitor() {
-      // Holds the current scope full name (Path).
-      String scopePath = "";
-
-      @Override public void endVisit(final MethodDeclaration __) {
-        scopePath = parentNameScope(scopePath);
-      }
-
-      @Override public boolean visit(final MethodDeclaration d) {
-        scopePath += "." + d.getName();
-        for (final SingleVariableDeclaration ¢ : step.parameters(d))
-          $.add(convertToEntry(¢));
-        for (final Statement ¢ : step.statements(d.getBody()))
-          if (¢ instanceof VariableDeclarationStatement)
-            $.addAll(convertToEntry(az.variableDeclrationStatement(¢)));
-        return true;
-      }
-
-      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
-        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
-      }
-
-      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
-        final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(s.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(s))
-          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
-        return $;
-      }
-
-      Information createInformation(final SingleVariableDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
-      }
-
-      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
-      }
-
-      String fullName(final SimpleName $) {
-        return scopePath + "." + $;
-      }
-
-      Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
-        for (final Entry<String, Information> ¢ : ss)
-          if (s.equals(¢.getKey()))
-            return ¢.getValue();
-        return null;
-      }
-
-      /** Returns the {@link Information} of the declaration the
-       * currentdeclaration is hiding.
-       * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
-      /* Implementation notes: Should go over result set, and search for
-       * declaration which shares the same variable name in the parents. Should
-       * return the closest match: for example, if we search for a match to
-       * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
-       * .A.B.x.
-       *
-       * If a result is found in the result set, return said result.
-       *
-       * To consider: what if said hidden declaration will not appear in
-       * 'declaresDown', but will appear in 'declaresUp'? Should we search for
-       * it in 'declaresUp' result set? Should we leave the result as it is? I
-       * (Dan) lean towards searching 'declaresUp'. Current implementation only
-       * searches declaresDown.
-       *
-       * If no match is found, return null. */
-      Information getHidden(final String ¢) {
-        final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
-        for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-          final Information i = get($, s + "." + shortName);
-          if (i != null)
-            return i;
-        }
-        return null;
-      }
-
-      String parentNameScope(final String ¢) {
-        assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
-        return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
-      }
-    });
-    return $;
-  }
-
-  /** Spawns the first nested {@link Environment}. Should be used when the first
-   * block is opened. */
-  static Environment genesis() {
-    return EMPTY.spawn();
-  }
-
-  /** @return set of entries used in a given node. this includes the list of
-   *         entries that were defined in the node */
-  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
-    return new LinkedHashSet<>();
-  }
-
-  /** Return true iff {@link Environment} doesn'tipper have an entry with a
-   * given name. */
-  default boolean doesntHave(final String name) {
-    return !has(name);
-  }
-
-  /** Return true iff {@link Environment} is empty. */
-  default boolean empty() {
-    return true;
-  }
-
-  default LinkedHashSet<Entry<String, Information>> entries() {
-    return emptyEntries;
-  }
-
-  default LinkedHashSet<Entry<String, Information>> fullEntries() {
-    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
-    if (nest() != null)
-      $.addAll(nest().fullEntries());
-    return $;
-  }
-
-  /** Get full path of the current {@link Environment} (all scope hierarchy).
-   * Used for full names of the variables. */
-  default String fullName() {
-    final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
-    return ($ == null ? "" : $ + ".") + name();
-  }
-
-  /** @return all the full names of the {@link Environment}. */
-  default LinkedHashSet<String> fullNames() {
-    final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
-    if (nest() != null)
-      $.addAll(nest().fullNames());
-    return $;
-  }
-
-  default int fullSize() {
-    return size() + (nest() == null ? 0 : nest().fullSize());
-  }
-
-  /** @return null iff the name is not in use in the {@link Environment} */
-  default Information get(final String name) {
-    return null;
-  }
-
-  /** Answer the question whether the name is in use in the current
-   * {@link Environment} */
-  default boolean has(final String name) {
-    return false;
-  }
-
-  /** @return null iff the name is not hiding anything from outer scopes,
-   *         otherwise Information about hided instance (with same name) */
-  default Information hiding(final String name) {
-    return nest() == null ? null : nest().get(name);
-  }
-
-  default String name() {
-    return "";
-  }
-
-  /** @return The names used in the current scope. */
-  default Set<String> names() {
-    return emptySet;
-  }
-
-  /** @return null at the most outer block. This method is similar to the
-   *         'next()' method in a linked list. */
-  default Environment nest() {
-    return null;
-  }
-
-  /** Should return the hidden entry, or null if no entry hidden by this one.
-   * Note: you will have to assume multiple definitions in the same block, this
-   * is a compilation error, but nevertheless, let a later entry with of a
-   * certain name to "hide" a former entry with the same name. */
-  default Information put(final String name, final Information i) {
-    throw new IllegalArgumentException(name + "/" + i);
-  }
-
-  default int size() {
-    return 0;
-  }
-
-  /** Used when new block (scope) is opened. */
-  default Environment spawn() {
-    return new Nested(this);
-  }
-
   /** Mumbo jumbo of stuff we will do later. Document it, but do not maintain it
    * for now, this class is intentionally package level, and intenationally
    * defined local. For now, clients should not be messing with it */
@@ -328,5 +128,506 @@ import il.org.spartan.spartanizer.utils.*;
       assert !flat.isEmpty();
       return hiding(name);
     }
+  }
+
+  /** The Environment structure is in some like a Linked list, where EMPTY is
+   * like the NULL at the end. */
+  final Environment EMPTY = new Environment() {
+    // This class is intentionally empty
+  };
+  /** Initializer for EMPTY */
+  final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
+  /** Initializer for EMPTY */
+  final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
+  // Holds the declarations in the subtree and relevant siblings.
+  final LinkedHashSet<Entry<String, Information>> currentEnvironment = new LinkedHashSet<>();
+
+  static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+  }
+
+  /** @param ¢ JD
+   * @return All declarations in given {@link Statement}, without entering the
+   *         contained ({@link Blocl}s. If the {@link Statement} is a
+   *         {@link Block}, (also IfStatement, ForStatement and so on...) return
+   *         empty Collection. */
+  static List<Entry<String, Information>> declarationsOf(final Statement ¢) {
+    final List<Entry<String, Information>> $ = new ArrayList<>();
+    switch (¢.getNodeType()) {
+      case VARIABLE_DECLARATION_STATEMENT:
+        $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
+        break;
+      default:
+        return $;
+    }
+    return $;
+  }
+
+  static List<Entry<String, Information>> declarationsOf(final VariableDeclarationStatement s) {
+    final List<Entry<String, Information>> $ = new ArrayList<>();
+    final type t = type.baptize(wizard.condense(s.getType()));
+    final String path = fullName(s);
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+      $.add(new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t)));
+    return $;
+  }
+
+  /** @return set of entries declared in the node, including all hiding. */
+  static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
+    // Holds the declarations in the subtree and relevant siblings.
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
+    n.accept(new ASTVisitor() {
+      // Holds the current scope full name (Path).
+      String scopePath = "";
+
+      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
+        // As of JSL3, AnonymousClassDeclaration's parent can be either
+        // ClassInstanceCreation or EnumConstantDeclaration
+        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
+        if (n instanceof ClassInstanceCreation)
+          return az.classInstanceCreation(n).getType() + "";
+        assert n instanceof EnumConstantDeclaration;
+        return az.enumConstantDeclaration(n).getName() + "";
+      }
+
+      Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(d.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(d))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(x.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(x))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationStatement s) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(s.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(s))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
+      Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
+      Information createInformation(final SingleVariableDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
+      Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+      }
+
+      @Override public void endVisit(final AnnotationTypeDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final AnonymousClassDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final Block __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final CatchClause __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final DoStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnhancedForStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnumConstantDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnumDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final ForStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final IfStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final MethodDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final SwitchStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final TryStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final TypeDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final WhileStatement __) {
+        restoreScopeName();
+      }
+
+      @SuppressWarnings("hiding") String fullName(final SimpleName $) {
+        return scopePath + "." + $;
+      }
+
+      /** Returns the {@link Information} of the declaration the current
+       * declaration is hiding.
+       * @param ¢ the fullName of the declaration.
+       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
+      /* Implementation notes: Should go over result set, and search for
+       * declaration which shares the same variable name in the parents. Should
+       * return the closest match: for example, if we search for a match to
+       * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
+       * .A.B.x.
+       *
+       * If a result is found in the result set, return said result.
+       *
+       * To consider: what if said hidden declaration will not appear in
+       * 'declaresDown', but will appear in 'declaresUp'? Should we search for
+       * it in 'declaresUp' result set? Should we leave the result as it is? I
+       * (Dan) lean towards searching 'declaresUp'. Current implementation only
+       * searches declaresDown.
+       *
+       * If no match is found, return null. */
+      Information getHidden(final String ¢) {
+        final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
+        for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+          final Information i = get($, s + "." + shortName);
+          if (i != null)
+            return i;
+        }
+        return null;
+      }
+
+      int orderOfCatchInTryParent(final CatchClause c) {
+        assert c.getParent() instanceof TryStatement;
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final CatchClause ¢ : step.catchClauses((TryStatement) c.getParent())) {
+          if (¢ == c)
+            break;
+          ++$;
+        }
+        return $;
+      }
+
+      String parentNameScope(final String ¢) {
+        assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
+        return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+      }
+
+      void restoreScopeName() {
+        scopePath = parentNameScope(scopePath);
+      }
+
+      /** Order of the searched {@link Statement} in its parent {@link ASTNode},
+       * among nodes of the same kind. Zero based.
+       * @param s
+       * @return The nodes index, according to order of appearance, among nodes
+       *         of the same type. */
+      int statementOrderAmongTypeInParent(final Statement s) {
+        // extract.statements wouldn't work here - we need a shallow extract,
+        // not a deep one.
+        @SuppressWarnings("hiding") final ASTNode n = s.getParent();
+        if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
+          return 0;
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final Statement ¢ : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
+          // This is intentionally '==' and not equals, meaning the exact same
+          // Statement,
+          // not just equivalence.
+          if (¢ == s)
+            break;
+          if (¢.getNodeType() == s.getNodeType())
+            ++$;
+        }
+        return $;
+      }
+
+      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        $.add(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final AnonymousClassDeclaration ¢) {
+        scopePath += "." + "#anon_extends_" + anonymousClassDeclarationParentName(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final Block ¢) {
+        scopePath += "." + "#block" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final CatchClause ¢) {
+        scopePath += "." + "#catch" + orderOfCatchInTryParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final DoStatement ¢) {
+        scopePath += "." + "#do" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final EnhancedForStatement ¢) {
+        scopePath += "." + "#enhancedFor" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        $.addAll(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final ForStatement ¢) {
+        scopePath += "." + "#for" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final IfStatement ¢) {
+        scopePath += "." + "#if" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final SingleVariableDeclaration ¢) {
+        $.add(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final SwitchStatement ¢) {
+        scopePath += "." + "#switch" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final TryStatement ¢) {
+        scopePath += "." + "#try" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final VariableDeclarationExpression ¢) {
+        $.addAll(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final VariableDeclarationStatement ¢) {
+        $.addAll(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final WhileStatement ¢) {
+        scopePath += "." + "#while" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+    });
+    return $;
+  }
+
+  static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
+    for (ASTNode iter = n; iter.getParent() != null; iter = iter.getParent())
+      switch (iter.getParent().getNodeType()) {
+        case BLOCK:
+          currentEnvironment.addAll(declarationsInParentBlockAbove(iter));
+          break;
+        default:
+      }
+    return currentEnvironment;
+  }
+  
+  static List <Entry<String, Information>> declarationsInParentBlockAbove(ASTNode n) {
+    List <Entry<String, Information>> $ = new ArrayList<>();
+    for (final Statement ¢ : step.statements(az.block(n.getParent()))) {
+      if (¢.equals(n))
+        break;
+      $.addAll(declarationsOf(¢));
+    }
+    return $;
+  }
+  
+  static String fullName(final ASTNode ¢) {
+    return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
+  }
+
+  /** Spawns the first nested {@link Environment}. Should be used when the first
+   * block is opened. */
+  static Environment genesis() {
+    return EMPTY.spawn();
+  }
+
+  static Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
+    for (final Entry<String, Information> ¢ : ss)
+      if (s.equals(¢.getKey()))
+        return ¢.getValue();
+    return null;
+  }
+
+  static Information getHidden(final String ¢) {
+    final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
+    for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+      final Information i = get(currentEnvironment, s + "." + shortName);
+      if (i != null)
+        return i;
+    }
+    return null;
+  }
+
+  static String name(final ASTNode ¢) {
+    return "???";
+  }
+
+  static String name(final VariableDeclarationFragment ¢) {
+    return ¢.getName() + "";
+  }
+
+  static String parentNameScope(final String ¢) {
+    assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
+    return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+  }
+
+  /** @return set of entries used in a given node. this includes the list of
+   *         entries that were defined in the node */
+  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
+    return new LinkedHashSet<>();
+  }
+
+  /** Return true iff {@link Environment} doesn'tipper have an entry with a
+   * given name. */
+  default boolean doesntHave(final String name) {
+    return !has(name);
+  }
+
+  /** Return true iff {@link Environment} is empty. */
+  default boolean empty() {
+    return true;
+  }
+
+  default LinkedHashSet<Entry<String, Information>> entries() {
+    return emptyEntries;
+  }
+
+  default LinkedHashSet<Entry<String, Information>> fullEntries() {
+    final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>(entries());
+    if (nest() != null)
+      $.addAll(nest().fullEntries());
+    return $;
+  }
+
+  /** Get full path of the current {@link Environment} (all scope hierarchy).
+   * Used for full names of the variables. */
+  default String fullName() {
+    final String $ = nest() == null || nest() == EMPTY ? null : nest().fullName();
+    return ($ == null ? "" : $ + ".") + name();
+  }
+
+  /** @return all the full names of the {@link Environment}. */
+  default LinkedHashSet<String> fullNames() {
+    final LinkedHashSet<String> $ = new LinkedHashSet<>(names());
+    if (nest() != null)
+      $.addAll(nest().fullNames());
+    return $;
+  }
+
+  default int fullSize() {
+    return size() + (nest() == null ? 0 : nest().fullSize());
+  }
+
+  /** @return null iff the name is not in use in the {@link Environment} */
+  default Information get(final String name) {
+    return null;
+  }
+
+  /** Answer the question whether the name is in use in the current
+   * {@link Environment} */
+  default boolean has(final String name) {
+    return false;
+  }
+
+  /** @return null iff the name is not hiding anything from outer scopes,
+   *         otherwise Information about hided instance (with same name) */
+  default Information hiding(final String name) {
+    return nest() == null ? null : nest().get(name);
+  }
+
+  default String name() {
+    return "";
+  }
+
+  /** @return The names used in the current scope. */
+  default Set<String> names() {
+    return emptySet;
+  }
+
+  /** @return null at the most outer block. This method is similar to the
+   *         'next()' method in a linked list. */
+  default Environment nest() {
+    return null;
+  }
+
+  /** Should return the hidden entry, or null if no entry hidden by this one.
+   * Note: you will have to assume multiple definitions in the same block, this
+   * is a compilation error, but nevertheless, let a later entry with of a
+   * certain name to "hide" a former entry with the same name. */
+  default Information put(final String name, final Information i) {
+    throw new IllegalArgumentException(name + "/" + i);
+  }
+
+  default int size() {
+    return 0;
+  }
+
+  /** Used when new block (scope) is opened. */
+  default Environment spawn() {
+    return new Nested(this);
   }
 }
