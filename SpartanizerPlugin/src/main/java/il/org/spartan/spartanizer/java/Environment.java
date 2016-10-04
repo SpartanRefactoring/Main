@@ -446,12 +446,26 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
-    for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
-      for (final Statement ¢ : step.statements(PB))
-        currentEnvironment.addAll(declarationsOf(¢));
+    for (ASTNode iter = n; iter.getParent() != null; iter = iter.getParent())
+      switch (iter.getParent().getNodeType()) {
+        case BLOCK:
+          currentEnvironment.addAll(declarationsInParentBlockAbove(iter));
+          break;
+        default:
+      }
     return currentEnvironment;
   }
-
+  
+  static List <Entry<String, Information>> declarationsInParentBlockAbove(ASTNode n) {
+    List <Entry<String, Information>> $ = new ArrayList<>();
+    for (final Statement ¢ : step.statements(az.block(n.getParent()))) {
+      if (¢.equals(n))
+        break;
+      $.addAll(declarationsOf(¢));
+    }
+    return $;
+  }
+  
   static String fullName(final ASTNode ¢) {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
@@ -496,10 +510,6 @@ import il.org.spartan.spartanizer.utils.*;
         return $;
     }
     return null;
-  }
-
-  static Block getParentBlock(final ASTNode ¢) {
-    return az.block(¢.getParent());
   }
 
   static String name(final ASTNode ¢) {
