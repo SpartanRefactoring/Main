@@ -344,9 +344,9 @@ public interface type {
      * @param i the node's type property
      * @return the type property tipper */
     private static implementation setType(final ASTNode n, final implementation i) {
-      // TODO: Alex and Dan: Take a look here to see how you store information
+      // TODO Dan Greenstein: Take a look here to see how you store information
       // within a node
-      // TODO: Ori Roth, Matteo this is for you too
+      // TODO Matteo: this is for you too
       // TODO Ori Roth: use {@link NodeData}
       assert !hasType(n);
       n.setProperty(propertyName, i);

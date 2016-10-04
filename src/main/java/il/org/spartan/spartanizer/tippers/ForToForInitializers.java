@@ -87,7 +87,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     // extendedModifiers cannot be null at this location
     if (extendedModifiers2 == extendedModifiers || extendedModifiers == null || extendedModifiers2 == null)
       return false;
-    // TODO: Alex format this as in the above
+    // TODO Dan Greenstein: format this as in the above
     assert extendedModifiers2 != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
         + "\n e = " + e + "\n extendedModifiers = " + extendedModifiers + "\n s = " + e + fault.done();
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
