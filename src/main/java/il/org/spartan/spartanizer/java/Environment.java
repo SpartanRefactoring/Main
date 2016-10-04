@@ -180,14 +180,36 @@ import il.org.spartan.spartanizer.utils.*;
       // Holds the current scope full name (Path).
       String scopePath = "";
 
+      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
+        // As of JSL3, AnonymousClassDeclaration's parent can be either
+        // ClassInstanceCreation or EnumConstantDeclaration
+        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
+        if (n instanceof ClassInstanceCreation)
+          return az.classInstanceCreation(n).getType() + "";
+        assert n instanceof EnumConstantDeclaration;
+        return az.enumConstantDeclaration(n).getName() + "";
+      }
+
+      Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(d.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(d))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
       Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
 
-      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression s) {
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final VariableDeclarationExpression x) {
         final List<Entry<String, Information>> $ = new ArrayList<>();
-        final type t = type.baptize(wizard.condense(s.getType()));
-        for (final VariableDeclarationFragment ¢ : step.fragments(s))
+        final type t = type.baptize(wizard.condense(x.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(x))
           $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
         return $;
       }
@@ -200,6 +222,10 @@ import il.org.spartan.spartanizer.utils.*;
         return $;
       }
 
+      Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
       Information createInformation(final SingleVariableDeclaration ¢) {
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
       }
@@ -208,7 +234,19 @@ import il.org.spartan.spartanizer.utils.*;
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
+      @Override public void endVisit(final AnnotationTypeDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final AnonymousClassDeclaration __) {
+        restoreScopeName();
+      }
+
       @Override public void endVisit(final Block __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final CatchClause __) {
         restoreScopeName();
       }
 
@@ -217,6 +255,14 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       @Override public void endVisit(final EnhancedForStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnumConstantDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnumDeclaration __) {
         restoreScopeName();
       }
 
@@ -237,6 +283,10 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       @Override public void endVisit(final TryStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final TypeDeclaration __) {
         restoreScopeName();
       }
 
@@ -284,99 +334,147 @@ import il.org.spartan.spartanizer.utils.*;
         return null;
       }
 
+      int orderOfCatchInTryParent(final CatchClause c) {
+        assert c.getParent() instanceof TryStatement;
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final CatchClause ¢ : step.catchClauses((TryStatement) c.getParent())) {
+          if (¢ == c)
+            break;
+          ++$;
+        }
+        return $;
+      }
+
       String parentNameScope(final String ¢) {
         assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
         return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
       }
 
-      /**
-       *
-       */
-      private void restoreScopeName() {
+      void restoreScopeName() {
         scopePath = parentNameScope(scopePath);
       }
 
       /** Order of the searched {@link Statement} in its parent {@link ASTNode},
        * among nodes of the same kind. Zero based.
-       * @param ¢
+       * @param s
        * @return The nodes index, according to order of appearance, among nodes
        *         of the same type. */
-      int statementOrderAmongTypeInParent(final Statement ¢) {
+      int statementOrderAmongTypeInParent(final Statement s) {
         // extract.statements wouldn't work here - we need a shallow extract,
         // not a deep one.
-        @SuppressWarnings("hiding") final ASTNode n = ¢.getParent();
-        if (n == null || !(n instanceof Block || n instanceof SwitchStatement))
+        @SuppressWarnings("hiding") final ASTNode n = s.getParent();
+        if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
           return 0;
-        int i = 0;
-        for (final Statement s : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final Statement ¢ : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
           // This is intentionally '==' and not equals, meaning the exact same
           // Statement,
           // not just equivalence.
-          if (s == ¢)
+          if (¢ == s)
             break;
-          if (s.getNodeType() == ¢.getNodeType())
-            ++i;
+          if (¢.getNodeType() == s.getNodeType())
+            ++$;
         }
-        return i;
+        return $;
       }
 
-      @Override public boolean visit(final Block b) {
-        scopePath += "." + "#block" + statementOrderAmongTypeInParent(b);
+      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+        scopePath += "." + ¢.getName();
         return true;
       }
 
-      @Override public boolean visit(final DoStatement s) {
-        scopePath += "." + "#do" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        $.add(convertToEntry(¢));
         return true;
       }
 
-      @Override public boolean visit(final EnhancedForStatement s) {
-        scopePath += "." + "#enhancedFor" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final AnonymousClassDeclaration ¢) {
+        scopePath += "." + "#anon_extends_" + anonymousClassDeclarationParentName(¢);
         return true;
       }
 
-      @Override public boolean visit(final ForStatement s) {
-        scopePath += "." + "#for" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final Block ¢) {
+        scopePath += "." + "#block" + statementOrderAmongTypeInParent(¢);
         return true;
       }
 
-      @Override public boolean visit(final IfStatement s) {
-        scopePath += "." + "#if" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final CatchClause ¢) {
+        scopePath += "." + "#catch" + orderOfCatchInTryParent(¢);
         return true;
       }
 
-      @Override public boolean visit(final MethodDeclaration d) {
-        scopePath += "." + d.getName();
+      @Override public boolean visit(final DoStatement ¢) {
+        scopePath += "." + "#do" + statementOrderAmongTypeInParent(¢);
         return true;
       }
 
-      @Override public boolean visit(final SingleVariableDeclaration d) {
-        $.add(convertToEntry(d));
+      @Override public boolean visit(final EnhancedForStatement ¢) {
+        scopePath += "." + "#enhancedFor" + statementOrderAmongTypeInParent(¢);
         return true;
       }
 
-      @Override public boolean visit(final SwitchStatement s) {
-        scopePath += "." + "#switch" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        scopePath += "." + ¢.getName();
         return true;
       }
 
-      @Override public boolean visit(final TryStatement s) {
-        scopePath += "." + "#try" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        scopePath += "." + ¢.getName();
         return true;
       }
 
-      @Override public boolean visit(final VariableDeclarationExpression x) {
-        $.addAll(convertToEntry(x));
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        $.addAll(convertToEntry(¢));
         return true;
       }
 
-      @Override public boolean visit(final VariableDeclarationStatement s) {
-        $.addAll(convertToEntry(s));
+      @Override public boolean visit(final ForStatement ¢) {
+        scopePath += "." + "#for" + statementOrderAmongTypeInParent(¢);
         return true;
       }
 
-      @Override public boolean visit(final WhileStatement s) {
-        scopePath += "." + "#while" + statementOrderAmongTypeInParent(s);
+      @Override public boolean visit(final IfStatement ¢) {
+        scopePath += "." + "#if" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final SingleVariableDeclaration ¢) {
+        $.add(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final SwitchStatement ¢) {
+        scopePath += "." + "#switch" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final TryStatement ¢) {
+        scopePath += "." + "#try" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final VariableDeclarationExpression ¢) {
+        $.addAll(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final VariableDeclarationStatement ¢) {
+        $.addAll(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final WhileStatement ¢) {
+        scopePath += "." + "#while" + statementOrderAmongTypeInParent(¢);
         return true;
       }
     });
