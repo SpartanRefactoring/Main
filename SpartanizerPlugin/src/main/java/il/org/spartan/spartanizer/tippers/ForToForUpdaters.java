@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.tipping.*;
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
-    // TODO Alex, minus should return void, and then no need to duplicate.
     $.setBody(minus.lastStatement(dupForBody($)));
     return $;
   }
