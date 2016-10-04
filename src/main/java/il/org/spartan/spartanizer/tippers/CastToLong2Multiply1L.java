@@ -5,6 +5,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,7 +29,7 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
   }
 
   @Override public String description(final CastExpression ¢) {
-    return "Use 1L*" + step.expression(¢) + " instead of (long)" + step.expression(¢);
+    return "Use 1L*" + expression(¢) + " instead of (long)" + expression(¢);
   }
 
   @Override public ASTNode replacement(final CastExpression ¢) {

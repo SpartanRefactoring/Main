@@ -36,7 +36,7 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block> implements T
   }
 
   @Override public Statement replacement(final Block b) {
-    final ASTNode parent = step.parent(b);
+    final ASTNode parent = parent(b);
     return !(parent instanceof Statement) || iz.nodeTypeIn(parent, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(onlyOne(statements(b)));
   }

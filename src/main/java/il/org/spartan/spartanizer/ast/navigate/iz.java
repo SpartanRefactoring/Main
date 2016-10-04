@@ -354,7 +354,7 @@ public interface iz {
   }
 
   static boolean infixDivide(final Expression ¢) {
-    return step.operator(az.infixExpression(¢)) == DIVIDE;
+    return operator(az.infixExpression(¢)) == DIVIDE;
   }
 
   static boolean infixExpression(final ASTNode ¢) {
@@ -362,15 +362,15 @@ public interface iz {
   }
 
   static boolean infixMinus(final ASTNode ¢) {
-    return step.operator(az.infixExpression(¢)) == wizard.MINUS2;
+    return operator(az.infixExpression(¢)) == wizard.MINUS2;
   }
 
   static boolean infixPlus(final ASTNode ¢) {
-    return step.operator(az.infixExpression(¢)) == wizard.PLUS2;
+    return operator(az.infixExpression(¢)) == wizard.PLUS2;
   }
 
   static boolean infixTimes(final Expression ¢) {
-    return step.operator(az.infixExpression(¢)) == TIMES;
+    return operator(az.infixExpression(¢)) == TIMES;
   }
 
   /** @param ¢ JD
@@ -490,7 +490,7 @@ public interface iz {
   }
 
   static boolean leftOfAssignment(final Expression ¢) {
-    return step.left(az.assignment(¢.getParent())).equals(¢);
+    return left(az.assignment(¢.getParent())).equals(¢);
   }
 
   /** @param pattern Expression node
@@ -694,7 +694,7 @@ public interface iz {
   }
 
   static boolean rightOfAssignment(final Expression ¢) {
-    return step.right(az.assignment(¢.getParent())).equals(¢);
+    return right(az.assignment(¢.getParent())).equals(¢);
   }
 
   /** Determine whether a node is a "sequencer", i.e.,

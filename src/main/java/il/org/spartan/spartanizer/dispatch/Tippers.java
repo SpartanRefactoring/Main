@@ -146,7 +146,7 @@ public enum Tippers {
     siblings.remove(i);
     siblings.add(i, by);
     final Block $ = parent.getAST().newBlock();
-    duplicate.into(siblings, step.statements($));
+    duplicate.into(siblings, statements($));
     r.replace(parent, $, g);
     return r;
   }

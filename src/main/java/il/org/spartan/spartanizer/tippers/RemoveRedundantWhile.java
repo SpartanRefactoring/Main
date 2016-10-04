@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,7 +22,7 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> imp
         || iz.variableDeclarationStatement(n) && !checkVariableDecleration(az.variableDeclrationStatement(n)))
       return false;
     if (iz.block(n))
-      for (final Statement ¢ : step.statements(az.block(n)))
+      for (final Statement ¢ : statements(az.block(n)))
         if (iz.expressionStatement(¢) && haz.sideEffects(az.expression(az.expressionStatement(¢).getExpression()))
             || !iz.isVariableDeclarationStatement(¢) || !checkVariableDecleration(az.variableDeclrationStatement(¢)))
           return false;
@@ -28,7 +30,7 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement> imp
   }
 
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+    for (final VariableDeclarationFragment ¢ : fragments(s))
       if (¢.getInitializer() != null && haz.sideEffects(¢.getInitializer()))
         return false;
     return true;

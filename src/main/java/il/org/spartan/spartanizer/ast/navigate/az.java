@@ -350,9 +350,9 @@ public enum az {
       return null;
     final VariableDeclarationExpression $ = ¢.getAST()
         .newVariableDeclarationExpression(duplicate.of(findFirst.elementOf(step.fragments(duplicate.of(¢)))));
-    step.fragments($).addAll(nextFragmentsOf(¢));
+    fragments($).addAll(nextFragmentsOf(¢));
     $.setType(duplicate.of(¢.getType()));
-    step.extendedModifiers($).addAll(modifiersOf(¢));
+    extendedModifiers($).addAll(modifiersOf(¢));
     return $;
   }
 

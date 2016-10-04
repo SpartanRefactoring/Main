@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,7 +24,7 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
   }
 
   @Override public String description(final PostfixExpression ¢) {
-    return "Convert post-" + description(¢.getOperator()) + " of " + step.operand(¢) + " to pre-" + description(¢.getOperator());
+    return "Convert post-" + description(¢.getOperator()) + " of " + operand(¢) + " to pre-" + description(¢.getOperator());
   }
 
   @Override public boolean prerequisite(final PostfixExpression ¢) {

@@ -123,7 +123,7 @@ public enum make {
     $.setOperator(wizard.PLUS2);
     $.setLeftOperand(duplicate.of(first(xs)));
     $.setRightOperand(duplicate.of(second(xs)));
-    for (int ¢ = 2;; ++¢, step.extendedOperands($).add(duplicate.of(xs.get(¢))))
+    for (int ¢ = 2;; ++¢, extendedOperands($).add(duplicate.of(xs.get(¢))))
       if (¢ >= xs.size())
         return $;
   }

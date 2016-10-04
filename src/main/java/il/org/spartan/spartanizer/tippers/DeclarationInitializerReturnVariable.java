@@ -4,6 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -36,7 +38,7 @@ public final class DeclarationInitializerReturnVariable extends $VariableDeclara
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression returnValue = step.expression(s);
+    final Expression returnValue = expression(s);
     if (returnValue == null || !wizard.same(n, returnValue))
       return null;
     eliminate(f, r, g);

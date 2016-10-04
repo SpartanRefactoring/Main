@@ -30,7 +30,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(duplicate.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(dupWhileExpression(¢), parent(f)));
-    step.initializers($).add(Initializers(f));
+    initializers($).add(Initializers(f));
     return $;
   }
 
@@ -56,7 +56,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
       if (iz.parenthesizeExpression(¢) && iz.assignment(az.parenthesizedExpression(¢).getExpression())) {
         final Assignment a = az.assignment(az.parenthesizedExpression(¢).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment f : step.fragments(s))
+        for (final VariableDeclarationFragment f : fragments(s))
           if ((f.getName() + "").equals(var + "")) {
             f.setInitializer(duplicate.of(step.right(a)));
             operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(var + ""));

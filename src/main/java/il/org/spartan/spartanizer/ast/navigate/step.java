@@ -105,7 +105,7 @@ public enum step {
       case ASTNode.ENHANCED_FOR_STATEMENT:
         return az.enhancedFor(¢).getExpression();
       case ASTNode.METHOD_INVOCATION:
-        return step.receiver((MethodInvocation) ¢);
+        return receiver((MethodInvocation) ¢);
       case ASTNode.PARENTHESIZED_EXPRESSION:
         return expression((ParenthesizedExpression) ¢);
       case ASTNode.DO_STATEMENT:

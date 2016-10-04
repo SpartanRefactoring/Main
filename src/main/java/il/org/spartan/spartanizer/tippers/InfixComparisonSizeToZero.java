@@ -79,7 +79,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         return null;
       sign = 1;
     }
-    final Expression receiver = step.receiver(i);
+    final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
     /* In case binding is available, uses it to ensure that isEmpty() is

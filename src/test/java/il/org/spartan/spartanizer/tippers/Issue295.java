@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -62,13 +64,13 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void B01() {
     trimmingOf("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { " + //
-        "List<VariableDeclarationFragment> lst = step.fragments(s); " + //
+        "List<VariableDeclarationFragment> lst =  fragments(s); " + //
         "for (VariableDeclarationFragment ¢ : lst) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
         "}").gives("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { " + //
-            "for (VariableDeclarationFragment ¢ : step.fragments(s);) " + //
+            "for (VariableDeclarationFragment ¢ :  fragments(s);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -78,13 +80,13 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void B02() {
     trimmingOf("void  f(V s) { " + //
-        "List<U> lst = step.fragments(s); " + //
+        "List<U> lst =  fragments(s); " + //
         "for (U ¢ : lst) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
         "}").gives(" f(U s) { " + //
-            "for (U ¢ : step.fragments(s);) " + //
+            "for (U ¢ :  fragments(s);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -94,13 +96,13 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void B03() {
     trimmingOf("void  f(V variableDeclarationFragment) { " + //
-        "List<U> lst = step.fragments(variableDeclarationFragment); " + //
+        "List<U> lst =  fragments(variableDeclarationFragment); " + //
         "for (U ¢ : lst) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
         "}").gives("void f(U variableDeclarationFragment) { " + //
-            "for (U ¢ : step.fragments(variableDeclarationFragment);) " + //
+            "for (U ¢ :  fragments(variableDeclarationFragment);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -110,13 +112,13 @@ import il.org.spartan.spartanizer.utils.*;
 
   @Test public void B05() {
     trimmingOf("boolean  f(V variableDeclarationFragment) { " + //
-        "V x= step.fragments(variableDeclarationFragment); " + //
+        "V x=  fragments(variableDeclarationFragment); " + //
         "for (U ¢ : x) " + //
         "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
         "    return false; " + //
         "return true; " + //
         "}").gives("boolean f(U variableDeclarationFragment) { " + //
-            "for (U ¢ : step.fragments(variableDeclarationFragment);) " + //
+            "for (U ¢ :  fragments(variableDeclarationFragment);) " + //
             "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + //
             "    return false; " + //
             "return true; " + //
@@ -186,7 +188,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void B15() {
-    final Expression es = step.expression(forr);
+    final Expression es = expression(forr);
     assert es != null;
     assert !haz.unknownNumberOfEvaluations(es, forr);
   }
