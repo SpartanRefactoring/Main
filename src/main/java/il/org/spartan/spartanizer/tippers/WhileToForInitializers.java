@@ -39,7 +39,8 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static boolean fitting(@SuppressWarnings("unused") final WhileStatement __) {
-    // TODO Dan Greenstein: check that the variables declared before the loop doesn't in use
+    // TODO Dan Greenstein: check that the variables declared before the loop
+    // doesn't in use
     // after the scope.
     return true;
   }
