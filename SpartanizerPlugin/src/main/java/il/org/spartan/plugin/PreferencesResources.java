@@ -22,7 +22,7 @@ public final class PreferencesResources {
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
-  public enum WringGroup {
+  public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
     Annonimaization(TipperCategory.Annonimization.class), //
     Canonicalization(TipperCategory.Collapse.class), //
@@ -39,7 +39,7 @@ public final class PreferencesResources {
     Ternarization(TipperCategory.Ternarization.class), //
     Nanopatterns(TipperCategory.Nanos.class), //
     ;
-    public static WringGroup find(final TipperCategory ¢) {
+    public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
     }
 
@@ -47,8 +47,8 @@ public final class PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static WringGroup find(final Class<? extends TipperCategory> ¢) {
-      for (final WringGroup $ : WringGroup.values())
+    private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
+      for (final TipperGroup $ : TipperGroup.values())
         if ($.clazz.isAssignableFrom(¢))
           return $;
       return null;
@@ -58,7 +58,7 @@ public final class PreferencesResources {
     final String id;
     final String label;
 
-    private WringGroup(final Class<? extends TipperCategory> clazz) {
+    private TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = getLabel(clazz) + "";

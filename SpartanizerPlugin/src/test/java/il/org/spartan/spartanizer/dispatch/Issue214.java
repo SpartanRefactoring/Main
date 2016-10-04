@@ -49,7 +49,7 @@ import il.org.spartan.spartanizer.tipping.*;
     azzert.notNull(blockSimplify.myActualOperandsClass());
   }
 
-  @Test public void A06_WringAbstractNotNull() {
+  @Test public void A06_TipperAbstractNotNull() {
     azzert.notNull(new BlockSimplify().myAbstractOperandsClass());
   }
 
@@ -57,31 +57,31 @@ import il.org.spartan.spartanizer.tipping.*;
     azzert.that(blockSimplify.myAbstractOperandsClass(), instanceOf(Class.class));
   }
 
-  @Test public void A08_WringReturnsSomeASTNode() {
+  @Test public void A08_TipperReturnsSomeASTNode() {
     azzert.that(tipper.myAbstractOperandsClass(), is(ASTNode.class));
   }
 
-  @Test public void A09_WringReturnsReasonableValue() {
+  @Test public void A09_TipperReturnsReasonableValue() {
     azzert.that(tipper.myAbstractOperandsClass().getClass(), is(Class.class));
   }
 
-  @Test public void A10_WringReturnsCorrectStaticType() {
+  @Test public void A10_TipperReturnsCorrectStaticType() {
     azzert.that(mustBeASTNodeClass(tipper.myAbstractOperandsClass()), is(tipper.myAbstractOperandsClass()));
   }
 
-  @Test public void A11_WringReturnsCorrectValueBlockSimplify() {
+  @Test public void A11_TipperReturnsCorrectValueBlockSimplify() {
     azzert.that(blockSimplify.myAbstractOperandsClass(), is(Block.class));
   }
 
-  @Test public void A12_WringReturnsCorrectConcreteValueBlockSimplify() {
+  @Test public void A12_TipperReturnsCorrectConcreteValueBlockSimplify() {
     azzert.that(blockSimplify.myActualOperandsClass(), is(Block.class));
   }
 
-  @Test public void A13_WringReturnsCorrectConcreteValueAssignmentAssignment() {
+  @Test public void A13_TipperReturnsCorrectConcreteValueAssignmentAssignment() {
     azzert.that(new AssignmentAndAssignment().myActualOperandsClass(), is(Assignment.class));
   }
 
-  @Test public void A14_WringReturnsCorrectConcreteValueIfStatement() {
+  @Test public void A14_TipperReturnsCorrectConcreteValueIfStatement() {
     azzert.that(new IfAssignToFooElseAssignToFoo().myActualOperandsClass(), is(IfStatement.class));
   }
 }
