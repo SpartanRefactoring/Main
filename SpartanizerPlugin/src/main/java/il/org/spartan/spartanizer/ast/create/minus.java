@@ -32,13 +32,12 @@ public enum minus {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement ¢) {
-    Statement $ = duplicate.of(¢);
-    if (!iz.block($))
-      return make.emptyStatement($);
-    final List<Statement> ss = step.statements(az.block($));
+    if (!iz.block(¢))
+      return make.emptyStatement(¢);
+    final List<Statement> ss = step.statements(az.block(¢));
     if (!ss.isEmpty())
       ss.remove(ss.size() - 1);
-    return $;
+    return ¢;
   }
 
   public static int level(final Expression ¢) {
