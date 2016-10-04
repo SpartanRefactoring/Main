@@ -63,13 +63,23 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
     if (e == null)
       return false;
-    assert e != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
-        + "\n first.getClass().getSimpleName() = " + first.getClass().getSimpleName() + fault.done();
+    assert e != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        "\n first = " + first + //
+        "\n first.getClass().getSimpleName() = " + first.getClass().getSimpleName() //
+        + fault.done();
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     if (extendedModifiers == null)
       return false;
-    assert extendedModifiers != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
-        + "\n e = " + e + fault.done();
+    assert extendedModifiers != null : fault.dump() + //
+        "\n s = " + s + //
+        "\n ¢ = " + ¢ + //
+        "\n initializers = " + initializers + //
+        "\n first = " + first + //
+        "\n e = " + e + //
+        fault.done();
     assert s != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first + "\n e = " + e
         + "\n extendedModifiers = " + extendedModifiers + fault.done();
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
@@ -77,6 +87,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     // extendedModifiers cannot be null at this location
     if (extendedModifiers2 == extendedModifiers || extendedModifiers == null || extendedModifiers2 == null)
       return false;
+    // TODO: Alex format this as in the above
     assert extendedModifiers2 != null : fault.dump() + "\n s = " + s + "\n ¢ = " + ¢ + "\n initializers = " + initializers + "\n first = " + first
         + "\n e = " + e + "\n extendedModifiers = " + extendedModifiers + "\n s = " + e + fault.done();
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
@@ -95,7 +106,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
             operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
           }
       }
-    return subject.pair(operands.get(0), operands.get(1)).to(from.getOperator());
+    return subject.pair(first(operands), second(operands)).to(from.getOperator());
   }
 
   private static Expression Initializers(final VariableDeclarationStatement ¢) {
@@ -134,6 +145,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       return null;
     exclude.excludeAll(step.fragments(parent));
     // exclude.exclude(s.getExpression());
+    // TODO: Alex use list rewriter; talk to Ori Roth
     r.remove(parent, g);
     r.replace(s, replace(parent, s), g);
     return r;

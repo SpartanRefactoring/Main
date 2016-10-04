@@ -93,8 +93,8 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return null;
   }
 
-  @Override public final WringGroup wringGroup() {
-    return super.wringGroup();
+  @Override public final TipperGroup tipperGroup() {
+    return super.tipperGroup();
   }
 
   abstract double evaluateDouble(List<Expression> xs) throws Exception;
