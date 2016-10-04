@@ -38,6 +38,7 @@ public final class CollectMetrics {
     }
   }
 
+// TODO Yossi Gil: eliminate warning
   private static void collectTips(final String javaCode, final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggesions(before));
   }
@@ -112,7 +113,7 @@ public final class CollectMetrics {
       Tips.nl();
     }
   }
-
+// TODO Yossi Gil: eliminate warning
   private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
     final Trimmer t = new Trimmer();
     assert t != null;
