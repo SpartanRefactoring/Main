@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
@@ -75,7 +76,8 @@ public enum Collect {
 
   /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
-   * @return {@link spartanizer} of all occurrences which are not definitions. */
+   * @return {@link spartanizer} of all occurrences which are not
+   *         definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
