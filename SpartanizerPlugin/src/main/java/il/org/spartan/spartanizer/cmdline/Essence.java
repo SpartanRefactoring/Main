@@ -3,12 +3,12 @@ package il.org.spartan.spartanizer.cmdline;
 /**
  * @author Yossi Gil 
  * @since 2016 */
-public class essence {
+public class Essence {
   public static void main(String[] args) {
-    
+   // TODO Yossi 
   }
 
-  static String essence(final String codeFragment) {
+  static String of(final String codeFragment) {
     return codeFragment//
         .replaceAll("\\r\\n","\\n") // DOS Junk
         .replaceAll("\\n\\r","\\n") // Mac Junk

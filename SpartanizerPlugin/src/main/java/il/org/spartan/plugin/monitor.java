@@ -16,7 +16,7 @@ public enum monitor {
       return this;
     }
   },
-  /** Used for real headless run; logs are simply ignore */
+  /** Used for real headless system; logs are simply ignore */
   OBLIVIOUS {
     @Override public monitor error(@SuppressWarnings("unused") final String __) {
       return this;
