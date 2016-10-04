@@ -45,7 +45,7 @@ public class TrimmerLog {
   }
 
   public static void fileProperties() {
-    // TODO Auto-generated method stub
+    // TODO Matteo Auto-generated method stub
   }
 
   public static int getMaxApplications() {

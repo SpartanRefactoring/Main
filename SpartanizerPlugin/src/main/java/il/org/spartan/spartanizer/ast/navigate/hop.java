@@ -104,7 +104,7 @@ public interface hop {
    * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
    *         if ¢ or name are null) */
-  // TODO this seems a bug
+  // TODO Yossi: this seems a bug
   static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
     return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
         : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
