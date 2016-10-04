@@ -9,10 +9,9 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
-@Ignore public class Issue337 {
+public class Issue337 {
   @Test public void t18() {
     trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}")//
-        .gives("for(;b==q;x=tipper+i){int i;double tipper;}")//
         .stays();
   }
 }

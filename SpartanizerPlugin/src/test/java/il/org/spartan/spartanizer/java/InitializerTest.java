@@ -30,9 +30,9 @@ public final class InitializerTest {
     System.out.println("Instance initializer");
   }
 
-  @Ignore @Test public void T_00() {
+  @Test public void T_00() {
     azzert.that(InitializerTest.a, is(0));
-    azzert.that(InitializerTest.b, is(0));
+    azzert.that(InitializerTest.b, is(200));
     azzert.that(InitializerTest.c, is(300));
   }
 
