@@ -40,22 +40,6 @@ public enum eclipse {
   static final boolean persistLocation = false;
   static final boolean showDialogMenu = true;
 
-  static ImageIcon icon() {
-    if (!iconInitialized) {
-      iconInitialized = true;
-      URL u;
-      try {
-        u = new URL("platform:/plugin/org.eclipse.pde.ua.ui/icons/wizban/new_cheatsheet_wiz.png");
-        Image i = Toolkit.getDefaultToolkit().getImage(u);
-        if (i != null)
-          icon = new ImageIcon(i/*.getScaledInstance(64, 64, Image.SCALE_SMOOTH)*/);
-      } catch (MalformedURLException x) {
-        x.printStackTrace();
-      }
-    }
-    return icon;
-  }
-  
   /** Add nature to one project */
   static void addNature(final IProject p) throws CoreException {
     final IProjectDescription d = p.getDescription();
@@ -155,6 +139,23 @@ public enum eclipse {
       monitor.logEvaluationError(x);
     }
     return null;
+  }
+
+  static ImageIcon icon() {
+    if (!iconInitialized) {
+      iconInitialized = true;
+      URL u;
+      try {
+        u = new URL("platform:/plugin/org.eclipse.pde.ua.ui/icons/wizban/new_cheatsheet_wiz.png");
+        final Image i = Toolkit.getDefaultToolkit().getImage(u);
+        if (i != null)
+          icon = new ImageIcon(
+              i/* .getScaledInstance(64, 64, Image.SCALE_SMOOTH) */);
+      } catch (final MalformedURLException x) {
+        x.printStackTrace();
+      }
+    }
+    return icon;
   }
 
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
