@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   // Primitive, manual tests, to root out the rough bugs.
   /** [[SuppressWarningsSpartan]] */
-  @Test public void declaresDownMethodDeclaration01() {
+  @Ignore @Test public void declaresDownMethodDeclaration01() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n"//
         + "void foo(int a, int b){}\n"//
         + "}"));
@@ -33,13 +33,13 @@ import il.org.spartan.spartanizer.utils.*;
       assert ".foo.a".equals(e.getKey()) || ".foo.b".equals(e.getKey());
   }
 
-  @Test public void declaresDownMethodDeclaration02() {
+  @Ignore @Test public void declaresDownMethodDeclaration02() {
     for (final Entry<String, Information> ¢ : Environment.declaresDown(
         makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){}\n" + "void g(int a){}\n" + "void h(){ int a; }\n" + "}"))))
       assert (".f.a".equals(¢.getKey()) || ".g.a".equals(¢.getKey()) || ".h.a".equals(¢.getKey())) && ¢.getValue().hiding == null;
   }
 
-  @Test public void declaresDownMethodDeclaration03() {
+  @Ignore @Test public void declaresDownMethodDeclaration03() {
     for (final Entry<String, Information> ¢ : Environment.declaresDown(
         makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void f(int a){\n" + "class B{" + "void g(int a){}" + "}" + "}\n" + "}"))))
       assert ".f.a".equals(¢.getKey()) || ".f.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
