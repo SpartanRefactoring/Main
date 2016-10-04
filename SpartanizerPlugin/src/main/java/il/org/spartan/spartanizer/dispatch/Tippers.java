@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** A number of utility functions common to all wrings.
+/** A number of utility functions common to all tippers.
  * @author Yossi Gil
  * @since 2015-07-17 */
 public enum Tippers {

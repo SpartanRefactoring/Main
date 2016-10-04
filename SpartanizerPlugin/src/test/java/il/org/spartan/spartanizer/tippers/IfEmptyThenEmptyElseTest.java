@@ -17,10 +17,10 @@ import il.org.spartan.spartanizer.spartanizations.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "javadoc", "static-method" }) public final class IfEmptyThenEmptyElseTest {
   private static final Statement INPUT = into.s("{if (b) ; else ;}");
   private static final IfStatement IF = findFirst.ifStatement(INPUT);
-  private static final IfEmptyThenEmptyElse WRING = new IfEmptyThenEmptyElse();
+  private static final IfEmptyThenEmptyElse TIPPER = new IfEmptyThenEmptyElse();
 
   @Test public void eligible() {
-    assert WRING.canTip(IF);
+    assert TIPPER.canTip(IF);
   }
 
   @Test public void emptyElse() {
@@ -46,7 +46,7 @@ import il.org.spartan.spartanizer.spartanizations.*;
     final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    final Tip t = WRING.tip(s);
+    final Tip t = TIPPER.tip(s);
     t.go(r, null);
     final TextEdit e = r.rewriteAST(d, null);
     assert e != null;
@@ -56,6 +56,6 @@ import il.org.spartan.spartanizer.spartanizations.*;
   }
 
   @Test public void scopeIncludes() {
-    assert WRING.canTip(IF);
+    assert TIPPER.canTip(IF);
   }
 }

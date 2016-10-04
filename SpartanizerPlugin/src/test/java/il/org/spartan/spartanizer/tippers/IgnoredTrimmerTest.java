@@ -56,9 +56,9 @@ import org.junit.runners.*;
 
   @Test public void forwardDeclaration7() {
     trimmingOf(
-        "  j = 2*i;   }      public final int j;    private C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f(res.j);   return res; ")
+        "  j = 2*i;   }      public final int j;    private C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f(res.j);   return res; ")
             .gives(
-                "  j = 2*i;   }      public final int j;    private C yada6() {   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   final C res = new C(6);   S.x.f(res.j);   return res; ");
+                "  j = 2*i;   }      public final int j;    private C yada6() {   final Runnable r = new Runnable() {        @Override    public void system() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   final C res = new C(6);   S.x.f(res.j);   return res; ");
   }
 
   @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
@@ -213,23 +213,23 @@ import org.junit.runners.*;
 
   @Test public void reanmeReturnVariableToDollar05() {
     trimmingOf(
-        "  j = 2*i;   }      public final int j;    public C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final C res) {     S.x.f(res.j);   S.x.f(res.j);   return res; ")
+        "  j = 2*i;   }      public final int j;    public C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final C res) {     S.x.f(res.j);   S.x.f(res.j);   return res; ")
             .gives(
-                "  j = 2*i;   }      public final int j;    public C yada6() {   final C $ = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C($.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final C res) {     S.x.f(res.j);   S.x.f($.j);   return $; ");
+                "  j = 2*i;   }      public final int j;    public C yada6() {   final C $ = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     final C res2 = new C($.j);     S.x.f(res2.j);     doStuff(res2);        private void doStuff(final C res) {     S.x.f(res.j);   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar06() {
     trimmingOf(
-        "  j = 2*i;   }      public final int j;    public void yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final C r) {     final C res = new C(r.j);     return res.j + 1;   S.x.f(res.j); ")
+        "  j = 2*i;   }      public final int j;    public void yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final C r) {     final C res = new C(r.j);     return res.j + 1;   S.x.f(res.j); ")
             .gives(
-                "  j = 2*i;   }      public final int j;    public void yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final C r) {     final C $ = new C(r.j);     return $.j + 1;   S.x.f(res.j); ");
+                "  j = 2*i;   }      public final int j;    public void yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     final C res2 = new C(res.j);     S.x.f(res2.j);     doStuff(res2);        private int doStuff(final C r) {     final C $ = new C(r.j);     return $.j + 1;   S.x.f(res.j); ");
   }
 
   @Test public void reanmeReturnVariableToDollar07() {
     trimmingOf(
-        "  j = 2*i;   }      public final int j;    public C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f(res.j);   return res; ")
+        "  j = 2*i;   }      public final int j;    public C yada6() {   final C res = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f(res.j);   return res; ")
             .gives(
-                "  j = 2*i;   }      public final int j;    public C yada6() {   final C $ = new C(6);   final Runnable r = new Runnable() {        @Override    public void run() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f($.j);   return $; ");
+                "  j = 2*i;   }      public final int j;    public C yada6() {   final C $ = new C(6);   final Runnable r = new Runnable() {        @Override    public void system() {     res = new C(8);     S.x.f(res.j);     doStuff(res);        private void doStuff(C res2) {     S.x.f(res2.j);        private C res;   S.x.f($.j);   return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar08() {
