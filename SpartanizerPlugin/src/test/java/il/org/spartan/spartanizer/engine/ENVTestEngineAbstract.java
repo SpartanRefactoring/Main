@@ -133,7 +133,7 @@ public abstract class ENVTestEngineAbstract {
   }
 
   protected boolean foundTestedAnnotation; // Global flag, used to
-  // determine when to run the
+  // determine when to system the
   // test on a node with
   // potential annotations.
   protected ASTNode n;
