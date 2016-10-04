@@ -14,14 +14,14 @@ public class MyException extends Exception {
   /** @param message */
   public MyException(final String message) {
     super(message);
-    // TODO Yossi Auto-generated constructor stub
+    // TODO Yossi Gil: Auto-generated constructor stub
   }
 
   /** @param message
    * @param cause */
   public MyException(final String message, final Throwable cause) {
     super(message, cause);
-    // TODO Yossi Auto-generated constructor stub
+    // TODO Yossi Gil: Auto-generated constructor stub
   }
 
   /** @param message
@@ -30,12 +30,12 @@ public class MyException extends Exception {
    * @param writableStackTrace */
   public MyException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
-    // TODO Yossi Auto-generated constructor stub
+    // TODO Yossi Gil: Auto-generated constructor stub
   }
 
   /** @param cause */
   public MyException(final Throwable cause) {
     super(cause);
-    // TODO Yossi Auto-generated constructor stub
+    // TODO Yossi Gil: Auto-generated constructor stub
   }
 }
