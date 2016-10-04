@@ -83,7 +83,7 @@ public final class CollectMetrics {
    * these. Note that you have to print the file name which is common to all
    * classes. Turn this if you like into a documentation
    * @param string */
-  // TODO: Yossi, make this even more clever, by using function interfaces..
+  // TODO: Yossi Gil: make this even more clever, by using function interfaces..
   private static void report(final String prefix, final CompilationUnit ¢) {
     // TODO Matteo make sure that the counting does not include comments. Do
     // this by adding stuff to the metrics suite.

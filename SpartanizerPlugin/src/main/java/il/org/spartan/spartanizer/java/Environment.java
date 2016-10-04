@@ -561,7 +561,7 @@ import il.org.spartan.spartanizer.utils.*;
     }
 
     public boolean equals(final Information ¢) {
-      // TODO: Yossi, we wanted to use the prudentType, so we wrote a comparison
+      // TODO: Yossi Gil: we wanted to use the prudentType, so we wrote a comparison
       // function to it.
       // Some one changed it and all our tests fell. When the API to "type" will
       // be ready we will
