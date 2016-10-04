@@ -48,6 +48,7 @@ public final class spartanizer {
   private PrintWriter afters;
   private CSVStatistics report;
   private final String reportFileName;
+  private File currentFile;
 
   private spartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -73,7 +74,7 @@ public final class spartanizer {
   }
 
   public Process shellEssenceMetrics(final String fileName) {
-    return bash("./Essence < " + fileName + " >" + essenced(fileName));
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
   void collect(final CompilationUnit u) {
@@ -87,6 +88,7 @@ public final class spartanizer {
   void collect(final File f) {
     if (!f.getPath().contains("src/test"))
       try {
+        currentFile = f;
         collect(FileUtils.read(f));
       } catch (final IOException e) {
         monitor.infoIOException(e, "File = " + f);
@@ -114,6 +116,7 @@ public final class spartanizer {
     afters.print(out);
     report.summaryFileName();
     report//
+        .put("File", currentFile)//
         .put("TipperCategory", extract.category(¢))//
         .put("Name", extract.name(¢))//
         .put("Nodes1", nodes)//

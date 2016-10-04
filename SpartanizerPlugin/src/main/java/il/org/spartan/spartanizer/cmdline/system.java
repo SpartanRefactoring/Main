@@ -27,8 +27,7 @@ public interface system {
     return path//
         .replaceAll("^[.]$", "CWD")//
         .replaceAll("^[.][.]$", "DOT-DOT")//
-        .replaceAll("[.]", "-DOT-")//
-        .replaceAll("[\\ /]", "-")//
+        .replaceAll("[\\ /.]", "-")//
         .replaceAll("-+", "-")//
         .replaceAll("^-", "")//
         .replaceAll("-$", "")//

@@ -120,7 +120,7 @@ public final class BatchSpartanizer {
   }
 
   public Process shellEssenceMetrics(final String fileName) {
-    return bash("./Essence < " + fileName + " >" + system.essenced(fileName));
+    return bash("./essence < " + fileName + " >" + system.essenced(fileName));
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
