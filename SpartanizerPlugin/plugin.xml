@@ -173,7 +173,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
        <command commandId="il.org.spartan.TipsToggleOnOff"
               id="il.org.spartan.menus.TipsToggleOnOff"
-              style="toggle"
+              style="push"
               mnemonic="O">
         </command>
         <visibleWhen>

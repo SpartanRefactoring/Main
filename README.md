@@ -119,7 +119,7 @@ written back to the source code.
 ## License
 The project is available under the **[MIT License]**
 
-[Release]: https://github.com/SpartanRefactoring/Spartanizer/releases/tag/2.5.2
+[Release]: https://github.com/SpartanRefactoring/Spartanizer/releases/tag/2.5.3
 [Spartan Programming]: http://blog.codinghorror.com/spartan-programming/
 [project wiki]: https://github.com/SpartanRefactoring/spartan-refactoring/wiki/Spartan-Programming
 [Technion - Israel Institute of Technology]: http://www.technion.ac.il/en/
