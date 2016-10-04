@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: ORI: Document
+/** TODO: Ori Marcovtich: Document
  * @author Ori Marcovitch
  * @since 2016 */
 public final class InteractiveSpartanizer {
@@ -22,7 +22,7 @@ public final class InteractiveSpartanizer {
 
   static String read() {
     String $ = "";
-    try (Scanner s = new Scanner(System.in).useDelimiter("\\n")) {
+    try (Scanner s = new Scanner(System.in).useDelimiter("\n")) {
       for (; s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;

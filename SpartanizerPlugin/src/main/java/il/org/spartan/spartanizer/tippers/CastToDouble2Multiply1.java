@@ -5,6 +5,8 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,7 +28,7 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
   }
 
   @Override public String description(final CastExpression ¢) {
-    return "Use 1.*" + step.expression(¢) + " instead of (double)" + step.expression(¢);
+    return "Use 1.*" + expression(¢) + " instead of (double)" + expression(¢);
   }
 
   @Override public ASTNode replacement(final CastExpression ¢) {

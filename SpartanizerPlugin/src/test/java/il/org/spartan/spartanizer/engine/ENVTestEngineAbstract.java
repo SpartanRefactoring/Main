@@ -25,10 +25,10 @@ public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Information>> testSetFlat;
   protected static LinkedHashSet<Entry<String, Information>> testSetNested;
 
-  private static void action(final Entry<String, Information> ¢, final Iterator<Entry<String, Information>> iterator) {
+  private static void action(final Entry<String, Information> ¢, final Iterator<Entry<String, Information>> s) {
     boolean entryFound = false;
-    while (iterator.hasNext())
-      if (¢.equals(iterator.next())) {
+    while (s.hasNext())
+      if (¢.equals(s.next())) {
         entryFound = true;
         break;
       }
@@ -79,15 +79,7 @@ public abstract class ENVTestEngineAbstract {
   public static void compareInOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {
     assert testSet != null;
     assert $ != null;
-    // TODO: Alex and Dan: use for each loop here.
-    // TODO Yossi, for(x:xs) considered a for each loop, and the while can not
-    // be replaced
-    // with for each loop just because we don't want to make anything "for each"
-    // element.
-    // I replaced the for(x:xs) to forEach(consumer) just to practice that java
-    // ficher.
-    final Iterator<Entry<String, Information>> iterator = $.iterator();
-    testSet.forEach(¢ -> action(¢, iterator));
+    testSet.forEach(¢ -> action(¢, $.iterator()));
   }
 
   /** Compares the given {@link LinkedHashSet} with the inner testSet.
@@ -95,7 +87,8 @@ public abstract class ENVTestEngineAbstract {
    * contained in the provided set.
    * @param $ JD
    * @return true iff the specified {@link LinkedHashSet} contains testSet. */
-  // TODO: Dan once the method is determined to be working, change to visibility
+  // TODO: Dan Greeenstein: once the method is determined to be working, change
+  // to visibility
   // to
   // protected.
   public static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> $, final LinkedHashSet<Entry<String, Information>> testSet) {

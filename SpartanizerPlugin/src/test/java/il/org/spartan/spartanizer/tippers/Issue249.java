@@ -5,6 +5,8 @@ import static il.org.spartan.azzert.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -42,8 +44,8 @@ import il.org.spartan.spartanizer.engine.*;
     azzert.that(s, instanceOf(Block.class));
     final Block b = az.block(s);
     assert b != null;
-    assert step.statements(b) != null;
-    azzert.that(step.statements(b).size(), is(0));
+    assert statements(b) != null;
+    azzert.that(statements(b).size(), is(0));
   }
 
   @Test public void a07() {

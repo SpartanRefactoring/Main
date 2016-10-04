@@ -9,10 +9,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** @author TODO: Matteo???
+/** @author TODO Matteo Orru: is that you?
  * @year 2016 */
 @SuppressWarnings("static-method") public class Issue239 {
   @Test public void a$01() {
@@ -67,7 +69,7 @@ import il.org.spartan.spartanizer.engine.*;
     )); //
     assert block != null;
     assert metrics.nodesCount(block) > 10;
-    final List<Statement> statements = step.statements(block);
+    final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;
     final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class, block);

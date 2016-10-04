@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -42,7 +44,7 @@ public interface spartan {
   }
 
   static String shorten(final ParameterizedType t) {
-    final List<Type> ts = step.typeArguments(t);
+    final List<Type> ts = typeArguments(t);
     final String $ = shorten(ts);
     if ($ == null)
       return shorten(t.getType());

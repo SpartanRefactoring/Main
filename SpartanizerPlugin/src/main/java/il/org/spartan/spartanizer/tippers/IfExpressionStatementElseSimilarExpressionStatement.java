@@ -35,10 +35,10 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
   }
 
   @Override public Statement replacement(final IfStatement s) {
-    final Expression then = step.expression(extract.expressionStatement(then(s)));
+    final Expression then = expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    final Expression elze = step.expression(extract.expressionStatement(elze(s)));
+    final Expression elze = expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
     final Expression e = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));

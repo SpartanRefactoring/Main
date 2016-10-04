@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,13 +23,12 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> imple
   }
 
   @Override public boolean prerequisite(final IfStatement x) {
-    final Expression then = step.expression(step.then(x));
+    final Expression then = expression(step.then(x));
     final InfixExpression e = az.infixExpression(step.expression(x));
     if (!iz.comparison(e))
       return false;
     final InfixExpression condition = az.comparison(e);
-    return step.operator(condition) == EQUALS && iz.nullLiteral(then)
-        && (iz.nullLiteral(step.left(condition)) || iz.nullLiteral(step.right(condition)));
+    return operator(condition) == EQUALS && iz.nullLiteral(then) && (iz.nullLiteral(step.left(condition)) || iz.nullLiteral(step.right(condition)));
   }
 
   @Override public Tip tip(final IfStatement s) {

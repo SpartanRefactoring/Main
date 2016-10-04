@@ -109,7 +109,7 @@ public enum step {
       case ASTNode.ENHANCED_FOR_STATEMENT:
         return az.enhancedFor(¢).getExpression();
       case ASTNode.METHOD_INVOCATION:
-        return step.receiver((MethodInvocation) ¢);
+        return receiver((MethodInvocation) ¢);
       case ASTNode.PARENTHESIZED_EXPRESSION:
         return expression((ParenthesizedExpression) ¢);
       case ASTNode.DO_STATEMENT:
@@ -354,7 +354,7 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
     return ¢.statements();
   }
-  
+
   /** Expose the list of sideEffects contained in a {@link SwitchStatement}
    * @param ¢ JD
    * @return reference to the list of sideEffects contained in the argument */

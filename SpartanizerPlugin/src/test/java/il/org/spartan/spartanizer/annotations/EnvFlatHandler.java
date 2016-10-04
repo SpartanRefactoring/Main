@@ -11,14 +11,6 @@ import il.org.spartan.spartanizer.java.Environment.*;
 
 /* Implements the handler of flatEnv outer annotation. */
 public final class EnvFlatHandler extends ENVTestEngineAbstract {
-  // TODO: #Dan, I changed the constructors by pulling out some similar
-  // code to initializers,
-  // we shouldn'tipper forget to test it as you tested the engine last time...
-  // TODO: #Dan, we can leave comments like this to mark ("#") stuff we want
-  // the other to know.
-  // before starting work we should run threw "TODO: #myName"s, and
-  // afterwards
-  // remove them:)
   static {
     testSetFlat = generateSet();
   }
@@ -52,14 +44,14 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
+      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
+        return ¢.values();
+      }
+
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(values(¢));
         return true;
-      }
-
-      @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
-        return ¢.values();
       }
     });
   }

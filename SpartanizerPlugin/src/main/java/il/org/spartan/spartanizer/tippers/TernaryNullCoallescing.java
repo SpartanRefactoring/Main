@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -34,16 +36,16 @@ public final class TernaryNullCoallescing extends NanoPatternTipper<ConditionalE
     if (!iz.comparison(az.infixExpression(step.expression(x))))
       return false;
     final InfixExpression condition = az.comparison(step.expression(x));
-    final Expression left = step.left(condition);
-    final Expression right = step.right(condition);
-    return step.operator(condition) == EQUALS ? prerequisite(left, right, step.elze(x))
-        : step.operator(condition) == NOT_EQUALS && prerequisite(left, right, step.then(x));
+    final Expression left = left(condition);
+    final Expression right = right(condition);
+    return operator(condition) == EQUALS ? prerequisite(left, right, elze(x))
+        : operator(condition) == NOT_EQUALS && prerequisite(left, right, then(x));
   }
 
   @Override public Tip tip(final ConditionalExpression x) {
     return new Tip(description(x), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(x, into.e("If.True(" + az.comparison(step.expression(x)) + ").then(" + step.then(x) + ").elze(" + step.elze(x) + ")"), g);
+        r.replace(x, into.e("If.True(" + az.comparison(step.expression(x)) + ").then(" + then(x) + ").elze(" + elze(x) + ")"), g);
       }
     };
   }

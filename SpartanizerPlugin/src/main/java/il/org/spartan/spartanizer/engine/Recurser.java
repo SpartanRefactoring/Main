@@ -19,7 +19,7 @@ public final class Recurser<T> {
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
-      return step.statements(az.block(n));
+      return statements(az.block(n));
     final InfixExpression ¢ = az.infixExpression(n);
     if (¢ != null) {
       // We must have this weird special case of adding right before left
@@ -31,7 +31,7 @@ public final class Recurser<T> {
       return $;
     }
     try {
-      return step.marchingList(n);
+      return marchingList(n);
     } catch (final NullPointerException e) {
       assert e != null;
       return null;

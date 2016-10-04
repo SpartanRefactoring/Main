@@ -89,7 +89,7 @@ public interface hop {
    * @param x the name by which to look for the fragment
    * @return fragment if such with the given name exists or null otherwise (or
    *         if ¢ or name are null) */
-  // TODO this seems a bug
+  // TODO Yossi Gil: this seems a bug
   static VariableDeclarationFragment getDefinition(final ASTNode n, final Expression x) {
     return hasNull(n, x) || n.getNodeType() != VARIABLE_DECLARATION_STATEMENT || x.getNodeType() != SIMPLE_NAME ? null
         : findDefinition((VariableDeclarationStatement) n, (SimpleName) x);
@@ -139,6 +139,18 @@ public interface hop {
     return $;
   }
 
+  /** @param s current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  static Statement previousStatementInBody(final Statement s) {
+    final Block b = az.block(s.getParent());
+    if (b == null)
+      return null;
+    final List<Statement> statements = statements(b);
+    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
+  }
+
   /** @param ¢ JD
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
@@ -171,18 +183,6 @@ public interface hop {
       return null;
     final VariableDeclarationStatement vds = az.variableDeclrationStatement(previous);
     return vds == null ? null : findFirst.elementOf(step.fragments(vds));
-  }
-
-  /** @param s current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
-  static Statement previousStatementInBody(final Statement s) {
-    final Block b = az.block(s.getParent());
-    if (b == null)
-      return null;
-    final List<Statement> statements = step.statements(b);
-    return statements.indexOf(s) < 1 ? null : statements.get(statements.indexOf(s) - 1);
   }
 
   static SimpleName simpleName(final Type ¢) {
