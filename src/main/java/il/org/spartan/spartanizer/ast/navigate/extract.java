@@ -408,7 +408,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    for (final Statement ¢ : statements(b))
+    for (final Statement ¢ : step.statements(b))
       extract.statementsInto(¢, $);
     return $;
   }
