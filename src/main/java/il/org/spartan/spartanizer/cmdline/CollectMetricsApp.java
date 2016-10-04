@@ -30,6 +30,7 @@ public final class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
   private static boolean optDoNotOverwrite;
 
+  // TODO Matteo Orru: why hiding?
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
