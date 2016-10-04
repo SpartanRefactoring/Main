@@ -146,6 +146,28 @@ import il.org.spartan.spartanizer.utils.*;
       // Holds the current scope full name (Path).
       String scopePath = "";
 
+      String anonymousClassDeclarationParentName(final AnonymousClassDeclaration d) {
+        // As of JSL3, AnonymousClassDeclaration's parent can be either
+        // ClassInstanceCreation or EnumConstantDeclaration
+        @SuppressWarnings("hiding") final ASTNode n = d.getParent();
+        if (n instanceof ClassInstanceCreation)
+          return az.classInstanceCreation(n).getType() + "";
+        assert n instanceof EnumConstantDeclaration;
+        return az.enumConstantDeclaration(n).getName() + "";
+      }
+
+      Entry<String, Information> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
+        return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
+      }
+
+      @SuppressWarnings("hiding") List<Entry<String, Information>> convertToEntry(final FieldDeclaration d) {
+        final List<Entry<String, Information>> $ = new ArrayList<>();
+        final type t = type.baptize(wizard.condense(d.getType()));
+        for (final VariableDeclarationFragment ¢ : step.fragments(d))
+          $.add(new MapEntry<>(fullName(¢.getName()), createInformation(¢, t)));
+        return $;
+      }
+
       Entry<String, Information> convertToEntry(final SingleVariableDeclaration ¢) {
         return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
       }
@@ -166,6 +188,10 @@ import il.org.spartan.spartanizer.utils.*;
         return $;
       }
 
+      Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+      }
+
       Information createInformation(final SingleVariableDeclaration ¢) {
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
       }
@@ -173,12 +199,20 @@ import il.org.spartan.spartanizer.utils.*;
       Information createInformation(final VariableDeclarationFragment ¢, final type t) {
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
-      
-      @Override public void endVisit(AnonymousClassDeclaration __){
+
+      @Override public void endVisit(final AnnotationTypeDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final AnonymousClassDeclaration __) {
         restoreScopeName();
       }
 
       @Override public void endVisit(final Block __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final CatchClause __) {
         restoreScopeName();
       }
 
@@ -187,6 +221,14 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       @Override public void endVisit(final EnhancedForStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnumConstantDeclaration __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final EnumDeclaration __) {
         restoreScopeName();
       }
 
@@ -207,6 +249,10 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       @Override public void endVisit(final TryStatement __) {
+        restoreScopeName();
+      }
+
+      @Override public void endVisit(final TypeDeclaration __) {
         restoreScopeName();
       }
 
@@ -255,6 +301,17 @@ import il.org.spartan.spartanizer.utils.*;
         return null;
       }
 
+      int orderOfCatchInTryParent(final CatchClause c) {
+        assert c.getParent() instanceof TryStatement;
+        @SuppressWarnings("hiding") int $ = 0;
+        for (final CatchClause ¢ : step.catchClauses((TryStatement) c.getParent())) {
+          if (¢ == c)
+            break;
+          ++$;
+        }
+        return $;
+      }
+
       String parentNameScope(final String ¢) {
         assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
         return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
@@ -287,23 +344,29 @@ import il.org.spartan.spartanizer.utils.*;
         }
         return $;
       }
-      
-      String anonymousClassDeclarationParentName(AnonymousClassDeclaration d){
-        //As of JSL3, AnonymousClassDeclaration's parent can be either ClassInstanceCreation or EnumConstantDeclaration
-        @SuppressWarnings("hiding") ASTNode n = d.getParent();
-        if(n instanceof ClassInstanceCreation)
-          return az.classInstanceCreation(n).getType() + "";
-        assert n instanceof EnumConstantDeclaration;
-        return az.enumConstantDeclaration(n).getName() + "";
+
+      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
       }
-      
-      @Override public boolean visit(final AnonymousClassDeclaration ¢){
+
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        $.add(convertToEntry(¢));
+        return true;
+      }
+
+      @Override public boolean visit(final AnonymousClassDeclaration ¢) {
         scopePath += "." + "#anon_extends_" + anonymousClassDeclarationParentName(¢);
         return true;
       }
 
       @Override public boolean visit(final Block ¢) {
         scopePath += "." + "#block" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final CatchClause ¢) {
+        scopePath += "." + "#catch" + orderOfCatchInTryParent(¢);
         return true;
       }
 
@@ -314,6 +377,21 @@ import il.org.spartan.spartanizer.utils.*;
 
       @Override public boolean visit(final EnhancedForStatement ¢) {
         scopePath += "." + "#enhancedFor" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        scopePath += "." + ¢.getName();
+        return true;
+      }
+
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        $.addAll(convertToEntry(¢));
         return true;
       }
 
@@ -344,6 +422,11 @@ import il.org.spartan.spartanizer.utils.*;
 
       @Override public boolean visit(final TryStatement ¢) {
         scopePath += "." + "#try" + statementOrderAmongTypeInParent(¢);
+        return true;
+      }
+
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        scopePath += "." + ¢.getName();
         return true;
       }
 
