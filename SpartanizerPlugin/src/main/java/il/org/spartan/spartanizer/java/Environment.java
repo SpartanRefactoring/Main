@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import java.util.*;
 import java.util.Map.*;
 
@@ -137,6 +139,38 @@ import il.org.spartan.spartanizer.utils.*;
   final LinkedHashSet<Entry<String, Information>> emptyEntries = new LinkedHashSet<>();
   /** Initializer for EMPTY */
   final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
+  // Holds the declarations in the subtree and relevant siblings.
+  final LinkedHashSet<Entry<String, Information>> currentEnvironment = new LinkedHashSet<>();
+
+  static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+  }
+
+  /** @param ¢ JD
+   * @return All declarations in given {@link Statement}, without entering the
+   *         contained ({@link Blocl}s. If the {@link Statement} is a
+   *         {@link Block}, (also IfStatement, ForStatement and so on...) return
+   *         empty Collection. */
+  static List<Entry<String, Information>> declarationsOf(final Statement ¢) {
+    final List<Entry<String, Information>> $ = new ArrayList<>();
+    switch (¢.getNodeType()) {
+      case VARIABLE_DECLARATION_STATEMENT:
+        $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
+        break;
+      default:
+        return $;
+    }
+    return $;
+  }
+
+  static List<Entry<String, Information>> declarationsOf(final VariableDeclarationStatement s) {
+    final List<Entry<String, Information>> $ = new ArrayList<>();
+    final type t = type.baptize(wizard.condense(s.getType()));
+    final String path = fullName(s);
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+      $.add(new MapEntry<>(path + "." + ¢.getName(), createInformation(¢, t)));
+    return $;
+  }
 
   /** @return set of entries declared in the node, including all hiding. */
   static LinkedHashSet<Entry<String, Information>> declaresDown(final ASTNode n) {
@@ -210,7 +244,6 @@ import il.org.spartan.spartanizer.utils.*;
         restoreScopeName();
       }
 
-      // TODO: Alex - do not define short names for fields.
       @SuppressWarnings("hiding") String fullName(final SimpleName $) {
         return scopePath + "." + $;
       }
@@ -350,10 +383,55 @@ import il.org.spartan.spartanizer.utils.*;
     return $;
   }
 
+  static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
+    for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
+      for (final Statement ¢ : step.statements(PB))
+        currentEnvironment.addAll(declarationsOf(¢));
+    return currentEnvironment;
+  }
+
+  static String fullName(final ASTNode ¢) {
+    return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
+  }
+
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
   static Environment genesis() {
     return EMPTY.spawn();
+  }
+
+  static Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
+    for (final Entry<String, Information> ¢ : ss)
+      if (s.equals(¢.getKey()))
+        return ¢.getValue();
+    return null;
+  }
+
+  static Information getHidden(final String ¢) {
+    final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
+    for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+      final Information i = get(currentEnvironment, s + "." + shortName);
+      if (i != null)
+        return i;
+    }
+    return null;
+  }
+
+  static Block getParentBlock(final ASTNode ¢) {
+    return az.block(¢.getParent());
+  }
+
+  static String name(final ASTNode ¢) {
+    return "???";
+  }
+
+  static String name(final VariableDeclarationFragment ¢) {
+    return ¢.getName() + "";
+  }
+
+  static String parentNameScope(final String ¢) {
+    assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
+    return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 
   /** @return set of entries used in a given node. this includes the list of
