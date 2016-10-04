@@ -1,21 +1,21 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class TestFactory {
-  public static String testcase(final String raw) {
-    return linify(shortenIdentifiers(eliminateSpaces(raw)));
+  public static String testcase(final String raw, final int report, final int issue) {
+    final String code = linify(shortenIdentifiers(eliminateSpaces(raw)));
+    return "  @Test public void report" + report + "() {" + "\n\ttrimmingOf(\"// From use case of issue" + issue + "\" //\n + " + code
+        + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" + code + ")\n.stays();\n}";
   }
 
   /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
@@ -24,12 +24,10 @@ public class TestFactory {
         : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
   }
 
-  /** Actually, implementing this might be trivial, I think applying toString()
-   * on an AST does this automatically.
-   * @param ¢
-   * @return */
+  /** @param ¢ string to be eliminated
+   * @return string without junk */
   private static String eliminateSpaces(final String ¢) {
-    return ¢;
+    return Essence.of(¢);
   }
 
   /** Separate the string to lines, like: trimmingOf("// From use case of
@@ -38,10 +36,17 @@ public class TestFactory {
    * @param ¢ string to linify
    * @return */
   private static String linify(final String ¢) {
-    return ¢;
+    String $ = "";
+    try (Scanner scanner = new Scanner(¢)) {
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        $ += "\"" + line + (!scanner.hasNextLine() ? "\"//" : "\" + //");
+      }
+    }
+    return $;
   }
 
-  private static String shortenIdentifiers(final String s) {
+  public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
     final Wrapper<String> id = new Wrapper<>();
     id.set("");
@@ -60,7 +65,7 @@ public class TestFactory {
             id.set(renderIdentifier(id.get()));
             renaming.put(name, id.get());
           }
-          Tippers.rename((SimpleName) ¢, ast.newSimpleName(renaming.get(name)), n, r, null);
+          r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
         }
         return true;
       }
