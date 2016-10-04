@@ -58,6 +58,7 @@ public interface system {
   static String runScript(final String pathname) throws IOException {
     return runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
+
   static int tokens(final String s) {
     int $ = 0;
     for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
