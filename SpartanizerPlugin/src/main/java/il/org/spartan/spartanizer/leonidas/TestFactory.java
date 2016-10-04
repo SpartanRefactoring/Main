@@ -30,9 +30,7 @@ public class TestFactory {
     return Essence.of(¢);
   }
 
-  /** Separate the string to lines, like: trimmingOf("// From use case of
-   * issue#1593\n" + // "public void f(){\n" + // " if(!g){\n" + // " foo();\n"
-   * + // " bar();\n" + // " }\n" + // "}"//
+  /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
   private static String linify(final String ¢) {
@@ -40,7 +38,7 @@ public class TestFactory {
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
-        $ += "\"" + line + (!scanner.hasNextLine() ? "\"//" : "\" + //");
+        $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "//" : " + //");
       }
     }
     return $;
