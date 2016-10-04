@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** @author // TODO Alex:
+/** @author // TODO Alex Kopzon:
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue177 {
   @SuppressWarnings("unused") @Test public void BitWiseAnd_withSideEffectsEXT() {
