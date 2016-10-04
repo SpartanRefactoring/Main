@@ -29,10 +29,9 @@ public class MyCSVStatistics extends CSVStatistics {
    *        numerical columns in the principal file
    * @throws IOException */
   public MyCSVStatistics(final String baseName, final String keysHeader) throws IOException {
-    // TODO: Yossi: I have a compilation error also for this method (nonnull).
-    // nonnull(baseName);
-    // nonnull(keysHeader);
     super(baseName, keysHeader);
+    assert baseName != null;
+    assert keysHeader != null;
     inner = new CSVWriter(removeExtension(baseName));
     summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;

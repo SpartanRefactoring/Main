@@ -179,7 +179,7 @@ public final class CollectMetricsApp implements IApplication {
   }
 
   private void spartanize() { // final CompilationUnit u) {
-    // TODO: try to it do first with one tipper only.
+    // TODO Yossi: try to it do first with one tipper only.
     // I think this is going be
     // better.
     try {

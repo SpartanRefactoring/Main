@@ -93,7 +93,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return e.getType() == s.getType() && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
-  /** XXX: This is a bug in autospartanization [[SuppressWarningsSpartan]] */
+  /** XXX: This is a bug in auto-laconize [[SuppressWarningsSpartan]] */
   private static Expression handleInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
     for (final Expression ¢¢ : operands)
