@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
-/* TODO ALex/Dan: Tippers to improve once Environment is complete:
+/* TODO Dan Greenstein: Tippers to improve once Environment is complete:
  * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
   /** The Environment structure is in some like a Linked list, where EMPTY is
@@ -523,7 +523,7 @@ import il.org.spartan.spartanizer.utils.*;
       return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
     }
 
-    // TODO: Dan & Alex implement this.
+    // TODO Dan Greenstein: implement this.
     static boolean eq(final type t1, final type t2) {
       return true;
       // return t1 == null ? t2 == null : t2 != null && t1 == t2;
