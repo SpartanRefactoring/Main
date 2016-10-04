@@ -1059,8 +1059,7 @@ public final class Version230 {
 
   @Test public void ifEmptyThenThrowVariant() {
     trimmingOf("if (b) {\n" + " /* empty */" + "; \n" + "} // no else \n" + " throw new Exception();\n")//
-        .gives("throw new Exception();")//
-        .stays();
+        .gives("throw new Exception();").stays();
   }
 
   @Test public void ifEmptyThenThrowVariant1() {
