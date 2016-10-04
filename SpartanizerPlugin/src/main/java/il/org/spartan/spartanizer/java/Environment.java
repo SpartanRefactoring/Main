@@ -143,7 +143,7 @@ import il.org.spartan.spartanizer.utils.*;
   final LinkedHashSet<Entry<String, Information>> currentEnvironment = new LinkedHashSet<>();
 
   static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-    return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+    return new Information(¢.getParent(), getHidden(fullName(¢.getName()), currentEnvironment), ¢, t);
   }
 
   /** @param ¢ JD
@@ -223,15 +223,15 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       Information createInformation(final AnnotationTypeMemberDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName()),$), ¢, type.baptize(wizard.condense(¢.getType())));
       }
 
       Information createInformation(final SingleVariableDeclaration ¢) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(wizard.condense(¢.getType())));
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName()),$), ¢, type.baptize(wizard.condense(¢.getType())));
       }
 
       Information createInformation(final VariableDeclarationFragment ¢, final type t) {
-        return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
+        return new Information(¢.getParent(), getHidden(fullName(¢.getName()),$), ¢, t);
       }
 
       @Override public void endVisit(final AnnotationTypeDeclaration __) {
@@ -298,42 +298,6 @@ import il.org.spartan.spartanizer.utils.*;
         return scopePath + "." + $;
       }
 
-      Information get(final LinkedHashSet<Entry<String, Information>> ss, final String s) {
-        for (final Entry<String, Information> ¢ : ss)
-          if (s.equals(¢.getKey()))
-            return ¢.getValue();
-        return null;
-      }
-
-      /** Returns the {@link Information} of the declaration the current
-       * declaration is hiding.
-       * @param ¢ the fullName of the declaration.
-       * @return The hidden node's Information [[SuppressWarningsSpartan]] */
-      /* Implementation notes: Should go over result set, and search for
-       * declaration which shares the same variable name in the parents. Should
-       * return the closest match: for example, if we search for a match to
-       * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
-       * .A.B.x.
-       *
-       * If a result is found in the result set, return said result.
-       *
-       * To consider: what if said hidden declaration will not appear in
-       * 'declaresDown', but will appear in 'declaresUp'? Should we search for
-       * it in 'declaresUp' result set? Should we leave the result as it is? I
-       * (Dan) lean towards searching 'declaresUp'. Current implementation only
-       * searches declaresDown.
-       *
-       * If no match is found, return null. */
-      Information getHidden(final String ¢) {
-        final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
-        for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-          final Information i = get($, s + "." + shortName);
-          if (i != null)
-            return i;
-        }
-        return null;
-      }
-
       int orderOfCatchInTryParent(final CatchClause c) {
         assert c.getParent() instanceof TryStatement;
         @SuppressWarnings("hiding") int $ = 0;
@@ -359,13 +323,13 @@ import il.org.spartan.spartanizer.utils.*;
        * @param s
        * @return The nodes index, according to order of appearance, among nodes
        *         of the same type. */
-      int statementOrderAmongTypeInParent(final Statement s) {
+      @SuppressWarnings("hiding") int statementOrderAmongTypeInParent(final Statement s) {
         // extract.statements wouldn't work here - we need a shallow extract,
         // not a deep one.
-        @SuppressWarnings("hiding") final ASTNode n = s.getParent();
+        final ASTNode n = s.getParent();
         if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
           return 0;
-        @SuppressWarnings("hiding") int $ = 0;
+        int $ = 0;
         for (final Statement ¢ : n instanceof Block ? step.statements((Block) n) : step.statements((SwitchStatement) n)) {
           // This is intentionally '==' and not equals, meaning the exact same
           // Statement,
@@ -505,12 +469,31 @@ import il.org.spartan.spartanizer.utils.*;
     return null;
   }
 
-  static Information getHidden(final String ¢) {
+  /** Returns the {@link Information} of the declaration the current
+   * declaration is hiding.
+   * @param ¢ the fullName of the declaration.
+   * @return The hidden node's Information [[SuppressWarningsSpartan]] */
+  /* Implementation notes: Should go over result set, and search for
+   * declaration which shares the same variable name in the parents. Should
+   * return the closest match: for example, if we search for a match to
+   * .A.B.C.x, and result set contains .A.B.x and .A.x, we should return
+   * .A.B.x.
+   *
+   * If a result is found in the result set, return said result.
+   *
+   * To consider: what if said hidden declaration will not appear in
+   * 'declaresDown', but will appear in 'declaresUp'? Should we search for
+   * it in 'declaresUp' result set? Should we leave the result as it is? I
+   * (Dan) lean towards searching 'declaresUp'. Current implementation only
+   * searches declaresDown.
+   *
+   * If no match is found, return null. */
+  static Information getHidden(final String ¢, LinkedHashSet<Entry<String,Information>> e) {
     final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
     for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-      final Information i = get(currentEnvironment, s + "." + shortName);
-      if (i != null)
-        return i;
+      final Information $ = get(e, s + "." + shortName);
+      if ($ != null)
+        return $;
     }
     return null;
   }
