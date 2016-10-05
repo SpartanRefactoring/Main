@@ -12,15 +12,26 @@ import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** Scans files named by folder, ignore test files, and collect statistics.
+/** Scans files named by folder, ignore test files, and collect statistics, on
+ * classes, methods, etc.
  * @author Yossi Gil
  * @year 2015 */
 public final class spartanizer {
   private static final String folder = "/tmp/";
-  private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer();
+  private static final Toolbox toolbox = new Toolbox();
+  private int done;
+  private final String inputPath;
+  private final String beforeFileName;
+  private final String afterFileName;
+  private PrintWriter befores;
+  private PrintWriter afters;
+  private CSVStatistics report;
+  private final String reportFileName;
+  private File currentFile;
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
@@ -38,16 +49,6 @@ public final class spartanizer {
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
   }
-
-  private int done;
-  private final String inputPath;
-  private final String beforeFileName;
-  private final String afterFileName;
-  private PrintWriter befores;
-  private PrintWriter afters;
-  private CSVStatistics report;
-  private final String reportFileName;
-  private File currentFile;
 
   private spartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -83,7 +84,7 @@ public final class spartanizer {
     final int body = metrics.bodySize(¢);
     final int tide = clean(¢ + "").length();
     final int essence = Essence.of(¢ + "").length();
-    final String out = interactiveSpartanizer.fixedPoint(¢ + "");
+    final String out = fixedPoint(¢);
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -137,13 +138,24 @@ public final class spartanizer {
         .put("R(B/S)", ratio(nodes, body)) //
     ;
     report.nl();
-    // System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
+    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
+  }
+
+  /** @param ¢
+   * @return */
+  private String fixedPoint(BodyDeclaration ¢) {
+    for (;;) {
+      return null;
+    }
+    // TODO Auto-generated method stub
   }
 
   void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
+        // TODO Marco: Check that this method does not have a <code>@Test</code>
+        // annotation
         return collect(¢);
       }
     });
@@ -167,10 +179,6 @@ public final class spartanizer {
     collect();
     runEssence();
     runWordCount();
-    System.err.printf("\n Our batch applicator had %d tippers dispersed over %d hooks\n", //
-        box.it(interactiveSpartanizer.toolbox.tippersCount()), //
-        box.it(interactiveSpartanizer.toolbox.hooksCount())//
-    );
   }
 
   void runEssence() {
@@ -214,7 +222,6 @@ public final class spartanizer {
       x.printStackTrace();
       System.err.println(done + " files processed; processing of " + inputPath + " failed for some I/O reason");
     }
-    applyEssenceCommandLine();
     System.err.print("\n Done: " + done + " files processed.");
     System.err.print("\n Summary: " + report.close());
   }

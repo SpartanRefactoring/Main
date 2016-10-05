@@ -18,93 +18,12 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends GUI$Applicator {
-  /** Disable laconic tips, used to indicate that no spartanization should be
-   * made to node */
-  public static final String disablers[] = { "[[SuppressWarningsSpartan]]", //
-  };
-  /** Enable spartanization identifier, overriding a disabler */
-  public static final String enablers[] = { "[[EnableWarningsSpartan]]", //
-  };
-  static final String disabledPropertyId = "Trimmer_disabled_id";
-
-  /** A recursive scan for disabled nodes. Adds disabled property to disabled
-   * nodes and their sub trees.
-   * <p>
-   * Algorithm:
-   * <ol>
-   * <li>Visit all nodes that contain an annotation.
-   * <li>If a node has a disabler, disable all nodes below it using
-   * {@link hop#descendants(ASTNode)}
-   * <li>Disabling is done by setting a node property, and is carried out
-   * <li>If a node which was previously disabled contains an enabler, enable all
-   * all its descendants.
-   * <li>If a node which was previously enabled, contains a disabler, disable
-   * all nodes below it, and carry on.
-   * <li>Obviously, the visit needs to be pre-order, i.e., visiting the parent
-   * before the children.
-   * </ol>
-   * The disabling information is used later by the tip/fixing mechanisms, which
-   * should know little about this class.
-   * @param n an {@link ASTNode}
-   * @author Ori Roth
-   * @since 2016/05/13 */
-  public static void disabledScan(final ASTNode n) {
-    n.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (!(¢ instanceof BodyDeclaration) || !isDisabledByIdentifier((BodyDeclaration) ¢))
-          return true;
-        disable((BodyDeclaration) ¢);
-        return false;
-      }
-    });
-  }
-
-  /** @param n an {@link ASTNode}
-   * @return true iff the node is spartanization disabled */
-  public static boolean isDisabled(final ASTNode ¢) {
-    return NodeData.has(¢, disabledPropertyId);
-  }
-
   public static boolean prune(final Tip r, final List<Tip> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
       rs.add(r);
     }
     return true;
-  }
-
-  /** The recursive disabling process. Returns to {@link Trimmer#disabledScan}
-   * upon reaching an enabler.
-   * @param d disabled {@link BodyDeclaration} */
-  static void disable(final BodyDeclaration d) {
-    d.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (¢ instanceof BodyDeclaration && isEnabledByIdentifier((BodyDeclaration) ¢)) {
-          disabledScan(¢);
-          return false;
-        }
-        NodeData.set(¢, disabledPropertyId);
-        return true;
-      }
-    });
-  }
-
-  static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
-    if (d == null || d.getJavadoc() == null)
-      return false;
-    final String s = d.getJavadoc() + "";
-    for (final String ¢ : ids)
-      if (s.contains(¢))
-        return true;
-    return false;
-  }
-
-  static boolean isDisabledByIdentifier(final BodyDeclaration ¢) {
-    return hasJavaDocIdentifier(¢, disablers);
-  }
-
-  static boolean isEnabledByIdentifier(final BodyDeclaration ¢) {
-    return !hasJavaDocIdentifier(¢, disablers) && hasJavaDocIdentifier(¢, enablers);
   }
 
   public final Toolbox toolbox;
@@ -125,7 +44,7 @@ public class Trimmer extends GUI$Applicator {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
         TrimmerLog.visitation(n);
-        if (!inRange(m, n) || isDisabled(n))
+        if (!inRange(m, n) || disabling.on(n))
           return true;
         final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
         if (w == null)
@@ -146,7 +65,7 @@ public class Trimmer extends GUI$Applicator {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        disabledScan(¢);
+        disabling.scan(¢);
       }
     });
   }
@@ -171,7 +90,7 @@ public class Trimmer extends GUI$Applicator {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
-        if (isDisabled(n))
+        if (disabling.on(n))
           return true;
         final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
         if (w != null)
@@ -185,7 +104,7 @@ public class Trimmer extends GUI$Applicator {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        disabledScan(¢);
+        disabling.scan(¢);
       }
     };
   }

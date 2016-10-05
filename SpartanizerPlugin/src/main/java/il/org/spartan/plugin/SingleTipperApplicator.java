@@ -203,7 +203,7 @@ public final class SingleTipperApplicator {
     protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
       b.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (Trimmer.isDisabled(n) || !w.myAbstractOperandsClass().isInstance(n))
+          if (disabling.on(n) || !w.myAbstractOperandsClass().isInstance(n))
             return true;
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
@@ -224,7 +224,7 @@ public final class SingleTipperApplicator {
         }
 
         @Override protected void initialization(final ASTNode ¢) {
-          Trimmer.disabledScan(¢);
+          disabling.scan(¢);
         }
       });
     }
