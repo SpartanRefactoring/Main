@@ -50,9 +50,14 @@ public class TipperFactory {
 
       @SuppressWarnings("unchecked") Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
         if (iz.name(p)) {
-          final String id = ((Name) p).getFullyQualifiedName();
-          if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$B"))
+          final String id = az.name(p).getFullyQualifiedName();
+          if (id.startsWith("$X") || id.startsWith("$M"))
             enviroment.put(id, n);
+        } else if (iz.methodInvocation(p)) {
+          final String id = az.methodInvocation(p).getName().getFullyQualifiedName();
+          if (id.startsWith("$B"))
+            enviroment.put(id + "();", n);
+          System.out.println(p);
         } else {
           final List<? extends ASTNode> nChildren = Recurser.children(n);
           final List<? extends ASTNode> pChildren = Recurser.children(p);
