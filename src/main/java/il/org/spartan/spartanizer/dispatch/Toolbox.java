@@ -71,7 +71,7 @@ public class Toolbox {
 
   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @SuppressWarnings("unchecked") Tipper<ASTNode> x = (Tipper<ASTNode>) t;
-    return extractTip(n,x);
+    return extractTip(n, x);
   }
 
   public static Tip extractTip(ASTNode n, Tipper<ASTNode> t) {

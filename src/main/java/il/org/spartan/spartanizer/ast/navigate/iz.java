@@ -862,9 +862,7 @@ public interface iz {
     return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   public static boolean variableNotUsedAfterStatement(final Statement ¢, final SimpleName n) {
     final Block b = az.block(¢.getParent());
     assert b != null : "For loop's parent is null";
@@ -914,5 +912,5 @@ public interface iz {
       monitor.logEvaluationError(this, x);
       return false;
     }
-  }  
+  }
 }
