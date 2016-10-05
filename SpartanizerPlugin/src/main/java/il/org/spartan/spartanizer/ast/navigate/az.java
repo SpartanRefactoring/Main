@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -319,7 +320,7 @@ public enum az {
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
     final List<VariableDeclarationFragment> fragments = new ArrayList<>();
     duplicate.into(step.fragments(¢), fragments);
-    return minus.firstElem(fragments);
+    return chop(fragments);
   }
 
   /** Down-cast, if possible, to {@link NormalAnnotation}

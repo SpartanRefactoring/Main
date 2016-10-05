@@ -82,7 +82,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
             operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
           }
       }
-    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElem(minus.firstElem(operands)));
+    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
@@ -120,7 +120,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
     return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null
-        && (e.getType() + "").equals((s.getType() + "")) && compareModifiers(extendedModifiers, extendedModifiers2);
+        && (e.getType() + "").equals(s.getType() + "") && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

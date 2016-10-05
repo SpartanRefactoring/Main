@@ -28,9 +28,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-// XXX: Ori Roth: check if we can eliminate this dependency on Refactoring...
-// Answer: no can do, see {@link Wizard} and {@link GUI$Applicator#getFixWithPreview}
-// In short: required for the apply with preview marker resolution
 public abstract class GUI$Applicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();

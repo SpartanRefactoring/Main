@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.dispatch;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
@@ -50,7 +48,7 @@ public class Toolbox {
    * @return */
   public ASTRewrite pickFirstTip(final ASTNode root) {
     disabling.scan(root);
-    AtomicBoolean done = new AtomicBoolean(false);
+    final AtomicBoolean done = new AtomicBoolean(false);
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
     root.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode n) {
@@ -70,14 +68,14 @@ public class Toolbox {
   }
 
   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
-    @SuppressWarnings("unchecked") Tipper<ASTNode> x = (Tipper<ASTNode>) t;
+    @SuppressWarnings("unchecked") final Tipper<ASTNode> x = (Tipper<ASTNode>) t;
     return extractTip(n, x);
   }
 
-  public static Tip extractTip(ASTNode n, Tipper<ASTNode> t) {
+  public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
     try {
       return t.tip(n);
-    } catch (TipperFailure ¢) {
+    } catch (final TipperFailure ¢) {
       ¢.printStackTrace();
       return null;
     }
