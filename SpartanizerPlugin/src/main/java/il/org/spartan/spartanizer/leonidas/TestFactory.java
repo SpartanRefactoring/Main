@@ -31,7 +31,6 @@ public class TestFactory {
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
   static String renderIdentifier(final String old) {
-    System.out.println(old);
     return "start".equals(old) ? "a"
         : "START".equals(old) ? "A"
             : "z".equals(old) ? "x1"
