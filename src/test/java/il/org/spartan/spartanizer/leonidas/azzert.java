@@ -126,7 +126,7 @@ public class azzert {
         case OUTER_TYPE_LOOKALIKE:
           return u;
         case STATEMENTS_LOOK_ALIKE:
-          return findSecond(Block.class, u);
+          return findFirst.instanceOf(Block.class, u);
         default:
           break;
       }
