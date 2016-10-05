@@ -96,7 +96,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression> i
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Tip(description(x), x) {
+    return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first(es);
         for (final Expression ¢ : es)

@@ -31,7 +31,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     final SimpleName ¢ = s.getAST().newSimpleName("¢");
     if (m != null)
       m.exclude(s);
-    return new Tip(description(s), s, body) {
+    return new Tip(description(s), s, this.getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, s, r, g);
       }

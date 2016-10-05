@@ -22,7 +22,7 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
   }
 
   @Override public Tip tip(final SuperConstructorInvocation i) {
-    return new Tip(description(i), i) {
+    return new Tip(description(i), i, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }

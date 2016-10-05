@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** A function object representing a sequence of operations on an
@@ -36,20 +37,23 @@ public abstract class Tip extends Range {
   public final String description;
   /** The line number of the first character to be rewritten **/
   public int lineNumber = -1;
+  /** The tipper class that supplied that tip */
+  @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
 
   /** Instantiates this class
    * @param description a textual description of the changes described by this
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, final ASTNode n, final ASTNode... ns) {
-    this(description, range(n, ns));
+  public Tip(final String description, final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode... ns) {
+    this(description, range(n, ns), tipperClass);
     lineNumber = ((CompilationUnit) searchAncestors.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
   }
 
-  Tip(final String description, final Range other) {
+  Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     super(other);
     this.description = description;
+    this.tipperClass = tipperClass;
   }
 
   /** Convert the rewrite into changes on an {@link ASTRewrite}
