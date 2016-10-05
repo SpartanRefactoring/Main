@@ -5,7 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.eclipse.ui.dialogs.*;
 
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -26,11 +25,10 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return "Split " + ¢.getName() + " into two logical parts";
   }
 
-  @Override public List<ASTNode> go(final ASTRewrite r, final MethodDeclaration d,
-      @SuppressWarnings("unused") final TextEditGroup __) {
+  @Override public List<ASTNode> go(final ASTRewrite r, final MethodDeclaration d, @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
-    MethodVariablesScanner s = new MethodVariablesScanner(d);
+    final MethodVariablesScanner s = new MethodVariablesScanner(d);
     for (final Statement ¢ : s.statements()) {
       s.update();
       if (s.isOptionalForkPoint())
@@ -42,30 +40,28 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   private static boolean isValid(final MethodDeclaration ¢) {
     return !¢.isConstructor() && ¢.getBody() != null && ¢.getBody().statements().size() >= MINIMAL_STATEMENTS_COUNT;
   }
-  
-  /** 
-   * @param d JD
+
+  /** @param d JD
    * @param ds variables list
-   * @return true iff the method and the list contains same variables, in matters oftype and quantity
-   * [[SuppressWarningsSpartan]]
-   */
-  @SuppressWarnings("unchecked") public static boolean sameParameters(MethodDeclaration d, List<VariableDeclaration> ds) {
+   * @return true iff the method and the list contains same variables, in
+   *         matters oftype and quantity [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
-    List<String> ts = new LinkedList<>();
-    for (VariableDeclaration ¢ : ds)
+    final List<String> ts = new LinkedList<>();
+    for (final VariableDeclaration ¢ : ds)
       ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
           : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
-    for (SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
+    for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) d.parameters())
       if (!ts.contains(¢.getType() + ""))
         return false;
     return true;
   }
 
   @SuppressWarnings("unchecked") private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d,
-      final List<VariableDeclaration> ds, final Statement forkPoint, boolean equalParams) {
+      final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
     Collections.sort(ds, new NaturalVariablesOrder(d));
-    List<ASTNode> $ = new LinkedList<>();
+    final List<ASTNode> $ = new LinkedList<>();
     final MethodDeclaration d1 = duplicate.of(d);
     fixStatements(d, d1, r);
     d1.getBody().statements().subList(d.getBody().statements().indexOf(forkPoint) + 1, d.getBody().statements().size()).clear();
@@ -92,28 +88,26 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return $;
   }
 
-  /**
-   * @param d
+  /** @param d
    * @param d1
-   * @param r
-   */
-  @SuppressWarnings("unchecked") private static void fixStatements(MethodDeclaration d, MethodDeclaration dx, ASTRewrite r) {
+   * @param r */
+  @SuppressWarnings("unchecked") private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     dx.getBody().statements().clear();
-    for (Statement ¢ : (List<Statement>) d.getBody().statements())
+    for (final Statement ¢ : (List<Statement>) d.getBody().statements())
       dx.getBody().statements().add(r.createCopyTarget(¢));
   }
 
-  private static void fixName(MethodDeclaration d2, boolean equalParams) {
+  private static void fixName(final MethodDeclaration d2, final boolean equalParams) {
     if (equalParams)
       d2.setName(d2.getAST().newSimpleName(fixName(d2.getName() + "")));
   }
-  
-  private static void fixName(MethodInvocation i, boolean equalParams) {
+
+  private static void fixName(final MethodInvocation i, final boolean equalParams) {
     if (equalParams)
       i.setName(i.getAST().newSimpleName(fixName(i.getName() + "")));
   }
-  
-  private static String fixName(String ¢) {
+
+  private static String fixName(final String ¢) {
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
 
@@ -128,13 +122,13 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(duplicate.of(v.getName()));
         sv.setType(duplicate.of(p.getType()));
-        for (IExtendedModifier md : (List<IExtendedModifier>) p.modifiers())
+        for (final IExtendedModifier md : (List<IExtendedModifier>) p.modifiers())
           sv.modifiers().add(duplicate.of((ASTNode) md));
         d2.parameters().add(sv);
       }
   }
-  
-  @SuppressWarnings("unchecked") private static void fixJavadoc(MethodDeclaration d, final List<VariableDeclaration> ds) {
+
+  @SuppressWarnings("unchecked") private static void fixJavadoc(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
@@ -159,27 +153,27 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return;
     ts.removeAll(xs);
     for (final String s : ns) {
-      TagElement e = j.getAST().newTagElement();
+      final TagElement e = j.getAST().newTagElement();
       e.setTagName(TagElement.TAG_PARAM);
       e.fragments().add(j.getAST().newSimpleName(s));
       ts.add(tagPosition, e);
     }
   }
 
-  @Override public ChildListPropertyDescriptor listDescritor(@SuppressWarnings("unused") MethodDeclaration __) {
+  @Override public ChildListPropertyDescriptor listDescritor(@SuppressWarnings("unused") final MethodDeclaration __) {
     return TypeDeclaration.BODY_DECLARATIONS_PROPERTY;
   }
-  
+
   public static class MethodVariablesScanner extends MethodScanner {
     // TODO Ori: get more suitable names for constants
     // 1.0 means all statements but the last.
-    private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;//2.0/3.0;
+    private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;// 2.0/3.0;
     protected final Map<VariableDeclaration, List<Statement>> uses;
     protected final List<VariableDeclaration> active;
     protected final List<VariableDeclaration> inactive;
     protected int variablesTerminated;
-    
-    @SuppressWarnings("unchecked") public MethodVariablesScanner(MethodDeclaration method) {
+
+    @SuppressWarnings("unchecked") public MethodVariablesScanner(final MethodDeclaration method) {
       super(method);
       uses = new HashMap<>();
       active = new LinkedList<>();
@@ -197,7 +191,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     @Override public List<Statement> availableStatements() {
       return statements.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * statements.size()) + 1, statements.size() - 2));
     }
-    
+
     @SuppressWarnings("unchecked") public void update() {
       final List<VariableDeclaration> vs = new LinkedList<>();
       vs.addAll(uses.keySet());
@@ -215,28 +209,29 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         }
       }
       if (currentStatement instanceof VariableDeclarationStatement)
-        for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) (((VariableDeclarationStatement) currentStatement).fragments())) {
+        for (final VariableDeclarationFragment ¢ : (List<VariableDeclarationFragment>) ((VariableDeclarationStatement) currentStatement)
+            .fragments()) {
           setUsesMapping(¢, currentIndex + 1);
           if (uses.containsKey(¢))
             inactive.add(¢);
         }
     }
-    
+
     public boolean isOptionalForkPoint() {
-      return variablesTerminated > 0 ;//&& active.isEmpty();
+      return variablesTerminated > 0;// && active.isEmpty();
     }
-    
+
     public List<VariableDeclaration> usedVariables() {
-      List<VariableDeclaration> $ = new LinkedList<>();
+      final List<VariableDeclaration> $ = new LinkedList<>();
       $.addAll(uses.keySet());
       return $;
     }
-    
+
     private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      for (int ¢ = starting ; ¢ < statements.size() ; ++¢)
+      for (int ¢ = starting; ¢ < statements.size(); ++¢)
         setUsesMapping(d, statements.get(¢));
     }
-    
+
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {
       if (Collect.usesOf(d.getName()).in(s).isEmpty())
         return;
@@ -245,17 +240,18 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       uses.get(d).add(s);
     }
   }
-  
+
   static class NaturalVariablesOrder implements Comparator<VariableDeclaration> {
     final List<SingleVariableDeclaration> ps;
     final List<Statement> ss;
-    @SuppressWarnings("unchecked") public NaturalVariablesOrder(MethodDeclaration method) {
+
+    @SuppressWarnings("unchecked") public NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = method.parameters();
       ss = method.getBody() == null ? Collections.EMPTY_LIST : method.getBody().statements();
     }
 
-    @Override public int compare(VariableDeclaration d1, VariableDeclaration d2) {
+    @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {
       return ps.contains(d1) ? !ps.contains(d2) ? 1 : ps.indexOf(d1) - ps.indexOf(d2)
           : ps.contains(d2) ? -1
               : d1.getParent() != d2.getParent() ? ss.indexOf(d1.getParent()) - ss.indexOf(d2.getParent())

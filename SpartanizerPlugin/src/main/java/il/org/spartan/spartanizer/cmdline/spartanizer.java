@@ -144,9 +144,9 @@ public final class spartanizer {
 
   /** @param ¢
    * @return */
-  private String fixedPoint(BodyDeclaration ¢) {
+  private String fixedPoint(final BodyDeclaration ¢) {
     for (;;)
-     return null;
+      return null;
   }
 
   void collect(final CompilationUnit u) {
@@ -182,20 +182,6 @@ public final class spartanizer {
   void runEssence() {
     shellEssenceMetrics(beforeFileName);
     shellEssenceMetrics(afterFileName);
-  }
-
-  private void applyEssenceCommandLine() {
-    try {
-      final String essentializedCodeBefore = runScript(beforeFileName);
-      final String essentializedCodeAfter = runScript(afterFileName);
-      final int numWordEssentialBefore = essentializedCodeBefore.trim().length();
-      final int numWordEssentialAfter = essentializedCodeAfter.trim().length();
-      System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
-      System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
-      System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    } catch (final IOException e) {
-      System.err.println(e.getMessage());
-    }
   }
 
   private void collect() {

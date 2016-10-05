@@ -43,7 +43,7 @@ public abstract class LaconizeSelection extends BaseHandler {
           applicator.parse();
           applicator.scan();
           n.inner = applicator.TipsCount();
-          Range r = getSelection(currentCompilationUnit);
+          final Range r = getSelection(currentCompilationUnit);
           if (r != null)
             applicator.apply(currentCompilationUnit, r);
         });
