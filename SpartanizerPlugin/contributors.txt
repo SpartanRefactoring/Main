@@ -12,6 +12,7 @@ Boris van Sosin <boris.van.sosin [at] gmail.com>
 Dan Greenstein <dngreenst [at] gmail.com>
 Daniel Mittelman <daniel [at] mittelman.co.il>
 Dor Ma’ayan <dor.d.ma [at] gmail.com>
+Itai Dabran <idabran@cs.technion.ac.il>
 Niv Shalmon <shalmon.niv [at] gmail.com>
 Ofir Elmakias <elmakias [at] outlook.com>
 Ori Roth <ori.rothh [at] gmail.com>
