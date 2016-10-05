@@ -1257,14 +1257,29 @@ public final class Version230 {
   }
 
   @Test public void inlineArrayInitialization1() {
-    trimmingOf("public void multiDimensionalIntArraysAreEqual() {\n" + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n"
-        + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" + "  assertArrayEquals(int1, int2);\n" + "}").stays();
+    trimmingOf("public void multiDimensionalIntArraysAreEqual() {\n" //
+        + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
+        + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
+        + "  assertArrayEquals(int1, int2);\n" //
+        + "}").gives("public void multiDimensionalIntArraysAreEqual() {\n" //
+            + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
+            + "  assertArrayEquals(int1, (new int[][] {{1, 2, 3}, {4, 5, 6}}));\n" //
+            + "}");
   }
 
   @Test public void inlineArrayInitialization2() {
-    trimmingOf("public double[] solve() {\n" + "  final SimpleRegression regress = new SimpleRegression(true);\n" + "  for (double[] dxx : points)\n"
-        + "    regress.addData(d[0], d[1]);\n" + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" + "  return $;\n" + "}")
-            .stays();
+    trimmingOf("public double[] solve() {\n" //
+        + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
+        + "  for (double[] dxx : points)\n" //
+        + "    regress.addData(d[0], d[1]);\n" //
+        + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
+        + "  return $;\n" //
+        + "}").gives("public double[] solve() {\n" //
+            + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
+            + "  for (double[] dxx : points)\n" //
+            + "    regress.addData(d[0], d[1]);\n" //
+            + "  return new double[] { regress.getSlope(), regress.getIntercept() };\n" //
+            + "}");
   }
 
   @Test public void inlineInitializers() {
