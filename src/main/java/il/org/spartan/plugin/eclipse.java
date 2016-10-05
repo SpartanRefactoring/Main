@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.*;
 public enum eclipse {
   facade;
   static final String NAME = "Laconic";
-  static final String ICON_PATH = "/src/main/icons/spartan-warrior.gif";
+  private static final String iconAddress = "platform:/plugin/org.eclipse.compare/icons/full/wizban/applypatch_wizban.png";
   private static boolean iconInitialized;
   static ImageIcon icon;
   static final Shell parent = null;
@@ -51,12 +51,7 @@ public enum eclipse {
   }
 
   static Void announce(final Object message) {
-    // new PopupDialog(parent, //
-    // shellStyle, takeFocusOnOpen, persistSize, persistLocation,
-    // showDialogMenu, showPersistActions, //
-    // message + "", "Spartan Plugin").open();
     JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon());
-    // JOptionPane.showMessageDialog(null, message);
     return null;
   }
 
@@ -146,11 +141,12 @@ public enum eclipse {
       iconInitialized = true;
       URL u;
       try {
-        u = new URL("platform:/plugin/org.eclipse.pde.ua.ui/icons/wizban/new_cheatsheet_wiz.png");
+        u = new URL(iconAddress);
         final Image i = Toolkit.getDefaultToolkit().getImage(u);
         if (i != null)
           icon = new ImageIcon(
-              i/* .getScaledInstance(64, 64, Image.SCALE_SMOOTH) */);
+              i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
+        System.out.println(i.getHeight(null));
       } catch (final MalformedURLException x) {
         x.printStackTrace();
       }
