@@ -59,6 +59,8 @@ public class Matcher {
       return false;
     if (iz.name(p))
       return sameName(p, n);
+    if (iz.methodInvocation(p) && az.methodInvocation(p).getName().getFullyQualifiedName().startsWith("$B"))
+      return matchesBlock(n) && consistent(n, az.methodInvocation(p).getName().getFullyQualifiedName());
     if (n.getNodeType() != p.getNodeType())
       return false;
     if (iz.literal(p))
@@ -75,6 +77,14 @@ public class Matcher {
     return true;
   }
 
+  /** Checks if node is a block or statement
+   * @param ¢
+   * @return */
+  private static boolean matchesBlock(ASTNode ¢) {
+    System.out.println(¢ + "" + (iz.block(¢) || iz.statement(¢)));
+    return iz.block(¢) || iz.statement(¢);
+  }
+
   private boolean sameName(final ASTNode p, final ASTNode n) {
     final String id = ((Name) p).getFullyQualifiedName();
     if (id.startsWith("$")) {
@@ -82,8 +92,6 @@ public class Matcher {
         return n instanceof Expression && consistent(n, id);
       if (id.startsWith("$M"))
         return n instanceof MethodInvocation && consistent(n, id);
-      if (id.startsWith("$B"))
-        return n instanceof Block && consistent(n, id);
     }
     return n instanceof Name && id.equals(((Name) p).getFullyQualifiedName());
   }
