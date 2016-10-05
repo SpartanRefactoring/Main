@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
@@ -13,15 +14,16 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @since 2016 */
 public class TestFactory {
   public static String testcase(final String raw, final int report, final int issue) {
+    // TODO Ori Marcovitch: use format and printf. Define constants
     final String code = linify(shortenIdentifiers(eliminateSpaces(raw)));
     return "  @Test public void report" + report + "() {" + "\n\ttrimmingOf(\"// From use case of issue" + issue + "\" //\n + " + code
         + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" + code + ")\n.stays();\n}";
   }
 
   /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
+  // TODO Ori marcovitch: Please keep up case, if the name begins with a lower case, it goes to lower case letter.
   static String renderIdentifier(final String old) {
-    return old.length() == 0 ? "a"
-        : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
+    return old.length() == 0 ? "a" : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
   }
 
   /** @param ¢ string to be eliminated
@@ -38,7 +40,7 @@ public class TestFactory {
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
-        $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "//" : " + //");
+        $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//";
       }
     }
     return $;
@@ -71,7 +73,7 @@ public class TestFactory {
     try {
       r.rewriteAST(document, null).apply(document);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
-      e.printStackTrace();
+      monitor.logEvaluationError(e); 
     }
     return ASTutils.extractCode(s, document);
   }
