@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.junit.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+
+import org.junit.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
