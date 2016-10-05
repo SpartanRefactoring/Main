@@ -748,6 +748,14 @@ public interface iz {
     return nodeTypeEquals(¢, SIMPLE_NAME);
   }
 
+  /** Determine whether a node is a qualified name
+   * @param pattern JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a qualified
+   *         name */
+  static boolean qualifiedName(final ASTNode ¢) {
+    return nodeTypeEquals(¢, QUALIFIED_NAME);
+  }
+
   static boolean singleMemberAnnotation(final ASTNode ¢) {
     return nodeTypeEquals(¢, SINGLE_MEMBER_ANNOTATION);
   }
@@ -911,5 +919,5 @@ public interface iz {
       monitor.logEvaluationError(this, x);
       return false;
     }
-  }  
+  }
 }

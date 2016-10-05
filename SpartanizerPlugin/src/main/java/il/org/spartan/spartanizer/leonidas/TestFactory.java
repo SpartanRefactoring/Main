@@ -20,11 +20,16 @@ public class TestFactory {
 
   /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
   static String renderIdentifier(final String old) {
-    return old.length() == 0 ? "a"
-        : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
+    return "start".equals(old) ? "a"
+        : "START".equals(old) ? "A"
+            : "z".equals(old) ? "x1"
+                : "Z".equals(old) ? "X1"
+                    : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
+                        : String.valueOf(old.charAt(1) + 1) + String.valueOf(old.charAt(1) + 1);
   }
 
-  /** maybe i should use http://stackoverflow.com/questions/2876204/java-code-formating 
+  /** maybe i should use
+   * http://stackoverflow.com/questions/2876204/java-code-formating
    * @param ¢ string to be eliminated
    * @return string without junk */
   private static String eliminateSpaces(final String ¢) {
@@ -39,7 +44,7 @@ public class TestFactory {
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
-        $ += "\"" + line + "\"" + ((!scanner.hasNextLine() ? "" : " + ") + "//");
+        $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//";
       }
     }
     return $;
@@ -48,7 +53,9 @@ public class TestFactory {
   public static String shortenIdentifiers(final String s) {
     final Map<String, String> renaming = new HashMap<>();
     final Wrapper<String> id = new Wrapper<>();
-    id.set("");
+    id.set("start");
+    final Wrapper<String> Id = new Wrapper<>();
+    Id.set("START");
     final Document document = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(document.get().toCharArray());
@@ -58,11 +65,16 @@ public class TestFactory {
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
-        if (iz.simpleName(¢)) {
-          final String name = ((SimpleName) ¢).getFullyQualifiedName();
+        if (iz.simpleName(¢) || iz.qualifiedName(¢)) {
+          final String name = ((Name) ¢).getFullyQualifiedName();
           if (!renaming.containsKey(name)) {
-            id.set(renderIdentifier(id.get()));
-            renaming.put(name, id.get());
+            if (name.charAt(0) < 'A' || name.charAt(0) > 'Z') {
+              id.set(renderIdentifier(id.get()));
+              renaming.put(name, id.get());
+            } else {
+              Id.set(renderIdentifier(Id.get()));
+              renaming.put(name, Id.get());
+            }
           }
           r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
         }
