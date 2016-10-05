@@ -298,16 +298,16 @@ public final class Version230 {
 
   @Test public void bugIntroducingMISSINGWord2() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == 2? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==2?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2a() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == 2? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==2?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2b() {

@@ -19,7 +19,7 @@ public class ASTutils {
       case EXPRESSION_LOOK_ALIKE:
         return findSecond(Expression.class, findFirst.methodDeclaration(u));
       case METHOD_LOOKALIKE:
-        return findSecond(MethodDeclaration.class, u);
+        return findFirst.instanceOf(MethodDeclaration.class, u);
       case OUTER_TYPE_LOOKALIKE:
         return u;
       case STATEMENTS_LOOK_ALIKE:
@@ -35,7 +35,7 @@ public class ASTutils {
       case EXPRESSION_LOOK_ALIKE:
         return d.get().substring(23, d.get().length() - 3);
       case METHOD_LOOKALIKE:
-        return d.get().substring(9, d.get().length() - 2);
+        return d.get().substring(8, d.get().length() - 1);
       case STATEMENTS_LOOK_ALIKE:
         return d.get().substring(16, d.get().length() - 2);
       default:
