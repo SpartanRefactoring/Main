@@ -258,7 +258,7 @@ public final class BatchSpartanizer {
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
       afters = a;
-      report = new CSVStatistics(reportFileName);
+      report = new CSVStatistics(reportFileName, "property");
       for (final File ¢ : new FilesGenerator(".java").from(inputPath))
         collect(¢);
     } catch (final IOException x) {
