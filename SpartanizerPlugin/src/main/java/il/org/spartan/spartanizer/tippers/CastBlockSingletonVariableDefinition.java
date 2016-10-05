@@ -35,7 +35,7 @@ public final class CastBlockSingletonVariableDefinition extends CarefulTipper<Bl
     for (final Statement ¢ : ss)
       if (!iz.variableDeclarationStatement(¢))
         return null;
-    return new Tip(description(), n) {
+    return new Tip(description(), n, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final Statement ¢ : ss)
           r.remove(¢, g);
