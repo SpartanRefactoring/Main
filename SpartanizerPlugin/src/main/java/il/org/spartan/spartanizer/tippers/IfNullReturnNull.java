@@ -32,7 +32,7 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> imple
   }
 
   @Override public Tip tip(final IfStatement s) {
-    return new Tip(description(s), s) {
+    return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(step.expression(step.then(s)), into.e("Null.value"), g);
       }
