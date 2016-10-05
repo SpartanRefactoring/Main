@@ -17,4 +17,5 @@ public class InfixIndexOfToStringContainsTest {
   @SuppressWarnings("static-method") @Test public void testMutation0() {
     trimmingOf("str.indexOf(stringy) >= 0").gives("str.contains(stringy)").stays();
   }
+  
 }
