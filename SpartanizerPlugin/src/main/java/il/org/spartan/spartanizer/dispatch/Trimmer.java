@@ -9,7 +9,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -44,9 +43,9 @@ public class Trimmer extends GUI$Applicator {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
         TrimmerLog.visitation(n);
-        if (!inRange(m, n) || disabling.on(n))
+        if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
-        final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
+        final Tipper<N> w = getTipper(n);
         if (w == null)
           return true;
         Tip s = null;
@@ -90,9 +89,9 @@ public class Trimmer extends GUI$Applicator {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
-        if (disabling.on(n))
+        if (!check(n) || disabling.on(n))
           return true;
-        final Tipper<N> w = Toolbox.defaultInstance().firstTipper(n);
+        final Tipper<N> w = getTipper(n);
         if (w != null)
           progressMonitor.worked(5);
         try {
@@ -113,5 +112,16 @@ public class Trimmer extends GUI$Applicator {
     public Trimmer trimmer() {
       return Trimmer.this;
     }
+  }
+  
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") N ¢) {
+    return true;
+  }
+  
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(N ¢) {
+    return Toolbox.defaultInstance().firstTipper(¢);
   }
 }

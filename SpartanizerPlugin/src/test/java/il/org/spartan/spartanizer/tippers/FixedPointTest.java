@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
+import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -10,8 +11,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"

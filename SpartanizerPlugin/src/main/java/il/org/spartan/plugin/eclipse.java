@@ -146,7 +146,6 @@ public enum eclipse {
         if (i != null)
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
-        System.out.println(i.getHeight(null));
       } catch (final MalformedURLException x) {
         x.printStackTrace();
       }
