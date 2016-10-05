@@ -23,7 +23,7 @@ public class TipperFactory {
       }
 
       @Override public Tip tip(final N n) {
-        return new Tip(description(n), n) {
+        return new Tip(description(n), n, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final Map<String, ASTNode> enviroment = collectEnviroment(n);
             final Wrapper<String> $ = new Wrapper<>();

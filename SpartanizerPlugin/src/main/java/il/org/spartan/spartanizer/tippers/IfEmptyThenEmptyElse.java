@@ -30,7 +30,7 @@ public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement> imple
   }
 
   @Override public Tip tip(final IfStatement s) {
-    return new Tip(description(s), s) {
+    return new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);
         r.remove(s, g);
