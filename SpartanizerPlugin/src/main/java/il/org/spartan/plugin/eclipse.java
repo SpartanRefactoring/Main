@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.*;
 public enum eclipse {
   facade;
   static final String NAME = "Laconic";
-  private static final String iconAddress = "platform:/plugin/org.eclipse.wst.xsd.ui/org/eclipse/wst/xsd/ui/internal/editor/icons/regx_wiz.png";
+  private static final String iconAddress = "platform:/plugin/org.eclipse.compare/icons/full/wizban/applypatch_wizban.png";
   private static boolean iconInitialized;
   static ImageIcon icon;
   static final Shell parent = null;
