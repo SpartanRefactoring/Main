@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -21,7 +20,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.type.Primitive.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
@@ -133,8 +132,6 @@ public interface type {
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
 
-  // TOOD: Ori, types are deterministic, everything is known at compile time.
-  // See here.
   /** An interface with one method- type, overloaded for many different
    * parameter types. Can be used to find the type of an expression thats known
    * at compile time by using overloading. Only use for testing, mainly for
@@ -189,20 +186,7 @@ public interface type {
     private static Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation get(final Expression ¢) {
-      return hasType(¢) ? getType(¢) : setType(¢, lookUp(¢, lookDown(¢)));
-    }
-
-    /** @param pattern JD/
-     * @return the type information stored inside the node n, or null if there
-     *         is none */
-    private static implementation getType(final ASTNode ¢) {
-      return (implementation) ¢.getProperty(propertyName);
-    }
-
-    /** @param ¢ JD
-     * @return true if n has a type property and false otherwise */
-    private static boolean hasType(final ASTNode ¢) {
-      return getType(¢) != null;
+      return (implementation) (NodeData.has(¢, propertyName) ? NodeData.get(¢, propertyName) : NodeData.set(¢, propertyName, lookUp(¢, lookDown(¢))));
     }
 
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
@@ -338,20 +322,6 @@ public interface type {
               return i;
           }
       }
-      return i;
-    }
-
-    /** sets the type property in the ASTNode
-     * @param n JD
-     * @param i the node's type property
-     * @return the type property tipper */
-    private static implementation setType(final ASTNode n, final implementation i) {
-      // TODO Dan Greenstein: Take a look here to see how you store information
-      // within a node
-      // TODO Matteo Orru: this is for you too
-      // TODO Ori Roth: use {@link NodeData}
-      assert !hasType(n);
-      n.setProperty(propertyName, i);
       return i;
     }
 
