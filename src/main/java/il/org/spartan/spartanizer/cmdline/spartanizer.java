@@ -145,10 +145,8 @@ public final class spartanizer {
   /** @param ¢
    * @return */
   private String fixedPoint(BodyDeclaration ¢) {
-    for (;;) {
-      return null;
-    }
-    // TODO Auto-generated method stub
+    for (;;)
+     return null;
   }
 
   void collect(final CompilationUnit u) {
