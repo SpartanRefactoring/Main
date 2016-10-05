@@ -38,7 +38,7 @@ public class Trimmer extends GUI$Applicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    refresh();
+    Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -112,9 +112,5 @@ public class Trimmer extends GUI$Applicator {
     public Trimmer trimmer() {
       return Trimmer.this;
     }
-  }
-  
-  protected void refresh() {
-    Toolbox.refresh();
   }
 }
