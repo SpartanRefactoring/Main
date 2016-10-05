@@ -242,7 +242,7 @@ import org.junit.runners.*;
                 "private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
                     + "int length = sb.length();"
                     + "for (int ¢ = 0; ¢ < length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');" + "return sb + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + ""
+            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
                 + "for (int length = sb.length(), ¢ = 0; ¢ < length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');"
                 + "return sb + \"\";")
             .stays();
