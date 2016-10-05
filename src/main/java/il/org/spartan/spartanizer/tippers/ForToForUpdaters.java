@@ -39,11 +39,14 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     final PrefixExpression pre = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
     final Assignment a = az.assignment(e);
-    final SimpleName n = pre != null ? az.simpleName(pre.getOperand()) : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null;
-    return updaterDeclaredInFor(¢, n);
+    return updaterDeclaredInFor(¢, (pre != null ? az.simpleName(pre.getOperand())
+        : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null));
   }
   
-  public static boolean bodyDeclaresElementsOf (ASTNode ¢) {
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  public static boolean bodyDeclaresElementsOf(ASTNode ¢) {
     Block body = az.block(¢.getParent());
     if (body == null)
       return false;
@@ -66,8 +69,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
     final VariableDeclarationExpression vde = az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)));
-    for (final VariableDeclarationFragment f : step.fragments(vde))
-      if (f.getName().toString().equals(n.toString()))
+    for (final VariableDeclarationFragment ¢ : step.fragments(vde))
+      if ((¢.getName() + "").equals((n + "")))
         return true;
     return false;
   }
