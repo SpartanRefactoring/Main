@@ -4,11 +4,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/**
- * @author Yossi Gil 
+/** @author Yossi Gil
  * @since 2016 */
 public interface disabling {
-
   /** A recursive scan for disabled nodes. Adds disabled property to disabled
    * nodes and their sub trees.
    * <p>
@@ -50,8 +48,8 @@ public interface disabling {
   String enablers[] = { "[[EnableWarningsSpartan]]", //
   };
 
-  /** The recursive disabling process. Returns to {@link disabledScan}
-   * upon reaching an enabler.
+  /** The recursive disabling process. Returns to {@link disabledScan} upon
+   * reaching an enabler.
    * @param d disabled {@link BodyDeclaration} */
   static void disable(final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {

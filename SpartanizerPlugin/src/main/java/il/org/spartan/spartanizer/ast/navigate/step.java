@@ -68,7 +68,7 @@ public enum step {
   public static Expression condition(final ForStatement ¢) {
     return ¢.getExpression();
   }
-  
+
   public static Expression condition(final WhileStatement ¢) {
     return ¢.getExpression();
   }

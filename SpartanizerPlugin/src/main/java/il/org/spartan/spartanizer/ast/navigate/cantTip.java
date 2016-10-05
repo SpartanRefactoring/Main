@@ -22,9 +22,7 @@ public enum cantTip {
     return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   public static boolean declarationRedundantInitializer(final ForStatement ¢) {
     for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
       if (new DeclarationRedundantInitializer().canTip(f))
@@ -32,9 +30,7 @@ public enum cantTip {
     return true;
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   public static boolean declarationRedundantInitializer(final WhileStatement ¢) {
     for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
       if (new DeclarationRedundantInitializer().canTip(f))
@@ -47,9 +43,7 @@ public enum cantTip {
     return e == null || new ForRenameInitializerToCent().cantTip(e);
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   public static boolean remvoeRedundantIf(final ForStatement ¢) {
     for (final IfStatement s : extract.ifStatements(step.body(¢)))
       if (new RemoveRedundantIf().canTip(s))
@@ -57,9 +51,7 @@ public enum cantTip {
     return true;
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   public static boolean remvoeRedundantIf(final WhileStatement ¢) {
     for (final IfStatement s : extract.ifStatements(step.body(¢)))
       if (new RemoveRedundantIf().canTip(s))

@@ -31,7 +31,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
     final Block bodyBlock = az.block(step.body(¢));
-    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2 || bodyDeclaresElementsOf(lastStatement(¢)))
+    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2
+        || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
@@ -42,10 +43,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     return updaterDeclaredInFor(¢, (pre != null ? az.simpleName(pre.getOperand())
         : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null));
   }
-  
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+
+  /** [[SuppressWarningsSpartan]] */
   public static boolean bodyDeclaresElementsOf(ASTNode ¢) {
     Block body = az.block(¢.getParent());
     if (body == null)

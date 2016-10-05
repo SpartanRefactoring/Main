@@ -89,7 +89,8 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final Assignment a = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(from.getExpression());
     final ParenthesizedExpression pe = az.parenthesizedExpression(from.getExpression());
-    return a != null ? handleAssignmentCondition(a, s) : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
+    return a != null ? handleAssignmentCondition(a, s)
+        : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
   }
 
   private static boolean isIn(final IExtendedModifier m, final List<IExtendedModifier> ms) {

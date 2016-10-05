@@ -21,12 +21,15 @@ public class TestFactory {
   }
 
   /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
-  // TODO Ori marcovitch: Please keep up case, if the name begins with a lower case, it goes to lower case letter.
+  // TODO Ori marcovitch: Please keep up case, if the name begins with a lower
+  // case, it goes to lower case letter.
   static String renderIdentifier(final String old) {
-    return old.length() == 0 ? "a" : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
+    return old.length() == 0 ? "a"
+        : "z".equals(old) ? "X1" : old.length() != 1 ? "X" + String.valueOf(old.charAt(1) + 1) : String.valueOf((char) (old.charAt(0) + 1));
   }
 
-  /** maybe i should use http://stackoverflow.com/questions/2876204/java-code-formating 
+  /** maybe i should use
+   * http://stackoverflow.com/questions/2876204/java-code-formating
    * @param ¢ string to be eliminated
    * @return string without junk */
   private static String eliminateSpaces(final String ¢) {
@@ -74,7 +77,7 @@ public class TestFactory {
     try {
       r.rewriteAST(document, null).apply(document);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException e) {
-      monitor.logEvaluationError(e); 
+      monitor.logEvaluationError(e);
     }
     return ASTutils.extractCode(s, document);
   }

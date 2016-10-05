@@ -85,4 +85,3 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     return $;
   }
 }
-
