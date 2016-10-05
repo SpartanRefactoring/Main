@@ -132,8 +132,6 @@ public interface type {
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
 
-  // TOOD: Ori, types are deterministic, everything is known at compile time.
-  // See here.
   /** An interface with one method- type, overloaded for many different
    * parameter types. Can be used to find the type of an expression thats known
    * at compile time by using overloading. Only use for testing, mainly for
