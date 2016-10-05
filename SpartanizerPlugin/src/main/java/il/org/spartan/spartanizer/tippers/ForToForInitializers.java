@@ -82,7 +82,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
             operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
           }
       }
-    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElem(minus.firstElem(operands)));
+    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
