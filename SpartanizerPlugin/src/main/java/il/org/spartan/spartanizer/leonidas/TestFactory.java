@@ -13,23 +13,35 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @since 2016 */
 public class TestFactory {
   public static String testcase(final String raw, final int report, final int issue) {
-    final String code = linify(shortenIdentifiers(eliminateSpaces(raw)));
-    return "  @Test public void report" + report + "() {" + "\n\ttrimmingOf(\"// From use case of issue" + issue + "\" //\n + " + code
-        + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" + code + ")\n.stays();\n}";
+    return wrapTest(report, issue, linify(escapeCommas(shortenIdentifiers(eliminateSpaces(raw)))));
   }
 
-  /** Renders the Strings a,b,c, ..., z, X1, X2, ... */
+  /** escapes all "s
+   * @param ¢
+   * @return */
+  private static String escapeCommas(String ¢) {
+    return ¢.replace("\"", "\\\"");
+  }
+
+  private static String wrapTest(final int report, final int issue, final String code) {
+    return "  @Test public void report" + report + "() {" + "\n\ttrimmingOf(\"// From use case of issue" + issue + "\" //\n + " + code
+        + "\n).gives(\"// Edit this to reflect your expectation, but leave this comment\" + //\n" + code + "\n).stays();\n}";
+  }
+
+  /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
+   * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
   static String renderIdentifier(final String old) {
+    System.out.println(old);
     return "start".equals(old) ? "a"
         : "START".equals(old) ? "A"
             : "z".equals(old) ? "x1"
                 : "Z".equals(old) ? "X1"
                     : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
-                        : String.valueOf(old.charAt(1) + 1) + String.valueOf(old.charAt(1) + 1);
+                        : String.valueOf(old.charAt(0)) + String.valueOf(old.charAt(1) + 1);
   }
 
   /** maybe i should use
-   * http://stackoverflow.com/questions/2876204/java-code-formating
+   * http://stackoverflow.com/questions/2876204/java-code-formating instead
    * @param ¢ string to be eliminated
    * @return string without junk */
   private static String eliminateSpaces(final String ¢) {
@@ -87,5 +99,14 @@ public class TestFactory {
       e.printStackTrace();
     }
     return ASTutils.extractCode(s, document);
+  }
+
+  public static void main(String args[]) {
+    try (Scanner reader = new Scanner(System.in)) {
+      String s = "";
+      while (reader.hasNext())
+        s += "\n" + reader.nextLine();
+      System.out.println(TestFactory.testcase(s, 234, 285));
+    }
   }
 }
