@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
  * {@link DisabledChecker}.
  * @author Ori Roth */
 public final class SuppressWarningsLaconicOnOff {
-  static final String disabler = Trimmer.disablers[0];
+  static final String disabler = disabling.disablers[0];
 
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
@@ -70,10 +70,10 @@ public final class SuppressWarningsLaconicOnOff {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
-        for (final String e : Trimmer.enablers)
+        for (final String e : disabling.enablers)
           if (s.contains(e))
             return false;
-        for (final String d : Trimmer.disablers)
+        for (final String d : disabling.disablers)
           if (s.contains(d))
             return true;
       }
@@ -92,11 +92,11 @@ public final class SuppressWarningsLaconicOnOff {
   }
 
   static Set<String> getDisablers(final String ¢) {
-    return getKeywords(¢, Trimmer.disablers);
+    return getKeywords(¢, disabling.disablers);
   }
 
   static Set<String> getEnablers(final String ¢) {
-    return getKeywords(¢, Trimmer.enablers);
+    return getKeywords(¢, disabling.enablers);
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
