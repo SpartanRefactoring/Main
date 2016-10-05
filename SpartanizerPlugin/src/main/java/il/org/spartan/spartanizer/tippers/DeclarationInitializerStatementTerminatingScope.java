@@ -43,7 +43,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
+    if (initializer == null || haz.annotation(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
@@ -63,7 +63,8 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     for (final SimpleName use : uses)
       if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
         return null;
-    final InlinerWithValue i = new Inliner(n, r, g).byValue(initializer);
+    Expression v = fixArrayInitializer(initializer, currentStatement);
+    final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
     final int removalSaving = removalSaving(f);
@@ -74,4 +75,14 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     remove(f, r, g);
     return r;
   }
+
+  private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+    if (!(initializer instanceof ArrayInitializer))
+      return initializer;
+    ArrayCreation $ = initializer.getAST().newArrayCreation();
+    $.setType((ArrayType) duplicate.of(currentStatement.getType()));
+    $.setInitializer(duplicate.of((ArrayInitializer) initializer));
+    return $;
+  }
 }
+
