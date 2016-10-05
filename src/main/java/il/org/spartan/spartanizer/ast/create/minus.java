@@ -21,11 +21,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016 */
 public enum minus {
   ;
-  public static <E> List<E> firstElem(final List<E> ¢) {
-    ¢.remove(0);
-    return ¢;
-  }
-
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.

@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -54,7 +56,7 @@ public class TestFactory {
     String $ = "";
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
+        final String line = scanner.nextLine();
         $ += "\"" + line + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//";
       }
     }
