@@ -13,6 +13,21 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
+  public static boolean bodyDeclaresElementsOf(final ASTNode n) {
+    final Block body = az.block(n.getParent());
+    if (body == null)
+      return false;
+    for (final VariableDeclarationFragment ¢ : extract.fragments(body))
+      if (!Collect.usesOf(¢.getName()).in(n).isEmpty())
+        return true;
+    return false;
+  }
+
+  private static boolean bodyHasLessThenTwoStatements(final ForStatement ¢) {
+    final Block bodyBlock = az.block(step.body(¢));
+    return bodyBlock == null || step.statements(bodyBlock).size() < 2;
+  }
+
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
@@ -30,8 +45,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
-    final Block bodyBlock = az.block(step.body(¢));
-    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2 || bodyDeclaresElementsOf(lastStatement(¢)))
+    if (bodyHasLessThenTwoStatements(¢) || !iz.incrementOrDecrement(lastStatement(¢)) || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
@@ -39,18 +53,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     final PrefixExpression pre = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
     final Assignment a = az.assignment(e);
-    final SimpleName n = pre != null ? az.simpleName(pre.getOperand()) : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null;
-    return updaterDeclaredInFor(¢, n);
-  }
-  
-  public static boolean bodyDeclaresElementsOf (ASTNode ¢) {
-    Block body = az.block(¢.getParent());
-    if (body == null)
-      return false;
-    for (VariableDeclarationFragment f : extract.fragments(body))
-      if (!Collect.usesOf(f.getName()).in(¢).isEmpty())
-        return true;
-    return false;
+    return updaterDeclaredInFor(¢, pre != null ? az.simpleName(pre.getOperand())
+        : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {
@@ -66,8 +70,8 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
     final VariableDeclarationExpression vde = az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)));
-    for (final VariableDeclarationFragment f : step.fragments(vde))
-      if (f.getName().toString().equals(n.toString()))
+    for (final VariableDeclarationFragment ¢ : step.fragments(vde))
+      if ((¢.getName() + "").equals(n + ""))
         return true;
     return false;
   }
