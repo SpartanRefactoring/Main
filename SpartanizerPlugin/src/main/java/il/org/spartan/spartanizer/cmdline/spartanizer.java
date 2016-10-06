@@ -197,7 +197,6 @@ public final class spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    Toolbox.refresh(); // leave this?
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
@@ -226,8 +225,8 @@ public final class spartanizer {
     });
   }
 
-  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return Toolbox.defaultInstance().firstTipper(¢);
+  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -250,7 +249,7 @@ public final class spartanizer {
   }
 
   void fire() {
-    System.out.println(Toolbox.defaultInstance().hooksCount());
+    System.out.println(toolbox.hooksCount());
     collect();
     runEssence();
     runWordCount();
