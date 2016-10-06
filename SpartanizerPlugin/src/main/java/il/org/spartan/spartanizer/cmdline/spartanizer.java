@@ -5,7 +5,12 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -14,7 +19,12 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+
+import static il.org.spartan.plugin.eclipse.*;
 
 /** Scans files named by folder, ignore test files, and collect statistics, on
  * classes, methods, etc.
@@ -22,7 +32,7 @@ import il.org.spartan.utils.*;
  * @year 2015 */
 public final class spartanizer {
   private static final String folder = "/tmp/";
-  private static final Toolbox toolbox = new Toolbox();
+  private final Toolbox toolbox = new Toolbox();
   private int done;
   private final String inputPath;
   private final String beforeFileName;
@@ -34,6 +44,7 @@ public final class spartanizer {
   private File currentFile;
 
   public static void main(final String[] args) {
+    
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new spartanizer(¢).fire();
   }
@@ -84,6 +95,7 @@ public final class spartanizer {
     final int body = metrics.bodySize(¢);
     final int tide = clean(¢ + "").length();
     final int essence = Essence.of(¢ + "").length();
+    // perform spartanization
     final String out = fixedPoint(¢);
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
@@ -94,8 +106,10 @@ public final class spartanizer {
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
     System.err.println(++done + " " + extract.category(¢) + " " + extract.name(¢));
+    // printout
     befores.print(¢);
     afters.print(out);
+    // generate csv with statistics
     report.summaryFileName();
     report//
         .put("File", currentFile)//
@@ -138,14 +152,15 @@ public final class spartanizer {
         .put("R(B/S)", ratio(nodes, body)) //
     ;
     report.nl();
-    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
 
   /** @param ¢
    * @return */
   private String fixedPoint(final BodyDeclaration ¢) {
-    return "";
+      String from = ¢ + "";
+      String fixed = fixedPoint(from);
+      return fixed; 
   }
 
   void collect(final CompilationUnit u) {
@@ -155,7 +170,81 @@ public final class spartanizer {
         // annotation
         return collect(¢);
       }
+      
+      @Override public boolean visit(final TypeDeclaration ¢) {
+        return collect(¢);
+      }
+
     });
+  }
+  
+  public String fixedPoint(final String from) {
+    for (final Document $ = new Document(from);;) {
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
+      final ASTRewrite r = createRewrite(u);
+      final TextEdit e = r.rewriteAST($, null);
+      try {
+        e.apply($);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        monitor.logEvaluationError(this, x);
+        throw new AssertionError(x);
+      }
+      if (!e.hasChildren())
+        return $.get();
+    }
+  }
+    
+  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
+    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    consolidateTips($, ¢); 
+    return $; 
+  }
+  
+  public ASTRewrite rewriterOf(final CompilationUnit u){ 
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    consolidateTips($, u); 
+    return $;
+  }
+  
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u){ 
+    Toolbox.refresh(); // leave this?
+    u.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        TrimmerLog.visitation(n);
+        if (!check(n) || disabling.on(n)) // removed !inRange(m, n) || !check(n) is always false
+          return true;
+        final Tipper<N> w = getTipper(n);
+        if (w == null)
+          return true;
+        System.out.println(w.description(n));
+        Tip s = null;
+        try {
+          s = w.tip(n, exclude);
+          TrimmerLog.tip(w, n);
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
+        }
+        if (s != null) {
+          TrimmerLog.application(r, s);
+        }
+        return true;
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
+      }
+    });
+  }
+  
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(N ¢) {
+    return Toolbox.defaultInstance().firstTipper(¢);
+  }
+  
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") N ¢) {
+    return true;
   }
 
   void collect(final File f) {
@@ -173,6 +262,7 @@ public final class spartanizer {
   }
 
   void fire() {
+    System.out.println(toolbox.defaultInstance().hooksCount());
     collect();
     runEssence();
     runWordCount();

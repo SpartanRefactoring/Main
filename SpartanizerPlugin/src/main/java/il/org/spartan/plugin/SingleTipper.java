@@ -1,7 +1,5 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.RefactorerUtil.*;
-
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -13,6 +11,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.plugin.RefactorerUtil.*;
 
 /** Single tipper applicator implementation using modified {@link Trimmer}
  * @author Ori Roth
@@ -24,11 +23,11 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     this.tipper = tipper;
   }
 
-  @Override protected boolean check(final ASTNode ¢) {
+  @Override protected boolean check(ASTNode ¢) {
     return Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
   }
 
-  @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(final ASTNode ¢) {
+  @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(ASTNode ¢) {
     assert check(¢);
     return !tipper.canTip((N) ¢) ? null : tipper;
   }
@@ -37,14 +36,14 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
    * @author Ori Roth
    * @since 2016 */
   static class InDeclaration extends Resolution {
-    @Override protected ITextSelection domain(final IMarker m) {
-      final ICompilationUnit u = eclipse.currentCompilationUnit();
+    @Override protected ITextSelection domain(IMarker m) {
+      ICompilationUnit u = eclipse.currentCompilationUnit();
       if (u == null)
         return null;
-      final ASTNode n = eclipse.getNodeByMarker(u, m);
+      ASTNode n = eclipse.getNodeByMarker(u, m);
       if (n == null)
         return null;
-      final ASTNode d = searchAncestors.forClass(BodyDeclaration.class).from(n);
+      ASTNode d = searchAncestors.forClass(BodyDeclaration.class).from(n);
       return d == null ? null : new TextSelection(d.getStartPosition(), d.getLength());
     }
 
@@ -61,7 +60,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
    * @author Ori Roth
    * @since 2016 */
   static class InFile extends Resolution {
-    @Override protected ITextSelection domain(@SuppressWarnings("unused") final IMarker __) {
+    @Override protected ITextSelection domain(@SuppressWarnings("unused") IMarker __) {
       return TextSelection.emptySelection();
     }
 
@@ -78,7 +77,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
    * @author Ori Roth
    * @since 2016 */
   static class InProject extends Resolution {
-    @Override protected ITextSelection domain(@SuppressWarnings("unused") final IMarker __) {
+    @Override protected ITextSelection domain(@SuppressWarnings("unused") IMarker __) {
       return TextSelection.emptySelection();
     }
 
@@ -89,7 +88,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public List<ICompilationUnit> getTargetCompilationUnits() {
       try {
         return eclipse.compilationUnits(eclipse.currentCompilationUnit(), new NullProgressMonitor());
-      } catch (final JavaModelException x) {
+      } catch (JavaModelException x) {
         monitor.log(x);
         return Collections.emptyList();
       }
@@ -104,12 +103,11 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
           + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES));
     }
 
-    @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
-        final ICompilationUnit currentCompilationUnit) {
+    @Override public String getProgressMonitorSubMessage(List<ICompilationUnit> currentCompilationUnits, ICompilationUnit currentCompilationUnit) {
       return completionIndex(currentCompilationUnits, currentCompilationUnit) + " : " + currentCompilationUnit.getElementName();
     }
 
-    @Override public int getProgressMonitorWork(final List<ICompilationUnit> ¢) {
+    @Override public int getProgressMonitorWork(List<ICompilationUnit> ¢) {
       return ¢.size();
     }
   }
@@ -127,20 +125,20 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     public abstract String getLabelSuffix();
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public GUI$Applicator getApplicator(final IMarker m) {
+    @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public GUI$Applicator getApplicator(IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         if (m.getResource() == null)
           return null;
-        final GUI$Applicator $ = getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
+        GUI$Applicator $ = getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
         if ($ == null)
           return null;
-        final ITextSelection t = domain(m);
+        ITextSelection t = domain(m);
         if (t == null)
           return null;
         $.setSelection(t);
         return $;
-      } catch (final CoreException x) {
+      } catch (CoreException x) {
         monitor.log(x);
       }
       return null;
@@ -150,9 +148,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return MANY_PASSES;
     }
 
-    @SuppressWarnings("unused") private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
+    @SuppressWarnings("unused") private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(Class<T> t) {
       try {
-        return new SingleTipper<>(t.newInstance());
+        return new SingleTipper<X>(t.newInstance());
       } catch (InstantiationException | IllegalAccessException x) {
         monitor.log(x);
       }

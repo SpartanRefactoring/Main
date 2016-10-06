@@ -8,6 +8,15 @@ import org.junit.runners.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public class Issue310 {
+  @Ignore @Test public void OrisCode() { // is not parsing well
+    trimmingOf(
+        "int i;for (i=0; i < MAX_PASSES; ++i) {final IProgressService ps=wb.getProgressService();final AtomicInteger passNum=new AtomicInteger(i + 1);final AtomicBoolean cancled=new AtomicBoolean(false);try {ps.run(true,true,pm -> {"
+            + "pm.beginTask(\"Spartanizing project '\" + javaProject.getElementName() + \"' - \"+ \"Pass \"+ passNum.get()+ \" out of maximum of \"+ MAX_PASSES,us.size());int n=0;final List<ICompilationUnit> dead=new ArrayList<>();for (final ICompilationUnit ¢ : us) {if (pm.isCanceled()) {cancled.set(true);break;"
+            + "}pm.worked(1);pm.subTask(¢.getElementName() + \" \" + ++n+ \"/\"+ us.size());if (!a.apply(¢)) dead.add(¢);}us.removeAll(dead);pm.done();});}"
+            + "catch (  final InvocationTargetException x) {monitor.logEvaluationError(this,x);}catch (  final InterruptedException x) {monitor.logEvaluationError(this,x);}if (cancled.get() || us.isEmpty()) break;}")
+                .stays();
+  }
+
   @Test public void OrisCode_check_a() {
     trimmingOf("void foo() {int i = 0;for(;i < 10;++i) if(i=5)break;}").gives("void foo() {for(int i = 0;i < 10;++i) if(i=5)break;}")
         .gives("void foo() {for(int ¢ = 0;¢ < 10;++¢) if(¢=5)break;}").stays();
@@ -95,13 +104,4 @@ import org.junit.runners.*;
                 + "return false;" + "}")
             .stays();
   }
-
-  @Test public void updaters_while_5() {
-    trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;" + "++i;"
-        + "p.getParent();}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;"
-                + "p.getParent();} return false;" + "}")
-            .stays();
-  }
-
 }

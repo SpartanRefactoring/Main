@@ -10,10 +10,6 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> implements TipperCategory.Collapse {
-  private static boolean bodyHasAtLeastTwoStatements(final WhileStatement ¢) {
-    return az.block(step.body(¢)) != null && step.statements(az.block(step.body(¢))).size() >= 2;
-  }
-
   private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(dupWhileExpression(¢));
@@ -40,7 +36,8 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    return bodyHasAtLeastTwoStatements(¢) && iz.incrementOrDecrement(lastStatement(¢)) && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
+    return az.block(step.body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && step.statements(az.block(step.body(¢))).size() >= 2
+        && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {

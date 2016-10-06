@@ -194,10 +194,6 @@ public enum step {
     return ¢.extendedOperands();
   }
 
-  public static VariableDeclarationExpression forInitializers(final ForStatement ¢) {
-    return az.variableDeclarationExpression(findFirst.elementOf(step.initializers(¢)));
-  }
-
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
