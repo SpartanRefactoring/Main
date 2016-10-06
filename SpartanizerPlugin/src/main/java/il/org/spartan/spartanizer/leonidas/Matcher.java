@@ -92,7 +92,7 @@ public class Matcher {
   /** Checks if node is a block or statement
    * @param ¢
    * @return */
-  private static boolean matchesBlock(ASTNode ¢) {
+  private static boolean matchesBlock(final ASTNode ¢) {
     return iz.block(¢) || iz.statement(¢);
   }
 

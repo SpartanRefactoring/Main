@@ -145,7 +145,7 @@ public final class spartanizer {
   /** @param ¢
    * @return */
   private String fixedPoint(final BodyDeclaration ¢) {
-      return ""; 
+    return "";
   }
 
   void collect(final CompilationUnit u) {
