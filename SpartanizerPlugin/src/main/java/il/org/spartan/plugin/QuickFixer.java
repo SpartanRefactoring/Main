@@ -21,9 +21,12 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           new LaconizeCurrent(), //
           new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize function"),
           new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize class"), //
-          fixers.applyFunction(), //
-          fixers.applyFile(), //
-          fixers.applyProject(), //
+          // fixers.applyFunction(), //
+          new SingleTipper.InDeclaration(), //
+//          fixers.applyFile(), //
+          new SingleTipper.InFile(), //
+//          fixers.applyProject(), //
+          new SingleTipper.InProject(), //
           fixers.disableFunctionFix(), //
           fixers.disableClassFix(), //
           fixers.disableFileFix() };//

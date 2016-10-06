@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import static org.junit.Assert.*;
+
 import org.junit.*;
 
 /** @author Ori Marcovitch

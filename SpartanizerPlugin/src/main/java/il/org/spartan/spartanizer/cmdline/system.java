@@ -2,14 +2,8 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-
 import il.org.spartan.java.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil

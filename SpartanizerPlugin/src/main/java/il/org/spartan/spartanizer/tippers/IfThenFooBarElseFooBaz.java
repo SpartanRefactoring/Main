@@ -67,7 +67,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement> imple
     if (elze.isEmpty())
       return null;
     final List<Statement> commonPrefix = commonPrefix(then, elze);
-    return commonPrefix.isEmpty() ? null : new Tip(description(s), s) {
+    return commonPrefix.isEmpty() ? null : new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (!iz.block(s.getParent())) {

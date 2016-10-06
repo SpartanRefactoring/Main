@@ -40,7 +40,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
-    return new Tip("Rename paraemter " + n + " to ¢ ", d) {
+    return new Tip("Rename paraemter " + n + " to ¢ ", d, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, n, ¢ + "", r, g);
