@@ -1,11 +1,14 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -39,8 +42,47 @@ public class Toolbox {
   /** The default Instance of this class */
   static Toolbox defaultInstance;
 
+  /** Generate an {@link ASTRewrite} that contains the changes proposed by the
+   * first tipper that applies to a node in the usual scan.
+   * @param root JD
+   * @return */
+  public ASTRewrite pickFirstTip(final ASTNode root) {
+    disabling.scan(root);
+    final AtomicBoolean done = new AtomicBoolean(false);
+    final ASTRewrite $ = ASTRewrite.create(root.getAST());
+    root.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode n) {
+        if (done.get())
+          return false;
+        if (disabling.on(n))
+          return true;
+        final Tipper<?> t = firstTipper(n);
+        if (t == null)
+          return true;
+        done.set(true);
+        extractTip(t, n).go($, null);
+        return false;
+      }
+    });
+    return $;
+  }
+
+  public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+    @SuppressWarnings("unchecked") final Tipper<ASTNode> x = (Tipper<ASTNode>) t;
+    return extractTip(n, x);
+  }
+
+  public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
+    try {
+      return t.tip(n);
+    } catch (final TipperFailure ¢) {
+      ¢.printStackTrace();
+      return null;
+    }
+  }
+
   public static Toolbox defaultInstance() {
-    // Lazy evaluation pattern.
+    // Lazy evaluation pattern // TODO Marco:
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
@@ -171,11 +213,8 @@ public class Toolbox {
             new TernaryPushdownStrings(), //
             null) //
         .add(TypeDeclaration.class, //
-            // new delmeTypeModifierCleanInterface(), //
             new TypeRedundantModifiers(), //
-            // Disabled to protect against infinite loop
             new BodyDeclarationModifiersSort.ofType(), //
-            // new BodyDeclarationAnnotationsSort.ofType(), //
             null) //
         .add(EnumDeclaration.class, //
             new EnumRedundantModifiers(), new BodyDeclarationModifiersSort.ofEnum(), //
@@ -192,7 +231,6 @@ public class Toolbox {
         .add(EnumConstantDeclaration.class, //
             new EnumConstantRedundantModifiers(), //
             new BodyDeclarationModifiersSort.ofEnumConstant(), //
-            // new BodyDeclarationAnnotationsSort.ofEnumConstant(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
@@ -251,8 +289,8 @@ public class Toolbox {
   }
 
   /** Implementation */
-  @SuppressWarnings("unchecked") private final List<Tipper<? extends ASTNode>>[] implementation = (List<Tipper<? extends ASTNode>>[]) new List<?>[2
-      * ASTNode.TYPE_METHOD_REFERENCE];
+  @SuppressWarnings("unchecked") private final List<Tipper<? extends ASTNode>>[] implementation = //
+      (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
 
   public Toolbox() {
     // Nothing to do

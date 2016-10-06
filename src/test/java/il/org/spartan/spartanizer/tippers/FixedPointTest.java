@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
+import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -10,8 +11,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.spartanizations.*;
-
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note
  * our naming convention: a) test methods do not use the redundant "test"
@@ -113,11 +112,16 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
   }
 
   @Test public void shortestIfBranchFirst02() {
-    trimmingOf("void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else  if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")
-    .gives("void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int i = 0;i < s.length();++i) if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd')$-=1; return $;}")
-    .gives("void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$-=1; return $;}")
-    .gives("void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$--; return $;}")
-    .gives("void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')--$; return $;}");
+    trimmingOf(
+        "void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else  if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")
+            .gives(
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int i = 0;i < s.length();++i) if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd')$-=1; return $;}")
+            .gives(
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$-=1; return $;}")
+            .gives(
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')$--; return $;}")
+            .gives(
+                "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int ¢ = 0;¢ < s.length();++¢) if (s.charAt(¢) == 'a') $ += 2; else if (s.charAt(¢) == 'd')--$; return $;}");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
@@ -231,8 +235,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
   }
 
   @Test(timeout = 2000) @Ignore("Pending Issue - fails because the commented test fails") public void ternarize40() {
-    //trimmingOf("int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;")
-    //.gives("int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
+    // trimmingOf("int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;")
+    // .gives("int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
     assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;",
         "int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
   }

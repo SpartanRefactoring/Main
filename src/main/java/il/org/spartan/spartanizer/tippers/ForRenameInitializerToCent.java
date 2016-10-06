@@ -62,7 +62,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
       m.exclude(forStatement);
     }
     final SimpleName ¢ = x.getAST().newSimpleName("¢");
-    return new Tip(description(x), x) {
+    return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, forStatement, r, g);
       }

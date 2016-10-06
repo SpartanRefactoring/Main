@@ -748,6 +748,14 @@ public interface iz {
     return nodeTypeEquals(¢, SIMPLE_NAME);
   }
 
+  /** Determine whether a node is a qualified name
+   * @param pattern JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a qualified
+   *         name */
+  static boolean qualifiedName(final ASTNode ¢) {
+    return nodeTypeEquals(¢, QUALIFIED_NAME);
+  }
+
   static boolean singleMemberAnnotation(final ASTNode ¢) {
     return nodeTypeEquals(¢, SINGLE_MEMBER_ANNOTATION);
   }
@@ -862,6 +870,7 @@ public interface iz {
     return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
+  /** [[SuppressWarningsSpartan]] */
   public static boolean variableNotUsedAfterStatement(final Statement ¢, final SimpleName n) {
     final Block b = az.block(¢.getParent());
     assert b != null : "For loop's parent is null";
@@ -911,5 +920,5 @@ public interface iz {
       monitor.logEvaluationError(this, x);
       return false;
     }
-  }  
+  }
 }
