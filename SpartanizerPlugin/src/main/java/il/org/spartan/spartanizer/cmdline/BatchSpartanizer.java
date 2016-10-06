@@ -31,12 +31,18 @@ public final class BatchSpartanizer {
       printHelpPrompt();
     else {
       parseCommandLineArgs(args);
-      if (inputDir != null && outputDir != null)
-        for (final File ¢ : new File(inputDir).listFiles())
-          if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
-            System.out.println(¢.getAbsolutePath());
-            new BatchSpartanizer(¢.getAbsolutePath()).fire();
-          }
+      if (inputDir != null && outputDir != null) {
+        final File input = new File(inputDir);
+        if (!input.isDirectory()) {
+          System.out.println("Analyzing single file: " + input.getAbsolutePath());
+          new BatchSpartanizer(input.getAbsolutePath()).fire();
+        } else
+          for (final File ¢ : input.listFiles())
+            if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
+              System.out.println(¢.getAbsolutePath());
+              new BatchSpartanizer(¢.getAbsolutePath()).fire();
+            }
+      }
       if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
         for (final String ¢ : args)
@@ -75,15 +81,15 @@ public final class BatchSpartanizer {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
-        System.out.println(outputDir);
+        System.out.println("OutputDir: " + outputDir);
         ¢ += 2;
       } else if ("-i".equals(args[¢])) {
         inputDir = args[¢ + 1];
-        System.out.println(inputDir);
+        System.out.println("InputDir: " + inputDir);
         ¢ += 2;
       } else {
         System.out.println(args[¢]);
-        System.out.println("something went wrong!");
+        System.out.println("[ERROR]: Something went wrong!");
         ++¢;
       }
   }
@@ -106,7 +112,7 @@ public final class BatchSpartanizer {
     beforeFileName = folder + outputDir + "/" + name + ".before.java";
     afterFileName = folder + outputDir + "/" + name + ".after.java";
     reportFileName = folder + outputDir + "/" + name + ".CSV";
-    final File dir = new File(folder + outputDir);
+    File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
@@ -277,11 +283,11 @@ public final class BatchSpartanizer {
     bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 
-  private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
+  private static boolean containsJavaFileOrJavaFileItSelf(File f) {
     if (f.getName().endsWith(".java"))
       return true;
     if (f.isDirectory())
-      for (final File ff : f.listFiles())
+      for (File ff : f.listFiles())
         if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"))
           return true;
     return false;

@@ -65,7 +65,7 @@ public final class PreferencesResources {
     }
 
     public boolean isEnabled() {
-      return Plugin.plugin() == null || "on".equals(store().getString(id));
+      return Plugin.plugin() == null || "true".equals(store().getString(id));
     }
 
     private Object getLabel(final Class<? extends TipperCategory> k) {
