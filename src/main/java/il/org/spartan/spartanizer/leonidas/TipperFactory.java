@@ -28,9 +28,9 @@ public class TipperFactory {
             final Map<String, ASTNode> enviroment = collectEnviroment(n);
             final Wrapper<String> $ = new Wrapper<>();
             $.set(replacement);
-            for (String ¢ : enviroment.keySet())
+            for (final String ¢ : enviroment.keySet())
               if (¢.startsWith("$B"))
-                $.set($.get().replace(¢, (enviroment.get(¢) + "")));
+                $.set($.get().replace(¢, enviroment.get(¢) + ""));
             wizard.ast(replacement).accept(new ASTVisitor() {
               @Override public boolean preVisit2(final ASTNode ¢) {
                 if (iz.name(¢) && enviroment.containsKey(¢ + ""))
@@ -81,7 +81,7 @@ public class TipperFactory {
     return az.methodInvocation(az.expressionStatement(p).getExpression()).getName().getFullyQualifiedName();
   }
 
-  static String reformat$Bs(String ¢) {
+  static String reformat$Bs(final String ¢) {
     return ¢.replaceAll("\\$B\\d*", "$0\\(\\);");
     // for(int i =0 ; i < s.length(); ++ i){
     // if(s.substring(i).startsWith("$B")){

@@ -113,15 +113,13 @@ public class Trimmer extends GUI$Applicator {
       return Trimmer.this;
     }
   }
-  
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
-  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") N ¢) {
+
+  /** [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N ¢) {
     return true;
   }
-  
-  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(N ¢) {
+
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return Toolbox.defaultInstance().firstTipper(¢);
   }
 }
