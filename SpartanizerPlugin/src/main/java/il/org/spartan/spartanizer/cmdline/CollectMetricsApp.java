@@ -77,9 +77,8 @@ public final class CollectMetricsApp implements IApplication {
   private static void copyFile(final File source, final File target) throws IOException {
     try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
       final byte[] buf = new byte[1024];
-      // TODO: Alex and Dan - restore this loop, created by buggy tipper.
-      for (final int length = in.read(buf); length > 0; out.write(buf, 0, length))
-        ;
+      for (final int length = in.read(buf); length > 0;)
+        out.write(buf, 0, length);
     }
   }
 
