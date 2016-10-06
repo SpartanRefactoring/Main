@@ -13,6 +13,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -55,7 +56,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
-      if (!iz.variableUsedInFor(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(s, ¢.getName()))
+      if (!variableUsedInFor(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(s, ¢.getName()))
         return false;
     return true;
   }
@@ -112,7 +113,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = step.initializers(¢);
-    if (initializers.isEmpty())
+    if (initializers.isEmpty() || !iz.variableDeclarationExpression(first(initializers)))
       return true;
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first(initializers));
     assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
@@ -127,6 +128,21 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     step.initializers($).clear();
     step.initializers($).add(az.variableDeclarationExpression(s));
     step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)))).addAll(duplicate.of(step.fragments(forInitializer)));
+  }
+
+  /** Determines whether a specific SimpleName was used in a
+   * {@link ForStatement}.
+   * @param s JD
+   * @param n JD
+   * @return true <b>iff</b> the SimpleName is used in a ForStatement's
+   *         condition, updaters, or body. */
+  private static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
+    if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
+      return true;
+    for (final Expression ¢ : step.updaters(s))
+      if (!Collect.usesOf(n).in(¢).isEmpty())
+        return true;
+    return false;
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

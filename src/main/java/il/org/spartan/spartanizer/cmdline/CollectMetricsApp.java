@@ -30,7 +30,7 @@ public final class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
   private static boolean optDoNotOverwrite;
 
-  // TODO Matteo Orru: why hiding?
+  // TODO Matteo: why hiding?
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
@@ -77,9 +77,8 @@ public final class CollectMetricsApp implements IApplication {
   private static void copyFile(final File source, final File target) throws IOException {
     try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
       final byte[] buf = new byte[1024];
-      // TODO: Alex and Dan - restore this loop, created by buggy tipper.
-      for (final int length = in.read(buf); length > 0; out.write(buf, 0, length))
-        ;
+      for (final int length = in.read(buf); length > 0;)
+        out.write(buf, 0, length);
     }
   }
 
@@ -123,7 +122,7 @@ public final class CollectMetricsApp implements IApplication {
    * classes. Turn this if you like into a documentation
    * @param string */
   private static void report(final String prefix, final CompilationUnit ¢) {
-    // TODO Matteo Orru: make sure that the counting does not include comments.
+    // TODO Matteo: make sure that the counting does not include comments.
     // Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());

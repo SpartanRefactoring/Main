@@ -142,10 +142,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       }
     }
     Expression addition = null;
-    // TODO: Alex and Dan - restore this loop, created by buggy tipper.
-    for (int ¢ = 0; ¢ < different.size() - 1; ++¢, addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1))
-        .to(PLUS2))
-      ;
+    for (int ¢ = 0; ¢ < different.size() - 1; ++¢)
+      addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     Expression multiplication = null;
     if (common.isEmpty())
       return addition;
@@ -153,10 +151,11 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return subject.pair(common.get(0), addition).to(Operator.TIMES);
     if (common.size() <= 1)
       return null;
-    // TODO: Alex and Dan - restore this loop, created by buggy tipper.
-    for (int ¢ = 0; ¢ < common.size() - 1; ++¢, multiplication = (multiplication == null ? subject.pair(common.get(¢), common.get(¢ + 1))
-        : subject.pair(multiplication, different.get(¢ + 1))).to(Operator.TIMES))
-      ;
+    for (int ¢ = 0; ¢ < common.size() - 1;) {
+      ++¢;
+      multiplication = (multiplication == null ? subject.pair(common.get(¢), common.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1)))
+          .to(Operator.TIMES);
+    }
     return subject.pair(multiplication, addition).to(Operator.TIMES);
   }
 }
