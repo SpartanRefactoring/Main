@@ -73,7 +73,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement> implement
       if (c.notAllDefined())
         return null;
     }
-    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s) {
+    return then.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {

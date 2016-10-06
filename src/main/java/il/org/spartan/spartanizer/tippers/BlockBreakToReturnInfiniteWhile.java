@@ -99,7 +99,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
     if (exclude != null)
       exclude.exclude(b);
-    return $ == null ? null : new Tip(description(b), b) {
+    return $ == null ? null : new Tip(description(b), b, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);

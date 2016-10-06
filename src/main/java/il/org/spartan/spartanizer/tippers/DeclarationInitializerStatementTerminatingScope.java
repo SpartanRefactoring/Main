@@ -63,7 +63,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     for (final SimpleName use : uses)
       if (never(use, nextStatement) || isPresentOnAnonymous(use, nextStatement))
         return null;
-    Expression v = fixArrayInitializer(initializer, currentStatement);
+    final Expression v = fixArrayInitializer(initializer, currentStatement);
     final InlinerWithValue i = new Inliner(n, r, g).byValue(v);
     final Statement newStatement = duplicate.of(nextStatement);
     final int addedSize = i.addedSize(newStatement);
@@ -79,7 +79,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
   private static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!(initializer instanceof ArrayInitializer))
       return initializer;
-    ArrayCreation $ = initializer.getAST().newArrayCreation();
+    final ArrayCreation $ = initializer.getAST().newArrayCreation();
     $.setType((ArrayType) duplicate.of(currentStatement.getType()));
     $.setInitializer(duplicate.of((ArrayInitializer) initializer));
     return $;

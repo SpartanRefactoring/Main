@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.leonidas;
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {
-  @Test public void testBlockMutation1() {
-    // azzert.tipper("if(!$X1) $B1; else $B2;", "if($X1) $B2; else $B1;",
-    // "change If order").turns("if(!(x==0)) return;").into("a.defaultsTo(y)");
+  @Ignore @Test public void testBlockMutation1() {
+    azzert.tipper("if(!($X1)) $B1 else $B2", "if($X1) $B2 else $B1", "change If order").turns("if(!(x==0)) return; else print(7);")
+        .into("if(x==0) print(7); else return;");
   }
 
   @Test public void testMatches1() {
@@ -40,12 +40,21 @@ import org.junit.*;
     azzert.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : foo()");
   }
 
+  @Test public void testMatches9() {
+    azzert.that("if(true) $B();").matches("if(true) foo();");
+  }
+
   @Test public void testMutation1() {
     azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
   }
 
   @Test public void testMutation2() {
     azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
+        .into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
+  }
+
+  @Ignore @Test public void testMutation3() {
+    azzert.tipper("if(!($X1 == $X2)) $B", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
         .into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
   }
 
@@ -79,5 +88,9 @@ import org.junit.*;
 
   @Test public void testTips5() {
     azzert.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
+  }
+
+  @Test public void testTips6() {
+    azzert.tipper("if(!$X1) $B1 else $B2", "if($X1) $B2 else $B1", "change If order").tips("if(!(x==0)) return; else print(7);");
   }
 }

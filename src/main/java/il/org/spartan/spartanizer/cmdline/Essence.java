@@ -1,10 +1,8 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
-import il.org.spartan.azzert.*;
-import org.junit.*;
 
-import il.org.spartan.spartanizer.leonidas.*;
+import org.junit.*;
 
 /** @author Yossi Gil
  * @since 2016 */
@@ -29,7 +27,7 @@ public class Essence {
   }
 
   @Test public void idempotent() {
-    for (String caze : new String[] { "This", "This 'is'", "This \"is" })
+    for (final String caze : new String[] { "This", "This 'is'", "This \"is" })
       il.org.spartan.azzert.that(stringRemove(stringRemove(caze)), il.org.spartan.azzert.iz(caze));
   }
 
@@ -37,7 +35,7 @@ public class Essence {
     il.org.spartan.azzert.that(stringRemove("\"Who\" is on \"First\""), il.org.spartan.azzert.iz(" is on "));
   }
 
-  private static String stringRemove(String ¢) {
+  private static String stringRemove(final String ¢) {
     return ¢;
   }
 

@@ -95,7 +95,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     final Statement $ = make(vor.getBody(), nextReturn);
     if (exclude != null)
       exclude.exclude(vor);
-    return $ == null ? null : new Tip(description(), vor, nextReturn) {
+    return $ == null ? null : new Tip(description(), vor, this.getClass(), nextReturn) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);

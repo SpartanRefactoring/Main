@@ -120,7 +120,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
     return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null
-        && (e.getType() + "").equals((s.getType() + "")) && compareModifiers(extendedModifiers, extendedModifiers2);
+        && (e.getType() + "").equals(s.getType() + "") && compareModifiers(extendedModifiers, extendedModifiers2);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

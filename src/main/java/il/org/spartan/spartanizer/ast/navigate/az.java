@@ -287,10 +287,10 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static MethodInvocation methodInvocation(final Expression $) {
+  public static MethodInvocation methodInvocation(final ASTNode $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
   }
-
+  
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
    * @param ¢ ASTNode
    * @return argument, but down-casted to a {@link MethodRef}, or
