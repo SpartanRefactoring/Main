@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -20,7 +21,7 @@ import il.org.spartan.utils.*;
  * @year 2015 */
 public final class BatchSpartanizer {
   private static final String folder = "/tmp/";
-  private static final String script = "./Essence";
+  private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static boolean defaultDir;
   private static String outputDir;
@@ -33,8 +34,10 @@ public final class BatchSpartanizer {
       parseCommandLineArgs(args);
       if (inputDir != null && outputDir != null)
         for (final File ¢ : new File(inputDir).listFiles()) {
-          System.out.println(¢.getAbsolutePath());
-          new BatchSpartanizer(¢.getAbsolutePath()).fire();
+          if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
+            System.out.println(¢.getAbsolutePath());
+            new BatchSpartanizer(¢.getAbsolutePath()).fire();
+          }
         }
       if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
@@ -102,9 +105,12 @@ public final class BatchSpartanizer {
 
   private BatchSpartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
-    beforeFileName = folder + name + ".before.java";
-    afterFileName = folder + name + ".after.java";
-    reportFileName = folder + name + ".CSV";
+    beforeFileName = folder + outputDir + "/" + name + ".before.java";
+    afterFileName = folder + outputDir + "/" + name + ".after.java";
+    reportFileName = folder + outputDir + "/" + name + ".CSV";
+    File dir = new File(folder + outputDir);
+    if (!dir.exists())
+      System.out.println(dir.mkdir());
   }
 
   public Process bash(final String shellCommand) {
@@ -187,7 +193,6 @@ public final class BatchSpartanizer {
         .put("R(B/S)", system.ratio(nodes, body)) //
     ;
     report.nl();
-    // System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
 
@@ -276,5 +281,17 @@ public final class BatchSpartanizer {
 
   private void runWordCount() {
     bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
+  }
+
+  private static boolean containsJavaFileOrJavaFileItSelf(File f) {
+    if (f.getName().endsWith(".java"))
+      return true;
+    if (f.isDirectory())
+      for (File ff : f.listFiles())
+        if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff))
+          return true;
+        else if (f.getName().endsWith(".java"))
+          return true;
+    return false;
   }
 }
