@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** IApplication for collecting metrics pre and post spartanization
+/** An {@link IApplication} for collecting metrics pre and post spartanization
  * @author Matteo Orru'
  * @year 2016 */
 public final class CollectMetricsApp implements IApplication {
