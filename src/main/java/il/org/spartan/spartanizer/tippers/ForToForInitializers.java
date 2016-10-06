@@ -113,10 +113,14 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = step.initializers(¢);
+    assert initializers != null;
     if (initializers.isEmpty())
       return true;
-    final VariableDeclarationExpression e = az.variableDeclarationExpression(first(initializers));
-    assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
+    final Expression first = first(initializers);
+    assert first != null;
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
+    if (e == null)
+      return false;
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
     return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null
