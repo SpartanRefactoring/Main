@@ -42,7 +42,7 @@ import org.junit.runners.*;
         .stays();
   }
 
-  // TODO: Dan, (Alex) look at this.. I saw you had some business with the relevant tipper.
+  // TODO: Dan, ATTENTION look at this.. I saw you had some business with the relevant tipper.
   @Ignore @Test public void b$07() {
     trimmingOf("public static void go(final S ssss[]) {  \n" + "for (final S a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
         .gives("public static void go(final S ss[]) {  \n" + "for (final S a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}").stays();
