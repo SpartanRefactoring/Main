@@ -5,8 +5,6 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -19,12 +17,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-
-import static il.org.spartan.plugin.eclipse.*;
 
 /** Scans files named by folder, ignore test files, and collect statistics, on
  * classes, methods, etc.
@@ -44,7 +38,6 @@ public final class spartanizer {
   private File currentFile;
 
   public static void main(final String[] args) {
-    
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new spartanizer(¢).fire();
   }
@@ -158,7 +151,7 @@ public final class spartanizer {
   /** @param ¢
    * @return */
   private String fixedPoint(final BodyDeclaration ¢) {
-      return fixedPoint((¢ + "")); 
+    return fixedPoint(¢ + "");
   }
 
   void collect(final CompilationUnit u) {
@@ -168,14 +161,13 @@ public final class spartanizer {
         // annotation
         return collect(¢);
       }
-      
+
       @Override public boolean visit(final TypeDeclaration ¢) {
         return collect(¢);
       }
-
     });
   }
-  
+
   public String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
@@ -191,25 +183,26 @@ public final class spartanizer {
         return $.get();
     }
   }
-    
+
   public ASTRewrite createRewrite(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     consolidateTips($, ¢);
     return $;
   }
-  
-  public ASTRewrite rewriterOf(final CompilationUnit ¢){ 
+
+  public ASTRewrite rewriterOf(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
-    consolidateTips($, ¢); 
+    consolidateTips($, ¢);
     return $;
   }
-  
-  public void consolidateTips(final ASTRewrite r, final CompilationUnit u){ 
+
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
     Toolbox.refresh(); // leave this?
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
-        if (!check(n) || disabling.on(n)) // removed !inRange(m, n) || !check(n) is always false
+        if (!check(n) || disabling.on(n)) // removed !inRange(m, n) || !check(n)
+                                          // is always false
           return true;
         final Tipper<N> w = getTipper(n);
         if (w == null)
@@ -232,15 +225,13 @@ public final class spartanizer {
       }
     });
   }
-  
-  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(N ¢) {
+
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return Toolbox.defaultInstance().firstTipper(¢);
   }
-  
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
-  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") N ¢) {
+
+  /** [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N ¢) {
     return true;
   }
 
