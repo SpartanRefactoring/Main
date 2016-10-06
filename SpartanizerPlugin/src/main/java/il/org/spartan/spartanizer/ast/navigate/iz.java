@@ -921,4 +921,8 @@ public interface iz {
       return false;
     }
   }
+
+  public static boolean variableDeclarationExpression(final ASTNode $) {
+    return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
+  }
 }
