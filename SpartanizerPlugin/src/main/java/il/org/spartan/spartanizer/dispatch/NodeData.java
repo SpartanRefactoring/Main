@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 /** Black box implementation of data storing in {@link ASTNode}s using Objects
  * map.
  * @author Ori Roth */
-public class NodeData<T> {
+public class NodeData {
   // TODO Roth: attachment.of(n).get(x)
   // TODO: Yossi Gil, erase the above as per #1
   /** Get property from node.
