@@ -45,7 +45,8 @@ public abstract class Tip extends Range {
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode... ns) {
+  public Tip(final String description, final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass,
+      final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
     lineNumber = ((CompilationUnit) searchAncestors.forClass(CompilationUnit.class).from(n)).getLineNumber(from);
   }
