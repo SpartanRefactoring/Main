@@ -3,11 +3,11 @@ package il.org.spartan.plugin;
 import static il.org.spartan.plugin.PreferencesResources.*;
 import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
 
+import org.eclipse.jface.layout.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** ??
@@ -28,7 +28,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     for (final TipperGroup ¢ : TipperGroup.values())
-      g.add(new ComboFieldEditor(¢.id, ¢.label, TIPPER_COMBO_OPTIONS, g.getFieldEditor()));
+      g.add((new BooleanFieldEditor(¢.id, ¢.label, g.getFieldEditor())));
     addField(g);
     g.init();
   }
