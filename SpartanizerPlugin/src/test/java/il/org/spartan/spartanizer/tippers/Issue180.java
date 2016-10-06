@@ -11,7 +11,7 @@ import org.junit.runners.*;
  * @author Ori Roth
  * @since 2016
  * @see SingleVariableDeclarationAbbreviation#fixJavadoc testing for comments */
-// TODO Ori Roth: add
+// TODO Roth: add ???
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") public class Issue180 {
   @Test public void renameToCent() {
     trimmingOf("/**\n" + " * @param s\n" + " */\n" + "int length(String s) {\n" + "  return s.length();\n" + "}")
