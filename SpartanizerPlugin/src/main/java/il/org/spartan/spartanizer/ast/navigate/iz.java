@@ -710,6 +710,14 @@ public interface iz {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
+  /** Determine whether a node is a qualified name
+   * @param pattern JD
+   * @return <code><b>true</b></code> <i>iff</i> the parameter is a qualified
+   *         name */
+  static boolean qualifiedName(final ASTNode ¢) {
+    return nodeTypeEquals(¢, QUALIFIED_NAME);
+  }
+
   /** Determine whether a node is a return statement
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a return
@@ -746,14 +754,6 @@ public interface iz {
    *         name */
   static boolean simpleName(final ASTNode ¢) {
     return nodeTypeEquals(¢, SIMPLE_NAME);
-  }
-
-  /** Determine whether a node is a qualified name
-   * @param pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a qualified
-   *         name */
-  static boolean qualifiedName(final ASTNode ¢) {
-    return nodeTypeEquals(¢, QUALIFIED_NAME);
   }
 
   static boolean singleMemberAnnotation(final ASTNode ¢) {
@@ -857,6 +857,10 @@ public interface iz {
     return true;
   }
 
+  public static boolean variableDeclarationExpression(final ASTNode $) {
+    return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
+  }
+
   /** @param $
    * @return */
   static boolean variableDeclarationFragment(final ASTNode $) {
@@ -883,6 +887,21 @@ public interface iz {
         passedFor = true;
     }
     return true;
+  }
+
+  /** Determines whether a specific SimpleName was used in a
+   * {@link ForStatement}.
+   * @param s JD
+   * @param n JD
+   * @return true <b>iff</b> the SimpleName is used in a ForStatement's
+   *         condition, updaters, or body. */
+  static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
+    if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
+      return true;
+    for (final Expression ¢ : updaters(s))
+      if (!Collect.usesOf(n).in(¢).isEmpty())
+        return true;
+    return false;
   }
 
   static boolean whileStatement(final ASTNode x) {
@@ -920,9 +939,5 @@ public interface iz {
       monitor.logEvaluationError(this, x);
       return false;
     }
-  }
-
-  public static boolean variableDeclarationExpression(final ASTNode $) {
-    return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
   }
 }
