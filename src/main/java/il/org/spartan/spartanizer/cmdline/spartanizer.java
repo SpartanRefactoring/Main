@@ -200,7 +200,7 @@ public final class spartanizer {
    * @return an ASTRewrite which contains the changes */
   
   public final ASTRewrite createRewrite(final CompilationUnit ¢) {
-    return rewriterOf(¢, (IMarker) null);
+    return rewriterOf(¢); //, (IMarker) null);
   }
   
   /**
@@ -210,26 +210,26 @@ public final class spartanizer {
    * @return ASTRewrite containing the changes
    */
   
-  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
+  public ASTRewrite rewriterOf(final CompilationUnit u) { //, final IMarker m) {
 //    progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateTips($, u, m);
+    consolidateTips($, u); //, m);
 //    progressMonitor.done();
     return $;
   }
   
-  public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u){ // final IMarker m) {
     Toolbox.refresh(); // leave this?
 //    IMarker m = null;
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-//        progressMonitor.worked(1);
-//        TrimmerLog.visitation(n);
-        if (!check(n) || !inRange(m, n) || disabling.on(n)) // !check(n) is always false
+        TrimmerLog.visitation(n);
+        if (!check(n) || disabling.on(n)) // !inRange(m, n) || !check(n) is always false
           return true;
         final Tipper<N> w = getTipper(n);
         if (w == null)
           return true;
+        System.out.println(w.description(n));
         Tip s = null;
         try {
           s = w.tip(n, exclude);
@@ -238,8 +238,6 @@ public final class spartanizer {
           monitor.debug(this, f);
         }
         if (s != null) {
-          if (LogManager.isActive())
-            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
           TrimmerLog.application(r, s);
         }
         return true;
@@ -262,14 +260,14 @@ public final class spartanizer {
     return true;
   }
   
-  /** 
-   * @param m marker which represents the range to apply the tipper within
-   * @param n the node which needs to be within the range of
-   *        <code><b>m</b></code>
-   * @return True if the node is within range */
-  public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
-  }
+//  /** 
+//   * @param m marker which represents the range to apply the tipper within
+//   * @param n the node which needs to be within the range of
+//   *        <code><b>m</b></code>
+//   * @return True if the node is within range */
+//  public final boolean inRange(final IMarker m, final ASTNode n) {
+//    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+//  }
 
   void collect(final File f) {
     if (!f.getPath().contains("src/test"))
@@ -281,38 +279,38 @@ public final class spartanizer {
       }
   }
   
-  /**
-   * 
-   * @param n
-   * @param m
-   * @return
-   */
+//  /**
+//   * 
+//   * @param n
+//   * @param m
+//   * @return
+//   */
+//  
+//  boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
+//    try {
+//      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
+//          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+//    } catch (final CoreException x) {
+//      monitor.logEvaluationError(this, x);
+//      return true;
+//    }
+//  }
   
-  boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
-    try {
-      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
-      return true;
-    }
-  }
+//  protected boolean isTextSelected() {
+//    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+//  }
   
-  protected boolean isTextSelected() {
-    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
-  }
-  
-  /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false.
-   * @DisableSpartan */
-  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
-    return !isSelected(¢.getStartPosition());
-  }
-  
-  private boolean isSelected(final int offset) {
-    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
-  }
+//  /** Determines if the node is outside of the selected text.
+//   * @return true if the node is not inside selection. If there is no selection
+//   *         at all will return false.
+//   * @DisableSpartan */
+//  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
+//    return !isSelected(¢.getStartPosition());
+//  }
+//  
+//  private boolean isSelected(final int offset) {
+//    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
+//  }
 
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
