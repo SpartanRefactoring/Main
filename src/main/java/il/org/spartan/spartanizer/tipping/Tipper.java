@@ -85,8 +85,8 @@ public abstract class Tipper<N extends ASTNode> implements TipperCategory {
   private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
-
-  @Override public boolean equals(final Object ¢) {
+  
+  @Override public boolean equals(Object ¢) {
     return ¢ != null && this.getClass().equals(¢.getClass());
   }
 

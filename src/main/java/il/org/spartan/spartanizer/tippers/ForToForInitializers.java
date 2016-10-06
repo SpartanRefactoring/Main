@@ -13,7 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -30,25 +29,17 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
-  private static boolean assignmentChangable(final Assignment a, final VariableDeclarationStatement s) {
-    final SimpleName var = az.simpleName(step.left(a));
-    for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      if ((¢.getName() + "").equals(var + ""))
-        return true;
-    return false;
-  }
-
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
-    $.setExpression(handleConditionInitializers(dupForExpression(¢), s));
+    $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));
     setInitializers($, duplicate.of(s));
     return $;
   }
 
-  private static boolean compareModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
-    final List<IExtendedModifier> l2 = step.extendedModifiers(s);
-    for (final IExtendedModifier ¢ : step.extendedModifiers(x))
-      if (!isIn(¢, l2))
+  private static boolean compareModifiers(final VariableDeclarationExpression e, final VariableDeclarationStatement s) {
+    final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
+    for (final IExtendedModifier ¢ : step.extendedModifiers(e))
+      if (!isIn(¢, extendedModifiers2))
         return false;
     return true;
   }
@@ -61,49 +52,37 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
-  // TODO: now fitting returns true iff all fragments fitting. We
+  // TODO: fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
-      if (!variableUsedInFor(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(s, ¢.getName()))
+      if (!iz.variableUsedInFor(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(s, ¢.getName()))
         return false;
     return true;
-  }
-
-  private static Assignment getAssignment(final Expression ¢) {
-    return az.assignment(az.parenthesizedExpression(¢).getExpression());
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     final SimpleName var = az.simpleName(step.left(from));
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      if ((¢.getName() + "").equals(var + "")) {
+      if ((¢.getName() + "").equals(var + ""))
         ¢.setInitializer(duplicate.of(step.right(from)));
-        return duplicate.of(step.left(from));
-      }
-    return from;
+    return duplicate.of(step.left(from));
   }
 
-  /** @param t JD
-   * @param from JD (already duplicated)
-   * @param to is the list that will contain the pulled out initializations from
-   *        the given expression.
-   * @return expression to the new for loop, without the initializers. */
-  private static Expression handleConditionInitializers(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? handleInfixCondition(duplicate.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from) ? handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
-  }
-
+  /** XXX: This is a bug in autospartanization [[SuppressWarningsSpartan]] */
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
-    for (final Expression ¢ : operands) {
-      if (!iz.parenthesizedExpression(¢) || !iz.assignment(az.parenthesizedExpression(¢).getExpression())
-          || !assignmentChangable(getAssignment(¢), s))
-        continue;
-      operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(handleAssignmentCondition(getAssignment(¢), s) + ""));
-    }
-    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElems(operands, 2));
+    for (final Expression ¢¢ : operands)
+      if (iz.parenthesizedExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
+        final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
+        final SimpleName var = az.simpleName(step.left(a));
+        for (final VariableDeclarationFragment f : fragments(s))
+          if ((f.getName() + "").equals(var + "")) {
+            f.setInitializer(duplicate.of(step.right(a)));
+            operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
+          }
+      }
+    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
@@ -121,37 +100,31 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return false;
   }
 
+  /** @param t JD
+   * @param from JD (already duplicated)
+   * @param to is the list that will contain the pulled out initializations from
+   *        the given expression.
+   * @return expression to the new for loop, without the initializers. */
+  private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+    return iz.infix(from) ? handleInfixCondition(duplicate.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s)
+            : iz.parenthesizedExpression(from) ? handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+  }
+
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = step.initializers(¢);
-    if (initializers.isEmpty() || !iz.variableDeclarationExpression(first(initializers)))
+    if (initializers.isEmpty())
       return true;
-    assert initializers != null;
-    final Expression first = first(initializers);
-    assert first != null;
-    final VariableDeclarationExpression e = az.variableDeclarationExpression(first);
-    return e != null && (e.getType() + "").equals(s.getType() + "") && compareModifiers(s, e);
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(first(initializers));
+    assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
+    return (e.getType() + "").equals(s.getType() + "") && compareModifiers(e, s);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
-    final VariableDeclarationExpression oldInitializers = step.forInitializers($);
+    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)));
     step.initializers($).clear();
     step.initializers($).add(az.variableDeclarationExpression(s));
-    step.fragments(step.forInitializers($)).addAll(duplicate.of(step.fragments(oldInitializers)));
-  }
-
-  /** Determines whether a specific SimpleName was used in a
-   * {@link ForStatement}.
-   * @param s JD
-   * @param n JD
-   * @return true <b>iff</b> the SimpleName is used in a ForStatement's
-   *         condition, updaters, or body. */
-  private static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
-    if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
-      return true;
-    for (final Expression ¢ : step.updaters(s))
-      if (!Collect.usesOf(n).in(¢).isEmpty())
-        return true;
-    return false;
+    step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers($)))).addAll(duplicate.of(step.fragments(forInitializer)));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -169,7 +142,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
     exclude.excludeAll(step.fragments(declarationStatement));
-    // TODO: use list rewriter; talk to Ori Roth
+    // TODO: Alex use list rewriter; talk to Ori Roth
     r.remove(declarationStatement, g);
     r.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
     return r;

@@ -143,7 +143,9 @@ public final class BatchSpartanizer {
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = code.essenceNew(in + "").length();
+    
     final String out = interactiveSpartanizer.fixedPoint(in + "");
+    
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -153,8 +155,10 @@ public final class BatchSpartanizer {
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
+    
     befores.print(in);
     afters.print(out);
+    
     report.summaryFileName();
     report//
         .put("TipperCategory", extract.category(in))//
@@ -196,7 +200,6 @@ public final class BatchSpartanizer {
         .put("R(B/S)", system.ratio(nodes, body)) //
     ;
     report.nl();
-    // System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
 

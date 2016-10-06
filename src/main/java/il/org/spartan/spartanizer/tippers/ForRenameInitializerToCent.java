@@ -26,21 +26,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016-09 */
 public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression> implements TipperCategory.Centification {
-  /** Determines whether a specific SimpleName was used in a
-   * {@link ForStatement}.
-   * @param s JD
-   * @param n JD
-   * @return true <b>iff</b> the SimpleName is used in a ForStatement's
-   *         condition, updaters, or body. */
-  private static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
-    if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
-      return true;
-    for (final Expression ¢ : updaters(s))
-      if (!Collect.usesOf(n).in(¢).isEmpty())
-        return true;
-    return false;
-  }
-
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename for iteration variable " + extract.onlyName(¢) + " to ¢";
   }
@@ -55,7 +40,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(x.getType(), n))
       return null;
     final Statement body = forStatement.getBody();
-    if (body == null || haz.variableDefinition(body) || !variableUsedInFor(forStatement, n))
+    if (body == null || haz.variableDefinition(body) || !iz.variableUsedInFor(forStatement, n))
       return null;
     if (m != null) {
       m.exclude(body);
