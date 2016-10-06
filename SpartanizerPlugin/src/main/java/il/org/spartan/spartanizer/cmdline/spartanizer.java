@@ -5,7 +5,12 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -14,7 +19,11 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+
+import static il.org.spartan.plugin.eclipse.*;
 
 /** Scans files named by folder, ignore test files, and collect statistics, on
  * classes, methods, etc.
@@ -32,6 +41,8 @@ public final class spartanizer {
   private CSVStatistics report;
   private final String reportFileName;
   private File currentFile;
+  
+  private ITextSelection selection; // from GUI$Applicator
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
@@ -84,7 +95,9 @@ public final class spartanizer {
     final int body = metrics.bodySize(¢);
     final int tide = clean(¢ + "").length();
     final int essence = Essence.of(¢ + "").length();
+    // perform spartanization
     final String out = fixedPoint(¢);
+    
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -94,8 +107,10 @@ public final class spartanizer {
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
     System.err.println(++done + " " + extract.category(¢) + " " + extract.name(¢));
+    // printout
     befores.print(¢);
     afters.print(out);
+    // generate csv with statistics
     report.summaryFileName();
     report//
         .put("File", currentFile)//
@@ -138,14 +153,20 @@ public final class spartanizer {
         .put("R(B/S)", ratio(nodes, body)) //
     ;
     report.nl();
-    System.out.println("δ Nodes %: " + report.get("δ Nodes %"));
     return false;
   }
 
   /** @param ¢
    * @return */
   private String fixedPoint(final BodyDeclaration ¢) {
-      return ""; 
+      String from = ¢ + "";
+      System.out.println("BEFORE");
+      System.out.println(from);
+      System.out.println("AFTER");
+//      Trimmer trimmer = new Trimmer(toolbox);
+      String fixed = fixedPoint(from);
+      System.out.println(fixed);
+      return fixed; 
   }
 
   void collect(final CompilationUnit u) {
@@ -157,6 +178,98 @@ public final class spartanizer {
       }
     });
   }
+  
+  public String fixedPoint(final String from) {
+    for (final Document $ = new Document(from);;) {
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
+      final ASTRewrite r = createRewrite(u);
+      final TextEdit e = r.rewriteAST($, null);
+      try {
+        e.apply($);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        monitor.logEvaluationError(this, x);
+        throw new AssertionError(x);
+      }
+      if (!e.hasChildren())
+        return $.get();
+    }
+  }
+  
+  /** creates an ASTRewrite which contains the changes
+   * @param ¢ the Compilation Unit (outermost ASTNode in the Java Grammar)
+   * @return an ASTRewrite which contains the changes */
+  
+  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
+    return rewriterOf(¢, (IMarker) null);
+  }
+  
+  /**
+   * 
+   * @param u
+   * @param m
+   * @return ASTRewrite containing the changes
+   */
+  
+  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
+//    progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    consolidateTips($, u, m);
+//    progressMonitor.done();
+    return $;
+  }
+  
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Toolbox.refresh(); // leave this?
+//    IMarker m = null;
+    u.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+//        progressMonitor.worked(1);
+//        TrimmerLog.visitation(n);
+        if (!check(n) || !inRange(m, n) || disabling.on(n)) // !check(n) is always false
+          return true;
+        final Tipper<N> w = getTipper(n);
+        if (w == null)
+          return true;
+        Tip s = null;
+        try {
+          s = w.tip(n, exclude);
+          TrimmerLog.tip(w, n);
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
+        }
+        if (s != null) {
+          if (LogManager.isActive())
+            LogManager.getLogWriter().printRow(u.getJavaElement().getElementName(), s.description, s.lineNumber + "");
+          TrimmerLog.application(r, s);
+        }
+        return true;
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
+      }
+    });
+  }
+  
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(N ¢) {
+    return Toolbox.defaultInstance().firstTipper(¢);
+  }
+  
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") N ¢) {
+    return true;
+  }
+  
+  /** 
+   * @param m marker which represents the range to apply the tipper within
+   * @param n the node which needs to be within the range of
+   *        <code><b>m</b></code>
+   * @return True if the node is within range */
+  public final boolean inRange(final IMarker m, final ASTNode n) {
+    return m != null ? !isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+  }
 
   void collect(final File f) {
     if (!f.getPath().contains("src/test"))
@@ -166,6 +279,39 @@ public final class spartanizer {
       } catch (final IOException e) {
         monitor.infoIOException(e, "File = " + f);
       }
+  }
+  
+  /**
+   * 
+   * @param n
+   * @param m
+   * @return
+   */
+  
+  boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
+    try {
+      return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
+          || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+    } catch (final CoreException x) {
+      monitor.logEvaluationError(this, x);
+      return true;
+    }
+  }
+  
+  protected boolean isTextSelected() {
+    return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+  }
+  
+  /** Determines if the node is outside of the selected text.
+   * @return true if the node is not inside selection. If there is no selection
+   *         at all will return false.
+   * @DisableSpartan */
+  protected boolean isNodeOutsideSelection(final ASTNode ¢) {
+    return !isSelected(¢.getStartPosition());
+  }
+  
+  private boolean isSelected(final int offset) {
+    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
   }
 
   void collect(final String javaCode) {
