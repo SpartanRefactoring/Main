@@ -28,8 +28,8 @@ public final class Builder extends IncrementalProjectBuilder {
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
-  /** the key in the marker's properties map under which the type of the
-   * tipper used to create the marker is stored */
+  /** the key in the marker's properties map under which the type of the tipper
+   * used to create the marker is stored */
   public static final String SPARTANIZATION_TIPPER_KEY = "il.org.spartan.spartanizer.spartanizationTipper";
 
   /** deletes all spartanization tip markers

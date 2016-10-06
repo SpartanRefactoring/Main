@@ -290,7 +290,7 @@ public enum az {
   public static MethodInvocation methodInvocation(final ASTNode $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
   }
-  
+
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
    * @param ¢ ASTNode
    * @return argument, but down-casted to a {@link MethodRef}, or
