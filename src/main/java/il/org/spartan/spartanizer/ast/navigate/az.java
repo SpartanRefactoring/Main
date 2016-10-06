@@ -290,7 +290,7 @@ public enum az {
   public static MethodInvocation methodInvocation(final ASTNode $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
   }
-
+  
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
    * @param ¢ ASTNode
    * @return argument, but down-casted to a {@link MethodRef}, or
@@ -435,7 +435,7 @@ public enum az {
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final ASTNode $) {
-    return !iz.variableDeclarationExpression($) ? null : (VariableDeclarationExpression) $;
+    return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {

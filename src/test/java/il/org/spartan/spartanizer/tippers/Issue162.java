@@ -9,24 +9,8 @@ import org.junit.runners.*;
  * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue162 {
-  @Ignore("addition zero") @Test public void issue162_01a() {
+  @Ignore("issue 172") @Test public void issue162_01() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
-  }
-
-  @Ignore("addition zero") @Test public void issue162_01b() {
-    trimmingOf("0+x+y+(4)").gives("x+y+4").stays();
-  }
-  
-  @Ignore("addition zero") @Test public void issue162_01c() {
-    trimmingOf("0+x+y+4").gives("x+y+4").stays();
-  }
-  
-  @Ignore("addition zero") @Test public void issue162_01d() {
-    trimmingOf("0+x").gives("x").stays();
-  }
-  
-  @Ignore("addition zero") @Test public void issue162_01e() {
-    trimmingOf("x+0").gives("x").stays();
   }
 
   @Test public void issue162_02() {

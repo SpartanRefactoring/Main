@@ -21,7 +21,7 @@ public class TestFactory {
   /** escapes all "s
    * @param ¢
    * @return */
-  private static String escapeCommas(final String ¢) {
+  private static String escapeCommas(String ¢) {
     return ¢.replace("\"", "\\\"");
   }
 
@@ -80,7 +80,7 @@ public class TestFactory {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.simpleName(¢) || iz.qualifiedName(¢)) {
           final String name = ((Name) ¢).getFullyQualifiedName();
-          if (!renaming.containsKey(name))
+          if (!renaming.containsKey(name)) {
             if (name.charAt(0) < 'A' || name.charAt(0) > 'Z') {
               id.set(renderIdentifier(id.get()));
               renaming.put(name, id.get());
@@ -88,6 +88,7 @@ public class TestFactory {
               Id.set(renderIdentifier(Id.get()));
               renaming.put(name, Id.get());
             }
+          }
           r.replace(¢, ast.newSimpleName(renaming.get(name)), null);
         }
         return true;
@@ -101,7 +102,7 @@ public class TestFactory {
     return ASTutils.extractCode(s, document);
   }
 
-  public static void main(final String args[]) {
+  public static void main(String args[]) {
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";
       while (reader.hasNext())

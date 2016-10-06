@@ -15,10 +15,8 @@ import org.junit.*;
   }
 
   @Test public void b() {
-    trimmingOf("for(int c = 0; c < 5; c-=1)\n" + "c*=2;")
-    .gives("for(int c = 0; c < 5; c--)\n" + "c*=2;")
-    .gives("for(int c = 0; c < 5; --c)\n" + "c*=2;")
-    .stays();
+    trimmingOf("for(int c = 0; c < 5; c-=1)\n" + "c*=2;").gives("for(int c = 0; c < 5; c--)\n" + "c*=2;")
+        .gives("for(int c = 0; c < 5; --c)\n" + "c*=2;").stays();
   }
 
   @Test public void c() {

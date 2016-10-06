@@ -60,9 +60,10 @@ import org.junit.runners.*;
             "for(final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName);m.find();)a += m.group();return a.toLowerCase();}");
   }
 
-  @Test public void challenge_while_e_Modifiers_in_initializers_2() {
-    trimmingOf("public boolean check(int i) {" + " int p = i;" + "while(p < 10) ++p;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for( int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
+  // Ignored due to compilation error, trying to increment final variable.
+  @Ignore @Test public void challenge_while_e_Modifiers_in_initializers_2() {
+    trimmingOf("public boolean check(int i) {" + "final int p = i;" + "while(p < 10) ++p;" + "return false;" + "}")
+        .gives("public boolean check(int i) {" + "for(final int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_2a() {
@@ -205,9 +206,10 @@ import org.junit.runners.*;
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
-  @Test public void initializers_while_3() {
+  // Ignored until treatment of each fragment alone will be implemented.
+  @Ignore @Test public void initializers_while_3() {
     trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "while(p < 10) ++p;" + "return false;" + "}")
-        .stays();
+        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
   @Test public void initializers_while_4() {
