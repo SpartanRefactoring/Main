@@ -158,9 +158,7 @@ public final class spartanizer {
   /** @param ¢
    * @return */
   private String fixedPoint(final BodyDeclaration ¢) {
-      String from = ¢ + "";
-      String fixed = fixedPoint(from);
-      return fixed; 
+      return fixedPoint((¢ + "")); 
   }
 
   void collect(final CompilationUnit u) {
@@ -194,15 +192,15 @@ public final class spartanizer {
     }
   }
     
-  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
-    consolidateTips($, ¢); 
-    return $; 
+    consolidateTips($, ¢);
+    return $;
   }
   
-  public ASTRewrite rewriterOf(final CompilationUnit u){ 
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateTips($, u); 
+  public ASTRewrite rewriterOf(final CompilationUnit ¢){ 
+    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    consolidateTips($, ¢); 
     return $;
   }
   
@@ -224,9 +222,8 @@ public final class spartanizer {
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         }
-        if (s != null) {
+        if (s != null)
           TrimmerLog.application(r, s);
-        }
         return true;
       }
 
@@ -262,7 +259,7 @@ public final class spartanizer {
   }
 
   void fire() {
-    System.out.println(toolbox.defaultInstance().hooksCount());
+    System.out.println(Toolbox.defaultInstance().hooksCount());
     collect();
     runEssence();
     runWordCount();
