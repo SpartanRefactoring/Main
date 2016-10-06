@@ -31,9 +31,8 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
           for (final ASTNode ¢ : input)
             r.replace(¢, first(output), g);
         else if (input.size() == output.size())
-          // TODO: Alex and Dan - fix this empty loop, created by buggy tipper.
-          for (int ¢ = 0; ¢ < input.size(); ++¢, r.replace(input.get(¢), output.get(¢), g))
-            ;
+          for (int ¢ = 0; ¢ < input.size(); ++¢)
+            r.replace(input.get(¢), output.get(¢), g);
       }
     };
   }
