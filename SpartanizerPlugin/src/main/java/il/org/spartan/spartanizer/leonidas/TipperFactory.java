@@ -65,9 +65,8 @@ public class TipperFactory {
             nChildren.addAll(az.methodInvocation(n).arguments());
             pChildren.addAll(az.methodInvocation(p).arguments());
           }
-          // TODO: Alex and Dan - fix this empty loop, created by buggy tipper.
-          for (int ¢ = 0; ¢ < pChildren.size(); collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment), ++¢)
-            ;
+          for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+            collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
         }
         return enviroment;
       }
