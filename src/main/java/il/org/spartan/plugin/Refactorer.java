@@ -180,7 +180,6 @@ import org.eclipse.ui.*;
     if (¢ == null)
       return null;
     final MessageDialog $ = eclipse.announceNonBusy(¢);
-    $.setBlockOnOpen(false);
     $.open();
     return $;
   }
