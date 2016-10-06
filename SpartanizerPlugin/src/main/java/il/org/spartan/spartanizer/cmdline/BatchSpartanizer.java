@@ -32,13 +32,20 @@ public final class BatchSpartanizer {
       printHelpPrompt();
     else {
       parseCommandLineArgs(args);
-      if (inputDir != null && outputDir != null)
-        for (final File ¢ : new File(inputDir).listFiles()) {
-          if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
-            System.out.println(¢.getAbsolutePath());
-            new BatchSpartanizer(¢.getAbsolutePath()).fire();
+      if (inputDir != null && outputDir != null) {
+        final File input = new File(inputDir);
+        if (input.isDirectory())
+          for (final File ¢ : input.listFiles()) {
+            if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
+              System.out.println(¢.getAbsolutePath());
+              new BatchSpartanizer(¢.getAbsolutePath()).fire();
+            }
           }
+        else {
+          System.out.println(input.getAbsolutePath());
+          new BatchSpartanizer(input.getAbsolutePath()).fire();
         }
+      }
       if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
         for (final String ¢ : args)
