@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -34,17 +33,15 @@ public final class BatchSpartanizer {
       parseCommandLineArgs(args);
       if (inputDir != null && outputDir != null) {
         final File input = new File(inputDir);
-        if (input.isDirectory())
-          for (final File ¢ : input.listFiles()) {
+        if (!input.isDirectory()) {
+          System.out.println(input.getAbsolutePath());
+          new BatchSpartanizer(input.getAbsolutePath()).fire();
+        } else
+          for (final File ¢ : input.listFiles())
             if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
               System.out.println(¢.getAbsolutePath());
               new BatchSpartanizer(¢.getAbsolutePath()).fire();
             }
-          }
-        else {
-          System.out.println(input.getAbsolutePath());
-          new BatchSpartanizer(input.getAbsolutePath()).fire();
-        }
       }
       if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
@@ -143,9 +140,7 @@ public final class BatchSpartanizer {
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = code.essenceNew(in + "").length();
-    
     final String out = interactiveSpartanizer.fixedPoint(in + "");
-    
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -155,10 +150,8 @@ public final class BatchSpartanizer {
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
-    
     befores.print(in);
     afters.print(out);
-    
     report.summaryFileName();
     report//
         .put("TipperCategory", extract.category(in))//
@@ -295,9 +288,7 @@ public final class BatchSpartanizer {
       return true;
     if (f.isDirectory())
       for (File ff : f.listFiles())
-        if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff))
-          return true;
-        else if (f.getName().endsWith(".java"))
+        if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"))
           return true;
     return false;
   }
