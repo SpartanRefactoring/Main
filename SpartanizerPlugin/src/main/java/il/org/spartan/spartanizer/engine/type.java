@@ -8,15 +8,10 @@ import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

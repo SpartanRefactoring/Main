@@ -13,7 +13,7 @@ public abstract class MethodScanner {
   protected Statement currentStatement;
   protected int currentIndex;
 
-  @SuppressWarnings("unchecked") public MethodScanner(MethodDeclaration method) {
+  @SuppressWarnings("unchecked") public MethodScanner(final MethodDeclaration method) {
     assert method != null;
     this.method = method;
     if (method.getBody() == null) {
@@ -32,22 +32,18 @@ public abstract class MethodScanner {
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */
   public Iterable<Statement> statements() {
-    return new Iterable<Statement>() {
-      @Override public Iterator<Statement> iterator() {
-        return new Iterator<Statement>() {
-          final Iterator<Statement> i = availableStatements().iterator();
+    return () -> new Iterator<Statement>() {
+      final Iterator<Statement> i = availableStatements().iterator();
 
-          @Override public boolean hasNext() {
-            return i.hasNext();
-          }
+      @Override public boolean hasNext() {
+        return i.hasNext();
+      }
 
-          @Override public Statement next() {
-            Statement $ = i.next();
-            ++currentIndex;
-            currentStatement = $;
-            return $;
-          }
-        };
+      @Override public Statement next() {
+        final Statement $ = i.next();
+        ++currentIndex;
+        currentStatement = $;
+        return $;
       }
     };
   }

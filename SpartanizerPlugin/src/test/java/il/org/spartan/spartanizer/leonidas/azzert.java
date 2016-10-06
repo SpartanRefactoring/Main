@@ -23,7 +23,7 @@ public class azzert {
     return new tipper(p, s, d);
   }
 
-  public static tipper tipper(Tipper<ASTNode> ¢) {
+  public static tipper tipper(final Tipper<ASTNode> ¢) {
     return new tipper(¢);
   }
 
@@ -34,7 +34,7 @@ public class azzert {
       tipper = TipperFactory.tipper(p, r, d);
     }
 
-    public tipper(Tipper<ASTNode> t) {
+    public tipper(final Tipper<ASTNode> t) {
       tipper = t;
     }
 
@@ -126,7 +126,7 @@ public class azzert {
         case OUTER_TYPE_LOOKALIKE:
           return u;
         case STATEMENTS_LOOK_ALIKE:
-          return findSecond(Block.class, u);
+          return findFirst.instanceOf(Block.class, u);
         default:
           break;
       }
