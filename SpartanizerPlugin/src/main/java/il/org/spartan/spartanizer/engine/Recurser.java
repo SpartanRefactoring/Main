@@ -16,6 +16,8 @@ public final class Recurser<T> {
    * @param n an ASTNode
    * @return a list of n's children */
   public static List<? extends ASTNode> children(final ASTNode n) {
+    // TODO: This method does not retrieve methodInvocations' operands... Are
+    // they not children?
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))

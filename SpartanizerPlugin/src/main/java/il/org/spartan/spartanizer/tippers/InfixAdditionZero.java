@@ -102,7 +102,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Tip(description(x), x) {
+    return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : es.get(0);
         for (final Expression ¢ : es)

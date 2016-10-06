@@ -28,6 +28,9 @@ public final class Builder extends IncrementalProjectBuilder {
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
+  /** the key in the marker's properties map under which the type of the
+   * tipper used to create the marker is stored */
+  public static final String SPARTANIZATION_TIPPER_KEY = "il.org.spartan.spartanizer.spartanizationTipper";
 
   /** deletes all spartanization tip markers
    * @param f the file from which to delete the markers
@@ -59,6 +62,7 @@ public final class Builder extends IncrementalProjectBuilder {
   private static void addMarker(final GUI$Applicator a, final Tip r, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
+    m.setAttribute(SPARTANIZATION_TIPPER_KEY, r.tipperClass);
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);
