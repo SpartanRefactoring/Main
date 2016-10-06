@@ -131,7 +131,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     public abstract String getLabelSuffix();
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public GUI$Applicator getApplicator(final IMarker m) {
+    @SuppressWarnings({ "unchecked", "rawtypes" }) //
+      @Override public GUI$Applicator getApplicator(final IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         if (m.getResource() == null)
