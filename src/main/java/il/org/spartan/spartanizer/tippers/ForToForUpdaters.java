@@ -13,6 +13,21 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Collapse {
+  public static boolean bodyDeclaresElementsOf(final ASTNode n) {
+    final Block body = az.block(n.getParent());
+    if (body == null)
+      return false;
+    for (final VariableDeclarationFragment ¢ : extract.fragments(body))
+      if (!Collect.usesOf(¢.getName()).in(n).isEmpty())
+        return true;
+    return false;
+  }
+
+  private static boolean bodyHasLessThenTwoStatements(final ForStatement ¢) {
+    final Block bodyBlock = az.block(step.body(¢));
+    return bodyBlock == null || step.statements(bodyBlock).size() < 2;
+  }
+
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
@@ -30,9 +45,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
-    final Block bodyBlock = az.block(step.body(¢));
-    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2
-        || bodyDeclaresElementsOf(lastStatement(¢)))
+    if (bodyHasLessThenTwoStatements(¢) || !iz.incrementOrDecrement(lastStatement(¢)) || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
@@ -42,17 +55,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
     final Assignment a = az.assignment(e);
     return updaterDeclaredInFor(¢, pre != null ? az.simpleName(pre.getOperand())
         : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
-  }
-
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean bodyDeclaresElementsOf(final ASTNode ¢) {
-    final Block body = az.block(¢.getParent());
-    if (body == null)
-      return false;
-    for (final VariableDeclarationFragment f : extract.fragments(body))
-      if (!Collect.usesOf(f.getName()).in(¢).isEmpty())
-        return true;
-    return false;
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {
