@@ -2,20 +2,27 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** @author Yossi Gil
@@ -72,7 +79,7 @@ public interface type {
     return of(¢) == Certain.STRING;
   }
 
-  // TODO: Matteo Orru: Nano-pattern of values: not implemented
+  // TODO: Matteo: Nano-pattern of values: not implemented
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }

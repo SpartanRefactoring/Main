@@ -12,13 +12,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-// TODO Ori: choose more suitable category
-// TODO Ori: add tests for tipper
+// TODO Roth: choose more suitable category
+// TODO Roth: add tests for tipper
 /** Extract method suffix into new method according to predefined heuristic.
  * @author Ori Roth
  * @since 2016 */
 public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration> implements TipperCategory.EarlyReturn {
-  // TODO Ori: get more suitable names for constants
+  // TODO Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 
   @Override public String description(final MethodDeclaration ¢) {
@@ -165,7 +165,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   public static class MethodVariablesScanner extends MethodScanner {
-    // TODO Ori: get more suitable names for constants
+    // TODO Roth: get more suitable names for constants
     // 1.0 means all statements but the last.
     private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;// 2.0/3.0;
     protected final Map<VariableDeclaration, List<Statement>> uses;
