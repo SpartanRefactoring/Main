@@ -75,7 +75,7 @@ public final class CollectClassMetrics {
    * @param string */
   // TODO: Yossi Gil: make this even more clever, by using function interfaces..
   private static void report(final String prefix, final CompilationUnit ¢) {
-    // TODO Matteo Orru: make sure that the counting does not include comments.
+    // TODO Matteo  : make sure that the counting does not include comments.
     // Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
