@@ -34,11 +34,11 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
 
   /** @param x
    * @return */
-  private static boolean stringOperands(InfixExpression x) {
+  private static boolean stringOperands(final InfixExpression x) {
     if (!iz.methodInvocation(x.getLeftOperand())
         || az.methodInvocation(x.getLeftOperand()).getExpression() != null && !type.isString(az.methodInvocation(x.getLeftOperand()).getExpression()))
       return false;
-    @SuppressWarnings("unchecked") List<ASTNode> arguments = az.methodInvocation(x.getLeftOperand()).arguments();
+    @SuppressWarnings("unchecked") final List<ASTNode> arguments = az.methodInvocation(x.getLeftOperand()).arguments();
     return !arguments.isEmpty() && iz.expression(arguments.get(0)) && type.isString(az.expression(arguments.get(0)));
   }
 
