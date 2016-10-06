@@ -112,6 +112,10 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public int getProgressMonitorWork(final List<ICompilationUnit> ¢) {
       return ¢.size();
     }
+    
+    @Override public boolean hasDisplay() {
+      return true;
+    }
   }
 
   abstract static class Resolution extends Refactorer {
