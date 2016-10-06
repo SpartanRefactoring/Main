@@ -71,7 +71,7 @@ import org.eclipse.ui.progress.*;
   /** @param compilationUnits JD
    * @return message to be displayed by a {@link IProgressMonitor}
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> compilationUnits, final int pass) {
+  @SuppressWarnings("unused") public String getProgressMonitorMessage(List<ICompilationUnit> compilationUnits, int pass) {
     return getLabel();
   }
 
@@ -79,15 +79,15 @@ import org.eclipse.ui.progress.*;
    * @param currentCompilationUnit
    * @return sub message to be displayed by a {@link IProgressMonitor}
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
-      final ICompilationUnit currentCompilationUnit) {
+  @SuppressWarnings("unused") public String getProgressMonitorSubMessage(List<ICompilationUnit> currentCompilationUnits,
+      ICompilationUnit currentCompilationUnit) {
     return null;
   }
 
   /** @param compilationUnits JD
    * @return work to be done by a {@link IProgressMonitor}
    *         [[SuppressWarningsSpartan]] */
-  public int getProgressMonitorWork(@SuppressWarnings("unused") final List<ICompilationUnit> compilationUnits) {
+  public int getProgressMonitorWork(@SuppressWarnings("unused") List<ICompilationUnit> compilationUnits) {
     return IProgressMonitor.UNKNOWN;
   }
 
@@ -121,7 +121,7 @@ import org.eclipse.ui.progress.*;
     put(attributes, attribute.APPLICATOR, applicator);
     show(getOpeningMessage(attributes));
     final IProgressService ps = getProgressService();
-    final IRunnableWithProgress r = runnable(targetCompilationUnits, applicator, attributes);
+    IRunnableWithProgress r = runnable(targetCompilationUnits, applicator, attributes);
     if (ps != null)
       try {
         if (isBusy())
@@ -138,19 +138,19 @@ import org.eclipse.ui.progress.*;
 
   private IRunnableWithProgress runnable(final List<ICompilationUnit> us, final GUI$Applicator a, final Map<attribute, Object> attributes) {
     return new IRunnableWithProgress() {
-      @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
+      @SuppressWarnings("synthetic-access") @Override public void run(IProgressMonitor pm) {
         final int passesCount = passesCount();
         int pass;
-        final List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
-        final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
+        List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
+        Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
         for (pass = 0; pass < passesCount && !done(pm); ++pass) {
           pm.beginTask(getProgressMonitorMessage(us, pass), getProgressMonitorWork(us));
-          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(us, deadCompilationUnits);
+          List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(us, deadCompilationUnits);
           if (currentCompilationUnits.isEmpty()) {
             done(pm);
             break;
           }
-          for (final ICompilationUnit currentCompilationUnit : currentCompilationUnits) {
+          for (ICompilationUnit currentCompilationUnit : currentCompilationUnits) {
             if (pm.isCanceled())
               break;
             pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, currentCompilationUnit));
@@ -165,7 +165,7 @@ import org.eclipse.ui.progress.*;
     };
   }
 
-  private static <T> T either(final T t1, final T t2) {
+  private static <T> T either(T t1, T t2) {
     return t1 != null ? t1 : t2;
   }
 
@@ -174,7 +174,7 @@ import org.eclipse.ui.progress.*;
       m.put(a, o);
   }
 
-  private static void show(final String ¢) {
+  private static void show(String ¢) {
     if (¢ != null)
       eclipse.announce(¢);
   }
@@ -185,20 +185,20 @@ import org.eclipse.ui.progress.*;
   }
 
   private static boolean done(final IProgressMonitor pm) {
-    final boolean $ = pm.isCanceled();
+    boolean $ = pm.isCanceled();
     pm.done();
     return $;
   }
 
-  private static List<ICompilationUnit> currentCompilationUnits(final List<ICompilationUnit> us, final List<ICompilationUnit> ds) {
-    final List<ICompilationUnit> $ = new LinkedList<>();
+  private static List<ICompilationUnit> currentCompilationUnits(List<ICompilationUnit> us, List<ICompilationUnit> ds) {
+    List<ICompilationUnit> $ = new LinkedList<>();
     $.addAll(us);
     $.removeAll(ds);
     return $;
   }
 
-  private static boolean valid(final Object... os) {
-    for (final Object ¢ : os)
+  private static boolean valid(Object... os) {
+    for (Object ¢ : os)
       if (¢ == null)
         return false;
     return true;

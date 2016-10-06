@@ -21,23 +21,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016 */
 public enum minus {
   ;
-  public static <E> List<E> firstElem(final List<E> ¢) {
-    ¢.remove(0);
-    return ¢;
-  }
-
-  /** @param es JD
-   * @param i number of elements to remove from the beginning.
-   * @return Same list untouched iff i = 0. empty list if i is greater then list
-   *         size. Otherwise, the list without i first elements. */
-  public static <E> List<E> firstElems(final List<E> es, final int i) {
-    if (i > es.size())
-      es.clear();
-    for (int ¢ = 0; ¢ < i; ++¢)
-      es.remove(0);
-    return es;
-  }
-
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.

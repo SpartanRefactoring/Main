@@ -8,14 +8,14 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Matteo:  
+/** TODO: Ori Marcovtich: Document
  * @author Ori Marcovitch
  * @since 2016 */
 public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] args) {
     if (args.length != 0)
-     spartanizer.main(args);
+      BatchSpartanizer.main(args);
     else
       System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
   }
