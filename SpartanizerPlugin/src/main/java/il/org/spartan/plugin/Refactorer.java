@@ -15,6 +15,8 @@ import org.eclipse.ui.progress.*;
  * @author Ori Roth
  * @since 2016 */
 @SuppressWarnings("static-method") public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
+  /** Used to collect attributes from a Refactorer's run, used later in printing
+   * actions (such as {@link eclipse#announce}) */
   enum attribute {
     EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES
   }
@@ -128,7 +130,6 @@ import org.eclipse.ui.progress.*;
           ps.busyCursorWhile(r);
       } catch (InterruptedException | InvocationTargetException x) {
         monitor.log(x);
-        x.printStackTrace();
         return null;
       }
     show(getEndingMessage(attributes));
