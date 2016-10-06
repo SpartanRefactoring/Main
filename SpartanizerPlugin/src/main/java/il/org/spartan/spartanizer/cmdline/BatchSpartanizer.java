@@ -112,7 +112,7 @@ public final class BatchSpartanizer {
     beforeFileName = folder + outputDir + "/" + name + ".before.java";
     afterFileName = folder + outputDir + "/" + name + ".after.java";
     reportFileName = folder + outputDir + "/" + name + ".CSV";
-    File dir = new File(folder + outputDir);
+    final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
@@ -283,11 +283,11 @@ public final class BatchSpartanizer {
     bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 
-  private static boolean containsJavaFileOrJavaFileItSelf(File f) {
+  private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
     if (f.getName().endsWith(".java"))
       return true;
     if (f.isDirectory())
-      for (File ff : f.listFiles())
+      for (final File ff : f.listFiles())
         if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"))
           return true;
     return false;
