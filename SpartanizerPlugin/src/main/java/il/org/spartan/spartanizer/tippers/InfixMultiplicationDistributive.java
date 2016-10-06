@@ -142,10 +142,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       }
     }
     Expression addition = null;
-    // TODO: Alex and Dan - restore this loop, created by buggy tipper.
-    for (int ¢ = 0; ¢ < different.size() - 1; ++¢, addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1))
-        .to(PLUS2))
-      ;
+    for (int ¢ = 0; ¢ < different.size() - 1; ++¢)
+      addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     Expression multiplication = null;
     if (common.isEmpty())
       return addition;

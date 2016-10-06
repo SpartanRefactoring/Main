@@ -45,7 +45,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
 
-  // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
+  // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
