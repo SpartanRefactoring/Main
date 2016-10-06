@@ -34,7 +34,7 @@ public final class BatchSpartanizer {
       if (inputDir != null && outputDir != null) {
         final File input = new File(inputDir);
         if (!input.isDirectory()) {
-          System.out.println(input.getAbsolutePath());
+          System.out.println("Analyzing single file: " + input.getAbsolutePath());
           new BatchSpartanizer(input.getAbsolutePath()).fire();
         } else
           for (final File ¢ : input.listFiles())
@@ -81,15 +81,15 @@ public final class BatchSpartanizer {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
-        System.out.println(outputDir);
+        System.out.println("OutputDir: " + outputDir);
         ¢ += 2;
       } else if ("-i".equals(args[¢])) {
         inputDir = args[¢ + 1];
-        System.out.println(inputDir);
+        System.out.println("InputDir: " + inputDir);
         ¢ += 2;
       } else {
         System.out.println(args[¢]);
-        System.out.println("something went wrong!");
+        System.out.println("[ERROR]: Something went wrong!");
         ++¢;
       }
   }
