@@ -14,11 +14,11 @@ import org.junit.*;
     trimmingOf("a+=1;").stays();
   }
 
-  @Ignore("centification") @Test public void b() {
+  @Test public void b() {
     trimmingOf("for(int c = 0; c < 5; c-=1)\n" + "c*=2;")
     .gives("for(int c = 0; c < 5; c--)\n" + "c*=2;")
     .gives("for(int c = 0; c < 5; --c)\n" + "c*=2;")
-    .gives("for(int ¢ = 0; ¢ < 5; --¢)\n" + "¢*=2;").stays();
+    .stays();
   }
 
   @Test public void c() {

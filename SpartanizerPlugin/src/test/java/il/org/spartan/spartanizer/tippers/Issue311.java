@@ -35,10 +35,16 @@ import org.junit.runners.*;
             .stays();
   }
 
-  @Ignore("centification") @Test public void challenge_while_c() {
+  @Test public void challenge_while_ca() {
     trimmingOf("for (int i = 0; i < 20; ++i) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
         "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-    .gives("for (int ¢ = 0; ¢ < 20; ++¢) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+    .stays();
+  }
+  
+  @Test public void challenge_while_cb() {
+    trimmingOf("for (int i = 0; i < 20; ++i) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
+    .gives("for (int ¢ = 0; ¢ < 20; ++¢) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
         "createdFiles[¢] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
     .stays();
   }
@@ -104,10 +110,10 @@ import org.junit.runners.*;
         .gives("for (int line = 1; 0 < line;++line){--a;}").gives("for (int line = 1; line > 0;++line)--a;").stays();
   }
 
-  @Ignore("centification") @Test public void challenge_while_i_initialization_expression_2d() {
+  @Test public void challenge_while_i_initialization_expression_2d() {
     trimmingOf("int line;while (0 < (line = 1)){a=line;++line;}").gives("for (int line = 1; 0 < line;){a=line;++line;}")
         .gives("for (int line = 1; 0 < line;++line){a=line;}").gives("for (int line = 1; line > 0;++line)a=line;")
-        .gives("for (int ¢ = 1; ¢ > 0;++¢){a=¢;}").stays();
+        .stays();
   }
 
   @Test public void challenge_while_i_initialization_expression_3a() {
