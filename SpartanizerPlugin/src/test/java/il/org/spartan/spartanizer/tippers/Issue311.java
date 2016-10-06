@@ -37,16 +37,15 @@ import org.junit.runners.*;
 
   @Test public void challenge_while_ca() {
     trimmingOf("for (int i = 0; i < 20; ++i) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
-        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-    .stays();
+        "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}").stays();
   }
-  
+
   @Test public void challenge_while_cb() {
     trimmingOf("for (int i = 0; i < 20; ++i) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
         "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-    .gives("for (int ¢ = 0; ¢ < 20; ++¢) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
-        "createdFiles[¢] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-    .stays();
+            .gives("for (int ¢ = 0; ¢ < 20; ++¢) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+                "createdFiles[¢] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
+            .stays();
   }
 
   @Test public void challenge_while_d() {
@@ -107,8 +106,7 @@ import org.junit.runners.*;
 
   @Test public void challenge_while_i_initialization_expression_2d() {
     trimmingOf("int line;while (0 < (line = 1)){a=line;++line;}").gives("for (int line = 1; 0 < line;){a=line;++line;}")
-        .gives("for (int line = 1; 0 < line;++line){a=line;}").gives("for (int line = 1; line > 0;++line)a=line;")
-        .stays();
+        .gives("for (int line = 1; 0 < line;++line){a=line;}").gives("for (int line = 1; line > 0;++line)a=line;").stays();
   }
 
   @Test public void challenge_while_i_initialization_expression_3a() {
@@ -200,10 +198,9 @@ import org.junit.runners.*;
         .gives("public boolean check(int i) {" + "for(int p = i;p < 10;) ++p;" + "return false;" + "}").stays();
   }
 
-  // Ignored until treatment of each fragment alone will be implemented.
-  @Ignore @Test public void initializers_while_3() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "while(p < 10) ++p;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p < 10;) ++p;" + "return false;" + "}").stays();
+  // TODO: when fragments will be handled alone, change the test.
+  @Test public void initializers_while_3() {
+    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "while(p < 10) ++p;" + "return false;" + "}").stays();
   }
 
   @Test public void initializers_while_4() {
