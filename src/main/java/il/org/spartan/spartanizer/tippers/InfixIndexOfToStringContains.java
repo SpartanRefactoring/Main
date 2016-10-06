@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
@@ -23,10 +24,25 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> 
 
   /** @see il.org.spartan.spartanizer.tipping.Tipper#canTip(org.eclipse.jdt.core.dom.ASTNode) */
   @Override public boolean canTip(final InfixExpression x) {
+    if (!stringOperands(x))
+      return false;
     for (final UserDefinedTipper<InfixExpression> ¢ : tippers)
       if (¢.canTip(x))
         return true;
     return false;
+  }
+
+  /** @param x
+   * @return */
+  private static boolean stringOperands(InfixExpression x) {
+    if (!iz.methodInvocation(x.getLeftOperand())) {
+      return false;
+    }
+    if (az.methodInvocation(x.getLeftOperand()).getExpression() != null && !type.isString(az.methodInvocation(x.getLeftOperand()).getExpression())) {
+      return false;
+    }
+    @SuppressWarnings("unchecked") List<ASTNode> arguments = az.methodInvocation(x.getLeftOperand()).arguments();
+    return !arguments.isEmpty() && iz.expression(arguments.get(0)) && type.isString(az.expression(arguments.get(0)));
   }
 
   @Override public Tip tip(final InfixExpression x) throws TipperFailure {
