@@ -228,10 +228,8 @@ import org.junit.runners.*;
   }
 
   @Test public void initializers_with_array_a() {
-    trimmingOf("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;) {arr[i] = 0;++i;}")
-        .gives("for(int i = 0;;) {(new int[]{1,2,3,4,5})[i] = 0;++i;}")
-        .gives("for(int ¢ = 0;;) {(new int[]{1,2,3,4,5})[¢] = 0;++¢;}")
-        .gives("for(int ¢ = 0;;++¢) {(new int[]{1,2,3,4,5})[¢] = 0;}")
+    trimmingOf("int[] arr = new int[]{1,2,3,4,5};for(int i = 0;;) {arr[i] = 0;++i;}").gives("for(int i = 0;;) {(new int[]{1,2,3,4,5})[i] = 0;++i;}")
+        .gives("for(int ¢ = 0;;) {(new int[]{1,2,3,4,5})[¢] = 0;++¢;}").gives("for(int ¢ = 0;;++¢) {(new int[]{1,2,3,4,5})[¢] = 0;}")
         .gives("for(int ¢ = 0;;++¢) (new int[]{1,2,3,4,5})[¢] = 0;").stays();
   }
 
@@ -242,7 +240,7 @@ import org.junit.runners.*;
                 "private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
                     + "int length = sb.length();"
                     + "for (int ¢ = 0; ¢ < length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');" + "return sb + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + ""
+            .gives("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);"
                 + "for (int length = sb.length(), ¢ = 0; ¢ < length; ++¢)" + "if (sb.charAt(¢) == '.')" + "sb.setCharAt(¢, '/');"
                 + "return sb + \"\";")
             .stays();

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -286,10 +287,10 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-  public static MethodInvocation methodInvocation(final Expression $) {
+  public static MethodInvocation methodInvocation(final ASTNode $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
   }
-
+  
   /** Convert, is possible, an {@link ASTNode} to a {@link MethodRef}
    * @param ¢ ASTNode
    * @return argument, but down-casted to a {@link MethodRef}, or
@@ -319,7 +320,7 @@ public enum az {
   private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
     final List<VariableDeclarationFragment> fragments = new ArrayList<>();
     duplicate.into(step.fragments(¢), fragments);
-    return minus.firstElem(fragments);
+    return chop(fragments);
   }
 
   /** Down-cast, if possible, to {@link NormalAnnotation}

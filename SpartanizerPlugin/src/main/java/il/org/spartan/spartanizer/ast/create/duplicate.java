@@ -56,11 +56,11 @@ public enum duplicate {
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢ JD
+   * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢) {
+  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
     final List<¢> $ = new ArrayList<>();
-    for (final ¢ cent : ¢)
+    for (final ¢ cent : ¢s)
       $.add((¢) copySubtree(cent.getAST(), cent));
     return $;
   }

@@ -28,7 +28,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>: major refactoring
  *         2013/07/10
  * @since 2013/01/01 */
-// TODO: Ori Roth: check if we can eliminate this dependency on Refactoring...
 public abstract class GUI$Applicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   final Collection<TextFileChange> changes = new ArrayList<>();
@@ -146,7 +145,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public boolean fuzzyImplementationApply(final ICompilationUnit cu, final ITextSelection s) {
     try {
       setICompilationUnit(cu);
-      setSelection(s.getLength() > 0 && !s.isEmpty() ? s : null);
+      setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule(cu);
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
@@ -426,7 +425,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
   }
 
-  private boolean isTextSelected() {
+  protected boolean isTextSelected() {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
 }

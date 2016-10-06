@@ -298,16 +298,16 @@ public final class Version230 {
 
   @Test public void bugIntroducingMISSINGWord2() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == 2? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==2?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2a() {
     trimmingOf(
-        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == -1? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
+        "name.endsWith(testSuffix) &&  MakeAST.stringBuilder(f).indexOf(testKeyword) == 2? objects(s, name, makeInFile(f)) : !name.endsWith(\".in\") ? null : dotOutExists(d, name) ? null : objects(name.replaceAll(\"\\\\.in$\", Z2), s, f)")
             .gives(
-                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==-1?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
+                "name.endsWith(testSuffix)&&MakeAST.stringBuilder(f).indexOf(testKeyword)==2?objects(s,name,makeInFile(f)):name.endsWith(\".in\")&&!dotOutExists(d,name)?objects(name.replaceAll(\"\\\\.in$\",Z2),s,f):null");
   }
 
   @Test public void bugIntroducingMISSINGWord2b() {
@@ -1261,10 +1261,11 @@ public final class Version230 {
         + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
         + "  assertArrayEquals(int1, int2);\n" //
-        + "}").gives("public void multiDimensionalIntArraysAreEqual() {\n" //
-            + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
-            + "  assertArrayEquals(int1, (new int[][] {{1, 2, 3}, {4, 5, 6}}));\n" //
-            + "}");
+        + "}")
+            .gives("public void multiDimensionalIntArraysAreEqual() {\n" //
+                + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
+                + "  assertArrayEquals(int1, (new int[][] {{1, 2, 3}, {4, 5, 6}}));\n" //
+                + "}");
   }
 
   @Test public void inlineArrayInitialization2() {
@@ -1274,12 +1275,13 @@ public final class Version230 {
         + "    regress.addData(d[0], d[1]);\n" //
         + "  final double[] $ = { regress.getSlope(), regress.getIntercept() };\n" //
         + "  return $;\n" //
-        + "}").gives("public double[] solve() {\n" //
-            + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
-            + "  for (double[] dxx : points)\n" //
-            + "    regress.addData(d[0], d[1]);\n" //
-            + "  return new double[] { regress.getSlope(), regress.getIntercept() };\n" //
-            + "}");
+        + "}")
+            .gives("public double[] solve() {\n" //
+                + "  final SimpleRegression regress = new SimpleRegression(true);\n" //
+                + "  for (double[] dxx : points)\n" //
+                + "    regress.addData(d[0], d[1]);\n" //
+                + "  return new double[] { regress.getSlope(), regress.getIntercept() };\n" //
+                + "}");
   }
 
   @Test public void inlineInitializers() {

@@ -14,18 +14,15 @@ public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
     final VariableDeclarationFragment f = hop.precidingFragmentToLastExpression(¢);
-    if (f == null)
-      return true;
-    return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
+    return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
     final VariableDeclarationFragment f = hop.prevFragmentToLastExpression(¢);
-    if (f == null)
-      return true;
-    return new DeclarationInitializerStatementTerminatingScope().cantTip(f);
+    return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
+  /** [[SuppressWarningsSpartan]] */
   public static boolean declarationRedundantInitializer(final ForStatement ¢) {
     for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
       if (new DeclarationRedundantInitializer().canTip(f))
@@ -33,6 +30,7 @@ public enum cantTip {
     return true;
   }
 
+  /** [[SuppressWarningsSpartan]] */
   public static boolean declarationRedundantInitializer(final WhileStatement ¢) {
     for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
       if (new DeclarationRedundantInitializer().canTip(f))
@@ -42,11 +40,10 @@ public enum cantTip {
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
     final VariableDeclarationExpression e = az.variableDeclarationExpression(¢);
-    if (e == null)
-      return true;
-    return new ForRenameInitializerToCent().cantTip(e);
+    return e == null || new ForRenameInitializerToCent().cantTip(e);
   }
 
+  /** [[SuppressWarningsSpartan]] */
   public static boolean remvoeRedundantIf(final ForStatement ¢) {
     for (final IfStatement s : extract.ifStatements(step.body(¢)))
       if (new RemoveRedundantIf().canTip(s))
@@ -54,6 +51,7 @@ public enum cantTip {
     return true;
   }
 
+  /** [[SuppressWarningsSpartan]] */
   public static boolean remvoeRedundantIf(final WhileStatement ¢) {
     for (final IfStatement s : extract.ifStatements(step.body(¢)))
       if (new RemoveRedundantIf().canTip(s))

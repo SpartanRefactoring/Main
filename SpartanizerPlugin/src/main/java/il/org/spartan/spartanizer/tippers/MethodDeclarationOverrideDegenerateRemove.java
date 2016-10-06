@@ -30,7 +30,7 @@ public final class MethodDeclarationOverrideDegenerateRemove extends EagerTipper
   @Override public Tip tip(final MethodDeclaration d) {
     final ExpressionStatement s = extract.expressionStatement(d);
     return s == null || !(s.getExpression() instanceof SuperMethodInvocation) || !shouldRemove(d, (SuperMethodInvocation) s.getExpression()) ? null
-        : new Tip(description(d), d) {
+        : new Tip(description(d), d, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.remove(d, g);
           }

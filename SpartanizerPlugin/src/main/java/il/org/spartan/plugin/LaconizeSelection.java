@@ -28,7 +28,6 @@ public abstract class LaconizeSelection extends BaseHandler {
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
-    // TODO Ori Roth: if we do not need this erase it
     new JOptionPane(status, JOptionPane.INFORMATION_MESSAGE, JOptionPane.NO_OPTION, eclipse.icon, null, Integer.valueOf(0));
     final IWorkbench wb = PlatformUI.getWorkbench();
     final GUI$Applicator applicator = new Trimmer();
@@ -44,7 +43,9 @@ public abstract class LaconizeSelection extends BaseHandler {
           applicator.parse();
           applicator.scan();
           n.inner = applicator.TipsCount();
-          applicator.apply(currentCompilationUnit, getSelection(currentCompilationUnit));
+          final Range r = getSelection(currentCompilationUnit);
+          if (r != null)
+            applicator.apply(currentCompilationUnit, r);
         });
       } catch (final InvocationTargetException x) {
         monitor.logEvaluationError(this, x);
@@ -101,8 +102,7 @@ public abstract class LaconizeSelection extends BaseHandler {
     @Override public Range getSelection(final ICompilationUnit u) {
       final ASTNode n = eclipse.getNodeByMarker(u, marker);
       if (n == null)
-        return new Range(0, 0); // TODO Ori Roth: replace with empty range. Is
-                                // this done?
+        return null;
       final ASTNode a = searchAncestors.forClass(clazz).from(n);
       return a == null ? new Range(n.getStartPosition(), n.getStartPosition() + n.getLength())
           : new Range(a.getStartPosition(), a.getStartPosition() + a.getLength());

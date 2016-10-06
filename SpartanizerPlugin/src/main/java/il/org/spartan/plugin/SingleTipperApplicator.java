@@ -89,8 +89,7 @@ public final class SingleTipperApplicator {
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
-    // TODO Ori Roth: why do you search for the tipper, don't you get it by
-    // parameter?
+    // TODO Ori Roth: find a better way to get tipper from marker
     final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
       pm.done();
@@ -203,7 +202,7 @@ public final class SingleTipperApplicator {
     protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
       b.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (Trimmer.isDisabled(n) || !w.myAbstractOperandsClass().isInstance(n))
+          if (disabling.on(n) || !w.myAbstractOperandsClass().isInstance(n))
             return true;
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
@@ -224,7 +223,7 @@ public final class SingleTipperApplicator {
         }
 
         @Override protected void initialization(final ASTNode ¢) {
-          Trimmer.disabledScan(¢);
+          disabling.scan(¢);
         }
       });
     }
