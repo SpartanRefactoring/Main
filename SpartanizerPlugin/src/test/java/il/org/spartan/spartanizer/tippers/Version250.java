@@ -297,7 +297,7 @@ import il.org.spartan.*;
 
   @Test public void simpleForLoop() {
     trimmingOf("for (int i = 0; i < 100; ++i) sum+=i;")//
-        .stays();
+        .gives("for (int ¢ = 0; ¢ < 100; ++¢) sum+=¢;").stays();
   }
 
   @Test public void test_b() {
