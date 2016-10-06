@@ -105,9 +105,12 @@ public final class BatchSpartanizer {
 
   private BatchSpartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
-    beforeFileName = folder + name + ".before.java";
-    afterFileName = folder + name + ".after.java";
-    reportFileName = folder + name + ".CSV";
+    beforeFileName = folder + outputDir + "/" + name + ".before.java";
+    afterFileName = folder + outputDir + "/" + name + ".after.java";
+    reportFileName = folder + outputDir + "/" + name + ".CSV";
+    File dir = new File(folder + outputDir);
+    if (!dir.exists())
+      System.out.println(dir.mkdir());
   }
 
   public Process bash(final String shellCommand) {
