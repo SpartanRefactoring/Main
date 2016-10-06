@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Roth */
 public class NodeData<T> {
   // TODO Roth: attachment.of(n).get(x)
+  // TODO: Yossi Gil, erase the above as per #1
   /** Get property from node.
    * @param n an {@link ASTNode}
    * @param key property name
