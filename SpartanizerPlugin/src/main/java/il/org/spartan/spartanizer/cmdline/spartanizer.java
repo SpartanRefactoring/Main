@@ -158,13 +158,9 @@ public final class spartanizer {
   /** @param ¢
    * @return */
   private String fixedPoint(final BodyDeclaration ¢) {
-<<<<<<< HEAD
       String from = ¢ + "";
       String fixed = fixedPoint(from);
       return fixed; 
-=======
-    return "";
->>>>>>> branch 'master' of https://github.com/SpartanRefactoring/spartan-refactoring.git
   }
 
   void collect(final CompilationUnit u) {
