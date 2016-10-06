@@ -82,7 +82,9 @@ public class Toolbox {
   }
 
   public static Toolbox defaultInstance() {
-    // Lazy evaluation pattern // TODO Marco:
+    // Lazy evaluation pattern
+    // TODO Marco: Note this lazy evaluation nano- and create an issue labeled
+    // new-nano for it.
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
