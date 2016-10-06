@@ -30,7 +30,7 @@ public final class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
   private static boolean optDoNotOverwrite;
 
-  // TODO Matteo: why hiding?
+  // TODO Matteo: Can we erase this class? why the parameter is hiding a field?
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
