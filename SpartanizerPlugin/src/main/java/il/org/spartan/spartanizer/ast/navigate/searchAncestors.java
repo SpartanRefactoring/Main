@@ -74,6 +74,8 @@ public abstract class searchAncestors {
   /** @param n JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode lastFrom(final ASTNode n) {
+    // TODO: Alex: Polish this loop manually and add a test case for future
+    // generations
     ASTNode $ = from(n);
     // TODO Dan Greenstein: fix this empty loop, created by buggy tipper.
     for (ASTNode p = $; p != null; p = from(p), $ = p)
