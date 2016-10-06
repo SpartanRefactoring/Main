@@ -9,7 +9,7 @@ public class NodeData {
   // TODO Roth: attachment.of(n).get(x)
   // TODO: Yossi Gil, erase the above as per #1
   /** Get property from node.
-   * @param n JD 
+   * @param n JD
    * @param key property name
    * @return key property of node, null if it does not have this property. */
   @SuppressWarnings("unchecked") //
