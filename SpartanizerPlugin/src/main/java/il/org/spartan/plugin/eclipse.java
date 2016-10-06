@@ -121,7 +121,7 @@ public enum eclipse {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
-  // TODO Ori Roth: do not create a compilation unit
+  // TODO Roth: do not create a compilation unit
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
