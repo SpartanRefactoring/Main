@@ -120,11 +120,9 @@ import org.eclipse.jdt.core.dom.*;
     return s.toLowerCase().contains(substring.toLowerCase());
   }
 
-  // TODO: Yossi Gil: looks better :). I want to die with this Mitug stuff. Did
-  // you
-  // know that clock
-  // is two transistors and a capacitor? Cycle duty depends on the
-  // capacitance:@.
+  // TODO: Yossi Gil: looks better :). I want to die with this switching theory
+  // stuff. Did you know that clock is made of two transistors and a capacitor?
+  // Cycle duty depends on the capacitance
   private String toSingular(final String word) {
     return word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
   }
