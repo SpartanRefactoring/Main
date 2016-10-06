@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
     trimmingOf("class A{@Deprecated @Deprecated int a;}").gives("class A{@Deprecated int a;}").stays();
   }
 
-  @Ignore("Issue #230") @Test public void a2() {
+  @Test public void a2() {
     trimmingOf("private @Nullable T value = null;").gives("@Nullable private T value = null;").stays();
   }
 
