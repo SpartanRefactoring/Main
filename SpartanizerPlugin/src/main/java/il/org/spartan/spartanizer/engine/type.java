@@ -72,7 +72,7 @@ public interface type {
     return of(¢) == Certain.STRING;
   }
 
-  // TODO: Matteo Orru: Nano-pattern of values: not implemented
+  // TODO: Matteo: Nano-pattern of values: not implemented
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
