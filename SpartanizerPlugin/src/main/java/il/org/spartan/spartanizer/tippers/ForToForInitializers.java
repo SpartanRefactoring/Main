@@ -30,6 +30,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class ForToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment> implements TipperCategory.Collapse {
+  private static boolean assignmentChangable(final Assignment a, final VariableDeclarationStatement s) {
+    final SimpleName var = az.simpleName(step.left(a));
+    for (final VariableDeclarationFragment ¢ : step.fragments(s))
+      if ((¢.getName() + "").equals(var + ""))
+        return true;
+    return false;
+  }
+
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = duplicate.of(¢);
     $.setExpression(removeInitializersFromExpression(dupForExpression(¢), s));
@@ -52,7 +60,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
-  // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
+  // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
@@ -61,28 +69,29 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return true;
   }
 
+  private static Assignment getAssignment(final Expression ¢) {
+    return az.assignment(az.parenthesizedExpression(¢).getExpression());
+  }
+
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     final SimpleName var = az.simpleName(step.left(from));
     for (final VariableDeclarationFragment ¢ : step.fragments(s))
-      if ((¢.getName() + "").equals(var + ""))
+      if ((¢.getName() + "").equals(var + "")) {
         ¢.setInitializer(duplicate.of(step.right(from)));
-    return duplicate.of(step.left(from));
+        return duplicate.of(step.left(from));
+      }
+    return from;
   }
 
-  /** XXX: This is a bug in autospartanization [[SuppressWarningsSpartan]] */
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
-    for (final Expression ¢¢ : operands)
-      if (iz.parenthesizedExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
-        final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
-        final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment f : fragments(s))
-          if ((f.getName() + "").equals(var + "")) {
-            f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
-          }
-      }
-    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
+    for (final Expression ¢ : operands) {
+      if (!iz.parenthesizedExpression(¢) || !iz.assignment(az.parenthesizedExpression(¢).getExpression())
+          || !assignmentChangable(getAssignment(¢), s))
+        continue;
+      operands.set(operands.indexOf(¢), ¢.getAST().newSimpleName(handleAssignmentCondition(getAssignment(¢), s) + ""));
+    }
+    return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), minus.firstElems(operands, 2));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
@@ -164,7 +173,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
     exclude.excludeAll(step.fragments(declarationStatement));
-    // TODO: Alex use list rewriter; talk to Ori Roth
+    // TODO: use list rewriter; talk to Ori Roth
     r.remove(declarationStatement, g);
     r.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
     return r;

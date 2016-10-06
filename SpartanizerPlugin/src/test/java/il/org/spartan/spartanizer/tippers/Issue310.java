@@ -104,4 +104,16 @@ import org.junit.runners.*;
                 + "return false;" + "}")
             .stays();
   }
+
+  // Should be ignored till talk to Yossi!
+  @Ignore @Test public void updaters_while_5() {
+    trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "return true;" + "++i;"
+        + "p.getParent();}" + "return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;"
+                + "p.getParent();} return false;" + "}")
+            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n; p != null;p.getParent()) {" + "if (dns.contains(p))" + "return true;" + "++i;"
+                + "} return false;" + "}")
+            .stays();
+  }
+
 }
