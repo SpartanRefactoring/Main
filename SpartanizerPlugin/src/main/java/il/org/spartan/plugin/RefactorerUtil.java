@@ -5,11 +5,8 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.internal.corext.util.Strings;
-
 import il.org.spartan.plugin.Refactorer.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.strings.*;
 
 /** A utility class for {@link Refactorer} concrete implementation, containing
  * common method overrides.
@@ -47,11 +44,11 @@ public class RefactorerUtil {
       ;
     return i + "/" + s;
   }
-  
+
   public static String plurals(String s, int i) {
     return i == 1 ? s : s + "s";
   }
-  
+
   public static String plurales(String s, int i) {
     return i == 1 ? s : s + "es";
   }

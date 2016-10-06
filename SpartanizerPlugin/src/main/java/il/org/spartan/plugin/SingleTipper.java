@@ -24,7 +24,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
   }
 
   @Override protected boolean check(ASTNode ¢) {
-    return tipper.myAbstractOperandsClass().isInstance(¢);
+    return Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
   }
 
   @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(ASTNode ¢) {
@@ -150,9 +150,6 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     @SuppressWarnings("unused") private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(Class<T> t) {
       try {
-        System.out.println(t);
-        System.out.println(t.newInstance().myAbstractOperandsClass());
-        System.out.println(new BodyDeclarationModifiersSort.ofMethod().myAbstractOperandsClass());
         return new SingleTipper<X>(t.newInstance());
       } catch (InstantiationException | IllegalAccessException x) {
         monitor.log(x);
