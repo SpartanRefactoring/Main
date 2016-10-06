@@ -3,7 +3,6 @@ package il.org.spartan.plugin;
 import static il.org.spartan.plugin.PreferencesResources.*;
 import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
 
-import org.eclipse.jface.layout.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
