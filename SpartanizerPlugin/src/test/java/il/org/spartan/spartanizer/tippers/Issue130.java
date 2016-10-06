@@ -22,7 +22,7 @@ import org.junit.runners.*;
         .gives("while(true){doSomething();if(done()){tipper+=2;return something();}}").stays();
   }
 
-  @Test @Ignore("Pending Issue") public void A$04() {
+  @Ignore("centification") @Test public void A$04() {
     trimmingOf("for(int i=4 ; true ; ++i){doSomething(i);if(done())break;}return something();")
         .gives("for(int ¢=4 ; true ; ++¢){doSomething(¢);if(done())return something();}")//
         .stays();
