@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -107,7 +106,7 @@ public final class BatchSpartanizer {
     beforeFileName = folder + outputDir + "/" + name + ".before.java";
     afterFileName = folder + outputDir + "/" + name + ".after.java";
     reportFileName = folder + outputDir + "/" + name + ".CSV";
-    File dir = new File(folder + outputDir);
+    final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
@@ -135,9 +134,7 @@ public final class BatchSpartanizer {
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = code.essenceNew(in + "").length();
-    
     final String out = interactiveSpartanizer.fixedPoint(in + "");
-    
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
@@ -147,10 +144,8 @@ public final class BatchSpartanizer {
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
-    
     befores.print(in);
     afters.print(out);
-    
     report.summaryFileName();
     report//
         .put("TipperCategory", extract.category(in))//
@@ -282,11 +277,11 @@ public final class BatchSpartanizer {
     bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 
-  private static boolean containsJavaFileOrJavaFileItSelf(File f) {
+  private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
     if (f.getName().endsWith(".java"))
       return true;
     if (f.isDirectory())
-      for (File ff : f.listFiles())
+      for (final File ff : f.listFiles())
         if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"))
           return true;
     return false;
