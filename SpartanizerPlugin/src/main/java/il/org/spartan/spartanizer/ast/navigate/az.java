@@ -435,7 +435,7 @@ public enum az {
    *         {@link VariableDeclarationExpression}, or <code><b>null</b></code>
    *         if no such down-cast is possible.. */
   public static VariableDeclarationExpression variableDeclarationExpression(final ASTNode $) {
-    return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
+    return !iz.variableDeclarationExpression($) ? null : (VariableDeclarationExpression) $;
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
