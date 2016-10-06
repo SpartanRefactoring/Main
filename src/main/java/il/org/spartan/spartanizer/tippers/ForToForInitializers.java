@@ -173,7 +173,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
     exclude.excludeAll(step.fragments(declarationStatement));
-    // TODO: Alex use list rewriter; talk to Ori Roth
+    // TODO: use list rewriter; talk to Ori Roth
     r.remove(declarationStatement, g);
     r.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
     return r;
