@@ -36,9 +36,10 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return $;
   }
 
-  private static boolean compareModifiers(final List<IExtendedModifier> l1, final List<IExtendedModifier> l2) {
-    for (final IExtendedModifier ¢ : l1)
-      if (!isIn(¢, l2))
+  private static boolean compareModifiers(final VariableDeclarationExpression e, final VariableDeclarationStatement s) {
+    final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
+    for (final IExtendedModifier ¢ : step.extendedModifiers(e))
+      if (!isIn(¢, extendedModifiers2))
         return false;
     return true;
   }
@@ -51,7 +52,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
-  // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
+  // TODO: fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
@@ -116,10 +117,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       return true;
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first(initializers));
     assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
-    final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
-    final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
-    return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null
-        && (e.getType() + "").equals(s.getType() + "") && compareModifiers(extendedModifiers, extendedModifiers2);
+    return (e.getType() + "").equals(s.getType() + "") && compareModifiers(e, s);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

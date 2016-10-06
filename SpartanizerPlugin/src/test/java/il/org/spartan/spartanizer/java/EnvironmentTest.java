@@ -94,11 +94,11 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that($.isEmpty(), is(true));
   }
 
-  @Ignore public void define_1() {
+  @Ignore public void define_1a() {
     azzert.that(Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
-  @Ignore public void define_10() {
+  @Ignore public void define_1b() {
     azzert.that(Environment.declaresDown(makeAST.COMPILATION_UNIT.from("int a = 0;")).contains("a"), is(true));
   }
 
