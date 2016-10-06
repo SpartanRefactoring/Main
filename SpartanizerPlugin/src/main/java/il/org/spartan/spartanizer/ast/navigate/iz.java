@@ -857,7 +857,7 @@ public interface iz {
     return true;
   }
 
-  public static boolean variableDeclarationExpression(final ASTNode $) {
+  static boolean variableDeclarationExpression(final ASTNode $) {
     return iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION);
   }
 
