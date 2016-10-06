@@ -41,13 +41,3 @@ public final class InitializerTest {
     azzert.that(InitializerTest.a, is(0));
   }
 }
-// TODO: Yossi Gil: I played with initializers, and that's my
-// observation:
-// STATIC: Called before creating the instance, have access only to outer DS and
-// static fields.
-// INSTANCE: Called each time an instance is created, have access to everything.
-// TEST: When I system the class from main, it uses only one instance as I
-// wanted.
-// When I use Junit there are 2 extra instance initializer calls, one from each
-// Test case.
-// Going to the last exam now.
