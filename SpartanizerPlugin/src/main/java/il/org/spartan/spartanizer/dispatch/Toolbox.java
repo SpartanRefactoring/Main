@@ -165,6 +165,7 @@ public class Toolbox {
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), //
+            new InfixAdditionZero(), //
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
