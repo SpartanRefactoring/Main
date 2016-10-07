@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 

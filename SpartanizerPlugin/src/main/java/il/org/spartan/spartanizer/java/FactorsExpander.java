@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>

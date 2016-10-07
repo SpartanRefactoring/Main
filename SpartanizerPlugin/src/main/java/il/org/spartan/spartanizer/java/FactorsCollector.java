@@ -8,8 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 // TOOD Niv: Who wrote this class?
 public final class FactorsCollector {
