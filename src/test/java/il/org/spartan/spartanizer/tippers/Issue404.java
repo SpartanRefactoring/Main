@@ -4,8 +4,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
-
 /** A test class constructed by TDD for {@link dig.stringLiterals( @author Yossi
  * Gil
  * @since 2016 */
