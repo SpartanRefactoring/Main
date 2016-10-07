@@ -2,14 +2,16 @@ package il.org.spartan.plugin;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.List;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.operation.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-import org.eclipse.ui.progress.*;
 
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
@@ -91,8 +93,8 @@ import org.eclipse.ui.progress.*;
     return IProgressMonitor.UNKNOWN;
   }
 
-  /** @return true iff the refactorer should run with busy cursor */
-  public static boolean isBusy() {
+  /** @return true iff the refactorer shows a display while working */
+  public boolean hasDisplay() {
     return false;
   }
 
@@ -119,19 +121,19 @@ import org.eclipse.ui.progress.*;
     put(attributes, attribute.MARKER, m);
     put(attributes, attribute.CU, targetCompilationUnits);
     put(attributes, attribute.APPLICATOR, applicator);
-    show(getOpeningMessage(attributes));
-    final IProgressService ps = getProgressService();
+    ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
     final IRunnableWithProgress r = runnable(targetCompilationUnits, applicator, attributes);
-    if (ps != null)
-      try {
-        if (isBusy())
-          ps.run(true, true, r);
-        else
-          ps.busyCursorWhile(r);
-      } catch (InterruptedException | InvocationTargetException x) {
-        monitor.log(x);
-        return null;
-      }
+    MessageDialog initialDialog = show(getOpeningMessage(attributes));
+    if (hasDisplay())
+      initializeProgressDialog(progressMonitorDialog);
+    try {
+      progressMonitorDialog.run(true, true, r);
+    } catch (InterruptedException | InvocationTargetException x) {
+      monitor.log(x);
+      x.printStackTrace();
+      return null;
+    }
+    closeDialog(initialDialog);
     show(getEndingMessage(attributes));
     return null;
   }
@@ -143,11 +145,11 @@ import org.eclipse.ui.progress.*;
         int pass;
         final List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
-        for (pass = 0; pass < passesCount && !done(pm); ++pass) {
+        for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
           pm.beginTask(getProgressMonitorMessage(us, pass), getProgressMonitorWork(us));
           final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(us, deadCompilationUnits);
           if (currentCompilationUnits.isEmpty()) {
-            done(pm);
+            finish(pm);
             break;
           }
           for (final ICompilationUnit currentCompilationUnit : currentCompilationUnits) {
@@ -174,17 +176,21 @@ import org.eclipse.ui.progress.*;
       m.put(a, o);
   }
 
-  private static void show(final String ¢) {
-    if (¢ != null)
-      eclipse.announce(¢);
+  private static MessageDialog show(final String ¢) {
+    if (¢ == null)
+      return null;
+    MessageDialog $ = eclipse.announceNonBusy(¢);
+    $.setBlockOnOpen(false);
+    $.open();
+    return $;
   }
 
-  private static IProgressService getProgressService() {
-    final IWorkbench wb = PlatformUI.getWorkbench();
-    return wb == null ? null : wb.getProgressService();
+  private void closeDialog(MessageDialog initialDialog) {
+    if (initialDialog != null)
+      initialDialog.close();
   }
 
-  private static boolean done(final IProgressMonitor pm) {
+  private static boolean finish(final IProgressMonitor pm) {
     final boolean $ = pm.isCanceled();
     pm.done();
     return $;
@@ -202,5 +208,14 @@ import org.eclipse.ui.progress.*;
       if (¢ == null)
         return false;
     return true;
+  }
+
+  private static void initializeProgressDialog(ProgressMonitorDialog d) {
+    d.open();
+    Shell s = d.getShell();
+    if (s == null)
+      return;
+    s.setText(eclipse.NAME);
+    s.setImage(eclipse.iconNonBusy());
   }
 }
