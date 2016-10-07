@@ -54,11 +54,11 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     
 //    List<Expression> c = gather(¢);
     List<Expression> c = gather(¢, new ArrayList<Expression>());
-    System.out.println("c.size(): " + c.size());
-    System.out.println("core(¢): " + core(¢));
-    System.out.println("left(¢): " + left(¢));
-    System.out.println("right(¢): " + right(¢));
-    System.out.println("right(¢): " + right(¢));
+//    System.out.println("c.size(): " + c.size());
+//    System.out.println("core(¢): " + core(¢));
+//    System.out.println("left(¢): " + left(¢));
+//    System.out.println("right(¢): " + right(¢));
+//    System.out.println("right(¢): " + right(¢));
     for(Expression a: c)
       System.out.println("gather(¢): " + a);
     
@@ -92,12 +92,12 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   @SuppressWarnings("static-method") public ASTNode replacement2(final InfixExpression ¢) {
 //    System.out.println("left(¢): " + left(¢));
 //    System.out.println("right(¢): " + right(¢));
-    System.out.println(extract.allOperands(¢));
+//    System.out.println(extract.allOperands(¢));
     List<Expression> ops = extract.allOperands(¢);
     ArrayList<Expression> ops2 = new ArrayList<Expression>();
     for(int i=0; i < ops.size(); i++){
-      System.out.println(i);
-      System.out.println(ops2);
+//      System.out.println(i);
+//      System.out.println(ops2);
       Expression ¢2 = ops.get(i);
       if(!iz.literal0(¢2)){
         ops2.add(ops.get(i));
@@ -113,19 +113,17 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       else 
         inexp = subject.pair(ops2.get(i), ops2.get(i+1)).to(Operator.PLUS);
     }
-    
     if(ops2.size() == 1)
       return ops2.get(0);
-    
     return inexp;
   }
   
   
   @Override public boolean prerequisite(final InfixExpression $) {
-    System.out.println("$: " + $);
-    System.out.println("iz.infixPlus($): " + iz.infixPlus($));
-    System.out.println("containsZeroOperand($): " + containsZeroOperand($));
-    System.out.println("containsPlusOperator($): " + containsPlusOperator($));
+//    System.out.println("$: " + $);
+//    System.out.println("iz.infixPlus($): " + iz.infixPlus($));
+//    System.out.println("containsZeroOperand($): " + containsZeroOperand($));
+//    System.out.println("containsPlusOperator($): " + containsPlusOperator($));
     return $ != null && iz.infixPlus($) && containsZeroOperand($) &&
         containsPlusOperator($);// && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
@@ -152,9 +150,9 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     System.out.println("x:" + x);
     if (x == null)
       return $;
-    System.out.println("x.getOperator().PLUS: " + x.getOperator().PLUS);
-    System.out.println("in(x.getOperator(), PLUS, MINUS): " + in(x.getOperator(), Operator.PLUS, Operator.MINUS));
-    System.out.println("in(x.getOperator(), PLUS): " + in(x.getOperator(), Operator.PLUS));
+//    System.out.println("x.getOperator().PLUS: " + x.getOperator().PLUS);
+//    System.out.println("in(x.getOperator(), PLUS, MINUS): " + in(x.getOperator(), Operator.PLUS, Operator.MINUS));
+//    System.out.println("in(x.getOperator(), PLUS): " + in(x.getOperator(), Operator.PLUS));
     if (!in(x.getOperator(), PLUS, MINUS)) {
       $.add(x);
       return $;
@@ -163,7 +161,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     gather(core(right(x)), $);
     if (x.hasExtendedOperands())
       gather(extendedOperands(x), $);
-    System.out.println(" --->> $: " + $);
+//    System.out.println(" --->> $: " + $);
     return $;
   }
 
@@ -174,7 +172,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   @Override public String description() {
-    return "remove 0 in X + 0 expressions from ";
+    return "remove 0 in expressions like ";
   }
 
   @Override public String description(final InfixExpression ¢) {
