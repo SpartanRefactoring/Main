@@ -43,8 +43,8 @@ public class RefactorerUtil {
     String i = us.indexOf(u) + 1 + "";
     // TODO Dan Greenstein: An empty loop again... Fix manually and create a
     // test case with this example
-    for (; i.length() < s.length(); i = " " + i)
-      ;
+    for (; i.length() < s.length();)
+      i = " " + i;
     return i + "/" + s;
   }
 
