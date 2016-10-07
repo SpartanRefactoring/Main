@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.cmdline.*;
  * <li>Fluent API class {@link azzert} is used for testing.
  * <li><code>static</code> members of fluent API class {@link azzert} are used
  * for fluent writing
- *
  * <pre>
+ * azzert.that(a.
  * </pre>
  *
  * used for testing.
@@ -41,7 +41,7 @@ public class Issue413 {
    * </ul>
   */
   @Test public void chocolate0() {
-    azzert.that(Essence.stringRemove("abc"), il.org.spartan.azzert.iz("abc"));
+    azzert.that(Essence.stringRemove("abc"), iz("abc"));
   }
 
   @Test public void chocolate1() {
@@ -57,14 +57,19 @@ public class Issue413 {
       azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
   }
 
-    @Ignore("Placeholder: dont remove") //
-  static class WorkInProgress {
-  @Test public void vanilla() {
-    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), iz(" is on "));
-  }
-
-  /* On the long-run, this class should loose all its members, but still
+/** On the long-run, this class should loose all its members, but still
      * remain as a place holder for bugs and faults that haven't been discovered
      * by tests of the tests in the containing class */
+  @Ignore("Placeholder: dont remove") //
+  static class WorkInProgress extends Exception {
+        /**
+     * We onl need this field, to keep Eclipse happy about the class not being empty. 
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Test public void vanilla() {
+      azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), iz(" is on "));
+    }
   }
 }
