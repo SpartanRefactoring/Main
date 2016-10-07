@@ -35,6 +35,13 @@ public class Essence {
   }
 
   public static String stringRemove(final String $) {
-    return $.replaceAll("\".*\"", "");
+    return $
+        // Unquoted double quote by two consecutive double quotes 
+        .replaceAll("([^\"])\"", "$1\"\"")
+        // Non greedy search and replacement of ""text"" by nothing
+        .replaceAll("\"\".*?\"\"", "") //
+        // Undo doubling of double quotes
+        .replaceAll("\"\"", "\"") ///
+        ;
   }
 }
