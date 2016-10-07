@@ -59,7 +59,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
           ¢ = az.parenthesizedExpression(¢).getExpression();
           replace(es, ¢, i);
         }
-        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditional(¢)
+        if (iz.infixExpression(¢) && i != 0 && b && !canRemove((InfixExpression) ¢) || iz.conditionalExpression(¢)
             || iz.nodeTypeEquals(¢, ASTNode.LAMBDA_EXPRESSION))
           continue;
         replace(es, ¢, i);

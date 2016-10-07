@@ -88,21 +88,6 @@ import il.org.spartan.*;
         .gives("foo(1.*18)");
   }
 
-  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076a() {
-    trimmingOf("a*b + a*c")//
-        .gives("a*(b+c)");
-  }
-
-  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076b() {
-    trimmingOf("b*a + c*a")//
-        .gives("a*(b+c)");
-  }
-
-  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076c() {
-    trimmingOf("b*a + c*a + d*a")//
-        .gives("a*(b+c+d)");
-  }
-
   @Test public void issue076d() {
     trimmingOf("a * (b + c)").stays();
   }
@@ -310,15 +295,5 @@ import il.org.spartan.*;
 
   @Test public void test_d() {
     azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
-  }
-
-  @Ignore("Pending Issue") @Test public void trimmerBugXOR() {
-    trimmingOf("j=j^k")//
-        .gives("j^=k");
-  }
-
-  @Test public void trimmerBugXORCompiling() {
-    trimmingOf("j = j ^ k")//
-        .gives("j ^= k");
   }
 }
