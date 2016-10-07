@@ -113,12 +113,36 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       else 
         inexp = subject.pair(ops2.get(i), ops2.get(i+1)).to(Operator.PLUS);
     }
+    if(containsNumericSum(inexp)){
+      containsNumericLitaralsInSequence(extract.allOperands(inexp));
+      
+    }
     if(ops2.size() == 1)
       return ops2.get(0);
     return inexp;
   }
   
   
+  /**
+   * @param allOperands
+   */
+  private boolean containsNumericLitaralsInSequence(List<Expression> ¢) {
+    for(int i = 0; i < ¢.size(); i++){
+      if(iz.numericLiteral(¢.get(i)) && iz.numericLiteral(¢.get(i+1)))
+        ;
+    }
+    return false;    
+  }
+
+  /**
+   * @param inexp
+   * @return
+   */
+  private boolean containsNumericSum(InfixExpression inexp) {
+    // TODO Auto-generated method stub
+    return false;
+  }
+
   @Override public boolean prerequisite(final InfixExpression $) {
 //    System.out.println("$: " + $);
 //    System.out.println("iz.infixPlus($): " + iz.infixPlus($));
