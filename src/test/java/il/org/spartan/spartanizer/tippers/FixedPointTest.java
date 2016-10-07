@@ -234,11 +234,9 @@ import il.org.spartan.spartanizer.utils.*;
     assertConvertsTo("boolean c;if (s.equals(532))    c=false;else c=true;", "boolean c=!s.equals(532);");
   }
 
-  @Test(timeout = 2000) @Ignore("Pending Issue - fails because the commented test fails") public void ternarize40() {
-    // trimmingOf("int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;")
-    // .gives("int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
+  @Test(timeout = 2000) public void ternarize40() {
     assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;",
-        "int c;if(3==4)for(;5==3;c=3);else for(;5==3;c=9);");
+        "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
   }
 
   @Test(timeout = 2000) public void ternarize49a() {
