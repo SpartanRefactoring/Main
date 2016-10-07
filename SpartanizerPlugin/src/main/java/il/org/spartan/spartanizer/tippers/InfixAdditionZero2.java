@@ -59,8 +59,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
 //    System.out.println("left(¢): " + left(¢));
 //    System.out.println("right(¢): " + right(¢));
 //    System.out.println("right(¢): " + right(¢));
-    for(Expression a: c)
-      System.out.println("gather(¢): " + a);
+    for(Expression a: c);
+//      System.out.println("gather(¢): " + a);
     
     Operator b = ¢.getOperator();
 //    if(Operator.PLUS == b) 
@@ -102,10 +102,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       if(!iz.literal0(¢2)){
         ops2.add(ops.get(i));
       }      
-    }
-    
-    System.out.println("ops2: " + ops);
-    
+    }    
+//    System.out.println("ops2: " + ops);    
     InfixExpression inexp = null;
     for(int i=0; i < ops2.size()-1; i++ ){
       if(inexp != null)
@@ -115,14 +113,12 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     }
     if(containsNumericSum(inexp)){
       containsNumericLitaralsInSequence(extract.allOperands(inexp));
-      
     }
     if(ops2.size() == 1)
       return ops2.get(0);
     return inexp;
   }
-  
-  
+    
   /**
    * @param allOperands
    */
@@ -171,7 +167,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
-    System.out.println("x:" + x);
+//    System.out.println("x:" + x);
     if (x == null)
       return $;
 //    System.out.println("x.getOperator().PLUS: " + x.getOperator().PLUS);
