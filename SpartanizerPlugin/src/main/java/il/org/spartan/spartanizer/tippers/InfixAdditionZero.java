@@ -90,7 +90,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression> implem
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "remove 0 in X + 0 expressions from " + ¢;
+    return "remove 0 in expressions like " + ¢;
   }
 
   @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
