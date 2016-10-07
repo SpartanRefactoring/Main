@@ -20,10 +20,10 @@ import org.eclipse.ui.*;
   /** Used to collect attributes from a Refactorer's run, used later in printing
    * actions (such as {@link eclipse#announce}) */
   enum attribute {
-    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS
+    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER
   }
 
-  private static final String UNKNOWN = "???";
+  public static final String UNKNOWN = "???";
 
   /** @return true iff the refactorer is a handler */
   public static boolean isHandler() {

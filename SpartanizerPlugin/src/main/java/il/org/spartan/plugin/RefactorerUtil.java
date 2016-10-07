@@ -19,12 +19,14 @@ public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
   @SuppressWarnings({ "rawtypes", "unchecked" }) public static String getTipperName(final Map<attribute, Object> ¢) {
-    try {
-      return ((Class<? extends Tipper>) ((IMarker) ¢.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName();
-    } catch (final CoreException x) {
-      monitor.log(x);
-      return "tip";
-    }
+    if (Refactorer.UNKNOWN.equals(¢.get(attribute.TIPPER)))
+      try {
+        ¢.put(attribute.TIPPER, ((Class<? extends Tipper>) ((IMarker) ¢.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+      } catch (final CoreException x) {
+        monitor.log(x);
+        ¢.put(attribute.TIPPER, "tip");
+      }
+    return ¢.get(attribute.TIPPER) + "";
   }
 
   public static String projectName(final Map<attribute, Object> ¢) {
