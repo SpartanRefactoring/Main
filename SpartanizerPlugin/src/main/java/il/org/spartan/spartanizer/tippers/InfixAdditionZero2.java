@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.factory.subject.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -91,36 +90,42 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
   
   @SuppressWarnings("static-method") public ASTNode replacement2(final InfixExpression ¢) {
-    System.out.println("left(¢): " + left(¢));
-    System.out.println("right(¢): " + right(¢));
+//    System.out.println("left(¢): " + left(¢));
+//    System.out.println("right(¢): " + right(¢));
     System.out.println(extract.allOperands(¢));
     List<Expression> ops = extract.allOperands(¢);
-    for(int i=0; i<ops.size(); i++){
-      System.out.println(ops);
-      if(iz.literal0(ops.get(i))){
-        ops.remove(i);
+    ArrayList<Expression> ops2 = new ArrayList<Expression>();
+    for(int i=0; i < ops.size(); i++){
+      System.out.println(i);
+      System.out.println(ops2);
+      Expression ¢2 = ops.get(i);
+      if(!iz.literal0(¢2)){
+        ops2.add(ops.get(i));
       }      
     }
+    
+    System.out.println("ops2: " + ops);
+    
     InfixExpression inexp = null;
-    for(int i=0; i<ops.size()-1; i++ ){
+    for(int i=0; i < ops2.size()-1; i++ ){
       if(inexp != null)
-        inexp = subject.pair(inexp, ops.get(i+1)).to(Operator.PLUS);
+        inexp = subject.pair(inexp, ops2.get(i+1)).to(Operator.PLUS);
       else 
-        inexp = subject.pair(ops.get(i), ops.get(i+1)).to(Operator.PLUS);
+        inexp = subject.pair(ops2.get(i), ops2.get(i+1)).to(Operator.PLUS);
     }
     
-    if(ops.size() == 1)
-      return ops.get(0);
+    if(ops2.size() == 1)
+      return ops2.get(0);
     
     return inexp;
   }
   
   
   @Override public boolean prerequisite(final InfixExpression $) {
-//    System.out.println("$: " + $);
-//    System.out.println("iz.infixPlus($): " + iz.infixPlus($));
-//    System.out.println("containsZeroOperand($): " + containsZeroOperand($));
-//    System.out.println("containsPlusOperator($): " + containsPlusOperator($));
+    System.out.println("$: " + $);
+    System.out.println("iz.infixPlus($): " + iz.infixPlus($));
+    System.out.println("containsZeroOperand($): " + containsZeroOperand($));
+    System.out.println("containsPlusOperator($): " + containsPlusOperator($));
     return $ != null && iz.infixPlus($) && containsZeroOperand($) &&
         containsPlusOperator($);// && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
