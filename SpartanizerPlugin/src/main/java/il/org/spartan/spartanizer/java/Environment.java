@@ -16,18 +16,19 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to Environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program flow. */
-/* TODO Dan Greenstein: Tippers to improve once Environment is complete:
- * AssignmentToPostfixIncrement (Issue 107). Identifier renaming (Issue 121) */
 @SuppressWarnings({ "unused" }) public interface Environment {
-  /** TODO Dan Greenstein: document Mumbo jumbo of stuff we will do later.
-   * Document it, but do not maintain it for now, this class is intentionally
-   * package level, and intenationally defined local. For now, clients should
-   * not be messing with it */
+  /** Information about a variable in the Environment - its {@link ASTNode}, his
+   * parent's, its {@link type}, and which other variables does it hide. this
+   * class is intentionally package level, and intentionally defined local. For
+   * now, clients should not be messing with it
+   * @since 2016 */
   static class Information {
     public static boolean eq(final Object o1, final Object o2) {
       return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
     }
 
+    /** For Information purposes, {@link type}s are equal if their key is
+     * equal. */
     static boolean eq(final type t1, final type t2) {
       return t1 == null ? t2 == null : t2 != null && t1.key().equals(t2.key());
     }
@@ -67,10 +68,18 @@ import il.org.spartan.spartanizer.utils.*;
       return eq(blockScope, ¢.blockScope) && eq(hiding, ¢.hiding) && eq(prudentType, ¢.prudentType) && eq(self, ¢.self);
     }
 
+    /** @param ¢
+     * @return true <b>iff</b> The the ASTNode (self) and its parent
+     *         (blockScope) are the same ones, the type's key() is the same, and
+     *         if the Information nodes hidden are equal. */
+    // Required for MapEntry equality, which is, in turn, required for Set
+    // containment check, which is required for testing.
     @Override public boolean equals(final Object ¢) {
       return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Information) ¢);
     }
 
+    // Required for MapEntry equality, which is, in turn, required for Set
+    // containment check, which is required for testing.
     @Override public int hashCode() {
       return (self == null ? 0 : self.hashCode())
           + 31 * ((hiding == null ? 0 : hiding.hashCode()) + 31 * ((blockScope == null ? 0 : blockScope.hashCode()) + 31));
@@ -146,7 +155,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   /** @param ¢ JD
    * @return All declarations in given {@link Statement}, without entering the
-   *         contained ({@link Blocl}s. If the {@link Statement} is a
+   *         contained ({@link Block}s. If the {@link Statement} is a
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
   static List<Entry<String, Information>> declarationsOf(final Statement ¢) {
@@ -175,6 +184,21 @@ import il.org.spartan.spartanizer.utils.*;
     // Holds the declarations in the subtree and relevant siblings.
     final LinkedHashSet<Entry<String, Information>> $ = new LinkedHashSet<>();
     n.accept(new ASTVisitor() {
+      /* Three groups of visitors here: 1. Non-declarations with a name. 2.
+       * Non-declarations without a name. 3. Actual Declarations.
+       *
+       * First two groups are those in which variable declarations can be made.
+       * Since we want to be able to distinguish variables of different scopes,
+       * but with, perhaps, equal names, need to keep the scope. The full scope
+       * might contain things that do not have a name, hence the need keep to
+       * visit ASTNodes without a name such as {@link Block}s, {@link
+       * ForStatement}s, etc.
+       *
+       * Since there can be more than one such node in a parent, they are
+       * distinguished by their order of appearance.
+       *
+       * The third group is the one in which actual addition to the Environment
+       * is made. */
       // Holds the current scope full name (Path).
       String scopePath = "";
 
@@ -229,9 +253,16 @@ import il.org.spartan.spartanizer.utils.*;
       }
 
       Information createInformation(final VariableDeclarationFragment ¢, final type t) {
+        // VariableDeclarationFragment, that comes from either FieldDeclaration,
+        // VariableDeclarationStatement or VariableDeclarationExpression,
+        // does not contain its type. Hence, the type is sent from the parent in
+        // the convertToEntry calls.
         return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
       }
 
+      // Everything besides the actual variable declaration was visited for
+      // nameScope reasons. Once their visit is over, the nameScope needs to be
+      // restored.
       @Override public void endVisit(final AnnotationTypeDeclaration __) {
         restoreScopeName();
       }
@@ -318,8 +349,8 @@ import il.org.spartan.spartanizer.utils.*;
        * To consider: what if said hidden declaration will not appear in
        * 'declaresDown', but will appear in 'declaresUp'? Should we search for
        * it in 'declaresUp' result set? Should we leave the result as it is? I
-       * (Dan) lean towards searching 'declaresUp'. Current implementation only
-       * searches declaresDown.
+       * (Dan Greenstein) lean towards searching 'declaresUp'. Current
+       * implementation only searches declaresDown.
        *
        * If no match is found, return null. */
       Information getHidden(final String ¢) {
@@ -332,6 +363,8 @@ import il.org.spartan.spartanizer.utils.*;
         return null;
       }
 
+      /** Similar to statementOrderAmongTypeInParent, {@link CatchClause}s
+       * only */
       int orderOfCatchInTryParent(final CatchClause c) {
         assert c.getParent() instanceof TryStatement;
         @SuppressWarnings("hiding") int $ = 0;
@@ -479,6 +512,7 @@ import il.org.spartan.spartanizer.utils.*;
     return $;
   }
 
+  /** Gets declarations made in ASTNode's Ancestors */
   static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
       for (final Statement ¢ : statements(PB))
