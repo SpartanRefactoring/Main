@@ -40,4 +40,7 @@ public class Issue404 {
   @Test public void f() {
     dig.stringLiterals(null).hashCode();
   }
+  @Test public void g() {
+    assert dig.stringLiterals(null) != null;
+  }
 }
