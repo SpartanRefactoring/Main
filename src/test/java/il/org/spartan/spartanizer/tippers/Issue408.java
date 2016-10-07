@@ -60,20 +60,20 @@ public class Issue408 {
     trimmingOf("0+x+y+4+z+5").gives("x+y+4+z+5").stays();
   }
   
-  @Test public void issue408_04() {
+  @SuppressWarnings("static-method") @Test public void issue408_04() {
     trimmingOf("x+0").gives("x").stays();
   }
 
-  @Ignore("addition zero") @Test public void issue408_05() {
+  @SuppressWarnings("static-method") @Ignore("addition zero") @Test public void issue408_05() {
     trimmingOf("0+x+3").gives("x+3").stays();
   }
   
-  @Ignore("addition zero") @Test public void issue408_06() {
+  @SuppressWarnings("static-method") @Ignore("addition zero") @Test public void issue408_06() {
     trimmingOf("x+0+y").gives("x+y").stays();
   }
   
   // taking this test here temporary
-  @Ignore @Test public void issue408_07() {
+  @SuppressWarnings("static-method") @Ignore @Test public void issue408_07() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
 
