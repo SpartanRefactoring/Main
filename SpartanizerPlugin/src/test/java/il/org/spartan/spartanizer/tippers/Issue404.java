@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
@@ -32,12 +33,15 @@ public class Issue404 {
   @Test public void d() {
     dig.stringLiterals(null);
   }
+
   @Test public void e() {
     (dig.stringLiterals(null) + "").hashCode();
   }
+
   @Test public void f() {
     dig.stringLiterals(null).hashCode();
   }
+
   @Test public void g() {
     assert dig.stringLiterals(null) != null;
   }
