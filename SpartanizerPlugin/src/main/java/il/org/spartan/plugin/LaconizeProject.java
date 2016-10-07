@@ -72,13 +72,13 @@ public final class LaconizeProject extends BaseHandler {
     return eclipse.announce(//
         status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
             + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - finalCount) + "\n" + "Tips before: "
-            + initialCount + "\n" + "Tips after: " + finalCount + "\n"
-    );
+            + initialCount + "\n" + "Tips after: " + finalCount + "\n");
   }
 
-    final IWorkbench workench = PlatformUI.getWorkbench();
+  final IWorkbench workench = PlatformUI.getWorkbench();
+
   void manyPasses() {
-    for (passNumber = 1; ; ++passNumber)
+    for (passNumber = 1;; ++passNumber)
       if (passNumber >= MAX_PASSES || singlePass())
         return;
   }
