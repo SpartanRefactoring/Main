@@ -23,7 +23,7 @@ public class Issue408 {
     trimmingOf("0+x+y+4").gives("x+y+4").stays();
   }
   
-  @Ignore("addition zero") 
+//  @Ignore("addition zero") 
   @Test public void issue408_04() {
     trimmingOf("x+0").gives("x").stays();
   }
