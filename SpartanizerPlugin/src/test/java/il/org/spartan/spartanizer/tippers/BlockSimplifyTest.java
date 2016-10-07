@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method",
-    "javadoc" }) @Ignore("Still problems with #205") public final class BlockSimplifyTest {
+    "javadoc" }) public final class BlockSimplifyTest {
   @Test public void complexEmpty0() {
     trimmingOf("{;}").gives("/* empty */    ");
   }
@@ -48,61 +48,28 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void complexSingleton() {
-    assertSimplifiesTo("{;{{;;return b; }}}", "return b;", new BlockSimplify(), Wrap.Statement);
+    trimmingOf("{;{{;;return b; }}}")
+    .gives("return b;");
   }
 
   @Test public void deeplyNestedReturn() {
-    assertSimplifiesTo("{{{;return c;};;};}", "return c;", new BlockSimplify(), Wrap.Statement);
+    trimmingOf("{{{;return c;};;};}")
+    .gives("return c;");
   }
 
   @Test public void empty() {
-    assertSimplifiesTo("{;;}", "", new BlockSimplify(), Wrap.Statement);
+    trimmingOf("{;;}")
+    .gives("");
   }
 
   @Test public void emptySimpler() {
-    assertSimplifiesTo("{;}", "", new BlockSimplify(), Wrap.Statement);
+    trimmingOf("{;}")
+    .gives("");
   }
 
   @Test public void emptySimplest() {
-    assertSimplifiesTo("{}", "", new BlockSimplify(), Wrap.Statement);
-  }
-
-  @Test public void emptySimplestA() {
-    final Wrap w = Wrap.Statement;
-    final String wrap = w.on("{}");
-    final String unpeeled = apply(new BlockSimplify(), wrap);
-    if (wrap.equals(unpeeled))
-      azzert.fail("Nothing done on " + "{}");
-    final String peeled = w.off(unpeeled);
-    if ("{}".equals(peeled))
-      azzert.that("No similification of " + "{}", peeled, is(not("{}")));
-    if (tide.clean(peeled).equals(tide.clean("{}")))
-      azzert.that("Simpification of " + "{}" + " is just reformatting", tide.clean("{}"), is(not(tide.clean(peeled))));
-    assertSimilar("", peeled);
-  }
-
-  @Test public void emptySimplestB() {
-    apply(new BlockSimplify(), Wrap.Statement.on("{}"));
-  }
-
-  @Test public void emptySimplestC() {
-    apply(new BlockSimplify(), Wrap.Statement.on("{}"));
-  }
-
-  @Test public void emptySimplestD() {
-    apply(new BlockSimplify(), Wrap.Statement.on("{}"));
-  }
-
-  @Test public void emptySimplestE() {
-    final String from = Wrap.Statement.on("{}");
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    final Document d = new Document(from);
-    assert d != null;
-    final Tipper<Block> inner = new BlockSimplify();
-    assert inner != null;
-    final TipperApplicator s = new TipperApplicator(inner);
-    assert s != null;
-    emptySimplestE_Aux(u, d, s);
+    trimmingOf("{}")
+    .gives("");
   }
 
   @Test public void expressionVsExpression() {
@@ -189,14 +156,7 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void threeStatements() {
-    assertSimplifiesTo("{i++;{{;;return b; }}j++;}", "i++;return b;j++;", new BlockSimplify(), Wrap.Statement);
-  }
-
-  private void emptySimplestE_Aux(final CompilationUnit u, final Document d, final TipperApplicator a) {
-    try {
-      a.rewriterOf(u, (IMarker) null).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException e) {
-      throw new AssertionError(e);
-    }
+    trimmingOf("{i++;{{;;return b; }}j++;}")
+    .gives("i++;return b;j++;");
   }
 }
