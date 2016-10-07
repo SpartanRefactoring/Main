@@ -37,4 +37,7 @@ public class Issue404 {
   @Test public void e() {
     (dig.stringLiterals(null) + "").hashCode();
   }
+  @Test public void f() {
+    dig.stringLiterals(null).hashCode();
+  }
 }
