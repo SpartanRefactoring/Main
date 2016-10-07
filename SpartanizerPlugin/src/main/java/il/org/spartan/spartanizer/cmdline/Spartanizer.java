@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -82,7 +81,7 @@ public final class Spartanizer {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
-  boolean spartanizeAndAnalyze(final BodyDeclaration ¢) {
+  boolean collect(final BodyDeclaration ¢) {
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
     final int nodes = metrics.nodesCount(¢);
@@ -155,7 +154,7 @@ public final class Spartanizer {
     return fixedPoint(¢ + "");
   }
 
-  void spartanizeAndAnalyze(final CompilationUnit u) {
+  void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
         // TODO Marco: Check that this method does not have a <code>@Test</code>
@@ -169,11 +168,27 @@ public final class Spartanizer {
         // if (m instanceof Annotation && "@Test".equals(((Annotation)
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
-        return spartanizeAndAnalyze(¢);
+        return collect(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
-        return spartanizeAndAnalyze(¢);
+        return collect(¢);
+      }
+
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        return collect(¢);
+      }
+
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        return collect(¢);
+      }
+
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        return collect(¢);
+      }
+
+      @Override public boolean visit(final Initializer ¢) {
+        return collect(¢);
       }
     });
   }
@@ -207,7 +222,6 @@ public final class Spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    Toolbox.refresh(); // leave this?
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
@@ -236,8 +250,8 @@ public final class Spartanizer {
     });
   }
 
-  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return Toolbox.defaultInstance().firstTipper(¢);
+  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -245,23 +259,23 @@ public final class Spartanizer {
     return true;
   }
 
-  void spartanizeAndAnalyze(final File f) {
+  void collect(final File f) {
     if (!f.getPath().contains("src/test"))
       try {
         currentFile = f;
-        spartanizeAndAnalyze(FileUtils.read(f));
+        collect(FileUtils.read(f));
       } catch (final IOException e) {
         monitor.infoIOException(e, "File = " + f);
       }
   }
 
-  void spartanizeAndAnalyze(final String javaCode) {
-    spartanizeAndAnalyze((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+  void collect(final String javaCode) {
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   void fire() {
-    System.out.println(Toolbox.defaultInstance().hooksCount());
-    spartanizeAndAnalyze();
+    System.out.println(toolbox.hooksCount());
+    collect();
     runEssence();
     runWordCount();
   }
@@ -271,7 +285,7 @@ public final class Spartanizer {
     shellEssenceMetrics(afterFileName);
   }
 
-  private void spartanizeAndAnalyze() {
+  private void collect() {
     System.err.printf( //
         " Input path=%s\n" + //
             "Before path=%s\n" + //
@@ -288,7 +302,7 @@ public final class Spartanizer {
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
       for (final File ¢ : new FilesGenerator(".java").from(inputPath))
-        spartanizeAndAnalyze(¢);
+        collect(¢);
     } catch (final IOException x) {
       x.printStackTrace();
       System.err.println(done + " files processed; processing of " + inputPath + " failed for some I/O reason");

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.create;
+package il.org.spartan.spartanizer.ast.factory;
 
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
  * <p>

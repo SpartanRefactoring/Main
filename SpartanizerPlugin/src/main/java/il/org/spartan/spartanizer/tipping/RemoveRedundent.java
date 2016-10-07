@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 public class RemoveRedundent {
   public static boolean checkBlock(final ASTNode n) {

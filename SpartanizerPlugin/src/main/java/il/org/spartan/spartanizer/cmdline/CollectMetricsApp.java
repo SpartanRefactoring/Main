@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/** IApplication for collecting metrics pre and post spartanization
+/** An {@link IApplication} for collecting metrics pre and post spartanization
  * @author Matteo Orru'
  * @year 2016 */
 public final class CollectMetricsApp implements IApplication {
@@ -30,7 +30,7 @@ public final class CollectMetricsApp implements IApplication {
   private static int optRounds = 1;
   private static boolean optDoNotOverwrite;
 
-  // TODO Matteo: why hiding?
+  // TODO Matteo: Can we erase this class? why the parameter is hiding a field?
   static String determineOutputFilename(final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
@@ -123,8 +123,7 @@ public final class CollectMetricsApp implements IApplication {
    * @param string */
   private static void report(final String prefix, final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
-    // Do
-    // this by adding stuff to the metrics suite.
+    // Do this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
     // TODO: Yossi Gil: make this even more clever, by using function
     // interfaces..

@@ -59,7 +59,7 @@ public final class CollectMetrics {
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
     collectTips(javaCode, before);
-    final CompilationUnit after = spartanize(javaCode, before);
+    final CompilationUnit after = spartanize(javaCode);
     assert after != null;
     report("After-", after);
     output.nl();
@@ -105,7 +105,6 @@ public final class CollectMetrics {
   }
 
   private static void reportTips(final List<Tip> ¢) {
-    // tips = new CSVStatistics("/tmp/tips.csv");
     for (final Tip $ : ¢) {
       Tips.put("description", $.description);
       Tips.put("from", $.from);
@@ -115,10 +114,8 @@ public final class CollectMetrics {
     }
   }
 
-  // TODO Yossi Gil: eliminate warning
-  private static CompilationUnit spartanize(final String javaCode, final CompilationUnit before) {
+  private static CompilationUnit spartanize(final String javaCode) {
     final Trimmer t = new Trimmer();
-    assert t != null;
     final String spartanized = t.fixed(javaCode);
     output.put("Characters", spartanized.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(spartanized);

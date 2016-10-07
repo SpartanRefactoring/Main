@@ -41,8 +41,8 @@ public class RefactorerUtil {
   public static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
     final String s = us.size() + "";
     String i = us.indexOf(u) + 1 + "";
-    for (; i.length() < s.length(); i = " " + i)
-      ;
+    for (; i.length() < s.length();)
+      i = " " + i;
     return i + "/" + s;
   }
 
