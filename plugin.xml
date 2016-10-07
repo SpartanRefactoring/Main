@@ -138,6 +138,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </command>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
      <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
+     <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -147,6 +148,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
+   <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
 </extension>
 
 <!-- Menus -->
@@ -205,6 +207,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+5"
 		commandId="il.org.spartan.LaconizeCurrent"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+M"
+		commandId="il.org.spartan.SpartanMovie"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
