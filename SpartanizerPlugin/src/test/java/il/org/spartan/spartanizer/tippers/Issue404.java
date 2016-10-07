@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
-
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals( @author Yossi
  * Gil
@@ -32,5 +33,8 @@ public class Issue404 {
 
   @Test public void d() {
     dig.stringLiterals(null);
+  }
+  @Test public void e() {
+    (dig.stringLiterals(null) + "").hashCode();
   }
 }
