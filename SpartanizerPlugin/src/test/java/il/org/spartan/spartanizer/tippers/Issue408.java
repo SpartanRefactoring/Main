@@ -7,6 +7,7 @@ import org.junit.*;
  * Test for issue 408
  * @author Matteo Orru'
  * @since 2016 */
+@Ignore("addition zero")
 public class Issue408 {
   
   @SuppressWarnings("static-method") @Test public void issue408_01() {
