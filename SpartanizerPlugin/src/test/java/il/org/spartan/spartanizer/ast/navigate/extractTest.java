@@ -10,8 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public final class extractTest {
+@SuppressWarnings({ "static-method", "javadoc" }) public final class ExtractTest {
   @Test public void core() {
     azzert.isNull(extract.core((Expression) null));
     azzert.isNull(extract.core((Statement) null));
@@ -35,7 +34,6 @@ public final class extractTest {
 
   @Test public void prefixToPostfixDecrement() {
     final String from = "for (int i = 0; i < 100;  i--)  i--;";
-    assert from != null;
     final Statement s = s(from);
     assert s != null;
     azzert.that(s, iz("{" + from + "}"));
