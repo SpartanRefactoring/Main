@@ -323,45 +323,13 @@ import il.org.spartan.spartanizer.java.*;
       trimmingOf("100%3L%1").gives("0L").stays();
     }
 
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_52() {
-      trimmingOf("100>>2").gives("25").stays();
-    }
-
     @Test public void issue92_53() {
       trimmingOf("-1/-2*-3/-4*-5*-6/-7/-8/-9").gives("-1/2*3/4*5*6/7/8/9").gives("-1/2*3/4*30/7/8/9").gives("30*-1/2*3/4/7/8/9")
           .gives("3*30*-1/2/4/7/8/9").gives("-90/2/4/7/8/9").gives("0").stays();
     }
 
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_54() {
-      trimmingOf("100L>>2").gives("25L").stays();
-    }
-
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_55() {
-      trimmingOf("100>>2L").gives("25").stays();
-    }
-
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_56() {
-      trimmingOf("100<<2").gives("400").stays();
-    }
-
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_57() {
-      trimmingOf("100L<<2").gives("400L").stays();
-    }
-
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_58() {
-      trimmingOf("100<<2L").gives("400").stays();
-    }
-
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_59() {
-      trimmingOf("100L<<2L").gives("400L").stays();
-    }
-
     @Test public void issue92_6() {
       trimmingOf("3./4").gives("0.75").stays();
-    }
-
-    @Test @Ignore("Do not compute shifts, they have a reason") public void issue92_60() {
-      trimmingOf("100L<<2L>>2L").gives("400L>>2L").gives("100L").stays();
     }
 
     @Test public void issue92_61() {
