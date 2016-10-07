@@ -17,6 +17,10 @@ public class Issue408 {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
   
+  @Test public void issue408_02b() {
+    trimmingOf("(0+x)+y").gives("x+y").stays();
+  }
+  
 //  @Ignore("addition zero") 
   @Test 
   public void issue408_03() {
