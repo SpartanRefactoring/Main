@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Reorganizer terms in a canonical way
