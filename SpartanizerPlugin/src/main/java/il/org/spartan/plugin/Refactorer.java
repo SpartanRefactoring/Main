@@ -121,9 +121,9 @@ import org.eclipse.ui.*;
     put(attributes, attribute.MARKER, m);
     put(attributes, attribute.CU, targetCompilationUnits);
     put(attributes, attribute.APPLICATOR, applicator);
-    ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
+    final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
     final IRunnableWithProgress r = runnable(targetCompilationUnits, applicator, attributes);
-    MessageDialog initialDialog = show(getOpeningMessage(attributes));
+    final MessageDialog initialDialog = show(getOpeningMessage(attributes));
     if (hasDisplay())
       initializeProgressDialog(progressMonitorDialog);
     try {
@@ -179,13 +179,13 @@ import org.eclipse.ui.*;
   private static MessageDialog show(final String ¢) {
     if (¢ == null)
       return null;
-    MessageDialog $ = eclipse.announceNonBusy(¢);
+    final MessageDialog $ = eclipse.announceNonBusy(¢);
     $.setBlockOnOpen(false);
     $.open();
     return $;
   }
 
-  private void closeDialog(MessageDialog initialDialog) {
+  private void closeDialog(final MessageDialog initialDialog) {
     if (initialDialog != null)
       initialDialog.close();
   }
@@ -210,9 +210,9 @@ import org.eclipse.ui.*;
     return true;
   }
 
-  private static void initializeProgressDialog(ProgressMonitorDialog d) {
+  private static void initializeProgressDialog(final ProgressMonitorDialog d) {
     d.open();
-    Shell s = d.getShell();
+    final Shell s = d.getShell();
     if (s == null)
       return;
     s.setText(eclipse.NAME);
