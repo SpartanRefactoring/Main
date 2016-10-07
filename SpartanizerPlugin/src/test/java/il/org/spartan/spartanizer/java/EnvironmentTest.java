@@ -197,37 +197,38 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered00() {
-    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")),s);
+    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")), s);
   }
 
   @Test public void EngineTestFlatUnordered000() {
     final ASTNode $ = makeAST.COMPILATION_UNIT
         .from(new Document("class A { String s; @FlatEnvUse({ @Id(name = \"str\", clazz = \"String\") }) int x;}"));
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered001() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class S { String s; @FlatEnvUse({ @Id(name = \"stra\", clazz = \"String\") }) int a;}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT
+        .from(new Document("class S { String s; @FlatEnvUse({ @Id(name = \"stra\", clazz = \"String\") }) int a;}"));
     s.add(new MapEntry<>("stra", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered02() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = \"str\", clazz = \"String\") }) int x}"));
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered03() {
     final ASTNode $ = makeAST.COMPILATION_UNIT
         .from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"a\", clazz = \"int\") })" + "void foo()}"));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.INT)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered04() {
@@ -235,7 +236,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "void foo(); \n" + "@FlatEnvUse({ @Id(name = " + "\"k\", clazz = \"int\") }) \n" + "void f();}"));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("k", new Information(type.Primitive.Certain.INT)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered05() {
@@ -243,13 +244,12 @@ import il.org.spartan.spartanizer.utils.*;
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   // Fall because we accept testSet is contained in the specified set.
   @Ignore @Test public void EngineTestFlatUnordered05a() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document(
-        "class A {"//
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {"//
         + "void foo();\n"//
         + "{ \n"//
         + "  @FlatEnvUse({ @Id(name = "//
@@ -257,7 +257,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "  \"a\", clazz = \"String\") }) \n"//
         + "void f();}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered05b() {
@@ -266,7 +266,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered05c() {
@@ -275,7 +275,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("b", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered05e() {
@@ -283,7 +283,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered07() {
@@ -291,7 +291,7 @@ import il.org.spartan.spartanizer.utils.*;
         "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"ss\", clazz = \"String\")})" + "void foo();\n}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered08() {
@@ -300,7 +300,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered09() {
@@ -308,7 +308,7 @@ import il.org.spartan.spartanizer.utils.*;
         "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   /** This test assumes that the annotation data is cleared after each
@@ -319,7 +319,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
     s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.DOUBLE)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   /** This test assumes that the annotation data is cleared after each
@@ -330,7 +330,7 @@ import il.org.spartan.spartanizer.utils.*;
         + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
     s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFlatUnordered12() {
@@ -339,28 +339,28 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   /** This test is meant to fail by azzert, due to double addition of the same
    * values. */
   @Ignore @Test public void EngineTestFlatUnordered13() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")),s);
+        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")), s);
   }
 
   // should fall dew to wrong ordering
   @Ignore @Test public void EngineTestFlatUnordered15a() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n"
-        + "void foo(); \n" + "@FlatEnvUse({  @Id(name = " + "\"a\", clazz = \"String\"),@Id(name = " + "\"i\", clazz = \"int\") }) \n" + "void f();}"));
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void foo(); \n" + "@FlatEnvUse({  @Id(name = "
+        + "\"a\", clazz = \"String\"),@Id(name = " + "\"i\", clazz = \"int\") }) \n" + "void f();}"));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void EngineTestFromFile() {
     s.add(new MapEntry<>("str", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler("EnvironmentTestMoreCodeExamples.java",s);
+    new EnvFlatHandler("EnvironmentTestMoreCodeExamples.java", s);
   }
 
   @Test public void EngineTestNested01() {
@@ -369,7 +369,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("EX.s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.C1.i", new Information(type.Primitive.Certain.INT)));
-    new EnvNestedHandler($,s);
+    new EnvNestedHandler($, s);
   }
 
   @Test public void EngineTestNested02() {
@@ -378,7 +378,7 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("EX.s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("EX.C1.s", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($,s);
+    new EnvFlatHandler($, s);
   }
 
   @Test public void get() {
