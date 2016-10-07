@@ -296,14 +296,4 @@ import il.org.spartan.*;
   @Test public void test_d() {
     azzert.that("studs".replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", ""), is("stud"));
   }
-
-  @Ignore("Pending Issue") @Test public void trimmerBugXOR() {
-    trimmingOf("j=j^k")//
-        .gives("j^=k");
-  }
-
-  @Test public void trimmerBugXORCompiling() {
-    trimmingOf("j = j ^ k")//
-        .gives("j ^= k");
-  }
 }
