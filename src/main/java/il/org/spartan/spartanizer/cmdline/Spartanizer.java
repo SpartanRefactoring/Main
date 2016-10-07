@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -24,7 +25,7 @@ import il.org.spartan.utils.*;
  * classes, methods, etc.
  * @author Yossi Gil
  * @year 2015 */
-public final class spartanizer {
+public final class Spartanizer {
   private static final String folder = "/tmp/";
   private final Toolbox toolbox = new Toolbox();
   private int done;
@@ -39,7 +40,7 @@ public final class spartanizer {
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new spartanizer(¢).fire();
+      new Spartanizer(¢).fire();
   }
 
   static double d(final double n1, final double n2) {
@@ -54,11 +55,11 @@ public final class spartanizer {
     return n2 / n1;
   }
 
-  private spartanizer(final String path) {
+  private Spartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  private spartanizer(final String inputPath, final String name) {
+  private Spartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
@@ -81,7 +82,7 @@ public final class spartanizer {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
-  boolean collect(final BodyDeclaration ¢) {
+  boolean spartanizeAndAnalyze(final BodyDeclaration ¢) {
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
     final int nodes = metrics.nodesCount(¢);
@@ -154,16 +155,25 @@ public final class spartanizer {
     return fixedPoint(¢ + "");
   }
 
-  void collect(final CompilationUnit u) {
+  void spartanizeAndAnalyze(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
         // TODO Marco: Check that this method does not have a <code>@Test</code>
         // annotation
-        return collect(¢);
+        // TODO: do not erase the following code, I think this will skip
+        // the @Test methods but I did't yet check if it works. (-Marco)
+        // List<ASTNode>
+        // modifiers = (List<ASTNode>)
+        // ¢.getStructuralProperty(¢.getModifiersProperty());
+        // for (ASTNode m : modifiers)
+        // if (m instanceof Annotation && "@Test".equals(((Annotation)
+        // m).getTypeName().getFullyQualifiedName()))
+        // return false;
+        return spartanizeAndAnalyze(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
-        return collect(¢);
+        return spartanizeAndAnalyze(¢);
       }
       
       @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
@@ -251,23 +261,25 @@ public final class spartanizer {
     return true;
   }
 
-  void collect(final File f) {
+  void spartanizeAndAnalyze(final File f) {
     if (!f.getPath().contains("src/test"))
       try {
         currentFile = f;
-        collect(FileUtils.read(f));
+        spartanizeAndAnalyze(FileUtils.read(f));
       } catch (final IOException e) {
         monitor.infoIOException(e, "File = " + f);
       }
   }
 
-  void collect(final String javaCode) {
-    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+  void spartanizeAndAnalyze(final String javaCode) {
+    spartanizeAndAnalyze((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   void fire() {
     System.out.println(toolbox.hooksCount());
+    System.out.println(Toolbox.defaultInstance().hooksCount());
     collect();
+    spartanizeAndAnalyze();
     runEssence();
     runWordCount();
   }
@@ -277,7 +289,7 @@ public final class spartanizer {
     shellEssenceMetrics(afterFileName);
   }
 
-  private void collect() {
+  private void spartanizeAndAnalyze() {
     System.err.printf( //
         " Input path=%s\n" + //
             "Before path=%s\n" + //
@@ -294,7 +306,7 @@ public final class spartanizer {
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
       for (final File ¢ : new FilesGenerator(".java").from(inputPath))
-        collect(¢);
+        spartanizeAndAnalyze(¢);
     } catch (final IOException x) {
       x.printStackTrace();
       System.err.println(done + " files processed; processing of " + inputPath + " failed for some I/O reason");
