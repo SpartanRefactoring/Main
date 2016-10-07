@@ -5,7 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** A test class constructed by TDD for {@link dig.stringLiterals( @author Yossi Gil
+/** A test class constructed by TDD for {@link dig.stringLiterals( @author Yossi
+ * Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
@@ -14,8 +15,14 @@ public class Issue404 {
   @Test public void Z$140() {
     trimmingOf("a").stays();
   }
+
   /** Ensure that there is a type named {@link dig} */
   @Test public void a() {
-   dig.class.hashCode(); 
+    dig.class.hashCode();
+  }
+
+  /** Make sure that {@link dig} is an <code>interface</code> */
+  @Test public void b() {
+    assert dig.class.isInterface();
   }
 }
