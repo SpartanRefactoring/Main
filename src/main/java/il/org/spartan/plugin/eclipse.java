@@ -3,7 +3,6 @@ package il.org.spartan.plugin;
 import static il.org.spartan.Utils.*;
 
 import java.awt.*;
-import java.awt.Image;
 import java.net.*;
 import java.util.*;
 import java.util.List;
