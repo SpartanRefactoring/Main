@@ -139,6 +139,7 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
+            new InfixAdditionZero2(),//
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
