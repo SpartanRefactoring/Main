@@ -77,8 +77,7 @@ public abstract class searchAncestors {
     // TODO: Alex: Polish this loop manually and add a test case for future
     // generations
     ASTNode $ = from(n);
-    for (ASTNode p = $; p != null; $ = p,p = from(p))
-      ;
+    for (ASTNode p = $; p != null; $ = p,p = from(p));
     return $;
   }
 
