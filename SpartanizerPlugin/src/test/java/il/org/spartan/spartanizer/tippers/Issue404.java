@@ -14,7 +14,8 @@ public class Issue404 {
   @Test public void Z$140() {
     trimmingOf("a").stays();
   }
+  /** Ensure that there is a type named {@link dig} */
   @Test public void a() {
-    
+   dig.class.hashCode(); 
   }
 }
