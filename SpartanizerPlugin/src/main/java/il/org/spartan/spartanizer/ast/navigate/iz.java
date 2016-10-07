@@ -159,7 +159,7 @@ public interface iz {
   /** @param xs JD
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
-  static boolean conditional(final Expression... xs) {
+  static boolean conditionalExpression(final Expression... xs) {
     for (final Expression ¢ : xs)
       if (nodeTypeEquals(extract.core(¢), CONDITIONAL_EXPRESSION))
         return true;
