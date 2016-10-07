@@ -55,11 +55,22 @@ public class Issue413 {
       azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
   }
 
-  @Test public void vanilla() {
-    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), iz(" is on "));
+  /** Flavor sour is for a bit tricky case */
+  @Test public void sour() {
+    azzert.that(
+        Essence.stringRemove(//
+            "\"string literal with an \\\"embedded\\\" string literal\""), //
+        iz(""));
   }
 
-  /** On the long-run, this class should loose all its members, but still remain
+  /** Flavor vanilla is for the simplest cases */
+  @Test public void vanilla() {
+    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), iz("is on"));
+  }
+
+  /** Where all not-yet working tests are.
+   * <p/>
+   * On the long-run, this class should loose all its members, but still remain
    * as a place holder for bugs and faults that haven't been discovered by tests
    * of the tests in the containing class */
   @Ignore("Placeholder: dont remove") //
