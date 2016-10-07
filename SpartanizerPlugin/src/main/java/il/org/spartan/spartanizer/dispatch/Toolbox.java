@@ -136,7 +136,6 @@ public class Toolbox {
             new PostfixToPrefix(), //
             null) //
         .add(InfixExpression.class, //
-            new InfixAdditionZero2(),//
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
@@ -164,6 +163,7 @@ public class Toolbox {
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), //
             new InfixAdditionZero(), //
+            new InfixAdditionZero2(),//
             null)
         .add(MethodDeclaration.class, //
             new MethodDeclarationRenameReturnToDollar(), //
