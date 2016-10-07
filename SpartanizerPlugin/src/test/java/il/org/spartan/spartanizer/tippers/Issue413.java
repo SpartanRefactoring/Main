@@ -1,7 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.azzert.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
@@ -13,17 +16,19 @@ import il.org.spartan.spartanizer.cmdline.*;
  * Note that:
  * <ol>
  * <li>Fluent API class {@link azzert} is used for testing.
- * <li><code>static</code> members of fluent API class {@link azzert} are used for fluent writing
+ * <li><code>static</code> members of fluent API class {@link azzert} are used
+ * for fluent writing
+ *
  * <pre>
  * </pre>
- *  used for testing.
+ *
+ * used for testing.
  * <ol>
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue413 {
-
   /** There are no established rules on names of test methods. Here are some
    * recommendations:
    * <ul>
@@ -45,20 +50,20 @@ public class Issue413 {
 
   @Test public void chocolate2() {
     azzert.that(Essence.stringRemove(Essence.stringRemove("hello")), instanceOf(String.class));
-  } 
+  }
 
   @Test public void idempotent() {
     for (final String caze : new String[] { "This", "This 'is'", "This \"is" })
       azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
   }
 
+    @Ignore("Placeholder: dont remove") //
+  static class WorkInProgress {
   @Test public void vanilla() {
     azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), iz(" is on "));
   }
 
-  @Ignore("Placeholder: dont remove") //
-  static class WorkInProgress {
-    /* On the long-run, this class should loose all its members, but still
+  /* On the long-run, this class should loose all its members, but still
      * remain as a place holder for bugs and faults that haven't been discovered
      * by tests of the tests in the containing class */
   }
