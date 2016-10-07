@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and

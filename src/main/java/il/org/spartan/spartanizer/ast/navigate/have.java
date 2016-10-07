@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -39,7 +41,7 @@ public enum have {
    *         the boolean literal <code><b>false</b></code> */
   public static boolean falseLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.navigate.iz.literal.false¢(¢))
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal.false¢(¢))
         return true;
     return false;
   }
@@ -50,7 +52,7 @@ public enum have {
    *         that is a literal. */
   public static boolean literal(final Expression... xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.navigate.iz.literal(¢))
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal(¢))
         return true;
     return false;
   }
@@ -61,7 +63,7 @@ public enum have {
    *         that is a literal. */
   public static boolean literal(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.navigate.iz.literal(¢))
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal(¢))
         return true;
     return false;
   }
@@ -94,7 +96,7 @@ public enum have {
    *         the boolean literal <code><b>true</b></code> */
   public static boolean trueLiteral(final List<Expression> xs) {
     for (final Expression ¢ : xs)
-      if (il.org.spartan.spartanizer.ast.navigate.iz.literal.true¢(¢))
+      if (il.org.spartan.spartanizer.ast.safety.iz.literal.true¢(¢))
         return true;
     return false;
   }
