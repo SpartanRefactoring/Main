@@ -49,8 +49,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     assert s1.length() <= s2.length();
     if (s1.length() == 0)
       return 0;
-    int $ = 0;
-    for (int ¢ = 0; ¢ < s1.length(); ++¢) {
+    for (int $ = 0, ¢ = 0; ¢ < s1.length(); ++¢) {
       if (!Character.isAlphabetic(first(s1, ¢)) && !Character.isAlphabetic(first(s2, ¢))
           || ¢ == s1.length() - 1 && !Character.isAlphabetic(first(s2, ¢)))
         $ = first(s1, ¢) != first(s2, ¢) ? ¢ : ¢ + 1;
@@ -86,8 +85,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     assert s1.length() <= s2.length();
     if (s1.length() == 0)
       return 0;
-    int $ = 0;
-    for (int ¢ = 0; ¢ < s1.length(); ++¢) {
+    for (int $ = 0, ¢ = 0; ¢ < s1.length(); ++¢) {
       if (!Character.isAlphabetic(last(s1, ¢)) && !Character.isAlphabetic(last(s2, ¢))
           || ¢ == s1.length() - 1 && !Character.isAlphabetic(last(s2, ¢)))
         $ = last(s1, ¢) != last(s2, ¢) ? ¢ : ¢ + 1;
