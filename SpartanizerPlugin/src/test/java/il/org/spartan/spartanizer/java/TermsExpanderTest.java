@@ -46,7 +46,7 @@ import il.org.spartan.*;
     azzert.that(TermsExpander.simplify(i("7 + -a")), iz("7 - a"));
   }
 
-  @Ignore("see typeTest.basicExpression31") @Test public void test09() {
+  @Test public void test09() {
     azzert.that(TermsExpander.simplify(i("+a + +a")), iz("a + a"));
   }
 
