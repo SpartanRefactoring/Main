@@ -20,10 +20,10 @@ import org.eclipse.ui.*;
   /** Used to collect attributes from a Refactorer's run, used later in printing
    * actions (such as {@link eclipse#announce}) */
   enum attribute {
-    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER
+    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER
   }
-  
-  private static final String UNKNOWN = "???";
+
+  public static final String UNKNOWN = "???";
 
   /** @return true iff the refactorer is a handler */
   public static boolean isHandler() {
@@ -105,8 +105,8 @@ import org.eclipse.ui.*;
    * @param attributes JD
    * @return work to be done before running the refactorer main loop
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUI$Applicator applicator, final List<ICompilationUnit> targetCompilationUnits,
-      final Map<attribute, Object> attributes) {
+  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUI$Applicator applicator,
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
     return null;
   }
 
@@ -115,8 +115,8 @@ import org.eclipse.ui.*;
    * @param attributes JD
    * @return work to be done after running the refactorer main loop
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUI$Applicator applicator, final List<ICompilationUnit> targetCompilationUnits,
-      final Map<attribute, Object> attributes) {
+  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUI$Applicator applicator,
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> attributes) {
     return null;
   }
 
@@ -186,6 +186,7 @@ import org.eclipse.ui.*;
       @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
         final int passesCount = passesCount();
         int pass;
+        int totalTips = 0;
         final List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
         for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
@@ -199,13 +200,15 @@ import org.eclipse.ui.*;
             if (pm.isCanceled())
               break;
             pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, currentCompilationUnit));
-            (!a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection()) ? deadCompilationUnits : modifiedCompilationUnits)
-                .add(currentCompilationUnit);
+            int tipsCommited = a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection());
+            totalTips += tipsCommited;
+            (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(currentCompilationUnit);
             pm.worked(1);
           }
         }
         put(attributes, attribute.CHANGES, modifiedCompilationUnits);
         put(attributes, attribute.PASSES, Integer.valueOf(pass));
+        put(attributes, attribute.TOTAL_TIPS, Integer.valueOf(totalTips));
       }
     };
   }

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
@@ -28,7 +29,8 @@ public final class TipperApplicator extends GUI$Applicator {
     assert clazz != null : "Oops, cannot find kind of operands of " + w.myName();
   }
 
-  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m,
+      @SuppressWarnings("unused") final AtomicInteger __) {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
