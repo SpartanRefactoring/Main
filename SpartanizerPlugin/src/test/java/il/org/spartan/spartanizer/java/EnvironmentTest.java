@@ -190,16 +190,6 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that(ee1.empty(), is(false));
   }
 
-  // Should fall because not right ordering!
-  @Ignore @Test public void EngineTestFlatOrdered01() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($, s);
-  }
-
   @Test public void EngineTestFlatUnordered00() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")), s);
   }
@@ -244,19 +234,6 @@ import il.org.spartan.spartanizer.utils.*;
         + "void foo();\n" + "{ \n" + "  @FlatEnvUse({ @Id(name = " + "  \"a\", clazz = \"String\") }) \n" + "void f();}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($, s);
-  }
-
-  // Fall because we accept testSet is contained in the specified set.
-  @Ignore @Test public void EngineTestFlatUnordered05a() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {"//
-        + "void foo();\n"//
-        + "{ \n"//
-        + "  @FlatEnvUse({ @Id(name = "//
-        + "\"s\", clazz = \"String\"),@Id(name = "//
-        + "  \"a\", clazz = \"String\") }) \n"//
-        + "void f();}"));
-    s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     new EnvFlatHandler($, s);
   }
 
@@ -311,50 +288,12 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($, s);
   }
 
-  /** This test assumes that the annotation data is cleared after each
-   * annotation. This will only be true once we implement uses and declares. */
-  @Ignore public void EngineTestFlatUnordered10() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
-        + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
-    s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.INT)));
-    s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.DOUBLE)));
-    new EnvFlatHandler($, s);
-  }
-
-  /** This test assumes that the annotation data is cleared after each
-   * annotation. This will only be true once we implement uses and declares. */
-  @Ignore @Test public void EngineTestFlatUnordered11() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"x\", clazz = \"String\"), "
-        + "@Id(name = \"y\", clazz = \"String\")," + "@Id(name = \"z\", clazz = \"int\")})" + "void f();\n" + "@FlatEnvUse({ @Id(name = "
-        + "\"x\", clazz = \"int\"), " + "@Id(name = \"y\", clazz = \"double\")" + "void g();\n}"));
-    s.add(new MapEntry<>("x", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("y", new Information(type.Primitive.Certain.STRING)));
-    new EnvFlatHandler($, s);
-  }
-
   @Test public void EngineTestFlatUnordered12() {
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
         + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    new EnvFlatHandler($, s);
-  }
-
-  /** This test is meant to fail by azzert, due to double addition of the same
-   * values. */
-  @Ignore @Test public void EngineTestFlatUnordered13() {
-    new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), "
-        + "@Id(name = \"ss\", clazz = \"String\")," + "@Id(name = \"s\", clazz = \"int\")})" + "void foo();\n}")), s);
-  }
-
-  // should fall dew to wrong ordering
-  @Ignore @Test public void EngineTestFlatUnordered15a() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void foo(); \n" + "@FlatEnvUse({  @Id(name = "
-        + "\"a\", clazz = \"String\"),@Id(name = " + "\"i\", clazz = \"int\") }) \n" + "void f();}"));
-    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
-    s.add(new MapEntry<>("a", new Information(type.Primitive.Certain.STRING)));
     new EnvFlatHandler($, s);
   }
 
