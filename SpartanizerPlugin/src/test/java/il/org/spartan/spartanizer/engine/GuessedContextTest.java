@@ -11,11 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) @Ignore public final class GuessedContextTest {
-  @Test public void dealWithBothKindsOfComment() {
-    similar("if (b) {\n", "if (b) {;} { throw new Exception(); }");
-  }
-
+@SuppressWarnings({ "static-method", "javadoc" }) public final class GuessedContextTest {
   @Test public void dealWithComment() {
     azzert.that(find("if (b) {\n"), is(STATEMENTS_LOOK_ALIKE));
   }
@@ -88,10 +84,6 @@ import il.org.spartan.spartanizer.cmdline.*;
     azzert.that(find("a(); b();"), is(STATEMENTS_LOOK_ALIKE));
   }
 
-  @Test public void findVariable() {
-    azzert.that(find("i"), is(EXPRESSION_LOOK_ALIKE));
-  }
-
   @Test public void intMethod() {
     azzert.that(find("int f() { int s = 0; for (int i = 0; i < 10; ++i) s += i; return s;}"), is(METHOD_LOOKALIKE));
   }
@@ -128,15 +120,7 @@ import il.org.spartan.spartanizer.cmdline.*;
     azzert.that("a/b", is(EXPRESSION_LOOK_ALIKE.off(EXPRESSION_LOOK_ALIKE.on("a/b"))));
   }
 
-  @Test public void removeCommentsTest() {
-    similar(wizard.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
-  }
-
   @Test public void statement() {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
-  }
-
-  private void similar(final String s1, final String s2) {
-    azzert.that(wizard.essence(s2), is(wizard.essence(s1)));
   }
 }
