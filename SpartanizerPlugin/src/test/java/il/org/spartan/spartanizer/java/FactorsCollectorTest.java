@@ -12,8 +12,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 @SuppressWarnings("static-method") public final class FactorsCollectorTest {
   private final InfixExpression complex = i("a-b*c - (x - - - (d*e))");
