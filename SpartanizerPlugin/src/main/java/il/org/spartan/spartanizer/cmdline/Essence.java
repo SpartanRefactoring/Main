@@ -34,7 +34,7 @@ public class Essence {
     ;
   }
 
-  public static String stringRemove(final String ¢) {
-    return ¢;
+  public static String stringRemove(final String $) {
+    return $.replaceAll("\".*\"", "");
   }
 }
