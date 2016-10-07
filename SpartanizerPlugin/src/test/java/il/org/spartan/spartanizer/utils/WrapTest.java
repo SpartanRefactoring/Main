@@ -1,7 +1,7 @@
-package il.org.spartan.spartanizer.spartanizations;
+package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.spartanizations.Wrap.*;
+import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
