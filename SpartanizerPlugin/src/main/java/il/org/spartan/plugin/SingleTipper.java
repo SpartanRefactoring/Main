@@ -55,6 +55,14 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public List<ICompilationUnit> getTargetCompilationUnits() {
       return Collections.singletonList(eclipse.currentCompilationUnit());
     }
+    
+    private static InDeclaration instance;
+    
+    public static InDeclaration instance() {
+      if (instance == null)
+        instance = new InDeclaration();
+      return instance;
+    }
   }
 
   /** Marker resolution. Commits single tipper in current file.
@@ -71,6 +79,14 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     @Override public List<ICompilationUnit> getTargetCompilationUnits() {
       return Collections.singletonList(eclipse.currentCompilationUnit());
+    }
+    
+    private static InFile instance;
+    
+    public static InFile instance() {
+      if (instance == null)
+        instance = new InFile();
+      return instance;
     }
   }
 
@@ -115,6 +131,14 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     @Override public boolean hasDisplay() {
       return true;
+    }
+    
+    private static InProject instance;
+    
+    public static InProject instance() {
+      if (instance == null)
+        instance = new InProject();
+      return instance;
     }
   }
 
