@@ -63,8 +63,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       System.out.println("gather(¢): " + a);
     
     Operator b = ¢.getOperator();
-    if(Operator.PLUS == b) 
-      System.out.println("ok");
+//    if(Operator.PLUS == b) 
+//      System.out.println("ok");
     List<Expression> allOperands = extract.allOperands(¢);
     List<Operator> allOperators = extract.allOperators(¢);
 //    containsPlusOperator(¢);
