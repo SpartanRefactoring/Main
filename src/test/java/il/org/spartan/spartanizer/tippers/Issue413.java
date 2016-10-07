@@ -61,10 +61,10 @@ public class Issue413 {
    * as a place holder for bugs and faults that haven't been discovered by tests
    * of the tests in the containing class */
   @Ignore("Placeholder: dont remove") //
-  static class WorkInProgress extends Exception {
+  static class WorkInProgress {
     /** We only need this field, to keep Eclipse happy about the class not being
      * empty. */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
 
     /** Flavor sour is for a bit tricky case */
     @Test public void sour() {
