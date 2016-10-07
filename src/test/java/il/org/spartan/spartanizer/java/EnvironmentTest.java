@@ -344,7 +344,7 @@ import il.org.spartan.spartanizer.utils.*;
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
     s.add(new MapEntry<>("ss", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
@@ -354,7 +354,7 @@ import il.org.spartan.spartanizer.utils.*;
         "class A {@FlatEnvUse({ @Id(name = " + "\"s\", clazz = \"String\"), " + "@Id(name = \"i\", clazz = \"int\")})" + "void foo();\n}"));
     new EnvFlatHandler($);
     s.add(new MapEntry<>("s", new Information(type.Primitive.Certain.STRING)));
-    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.STRING)));
+    s.add(new MapEntry<>("i", new Information(type.Primitive.Certain.INT)));
     ENVTestEngineAbstract.compareFlat(s);
     ENVTestEngineAbstract.testSetsReset();
   }
