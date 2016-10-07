@@ -20,8 +20,10 @@ import org.eclipse.ui.*;
   /** Used to collect attributes from a Refactorer's run, used later in printing
    * actions (such as {@link eclipse#announce}) */
   enum attribute {
-    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES
+    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER
   }
+  
+  private static final String UNKNOWN = "???";
 
   /** @return true iff the refactorer is a handler */
   public static boolean isHandler() {
@@ -98,6 +100,26 @@ import org.eclipse.ui.*;
     return false;
   }
 
+  /** @param applicator JD
+   * @param targetCompilationUnits JD
+   * @param attributes JD
+   * @return work to be done before running the refactorer main loop
+   *         [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUI$Applicator applicator, final List<ICompilationUnit> targetCompilationUnits,
+      final Map<attribute, Object> attributes) {
+    return null;
+  }
+
+  /** @param applicator JD
+   * @param targetCompilationUnits JD
+   * @param attributes JD
+   * @return work to be done after running the refactorer main loop
+   *         [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUI$Applicator applicator, final List<ICompilationUnit> targetCompilationUnits,
+      final Map<attribute, Object> attributes) {
+    return null;
+  }
+
   @Override public String getLabel() {
     return null;
   }
@@ -116,11 +138,12 @@ import org.eclipse.ui.*;
     final GUI$Applicator applicator = either(getApplicator(e), getApplicator(m));
     if (!valid(targetCompilationUnits, applicator))
       return null;
-    final Map<attribute, Object> attributes = new HashMap<>();
+    final Map<attribute, Object> attributes = unknowns();
     put(attributes, attribute.EVENT, e);
     put(attributes, attribute.MARKER, m);
     put(attributes, attribute.CU, targetCompilationUnits);
     put(attributes, attribute.APPLICATOR, applicator);
+    doWork(initialWork(applicator, targetCompilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
     final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
     final IRunnableWithProgress r = runnable(targetCompilationUnits, applicator, attributes);
     final MessageDialog initialDialog = show(getOpeningMessage(attributes));
@@ -130,12 +153,32 @@ import org.eclipse.ui.*;
       progressMonitorDialog.run(true, true, r);
     } catch (InterruptedException | InvocationTargetException x) {
       monitor.log(x);
-      x.printStackTrace();
       return null;
     }
     closeDialog(initialDialog);
+    doWork(finalWork(applicator, targetCompilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
     show(getEndingMessage(attributes));
     return null;
+  }
+
+  private Map<attribute, Object> unknowns() {
+    final Map<attribute, Object> $ = new HashMap<>();
+    for (attribute ¢ : attribute.values())
+      $.put(¢, UNKNOWN);
+    return $;
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  private boolean doWork(final IRunnableWithProgress r, final ProgressMonitorDialog d) {
+    if (r != null)
+      try {
+        d.run(true, true, r);
+      } catch (InvocationTargetException | InterruptedException x) {
+        monitor.log(x);
+        x.printStackTrace();
+        return false;
+      }
+    return true;
   }
 
   private IRunnableWithProgress runnable(final List<ICompilationUnit> us, final GUI$Applicator a, final Map<attribute, Object> attributes) {

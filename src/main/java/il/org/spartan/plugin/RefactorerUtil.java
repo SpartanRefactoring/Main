@@ -5,8 +5,10 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.operation.*;
 
 import il.org.spartan.plugin.Refactorer.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A utility class for {@link Refactorer} concrete implementation, containing
@@ -52,5 +54,21 @@ public class RefactorerUtil {
 
   public static String plurales(final String s, final int i) {
     return i == 1 ? s : s + "es";
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final GUI$Applicator __, final List<ICompilationUnit> us,
+      final Map<attribute, Object> m, attribute t) {
+    if (us.isEmpty())
+      return null;
+    final Trimmer tr = new Trimmer();
+    return new IRunnableWithProgress() {
+      @SuppressWarnings("boxing") @Override public void run(IProgressMonitor pm) {
+        pm.beginTask("Counting tips in " + us.get(0).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+        tr.setICompilationUnit(us.get(0));
+        m.put(t, tr.countTips());
+        pm.done();
+      }
+    };
   }
 }
