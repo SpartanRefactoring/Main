@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /**
+ * Test for issue 408
  * @author Matteo Orru'
  * @since 2016 */
 public class Issue408 {
@@ -12,7 +13,8 @@ public class Issue408 {
     trimmingOf("0+x").gives("x").stays();
   }
   
-  @SuppressWarnings("static-method") @Ignore @Test public void issue408_02() {
+  @SuppressWarnings("static-method") 
+  @Test public void issue408_02() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
   
@@ -24,11 +26,16 @@ public class Issue408 {
   public void issue408_03() {
     trimmingOf("0+x+y+4").gives("x+y+4").stays();
   }
-  
+  @Ignore("added zero")
   @SuppressWarnings("static-method") @Test 
   public void issue408_03b() {
     trimmingOf("0+x+y+4+5").gives("x+y+9").stays();
   }
+  
+  @SuppressWarnings("static-method") @Test 
+  public void issue408_03b1() {
+    trimmingOf("0+(x + 0 + y + (x + 2))").gives("x+y+x+2").stays();
+  }  
   
   @SuppressWarnings("static-method") @Test 
   public void issue408_03c() {
@@ -64,17 +71,25 @@ public class Issue408 {
     trimmingOf("x+0").gives("x").stays();
   }
 
-  @SuppressWarnings("static-method") @Ignore("addition zero") @Test public void issue408_05() {
+  @SuppressWarnings("static-method") 
+  @Test public void issue408_05() {
     trimmingOf("0+x+3").gives("x+3").stays();
   }
   
-  @SuppressWarnings("static-method") @Ignore("addition zero") @Test public void issue408_06() {
+  @SuppressWarnings("static-method") 
+  @Test public void issue408_06() {
     trimmingOf("x+0+y").gives("x+y").stays();
   }
   
   // taking this test here temporary
-  @SuppressWarnings("static-method") @Ignore @Test public void issue408_07() {
+  @SuppressWarnings("static-method") 
+  @Test public void issue408_07() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
+  }
+  
+  @SuppressWarnings("static-method") 
+  @Test public void issue408_08() {
+    trimmingOf("0+0+x+4*y").gives("x+4*y").stays();
   }
 
 }
