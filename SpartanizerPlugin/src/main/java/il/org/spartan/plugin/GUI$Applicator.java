@@ -412,7 +412,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return $;
   }
 
-  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+  public RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
     scanCompilationUnitForMarkerFix(m, preview);
