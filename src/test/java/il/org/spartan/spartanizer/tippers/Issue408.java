@@ -8,7 +8,8 @@ import org.junit.*;
  * @since 2016 */
 public class Issue408 {
   
-  @Ignore("addition zero") @Test public void issue408_01() {
+//  @Ignore("addition zero") 
+  @Test public void issue408_01() {
     trimmingOf("0+x").gives("x").stays();
   }
   
@@ -16,8 +17,9 @@ public class Issue408 {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
   
-  @Ignore("addition zero") 
-  @Test public void issue408_03() {
+//  @Ignore("addition zero") 
+  @Test 
+  public void issue408_03() {
     trimmingOf("0+x+y+4").gives("x+y+4").stays();
   }
   
