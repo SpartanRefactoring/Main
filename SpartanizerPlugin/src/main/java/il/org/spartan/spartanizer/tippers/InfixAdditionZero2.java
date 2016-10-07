@@ -3,15 +3,17 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.plugin.PreferencesResources.*;
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.factory.subject.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -49,7 +51,46 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @SuppressWarnings("unused") @Override public ASTNode replacement(final InfixExpression ¢) {
+    
+//    List<Expression> c = gather(¢);
+    List<Expression> c = gather(¢, new ArrayList<Expression>());
+    System.out.println("c.size(): " + c.size());
+    System.out.println("core(¢): " + core(¢));
+    System.out.println("left(¢): " + left(¢));
+    System.out.println("right(¢): " + right(¢));
+    System.out.println("right(¢): " + right(¢));
+    for(Expression a: c)
+      System.out.println("gather(¢): " + a);
+    
+    Operator b = ¢.getOperator();
+    if(Operator.PLUS == b) 
+      System.out.println("ok");
+    List<Expression> allOperands = extract.allOperands(¢);
+    List<Operator> allOperators = extract.allOperators(¢);
+//    containsPlusOperator(¢);
+//    containsZeroOperand(¢);
+    Object a = replacement(allOperands);
+    return replacement2(¢);
+  }
+
+  @SuppressWarnings("static-method") private boolean containsZeroOperand(final InfixExpression ¢) {
+    List<Expression> allOperands = extract.allOperands(¢);
+    for(Expression opnd: allOperands)
+      if(iz.literal0(opnd))
+        return true;
+    return false;
+  }
+
+  @SuppressWarnings("static-method") private boolean containsPlusOperator(final InfixExpression ¢) {
+    List<Operator> allOperators = extract.allOperators(¢);
+    for(Operator optor: allOperators)
+      if(optor == Operator.PLUS)
+        return true; 
+    return false;
+  }
+  
+  @SuppressWarnings("static-method") public ASTNode replacement2(final InfixExpression ¢) {
     System.out.println("left(¢): " + left(¢));
     System.out.println("right(¢): " + right(¢));
     System.out.println(extract.allOperands(¢));
@@ -60,25 +101,34 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
         ops.remove(i);
       }      
     }
+    InfixExpression inexp = null;
+    for(int i=0; i<ops.size()-1; i++ ){
+      if(inexp != null)
+        inexp = subject.pair(inexp, ops.get(i+1)).to(Operator.PLUS);
+      else 
+        inexp = subject.pair(ops.get(i), ops.get(i+1)).to(Operator.PLUS);
+    }
+    
     if(ops.size() == 1)
       return ops.get(0);
-    return null;
-//    for(int j = 0; j < ops.size(); j++){
-//       subject.pair(ops.get(j), ops.get(j+1)).to(Operator.PLUS);
-//     }
-//     
-//     return iz.infixPlus(¢) ? null : null;
+    
+    return inexp;
   }
   
   
   @Override public boolean prerequisite(final InfixExpression $) {
-    return $ != null && iz.infixPlus($); // && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
+//    System.out.println("$: " + $);
+//    System.out.println("iz.infixPlus($): " + iz.infixPlus($));
+//    System.out.println("containsZeroOperand($): " + containsZeroOperand($));
+//    System.out.println("containsPlusOperator($): " + containsPlusOperator($));
+    return $ != null && iz.infixPlus($) && containsZeroOperand($) &&
+        containsPlusOperator($);// && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
   /**
    * @param allOperands
    * @return
    */
-  private Object replacement(List<Expression> allOperands) {
+  @SuppressWarnings("static-method") private Object replacement(List<Expression> allOperands) {
     return null;
   }
 
@@ -97,9 +147,9 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     System.out.println("x:" + x);
     if (x == null)
       return $;
-    System.out.println(x.getOperator());
-    System.out.println(in(x.getOperator(), PLUS, MINUS));
-    System.out.println(in(x.getOperator(), PLUS));
+    System.out.println("x.getOperator().PLUS: " + x.getOperator().PLUS);
+    System.out.println("in(x.getOperator(), PLUS, MINUS): " + in(x.getOperator(), Operator.PLUS, Operator.MINUS));
+    System.out.println("in(x.getOperator(), PLUS): " + in(x.getOperator(), Operator.PLUS));
     if (!in(x.getOperator(), PLUS, MINUS)) {
       $.add(x);
       return $;
@@ -108,6 +158,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     gather(core(right(x)), $);
     if (x.hasExtendedOperands())
       gather(extendedOperands(x), $);
+    System.out.println(" --->> $: " + $);
     return $;
   }
 
