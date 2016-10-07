@@ -126,8 +126,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
           + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
           + "\n" //
-          + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
-          + "Tips after:\t" + ¢.get(attribute.TIPS_AFTER);
+          + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS) + "\n" //
+          + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
+          + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
