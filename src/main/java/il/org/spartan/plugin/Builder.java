@@ -24,7 +24,7 @@ public final class Builder extends IncrementalProjectBuilder {
   public static final String EMPTY_PREFIX = "";
   /** the ID under which this builder is registered */
   public static final String BUILDER_ID = "spartan.tipper";
-  private static final String MARKER_TYPE = "il.org.spartan.tip";
+  public static final String MARKER_TYPE = "il.org.spartan.tip";
   /** the key in the marker's properties map under which the type of the
    * spartanization is stored */
   public static final String SPARTANIZATION_TYPE_KEY = "il.org.spartan.spartanizer.spartanizationType";
