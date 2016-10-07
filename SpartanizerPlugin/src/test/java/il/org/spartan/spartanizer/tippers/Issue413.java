@@ -55,25 +55,6 @@ public class Issue413 {
       azzert.that(Essence.stringRemove(Essence.stringRemove(caze)), iz(caze));
   }
 
-  /** Flavor sour is for a bit tricky case */
-  @Test public void sour() {
-    azzert.that(
-        Essence.stringRemove(//
-            "\"string literal with an \\\"embedded\\\" string literal\""), //
-        iz(""));
-  }
-
-  /** Flavor vanilla is for the simplest cases */
-  @Test public void vanilla01() {
-    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
-        iz("is on"));
-  }
-
-/** Flavor vanilla is for the simplest cases */
-  @Test public void vanilla02() {
-    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
-        is("is on"));
-  }
   /** Where all not-yet working tests are.
    * <p/>
    * On the long-run, this class should loose all its members, but still remain
@@ -84,5 +65,25 @@ public class Issue413 {
     /** We only need this field, to keep Eclipse happy about the class not being
      * empty. */
     private static final long serialVersionUID = 1L;
+
+    /** Flavor sour is for a bit tricky case */
+    @Test public void sour() {
+      azzert.that(
+          Essence.stringRemove(//
+              "\"string literal with an \\\"embedded\\\" string literal\""), //
+          iz(""));
+    }
+
+    /** Flavor vanilla is for the simplest cases */
+    @Test public void vanilla01() {
+      azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
+          iz("is on"));
+    }
+
+    /** Flavor vanilla is for the simplest cases */
+    @Test public void vanilla02() {
+      azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
+          is("is on"));
+    }
   }
 }
