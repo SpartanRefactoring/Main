@@ -25,9 +25,12 @@ public class Issue404 {
   @Test public void b() {
     assert dig.class.isInterface();
   }
+
   @Test public void c() {
     assert !dig.class.isEnum();
   }
 
-
+  @Test public void d() {
+    dig.stringLiterals(null);
+  }
 }
