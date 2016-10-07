@@ -41,8 +41,6 @@ public class RefactorerUtil {
   public static String completionIndex(final List<ICompilationUnit> us, final ICompilationUnit u) {
     final String s = us.size() + "";
     String i = us.indexOf(u) + 1 + "";
-    // TODO Dan Greenstein: An empty loop again... Fix manually and create a
-    // test case with this example
     for (; i.length() < s.length();)
       i = " " + i;
     return i + "/" + s;
