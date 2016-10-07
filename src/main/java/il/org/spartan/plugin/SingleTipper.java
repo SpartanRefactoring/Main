@@ -112,6 +112,10 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public int getProgressMonitorWork(final List<ICompilationUnit> ¢) {
       return ¢.size();
     }
+
+    @Override public boolean hasDisplay() {
+      return true;
+    }
   }
 
   abstract static class Resolution extends Refactorer {
@@ -150,7 +154,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return MANY_PASSES;
     }
 
-    @SuppressWarnings("unused") private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
       try {
         return new SingleTipper<>(t.newInstance());
       } catch (InstantiationException | IllegalAccessException x) {

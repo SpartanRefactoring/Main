@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Evaluate the addition of numbers according to the following rules <br/>
  * <br/>

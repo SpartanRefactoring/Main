@@ -22,10 +22,11 @@ public final class InteractiveSpartanizer {
 
   static String read() {
     String $ = "";
-    try (Scanner s = new Scanner(System.in).useDelimiter("\n")) {
+    try (final Scanner s = new Scanner(System.in).useDelimiter("\n")) {
       for (; s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;
+      s.close();
     }
     return $;
   }

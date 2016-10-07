@@ -9,10 +9,36 @@ import org.junit.runners.*;
  * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue162 {
-  //TODO: Mateu InfixAdditionZero fail.
+  // TODO: Mateu InfixAdditionZero fail.
   @Ignore @Test public void issue162_01() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
   }
+  
+  @Ignore("addition zero") 
+  @Test public void issue162_01c() {
+    trimmingOf("0+x+y+4").gives("x+y+4").stays();
+  }
+  
+  @Ignore("addition zero") 
+  @Test public void issue162_01d() {
+    trimmingOf("0+x").gives("x").stays();
+  }
+  
+  @Ignore("addition zero") 
+  @Test public void issue162_01e() {
+    trimmingOf("x+0").gives("x").stays();
+  }
+
+  @Ignore("addition zero") 
+  @Test public void issue162_01d5() {
+    trimmingOf("0+x+3").gives("x+3").stays();
+  }
+  
+  @Ignore("addition zero") 
+  @Test public void issue162_01e2() {
+    trimmingOf("x+0+y").gives("x+y").stays();
+  }
+
 
   @Test public void issue162_02() {
     trimmingOf("\"I ate\"+(\"an\"+\" ice cream sandwich\")").gives("\"I ate\"+\"an\"+\" ice cream sandwich\"").stays();

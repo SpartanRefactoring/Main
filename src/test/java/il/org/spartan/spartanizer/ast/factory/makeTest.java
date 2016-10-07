@@ -1,15 +1,14 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.ast.factory;
 
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.create.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings("static-method") //
-public final class RestructureTest {
+public final class makeTest {
   @Test public void issue72me4xA() {
     azzert.that(make.minus(into.e("-x")), iz("x"));
   }
