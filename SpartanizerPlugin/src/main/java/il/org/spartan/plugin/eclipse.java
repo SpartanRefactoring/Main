@@ -3,6 +3,7 @@ package il.org.spartan.plugin;
 import static il.org.spartan.Utils.*;
 
 import java.awt.*;
+import java.awt.Image;
 import java.net.*;
 import java.util.*;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.resource.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.*;
@@ -33,6 +36,8 @@ public enum eclipse {
   private static final String iconAddress = "platform:/plugin/org.eclipse.compare/icons/full/wizban/applypatch_wizban.png";
   private static boolean iconInitialized;
   static ImageIcon icon;
+  private static boolean iconNonBusyInitialized;
+  static org.eclipse.swt.graphics.Image iconNonBusy;
   static final Shell parent = null;
   static final int shellStyle = SWT.TOOL;
   static final boolean takeFocusOnOpen = false;
@@ -51,8 +56,29 @@ public enum eclipse {
   }
 
   static Void announce(final Object message) {
-    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon());
+//    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon());
+    announceNonBusy(message + "");
     return null;
+  }
+
+  static MessageDialog announceNonBusy(final String message) {
+    return new MessageDialog(null, NAME, iconNonBusy(), message, MessageDialog.INFORMATION, 0) {
+      @Override protected void setShellStyle(@SuppressWarnings("unused") int __) {
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
+      }
+    };
+  }
+  
+  static ProgressMonitorDialog progressMonitorDialog(boolean openOnRun) {
+    ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+      @Override protected void setShellStyle(@SuppressWarnings("unused") int __) {
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
+      }
+    };
+    $.setBlockOnOpen(false);
+    $.setCancelable(true);
+    $.setOpenOnRun(openOnRun);
+    return $;
   }
 
   static ICompilationUnit compilationUnit(final IEditorPart ep) {
@@ -151,6 +177,19 @@ public enum eclipse {
       }
     }
     return icon;
+  }
+
+  static org.eclipse.swt.graphics.Image iconNonBusy() {
+    if (!iconNonBusyInitialized) {
+      iconNonBusyInitialized = true;
+      try {
+        iconNonBusy = new org.eclipse.swt.graphics.Image(null,
+            ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
+      } catch (final MalformedURLException x) {
+        monitor.log(x);
+      }
+    }
+    return iconNonBusy;
   }
 
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
