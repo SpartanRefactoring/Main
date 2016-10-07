@@ -165,6 +165,23 @@ public final class spartanizer {
       @Override public boolean visit(final TypeDeclaration ¢) {
         return collect(¢);
       }
+      
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        return collect(¢);
+      }
+      
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        return collect(¢);
+      }
+      
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        return collect(¢);
+      }
+      
+      @Override public boolean visit(final Initializer ¢) {
+        return collect(¢);
+      }
+    
     });
   }
 
