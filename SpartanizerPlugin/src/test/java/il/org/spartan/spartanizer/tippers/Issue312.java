@@ -51,4 +51,10 @@ public class Issue312 {
   @Test public void t18() {
     trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}").stays();
   }
+  
+  @Test public void refactorUtilBug(){
+    trimmingOf("for (; i.length() < s.length();)"
+        + "i = \" \" + i;")
+    .stays();
+  }
 }
