@@ -106,8 +106,7 @@ public final class izTest {
   }
 
   @Test public void isOneOf() {
-    final int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION };
-    azzert.that(iz.nodeTypeIn(e("this"), types), is(true));
+    azzert.that(iz.nodeTypeIn(e("this"), (new int[] { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION })), is(true));
   }
 
   @Test public void isThisFalse1() {
