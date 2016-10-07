@@ -88,21 +88,6 @@ import il.org.spartan.*;
         .gives("foo(1.*18)");
   }
 
-  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076a() {
-    trimmingOf("a*b + a*c")//
-        .gives("a*(b+c)");
-  }
-
-  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076b() {
-    trimmingOf("b*a + c*a")//
-        .gives("a*(b+c)");
-  }
-
-  @Ignore("Disabled: there is some bug in distributive rule") @Test public void issue076c() {
-    trimmingOf("b*a + c*a + d*a")//
-        .gives("a*(b+c+d)");
-  }
-
   @Test public void issue076d() {
     trimmingOf("a * (b + c)").stays();
   }
