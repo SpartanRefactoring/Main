@@ -3,7 +3,6 @@ package il.org.spartan.plugin;
 import static il.org.spartan.Utils.*;
 
 import java.awt.*;
-import java.awt.Image;
 import java.net.*;
 import java.util.*;
 import java.util.List;
@@ -56,22 +55,23 @@ public enum eclipse {
   }
 
   static Void announce(final Object message) {
-//    JOptionPane.showMessageDialog(null, message, NAME, JOptionPane.INFORMATION_MESSAGE, icon());
+    // JOptionPane.showMessageDialog(null, message, NAME,
+    // JOptionPane.INFORMATION_MESSAGE, icon());
     announceNonBusy(message + "");
     return null;
   }
 
   static MessageDialog announceNonBusy(final String message) {
     return new MessageDialog(null, NAME, iconNonBusy(), message, MessageDialog.INFORMATION, 0) {
-      @Override protected void setShellStyle(@SuppressWarnings("unused") int __) {
+      @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
     };
   }
-  
-  static ProgressMonitorDialog progressMonitorDialog(boolean openOnRun) {
-    ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
-      @Override protected void setShellStyle(@SuppressWarnings("unused") int __) {
+
+  static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
+    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+      @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
       }
     };
