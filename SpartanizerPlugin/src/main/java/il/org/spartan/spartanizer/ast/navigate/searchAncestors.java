@@ -77,8 +77,7 @@ public abstract class searchAncestors {
     // TODO: Alex: Polish this loop manually and add a test case for future
     // generations
     ASTNode $ = from(n);
-    // TODO Dan Greenstein: fix this empty loop, created by buggy tipper.
-    for (ASTNode p = $; p != null; p = from(p), $ = p)
+    for (ASTNode p = $; p != null; $ = p,p = from(p))
       ;
     return $;
   }
