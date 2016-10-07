@@ -52,8 +52,9 @@ public class SpartanMovie extends AbstractHandler {
                   ++filesModified;
                   counterInitialized = true;
                 }
-                pm.subTask("Working on " + file.getName());
                 IMarker marker = getFirstMarker(markers);
+                pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
+                    + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
                 IDE.openEditor(page, marker, true);
                 refresh(page);
                 sleep(SLEEP_BETWEEN);
@@ -119,9 +120,9 @@ public class SpartanMovie extends AbstractHandler {
 
   static void moveProgressDialog() {
     Shell s = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-    Composite c = s == null ? null : s.getParent();
-    if (s != null && c != null)
-      s.setLocation(c.getSize().x - s.getBounds().width, 0);
+    Shell p = s == null ? null : s.getParent().getShell();
+    if (s != null && p != null)
+      s.setLocation(p.getBounds().x + p.getBounds().width - s.getBounds().width, p.getBounds().y);
   }
 
   @SuppressWarnings("boxing") static IMarker getFirstMarker(IMarker[] ¢) {
