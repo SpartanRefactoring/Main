@@ -64,10 +64,16 @@ public class Issue413 {
   }
 
   /** Flavor vanilla is for the simplest cases */
-  @Test public void vanilla() {
-    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), iz("is on"));
+  @Test public void vanilla01() {
+    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
+        iz("is on"));
   }
 
+/** Flavor vanilla is for the simplest cases */
+  @Test public void vanilla02() {
+    azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
+        is("is on"));
+  }
   /** Where all not-yet working tests are.
    * <p/>
    * On the long-run, this class should loose all its members, but still remain
