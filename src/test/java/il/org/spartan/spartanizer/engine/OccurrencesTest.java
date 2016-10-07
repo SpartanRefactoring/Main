@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.spartanizations.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** @author Yossi Gil
  * @since 2014-08-25 */

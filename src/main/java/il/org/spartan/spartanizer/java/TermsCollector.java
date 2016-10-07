@@ -8,8 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import il.org.spartan.spartanizer.ast.create.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Collects the {@link Term} found in an {@link InfixExpression}, organizing
  * them in three output fields: {@link #plus}, {@link #minus} and {@link #all}.
