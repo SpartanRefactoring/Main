@@ -47,9 +47,9 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
     final ConditionalExpression $ = subject.pair(core(x.getElseExpression()), core(x.getThenExpression())).toCondition(make.notOf(x.getExpression()));
     final Expression then = $.getElseExpression();
     final Expression elze = $.getThenExpression();
-    if (!iz.conditional(then) && iz.conditional(elze))
+    if (!iz.conditionalExpression(then) && iz.conditionalExpression(elze))
       return null;
-    if (iz.conditional(then) && !iz.conditional(elze))
+    if (iz.conditionalExpression(then) && !iz.conditionalExpression(elze))
       return $;
     final ConditionalExpression parent = az.conditionalExpression(x.getParent());
     if (parent != null && parent.getElseExpression() == x && compatibleCondition(parent.getExpression(), x.getExpression())) {
