@@ -64,7 +64,7 @@ public class Issue413 {
   static class WorkInProgress {
     /** We only need this field, to keep Eclipse happy about the class not being
      * empty. */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
 
     /** Flavor sour is for a bit tricky case */
     @Test public void sour() {
