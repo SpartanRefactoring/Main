@@ -216,8 +216,7 @@ public interface iz {
   }
 
   static boolean containsOperator(final ASTNode ¢) {
-    final int[] types = { ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT };
-    return nodeTypeIn(¢, types);
+    return nodeTypeIn(¢, new int[] { ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT });
   }
 
   /** Check whether the operator of an expression is susceptible for applying
@@ -678,8 +677,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean numericLiteral(final Expression ¢) {
-    final int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL };
-    return iz.nodeTypeIn(¢, types);
+    return iz.nodeTypeIn(¢, (new int[] { CHARACTER_LITERAL, NUMBER_LITERAL }));
   }
 
   static boolean parenthesizedExpression(final Expression ¢) {
@@ -737,8 +735,7 @@ public interface iz {
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer */
   static boolean sequencer(final ASTNode ¢) {
-    final int[] types = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
-    return iz.nodeTypeIn(¢, types);
+    return iz.nodeTypeIn(¢, (new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT }));
   }
 
   /** Checks if expression is simple.
@@ -808,8 +805,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
    *         statement */
   static boolean thisOrNull(final Expression ¢) {
-    final int[] types = { NULL_LITERAL, THIS_EXPRESSION };
-    return iz.nodeTypeIn(¢, types);
+    return iz.nodeTypeIn(¢, (new int[] { NULL_LITERAL, THIS_EXPRESSION }));
   }
 
   static boolean tryStatement(final ASTNode ¢) {
