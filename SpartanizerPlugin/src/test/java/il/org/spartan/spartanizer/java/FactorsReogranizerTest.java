@@ -40,54 +40,6 @@ import il.org.spartan.*;
     azzert.that(FactorsReorganizer.simplify(i("a / (c /d)")), iz("a * d /c"));
   }
 
-  @Ignore("no similar case fo multification") @Test public void test08() {
-    azzert.that(FactorsReorganizer.simplify(i("a + -a")), iz("a - a"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test09() {
-    azzert.that(FactorsReorganizer.simplify(i("+a + +a")), iz("a + a"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test10() {
-    azzert.that(FactorsReorganizer.simplify(i("a - -b")), iz("a + b"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test11() {
-    azzert.that(FactorsReorganizer.simplify(i("a + - - (b + c)")), iz("a + b + c"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test12() {
-    azzert.that(FactorsReorganizer.simplify(i("a + + - - - (b -c)")), iz("a +c -b"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test13() {
-    azzert.that(FactorsReorganizer.simplify(i("-a + + - - - (b -c)")), iz("c -a -b"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test14() {
-    azzert.that(FactorsReorganizer.simplify(i("-a + + - - - (b -(-c))")), iz(" -a -b-c"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test15() {
-    azzert.that(FactorsReorganizer.simplify(i("-a-b")), iz("-a-b"));
-  }
-
-  @Test public void test16() {
-    azzert.that(FactorsReorganizer.simplify(i("x/a/b")), iz("x/a/b"));
-  }
-
-  @Test public void test17() {
-    azzert.that(FactorsReorganizer.simplify(i("x/a/b * y")), iz("x * y/a/b"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test18() {
-    azzert.that(FactorsReorganizer.simplify(i("(-(x-a))-+ + (y -b)")), iz("a + b-x-y"));
-  }
-
-  @Ignore("no similar case fo multification") @Test public void test19() {
-    azzert.that(FactorsReorganizer.simplify(i("a-b*c - (x - - - (d*e))")), iz("a + d*e - b*c -x"));
-  }
-
   @Test public void test20() {
     azzert.that(FactorsReorganizer.simplify(i("a/(b+c)")), iz("a / (b+c)"));
   }
