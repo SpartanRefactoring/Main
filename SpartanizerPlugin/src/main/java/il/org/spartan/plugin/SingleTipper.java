@@ -8,6 +8,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -55,9 +56,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public List<ICompilationUnit> getTargetCompilationUnits() {
       return Collections.singletonList(eclipse.currentCompilationUnit());
     }
-    
+
     private static InDeclaration instance;
-    
+
     public static InDeclaration instance() {
       if (instance == null)
         instance = new InDeclaration();
@@ -80,9 +81,9 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public List<ICompilationUnit> getTargetCompilationUnits() {
       return Collections.singletonList(eclipse.currentCompilationUnit());
     }
-    
+
     private static InFile instance;
-    
+
     public static InFile instance() {
       if (instance == null)
         instance = new InFile();
@@ -111,13 +112,22 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       }
     }
 
+    /** [[SuppressWarningsSpartan]] */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
-      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + getCUsCount(¢) + " files";
+      int cs = getCUsCount(¢);
+      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
+          + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
+    /** [[SuppressWarningsSpartan]] */
     @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
-      return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + ", " + getChangesCount(¢) + " files spartanized in "
-          + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES));
+      int cs = getChangesCount(¢);
+      return //
+      "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
+          + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
+          + "\n" //
+          + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
+          + "Tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
@@ -132,9 +142,17 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public boolean hasDisplay() {
       return true;
     }
-    
+
+    @Override public IRunnableWithProgress initialWork(final GUI$Applicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
+      return countTipsInProject(a, us, m, attribute.TIPS_BEFORE);
+    }
+
+    @Override public IRunnableWithProgress finalWork(final GUI$Applicator a, final List<ICompilationUnit> us, final Map<attribute, Object> m) {
+      return countTipsInProject(a, us, m, attribute.TIPS_AFTER);
+    }
+
     private static InProject instance;
-    
+
     public static InProject instance() {
       if (instance == null)
         instance = new InProject();
