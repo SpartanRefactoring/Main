@@ -3,7 +3,7 @@
 - Offers in the problems view tips for simplifying your code 
 - Batch laconize a function, file and project 
 
-![spartanization]([GIF])
+![spartanization](https://cloud.githubusercontent.com/assets/15183108/19212649/59d65e3e-8d5e-11e6-9940-ac7a070be7d6.gif)
 
 # Installation
 - Installation button (drag to your eclipse workspace)
