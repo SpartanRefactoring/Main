@@ -17,7 +17,6 @@ import org.eclipse.ui.*;
  * @author Ori Roth
  * @since 2016 */
 @SuppressWarnings("static-method") public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
-
   public static final attribute UNKNOWN = attribute.UNKNOWN;
 
   /** Used to collect attributes from a Refactorer's run, used later in printing
