@@ -38,7 +38,6 @@ public class SpartanMovie extends AbstractHandler {
       progressService.run(false, true, new IRunnableWithProgress() {
         @Override public void run(final IProgressMonitor pm) {
           moveProgressDialog();
-          pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
           int changes = 0;
           int filesModified = 0;
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
@@ -53,8 +52,9 @@ public class SpartanMovie extends AbstractHandler {
                   counterInitialized = true;
                 }
                 IMarker marker = getFirstMarker(markers);
-                pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
-                    + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+                pm.beginTask(headLine(file, currentCompilationUnit), IProgressMonitor.UNKNOWN);
+                pm.subTask("Current tip:\t" + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName() + "\n" //
+                    + "Current node:\t" + eclipse.getNodeByMarker(currentCompilationUnit, marker).getClass().getSimpleName());
                 IDE.openEditor(page, marker, true);
                 refresh(page);
                 sleep(SLEEP_BETWEEN);
@@ -136,5 +136,9 @@ public class SpartanMovie extends AbstractHandler {
         break;
       }
     return ¢[$];
+  }
+
+  static String headLine(IFile f, ICompilationUnit u) {
+    return NAME + ": Laconizing " + u.getResource().getProject().getName() + " ~ " + f.getName();
   }
 }
