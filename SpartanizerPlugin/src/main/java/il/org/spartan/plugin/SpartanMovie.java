@@ -38,7 +38,6 @@ public class SpartanMovie extends AbstractHandler {
       progressService.run(false, true, new IRunnableWithProgress() {
         @Override public void run(final IProgressMonitor pm) {
           moveProgressDialog();
-          pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
           int changes = 0;
           int filesModified = 0;
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
@@ -52,8 +51,10 @@ public class SpartanMovie extends AbstractHandler {
                   ++filesModified;
                   counterInitialized = true;
                 }
-                pm.subTask("Working on " + file.getName());
                 IMarker marker = getFirstMarker(markers);
+                pm.beginTask(headLine(file, currentCompilationUnit), IProgressMonitor.UNKNOWN);
+                pm.subTask("Current tip:\t" + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName() + "\n" //
+                    + "Current node:\t" + eclipse.getNodeByMarker(currentCompilationUnit, marker).getClass().getSimpleName());
                 IDE.openEditor(page, marker, true);
                 refresh(page);
                 sleep(SLEEP_BETWEEN);
@@ -119,9 +120,9 @@ public class SpartanMovie extends AbstractHandler {
 
   static void moveProgressDialog() {
     Shell s = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-    Composite c = s == null ? null : s.getParent();
-    if (s != null && c != null)
-      s.setLocation(c.getSize().x - s.getBounds().width, 0);
+    Shell p = s == null ? null : s.getParent().getShell();
+    if (s != null && p != null)
+      s.setLocation(p.getBounds().x + p.getBounds().width - s.getBounds().width, p.getBounds().y);
   }
 
   @SuppressWarnings("boxing") static IMarker getFirstMarker(IMarker[] ¢) {
@@ -135,5 +136,9 @@ public class SpartanMovie extends AbstractHandler {
         break;
       }
     return ¢[$];
+  }
+
+  static String headLine(IFile f, ICompilationUnit u) {
+    return NAME + ": Laconizing " + u.getResource().getProject().getName() + " ~ " + f.getName();
   }
 }
