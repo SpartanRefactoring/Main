@@ -6,7 +6,7 @@ import org.junit.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-@SuppressWarnings("static-method")//
+@SuppressWarnings("static-method") //
 public class TestFactoryTest {
   Object o = TipperFactory.tipper("", "", "");
 
