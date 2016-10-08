@@ -43,8 +43,11 @@ import org.junit.runners.*;
   }
 
   @Test public void b$07() {
-    trimmingOf("public static void go(final Stringssss ssss[]) {  \n" + "for (final Stringssss a : ssss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}")
-        .gives("public static void go(final Stringssss ss[]) {  \n" + "for (final Stringssss a : ss) \n" + "out(a);  \n" + "out(\"elements\");   \n" + "}").stays();
+    trimmingOf("public static void go(final Stringssss ssss[]) {  \n" + "for (final Stringssss a : ssss) \n" + "out(a);  \n"
+        + "out(\"elements\");   \n" + "}")
+            .gives("public static void go(final Stringssss ss[]) {  \n" + "for (final Stringssss a : ss) \n" + "out(a);  \n"
+                + "out(\"elements\");   \n" + "}")
+            .stays();
   }
 
   @Test public void b$08() {
