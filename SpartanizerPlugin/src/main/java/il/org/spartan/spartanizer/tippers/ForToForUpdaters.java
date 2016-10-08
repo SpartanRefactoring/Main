@@ -45,13 +45,12 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
         : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean bodyDeclaresElementsOf(final ASTNode ¢) {
-    final Block body = az.block(¢.getParent());
+  public static boolean bodyDeclaresElementsOf(final ASTNode n) {
+    final Block body = az.block(n.getParent());
     if (body == null)
       return false;
-    for (final VariableDeclarationFragment f : extract.fragments(body))
-      if (!Collect.usesOf(f.getName()).in(¢).isEmpty())
+    for (final VariableDeclarationFragment ¢ : extract.fragments(body))
+      if (!Collect.usesOf(¢.getName()).in(n).isEmpty())
         return true;
     return false;
   }

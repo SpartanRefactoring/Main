@@ -875,16 +875,15 @@ public interface iz {
     return nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean variableNotUsedAfterStatement(final Statement ¢, final SimpleName n) {
-    final Block b = az.block(¢.getParent());
+  static boolean variableNotUsedAfterStatement(final Statement s, final SimpleName n) {
+    final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is null";
     final List<Statement> statements = step.statements(b);
     boolean passedFor = false;
-    for (final Statement s : statements) {
-      if (passedFor && !Collect.usesOf(n).in(s).isEmpty())
+    for (final Statement ¢ : statements) {
+      if (passedFor && !Collect.usesOf(n).in(¢).isEmpty())
         return false;
-      if (s.equals(¢))
+      if (¢.equals(s))
         passedFor = true;
     }
     return true;

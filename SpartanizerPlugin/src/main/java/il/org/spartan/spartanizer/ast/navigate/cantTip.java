@@ -23,39 +23,35 @@ public enum cantTip {
     return f == null || new DeclarationInitializerStatementTerminatingScope().cantTip(f);
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean declarationRedundantInitializer(final ForStatement ¢) {
-    for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
-      if (new DeclarationRedundantInitializer().canTip(f))
+  public static boolean declarationRedundantInitializer(final ForStatement s) {
+    for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s)))
+      if (new DeclarationRedundantInitializer().canTip(¢))
         return false;
     return true;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean declarationRedundantInitializer(final WhileStatement ¢) {
-    for (final VariableDeclarationFragment f : extract.fragments(step.body(¢)))
-      if (new DeclarationRedundantInitializer().canTip(f))
+  public static boolean declarationRedundantInitializer(final WhileStatement s) {
+    for (final VariableDeclarationFragment ¢ : extract.fragments(step.body(s)))
+      if (new DeclarationRedundantInitializer().canTip(¢))
         return false;
     return true;
   }
 
-  public static boolean forRenameInitializerToCent(final ForStatement ¢) {
-    final VariableDeclarationExpression e = az.variableDeclarationExpression(¢);
+  public static boolean forRenameInitializerToCent(final ForStatement s) {
+    final VariableDeclarationExpression e = az.variableDeclarationExpression(s);
     return e == null || new ForRenameInitializerToCent().cantTip(e);
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean remvoeRedundantIf(final ForStatement ¢) {
-    for (final IfStatement s : extract.ifStatements(step.body(¢)))
-      if (new RemoveRedundantIf().canTip(s))
+  public static boolean remvoeRedundantIf(final ForStatement s) {
+    for (final IfStatement ¢ : extract.ifStatements(step.body(s)))
+      if (new RemoveRedundantIf().canTip(¢))
         return false;
     return true;
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  public static boolean remvoeRedundantIf(final WhileStatement ¢) {
-    for (final IfStatement s : extract.ifStatements(step.body(¢)))
-      if (new RemoveRedundantIf().canTip(s))
+  public static boolean remvoeRedundantIf(final WhileStatement s) {
+    for (final IfStatement ¢ : extract.ifStatements(step.body(s)))
+      if (new RemoveRedundantIf().canTip(¢))
         return false;
     return true;
   }
