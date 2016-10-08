@@ -166,7 +166,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    for (attribute ¢ : attribute.values())
+    for (final attribute ¢ : attribute.values())
       $.put(¢, UNKNOWN);
     return $;
   }
@@ -202,9 +202,9 @@ import il.org.spartan.spartanizer.dispatch.*;
           for (final ICompilationUnit u : currentCompilationUnits) {
             if (pm.isCanceled())
               break;
-            GUI$Applicator a = new Trimmer();
+            final GUI$Applicator a = new Trimmer();
             pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
-            int tipsCommited = a.fuzzyImplementationApply(u, a.getSelection());
+            final int tipsCommited = a.fuzzyImplementationApply(u, a.getSelection());
             totalTips += tipsCommited;
             (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
             (a.fuzzyImplementationApply(u, a.getSelection()) != 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
