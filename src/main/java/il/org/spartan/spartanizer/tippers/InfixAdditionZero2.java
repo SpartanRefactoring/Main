@@ -58,20 +58,17 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     final List<Operator> allOperators = extract.allOperators(¢);
     final List<Expression> ops = extract.allOperands(¢);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int i = 0; i < ops.size(); i++) {
-      final Expression ¢2 = ops.get(i);
-      if (!iz.literal0(¢2))
+    for (int i = 0; i < ops.size(); ++i) {
+      if (!iz.literal0(ops.get(i)))
         ops2.add(ops.get(i));
     }
-    InfixExpression inexp = null;
+    InfixExpression $ = null;
     for (int i = 0; i < ops2.size() - 1; i++)
-      if (inexp != null)
-        inexp = subject.pair(inexp, ops2.get(i + 1)).to(Operator.PLUS);
+      if ($ != null)
+        $ = subject.pair($, ops2.get(i + 1)).to(Operator.PLUS);
       else
-        inexp = subject.pair(ops2.get(i), ops2.get(i + 1)).to(Operator.PLUS);
-    if (ops2.size() == 1)
-      return ops2.get(0);
-    return inexp;
+        $ = subject.pair(ops2.get(i), ops2.get(i + 1)).to(Operator.PLUS);
+    return ops2.size() != 1 ? $ : ops2.get(0);
   }
 
   @SuppressWarnings("static-method") private boolean containsZeroOperand(final InfixExpression ¢) {
@@ -82,10 +79,9 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  @SuppressWarnings("static-method") private boolean containsPlusOperator(final InfixExpression ¢) {
-    final List<Operator> allOperators = extract.allOperators(¢);
-    for (final Operator optor : allOperators)
-      if (optor == Operator.PLUS)
+  @SuppressWarnings("static-method") private boolean containsPlusOperator(final InfixExpression e) {
+    for (final Operator o : extract.allOperators(e))
+      if (o == Operator.PLUS)
         return true;
     return false;
   }
