@@ -24,9 +24,9 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           // fixers.applyFunction(), //
           SingleTipper.InDeclaration.instance(), //
           // fixers.applyFile(), //
-          // SingleTipper.InFile.instance(), //
+           SingleTipper.InFile.instance(), //
           // fixers.applyProject(), //
-          // SingleTipper.InProject.instance(), //
+           SingleTipper.InProject.instance(), //
           fixers.disableFunctionFix(), //
           fixers.disableClassFix(), //
           fixers.disableFileFix() };//
