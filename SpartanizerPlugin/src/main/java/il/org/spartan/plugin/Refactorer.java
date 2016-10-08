@@ -13,17 +13,20 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
+
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
  * @since 2016 */
 @SuppressWarnings("static-method") public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
+  public static final attribute UNKNOWN = attribute.UNKNOWN;
+
   /** Used to collect attributes from a Refactorer's run, used later in printing
    * actions (such as {@link eclipse#announce}) */
   enum attribute {
-    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER
+    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER, UNKNOWN
   }
-
-  public static final String UNKNOWN = "???";
+  // public static final String UNKNOWN = "???";
 
   /** @return true iff the refactorer is a handler */
   public static boolean isHandler() {
@@ -163,7 +166,7 @@ import org.eclipse.ui.*;
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    for (attribute ¢ : attribute.values())
+    for (final attribute ¢ : attribute.values())
       $.put(¢, UNKNOWN);
     return $;
   }
@@ -196,13 +199,15 @@ import org.eclipse.ui.*;
             finish(pm);
             break;
           }
-          for (final ICompilationUnit currentCompilationUnit : currentCompilationUnits) {
+          for (final ICompilationUnit u : currentCompilationUnits) {
             if (pm.isCanceled())
               break;
-            pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, currentCompilationUnit));
-            int tipsCommited = a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection());
+            final GUI$Applicator a = new Trimmer();
+            pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
+            final int tipsCommited = a.fuzzyImplementationApply(u, a.getSelection());
             totalTips += tipsCommited;
-            (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(currentCompilationUnit);
+            (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
+            (a.fuzzyImplementationApply(u, a.getSelection()) != 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
             pm.worked(1);
           }
         }
@@ -226,7 +231,6 @@ import org.eclipse.ui.*;
     if (¢ == null)
       return null;
     final MessageDialog $ = eclipse.announceNonBusy(¢);
-    $.setBlockOnOpen(false);
     $.open();
     return $;
   }

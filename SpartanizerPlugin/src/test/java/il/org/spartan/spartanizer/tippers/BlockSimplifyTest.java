@@ -1,28 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.apply;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Unit tests for {@link NameYourClassHere}
  * @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method",
-    "javadoc" }) public final class BlockSimplifyTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class BlockSimplifyTest {
   @Test public void complexEmpty0() {
     trimmingOf("{;}").gives("/* empty */    ");
   }
@@ -48,28 +34,23 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void complexSingleton() {
-    trimmingOf("{;{{;;return b; }}}")
-    .gives("return b;");
+    trimmingOf("{;{{;;return b; }}}").gives("return b;");
   }
 
   @Test public void deeplyNestedReturn() {
-    trimmingOf("{{{;return c;};;};}")
-    .gives("return c;");
+    trimmingOf("{{{;return c;};;};}").gives("return c;");
   }
 
   @Test public void empty() {
-    trimmingOf("{;;}")
-    .gives("");
+    trimmingOf("{;;}").gives("");
   }
 
   @Test public void emptySimpler() {
-    trimmingOf("{;}")
-    .gives("");
+    trimmingOf("{;}").gives("");
   }
 
   @Test public void emptySimplest() {
-    trimmingOf("{}")
-    .gives("");
+    trimmingOf("{}").gives("");
   }
 
   @Test public void expressionVsExpression() {
@@ -156,7 +137,6 @@ import il.org.spartan.spartanizer.utils.*;
   }
 
   @Test public void threeStatements() {
-    trimmingOf("{i++;{{;;return b; }}j++;}")
-    .gives("i++;return b;j++;");
+    trimmingOf("{i++;{{;;return b; }}j++;}").gives("i++;return b;j++;");
   }
 }

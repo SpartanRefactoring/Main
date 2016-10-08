@@ -21,7 +21,8 @@ public class RefactorerUtil {
   @SuppressWarnings({ "rawtypes", "unchecked" }) public static String getTipperName(final Map<attribute, Object> ¢) {
     if (Refactorer.UNKNOWN.equals(¢.get(attribute.TIPPER)))
       try {
-        ¢.put(attribute.TIPPER, ((Class<? extends Tipper>) ((IMarker) ¢.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+        ¢.put(attribute.TIPPER,
+            ((Class<? extends Tipper>) ((IMarker) ¢.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
       } catch (final CoreException x) {
         monitor.log(x);
         ¢.put(attribute.TIPPER, "tip");
@@ -60,12 +61,12 @@ public class RefactorerUtil {
 
   /** [[SuppressWarningsSpartan]] */
   public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final GUI$Applicator __, final List<ICompilationUnit> us,
-      final Map<attribute, Object> m, attribute t) {
+      final Map<attribute, Object> m, final attribute t) {
     if (us.isEmpty())
       return null;
     final Trimmer tr = new Trimmer();
     return new IRunnableWithProgress() {
-      @SuppressWarnings("boxing") @Override public void run(IProgressMonitor pm) {
+      @SuppressWarnings("boxing") @Override public void run(final IProgressMonitor pm) {
         pm.beginTask("Counting tips in " + us.get(0).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
         tr.setICompilationUnit(us.get(0));
         m.put(t, tr.countTips());
