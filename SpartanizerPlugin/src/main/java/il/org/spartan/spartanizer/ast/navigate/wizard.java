@@ -365,15 +365,14 @@ public interface wizard {
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * <p>
-   * XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]]
    * @param ¢ JD
    * @param xs JD */
-  static void removeAll(final boolean b, final List<Expression> xs) {
+  static void removeAll(final boolean ¢, final List<Expression> xs) {
     for (;;) {
-      final Expression ¢ = find(b, xs);
-      if (¢ == null)
+      final Expression x = find(¢, xs);
+      if (x == null)
         return;
-      xs.remove(¢);
+      xs.remove(x);
     }
   }
 

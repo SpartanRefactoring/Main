@@ -24,13 +24,10 @@ import il.org.spartan.spartanizer.utils.*;
   private LinkedHashSet<Entry<String, Information>> s;
 
   // Primitive, manual tests, to root out the rough bugs.
-  /** [[SuppressWarningsSpartan]] */
   @Test public void declaresDownMethodDeclaration01() {
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(new Document("class A {\n"//
-        + "void foo(int a, int b){}\n"//
-        + "}"));
-    for (final Entry<String, Information> e : Environment.declaresDown($))
-      assert ".A.foo.a".equals(e.getKey()) || ".A.foo.b".equals(e.getKey());
+    for (final Entry<String, Information> ¢ : Environment
+        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A {\n" + "void foo(int a, int b){}\n" + "}"))))
+      assert ".A.foo.a".equals(¢.getKey()) || ".A.foo.b".equals(¢.getKey());
   }
 
   @Test public void declaresDownMethodDeclaration02() {

@@ -112,23 +112,21 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       }
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
-      int cs = getCUsCount(¢);
-      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
-          + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
+    @Override public String getOpeningMessage(final Map<attribute, Object> a) {
+      int cs = getCUsCount(a);
+      return "Applying " + getTipperName(a) + " to " + projectName(a) + " with " + cs + " " + plurals("file", cs) + "\n" //
+          + "Tips before:\t" + a.get(attribute.TIPS_BEFORE);
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
-      int cs = getChangesCount(¢);
+    @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> a) {
+      int cs = getChangesCount(a);
       return //
-      "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
-          + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
+      "Done applying " + getTipperName(a) + " to " + projectName(a) + "\n" //
+          + cs + " " + plurals("file", cs) + " spartanized in " + a.get(attribute.PASSES) + " " + plurales("pass", (int) a.get(attribute.PASSES))
           + "\n" //
-          + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS) + "\n" //
-          + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
-          + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
+          + "Tips commited:\t" + a.get(attribute.TOTAL_TIPS) + "\n" //
+          + "Total tips before:\t" + a.get(attribute.TIPS_BEFORE) + "\n" //
+          + "Total tips after:\t" + a.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,

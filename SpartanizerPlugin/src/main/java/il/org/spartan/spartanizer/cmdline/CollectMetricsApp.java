@@ -73,12 +73,10 @@ public final class CollectMetricsApp implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   private static void copyFile(final File source, final File target) throws IOException {
     try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(target)) {
-      final byte[] buf = new byte[1024];
-      for (final int length = in.read(buf); length > 0;)
-        out.write(buf, 0, length);
+      for (final int length = in.read((new byte[1024])); length > 0;)
+        out.write((new byte[1024]), 0, length);
     }
   }
 

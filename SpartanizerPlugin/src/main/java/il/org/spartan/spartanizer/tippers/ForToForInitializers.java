@@ -70,17 +70,16 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return duplicate.of(step.left(from));
   }
 
-  /** XXX: This is a bug in autospartanization [[SuppressWarningsSpartan]] */
   public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> operands = hop.operands(from);
-    for (final Expression ¢¢ : operands)
-      if (iz.parenthesizedExpression(¢¢) && iz.assignment(az.parenthesizedExpression(¢¢).getExpression())) {
-        final Assignment a = az.assignment(az.parenthesizedExpression(¢¢).getExpression());
+    for (final Expression x : operands)
+      if (iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())) {
+        final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
         final SimpleName var = az.simpleName(step.left(a));
-        for (final VariableDeclarationFragment f : fragments(s))
-          if ((f.getName() + "").equals(var + "")) {
-            f.setInitializer(duplicate.of(step.right(a)));
-            operands.set(operands.indexOf(¢¢), ¢¢.getAST().newSimpleName(var + ""));
+        for (final VariableDeclarationFragment ¢ : fragments(s))
+          if ((¢.getName() + "").equals(var + "")) {
+            ¢.setInitializer(duplicate.of(step.right(a)));
+            operands.set(operands.indexOf(x), x.getAST().newSimpleName(var + ""));
           }
       }
     return subject.append(subject.pair(operands.get(0), operands.get(1)).to(from.getOperator()), chop(chop(operands)));
