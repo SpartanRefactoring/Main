@@ -3,6 +3,8 @@
 - Offers in the problems view tips for simplifying your code 
 - Batch laconize a function, file and project 
 
+![spartanization](https://cloud.githubusercontent.com/assets/15183108/19212649/59d65e3e-8d5e-11e6-9940-ac7a070be7d6.gif)
+
 # Installation
 - Installation button (drag to your eclipse workspace)
 <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2617709" class="drag" title="Drag to your running Eclipse workspace to install Spartan Refactoring"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install Spartan Refactoring" /></a>
@@ -126,4 +128,3 @@ The project is available under the **[MIT License]**
 [abstract syntax tree]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
 [ASTVisitor]: http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.jdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fjdt%2Fcore%2Fdom%2FASTVisitor.html
 [MIT License]: https://opensource.org/licenses/MIT
-
