@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
+ * @author Ori Roth
+ * @author Yossi Gil
  * @since 2015/08/01 */
 public final class LaconizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
@@ -24,6 +26,7 @@ public final class LaconizeProject extends BaseHandler {
   final List<ICompilationUnit> todo = new ArrayList<>();
   private int initialCount;
   private final List<ICompilationUnit> dead = new ArrayList<>();
+  private int passNumber;
 
   /** Returns the number of spartanization tips for a compilation unit
    * @param u JD
@@ -62,55 +65,58 @@ public final class LaconizeProject extends BaseHandler {
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");
     eclipse.announce(status);
-    final GUI$Applicator a = new Trimmer();
-    int i;
-    final IWorkbench wb = PlatformUI.getWorkbench();
-    for (i = 0; i < MAX_PASSES; ++i) {
-      final IProgressService ps = wb.getProgressService();
-      final AtomicInteger passNum = new AtomicInteger(i + 1);
-      final AtomicBoolean cancelled = new AtomicBoolean(false);
-      try {
-        ps.run(true, true, pm -> {
-          // a.setProgressMonitor(pm);
-          pm.beginTask(
-              "Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
-              todo.size());
-          int n = 0;
-          for (final ICompilationUnit ¢ : todo) {
-            if (pm.isCanceled()) {
-              cancelled.set(true);
-              break;
-            }
-            pm.worked(1);
-            pm.subTask("Compilation unit #" + ++n + "/" + todo.size() + " (" + ¢.getElementName() + ")");
-            if (!a.apply(¢))
-              dead.add(¢);
-          }
-          if (!dead.isEmpty())
-            status.append(dead.size() + " CUs did not change; will not be processed further\n");
-          todo.removeAll(dead);
-          dead.clear();
-          pm.done();
-        });
-      } catch (final InvocationTargetException x) {
-        monitor.logEvaluationError(this, x);
-      } catch (final InterruptedException x) {
-        monitor.logEvaluationError(this, x);
-      }
-      if (cancelled.get() || todo.isEmpty())
-        break;
-    }
+    manyPasses();
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int finalCount = countTips();
     return eclipse.announce(//
-        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + //
-            "Completed in " + (1 + i) + " passes. \n" + //
-            (i < MAX_PASSES ? "" : "   === too many passes\n") + //
-            "Tips followed: " + (initialCount - finalCount) + "\n" + //
-            "Tips before: " + initialCount + "\n" + //
-            "Tips after: " + finalCount + "\n" //
-    );
+        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
+            + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - finalCount) + "\n" + "Tips before: "
+            + initialCount + "\n" + "Tips after: " + finalCount + "\n");
+  }
+
+  final IWorkbench workench = PlatformUI.getWorkbench();
+
+  void manyPasses() {
+    for (passNumber = 1;; ++passNumber)
+      if (passNumber >= MAX_PASSES || singlePass())
+        return;
+  }
+
+  boolean singlePass() {
+    final Trimmer t = new Trimmer();
+    final IProgressService ps = workench.getProgressService();
+    final AtomicInteger passNum = new AtomicInteger(passNumber + 1);
+    final AtomicBoolean cancelled = new AtomicBoolean(false);
+    try {
+      ps.run(true, true, pm -> {
+        pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
+            todo.size());
+        int n = 0;
+        for (final ICompilationUnit ¢ : todo) {
+          if (pm.isCanceled()) {
+            cancelled.set(true);
+            break;
+          }
+          pm.worked(1);
+          pm.subTask("Compilation unit #" + ++n + "/" + todo.size() + " (" + ¢.getElementName() + ")");
+          if (!t.apply(¢))
+            dead.add(¢);
+        }
+        if (!dead.isEmpty())
+          status.append(dead.size() + " CUs did not change; will not be processed further\n");
+        todo.removeAll(dead);
+        dead.clear();
+        pm.done();
+      });
+    } catch (final InvocationTargetException x) {
+      monitor.logEvaluationError(this, x);
+      return true;
+    } catch (final InterruptedException x) {
+      monitor.logEvaluationError(this, x);
+      return true;
+    }
+    return cancelled.get() || todo.isEmpty();
   }
 
   public void start() {
