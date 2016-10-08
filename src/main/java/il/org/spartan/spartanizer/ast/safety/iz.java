@@ -873,7 +873,7 @@ public interface iz {
 
   static boolean variableNotUsedAfterStatement(final Statement s, final SimpleName n) {
     final Block b = az.block(s.getParent());
-    assert b != null : "For loop's parent is null";
+    assert b != null : "For loop's parent is not a block";
     final List<Statement> statements = step.statements(b);
     boolean passedFor = false;
     for (final Statement ¢ : statements) {

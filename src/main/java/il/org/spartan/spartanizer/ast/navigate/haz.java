@@ -26,17 +26,16 @@ public enum haz {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
 
-  public static boolean cent(ASTNode n) {
-    //return Collect.usesOf(new ).in(n).isEmpty();
-    return false;
-  }
-  
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return !extract.annotations(¢).isEmpty();
   }
-
+  
   static boolean binding(final ASTNode ¢) {
     return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
+  }
+
+  public static boolean cent(ASTNode ¢) {
+    return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a
