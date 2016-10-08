@@ -754,10 +754,6 @@ import il.org.spartan.spartanizer.engine.type.*;
       azzert.that(of((Expression) lisp.first(fs.updaters())), is(NUMERIC));
     }
 
-    @Ignore("cancled to avoid harming tests, see issue #119 for more info") @Test public void context21() {
-      azzert.that(of(findFirst.whileStatement(into.s("while(x) somthing();")).getExpression()), is(BOOLEAN));
-    }
-
     @Test public void context22() {
       final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
       azzert.that(of(as.getExpression()), is(BOOLEAN));

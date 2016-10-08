@@ -19,11 +19,11 @@ import il.org.spartan.spartanizer.engine.*;
     azzert.that(metricUnderTest(null), is(0));
   }
 
-  @Ignore @Test public void a01() {
+  @Test public void a01() {
     azzert.that(metricUnderTest(""), is(0));
   }
 
-  @Ignore @Test public void a02() {
+  @Test public void a02() {
     azzert.that(metricUnderTest(";"), is(1));
   }
 

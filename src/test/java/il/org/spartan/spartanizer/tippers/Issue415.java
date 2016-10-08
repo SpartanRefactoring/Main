@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/**
- * Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved here. 
+/** Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved
+ * here.
  * @since 2016 */
 @SuppressWarnings("static-method") @Ignore("Do not compute shifts, they have a reason") public class Issue415 {
   @Test public void issue92_52() {
@@ -34,8 +34,8 @@ import org.junit.*;
 
   @Test public void issue92_59() {
     trimmingOf("100L<<2L").gives("400L").stays();
-  }  
-  
+  }
+
   @Test public void issue92_60() {
     trimmingOf("100L<<2L>>2L").gives("400L>>2L").gives("100L").stays();
   }

@@ -2,8 +2,6 @@ package il.org.spartan.plugin;
 
 import java.lang.reflect.*;
 
-import javax.swing.*;
-
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
@@ -28,8 +26,7 @@ public abstract class LaconizeSelection extends BaseHandler {
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
-    // TODO Roth: Can we erase this one?
-    new JOptionPane(status, JOptionPane.INFORMATION_MESSAGE, JOptionPane.NO_OPTION, eclipse.icon, null, Integer.valueOf(0));
+    eclipse.announce(status);
     final IWorkbench wb = PlatformUI.getWorkbench();
     final GUI$Applicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);

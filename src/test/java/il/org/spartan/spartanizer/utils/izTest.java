@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -8,7 +7,6 @@ import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
@@ -19,27 +17,27 @@ import il.org.spartan.spartanizer.java.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class izTest {
   @Test public void booleanLiteralFalseOnNull() {
-    azzert.that(iz.booleanLiteral(e("null")), is(false));
+    assert !iz.booleanLiteral(e("null"));
   }
 
   @Test public void booleanLiteralFalseOnNumeric() {
-    azzert.that(iz.booleanLiteral(e("12")), is(false));
+    assert !iz.booleanLiteral(e("12"));
   }
 
   @Test public void booleanLiteralFalseOnThis() {
-    azzert.that(iz.booleanLiteral(e("this")), is(false));
+    assert !iz.booleanLiteral(e("this"));
   }
 
   @Test public void booleanLiteralTrueOnFalse() {
-    azzert.that(iz.booleanLiteral(e("false")), is(true));
+    assert iz.booleanLiteral(e("false"));
   }
 
   @Test public void booleanLiteralTrueOnTrue() {
-    azzert.that(iz.booleanLiteral(e("true")), is(true));
+    assert iz.booleanLiteral(e("true"));
   }
 
   @Test public void callIsSpecificTrue() {
-    azzert.that(iz.constant(e("this")), is(true));
+    assert iz.constant(e("this"));
   }
 
   @Test public void canMakeExpression() {
@@ -47,99 +45,105 @@ public final class izTest {
   }
 
   @Test public void deterministicArray1() {
-    azzert.that(sideEffects.deterministic(e("new a[3]")), is(false));
+    assert !sideEffects.deterministic(e("new a[3]"));
   }
 
   @Test public void deterministicArray2() {
-    azzert.that(sideEffects.deterministic(e("new int[] {12,13}")), is(false));
+    assert !sideEffects.deterministic(e("new int[] {12,13}"));
   }
 
   @Test public void deterministicArray3() {
-    azzert.that(sideEffects.deterministic(e("new int[] {12,13, i++}")), is(false));
+    assert !sideEffects.deterministic(e("new int[] {12,13, i++}"));
   }
 
   @Test public void deterministicArray4() {
-    azzert.that(sideEffects.deterministic(e("new int[f()]")), is(false));
+    assert !sideEffects.deterministic(e("new int[f()]"));
   }
 
   @Test public void isConstantFalse() {
-    azzert.that(iz.constant(e("a")), is(false));
+    assert !iz.constant(e("a"));
   }
 
   @Test public void isNullFalse1() {
-    azzert.that(iz.nullLiteral(e("this")), is(false));
+    assert !iz.nullLiteral(e("this"));
   }
 
   @Test public void isNullFalse2() {
-    azzert.that(iz.thisLiteral(e("this.a")), is(false));
+    assert !iz.thisLiteral(e("this.a"));
   }
 
   @Test public void isNullTrue() {
-    azzert.that(iz.nullLiteral(e("null")), is(true));
+    assert iz.nullLiteral(e("null"));
   }
 
   @Test public void isOneOf() {
-    final int[] types = { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION };
-    azzert.that(iz.nodeTypeIn(e("this"), types), is(true));
+    assert iz.nodeTypeIn(e("this"), new int[] { CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION });
   }
 
   @Test public void isThisFalse1() {
-    azzert.that(iz.thisLiteral(e("null")), is(false));
+    assert !iz.thisLiteral(e("null"));
   }
 
   @Test public void isThisFalse2() {
-    azzert.that(iz.thisLiteral(e("this.a")), is(false));
+    assert !iz.thisLiteral(e("this.a"));
   }
 
   @Test public void isThisTrue() {
-    azzert.that(iz.thisLiteral(e("this")), is(true));
+    assert iz.thisLiteral(e("this"));
   }
 
   @Test public void negative0() {
-    azzert.that(iz.negative(e("0")), is(false));
+    assert !iz.negative(e("0"));
   }
 
   @Test public void negative1() {
-    azzert.that(iz.negative(e("0")), is(false));
+    assert !iz.negative(e("0"));
   }
 
   @Test public void negativeMinus1() {
-    azzert.that(iz.negative(e("- 1")), is(true));
+    assert iz.negative(e("- 1"));
   }
 
   @Test public void negativeMinus2() {
-    azzert.that(iz.negative(e("- 2")), is(true));
+    assert iz.negative(e("- 2"));
   }
 
   @Test public void negativeMinusA() {
-    azzert.that(iz.negative(e("- a")), is(true));
+    assert iz.negative(e("- a"));
   }
 
   @Test public void negativeNull() {
-    azzert.that(iz.negative(e("null")), is(false));
+    assert !iz.negative(e("null"));
   }
 
   @Test public void nonnAssociative() {
-    azzert.that(wizard.nonAssociative(e("1")), is(false));
-    azzert.that(wizard.nonAssociative(e("-1")), is(false));
-    azzert.that(wizard.nonAssociative(e("-1+2")), is(false));
-    azzert.that(wizard.nonAssociative(e("1+2")), is(false));
-    azzert.that(wizard.nonAssociative(e("2-1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2/1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2%1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2*1")), is(false));
+    final boolean b = wizard.nonAssociative(e("1"));
+    assert !b;
+    final boolean b1 = wizard.nonAssociative(e("-1"));
+    assert !b1;
+    final boolean b2 = wizard.nonAssociative(e("-1+2"));
+    assert !b2;
+    final boolean b3 = wizard.nonAssociative(e("1+2"));
+    assert !b3;
+    final boolean b4 = wizard.nonAssociative(e("2-1"));
+    assert b4;
+    final boolean b5 = wizard.nonAssociative(e("2/1"));
+    assert b5;
+    final boolean b6 = wizard.nonAssociative(e("2%1"));
+    assert b6;
+    assert !wizard.nonAssociative(e("2*1"));
   }
 
   @Test public void numericLiteralFalse1() {
-    azzert.that(iz.numericLiteral(e("2*3")), is(false));
+    assert !iz.numericLiteral(e("2*3"));
   }
 
   @Test public void numericLiteralFalse2() {
-    azzert.that(iz.numericLiteral(e("2*3")), is(false));
+    assert !iz.numericLiteral(e("2*3"));
   }
 
   @Test public void numericLiteralTrue() {
-    azzert.that(iz.numericLiteral(e("1")), is(true));
+    assert iz.numericLiteral(e("1"));
   }
 
   @Test public void seriesA_3() {
