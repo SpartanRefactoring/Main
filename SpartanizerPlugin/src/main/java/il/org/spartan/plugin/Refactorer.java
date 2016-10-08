@@ -13,13 +13,11 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
-
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
  * @since 2016 */
 @SuppressWarnings("static-method") public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
-  public static final attribute UNKNOWN = attribute.UNKNOWN;
+  public static final attribute unknown = attribute.UNKNOWN;
 
   /** Used to collect attributes from a Refactorer's run, used later in printing
    * actions (such as {@link eclipse#announce}) */
@@ -167,7 +165,7 @@ import il.org.spartan.spartanizer.dispatch.*;
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
     for (final attribute ¢ : attribute.values())
-      $.put(¢, UNKNOWN);
+      $.put(¢, unknown);
     return $;
   }
 
@@ -202,7 +200,6 @@ import il.org.spartan.spartanizer.dispatch.*;
           for (final ICompilationUnit u : currentCompilationUnits) {
             if (pm.isCanceled())
               break;
-            final GUI$Applicator a = new Trimmer();
             pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
             final int tipsCommited = a.fuzzyImplementationApply(u, a.getSelection());
             totalTips += tipsCommited;

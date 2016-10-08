@@ -57,7 +57,7 @@ public enum eclipse {
   static Void announce(final Object message) {
     // JOptionPane.showMessageDialog(null, message, NAME,
     // JOptionPane.INFORMATION_MESSAGE, icon());
-    announceNonBusy(message + "");
+    announceNonBusy(message + "").open();
     return null;
   }
 
