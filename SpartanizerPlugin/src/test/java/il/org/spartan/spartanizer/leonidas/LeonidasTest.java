@@ -3,11 +3,6 @@ package il.org.spartan.spartanizer.leonidas;
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {
-  @Ignore @Test public void testBlockMutation1() {
-    azzert.tipper("if(!($X1)) $B1 else $B2", "if($X1) $B2 else $B1", "change If order").turns("if(!(x==0)) return; else print(7);")
-        .into("if(x==0) print(7); else return;");
-  }
-
   @Test public void testMatches1() {
     azzert.that("$X ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");
   }
@@ -50,11 +45,6 @@ import org.junit.*;
 
   @Test public void testMutation2() {
     azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
-        .into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
-  }
-
-  @Ignore @Test public void testMutation3() {
-    azzert.tipper("if(!($X1 == $X2)) $B", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
         .into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
   }
 
