@@ -123,7 +123,7 @@ public abstract class GUI$Applicator extends Refactoring {
   public final ASTRewrite createRewrite(final CompilationUnit ¢, final AtomicInteger counter) {
     return rewriterOf(¢, (IMarker) null, counter);
   }
-  
+
   public final ASTRewrite createRewrite(final CompilationUnit ¢) {
     return rewriterOf(¢, (IMarker) null, new AtomicInteger(0));
   }
@@ -275,7 +275,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return counter.get();
   }
 
-  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, AtomicInteger counter) {
+  public ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final AtomicInteger counter) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u, m, counter);
@@ -320,7 +320,8 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, final AtomicInteger counter);
-  public void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m) {
+
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
     consolidateTips(r, u, m, new AtomicInteger(0));
   }
 

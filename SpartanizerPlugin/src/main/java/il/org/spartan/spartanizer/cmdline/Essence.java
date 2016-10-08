@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
-import org.junit.*;
-
 /** @author Yossi Gil
  * @since 2016 */
 public class Essence {
@@ -12,31 +10,6 @@ public class Essence {
       System.out.print("Enter some code: ");
       System.out.println(Essence.of(¢.nextLine()));
     }
-  }
-
-  @Test public void chocolate0() {
-    il.org.spartan.azzert.that(stringRemove("abc"), il.org.spartan.azzert.iz("abc"));
-  }
-
-  @Test public void chocolate1() {
-    il.org.spartan.azzert.that(stringRemove("abc"), il.org.spartan.azzert.instanceOf(String.class));
-  }
-
-  @Test public void chocolate2() {
-    il.org.spartan.azzert.that(stringRemove(stringRemove("hello")), il.org.spartan.azzert.instanceOf(String.class));
-  }
-
-  @Test public void idempotent() {
-    for (final String caze : new String[] { "This", "This 'is'", "This \"is" })
-      il.org.spartan.azzert.that(stringRemove(stringRemove(caze)), il.org.spartan.azzert.iz(caze));
-  }
-
-  @Ignore("Work later with Itai") @Test public void vanilla() {
-    il.org.spartan.azzert.that(stringRemove("\"Who\" is on \"First\""), il.org.spartan.azzert.iz(" is on "));
-  }
-
-  private static String stringRemove(final String ¢) {
-    return ¢;
   }
 
   public static String of(final String codeFragment) {
@@ -58,6 +31,17 @@ public class Essence {
         .replaceAll("([\\p{L}]) ([^\\p{L}])", "$1$2")//
         // Non letter, then letter
         .replaceAll("([^\\p{L}]) ([\\p{L}])", "$1$2")//
+    ;
+  }
+
+  public static String stringRemove(final String $) {
+    return $
+        // Unquoted double quote by two consecutive double quotes
+        .replaceAll("([^\"])\"", "$1\"\"")
+        // Non greedy search and replacement of ""text"" by nothing
+        .replaceAll("\"\".*?\"\"", "") //
+        // Undo doubling of double quotes
+        .replaceAll("\"\"", "\"") ///
     ;
   }
 }
