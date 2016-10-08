@@ -28,7 +28,7 @@ public abstract class LaconizeSelection extends BaseHandler {
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
-    // TODO Roth: Can we erase this one?
+    // TODO Roth: Can we erase this one? I would like to lower our `W` metric.
     new JOptionPane(status, JOptionPane.INFORMATION_MESSAGE, JOptionPane.NO_OPTION, eclipse.icon, null, Integer.valueOf(0));
     final IWorkbench wb = PlatformUI.getWorkbench();
     final GUI$Applicator applicator = new Trimmer();
