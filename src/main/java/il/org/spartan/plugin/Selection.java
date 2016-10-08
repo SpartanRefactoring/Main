@@ -46,6 +46,11 @@ public class Selection {
       this.compilationUnits.add(u);
     return this;
   }
+  
+  public Selection unify(final Selection ¢) {
+    this.compilationUnits.addAll(¢.compilationUnits);
+    return this;
+  }
 
   public static Selection empty() {
     return new Selection(null, null);
@@ -61,5 +66,9 @@ public class Selection {
 
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
     return new Selection(u == null ? null : Collections.singletonList(u), s);
+  }
+  
+  public static Selection of(ICompilationUnit[] ¢) {
+    return new Selection(Arrays.asList(¢), null);
   }
 }
