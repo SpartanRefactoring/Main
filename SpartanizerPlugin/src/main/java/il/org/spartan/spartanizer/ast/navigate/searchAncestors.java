@@ -59,12 +59,11 @@ public abstract class searchAncestors {
    * @return closest ancestor whose type matches the given type. */
   public abstract ASTNode inclusiveFrom(final ASTNode n);
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]]
+  /**
    * @param ¢ JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode inclusiveLastFrom(final ASTNode ¢) {
-    ASTNode $ = inclusiveFrom(¢);
-    for (ASTNode p = $;; p = from(p.getParent())) {
+    for (ASTNode $ = inclusiveFrom(¢), p = $;; p = from(p.getParent())) {
       if (p == null)
         return $;
       $ = p;
