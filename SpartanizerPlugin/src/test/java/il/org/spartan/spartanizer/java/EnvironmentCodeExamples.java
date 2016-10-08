@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import org.junit.*;
-
 import il.org.spartan.spartanizer.annotations.*;
 
 @SuppressWarnings("all") public final class EnvironmentCodeExamples {
