@@ -53,8 +53,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return "enclosing function";
     }
 
-    @Override public List<ICompilationUnit> getTargetCompilationUnits() {
-      return Collections.singletonList(eclipse.currentCompilationUnit());
+    @Override public Selection getSelection(final IMarker ¢) {
+      return RefactorerUtil.selection.getCurrentCompilationUnit().setTextSelection(domain(¢));
     }
 
     private static InDeclaration instance;
@@ -78,8 +78,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return "compilation unit";
     }
 
-    @Override public List<ICompilationUnit> getTargetCompilationUnits() {
-      return Collections.singletonList(eclipse.currentCompilationUnit());
+    @Override public Selection getSelection() {
+      return RefactorerUtil.selection.getCurrentCompilationUnit();
     }
 
     private static InFile instance;
@@ -103,30 +103,27 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return "entire project";
     }
 
-    @Override public List<ICompilationUnit> getTargetCompilationUnits() {
-      try {
-        return eclipse.compilationUnits(eclipse.currentCompilationUnit(), new NullProgressMonitor());
-      } catch (final JavaModelException x) {
-        monitor.log(x);
-        return Collections.emptyList();
-      }
+    @Override public Selection getSelection() {
+      return RefactorerUtil.selection.getAllCompilationUnits();
     }
 
-    @Override public String getOpeningMessage(final Map<attribute, Object> a) {
-      int cs = getCUsCount(a);
-      return "Applying " + getTipperName(a) + " to " + projectName(a) + " with " + cs + " " + plurals("file", cs) + "\n" //
-          + "Tips before:\t" + a.get(attribute.TIPS_BEFORE);
+    /** [[SuppressWarningsSpartan]] */
+    @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
+      final int cs = getCUsCount(¢);
+      return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
+          + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
-    @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> a) {
-      int cs = getChangesCount(a);
+    /** [[SuppressWarningsSpartan]] */
+    @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
+      final int cs = getChangesCount(¢);
       return //
-      "Done applying " + getTipperName(a) + " to " + projectName(a) + "\n" //
-          + cs + " " + plurals("file", cs) + " spartanized in " + a.get(attribute.PASSES) + " " + plurales("pass", (int) a.get(attribute.PASSES))
+      "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
+          + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
           + "\n" //
-          + "Tips commited:\t" + a.get(attribute.TOTAL_TIPS) + "\n" //
-          + "Total tips before:\t" + a.get(attribute.TIPS_BEFORE) + "\n" //
-          + "Total tips after:\t" + a.get(attribute.TIPS_AFTER);
+          + "Tips commited:\t" + ¢.get(attribute.TOTAL_TIPS) + "\n" //
+          + "Total tips before:\t" + ¢.get(attribute.TIPS_BEFORE) + "\n" //
+          + "Total tips after:\t" + ¢.get(attribute.TIPS_AFTER);
     }
 
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
@@ -176,16 +173,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     @Override public GUI$Applicator getApplicator(final IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
-        if (m.getResource() == null)
-          return null;
-        final GUI$Applicator $ = getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
-        if ($ == null)
-          return null;
-        final ITextSelection t = domain(m);
-        if (t == null)
-          return null;
-        $.setSelection(t);
-        return $;
+        return m.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
       } catch (final CoreException x) {
         monitor.log(x);
       }
