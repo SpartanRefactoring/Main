@@ -6,7 +6,10 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jface.operation.*;
-
+import org.eclipse.jface.text.*;
+import org.eclipse.jface.viewers.*;
+import org.eclipse.ui.*;
+import org.eclipse.ui.views.markers.*;
 import il.org.spartan.plugin.Refactorer.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -73,5 +76,174 @@ public class RefactorerUtil {
         pm.done();
       }
     };
+  }
+
+  /** TODO Roth: spartanize class TODO Roth: check for circles
+   * [[SuppressWarningsSpartan]] */
+  public static class selection {
+    public static Selection getCurrentCompilationUnit() {
+      final ISelection s = getSelection();
+      if (s == null)
+        return Selection.empty();
+      if (s instanceof ITextSelection)
+        return by((ITextSelection) s).setTextSelection(null);
+      return Selection.empty();
+    }
+
+    public static Selection getAllCompilationUnits() {
+      final ISelection s = getSelection();
+      if (s == null)
+        return Selection.empty();
+      if (s instanceof ITextSelection)
+        return by(getProject()).setTextSelection(null);
+      return Selection.empty();
+    }
+
+    public static Selection get() {
+      final ISelection s = getSelection();
+      if (s == null)
+        return Selection.empty();
+      if (s instanceof ITextSelection)
+        return by((ITextSelection) s);
+      if (s instanceof TreeSelection)
+        return by((TreeSelection) s);
+      return Selection.empty();
+    }
+
+    private static ISelection getSelection() {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      if (wb == null)
+        return null;
+      final IWorkbenchWindow w = wb.getActiveWorkbenchWindow();
+      if (w == null)
+        return null;
+      final ISelectionService s = w.getSelectionService();
+      return s == null ? null : s.getSelection();
+    }
+
+    /** Depends on local editor */
+    private static IJavaProject getProject() {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      if (wb == null)
+        return null;
+      final IWorkbenchWindow w = wb.getActiveWorkbenchWindow();
+      if (w == null)
+        return null;
+      final IWorkbenchPage p = w.getActivePage();
+      if (p == null)
+        return null;
+      final IEditorPart e = p.getActiveEditor();
+      if (e == null)
+        return null;
+      final IEditorInput i = e.getEditorInput();
+      if (i == null)
+        return null;
+      final IResource r = i.getAdapter(IResource.class);
+      if (r == null)
+        return null;
+      return JavaCore.create(r.getProject());
+    }
+
+    /** Depends on local editor */
+    private static Selection by(ITextSelection s) {
+      final IWorkbench wb = PlatformUI.getWorkbench();
+      if (wb == null)
+        return null;
+      final IWorkbenchWindow w = wb.getActiveWorkbenchWindow();
+      if (w == null)
+        return null;
+      final IWorkbenchPage p = w.getActivePage();
+      if (p == null)
+        return null;
+      final IEditorPart e = p.getActiveEditor();
+      if (e == null)
+        return null;
+      final IEditorInput i = e.getEditorInput();
+      return i == null ? null : by(i.getAdapter(IResource.class)).setTextSelection(s);
+    }
+
+    private static Selection by(final IResource ¢) {
+      return ¢ == null || !(¢ instanceof IFile) ? null : by((IFile) ¢);
+    }
+
+    private static Selection by(final IFile ¢) {
+      return ¢ == null ? null : Selection.of(JavaCore.createCompilationUnitFrom(¢));
+    }
+
+    private static Selection by(final MarkerItem ¢) {
+      return ¢ == null ? null : by(¢.getMarker());
+    }
+
+    private static Selection by(final IMarker ¢) {
+      return ¢ == null || !¢.exists() ? null : by(¢.getResource());
+    }
+
+    private static Selection by(TreeSelection s) {
+      final Object o = s.getFirstElement();
+      if (o instanceof MarkerItem)
+        return by((MarkerItem) o);
+      if (o instanceof IJavaProject)
+        return by((IJavaProject) o);
+      if (o instanceof IPackageFragmentRoot)
+        return by((IPackageFragmentRoot) o);
+      if (o instanceof IPackageFragment)
+        return by((IPackageFragment) o);
+      if (o instanceof ICompilationUnit)
+        return Selection.of((ICompilationUnit) o);
+      if (o instanceof IMember)
+        return by((IMember) o);
+      return null;
+    }
+
+    private static Selection by(final IJavaProject p) {
+      if (p == null)
+        return Selection.empty();
+      Selection $ = Selection.empty();
+      final IPackageFragmentRoot[] rs;
+      try {
+        rs = p.getPackageFragmentRoots();
+      } catch (JavaModelException x) {
+        monitor.log(x);
+        return Selection.empty();
+      }
+      for (final IPackageFragmentRoot ¢ : rs)
+        $.unify(by(¢));
+      return $;
+    }
+
+    private static Selection by(final IPackageFragmentRoot r) {
+      Selection $ = Selection.empty();
+      try {
+        for (final IJavaElement ¢ : r.getChildren())
+          if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+            $.unify(by((IPackageFragment) ¢));
+      } catch (JavaModelException x) {
+        monitor.log(x);
+        return Selection.empty();
+      }
+      return $;
+    }
+
+    private static Selection by(final IPackageFragment f) {
+      try {
+        return f == null ? Selection.empty() : Selection.of(f.getCompilationUnits());
+      } catch (JavaModelException x) {
+        monitor.log(x);
+        return Selection.empty();
+      }
+    }
+
+    // TODO Roth: maybe the return of empty selection is unjustified (file
+    // closed for instance)
+    private static Selection by(final IMember m) {
+      ISourceRange r;
+      try {
+        r = m.getSourceRange();
+      } catch (JavaModelException x) {
+        monitor.log(x);
+        return Selection.empty();
+      }
+      return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength()));
+    }
   }
 }
