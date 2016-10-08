@@ -13,6 +13,8 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
+
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
  * @since 2016 */
@@ -24,7 +26,7 @@ import org.eclipse.ui.*;
   enum attribute {
     EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER, UNKNOWN
   }
-// public static final String UNKNOWN = "???";
+  // public static final String UNKNOWN = "???";
 
   /** @return true iff the refactorer is a handler */
   public static boolean isHandler() {
@@ -197,16 +199,15 @@ import org.eclipse.ui.*;
             finish(pm);
             break;
           }
-          for (final ICompilationUnit currentCompilationUnit : currentCompilationUnits) {
+          for (final ICompilationUnit u : currentCompilationUnits) {
             if (pm.isCanceled())
               break;
-            pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, currentCompilationUnit));
-            int tipsCommited = a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection());
+            GUI$Applicator a = new Trimmer();
+            pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
+            int tipsCommited = a.fuzzyImplementationApply(u, a.getSelection());
             totalTips += tipsCommited;
-            (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(currentCompilationUnit);
-            (0!=a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection()) ? deadCompilationUnits : modifiedCompilationUnits)
-            (a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection()) != 0 ? deadCompilationUnits : modifiedCompilationUnits)
-                .add(currentCompilationUnit);
+            (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
+            (a.fuzzyImplementationApply(u, a.getSelection()) != 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
             pm.worked(1);
           }
         }
