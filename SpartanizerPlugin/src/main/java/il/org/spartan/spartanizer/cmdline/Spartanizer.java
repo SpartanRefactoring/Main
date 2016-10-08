@@ -24,22 +24,12 @@ import il.org.spartan.utils.*;
  * classes, methods, etc.
  * @author Yossi Gil
  * @year 2015 */
-public final class spartanizer {
+public final class Spartanizer {
   private static final String folder = "/tmp/";
-  private final Toolbox toolbox = new Toolbox();
-  private int done;
-  private final String inputPath;
-  private final String beforeFileName;
-  private final String afterFileName;
-  private PrintWriter befores;
-  private PrintWriter afters;
-  private CSVStatistics report;
-  private final String reportFileName;
-  private File currentFile;
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new spartanizer(¢).fire();
+      new Spartanizer(¢).fire();
   }
 
   static double d(final double n1, final double n2) {
@@ -54,11 +44,22 @@ public final class spartanizer {
     return n2 / n1;
   }
 
-  private spartanizer(final String path) {
+  private final String afterFileName;
+  private PrintWriter afters;
+  private final String beforeFileName;
+  private PrintWriter befores;
+  private File currentFile;
+  private int done;
+  private final String inputPath;
+  private CSVStatistics report;
+  private final String reportFileName;
+  private final Toolbox toolbox = new Toolbox();
+
+  private Spartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  private spartanizer(final String inputPath, final String name) {
+  private Spartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
@@ -77,8 +78,87 @@ public final class spartanizer {
     return null;
   }
 
+  public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
+    u.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N n) {
+        TrimmerLog.visitation(n);
+        if (!check(n) || disabling.on(n)) // removed !inRange(m, n) || !check(n)
+                                          // is always false
+          return true;
+        final Tipper<N> w = getTipper(n);
+        if (w == null)
+          return true;
+        System.out.println(w.description(n));
+        Tip s = null;
+        try {
+          s = w.tip(n, exclude);
+          TrimmerLog.tip(w, n);
+        } catch (final TipperFailure f) {
+          monitor.debug(this, f);
+        }
+        if (s != null)
+          TrimmerLog.application(r, s);
+        return true;
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
+      }
+    });
+  }
+
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
+    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    consolidateTips($, ¢);
+    return $;
+  }
+
+  public String fixedPoint(final String from) {
+    for (final Document $ = new Document(from);;) {
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
+      final ASTRewrite r = createRewrite(u);
+      final TextEdit e = r.rewriteAST($, null);
+      try {
+        e.apply($);
+      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
+        monitor.logEvaluationError(this, x);
+        throw new AssertionError(x);
+      }
+      if (!e.hasChildren())
+        return $.get();
+    }
+  }
+
+  public ASTRewrite rewriterOf(final CompilationUnit ¢) {
+    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    consolidateTips($, ¢);
+    return $;
+  }
+
   public Process shellEssenceMetrics(final String fileName) {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N ¢) {
+    return true;
+  }
+
+  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
+  }
+
+  void fire() {
+    System.out.println(toolbox.hooksCount());
+    System.out.println(Toolbox.defaultInstance().hooksCount());
+    spartanizeAndAnalyze();
+    runEssence();
+    runWordCount();
+  }
+
+  void runEssence() {
+    shellEssenceMetrics(beforeFileName);
+    shellEssenceMetrics(afterFileName);
   }
 
   boolean spartanizeAndAnalyze(final BodyDeclaration ¢) {
@@ -148,14 +228,12 @@ public final class spartanizer {
     return false;
   }
 
-  /** @param ¢
-   * @return */
-  private String fixedPoint(final BodyDeclaration ¢) {
-    return fixedPoint(¢ + "");
-  }
-
   void spartanizeAndAnalyze(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
+        return spartanizeAndAnalyze(¢);
+      }
+
       @Override public boolean visit(final MethodDeclaration ¢) {
         // TODO Marco: Check that this method does not have a <code>@Test</code>
         // annotation
@@ -174,90 +252,7 @@ public final class spartanizer {
       @Override public boolean visit(final TypeDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
-      @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
-        return spartanizeAndAnalyze(¢);
-      }
-      
-      @Override public boolean visit(final EnumConstantDeclaration ¢) {
-        return spartanizeAndAnalyze(¢);
-      }
-      
-      @Override public boolean visit(final FieldDeclaration ¢) {
-        return spartanizeAndAnalyze(¢);
-      }
-      
-      @Override public boolean visit(final Initializer ¢) {
-        return spartanizeAndAnalyze(¢);
-      }
-    
     });
-  }
-
-  public String fixedPoint(final String from) {
-    for (final Document $ = new Document(from);;) {
-      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from($.get());
-      final ASTRewrite r = createRewrite(u);
-      final TextEdit e = r.rewriteAST($, null);
-      try {
-        e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-        monitor.logEvaluationError(this, x);
-        throw new AssertionError(x);
-      }
-      if (!e.hasChildren())
-        return $.get();
-    }
-  }
-
-  public ASTRewrite createRewrite(final CompilationUnit ¢) {
-    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
-    consolidateTips($, ¢);
-    return $;
-  }
-
-  public ASTRewrite rewriterOf(final CompilationUnit ¢) {
-    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
-    consolidateTips($, ¢);
-    return $;
-  }
-
-  public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        TrimmerLog.visitation(n);
-        if (!check(n) || disabling.on(n)) // removed !inRange(m, n) || !check(n)
-                                          // is always false
-          return true;
-        final Tipper<N> w = getTipper(n);
-        if (w == null)
-          return true;
-        System.out.println(w.description(n));
-        Tip s = null;
-        try {
-          s = w.tip(n, exclude);
-          TrimmerLog.tip(w, n);
-        } catch (final TipperFailure f) {
-          monitor.debug(this, f);
-        }
-        if (s != null)
-          TrimmerLog.application(r, s);
-        return true;
-      }
-
-      @Override protected void initialization(final ASTNode ¢) {
-        disabling.scan(¢);
-      }
-    });
-  }
-
-  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
-  }
-
-  /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N ¢) {
-    return true;
   }
 
   void spartanizeAndAnalyze(final File f) {
@@ -274,17 +269,14 @@ public final class spartanizer {
     spartanizeAndAnalyze((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  void fire() {
-    System.out.println(toolbox.hooksCount());
-    System.out.println(Toolbox.defaultInstance().hooksCount());
-    spartanizeAndAnalyze();
-    runEssence();
-    runWordCount();
+  /** @param ¢
+   * @return */
+  private String fixedPoint(final BodyDeclaration ¢) {
+    return fixedPoint(¢ + "");
   }
 
-  void runEssence() {
-    shellEssenceMetrics(beforeFileName);
-    shellEssenceMetrics(afterFileName);
+  private void runWordCount() {
+    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 
   private void spartanizeAndAnalyze() {
@@ -311,9 +303,5 @@ public final class spartanizer {
     }
     System.err.print("\n Done: " + done + " files processed.");
     System.err.print("\n Summary: " + report.close());
-  }
-
-  private void runWordCount() {
-    bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 }
