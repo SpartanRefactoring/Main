@@ -51,27 +51,23 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
-  @SuppressWarnings("unused") @Override public ASTNode replacement(final InfixExpression ¢) {
-    final List<Expression> c = gather(¢, new ArrayList<Expression>());
-    final Operator b = ¢.getOperator();
-    final List<Expression> allOperands = extract.allOperands(¢);
-    final List<Operator> allOperators = extract.allOperators(¢);
-    final List<Expression> ops = extract.allOperands(¢);
+  @SuppressWarnings("unused") @Override public ASTNode replacement(final InfixExpression x) {
+    final List<Expression> c = gather(x, new ArrayList<Expression>());
+    final Operator b = x.getOperator();
+    final List<Expression> allOperands = extract.allOperands(x);
+    final List<Operator> allOperators = extract.allOperators(x);
+    final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int i = 0; i < ops.size(); ++i) {
-      if (!iz.literal0(ops.get(i)))
-        ops2.add(ops.get(i));
-    }
+    for (int ¢ = 0; ¢ < ops.size(); ++¢)
+      if (!iz.literal0(ops.get(¢)))
+        ops2.add(ops.get(¢));
     InfixExpression $ = null;
-    for (int i = 0; i < ops2.size() - 1; i++)
-      if ($ != null)
-        $ = subject.pair($, ops2.get(i + 1)).to(Operator.PLUS);
-      else
-        $ = subject.pair(ops2.get(i), ops2.get(i + 1)).to(Operator.PLUS);
+    for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
+      $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
 
-  @SuppressWarnings("static-method") private boolean containsZeroOperand(final InfixExpression ¢) {
+  private boolean containsZeroOperand(final InfixExpression ¢) {
     final List<Expression> allOperands = extract.allOperands(¢);
     for (final Expression opnd : allOperands)
       if (iz.literal0(opnd))
@@ -79,7 +75,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  @SuppressWarnings("static-method") private boolean containsPlusOperator(final InfixExpression e) {
+  /** [[SuppressWarningsSpartan]] */
+  private static boolean containsPlusOperator(final InfixExpression e) {
     for (final Operator o : extract.allOperators(e))
       if (o == Operator.PLUS)
         return true;
