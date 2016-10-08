@@ -206,6 +206,7 @@ import org.eclipse.ui.*;
             totalTips += tipsCommited;
             (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(currentCompilationUnit);
             (0!=a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection()) ? deadCompilationUnits : modifiedCompilationUnits)
+            (a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection()) != 0 ? deadCompilationUnits : modifiedCompilationUnits)
                 .add(currentCompilationUnit);
             pm.worked(1);
           }
