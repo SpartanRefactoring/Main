@@ -76,4 +76,10 @@ import org.junit.*;
   @SuppressWarnings("static-method") @Test public void issue408_08() {
     trimmingOf("0+0+x+4*y").gives("x+4*y").stays();
   }
+  
+  //A test from issue162 moved here.
+  // TODO: Mateu InfixAdditionZero fail.
+  @Ignore @Test public void issue162_01() {
+    trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
+  }
 }
