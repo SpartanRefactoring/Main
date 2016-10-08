@@ -41,7 +41,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !isJohnDoe(x.getType(), n))
       return null;
     final Statement body = forStatement.getBody();
-    if (body == null || haz.variableDefinition(body) || !iz.variableUsedInFor(forStatement, n))
+    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !iz.variableUsedInFor(forStatement, n))
       return null;
     if (m != null) {
       m.exclude(body);

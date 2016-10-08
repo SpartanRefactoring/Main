@@ -147,7 +147,7 @@ import il.org.spartan.spartanizer.utils.*;
   /** Initializer for EMPTY */
   final LinkedHashSet<String> emptySet = new LinkedHashSet<>();
   // Holds the declarations in the subtree and relevant siblings.
-  final LinkedHashSet<Entry<String, Information>> currentEnvironment = new LinkedHashSet<>();
+  final LinkedHashSet<Entry<String, Information>> upEnv = new LinkedHashSet<>();
 
   static Information createInformation(final VariableDeclarationFragment ¢, final type t) {
     return new Information(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
@@ -516,8 +516,8 @@ import il.org.spartan.spartanizer.utils.*;
   static LinkedHashSet<Entry<String, Information>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
       for (final Statement ¢ : statements(PB))
-        currentEnvironment.addAll(declarationsOf(¢));
-    return currentEnvironment;
+        upEnv.addAll(declarationsOf(¢));
+    return upEnv;
   }
 
   static String fullName(final ASTNode ¢) {
@@ -541,7 +541,7 @@ import il.org.spartan.spartanizer.utils.*;
   static Information getHidden(final String ¢) {
     final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
     for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-      final Information i = get(currentEnvironment, s + "." + shortName);
+      final Information i = get(upEnv, s + "." + shortName);
       if (i != null)
         return i;
     }
