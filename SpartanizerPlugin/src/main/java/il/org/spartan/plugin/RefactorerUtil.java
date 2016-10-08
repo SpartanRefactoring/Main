@@ -78,7 +78,8 @@ public class RefactorerUtil {
     };
   }
 
-  /** TODO Roth: spartanize class TODO Roth: check for circles */
+  /** TODO Roth: spartanize class TODO Roth: check for circles
+   * [[SuppressWarningsSpartan]] */
   public static class selection {
     public static Selection getCurrentCompilationUnit() {
       final ISelection s = getSelection();
@@ -120,9 +121,7 @@ public class RefactorerUtil {
       return s == null ? null : s.getSelection();
     }
 
-    /**
-     * Depends on local editor
-     */
+    /** Depends on local editor */
     private static IJavaProject getProject() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
@@ -145,9 +144,7 @@ public class RefactorerUtil {
       return JavaCore.create(r.getProject());
     }
 
-    /**
-     * Depends on local editor
-     */
+    /** Depends on local editor */
     private static Selection by(ITextSelection s) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
@@ -209,11 +206,17 @@ public class RefactorerUtil {
         monitor.log(x);
         return Selection.empty();
       }
+      for (final IPackageFragmentRoot ¢ : rs)
+        $.unify(by(¢));
+      return $;
+    }
+
+    private static Selection by(final IPackageFragmentRoot r) {
+      Selection $ = Selection.empty();
       try {
-      for (final IPackageFragmentRoot r : rs)
         for (final IJavaElement ¢ : r.getChildren())
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            $.add(((IPackageFragment) ¢).getCompilationUnits());
+            $.unify(by((IPackageFragment) ¢));
       } catch (JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
@@ -221,19 +224,26 @@ public class RefactorerUtil {
       return $;
     }
 
-    private static Selection by(final IPackageFragmentRoot r) {
-      // TODO Auto-generated method stub
-      return null;
+    private static Selection by(final IPackageFragment f) {
+      try {
+        return f == null ? Selection.empty() : Selection.of(f.getCompilationUnits());
+      } catch (JavaModelException x) {
+        monitor.log(x);
+        return Selection.empty();
+      }
     }
 
-    private static Selection by(final IPackageFragment o) {
-      // TODO Auto-generated method stub
-      return null;
-    }
-
-    private static Selection by(final IMember o) {
-      // TODO Auto-generated method stub
-      return null;
+    // TODO Roth: maybe the return of empty selection is unjustified (file
+    // closed for instance)
+    private static Selection by(final IMember m) {
+      ISourceRange r;
+      try {
+        r = m.getSourceRange();
+      } catch (JavaModelException x) {
+        monitor.log(x);
+        return Selection.empty();
+      }
+      return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength()));
     }
   }
 }
