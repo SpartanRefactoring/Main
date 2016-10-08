@@ -52,8 +52,14 @@ import org.eclipse.ui.*;
 
   /** @return the compilation units designated for refactorer
    *         [[SuppressWarningsSpartan]] */
-  public List<ICompilationUnit> getTargetCompilationUnits() {
-    return Collections.emptyList();
+  public Selection getSelection() {
+    return null;
+  }
+
+  /** @return the compilation units designated for refactorer
+   *         [[SuppressWarningsSpartan]] */
+  public Selection getSelection(@SuppressWarnings("unused") final IMarker marker) {
+    return null;
   }
 
   /** Return null for canceled message.
@@ -135,18 +141,18 @@ import org.eclipse.ui.*;
   }
 
   private Void go(final ExecutionEvent e, final IMarker m) {
-    final List<ICompilationUnit> targetCompilationUnits = getTargetCompilationUnits();
+    final Selection selection = either(getSelection(), getSelection(m));
     final GUI$Applicator applicator = either(getApplicator(e), getApplicator(m));
-    if (!valid(targetCompilationUnits, applicator))
+    if (!valid(selection, applicator) || selection.compilationUnits.isEmpty())
       return null;
     final Map<attribute, Object> attributes = unknowns();
     put(attributes, attribute.EVENT, e);
     put(attributes, attribute.MARKER, m);
-    put(attributes, attribute.CU, targetCompilationUnits);
+    put(attributes, attribute.CU, selection.compilationUnits);
     put(attributes, attribute.APPLICATOR, applicator);
-    doWork(initialWork(applicator, targetCompilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
+    doWork(initialWork(applicator, selection.compilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
     final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
-    final IRunnableWithProgress r = runnable(targetCompilationUnits, applicator, attributes);
+    final IRunnableWithProgress r = runnable(selection, applicator, attributes);
     final MessageDialog initialDialog = show(getOpeningMessage(attributes));
     if (hasDisplay())
       initializeProgressDialog(progressMonitorDialog);
@@ -157,7 +163,7 @@ import org.eclipse.ui.*;
       return null;
     }
     closeDialog(initialDialog);
-    doWork(finalWork(applicator, targetCompilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
+    doWork(finalWork(applicator, selection.compilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
     show(getEndingMessage(attributes));
     return null;
   }
@@ -182,7 +188,7 @@ import org.eclipse.ui.*;
     return true;
   }
 
-  private IRunnableWithProgress runnable(final List<ICompilationUnit> us, final GUI$Applicator a, final Map<attribute, Object> attributes) {
+  private IRunnableWithProgress runnable(final Selection s, final GUI$Applicator a, final Map<attribute, Object> attributes) {
     return new IRunnableWithProgress() {
       @SuppressWarnings("synthetic-access") @Override public void run(final IProgressMonitor pm) {
         final int passesCount = passesCount();
@@ -191,8 +197,8 @@ import org.eclipse.ui.*;
         final List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
         for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
-          pm.beginTask(getProgressMonitorMessage(us, pass), getProgressMonitorWork(us));
-          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(us, deadCompilationUnits);
+          pm.beginTask(getProgressMonitorMessage(s.compilationUnits, pass), getProgressMonitorWork(s.compilationUnits));
+          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.compilationUnits, deadCompilationUnits);
           if (currentCompilationUnits.isEmpty()) {
             finish(pm);
             break;
@@ -201,10 +207,10 @@ import org.eclipse.ui.*;
             if (pm.isCanceled())
               break;
             pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
-            final int tipsCommited = a.fuzzyImplementationApply(u, a.getSelection());
+            final int tipsCommited = a.fuzzyImplementationApply(u, s.textSelection);
             totalTips += tipsCommited;
             (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
-            (a.fuzzyImplementationApply(u, a.getSelection()) != 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
+            (a.fuzzyImplementationApply(u, s.textSelection) != 0 ? deadCompilationUnits : modifiedCompilationUnits).add(u);
             pm.worked(1);
           }
         }
