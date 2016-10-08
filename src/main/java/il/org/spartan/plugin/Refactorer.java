@@ -17,13 +17,15 @@ import org.eclipse.ui.*;
  * @author Ori Roth
  * @since 2016 */
 @SuppressWarnings("static-method") public abstract class Refactorer extends AbstractHandler implements IMarkerResolution {
+
+  public static final attribute UNKNOWN = attribute.UNKNOWN;
+
   /** Used to collect attributes from a Refactorer's run, used later in printing
    * actions (such as {@link eclipse#announce}) */
   enum attribute {
-    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER
+    EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER, UNKNOWN
   }
-
-  public static final String UNKNOWN = "???";
+// public static final String UNKNOWN = "???";
 
   /** @return true iff the refactorer is a handler */
   public static boolean isHandler() {
@@ -203,6 +205,8 @@ import org.eclipse.ui.*;
             int tipsCommited = a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection());
             totalTips += tipsCommited;
             (tipsCommited == 0 ? deadCompilationUnits : modifiedCompilationUnits).add(currentCompilationUnit);
+            (0!=a.fuzzyImplementationApply(currentCompilationUnit, a.getSelection()) ? deadCompilationUnits : modifiedCompilationUnits)
+                .add(currentCompilationUnit);
             pm.worked(1);
           }
         }

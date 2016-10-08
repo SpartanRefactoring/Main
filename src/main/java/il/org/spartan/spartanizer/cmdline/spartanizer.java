@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -25,7 +24,7 @@ import il.org.spartan.utils.*;
  * classes, methods, etc.
  * @author Yossi Gil
  * @year 2015 */
-public final class Spartanizer {
+public final class spartanizer {
   private static final String folder = "/tmp/";
   private final Toolbox toolbox = new Toolbox();
   private int done;
@@ -40,7 +39,7 @@ public final class Spartanizer {
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new Spartanizer(¢).fire();
+      new spartanizer(¢).fire();
   }
 
   static double d(final double n1, final double n2) {
@@ -55,11 +54,11 @@ public final class Spartanizer {
     return n2 / n1;
   }
 
-  private Spartanizer(final String path) {
+  private spartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  private Spartanizer(final String inputPath, final String name) {
+  private spartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
@@ -177,19 +176,19 @@ public final class Spartanizer {
       }
       
       @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
-        return collect(¢);
+        return spartanizeAndAnalyze(¢);
       }
       
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
-        return collect(¢);
+        return spartanizeAndAnalyze(¢);
       }
       
       @Override public boolean visit(final FieldDeclaration ¢) {
-        return collect(¢);
+        return spartanizeAndAnalyze(¢);
       }
       
       @Override public boolean visit(final Initializer ¢) {
-        return collect(¢);
+        return spartanizeAndAnalyze(¢);
       }
     
     });
@@ -278,7 +277,6 @@ public final class Spartanizer {
   void fire() {
     System.out.println(toolbox.hooksCount());
     System.out.println(Toolbox.defaultInstance().hooksCount());
-    collect();
     spartanizeAndAnalyze();
     runEssence();
     runWordCount();
