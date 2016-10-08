@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  * A test class regarding a bug with {@link ForToForInitializers}. 
- * Desired behavior is not to allow removal of final modifier.
+ * Desired behavior is not to allow inlining if the modifiers are different.
  * @author Dan Greenstein
  * @since 2016 */
 @SuppressWarnings("static-method") public class Issue402 {
