@@ -38,9 +38,9 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return $;
   }
 
-  private static boolean compareModifiers(final List<IExtendedModifier> l1, final List<IExtendedModifier> l2) {
-    for (final IExtendedModifier ¢ : l1)
-      if (!isIn(¢, l2))
+  private static boolean containsModifiers(final List<IExtendedModifier> contained, final List<IExtendedModifier> contains) {
+    for (final IExtendedModifier ¢ : contained)
+      if (!isIn(¢, contains))
         return false;
     return true;
   }
@@ -119,8 +119,9 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
     final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
-    return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null
-        && (e.getType() + "").equals(s.getType() + "") && compareModifiers(extendedModifiers, extendedModifiers2);
+    return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null //
+        && (e.getType() + "").equals(s.getType() + "") && //
+        containsModifiers(extendedModifiers, extendedModifiers2) && containsModifiers(extendedModifiers2,extendedModifiers);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

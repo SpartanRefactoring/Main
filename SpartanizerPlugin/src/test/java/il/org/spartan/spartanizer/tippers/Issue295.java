@@ -24,7 +24,6 @@ import il.org.spartan.spartanizer.utils.*;
   private static final String INPUT = "A a = new A();for (A b: g.f(a,true))sum+=b;";
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
   private static final String OUTPUT = "for (A b: g.f((new A()),true))sum+=b;";
-  private static final String OUTPUT1 = "boolean f(){for(A b:f(1))if(b.a)return true;return false;}";
   MethodDeclaration input1 = into.d(INPUT1);
   EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, input1);
   NumberLiteral one = findFirst.instanceOf(NumberLiteral.class, input1);
