@@ -47,7 +47,6 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return "Use \"+\" operator to concatenate strings";
   }
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;

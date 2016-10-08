@@ -116,8 +116,7 @@ public class Trimmer extends GUI$Applicator {
     }
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N ¢) {
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N __) {
     return true;
   }
 

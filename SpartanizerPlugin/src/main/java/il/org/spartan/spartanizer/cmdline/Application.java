@@ -98,7 +98,6 @@ public final class Application implements IApplication {
   int optRounds = 20;
   String optPath;
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
@@ -263,7 +262,6 @@ public final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   private void printChangeStatistics(final List<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (optIndividualStatistics)

@@ -44,7 +44,6 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return description();
   }
 
-  /** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] */
   @Override public Expression replacement(final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
