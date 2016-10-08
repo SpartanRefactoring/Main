@@ -139,8 +139,7 @@ public final class Spartanizer {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N ¢) {
+  @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N __) {
     return true;
   }
 

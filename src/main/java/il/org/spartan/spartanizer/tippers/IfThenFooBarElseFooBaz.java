@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** XXX: This is a bug of auto-laconize [[SuppressWarningsSpartan]] Converts
+/** XXX: This is a bug of auto-laconize Converts
  *
  * <pre>
  * if (X) {
