@@ -20,7 +20,7 @@ public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulT
 
   /** @return child list property descriptor of the parent of the node we are
    *         replacing */
-  public abstract ChildListPropertyDescriptor listDescritor(N n);
+  public abstract ChildListPropertyDescriptor listDescriptor(N n);
 
   @Override public boolean prerequisite(final N ¢) {
     return ¢.getParent() != null && go(ASTRewrite.create(¢.getAST()), ¢, null) != null;
@@ -29,7 +29,7 @@ public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulT
   @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(n.getParent(), listDescritor(n));
+        final ListRewrite l = r.getListRewrite(n.getParent(), listDescriptor(n));
         for (final ASTNode rep : ListReplaceCurrentNode.this.go(r, n, g))
           l.insertBefore(rep, n, g);
         l.remove(n, g);

@@ -160,7 +160,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
   }
 
-  @Override public ChildListPropertyDescriptor listDescritor(@SuppressWarnings("unused") final MethodDeclaration __) {
+  @Override public ChildListPropertyDescriptor listDescriptor(@SuppressWarnings("unused") final MethodDeclaration __) {
     return TypeDeclaration.BODY_DECLARATIONS_PROPERTY;
   }
 
