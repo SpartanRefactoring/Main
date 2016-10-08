@@ -53,9 +53,6 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
   @SuppressWarnings("unused") @Override public ASTNode replacement(final InfixExpression ¢) {
     final List<Expression> c = gather(¢, new ArrayList<Expression>());
-    // TODO: Matteo - do we need this?
-    for (final Expression a : c)
-      ;
     final Operator b = ¢.getOperator();
     final List<Expression> allOperands = extract.allOperands(¢);
     final List<Operator> allOperators = extract.allOperators(¢);
