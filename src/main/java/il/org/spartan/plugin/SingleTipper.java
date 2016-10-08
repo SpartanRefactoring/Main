@@ -114,14 +114,14 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     /** [[SuppressWarningsSpartan]] */
     @Override public String getOpeningMessage(final Map<attribute, Object> ¢) {
-      int cs = getCUsCount(¢);
+      final int cs = getCUsCount(¢);
       return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + cs + " " + plurals("file", cs) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
     /** [[SuppressWarningsSpartan]] */
     @SuppressWarnings("boxing") @Override public String getEndingMessage(final Map<attribute, Object> ¢) {
-      int cs = getChangesCount(¢);
+      final int cs = getChangesCount(¢);
       return //
       "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" //
           + cs + " " + plurals("file", cs) + " spartanized in " + ¢.get(attribute.PASSES) + " " + plurales("pass", (int) ¢.get(attribute.PASSES))
@@ -174,7 +174,8 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     public abstract String getLabelSuffix();
 
-    @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public GUI$Applicator getApplicator(final IMarker m) {
+    @SuppressWarnings({ "unchecked", "rawtypes" }) //
+    @Override public GUI$Applicator getApplicator(final IMarker m) {
       try {
         assert m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         if (m.getResource() == null)

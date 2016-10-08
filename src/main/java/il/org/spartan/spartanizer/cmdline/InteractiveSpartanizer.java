@@ -8,8 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * @author ?
+/** @author ?
  * @since 2016 */
 public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
