@@ -84,6 +84,7 @@ public class Issue408 {
   
   @SuppressWarnings("static-method") @Test public void issue408_09b() {
     trimmingOf("4+\"string\"+0+1").stays();
+  }
 
   // A test from issue162 moved here.
   // TODO: Mateu InfixAdditionZero fail.
