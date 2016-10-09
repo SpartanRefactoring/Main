@@ -9,15 +9,15 @@ import org.eclipse.jdt.core.dom.*;
 public class NPMarkerVisitor extends ASTVisitor {
   static Map<Class<?>, List<NanoPattern>> nanoPatterns = new HashMap<>();
 
-  @Override public void postVisit(ASTNode n) {
-    for (NanoPattern ¢ : nanoPatterns.get(n.getClass()))
+  @Override public void postVisit(final ASTNode n) {
+    for (final NanoPattern ¢ : nanoPatterns.get(n.getClass()))
       if (¢.matches(n))
         mark(¢, n);
   }
 
   /** @param p
    * @param n */
-  private void mark(NanoPattern p, ASTNode n) {
+  private void mark(final NanoPattern p, final ASTNode n) {
     // TODO Auto-generated method stub
   }
 }
