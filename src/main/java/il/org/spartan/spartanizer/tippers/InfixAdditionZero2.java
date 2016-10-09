@@ -61,41 +61,24 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     final ArrayList<Expression> ops2 = new ArrayList<>();
     for (int i = 0; i < ops.size(); i++) {
       final Expression ¢2 = ops.get(i);
-//      System.out.println(iz.stringLiteral(ops.get(i-1)));
-//      if(iz.stringLiteral(¢2))
-//        System.out.println("string literal: " + ¢2);
-//      if(!iz.stringLiteral(¢2)){
-//        System.out.println("string literal: " + ¢2);
       if (!iz.literal0(¢2)) {
         System.out.println(¢2);
         ops2.add(ops.get(i));
       }
-      else // if(iz.literal0(¢2))
-          if((i+1) < ops.size())
-            if(iz.stringLiteral(ops.get(i+1))){
-              System.out.println("string after");
-              ops2.add(¢2);
-              }
-          else 
-          if(i>0){
-            System.out.println("string before");
-            if(iz.stringLiteral(ops.get(i-1))){
-              System.out.println("string before");
-              ops2.add(¢2);
-            }
+      else 
+      if((i+1) < ops.size())
+        if(iz.stringLiteral(ops.get(i+1))){
+          System.out.println("string after");
+          ops2.add(¢2);
           }
-            
-//        else if(iz.stringLiteral(¢2))
-//          if((i+1) < ops.size())
-//            if(iz.literal0(ops.get(i+1)))
-//              ops2.add(ops.get(i));
-//        else if(iz.stringLiteral(¢2))
-//          if((i+1) < ops.size())
-//             if(iz.literal0(ops.get(i+1)))
-//                  ops2.add(ops.get(i));
-//          else
-//            ops2.add(subject.append(subject.pair(¢2,ops.get(i+1)).to(Operator.PLUS)));
-//        }
+      else 
+      if(i>0){
+        System.out.println("string before");
+        if(iz.stringLiteral(ops.get(i-1))){
+          System.out.println("string before");
+          ops2.add(¢2);
+        }
+      }
     }
     InfixExpression inexp = null;
     for (int i = 0; i < ops2.size() - 1; i++)
