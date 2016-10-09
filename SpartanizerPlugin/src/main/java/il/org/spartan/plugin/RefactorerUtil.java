@@ -10,7 +10,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
-
 import il.org.spartan.plugin.Refactorer.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -91,12 +90,13 @@ public class RefactorerUtil {
       return Selection.empty();
     }
 
+    /** We may use {@link selection#getProject(ISelection)} instead. */
     public static Selection getAllCompilationUnits() {
       final ISelection s = getSelection();
       if (s == null)
         return Selection.empty();
       if (s instanceof ITextSelection)
-        return by(getProject()).setTextSelection(null);
+        return by(getJavaProject()).setTextSelection(null);
       return Selection.empty();
     }
 
@@ -111,7 +111,7 @@ public class RefactorerUtil {
       return Selection.empty();
     }
 
-    private static ISelection getSelection() {
+    public static ISelection getSelection() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -123,7 +123,7 @@ public class RefactorerUtil {
     }
 
     /** Depends on local editor */
-    private static IJavaProject getProject() {
+    private static IProject getProject() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -142,7 +142,34 @@ public class RefactorerUtil {
       final IResource r = i.getAdapter(IResource.class);
       if (r == null)
         return null;
-      return JavaCore.create(r.getProject());
+      return r.getProject();
+    }
+
+    public static IProject getProject(final ISelection s) {
+      if (s == null || s instanceof ITextSelection)
+        return getProject();
+      if (s instanceof ITreeSelection) {
+        final Object o = ((TreeSelection) s).getFirstElement();
+        if (o == null)
+          return null;
+        if (o instanceof MarkerItem) {
+          final IMarker m = ((MarkerItem) o).getMarker();
+          if (m == null)
+            return null;
+          final IResource r = m.getResource();
+          return r == null ? null : r.getProject();
+        }
+        if (o instanceof IJavaElement) {
+          final IJavaProject p = ((IJavaElement) o).getJavaProject();
+          return p == null ? null : p.getProject();
+        }
+      }
+      return null;
+    }
+
+    private static IJavaProject getJavaProject() {
+      final IProject p = getProject();
+      return p == null ? null : JavaCore.create(p);
     }
 
     /** Depends on local editor */
