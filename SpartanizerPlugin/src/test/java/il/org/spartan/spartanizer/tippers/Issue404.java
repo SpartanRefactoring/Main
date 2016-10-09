@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import il.org.spartan.spartanizer.ast.navigate.dig;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -54,12 +56,12 @@ public class Issue404 {
    * </pre>
    *
    * annotation on your test class */
-  /*
+  
   @Test public void a() {
     dig.class.hashCode();
-  }*/
+  }
 
-  /** Make sure that {@link dig} is an <code>interface</code> *//*
+  /** Make sure that {@link dig} is an <code>interface</code> */
   @Test public void b() {
     assert dig.class.isInterface();
   }
@@ -97,11 +99,10 @@ public class Issue404 {
     assert dig.stringLiterals(into.e("\"str\"")).size() == 1;
     assert "str".equals(dig.stringLiterals(into.e("\"str\"")).get(0));
   }
-  */
+  
   /** Correct way of trimming does not change */
-  /*
   @Test public void Z$140() {
     trimmingOf("a").stays();
   }
-  */
+  
 }
