@@ -117,7 +117,7 @@ import il.org.spartan.spartanizer.engine.*;
     azzert.that(refit + "", is("3 * 4 + 5"));
   }
 
-  @Test @Ignore public void refitWithSort() {
+  @Test public void refitWithSort() {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));

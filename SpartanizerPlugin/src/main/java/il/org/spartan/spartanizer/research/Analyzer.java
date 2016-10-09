@@ -33,6 +33,7 @@ public class Analyzer {
     }
   }
 
+  /** Remove all comments from all files in directory @param outputFolder */
   private static void clean(final String inputFolder, String outputFolder) {
     for (final File f : getJavaFiles(inputFolder)) {
       final ASTNode cu = getCompilationUnit(f);
@@ -42,10 +43,10 @@ public class Analyzer {
   }
 
   private static void updateFile(final File f, final ASTNode cu) {
-    updateFile(f, cu);
+    updateFile(f, cu + "");
   }
 
-  private static void writeFile(final File f, final String s) {
+  private static void updateFile(final File f, final String s) {
     try (final PrintWriter writer = new PrintWriter(f.getAbsolutePath())) {
       writer.print(s);
       writer.close();
@@ -70,7 +71,7 @@ public class Analyzer {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
-  static String readFile(final String fileName) {
+  private static String readFile(final String fileName) {
     try {
       return FileUtils.read(new File(fileName));
     } catch (final IOException e) {
@@ -118,7 +119,7 @@ public class Analyzer {
     // TODO: much more then that..
   }
 
-  static int nodes(final ASTNode root) {
+  private static int nodes(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") ASTNode __) {
@@ -128,7 +129,7 @@ public class Analyzer {
     return $.inner;
   }
 
-  static int markedNodes(final ASTNode root) {
+  private static int markedNodes(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
@@ -149,11 +150,12 @@ public class Analyzer {
   /** @param inputFolder
    * @param outputFolder */
   private static void spartanize(final String inputFolder, String outputFolder) {
-    InteractiveSpartanizer is = new InteractiveSpartanizer();
+    InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+//    spartanizer.toolbox.add(n, ns)
     String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
       System.out.println("Now: " + ¢.getName());
-      spartanizedCode = is.fixedPoint(getCompilationUnit(¢) + "");
+      spartanizedCode = spartanizer.fixedPoint(getCompilationUnit(¢) + "");
       appendFile((new File(outputFolder + "/after.java")), spartanizedCode);
     }
   }

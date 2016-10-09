@@ -7,12 +7,12 @@ import org.eclipse.jdt.core.dom.*;
 /** @author Yossi Gil
  * @since 2016-10-07 */
 public interface dig {
-  static List<String> stringLiterals(final ASTNode ¢) {
+  static List<String> stringLiterals(final ASTNode n) {
     final List<String> $ = new ArrayList<>();
-    if (¢ == null)
+    if (n == null)
       return $;
-    ¢.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("hiding") final StringLiteral ¢) {
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final StringLiteral ¢) {
         $.add(¢.getLiteralValue());
         return true;
       }
