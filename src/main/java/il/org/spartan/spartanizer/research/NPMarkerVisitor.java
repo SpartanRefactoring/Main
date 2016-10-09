@@ -17,7 +17,9 @@ public class NPMarkerVisitor extends ASTVisitor {
 
   /** @param p
    * @param n */
-  private void mark(NanoPattern p, ASTNode n) {
-    // TODO Auto-generated method stub
+  @SuppressWarnings("unchecked") private static void mark(NanoPattern p, ASTNode n) {
+    if (n.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) == null)
+      n.setProperty(Marker.AST_PROPERTY_NAME_NP_LIST, new ArrayList<Marker>());
+    ((List<Marker>) n.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST)).add(new Marker(p));
   }
 }
