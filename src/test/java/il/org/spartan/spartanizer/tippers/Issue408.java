@@ -87,8 +87,6 @@ public class Issue408 {
   }
 
   // A test from issue162 moved here.
-
-  // A test from issue162 moved here.
   // TODO: Mateu InfixAdditionZero fail.
   @Ignore @Test public void issue162_01() {
     trimmingOf("0+(0+x+y+(4))").gives("x+y+4").stays();
