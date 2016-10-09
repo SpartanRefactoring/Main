@@ -8,8 +8,6 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings("static-method") //
 public class TestFactoryTest {
-  Object o = TipperFactory.tipper("", "", "");
-
   @Test public void testRenaming() {
     assertEquals("if(a == b) return c(a, d());", TestFactory.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"));
   }
