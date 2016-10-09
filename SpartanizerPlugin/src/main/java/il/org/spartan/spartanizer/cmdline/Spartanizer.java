@@ -152,8 +152,6 @@ public final class Spartanizer {
   }
 
   void fire() {
-//    System.out.println(toolbox.hooksCount());
-//    System.out.println(Toolbox.defaultInstance().hooksCount());
     spartanizeAndAnalyze();
     runEssence();
     runWordCount();
@@ -277,7 +275,7 @@ public final class Spartanizer {
   }
 
   void spartanizeAndAnalyze(final File f) {
-    if (!f.getPath().contains("src/test"))
+    if (!f.getPath().matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")); //contains("src/test"))
       try {
         currentFile = f;
         spartanizeAndAnalyze(FileUtils.read(f));
