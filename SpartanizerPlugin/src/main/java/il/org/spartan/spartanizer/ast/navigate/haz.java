@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.compiler.util.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -29,12 +28,12 @@ public enum haz {
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return !extract.annotations(¢).isEmpty();
   }
-  
+
   static boolean binding(final ASTNode ¢) {
     return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
 
-  public static boolean cent(ASTNode ¢) {
+  public static boolean cent(final ASTNode ¢) {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
 

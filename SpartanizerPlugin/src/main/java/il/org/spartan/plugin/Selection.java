@@ -19,36 +19,36 @@ public class Selection {
   }
 
   public Selection setCompilationUnits(final List<ICompilationUnit> ¢) {
-    this.compilationUnits = ¢ != null ? ¢ : new ArrayList<>();
+    compilationUnits = ¢ != null ? ¢ : new ArrayList<>();
     return this;
   }
 
   public Selection setTextSelection(final ITextSelection ¢) {
-    this.textSelection = ¢;
+    textSelection = ¢;
     return this;
   }
 
   public Selection add(final ICompilationUnit ¢) {
     if (¢ != null)
-      this.compilationUnits.add(¢);
+      compilationUnits.add(¢);
     return this;
   }
 
   public Selection add(final List<ICompilationUnit> ¢) {
     if (¢ != null)
-      this.compilationUnits.addAll(¢);
+      compilationUnits.addAll(¢);
     return this;
   }
 
   /** [[SuppressWarningsSpartan]] */
   public Selection add(final ICompilationUnit... ¢) {
     for (final ICompilationUnit u : ¢)
-      this.compilationUnits.add(u);
+      compilationUnits.add(u);
     return this;
   }
-  
+
   public Selection unify(final Selection ¢) {
-    this.compilationUnits.addAll(¢.compilationUnits);
+    compilationUnits.addAll(¢.compilationUnits);
     return this;
   }
 
@@ -67,8 +67,8 @@ public class Selection {
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
     return new Selection(u == null ? null : Collections.singletonList(u), s);
   }
-  
-  public static Selection of(ICompilationUnit[] ¢) {
+
+  public static Selection of(final ICompilationUnit[] ¢) {
     return new Selection(Arrays.asList(¢), null);
   }
 }

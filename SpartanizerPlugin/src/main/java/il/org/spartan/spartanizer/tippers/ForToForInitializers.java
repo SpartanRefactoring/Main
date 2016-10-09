@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -121,7 +120,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
     return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null //
         && (e.getType() + "").equals(s.getType() + "") && //
-        containsModifiers(extendedModifiers, extendedModifiers2) && containsModifiers(extendedModifiers2,extendedModifiers);
+        containsModifiers(extendedModifiers, extendedModifiers2) && containsModifiers(extendedModifiers2, extendedModifiers);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

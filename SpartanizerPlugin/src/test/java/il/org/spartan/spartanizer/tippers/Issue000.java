@@ -1,13 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.junit.*;
-import org.junit.runners.*;
-
-import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -54,7 +49,7 @@ public class Issue000 {
     azzert.that(spartan.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
     azzert.that(minus.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
     azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
-    }
+  }
 
   /** Correct way of trimming does not change */
   @Test public void demoOfTrimming() {
