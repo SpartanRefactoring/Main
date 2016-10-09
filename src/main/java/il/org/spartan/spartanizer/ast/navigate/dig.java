@@ -10,8 +10,14 @@ import org.eclipse.jdt.core.dom.*;
 public interface dig {
   static List<String> stringLiterals(final ASTNode ¢) {
     List<String> $ = new ArrayList<>();
-    if(¢ instanceof StringLiteral)
-      $.add(((StringLiteral)¢).getLiteralValue());
+    if(¢ == null)
+      return $;
+    ¢.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("hiding") StringLiteral ¢){
+        $.add(¢.getLiteralValue());
+        return true;
+      }
+    });
     return $;
   }
 }
