@@ -7,7 +7,7 @@ import org.junit.*;
 /** Test for issue 408
  * @author Matteo Orru'
  * @since 2016 */
-//@Ignore("Take note, you cannot convert x + 0 to x, unless you know that x is not a string") 
+@Ignore("Take note, you cannot convert x + 0 to x, unless you know that x is not a string") 
 public class Issue408 {
   @SuppressWarnings("static-method") @Test public void issue408_01() {
     trimmingOf("0+x").gives("x").stays();
