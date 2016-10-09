@@ -25,6 +25,13 @@ public enum haz {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
 
+  public static boolean Final(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (IExtendedModifiersOrdering.compare(¢, IExtendedModifiersOrdering.FINAL) == 0)
+        return true;
+    return false;
+  }
+  
   public static boolean annotation(final VariableDeclarationStatement ¢) {
     return !extract.annotations(¢).isEmpty();
   }
