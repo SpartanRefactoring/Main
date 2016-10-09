@@ -7,8 +7,7 @@ import org.junit.*;
 /** Test for issue 408
  * @author Matteo Orru'
  * @since 2016 */
-@Ignore("Take note, you cannot convert x + 0 to x, unless you know that x is not a string") 
-public class Issue408 {
+@Ignore("Take note, you cannot convert x + 0 to x, unless you know that x is not a string") public class Issue408 {
   @SuppressWarnings("static-method") @Test public void issue408_01() {
     trimmingOf("0+x").gives("x").stays();
   }
@@ -76,14 +75,6 @@ public class Issue408 {
 
   @SuppressWarnings("static-method") @Test public void issue408_08() {
     trimmingOf("0+0+x+4*y").gives("x+4*y").stays();
-  }
-  
-  @SuppressWarnings("static-method") @Test public void issue408_09() {
-    trimmingOf("0+\"string\"+4*y").stays();
-  }
-  
-  @SuppressWarnings("static-method") @Test public void issue408_09b() {
-    trimmingOf("4+\"string\"+0+1").stays();
   }
 
   // A test from issue162 moved here.
