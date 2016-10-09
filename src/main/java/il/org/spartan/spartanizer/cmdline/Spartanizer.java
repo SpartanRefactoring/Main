@@ -165,8 +165,6 @@ public final class Spartanizer {
   }
 
   boolean spartanizeAndAnalyze(final BodyDeclaration ¢) {
-    System.out.println(¢.getNodeType());
-//    System.out.println(¢);
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
     final int nodes = metrics.nodesCount(¢);
@@ -252,11 +250,6 @@ public final class Spartanizer {
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
         
-        //Mat
-//        ArrayList<ASTNode> ms = (ArrayList<ASTNode>) ¢.modifiers();
-//        for(ASTNode m: ms) {
-//          ;
-//        }
         return spartanizeAndAnalyze(¢);
       }
 
