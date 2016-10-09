@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public class Analyzer {
   public static void main(final String args[]) {
-    String folderName = args[1];
+    final String folderName = args[1];
     switch (args[0]) {
       case "-clean":
         clean(folderName);
@@ -31,28 +31,28 @@ public class Analyzer {
     }
   }
 
-  private static void clean(String folderName) {
+  private static void clean(final String folderName) {
     for (final File f : getJavaFiles(folderName)) {
-      ASTNode cu = getCompilationUnit(f);
+      final ASTNode cu = getCompilationUnit(f);
       clean(cu);
       updateFile(f, cu);
     }
   }
 
-  private static void updateFile(final File f, ASTNode cu) {
+  private static void updateFile(final File f, final ASTNode cu) {
     try (final PrintWriter writer = new PrintWriter(f.getAbsolutePath())) {
       writer.print(cu);
       writer.close();
-    } catch (FileNotFoundException e) {
+    } catch (final FileNotFoundException e) {
       e.printStackTrace();
     }
   }
 
-  private static void clean(ASTNode cu) {
+  private static void clean(final ASTNode cu) {
     cu.accept(new CommentsCleanerVisitor());
   }
 
-  private static ASTNode getCompilationUnit(File ¢) {
+  private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
@@ -67,7 +67,7 @@ public class Analyzer {
 
   public static void analyze(final String folderName) {
     for (final File f : getJavaFiles(folderName)) {
-      ASTNode cu = getCompilationUnit(f);
+      final ASTNode cu = getCompilationUnit(f);
       analyze(cu);
       updateFile(f, cu);
     }
@@ -80,10 +80,10 @@ public class Analyzer {
   /** @param folderName
    * @return */
   private static Set<File> getJavaFiles(final File dir) {
-    Set<File> $ = new HashSet<>();
+    final Set<File> $ = new HashSet<>();
     if (dir == null || dir.listFiles() == null)
       return $;
-    for (File entry : dir.listFiles())
+    for (final File entry : dir.listFiles())
       if (entry.isFile() && entry.getName().endsWith(".java"))
         $.add(entry);
       else
@@ -112,7 +112,7 @@ public class Analyzer {
   }
 
   /** @param folderName */
-  private static ASTNode spartanize(String folderName) {
+  private static ASTNode spartanize(final String folderName) {
     return null;
     // TODO call some spartanizer
   }

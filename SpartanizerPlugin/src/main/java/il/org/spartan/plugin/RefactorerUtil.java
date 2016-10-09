@@ -10,6 +10,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
+
 import il.org.spartan.plugin.Refactorer.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -145,7 +146,7 @@ public class RefactorerUtil {
     }
 
     /** Depends on local editor */
-    private static Selection by(ITextSelection s) {
+    private static Selection by(final ITextSelection s) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -178,7 +179,7 @@ public class RefactorerUtil {
       return ¢ == null || !¢.exists() ? null : by(¢.getResource());
     }
 
-    private static Selection by(TreeSelection s) {
+    private static Selection by(final TreeSelection s) {
       final Object o = s.getFirstElement();
       if (o instanceof MarkerItem)
         return by((MarkerItem) o);
@@ -198,11 +199,11 @@ public class RefactorerUtil {
     private static Selection by(final IJavaProject p) {
       if (p == null)
         return Selection.empty();
-      Selection $ = Selection.empty();
+      final Selection $ = Selection.empty();
       final IPackageFragmentRoot[] rs;
       try {
         rs = p.getPackageFragmentRoots();
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
@@ -212,12 +213,12 @@ public class RefactorerUtil {
     }
 
     private static Selection by(final IPackageFragmentRoot r) {
-      Selection $ = Selection.empty();
+      final Selection $ = Selection.empty();
       try {
         for (final IJavaElement ¢ : r.getChildren())
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             $.unify(by((IPackageFragment) ¢));
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
@@ -227,7 +228,7 @@ public class RefactorerUtil {
     private static Selection by(final IPackageFragment f) {
       try {
         return f == null ? Selection.empty() : Selection.of(f.getCompilationUnits());
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
@@ -239,7 +240,7 @@ public class RefactorerUtil {
       ISourceRange r;
       try {
         r = m.getSourceRange();
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
