@@ -96,7 +96,7 @@ public class Issue404 {
   
   @Test public void j() {
     assert dig.stringLiterals(into.e("\"str\"")).size() == 1;
-    assert "str".equals(dig.stringLiterals(into.e("\"\"")).get(0));
+    assert "str".equals(dig.stringLiterals(into.e("\"str\"")).get(0));
   }
 
   /** Correct way of trimming does not change */
