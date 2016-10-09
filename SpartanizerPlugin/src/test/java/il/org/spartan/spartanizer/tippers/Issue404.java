@@ -2,8 +2,12 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import java.awt.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.engine.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
  * @author Yossi Gil
@@ -79,6 +83,20 @@ public class Issue404 {
 
   @Test public void g() {
     assert dig.stringLiterals(null) != null;
+  }
+  
+  @Test public void h() {
+    assert dig.stringLiterals(null).isEmpty();
+  }
+  
+  @Test public void i() {
+    assert dig.stringLiterals(into.e("\"\"")).size() == 1;
+    assert "".equals(dig.stringLiterals(into.e("\"\"")).get(0));
+  }
+  
+  @Test public void j() {
+    assert dig.stringLiterals(into.e("\"str\"")).size() == 1;
+    assert "str".equals(dig.stringLiterals(into.e("\"\"")).get(0));
   }
 
   /** Correct way of trimming does not change */
