@@ -6,13 +6,7 @@ import java.util.function.*;
 /** A {@link Listener} that listen to {@link event}s.
  * @author Ori Roth
  * @since 2016 */
-public class EventMapper implements Listener {
-  /** Possible events during spartanization process */
-  enum event {
-    run_start, run_finish, run_pass, //
-    visit_project, visit_cu, visit_node, //
-  }
-
+public class EventMapper extends EventListener {
   protected final Map<event, Object> eventMap;
   @SuppressWarnings("rawtypes") protected final List<EventFunctor> recorders;
 
@@ -23,14 +17,16 @@ public class EventMapper implements Listener {
     recorders = new ArrayList<>();
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(Object... os) {
-    if (os != null && (os.length == 0 || os.length == 1) && os[0] instanceof event)
-      for (final EventFunctor ¢ : recorders)
-        if (¢.domain(((event) os[0])))
-          if (os.length == 0)
-            ¢.update(eventMap);
-          else
-            ¢.update(eventMap, os[1]);
+  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(event e) {
+    for (final EventFunctor ¢ : recorders)
+      if (¢.domain(e))
+        ¢.update(eventMap);
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(event e, Object o) {
+    for (final EventFunctor ¢ : recorders)
+      if (¢.domain(e))
+        ¢.update(eventMap, o);
   }
 
   /** Expend this EventMapper by adding a recorder.
