@@ -246,7 +246,7 @@ public class Toolbox {
             new DeclarationInitializerReturnExpression(), //
             new DeclarationInitializerReturnAssignment(), //
             new DeclarationInitializerReturnUpdateAssignment(), //
-            new DeclarationInitializerStatementTerminatingScope(), //
+//            new DeclarationInitializerStatementTerminatingScope(), //
             new DeclarationInitialiazerAssignment(), //
             new VariableDeclarationRenameUnderscoreToDoubleUnderscore<VariableDeclarationFragment>(), //
             new ForToForInitializers(), //
