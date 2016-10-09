@@ -200,14 +200,14 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod() {
-    trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
+    trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int __, final int ofTotal) {\n"
         + "          if (!isMessageSuppressed(myMessage)) {\n" + //
         "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(myMessage);\n"
         + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
         + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
             .gives(
-                "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+                "@Override public void messageFinished(final LocalMessage myMessage,final int __,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod2() {
@@ -1227,6 +1227,8 @@ public final class Version230 {
 
   @Test public void infiniteLoopBug1() {
     trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet) {\n"
+        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }")
+    .gives("static boolean hasAnnotation(final VariableDeclarationFragment __) {\n"
         + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }").stays();
   }
 
@@ -2239,7 +2241,7 @@ public final class Version230 {
   }
 
   @Test public void paramAbbreviateConflictingWithMethodName() {
-    trimmingOf("void m(BitmapManipulator bitmapManipulator, int abcd) {" + "bitmapManipulator.x().y();").stays();
+    trimmingOf("void m(BitmapManipulator bitmapManipulator, int __) {" + "bitmapManipulator.x().y();").stays();
   }
 
   @Test public void paramAbbreviateMultiple() {
@@ -2777,7 +2779,7 @@ public final class Version230 {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimmingOf("void f(int x) {}").stays();
+    trimmingOf("void f(int x) {}").gives("void f(int __) {}").stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
@@ -2787,12 +2789,12 @@ public final class Version230 {
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
     trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}")//
-        .gives("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
+        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore5() {
     trimmingOf("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
-        .gives("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int __) {}");
+        .gives("void f(int __, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}");
   }
 
   @Test public void renameVariableUnderscore1() {
