@@ -4,10 +4,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.navigate.dig;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
@@ -138,6 +140,13 @@ public class Issue404 {
     assert $.size() == 2 : "The List did not contain the expected number of elements";
     assert $.contains("") : "List did not contain expected element \"\"";
     assert $.contains("str") : "List did not contain expected element \"str\"";
+  }
+  
+  @Test public void p(){
+    List<String> $ = dig.stringLiterals(into.i("\"0\" + \"1\""));
+    assert $.size() == 2 : "The List did not contain the expected number of elements";
+    assert $.contains("0") : "List did not contain expected element \"0\"";
+    assert $.contains("1") : "List did not contain expected element \"1\"";
   }
 
   /** Correct way of trimming does not change */
