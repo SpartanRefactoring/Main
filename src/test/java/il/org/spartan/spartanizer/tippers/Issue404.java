@@ -2,8 +2,13 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import java.util.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.ast.navigate.dig;
+import il.org.spartan.spartanizer.engine.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
  * @author Yossi Gil
@@ -79,6 +84,60 @@ public class Issue404 {
 
   @Test public void g() {
     assert dig.stringLiterals(null) != null;
+  }
+
+  @Test public void h() {
+    assert dig.stringLiterals(null).isEmpty();
+  }
+
+  @Test public void i() {
+    assert dig.stringLiterals(into.e("\"\"")).size() == 1 : "The List did not contain the expected number of elements.";
+    assert "".equals(dig.stringLiterals(into.e("\"\"")).get(0)) : "The contained element was not the expected one.";
+  }
+
+  @Test public void j() {
+    assert dig.stringLiterals(into.e("\"str\"")).size() == 1 : "The List did not contain the expected number of elements.";
+    assert "str".equals(dig.stringLiterals(into.e("\"str\"")).get(0)) : "The contained element was not the expected one.";
+  }
+
+  @Test public void k() {
+    final List<String> $ = dig.stringLiterals(into.a("s = \"a\""));
+    assert $.size() == 1 : "The List did not contain the expected number of elements.";
+    assert "a".equals($.get(0)) : "The contained element was not the expected one.";
+  }
+
+  @Test public void l() {
+    final List<String> $ = dig.stringLiterals(into.c("\"a\".size() > b.size() ? b : a"));
+    assert $.size() == 1 : "The List did not contain the expected number of elements.";
+    assert "a".equals($.get(0));
+  }
+
+  @Test public void m() {
+    final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
+        + "int i = \"four\".size();\n"//
+        + "String foo(){\n"//
+        + "return \"fooFunc\";\n"//
+        + "}\n"//
+        + "}"));
+    assert $.size() == 2 : "The List did not contain the expected number of elements.";
+    assert $.contains("four") : "List did not contain expected element \"four\"";
+    assert $.contains("fooFunc") : "List did not contain expected element \"fooFunc\"";
+  }
+
+  @Test public void n() {
+    final List<String> $ = dig.stringLiterals(into.d("int f(String a){\n" + "return a.equals(\"2\") ? \"3\".size() : \"one\".size();\n"//
+        + "}"));
+    assert $.size() == 3 : "The List did not contain the expected number of elements";
+    assert $.contains("2") : "List did not contain expected element \"2\"";
+    assert $.contains("3") : "List did not contain expected element \"3\"";
+    assert $.contains("one") : "List did not contain expected element \"one\"";
+  }
+
+  @Test public void o() {
+    final List<String> $ = dig.stringLiterals(into.s("{ a=\"\"; b=\"str\";}"));
+    assert $.size() == 2 : "The List did not contain the expected number of elements";
+    assert $.contains("") : "List did not contain expected element \"\"";
+    assert $.contains("str") : "List did not contain expected element \"str\"";
   }
 
   /** Correct way of trimming does not change */
