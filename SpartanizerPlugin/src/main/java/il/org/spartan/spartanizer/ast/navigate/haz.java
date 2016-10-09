@@ -55,6 +55,13 @@ public enum haz {
     return false;
   }
 
+  public static boolean Final(final List<IExtendedModifier> ms) {
+    for (final IExtendedModifier ¢ : ms)
+      if (IExtendedModifiersOrdering.compare(¢, IExtendedModifiersOrdering.FINAL) == 0)
+        return true;
+    return false;
+  }
+
   static boolean hasAnnotation(final List<IExtendedModifier> ms) {
     for (final IExtendedModifier ¢ : ms)
       if (¢.isAnnotation())
