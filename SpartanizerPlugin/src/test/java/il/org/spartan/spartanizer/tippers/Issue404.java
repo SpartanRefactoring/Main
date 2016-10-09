@@ -138,6 +138,13 @@ public class Issue404 {
     assert $.contains("one") : "List did not contain expected element \"one\"";
   }
   
+  @Test public void o() {
+    List<String> $ = dig.stringLiterals(into.s("{ a=\"\"; b=\"str\"}"));
+    assert $.size() == 2 : "The List did not contain the expected number of elements";
+    assert $.contains("") : "List did not contain expected element \"\"";
+    assert $.contains("str") : "List did not contain expected element \"str\"";
+  }
+  
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimmingOf("a").stays();
