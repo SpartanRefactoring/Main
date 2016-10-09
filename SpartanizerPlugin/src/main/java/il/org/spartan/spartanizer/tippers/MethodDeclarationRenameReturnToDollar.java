@@ -73,7 +73,7 @@ abstract class AbstractRenamePolicy {
   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(inner.getBody()) ? null
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(localVariables) ? null
         : innerSelectReturnVariable();
   }
 }

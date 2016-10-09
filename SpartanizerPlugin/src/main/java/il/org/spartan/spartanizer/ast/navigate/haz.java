@@ -48,10 +48,6 @@ public enum haz {
     }) > 0;
   }
 
-  public static boolean dollar(final ASTNode ¢) {
-    return !Collect.usesOf("$").inside(¢).isEmpty();
-  }
-
   public static boolean dollar(final List<SimpleName> ns) {
     for (final SimpleName ¢ : ns)
       if ("$".equals(identifier(¢)))

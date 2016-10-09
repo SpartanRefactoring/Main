@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -53,7 +54,7 @@ public final class Spartanizer {
   private final String inputPath;
   private CSVStatistics report;
   private final String reportFileName;
-  private final Toolbox toolbox = new Toolbox();
+  private Toolbox toolbox = new Toolbox();
 
   private Spartanizer(final String path) {
     this(path, system.folder2File(path));
@@ -79,25 +80,28 @@ public final class Spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
+    toolbox=Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
-        if (!check(n) || disabling.on(n)) // removed !inRange(m, n) || !check(n)
-                                          // is always false
+        if (!check(n) || disabling.on(n)) {// removed !inRange(m, n) || !check(n)
           return true;
+        }
         final Tipper<N> w = getTipper(n);
-        if (w == null)
+        if (w == null){
           return true;
-        System.out.println(w.description(n));
+        }
         Tip s = null;
         try {
           s = w.tip(n, exclude);
+          System.out.println("tipper description: " + w.description());
           TrimmerLog.tip(w, n);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         }
-        if (s != null)
+        if (s != null){
           TrimmerLog.application(r, s);
+        }
         return true;
       }
 
@@ -148,8 +152,8 @@ public final class Spartanizer {
   }
 
   void fire() {
-    System.out.println(toolbox.hooksCount());
-    System.out.println(Toolbox.defaultInstance().hooksCount());
+//    System.out.println(toolbox.hooksCount());
+//    System.out.println(Toolbox.defaultInstance().hooksCount());
     spartanizeAndAnalyze();
     runEssence();
     runWordCount();
@@ -161,6 +165,8 @@ public final class Spartanizer {
   }
 
   boolean spartanizeAndAnalyze(final BodyDeclaration ¢) {
+    System.out.println(¢.getNodeType());
+//    System.out.println(¢);
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
     final int nodes = metrics.nodesCount(¢);
@@ -245,12 +251,35 @@ public final class Spartanizer {
         // if (m instanceof Annotation && "@Test".equals(((Annotation)
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
+        
+        //Mat
+//        ArrayList<ASTNode> ms = (ArrayList<ASTNode>) ¢.modifiers();
+//        for(ASTNode m: ms) {
+//          ;
+//        }
         return spartanizeAndAnalyze(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
+      
+      @Override public boolean visit(final EnumConstantDeclaration ¢) {
+        return spartanizeAndAnalyze(¢);
+      }
+      
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        return spartanizeAndAnalyze(¢);
+      }
+      
+      @Override public boolean visit(final EnumDeclaration ¢) {
+        return spartanizeAndAnalyze(¢);
+      }
+      
+      @Override public boolean visit(final Initializer ¢) {
+        return spartanizeAndAnalyze(¢);
+      }
+      
     });
   }
 
