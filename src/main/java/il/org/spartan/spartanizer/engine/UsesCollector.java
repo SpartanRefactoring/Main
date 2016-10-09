@@ -462,7 +462,6 @@ class StringCollector extends HidingDepth {
   }
 }
 
-
 class UsesCollectorIgnoreDefinitions extends UsesCollector {
   public UsesCollectorIgnoreDefinitions(final UsesCollector c) {
     super(c);
