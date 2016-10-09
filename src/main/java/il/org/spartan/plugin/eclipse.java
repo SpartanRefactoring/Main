@@ -38,7 +38,7 @@ public enum eclipse {
   private static boolean iconNonBusyInitialized;
   static org.eclipse.swt.graphics.Image iconNonBusy;
   static final Shell parent = null;
-  static final int shellStyle = SWT.TOOL | SWT.CLOSE | SWT.TITLE;
+  static final int shellStyle = SWT.TOOL;
   static final boolean takeFocusOnOpen = false;
   static final boolean persistSize = false;
   static final boolean persistLocation = false;
