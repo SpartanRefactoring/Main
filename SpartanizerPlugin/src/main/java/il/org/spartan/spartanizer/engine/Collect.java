@@ -50,7 +50,7 @@ public enum Collect {
   /** Creates a new spartanizer which holds the occurrences of the provided name
    * in declarations.
    * @param n JD
-   * @return A {@link Spartanizer}, with the uses of the provided identifier
+   * @return A {@link spartanizer}, with the uses of the provided identifier
    *         within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
@@ -77,7 +77,7 @@ public enum Collect {
 
   /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
-   * @return {@link Spartanizer} of all occurrences which are not
+   * @return {@link spartanizer} of all occurrences which are not
    *         definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
@@ -108,7 +108,7 @@ public enum Collect {
   /** Creates a new spartanizer which holds all the occurrences of the provided
    * name.
    * @param n JD
-   * @return A {@link Spartanizer}, with the uses of the provided identifier
+   * @return A {@link spartanizer}, with the uses of the provided identifier
    *         within the provided {@link ASTNode}s array to the in function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
