@@ -44,10 +44,6 @@ public class TrimmerLog {
     System.out.println("       After: " + r);
   }
 
-  public static void fileProperties() {
-    // TODO Matteo: Auto-generated method stub do we need this?
-  }
-
   public static int getMaxApplications() {
     return maxApplications;
   }
