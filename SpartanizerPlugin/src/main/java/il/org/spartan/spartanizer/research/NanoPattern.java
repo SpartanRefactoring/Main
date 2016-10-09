@@ -4,8 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class NanoPattern {
-  public boolean matches(final ASTNode n) {
-    return false;
-  }
+public abstract class NanoPattern {
+  public abstract boolean matches(ASTNode n);
 }
