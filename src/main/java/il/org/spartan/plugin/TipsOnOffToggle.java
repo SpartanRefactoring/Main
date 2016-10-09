@@ -5,8 +5,6 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.handlers.*;
 
 /** A command handler which toggles the spartanization nature
  * @see org.eclipse.core.commands.IHandler
@@ -49,22 +47,20 @@ public final class TipsOnOffToggle extends AbstractHandler {
 
   /** the main method of the command handler, runs when the command is
    * called. */
-  @Override public Void execute(final ExecutionEvent e) {
-    final IEditorPart ep = HandlerUtil.getActiveEditor(e);
-    if (ep == null)
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    IProject p = getProject();
+    if (p == null)
       return null;
-    final IEditorInput i = ep.getEditorInput();
-    if (i == null)
-      return null;
-    if (i instanceof IFileEditorInput) {
-      final IProject p = ((IFileEditorInput) i).getFile().getProject();
-      if (p != null)
-        try {
-          toggleNature(p, !p.hasNature(Nature.NATURE_ID));
-        } catch (final CoreException x) {
-          monitor.logEvaluationError(this, x);
-        }
+    try {
+      toggleNature(p, !p.hasNature(Nature.NATURE_ID));
+    } catch (final CoreException x) {
+      monitor.logEvaluationError(this, x);
     }
     return null;
+  }
+  
+  private static IProject getProject() {
+    final IProject p = RefactorerUtil.selection.getProject(RefactorerUtil.selection.getSelection());
+    return p != null ? p : null;
   }
 }
