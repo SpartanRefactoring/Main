@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.dispatch;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.*;
+
 /** A visitor hack converting the type specific visit functions, into a single
  * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
  * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
@@ -128,6 +130,11 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   }
 
   private boolean cautiousGo(final ASTNode ¢) {
-    return !exclude.isExcluded(¢) && go(¢);
+    try {
+      return !exclude.isExcluded(¢) && go(¢);
+    } catch (Throwable t) {
+      monitor.logEvaluationError(t);
+      return true; 
+    }
   }
 }
