@@ -17,7 +17,6 @@ import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -52,46 +51,23 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression> implements TipperCategory.InVain {
-  @SuppressWarnings("unused") @Override public ASTNode replacement(final InfixExpression ¢) {
-    final List<Expression> c = gather(¢, new ArrayList<Expression>());
-    final Operator b = ¢.getOperator();
-    final List<Expression> allOperands = extract.allOperands(¢);
-    final List<Operator> allOperators = extract.allOperators(¢);
-    final List<Expression> ops = extract.allOperands(¢);
+  @SuppressWarnings("unused") @Override public ASTNode replacement(final InfixExpression x) {
+    final List<Expression> c = gather(x, new ArrayList<Expression>());
+    final Operator b = x.getOperator();
+    final List<Expression> allOperands = extract.allOperands(x);
+    final List<Operator> allOperators = extract.allOperators(x);
+    final List<Expression> ops = extract.allOperands(x);
     final ArrayList<Expression> ops2 = new ArrayList<>();
-    for (int i = 0; i < ops.size(); i++) {
-      final Expression ¢2 = ops.get(i);
-      if (!iz.literal0(¢2)) {
-        System.out.println(¢2);
-        ops2.add(ops.get(i));
-      }
-      else 
-      if((i+1) < ops.size())
-        if(iz.stringLiteral(ops.get(i+1))){
-          System.out.println("string after");
-          ops2.add(¢2);
-          }
-      else 
-      if(i>0){
-        System.out.println("string before");
-        if(iz.stringLiteral(ops.get(i-1))){
-          System.out.println("string before");
-          ops2.add(¢2);
-        }
-      }
-    }
-    InfixExpression inexp = null;
-    for (int i = 0; i < ops2.size() - 1; i++)
-      if (inexp != null)
-        inexp = subject.pair(inexp, ops2.get(i + 1)).to(Operator.PLUS);
-      else
-        inexp = subject.pair(ops2.get(i), ops2.get(i + 1)).to(Operator.PLUS);
-    if (ops2.size() == 1)
-      return ops2.get(0);
-    return inexp;
+    for (int ¢ = 0; ¢ < ops.size(); ++¢)
+      if (!iz.literal0(ops.get(¢)))
+        ops2.add(ops.get(¢));
+    InfixExpression $ = null;
+    for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
+      $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
+    return ops2.size() != 1 ? $ : ops2.get(0);
   }
 
-  @SuppressWarnings("static-method") private boolean containsZeroOperand(final InfixExpression ¢) {
+  private boolean containsZeroOperand(final InfixExpression ¢) {
     final List<Expression> allOperands = extract.allOperands(¢);
     for (final Expression opnd : allOperands)
       if (iz.literal0(opnd))
@@ -99,10 +75,10 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  @SuppressWarnings("static-method") private boolean containsPlusOperator(final InfixExpression ¢) {
-    final List<Operator> allOperators = extract.allOperators(¢);
-    for (final Operator optor : allOperators)
-      if (optor == Operator.PLUS)
+  /** [[SuppressWarningsSpartan]] */
+  private static boolean containsPlusOperator(final InfixExpression e) {
+    for (final Operator o : extract.allOperators(e))
+      if (o == Operator.PLUS)
         return true;
     return false;
   }
@@ -170,3 +146,4 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return TipperGroup.Abbreviation;
   }
 }
+
