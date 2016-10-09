@@ -12,6 +12,8 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public class Analyzer {
   public static void main(final String args[]) {
+    if (args.length != 3)
+      System.out.println("Usage: Analyzer <operation> <inputFolder> <outputFolder>");
     final String inputFolder = args[1];
     switch (args[0]) {
       case "-clean":
