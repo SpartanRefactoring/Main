@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-public class azzert {
+public class leonidasSays {
   public static expression that(final String ¢) {
     return new expression(¢);
   }

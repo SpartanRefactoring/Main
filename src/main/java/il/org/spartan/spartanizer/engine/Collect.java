@@ -121,12 +121,13 @@ public enum Collect {
       }
     };
   }
-  
+
   public static Collector usesOf(final String s) {
     return new Collector(s) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         return null;
       }
+
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
         for (final ASTNode ¢ : ns)
@@ -472,20 +473,18 @@ public enum Collect {
 
     Collector(final SimpleName name) {
       this.name = name;
-      this.stringName = name + "";
+      stringName = name + "";
     }
 
-    /**
-     * @param ns
-     * @return
-     */
+    /** @param ns
+     * @return */
     public List<String> inside(final ASTNode... ns) {
       return null;
     }
 
     Collector(final String name) {
       this.name = null;
-      this.stringName = name;
+      stringName = name;
     }
 
     public abstract List<SimpleName> in(final ASTNode... ns);
