@@ -90,10 +90,6 @@ public class TrimmerLogTest {
     assert u.getJavaElement() == null;
   }
 
-  @Ignore("not ready yet") @Test public void test05() {
-    TrimmerLog.fileProperties();
-  }
-
   @Ignore("not ready yet") @Test public void test06() {
     final String path = "/home/matteo/MUTATION_TESTING_REFACTORING/test-common-lang/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtils.java";
     final File f = new File(path);

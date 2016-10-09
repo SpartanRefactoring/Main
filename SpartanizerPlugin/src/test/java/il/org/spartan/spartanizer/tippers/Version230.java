@@ -27,8 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@SuppressWarnings({ "static-method", "javadoc" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Version230 {
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
@@ -201,14 +200,14 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod() {
-    trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
+    trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int __, final int ofTotal) {\n"
         + "          if (!isMessageSuppressed(myMessage)) {\n" + //
         "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(myMessage);\n"
         + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
         + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
             .gives(
-                "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+                "@Override public void messageFinished(final LocalMessage myMessage,final int __,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod2() {
@@ -1228,6 +1227,8 @@ public final class Version230 {
 
   @Test public void infiniteLoopBug1() {
     trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet) {\n"
+        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }")
+    .gives("static boolean hasAnnotation(final VariableDeclarationFragment __) {\n"
         + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }").stays();
   }
 
@@ -1619,19 +1620,11 @@ public final class Version230 {
                 + "    return false;\n" + "return true;");
   }
 
-  @Test public void issue39versionA() {
-    trimmingOf("if (varArgs) {\n" + //
-        "    if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
-        "        return false;\n" + //
-        "    }\n" + //
-        "} else if (parameterTypes.length != argumentTypes.length) {\n" + //
-        "    return false;\n" + //
-        "}").gives("if (!varArgs) {\n" + //
-            "    if (parameterTypes.length != argumentTypes.length) {\n" + //
-            "        return false;\n" + //
-            "    }\n" + //
-            "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
-            "    return false;\n" + "}");
+  @Test(timeout = 100) public void issue39versionA() {
+    trimmingOf("if (varArgs) {\n" + "    if (argumentTypes.length < parameterTypes.length - 1) {\n" + "        return false;\n" + "    }\n"
+        + "} else if (parameterTypes.length != argumentTypes.length) {\n" + "    return false;\n" + "}")
+            .gives("if (!varArgs) {\n" + "    if (parameterTypes.length != argumentTypes.length) {\n" + "        return false;\n" + "    }\n"
+                + "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + "    return false;\n" + "}");
   }
 
   public void issue39versionAdual() {
@@ -1661,7 +1654,8 @@ public final class Version230 {
 
   @Test public void issue51() {
     trimmingOf("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")
-        .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
+    .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}")
+    .gives("int f() { int $ = 0; for (int ¢ = 0; ¢ < 10; ++¢) $ += ¢; return $;}").stays();
   }
 
   @Test public void issue51g() {
@@ -2248,7 +2242,7 @@ public final class Version230 {
   }
 
   @Test public void paramAbbreviateConflictingWithMethodName() {
-    trimmingOf("void m(BitmapManipulator bitmapManipulator, int abcd) {" + "bitmapManipulator.x().y();").stays();
+    trimmingOf("void m(BitmapManipulator bitmapManipulator, int __) {" + "bitmapManipulator.x().y();").stays();
   }
 
   @Test public void paramAbbreviateMultiple() {
@@ -2786,7 +2780,7 @@ public final class Version230 {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimmingOf("void f(int x) {}").stays();
+    trimmingOf("void f(int x) {}").gives("void f(int __) {}").stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
@@ -2796,12 +2790,12 @@ public final class Version230 {
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
     trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}")//
-        .gives("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
+        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore5() {
     trimmingOf("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
-        .gives("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int __) {}");
+        .gives("void f(int __, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}");
   }
 
   @Test public void renameVariableUnderscore1() {
