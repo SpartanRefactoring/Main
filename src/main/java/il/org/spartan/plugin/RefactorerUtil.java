@@ -106,8 +106,8 @@ public class RefactorerUtil {
         return Selection.empty();
       if (s instanceof ITextSelection)
         return by((ITextSelection) s);
-      if (s instanceof TreeSelection)
-        return by((TreeSelection) s);
+      if (s instanceof ITreeSelection)
+        return by((ITreeSelection) s);
       return Selection.empty();
     }
 
@@ -149,7 +149,7 @@ public class RefactorerUtil {
       if (s == null || s instanceof ITextSelection)
         return getProject();
       if (s instanceof ITreeSelection) {
-        final Object o = ((TreeSelection) s).getFirstElement();
+        final Object o = ((ITreeSelection) s).getFirstElement();
         if (o == null)
           return null;
         if (o instanceof MarkerItem) {
@@ -206,7 +206,7 @@ public class RefactorerUtil {
       return ¢ == null || !¢.exists() ? null : by(¢.getResource());
     }
 
-    private static Selection by(final TreeSelection s) {
+    private static Selection by(final ITreeSelection s) {
       final Object o = s.getFirstElement();
       if (o instanceof MarkerItem)
         return by((MarkerItem) o);
