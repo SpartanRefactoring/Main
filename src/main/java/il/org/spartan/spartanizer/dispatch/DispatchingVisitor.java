@@ -132,9 +132,9 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   private boolean cautiousGo(final ASTNode ¢) {
     try {
       return !exclude.isExcluded(¢) && go(¢);
-    } catch (Throwable t) {
+    } catch (final Throwable t) {
       monitor.logEvaluationError(t);
-      return true; 
+      return true;
     }
   }
 }
