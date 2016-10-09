@@ -1649,12 +1649,13 @@ public final class Version230 {
 
   @Test public void issue49() {
     trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")
-    .gives("int f() { int f = 0; for (int i: X) $ += f(i); return f;}").stays();
+    .gives("int f() { int f = 0; for (int ¢: X) $ += f(¢); return f;}").stays();
   }
 
   @Test public void issue51() {
     trimmingOf("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")
-        .gives("int f() { int $ = 0; for (int ¢ = 0; ¢ < 10; ++¢) $ += ¢; return $;}");
+    .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}")
+    .gives("int f() { int $ = 0; for (int ¢ = 0; ¢ < 10; ++¢) $ += ¢; return $;}").stays();
   }
 
   @Test public void issue51g() {
