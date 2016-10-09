@@ -36,6 +36,10 @@ public enum haz {
   public static boolean cent(final ASTNode ¢) {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
+  
+  public static boolean dollar(final ASTNode ¢) {
+    return !Collect.usesOf("$").inside(¢).isEmpty();
+  }
 
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
@@ -46,10 +50,6 @@ public enum haz {
     return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
       return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
     }) > 0;
-  }
-
-  public static boolean dollar(final ASTNode ¢) {
-    return !Collect.usesOf("$").inside(¢).isEmpty();
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
