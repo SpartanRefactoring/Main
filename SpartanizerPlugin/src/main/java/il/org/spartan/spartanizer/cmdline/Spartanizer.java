@@ -80,33 +80,26 @@ public final class Spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    System.out.println(" -------------------------------------- ");
     toolbox=Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        System.out.println(" +============================== ");  
-        System.out.println(disabling.on(n));
         TrimmerLog.visitation(n);
         if (!check(n) || disabling.on(n)) {// removed !inRange(m, n) || !check(n)
-          System.out.println(" ***************** ");                                // is always false
           return true;
         }
         final Tipper<N> w = getTipper(n);
         if (w == null){
-          System.out.println("w: " + w);
           return true;
         }
-//        System.out.println(w.description(n));
         Tip s = null;
         try {
           s = w.tip(n, exclude);
-          System.out.println("s: " + s);
+          System.out.println("tipper description: " + w.description());
           TrimmerLog.tip(w, n);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         }
         if (s != null){
-          System.out.println(s);
           TrimmerLog.application(r, s);
         }
         return true;
