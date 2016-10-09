@@ -88,7 +88,7 @@ public final class Spartanizer {
         final Tipper<N> w = getTipper(n);
         if (w == null)
           return true;
-        System.out.println(w.description(n));
+//        System.out.println(w.description(n));
         Tip s = null;
         try {
           s = w.tip(n, exclude);
@@ -148,8 +148,8 @@ public final class Spartanizer {
   }
 
   void fire() {
-    System.out.println(toolbox.hooksCount());
-    System.out.println(Toolbox.defaultInstance().hooksCount());
+//    System.out.println(toolbox.hooksCount());
+//    System.out.println(Toolbox.defaultInstance().hooksCount());
     spartanizeAndAnalyze();
     runEssence();
     runWordCount();
