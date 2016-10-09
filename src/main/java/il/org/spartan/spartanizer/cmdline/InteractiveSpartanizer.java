@@ -30,7 +30,7 @@ public final class InteractiveSpartanizer {
     return $;
   }
 
-  public final Toolbox toolbox = new Toolbox();
+  public final Toolbox toolbox = Toolbox.defaultInstance();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
