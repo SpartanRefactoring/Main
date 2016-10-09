@@ -1646,8 +1646,8 @@ public final class Version230 {
   }
 
   @Test public void issue49() {
-    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")//
-        .gives("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
+    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")
+    .gives("int f() { int f = 0; for (int ¢: X) $ += f(¢); return f;}").stays();
   }
 
   @Test public void issue51() {
