@@ -27,7 +27,8 @@ import il.org.spartan.spartanizer.utils.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) //
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+@SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Version230 {
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
@@ -1618,11 +1619,19 @@ public final class Version230 {
                 + "    return false;\n" + "return true;");
   }
 
-  @Test(timeout = 100) public void issue39versionA() {
-    trimmingOf("if (varArgs) {\n" + "    if (argumentTypes.length < parameterTypes.length - 1) {\n" + "        return false;\n" + "    }\n"
-        + "} else if (parameterTypes.length != argumentTypes.length) {\n" + "    return false;\n" + "}")
-            .gives("if (!varArgs) {\n" + "    if (parameterTypes.length != argumentTypes.length) {\n" + "        return false;\n" + "    }\n"
-                + "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + "    return false;\n" + "}");
+  @Test public void issue39versionA() {
+    trimmingOf("if (varArgs) {\n" + //
+        "    if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
+        "        return false;\n" + //
+        "    }\n" + //
+        "} else if (parameterTypes.length != argumentTypes.length) {\n" + //
+        "    return false;\n" + //
+        "}").gives("if (!varArgs) {\n" + //
+            "    if (parameterTypes.length != argumentTypes.length) {\n" + //
+            "        return false;\n" + //
+            "    }\n" + //
+            "} else if (argumentTypes.length < parameterTypes.length - 1) {\n" + //
+            "    return false;\n" + "}");
   }
 
   public void issue39versionAdual() {
