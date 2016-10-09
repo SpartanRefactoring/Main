@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.revision.EventListener.*;
 import il.org.spartan.plugin.revision.EventMapper.*;
 
 /** @author Ori Roth
