@@ -146,4 +146,3 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return TipperGroup.Abbreviation;
   }
 }
-
