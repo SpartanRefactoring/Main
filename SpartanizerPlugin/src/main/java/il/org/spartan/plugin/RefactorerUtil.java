@@ -90,12 +90,13 @@ public class RefactorerUtil {
       return Selection.empty();
     }
 
+    /** We may use {@link selection#getProject(ISelection)} instead. */
     public static Selection getAllCompilationUnits() {
       final ISelection s = getSelection();
       if (s == null)
         return Selection.empty();
       if (s instanceof ITextSelection)
-        return by(getProject()).setTextSelection(null);
+        return by(getJavaProject()).setTextSelection(null);
       return Selection.empty();
     }
 
@@ -110,7 +111,7 @@ public class RefactorerUtil {
       return Selection.empty();
     }
 
-    private static ISelection getSelection() {
+    public static ISelection getSelection() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -122,7 +123,7 @@ public class RefactorerUtil {
     }
 
     /** Depends on local editor */
-    private static IJavaProject getProject() {
+    private static IProject getProject() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -141,11 +142,38 @@ public class RefactorerUtil {
       final IResource r = i.getAdapter(IResource.class);
       if (r == null)
         return null;
-      return JavaCore.create(r.getProject());
+      return r.getProject();
+    }
+
+    public static IProject getProject(final ISelection s) {
+      if (s == null || s instanceof ITextSelection)
+        return getProject();
+      if (s instanceof ITreeSelection) {
+        final Object o = ((TreeSelection) s).getFirstElement();
+        if (o == null)
+          return null;
+        if (o instanceof MarkerItem) {
+          final IMarker m = ((MarkerItem) o).getMarker();
+          if (m == null)
+            return null;
+          final IResource r = m.getResource();
+          return r == null ? null : r.getProject();
+        }
+        if (o instanceof IJavaElement) {
+          final IJavaProject p = ((IJavaElement) o).getJavaProject();
+          return p == null ? null : p.getProject();
+        }
+      }
+      return null;
+    }
+
+    private static IJavaProject getJavaProject() {
+      final IProject p = getProject();
+      return p == null ? null : JavaCore.create(p);
     }
 
     /** Depends on local editor */
-    private static Selection by(ITextSelection s) {
+    private static Selection by(final ITextSelection s) {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -178,7 +206,7 @@ public class RefactorerUtil {
       return ¢ == null || !¢.exists() ? null : by(¢.getResource());
     }
 
-    private static Selection by(TreeSelection s) {
+    private static Selection by(final TreeSelection s) {
       final Object o = s.getFirstElement();
       if (o instanceof MarkerItem)
         return by((MarkerItem) o);
@@ -198,11 +226,11 @@ public class RefactorerUtil {
     private static Selection by(final IJavaProject p) {
       if (p == null)
         return Selection.empty();
-      Selection $ = Selection.empty();
+      final Selection $ = Selection.empty();
       final IPackageFragmentRoot[] rs;
       try {
         rs = p.getPackageFragmentRoots();
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
@@ -212,12 +240,12 @@ public class RefactorerUtil {
     }
 
     private static Selection by(final IPackageFragmentRoot r) {
-      Selection $ = Selection.empty();
+      final Selection $ = Selection.empty();
       try {
         for (final IJavaElement ¢ : r.getChildren())
           if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             $.unify(by((IPackageFragment) ¢));
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
@@ -227,7 +255,7 @@ public class RefactorerUtil {
     private static Selection by(final IPackageFragment f) {
       try {
         return f == null ? Selection.empty() : Selection.of(f.getCompilationUnits());
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
@@ -239,7 +267,7 @@ public class RefactorerUtil {
       ISourceRange r;
       try {
         r = m.getSourceRange();
-      } catch (JavaModelException x) {
+      } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
       }
