@@ -23,7 +23,7 @@ public class SpartanMovie extends AbstractHandler {
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
-  @Override public Object execute(@SuppressWarnings("unused") ExecutionEvent __) {
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();

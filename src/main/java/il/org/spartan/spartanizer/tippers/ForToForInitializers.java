@@ -14,8 +14,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code>
@@ -38,13 +36,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return $;
   }
 
-  private static boolean containsModifiers(final List<IExtendedModifier> contained, final List<IExtendedModifier> contains) {
-    for (final IExtendedModifier ¢ : contained)
-      if (!isIn(¢, contains))
-        return false;
-    return true;
-  }
-
   private static Expression dupForExpression(final ForStatement ¢) {
     return duplicate.of(expression(¢));
   }
@@ -53,7 +44,23 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
-  // TODO: Alex and Dan, now fitting returns true iff all fragments fitting. We
+  /** final modifier is the only legal modifier inside a for loop, thus we push
+   * initializers only if both, initializer's and declaration's modifiers lists
+   * are empty, or contain final modifier only.
+   * @param s
+   * @param x
+   * @return true iff initializer's and declaration's modifiers are mergable. */
+  private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
+    final List<IExtendedModifier> declarationModifiers = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
+    return declarationModifiers.isEmpty() && initializerModifiers.isEmpty()
+        || haz.Final(declarationModifiers) && haz.Final(initializerModifiers);
+  }
+
+  private static boolean fittingType(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
+    return (x.getType() + "").equals(s.getType() + "");
+  }
+
+  // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
@@ -93,13 +100,6 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
         : e != null ? handleInfixCondition(e, s) : pe != null ? handleParenthesizedCondition(pe, s) : from;
   }
 
-  private static boolean isIn(final IExtendedModifier m, final List<IExtendedModifier> ms) {
-    for (final IExtendedModifier ¢ : ms)
-      if (IExtendedModifiersOrdering.compare(m, ¢) == 0)
-        return true;
-    return false;
-  }
-
   /** @param t JD
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
@@ -117,11 +117,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
       return true;
     final VariableDeclarationExpression e = az.variableDeclarationExpression(first(initializers));
     assert e != null : "ForToForInitializers -> for initializer is null and not empty?!?";
-    final List<IExtendedModifier> extendedModifiers = step.extendedModifiers(e);
-    final List<IExtendedModifier> extendedModifiers2 = step.extendedModifiers(s);
-    return extendedModifiers2 != extendedModifiers && extendedModifiers != null && extendedModifiers2 != null //
-        && (e.getType() + "").equals(s.getType() + "") && //
-        containsModifiers(extendedModifiers, extendedModifiers2) && containsModifiers(extendedModifiers2,extendedModifiers);
+    return fittingType(s, e) && fittingModifiers(s, e);
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {

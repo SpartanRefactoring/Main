@@ -4,83 +4,83 @@ import org.junit.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {
   @Test public void testMatches1() {
-    azzert.that("$X ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");
+    leonidasSays.that("$X ? y == 17 : $X2").matches("x == 7 ? y == 17 : 9");
   }
 
   @Test public void testMatches2() {
-    azzert.that("$X ? 8 : $X2").notmatches("x == 7 ? y == 17 : 9");
+    leonidasSays.that("$X ? 8 : $X2").notmatches("x == 7 ? y == 17 : 9");
   }
 
   @Test public void testMatches3() {
-    azzert.that("w = $X ? y == 17 : $X2;").matches("w = x == 7 ? y == 17 : 9;");
+    leonidasSays.that("w = $X ? y == 17 : $X2;").matches("w = x == 7 ? y == 17 : 9;");
   }
 
   @Test public void testMatches4() {
-    azzert.that("w = $X ? 8 : $X2;").notmatches("w = x == 7 ? y == 17 : 9;");
+    leonidasSays.that("w = $X ? 8 : $X2;").notmatches("w = x == 7 ? y == 17 : 9;");
   }
 
   @Test public void testMatches5() {
-    azzert.that("x == $X ? $X2 : $X").matches("x == null ? 17 : null");
+    leonidasSays.that("x == $X ? $X2 : $X").matches("x == null ? 17 : null");
   }
 
   @Test public void testMatches6() {
-    azzert.that("x == $X ? $X2 : $X").notmatches("x == null ? 17 : 18");
+    leonidasSays.that("x == $X ? $X2 : $X").notmatches("x == null ? 17 : 18");
   }
 
   @Test public void testMatches7() {
-    azzert.that("x == $X ? $X : $X").notmatches("x == null ? 17 : null");
+    leonidasSays.that("x == $X ? $X : $X").notmatches("x == null ? 17 : null");
   }
 
   @Test public void testMatches8() {
-    azzert.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : foo()");
+    leonidasSays.that("$X ? y == 17 : $M").matches("x == 7 ? y == 17 : foo()");
   }
 
   @Test public void testMatches9() {
-    azzert.that("if(true) $B();").matches("if(true) foo();");
+    leonidasSays.that("if(true) $B();").matches("if(true) foo();");
   }
 
   @Test public void testMutation1() {
-    azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
+    leonidasSays.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a == null ? y : a").into("a.defaultsTo(y)");
   }
 
   @Test public void testMutation2() {
-    azzert.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
+    leonidasSays.tipper("$X1 == null ? $X2 : $X1", "$X1.defaultsTo($X2)", "defaultsTo").turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e")
         .into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
   }
 
   @Test public void testNotTips1() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("x17 == 7 ? 2*3 + 4*z().x : x17");
+    leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("x17 == 7 ? 2*3 + 4*z().x : x17");
   }
 
   @Test public void testNotTips2() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("null == x ? 2*3 + 4*z().x : x17");
+    leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("null == x ? 2*3 + 4*z().x : x17");
   }
 
   @Test public void testNotTips3() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).f");
+    leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).f");
   }
 
   @Test public void testTips1() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("x17 == null ? 2*3 + 4*z().x : x17");
+    leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("x17 == null ? 2*3 + 4*z().x : x17");
   }
 
   @Test public void testTips2() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).e");
+    leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(), c.d()).e");
   }
 
   @Test public void testTips3() {
-    azzert.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("x17 == null ? 2*3 + 4*z().x : x17");
+    leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").tips("x17 == null ? 2*3 + 4*z().x : x17");
   }
 
   @Test public void testTips4() {
-    azzert.tipper("$X1 == $X2 && $X1 == $X3", "$X1.equals($X2, $X3)", "equalsToFew").tips("x1 == x2 && x1 == 789");
+    leonidasSays.tipper("$X1 == $X2 && $X1 == $X3", "$X1.equals($X2, $X3)", "equalsToFew").tips("x1 == x2 && x1 == 789");
   }
 
   @Test public void testTips5() {
-    azzert.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
+    leonidasSays.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull").tips("if(g().f.b.c(1,g(), 7) == null) return null;");
   }
 
   @Test public void testTips6() {
-    azzert.tipper("if(!$X1) $B1 else $B2", "if($X1) $B2 else $B1", "change If order").tips("if(!(x==0)) return; else print(7);");
+    leonidasSays.tipper("if(!$X1) $B1 else $B2", "if($X1) $B2 else $B1", "change If order").tips("if(!(x==0)) return; else print(7);");
   }
 }
