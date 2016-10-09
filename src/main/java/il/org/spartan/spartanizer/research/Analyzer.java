@@ -5,7 +5,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
@@ -91,17 +93,38 @@ public class Analyzer {
     return $;
   }
 
-  /** @param f */
-  private static void analyze(final ASTNode cu) {
-    markAllNP(cu);
-    report();
+  private static void analyze(final ASTNode ¢) {
+    markAllNP(¢);
+    report(¢);
   }
 
   /**
    *
    */
-  private static void report() {
-    // TODO output statistics
+  private static void report(final ASTNode root) {
+    System.out.println("[" + markedNodes(root) + "/" + nodes(root) + "]");
+    // TODO: much more then that..
+  }
+
+  static int nodes(final ASTNode root) {
+    final Int $ = new Int();
+    root.accept(new ASTVisitor() {
+      @Override public void preVisit(@SuppressWarnings("unused") ASTNode __) {
+        $.inner += 1;
+      }
+    });
+    return $.inner;
+  }
+
+  static int markedNodes(final ASTNode root) {
+    final Int $ = new Int();
+    root.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
+          $.inner += 1;
+      }
+    });
+    return $.inner;
   }
 
   /**
