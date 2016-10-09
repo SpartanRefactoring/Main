@@ -70,13 +70,13 @@ public enum GuessedContext {
    *         parsed appropriately. */
   public static GuessedContext find(final String codeFragment) {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
-      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
+      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
-    azzert.fail("שימ לב!\n" + //
+    azzert.fail("שים ליבך!\n" + //
         "Nota!\n" + //
         "Either I am buggy, or this must be a problem of incorrect Java code you placed\n" + //
         "at a string literal somewhere \n " + //
-        "\t\t =>  in *your* __צלך__ @Test related Java code  <== \n" + //
+        "\t\t =>  in *your* __שלך__ @Test related Java code  <== \n" + //
         "To fix this problem, copy this trace window (try right clicking __here__). Then,\n" + //
         "paste the trace to examine it with some text editor. I printed  below my attempts\n" + //
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
@@ -86,6 +86,11 @@ public enum GuessedContext {
         "\n" + //
         enumerateFailingAttempts(codeFragment));
     throw new RuntimeException();
+  }
+
+  private static boolean wasActuallyInsertedToWrapper(final GuessedContext $, final String codeFragment) {
+    String tmp1 = $.intoCompilationUnit("") + "";
+    return !tmp1.equals(("" + $.intoCompilationUnit(codeFragment)));
   }
 
   static String enumerateFailingAttempts(final String codeFragment) {
