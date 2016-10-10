@@ -103,11 +103,11 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
       return $;
     }
 
-    @SuppressWarnings("unused") void update(final Map<E, Object> e, final O o) {
+    @SuppressWarnings("unused") void update(final Map<E, Object> __, final O o) {
       //
     }
 
-    @SuppressWarnings("unused") void update(final Map<E, Object> e) {
+    @SuppressWarnings("unused") void update(final Map<E, Object> __) {
       //
     }
   }
