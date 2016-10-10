@@ -20,9 +20,9 @@ public interface Listener {
     return id.get();
   }
 
-  default void tick(Object... os) {
+  default void tick(Object... ¢) {
     id.incrementAndGet();
-    ___.unused(os);
+    ___.unused(¢);
   }
 
   /** A listener that records a long string of the message it got.
