@@ -79,12 +79,11 @@ public final class Spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    toolbox = Toolbox.defaultInstance();
+    toolbox=Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
         if (!check(n) || disabling.on(n))
-          // !check(n)
           return true;
         final Tipper<N> w = getTipper(n);
         if (w == null)
@@ -244,33 +243,37 @@ public final class Spartanizer {
         // if (m instanceof Annotation && "@Test".equals(((Annotation)
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
+        
+        System.out.println(¢.MODIFIERS2_PROPERTY);
+        
         return spartanizeAndAnalyze(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-
+      
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-
+      
       @Override public boolean visit(final FieldDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-
+      
       @Override public boolean visit(final EnumDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-
+      
       @Override public boolean visit(final Initializer ¢) {
         return spartanizeAndAnalyze(¢);
       }
+      
     });
   }
 
   void spartanizeAndAnalyze(final File f) {
-    if (!system.isTestFile(f))
+    if (!f.getPath().matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*") || !f.getName().matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"))
       try {
         currentFile = f;
         spartanizeAndAnalyze(FileUtils.read(f));
