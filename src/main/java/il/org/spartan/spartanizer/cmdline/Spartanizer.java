@@ -83,14 +83,12 @@ public final class Spartanizer {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
-        if (!check(n) || disabling.on(n)) {// removed !inRange(m, n) ||
-                                           // !check(n)
+        if (!check(n) || disabling.on(n))
+          // !check(n)
           return true;
-        }
         final Tipper<N> w = getTipper(n);
-        if (w == null) {
+        if (w == null)
           return true;
-        }
         Tip s = null;
         try {
           s = w.tip(n, exclude);
@@ -99,9 +97,8 @@ public final class Spartanizer {
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         }
-        if (s != null) {
+        if (s != null)
           TrimmerLog.application(r, s);
-        }
         return true;
       }
 
