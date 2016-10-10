@@ -52,8 +52,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    * @return true iff initializer's and declaration's modifiers are mergable. */
   private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
     final List<IExtendedModifier> declarationModifiers = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
-    return declarationModifiers.isEmpty() && initializerModifiers.isEmpty()
-        || haz.Final(declarationModifiers) && haz.Final(initializerModifiers);
+    return declarationModifiers.isEmpty() && initializerModifiers.isEmpty() || haz.Final(declarationModifiers) && haz.Final(initializerModifiers);
   }
 
   private static boolean fittingType(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {

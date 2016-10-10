@@ -7,7 +7,7 @@ public class Marker {
   public final NanoPattern np;
   public static final String AST_PROPERTY_NAME_NP_LIST = "MARKER";
 
-  public Marker(NanoPattern np) {
+  public Marker(final NanoPattern np) {
     this.np = np;
   }
 }

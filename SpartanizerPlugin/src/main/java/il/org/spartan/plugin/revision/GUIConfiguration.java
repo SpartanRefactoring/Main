@@ -12,12 +12,12 @@ import il.org.spartan.plugin.revision.EventMapper.*;
  * @since 2016 */
 public enum GUIConfiguration {
   listener;
-  void configure(Object ¢) {
+  void configure(final Object ¢) {
     if (listener.equals(this))
       configure((EventMapper) ¢);
   }
 
-  @SuppressWarnings("rawtypes") static void configure(EventMapper l) {
+  @SuppressWarnings("rawtypes") static void configure(final EventMapper l) {
     l.expend(EventMapperFunctor.recorderOf(event.visit_cu).collectBy(ICompilationUnit.class))
         .expend(EventMapperFunctor.recorderOf(event.visit_node).collectBy(ASTNode.class))
         .expend(EventMapperFunctor.recorderOf(event.visit_project).remember(IJavaProject.class))

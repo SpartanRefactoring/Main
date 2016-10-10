@@ -37,7 +37,7 @@ public enum step {
   public static Statement body(final ForStatement ¢) {
     return ¢.getBody();
   }
-  
+
   public static Statement body(final MethodDeclaration ¢) {
     return ¢.getBody();
   }
