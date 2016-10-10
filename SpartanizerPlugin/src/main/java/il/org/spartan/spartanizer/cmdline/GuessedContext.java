@@ -89,8 +89,7 @@ public enum GuessedContext {
   }
 
   private static boolean wasActuallyInsertedToWrapper(final GuessedContext $, final String codeFragment) {
-    final String tmp1 = $.intoCompilationUnit("") + "";
-    return !tmp1.equals("" + $.intoCompilationUnit(codeFragment));
+    return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
 
   static String enumerateFailingAttempts(final String codeFragment) {
