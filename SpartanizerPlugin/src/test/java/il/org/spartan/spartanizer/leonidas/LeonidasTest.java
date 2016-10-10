@@ -104,4 +104,32 @@ import org.junit.*;
   @Test public void testTips6() {
     leonidasSays.tipper("if(!$X1) $B1 else $B2", "if($X1) $B2 else $B1", "change If order").tips("if(!(x==0)) return; else print(7);");
   }
+
+  @Test public void testTips7() {
+    leonidasSays.tipper("if(x) return y; print(7);", "", "").tips("if(x) return y; print(7);");
+  }
+
+  @Test public void testTips8() {
+    leonidasSays.tipper("if($X) return y; print(7);", "", "").tips("if(a || b && c) return y; print(7);");
+  }
+
+  @Test public void testNotTips4() {
+    leonidasSays.tipper("if($X) return y; print(7);", "", "").nottips("if(a || b && c) return z; print(7);");
+  }
+
+  @Test public void testNotTips5() {
+    leonidasSays.tipper("x", "", "").nottips("y");
+  }
+
+  @Test public void testNotTips6() {
+    leonidasSays.tipper("print(7); print(8);", "", "").nottips("print(7); print(9);");
+  }
+
+  @Test public void testNotTips7() {
+    leonidasSays.tipper("print(7);", "", "").nottips("print(8);");
+  }
+
+  @Test public void testNotTips8() {
+    leonidasSays.tipper("7", "", "").nottips("8");
+  }
 }
