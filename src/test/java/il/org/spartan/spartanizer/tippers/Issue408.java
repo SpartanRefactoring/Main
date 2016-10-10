@@ -24,9 +24,8 @@ import org.junit.*;
     trimmingOf("0+x+y+4").gives("x+y+4").stays();
   }
 
-  // @Ignore("added zero") 
-  @SuppressWarnings("static-method") 
-  @Test public void issue408_03b() {
+  // @Ignore("added zero")
+  @SuppressWarnings("static-method") @Test public void issue408_03b() {
     trimmingOf("0+x+y+4+5").gives("x+y+9").stays();
   }
 
