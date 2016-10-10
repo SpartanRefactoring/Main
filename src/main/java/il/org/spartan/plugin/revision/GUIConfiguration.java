@@ -10,21 +10,18 @@ import il.org.spartan.plugin.revision.EventMapper.*;
 
 /** @author Ori Roth
  * @since 2016 */
-public class GUIApllicatorUtil {
-  @SuppressWarnings("rawtypes") public static Listener basicGUIListener() {
-    return EventMapper.empty() //
-        .expend( //
-            EventMapperFunctor.recorderOf(event.visit_cu) //
-                .collectBy(ICompilationUnit.class)) //
-        .expend( //
-            EventMapperFunctor.recorderOf(event.visit_node) //
-                .collectBy(ASTNode.class)) //
-        .expend( //
-            EventMapperFunctor.recorderOf(event.visit_project) //
-                .remember(IJavaProject.class)) //
-        .expend( //
-            EventMapperFunctor.recorderOf(event.run_pass) //
-                .counter()) //
+public enum GUIConfiguration {
+  listener;
+  void configure(Object ¢) {
+    if (listener.equals(this))
+      configure((EventMapper) ¢);
+  }
+
+  @SuppressWarnings("rawtypes") static void configure(EventMapper l) {
+    l.expend(EventMapperFunctor.recorderOf(event.visit_cu).collectBy(ICompilationUnit.class))
+        .expend(EventMapperFunctor.recorderOf(event.visit_node).collectBy(ASTNode.class))
+        .expend(EventMapperFunctor.recorderOf(event.visit_project).remember(IJavaProject.class))
+        .expend(EventMapperFunctor.recorderOf(event.run_pass).counter()) //
         .expend(new EventFunctor(event.run_start) {
           @Override void update(final Map ¢) {
             // TODO Roth: open a dialog box etc etc...
@@ -36,7 +33,7 @@ public class GUIApllicatorUtil {
             System.out.println("Done spartanizing " + ¢.get(event.visit_project));
             System.out.println("Spartanized " + ¢.get(event.visit_project) //
                 + " with " + ((Collection) ¢.get(event.visit_cu)).size() + " files" //
-                + " in " + ¢.get(event.run_pass) + " passes ");
+                + " in " + ¢.get(event.run_pass) + " passes");
           }
         });
   }
