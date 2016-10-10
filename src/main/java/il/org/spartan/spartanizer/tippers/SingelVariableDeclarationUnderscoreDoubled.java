@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.mockito.internal.matchers.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -54,6 +55,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(duplicate.of(¢.getType()));
+    $.setVarargs(¢.isVarargs());
     duplicate.modifiers(step.extendedModifiers(¢), extendedModifiers($));
     return $;
   }
