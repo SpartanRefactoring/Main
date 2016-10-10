@@ -372,9 +372,11 @@ public enum extract {
     return core(onlyOne($));
   }
 
-  public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    final VariableDeclarationFragment onlyOne = lisp.onlyOne(step.fragments(¢));
-    return onlyOne == null ? null : onlyOne.getName();
+  public static SimpleName onlyName(final VariableDeclarationExpression x) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(x))
+      if (!iz.identifier("$", ¢.getName()))
+          return ¢.getName();
+    return null;
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
