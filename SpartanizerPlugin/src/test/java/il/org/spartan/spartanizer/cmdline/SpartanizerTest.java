@@ -16,8 +16,6 @@ public class SpartanizerTest {
   
   public static void main(String[] args){
     
-//    System.out.println("main");
-    
     String test = "package test;\n"
         + "import static org.junit.Assert.*;\n"
         + "import org.junit.*;\n"
@@ -28,11 +26,9 @@ public class SpartanizerTest {
         + " }\n"
         + "}";
     
-//    System.out.println(test);
-    
+   
     ASTNode u = makeAST.COMPILATION_UNIT.from(test);
     assert u != null;
-//    System.out.println("u.getLength(): " + u.getLength());
     
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
@@ -48,17 +44,9 @@ public class SpartanizerTest {
        */
       @Override public boolean visit(final MethodDeclaration node) {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
-//        ChildListPropertyDescriptor modProp = node.getModifiersProperty();
         List<ASTNode> modifiers = node.modifiers();
         if(hasTestAnnotation(node))
           return false;
-//        for(int i = 0; i < modifiers.size(); i++)
-//          if(modifiers.get(i) instanceof MarkerAnnotation){
-//            System.out.println(" -----------------> " + ((MarkerAnnotation) modifiers.get(i)).toString().contains("@Test"));
-////          System.out.println(modifiers.get(i));
-//          }
-//        System.out.println("modifiers size: " + modifiers.size());
-//        System.out.println(modProp);
         return true;
       }
       
@@ -67,22 +55,10 @@ public class SpartanizerTest {
         
         for(int i = 0; i < modifiers.size(); i++)
           if(modifiers.get(i) instanceof MarkerAnnotation){
-//            System.out.println(" -----------------> " + ((MarkerAnnotation) modifiers.get(i)).toString().contains("@Test"));
             if(((MarkerAnnotation) modifiers.get(i)).toString().contains("@Test"))
               return true;
-//          System.out.println(modifiers.get(i));
           }
                
-//        Modifier mod = null;
-//        for(int i = 0; i < modifiers.size(); i++){
-////          mod  = modifiers.get(i);
-////          if(modifiers.get(i)){
-////            System.out.println("mod: " + modifiers.get(i).getClass());
-////            System.out.println(modifiers);
-//            if(modifiers.get(i).equals("@Test"))
-//              System.out.println("Got it!");
-////          }
-//        }
         return false;
       }
       
