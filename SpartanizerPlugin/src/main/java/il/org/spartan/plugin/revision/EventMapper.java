@@ -17,13 +17,13 @@ public class EventMapper extends EventListener {
     recorders = new ArrayList<>();
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(final event e) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void tick(final event e) {
     for (final EventFunctor ¢ : recorders)
       if (¢.domain(e))
         ¢.update(eventMap);
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(final event e, final Object o) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void tick(final event e, final Object o) {
     for (final EventFunctor ¢ : recorders)
       if (¢.domain(e))
         ¢.update(eventMap, o);
