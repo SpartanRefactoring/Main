@@ -254,24 +254,20 @@ public class SpartanizerTest {
     
   }
 
-  /**
-   * @param u1
-   */
   private void visitASTNode(ASTNode u1) {
     u1.accept(new ASTVisitor() {
       
-      int methodNum;
+      @SuppressWarnings("unused") int methodNum;
 
-      @Override public boolean visit(final MethodDeclaration node) {
+      @SuppressWarnings("synthetic-access") @Override public boolean visit(final MethodDeclaration node) {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node) && countMethods();
       }
       
-      boolean hasTestAnnotation(MethodDeclaration d) {
+      @SuppressWarnings("cast") boolean hasTestAnnotation(MethodDeclaration d) {
         List<?> modifiers = d.modifiers();
         for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
-          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test")
-              && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
+          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
             return true;
         return false;
       }
