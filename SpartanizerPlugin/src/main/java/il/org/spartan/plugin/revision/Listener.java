@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.revision;
 
+import static il.org.spartan.plugin.revision.Listener.*;
+
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
@@ -18,7 +20,7 @@ public interface Listener {
     return id.get();
   }
 
-  default void tick(Object... ¢) {
+  default void tick(final Object... ¢) {
     id.incrementAndGet();
     ___.unused(¢);
   }
@@ -27,24 +29,24 @@ public interface Listener {
    * @author Yossi Gil
    * @since 2016 */
   class Tracing implements Listener {
-    private StringBuilder $ = new StringBuilder();
+    private final StringBuilder $ = new StringBuilder();
 
     public String $() {
       return $ + "";
     }
 
-    @Override public void tick(Object... os) {
+    @Override public void tick(final Object... os) {
       $.append(id() + ": ");
-      for (Object ¢ : os)
+      for (final Object ¢ : os)
         pack(¢);
       $.append('\n');
     }
 
-    private void pack(Object ¢) {
+    private void pack(final Object ¢) {
       $.append("," + trim(¢));
     }
 
-    private static String trim(Object ¢) {
+    private static String trim(final Object ¢) {
       return (¢ + "").substring(1, 35);
     }
   }
@@ -56,17 +58,17 @@ public interface Listener {
   class S extends ArrayList<Listener> implements Listener {
     private static final long serialVersionUID = 1L;
 
-    @Override public void tick(Object... os) {
+    @Override public void tick(final Object... os) {
       for (final Listener ¢ : this)
         ¢.tick(os);
     }
 
     /** for fluent API use, i.e., <code>
-     * 
+     *
      * <pre>
      *  <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
      * </pre>
-     * 
+     *
      * <code>
      * @return an empty new instance */
     public static S empty() {

@@ -3,6 +3,8 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 import java.util.function.*;
 
+import il.org.spartan.plugin.revision.GUIApplicator.*;
+
 /** A {@link Listener} that listen to {@link event}s.
  * @author Ori Roth
  * @since 2016 */
@@ -21,7 +23,7 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void tick(final E e) {
-    EventFunctor f = recorders.get(e);
+    final EventFunctor f = recorders.get(e);
     if (f == null)
       return;
     if (!f.initialized)
@@ -60,11 +62,11 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
    * {@link EventMapper#eventMap}. [[SuppressWarningsSpartan]] */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
     return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
-      @Override public void update(Map<E, Object> m) {
+      @Override public void update(final Map<E, Object> m) {
         consumer.accept(m);
       }
 
-      @Override public void update(Map<E, Object> m, Object o) {
+      @Override public void update(final Map<E, Object> m, final Object o) {
         biConsumer.accept(m, o);
       }
     };
@@ -101,11 +103,11 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
       return $;
     }
 
-    @SuppressWarnings("unused") void update(final Map<E, Object> e, final O o) {
+    @SuppressWarnings("unused") void update(final Map<E, Object> __, final O o) {
       //
     }
 
-    @SuppressWarnings("unused") void update(final Map<E, Object> e) {
+    @SuppressWarnings("unused") void update(final Map<E, Object> __) {
       //
     }
   }
@@ -129,14 +131,14 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
     }
 
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWith(final X ¢) {
-      EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
+      final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
       $.initialization = ¢;
       return $;
     }
 
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWithSupplyOf(final Supplier<X> ¢) {
-      EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
+      final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
       $.initializationSupplier = ¢;
       return $;
@@ -163,7 +165,7 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
     }
 
     @Override @SuppressWarnings("unchecked") public void update(final Map<E, Object> e, final O o) {
-      assert (biConsumer == null || biFunction == null);
+      assert biConsumer == null || biFunction == null;
       if (biConsumer != null)
         biConsumer.accept((P) e.get(domain), o);
       if (biFunction != null)
@@ -171,7 +173,7 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
     }
 
     @Override @SuppressWarnings("unchecked") public void update(final Map<E, Object> ¢) {
-      assert (consumer == null || function == null);
+      assert consumer == null || function == null;
       if (consumer != null)
         consumer.accept((P) ¢.get(domain));
       if (function != null)
@@ -230,13 +232,13 @@ public class EventMapper<E extends Enum<E>> extends EventListener<E> {
 
   static class SimpleMapper extends EventMapper<none> {
     /** Empty enum used by {@link EventMapper#simpleMapper()} */
-    public SimpleMapper(Class<none> enumClass) {
+    public SimpleMapper(final Class<none> enumClass) {
       super(enumClass);
     }
 
     public static SimpleMapper get() {
       return new SimpleMapper(none.class) {
-        @Override public void tick(Object... ¢) {
+        @Override public void tick(final Object... ¢) {
           if (¢ != null)
             if (¢.length == 0)
               tick(none.X);

@@ -10,7 +10,7 @@ import il.org.spartan.plugin.revision.GUIApplicator.*;
 public class Example {
   @SuppressWarnings("static-method") @Test public void example() {
     System.out.println("############\nExample 1:");
-    GUIApplicator a = new GUIApplicator();
+    final GUIApplicator a = new GUIApplicator();
     // start running
     a.listener.tick(event.visit_project, "MyProject");
     a.listener.tick(event.run_start);
@@ -43,11 +43,11 @@ public class Example {
       int index;
       StringBuilder builder;
     }
-    Listener listener = EventMapper.empty(traceOperation.class) //
+    final Listener listener = EventMapper.empty(traceOperation.class) //
         .expend( //
             EventMapper.recorderOf(traceOperation.trace) //
                 .startWithSupplyOf(() -> {
-                  Container $ = new Container();
+                  final Container $ = new Container();
                   $.index = 0;
                   $.builder = new StringBuilder();
                   return $;
@@ -55,7 +55,7 @@ public class Example {
                 .gets(Object[].class) //
                 .does((c, os) -> {
                   c.builder.append(++c.index + ": ");
-                  for (Object ¢ : os)
+                  for (final Object ¢ : os)
                     c.builder.append("," + ((¢ + "").length() < 36 ? ¢ + "" : (¢ + "").substring(1, 35)));
                   c.builder.append('\n');
                 })) //
@@ -72,11 +72,11 @@ public class Example {
     print(listener);
   }
 
-  public static void trace(Listener l, Object... os) {
+  public static void trace(final Listener l, final Object... os) {
     l.tick(traceOperation.trace, os);
   }
 
-  public static void print(Listener ¢) {
+  public static void print(final Listener ¢) {
     ¢.tick(traceOperation.print);
   }
 }
