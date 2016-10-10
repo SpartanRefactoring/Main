@@ -14,10 +14,10 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface Listener {
-  final AtomicInteger id = new AtomicInteger(); 
-  
+  final AtomicInteger id = new AtomicInteger();
+
   static int id() {
-   return id.get(); 
+    return id.get();
   }
 
   default void tick(Object... os) {
@@ -28,7 +28,7 @@ public interface Listener {
   /** A listener that records a long string of the message it got.
    * @author Yossi Gil
    * @since 2016 */
-  public class Tracing implements Listener {
+  class Tracing implements Listener {
     private StringBuilder $ = new StringBuilder();
 
     public String $() {
@@ -51,11 +51,10 @@ public interface Listener {
     }
   }
 
-  /**
-   * An aggregating kind of  {@link Listener}  that dispatches the event it receives to the multiple  {@link Listener} s it stores internally.
-   * @author  Yossi Gil
-   * @since  2.6 
-   */
+  /** An aggregating kind of {@link Listener} that dispatches the event it
+   * receives to the multiple {@link Listener} s it stores internally.
+   * @author Yossi Gil
+   * @since 2.6 */
   class S extends ArrayList<Listener> implements Listener {
     private static final long serialVersionUID = 1L;
 
@@ -64,18 +63,23 @@ public interface Listener {
         ¢.tick(os);
     }
 
-    /**
-    * for fluent API use, i.e., <code> <pre> <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()} </pre> <code>
-    * @return  an empty new instance 
-    */
+    /** for fluent API use, i.e., <code>
+     * 
+     * <pre>
+     *  <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
+     * </pre>
+     * 
+     * <code>
+     * @return an empty new instance */
     public static S empty() {
       return new S();
     }
 
-    /**
-    * To be used in the following nano <code><pre> public interface Applicator { public class Settings extends Listeners { public class Action extends Setting { action1(); action2(); } }  } </pre></code> parameterized solely by the name <code>Applicator</code> and the action in <code>Action</code>
-    * @return  <code><b>this</b></code> 
-    */
+    /** To be used in the following nano
+     * <code><pre> public interface Applicator { public class Settings extends Listeners { public class Action extends Setting { action1(); action2(); } }  } </pre></code>
+     * parameterized solely by the name <code>Applicator</code> and the action
+     * in <code>Action</code>
+     * @return <code><b>this</b></code> */
     public List<Listener> listeners() {
       return this;
     }

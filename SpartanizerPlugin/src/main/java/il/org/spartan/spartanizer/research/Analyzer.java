@@ -35,7 +35,7 @@ public class Analyzer {
     }
   }
 
-  private static void clean(final String inputFolder, final String __) {
+  private static void clean(final String inputFolder, @SuppressWarnings("unused") final String __) {
     for (final File f : getJavaFiles(inputFolder)) {
       final ASTNode cu = getCompilationUnit(f);
       clean(cu);
