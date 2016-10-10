@@ -57,10 +57,13 @@ public class EventMapper extends EventListener {
 
   /** Factory method for {@link EventMapperFunctor}. Inspects
    * {@link EventMapper#eventMap}. [[SuppressWarningsSpartan]] */
-  public static EventMapperFunctor<Map<event, Object>, Map<event, Object>> inspectorOf(final event ¢) {
-    return new EventMapperFunctor<Map<event, Object>, Map<event, Object>>(¢) {
+  public static EventMapperFunctor<Map<event, Object>, Object> inspectorOf(final event ¢) {
+    return new EventMapperFunctor<Map<event, Object>, Object>(¢) {
       @Override public void update(Map<event, Object> m) {
         consumer.accept(m);
+      }
+      @Override public void update(Map<event, Object> m, Object o) {
+        biConsumer.accept(m, o);
       }
     };
   }
@@ -176,17 +179,26 @@ public class EventMapper extends EventListener {
       return (EventMapperFunctor<X, Y>) this;
     }
 
-    /** Collects objects of specific type */
-    @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<Collection<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
+    /** Remembers objects of specific type */
+    @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<Collection<Y>, Y> rememberBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<Collection<Y>, Y>) this) //
           .startWith(new HashSet<>()) //
           .does((l, u) -> {
             l.add(u);
           });
     }
+    
+    /** Collects objects of specific type */
+    @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<Collection<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
+      return ((EventMapperFunctor<Collection<Y>, Y>) this) //
+          .startWith(new LinkedList<>()) //
+          .does((l, u) -> {
+            l.add(u);
+          });
+    }
 
     /** Remember an object of specific type */
-    @SuppressWarnings("unchecked") public <X> EventMapperFunctor<X, X> remember(@SuppressWarnings("unused") final Class<X> __) {
+    @SuppressWarnings("unchecked") public <X> EventMapperFunctor<X, X> rememberLast(@SuppressWarnings("unused") final Class<X> __) {
       return ((EventMapperFunctor<X, X>) this) //
           .does((x, u) -> {
             return u;
