@@ -567,7 +567,7 @@ import il.org.spartan.spartanizer.utils.*;
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode n) {
+  static LinkedHashSet<Entry<String, Information>> uses(final ASTNode __) {
     return new LinkedHashSet<>();
   }
 
