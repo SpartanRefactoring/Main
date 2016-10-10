@@ -552,7 +552,7 @@ import il.org.spartan.spartanizer.utils.*;
     return az.block(¢.getParent());
   }
 
-  static String name(final ASTNode ¢) {
+  static String name(final ASTNode __) {
     return "???";
   }
 
