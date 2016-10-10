@@ -375,7 +375,7 @@ public enum extract {
   public static SimpleName onlyName(final VariableDeclarationExpression x) {
     for (final VariableDeclarationFragment ¢ : step.fragments(x))
       if (!iz.identifier("$", ¢.getName()))
-          return ¢.getName();
+        return ¢.getName();
     return null;
   }
 
