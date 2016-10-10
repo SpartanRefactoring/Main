@@ -57,11 +57,11 @@ public class EventMapper extends EventListener {
       return domain != null && domain.equals(¢);
     }
 
-    @SuppressWarnings("unused") void update(final Map<event, Object> e, final O o) {
+    @SuppressWarnings("unused") void update(final Map<event, Object> __, final O o) {
       //
     }
 
-    @SuppressWarnings("unused") void update(final Map<event, Object> e) {
+    @SuppressWarnings("unused") void update(final Map<event, Object> __) {
       //
     }
   }

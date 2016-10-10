@@ -95,19 +95,19 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return replacement(¢, null);
   }
 
-  @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
-    final MethodDeclaration method = getMethod(n);
+  @Override public ASTNode replacement(final SingleVariableDeclaration d, final ExclusionManager m) {
+    final MethodDeclaration method = getMethod(d);
     if (method == null || method.getBody() == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressing(n) || isUsed(method, n.getName()))
+    if (BY_ANNOTATION && !suppressing(d) || isUsed(method, d.getName()))
       return null;
     if (m != null)
       for (final SingleVariableDeclaration ¢ : parameters(method))
-        if (!n.equals(¢))
+        if (!d.equals(¢))
           m.exclude(¢);
-    return replace(n);
+    return replace(d);
   }
 }
