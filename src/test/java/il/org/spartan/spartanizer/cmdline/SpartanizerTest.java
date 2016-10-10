@@ -10,43 +10,35 @@ import org.junit.*;
 public class SpartanizerTest {
   // testing how the matches method works
   @SuppressWarnings("static-method") @Test public void testStringMatches_01() {
-    final String path = "/basedir/test";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
+    assertTrue("/basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_02() {
-    final String path = "/basedir/test/";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
+    assertTrue("/basedir/test/".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_03() {
-    final String path = "/basedir/test/dir";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
+    assertTrue("/basedir/test/dir".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_04() {
-    final String path = "basedir/test";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
+    assertTrue("basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_05() {
-    final String path = "basedir/test/";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
+    assertTrue("basedir/test/".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_06() {
-    final String path = "basedir/test/dir";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
+    assertTrue("basedir/test/dir".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_07() {
-    final String path = "/matteo/test";
-    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\-/]test[\\/A-Za-z0-9]*"));
+    assertTrue("/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_08() {
-    final String path = "/matteo/test";
-    assertFalse(path.matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*"));
+    assertFalse("/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testFileName_01() {
