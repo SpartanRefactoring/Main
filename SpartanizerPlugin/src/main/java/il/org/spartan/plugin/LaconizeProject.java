@@ -37,7 +37,7 @@ public final class LaconizeProject extends BaseHandler {
     final AtomicInteger $ = new AtomicInteger(0);
     final GUI$Applicator ¢ = new Trimmer();
     try {
-      PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
+      eclipse.progressMonitorDialog(false).run(true, true, pm -> {
         pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
         ¢.setMarker(null);
         ¢.setICompilationUnit(todo.get(0));
