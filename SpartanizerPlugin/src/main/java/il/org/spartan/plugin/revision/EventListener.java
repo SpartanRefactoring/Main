@@ -1,10 +1,12 @@
 package il.org.spartan.plugin.revision;
 
+import il.org.spartan.plugin.revision.GUIApplicator.*;
+
 /** Listen to {@link event}s, with an optional additional object.
  * @author Ori Roth
  * @since 2016 */
 public abstract class EventListener<E extends Enum<E>> implements Listener {
-  private Class<? extends E> enumClass;
+  private final Class<? extends E> enumClass;
 
   public abstract void tick(E e);
 
