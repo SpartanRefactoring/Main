@@ -32,7 +32,7 @@ public class Issue312 {
   }
 
   @Test public void chocolate2() {
-    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;").stays();
+    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;").gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;").stays();
   }
 
   @Test public void issue54ForPlain() {
