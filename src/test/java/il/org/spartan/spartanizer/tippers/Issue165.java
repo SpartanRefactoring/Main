@@ -28,11 +28,11 @@ import org.junit.runners.*;
   }
 
   @Test public void seriesA_05_unused() {
-    trimmingOf("void f(int a){}").gives("void f(int __){}").stays();
+    trimmingOf("void f(int a){}").stays();
   }
 
   @Test public void seriesA_06_abstract() {
-    trimmingOf("abstract void f(int a);").gives("abstract void f(int __);").stays();
+    trimmingOf("abstract void f(int a);").stays();
   }
 
   @Test public void seriesA_06_meaningfulName() {
