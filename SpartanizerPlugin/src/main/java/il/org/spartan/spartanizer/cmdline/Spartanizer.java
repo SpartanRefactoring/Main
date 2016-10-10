@@ -270,14 +270,13 @@ public final class Spartanizer {
   }
 
   void spartanizeAndAnalyze(final File f) {
-    if (system.isTestFile(f))
-      return;
-    try {
-      currentFile = f;
-      spartanizeAndAnalyze(FileUtils.read(f));
-    } catch (final IOException e) {
-      monitor.infoIOException(e, "File = " + f);
-    }
+    if (!system.isTestFile(f))
+      try {
+        currentFile = f;
+        spartanizeAndAnalyze(FileUtils.read(f));
+      } catch (final IOException e) {
+        monitor.infoIOException(e, "File = " + f);
+      }
   }
 
   void spartanizeAndAnalyze(final String javaCode) {
