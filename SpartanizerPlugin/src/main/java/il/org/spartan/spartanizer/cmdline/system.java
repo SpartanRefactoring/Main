@@ -70,4 +70,20 @@ public interface system {
       ++$;
     }
   }
+
+  static boolean isTestFile(final File f) {
+    return system.isTestSourceFile(f.getName());
+  }
+
+  static boolean isTestSourceFile(final String fileName) {
+    if (fileName.contains("/test/"))
+      return true;
+    if (fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"))
+      return true;
+    if (fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$"))
+      return true;
+    if (fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"))
+      return true;
+    return false;
+  }
 }
