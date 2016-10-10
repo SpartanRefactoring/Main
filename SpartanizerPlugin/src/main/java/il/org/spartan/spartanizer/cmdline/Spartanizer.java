@@ -92,7 +92,7 @@ public final class Spartanizer {
         Tip s = null;
         try {
           s = w.tip(n, exclude);
-          System.out.println("tipper description: " + w.description());
+//          System.out.println("tipper description: " + w.description());
           TrimmerLog.tip(w, n);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
@@ -225,6 +225,8 @@ public final class Spartanizer {
     report.nl();
     return false;
   }
+  
+  
 
   void spartanizeAndAnalyze(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
@@ -245,7 +247,7 @@ public final class Spartanizer {
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
                
-        return hasTestAnnotation(¢) && spartanizeAndAnalyze(¢); 
+        return hasTestAnnotation(¢) ? spartanizeAndAnalyze(¢) : false; // do not apply the tip! it changes the semantics
       }
       
       boolean hasTestAnnotation(MethodDeclaration d) {
@@ -280,8 +282,9 @@ public final class Spartanizer {
   }
 
   void spartanizeAndAnalyze(final File f) {
-    if (!f.getPath().matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*") || !f.getName().matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"))
+    if (!f.getPath().matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*")) // || !f.getName().matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"))
       try {
+        System.out.println("---" + f.getPath());
         currentFile = f;
         spartanizeAndAnalyze(FileUtils.read(f));
       } catch (final IOException e) {
