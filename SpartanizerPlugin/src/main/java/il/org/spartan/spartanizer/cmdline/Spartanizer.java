@@ -79,7 +79,7 @@ public final class Spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    toolbox=Toolbox.defaultInstance();
+    toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
@@ -243,32 +243,29 @@ public final class Spartanizer {
         // if (m instanceof Annotation && "@Test".equals(((Annotation)
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
-        
-        System.out.println(¢.MODIFIERS2_PROPERTY);
-        
+        System.out.println(MethodDeclaration.MODIFIERS2_PROPERTY);
         return spartanizeAndAnalyze(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final FieldDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final EnumDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final Initializer ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
     });
   }
 

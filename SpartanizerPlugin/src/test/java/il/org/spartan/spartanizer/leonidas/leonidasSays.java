@@ -1,10 +1,12 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import static org.junit.Assert.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -167,11 +169,11 @@ public class leonidasSays {
       final ASTRewrite r = ASTRewrite.create(ast);
       final ASTNode n = extractASTNode(s, cu);
       n.accept(new ASTVisitor() {
-        @Override public void preVisit(ASTNode node) {
+        @Override public void preVisit(final ASTNode node) {
           if (tipper.canTip(node))
             try {
               tipper.tip(node).go(r, null);
-            } catch (TipperFailure e) {
+            } catch (final TipperFailure e) {
               e.printStackTrace();
             }
         }

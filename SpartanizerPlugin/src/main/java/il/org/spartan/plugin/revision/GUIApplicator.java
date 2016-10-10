@@ -38,7 +38,7 @@ public class GUIApplicator extends AbstractHandler implements Applicator, IMarke
     System.out.println(selection);
   }
 
-  private void prepare(boolean setSelection) {
+  private void prepare(final boolean setSelection) {
     listener = EventMapper.empty(event.class);
     GUIConfiguration.listener.configure(listener);
     if (setSelection)

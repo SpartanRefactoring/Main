@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,14 +27,14 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
   }
 
   @Override public boolean prerequisite(final Assignment x) {
-    for (UserDefinedTipper<Assignment> ¢ : tippers)
+    for (final UserDefinedTipper<Assignment> ¢ : tippers)
       if (¢.canTip(x))
         return true;
     return false;
   }
 
   @Override public Tip tip(final Assignment x) throws TipperFailure {
-    for (UserDefinedTipper<Assignment> ¢ : tippers)
+    for (final UserDefinedTipper<Assignment> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
     assert false;

@@ -16,8 +16,8 @@ public class Matcher {
       return new Matcher().matchesAux(p, n);
     if (!iz.block(n))
       return false;
-    @SuppressWarnings("unchecked") List<Statement> sp = az.block(p).statements();
-    @SuppressWarnings("unchecked") List<Statement> sn = az.block(n).statements();
+    @SuppressWarnings("unchecked") final List<Statement> sp = az.block(p).statements();
+    @SuppressWarnings("unchecked") final List<Statement> sn = az.block(n).statements();
     if (sp == null || sn == null || sp.size() > sn.size())
       return false;
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
@@ -29,7 +29,7 @@ public class Matcher {
   /** @param sp
    * @param subList
    * @return */
-  private boolean statementsMatch(List<Statement> sp, List<Statement> subList) {
+  private boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
     for (int ¢ = 0; ¢ < sp.size(); ++¢)
       if (!matchesAux(sp.get(¢), subList.get(¢)))
         return false;
@@ -109,7 +109,7 @@ public class Matcher {
   /** @param p
    * @param n
    * @return */
-  private static boolean sameLiteral(ASTNode p, ASTNode n) {
+  private static boolean sameLiteral(final ASTNode p, final ASTNode n) {
     return iz.literal(n) && (p + "").equals(n + "");
   }
 
