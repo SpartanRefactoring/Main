@@ -37,56 +37,45 @@ public interface Listener {
 
     @Override public void tick(Object... os) {
       $.append(id() + ": ");
-      for (Object o : os)
-        pack(o);
+      for (Object ¢ : os)
+        pack(¢);
       $.append('\n');
     }
 
-    private void pack(Object o) {
-      $.append("," + trim(o));
+    private void pack(Object ¢) {
+      $.append("," + trim(¢));
     }
 
-    private static String trim(Object o) {
-      return (o + "").substring(1, 35);
+    private static String trim(Object ¢) {
+      return (¢ + "").substring(1, 35);
     }
   }
 
-  /** An aggregating kind of {@link Listener} that dispatches the event it
-   * receives to the multiple {@link Listener}s it stores internally.
-   * @author Yossi Gil
-   * @since 2.6 */
-  public class S extends ArrayList<Listener> implements Listener {
+  /**
+   * An aggregating kind of  {@link Listener}  that dispatches the event it receives to the multiple  {@link Listener} s it stores internally.
+   * @author  Yossi Gil
+   * @since  2.6 
+   */
+  class S extends ArrayList<Listener> implements Listener {
     private static final long serialVersionUID = 1L;
 
     @Override public void tick(Object... os) {
-      for (final Listener l : this)
-        l.tick(os);
+      for (final Listener ¢ : this)
+        ¢.tick(os);
     }
 
-    /** for fluent API use, i.e., <code>
-     * 
-     * <pre>
-     * <b>public final</b> {@link Listener} listeners = {@link Listener.S}.{@link #empty()}
-     * </pre>
-     * 
-     * <code>
-     * @return an empty new instance */
+    /**
+    * for fluent API use, i.e., <code> <pre> <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()} </pre> <code>
+    * @return  an empty new instance 
+    */
     public static S empty() {
       return new S();
     }
 
-    /** To be used in the following nano <code><pre>
-       *  public interface Applicator {
-       *    public class Settings extends Listeners {
-       *      public class Action extends Setting {
-       *         action1();
-       *         action2();
-       *      }
-       *    } 
-       *  }
-        * </pre></code> parameterized solely by the name <code>Applicator</code>
-     * and the action in <code>Action</code>
-     * @return <code><b>this</b></code> */
+    /**
+    * To be used in the following nano <code><pre> public interface Applicator { public class Settings extends Listeners { public class Action extends Setting { action1(); action2(); } }  } </pre></code> parameterized solely by the name <code>Applicator</code> and the action in <code>Action</code>
+    * @return  <code><b>this</b></code> 
+    */
     public List<Listener> listeners() {
       return this;
     }
