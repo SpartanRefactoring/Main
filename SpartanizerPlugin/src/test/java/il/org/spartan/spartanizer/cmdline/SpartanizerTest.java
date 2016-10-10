@@ -13,112 +13,116 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
-  
-  public static void main(String[] args){
-    
-    String test = "package test;\n"
-        + "import static org.junit.Assert.*;\n"
-        + "import org.junit.*;\n"
-        + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void testMethod(){\n "
-        + "   int i = 1;\n"
-        + "   assertTrue(i>0);\n"
-        + " }\n"
-        + "}";
-    
-   
-    ASTNode u = makeAST.COMPILATION_UNIT.from(test);
+  public static void main(final String[] args) {
+    final String test = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test);
     assert u != null;
-    
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.AnnotationTypeDeclaration)
-       */
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * AnnotationTypeDeclaration) */
       @Override public boolean visit(final AnnotationTypeDeclaration node) {
         System.out.println("node.getName().getIdentifier(): " + node.getName().getIdentifier());
-        return true; //super.visit(node);
+        return true; // super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.MethodDeclaration)
-       */
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * MethodDeclaration) */
       @Override public boolean visit(final MethodDeclaration node) {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node);
       }
-      
-      boolean hasTestAnnotation(MethodDeclaration d) {
-        List<?> modifiers = d.modifiers();
+
+      boolean hasTestAnnotation(final MethodDeclaration d) {
+        final List<?> modifiers = d.modifiers();
         for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
-          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test")
-              && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
+          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
             return true;
         return false;
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.AnonymousClassDeclaration)
-       */
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * AnonymousClassDeclaration) */
       @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
-        System.out.println("AnnotationTypeMemberDeclaration node.getName():" +node.getName());
+        System.out.println("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
         return super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.ImportDeclaration)
-       */
-      @Override public boolean visit(ImportDeclaration node) {
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * ImportDeclaration) */
+      @Override public boolean visit(final ImportDeclaration node) {
         System.out.println(node.getName());
         return super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.PackageDeclaration)
-       */
-      @Override public boolean visit(PackageDeclaration node) {
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * PackageDeclaration) */
+      @Override public boolean visit(final PackageDeclaration node) {
         System.out.println(node.getName());
         return super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.MethodInvocation)
-       */
-      @Override public boolean visit(MethodInvocation node) {
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * MethodInvocation) */
+      @Override public boolean visit(final MethodInvocation node) {
         System.out.println(node.getName());
         return super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.Assignment)
-       */
-      @Override public boolean visit(Assignment node) {
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * Assignment) */
+      @Override public boolean visit(final Assignment node) {
         System.out.println(node.getOperator());
         return super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.NormalAnnotation)
-       */
-      @Override public boolean visit(NormalAnnotation node) {
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * NormalAnnotation) */
+      @Override public boolean visit(final NormalAnnotation node) {
         System.out.println("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
-      
+
       /* (non-Javadoc)
-       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.MarkerAnnotation)
-       */
-      @Override public boolean visit(MarkerAnnotation node) {
+       * 
+       * @see
+       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
+       * MarkerAnnotation) */
+      @Override public boolean visit(final MarkerAnnotation node) {
         System.out.println("MarkerAnnotation: " + node.getTypeName());
-        ASTNode parent = node.getParent();
+        final ASTNode parent = node.getParent();
         System.out.println("parent: " + parent.getNodeType());
         return super.visit(node);
       }
     });
-       
   }
 
   private static int nMethods;
-  
+
   // testing how the matches method works
   @SuppressWarnings("static-method") @Test public void testStringMatches_01() {
     assertTrue("/basedir/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
@@ -203,84 +207,45 @@ public class SpartanizerTest {
   @SuppressWarnings("static-method") @Test public void testFileName_13() {
     assertTrue("foo1-test-foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"));
   }
-  
+
   @Test public void testMethodWithAnnotation_01() {
-    
-    String test1 = "package test;\n"
-        + "import static org.junit.Assert.*;\n"
-        + "import org.junit.*;\n"
-        + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n "
-        + "   int i = 1;\n"
-        + "   assertTrue(i>0);\n"
-        + " }\n"
-        + " public void notATestMethod(){\n "
-        + "   int i = 1;\n"
-        + "   assertTrue(i>0);\n"
-        + " }\n"
-        + "}";
-    
-    String test2 = "package test;\n"
-        + "import static org.junit.Assert.*;\n"
-        + "import org.junit.*;\n"
-        + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n "
-        + "   int i = 1;\n"
-        + "   assertTrue(i>0);\n"
-        + " }\n"
-        + " public void notATestMethod(){\n "
-        + "   int i = 1;\n"
-        + "   assertTrue(i>0);\n"
-        + " }\n"
-        + " public void ASecondNotTestMethod(){\n "
-        + "   int i = 1;\n"
-        + "   assertTrue(i>0);\n"
-        + " }\n"
-        + "}";
-    
-    ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1);
-    ASTNode u2 = makeAST.COMPILATION_UNIT.from(test2);
-    
+    final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
+        + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+    final String test2 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
+        + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
+        + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+    final ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1);
+    final ASTNode u2 = makeAST.COMPILATION_UNIT.from(test2);
     assert u1 != null;
     assert u2 != null;
-   
     visitASTNode(u1);
-    
-    assertTrue(nMethods==1);
-    
+    assertTrue(nMethods == 1);
     visitASTNode(u2);
-    
-    assertTrue(nMethods==3);
-    
+    assertTrue(nMethods == 3);
   }
 
-  /**
-   * @param u1
-   */
-  private void visitASTNode(ASTNode u1) {
+  /** @param u1 */
+  private void visitASTNode(final ASTNode u1) {
     u1.accept(new ASTVisitor() {
-      
-      int methodNum;
-
       @Override public boolean visit(final MethodDeclaration node) {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node) && countMethods();
       }
-      
-      boolean hasTestAnnotation(MethodDeclaration d) {
-        List<?> modifiers = d.modifiers();
+
+      boolean hasTestAnnotation(final MethodDeclaration d) {
+        final List<?> modifiers = d.modifiers();
         for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
-          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test")
-              && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
+          if (modifiers.get(¢) instanceof MarkerAnnotation && (modifiers.get(¢) + "").contains("@Test") && (modifiers.get(¢) + "").contains("@Test"))
             return true;
         return false;
       }
     });
   }
-  
+
   private boolean countMethods() {
     ++nMethods;
     return false;
   }
-  
 }
