@@ -18,9 +18,9 @@ public enum GUIConfiguration {
 
   @SuppressWarnings("rawtypes") static void configure(final EventMapper l) {
     l //
-        .expend(EventMapper.recorderOf(event.visit_cu).collectBy(ICompilationUnit.class)) //
-        .expend(EventMapper.recorderOf(event.visit_node).collectBy(ASTNode.class)) //
-        .expend(EventMapper.recorderOf(event.visit_project).remember(IJavaProject.class)) //
+        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class)) //
+        .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
+        .expend(EventMapper.recorderOf(event.visit_project).rememberLast(IJavaProject.class)) //
         .expend(EventMapper.recorderOf(event.run_pass).counter()) //
         .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           // TODO Roth: open a dialog box etc etc...
