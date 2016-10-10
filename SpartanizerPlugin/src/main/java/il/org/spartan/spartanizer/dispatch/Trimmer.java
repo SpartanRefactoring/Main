@@ -120,7 +120,7 @@ public class Trimmer extends GUI$Applicator {
     return true;
   }
 
-  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
 }
