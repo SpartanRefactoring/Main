@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -162,6 +162,13 @@ public class Analyzer {
   }
 
   private static void addNanoPatterns(InteractiveSpartanizer ¢) {
-    ¢.toolbox.add(ConditionalExpression.class, new TernaryNullCoallescing(), new TernaryNullConditional());
+    ¢.toolbox
+        .add(ConditionalExpression.class, //
+            new TernaryNullCoallescing(), //
+            new TernaryNullConditional(), //
+            null) //
+        .add(MethodDeclaration.class, //
+            new MethodLazyEvaluation(), //
+            new MethodEmpty());
   }
 }
