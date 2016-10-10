@@ -145,13 +145,32 @@ public class SpartanizerTest {
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_07() {
-    assertTrue("/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test[\\/A-Za-z0-9]*"));
+    assertTrue("/matteo/test".matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));
   }
 
   @SuppressWarnings("static-method") @Test public void testStringMatches_08() {
-    assertFalse("/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*"));
+    assertFalse("/matteo/test".matches("[\\/A-Za-z0-9]*[\\/]test1[\\/A-Za-z0-9]*"));
   }
-
+  
+  @SuppressWarnings("static-method") @Test public void testStringMatches_09() {
+    assertTrue("/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java"
+        .matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+  
+  @SuppressWarnings("static-method") @Test public void testStringMatches_10() {
+    assertTrue("/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java"
+        .matches("[\\/A-Za-z0-9-_.]*test[[\\/A-Za-z0-9-_.]*"));
+  }
+  
+  @SuppressWarnings("static-method") @Test public void testStringMatches_11() {
+    assertTrue("/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/integration/voldemort/performance/StoreRoutingPlanPerf.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+  
+  
+  @SuppressWarnings("static-method") @Test public void testStringMatches_12() {
+    assertTrue("/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/contrib/ec2-testing/src/java/voldemort/utils/impl/RsyncDeployer.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+  
   @SuppressWarnings("static-method") @Test public void testFileName_01() {
     assertTrue("fooTest.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"));
   }
@@ -203,6 +222,8 @@ public class SpartanizerTest {
   @SuppressWarnings("static-method") @Test public void testFileName_13() {
     assertTrue("foo1-test-foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"));
   }
+  
+  
   
   @Test public void testMethodWithAnnotation_01() {
     
