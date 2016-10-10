@@ -16,9 +16,9 @@ public abstract class EventListener implements Listener {
 
   @Override public void tick(final Object... ¢) {
     if (¢ != null && ¢[0] instanceof event)
-      if (¢.length == 0)
-        tick(¢[0]);
-      else if (¢.length == 1)
-        tick(¢[0], ¢[1]);
+      if (¢.length == 1)
+        tick((event) ¢[0]);
+      else if (¢.length == 2)
+        tick((event) ¢[0], ¢[1]);
   }
 }
