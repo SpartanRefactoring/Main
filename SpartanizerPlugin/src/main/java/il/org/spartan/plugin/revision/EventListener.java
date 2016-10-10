@@ -10,15 +10,15 @@ public abstract class EventListener implements Listener {
     visit_project, visit_cu, visit_node, //
   }
 
-  public abstract void acknowledge(event e);
+  public abstract void tick(event e);
 
-  public abstract void acknowledge(event e, Object o);
+  public abstract void tick(event e, Object o);
 
-  @Override public void acknowledge(final Object... ¢) {
+  @Override public void tick(final Object... ¢) {
     if (¢ != null && ¢[0] instanceof event)
       if (¢.length == 0)
-        acknowledge(¢[0]);
+        tick(¢[0]);
       else if (¢.length == 1)
-        acknowledge(¢[0], ¢[1]);
+        tick(¢[0], ¢[1]);
   }
 }

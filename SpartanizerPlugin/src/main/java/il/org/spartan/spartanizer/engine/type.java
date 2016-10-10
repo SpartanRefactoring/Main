@@ -142,43 +142,43 @@ public interface type {
    * @author Niv Shalmon
    * @since 2016 */
   @SuppressWarnings("unused") interface Axiom {
-    static Certain type(final boolean x) {
+    static Certain type(final boolean __) {
       return BOOLEAN;
     }
 
-    static Certain type(final byte x) {
+    static Certain type(final byte __) {
       return BYTE;
     }
 
-    static Certain type(final char x) {
+    static Certain type(final char __) {
       return CHAR;
     }
 
-    static Certain type(final double x) {
+    static Certain type(final double __) {
       return DOUBLE;
     }
 
-    static Certain type(final float x) {
+    static Certain type(final float __) {
       return FLOAT;
     }
 
-    static Certain type(final int x) {
+    static Certain type(final int __) {
       return INT;
     }
 
-    static Certain type(final long x) {
+    static Certain type(final long __) {
       return LONG;
     }
 
-    static type type(final Object o) {
+    static type type(final Object __) {
       return NOTHING;
     }
 
-    static Certain type(final short x) {
+    static Certain type(final short __) {
       return SHORT;
     }
 
-    static Certain type(final String x) {
+    static Certain type(final String __) {
       return STRING;
     }
   }
