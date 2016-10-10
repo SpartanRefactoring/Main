@@ -39,7 +39,7 @@ public final class CollectMetrics {
   }
 
   // TODO Yossi Gil: eliminate warning
-  private static void collectTips(final String __, final CompilationUnit before) {
+  private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggesions(before));
   }
 
