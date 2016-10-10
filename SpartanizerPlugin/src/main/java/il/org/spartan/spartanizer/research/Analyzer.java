@@ -2,11 +2,10 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -35,7 +34,8 @@ public class Analyzer {
     }
   }
 
-  private static void clean(final String inputFolder, @SuppressWarnings("unused") final String __) {
+  /** Remove all comments from all files in directory @param outputFolder */
+  private static void clean(final String inputFolder, String outputFolder) {
     for (final File f : getJavaFiles(inputFolder)) {
       final ASTNode cu = getCompilationUnit(f);
       clean(cu);
@@ -44,13 +44,22 @@ public class Analyzer {
   }
 
   private static void updateFile(final File f, final ASTNode cu) {
-    updateFile(f, cu);
+    updateFile(f, cu + "");
+  }
+
+  private static void updateFile(final File f, final String s) {
+    try (final PrintWriter writer = new PrintWriter(f.getAbsolutePath())) {
+      writer.print(s);
+      writer.close();
+    } catch (final FileNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   private static void appendFile(final File f, final String s) {
     try (FileWriter fw = new FileWriter(f, true)) {
       fw.write(s);
-    } catch (final IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -63,7 +72,7 @@ public class Analyzer {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
-  static String readFile(final String fileName) {
+  private static String readFile(final String fileName) {
     try {
       return FileUtils.read(new File(fileName));
     } catch (final IOException e) {
@@ -111,20 +120,20 @@ public class Analyzer {
     // TODO: much more then that..
   }
 
-  static int nodes(final ASTNode root) {
+  private static int nodes(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+      @Override public void preVisit(@SuppressWarnings("unused") ASTNode __) {
         $.inner += 1;
       }
     });
     return $.inner;
   }
 
-  static int markedNodes(final ASTNode root) {
+  private static int markedNodes(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(ASTNode ¢) {
         if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
           $.inner += 1;
       }
@@ -141,13 +150,25 @@ public class Analyzer {
 
   /** @param inputFolder
    * @param outputFolder */
-  private static void spartanize(final String inputFolder, final String outputFolder) {
-    final InteractiveSpartanizer is = new InteractiveSpartanizer();
+  private static void spartanize(final String inputFolder, String outputFolder) {
+    InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+    addNanoPatterns(spartanizer);
     String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
       System.out.println("Now: " + ¢.getName());
-      spartanizedCode = is.fixedPoint(getCompilationUnit(¢) + "");
-      appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
+      spartanizedCode = spartanizer.fixedPoint(getCompilationUnit(¢) + "");
+      appendFile((new File(outputFolder + "/after.java")), spartanizedCode);
     }
+  }
+
+  private static void addNanoPatterns(InteractiveSpartanizer ¢) {
+    ¢.toolbox
+        .add(ConditionalExpression.class, //
+            new TernaryNullCoallescing(), //
+            new TernaryNullConditional(), //
+            null) //
+        .add(MethodDeclaration.class, //
+            new MethodLazyEvaluation(), //
+            new MethodEmpty());
   }
 }

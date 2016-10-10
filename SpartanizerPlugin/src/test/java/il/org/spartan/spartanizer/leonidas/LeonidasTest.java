@@ -48,6 +48,12 @@ import org.junit.*;
         .turns("a(b(), c.d()).e == null ? 2*3 + 4*z().x : a(b(),c.d()).e").into("a(b(), c.d()).e.defaultsTo(2 * 3 + 4 * z().x)");
   }
 
+  @Test public void testMutation3() {
+    leonidasSays.tipper("$X1 = $X1 != null ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation")
+        .turns("defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers()")
+        .into("lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers())");
+  }
+
   @Test public void testNotTips1() {
     leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("x17 == 7 ? 2*3 + 4*z().x : x17");
   }
