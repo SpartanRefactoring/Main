@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public final class InfixIndexOfToStringContains extends Tipper<InfixExpression> implements TipperCategory.Idiomatic {
-  static List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<>();
+  private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<>();
 
   public InfixIndexOfToStringContains() {
     if (tippers.size() == 4)
