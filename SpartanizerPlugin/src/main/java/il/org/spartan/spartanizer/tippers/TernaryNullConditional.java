@@ -1,16 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
+import java.util.*;
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Replace X == null ? null : X.Y with X?.Y <br>
  * replace X != null ? X.Y : null with X?.Y <br>
@@ -19,27 +14,33 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> implements TipperCategory.Nanos {
-  private static boolean prerequisite(final Expression left, final Expression right, final Expression elze) {
-    if (!iz.nullLiteral(left) && iz.nullLiteral(right) && wizard.same(left, elze))
-      Counter.count(TernaryNullConditional.class);
-    if (iz.nullLiteral(left) && !iz.nullLiteral(right) && wizard.same(right, elze))
-      Counter.count(TernaryNullConditional.class);
-    return true;
+  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<>();
+
+  public TernaryNullConditional(){
+    if (tippers.size() == 4)
+      return;
+    tippers.add(TipperFactory.tipper("$X1 == null ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
+    tippers.add(TipperFactory.tipper("$X1 != null ? $X1.$X2 : null", "NullConditional($X1,$X2)", "null Conditional"));
+    tippers.add(TipperFactory.tipper("null == $X1 ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
+    tippers.add(TipperFactory.tipper("null != $X1 ? $X1.$X2 : null", "NullConditional($X1,$X2)", "null Conditional"));
+
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "replace null coallescing ternary with ??";
+    return "replace null conditionl ternary with ?.";
   }
 
   @Override public boolean prerequisite(final ConditionalExpression x) {
-    if (!iz.comparison(az.infixExpression(step.expression(x))))
-      return false;
-    final InfixExpression condition = az.comparison(step.expression(x));
-    final Expression left = left(condition);
-    final Expression right = right(condition);
-    then(x);
-    elze(x);
-    return operator(condition) == EQUALS ? prerequisite(left, right, elze(x))
-        : operator(condition) == NOT_EQUALS && prerequisite(left, right, then(x));
+    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
+      if (¢.canTip(x))
+        return true;
+    return false;
+  }
+  
+  @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
+    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
+      if (¢.canTip(x))
+        return ¢.tip(x);
+    return null;
   }
 }
