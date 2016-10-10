@@ -6,8 +6,14 @@ import org.eclipse.ui.*;
 /** @author Ori Roth
  * @since 2016 */
 public class GUIApplicator extends Applicator implements IMarkerResolution {
+  /** Possible events during spartanization process */
+  enum event {
+    run_start, run_finish, run_pass, //
+    visit_project, visit_cu, visit_node, //
+  }
+
   public GUIApplicator() {
-    listener = EventMapper.empty();
+    listener = EventMapper.empty(event.class);
     GUIConfiguration.listener.configure(listener);
   }
 

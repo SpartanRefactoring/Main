@@ -1227,10 +1227,7 @@ public final class Version230 {
 
   @Test public void infiniteLoopBug1() {
     trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet) {\n"
-        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }")
-            .gives("static boolean hasAnnotation(final VariableDeclarationFragment __) {\n"
-                + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }")
-            .stays();
+        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n}").stays();
   }
 
   @Test public void infiniteLoopBug2() {
@@ -2782,21 +2779,26 @@ public final class Version230 {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimmingOf("void f(int x) {}").gives("void f(int __) {}").stays();
+    trimmingOf("void f(int i) {}").gives("void f(int __) {}").stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int i) {}")//
         .gives("void f(@SuppressWarnings({\"unused\"}) int __){}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}")//
-        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+        .stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore5() {
-    trimmingOf("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
+    trimmingOf("void f(int i, @SuppressWarnings(\"unused\") int y) {}")//
+        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
+  }
+
+  @Test public void renameUnusedVariableToDoubleUnderscore6() {
+    trimmingOf("void f(int i, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
         .gives("void f(int __, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}");
   }
 

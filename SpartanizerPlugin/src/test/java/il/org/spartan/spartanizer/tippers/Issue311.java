@@ -121,12 +121,14 @@ import org.junit.runners.*;
 
   @Test public void challenge_while_i_initialization_expression_3e() {
     trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (c=true))$.append(line).append(ls);")
-        .gives("for(boolean a=true,b=true,c=true;b && a && c;)$.append(line).append(ls);").stays();
+        .gives("for(boolean a=true,b=true,c=true;b && a && c;)$.append(line).append(ls);")
+        .gives("for(boolean ¢=true,b=true,c=true;b && ¢ && c;)$.append(line).append(ls);").stays();
   }
 
   @Test public void challenge_while_i_initialization_expression_4() {
     trimmingOf("boolean a,b,c;while ((b=true) && (a=true) && (d=true))$.append(c).append(ls);")
-        .gives("for(boolean a=true,b=true,c;b && a && (d=true);)$.append(c).append(ls);").stays();
+        .gives("for(boolean a=true,b=true,c;b && a && (d=true);)$.append(c).append(ls);")
+        .gives("for(boolean ¢=true,b=true,c;b && ¢ && (d=true);)$.append(c).append(ls);").stays();
   }
 
   @Test public void challenge_while_j() {
@@ -228,14 +230,12 @@ import org.junit.runners.*;
 
   @Test public void t03b() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
-        + "return $;}").gives(
-            "private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
-            .stays();
+        + "return $;}").stays();
   }
 
   @Test public void t03c() {
     trimmingOf(
-        "private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
+        "private static String toPath(String s) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
             .gives("private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$){" + "if ($ == 0)" + "$ = 7;}"
                 + "return $;}")
             .gives(
