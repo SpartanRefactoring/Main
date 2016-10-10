@@ -13,17 +13,16 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/**
- * @author Dan Greenstein
+/** @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "unused", "javadoc" }) public class EnvironmentTestEngineTest {
   private LinkedHashSet<Entry<String, Information>> s;
-  
+
   @Before public void initTestEngineTest() {
     s = new LinkedHashSet<>();
   }
-  
+
   @Test public void EngineTestFlatUnordered00() {
     new EnvFlatHandler(makeAST.COMPILATION_UNIT.from(new Document("@FlatEnvUse({}) int x;")), s);
   }
@@ -153,5 +152,4 @@ import il.org.spartan.spartanizer.utils.*;
     s.add(new MapEntry<>("EX.C1.s", new Information(type.Primitive.Certain.STRING)));
     new EnvFlatHandler($, s);
   }
-
 }

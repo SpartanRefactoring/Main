@@ -228,9 +228,9 @@ import org.junit.runners.*;
 
   @Test public void t03b() {
     trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
-        + "return $;}")
-    .gives("private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}"
-        + "return $;}").stays();
+        + "return $;}").gives(
+            "private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (; $ < one;){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
+            .stays();
   }
 
   @Test public void t03c() {
@@ -238,8 +238,8 @@ import org.junit.runners.*;
         "private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ < one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
             .gives("private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$){" + "if ($ == 0)" + "$ = 7;}"
                 + "return $;}")
-            .gives("private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$)" + "if ($ == 0)" + "$ = 7;"
-                + "return $;}")
+            .gives(
+                "private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (;$ < one;++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
             .stays();
   }
 
