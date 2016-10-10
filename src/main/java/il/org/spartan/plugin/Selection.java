@@ -97,6 +97,8 @@ public class Selection {
   }
 
   @Override public String toString() {
+    if (compilationUnits == null || compilationUnits.isEmpty())
+      return "{empty}";
     int s = compilationUnits == null ? 0 : compilationUnits.size();
     return "{" + (compilationUnits == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
