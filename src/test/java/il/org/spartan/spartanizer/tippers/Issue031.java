@@ -67,6 +67,6 @@ import org.junit.runners.*;
   }
 
   @Test public void n() {
-    trimmingOf("String tellTale(ExamplyExamplar foo)").gives("String tellTale(ExamplyExamplar __)").stays();
+    trimmingOf("String tellTale(ExamplyExamplar foo)").stays();
   }
 }
