@@ -27,14 +27,14 @@ public final class MethodLazyEvaluation extends NanoPatternTipper<MethodDeclarat
 
   @Override public boolean prerequisite(final MethodDeclaration x) {
     for (UserDefinedTipper<MethodDeclaration> ¢ : tippers)
-      if (¢.cantTip(x))
+      if (¢.canTip(x))
         return true;
     return false;
   }
 
   @Override public Tip tip(final MethodDeclaration x) throws TipperFailure {
     for (UserDefinedTipper<MethodDeclaration> ¢ : tippers)
-      if (¢.cantTip(x))
+      if (¢.canTip(x))
         return ¢.tip(x);
     assert false;
     return null;
