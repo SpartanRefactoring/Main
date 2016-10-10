@@ -3,25 +3,16 @@ package il.org.spartan.spartanizer.java;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.java.Environment.*;
 
-import java.util.*;
-import java.util.Map.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.annotations.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
-import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings({ "unused" }) public final class EnvironmentTestSpawningAndManualAddition {
   Environment e0 = Environment.genesis();
   Environment e1 = e0.spawn();
   Environment ee0 = Environment.genesis();
   Environment ee1 = ee0.spawn();
-  private LinkedHashSet<Entry<String, Information>> s;
 
   @Test public void defaultDoesntHave() {
     azzert.that(e0.nest().doesntHave("Alex"), is(true));
@@ -64,7 +55,6 @@ import il.org.spartan.spartanizer.utils.*;
     azzert.that(e0.fullSize(), is(0));
   }
 
-
   @Test public void DoesntHaveFalseResult() {
     azzert.that(e1.nest().doesntHave("Yossi"), is(false));
   }
@@ -97,7 +87,7 @@ import il.org.spartan.spartanizer.utils.*;
     ee1.put("Dan", new Information());
     azzert.that(ee1.empty(), is(false));
   }
- 
+
   @Test public void get() {
     e0.put("Alex", new Information());
     assert e0.get("Alex") != null;

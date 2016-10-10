@@ -36,7 +36,7 @@ public enum haz {
   public static boolean cent(final ASTNode ¢) {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
-  
+
   public static boolean dollar(final ASTNode ¢) {
     return !Collect.usesOf("$").inside(¢).isEmpty();
   }

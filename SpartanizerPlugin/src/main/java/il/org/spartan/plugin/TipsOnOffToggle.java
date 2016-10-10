@@ -48,7 +48,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    IProject p = getProject();
+    final IProject p = getProject();
     if (p == null)
       return null;
     try {
@@ -58,7 +58,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
     }
     return null;
   }
-  
+
   private static IProject getProject() {
     final IProject p = RefactorerUtil.selection.getProject(RefactorerUtil.selection.getSelection());
     return p != null ? p : null;
