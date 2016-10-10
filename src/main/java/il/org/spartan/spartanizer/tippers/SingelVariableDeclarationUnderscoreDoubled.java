@@ -97,7 +97,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
 
   @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
     final MethodDeclaration method = getMethod(n);
-    if (method != null || iz.abstract¢(method))
+    if (method == null || method.getBody() == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
