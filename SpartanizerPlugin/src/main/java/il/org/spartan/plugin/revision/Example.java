@@ -9,6 +9,7 @@ import il.org.spartan.plugin.revision.GUIApplicator.*;
  * @since 2016 */
 public class Example {
   @SuppressWarnings("static-method") @Test public void example() {
+    System.out.println("############\nExample 1:");
     GUIApplicator a = new GUIApplicator();
     // start running
     a.listener.tick(event.visit_project, "MyProject");
@@ -22,12 +23,60 @@ public class Example {
     a.listener.tick(event.visit_cu, "MyCU2");
     a.listener.tick(event.visit_node, "MyNode3");
     a.listener.tick(event.visit_node, "MyNode4");
-    //pass 2
+    // pass 2
     a.listener.tick(event.run_pass);
     a.listener.tick(event.visit_cu, "MyCU1");
     a.listener.tick(event.visit_node, "MyNode5");
     a.listener.tick(event.visit_node, "MyNode6");
     // finish running
     a.listener.tick(event.run_finish);
+  }
+
+  // a replacement for Listener.Tracing...
+  enum traceOperation {
+    trace, print
+  }
+
+  @Test public void exampleTracing() {
+    System.out.println("############\nExample 2:");
+    class Container {
+      int index;
+      StringBuilder builder;
+    }
+    Listener listener = EventMapper.empty(traceOperation.class) //
+        .expend( //
+            EventMapper.recorderOf(traceOperation.trace) //
+                .startWithSupplyOf(() -> {
+                  Container $ = new Container();
+                  $.index = 0;
+                  $.builder = new StringBuilder();
+                  return $;
+                }) //
+                .gets(Object[].class) //
+                .does((c, os) -> {
+                  c.builder.append(++c.index + ": ");
+                  for (Object ¢ : os)
+                    c.builder.append("," + ((¢ + "").length() < 36 ? ¢ + "" : (¢ + "").substring(1, 35)));
+                  c.builder.append('\n');
+                })) //
+        .expend(EventMapper.inspectorOf(traceOperation.print) //
+            .does(¢ -> {
+              final Container c = (Container) ¢.get(traceOperation.trace);
+              if (c != null)
+                System.out.println(c.builder); // or whatever you want
+            }));
+    // Pay attention to wrapper functions below. No for the testing:
+    trace(listener, "Project", "MyProject");
+    trace(listener, "CU", "MyCU1");
+    trace(listener, "CU", "MyCU2");
+    print(listener);
+  }
+
+  public static void trace(Listener l, Object... os) {
+    l.tick(traceOperation.trace, os);
+  }
+
+  public static void print(Listener ¢) {
+    ¢.tick(traceOperation.print);
   }
 }
