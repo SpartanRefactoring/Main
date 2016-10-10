@@ -79,17 +79,16 @@ public final class Spartanizer {
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    toolbox=Toolbox.defaultInstance();
+    toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
-        if (!check(n) || disabling.on(n)) {// removed !inRange(m, n) || !check(n)
+        if (!check(n) || disabling.on(n))
+          // !check(n)
           return true;
-        }
         final Tipper<N> w = getTipper(n);
-        if (w == null){
+        if (w == null)
           return true;
-        }
         Tip s = null;
         try {
           s = w.tip(n, exclude);
@@ -98,9 +97,8 @@ public final class Spartanizer {
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         }
-        if (s != null){
+        if (s != null)
           TrimmerLog.application(r, s);
-        }
         return true;
       }
 
@@ -246,36 +244,33 @@ public final class Spartanizer {
         // if (m instanceof Annotation && "@Test".equals(((Annotation)
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
-        
         return spartanizeAndAnalyze(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final FieldDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final EnumDeclaration ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
+
       @Override public boolean visit(final Initializer ¢) {
         return spartanizeAndAnalyze(¢);
       }
-      
     });
   }
 
   void spartanizeAndAnalyze(final File f) {
-    if (!f.getPath().matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*") || f.getName().matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java")); //contains("src/test"))
-    if (!f.getPath().matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")); //contains("src/test"))
+    if (!system.isTestFile(f))
       try {
         currentFile = f;
         spartanizeAndAnalyze(FileUtils.read(f));
