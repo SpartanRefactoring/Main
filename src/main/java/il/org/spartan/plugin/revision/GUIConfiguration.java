@@ -5,15 +5,15 @@ import java.util.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.plugin.revision.EventListener.*;
+import il.org.spartan.plugin.revision.GUIApplicator.*;
 
 /** @author Ori Roth
  * @since 2016 */
 public enum GUIConfiguration {
   listener;
-  void configure(final Object ¢) {
+  @SuppressWarnings("unchecked") void configure(final Object ¢) {
     if (listener.equals(this))
-      configure((EventMapper) ¢);
+      configure((EventMapper<event>) ¢);
   }
 
   @SuppressWarnings("rawtypes") static void configure(final EventMapper l) {

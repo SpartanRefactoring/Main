@@ -3,22 +3,27 @@ package il.org.spartan.plugin.revision;
 /** Listen to {@link event}s, with an optional additional object.
  * @author Ori Roth
  * @since 2016 */
-public abstract class EventListener implements Listener {
-  /** Possible events during spartanization process */
-  enum event {
-    run_start, run_finish, run_pass, //
-    visit_project, visit_cu, visit_node, //
+public abstract class EventListener<E extends Enum<E>> implements Listener {
+
+  private Class<? extends E> enumClass;
+  
+  public abstract void tick(E e);
+
+  public abstract void tick(E e, Object o);
+  
+  protected EventListener(final Class<? extends E> enumClass) {
+    this.enumClass = enumClass;
+  }
+  
+  protected E[] events() {
+    return enumClass.getEnumConstants();
   }
 
-  public abstract void tick(event e);
-
-  public abstract void tick(event e, Object o);
-
-  @Override public void tick(final Object... ¢) {
-    if (¢ != null && ¢[0] instanceof event)
+  @SuppressWarnings("unchecked") @Override public void tick(final Object... ¢) {
+    if (¢ != null && enumClass.isInstance(¢[0]))
       if (¢.length == 1)
-        tick((event) ¢[0]);
+        tick((E) ¢[0]);
       else if (¢.length == 2)
-        tick((event) ¢[0], ¢[1]);
+        tick((E) ¢[0], ¢[1]);
   }
 }

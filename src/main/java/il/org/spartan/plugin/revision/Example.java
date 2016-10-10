@@ -2,7 +2,7 @@ package il.org.spartan.plugin.revision;
 
 import org.junit.*;
 
-import il.org.spartan.plugin.revision.EventListener.*;
+import il.org.spartan.plugin.revision.GUIApplicator.*;
 
 /** A use example. Will be deleted as soon as possible.
  * @author Ori Roth
