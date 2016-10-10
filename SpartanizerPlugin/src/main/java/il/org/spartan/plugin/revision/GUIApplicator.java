@@ -3,11 +3,9 @@ package il.org.spartan.plugin.revision;
 import org.eclipse.core.resources.*;
 import org.eclipse.ui.*;
 
-/**
- * @author Ori Roth
+/** @author Ori Roth
  * @since 2016 */
 public class GUIApplicator extends Applicator implements IMarkerResolution {
-  
   public GUIApplicator() {
     listener = EventMapper.empty();
     GUIConfiguration.listener.configure(listener);
@@ -17,7 +15,7 @@ public class GUIApplicator extends Applicator implements IMarkerResolution {
     return "Apply";
   }
 
-  @Override public void run(@SuppressWarnings("unused") IMarker __) {
+  @Override public void run(@SuppressWarnings("unused") final IMarker __) {
     // set selection using marker, then
     go();
   }
