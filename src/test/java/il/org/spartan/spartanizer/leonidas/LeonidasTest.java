@@ -54,6 +54,18 @@ import org.junit.*;
         .into("lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers())");
   }
 
+  @Test public void testMutation4() {
+    leonidasSays.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation")
+        .turns("defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance")
+        .into("lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers())");
+  }
+
+  @Test public void testMutation5() {
+    leonidasSays.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation")
+        .turns("return defaultInstance = defaultInstance == null ? freshCopyOfAllTippers() : defaultInstance;")
+        .into("return lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers());");
+  }
+
   @Test public void testNotTips1() {
     leonidasSays.tipper("$X == null ? $X2 : $X", "$X.defaultsTo($X2)", "defaultsTo").nottips("x17 == 7 ? 2*3 + 4*z().x : x17");
   }
