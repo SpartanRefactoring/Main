@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import org.eclipse.jdt.core.dom.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public final class MethodEmpty extends NanoPatternTipper<MethodDeclaration> implements TipperCategory.Nanos {
+public final class MethodEmpty extends NanoPatternTipper<MethodDeclaration> {
   @Override protected boolean prerequisite(MethodDeclaration ¢) {
-    return ¢.getBody().statements().isEmpty();
+    return ¢.getBody() != null && ¢.getBody().statements().isEmpty();
   }
 
   @Override public String description(MethodDeclaration ¢) {
@@ -15,7 +14,6 @@ public final class MethodEmpty extends NanoPatternTipper<MethodDeclaration> impl
   }
 
   @Override public Tip tip(MethodDeclaration __) throws TipperFailure {
-    System.out.println(__);
     throw new TipperFailure.TipNotImplementedException();
   }
 }
