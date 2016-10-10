@@ -278,7 +278,7 @@ public final class Spartanizer {
   }
 
   void spartanizeAndAnalyze(final File f) {
-    if (!f.getPath().contains("src/test"))
+    if (!f.getPath().matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"))
       try {
         currentFile = f;
         spartanizeAndAnalyze(FileUtils.read(f));
