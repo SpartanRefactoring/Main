@@ -1,12 +1,10 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import static org.junit.Assert.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -108,7 +106,7 @@ public class leonidasSays {
           assertEquals(s, d.get());
           break;
         case STATEMENTS_LOOK_ALIKE:
-          assertEquals(s, d.get().substring(16, d.get().length() - 3));
+          assertEquals(s, d.get().substring(16, d.get().length() - 2));
           break;
         default:
           break;
@@ -151,7 +149,7 @@ public class leonidasSays {
       return null;
     }
 
-    private final Tipper<ASTNode> tipper;
+    final Tipper<ASTNode> tipper;
     private final String s;
 
     public turns(final Tipper<ASTNode> tipper, final String _s) {
@@ -168,13 +166,16 @@ public class leonidasSays {
       final AST ast = cu.getAST();
       final ASTRewrite r = ASTRewrite.create(ast);
       final ASTNode n = extractASTNode(s, cu);
-      try {
-        assert tipper.canTip(n);
-        tipper.tip(n).go(r, null);
-      } catch (final TipperFailure e) {
-        e.printStackTrace();
-        fail();
-      }
+      n.accept(new ASTVisitor() {
+        @Override public void preVisit(ASTNode node) {
+          if (tipper.canTip(node))
+            try {
+              tipper.tip(node).go(r, null);
+            } catch (TipperFailure e) {
+              e.printStackTrace();
+            }
+        }
+      });
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);

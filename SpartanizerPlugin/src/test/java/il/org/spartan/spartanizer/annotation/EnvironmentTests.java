@@ -421,7 +421,7 @@ import java.util.*;
         this(Oompa_Loompa, Oompa_Loompa);
       }
 
-      Oompa_Loompa(final Oompa_Loompa[]... Oompa_Loompa) {
+      Oompa_Loompa(final Oompa_Loompa[]... __) {
         this();
       }
 

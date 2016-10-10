@@ -167,8 +167,10 @@ public class Analyzer {
             new TernaryNullCoallescing(), //
             new TernaryNullConditional(), //
             null) //
+        .add(Assignment.class, new AssignmentLazyEvaluation(), //
+            null) //
         .add(MethodDeclaration.class, //
-            new MethodLazyEvaluation(), //
-            new MethodEmpty());
+            new MethodEmpty(), //
+            null);
   }
 }
