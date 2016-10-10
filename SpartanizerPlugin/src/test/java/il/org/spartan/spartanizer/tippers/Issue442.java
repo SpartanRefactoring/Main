@@ -33,7 +33,13 @@ public class Issue442 {
   }
 
   @Test public void c$etc() {
-    assert true;
+    trimmingOf("interface I{ I f(I i);}").stays();
+  }
+
+  @Test public void b() {
+    trimmingOf("public S f(X x){return null;}")//
+        .gives("public S f(X __){return null;}")//
+        .stays();
   }
 
   @Test public void chocolate01() {
