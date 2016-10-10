@@ -150,7 +150,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
    *         expression. */
   static boolean comparison(final InfixExpression ¢) {
-    return in(¢.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
+    return ¢ != null && in(¢.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
 
   static boolean comparison(final Operator ¢) {

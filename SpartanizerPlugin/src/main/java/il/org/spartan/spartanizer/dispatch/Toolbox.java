@@ -115,6 +115,7 @@ public class Toolbox {
             new ReturnToBreakFiniteFor(), //
             new RemoveRedundentFor(), //
             new ForToForUpdaters(), //
+            new ForTrueConditionRemove(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
