@@ -1,8 +1,10 @@
 package il.org.spartan.plugin.revision;
 
-import java.util.*;
+import static il.org.spartan.plugin.revision.Listener.*;
 
-import il.org.spartan.spartanizer.utils.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+
 import il.org.spartan.utils.*;
 
 /** An abstract listener taking events that may have any number of parameters.
@@ -12,10 +14,14 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface Listener {
-  final Int id = new Int();
+  final AtomicInteger id = new AtomicInteger(); 
+  
+  static int id() {
+   return id.get(); 
+  }
 
   default void tick(Object... os) {
-    id.inner++;
+    id.incrementAndGet();
     ___.unused(os);
   }
 
@@ -30,7 +36,7 @@ public interface Listener {
     }
 
     @Override public void tick(Object... os) {
-      $.append(id.inner() + ": ");
+      $.append(id() + ": ");
       for (Object o : os)
         pack(o);
       $.append('\n');
