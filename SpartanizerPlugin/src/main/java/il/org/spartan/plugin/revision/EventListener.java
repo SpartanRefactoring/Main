@@ -4,17 +4,16 @@ package il.org.spartan.plugin.revision;
  * @author Ori Roth
  * @since 2016 */
 public abstract class EventListener<E extends Enum<E>> implements Listener {
-
   private Class<? extends E> enumClass;
-  
+
   public abstract void tick(E e);
 
   public abstract void tick(E e, Object o);
-  
+
   protected EventListener(final Class<? extends E> enumClass) {
     this.enumClass = enumClass;
   }
-  
+
   protected E[] events() {
     return enumClass.getEnumConstants();
   }
