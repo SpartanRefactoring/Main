@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 public class TipperFactory {
   public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
@@ -22,9 +23,30 @@ public class TipperFactory {
       }
 
       @Override public Tip tip(final N n) {
+        if (!iz.block(pattern) || !iz.block(n))
+          return new Tip(description(n), n, this.getClass()) {
+            @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+              final Map<String, ASTNode> enviroment = collectEnviroment(n);
+              final Wrapper<String> $ = new Wrapper<>();
+              $.set(replacement);
+              for (final String ¢ : enviroment.keySet())
+                if (¢.startsWith("$B"))
+                  $.set($.get().replace(¢, enviroment.get(¢) + ""));
+              wizard.ast(replacement).accept(new ASTVisitor() {
+                @Override public boolean preVisit2(final ASTNode ¢) {
+                  if (iz.name(¢) && enviroment.containsKey(¢ + ""))
+                    $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "") + ""));
+                  return true;
+                }
+              });
+              r.replace(n, wizard.ast($.get()), g);
+            }
+          };
+        Pair<Integer, Integer> idxs = Matcher.getBlockMatching(az.block(pattern), az.block(n));
+        @SuppressWarnings("boxing") String matching = stringifySubBlock(n, idxs.first, idxs.second);
         return new Tip(description(n), n, this.getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final Map<String, ASTNode> enviroment = collectEnviroment(n);
+          @SuppressWarnings("boxing") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            final Map<String, ASTNode> enviroment = collectEnviroment(wizard.ast(matching));
             final Wrapper<String> $ = new Wrapper<>();
             $.set(replacement);
             for (final String ¢ : enviroment.keySet())
@@ -37,9 +59,21 @@ public class TipperFactory {
                 return true;
               }
             });
-            r.replace(n, wizard.ast($.get()), g);
+            r.replace(n, wizard.ast(stringifySubBlock(n, 0, idxs.first) + $.get() + stringifySubBlock(n, idxs.second)), g);
           }
         };
+      }
+
+      String stringifySubBlock(N n, int start) {
+        int end = az.block(n).statements().size();
+        return start >= end ? "" : stringifySubBlock(n, start, end);
+      }
+
+      String stringifySubBlock(N n, int start, int end) {
+        if (start >= end)
+          return "";
+        @SuppressWarnings("unchecked") List<Statement> ss = az.block(n).statements().subList(start, end);
+        return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
       }
 
       @Override protected boolean prerequisite(final N ¢) {
