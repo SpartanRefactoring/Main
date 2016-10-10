@@ -1,32 +1,47 @@
 package il.org.spartan.plugin.revision;
 
+import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.plugin.*;
+
 /** @author Ori Roth
  * @since 2016 */
-public class GUIApplicator extends Applicator implements IMarkerResolution {
+public class GUIApplicator extends AbstractHandler implements Applicator, IMarkerResolution {
   /** Possible events during spartanization process */
   enum event {
     run_start, run_finish, run_pass, //
     visit_project, visit_cu, visit_node, //
   }
 
-  public GUIApplicator() {
-    listener = EventMapper.empty(event.class);
-    GUIConfiguration.listener.configure(listener);
-  }
+  protected Listener listener;
+  protected Selection selection;
 
   @Override public String getLabel() {
     return "Apply";
   }
 
-  @Override public void run(@SuppressWarnings("unused") final IMarker __) {
-    // set selection using marker, then
+  @Override public void run(final IMarker ¢) {
+    prepare(false);
+    selection = RefactorerUtil.selection.by(¢);
     go();
   }
 
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    prepare(true);
+    go();
+    return null;
+  }
+
   @Override public void go() {
-    // spartanization
+    System.out.println(selection);
+  }
+
+  private void prepare(boolean setSelection) {
+    listener = EventMapper.empty(event.class);
+    GUIConfiguration.listener.configure(listener);
+    if (setSelection)
+      selection = RefactorerUtil.selection.get();
   }
 }

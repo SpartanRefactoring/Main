@@ -188,7 +188,7 @@ public class RefactorerUtil {
       if (e == null)
         return null;
       final IEditorInput i = e.getEditorInput();
-      return i == null ? null : by(i.getAdapter(IResource.class)).setTextSelection(s);
+      return i == null ? Selection.empty() : by(i.getAdapter(IResource.class)).setTextSelection(s).fixEmptyTextSelection();
     }
 
     private static Selection by(final IResource ¢) {
@@ -203,8 +203,13 @@ public class RefactorerUtil {
       return ¢ == null ? null : by(¢.getMarker());
     }
 
-    private static Selection by(final IMarker ¢) {
-      return ¢ == null || !¢.exists() ? null : by(¢.getResource());
+    public static Selection by(final IMarker ¢) {
+      if (¢ == null || !¢.exists())
+        return null;
+      ITextSelection s = getTextSelection(¢);
+      if (s == null)
+        return Selection.empty();
+      return by(¢.getResource()).setTextSelection(s);
     }
 
     private static Selection by(final ITreeSelection s) {
@@ -221,7 +226,7 @@ public class RefactorerUtil {
         return Selection.of((ICompilationUnit) o);
       if (o instanceof IMember)
         return by((IMember) o);
-      return null;
+      return Selection.empty();
     }
 
     private static Selection by(final IJavaProject p) {
@@ -273,6 +278,17 @@ public class RefactorerUtil {
         return Selection.empty();
       }
       return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength()));
+    }
+
+    private static ITextSelection getTextSelection(IMarker ¢) {
+      int cs;
+      try {
+        cs = ((Integer) ¢.getAttribute(IMarker.CHAR_START)).intValue();
+        return new TextSelection(cs, ((Integer) ¢.getAttribute(IMarker.CHAR_END)).intValue() - cs);
+      } catch (CoreException x) {
+        monitor.log(x);
+      }
+      return null;
     }
   }
 }
