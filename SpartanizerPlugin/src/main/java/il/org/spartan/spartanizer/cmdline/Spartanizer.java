@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -243,10 +244,16 @@ public final class Spartanizer {
         // if (m instanceof Annotation && "@Test".equals(((Annotation)
         // m).getTypeName().getFullyQualifiedName()))
         // return false;
-        
-        System.out.println(¢.MODIFIERS2_PROPERTY);
-        
-        return spartanizeAndAnalyze(¢);
+               
+        return hasTestAnnotation(¢) && spartanizeAndAnalyze(¢); 
+      }
+      
+      boolean hasTestAnnotation(MethodDeclaration d) {
+        List<?> modifiers = d.modifiers();
+        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
+          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
+            return true;
+        return false;
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
