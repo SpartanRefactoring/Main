@@ -3,14 +3,9 @@ package il.org.spartan.spartanizer.research;
 import java.io.*;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -157,7 +152,6 @@ public class Analyzer {
    * @param outputFolder */
   private static void spartanize(final String inputFolder, String outputFolder) {
     InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
-    
     addNanoPatterns(spartanizer);
     String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
@@ -168,6 +162,6 @@ public class Analyzer {
   }
 
   private static void addNanoPatterns(InteractiveSpartanizer ¢) {
-    ¢.toolbox.add(ConditionalExpression.class, new TernaryNullCoallescing());
+    ¢.toolbox.add(ConditionalExpression.class, new TernaryNullCoallescing(), new TernaryNullConditional());
   }
 }
