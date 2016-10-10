@@ -122,6 +122,8 @@ public class SpartanizerTest {
     });
        
   }
+
+  private static int nMethods = 0;
   
   // testing how the matches method works
   @SuppressWarnings("static-method") @Test public void testStringMatches_01() {
@@ -208,5 +210,89 @@ public class SpartanizerTest {
     assertTrue("foo1-test-foo2.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"));
   }
   
+  @Test public void testMethodWithAnnotation_01() {
+    
+    String test1 = "package test;\n"
+        + "import static org.junit.Assert.*;\n"
+        + "import org.junit.*;\n"
+        + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n "
+        + "   int i = 1;\n"
+        + "   assertTrue(i>0);\n"
+        + " }\n"
+        + " public void notATestMethod(){\n "
+        + "   int i = 1;\n"
+        + "   assertTrue(i>0);\n"
+        + " }\n"
+        + "}";
+    
+    String test2 = "package test;\n"
+        + "import static org.junit.Assert.*;\n"
+        + "import org.junit.*;\n"
+        + "public class Test {\n"
+        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n "
+        + "   int i = 1;\n"
+        + "   assertTrue(i>0);\n"
+        + " }\n"
+        + " public void notATestMethod(){\n "
+        + "   int i = 1;\n"
+        + "   assertTrue(i>0);\n"
+        + " }\n"
+        + " public void ASecondNotTestMethod(){\n "
+        + "   int i = 1;\n"
+        + "   assertTrue(i>0);\n"
+        + " }\n"
+        + "}";
+    
+    ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1);
+    ASTNode u2 = makeAST.COMPILATION_UNIT.from(test2);
+    
+    assert u1 != null;
+    assert u2 != null;
+   
+    visitASTNode(u1);
+    
+    assertTrue(nMethods==1);
+    
+    visitASTNode(u2);
+    
+    assertTrue(nMethods==3);
+    
+  }
+
+  /**
+   * @param u1
+   */
+  private void visitASTNode(ASTNode u1) {
+    u1.accept(new ASTVisitor() {
+      
+      private int methodNum;
+
+      @Override public boolean visit(final MethodDeclaration node) {
+        System.out.println("MethodDeclaration node: getName(): " + node.getName());
+        List<ASTNode> modifiers = node.modifiers();
+        if(hasTestAnnotation(node))
+          return false;
+        return countMethods();
+      }
+      
+      private boolean hasTestAnnotation(MethodDeclaration md){
+        List<?> modifiers = md.modifiers();
+        
+        for(int i = 0; i < modifiers.size(); i++)
+          if(modifiers.get(i) instanceof MarkerAnnotation){
+            if(((MarkerAnnotation) modifiers.get(i)).toString().contains("@Test"))
+              return true;
+          }
+               
+        return false;
+      }
+    });
+  }
+  
+  private boolean countMethods() {
+    nMethods++;
+    return false;
+  }
   
 }
