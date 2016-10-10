@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.mockito.internal.matchers.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

@@ -11,27 +11,27 @@ import org.eclipse.text.edits.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class TestComments {
-  public static void main(String[] args) throws MalformedTreeException, BadLocationException, CoreException {
-    IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("testAddComments");
-    IJavaProject javaProject = JavaCore.create(project);
-    IPackageFragment package1 = javaProject.getPackageFragments()[0];
+  public static void main(final String[] args) throws MalformedTreeException, BadLocationException, CoreException {
+    final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("testAddComments");
+    final IJavaProject javaProject = JavaCore.create(project);
+    final IPackageFragment package1 = javaProject.getPackageFragments()[0];
     // get first compilation unit
-    ICompilationUnit unit = package1.getCompilationUnits()[0];
+    final ICompilationUnit unit = package1.getCompilationUnits()[0];
     // parse compilation unit
-    CompilationUnit astRoot = parse(unit);
+    final CompilationUnit astRoot = parse(unit);
     // create a ASTRewrite
-    AST ast = astRoot.getAST();
-    ASTRewrite rewriter = ASTRewrite.create(ast);
+    final AST ast = astRoot.getAST();
+    final ASTRewrite rewriter = ASTRewrite.create(ast);
     // for getting insertion position
-    TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
-    MethodDeclaration methodDecl = typeDecl.getMethods()[0];
-    Block block = methodDecl.getBody();
-    ListRewrite listRewrite = rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
-    Statement placeHolder = (Statement) rewriter.createStringPlaceholder("//mycomment", ASTNode.EMPTY_STATEMENT);
+    final TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
+    final MethodDeclaration methodDecl = typeDecl.getMethods()[0];
+    final Block block = methodDecl.getBody();
+    final ListRewrite listRewrite = rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+    final Statement placeHolder = (Statement) rewriter.createStringPlaceholder("//mycomment", ASTNode.EMPTY_STATEMENT);
     listRewrite.insertFirst(placeHolder, null);
-    TextEdit edits = rewriter.rewriteAST();
+    final TextEdit edits = rewriter.rewriteAST();
     // apply the text edits to the compilation unit
-    Document document = new Document(unit.getSource());
+    final Document document = new Document(unit.getSource());
     edits.apply(document);
     // this is the code for adding statements
     unit.getBuffer().setContents(document.get());
@@ -40,7 +40,7 @@ public class TestComments {
 
   /** @param unit
    * @return */
-  private static CompilationUnit parse(ICompilationUnit u) {
+  private static CompilationUnit parse(final ICompilationUnit u) {
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setKind(ASTParser.K_COMPILATION_UNIT);
     parser.setSource(u);

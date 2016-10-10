@@ -206,7 +206,7 @@ public class RefactorerUtil {
     public static Selection by(final IMarker ¢) {
       if (¢ == null || !¢.exists())
         return null;
-      ITextSelection s = getTextSelection(¢);
+      final ITextSelection s = getTextSelection(¢);
       if (s == null)
         return Selection.empty();
       return by(¢.getResource()).setTextSelection(s);
@@ -280,12 +280,12 @@ public class RefactorerUtil {
       return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength()));
     }
 
-    private static ITextSelection getTextSelection(IMarker ¢) {
+    private static ITextSelection getTextSelection(final IMarker ¢) {
       int cs;
       try {
         cs = ((Integer) ¢.getAttribute(IMarker.CHAR_START)).intValue();
         return new TextSelection(cs, ((Integer) ¢.getAttribute(IMarker.CHAR_END)).intValue() - cs);
-      } catch (CoreException x) {
+      } catch (final CoreException x) {
         monitor.log(x);
       }
       return null;

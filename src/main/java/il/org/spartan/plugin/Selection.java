@@ -77,19 +77,19 @@ public class Selection {
   public Selection fixEmptyTextSelection() {
     if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null || textSelection.getLength() > 0)
       return this;
-    ICompilationUnit u = compilationUnits.get(0);
-    IResource r = u.getResource();
+    final ICompilationUnit u = compilationUnits.get(0);
+    final IResource r = u.getResource();
     if (!(r instanceof IFile))
       return this;
-    int o = textSelection.getOffset();
+    final int o = textSelection.getOffset();
     try {
-      for (IMarker m : ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
-        int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
-        int ce = ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
+      for (final IMarker m : ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
+        final int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
+        final int ce = ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
         if (cs <= o && ce >= o)
-          return this.setTextSelection(new TextSelection(cs, ce - cs));
+          return setTextSelection(new TextSelection(cs, ce - cs));
       }
-    } catch (CoreException x) {
+    } catch (final CoreException x) {
       monitor.log(x);
       return this;
     }
@@ -99,12 +99,12 @@ public class Selection {
   @Override public String toString() {
     if (compilationUnits == null || compilationUnits.isEmpty())
       return "{empty}";
-    int s = compilationUnits == null ? 0 : compilationUnits.size();
+    final int s = compilationUnits == null ? 0 : compilationUnits.size();
     return "{" + (compilationUnits == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
   }
 
-  public static String printable(ITextSelection ¢) {
+  public static String printable(final ITextSelection ¢) {
     return "(" + ¢.getOffset() + "," + ¢.getLength() + ")";
   }
 }
