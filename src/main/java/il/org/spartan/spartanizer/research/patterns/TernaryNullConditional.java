@@ -1,10 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -15,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * replace null != X ? X.Y : null with X?.Y <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> implements TipperCategory.Nanos {
+public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<>();
 
   public TernaryNullConditional() {
