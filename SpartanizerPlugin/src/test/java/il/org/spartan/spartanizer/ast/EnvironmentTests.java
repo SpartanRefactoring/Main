@@ -1,8 +1,10 @@
-package il.org.spartan.spartanizer.annotation;
+package il.org.spartan.spartanizer.ast;
 
 import static java.lang.System.*;
 
 import java.util.*;
+
+import il.org.spartan.spartanizer.annotation.*;
 
 @SuppressWarnings("all") public final class EnvironmentTests {
   {
@@ -421,7 +423,7 @@ import java.util.*;
         this(Oompa_Loompa, Oompa_Loompa);
       }
 
-      Oompa_Loompa(final Oompa_Loompa[]... Oompa_Loompa) {
+      Oompa_Loompa(final Oompa_Loompa[]... __) {
         this();
       }
 
