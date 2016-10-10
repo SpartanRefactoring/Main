@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
 
