@@ -148,8 +148,6 @@ public final class Spartanizer {
   }
 
   void fire() {
-    // System.out.println(toolbox.hooksCount());
-    // System.out.println(Toolbox.defaultInstance().hooksCount());
     spartanizeAndAnalyze();
     runEssence();
     runWordCount();
@@ -162,7 +160,6 @@ public final class Spartanizer {
 
   boolean spartanizeAndAnalyze(final BodyDeclaration ¢) {
     System.out.println(¢.getNodeType());
-    // System.out.println(¢);
     final int length = ¢.getLength();
     final int tokens = metrics.tokens(¢ + "");
     final int nodes = metrics.nodesCount(¢);
