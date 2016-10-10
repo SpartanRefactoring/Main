@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
@@ -16,14 +16,13 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> implements TipperCategory.Nanos {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<>();
 
-  public TernaryNullConditional(){
+  public TernaryNullConditional() {
     if (tippers.size() == 4)
       return;
     tippers.add(TipperFactory.tipper("$X1 == null ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
     tippers.add(TipperFactory.tipper("$X1 != null ? $X1.$X2 : null", "NullConditional($X1,$X2)", "null Conditional"));
     tippers.add(TipperFactory.tipper("null == $X1 ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
     tippers.add(TipperFactory.tipper("null != $X1 ? $X1.$X2 : null", "NullConditional($X1,$X2)", "null Conditional"));
-
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
@@ -36,7 +35,7 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
         return true;
     return false;
   }
-  
+
   @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
