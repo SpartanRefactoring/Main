@@ -151,9 +151,7 @@ public class Analyzer {
    * @param outputFolder */
   private static void spartanize(final String inputFolder, String outputFolder) {
     InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
-    
-//    spartanizer.toolbox.add(n, ns)
-    String spartanizedCode = "";
+        String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
       System.out.println("Now: " + ¢.getName());
       spartanizedCode = spartanizer.fixedPoint(getCompilationUnit(¢) + "");

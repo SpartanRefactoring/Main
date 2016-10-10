@@ -15,8 +15,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.Environment.*;
 
-/**
- * @author Dan Greenstein
+/** @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) @Ignore public class EnvironmentTestDeclares {
@@ -109,5 +108,4 @@ import il.org.spartan.spartanizer.java.Environment.*;
   @Test public void declareTestMethodDefinition() {
     Environment.declaresDown(makeAST.COMPILATION_UNIT.from(new Document("int x = 5;").get()));
   }
-
 }
