@@ -12,18 +12,18 @@ public class EventMapper extends EventListener {
 
   public EventMapper() {
     eventMap = new HashMap<>();
-    for (event ¢ : event.values())
+    for (final event ¢ : event.values())
       eventMap.put(¢, null);
     recorders = new ArrayList<>();
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(event e) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(final event e) {
     for (final EventFunctor ¢ : recorders)
       if (¢.domain(e))
         ¢.update(eventMap);
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(event e, Object o) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) @Override public void acknowledge(final event e, final Object o) {
     for (final EventFunctor ¢ : recorders)
       if (¢.domain(e))
         ¢.update(eventMap, o);
@@ -57,7 +57,7 @@ public class EventMapper extends EventListener {
       return domain != null && domain.equals(¢);
     }
 
-    @SuppressWarnings("unused") void update(final Map<event, Object> e, O o) {
+    @SuppressWarnings("unused") void update(final Map<event, Object> e, final O o) {
       //
     }
 
@@ -90,7 +90,7 @@ public class EventMapper extends EventListener {
       return this;
     }
 
-    @Override @SuppressWarnings("unchecked") public void update(final Map<event, Object> e, O o) {
+    @Override @SuppressWarnings("unchecked") public void update(final Map<event, Object> e, final O o) {
       e.put(domain, biFunction.apply((P) e.get(domain), o));
     }
 
@@ -100,7 +100,7 @@ public class EventMapper extends EventListener {
     }
 
     /** Used for casting */
-    @SuppressWarnings({ "unchecked", "unused" }) public <X, Y> EventMapperFunctor<X, Y> gets(final Class<X> cp, Class<Y> co) {
+    @SuppressWarnings({ "unchecked", "unused" }) public <X, Y> EventMapperFunctor<X, Y> gets(final Class<X> cp, final Class<Y> co) {
       return (EventMapperFunctor<X, Y>) this;
     }
 

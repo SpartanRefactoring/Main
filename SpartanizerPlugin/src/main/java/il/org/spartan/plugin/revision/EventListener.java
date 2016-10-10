@@ -14,7 +14,7 @@ public abstract class EventListener implements Listener {
 
   public abstract void acknowledge(event e, Object o);
 
-  @Override public void acknowledge(Object... ¢) {
+  @Override public void acknowledge(final Object... ¢) {
     if (¢ != null && ¢[0] instanceof event)
       if (¢.length == 0)
         acknowledge(¢[0]);

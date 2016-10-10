@@ -7,8 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.leonidas.*;
 
-/**
- * Failing test, originally from {@link TestFactoryTest}.
+/** Failing test, originally from {@link TestFactoryTest}.
  * @since 2016 */
 @SuppressWarnings("static-method") @FixMethodOrder(MethodSorters.NAME_ASCENDING) @Ignore public class Issue436 {
   @Test public void testRenamingWithQualified() {

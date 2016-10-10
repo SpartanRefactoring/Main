@@ -2,7 +2,9 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -33,7 +35,7 @@ public class Analyzer {
     }
   }
 
-  private static void clean(final String inputFolder, String outputFolder) {
+  private static void clean(final String inputFolder, final String outputFolder) {
     for (final File f : getJavaFiles(inputFolder)) {
       final ASTNode cu = getCompilationUnit(f);
       clean(cu);
@@ -45,19 +47,10 @@ public class Analyzer {
     updateFile(f, cu);
   }
 
-  private static void writeFile(final File f, final String s) {
-    try (final PrintWriter writer = new PrintWriter(f.getAbsolutePath())) {
-      writer.print(s);
-      writer.close();
-    } catch (final FileNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
-
   private static void appendFile(final File f, final String s) {
     try (FileWriter fw = new FileWriter(f, true)) {
       fw.write(s);
-    } catch (IOException e) {
+    } catch (final IOException e) {
       e.printStackTrace();
     }
   }
@@ -121,7 +114,7 @@ public class Analyzer {
   static int nodes(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") ASTNode __) {
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         $.inner += 1;
       }
     });
@@ -131,7 +124,7 @@ public class Analyzer {
   static int markedNodes(final ASTNode root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
           $.inner += 1;
       }
@@ -148,13 +141,13 @@ public class Analyzer {
 
   /** @param inputFolder
    * @param outputFolder */
-  private static void spartanize(final String inputFolder, String outputFolder) {
-    InteractiveSpartanizer is = new InteractiveSpartanizer();
+  private static void spartanize(final String inputFolder, final String outputFolder) {
+    final InteractiveSpartanizer is = new InteractiveSpartanizer();
     String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
       System.out.println("Now: " + ¢.getName());
       spartanizedCode = is.fixedPoint(getCompilationUnit(¢) + "");
-      appendFile((new File(outputFolder + "/after.java")), spartanizedCode);
+      appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
     }
   }
 }
