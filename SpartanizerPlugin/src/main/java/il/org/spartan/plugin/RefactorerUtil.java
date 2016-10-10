@@ -192,15 +192,15 @@ public class RefactorerUtil {
     }
 
     private static Selection by(final IResource ¢) {
-      return ¢ == null || !(¢ instanceof IFile) ? null : by((IFile) ¢);
+      return ¢ == null || !(¢ instanceof IFile) || !((IFile) ¢).getName().endsWith(".java") ? Selection.empty() : by((IFile) ¢);
     }
 
     private static Selection by(final IFile ¢) {
-      return ¢ == null ? null : Selection.of(JavaCore.createCompilationUnitFrom(¢));
+      return ¢ == null ? Selection.empty() : Selection.of(JavaCore.createCompilationUnitFrom(¢));
     }
 
     private static Selection by(final MarkerItem ¢) {
-      return ¢ == null ? null : by(¢.getMarker());
+      return ¢ == null ? Selection.empty() : by(¢.getMarker());
     }
 
     public static Selection by(final IMarker ¢) {
