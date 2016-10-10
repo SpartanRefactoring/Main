@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
@@ -37,14 +38,14 @@ public final class LaconizeProject extends BaseHandler {
     final AtomicInteger $ = new AtomicInteger(0);
     final GUI$Applicator ¢ = new Trimmer();
     try {
-      PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
-        pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
+      eclipse.progressMonitorDialog(true).run(true, true, pm -> {
+//        pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
         ¢.setMarker(null);
         ¢.setICompilationUnit(todo.get(0));
         $.addAndGet(¢.countTips());
-        if (pm.isCanceled())
-          $.set(0);
-        pm.done();
+//        if (pm.isCanceled())
+//          $.set(0);
+//        pm.done();
       });
     } catch (InvocationTargetException | InterruptedException e) {
       e.printStackTrace();
