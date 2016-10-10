@@ -25,7 +25,6 @@ public abstract class LaconizeSelection extends BaseHandler {
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
-    eclipse.announce(status);
     final IWorkbench wb = PlatformUI.getWorkbench();
     final GUI$Applicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);
