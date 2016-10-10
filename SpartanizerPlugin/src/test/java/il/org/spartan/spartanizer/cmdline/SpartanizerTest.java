@@ -5,9 +5,52 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 /**
- * @author Matteo Orru'
+ * Test for the Spartanizer class
+ * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
+	
+	  // testing how the matches method works
+	  
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_01() {
+	    String path = "/basedir/test";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));    
+	  }
+	  
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_02() {
+	    String path = "/basedir/test/";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));    
+	  }
+	  
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_03() {
+	    String path = "/basedir/test/dir";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));    
+	  }
+	  
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_04() {
+	    String path = "basedir/test";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));    
+	  }
+
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_05() {
+	    String path = "basedir/test/";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));    
+	  }
+
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_06() {
+	    String path = "basedir/test/dir";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*"));    
+	  }
+	  
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_07() {
+	    String path = "/matteo/test";
+	    assertTrue(path.matches("[\\/A-Za-z0-9]*[\\-/]test[\\/A-Za-z0-9]*"));    
+	  }
+	  
+	  @SuppressWarnings("static-method") @Test public void testStringMatches_08() {
+	    String path = "/matteo/test";
+	    assertFalse(path.matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*"));    
+	  }
   
   @SuppressWarnings("static-method") @Test public void testFileName_01() {
     assertTrue("fooTest.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"));
