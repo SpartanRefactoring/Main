@@ -2,14 +2,13 @@ package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment> implements TipperCategory.Nanos {
+public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment> {
   private static final List<UserDefinedTipper<Assignment>> tippers = new ArrayList<>();
 
   public AssignmentLazyEvaluation() {
