@@ -170,7 +170,6 @@ public class Toolbox {
             new MethodDeclarationModifiersRedundant(), //
             new BodyDeclarationModifiersSort.ofMethod(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
-            new MethodLazyEvaluation(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
