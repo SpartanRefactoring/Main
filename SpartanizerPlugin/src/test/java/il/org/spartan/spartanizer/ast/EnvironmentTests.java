@@ -1,8 +1,10 @@
-package il.org.spartan.spartanizer.annotation;
+package il.org.spartan.spartanizer.ast;
 
 import static java.lang.System.*;
 
 import java.util.*;
+
+import il.org.spartan.spartanizer.annotation.*;
 
 @SuppressWarnings("all") public final class EnvironmentTests {
   {
