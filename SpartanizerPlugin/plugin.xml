@@ -139,6 +139,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
      <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
+     <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -149,6 +150,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
+   <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.revision.GUIApplicator"/>
 </extension>
 
 <!-- Menus -->
@@ -210,6 +212,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+M"
 		commandId="il.org.spartan.SpartanMovie"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+Enter"
+		commandId="il.org.spartan.SpartanGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
