@@ -44,21 +44,15 @@ public class SpartanizerTest {
        */
       @Override public boolean visit(final MethodDeclaration node) {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
-        List<ASTNode> modifiers = node.modifiers();
-        if(hasTestAnnotation(node))
-          return false;
-        return true;
+        return !hasTestAnnotation(node);
       }
       
-      private boolean hasTestAnnotation(MethodDeclaration md){
-        List<?> modifiers = md.modifiers();
-        
-        for(int i = 0; i < modifiers.size(); i++)
-          if(modifiers.get(i) instanceof MarkerAnnotation){
-            if(((MarkerAnnotation) modifiers.get(i)).toString().contains("@Test"))
-              return true;
-          }
-               
+      boolean hasTestAnnotation(MethodDeclaration d) {
+        List<?> modifiers = d.modifiers();
+        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
+          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test")
+              && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
+            return true;
         return false;
       }
       
@@ -123,7 +117,7 @@ public class SpartanizerTest {
        
   }
 
-  private static int nMethods = 0;
+  private static int nMethods;
   
   // testing how the matches method works
   @SuppressWarnings("static-method") @Test public void testStringMatches_01() {
@@ -266,32 +260,26 @@ public class SpartanizerTest {
   private void visitASTNode(ASTNode u1) {
     u1.accept(new ASTVisitor() {
       
-      private int methodNum;
+      int methodNum;
 
       @Override public boolean visit(final MethodDeclaration node) {
         System.out.println("MethodDeclaration node: getName(): " + node.getName());
-        List<ASTNode> modifiers = node.modifiers();
-        if(hasTestAnnotation(node))
-          return false;
-        return countMethods();
+        return !hasTestAnnotation(node) && countMethods();
       }
       
-      private boolean hasTestAnnotation(MethodDeclaration md){
-        List<?> modifiers = md.modifiers();
-        
-        for(int i = 0; i < modifiers.size(); i++)
-          if(modifiers.get(i) instanceof MarkerAnnotation){
-            if(((MarkerAnnotation) modifiers.get(i)).toString().contains("@Test"))
-              return true;
-          }
-               
+      boolean hasTestAnnotation(MethodDeclaration d) {
+        List<?> modifiers = d.modifiers();
+        for (int ¢ = 0; ¢ < modifiers.size(); ++¢)
+          if (modifiers.get(¢) instanceof MarkerAnnotation && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test")
+              && ((MarkerAnnotation) modifiers.get(¢) + "").contains("@Test"))
+            return true;
         return false;
       }
     });
   }
   
   private boolean countMethods() {
-    nMethods++;
+    ++nMethods;
     return false;
   }
   
