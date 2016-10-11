@@ -56,6 +56,7 @@ abstract class AbstractBatch {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
+     // if astnode is in selectedNodeType check is true
         if (!check(n) || disabling.on(n))
           return true;
         final Tipper<N> w = getTipper(n);
