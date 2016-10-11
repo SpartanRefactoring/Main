@@ -13,6 +13,17 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
+  
+  private Spartanizer spartanizer;
+  
+  private final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
+      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+  private final String test2 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+      + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
+      + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
+      + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+  
   public static void main(final String[] args) {
     final String test = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
         + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
@@ -209,13 +220,7 @@ public class SpartanizerTest {
   }
 
   @Test public void testMethodWithAnnotation_01() {
-    final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
-        + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
-    final String test2 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
-        + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
-        + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
-        + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+
     final ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1);
     final ASTNode u2 = makeAST.COMPILATION_UNIT.from(test2);
     assert u1 != null;
@@ -244,8 +249,13 @@ public class SpartanizerTest {
     });
   }
 
-  private boolean countMethods() {
+  @SuppressWarnings("static-method") boolean countMethods() {
     ++nMethods;
     return false;
+  }
+  
+  
+  @Test public void testSpartanizerCheckMethod(){
+    spartanizer.check(null);
   }
 }
