@@ -3,8 +3,6 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 import java.util.function.*;
 
-import il.org.spartan.plugin.revision.GUIApplicator.*;
-
 /** A {@link Listener} that listen to {@link event}s.
  * @author Ori Roth
  * @since 2016 */

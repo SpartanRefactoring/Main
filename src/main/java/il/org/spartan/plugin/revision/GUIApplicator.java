@@ -4,8 +4,6 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.*;
-
 /** @author Ori Roth
  * @since 2016 */
 public class GUIApplicator extends AbstractHandler implements Applicator, IMarkerResolution {
@@ -24,7 +22,7 @@ public class GUIApplicator extends AbstractHandler implements Applicator, IMarke
 
   @Override public void run(final IMarker ¢) {
     prepare(false);
-    selection = RefactorerUtil.selection.by(¢);
+    selection = Selection.Util.by(¢);
     go();
   }
 
@@ -42,6 +40,6 @@ public class GUIApplicator extends AbstractHandler implements Applicator, IMarke
     listener = EventMapper.empty(event.class);
     GUIConfiguration.listener.configure(listener);
     if (setSelection)
-      selection = RefactorerUtil.selection.get();
+      selection = Selection.Util.get();
   }
 }
