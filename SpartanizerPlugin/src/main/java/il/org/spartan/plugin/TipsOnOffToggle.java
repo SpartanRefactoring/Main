@@ -60,7 +60,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   }
 
   private static IProject getProject() {
-    final IProject p = RefactorerUtil.selection.getProject(RefactorerUtil.selection.getSelection());
+    final IProject p = RefactorerUtil.selection.project();
     return p != null ? p : null;
   }
 }
