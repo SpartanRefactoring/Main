@@ -34,6 +34,7 @@ public class GUIApplicator extends AbstractHandler implements Applicator, IMarke
 
   @Override public void go() {
     System.out.println(selection);
+//    System.out.println(Dialogs.ok(Dialogs.message(selection + "")));
   }
 
   private void prepare(final boolean setSelection) {
