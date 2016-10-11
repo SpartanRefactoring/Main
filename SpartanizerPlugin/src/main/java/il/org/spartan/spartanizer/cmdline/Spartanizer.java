@@ -18,7 +18,7 @@ public final class Spartanizer extends AbstractBatch {
       new Spartanizer(¢).fire();
   }
 
-  private Spartanizer(final String path) {
+  Spartanizer(final String path) {
     super(path);
   }
 
