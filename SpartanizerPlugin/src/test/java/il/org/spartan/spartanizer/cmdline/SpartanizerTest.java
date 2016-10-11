@@ -13,16 +13,27 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
-  
-  private Spartanizer spartanizer;
+  private String path = "/home/matteo/MUTATION_TESTING/test-spartanizer/projects/commons-bcel";
+  private Spartanizer spartanizer = new Spartanizer(path);
+  private String method = "";
   
   private final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
       + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+  
   private final String test2 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
       + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
       + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+  
+  private final String test3 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+      + " public void method1(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
+      + " public void method2(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void method3(){\n "
+      + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
+  
+  private final String test4 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
+      + " public void method1(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
+      + "}";
   
   public static void main(final String[] args) {
     final String test = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
@@ -46,7 +57,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */
       @Override public boolean visit(final MethodDeclaration node) {
-        System.out.println("MethodDeclaration node: getName(): " + node.getName());
+        System.out.println(MethodDeclaration.class + ": " + node.getName());
         return !hasTestAnnotation(node);
       }
 
@@ -64,7 +75,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
       @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
-        System.out.println("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
+        System.out.println(AnnotationTypeMemberDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -74,7 +85,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * ImportDeclaration) */
       @Override public boolean visit(final ImportDeclaration node) {
-        System.out.println(node.getName());
+        System.out.println(ImportDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -84,7 +95,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * PackageDeclaration) */
       @Override public boolean visit(final PackageDeclaration node) {
-        System.out.println(node.getName());
+        System.out.println(PackageDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -94,7 +105,7 @@ public class SpartanizerTest {
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodInvocation) */
       @Override public boolean visit(final MethodInvocation node) {
-        System.out.println(node.getName());
+        System.out.println(MethodInvocation.class + ": " + node.getName());
         return super.visit(node);
       }
 
@@ -166,6 +177,26 @@ public class SpartanizerTest {
   @SuppressWarnings("static-method") @Test public void testStringMatches_08() {
     assertFalse("/matteo/test".matches("[\\/A-Za-z0-9]*[\\-/]test1[\\/A-Za-z0-9]*"));
   }
+  
+  // examples from real world
+    
+  @SuppressWarnings("static-method") @Test public void testStringMatches_09() {
+   assertTrue("/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+    
+  @SuppressWarnings("static-method") @Test public void testStringMatches_10() {
+    assertTrue("/projects/voldemort/test/common/voldemort/VoldemortTestConstants.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+    
+  @SuppressWarnings("static-method") @Test public void testStringMatches_11() {
+    assertTrue("/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/test/integration/voldemort/performance/StoreRoutingPlanPerf.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+    
+    
+  @SuppressWarnings("static-method") @Test public void testStringMatches_12() {
+    assertTrue("/home/matteo/MUTATION_TESTING/GL-corpus/projects/voldemort/contrib/ec2-testing/src/java/voldemort/utils/impl/RsyncDeployer.java".matches("[\\/A-Za-z0-9-_.]*test[\\/A-Za-z0-9-_.]*"));
+  }
+ 
 
   @SuppressWarnings("static-method") @Test public void testFileName_01() {
     assertTrue("fooTest.java".matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java"));
@@ -255,7 +286,72 @@ public class SpartanizerTest {
   }
   
   
-  @Test public void testSpartanizerCheckMethod(){
-    spartanizer.check(null);
+  @Test public void testSpartanizerCheckMethod_01(){
+    System.out.println(test1);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(this.test2);
+    System.out.println(u.getClass());
+    assert u != null;
+    assert spartanizer != null;
+//    assertNotNull(u);
+    assertTrue(spartanizer.check(u)); // it's a compilation unit
   }
+  
+  @Test public void testSpartanizerCheckMethod_02(){
+    System.out.println(test1);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
+    assert u != null;
+    u.accept(new ASTVisitor() {
+      /* (non-Javadoc)
+       * @see org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.AnnotationTypeDeclaration)
+       */
+      @SuppressWarnings("synthetic-access") @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+        System.out.println(AnnotationTypeDeclaration.class);
+//        assertTrue("AnnotationTypeDeclaration is not included", spartanizer.check(¢));
+        return super.visit(¢);
+      }
+      
+      @SuppressWarnings("synthetic-access") @Override public boolean visit(final MethodDeclaration ¢) {
+//        assertFalse("MethodDeclaration is not included", spartanizer.check(¢));
+        return super.visit(¢);
+      }
+      
+      @SuppressWarnings("synthetic-access") @Override public boolean visit(final TypeDeclaration ¢) {
+//        assertTrue("TypeDeclaration is not included", !spartanizer.check(¢));
+        return super.visit(¢);
+      }
+      
+      @SuppressWarnings("synthetic-access") @Override public boolean visit(final FieldDeclaration ¢) {
+//        assertFalse("FieldDeclaration is not included", !spartanizer.check(¢));
+        return super.visit(¢);
+      }
+      
+      
+    });
+    
+  }
+  
+  @Test public void testSpartanizerCheckMethod_03(){
+    System.out.println(test4);
+    
+    spartanizer.selectedNodes(TypeDeclaration.class);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
+    assert u != null;
+    u.accept(new ASTVisitor() {
+      
+      @SuppressWarnings("synthetic-access") @Override public boolean visit(final MethodDeclaration ¢) {
+        return storeMethodName(¢.getName());
+      }
+            
+      boolean storeMethodName(SimpleName ¢) {
+        method = ¢ + "";
+        return false;
+      }
+     
+    });
+    
+    assertTrue(method.equals("method1"));
+    
+  }
+  
+  
 }
