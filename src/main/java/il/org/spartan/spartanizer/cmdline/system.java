@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
+import il.org.spartan.bench.*;
 import il.org.spartan.java.*;
 import il.org.spartan.plugin.*;
 
@@ -34,9 +35,6 @@ public interface system {
     ;
   }
 
-  static double ratio(final double n1, final double n2) {
-    return n2 / n1;
-  }
 
   static String removePercentChar(final String p) {
     return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
@@ -78,5 +76,33 @@ public interface system {
   static boolean isTestSourceFile(final String fileName) {
     return fileName.contains("/test/") || fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$") || fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*");
+  }
+
+  static Process bash(final String shellCommand) {
+    final String[] command = { "/bin/bash", "-c", shellCommand };
+    try {
+      final Process p = Runtime.getRuntime().exec(command);
+      if (p != null)
+        return dumpOutput(p);
+    } catch (final IOException x) {
+      monitor.logProbableBug(shellCommand, x);
+    }
+    return null;
+  }
+
+  static double d(final double n1, final double n2) {
+    return 1 - n2 / n1;
+  }
+
+  static String p(final int n1, final int n2) {
+    return Unit.formatRelative(d(n1, n2));
+  }
+
+  static double ratio(final double n1, final double n2) {
+    return n2 / n1;
+  }
+
+  static Process shellEssenceMetrics(final String fileName) {
+    return bash("./essence < " + fileName + " >" + essenced(fileName));
   }
 }
