@@ -11,8 +11,12 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class Spartanizer extends AbstractBatch {
-  static final List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
-
+  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class, TypeDeclaration.class);
+  
+  @SuppressWarnings("static-method") public List<Class<? extends BodyDeclaration>> selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration> ... n){
+    return as.list(n);
+  }
+//  static final List<Class<? extends ASTNode>> selNodeTypes = as.list(MethodDeclaration.class, TypeDeclaration.class);
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new Spartanizer(¢).fire();
@@ -23,6 +27,7 @@ public final class Spartanizer extends AbstractBatch {
   }
 
   @Override protected boolean check(final ASTNode ¢) {
+    // if astnode is in selectedNodeType return false
     return !selectedNodeTypes.contains(¢.getClass());
   }
 }
