@@ -20,7 +20,6 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
   }
 
   @Override public Tip tip(final Block x) throws TipperFailure {
-    System.out.println("found CAhced************** " + x);
     return tipper.tip(x);
   }
 }
