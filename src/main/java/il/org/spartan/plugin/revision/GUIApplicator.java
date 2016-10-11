@@ -1,46 +1,51 @@
 package il.org.spartan.plugin.revision;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.ui.*;
+import java.util.*;
 
-/** @author Ori Roth
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
+
+/** An {@link Applicator} suitable for eclipse GUI.
+ * @author Ori Roth
  * @since 2016 */
-public class GUIApplicator extends AbstractHandler implements Applicator, IMarkerResolution {
+public class GUIApplicator extends Applicator {
   /** Possible events during spartanization process */
   enum event {
     run_start, run_finish, run_pass, //
     visit_project, visit_cu, visit_node, //
   }
 
-  protected Listener listener;
-  protected Selection selection;
-
-  @Override public String getLabel() {
-    return "Apply";
-  }
-
-  @Override public void run(final IMarker ¢) {
-    prepare(false);
-    selection = Selection.Util.by(¢);
-    go();
-  }
-
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    prepare(true);
-    go();
-    return null;
-  }
-
+  /** Spartanization process. */
   @Override public void go() {
-    System.out.println(selection);
-//    System.out.println(Dialogs.ok(Dialogs.message(selection + "")));
+    System.out.println(selection());
   }
 
-  private void prepare(final boolean setSelection) {
-    listener = EventMapper.empty(event.class);
-    GUIConfiguration.listener.configure(listener);
-    if (setSelection)
-      selection = Selection.Util.get();
+  /** Default listener configuration of {@link GUIApplicator}.
+   * @return this applicator */
+  public GUIApplicator defaultListener() {
+    listener(EventMapper.empty(event.class) //
+        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class)) //
+        .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
+        .expend(EventMapper.recorderOf(event.visit_project).rememberLast(IJavaProject.class)) //
+        .expend(EventMapper.recorderOf(event.run_pass).counter()) //
+        .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
+          // TODO Roth: open a dialog box etc etc...
+          System.out.println("Spartanizing " + ¢.get(event.visit_project));
+        })) //
+        .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
+          // TODO Roth: open a dialog box etc etc...
+          System.out.println("Done spartanizing " + ¢.get(event.visit_project));
+          System.out.println("Spartanized " + ¢.get(event.visit_project) //
+              + " with " + ((Collection<?>) ¢.get(event.visit_cu)).size() + " files" //
+              + " in " + ¢.get(event.run_pass) + " passes");
+        })));
+    return this;
+  }
+
+  /** Default selection configuration of {@link GUIApplicator}.
+   * @return this applicator */
+  public GUIApplicator defaultSelection() {
+    selection(Selection.Util.get());
+    return this;
   }
 }
