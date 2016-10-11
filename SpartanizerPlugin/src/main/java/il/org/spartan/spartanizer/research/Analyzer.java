@@ -161,6 +161,8 @@ public class Analyzer {
             null) //
         .add(Assignment.class, new AssignmentLazyEvaluation(), //
             null) //
+        .add(Block.class, new CachingPattern(), //
+            null) //
         .add(MethodDeclaration.class, //
             new MethodEmpty(), //
             null);
