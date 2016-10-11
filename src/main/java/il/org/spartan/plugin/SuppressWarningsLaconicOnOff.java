@@ -52,15 +52,12 @@ public final class SuppressWarningsLaconicOnOff {
       s = s.replaceFirst("\\*\\/$", (s.matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
-    else {
-      final BodyDeclaration cd = (BodyDeclaration) ASTNode.copySubtree(d.getAST(), d);
-      final Javadoc cj = (Javadoc) $.createStringPlaceholder(s, ASTNode.JAVADOC);
-      cd.setJavadoc(cj);
-      $.replace(d, cd, null);
-    }
-    // $.replace(d, $.createStringPlaceholder(s + "\n" + (d +
-    // "").trim(),
-    // d.getNodeType()), null);
+    else
+      $.replace(d, $.createGroupNode(new ASTNode[] { $.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), $.createCopyTarget(d) }), null);
+  }
+
+  private static String fixNL(BodyDeclaration ¢) {
+    return ¢ instanceof EnumDeclaration || ¢ instanceof MethodDeclaration || ¢ instanceof EnumConstantDeclaration ? "\n" : "";
   }
 
   /** @param n an {@link ASTNode}
