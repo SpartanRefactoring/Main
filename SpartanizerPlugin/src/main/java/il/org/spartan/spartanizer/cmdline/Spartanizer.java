@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.ui.internal.handlers.WizardHandler.*;
 
 import il.org.spartan.*;
 
@@ -13,8 +14,8 @@ import il.org.spartan.*;
 public final class Spartanizer extends AbstractBatch {
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class, TypeDeclaration.class);
   
-  @SuppressWarnings("static-method") public List<Class<? extends BodyDeclaration>> selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration> ... n){
-    return as.list(n);
+  @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration> ... ¢){
+    selectedNodeTypes = as.list(¢);
   }
 //  static final List<Class<? extends ASTNode>> selNodeTypes = as.list(MethodDeclaration.class, TypeDeclaration.class);
   public static void main(final String[] args) {
