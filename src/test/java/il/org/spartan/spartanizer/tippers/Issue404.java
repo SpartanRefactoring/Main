@@ -148,9 +148,73 @@ public class Issue404 {
     assert $.contains("0") : "List did not contain expected element \"0\"";
     assert $.contains("1") : "List did not contain expected element \"1\"";
   }
+  
+  @Test public void r() { 
+    forceStaticReturnType(dig.stringLiterals(null));
+  }
+  
+  @Test public void q() {
+    final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
+        + "int i = \"first\".size();\n"//
+        + "String s = \"second\""
+        + "String foo(){\n"//
+        + "return i > 5 ? \"third\" : \"fourth\";\n"//
+        + "}\n"//
+        + "}"));
+    assert $.size() == 4 : "The List did not contain the expected number of elements.";
+    assert "first".equals($.get(0)) : "List did not contain expected element \"first\" at index 0";
+    assert "second".equals($.get(1)) : "List did not contain expected element \"second\" at index 1";
+    assert "third".equals($.get(2)) : "List did not contain expected element \"third\" at index 2";
+    assert "fourth".equals($.get(3)) : "List did not contain expected element \"fourth\" at index 3";
+  }
+  
+  //Writing an escaped string within an escaped string within another string is a bit cumbersome. Setting the value manually.
+  @Test public void v() {
+    final Expression x = into.e("\"\"");
+    assert x instanceof StringLiteral;
+    StringLiteral l = (StringLiteral) x;
+    l.setLiteralValue("\"");
+    final List<String> $ = dig.stringLiterals(l);
+    assert $.size() == 1 : "The List did not contain the expected number of elements.";
+    assert $.contains("\"") : "The List did not contain the expected element \"";
+  }
+  
+  @Test public void u() {
+    final InfixExpression x = into.i("\"\" + \" \"");
+    assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
+    StringLiteral left = x.getAST().newStringLiteral();
+    StringLiteral right = x.getAST().newStringLiteral();
+    left.setLiteralValue("\"");
+    right.setLiteralValue("\'");
+    x.setLeftOperand(left);
+    x.setRightOperand(right);
+    final List<String> $ = dig.stringLiterals(x);
+    assert $.size() == 2 : "The List did not contain the expected number of elements.";
+    assert "\"".equals($.get(0)) : "The List did not contain the expected element \" at index 0";
+    assert "\'".equals($.get(1)) : "The List did not contain the expected element \' at index 1";
+  }
+  
+  @Test public void w() {
+    final InfixExpression x = into.i("\"\" + \"\"");
+    assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
+    StringLiteral left = x.getAST().newStringLiteral();
+    StringLiteral right = x.getAST().newStringLiteral();
+    left.setLiteralValue(String.valueOf((char)34)); // " 
+    right.setLiteralValue(String.valueOf((char)1));
+    x.setLeftOperand(left);
+    x.setRightOperand(right);
+    final List<String> $ = dig.stringLiterals(x);
+    assert $.size() == 2 : "The List did not contain the expected number of elements.";
+    assert "\"".equals($.get(0)) : "The List did not contain the expected element \" at index 0";
+    assert String.valueOf((char)1).equals($.get(1)) : "The List did not contain the expected element \' at index 1";
+  }
 
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimmingOf("a").stays();
+  }
+  
+  private static void forceStaticReturnType(List<String> ¢) {
+    assert ¢ != null;
   }
 }
