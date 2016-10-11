@@ -36,7 +36,7 @@ public enum haz {
   public static boolean cent(final ASTNode ¢) {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
-  
+
   public static boolean dollar(final ASTNode ¢) {
     return !Collect.usesOf("$").inside(¢).isEmpty();
   }
@@ -195,9 +195,9 @@ public enum haz {
     n.accept(new ASTVisitor() {
       boolean continue¢(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment ¢ : fs)
-          if (!continue¢(¢.getName()))
-            return false;
-        return true;
+          if (continue¢(¢.getName()))
+            return true;
+        return false;
       }
 
       boolean continue¢(final SimpleName ¢) {

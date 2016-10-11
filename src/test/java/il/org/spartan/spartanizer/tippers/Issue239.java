@@ -77,7 +77,7 @@ import il.org.spartan.spartanizer.engine.*;
     assert lastIn(nextStatement, statements);
     final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class, block);
     assert f != null;
-    final Statement currentStatement = extract.statement(f);
+    final Statement currentStatement = extract.containingStatement(f);
     assert currentStatement != null;
     assert penultimateIn(currentStatement, statements);
     final SimpleName name = f.getName();

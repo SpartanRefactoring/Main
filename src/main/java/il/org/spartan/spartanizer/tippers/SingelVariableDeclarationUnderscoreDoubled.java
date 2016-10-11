@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -52,6 +54,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(duplicate.of(¢.getType()));
+    $.setVarargs(¢.isVarargs());
     duplicate.modifiers(step.extendedModifiers(¢), extendedModifiers($));
     return $;
   }
@@ -95,19 +98,19 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return replacement(¢, null);
   }
 
-  @SuppressWarnings("unused") @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
-    final MethodDeclaration d = getMethod(n);
-    if (d == null)
+  @SuppressWarnings("unused") @Override public ASTNode replacement(final SingleVariableDeclaration d, final ExclusionManager m) {
+    final MethodDeclaration method = getMethod(d);
+    if (method == null || method.getBody() == null)
       return null;
-    for (final SingleVariableDeclaration ¢ : parameters(d))
+    for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressing(n) || isUsed(d, n.getName()))
+    if (BY_ANNOTATION && !suppressing(d) || isUsed(method, d.getName()) || !isJohnDoe(d.getType(), d.getName()))
       return null;
     if (m != null)
-      for (final SingleVariableDeclaration ¢ : parameters(d))
-        if (!n.equals(¢))
+      for (final SingleVariableDeclaration ¢ : parameters(method))
+        if (!d.equals(¢))
           m.exclude(¢);
-    return replace(n);
+    return replace(d);
   }
 }

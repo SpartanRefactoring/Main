@@ -124,7 +124,7 @@ public enum Collect {
 
   public static Collector usesOf(final String s) {
     return new Collector(s) {
-      @Override public List<SimpleName> in(final ASTNode... ns) {
+      @Override public List<SimpleName> in(final ASTNode... __) {
         return null;
       }
 
@@ -478,7 +478,7 @@ public enum Collect {
 
     /** @param ns
      * @return */
-    public List<String> inside(final ASTNode... ns) {
+    public List<String> inside(final ASTNode... __) {
       return null;
     }
 
