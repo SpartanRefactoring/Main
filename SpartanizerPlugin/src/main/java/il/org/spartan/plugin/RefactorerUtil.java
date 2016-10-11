@@ -91,7 +91,7 @@ public class RefactorerUtil {
       return Selection.empty();
     }
 
-    /** We may use {@link selection#getProject(ISelection)} instead. */
+    /** We may use {@link selection#getProject} instead. */
     public static Selection getAllCompilationUnits() {
       final ISelection s = getSelection();
       if (s == null)
@@ -112,7 +112,39 @@ public class RefactorerUtil {
       return Selection.empty();
     }
 
-    public static ISelection getSelection() {
+    public static IProject project() {
+      final ISelection s = getSelection();
+      if (s == null || s instanceof ITextSelection)
+        return getProject();
+      if (s instanceof ITreeSelection) {
+        final Object o = ((ITreeSelection) s).getFirstElement();
+        if (o == null)
+          return null;
+        if (o instanceof MarkerItem) {
+          final IMarker m = ((MarkerItem) o).getMarker();
+          if (m == null)
+            return null;
+          final IResource r = m.getResource();
+          return r == null ? null : r.getProject();
+        }
+        if (o instanceof IJavaElement) {
+          final IJavaProject p = ((IJavaElement) o).getJavaProject();
+          return p == null ? null : p.getProject();
+        }
+      }
+      return null;
+    }
+    
+    public static Selection by(final IMarker ¢) {
+      if (¢ == null || !¢.exists())
+        return null;
+      ITextSelection s = getTextSelection(¢);
+      if (s == null)
+        return Selection.empty();
+      return by(¢.getResource()).setTextSelection(s);
+    }
+    
+    private static ISelection getSelection() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -144,28 +176,6 @@ public class RefactorerUtil {
       if (r == null)
         return null;
       return r.getProject();
-    }
-
-    public static IProject getProject(final ISelection s) {
-      if (s == null || s instanceof ITextSelection)
-        return getProject();
-      if (s instanceof ITreeSelection) {
-        final Object o = ((ITreeSelection) s).getFirstElement();
-        if (o == null)
-          return null;
-        if (o instanceof MarkerItem) {
-          final IMarker m = ((MarkerItem) o).getMarker();
-          if (m == null)
-            return null;
-          final IResource r = m.getResource();
-          return r == null ? null : r.getProject();
-        }
-        if (o instanceof IJavaElement) {
-          final IJavaProject p = ((IJavaElement) o).getJavaProject();
-          return p == null ? null : p.getProject();
-        }
-      }
-      return null;
     }
 
     private static IJavaProject getJavaProject() {
@@ -201,15 +211,6 @@ public class RefactorerUtil {
 
     private static Selection by(final MarkerItem ¢) {
       return ¢ == null ? Selection.empty() : by(¢.getMarker());
-    }
-
-    public static Selection by(final IMarker ¢) {
-      if (¢ == null || !¢.exists())
-        return null;
-      final ITextSelection s = getTextSelection(¢);
-      if (s == null)
-        return Selection.empty();
-      return by(¢.getResource()).setTextSelection(s);
     }
 
     private static Selection by(final ITreeSelection s) {
