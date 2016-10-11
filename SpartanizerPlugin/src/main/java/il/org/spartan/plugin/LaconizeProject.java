@@ -64,7 +64,6 @@ public final class LaconizeProject extends BaseHandler {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");
-    eclipse.announce(status);
     manyPasses();
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
