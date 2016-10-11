@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
  * @year 2016
  * @see ExclusionManager */
 public abstract class DispatchingVisitor extends ASTVisitor {
-  protected final ExclusionManager exclude = new ExclusionManager();
+  public final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
   @Override public void preVisit(final ASTNode ¢) {
