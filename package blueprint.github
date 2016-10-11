@@ -9,11 +9,11 @@ Color codes in ascending order of quality; for a code to be in a certain color, 
 4. Code GREEN-XXX: YELLOW-000, plus XXX `@Ignore`d tests. 
 5. Code TRANSPARENT: Same as GREEN-000
 
-`XXX` is a sequence of one or more digits making a natural number. 
+`XXX` is a sequence of one or more digits making a positive integer. 
 The names YELLOW-1, YELLOW_1, YELLOW_01, YELLOW-0001, are isomorphic.
 
 ## Integral metrics
-An integral meric such as `SC0012` has two components: a sequence (`SC` here) denoting the kind of the metric, and a non negative integer. 
+An integral metric such as `SC0012` has two components: a sequence (`SC` here) denoting the kind of the metric, and a non negative integer. 
 Here `0012` is just a long name for "12". Higher values are worse
 
 A numerical metrics value of the project is written as `l1w35`, which means one laconize tip, and thirty-five "ordinary" warnings.  The (partial, to be extended) legend is this:
@@ -21,18 +21,18 @@ A numerical metrics value of the project is written as `l1w35`, which means one 
   2. n (N) - number of (distinct) `@Nullable` and `null` checking warnings. 
   3. l (L) - number of (distinct) laconization tips offered on the project. 
   3. s (S) - number of (distinct) `@SuppressWarning` offered on the project. 
-  4. t (T) - numbef of (distinct) tokens
+  4. t (T) - number of (distinct) tokens
   5. w (W) - number of (distinct) plain warnings. 
 
 These rules apply:
-  - The following are all immetarial: 
+  - The following are all immaterial: 
     - Order, 
     - Space, `-`, `_` and `=` 
     - leading zeroes 
     are immaterial. Consequently `D=30 W10`, `W-10D_30`, 'W -=_ 0120D030` 
-  - Implied inofrmatio might be omitted: `W1`, `w1W1` are equivalent.  
+  - Implied information might be omitted: `W1`, `w1W1` are equivalent.  
   - Missing information is not written, so`T?` is invalid.
 
 ## Coverage
-  Written as "C20" to denote 80% coverge
+  Written as "C20" to denote 80% coverage
 

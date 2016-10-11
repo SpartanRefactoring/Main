@@ -36,7 +36,8 @@ import org.junit.runners.*;
   }
 
   @Test public void g() {
-    trimmingOf("void foo(TestExpression exp,TestAssignment testAssignment){return f(exp,testAssignment);}").gives("void foo(TestExpression x,TestAssignment testAssignment){return f(x,testAssignment);}")
+    trimmingOf("void foo(TestExpression exp,TestAssignment testAssignment){return f(exp,testAssignment);}")
+        .gives("void foo(TestExpression x,TestAssignment testAssignment){return f(x,testAssignment);}")
         .gives("void foo(TestExpression x,TestAssignment a){return f(x,a);}");
   }
 
@@ -66,6 +67,6 @@ import org.junit.runners.*;
   }
 
   @Test public void n() {
-    trimmingOf("String tellTale(ExamplyExamplar foo)").gives("String tellTale(ExamplyExamplar __)").stays();
+    trimmingOf("String tellTale(ExamplyExamplar foo)").stays();
   }
 }

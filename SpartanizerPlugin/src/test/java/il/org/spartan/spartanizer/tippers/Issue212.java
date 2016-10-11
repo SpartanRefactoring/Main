@@ -16,6 +16,7 @@ import org.junit.runners.*;
 
   @Test public void chocolate2() {
     trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
+        .gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;")//
         .stays();
   }
 
