@@ -22,8 +22,8 @@ import org.junit.runners.*;
   }
 
   @Test public void chocolate3() {
-    trimmingOf("int f(int a) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}")
-    .gives("int f(int __) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}").stays();
+    trimmingOf("int f(int i) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}")
+        .gives("int f(int __) {\n" + "for (int b: fs)\n" + "return 0;\n" + "return 1;\n" + "}").stays();
   }
 
   @Test public void vanilla() {

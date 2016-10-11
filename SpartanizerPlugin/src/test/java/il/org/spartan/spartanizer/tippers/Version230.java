@@ -1227,9 +1227,7 @@ public final class Version230 {
 
   @Test public void infiniteLoopBug1() {
     trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet) {\n"
-        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }")
-    .gives("static boolean hasAnnotation(final VariableDeclarationFragment __) {\n"
-        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }").stays();
+        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n}").stays();
   }
 
   @Test public void infiniteLoopBug2() {
@@ -1353,6 +1351,7 @@ public final class Version230 {
   @Test public void inlineSingleUseWithAssignment() {
     trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;")//
         .gives("for (int a = 2;true;) if (f()) f(a); else a = 2;")//
+        .gives("for (int a = 2;;) if (f()) f(a); else a = 2;")//
         .stays();
   }
 
@@ -1648,14 +1647,14 @@ public final class Version230 {
   }
 
   @Test public void issue49() {
-    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")
-    .gives("int f() { int f = 0; for (int ¢: X) $ += f(¢); return f;}").stays();
+    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}").gives("int f() { int f = 0; for (int ¢: X) $ += f(¢); return f;}")
+        .stays();
   }
 
   @Test public void issue51() {
     trimmingOf("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")
-    .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}")
-    .gives("int f() { int $ = 0; for (int ¢ = 0; ¢ < 10; ++¢) $ += ¢; return $;}").stays();
+        .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}")
+        .gives("int f() { int $ = 0; for (int ¢ = 0; ¢ < 10; ++¢) $ += ¢; return $;}").stays();
   }
 
   @Test public void issue51g() {
@@ -2780,21 +2779,26 @@ public final class Version230 {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimmingOf("void f(int x) {}").gives("void f(int __) {}").stays();
+    trimmingOf("void f(int i) {}").gives("void f(int __) {}").stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int i) {}")//
         .gives("void f(@SuppressWarnings({\"unused\"}) int __){}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}")//
-        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+        .stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore5() {
-    trimmingOf("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
+    trimmingOf("void f(int i, @SuppressWarnings(\"unused\") int y) {}")//
+        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
+  }
+
+  @Test public void renameUnusedVariableToDoubleUnderscore6() {
+    trimmingOf("void f(int i, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
         .gives("void f(int __, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}");
   }
 

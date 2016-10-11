@@ -52,7 +52,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       return null;
     final List<Expression> terms = new ArrayList<>();
     MethodInvocation r = i;
-    for (boolean hs = false; true;) {
+    for (boolean hs = false;;) {
       final Expression e = r.getExpression();
       if (e instanceof ClassInstanceCreation) {
         final String t = ((ClassInstanceCreation) e).getType() + "";

@@ -96,6 +96,14 @@ public enum extract {
           return "static type initializer";
         return "type initializer";
       case METHOD_DECLARATION:
+        final Statement body = body(az.methodDeclaration(¢));
+        if (body == null)
+          return "abstract";
+        List<Statement> ss = extract.statements(body);
+        if (ss.isEmpty())
+          return "empty";
+        if (ss.size() == 1)
+          return "singleton";
         return "method";
       case TYPE_DECLARATION:
         return category((TypeDeclaration) ¢);
@@ -350,7 +358,7 @@ public enum extract {
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement nextStatement(final ASTNode ¢) {
-    return nextStatement(statement(¢));
+    return nextStatement(containingStatement(¢));
   }
 
   /** Extract the {@link Statement} that immediately follows a given statement
@@ -372,9 +380,11 @@ public enum extract {
     return core(onlyOne($));
   }
 
-  public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    final VariableDeclarationFragment onlyOne = lisp.onlyOne(step.fragments(¢));
-    return onlyOne == null ? null : onlyOne.getName();
+  public static SimpleName onlyName(final VariableDeclarationExpression x) {
+    for (final VariableDeclarationFragment ¢ : step.fragments(x))
+      if (!iz.identifier("$", ¢.getName()))
+        return ¢.getName();
+    return null;
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
@@ -428,14 +438,14 @@ public enum extract {
    * @param pattern JD
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
-  public static Statement statement(final ASTNode ¢) {
+  public static Statement containingStatement(final ASTNode ¢) {
     for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.statement($))
         return az.asStatement($);
     return null;
   }
 
-  /** Extract the list of non-empty sideEffects embedded in node (nesting within
+  /** Extract the list of non-empty statements embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param pattern JD
    * @return list of such sideEffects. */
