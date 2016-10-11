@@ -127,7 +127,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     // overridden
   }
 
-  private boolean cautiousGo(final ASTNode ¢) {
+  protected boolean cautiousGo(final ASTNode ¢) {
     return !exclude.isExcluded(¢) && go(¢);
   }
 }
