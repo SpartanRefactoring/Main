@@ -6,6 +6,8 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
+import il.org.spartan.plugin.revision.*;
+
 /** A command handler which toggles the spartanization nature
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
@@ -60,7 +62,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   }
 
   private static IProject getProject() {
-    final IProject p = RefactorerUtil.selection.project();
+    final IProject p = Selection.Util.project();
     return p != null ? p : null;
   }
 }
