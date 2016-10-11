@@ -22,9 +22,7 @@ public final class Spartanizer extends AbstractBatch {
     super(path);
   }
 
-  @Override protected boolean check(final ASTNode n) {
-    if (!selectedNodeTypes.contains(n.getClass()))
-      return true;
-    return false;
+  @Override protected boolean check(final ASTNode ¢) {
+    return !selectedNodeTypes.contains(¢.getClass());
   }
 }
