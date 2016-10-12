@@ -1,6 +1,12 @@
 package il.org.spartan.spartanizer.leonidas;
 
-/** @author Ori Marcovitch
+/** Factory to create tippers out of user strings! Much easier to implement
+ * tippers with this. <br>
+ * $Xi for expression i.e. - foo(a,b,c)*d + 17 <br>
+ * $M for MethodInvocation i.e. - func() <br>
+ * $N for Name i.e. - func <br>
+ * $B for block or statement i.e. - if(x) return 17; <br>
+ * @author Ori Marcovitch
  * @since 2016 */
 import java.util.*;
 
@@ -89,7 +95,7 @@ public class TipperFactory {
       @SuppressWarnings("unchecked") Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
         if (iz.name(p)) {
           final String id = az.name(p).getFullyQualifiedName();
-          if (id.startsWith("$X") || id.startsWith("$M"))
+          if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N"))
             enviroment.put(id, n);
         } else if (isBlockVariable(p))
           enviroment.put(blockName(p) + "();", n);
