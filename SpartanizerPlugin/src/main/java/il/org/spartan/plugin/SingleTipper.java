@@ -61,9 +61,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     private static InDeclaration instance;
 
     public static InDeclaration instance() {
-      if (instance == null)
-        instance = new InDeclaration();
-      return instance;
+      return instance = instance != null ? instance : new InDeclaration();
     }
   }
 
@@ -86,9 +84,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     private static InFile instance;
 
     public static InFile instance() {
-      if (instance == null)
-        instance = new InFile();
-      return instance;
+      return instance = instance != null ? instance : new InFile();
     }
   }
 
@@ -151,9 +147,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     private static InProject instance;
 
     public static InProject instance() {
-      if (instance == null)
-        instance = new InProject();
-      return instance;
+      return instance = instance != null ? instance : new InProject();
     }
   }
 
