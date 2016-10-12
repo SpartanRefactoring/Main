@@ -2,8 +2,8 @@ package il.org.spartan.plugin.revision;
 
 /** @author Ori Roth
  * @since 2016 */
-public abstract class Applicator {
-  private Listener listener;
+public abstract class Applicator<L extends Listener> {
+  private L listener;
   private Selection selection;
   private boolean shouldRun = true;
 
@@ -18,19 +18,14 @@ public abstract class Applicator {
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  public Listener listener() {
+  public L listener() {
     return listener;
-  }
-
-  /** @return listener of the applicator, ready to be configured. */
-  @SuppressWarnings({ "unchecked", "unused" }) public <L extends Listener> L listener(final Class<L> __) {
-    return (L) listener;
   }
 
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator listener(final Listener ¢) {
+  public Applicator<L> listener(final L ¢) {
     listener = ¢;
     return this;
   }
@@ -40,15 +35,10 @@ public abstract class Applicator {
     return selection;
   }
 
-  /** @return selection of the applicator, ready to be configured. */
-  @SuppressWarnings({ "unchecked", "unused" }) public <S extends Selection> S selection(final Class<S> __) {
-    return (S) selection;
-  }
-
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator selection(final Selection ¢) {
+  public Applicator<L> selection(final Selection ¢) {
     selection = ¢;
     return this;
   }
