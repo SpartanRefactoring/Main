@@ -13,7 +13,7 @@ import il.org.spartan.plugin.revision.GUIApplicator.*;
  * @author Ori Roth
  * @since 2016 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
-  @Override public Object execute(@SuppressWarnings("unused") ExecutionEvent __) {
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     applicator().defaultSelection().go();
     return null;
   }
@@ -22,14 +22,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     return "Apply Spartanization";
   }
 
-  @Override public void run(IMarker ¢) {
+  @Override public void run(final IMarker ¢) {
     applicator().selection(Selection.Util.by(¢)).go();
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   protected static GUIApplicator applicator() {
-    GUIApplicator $ = new GUIApplicator().defaultListener();
+    final GUIApplicator $ = new GUIApplicator().defaultListener();
     $.listener(EventMapper.class).expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
       if (!Dialogs.ok(Dialogs.message("Spartanizing " + ¢.get(event.visit_project))))
         $.stop();

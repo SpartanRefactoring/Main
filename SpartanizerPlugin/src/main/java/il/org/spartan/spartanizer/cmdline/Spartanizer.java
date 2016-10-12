@@ -18,11 +18,19 @@ public final class Spartanizer extends AbstractBatch {
       new Spartanizer(¢).fire();
   }
 
-  private Spartanizer(final String path) {
+  Spartanizer(final String path) {
     super(path);
   }
 
   @Override protected boolean check(final ASTNode ¢) {
     return !selectedNodeTypes.contains(¢.getClass());
+  }
+
+  /**
+   * @param class1
+   */
+  public void selectedNodes(Class<TypeDeclaration> class1) {
+    // TODO Auto-generated method stub
+    
   }
 }

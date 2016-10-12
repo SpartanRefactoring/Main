@@ -23,7 +23,7 @@ public abstract class Applicator {
   }
 
   /** @return listener of the applicator, ready to be configured. */
-  @SuppressWarnings({ "unchecked", "unused" }) public <L extends Listener> L listener(Class<L> __) {
+  @SuppressWarnings({ "unchecked", "unused" }) public <L extends Listener> L listener(final Class<L> __) {
     return (L) listener;
   }
 
@@ -31,7 +31,7 @@ public abstract class Applicator {
    * @param ¢ JD
    * @return this applicator */
   public Applicator listener(final Listener ¢) {
-    this.listener = ¢;
+    listener = ¢;
     return this;
   }
 
@@ -41,7 +41,7 @@ public abstract class Applicator {
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  @SuppressWarnings({ "unchecked", "unused" }) public <S extends Selection> S selection(Class<S> __) {
+  @SuppressWarnings({ "unchecked", "unused" }) public <S extends Selection> S selection(final Class<S> __) {
     return (S) selection;
   }
 
@@ -49,7 +49,7 @@ public abstract class Applicator {
    * @param ¢ JD
    * @return this applicator */
   public Applicator selection(final Selection ¢) {
-    this.selection = ¢;
+    selection = ¢;
     return this;
   }
 
