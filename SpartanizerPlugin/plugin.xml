@@ -150,7 +150,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
-   <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.revision.GUIApplicator"/>
+   <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.revision.SpartanizationHandler"/>
 </extension>
 
 <!-- Menus -->
