@@ -33,7 +33,7 @@ public interface disabling {
       @Override public boolean visit(final Initializer ¢) {
         return cautiousGo(¢);
       }
-      
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return cautiousGo(¢);
       }
@@ -64,7 +64,7 @@ public interface disabling {
       @Override public boolean visit(final Initializer ¢) {
         return cautiousGo(¢);
       }
-      
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return cautiousGo(¢);
       }

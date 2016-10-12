@@ -112,7 +112,7 @@ public class Selection {
   public static String printable(final ITextSelection ¢) {
     return "(" + ¢.getOffset() + "," + ¢.getLength() + ")";
   }
-  
+
   /** TODO Roth: spartanize class TODO Roth: check for circles
    * [[SuppressWarningsSpartan]] */
   public static class Util {
@@ -168,16 +168,16 @@ public class Selection {
       }
       return null;
     }
-    
+
     public static Selection by(final IMarker ¢) {
       if (¢ == null || !¢.exists())
         return null;
-      ITextSelection s = getTextSelection(¢);
+      final ITextSelection s = getTextSelection(¢);
       if (s == null)
         return Selection.empty();
       return by(¢.getResource()).setTextSelection(s);
     }
-    
+
     private static ISelection getSelection() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)

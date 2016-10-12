@@ -44,8 +44,8 @@ public class TipperFactory {
               r.replace(n, wizard.ast($.get()), g);
             }
           };
-        Pair<Integer, Integer> idxs = Matcher.getBlockMatching(az.block(pattern), az.block(n));
-        @SuppressWarnings("boxing") String matching = stringifySubBlock(n, idxs.first, idxs.second);
+        final Pair<Integer, Integer> idxs = Matcher.getBlockMatching(az.block(pattern), az.block(n));
+        @SuppressWarnings("boxing") final String matching = stringifySubBlock(n, idxs.first, idxs.second);
         return new Tip(description(n), n, this.getClass()) {
           @SuppressWarnings("boxing") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final Map<String, ASTNode> enviroment = collectEnviroment(wizard.ast(matching));
@@ -66,15 +66,15 @@ public class TipperFactory {
         };
       }
 
-      String stringifySubBlock(N n, int start) {
-        int end = az.block(n).statements().size();
+      String stringifySubBlock(final N n, final int start) {
+        final int end = az.block(n).statements().size();
         return start >= end ? "" : stringifySubBlock(n, start, end);
       }
 
-      String stringifySubBlock(N n, int start, int end) {
+      String stringifySubBlock(final N n, final int start, final int end) {
         if (start >= end)
           return "";
-        @SuppressWarnings("unchecked") List<Statement> ss = az.block(n).statements().subList(start, end);
+        @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
         return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
       }
 
