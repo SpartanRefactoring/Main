@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -104,33 +105,30 @@ public class Analyzer {
     report(¢);
   }
 
-  /**
-   *
-   */
   private static void report(final ASTNode root) {
     System.out.println("[" + markedNodes(root) + "/" + nodes(root) + "]");
-    // TODO: much more then that..
+    // TODO Marco: much more than that..
   }
 
   private static int nodes(final ASTNode root) {
-    final Int $ = new Int();
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        $.inner += 1;
+        $.incrementAndGet();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   private static int markedNodes(final ASTNode root) {
-    final Int $ = new Int();
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
-          $.inner += 1;
+          $.incrementAndGet();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   /**
