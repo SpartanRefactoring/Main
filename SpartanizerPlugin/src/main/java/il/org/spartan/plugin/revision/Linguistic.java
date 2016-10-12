@@ -23,11 +23,11 @@ public class Linguistic {
     return i == 1 ? "one " + s : i + " " + s + "es";
   }
 
-  public static <X> String nanable(X ¢) {
+  public static <X> String nanable(final X ¢) {
     return ¢ == null ? NAN : ¢ + "";
   }
 
-  public static <X> String nanable(X x, Function<X, ?> f) {
+  public static <X> String nanable(final X x, final Function<X, ?> f) {
     return x == null ? NAN : f.apply(x) + "";
   }
 }
