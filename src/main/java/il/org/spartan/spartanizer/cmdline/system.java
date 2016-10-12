@@ -1,3 +1,5 @@
+package il.org.spartan.spartanizer.cmdline;
+
 import static il.org.spartan.utils.Box.*;
 
 import java.io.*;
