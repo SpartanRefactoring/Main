@@ -56,7 +56,7 @@ public final class SuppressWarningsLaconicOnOff {
       $.replace(d, $.createGroupNode(new ASTNode[] { $.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), $.createCopyTarget(d) }), null);
   }
 
-  private static String fixNL(BodyDeclaration ¢) {
+  private static String fixNL(final BodyDeclaration ¢) {
     return ¢ instanceof EnumDeclaration || ¢ instanceof MethodDeclaration || ¢ instanceof EnumConstantDeclaration ? "\n" : "";
   }
 
