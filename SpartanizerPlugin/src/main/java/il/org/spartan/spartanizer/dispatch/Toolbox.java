@@ -338,9 +338,7 @@ public class Toolbox {
   }
 
   public List<Tipper<? extends ASTNode>> get(final int ¢) {
-    if (implementation[¢] == null)
-      implementation[¢] = new ArrayList<>();
-    return implementation[¢];
+    return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
   public int hooksCount() {
