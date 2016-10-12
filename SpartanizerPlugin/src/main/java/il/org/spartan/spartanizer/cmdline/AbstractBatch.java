@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -34,6 +35,9 @@ abstract class AbstractBatch {
   protected CSVStatistics report;
   protected String reportFileName;
   protected Toolbox toolbox = new Toolbox();
+  protected final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
+  protected CSVStatistics spectrumStats;
+  private String spectrumFileName;
 
    AbstractBatch(final String path) {
     this(path, system.folder2File(path));
@@ -44,6 +48,7 @@ abstract class AbstractBatch {
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
+    spectrumFileName = folder + name + ".spectrum.CSV";
   }
 
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
@@ -51,6 +56,7 @@ abstract class AbstractBatch {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
+     // if astnode is in selectedNodeType check is true
         if (!check(n) || disabling.on(n))
           return true;
         final Tipper<N> w = getTipper(n);
@@ -59,14 +65,34 @@ abstract class AbstractBatch {
         Tip s = null;
         try {
           s = w.tip(n, exclude);
-          System.out.println("tipper description: " + w.description());
-          TrimmerLog.tip(w, n);
+          
+          tick(n, w);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
         }
         if (s != null)
           TrimmerLog.application(r, s);
         return true;
+      }
+
+      /**
+       * @param n
+       * @param w
+       * @throws TipperFailure
+       */
+      <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
+        tick(w);
+        TrimmerLog.tip(w, n);
+      }
+
+      /**
+       * @param w
+       */
+      <N extends ASTNode> void tick(final Tipper<N> w) {
+        String key = monitor.className(w.getClass());
+        if (!spectrum.containsKey(key))
+          spectrum.put(key, 0);
+        spectrum.put(key, spectrum.get(key) + 1);
       }
   
       @Override protected void initialization(final ASTNode ¢) {
@@ -110,8 +136,21 @@ abstract class AbstractBatch {
 
   protected void fire() {
     go();
+    reportSpectrum();
     runEssence();
     runWordCount();
+  }
+
+  /**
+   * 
+   */
+  private void reportSpectrum() {
+    for(Entry<String, Integer> ¢: spectrum.entrySet()){
+      spectrumStats.put("Tipper", ¢.getKey());
+      spectrumStats.put("Times", ¢.getValue());
+      spectrumStats.nl();
+    }
+    System.err.print("\n Spectrum: " + spectrumStats.close());
   }
 
   boolean go(final BodyDeclaration ¢) {
@@ -248,6 +287,7 @@ abstract class AbstractBatch {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
+      spectrumStats = new CSVStatistics(spectrumFileName , "property");
       for (final File ¢ : new FilesGenerator(".java").from(inputPath))
         go(¢);
     } catch (final IOException x) {
