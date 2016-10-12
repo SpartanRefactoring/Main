@@ -108,7 +108,6 @@ public final class BatchSpartanizer {
       System.out.println(dir.mkdir());
   }
 
-
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");

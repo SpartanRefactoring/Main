@@ -99,7 +99,7 @@ public enum extract {
         final Statement body = body(az.methodDeclaration(¢));
         if (body == null)
           return "abstract";
-        List<Statement> ss = extract.statements(body);
+        final List<Statement> ss = extract.statements(body);
         if (ss.isEmpty())
           return "empty";
         if (ss.size() == 1)

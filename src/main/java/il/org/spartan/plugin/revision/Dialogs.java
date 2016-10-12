@@ -49,12 +49,12 @@ public class Dialogs {
     $.setOpenOnRun(openOnRun);
     return $;
   }
-  
-  public static boolean ok(MessageDialog ¢) {
+
+  public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
   }
-  
-  public static boolean ok(MessageDialog ¢, int okIndex) {
+
+  public static boolean ok(final MessageDialog ¢, final int okIndex) {
     return ¢.open() == okIndex;
   }
 }

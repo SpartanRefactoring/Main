@@ -191,7 +191,7 @@ public enum eclipse {
   }
 
   static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
-    return new SubProgressMonitor(¢, 1, SubProgressMonitor.SUPPRESS_SUBTASK_LABEL);
+    return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
   static Object resources(final IEditorPart ep) {
