@@ -149,4 +149,14 @@ import org.junit.*;
   @Test public void testTips9() {
     leonidasSays.tipper("if($X1 == null) $X1 = $X2; return $X1;", "", "").tips("if (instance == null) instance = allTippers(); return instance;");
   }
+
+  @Test public void testTips10() {
+    leonidasSays.tipper("$X = $X.$N1($A1); $X1 = $X.$N2($A2);", "", "")
+        .tips("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\");\n $ = $.replaceAll(\";$\", \"\");");
+  }
+
+  @Test public void testTips10WithWhitespaces() {
+    leonidasSays.tipper("$X = $X.$N1($A1); $X1 = $X.$N2($A2);", "", "")
+        .tips("$ =$.replaceFirst(\"^[\\\\[]+L\", \"\");\n\t\t\t\n     $=    \t$.replaceAll(\";$\", \"\");");
+  }
 }
