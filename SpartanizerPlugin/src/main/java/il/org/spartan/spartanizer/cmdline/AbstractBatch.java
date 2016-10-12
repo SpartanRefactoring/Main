@@ -23,8 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/**
- * @author Yossi Gil 
+/** @author Yossi Gil
  * @since 2016 */
 abstract class AbstractBatch {
   protected static final String folder = "/tmp/";
@@ -42,14 +41,14 @@ abstract class AbstractBatch {
   protected final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
   protected CSVStatistics spectrumStats;
   protected CSVStatistics coverageStats;
-  private String spectrumFileName;
-  private String coverageFileName;
+  private final String spectrumFileName;
+  private final String coverageFileName;
   static String presentFileName;
   static String presentMethod;
   protected static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   int tippersAppliedOnCurrentObject;
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     System.out.println(system.p(12, 15));
     System.out.println(system.p(18, 15));
   }
@@ -92,8 +91,8 @@ abstract class AbstractBatch {
         return true;
       }
 
-      <N extends ASTNode> void tick2(N n, Tipper<N> w) {
-        String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
+      <N extends ASTNode> void tick2(final N n, final Tipper<N> w) {
+        final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);
@@ -109,7 +108,7 @@ abstract class AbstractBatch {
 
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
-        String key = monitor.className(w.getClass());
+        final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
@@ -158,9 +157,9 @@ abstract class AbstractBatch {
   }
 
   private void reportCoverage() {
-    for (Entry<String, Integer> ¢ : coverage.entrySet()) {
-      int i = ¢.getKey().indexOf(".java");
-      String file = ¢.getKey().substring(0, i + 5);
+    for (final Entry<String, Integer> ¢ : coverage.entrySet()) {
+      final int i = ¢.getKey().indexOf(".java");
+      final String file = ¢.getKey().substring(0, i + 5);
       coverageStats.put("File", file);
       coverageStats.put("Method", ¢.getKey());
       coverageStats.put("Spartanization", ¢.getValue());
@@ -170,7 +169,7 @@ abstract class AbstractBatch {
   }
 
   private void reportSpectrum() {
-    for (Entry<String, Integer> ¢ : spectrum.entrySet()) {
+    for (final Entry<String, Integer> ¢ : spectrum.entrySet()) {
       spectrumStats.put("Tipper", ¢.getKey());
       spectrumStats.put("Times", ¢.getValue());
       spectrumStats.nl();
@@ -194,10 +193,10 @@ abstract class AbstractBatch {
     final int essence2 = Essence.of(out + "").length();
     final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(out + ""));
     final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(out);
-   final int nodes2 = metrics.nodesCount(to);
+    final int nodes2 = metrics.nodesCount(to);
     final int body2 = metrics.bodySize(to);
-    MethodDeclaration methodDeclaration = az.methodDeclaration(to);
-    int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
+    final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
+    final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     befores.print(input);
     afters.print(out);
@@ -211,38 +210,38 @@ abstract class AbstractBatch {
         .put("Nodes2", nodes2)//
         .put("Δ Nodes", nodes - nodes2)//
         .put("δ Nodes", system.d(nodes, nodes2))//
-        .put("δ Nodes %", ((system.p(nodes, nodes2))))//
+        .put("δ Nodes %", system.p(nodes, nodes2))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("Δ Body", body - body2)//
         .put("δ Body", system.d(body, body2))//
-        .put("% Body", ((system.p(body, body2))))//
+        .put("% Body", system.p(body, body2))//
         .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("Δ Tokens", tokens - tokens2)//
         .put("δ Tokens", system.d(tokens, tokens2))//
-        .put("% Tokens", ((system.p(tokens, tokens2))))//
+        .put("% Tokens", system.p(tokens, tokens2))//
         .put("Length1", length)//
         .put("Length2", length2)//
         .put("Δ Length", length - length2)//
         .put("δ Length", system.d(length, length2))//
-        .put("% Length", ((system.p(length, length2))))//
+        .put("% Length", system.p(length, length2))//
         .put("Tide1", tide)//
         .put("Tide2", tide2)//
         .put("Δ Tide2", tide - tide2)//
         .put("δ Tide2", system.d(tide, tide2))//
-        .put("δ Tide2", ((system.p(tide, tide2))))//
+        .put("δ Tide2", system.p(tide, tide2))//
         .put("Essence1", essence)//
         .put("Essence2", essence2)//
         .put("Δ Essence", essence - essence2)//
         .put("δ Essence", system.d(essence, essence2))//
-        .put("% Essence", ((system.p(essence, essence2))))//
+        .put("% Essence", system.p(essence, essence2))//
         .put("Statements1", statements)//
         .put("Statement2", statements2)//
         .put("Δ Statement", statements - statements2)//
         .put("δ Statement", system.d(statements, statements2))//
-        .put("% Statement", ((system.p(essence, essence2))))//
+        .put("% Statement", system.p(essence, essence2))//
         .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
         .put("R(E/L)", system.ratio(length, essence)) //
         .put("R(E/T)", system.ratio(tide, essence)) //
@@ -254,13 +253,13 @@ abstract class AbstractBatch {
 
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(ASTNode ¢) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
         return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
       }
     });
   }
 
-  boolean filter(ASTNode ¢) {
+  boolean filter(final ASTNode ¢) {
     return true;
   }
 
