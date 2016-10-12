@@ -116,14 +116,14 @@ public class Matcher {
 
   /** @param n
    * @return */
-  private boolean isMethodInvocationAndConsistentWith$AArgument(ASTNode p, ASTNode n) {
+  private boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName())
         && consistent(az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
   }
 
   /** @param p
    * @return */
-  private static boolean isMethodInvocationAndHas$AArgument(ASTNode p) {
+  private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
     return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
         && (az.methodInvocation(p).arguments().get(0) + "").startsWith("$A");
   }
@@ -192,14 +192,14 @@ public class Matcher {
 
   /** @param p
    * @return */
-  private static String argumentsId(ASTNode p) {
+  private static String argumentsId(final ASTNode p) {
     return az.methodInvocation(p).arguments().get(0) + "";
   }
 
   /** @param ¢
    * @return */
-  private static String arguments(ASTNode ¢) {
-    String str = az.methodInvocation(¢).arguments() + "";
+  private static String arguments(final ASTNode ¢) {
+    final String str = az.methodInvocation(¢).arguments() + "";
     return str.substring(1, str.length() - 1);
   }
 }

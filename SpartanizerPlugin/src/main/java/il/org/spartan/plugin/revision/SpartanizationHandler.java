@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.revision;
 
+import static il.org.spartan.plugin.revision.Linguistic.*;
+
 import java.util.*;
 
 import org.eclipse.core.commands.*;
@@ -7,8 +9,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
-
-import static il.org.spartan.plugin.revision.Linguistic.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link EventApplicator} as its applicator.
@@ -44,7 +44,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_project)) //
               + ". Spartanized " + nanable(¢.get(event.visit_project)) //
-              + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {return c.size();}) + " files" //
+              + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
+                return c.size();
+              }) + " files" //
               + " in " + plurales("pass", (Integer) ¢.get(event.run_pass))).open();
         })));
     return $;
