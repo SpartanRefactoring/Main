@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -21,8 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/**
- * @author Yossi Gil 
+/** @author Yossi Gil
  * @since 2016 */
 abstract class AbstractBatch {
   protected static final String folder = "/tmp/";
@@ -38,9 +36,9 @@ abstract class AbstractBatch {
   protected Toolbox toolbox = new Toolbox();
   protected final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   protected CSVStatistics spectrumStats;
-  private String spectrumFileName;
+  private final String spectrumFileName;
 
-   AbstractBatch(final String path) {
+  AbstractBatch(final String path) {
     this(path, system.folder2File(path));
   }
 
@@ -57,7 +55,7 @@ abstract class AbstractBatch {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
-     // if astnode is in selectedNodeType check is true
+        // if astnode is in selectedNodeType check is true
         if (!check(n) || disabling.on(n))
           return true;
         final Tipper<N> w = getTipper(n);
@@ -66,7 +64,6 @@ abstract class AbstractBatch {
         Tip s = null;
         try {
           s = w.tip(n, exclude);
-          
           tick(n, w);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
@@ -76,32 +73,29 @@ abstract class AbstractBatch {
         return true;
       }
 
-      /**
-       * @param n
+      /** @param n
        * @param w
-       * @throws TipperFailure
-       */
+       * @throws TipperFailure */
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      /**
-       * @param w
-       */
+      /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
-        String key = monitor.className(w.getClass());
+        final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-  
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-      abstract boolean check(ASTNode n); 
+
+  abstract boolean check(ASTNode n);
 
   public ASTRewrite createRewrite(final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
@@ -143,10 +137,10 @@ abstract class AbstractBatch {
   }
 
   /**
-   * 
+   *
    */
   private void reportSpectrum() {
-    for(Entry<String, Integer> ¢: spectrum.entrySet()){
+    for (final Entry<String, Integer> ¢ : spectrum.entrySet()) {
       spectrumStats.put("Tipper", ¢.getKey());
       spectrumStats.put("Times", ¢.getValue());
       spectrumStats.nl();
@@ -172,7 +166,7 @@ abstract class AbstractBatch {
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = metrics.nodesCount(from);
     final int body2 = metrics.bodySize(from);
-    System.err.println(++done + " " + extract.category(¢) + " " + extract.name(¢) );
+    System.err.println(++done + " " + extract.category(¢) + " " + extract.name(¢));
     // printout
     befores.print(¢);
     afters.print(out);
@@ -227,27 +221,27 @@ abstract class AbstractBatch {
       @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
         return go(¢);
       }
-  
+
       @Override public boolean visit(final MethodDeclaration ¢) {
         return go(¢);
       }
-  
+
       @Override public boolean visit(final TypeDeclaration ¢) {
         return go(¢);
       }
-  
+
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return go(¢);
       }
-  
+
       @Override public boolean visit(final FieldDeclaration ¢) {
         return go(¢);
       }
-  
+
       @Override public boolean visit(final EnumDeclaration ¢) {
         return go(¢);
       }
-  
+
       @Override public boolean visit(final Initializer ¢) {
         return go(¢);
       }
@@ -288,7 +282,7 @@ abstract class AbstractBatch {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
-      spectrumStats = new CSVStatistics(spectrumFileName , "property");
+      spectrumStats = new CSVStatistics(spectrumFileName, "property");
       for (final File ¢ : new FilesGenerator(".java").from(inputPath))
         go(¢);
     } catch (final IOException x) {
