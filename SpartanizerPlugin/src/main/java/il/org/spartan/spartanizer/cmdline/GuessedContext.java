@@ -82,7 +82,7 @@ public enum GuessedContext {
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
         "It sure does not look like a correct Java code to me.\n" + //
         "\n" + //
-        "Here are the attempts I made at literal ```" + codeFragment + "''':,\n" + //
+        "Here are the attempts I made at literal [" + codeFragment + "]:,\n" + //
         "\n" + //
         enumerateFailingAttempts(codeFragment));
     throw new RuntimeException();

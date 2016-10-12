@@ -71,20 +71,16 @@ public class Matcher {
     return true;
   }
 
-  Map<String, ArrayList<ASTNode>> ids = new HashMap<>();
+  Map<String, String> ids = new HashMap<>();
 
   private Matcher() {
   }
 
   /** Validates that matched variables are the same in all matching places. */
-  private boolean consistent(final ASTNode n, final String id) {
+  private boolean consistent(final String id, final String s) {
     if (!ids.containsKey(id))
-      ids.put(id, new ArrayList<>());
-    ids.get(id).add(n);
-    for (final ASTNode other : ids.get(id))
-      if (!(n + "").equals(other + ""))
-        return false;
-    return true;
+      ids.put(id, s);
+    return ids.get(id).equals(s);
   }
 
   @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n) {
@@ -95,7 +91,9 @@ public class Matcher {
     if (iz.literal(p))
       return sameLiteral(p, n);
     if (isBlockVariable(p))
-      return matchesBlock(n) && consistent(n, blockName(p));
+      return matchesBlock(n) && consistent(blockName(p), n + "");
+    if (isMethodInvocationAndHas$AArgument(p))
+      return isMethodInvocationAndConsistentWith$AArgument(p, n);
     if (differentTypes(p, n))
       return false;
     if (iz.literal(p))
@@ -114,6 +112,20 @@ public class Matcher {
       if (!matchesAux(pChildren.get(¢), nChildren.get(¢)))
         return false;
     return true;
+  }
+
+  /** @param n
+   * @return */
+  private boolean isMethodInvocationAndConsistentWith$AArgument(ASTNode p, ASTNode n) {
+    return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName())
+        && consistent(az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
+  }
+
+  /** @param p
+   * @return */
+  private static boolean isMethodInvocationAndHas$AArgument(ASTNode p) {
+    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
+        && (az.methodInvocation(p).arguments().get(0) + "").startsWith("$A");
   }
 
   /** @param p
@@ -146,9 +158,11 @@ public class Matcher {
     final String id = ((Name) p).getFullyQualifiedName();
     if (id.startsWith("$")) {
       if (id.startsWith("$X"))
-        return n instanceof Expression && consistent(n, id);
+        return n instanceof Expression && consistent(id, n + "");
       if (id.startsWith("$M"))
-        return n instanceof MethodInvocation && consistent(n, id);
+        return n instanceof MethodInvocation && consistent(id, n + "");
+      if (id.startsWith("$N"))
+        return iz.name(n) && consistent(id, n + "");
     }
     return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
   }
