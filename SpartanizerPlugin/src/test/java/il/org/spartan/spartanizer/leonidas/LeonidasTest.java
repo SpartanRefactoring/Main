@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.leonidas;
 
-import java.util.*;
-
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {

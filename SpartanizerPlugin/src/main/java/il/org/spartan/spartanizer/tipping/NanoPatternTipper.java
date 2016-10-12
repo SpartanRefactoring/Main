@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tipping;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** A {@link Tipper} in which represents a NanoPattern.
  * @author Ori Marcovitch
@@ -13,4 +14,6 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   protected abstract boolean prerequisite(final N ¢);
+  
+  @Override public abstract Tip tip(final N ¢)  throws TipperFailure;
 }
