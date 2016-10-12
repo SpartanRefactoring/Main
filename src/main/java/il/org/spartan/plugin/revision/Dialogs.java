@@ -38,6 +38,16 @@ public class Dialogs {
     };
   }
 
+  public static MessageDialog messageOnTheRun(final String message) {
+    MessageDialog $ = new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+      @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
+        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
+      }
+    };
+    $.setBlockOnOpen(false);
+    return $;
+  }
+
   public static ProgressMonitorDialog progress(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
@@ -49,12 +59,12 @@ public class Dialogs {
     $.setOpenOnRun(openOnRun);
     return $;
   }
-  
-  public static boolean ok(MessageDialog ¢) {
+
+  public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
   }
-  
-  public static boolean ok(MessageDialog ¢, int okIndex) {
+
+  public static boolean ok(final MessageDialog ¢, final int okIndex) {
     return ¢.open() == okIndex;
   }
 }
