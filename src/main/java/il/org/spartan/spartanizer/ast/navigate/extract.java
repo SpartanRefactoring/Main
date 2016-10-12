@@ -99,7 +99,7 @@ public enum extract {
         final Statement body = body(az.methodDeclaration(¢));
         if (body == null)
           return "abstract";
-        final List<Statement> ss = extract.statements(body);
+        List<Statement> ss = extract.statements(body);
         if (ss.isEmpty())
           return "empty";
         if (ss.size() == 1)
@@ -295,7 +295,7 @@ public enum extract {
     return $;
   }
 
-  public static String name(final BodyDeclaration ¢) {
+  public static String name(final ASTNode ¢) {
     switch (¢.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
         return ((AnnotationTypeDeclaration) ¢).getName() + "";
