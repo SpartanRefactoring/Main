@@ -39,7 +39,7 @@ public class Dialogs {
   }
 
   public static MessageDialog messageOnTheRun(final String message) {
-    MessageDialog $ = new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+    final MessageDialog $ = new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
