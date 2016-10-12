@@ -134,6 +134,7 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             new CachingPattern(), //
+            new BlockInlineStatementIntoNext(), //
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //

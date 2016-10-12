@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -8,9 +8,9 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch
  * @year 2016 */
-public final class CachingPattern extends NanoPatternTipper<Block> {
-  private static final UserDefinedTipper<Block> tipper = TipperFactory.tipper("if($X1 == null) $X1 = $X2; return $X1;",
-      "return $X1 = $X1 == null ? $X2 : $X1;", "Caching pattern: inline into ternary return");
+public final class BlockInlineStatementIntoNext extends NanoPatternTipper<Block> {
+  private static final UserDefinedTipper<Block> tipper = TipperFactory.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);",
+      "inline statement into next one");
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();
