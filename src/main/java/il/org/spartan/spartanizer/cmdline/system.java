@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+import static il.org.spartan.utils.Box.*;
 
 import java.io.*;
 
@@ -35,9 +35,6 @@ public interface system {
     ;
   }
 
-  static String removePercentChar(final String p) {
-    return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
-  }
 
   static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
@@ -94,12 +91,62 @@ public interface system {
   }
 
   static String p(final int n1, final int n2) {
-    return Unit.formatRelative(d(n1, n2));
+    return formatRelative(d(n1, n2));
+  }
+  static String formatRelative(final double ¢) {
+    return String.format(format2(¢) + "%%", box(100 * ¢));
+  }
+
+  static String formatRelative(final double d1, final double d2) {
+    return formatRelative(d1 / d2);
+  }
+  static String format2(final double d) {
+    if (d < 0)
+      return "-" + format2(-d);
+    final double p = 100 * d;
+    return "%" + (p < 0.01 ? ".0f" : (p < 0.1 ? ".2f" : (p < 1 || p < 10 ? ".1f" : (p < 100 || p < 1000 ? ".0f" : "5.0g"))));
+  }
+  static double round3(final double ¢) {
+    switch (digits(¢)) {
+      case -1:
+      case 0:
+        return Math.round(1000 * ¢) / 1000.0;
+      case 1:
+        return Math.round(100 * ¢) / 100.0;
+      case 2:
+        return Math.round(10 * ¢) / 10.0;
+      default:
+        return ¢;
+    }
+  }
+  static int digits(final double d) {
+    if (d == 0)
+      return -1;
+    final double log = Math.log10(d);
+    return log < 0 ? 0 : (int) log + 1;
+  }
+
+  static String format3(final double d) {
+    final double fraction = d - (int) d;
+    if (d == 0 || d >= 1 && fraction < 0.0005)
+      return "%.0f";
+    switch (digits(round3(d))) {
+      case -1:
+      case 0:
+        return "%.3f";
+      case 1:
+        return "%.2f";
+      case 2:
+        return "%.1f";
+      default:
+        return "%.0f";
+    }
   }
 
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
   }
+
 
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
