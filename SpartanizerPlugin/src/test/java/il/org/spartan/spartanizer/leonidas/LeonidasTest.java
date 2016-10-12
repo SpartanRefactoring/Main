@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.leonidas;
 
+import java.util.*;
+
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class LeonidasTest {
@@ -66,17 +68,24 @@ import org.junit.*;
         .into("return lazyEvaluatedTo(defaultInstance, freshCopyOfAllTippers());");
   }
 
-  // TODO: ignored because of formatting (test is indeed successful)
+  // TODO: ignored due to formatting (test is indeed successful)
   @Ignore @Test public void testMutation6() {
     leonidasSays.tipper("if($X) return y; print(7);", "washere();", "").turns("print(8); if(a || b && c) return y; print(7);")
         .into("print(8); washere();");
   }
 
-  // TODO: ignored because of formatting (test is indeed successful)
+  // TODO: ignored due to formatting (test is indeed successful)
   @Ignore @Test public void testMutation7() {
     leonidasSays.tipper("if($X1 == null) $X1 = $X2; return $X1;", "return $X1 = $X1 == null ? $X2 : $X1;", "")
         .turns("if (instance == null) instance = allTippers(); return instance;")
         .into("return instance = instance == null ? allTippers() : instance;");
+  }
+
+  // TODO: ignored due to formatting (test is indeed successful)
+  @Ignore @Test public void testMutation8() {
+    leonidasSays.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);", "")
+        .turns("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\");\n $ = $.replaceAll(\";$\", \"\");")
+        .into("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\").replaceAll(\";$\", \"\");");
   }
 
   @Test public void testNotTips1() {
@@ -151,12 +160,12 @@ import org.junit.*;
   }
 
   @Test public void testTips10() {
-    leonidasSays.tipper("$X = $X.$N1($A1); $X1 = $X.$N2($A2);", "", "")
+    leonidasSays.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "", "")
         .tips("$ = $.replaceFirst(\"^[\\\\[]+L\", \"\");\n $ = $.replaceAll(\";$\", \"\");");
   }
 
   @Test public void testTips10WithWhitespaces() {
-    leonidasSays.tipper("$X = $X.$N1($A1); $X1 = $X.$N2($A2);", "", "")
+    leonidasSays.tipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "", "")
         .tips("$ =$.replaceFirst(\"^[\\\\[]+L\", \"\");\n\t\t\t\n     $=    \t$.replaceAll(\";$\", \"\");");
   }
 }
