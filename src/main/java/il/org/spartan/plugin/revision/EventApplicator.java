@@ -12,8 +12,8 @@ enum event {
 public class EventApplicator extends Applicator<EventListener<event>> {
   /** Spartanization process. */
   @Override public void go() {
-    listener().tick(event.run_start);
-    if (shouldRun())
+//    listener().tick(event.run_start);
+//    if (shouldRun())
       System.out.println(selection());
   }
 
