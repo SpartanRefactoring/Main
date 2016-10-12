@@ -166,4 +166,40 @@ public class Matcher {
     }
     return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
   }
+
+  @SuppressWarnings("unchecked") public static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
+      final Map<String, String> enviroment) {
+    if (iz.name(p)) {
+      final String id = az.name(p).getFullyQualifiedName();
+      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N"))
+        enviroment.put(id, n + "");
+    } else if (isBlockVariable(p))
+      enviroment.put(blockName(p) + "();", n + "");
+    else {
+      final List<? extends ASTNode> nChildren = Recurser.children(n);
+      final List<? extends ASTNode> pChildren = Recurser.children(p);
+      if (isMethodInvocationAndHas$AArgument(p))
+        enviroment.put(argumentsId(p), arguments(n) + "");
+      else if (iz.methodInvocation(p)) {
+        nChildren.addAll(az.methodInvocation(n).arguments());
+        pChildren.addAll(az.methodInvocation(p).arguments());
+      }
+      for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+        collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
+    }
+    return enviroment;
+  }
+
+  /** @param p
+   * @return */
+  private static String argumentsId(ASTNode p) {
+    return az.methodInvocation(p).arguments().get(0) + "";
+  }
+
+  /** @param ¢
+   * @return */
+  private static String arguments(ASTNode ¢) {
+    String str = az.methodInvocation(¢).arguments() + "";
+    return str.substring(1, str.length() - 1);
+  }
 }
