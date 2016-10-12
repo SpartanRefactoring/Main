@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+
 import org.junit.*;
 import org.junit.runners.*;
+
 import il.org.spartan.spartanizer.research.patterns.*;
 
 /** Tests of {@link CachingPattern}

@@ -35,7 +35,6 @@ public interface system {
     ;
   }
 
-
   static String removePercentChar(final String p) {
     return !p.contains("--") ? p.replace("%", "") : p.replace("%", "").replaceAll("--", "-");
   }

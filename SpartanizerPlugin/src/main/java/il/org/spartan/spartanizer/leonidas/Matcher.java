@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -26,8 +28,8 @@ public class Matcher {
   }
 
   @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
-    @SuppressWarnings("unchecked") List<Statement> sp = p.statements();
-    @SuppressWarnings("unchecked") List<Statement> sn = n.statements();
+    @SuppressWarnings("unchecked") final List<Statement> sp = p.statements();
+    @SuppressWarnings("unchecked") final List<Statement> sn = n.statements();
     for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
       if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
         return new Pair<>(¢, ¢ + sp.size());

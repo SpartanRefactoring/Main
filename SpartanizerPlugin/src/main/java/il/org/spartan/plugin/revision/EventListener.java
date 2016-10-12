@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.revision;
 
+import il.org.spartan.plugin.revision.GUIApplicator.*;
+
 /** Listen to {@link event}s, with an optional additional object.
  * @author Ori Roth
  * @since 2016 */
