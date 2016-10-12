@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.ui.internal.handlers.WizardHandler.*;
 
 import il.org.spartan.*;
 
@@ -11,20 +12,23 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @year 2015 */
 public final class Spartanizer extends AbstractBatch {
-  static final List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
-
+  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class, TypeDeclaration.class);
+  
+  @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration> ... ¢){
+    selectedNodeTypes = as.list(¢);
+  }
+//  static final List<Class<? extends ASTNode>> selNodeTypes = as.list(MethodDeclaration.class, TypeDeclaration.class);
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new Spartanizer(¢).fire();
   }
 
-  private Spartanizer(final String path) {
+  Spartanizer(final String path) {
     super(path);
   }
 
-  @Override protected boolean check(final ASTNode n) {
-    if (!selectedNodeTypes.contains(n.getClass()))
-      return true;
-    return false;
+  @Override protected boolean check(final ASTNode ¢) {
+    // if astnode is in selectedNodeType return false
+    return !selectedNodeTypes.contains(¢.getClass());
   }
 }
