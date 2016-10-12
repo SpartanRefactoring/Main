@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.cmdline.system.*;
-import static il.org.spartan.tide.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -9,8 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Test for the Spartanizer class
