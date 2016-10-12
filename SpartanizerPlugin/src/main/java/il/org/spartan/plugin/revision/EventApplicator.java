@@ -12,7 +12,9 @@ enum event {
 public class EventApplicator extends Applicator<EventListener<event>> {
   /** Spartanization process. */
   @Override public void go() {
-    System.out.println(selection());
+    listener().tick(event.run_start);
+    if (shouldRun())
+      System.out.println(selection());
   }
 
   /** Default listener configuration of {@link EventApplicator}.
