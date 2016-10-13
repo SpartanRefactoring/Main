@@ -38,6 +38,10 @@ public enum step {
     return ¢.getBody();
   }
 
+  public static Statement body(final MethodDeclaration ¢) {
+    return ¢.getBody();
+  }
+
   public static Statement body(final WhileStatement ¢) {
     return ¢.getBody();
   }

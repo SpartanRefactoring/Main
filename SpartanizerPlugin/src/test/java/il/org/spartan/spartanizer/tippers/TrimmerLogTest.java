@@ -1,9 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-import static org.junit.Assert.*;
-
-import java.io.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -15,22 +12,13 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {
-  @Ignore @Test public void test01() throws TipperFailure {
-    final Tipper<ASTNode> w = null;
-    final ASTNode n = null;
-    TrimmerLog.tip(w, n);
-    assertTrue(false);
-  }
-
   @Test public void test02() {
     final Operand o = trimmingOf("new Integer(3)");
     final Wrap w = Wrap.find(o.get());
@@ -88,16 +76,5 @@ public class TrimmerLogTest {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     assert u.getJavaElement() == null;
-  }
-
-  @Ignore("not ready yet") @Test public void test06() {
-    final String path = "/home/matteo/MUTATION_TESTING_REFACTORING/test-common-lang/commons-lang/src/main/java/org/apache/commons/lang3/ArrayUtils.java";
-    final File f = new File(path);
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(f);
-    final Trimmer trimmer = new Trimmer();
-    final int opp = TrimmerTestsUtils.countOpportunities(trimmer, cu);
-    System.out.println(opp);
-    for (final Tip ¢ : trimmer.collectSuggesions(cu))
-      System.out.println(¢.description);
   }
 }

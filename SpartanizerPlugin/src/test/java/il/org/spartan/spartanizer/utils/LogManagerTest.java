@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-@SuppressWarnings("static-method") public final class LogManagerTest {
+@SuppressWarnings("static-method") @Ignore public final class LogManagerTest {
   @Test public void testActive() {
     LogManager.activateLog();
     assert LogManager.isActive();
   }
 
-  @Ignore @Test public void testGetLogDir() {
+  @Test public void testGetLogDir() {
     fail("Not yet implemented");
   }
 
@@ -30,7 +30,7 @@ import org.junit.*;
     assert !LogManager.isActive();
   }
 
-  @Ignore @Test public void testPrintRow() {
+  @Test public void testPrintRow() {
     LogManager.initialize("/home/matteo/SpartanLog");
     final LogWriter lw = LogManager.getLogWriter();
     assert LogManager.getLogWriter() != null;
@@ -39,7 +39,7 @@ import org.junit.*;
     lw.close();
   }
 
-  @Ignore @Test public void testSetLogDir() {
+  @Test public void testSetLogDir() {
     fail("Not yet implemented");
   }
 }

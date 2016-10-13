@@ -25,7 +25,6 @@ public abstract class LaconizeSelection extends BaseHandler {
   public Void execute() throws ExecutionException {
     final ICompilationUnit currentCompilationUnit = eclipse.currentCompilationUnit();
     final StringBuilder status = new StringBuilder("Spartanizing " + currentCompilationUnit.getElementName());
-    eclipse.announce(status);
     final IWorkbench wb = PlatformUI.getWorkbench();
     final GUI$Applicator applicator = new Trimmer();
     applicator.setICompilationUnit(currentCompilationUnit);
@@ -54,7 +53,7 @@ public abstract class LaconizeSelection extends BaseHandler {
         status.append("\n Applied a total of " + total + " tips in " + i + " rounds");
         return eclipse.announce(status);
       }
-      status.append("\n Round " + (i + 1) + ": " + n.inner + " tips (previous rounds: " + total + " tips");
+      status.append("\n Round " + (i + 1) + ": " + n.inner + " tips (previous rounds: " + total + " tips)");
       total += n.inner;
     }
     if (i != MAX_PASSES) {

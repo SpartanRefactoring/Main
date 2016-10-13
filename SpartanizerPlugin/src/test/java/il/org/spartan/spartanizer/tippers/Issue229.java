@@ -10,6 +10,6 @@ import org.junit.runners.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) public final class Issue229 {
   @Test public void vanilla() {
-    trimmingOf("final class X { @SafeVarargs public final void f(final int... ¢) {}}").stays();
+    trimmingOf("final class X { @SafeVarargs public final void f(final int... __) {}}").stays();
   }
 }

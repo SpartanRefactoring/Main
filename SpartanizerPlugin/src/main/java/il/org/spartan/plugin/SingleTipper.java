@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.plugin.revision.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -54,15 +55,13 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     }
 
     @Override public Selection getSelection(final IMarker ¢) {
-      return RefactorerUtil.selection.getCurrentCompilationUnit().setTextSelection(domain(¢));
+      return Selection.Util.getCurrentCompilationUnit().setTextSelection(domain(¢));
     }
 
     private static InDeclaration instance;
 
     public static InDeclaration instance() {
-      if (instance == null)
-        instance = new InDeclaration();
-      return instance;
+      return instance = instance != null ? instance : new InDeclaration();
     }
   }
 
@@ -79,15 +78,13 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     }
 
     @Override public Selection getSelection() {
-      return RefactorerUtil.selection.getCurrentCompilationUnit();
+      return Selection.Util.getCurrentCompilationUnit();
     }
 
     private static InFile instance;
 
     public static InFile instance() {
-      if (instance == null)
-        instance = new InFile();
-      return instance;
+      return instance = instance != null ? instance : new InFile();
     }
   }
 
@@ -104,7 +101,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     }
 
     @Override public Selection getSelection() {
-      return RefactorerUtil.selection.getAllCompilationUnits();
+      return Selection.Util.getAllCompilationUnits();
     }
 
     /** [[SuppressWarningsSpartan]] */
@@ -150,9 +147,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     private static InProject instance;
 
     public static InProject instance() {
-      if (instance == null)
-        instance = new InProject();
-      return instance;
+      return instance = instance != null ? instance : new InProject();
     }
   }
 

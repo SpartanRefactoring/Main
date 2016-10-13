@@ -37,6 +37,10 @@ public enum haz {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }
 
+  public static boolean dollar(final ASTNode ¢) {
+    return !Collect.usesOf("$").inside(¢).isEmpty();
+  }
+
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
@@ -191,9 +195,9 @@ public enum haz {
     n.accept(new ASTVisitor() {
       boolean continue¢(final List<VariableDeclarationFragment> fs) {
         for (final VariableDeclarationFragment ¢ : fs)
-          if (!continue¢(¢.getName()))
-            return false;
-        return true;
+          if (continue¢(¢.getName()))
+            return true;
+        return false;
       }
 
       boolean continue¢(final SimpleName ¢) {
