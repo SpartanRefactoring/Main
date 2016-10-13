@@ -12,10 +12,8 @@ import il.org.spartan.utils.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Matcher {
-  public static boolean matches(final ASTNode p, final ASTNode n) {
-    if (!iz.block(p))
-      return new Matcher().matchesAux(p, n);
-    if (!iz.block(n))
+  public static boolean blockMatches(final ASTNode p, final ASTNode n) {
+    if (!iz.block(n) || !iz.block(p))
       return false;
     @SuppressWarnings("unchecked") final List<Statement> sp = az.block(p).statements();
     @SuppressWarnings("unchecked") final List<Statement> sn = az.block(n).statements();
@@ -25,6 +23,10 @@ public class Matcher {
       if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
         return true;
     return false;
+  }
+
+  public static boolean matches(final ASTNode p, final ASTNode n) {
+    return new Matcher().matchesAux(p, n);
   }
 
   @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
@@ -184,8 +186,6 @@ public class Matcher {
         nChildren.addAll(az.methodInvocation(n).arguments());
         pChildren.addAll(az.methodInvocation(p).arguments());
       }
-      System.out.println(pChildren);
-      System.out.println(nChildren);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
