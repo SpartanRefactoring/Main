@@ -9,9 +9,11 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
-/** Evaluate the multiplication of numbers according to the following rules :
- * </br>
+/** Evaluate the multiplication of numbers according to the following rules
+ * : </br>
  * </br>
  * <code>
  * int * int --> int <br/>
@@ -26,11 +28,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 1;
-    try{
-    for (final Expression ¢ : xs)
-      $ *= az.throwing.double¢(¢);
-    }
-    catch(NumberFormatException e){
+    try {
+      for (final Expression ¢ : xs)
+        $ *= az.throwing.double¢(¢);
+    } catch (NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -38,23 +39,27 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
 
   @Override int evaluateInt(final List<Expression> xs) {
     int $ = 1;
-    try{
-    for (final Expression ¢ : xs)
-      $ *= az.throwing.int¢(¢);
-    }
-    catch(NumberFormatException e){
+    try {
+      for (final Expression ¢ : xs) {
+        if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
+          throw new NumberFormatException();
+        $ *= az.throwing.int¢(¢);
+      }
+    } catch (NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs){
+  @Override long evaluateLong(final List<Expression> xs) {
     long $ = 1;
-    try{
-    for (final Expression ¢ : xs)
-      $ *= az.throwing.long¢(¢);
-    }
-    catch(NumberFormatException e){
+    try {
+      for (final Expression ¢ : xs) {
+        if (type.of(¢) == Certain.DOUBLE)
+          throw new NumberFormatException();
+        $ *= az.throwing.long¢(¢);
+      }
+    } catch (NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
