@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
@@ -43,8 +45,12 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
     int $ = 0;
     try{
+      if(type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
+        throw new NumberFormatException();
     $ = az.throwing.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
+      if(type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
+        throw new NumberFormatException();
       if (az.throwing.int¢(¢) == 0)
         throw new Exception("Cannot evaluate division by zero");
       $ /= az.throwing.int¢(¢);
@@ -59,8 +65,12 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
     long $ = 0;
     try{
+    if(type.of(first(xs)) == Certain.DOUBLE )
+        throw new NumberFormatException();
     $ = az.throwing.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
+      if(type.of(¢) == Certain.DOUBLE)
+        throw new NumberFormatException();
       if (az.throwing.long¢(¢) == 0)
         throw new Exception("Cannot evaluate division by zero");
       $ /= az.throwing.long¢(¢);

@@ -11,6 +11,8 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
@@ -25,41 +27,44 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> xs){
+  @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
-    try{
-    $ = az.throwing.double¢(first(xs));
-    for (final Expression ¢ : rest(xs))
-      $ -= az.throwing.double¢(¢);
-    }
-    catch(NumberFormatException e){
-        monitor.logEvaluationError(this, e);
+    try {
+      $ = az.throwing.double¢(first(xs));
+      for (final Expression ¢ : rest(xs))
+        $ -= az.throwing.double¢(¢);
+    } catch (NumberFormatException e) {
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }
 
-  @Override int evaluateInt(final List<Expression> xs){
+  @Override int evaluateInt(final List<Expression> xs) {
     int $ = 0;
-    try{
-    $ = az.throwing.int¢(first(xs));
-    for (final Expression ¢ : rest(xs))
-      $ -= az.throwing.int¢(¢);
-    }
-    catch(NumberFormatException e){
-        monitor.logEvaluationError(this, e);
+    try {
+      $ = az.throwing.int¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
+          throw new NumberFormatException();
+        $ -= az.throwing.int¢(¢);
+      }
+    } catch (NumberFormatException e) {
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs){
+  @Override long evaluateLong(final List<Expression> xs) {
     long $ = 0;
-    try{
-    $ = az.throwing.long¢(first(xs));
-    for (final Expression ¢ : rest(xs))
-      $ -= az.throwing.long¢(¢);
-    }
-    catch(NumberFormatException e){
-        monitor.logEvaluationError(this, e);
+    try {
+      $ = az.throwing.long¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (type.of(¢) == Certain.DOUBLE)
+          throw new NumberFormatException();
+        $ -= az.throwing.long¢(¢);
+      }
+    } catch (NumberFormatException e) {
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }

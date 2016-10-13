@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import java.net.Proxy.Type;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,6 +10,8 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
 /** Evaluate the addition of numbers according to the following rules <br/>
  * <br/>
@@ -23,37 +26,40 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> xs){
+  @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
-    try{
-    for (final Expression ¢ : xs)
-      $ += az.throwing.double¢(¢);
-    }
-    catch(NumberFormatException e){
+    try {
+      for (final Expression ¢ : xs)
+        $ += az.throwing.double¢(¢);
+    } catch (NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
   }
 
-  @Override int evaluateInt(final List<Expression> xs){
+  @Override int evaluateInt(final List<Expression> xs) {
     int $ = 0;
-    try{
-    for (final Expression ¢ : xs)
-      $ += az.throwing.int¢(¢);
-    }
-    catch(NumberFormatException e){
+    try {
+      for (final Expression ¢ : xs) {
+        if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
+          throw new NumberFormatException();
+        $ += az.throwing.int¢(¢);
+      }
+    } catch (NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs){
+  @Override long evaluateLong(final List<Expression> xs) {
     long $ = 0;
-    try{
-    for (final Expression ¢ : xs)
-      $ += az.throwing.long¢(¢);
-    }
-    catch(NumberFormatException e){
+    try {
+      for (final Expression ¢ : xs) {
+        if (type.of(¢) == Certain.DOUBLE)
+          throw new NumberFormatException();
+        $ += az.throwing.long¢(¢);
+      }
+    } catch (NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
