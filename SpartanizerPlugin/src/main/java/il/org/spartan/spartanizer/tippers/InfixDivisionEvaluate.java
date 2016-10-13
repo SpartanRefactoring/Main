@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
@@ -24,31 +25,49 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) throws Exception {
-    double $ = az.throwing.double¢(first(xs));
+    double $ = 0;
+    try{
+    $ = az.throwing.double¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
       if (az.throwing.double¢(¢) == 0)
         throw new Exception("Cannot evaluate division by zero");
       $ /= az.throwing.double¢(¢);
     }
+    }
+    catch(NumberFormatException e){
+      monitor.logEvaluationError(this, e);
+    }
     return $;
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
-    int $ = az.throwing.int¢(first(xs));
+    int $ = 0;
+    try{
+    $ = az.throwing.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
       if (az.throwing.int¢(¢) == 0)
         throw new Exception("Cannot evaluate division by zero");
       $ /= az.throwing.int¢(¢);
     }
+    }
+    catch(NumberFormatException e){
+      monitor.logEvaluationError(this, e);
+    }
     return $;
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
-    long $ = az.throwing.long¢(first(xs));
+    long $ = 0;
+    try{
+    $ = az.throwing.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
       if (az.throwing.long¢(¢) == 0)
         throw new Exception("Cannot evaluate division by zero");
       $ /= az.throwing.long¢(¢);
+    }
+    }
+    catch(NumberFormatException e){
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }

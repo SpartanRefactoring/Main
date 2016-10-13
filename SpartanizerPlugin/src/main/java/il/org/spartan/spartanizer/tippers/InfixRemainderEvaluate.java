@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Evaluate the $ of numbers according to the following rules <br/>
@@ -26,22 +27,35 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
-    int $ = az.throwing.int¢(first(xs));
+    int $ = 0 ;
+    try{
+    $ = az.throwing.int¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
       final int int¢ = az.throwing.int¢(¢);
       if (int¢ == 0)
         throw new Exception("remainder in division by zero is undefined");
       $ %= int¢;
     }
+    }
+    catch(NumberFormatException e){
+      monitor.logEvaluationError(this, e);
+    }
     return $;
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
-    long $ = az.throwing.long¢(first(xs));
+    long $ = 0 ;
+    try{
+    $ = az.throwing.long¢(first(xs));
     for (final Expression ¢ : rest(xs)) {
-      if (az.throwing.long¢(¢) == 0)
+      final long long¢ = az.throwing.long¢(¢);
+      if (long¢ == 0)
         throw new Exception("remainder in division by zero is undefined");
-      $ %= az.throwing.long¢(¢);
+      $ %= long¢;
+    }
+    }
+    catch(NumberFormatException e){
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }
