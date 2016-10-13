@@ -1,6 +1,12 @@
 package il.org.spartan.spartanizer.leonidas;
 
-/** @author Ori Marcovitch
+/** Factory to create tippers out of user strings! Much easier to implement
+ * tippers with this. <br>
+ * $Xi for expression i.e. - foo(a,b,c)*d + 17 <br>
+ * $M for MethodInvocation i.e. - func() <br>
+ * $N for Name i.e. - func <br>
+ * $B for block or statement i.e. - if(x) return 17; <br>
+ * @author Ori Marcovitch
  * @since 2016 */
 import java.util.*;
 
@@ -28,7 +34,7 @@ public class TipperFactory {
         if (!iz.block(pattern) || !iz.block(n))
           return new Tip(description(n), n, this.getClass()) {
             @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-              final Map<String, ASTNode> enviroment = collectEnviroment(n);
+              final Map<String, String> enviroment = collectEnviroment(n);
               final Wrapper<String> $ = new Wrapper<>();
               $.set(replacement);
               for (final String ¢ : enviroment.keySet())
@@ -48,7 +54,7 @@ public class TipperFactory {
         @SuppressWarnings("boxing") final String matching = stringifySubBlock(n, idxs.first, idxs.second);
         return new Tip(description(n), n, this.getClass()) {
           @SuppressWarnings("boxing") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final Map<String, ASTNode> enviroment = collectEnviroment(wizard.ast(matching));
+            final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching));
             final Wrapper<String> $ = new Wrapper<>();
             $.set(replacement);
             for (final String ¢ : enviroment.keySet())
@@ -57,7 +63,7 @@ public class TipperFactory {
             wizard.ast(replacement).accept(new ASTVisitor() {
               @Override public boolean preVisit2(final ASTNode ¢) {
                 if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "") + ""));
+                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
                 return true;
               }
             });
@@ -82,28 +88,8 @@ public class TipperFactory {
         return Matcher.matches(pattern, ¢);
       }
 
-      Map<String, ASTNode> collectEnviroment(final ASTNode ¢) {
-        return collectEnviroment(pattern, ¢, new HashMap<>());
-      }
-
-      @SuppressWarnings("unchecked") Map<String, ASTNode> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, ASTNode> enviroment) {
-        if (iz.name(p)) {
-          final String id = az.name(p).getFullyQualifiedName();
-          if (id.startsWith("$X") || id.startsWith("$M"))
-            enviroment.put(id, n);
-        } else if (isBlockVariable(p))
-          enviroment.put(blockName(p) + "();", n);
-        else {
-          final List<? extends ASTNode> nChildren = Recurser.children(n);
-          final List<? extends ASTNode> pChildren = Recurser.children(p);
-          if (iz.methodInvocation(p)) {
-            nChildren.addAll(az.methodInvocation(n).arguments());
-            pChildren.addAll(az.methodInvocation(p).arguments());
-          }
-          for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-            collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
-        }
-        return enviroment;
+      Map<String, String> collectEnviroment(final ASTNode ¢) {
+        return Matcher.collectEnviroment(pattern, ¢, new HashMap<>());
       }
     };
   }
