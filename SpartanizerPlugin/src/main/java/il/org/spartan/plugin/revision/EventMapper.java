@@ -90,7 +90,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   /** Extendible functor used by the {@link EventMapper}. Works for specific
    * kind of {@link event}.
    * @author Ori Roth
-   * @since 2016 */
+   * @since 2.6 */
   public static class EventFunctor<E, P, O> {
     /** The event covered by this functor. */
     protected final E domain;
@@ -143,9 +143,12 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   }
 
   /** Updates the map of the {@link EventMapper} with each
-   * {@link EventFunctor#update}.
+   * {@link EventFunctor#update}. Suitable for listening to events or events and
+   * objects, using a {@link Function}, a {@link BiFunction}, a
+   * {@link Consumers} or a {@link BiConsumer}. A possible flaw of this class is
+   * the unclear override if the consumers/functions.
    * @author Ori Roth
-   * @since 2016 */
+   * @since 2.6 */
   public static class EventMapperFunctor<E, P, O> extends EventFunctor<E, P, O> {
     BiConsumer<P, O> biConsumer;
     Consumer<P> consumer;
@@ -160,6 +163,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       function = null;
     }
 
+    /** Determines initialization value for this functor. Conducts casting.
+     * @param ¢ JD
+     * @return this functor. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWith(final X ¢) {
       final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
@@ -167,6 +173,10 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       return $;
     }
 
+    /** Determines initialization value for this functor using a supplier.
+     * Conducts casting.
+     * @param ¢ JD
+     * @return this functor. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWithSupplyOf(final Supplier<X> ¢) {
       final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
@@ -174,11 +184,18 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       return $;
     }
 
+    /** Setting biconsumer for this functor. May join with existing biconsumer.
+     * @param ¢ JD
+     * @return this functor. */
     public EventMapperFunctor<E, P, O> does(final BiConsumer<P, O> ¢) {
       biConsumer = biConsumer == null ? ¢ : biConsumer.andThen(¢);
       return this;
     }
 
+    /** Setting consumer for this functor. May join with existing
+     * consumer/biconsumer.
+     * @param ¢ JD
+     * @return this functor. */
     public EventMapperFunctor<E, P, O> does(final Consumer<P> ¢) {
       consumer = consumer == null ? ¢ : consumer.andThen(¢);
       biConsumer = biConsumer == null ? null : biConsumer.andThen(new BiConsumer<P, O>() {
@@ -189,16 +206,25 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       return this;
     }
 
+    /** Setting bifunction for this functor.
+     * @param ¢ JD
+     * @return this functor. */
     public EventMapperFunctor<E, P, O> does(final BiFunction<P, O, P> ¢) {
       biFunction = ¢;
       return this;
     }
 
+    /** Setting function for this functor.
+     * @param ¢ JD
+     * @return this functor. */
     public EventMapperFunctor<E, P, O> does(final Function<P, O> ¢) {
       function = ¢;
       return this;
     }
 
+    /** Updates the map with the object using
+     * {@link EventMapperFunctor#biConsumer} or
+     * {@link EventMapperFunctor#biFunction} */
     @Override @SuppressWarnings("unchecked") public void update(final Map<E, Object> e, final O o) {
       assert biConsumer == null || biFunction == null;
       if (biConsumer != null)
@@ -207,6 +233,8 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
         e.put(domain, biFunction.apply((P) e.get(domain), o));
     }
 
+    /** Updates the map using {@link EventMapperFunctor#consumer} or
+     * {@link EventMapperFunctor#function} */
     @Override @SuppressWarnings("unchecked") public void update(final Map<E, Object> ¢) {
       assert consumer == null || function == null;
       if (consumer != null)
@@ -220,12 +248,14 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       return (EventMapperFunctor<E, X, Y>) this;
     }
 
-    /** Used for casting TODO Roth: make it clear the casting is for O */
+    // TODO Roth: make it clear the casting is for O
+    /** Used for casting. */
     @SuppressWarnings({ "unchecked", "unused" }) public <Y> EventMapperFunctor<E, P, Y> gets(final Class<Y> co) {
       return (EventMapperFunctor<E, P, Y>) this;
     }
 
-    /** Remembers objects of specific type */
+    /** Remembers objects of specific type in a {@link HashSet}. Conducts
+     * casting. */
     @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, HashSet<Y>, Y> rememberBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<E, HashSet<Y>, Y>) this) //
           .startWith(new HashSet<Y>()) //
@@ -234,7 +264,8 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           });
     }
 
-    /** Collects objects of specific type */
+    /** Collects objects of specific type in a {@link List}. Conducts
+     * casting. */
     @SuppressWarnings("unchecked") public <Y> EventMapperFunctor<E, LinkedList<Y>, Y> collectBy(@SuppressWarnings("unused") final Class<Y> __) {
       return ((EventMapperFunctor<E, LinkedList<Y>, Y>) this) //
           .startWith(new LinkedList<Y>()) //
@@ -243,7 +274,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           });
     }
 
-    /** Remember an object of specific type */
+    /** Remember the last object received of specific type. Conducts casting. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, X> rememberLast(@SuppressWarnings("unused") final Class<X> __) {
       return ((EventMapperFunctor<E, X, X>) this) //
           .does((x, u) -> {
@@ -251,7 +282,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
           });
     }
 
-    /** Counts calls */
+    /** Counts calls of this event. Conducts casting. */
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, AtomicInteger, AtomicInteger> counter() {
       return ((EventMapperFunctor<E, AtomicInteger, AtomicInteger>) this) //
           .startWith(new AtomicInteger(0)) //
@@ -261,16 +292,21 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     }
   }
 
+  /** Empty enum used by {@link EventMapper#simpleMapper()} */
   private enum none {
     X
   }
 
+  /** An event mapper for anonymous, single value enum.
+   * @author Ori Roth
+   * @since 2.6 */
   static class SimpleMapper extends EventMapper<none> {
-    /** Empty enum used by {@link EventMapper#simpleMapper()} */
     public SimpleMapper(final Class<none> enumClass) {
       super(enumClass);
     }
 
+    /** Factory method.
+     * @return empty simple mapper */
     public static SimpleMapper get() {
       return new SimpleMapper(none.class) {
         @Override public void tick(final Object... ¢) {
@@ -283,6 +319,8 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       };
     }
 
+    /** @return a functor ready to extend the {@link SimpleMapper} and to be
+     *         configured */
     public static <P, O> EventMapperFunctor<none, P, O> recorder() {
       return new EventMapperFunctor<>(none.X);
     }
