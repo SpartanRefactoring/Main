@@ -7,6 +7,14 @@ import java.util.function.*;
 public class Linguistic {
   public static final String NAN = "???";
 
+  /** Cut string's suffix.
+   * @param s JD
+   * @param l JD
+   * @return cut string */
+  public static String trim(final String s, final int l) {
+    return s == null || s.length() < l ? s : s.substring(0, l);
+  }
+
   public static String plurals(final String s, final Integer i) {
     return i == null ? NAN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
