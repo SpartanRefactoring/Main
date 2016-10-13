@@ -2,13 +2,22 @@ package il.org.spartan.plugin.revision;
 
 import java.util.function.*;
 
-/** @author Ori Roth
- * @since 2016 */
+/** Configurable applicator.
+ * @author Ori Roth
+ * @since 2.6 */
 public abstract class Applicator<L extends Listener> {
+  /** Generic listener. */
   private L listener;
+  /** The selection covered by this applicator. */
   private Selection selection;
+  /** The context in which the application runs. The bulk of the application
+   * will run in this context, thus allow tracking and monitoring. */
   private Consumer<Runnable> runContext;
+  /** How many passes this applicator conducts. May vary according to
+   * {@link Applicator#selection}. */
   private int passes;
+  /** Whether or not the applicator should run. May be checked/change multiple
+   * times during main application run. */
   private boolean shouldRun = true;
 
   /** Tell this applicator it should not run. */

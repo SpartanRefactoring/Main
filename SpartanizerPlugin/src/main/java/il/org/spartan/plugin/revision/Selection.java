@@ -15,7 +15,7 @@ import il.org.spartan.plugin.*;
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection
  * @author Ori Roth
- * @since 2016 */
+ * @since 2.6 */
 public class Selection {
   public List<ICompilationUnit> compilationUnits;
   public ITextSelection textSelection;

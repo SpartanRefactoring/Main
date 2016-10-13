@@ -18,7 +18,7 @@ import il.org.spartan.plugin.*;
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link EventApplicator} as its applicator.
  * @author Ori Roth
- * @since 2016 */
+ * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
   private static final String NAME = "Laconic";
   private static final int PASSES = 20;
