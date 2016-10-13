@@ -24,12 +24,12 @@ import il.org.spartan.utils.*;
  * classes, methods, etc.
  * @author Yossi Gil
  * @year 2015 */
-public final class spartanizer {
+public final class Spartanizer {
   private static final String folder = "/tmp/";
 
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new spartanizer(¢).fire();
+      new Spartanizer(¢).fire();
   }
 
   static double d(final double n1, final double n2) {
@@ -55,11 +55,11 @@ public final class spartanizer {
   private final String reportFileName;
   private final Toolbox toolbox = new Toolbox();
 
-  private spartanizer(final String path) {
+  private Spartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  private spartanizer(final String inputPath, final String name) {
+  private Spartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
