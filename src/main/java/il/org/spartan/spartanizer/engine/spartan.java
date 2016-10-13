@@ -59,6 +59,7 @@ public interface spartan {
       case "ArrayList":
       case "TreeSet":
       case "Vector":
+      case "Sequence":
         return $ + "s";
       default:
         return $;

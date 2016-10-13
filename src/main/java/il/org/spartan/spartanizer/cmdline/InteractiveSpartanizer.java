@@ -8,29 +8,28 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author ?
+/** @author Yossi Gil
  * @since 2016 */
 public final class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
-  public static void main(final String[] args) {
-    if (args.length != 0)
-      BatchSpartanizer.main(args);
+  public static void main(final String[] fileNames) {
+    if (fileNames.length != 0)
+      BatchSpartanizer.main(fileNames);
     else
       System.out.println(new InteractiveSpartanizer().fixedPoint(read()));
   }
 
   static String read() {
     String $ = "";
-    try (final Scanner s = new Scanner(System.in).useDelimiter("\n")) {
-      for (; s.hasNext(); $ += s.next() + "\n")
+    try (final Scanner s = new Scanner(System.in)) {
+      for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;
-      s.close();
     }
     return $;
   }
 
-  public final Toolbox toolbox = new Toolbox();
+  public final Toolbox toolbox = Toolbox.defaultInstance();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);

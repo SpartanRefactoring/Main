@@ -200,14 +200,14 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod() {
-    trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int number, final int ofTotal) {\n"
+    trimmingOf("        @Override public void messageFinished(final LocalMessage myMessage, final int __, final int ofTotal) {\n"
         + "          if (!isMessageSuppressed(myMessage)) {\n" + //
         "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(myMessage);\n"
         + "            stats.unreadMessageCount += myMessage.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += myMessage.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
         + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
             .gives(
-                "@Override public void messageFinished(final LocalMessage myMessage,final int number,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+                "@Override public void messageFinished(final LocalMessage myMessage,final int __,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod2() {
@@ -1227,7 +1227,7 @@ public final class Version230 {
 
   @Test public void infiniteLoopBug1() {
     trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet) {\n"
-        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n" + "    }").stays();
+        + "      return hasAnnotation((VariableDeclarationStatement) f.getParent());\n}").stays();
   }
 
   @Test public void infiniteLoopBug2() {
@@ -1351,6 +1351,7 @@ public final class Version230 {
   @Test public void inlineSingleUseWithAssignment() {
     trimmingOf("int a = 2; while (true) if (f()) f(a); else a = 2;")//
         .gives("for (int a = 2;true;) if (f()) f(a); else a = 2;")//
+        .gives("for (int a = 2;;) if (f()) f(a); else a = 2;")//
         .stays();
   }
 
@@ -1646,13 +1647,14 @@ public final class Version230 {
   }
 
   @Test public void issue49() {
-    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}")//
-        .gives("int f(){int $=0;for(int i:X)$+=f(i);return $;}");
+    trimmingOf("int f() { int f = 0; for (int i: X) $ += f(i); return f;}").gives("int f() { int f = 0; for (int ¢: X) $ += f(¢); return f;}")
+        .stays();
   }
 
   @Test public void issue51() {
     trimmingOf("int f() { int x = 0; for (int i = 0; i < 10; ++i) x += i; return x;}")
-        .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}");
+        .gives("int f() { int $ = 0; for (int i = 0; i < 10; ++i) $ += i; return $;}")
+        .gives("int f() { int $ = 0; for (int ¢ = 0; ¢ < 10; ++¢) $ += ¢; return $;}").stays();
   }
 
   @Test public void issue51g() {
@@ -2239,7 +2241,7 @@ public final class Version230 {
   }
 
   @Test public void paramAbbreviateConflictingWithMethodName() {
-    trimmingOf("void m(BitmapManipulator bitmapManipulator, int abcd) {" + "bitmapManipulator.x().y();").stays();
+    trimmingOf("void m(BitmapManipulator bitmapManipulator, int __) {" + "bitmapManipulator.x().y();").stays();
   }
 
   @Test public void paramAbbreviateMultiple() {
@@ -2777,22 +2779,27 @@ public final class Version230 {
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore2() {
-    trimmingOf("void f(int x) {}").stays();
+    trimmingOf("void f(int i) {}").gives("void f(int __) {}").stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
-    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int i) {}")//
         .gives("void f(@SuppressWarnings({\"unused\"}) int __){}");
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
-    trimmingOf("void f(int x, @SuppressWarnings(\"unused\") int y) {}")//
-        .gives("void f(int x, @SuppressWarnings(\"unused\") int __) {}");
+    trimmingOf("void f(@SuppressWarnings({\"unused\"}) int x) {}")//
+        .stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore5() {
-    trimmingOf("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
-        .gives("void f(int x, @SuppressWarnings @SuppressWarnings(\"unused\") int __) {}");
+    trimmingOf("void f(int i, @SuppressWarnings(\"unused\") int y) {}")//
+        .gives("void f(int __, @SuppressWarnings(\"unused\") int y) {}");
+  }
+
+  @Test public void renameUnusedVariableToDoubleUnderscore6() {
+    trimmingOf("void f(int i, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}")
+        .gives("void f(int __, @SuppressWarnings @SuppressWarnings(\"unused\") int y) {}");
   }
 
   @Test public void renameVariableUnderscore1() {

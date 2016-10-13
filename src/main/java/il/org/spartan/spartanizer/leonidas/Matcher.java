@@ -7,16 +7,47 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Matcher {
   public static boolean matches(final ASTNode p, final ASTNode n) {
-    return new Matcher().matchesAux(p, n);
+    if (!iz.block(p))
+      return new Matcher().matchesAux(p, n);
+    if (!iz.block(n))
+      return false;
+    @SuppressWarnings("unchecked") final List<Statement> sp = az.block(p).statements();
+    @SuppressWarnings("unchecked") final List<Statement> sn = az.block(n).statements();
+    if (sp == null || sn == null || sp.size() > sn.size())
+      return false;
+    for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
+      if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
+        return true;
+    return false;
+  }
+
+  @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
+    @SuppressWarnings("unchecked") final List<Statement> sp = p.statements();
+    @SuppressWarnings("unchecked") final List<Statement> sn = n.statements();
+    for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
+      if (new Matcher().statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
+        return new Pair<>(¢, ¢ + sp.size());
+    return null;
+  }
+
+  /** @param sp
+   * @param subList
+   * @return */
+  private boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
+    for (int ¢ = 0; ¢ < sp.size(); ++¢)
+      if (!matchesAux(sp.get(¢), subList.get(¢)))
+        return false;
+    return true;
   }
 
   private static boolean sameOperator(final ASTNode p, final ASTNode n) {
-    // I really hope these are the only options for operators
+    // I really hope these are the only options for operators (-Ori)
     switch (p.getNodeType()) {
       case ASTNode.PREFIX_EXPRESSION:
         if (!step.operator((PrefixExpression) p).equals(step.operator((PrefixExpression) n)))
@@ -40,28 +71,29 @@ public class Matcher {
     return true;
   }
 
-  Map<String, ArrayList<ASTNode>> ids = new HashMap<>();
+  Map<String, String> ids = new HashMap<>();
 
   private Matcher() {
   }
 
-  private boolean consistent(final ASTNode n, final String id) {
+  /** Validates that matched variables are the same in all matching places. */
+  private boolean consistent(final String id, final String s) {
     if (!ids.containsKey(id))
-      ids.put(id, new ArrayList<>());
-    ids.get(id).add(n);
-    for (final ASTNode other : ids.get(id))
-      if (!(n + "").equals(other + ""))
-        return false;
-    return true;
+      ids.put(id, s);
+    return ids.get(id).equals(s);
   }
 
-  private boolean matchesAux(final ASTNode p, final ASTNode n) {
+  @SuppressWarnings("unchecked") private boolean matchesAux(final ASTNode p, final ASTNode n) {
     if (p == null || n == null)
       return false;
     if (iz.name(p))
       return sameName(p, n);
+    if (iz.literal(p))
+      return sameLiteral(p, n);
     if (isBlockVariable(p))
-      return matchesBlock(n) && consistent(n, blockName(p));
+      return matchesBlock(n) && consistent(blockName(p), n + "");
+    if (isMethodInvocationAndHas$AArgument(p))
+      return isMethodInvocationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
     if (differentTypes(p, n))
       return false;
     if (iz.literal(p))
@@ -70,12 +102,37 @@ public class Matcher {
       return false;
     final List<? extends ASTNode> nChildren = Recurser.children(n);
     final List<? extends ASTNode> pChildren = Recurser.children(p);
+    if (iz.methodInvocation(p)) {
+      pChildren.addAll(az.methodInvocation(p).arguments());
+      nChildren.addAll(az.methodInvocation(n).arguments());
+    }
     if (nChildren.size() != pChildren.size())
       return false;
     for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
       if (!matchesAux(pChildren.get(¢), nChildren.get(¢)))
         return false;
     return true;
+  }
+
+  /** @param n
+   * @return */
+  private boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
+    return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName())
+        && consistent(az.methodInvocation(p).arguments().get(0) + "", az.methodInvocation(n).arguments() + "");
+  }
+
+  /** @param p
+   * @return */
+  private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
+    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
+        && (az.methodInvocation(p).arguments().get(0) + "").startsWith("$A");
+  }
+
+  /** @param p
+   * @param n
+   * @return */
+  private static boolean sameLiteral(final ASTNode p, final ASTNode n) {
+    return iz.literal(n) && (p + "").equals(n + "");
   }
 
   private static boolean differentTypes(final ASTNode p, final ASTNode n) {
@@ -101,10 +158,50 @@ public class Matcher {
     final String id = ((Name) p).getFullyQualifiedName();
     if (id.startsWith("$")) {
       if (id.startsWith("$X"))
-        return n instanceof Expression && consistent(n, id);
+        return n instanceof Expression && consistent(id, n + "");
       if (id.startsWith("$M"))
-        return n instanceof MethodInvocation && consistent(n, id);
+        return n instanceof MethodInvocation && consistent(id, n + "");
+      if (id.startsWith("$N"))
+        return iz.name(n) && consistent(id, n + "");
     }
-    return n instanceof Name && id.equals(((Name) p).getFullyQualifiedName());
+    return n instanceof Name && id.equals(((Name) n).getFullyQualifiedName());
+  }
+
+  @SuppressWarnings("unchecked") public static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n,
+      final Map<String, String> enviroment) {
+    if (iz.name(p)) {
+      final String id = az.name(p).getFullyQualifiedName();
+      if (id.startsWith("$X") || id.startsWith("$M") || id.startsWith("$N"))
+        enviroment.put(id, n + "");
+    } else if (isBlockVariable(p))
+      enviroment.put(blockName(p) + "();", n + "");
+    else {
+      final List<? extends ASTNode> nChildren = Recurser.children(n);
+      final List<? extends ASTNode> pChildren = Recurser.children(p);
+      if (isMethodInvocationAndHas$AArgument(p))
+        enviroment.put(argumentsId(p), arguments(n) + "");
+      else if (iz.methodInvocation(p)) {
+        nChildren.addAll(az.methodInvocation(n).arguments());
+        pChildren.addAll(az.methodInvocation(p).arguments());
+      }
+      System.out.println(pChildren);
+      System.out.println(nChildren);
+      for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
+        collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
+    }
+    return enviroment;
+  }
+
+  /** @param p
+   * @return */
+  private static String argumentsId(final ASTNode p) {
+    return az.methodInvocation(p).arguments().get(0) + "";
+  }
+
+  /** @param ¢
+   * @return */
+  private static String arguments(final ASTNode ¢) {
+    final String str = az.methodInvocation(¢).arguments() + "";
+    return str.substring(1, str.length() - 1);
   }
 }

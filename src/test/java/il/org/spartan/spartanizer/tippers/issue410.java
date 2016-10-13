@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 
 /** Test class for {@link GuessedContext}.
  * @since 2016 */
-@SuppressWarnings("static-method") public class issue410 {
-  @Ignore @Test public void dealWithBothKindsOfComment() {
+@SuppressWarnings("static-method") @Ignore public class issue410 {
+  @Test public void dealWithBothKindsOfComment() {
     similar("if (b) {\n", "if (b) {;} { throw new Exception(); }");
   }
 
@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.cmdline.*;
     azzert.that(find("i"), is(EXPRESSION_LOOK_ALIKE));
   }
 
-  @Ignore @Test public void removeCommentsTest() {
+  @Test public void removeCommentsTest() {
     similar(wizard.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 

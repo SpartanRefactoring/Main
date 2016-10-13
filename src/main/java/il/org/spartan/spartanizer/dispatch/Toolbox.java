@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -115,6 +116,7 @@ public class Toolbox {
             new ReturnToBreakFiniteFor(), //
             new RemoveRedundentFor(), //
             new ForToForUpdaters(), //
+            new ForTrueConditionRemove(), //
             null)//
         .add(WhileStatement.class, //
             new BlockBreakToReturnInfiniteWhile(), //
@@ -131,6 +133,8 @@ public class Toolbox {
         .add(Block.class, //
             new BlockSimplify(), //
             new BlockSingleton(), //
+            new CachingPattern(), //
+            new BlockInlineStatementIntoNext(), //
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
@@ -334,9 +338,7 @@ public class Toolbox {
   }
 
   public List<Tipper<? extends ASTNode>> get(final int ¢) {
-    if (implementation[¢] == null)
-      implementation[¢] = new ArrayList<>();
-    return implementation[¢];
+    return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
   public int hooksCount() {

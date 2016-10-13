@@ -15,8 +15,4 @@ public class TestFactoryTest {
   @Test public void testRenamingWithCapital() {
     assertEquals("if(a == A) return b(a, B());", TestFactory.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"));
   }
-
-  @Ignore @Test public void testRenamingWithQualified() {
-    assertEquals("if(a == A) return b(a, B());", TestFactory.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear.foo());"));
-  }
 }

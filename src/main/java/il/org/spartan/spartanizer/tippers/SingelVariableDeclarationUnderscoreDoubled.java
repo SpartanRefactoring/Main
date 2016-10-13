@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.engine.JavaTypeNameParser.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -10,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Rename unused variable to double underscore "__" VariableChangeName instead
@@ -18,12 +21,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-05-08 */
 public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
     implements TipperCategory.Annonimization {
-  static final boolean BY_ANNOTATION = true;
+  static final boolean BY_ANNOTATION = false;
 
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
-    final IsUsed u = new IsUsed(n);
-    d.getBody().accept(u);
-    return u.conclusion();
+    return !Collect.usesOf(n).in(d.getBody()).isEmpty();
   }
 
   public static boolean suppressing(final SingleVariableDeclaration d) {
@@ -53,6 +54,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(duplicate.of(¢.getType()));
+    $.setVarargs(¢.isVarargs());
     duplicate.modifiers(step.extendedModifiers(¢), extendedModifiers($));
     return $;
   }
@@ -96,62 +98,19 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return replacement(¢, null);
   }
 
-  @Override public ASTNode replacement(final SingleVariableDeclaration n, final ExclusionManager m) {
-    final MethodDeclaration d = getMethod(n);
-    if (d == null)
+  @SuppressWarnings("unused") @Override public ASTNode replacement(final SingleVariableDeclaration d, final ExclusionManager m) {
+    final MethodDeclaration method = getMethod(d);
+    if (method == null || method.getBody() == null)
       return null;
-    for (final SingleVariableDeclaration ¢ : parameters(d))
+    for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressing(n) || isUsed(d, n.getName()))
+    if (BY_ANNOTATION && !suppressing(d) || isUsed(method, d.getName()) || !isJohnDoe(d.getType(), d.getName()))
       return null;
     if (m != null)
-      for (final SingleVariableDeclaration ¢ : parameters(d))
-        if (!n.equals(¢))
+      for (final SingleVariableDeclaration ¢ : parameters(method))
+        if (!d.equals(¢))
           m.exclude(¢);
-    return replace(n);
-  }
-
-  public static class IsUsed extends ASTVisitor {
-    boolean c = true;
-    String n;
-
-    public IsUsed(final SimpleName sn) {
-      n = sn.getIdentifier();
-    }
-
-    public IsUsed(final String sn) {
-      n = sn;
-    }
-
-    public boolean conclusion() {
-      return !c;
-    }
-
-    @Override public boolean preVisit2(@SuppressWarnings("unused") final ASTNode __) {
-      return c;
-    }
-
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnnotationTypeDeclaration __) {
-      return false;
-    }
-
-    @Override public final boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration __) {
-      return false;
-    }
-
-    @Override public final boolean visit(@SuppressWarnings("unused") final EnumDeclaration __) {
-      return false;
-    }
-
-    @Override public boolean visit(final SimpleName ¢) {
-      if (¢.equals(¢.getIdentifier()))
-        c = false;
-      return c;
-    }
-
-    @Override public final boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
-      return false;
-    }
+    return replace(d);
   }
 }

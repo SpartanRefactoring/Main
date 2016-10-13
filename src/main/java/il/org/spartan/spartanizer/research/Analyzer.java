@@ -2,39 +2,42 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Analyzer {
   public static void main(final String args[]) {
-    final String folderName = args[1];
+    if (args.length != 3)
+      System.out.println("Usage: Analyzer <operation> <inputFolder> <outputFolder>");
+    final String inputFolder = args[1];
     switch (args[0]) {
       case "-clean":
-        clean(folderName);
+        clean(inputFolder, args[2]);
         break;
       case "-analyze":
-        analyze(folderName);
+        analyze(inputFolder);
         break;
       case "-spartanize":
-        spartanize(folderName);
+        spartanize(inputFolder, args[2]);
         break;
       case "-full":
       default:
-        spartanize(folderName);
-        clean(folderName);
-        analyze(folderName);
+        spartanize(inputFolder, args[2]);
+        clean(inputFolder, args[2]);
+        analyze(inputFolder);
     }
   }
 
-  private static void clean(final String folderName) {
-    for (final File f : getJavaFiles(folderName)) {
+  /** Remove all comments from all files in directory @param outputFolder */
+  private static void clean(final String inputFolder, final String outputFolder) {
+    for (final File f : getJavaFiles(inputFolder)) {
       final ASTNode cu = getCompilationUnit(f);
       clean(cu);
       updateFile(f, cu);
@@ -42,29 +45,33 @@ public class Analyzer {
   }
 
   private static void updateFile(final File f, final ASTNode cu) {
+    updateFile(f, cu + "");
+  }
+
+  private static void updateFile(final File f, final String s) {
     try (final PrintWriter writer = new PrintWriter(f.getAbsolutePath())) {
-      writer.print(cu);
+      writer.print(s);
       writer.close();
     } catch (final FileNotFoundException e) {
       e.printStackTrace();
     }
   }
 
-  private static void clean(final ASTNode cu) {
-    cu.accept(new CommentsCleanerVisitor());
+  private static void appendFile(final File f, final String s) {
+    try (FileWriter fw = new FileWriter(f, true)) {
+      fw.write(s);
+    } catch (final IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static ASTNode clean(final ASTNode cu) {
+    cu.accept(new CleanerVisitor());
+    return cu;
   }
 
   private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
-  }
-
-  static String readFile(final String fileName) {
-    try {
-      return FileUtils.read(new File(fileName));
-    } catch (final IOException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   public static void analyze(final String folderName) {
@@ -86,7 +93,7 @@ public class Analyzer {
     if (dir == null || dir.listFiles() == null)
       return $;
     for (final File entry : dir.listFiles())
-      if (entry.isFile() && entry.getName().endsWith(".java"))
+      if (entry.isFile() && entry.getName().endsWith(".java") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test"))
         $.add(entry);
       else
         $.addAll(getJavaFiles(entry));
@@ -98,33 +105,30 @@ public class Analyzer {
     report(¢);
   }
 
-  /**
-   *
-   */
   private static void report(final ASTNode root) {
     System.out.println("[" + markedNodes(root) + "/" + nodes(root) + "]");
-    // TODO: much more then that..
+    // TODO Marco: much more than that..
   }
 
-  static int nodes(final ASTNode root) {
-    final Int $ = new Int();
+  private static int nodes(final ASTNode root) {
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") ASTNode __) {
-        $.inner += 1;
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+        $.incrementAndGet();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
-  static int markedNodes(final ASTNode root) {
-    final Int $ = new Int();
+  private static int markedNodes(final ASTNode root) {
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
-          $.inner += 1;
+          $.incrementAndGet();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   /**
@@ -134,9 +138,33 @@ public class Analyzer {
     ¢.accept(new NPMarkerVisitor());
   }
 
-  /** @param folderName */
-  private static ASTNode spartanize(final String folderName) {
-    return null;
-    // TODO call some spartanizer
+  /** @param inputFolder
+   * @param outputFolder */
+  private static void spartanize(final String inputFolder, final String outputFolder) {
+    final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+    addNanoPatterns(spartanizer);
+    String spartanizedCode = "";
+    for (final File ¢ : getJavaFiles(inputFolder)) {
+      System.out.println("Now: " + ¢.getName());
+      spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
+      appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
+    }
+  }
+
+  private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
+    ¢.toolbox
+        .add(ConditionalExpression.class, //
+            new TernaryNullCoallescing(), //
+            new TernaryNullConditional(), //
+            null) //
+        .add(Assignment.class, new AssignmentLazyEvaluation(), //
+            null) //
+        .add(Block.class, new CachingPattern(), //
+            null) //
+        .add(MethodDeclaration.class, //
+            new MethodEmpty(), //
+            new Getter(), //
+            new Setter(), //
+            null);
   }
 }
