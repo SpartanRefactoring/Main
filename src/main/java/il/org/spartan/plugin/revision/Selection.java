@@ -19,10 +19,12 @@ import il.org.spartan.plugin.*;
 public class Selection {
   public List<ICompilationUnit> compilationUnits;
   public ITextSelection textSelection;
+  public String name;
 
-  public Selection(final List<ICompilationUnit> compilationUnits, final ITextSelection textSelection) {
+  public Selection(final List<ICompilationUnit> compilationUnits, final ITextSelection textSelection, final String name) {
     this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.textSelection = textSelection;
+    this.name = name;
   }
 
   public Selection setCompilationUnits(final List<ICompilationUnit> ¢) {
@@ -32,6 +34,11 @@ public class Selection {
 
   public Selection setTextSelection(final ITextSelection ¢) {
     textSelection = ¢;
+    return this;
+  }
+
+  public Selection setName(final String ¢) {
+    name = ¢;
     return this;
   }
 
@@ -60,23 +67,32 @@ public class Selection {
   }
 
   public static Selection empty() {
-    return new Selection(null, null);
+    return new Selection(null, null, null);
   }
 
   public static Selection of(final List<ICompilationUnit> ¢) {
-    return new Selection(¢, null);
+    return new Selection(¢, null, getName(¢));
   }
 
   public static Selection of(final ICompilationUnit ¢) {
-    return new Selection(¢ == null ? null : Collections.singletonList(¢), null);
+    return new Selection(¢ == null ? null : Collections.singletonList(¢), null, getName(¢));
   }
 
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
-    return new Selection(u == null ? null : Collections.singletonList(u), s);
+    return new Selection(u == null ? null : Collections.singletonList(u), s, getName(u));
   }
 
   public static Selection of(final ICompilationUnit[] ¢) {
-    return new Selection(Arrays.asList(¢), null);
+    List<ICompilationUnit> l = Arrays.asList(¢);
+    return new Selection(l, null, getName(l));
+  }
+
+  private static String getName(List<ICompilationUnit> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? ¢.get(0).getElementName() : ¢.get(0).getResource().getProject().getName();
+  }
+
+  private static String getName(ICompilationUnit ¢) {
+    return ¢ == null ? null : ¢.getElementName();
   }
 
   public Selection fixEmptyTextSelection() {
@@ -108,9 +124,13 @@ public class Selection {
     return "{" + (compilationUnits == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
   }
-  
+
+  public int size() {
+    return isEmpty() ? 0 : compilationUnits.size();
+  }
+
   public boolean isEmpty() {
-    return compilationUnits == null || compilationUnits.isEmpty();
+    return compilationUnits == null || compilationUnits.isEmpty() || (textSelection != null && textSelection.getLength() <= 0);
   }
 
   public static String printable(final ITextSelection ¢) {
@@ -120,6 +140,10 @@ public class Selection {
   /** TODO Roth: spartanize class TODO Roth: check for circles
    * [[SuppressWarningsSpartan]] */
   public static class Util {
+    private static final String MARKER_NAME = "marker";
+    private static final String SELECTION_NAME = "selection";
+    private static final String DEFAULT_PACKAGE_NAME = "(default package)";
+
     public static Selection getCurrentCompilationUnit() {
       final Selection $ = getCompilationUnit();
       return $ == null ? Selection.empty() : $;
@@ -130,8 +154,10 @@ public class Selection {
       final ISelection s = getSelection();
       if (s == null)
         return Selection.empty();
-      if (s instanceof ITextSelection)
-        return by(getJavaProject()).setTextSelection(null);
+      if (s instanceof ITextSelection) {
+        IJavaProject p = getJavaProject();
+        return by(p).setTextSelection(null).setName(p.getElementName());
+      }
       return Selection.empty();
     }
 
@@ -175,7 +201,7 @@ public class Selection {
       final ITextSelection s = getTextSelection(¢);
       if (s == null)
         return Selection.empty();
-      return by(¢.getResource()).setTextSelection(s);
+      return by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
     private static ISelection getSelection() {
@@ -216,7 +242,7 @@ public class Selection {
       final IProject p = getProject();
       return p == null ? null : JavaCore.create(p);
     }
-    
+
     /** Depends on local editor */
     private static Selection getCompilationUnit() {
       final IWorkbench wb = PlatformUI.getWorkbench();
@@ -237,19 +263,20 @@ public class Selection {
 
     private static Selection by(final ITextSelection s) {
       final Selection $ = getCompilationUnit();
-      return $ == null ? Selection.empty() : $.setTextSelection(s).fixEmptyTextSelection();
+      return $ == null ? Selection.empty() : $.setTextSelection(s).fixEmptyTextSelection().setName(SELECTION_NAME);
     }
 
+    // TODO Roth: does not look legit
     private static Selection by(final IResource ¢) {
       return ¢ == null || !(¢ instanceof IFile) || !((IFile) ¢).getName().endsWith(".java") ? Selection.empty() : by((IFile) ¢);
     }
 
     private static Selection by(final IFile ¢) {
-      return ¢ == null ? Selection.empty() : Selection.of(JavaCore.createCompilationUnitFrom(¢));
+      return ¢ == null ? Selection.empty() : Selection.of(JavaCore.createCompilationUnitFrom(¢)).setName(¢.getName());
     }
 
     private static Selection by(final MarkerItem ¢) {
-      return ¢ == null ? Selection.empty() : by(¢.getMarker());
+      return ¢ == null ? Selection.empty() : by(¢.getMarker()).setName(MARKER_NAME);
     }
 
     private static Selection by(final ITreeSelection s) {
@@ -282,7 +309,7 @@ public class Selection {
       }
       for (final IPackageFragmentRoot ¢ : rs)
         $.unify(by(¢));
-      return $;
+      return $.setName(p.getElementName());
     }
 
     private static Selection by(final IPackageFragmentRoot r) {
@@ -295,12 +322,13 @@ public class Selection {
         monitor.log(x);
         return Selection.empty();
       }
-      return $;
+      return $.setName(r.getElementName());
     }
 
     private static Selection by(final IPackageFragment f) {
       try {
-        return f == null ? Selection.empty() : Selection.of(f.getCompilationUnits());
+        return f == null ? Selection.empty()
+            : Selection.of(f.getCompilationUnits()).setName("".equals(f.getElementName()) ? DEFAULT_PACKAGE_NAME : f.getElementName());
       } catch (final JavaModelException x) {
         monitor.log(x);
         return Selection.empty();
@@ -317,7 +345,7 @@ public class Selection {
         monitor.log(x);
         return Selection.empty();
       }
-      return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength()));
+      return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength())).setName(m.getElementName());
     }
 
     private static ITextSelection getTextSelection(final IMarker ¢) {
