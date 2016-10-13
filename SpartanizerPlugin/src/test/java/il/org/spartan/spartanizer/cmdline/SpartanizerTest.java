@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016 */
 public class SpartanizerTest {
   private final String path = "/home/matteo/MUTATION_TESTING/test-spartanizer/projects/commons-bcel";
-  Spartanizer spartanizer = new Spartanizer(path);
   String method = "";
   private final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
@@ -280,7 +279,6 @@ public class SpartanizerTest {
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
     System.out.println(u.getClass());
     assert u != null;
-    assert spartanizer != null;
   }
 
   @Test public void testSpartanizerCheckMethod_02() {
@@ -321,7 +319,6 @@ public class SpartanizerTest {
 
   @Test public void testSpartanizerCheckMethod_03() {
     System.out.println(test4);
-    spartanizer.selectedNodes(TypeDeclaration.class);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;
     u.accept(new ASTVisitor() {

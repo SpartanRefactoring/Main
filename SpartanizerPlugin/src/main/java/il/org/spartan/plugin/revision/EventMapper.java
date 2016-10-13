@@ -1,6 +1,7 @@
 package il.org.spartan.plugin.revision;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 /** A {@link Listener} that listen to {@link event}s.
@@ -46,8 +47,12 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     return this;
   }
 
+  @SuppressWarnings("rawtypes") public EventFunctor recorder(E event) {
+    return recorders.get(event);
+  }
+
   /** @return an empty mapper, with no recorders. */
-  public static <E extends Enum<E>> EventMapper<E> empty(final Class<? extends E> enumClass) {
+  public static <E extends Enum<?>> EventMapper<E> empty(final Class<? extends E> enumClass) {
     return new EventMapper<>(enumClass);
   }
 
@@ -143,12 +148,17 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     }
 
     public EventMapperFunctor<E, P, O> does(final BiConsumer<P, O> ¢) {
-      biConsumer = ¢;
+      biConsumer = biConsumer == null ? ¢ : biConsumer.andThen(¢);
       return this;
     }
 
     public EventMapperFunctor<E, P, O> does(final Consumer<P> ¢) {
-      consumer = ¢;
+      consumer = consumer == null ? ¢ : consumer.andThen(¢);
+      biConsumer = biConsumer == null ? null : biConsumer.andThen(new BiConsumer<P, O>() {
+        @Override public void accept(P p, @SuppressWarnings("unused") O __) {
+          ¢.accept(p);
+        }
+      });
       return this;
     }
 
@@ -215,11 +225,11 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     }
 
     /** Counts calls */
-    @SuppressWarnings("unchecked") public EventMapperFunctor<E, Integer, Integer> counter() {
-      return ((EventMapperFunctor<E, Integer, Integer>) this) //
-          .startWith(Integer.valueOf(0)) //
+    @SuppressWarnings("unchecked") public EventMapperFunctor<E, AtomicInteger, AtomicInteger> counter() {
+      return ((EventMapperFunctor<E, AtomicInteger, AtomicInteger>) this) //
+          .startWith(new AtomicInteger(0)) //
           .does(c -> {
-            return Integer.valueOf(c.intValue() + 1);
+            c.incrementAndGet();
           });
     }
   }
