@@ -27,7 +27,6 @@ public class CleanerVisitor extends ASTVisitor {
   }
 
   @Override public boolean visit(final PackageDeclaration ¢) {
-    System.out.println(¢);
     ¢.delete();
     return true;
   }
