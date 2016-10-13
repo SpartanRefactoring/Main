@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
-  private String path = "/home/matteo/MUTATION_TESTING/test-spartanizer/projects/commons-bcel";
+  private final String path = "/home/matteo/MUTATION_TESTING/test-spartanizer/projects/commons-bcel";
   Spartanizer spartanizer = new Spartanizer(path);
   String method = "";
   private final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
@@ -23,9 +23,6 @@ public class SpartanizerTest {
       + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"
       + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void ASecondNotTestMethod(){\n "
       + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
-  private final String test3 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
-      + " public void method1(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + " public void method2(){\n " + "   int i = 1;\n"
-      + "   assertTrue(i>0);\n" + " }\n" + " public void method3(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
   private final String test4 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
       + " public void method1(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n" + "}";
 
@@ -36,7 +33,7 @@ public class SpartanizerTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
@@ -46,7 +43,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */
@@ -64,7 +61,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
@@ -74,7 +71,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * ImportDeclaration) */
@@ -84,7 +81,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * PackageDeclaration) */
@@ -94,7 +91,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodInvocation) */
@@ -104,7 +101,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * Assignment) */
@@ -114,7 +111,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * NormalAnnotation) */
@@ -124,7 +121,7 @@ public class SpartanizerTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MarkerAnnotation) */
@@ -280,7 +277,7 @@ public class SpartanizerTest {
 
   @Test public void testSpartanizerCheckMethod_01() {
     System.out.println(test1);
-    final ASTNode u = makeAST.COMPILATION_UNIT.from(this.test2);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
     System.out.println(u.getClass());
     assert u != null;
     assert spartanizer != null;
@@ -292,7 +289,7 @@ public class SpartanizerTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
@@ -332,7 +329,7 @@ public class SpartanizerTest {
         return storeMethodName(¢.getName());
       }
 
-      boolean storeMethodName(SimpleName ¢) {
+      boolean storeMethodName(final SimpleName ¢) {
         method = ¢ + "";
         return false;
       }
