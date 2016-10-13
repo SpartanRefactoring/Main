@@ -9,11 +9,9 @@ package il.org.spartan.spartanizer.leonidas;
  * @author Ori Marcovitch
  * @since 2016 */
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,39 +19,16 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 public class TipperFactory {
-  public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
+  public static <N extends ASTNode> UserDefinedTipper<N> subBlockTipper(final String _pattern, final String _replacement, final String description) {
     return new UserDefinedTipper<N>() {
       final ASTNode pattern = wizard.ast(reformat$Bs(_pattern));
       final String replacement = reformat$Bs(_replacement);
 
-      @Override public String description(@SuppressWarnings("unused") final N __) {
-        return description;
-      }
-
-      @Override public Tip tip(final N n) {
-        if (!iz.block(pattern) || !iz.block(n))
-          return new Tip(description(n), n, this.getClass()) {
-            @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-              final Map<String, String> enviroment = collectEnviroment(n);
-              final Wrapper<String> $ = new Wrapper<>();
-              $.set(replacement);
-              for (final String ¢ : enviroment.keySet())
-                if (¢.startsWith("$B"))
-                  $.set($.get().replace(¢, enviroment.get(¢) + ""));
-              wizard.ast(replacement).accept(new ASTVisitor() {
-                @Override public boolean preVisit2(final ASTNode ¢) {
-                  if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-                    $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "") + ""));
-                  return true;
-                }
-              });
-              r.replace(n, wizard.ast($.get()), g);
-            }
-          };
+      @Override @SuppressWarnings("boxing") public Tip tip(final N n) {
         final Pair<Integer, Integer> idxs = Matcher.getBlockMatching(az.block(pattern), az.block(n));
-        @SuppressWarnings("boxing") final String matching = stringifySubBlock(n, idxs.first, idxs.second);
-        return new Tip(description(n), n, this.getClass()) {
-          @SuppressWarnings("boxing") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final String matching = stringifySubBlock(n, idxs.first, idxs.second);
+        return new Tip(description(n), n, this.getClass(), getMatchedNodes(az.block(n), idxs)) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final Map<String, String> enviroment = collectEnviroment(wizard.ast(matching));
             final Wrapper<String> $ = new Wrapper<>();
             $.set(replacement);
@@ -72,16 +47,47 @@ public class TipperFactory {
         };
       }
 
-      String stringifySubBlock(final N n, final int start) {
-        final int end = az.block(n).statements().size();
-        return start >= end ? "" : stringifySubBlock(n, start, end);
+      @Override protected boolean prerequisite(N ¢) {
+        return Matcher.blockMatches(pattern, ¢);
       }
 
-      String stringifySubBlock(final N n, final int start, final int end) {
-        if (start >= end)
-          return "";
-        @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
-        return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
+      @Override public String description(@SuppressWarnings("unused") final N __) {
+        return description;
+      }
+
+      Map<String, String> collectEnviroment(final ASTNode ¢) {
+        return Matcher.collectEnviroment(pattern, ¢, new HashMap<>());
+      }
+    };
+  }
+
+  public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
+    final ASTNode pattern = wizard.ast(reformat$Bs(_pattern));
+    final String replacement = reformat$Bs(_replacement);
+    return new UserDefinedTipper<N>() {
+      @Override public String description(@SuppressWarnings("unused") final N __) {
+        return description;
+      }
+
+      @Override public Tip tip(final N n) {
+        return new Tip(description(n), n, this.getClass()) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            final Map<String, String> enviroment = collectEnviroment(n);
+            final Wrapper<String> $ = new Wrapper<>();
+            $.set(replacement);
+            for (final String ¢ : enviroment.keySet())
+              if (¢.startsWith("$B"))
+                $.set($.get().replace(¢, enviroment.get(¢) + ""));
+            wizard.ast(replacement).accept(new ASTVisitor() {
+              @Override public boolean preVisit2(final ASTNode ¢) {
+                if (iz.name(¢) && enviroment.containsKey(¢ + ""))
+                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "") + ""));
+                return true;
+              }
+            });
+            r.replace(n, wizard.ast($.get()), g);
+          }
+        };
       }
 
       @Override protected boolean prerequisite(final N ¢) {
@@ -92,6 +98,28 @@ public class TipperFactory {
         return Matcher.collectEnviroment(pattern, ¢, new HashMap<>());
       }
     };
+  }
+
+  public static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
+    final int end = az.block(n).statements().size();
+    return start >= end ? "" : stringifySubBlock(n, start, end);
+  }
+
+  public static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
+    if (start >= end)
+      return "";
+    @SuppressWarnings("unchecked") final List<Statement> ss = az.block(n).statements().subList(start, end);
+    return ss.stream().map(x -> x + "").reduce("", (x, y) -> x + y);
+  }
+
+  /** @param b
+   * @param idxs
+   * @return */
+  @SuppressWarnings("boxing") protected static ASTNode[] getMatchedNodes(Block b, Pair<Integer, Integer> idxs) {
+    ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
+    for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
+      $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
+    return $;
   }
 
   static boolean isBlockVariable(final ASTNode p) {

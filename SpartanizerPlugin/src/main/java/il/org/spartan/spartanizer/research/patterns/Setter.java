@@ -4,10 +4,13 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.leonidas.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
+  private static final UserDefinedTipper<Expression> tipper = TipperFactory.tipper("this.$N", "","");
+
   @Override protected boolean morePrerequisites(MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null)
       return false;
@@ -18,7 +21,7 @@ public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     if (!iz.assignment(e))
       return false;
     Assignment a = az.assignment(e);
-    return iz.name(a.getLeftHandSide()) && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
+    return (iz.name(a.getLeftHandSide()) || tipper.canTip(a.getLeftHandSide())) && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 
   @Override public String description(MethodDeclaration ¢) {

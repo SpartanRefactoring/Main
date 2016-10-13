@@ -38,7 +38,7 @@ public enum step {
     return ¢.getBody();
   }
 
-  public static Statement body(final MethodDeclaration ¢) {
+  public static Block body(final MethodDeclaration ¢) {
     return ¢.getBody();
   }
 

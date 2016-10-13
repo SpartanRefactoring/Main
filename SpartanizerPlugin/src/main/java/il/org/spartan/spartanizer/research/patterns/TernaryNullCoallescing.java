@@ -1,17 +1,13 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace X != null ? X : Y with X ?? Y <br>
  * replace X == null ? Y : X with X ?? Y <br>

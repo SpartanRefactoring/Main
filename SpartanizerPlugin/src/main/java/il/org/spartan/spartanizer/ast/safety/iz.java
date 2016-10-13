@@ -936,4 +936,10 @@ public interface iz {
       return false;
     }
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean fieldAccess(Expression ¢) {
+    return ¢ != null && ¢.getNodeType() == FIELD_ACCESS;
+  }
 }
