@@ -65,8 +65,9 @@ public class Analyzer {
     }
   }
 
-  private static void clean(final ASTNode cu) {
-    cu.accept(new CommentsCleanerVisitor());
+  private static ASTNode clean(final ASTNode cu) {
+    cu.accept(new CleanerVisitor());
+    return cu;
   }
 
   private static ASTNode getCompilationUnit(final File ¢) {
@@ -145,7 +146,7 @@ public class Analyzer {
     String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
       System.out.println("Now: " + ¢.getName());
-      spartanizedCode = spartanizer.fixedPoint(getCompilationUnit(¢) + "");
+      spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
       appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
     }
   }

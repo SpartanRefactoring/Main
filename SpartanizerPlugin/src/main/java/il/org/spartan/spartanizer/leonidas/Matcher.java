@@ -93,7 +93,7 @@ public class Matcher {
     if (isBlockVariable(p))
       return matchesBlock(n) && consistent(blockName(p), n + "");
     if (isMethodInvocationAndHas$AArgument(p))
-      return isMethodInvocationAndConsistentWith$AArgument(p, n);
+      return isMethodInvocationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
     if (differentTypes(p, n))
       return false;
     if (iz.literal(p))
@@ -184,6 +184,8 @@ public class Matcher {
         nChildren.addAll(az.methodInvocation(n).arguments());
         pChildren.addAll(az.methodInvocation(p).arguments());
       }
+      System.out.println(pChildren);
+      System.out.println(nChildren);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
     }
