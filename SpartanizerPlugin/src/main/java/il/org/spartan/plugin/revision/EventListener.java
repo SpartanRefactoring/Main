@@ -29,6 +29,19 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
   }
 
   /** [[SuppressWarningsSpartan]] */
+  public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c) {
+    return new EventListener<E>(enumClass) {
+      @Override public void tick(final E e) {
+        c.accept(e);
+      }
+
+      @Override public void tick(final E e, @SuppressWarnings("unused") final Object __) {
+        c.accept(e);
+      }
+    };
+  }
+
+  /** [[SuppressWarningsSpartan]] */
   public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c, final BiConsumer<E, Object> bc) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E e) {

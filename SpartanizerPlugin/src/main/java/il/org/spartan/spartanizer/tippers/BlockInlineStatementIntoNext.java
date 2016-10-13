@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch

@@ -102,11 +102,15 @@ public class Selection {
   }
 
   @Override public String toString() {
-    if (compilationUnits == null || compilationUnits.isEmpty())
+    if (isEmpty())
       return "{empty}";
     final int s = compilationUnits == null ? 0 : compilationUnits.size();
     return "{" + (compilationUnits == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
+  }
+  
+  public boolean isEmpty() {
+    return compilationUnits == null || compilationUnits.isEmpty();
   }
 
   public static String printable(final ITextSelection ¢) {
@@ -117,12 +121,8 @@ public class Selection {
    * [[SuppressWarningsSpartan]] */
   public static class Util {
     public static Selection getCurrentCompilationUnit() {
-      final ISelection s = getSelection();
-      if (s == null)
-        return Selection.empty();
-      if (s instanceof ITextSelection)
-        return by((ITextSelection) s).setTextSelection(null);
-      return Selection.empty();
+      final Selection $ = getCompilationUnit();
+      return $ == null ? Selection.empty() : $;
     }
 
     /** We may use {@link selection#getProject} instead. */
@@ -153,20 +153,20 @@ public class Selection {
       if (s instanceof ITreeSelection) {
         final Object o = ((ITreeSelection) s).getFirstElement();
         if (o == null)
-          return null;
+          return getProject();
         if (o instanceof MarkerItem) {
           final IMarker m = ((MarkerItem) o).getMarker();
           if (m == null)
             return null;
           final IResource r = m.getResource();
-          return r == null ? null : r.getProject();
+          return r == null ? getProject() : r.getProject();
         }
         if (o instanceof IJavaElement) {
           final IJavaProject p = ((IJavaElement) o).getJavaProject();
-          return p == null ? null : p.getProject();
+          return p == null ? getProject() : p.getProject();
         }
       }
-      return null;
+      return getProject();
     }
 
     public static Selection by(final IMarker ¢) {
@@ -216,9 +216,9 @@ public class Selection {
       final IProject p = getProject();
       return p == null ? null : JavaCore.create(p);
     }
-
+    
     /** Depends on local editor */
-    private static Selection by(final ITextSelection s) {
+    private static Selection getCompilationUnit() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
@@ -232,7 +232,12 @@ public class Selection {
       if (e == null)
         return null;
       final IEditorInput i = e.getEditorInput();
-      return i == null ? Selection.empty() : by(i.getAdapter(IResource.class)).setTextSelection(s).fixEmptyTextSelection();
+      return i == null ? null : by(i.getAdapter(IResource.class));
+    }
+
+    private static Selection by(final ITextSelection s) {
+      final Selection $ = getCompilationUnit();
+      return $ == null ? Selection.empty() : $.setTextSelection(s).fixEmptyTextSelection();
     }
 
     private static Selection by(final IResource ¢) {
