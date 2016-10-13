@@ -102,11 +102,15 @@ public class Selection {
   }
 
   @Override public String toString() {
-    if (compilationUnits == null || compilationUnits.isEmpty())
+    if (isEmpty())
       return "{empty}";
     final int s = compilationUnits == null ? 0 : compilationUnits.size();
     return "{" + (compilationUnits == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
+  }
+  
+  public boolean isEmpty() {
+    return compilationUnits == null || compilationUnits.isEmpty();
   }
 
   public static String printable(final ITextSelection ¢) {
