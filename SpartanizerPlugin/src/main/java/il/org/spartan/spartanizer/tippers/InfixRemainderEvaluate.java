@@ -8,7 +8,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
 /** Evaluate the $ of numbers according to the following rules <br/>
  * <br/>
@@ -26,22 +29,41 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
-    int $ = az.throwing.int¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
-      final int int¢ = az.throwing.int¢(¢);
-      if (int¢ == 0)
-        throw new Exception("remainder in division by zero is undefined");
-      $ %= int¢;
+    int $ = 0;
+    try {
+      if (type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
+        throw new NumberFormatException();
+      $ = az.throwing.int¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
+          throw new NumberFormatException();
+        final int int¢ = az.throwing.int¢(¢);
+        if (int¢ == 0)
+          throw new Exception("remainder in division by zero is undefined");
+        $ %= int¢;
+      }
+    } catch (NumberFormatException e) {
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
-    long $ = az.throwing.long¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
-      if (az.throwing.long¢(¢) == 0)
-        throw new Exception("remainder in division by zero is undefined");
-      $ %= az.throwing.long¢(¢);
+    long $ = 0;
+    try {
+      if (type.of(first(xs)) == Certain.DOUBLE)
+        throw new NumberFormatException();
+      $ = az.throwing.long¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (type.of(¢) == Certain.DOUBLE)
+          throw new NumberFormatException();
+        final long long¢ = az.throwing.long¢(¢);
+        if (long¢ == 0)
+          throw new Exception("remainder in division by zero is undefined");
+        $ %= long¢;
+      }
+    } catch (NumberFormatException e) {
+      monitor.logEvaluationError(this, e);
     }
     return $;
   }

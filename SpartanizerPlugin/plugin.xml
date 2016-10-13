@@ -213,7 +213,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+M"
 		commandId="il.org.spartan.SpartanMovie"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<key sequence="Ctrl+Alt+Enter"
+	<key sequence="Ctrl+Alt+/"
 		commandId="il.org.spartan.SpartanGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>

@@ -32,46 +32,34 @@ public enum az {
       return ¢.substring(0, ¢.length() - 1);
     }
 
-    static double double¢(final Expression ¢) throws Exception {
+    static double double¢(final Expression ¢) throws  NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
           : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
               : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
     }
 
-    static double double¢(final String token) throws Exception {
-      try {
+    static double double¢(final String token) throws NumberFormatException {
         return Double.parseDouble(token);
-      } catch (final NumberFormatException x) {
-        throw new Exception(token, x);
-      }
     }
 
-    static int int¢(final Expression ¢) throws Exception {
+    static int int¢(final Expression ¢) throws  NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
     }
 
-    static int int¢(final String token) throws Exception {
-      try {
+    static int int¢(final String token) throws  NumberFormatException {
         return Integer.parseInt(token);
-      } catch (final NumberFormatException x) {
-        throw new Exception(token, x);
-      }
     }
 
-    static long long¢(final Expression ¢) throws Exception {
+    static long long¢(final Expression ¢) throws  NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
           : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
     }
 
-    static long long¢(final String token) throws Exception {
-      try {
+    static long long¢(final String token) throws  NumberFormatException {
         return Long.parseLong(token);
-      } catch (final NumberFormatException x) {
-        throw new Exception(token, x);
-      }
     }
 
     static NumberLiteral negativeLiteral(final Expression ¢) {
