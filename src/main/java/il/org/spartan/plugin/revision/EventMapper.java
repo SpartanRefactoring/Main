@@ -4,13 +4,21 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
-/** A {@link Listener} that listen to {@link event}s.
+/** A {@link Listener} that listen to {@link event}s. Maps both the recorders
+ * and the results to the events. The recorders can be {@link Function}s,
+ * {@link BiFunction}s, {@link Consumers}s or {@link BiConsumer}s.
  * @author Ori Roth
- * @since 2016 */
+ * @since 2.6 */
 public class EventMapper<E extends Enum<?>> extends EventListener<E> {
+  /** Results mapping. */
   private final Map<E, Object> eventMap;
+  /** Recorders mapping. In the current implementation only one recorder is
+   * available for each event, though the functions/consumers can be merged
+   * together. */
   @SuppressWarnings("rawtypes") private final Map<E, EventFunctor> recorders;
 
+  /** Initialize mapping according to specific events defined in the enum.
+   * @param enumClass contains possible events for this listener */
   public EventMapper(final Class<? extends E> enumClass) {
     super(enumClass);
     eventMap = new HashMap<>();
@@ -47,11 +55,14 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     return this;
   }
 
+  /** @param event JD
+   * @return the recorder mapped to this event */
   @SuppressWarnings("rawtypes") public EventFunctor recorder(E event) {
     return recorders.get(event);
   }
 
-  /** @return an empty mapper, with no recorders. */
+  /** Factory method.
+   * @return an empty mapper, with no recorders. */
   public static <E extends Enum<?>> EventMapper<E> empty(final Class<? extends E> enumClass) {
     return new EventMapper<>(enumClass);
   }
@@ -61,8 +72,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     return new EventMapperFunctor<>(¢);
   }
 
-  /** Factory method for {@link EventMapperFunctor}. Inspects
-   * {@link EventMapper#eventMap}. [[SuppressWarningsSpartan]] */
+  /** Factory method for {@link EventMapperFunctor}. Inspects the
+   * {@link EventMapper#eventMap}. Used to inspect the collected data, rather
+   * than update it. [[SuppressWarningsSpartan]] */
   public static <E extends Enum<E>> EventMapperFunctor<E, Map<E, Object>, Object> inspectorOf(final E ¢) {
     return new EventMapperFunctor<E, Map<E, Object>, Object>(¢) {
       @Override public void update(final Map<E, Object> m) {
@@ -80,11 +92,18 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * @author Ori Roth
    * @since 2016 */
   public static class EventFunctor<E, P, O> {
+    /** The event covered by this functor. */
     protected final E domain;
+    /** Whether or not the value mapped in {@link EventMapper#eventMap} for
+     * {@link EventFunctor#domain} has been initialized. */
     boolean initialized;
+    /** Initialization value for {@link EventMapper#eventMap}. */
     protected P initialization;
+    /** Initialization supplier for {@link EventMapper#eventMap}. */
     protected Supplier<P> initializationSupplier;
 
+    /** Creates a functor for a specific event.
+     * @param domain the event covered by this functor. */
     public EventFunctor(final E domain) {
       this.domain = domain;
       initialized = true;
@@ -92,6 +111,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       initializationSupplier = null;
     }
 
+    /** @return initialization value for this functor, either from
+     *         {@link EventFunctor#initialization} or from
+     *         {@link EventFunctor#initializationSupplier}. */
     protected Object initializeValue() {
       assert !initialized;
       initialized = true;
@@ -106,10 +128,15 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       return $;
     }
 
+    /** Update the map. Empty implementation.
+     * @param __ JD
+     * @param o object listened with the event */
     @SuppressWarnings("unused") void update(final Map<E, Object> __, final O o) {
       //
     }
 
+    /** Update the map. Empty implementation.
+     * @param __ JD */
     @SuppressWarnings("unused") void update(final Map<E, Object> __) {
       //
     }

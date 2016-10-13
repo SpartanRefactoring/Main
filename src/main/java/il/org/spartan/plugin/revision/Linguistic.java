@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 /** @author Ori Roth
- * @since 2016 */
+ * @since 2.6 */
 public class Linguistic {
   public static final String NAN = "???";
 
