@@ -36,7 +36,6 @@ public interface system {
     ;
   }
 
-
   static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
@@ -94,6 +93,7 @@ public interface system {
   static String p(final int n1, final int n2) {
     return formatRelative(d(n1, n2));
   }
+
   static String formatRelative(final double ¢) {
     return String.format(format2(¢) + "%%", box(100 * ¢));
   }
@@ -101,12 +101,14 @@ public interface system {
   static String formatRelative(final double d1, final double d2) {
     return formatRelative(d1 / d2);
   }
+
   static String format2(final double d) {
     if (d < 0)
       return "-" + format2(-d);
     final double p = 100 * d;
-    return "%" + (p < 0.01 ? ".0f" : (p < 0.1 ? ".2f" : (p < 1 || p < 10 ? ".1f" : (p < 100 || p < 1000 ? ".0f" : "5.0g"))));
+    return "%" + (p < 0.01 ? ".0f" : p < 0.1 ? ".2f" : p < 1 || p < 10 ? ".1f" : p < 100 || p < 1000 ? ".0f" : "5.0g");
   }
+
   static double round3(final double ¢) {
     switch (digits(¢)) {
       case -1:
@@ -120,6 +122,7 @@ public interface system {
         return ¢;
     }
   }
+
   static int digits(final double d) {
     if (d == 0)
       return -1;
@@ -147,7 +150,6 @@ public interface system {
   static double ratio(final double n1, final double n2) {
     return n2 / n1;
   }
-
 
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence < " + fileName + " >" + essenced(fileName));
