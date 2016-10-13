@@ -2,11 +2,8 @@ package il.org.spartan.spartanizer.research.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
-
-public final class MethodEmpty extends NanoPatternTipper<MethodDeclaration> {
-  @Override protected boolean prerequisite(final MethodDeclaration ¢) {
+public final class MethodEmpty extends JavadocMarkerNanoPattern<MethodDeclaration> {
+  @Override protected boolean morePrerequisites(final MethodDeclaration ¢) {
     return ¢.getBody() != null && ¢.getBody().statements().isEmpty();
   }
 
@@ -14,7 +11,7 @@ public final class MethodEmpty extends NanoPatternTipper<MethodDeclaration> {
     return "Empty method " + ¢.getName();
   }
 
-  @Override public Tip tip(final MethodDeclaration __) throws TipperFailure {
-    throw new TipperFailure.TipNotImplementedException();
+  @Override protected String javadoc() {
+    return "[[Empty]]";
   }
 }

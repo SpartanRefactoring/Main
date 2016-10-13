@@ -15,6 +15,8 @@ import org.eclipse.ui.*;
  * @author Ori Roth
  * @since 2016 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
+  private static final int PASSES = 20;
+  
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     applicator().defaultSelection().go();
     return null;
@@ -32,6 +34,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler */
   @SuppressWarnings("boxing") protected static EventApplicator applicator() {
     final EventApplicator $ = new EventApplicator();
+    $.passes(PASSES);
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class)) //
         .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
