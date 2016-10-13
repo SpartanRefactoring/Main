@@ -145,7 +145,7 @@ public class Analyzer {
     addNanoPatterns(spartanizer);
     String spartanizedCode = "";
     for (final File ¢ : getJavaFiles(inputFolder)) {
-      System.out.println("Now: " + ¢.getName());
+      // System.out.println("Now: " + ¢.getName());
       spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
       appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
     }
@@ -165,6 +165,7 @@ public class Analyzer {
             new MethodEmpty(), //
             new Getter(), //
             new Setter(), //
+            new Mapper(), //
             null);
   }
 }
