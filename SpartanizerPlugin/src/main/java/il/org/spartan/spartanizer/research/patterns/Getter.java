@@ -3,16 +3,28 @@ package il.org.spartan.spartanizer.research.patterns;
 import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.leonidas.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  @Override protected boolean morePrerequisites(MethodDeclaration ¢) {
-    if (step.body(¢) == null)
+  Set<UserDefinedTipper<Statement>> tippers;
+
+  public Getter() {
+    if (tippers != null)
+      return;
+    tippers = new HashSet<>();
+    tippers.add(TipperFactory.tipper("return $N;", "", ""));
+    tippers.add(TipperFactory.tipper("return this.$N;", "", ""));
+  }
+
+  @Override protected boolean morePrerequisites(MethodDeclaration d) {
+    if (step.body(d) == null || !step.parameters(d).isEmpty())
       return false;
-    @SuppressWarnings("unchecked") List<Statement> ss = ¢.getBody().statements();
-    return ss.size() == 1 && iz.returnStatement(ss.get(0)) && step.parameters(¢).isEmpty() && iz.name(az.returnStatement(ss.get(0)).getExpression());
+    for (UserDefinedTipper<Statement> ¢ : tippers)
+      if (¢.canTip(step.body(d)))
+        return true;
+    return false;
   }
 
   @Override public String description(MethodDeclaration ¢) {
