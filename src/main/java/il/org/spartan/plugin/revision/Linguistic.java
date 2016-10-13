@@ -1,5 +1,6 @@
 package il.org.spartan.plugin.revision;
 
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 /** @author Ori Roth
@@ -20,6 +21,14 @@ public class Linguistic {
   }
 
   public static String plurales(final String s, final Integer i) {
+    return i == null ? NAN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
+  }
+  
+  public static String plurals(final String s, final AtomicInteger i) {
+    return i == null ? NAN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
+  }
+
+  public static String plurales(final String s, final AtomicInteger i) {
     return i == null ? NAN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
 

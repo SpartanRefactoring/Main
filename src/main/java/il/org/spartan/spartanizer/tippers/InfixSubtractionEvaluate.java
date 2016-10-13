@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
@@ -24,24 +25,42 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> xs) throws Exception {
-    double $ = az.throwing.double¢(first(xs));
+  @Override double evaluateDouble(final List<Expression> xs){
+    double $ = 0;
+    try{
+    $ = az.throwing.double¢(first(xs));
     for (final Expression ¢ : rest(xs))
       $ -= az.throwing.double¢(¢);
+    }
+    catch(NumberFormatException e){
+        monitor.logEvaluationError(this, e);
+    }
     return $;
   }
 
-  @Override int evaluateInt(final List<Expression> xs) throws Exception {
-    int $ = az.throwing.int¢(first(xs));
+  @Override int evaluateInt(final List<Expression> xs){
+    int $ = 0;
+    try{
+    $ = az.throwing.int¢(first(xs));
     for (final Expression ¢ : rest(xs))
       $ -= az.throwing.int¢(¢);
+    }
+    catch(NumberFormatException e){
+        monitor.logEvaluationError(this, e);
+    }
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs) throws Exception {
-    long $ = az.throwing.long¢(first(xs));
+  @Override long evaluateLong(final List<Expression> xs){
+    long $ = 0;
+    try{
+    $ = az.throwing.long¢(first(xs));
     for (final Expression ¢ : rest(xs))
       $ -= az.throwing.long¢(¢);
+    }
+    catch(NumberFormatException e){
+        monitor.logEvaluationError(this, e);
+    }
     return $;
   }
 
