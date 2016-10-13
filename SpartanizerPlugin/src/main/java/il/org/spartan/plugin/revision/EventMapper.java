@@ -6,7 +6,7 @@ import java.util.function.*;
 /** A {@link Listener} that listen to {@link event}s.
  * @author Ori Roth
  * @since 2016 */
-public class EventMapper<E extends Enum<E>> extends EventListener<E> {
+public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   private final Map<E, Object> eventMap;
   @SuppressWarnings("rawtypes") private final Map<E, EventFunctor> recorders;
 
