@@ -134,6 +134,7 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             new CachingPattern(), //
+            new BlockInlineStatementIntoNext(), //
             null) //
         .add(PostfixExpression.class, //
             new PostfixToPrefix(), //
@@ -337,9 +338,7 @@ public class Toolbox {
   }
 
   public List<Tipper<? extends ASTNode>> get(final int ¢) {
-    if (implementation[¢] == null)
-      implementation[¢] = new ArrayList<>();
-    return implementation[¢];
+    return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
   public int hooksCount() {

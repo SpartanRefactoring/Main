@@ -162,6 +162,8 @@ public class Analyzer {
             null) //
         .add(MethodDeclaration.class, //
             new MethodEmpty(), //
+            new Getter(), //
+            new Setter(), //
             null);
   }
 }
