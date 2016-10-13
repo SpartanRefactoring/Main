@@ -44,7 +44,7 @@ public final class DeclarationAssignment extends $VariableDeclarationFragementAn
     if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     r.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
-    r.remove(extract.statement(a), g);
+    r.remove(extract.containingStatement(a), g);
     return r;
   }
 }

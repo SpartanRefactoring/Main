@@ -5,335 +5,335 @@ package il.org.spartan.spartanizer.java;
  * @since 2016 */
 @SuppressWarnings("unused") //
 public interface atomic {
-  static boolean isBoolean(final boolean ____) {
+  static boolean isBoolean(final boolean __) {
     return true;
   }
 
-  static boolean isBoolean(final byte ____) {
+  static boolean isBoolean(final byte __) {
     return false;
   }
 
-  static boolean isBoolean(final char ____) {
+  static boolean isBoolean(final char __) {
     return false;
   }
 
-  static boolean isBoolean(final double ____) {
+  static boolean isBoolean(final double __) {
     return false;
   }
 
-  static boolean isBoolean(final float ____) {
+  static boolean isBoolean(final float __) {
     return false;
   }
 
-  static boolean isBoolean(final Object ____) {
+  static boolean isBoolean(final Object __) {
     return false;
   }
 
-  static boolean isBoolean(final short ____) {
+  static boolean isBoolean(final short __) {
     return false;
   }
 
-  static boolean isBoolean(final String ____) {
+  static boolean isBoolean(final String __) {
     return false;
   }
 
-  static boolean isByte(final boolean ____) {
+  static boolean isByte(final boolean __) {
     return false;
   }
 
-  static boolean isByte(final byte ____) {
+  static boolean isByte(final byte __) {
     return true;
   }
 
-  static boolean isByte(final char ____) {
+  static boolean isByte(final char __) {
     return false;
   }
 
-  static boolean isByte(final double ____) {
+  static boolean isByte(final double __) {
     return false;
   }
 
-  static boolean isByte(final float ____) {
+  static boolean isByte(final float __) {
     return false;
   }
 
-  static boolean isByte(final int ____) {
+  static boolean isByte(final int __) {
     return false;
   }
 
-  static boolean isByte(final long ____) {
+  static boolean isByte(final long __) {
     return false;
   }
 
-  static boolean isByte(final Object ____) {
+  static boolean isByte(final Object __) {
     return false;
   }
 
-  static boolean isByte(final short ____) {
+  static boolean isByte(final short __) {
     return false;
   }
 
-  static boolean isByte(final String ____) {
+  static boolean isByte(final String __) {
     return false;
   }
 
-  static boolean isChar(final byte ____) {
+  static boolean isChar(final byte __) {
     return false;
   }
 
-  static boolean isChar(final char ____) {
+  static boolean isChar(final char __) {
     return true;
   }
 
-  static boolean isChar(final double ____) {
+  static boolean isChar(final double __) {
     return false;
   }
 
-  static boolean isChar(final float ____) {
+  static boolean isChar(final float __) {
     return false;
   }
 
-  static boolean isChar(final int ____) {
+  static boolean isChar(final int __) {
     return false;
   }
 
-  static boolean isChar(final long ____) {
+  static boolean isChar(final long __) {
     return false;
   }
 
-  static boolean isChar(final Object ____) {
+  static boolean isChar(final Object __) {
     return false;
   }
 
-  static boolean isChar(final short ____) {
+  static boolean isChar(final short __) {
     return false;
   }
 
-  static boolean isChar(final String ____) {
+  static boolean isChar(final String __) {
     return false;
   }
 
-  static boolean isDouble(final boolean ____) {
+  static boolean isDouble(final boolean __) {
     return false;
   }
 
-  static boolean isDouble(final byte ____) {
+  static boolean isDouble(final byte __) {
     return false;
   }
 
-  static boolean isDouble(final char ____) {
+  static boolean isDouble(final char __) {
     return false;
   }
 
-  static boolean isDouble(final double ____) {
+  static boolean isDouble(final double __) {
     return true;
   }
 
-  static boolean isDouble(final float ____) {
+  static boolean isDouble(final float __) {
     return false;
   }
 
-  static boolean isDouble(final int ____) {
+  static boolean isDouble(final int __) {
     return false;
   }
 
-  static boolean isDouble(final long ____) {
+  static boolean isDouble(final long __) {
     return false;
   }
 
-  static boolean isDouble(final Object ____) {
+  static boolean isDouble(final Object __) {
     return false;
   }
 
-  static boolean isDouble(final short ____) {
+  static boolean isDouble(final short __) {
     return false;
   }
 
-  static boolean isDouble(final String ____) {
+  static boolean isDouble(final String __) {
     return false;
   }
 
-  static boolean isFloat(final boolean ____) {
+  static boolean isFloat(final boolean __) {
     return false;
   }
 
-  static boolean isFloat(final byte ____) {
+  static boolean isFloat(final byte __) {
     return false;
   }
 
-  static boolean isFloat(final char ____) {
+  static boolean isFloat(final char __) {
     return false;
   }
 
-  static boolean isFloat(final double ____) {
+  static boolean isFloat(final double __) {
     return false;
   }
 
-  static boolean isFloat(final float ____) {
+  static boolean isFloat(final float __) {
     return true;
   }
 
-  static boolean isFloat(final int ____) {
+  static boolean isFloat(final int __) {
     return false;
   }
 
-  static boolean isFloat(final long ____) {
+  static boolean isFloat(final long __) {
     return false;
   }
 
-  static boolean isFloat(final Object ____) {
+  static boolean isFloat(final Object __) {
     return false;
   }
 
-  static boolean isFloat(final short ____) {
+  static boolean isFloat(final short __) {
     return false;
   }
 
-  static boolean isFloat(final String ____) {
+  static boolean isFloat(final String __) {
     return false;
   }
 
-  static boolean isInt(final boolean ____) {
+  static boolean isInt(final boolean __) {
     return false;
   }
 
-  static boolean isInt(final byte ____) {
+  static boolean isInt(final byte __) {
     return false;
   }
 
-  static boolean isInt(final char ____) {
+  static boolean isInt(final char __) {
     return false;
   }
 
-  static boolean isInt(final double ____) {
+  static boolean isInt(final double __) {
     return false;
   }
 
-  static boolean isInt(final float ____) {
+  static boolean isInt(final float __) {
     return false;
   }
 
-  static boolean isInt(final int ____) {
+  static boolean isInt(final int __) {
     return true;
   }
 
-  static boolean isInt(final long ____) {
+  static boolean isInt(final long __) {
     return false;
   }
 
-  static boolean isInt(final Object ____) {
+  static boolean isInt(final Object __) {
     return false;
   }
 
-  static boolean isInt(final short ____) {
+  static boolean isInt(final short __) {
     return false;
   }
 
-  static boolean isInt(final String ____) {
+  static boolean isInt(final String __) {
     return false;
   }
 
-  static boolean isLong(final boolean ____) {
+  static boolean isLong(final boolean __) {
     return false;
   }
 
-  static boolean isLong(final byte ____) {
+  static boolean isLong(final byte __) {
     return false;
   }
 
-  static boolean isLong(final char ____) {
+  static boolean isLong(final char __) {
     return false;
   }
 
-  static boolean isLong(final double ____) {
+  static boolean isLong(final double __) {
     return false;
   }
 
-  static boolean isLong(final float ____) {
+  static boolean isLong(final float __) {
     return false;
   }
 
-  static boolean isLong(final int ____) {
+  static boolean isLong(final int __) {
     return true;
   }
 
-  static boolean isLong(final long ____) {
+  static boolean isLong(final long __) {
     return true;
   }
 
-  static boolean isLong(final Object ____) {
+  static boolean isLong(final Object __) {
     return false;
   }
 
-  static boolean isLong(final short ____) {
+  static boolean isLong(final short __) {
     return false;
   }
 
-  static boolean isLong(final String ____) {
+  static boolean isLong(final String __) {
     return true;
   }
 
-  static boolean isObject(final short ____) {
+  static boolean isObject(final short __) {
     return false;
   }
 
-  static boolean isShort(final boolean ____) {
+  static boolean isShort(final boolean __) {
     return false;
   }
 
-  static boolean isShort(final byte ____) {
+  static boolean isShort(final byte __) {
     return true;
   }
 
-  static boolean isShort(final char ____) {
+  static boolean isShort(final char __) {
     return false;
   }
 
-  static boolean isShort(final double ____) {
+  static boolean isShort(final double __) {
     return false;
   }
 
-  static boolean isShort(final float ____) {
+  static boolean isShort(final float __) {
     return false;
   }
 
-  static boolean isShort(final int ____) {
+  static boolean isShort(final int __) {
     return false;
   }
 
-  static boolean isShort(final long ____) {
+  static boolean isShort(final long __) {
     return false;
   }
 
-  static boolean isShort(final Object ____) {
+  static boolean isShort(final Object __) {
     return false;
   }
 
-  static boolean isShort(final short ____) {
+  static boolean isShort(final short __) {
     return true;
   }
 
-  static boolean isShort(final String ____) {
+  static boolean isShort(final String __) {
     return false;
   }
 
-  static boolean isString(final double ____) {
+  static boolean isString(final double __) {
     return false;
   }
 
-  static boolean isString(final float ____) {
+  static boolean isString(final float __) {
     return false;
   }
 
-  static boolean isString(final Object ____) {
+  static boolean isString(final Object __) {
     return false;
   }
 
-  static boolean isString(final short ____) {
+  static boolean isString(final short __) {
     return false;
   }
 
-  static boolean isString(final String ____) {
+  static boolean isString(final String __) {
     return true;
   }
 }

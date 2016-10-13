@@ -28,7 +28,7 @@ import org.eclipse.jdt.core.dom.*;
 
   /** replaces {@link #preVisit(ASTNode)}
    * @param n JD */
-  public void preVisit0(final ASTNode n) {
+  public void preVisit0(final ASTNode __) {
     // To be realized by user
   }
 

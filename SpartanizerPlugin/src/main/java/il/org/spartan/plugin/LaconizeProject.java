@@ -37,8 +37,8 @@ public final class LaconizeProject extends BaseHandler {
     final AtomicInteger $ = new AtomicInteger(0);
     final GUI$Applicator ¢ = new Trimmer();
     try {
-      PlatformUI.getWorkbench().getProgressService().run(true, true, pm -> {
-        pm.beginTask("Looking for tips in " + javaProject, IProgressMonitor.UNKNOWN);
+      eclipse.progressMonitorDialog(true).run(true, true, pm -> {
+        pm.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
         ¢.setMarker(null);
         ¢.setICompilationUnit(todo.get(0));
         $.addAndGet(¢.countTips());
@@ -64,7 +64,6 @@ public final class LaconizeProject extends BaseHandler {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");
-    eclipse.announce(status);
     manyPasses();
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));

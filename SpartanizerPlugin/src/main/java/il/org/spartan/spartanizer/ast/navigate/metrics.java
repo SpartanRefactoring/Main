@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -40,49 +41,49 @@ public interface metrics {
   }
 
   static int count(final ASTNode root) {
-    final Int $ = new Int();
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("unused") public void preVisit(final ASTNode ¢) {
-        ++$.inner;
+      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
+        $.getAndIncrement();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   static int countImports(final CompilationUnit u) {
-    final Int $ = new Int();
+    final AtomicInteger $ = new AtomicInteger();
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(ImportDeclaration.class))
-          ++$.inner;
+          $.getAndIncrement();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   static int countNoImport(final CompilationUnit root) {
-    final Int $ = new Int();
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class))
-          ++$.inner;
+          $.getAndIncrement();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   /** Exclude comments and import package statement from the content.
    * @param root
    * @return */
   static int countNoImportNoComments(final ASTNode root) {
-    final Int $ = new Int();
+    final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
-          ++$.inner;
+          $.getAndIncrement();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   /** Counts the number of non-space characters in a tree rooted at a given node

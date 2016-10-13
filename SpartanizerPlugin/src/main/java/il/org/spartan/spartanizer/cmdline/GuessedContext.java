@@ -82,15 +82,14 @@ public enum GuessedContext {
         "of making sense of this code. It may have something you (or I) did wrong, but:\n" + //
         "It sure does not look like a correct Java code to me.\n" + //
         "\n" + //
-        "Here are the attempts I made at literal ```" + codeFragment + "''':,\n" + //
+        "Here are the attempts I made at literal [" + codeFragment + "]:,\n" + //
         "\n" + //
         enumerateFailingAttempts(codeFragment));
     throw new RuntimeException();
   }
 
   private static boolean wasActuallyInsertedToWrapper(final GuessedContext $, final String codeFragment) {
-    String tmp1 = $.intoCompilationUnit("") + "";
-    return !tmp1.equals(("" + $.intoCompilationUnit(codeFragment)));
+    return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
 
   static String enumerateFailingAttempts(final String codeFragment) {
