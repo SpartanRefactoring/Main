@@ -9,12 +9,15 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean morePrerequisites(MethodDeclaration ¢) {
-    if (step.parameters(¢).size() != 1)
+    if (step.parameters(¢).size() != 1 || step.body(¢) == null)
       return false;
     @SuppressWarnings("unchecked") List<Statement> ss = ¢.getBody().statements();
     if (ss.size() != 1 || !iz.expressionStatement(ss.get(0)))
       return false;
-    Assignment a = az.assignment(az.expressionStatement(ss.get(0)).getExpression());
+    Expression e = az.expressionStatement(ss.get(0)).getExpression();
+    if (!iz.assignment(e))
+      return false;
+    Assignment a = az.assignment(e);
     return iz.name(a.getLeftHandSide()) && wizard.same(a.getRightHandSide(), step.parameters(¢).get(0).getName());
   }
 

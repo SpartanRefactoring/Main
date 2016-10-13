@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean morePrerequisites(MethodDeclaration ¢) {
+    if (step.body(¢) == null)
+      return false;
     @SuppressWarnings("unchecked") List<Statement> ss = ¢.getBody().statements();
     return ss.size() == 1 && iz.returnStatement(ss.get(0)) && step.parameters(¢).isEmpty() && iz.name(az.returnStatement(ss.get(0)).getExpression());
   }
