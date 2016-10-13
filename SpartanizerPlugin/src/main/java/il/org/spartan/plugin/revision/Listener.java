@@ -18,6 +18,8 @@ public interface Listener {
     return id.get();
   }
 
+  /** Main listener function.
+   * @param ¢ object to be listened to */
   default void tick(final Object... ¢) {
     id.incrementAndGet();
     ___.unused(¢);
