@@ -69,7 +69,7 @@ import il.org.spartan.spartanizer.engine.*;
             "  f1(i1,i2);\n"//
     )); //
     assert block != null;
-    assert metrics.nodesCount(block) > 10;
+    assert count.nodes(block) > 10;
     final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;

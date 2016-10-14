@@ -111,7 +111,7 @@ public final class BatchSpartanizer {
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength();
     final int tokens = metrics.tokens(in + "");
-    final int nodes = metrics.nodesCount(in);
+    final int nodes = count.nodes(in);
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = code.essenceNew(in + "").length();
@@ -122,7 +122,7 @@ public final class BatchSpartanizer {
     final int essence2 = code.essenceNew(out + "").length();
     final int wordCount = code.wc(code.essenceNew(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
-    final int nodes2 = metrics.nodesCount(from);
+    final int nodes2 = count.nodes(from);
     final int body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);

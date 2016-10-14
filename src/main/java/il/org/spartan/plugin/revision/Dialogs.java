@@ -74,12 +74,12 @@ public class Dialogs {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
       }
 
-      @Override protected void createButtonsForButtonBar(Composite ¢) {
+      @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, RIB_ID, "Run in Background", false);
         super.createButtonsForButtonBar(¢);
       }
-      
-      @Override protected void buttonPressed(int ¢) {
+
+      @Override protected void buttonPressed(final int ¢) {
         super.buttonPressed(¢);
         switch (¢) {
           case RIB_ID:
