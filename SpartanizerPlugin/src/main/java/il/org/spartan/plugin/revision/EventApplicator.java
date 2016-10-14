@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
 // TODO Roth: move into separate file
 /** Possible events during spartanization process */
 enum event {
-  run_start, run_finish, run_pass, //
+  run_start, run_finish, run_pass, run_pass_done, //
   visit_root, visit_cu, visit_node, //
 }
 
@@ -47,6 +47,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
           if (!shouldRun())
             break;
         }
+        listener().tick(event.run_pass_done);
         alive.removeAll(dead);
         if (alive.isEmpty() || !shouldRun())
           break;

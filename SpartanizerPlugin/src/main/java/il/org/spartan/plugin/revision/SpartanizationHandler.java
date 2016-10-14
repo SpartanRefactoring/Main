@@ -3,6 +3,7 @@ package il.org.spartan.plugin.revision;
 import static il.org.spartan.plugin.revision.Linguistic.*;
 
 import java.lang.reflect.*;
+import java.math.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
@@ -44,12 +45,15 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final EventApplicator $ = new EventApplicator();
     $.passes(PASSES);
     final ProgressMonitorDialog d = Dialogs.progress(true);
+    final Time time = new Time();
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
             asynch(() -> {
               d.getProgressMonitor().subTask("Spartanizing " + ¢.getElementName());
               d.getProgressMonitor().worked(1);
+              if (d.getProgressMonitor().isCanceled())
+                $.stop();
             });
         })) //
         .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
@@ -58,11 +62,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           if ($.selection().size() >= DIALOG_THRESHOLD)
             asynch(() -> {
               d.getProgressMonitor().beginTask(NAME, $.selection().size());
+              if (d.getProgressMonitor().isCanceled())
+                $.stop();
             });
         })) //
         .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD && !Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
             $.stop();
+          time.set(System.nanoTime());
         })) //
         .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
@@ -76,24 +83,50 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
                   return c.size();
                 }) + " files" //
-                + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();
+                + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass)) //
+                + "\nTotal run time: " + time.intervalInSeconds(System.nanoTime()) + " seconds").open();
         })));
     $.runContext(r -> {
-      // TODO Roth: allow cancellation
       try {
         d.run(true, true, __ -> {
           r.run();
         });
       } catch (InvocationTargetException | InterruptedException x) {
         monitor.log(x);
-        x.printStackTrace();
       }
     });
     $.defaultRunAction();
     return $;
   }
 
+  /** Run asynchronously in UI thread.
+   * @param ¢ JD */
   private static void asynch(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
+  }
+
+  /** Used to measure run time.
+   * @author Ori Roth
+   * @since 2.6 */
+  private static class Time {
+    long time;
+
+    public Time() {
+      //
+    }
+
+    void set(long ¢) {
+      time = ¢;
+    }
+
+    double intervalInSeconds(long ¢) {
+      return round((¢ - time) / 1000000000.0, 2);
+    }
+
+    private static double round(double value, int places) {
+      if (places < 0)
+        throw new IllegalArgumentException();
+      return (new BigDecimal(value)).setScale(places, RoundingMode.HALF_UP).doubleValue();
+    }
   }
 }
