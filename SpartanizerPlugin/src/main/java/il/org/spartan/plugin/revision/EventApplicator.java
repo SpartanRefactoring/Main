@@ -59,11 +59,24 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default listener configuration of {@link EventApplicator}. Simple printing
    * to console.
    * @return this applicator */
-  public EventApplicator defaultListener() {
+  public EventApplicator defaultListenerNoisy() {
     listener(EventListener.simpleListener(event.class, //
         e -> System.out.println(e), //
         (e, o) -> System.out.println(e + ":\t" + o)//
     ));
+    return this;
+  }
+
+  /** Default listener configuration of {@link EventApplicator}. Silent
+   * listener.
+   * @return this applicator */
+  public EventApplicator defaultListenerSilent() {
+    listener(EventListener.simpleListener(event.class, //
+        e -> {
+          //
+        }, (e, o) -> {
+          //
+        }));
     return this;
   }
 
@@ -111,6 +124,12 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public EventApplicator defaultSettings() {
-    return defaultListener().defaultPassesFew().defaultRunContext().defaultSelection();
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection();
+  }
+
+  /** Factory method.
+   * @return default event applicator */
+  public static EventApplicator defaultApplicator() {
+    return new EventApplicator().defaultSettings();
   }
 }
