@@ -940,6 +940,12 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean fieldAccess(final Expression ¢) {
-    return ¢ != null && ¢.getNodeType() == FIELD_ACCESS;
+    return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
+  }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean classInstanceCreation(ASTNode ¢) {
+    return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
   }
 }
