@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
@@ -121,10 +122,20 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     return this;
   }
 
+  /** Default run action configuration of {@link EventApplicator}. Spartanize
+   * the {@link ICompilationUnit} using received {@link GUI$Applicator}.
+   * @param a JD
+   * @return this applicator */
+  public EventApplicator defaultRunAction(final GUI$Applicator a) {
+    runAction(u -> Boolean.valueOf(a.apply(u, (selection().textSelection == null ? new Range(0, 0)
+        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength())))));
+    return this;
+  }
+
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public EventApplicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection();
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
 
   /** Factory method.
