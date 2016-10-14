@@ -25,7 +25,34 @@ public class EventApplicator extends Applicator<EventListener<event>> {
 
   /** Spartanization process. */
   @Override public void go() {
-    goTrimmer();
+    if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
+      return;
+    listener().tick(event.visit_root, selection().name);
+    listener().tick(event.run_start);
+    if (!shouldRun())
+      return;
+    runContext().accept(() -> {
+      final List<ICompilationUnit> alive = new LinkedList<>();
+      alive.addAll(selection().compilationUnits);
+      final int l = selection().textSelection != null ? 1 : passes();
+      for (int pass = 0; pass < l; ++pass) {
+        listener().tick(event.run_pass);
+        if (!shouldRun())
+          break;
+        final List<ICompilationUnit> dead = new LinkedList<>();
+        for (final ICompilationUnit ¢ : alive) {
+          if (!runAction().apply(¢).booleanValue())
+            dead.add(¢);
+          listener().tick(event.visit_cu, ¢);
+          if (!shouldRun())
+            break;
+        }
+        alive.removeAll(dead);
+        if (alive.isEmpty() || !shouldRun())
+          break;
+      }
+    });
+    listener().tick(event.run_finish);
   }
 
   /** Default listener configuration of {@link EventApplicator}. Simple printing
@@ -69,45 +96,20 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     return this;
   }
 
+  // TODO Roth: use Policy / replacement for Trimmer.
+  /** Default run action configuration of {@link EventApplicator}. Spartanize
+   * the {@link ICompilationUnit} using a {@link Trimmer}.
+   * @return this applicator */
+  public EventApplicator defaultRunAction() {
+    final Trimmer t = new Trimmer();
+    runAction(u -> Boolean.valueOf(t.apply(u, (selection().textSelection == null ? new Range(0, 0)
+        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength())))));
+    return this;
+  }
+
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
   public EventApplicator defaultSettings() {
     return defaultListener().defaultPassesFew().defaultRunContext().defaultSelection();
-  }
-
-  // TODO Roth: use Policy / replacement for Trimmer.
-  /** Temporary solution using {@link Trimmer}. */
-  private void goTrimmer() {
-    if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
-      return;
-    listener().tick(event.visit_root, selection().name);
-    listener().tick(event.run_start);
-    if (!shouldRun())
-      return;
-    runContext().accept(() -> {
-      final List<ICompilationUnit> alive = new LinkedList<>();
-      alive.addAll(selection().compilationUnits);
-      final int l = selection().textSelection != null ? 1 : passes();
-      for (int pass = 0; pass < l; ++pass) {
-        final Trimmer trimmer = new Trimmer();
-        listener().tick(event.run_pass);
-        if (!shouldRun())
-          break;
-        final List<ICompilationUnit> dead = new LinkedList<>();
-        for (final ICompilationUnit ¢ : alive) {
-          final Range r = selection().textSelection == null ? new Range(0, 0)
-              : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength());
-          if (!trimmer.apply(¢, r))
-            dead.add(¢);
-          listener().tick(event.visit_cu, ¢);
-          if (!shouldRun())
-            break;
-        }
-        alive.removeAll(dead);
-        if (alive.isEmpty() || !shouldRun())
-          break;
-      }
-    });
-    listener().tick(event.run_finish);
   }
 }
