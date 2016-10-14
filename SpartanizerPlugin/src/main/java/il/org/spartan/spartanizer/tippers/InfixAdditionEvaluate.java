@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.net.Proxy.Type;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,7 +30,7 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
     try {
       for (final Expression ¢ : xs)
         $ += az.throwing.double¢(¢);
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -45,7 +44,7 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ += az.throwing.int¢(¢);
       }
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -59,7 +58,7 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ += az.throwing.long¢(¢);
       }
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;

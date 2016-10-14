@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Matteo Orrù
  * @since 2016 */
 public class SpartanizerTest {
-  private final String path = "/home/matteo/MUTATION_TESTING/test-spartanizer/projects/commons-bcel";
   String method = "";
   private final String test1 = "package test;\n" + "import static org.junit.Assert.*;\n" + "import org.junit.*;\n" + "public class Test {\n"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assertTrue(i>0);\n" + " }\n"

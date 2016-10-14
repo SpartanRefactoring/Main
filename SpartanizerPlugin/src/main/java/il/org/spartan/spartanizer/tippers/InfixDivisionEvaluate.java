@@ -28,15 +28,14 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) throws Exception {
     double $ = 0;
-    try{
-    $ = az.throwing.double¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
-      if (az.throwing.double¢(¢) == 0)
-        throw new Exception("Cannot evaluate division by zero");
-      $ /= az.throwing.double¢(¢);
-    }
-    }
-    catch(NumberFormatException e){
+    try {
+      $ = az.throwing.double¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (az.throwing.double¢(¢) == 0)
+          throw new Exception("Cannot evaluate division by zero");
+        $ /= az.throwing.double¢(¢);
+      }
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -44,19 +43,18 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
 
   @Override int evaluateInt(final List<Expression> xs) throws Exception {
     int $ = 0;
-    try{
-      if(type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
+    try {
+      if (type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
         throw new NumberFormatException();
-    $ = az.throwing.int¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
-      if(type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
-        throw new NumberFormatException();
-      if (az.throwing.int¢(¢) == 0)
-        throw new Exception("Cannot evaluate division by zero");
-      $ /= az.throwing.int¢(¢);
-    }
-    }
-    catch(NumberFormatException e){
+      $ = az.throwing.int¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
+          throw new NumberFormatException();
+        if (az.throwing.int¢(¢) == 0)
+          throw new Exception("Cannot evaluate division by zero");
+        $ /= az.throwing.int¢(¢);
+      }
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -64,19 +62,18 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
 
   @Override long evaluateLong(final List<Expression> xs) throws Exception {
     long $ = 0;
-    try{
-    if(type.of(first(xs)) == Certain.DOUBLE )
+    try {
+      if (type.of(first(xs)) == Certain.DOUBLE)
         throw new NumberFormatException();
-    $ = az.throwing.long¢(first(xs));
-    for (final Expression ¢ : rest(xs)) {
-      if(type.of(¢) == Certain.DOUBLE)
-        throw new NumberFormatException();
-      if (az.throwing.long¢(¢) == 0)
-        throw new Exception("Cannot evaluate division by zero");
-      $ /= az.throwing.long¢(¢);
-    }
-    }
-    catch(NumberFormatException e){
+      $ = az.throwing.long¢(first(xs));
+      for (final Expression ¢ : rest(xs)) {
+        if (type.of(¢) == Certain.DOUBLE)
+          throw new NumberFormatException();
+        if (az.throwing.long¢(¢) == 0)
+          throw new Exception("Cannot evaluate division by zero");
+        $ /= az.throwing.long¢(¢);
+      }
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;

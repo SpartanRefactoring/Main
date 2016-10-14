@@ -83,15 +83,15 @@ public class Selection {
   }
 
   public static Selection of(final ICompilationUnit[] ¢) {
-    List<ICompilationUnit> l = Arrays.asList(¢);
+    final List<ICompilationUnit> l = Arrays.asList(¢);
     return new Selection(l, null, getName(l));
   }
 
-  private static String getName(List<ICompilationUnit> ¢) {
+  private static String getName(final List<ICompilationUnit> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? ¢.get(0).getElementName() : ¢.get(0).getResource().getProject().getName();
   }
 
-  private static String getName(ICompilationUnit ¢) {
+  private static String getName(final ICompilationUnit ¢) {
     return ¢ == null ? null : ¢.getElementName();
   }
 
@@ -130,7 +130,7 @@ public class Selection {
   }
 
   public boolean isEmpty() {
-    return compilationUnits == null || compilationUnits.isEmpty() || (textSelection != null && textSelection.getLength() <= 0);
+    return compilationUnits == null || compilationUnits.isEmpty() || textSelection != null && textSelection.getLength() <= 0;
   }
 
   public static String printable(final ITextSelection ¢) {
@@ -155,7 +155,7 @@ public class Selection {
       if (s == null)
         return Selection.empty();
       if (s instanceof ITextSelection) {
-        IJavaProject p = getJavaProject();
+        final IJavaProject p = getJavaProject();
         return by(p).setTextSelection(null).setName(p.getElementName());
       }
       return Selection.empty();

@@ -3,6 +3,7 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
@@ -89,7 +90,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
         listener().tick(event.run_pass);
         final List<ICompilationUnit> dead = new LinkedList<>();
         for (final ICompilationUnit ¢ : alive) {
-          Range r = selection().textSelection == null ? new Range(0, 0)
+          final Range r = selection().textSelection == null ? new Range(0, 0)
               : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength());
           if (!trimmer.apply(¢, r))
             dead.add(¢);

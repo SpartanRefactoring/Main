@@ -9,9 +9,11 @@ package il.org.spartan.spartanizer.leonidas;
  * @author Ori Marcovitch
  * @since 2016 */
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -47,7 +49,7 @@ public class TipperFactory {
         };
       }
 
-      @Override protected boolean prerequisite(N ¢) {
+      @Override protected boolean prerequisite(final N ¢) {
         return Matcher.blockMatches(pattern, ¢);
       }
 
@@ -115,8 +117,8 @@ public class TipperFactory {
   /** @param b
    * @param idxs
    * @return */
-  @SuppressWarnings("boxing") protected static ASTNode[] getMatchedNodes(Block b, Pair<Integer, Integer> idxs) {
-    ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
+  @SuppressWarnings("boxing") protected static ASTNode[] getMatchedNodes(final Block b, final Pair<Integer, Integer> idxs) {
+    final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
     for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
       $[¢ - idxs.first] = (ASTNode) b.statements().get(idxs.first);
     return $;
