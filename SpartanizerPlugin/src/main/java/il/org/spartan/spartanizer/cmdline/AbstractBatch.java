@@ -85,13 +85,13 @@ abstract class AbstractBatch {
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
-          tick2(n, tipper); // save coverage info
+          tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
         }
         return true;
       }
 
-      <N extends ASTNode> void tick2(final N __, final Tipper<N> w) {
+      <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
