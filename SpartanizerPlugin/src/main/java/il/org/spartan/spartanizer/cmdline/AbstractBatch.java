@@ -181,7 +181,7 @@ abstract class AbstractBatch {
     tippersAppliedOnCurrentObject = 0;
     final int length = input.getLength();
     final int tokens = metrics.tokens(input + "");
-    final int nodes = metrics.nodesCount(input);
+    final int nodes = count.nodes(input);
     final int body = metrics.bodySize(input);
     final int statements = extract.statements(az.methodDeclaration(input).getBody()).size();
     final int tide = clean(input + "").length();
@@ -193,7 +193,7 @@ abstract class AbstractBatch {
     final int essence2 = Essence.of(out + "").length();
     final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(out + ""));
     final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(out);
-    final int nodes2 = metrics.nodesCount(to);
+    final int nodes2 = count.nodes(to);
     final int body2 = metrics.bodySize(to);
     final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
     final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();

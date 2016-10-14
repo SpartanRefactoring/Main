@@ -94,7 +94,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         number of characters in the first argument is less than, equal to,
    *         or greater than the number of characters in the second argument. */
   static int characterCompare(final Expression e1, final Expression e2) {
-    return metrics.countNonWhites(e1) - metrics.countNonWhites(e2);
+    return count.nonWhiteCharacters(e1) - count.nonWhiteCharacters(e2);
   }
 
   static int literalCompare(final Expression e1, final Expression e2) {
@@ -102,7 +102,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   static int nodesCompare(final Expression e1, final Expression e2) {
-    return round(metrics.nodesCount(e1) - metrics.nodesCount(e2), NODES_THRESHOLD);
+    return round(count.nodes(e1) - count.nodes(e2), NODES_THRESHOLD);
   }
 
   static int round(final int $, final int threshold) {
@@ -111,8 +111,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !hasNull(e1, e2) && (//
-    metrics.nodesCount(e1) > metrics.nodesCount(e2) + NODES_THRESHOLD || //
-        metrics.nodesCount(e1) >= metrics.nodesCount(e2) && moreArguments(e1, e2)//
+    count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD || //
+        count.nodes(e1) >= count.nodes(e2) && moreArguments(e1, e2)//
     );
   }
 

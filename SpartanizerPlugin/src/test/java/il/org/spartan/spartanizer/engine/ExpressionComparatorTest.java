@@ -130,6 +130,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
   }
 
   private int cs(final String statement) {
-    return metrics.lineCount(s(statement));
+    return count.lines(s(statement));
   }
 }

@@ -68,7 +68,7 @@ import il.org.spartan.spartanizer.engine.*;
   }
 
   @Test public void countNonWhiteCharacters() {
-    azzert.that(metrics.countNonWhites(e("1 + 23     *456 + \n /* aa */ 7890")), is(13));
+    azzert.that(count.nonWhiteCharacters(e("1 + 23     *456 + \n /* aa */ 7890")), is(13));
   }
 
   @Test public void findFirstType() {
