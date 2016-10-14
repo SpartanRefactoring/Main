@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,14 +27,14 @@ public final class IfNullReturn extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public boolean canTip(final IfStatement s) {
-    for (UserDefinedTipper<IfStatement> ¢ : tippers)
+    for (final UserDefinedTipper<IfStatement> ¢ : tippers)
       if (¢.canTip(s))
         return true;
     return false;
   }
 
   @Override public Tip tip(final IfStatement s) throws TipperFailure {
-    for (UserDefinedTipper<IfStatement> ¢ : tippers)
+    for (final UserDefinedTipper<IfStatement> ¢ : tippers)
       if (¢.canTip(s))
         return ¢.tip(s);
     return null;

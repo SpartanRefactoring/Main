@@ -23,7 +23,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       final GUI$Applicator g = getSpartanizer(¢);
       final Applicator<?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢));
       a.runAction(u -> Boolean.valueOf(g.apply(u,
-          (new Range(a.selection().textSelection.getOffset(), a.selection().textSelection.getOffset() + a.selection().textSelection.getLength())))));
+          new Range(a.selection().textSelection.getOffset(), a.selection().textSelection.getOffset() + a.selection().textSelection.getLength()))));
       a.go();
     }
 
@@ -75,10 +75,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     }
   }
 
-  static GUI$Applicator getSpartanizer(IMarker m) {
+  static GUI$Applicator getSpartanizer(final IMarker m) {
     try {
       return Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-    } catch (CoreException x) {
+    } catch (final CoreException x) {
       monitor.log(x);
     }
     return null;
