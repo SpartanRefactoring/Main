@@ -32,11 +32,10 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * to console.
    * @return this applicator */
   public EventApplicator defaultListener() {
-    listener(EventListener.simpleListener(event.class, e -> {
-      System.out.println(e);
-    }, (e, o) -> {
-      System.out.println(e + ":\t" + o);
-    }));
+    listener(EventListener.simpleListener(event.class, //
+        e -> System.out.println(e), //
+        (e, o) -> System.out.println(e + ":\t" + o)//
+    ));
     return this;
   }
 
@@ -66,9 +65,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * the {@link Runnable} in the current thread.
    * @return this applicator */
   public EventApplicator defaultRunContext() {
-    runContext(r -> {
-      r.run();
-    });
+    runContext(r -> r.run());
     return this;
   }
 
