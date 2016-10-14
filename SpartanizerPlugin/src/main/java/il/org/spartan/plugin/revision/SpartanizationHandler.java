@@ -43,7 +43,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   @SuppressWarnings("boxing") protected static EventApplicator applicator() {
     final EventApplicator $ = new EventApplicator();
     $.passes(PASSES);
-    final ProgressMonitorDialog d = Dialogs.progress(false);
+    final ProgressMonitorDialog d = Dialogs.progress(true);
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
@@ -63,11 +63,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD && !Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
             $.stop();
-        }).does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD && $.shouldRun())
-            asynch(() -> {
-              d.open();
-            });
         })) //
         .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
@@ -77,7 +72,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         }).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
-                + ". Spartanized " + nanable(¢.get(event.visit_root)) //
+                + "\nSpartanized " + nanable(¢.get(event.visit_root)) //
                 + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
                   return c.size();
                 }) + " files" //
@@ -86,7 +81,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.runContext(r -> {
       // TODO Roth: allow cancellation
       try {
-        d.run(true, false, __ -> {
+        d.run(true, true, __ -> {
           r.run();
         });
       } catch (InvocationTargetException | InterruptedException x) {
@@ -94,6 +89,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         x.printStackTrace();
       }
     });
+    $.defaultRunAction();
     return $;
   }
 
