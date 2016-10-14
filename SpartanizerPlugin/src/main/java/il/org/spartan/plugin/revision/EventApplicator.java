@@ -116,8 +116,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @return this applicator */
   public EventApplicator defaultRunAction() {
     final Trimmer t = new Trimmer();
-    runAction(u -> Boolean.valueOf(t.apply(u, (selection().textSelection == null ? new Range(0, 0)
-        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength())))));
+    runAction(u -> Boolean.valueOf(t.apply(u, selection().textSelection == null ? new Range(0, 0)
+        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength()))));
     return this;
   }
 

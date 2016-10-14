@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.patterns;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.engine.*;
 
 /** @author Ori Marcovitch

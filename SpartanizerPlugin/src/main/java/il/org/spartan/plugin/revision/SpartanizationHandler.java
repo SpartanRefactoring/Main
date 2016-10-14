@@ -118,18 +118,18 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       //
     }
 
-    void set(long ¢) {
+    void set(final long ¢) {
       time = ¢;
     }
 
-    double intervalInSeconds(long ¢) {
+    double intervalInSeconds(final long ¢) {
       return round((¢ - time) / 1000000000.0, 2);
     }
 
-    private static double round(double value, int places) {
+    private static double round(final double value, final int places) {
       if (places < 0)
         throw new IllegalArgumentException();
-      return (new BigDecimal(value)).setScale(places, RoundingMode.HALF_UP).doubleValue();
+      return new BigDecimal(value).setScale(places, RoundingMode.HALF_UP).doubleValue();
     }
   }
 }
