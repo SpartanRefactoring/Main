@@ -164,6 +164,9 @@ public class Analyzer {
         .add(Block.class, //
             new CachingPattern(), //
             null) //
+        .add(CastExpression.class, //
+            new Coercion(), //
+            null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             null) //
