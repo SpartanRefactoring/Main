@@ -20,7 +20,7 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     tippers.add(TipperFactory.tipper("return this.$N;", "", ""));
   }
 
-  @Override protected boolean morePrerequisites(final MethodDeclaration d) {
+  @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (step.body(d) == null)
       return false;
     for (final UserDefinedTipper<Statement> ¢ : tippers)

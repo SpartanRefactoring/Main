@@ -38,7 +38,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
   /** Marker resolution. Commits single tipper in current function.
    * @author Ori Roth
    * @since 2016 */
-  static class InDeclaration extends Resolution {
+  public static class InDeclaration extends Resolution {
     @Override protected ITextSelection domain(final IMarker m) {
       final ICompilationUnit u = eclipse.currentCompilationUnit();
       if (u == null)
@@ -68,7 +68,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
   /** Marker resolution. Commits single tipper in current file.
    * @author Ori Roth
    * @since 2016 */
-  static class InFile extends Resolution {
+  public static class InFile extends Resolution {
     @Override protected ITextSelection domain(@SuppressWarnings("unused") final IMarker __) {
       return TextSelection.emptySelection();
     }
@@ -91,7 +91,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
   /** Marker resolution. Commits single tipper in current project.
    * @author Ori Roth
    * @since 2016 */
-  static class InProject extends Resolution {
+  public static class InProject extends Resolution {
     @Override protected ITextSelection domain(@SuppressWarnings("unused") final IMarker __) {
       return TextSelection.emptySelection();
     }

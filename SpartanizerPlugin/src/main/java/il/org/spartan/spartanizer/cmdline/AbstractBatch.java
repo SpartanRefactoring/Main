@@ -48,11 +48,6 @@ abstract class AbstractBatch {
   protected static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   int tippersAppliedOnCurrentObject;
 
-  public static void main(final String[] args) {
-    System.out.println(system.p(12, 15));
-    System.out.println(system.p(18, 15));
-  }
-
   AbstractBatch(final String path) {
     this(path, system.folder2File(path));
   }

@@ -30,4 +30,9 @@ public class CleanerVisitor extends ASTVisitor {
     ¢.delete();
     return true;
   }
+
+  @Override public boolean visit(final FieldDeclaration ¢) {
+    ¢.delete();
+    return true;
+  }
 }
