@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -39,11 +40,11 @@ public class leonidasSays {
     }
 
     public void nottips(final String ¢) {
-      assert !tipper.canTip(wizard.ast(¢));
+      assert !tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
     }
 
     public void tips(final String ¢) {
-      assert tipper.canTip(wizard.ast(¢));
+      assert tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
     }
 
     public turns turns(final String ¢) {
@@ -167,7 +168,7 @@ public class leonidasSays {
       final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final AST ast = cu.getAST();
       final ASTRewrite r = ASTRewrite.create(ast);
-      final ASTNode n = extractASTNode(s, cu);
+      final ASTNode n = extractStatementIfOne(extractASTNode(s, cu));
       n.accept(new ASTVisitor() {
         @Override public void preVisit(final ASTNode node) {
           if (tipper.canTip(node))
@@ -187,5 +188,9 @@ public class leonidasSays {
       }
       azzertEquals(res, document);
     }
+  }
+
+  static ASTNode extractStatementIfOne(ASTNode ¢) {
+    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
   }
 }

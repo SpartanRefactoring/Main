@@ -13,6 +13,8 @@ public class Mapper extends JavadocMarkerNanoPattern<MethodDeclaration> {
   Set<UserDefinedTipper<Statement>> tippers;
 
   public Mapper() {
+    // TODO Marco: see if you can move this initialization code to the
+    // definition of tippers.
     if (tippers != null)
       return;
     tippers = new HashSet<>();
