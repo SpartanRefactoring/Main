@@ -144,6 +144,7 @@ public class Analyzer {
     final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
     addNanoPatterns(spartanizer);
     String spartanizedCode = "";
+    new File(outputFolder + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
       // System.out.println("Now: " + ¢.getName());
       spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
@@ -157,9 +158,14 @@ public class Analyzer {
             new TernaryNullCoallescing(), //
             new TernaryNullConditional(), //
             null) //
-        .add(Assignment.class, new AssignmentLazyEvaluation(), //
+        .add(Assignment.class, //
+            new AssignmentLazyEvaluation(), //
             null) //
-        .add(Block.class, new CachingPattern(), //
+        .add(Block.class, //
+            new CachingPattern(), //
+            null) //
+        .add(IfStatement.class, //
+            new IfNullThrow(), //
             null) //
         .add(MethodDeclaration.class, //
             new MethodEmpty(), //

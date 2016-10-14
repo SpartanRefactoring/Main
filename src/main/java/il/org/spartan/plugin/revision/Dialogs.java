@@ -7,6 +7,7 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.resource.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.*;
@@ -23,6 +24,8 @@ public class Dialogs {
   private static boolean iconInitialized;
   /** Icon used for dialogs. May not appear on some OSs. */
   static Image icon;
+  /** Id for run in background button. */
+  public static final int RIB_ID = 2;
 
   /** Lazy, dynamic loading of the dialogs' icon.
    * @return icon used by dialogs */
@@ -69,6 +72,23 @@ public class Dialogs {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.MODELESS);
+      }
+
+      @Override protected void createButtonsForButtonBar(Composite ¢) {
+        createButton(¢, RIB_ID, "Run in Background", false);
+        super.createButtonsForButtonBar(¢);
+      }
+      
+      @Override protected void buttonPressed(int ¢) {
+        super.buttonPressed(¢);
+        switch (¢) {
+          case RIB_ID:
+            decrementNestingDepth();
+            close();
+            break;
+          default:
+            break;
+        }
       }
     };
     $.setBlockOnOpen(false);

@@ -64,7 +64,7 @@ public class TipperFactory {
   }
 
   public static <N extends ASTNode> UserDefinedTipper<N> tipper(final String _pattern, final String _replacement, final String description) {
-    final ASTNode pattern = wizard.ast(reformat$Bs(_pattern));
+    final ASTNode pattern = extractStatementIfOne(wizard.ast(reformat$Bs(_pattern)));
     final String replacement = reformat$Bs(_replacement);
     return new UserDefinedTipper<N>() {
       @Override public String description(@SuppressWarnings("unused") final N __) {
@@ -83,7 +83,7 @@ public class TipperFactory {
             wizard.ast(replacement).accept(new ASTVisitor() {
               @Override public boolean preVisit2(final ASTNode ¢) {
                 if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "") + ""));
+                  $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
                 return true;
               }
             });
@@ -134,5 +134,9 @@ public class TipperFactory {
 
   static String reformat$Bs(final String ¢) {
     return ¢.replaceAll("\\$B\\d*", "$0\\(\\);");
+  }
+
+  static ASTNode extractStatementIfOne(ASTNode ¢) {
+    return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
   }
 }

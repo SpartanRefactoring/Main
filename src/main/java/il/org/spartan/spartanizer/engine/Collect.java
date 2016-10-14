@@ -478,8 +478,8 @@ public enum Collect {
 
     /** @param ns
      * @return */
-    public List<String> inside(final ASTNode... __) {
-      return null;
+    @SuppressWarnings("static-method") public List<String> inside(final ASTNode... __) {
+      return new ArrayList<>();
     }
 
     Collector(final String name) {
