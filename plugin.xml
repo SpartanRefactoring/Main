@@ -89,7 +89,7 @@ Java class which generates several quick fix for tips. -->
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.plugin.revision.QuickFixer"
   />
 </extension>
 
