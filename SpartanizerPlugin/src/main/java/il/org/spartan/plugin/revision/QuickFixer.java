@@ -20,23 +20,24 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ori Roth
  * @since 2013/07/01 */
-public final class QuickFixer implements IMarkerResolutionGenerator {
+@SuppressWarnings("unused") public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker m) {
     try {
       final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
       assert $ != null;
       return new IMarkerResolution[] { //
           apply, //
-          applyPreview, //
-          laconizeFile, //
+          // applyPreview, //
+          // laconizeFile, //
           laconizeFunction, //
           laconizeClass, //
-          singleTipperFunction, //
+          // singleTipperFunction, //
           singleTipperFile, //
           singleTipperProject, //
           disableFunction, //
           disableClass, //
-          disableFile };
+          // disableFile //
+      };
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
       return new IMarkerResolution[] {};
