@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
  * {@link Listener.S}
  * @author Ori Roth
  * @author Yossi Gil
- * @since 2016 */
+ * @since 2.6 */
 public interface Listener {
   final AtomicInteger id = new AtomicInteger();
 
@@ -18,6 +18,8 @@ public interface Listener {
     return id.get();
   }
 
+  /** Main listener function.
+   * @param ¢ object to be listened to */
   default void tick(final Object... ¢) {
     id.incrementAndGet();
     ___.unused(¢);
