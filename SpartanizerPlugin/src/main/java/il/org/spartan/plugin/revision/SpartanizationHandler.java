@@ -48,19 +48,25 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if ($.selection().size() >= DIALOG_THRESHOLD) {
+            if (d.getProgressMonitor().isCanceled())
+              $.stop();
             asynch(() -> {
               d.getProgressMonitor().subTask("Spartanizing " + ¢.getElementName());
               d.getProgressMonitor().worked(1);
             });
+          }
         })) //
         .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
         .expend(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
         .expend(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if ($.selection().size() >= DIALOG_THRESHOLD) {
+            if (d.getProgressMonitor().isCanceled())
+              $.stop();
             asynch(() -> {
               d.getProgressMonitor().beginTask(NAME, $.selection().size());
             });
+          }
         })) //
         .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD && !Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
@@ -86,9 +92,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();
         })));
     $.runContext(r -> {
-      // TODO Roth: allow cancellation
       try {
-        d.run(true, false, __ -> {
+        d.run(true, true, __ -> {
           r.run();
         });
       } catch (InvocationTargetException | InterruptedException x) {
