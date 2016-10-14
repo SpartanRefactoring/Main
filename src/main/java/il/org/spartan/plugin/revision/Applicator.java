@@ -2,6 +2,8 @@ package il.org.spartan.plugin.revision;
 
 import java.util.function.*;
 
+import org.eclipse.jdt.core.*;
+
 /** Configurable applicator.
  * @author Ori Roth
  * @since 2.6 */
@@ -13,6 +15,11 @@ public abstract class Applicator<L extends Listener> {
   /** The context in which the application runs. The bulk of the application
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
+  /** The modification process for each {@link ICompilationUnit} in
+   * {@link Selection}. May activate, for instance, a {@link GUI$Applicator}.
+   * The return value determines whether the compilation unit should continue to
+   * the next pass or not. */
+  private Function<ICompilationUnit, Boolean> runAction;
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
   private int passes;
@@ -40,6 +47,19 @@ public abstract class Applicator<L extends Listener> {
    * @return this applicator */
   public Applicator<L> runContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
+    return this;
+  }
+
+  /** @return run action for this applicator */
+  public Function<ICompilationUnit, Boolean> runAction() {
+    return runAction;
+  }
+
+  /** Determines run action for this applicator.
+   * @param ¢ JD
+   * @return this applicator */
+  public Applicator<L> runAction(final Function<ICompilationUnit, Boolean> ¢) {
+    runAction = ¢;
     return this;
   }
 
