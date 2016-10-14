@@ -49,7 +49,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
    * are empty, or contain final modifier only.
    * @param s
    * @param x
-   * @return true iff initializer's and declaration's modifiers are mergable. */
+   * @return <code><b>true</b></code> <em>iff</em> initializer's and declaration's modifiers are mergable. */
   private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
     final List<IExtendedModifier> declarationModifiers = step.extendedModifiers(s), initializerModifiers = step.extendedModifiers(x);
     return declarationModifiers.isEmpty() && initializerModifiers.isEmpty() || haz.Final(declarationModifiers) && haz.Final(initializerModifiers);

@@ -72,7 +72,7 @@ public abstract class LaconizeSelection extends BaseHandler {
    * @return selection chosen for spartanization */
   public abstract Range getSelection(ICompilationUnit u);
 
-  /** @return true iff the handler runs in a loop, for
+  /** @return <code><b>true</b></code> <em>iff</em> the handler runs in a loop, for
    *         {@link LaconizeSelection#MAX_PASSES} times */
   public abstract boolean isRepeating();
 

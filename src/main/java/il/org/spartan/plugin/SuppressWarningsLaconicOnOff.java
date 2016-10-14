@@ -61,7 +61,7 @@ public final class SuppressWarningsLaconicOnOff {
   }
 
   /** @param n an {@link ASTNode}
-   * @return true iff the node is disabled by an ancestor
+   * @return <code><b>true</b></code> <em>iff</em> the node is disabled by an ancestor
    *         {@link BodyDeclaration}, containing a disabler in its JavaDoc. */
   static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())

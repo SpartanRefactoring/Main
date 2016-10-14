@@ -73,7 +73,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * {@link ForStatement}.
    * @param s JD
    * @param n JD
-   * @return true <b>iff</b> the SimpleName is used in a ForStatement's
+   * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a ForStatement's
    *         condition, updaters, or body. */
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
     return !Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty();

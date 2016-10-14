@@ -45,7 +45,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
    * @param b a method
    * @param n the context in which the method is invoked
    * @param u current {@link CompilationUnit}
-   * @return true iff method is visible from its context */
+   * @return <code><b>true</b></code> <em>iff</em> method is visible from its context */
   public static boolean isVisible(final IMethodBinding b, final ASTNode n, final CompilationUnit u) {
     final int ms = b.getModifiers();
     if (Modifier.isPublic(ms))
