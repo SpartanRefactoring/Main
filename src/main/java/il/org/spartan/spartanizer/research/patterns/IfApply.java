@@ -19,7 +19,7 @@ public final class IfApply extends NanoPatternTipper<IfStatement> implements Tip
     return "replace .......";
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return elze(¢) == null && !iz.block(step.then(¢));
   }
 

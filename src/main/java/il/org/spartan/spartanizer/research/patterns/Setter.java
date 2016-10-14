@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.leonidas.*;
 public class Setter extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.tipper("this.$N", "", "");
 
-  @Override protected boolean morePrerequisites(final MethodDeclaration ¢) {
+  @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null)
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();

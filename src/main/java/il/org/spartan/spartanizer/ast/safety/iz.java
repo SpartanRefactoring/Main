@@ -950,5 +950,16 @@ public interface iz {
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
     }
+  /** @param ¢ JD
+   * @return */
+  static boolean fieldAccess(final Expression ¢) {
+    return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
   }
+
+  /** @param ¢ JD
+   * @return */
+  static boolean classInstanceCreation(ASTNode ¢) {
+    return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+  }
+}
 }
