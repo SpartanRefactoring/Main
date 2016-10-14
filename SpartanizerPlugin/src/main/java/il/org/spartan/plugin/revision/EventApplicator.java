@@ -69,6 +69,12 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     return this;
   }
 
+  /** Default settings for all {@link Applicator} components.
+   * @return this applicator */
+  public EventApplicator defaultSettings() {
+    return defaultListener().defaultPassesFew().defaultRunContext().defaultSelection();
+  }
+
   // TODO Roth: use Policy / replacement for Trimmer.
   /** Temporary solution using {@link Trimmer}. */
   private void goTrimmer() {
@@ -85,6 +91,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
       for (int pass = 0; pass < l; ++pass) {
         final Trimmer trimmer = new Trimmer();
         listener().tick(event.run_pass);
+        if (!shouldRun())
+          break;
         final List<ICompilationUnit> dead = new LinkedList<>();
         for (final ICompilationUnit ¢ : alive) {
           final Range r = selection().textSelection == null ? new Range(0, 0)
@@ -92,9 +100,11 @@ public class EventApplicator extends Applicator<EventListener<event>> {
           if (!trimmer.apply(¢, r))
             dead.add(¢);
           listener().tick(event.visit_cu, ¢);
+          if (!shouldRun())
+            break;
         }
         alive.removeAll(dead);
-        if (alive.isEmpty())
+        if (alive.isEmpty() || !shouldRun())
           break;
       }
     });
