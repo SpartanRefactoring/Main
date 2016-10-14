@@ -26,7 +26,7 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
     return "replace lazy evaluation with lazyEvaluatedTo($X1,$X2)";
   }
 
-  @Override public boolean prerequisite(final Assignment x) {
+  @Override public boolean canTip(final Assignment x) {
     for (final UserDefinedTipper<Assignment> ¢ : tippers)
       if (¢.canTip(x))
         return true;

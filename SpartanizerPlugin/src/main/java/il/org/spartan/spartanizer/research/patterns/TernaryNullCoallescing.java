@@ -28,7 +28,7 @@ public final class TernaryNullCoallescing extends NanoPatternTipper<ConditionalE
     return "replace null coallescing ternary with ??";
   }
 
-  @Override public boolean prerequisite(final ConditionalExpression x) {
+  @Override public boolean canTip(final ConditionalExpression x) {
     if (!iz.comparison(az.infixExpression(step.expression(x))))
       return false;
     final InfixExpression condition = az.comparison(step.expression(x));

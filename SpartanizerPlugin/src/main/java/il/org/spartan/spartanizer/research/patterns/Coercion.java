@@ -9,14 +9,14 @@ import il.org.spartan.spartanizer.engine.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Coercion extends NanoPatternTipper<CastExpression> {
-  @Override protected boolean prerequisite(@SuppressWarnings("unused") CastExpression __) {
+  @Override public boolean canTip(@SuppressWarnings("unused") CastExpression __) {
     return true;
   }
 
   @Override public Tip tip(CastExpression ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(ASTRewrite r, TextEditGroup g) {
-        r.replace(¢, wizard.ast("az(" + ¢.getType() + ", " + ¢.getExpression() + ")"), g);
+        r.replace(¢, wizard.ast("az(\"" + ¢.getType() + "\", " + ¢.getExpression() + ")"), g);
       }
     };
   }

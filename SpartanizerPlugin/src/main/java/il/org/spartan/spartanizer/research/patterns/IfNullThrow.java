@@ -16,7 +16,7 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
     return "Grumpy pattern";
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return tipper.canTip(¢);
   }
 

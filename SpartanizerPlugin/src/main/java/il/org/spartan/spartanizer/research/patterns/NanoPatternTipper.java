@@ -10,11 +10,5 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Nanos {
-  @Override public final boolean canTip(final N ¢) {
-    return prerequisite(¢);
-  }
-
-  protected abstract boolean prerequisite(final N ¢);
-
   @Override public abstract Tip tip(final N ¢) throws TipperFailure;
 }

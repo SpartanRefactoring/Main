@@ -16,7 +16,7 @@ public final class CachingPattern extends NanoPatternTipper<Block> {
     return tipper.description();
   }
 
-  @Override public boolean prerequisite(final Block x) {
+  @Override public boolean canTip(final Block x) {
     return tipper.canTip(x);
   }
 
