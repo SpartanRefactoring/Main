@@ -3,22 +3,21 @@ package il.org.spartan.spartanizer.research.patterns;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
 public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> extends NanoPatternTipper<N> {
-  @Override protected final boolean prerequisite(final N ¢) {
+  @Override public final boolean canTip(final N ¢) {
     final Javadoc j = ¢.getJavadoc();
-    return (j == null || !(j + "").contains(javadoc())) && morePrerequisites(¢);
+    return (j == null || !(j + "").contains(javadoc())) && prerequisites(¢);
   }
 
-  protected abstract boolean morePrerequisites(N ¢);
+  protected abstract boolean prerequisites(N ¢);
 
   @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
-      @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Javadoc j = n.getJavadoc();
         final String s = (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + javadoc() + "\n */");
         if (j != null)

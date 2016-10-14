@@ -30,7 +30,7 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
     return "replace null conditionl ternary with ?.";
   }
 
-  @Override public boolean prerequisite(final ConditionalExpression x) {
+  @Override public boolean canTip(final ConditionalExpression x) {
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return true;
