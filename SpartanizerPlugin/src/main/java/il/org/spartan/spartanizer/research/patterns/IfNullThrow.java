@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,7 +21,7 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
     return tipper.canTip(¢);
   }
 
-  @Override public Tip tip(IfStatement ¢) throws TipperFailure {
+  @Override public Tip tip(final IfStatement ¢) throws TipperFailure {
     return tipper.tip(¢);
     // if (¢ == null)
     // throw new $N("Cannot get the toString of a null identity");

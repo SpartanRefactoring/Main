@@ -163,8 +163,8 @@ public enum Tippers {
     final Statement elze = elze(s);
     if (elze == null)
       return true;
-    final int s1 = metrics.lineCount(then);
-    final int s2 = metrics.lineCount(elze);
+    final int s1 = count.lines(then);
+    final int s2 = count.lines(elze);
     if (s1 < s2)
       return true;
     if (s1 > s2)

@@ -79,18 +79,18 @@ public final class CollectClassMetrics {
     // Do
     // this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
-    output.put(prefix + "Count", metrics.count(¢));
-    output.put(prefix + "Non whites", metrics.countNonWhites(¢));
+    output.put(prefix + "Count", count.nodes(¢));
+    output.put(prefix + "Non whites", count.nonWhiteCharacters(¢));
     output.put(prefix + "Condensed size", metrics.condensedSize(¢));
-    output.put(prefix + "Lines", metrics.lineCount(¢));
+    output.put(prefix + "Lines", count.lines(¢));
     output.put(prefix + "Dexterity", metrics.dexterity(¢));
     output.put(prefix + "Leaves", metrics.leaves(¢));
     output.put(prefix + "Nodes", metrics.nodes(¢));
     output.put(prefix + "Internals", metrics.internals(¢));
     output.put(prefix + "Vocabulary", metrics.vocabulary(¢));
     output.put(prefix + "Literacy", metrics.literacy(¢));
-    output.put(prefix + "Imports", metrics.countImports(¢));
-    output.put(prefix + "No Imports", metrics.countNoImport(¢));
+    output.put(prefix + "Imports", count.imports(¢));
+    output.put(prefix + "No Imports", count.noimports(¢));
     output.nl();
   }
 }

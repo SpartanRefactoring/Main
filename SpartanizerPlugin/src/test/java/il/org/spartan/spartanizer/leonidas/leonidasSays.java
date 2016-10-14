@@ -190,7 +190,7 @@ public class leonidasSays {
     }
   }
 
-  static ASTNode extractStatementIfOne(ASTNode ¢) {
+  static ASTNode extractStatementIfOne(final ASTNode ¢) {
     return !iz.block(¢) || az.block(¢).statements().size() != 1 ? ¢ : (ASTNode) az.block(¢).statements().get(0);
   }
 }

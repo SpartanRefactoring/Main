@@ -38,14 +38,14 @@ abstract class $BodyDeclarationModifiersPrune<N extends BodyDeclaration> extends
       $.add(isStatic);
       $.add(isAbstract);
     }
-    if (iz.isMethodDeclaration(¢) && (iz.isPrivate(¢) || iz.isStatic(¢)))
+    if (iz.isMethodDeclaration(¢) && (iz.private¢(¢) || iz.static¢(¢)))
       $.add(isFinal);
     final ASTNode container = hop.containerType(¢);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
     if (container == null)
       return $;
-    if (iz.abstractTypeDeclaration(container) && iz.isFinal(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
+    if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
       $.add(isFinal);
     if (iz.interface¢(container)) {
       $.add(isPublic);
