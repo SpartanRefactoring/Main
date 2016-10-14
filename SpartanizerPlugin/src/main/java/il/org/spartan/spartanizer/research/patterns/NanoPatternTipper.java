@@ -15,6 +15,6 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N> imp
   }
 
   protected abstract boolean prerequisite(final N ¢);
-  
-  @Override public abstract Tip tip(final N ¢)  throws TipperFailure;
+
+  @Override public abstract Tip tip(final N ¢) throws TipperFailure;
 }

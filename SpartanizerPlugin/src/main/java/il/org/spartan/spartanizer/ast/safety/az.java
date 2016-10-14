@@ -32,7 +32,7 @@ public enum az {
       return ¢.substring(0, ¢.length() - 1);
     }
 
-    static double double¢(final Expression ¢) throws  NumberFormatException {
+    static double double¢(final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
           : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
@@ -40,26 +40,26 @@ public enum az {
     }
 
     static double double¢(final String token) throws NumberFormatException {
-        return Double.parseDouble(token);
+      return Double.parseDouble(token);
     }
 
-    static int int¢(final Expression ¢) throws  NumberFormatException {
+    static int int¢(final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
     }
 
-    static int int¢(final String token) throws  NumberFormatException {
-        return Integer.parseInt(token);
+    static int int¢(final String token) throws NumberFormatException {
+      return Integer.parseInt(token);
     }
 
-    static long long¢(final Expression ¢) throws  NumberFormatException {
+    static long long¢(final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
           : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
     }
 
-    static long long¢(final String token) throws  NumberFormatException {
-        return Long.parseLong(token);
+    static long long¢(final String token) throws NumberFormatException {
+      return Long.parseLong(token);
     }
 
     static NumberLiteral negativeLiteral(final Expression ¢) {
