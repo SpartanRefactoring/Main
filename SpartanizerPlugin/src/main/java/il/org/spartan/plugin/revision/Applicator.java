@@ -25,7 +25,7 @@ public abstract class Applicator<L extends Listener> {
     shouldRun = false;
   }
 
-  /** @return true iff this applicator should run. */
+  /** @return <code><b>true</b></code> <em>iff</em> this applicator should run. */
   public boolean shouldRun() {
     return shouldRun;
   }

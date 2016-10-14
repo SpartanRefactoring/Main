@@ -20,7 +20,7 @@ public class NodeData {
   /** Checks node has a property.
    * @param n JD
    * @param key property name
-   * @return true iff node contains the key property */
+   * @return <code><b>true</b></code> <em>iff</em> node contains the key property */
   public static boolean has(final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
   }

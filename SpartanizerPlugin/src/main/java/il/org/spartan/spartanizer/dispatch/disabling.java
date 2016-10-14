@@ -81,7 +81,7 @@ public interface disabling {
   }
 
   /** @param n an {@link ASTNode}
-   * @return true iff the node is spartanization disabled */
+   * @return <code><b>true</b></code> <em>iff</em> the node is spartanization disabled */
   static boolean on(final ASTNode ¢) {
     return NodeData.has(¢, disabledPropertyId);
   }

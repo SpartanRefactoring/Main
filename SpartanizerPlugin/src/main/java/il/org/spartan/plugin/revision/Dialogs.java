@@ -98,14 +98,14 @@ public class Dialogs {
   }
 
   /** @param ¢ JD
-   * @return true iff the user pressed any button except close button. */
+   * @return <code><b>true</b></code> <em>iff</em> the user pressed any button except close button. */
   public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
   }
 
   /** @param ¢ JD
    * @param okIndex index of button to be pressed
-   * @return true iff the button selected has been pressed */
+   * @return <code><b>true</b></code> <em>iff</em> the button selected has been pressed */
   public static boolean ok(final MessageDialog ¢, final int okIndex) {
     return ¢.open() == okIndex;
   }
