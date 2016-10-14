@@ -22,7 +22,5 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
 
   @Override public Tip tip(IfStatement ¢) throws TipperFailure {
     return tipper.tip(¢);
-    // if (¢ == null)
-    // throw new $N("Cannot get the toString of a null identity");
   }
 }
