@@ -607,6 +607,10 @@ public interface iz {
     return nodeTypeEquals(¢, METHOD_INVOCATION);
   }
 
+  static boolean classInstanceCreation(final ASTNode ¢) {
+    return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+  }
+
   static boolean modifier(final ASTNode ¢) {
     return nodeTypeEquals(¢, MODIFIER);
   }
@@ -940,6 +944,6 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean fieldAccess(Expression ¢) {
-    return ¢ != null && ¢.getNodeType() == FIELD_ACCESS;
+    return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
   }
 }
