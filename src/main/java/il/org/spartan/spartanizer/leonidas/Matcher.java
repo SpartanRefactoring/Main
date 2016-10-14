@@ -139,7 +139,7 @@ public class Matcher {
   }
 
   public boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation classInstanceCreation) {
-    return iz.classInstanceCreation(n) && sameName(classInstanceCreation.getName(), az.classInstanceCreation(n).getName())
+    return iz.classInstanceCreation(n) && sameName(classInstanceCreation.getType(), az.classInstanceCreation(n).getType())
         && consistent(classInstanceCreation.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
