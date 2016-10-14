@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @year 2016 */
 public final class IfApply extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    // TODO: complete this nano
+    // TODO Marco: complete this nano
     return "replace .......";
   }
 
@@ -24,7 +24,7 @@ public final class IfApply extends NanoPatternTipper<IfStatement> implements Tip
   }
 
   @Override public Tip tip(final IfStatement ¢) {
-    // TODO Auto-generated method stub
+    // TODO Marco: Auto-generated method stub
     return null;
   }
 }
