@@ -20,8 +20,11 @@ import il.org.spartan.plugin.*;
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
+  /** Handler name used for dialogs. */
   private static final String NAME = "Laconic";
+  /** Maximal number of passes conducted by the applicator of the handler. */
   private static final int PASSES = 20;
+  /** Number of files in selection that triggers dialogs. */
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -96,6 +99,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     return $;
   }
 
+  /** Run asynchronously on UI thread.
+   * @param ¢ code to be run */
   private static void asynch(Runnable ¢) {
     Display.getDefault().asyncExec(¢);
   }
