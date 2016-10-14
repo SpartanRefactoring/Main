@@ -22,26 +22,19 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2013/07/01 */
 @SuppressWarnings("unused") public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker m) {
-    try {
-      final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-      assert $ != null;
-      return new IMarkerResolution[] { //
-          apply, //
-          // applyPreview, //
-          // laconizeFile, //
-          laconizeFunction, //
-          laconizeClass, //
-          // singleTipperFunction, //
-          singleTipperFile, //
-          singleTipperProject, //
-          disableFunction, //
-          disableClass, //
-          // disableFile //
-      };
-    } catch (final CoreException x) {
-      monitor.logEvaluationError(this, x);
-      return new IMarkerResolution[] {};
-    }
+    return new IMarkerResolution[] { //
+        apply, //
+        // applyPreview, //
+        // laconizeFile, //
+        laconizeFunction, //
+        laconizeClass, //
+        // singleTipperFunction, //
+        singleTipperFile, //
+        singleTipperProject, //
+        disableFunction, //
+        disableClass, //
+        // disableFile //
+    };
   }
 
   /** Apply spartanization to marked code. */
