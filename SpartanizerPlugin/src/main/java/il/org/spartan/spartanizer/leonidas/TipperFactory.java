@@ -87,7 +87,7 @@ public class TipperFactory {
                 return true;
               }
             });
-            r.replace(n, wizard.ast($.get()), g);
+            r.replace(n, extractStatementIfOne(wizard.ast($.get())), g);
           }
         };
       }

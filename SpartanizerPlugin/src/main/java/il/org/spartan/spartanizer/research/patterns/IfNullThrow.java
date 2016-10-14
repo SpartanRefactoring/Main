@@ -17,13 +17,11 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
     return "Grumpy pattern";
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return tipper.canTip(¢);
   }
 
   @Override public Tip tip(final IfStatement ¢) throws TipperFailure {
     return tipper.tip(¢);
-    // if (¢ == null)
-    // throw new $N("Cannot get the toString of a null identity");
   }
 }
