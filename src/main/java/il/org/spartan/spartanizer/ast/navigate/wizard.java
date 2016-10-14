@@ -145,8 +145,8 @@ public interface wizard {
    * side(variable) and operator
    * @param base The assignment to compare all others to
    * @param as The assignments to compare
-   * @return true if all assignments has the same left hand side and operator as
-   *         the first one or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
+   *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
     if (hasNull(base, as))
       return false;
@@ -162,7 +162,8 @@ public interface wizard {
 
   /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
-   * @return true if all the operator are the same or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>all the operator are the same
+   *         or false otherwise */
   static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
     if (hasNull(o, os))
       return false;
@@ -190,9 +191,10 @@ public interface wizard {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return true if one of the nodes is an Expression Statement of type Post or
-   *         Pre Expression with ++ or -- operator. false if none of them are or
-   *         if the given parameter is null. */
+   * @return <code><b>true</b></code> <em>iff</em>one of the nodes is an
+   *         Expression Statement of type Post or Pre Expression with ++ or --
+   *         operator. false if none of them are or if the given parameter is
+   *         null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
     if (ns == null)
       return false;
@@ -258,7 +260,8 @@ public interface wizard {
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
-   * @return true if one of {@link #InfixExpression.Operator.XOR},
+   * @return <code><b>true</b></code> <em>iff</em>one of
+   *         {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
   static boolean isBitwiseOperator(final InfixExpression.Operator ¢) {
@@ -272,7 +275,8 @@ public interface wizard {
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
-   * @return true if one of {@link #InfixExpression.Operator.LESS},
+   * @return <code><b>true</b></code> <em>iff</em>one of
+   *         {@link #InfixExpression.Operator.LESS},
    *         {@link #InfixExpression.Operator.GREATER},
    *         {@link #InfixExpression.Operator.LESS_EQUALS},
    *         {@link #InfixExpression.Operator.GREATER_EQUALS},
@@ -292,7 +296,8 @@ public interface wizard {
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
-   * @return true if one of {@link #InfixExpression.Operator.LEFT_SHIFT},
+   * @return <code><b>true</b></code> <em>iff</em>one of
+   *         {@link #InfixExpression.Operator.LEFT_SHIFT},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_SIGNED},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false
    *         otherwise */
@@ -408,7 +413,8 @@ public interface wizard {
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
-   * @return true if all names are the same (string wise) or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>all names are the same (string
+   *         wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
     for (final Expression ¢ : xs)
       if (!same(¢, x))

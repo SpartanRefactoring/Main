@@ -81,7 +81,8 @@ public interface iz {
   }
 
   /** @param subject JD
-   * @return true if the parameter is an essential block or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the parameter is an essential
+   *         block or false otherwise */
   static boolean blockEssential(final Statement ¢) {
     return blockEssential(az.ifStatement(¢));
   }
@@ -92,8 +93,8 @@ public interface iz {
     return blockRequiredInReplacement(¢, ¢);
   }
 
-  static boolean blockRequired(final Statement s) {
-    return blockRequired(az.ifStatement(s));
+  static boolean blockRequired(final Statement ¢) {
+    return blockRequired(az.ifStatement(¢));
   }
 
   static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
@@ -113,8 +114,8 @@ public interface iz {
   }
 
   /** @param ¢ node to check
-   * @return true if the given node is a boolean or null literal or false
-   *         otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a boolean or
+   *         null literal or false otherwise */
   static boolean booleanOrNullLiteral(final ASTNode ¢) {
     return iz.nodeTypeIn(¢, BOOLEAN_LITERAL, NULL_LITERAL);
   }
@@ -123,10 +124,10 @@ public interface iz {
     return iz.nodeTypeEquals(¢, BREAK_STATEMENT);
   }
 
-  /** @param n
+  /** @param ¢
    * @return */
-  static boolean classInstanceCreation(final ASTNode n) {
-    return iz.nodeTypeEquals(n, CLASS_INSTANCE_CREATION);
+  static boolean classInstanceCreation(final ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
   }
 
   static boolean comparison(final Expression ¢) {
@@ -293,7 +294,7 @@ public interface iz {
 
   /** Determine whether a declaration is final or not
    * @param ¢ JD
-   * @return true if declaration is final */
+   * @return <code><b>true</b></code> <em>iff</em>declaration is final */
   static boolean final¢(final BodyDeclaration ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
@@ -366,7 +367,8 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is an infix expression or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is an infix
+   *         expression or false otherwise */
   static boolean infix(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, INFIX_EXPRESSION);
   }
@@ -392,7 +394,8 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is an interface or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is an interface
+   *         or false otherwise */
   static boolean interface¢(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
@@ -402,14 +405,15 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a method decleration or false
-   *         otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a method
+   *         decleration or false otherwise */
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
 
   /** @param ¢ node to check
-   * @return true if the given node is a method invocation or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a method
+   *         invocation or false otherwise */
   static boolean isMethodInvocation(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_INVOCATION);
   }
@@ -440,8 +444,8 @@ public interface iz {
   }
 
   /** @param ¢ node to check
-   * @return true if the given node is a variable declaration statement or false
-   *         otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a variable
+   *         declaration statement or false otherwise */
   static boolean isVariableDeclarationStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
@@ -473,7 +477,8 @@ public interface iz {
 
   /** Determines whether a statement is last statement in its containing method
    * @param s JD
-   * @return true if the parameter is a statement which is last in its method */
+   * @return <code><b>true</b></code> <em>iff</em>the parameter is a statement
+   *         which is last in its method */
   static boolean lastInMethod(final Statement s) {
     final Block b = az.block(parent(s));
     return last(s, statements(b)) && iz.methodDeclaration(parent(b));
@@ -541,13 +546,15 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a literal 0 or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal 0
+   *         or false otherwise */
   static boolean literal0(final ASTNode ¢) {
     return literal(¢, 0);
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a literal 1 or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal 1
+   *         or false otherwise */
   static boolean literal1(final ASTNode ¢) {
     return literal(¢, 1);
   }
@@ -676,7 +683,7 @@ public interface iz {
 
   /** Determine whether a declaration is private
    * @param ¢ JD
-   * @return true if declaration is private */
+   * @return <code><b>true</b></code> <em>iff</em>declaration is private */
   static boolean private¢(final BodyDeclaration ¢) {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
   }
@@ -755,14 +762,15 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a statement or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a statement
+   *         or false otherwise */
   static boolean statement(final ASTNode ¢) {
     return ¢ instanceof Statement;
   }
 
   /** Determine whether a declaration is static or not
    * @param ¢ JD
-   * @return true if declaration is static */
+   * @return <code><b>true</b></code> <em>iff</em>declaration is static */
   static boolean static¢(final BodyDeclaration ¢) {
     return (Modifier.STATIC & ¢.getModifiers()) != 0;
   }
@@ -892,7 +900,8 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return true if the given node is a literal or false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the given node is a literal or
+   *         false otherwise */
   default boolean parsesTo(final String token, final double d) {
     try {
       return Double.parseDouble(token) == d;
@@ -922,13 +931,15 @@ public interface iz {
 
   interface literal {
     /** @param ¢ JD
-     * @return true if the given node is a literal false or false otherwise */
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         false or false otherwise */
     static boolean false¢(final ASTNode ¢) {
       return iz.literal(¢, false);
     }
 
     /** @param ¢ JD
-     * @return true if the given node is a literal true or false otherwise */
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         true or false otherwise */
     static boolean true¢(final ASTNode ¢) {
       return iz.literal(¢, true);
     }
