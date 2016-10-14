@@ -44,7 +44,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   @SuppressWarnings("boxing") protected static EventApplicator applicator() {
     final EventApplicator $ = new EventApplicator();
     $.passes(PASSES);
-    final ProgressMonitorDialog d = Dialogs.progress(true);
+    final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
@@ -67,8 +67,11 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             });
         })) //
         .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD && !Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
-            $.stop();
+          if ($.selection().size() >= DIALOG_THRESHOLD)
+            if (!Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
+              $.stop();
+            else
+              asynch(() -> d.open());
           time.set(System.nanoTime());
         })) //
         .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
