@@ -9,18 +9,18 @@ import il.org.spartan.spartanizer.engine.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> extends NanoPatternTipper<N> {
-  @Override protected final boolean prerequisite(N ¢) {
-    Javadoc j = ¢.getJavadoc();
+  @Override protected final boolean prerequisite(final N ¢) {
+    final Javadoc j = ¢.getJavadoc();
     return (j == null || !(j + "").contains(javadoc())) && morePrerequisites(¢);
   }
 
   protected abstract boolean morePrerequisites(N ¢);
 
-  @Override public final Tip tip(N n) {
+  @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, this.getClass()) {
       @SuppressWarnings("unused") @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Javadoc j = n.getJavadoc();
-        String s = (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + javadoc() + "\n */");
+        final String s = (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + javadoc() + "\n */");
         if (j != null)
           r.replace(j, r.createStringPlaceholder(s, ASTNode.JAVADOC), null);
         else

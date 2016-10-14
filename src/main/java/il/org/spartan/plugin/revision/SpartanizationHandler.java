@@ -5,6 +5,7 @@ import static il.org.spartan.plugin.revision.Linguistic.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
+
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
@@ -96,7 +97,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     return $;
   }
 
-  private static void asynch(Runnable ¢) {
+  private static void asynch(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
   }
 }

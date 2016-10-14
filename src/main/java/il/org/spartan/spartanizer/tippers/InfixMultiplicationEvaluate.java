@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 
-/** Evaluate the multiplication of numbers according to the following rules
- * : </br>
+/** Evaluate the multiplication of numbers according to the following rules :
+ * </br>
  * </br>
  * <code>
  * int * int --> int <br/>
@@ -31,7 +31,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
     try {
       for (final Expression ¢ : xs)
         $ *= az.throwing.double¢(¢);
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -45,7 +45,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
           throw new NumberFormatException();
         $ *= az.throwing.int¢(¢);
       }
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -59,7 +59,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
           throw new NumberFormatException();
         $ *= az.throwing.long¢(¢);
       }
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;

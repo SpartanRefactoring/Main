@@ -939,7 +939,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean fieldAccess(Expression ¢) {
+  static boolean fieldAccess(final Expression ¢) {
     return ¢ != null && ¢.getNodeType() == FIELD_ACCESS;
   }
 }

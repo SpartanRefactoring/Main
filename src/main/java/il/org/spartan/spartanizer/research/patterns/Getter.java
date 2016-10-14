@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.leonidas.*;
 
@@ -18,16 +20,16 @@ public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
     tippers.add(TipperFactory.tipper("return this.$N;", "", ""));
   }
 
-  @Override protected boolean morePrerequisites(MethodDeclaration d) {
+  @Override protected boolean morePrerequisites(final MethodDeclaration d) {
     if (step.body(d) == null)
       return false;
-    for (UserDefinedTipper<Statement> ¢ : tippers)
+    for (final UserDefinedTipper<Statement> ¢ : tippers)
       if (¢.canTip(step.body(d)))
         return true;
     return false;
   }
 
-  @Override public String description(MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + " is a getter method";
   }
 

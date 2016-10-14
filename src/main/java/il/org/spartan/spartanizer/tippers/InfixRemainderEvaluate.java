@@ -42,7 +42,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new Exception("remainder in division by zero is undefined");
         $ %= int¢;
       }
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;
@@ -62,7 +62,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new Exception("remainder in division by zero is undefined");
         $ %= long¢;
       }
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       monitor.logEvaluationError(this, e);
     }
     return $;

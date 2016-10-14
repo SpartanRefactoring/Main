@@ -57,7 +57,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
   /** @param event JD
    * @return the recorder mapped to this event */
-  @SuppressWarnings("rawtypes") public EventFunctor recorder(E event) {
+  @SuppressWarnings("rawtypes") public EventFunctor recorder(final E event) {
     return recorders.get(event);
   }
 
@@ -198,11 +198,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
      * @return this functor. */
     public EventMapperFunctor<E, P, O> does(final Consumer<P> ¢) {
       consumer = consumer == null ? ¢ : consumer.andThen(¢);
-      biConsumer = biConsumer == null ? null : biConsumer.andThen(new BiConsumer<P, O>() {
-        @Override public void accept(P p, @SuppressWarnings("unused") O __) {
-          ¢.accept(p);
-        }
-      });
+      biConsumer = biConsumer == null ? null : biConsumer.andThen((final P p, @SuppressWarnings("unused") final O __) -> ¢.accept(p));
       return this;
     }
 
