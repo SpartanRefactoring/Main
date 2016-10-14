@@ -198,7 +198,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
      * @return this functor. */
     public EventMapperFunctor<E, P, O> does(final Consumer<P> ¢) {
       consumer = consumer == null ? ¢ : consumer.andThen(¢);
-      biConsumer = biConsumer == null ? null : biConsumer.andThen((final P p, @SuppressWarnings("unused") final O __) -> ¢.accept(p));
+      biConsumer = biConsumer == null ? null : biConsumer.andThen((final P p, final O __) -> ¢.accept(p));
       return this;
     }
 
