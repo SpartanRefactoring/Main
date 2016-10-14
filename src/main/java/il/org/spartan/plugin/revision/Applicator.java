@@ -4,6 +4,8 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.*;
 
+import il.org.spartan.plugin.*;
+
 /** Configurable applicator.
  * @author Ori Roth
  * @since 2.6 */
