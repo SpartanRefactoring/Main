@@ -118,7 +118,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   /** Sorts the {@link Expression} list
    * @param xs an {@link Expression} list to sort
-   * @return True if the list was modified */
+   * @return <code><b>true</b></code> <em>iff</em>the list was modified */
   public boolean sort(final List<Expression> xs) {
     boolean $ = false;
     // Bubble sort

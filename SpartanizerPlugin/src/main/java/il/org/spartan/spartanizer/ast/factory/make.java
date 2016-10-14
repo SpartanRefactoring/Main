@@ -180,8 +180,8 @@ public enum make {
     /** Determines whether an infix expression can be added to String concating
      * without parenthesis type wise.
      * @param Expression
-     * @return true if e is an infix expression and if it's first operand is of
-     *         type String and false otherwise */
+     * @return <code><b>true</b></code> <em>iff</em>e is an infix expression and
+     *         if it's first operand is of type String and false otherwise */
     static boolean isStringConactingSafe(final Expression ¢) {
       return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }

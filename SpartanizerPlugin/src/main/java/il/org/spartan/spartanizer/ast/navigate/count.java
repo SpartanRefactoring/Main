@@ -77,8 +77,8 @@ public interface count {
   static int statements(final ASTNode root) {
     final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode n) {
-        $.addAndGet(as.bit(iz.statement(n)));
+      @Override public void preVisit(final ASTNode ¢) {
+        $.addAndGet(as.bit(iz.statement(¢)));
       }
     });
     return $.get();
