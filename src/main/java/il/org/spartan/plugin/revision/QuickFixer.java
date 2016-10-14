@@ -12,6 +12,8 @@ import org.eclipse.ui.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.
@@ -29,12 +31,12 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           laconizeFile, //
           laconizeFunction, //
           laconizeClass, //
-          SingleTipper.InDeclaration.instance(), //
-          SingleTipper.InFile.instance(), //
-          SingleTipper.InProject.instance(), //
+          singleTipperFunction, //
+          singleTipperFile, //
+          singleTipperProject, //
           fixers.disableFunctionFix(), //
           fixers.disableClassFix(), //
-          fixers.disableFileFix() };//
+          fixers.disableFileFix() };
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
       return new IMarkerResolution[] {};
@@ -68,6 +70,15 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   /** Spartanize current class. */
   private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> EventApplicator.defaultApplicator()
       .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class)).go());
+  /** Apply tipper to current function. */
+  private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", ¢ -> EventApplicator.defaultApplicator()
+      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
+  /** Apply tipper to current file. */
+  private final IMarkerResolution singleTipperFile = quickFix("Apply to compilation unit", ¢ -> EventApplicator.defaultApplicator()
+      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+  /** Apply tipper to entire project. */
+  private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", ¢ -> SpartanizationHandler.applicator()
+      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(¢)).go());
 
   /** Factory method for {@link IMarkerResolution}s.
    * @param name resolution's name
@@ -92,6 +103,45 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       monitor.log(x);
     }
     return null;
+  }
+
+  /** Single tipper applicator implementation using modified {@link Trimmer}
+   * @author Ori Roth
+   * @since 2016 */
+  private static class SingleTipper<N extends ASTNode> extends Trimmer {
+    final Tipper<N> tipper;
+
+    public SingleTipper(final Tipper<N> tipper) {
+      this.tipper = tipper;
+    }
+
+    @Override protected boolean check(final ASTNode ¢) {
+      return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
+    }
+
+    @SuppressWarnings("unchecked") @Override protected Tipper<N> getTipper(final ASTNode ¢) {
+      assert check(¢);
+      return !tipper.canTip((N) ¢) ? null : tipper;
+    }
+
+    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker ¢) {
+      try {
+        assert ¢.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
+        return ¢.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) ¢.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
+      } catch (final CoreException x) {
+        monitor.log(x);
+      }
+      return null;
+    }
+
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> t) {
+      try {
+        return new SingleTipper<>(t.newInstance());
+      } catch (InstantiationException | IllegalAccessException x) {
+        monitor.log(x);
+      }
+      return null;
+    }
   }
 
   interface fixers {

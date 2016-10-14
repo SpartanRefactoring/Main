@@ -210,11 +210,22 @@ public class Selection {
      * @return selection of current compilation unit by marker */
     public static Selection getCurrentCompilationUnit(IMarker m) {
       if (!m.exists())
-        return null;
+        return Selection.empty();
       IResource r = m.getResource();
       if (!(r instanceof IFile))
-        return null;
+        return Selection.empty();
       return by((IFile) r).setTextSelection(null);
+    }
+
+    /** @param m JD
+     * @return selection of all compilation units in project by marker */
+    public static Selection getAllCompilationUnit(IMarker m) {
+      if (!m.exists())
+        return Selection.empty();
+      IResource r = m.getResource();
+      if (r == null)
+        return Selection.empty();
+      return by(getJavaProject(r.getProject()));
     }
 
     // TODO Roth: delete this ASAP
@@ -331,9 +342,16 @@ public class Selection {
       return r.getProject();
     }
 
+    // TODO Roth: delete this ASAP
     /** @return current java project */
     private static IJavaProject getJavaProject() {
       final IProject p = getProject();
+      return p == null ? null : JavaCore.create(p);
+    }
+
+    /** @param p JD
+     * @return java project */
+    private static IJavaProject getJavaProject(IProject p) {
       return p == null ? null : JavaCore.create(p);
     }
 
