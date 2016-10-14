@@ -22,11 +22,11 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
         final Javadoc j = n.getJavadoc();
         final String s = (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + javadoc() + "\n */");
         if (j != null)
-          r.replace(j, r.createStringPlaceholder(s, ASTNode.JAVADOC), null);
+          r.replace(j, r.createStringPlaceholder(s, ASTNode.JAVADOC), g);
         else
           r.replace(n,
               r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + javadoc() + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
-              null);
+              g);
       }
     };
   }
