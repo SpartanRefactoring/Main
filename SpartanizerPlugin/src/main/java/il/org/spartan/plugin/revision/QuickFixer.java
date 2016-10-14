@@ -22,6 +22,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2013/07/01 */
 @SuppressWarnings("unused") public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker m) {
+    // TODO Roth: decide what resolutions should appear in the quick fix menu.
+    // Note that in the current configuration the entire menu is accessible
+    // without using the mouse wheel (=very good, elegant and spartanized).
     return new IMarkerResolution[] { //
         apply, //
         // applyPreview, //
