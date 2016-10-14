@@ -69,9 +69,9 @@ import il.org.spartan.spartanizer.utils.*;
     }
 
     /** @param ¢
-     * @return <code><b>true</b></code> <em>iff</em> the ASTNode (self) and its parent
-     *         (blockScope) are the same ones, the type's key() is the same, and
-     *         if the Information nodes hidden are equal. */
+     * @return <code><b>true</b></code> <em>iff</em> the ASTNode (self) and its
+     *         parent (blockScope) are the same ones, the type's key() is the
+     *         same, and if the Information nodes hidden are equal. */
     // Required for MapEntry equality, which is, in turn, required for Set
     // containment check, which is required for testing.
     @Override public boolean equals(final Object ¢) {
@@ -96,7 +96,8 @@ import il.org.spartan.spartanizer.utils.*;
       nest = parent;
     }
 
-    /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is empty. */
+    /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is
+     *         empty. */
     @Override public boolean empty() {
       return flat.isEmpty() && nest.empty();
     }
