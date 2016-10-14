@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.revision;
 
+import java.util.function.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -10,7 +12,6 @@ import org.eclipse.ui.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.utils.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.
@@ -18,51 +19,16 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @since 2013/07/01 */
 public final class QuickFixer implements IMarkerResolutionGenerator {
-  private final IMarkerResolution apply = new IMarkerResolution() {
-    @Override public void run(final IMarker ¢) {
-      final GUI$Applicator g = getSpartanizer(¢);
-      final Applicator<?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢));
-      a.runAction(u -> Boolean.valueOf(g.apply(u,
-          new Range(a.selection().textSelection.getOffset(), a.selection().textSelection.getOffset() + a.selection().textSelection.getLength()))));
-      a.go();
-    }
-
-    @Override public String getLabel() {
-      return "Apply";
-    }
-  };
-  private final IMarkerResolution applyPreview = new IMarkerResolution() {
-    @Override public void run(final IMarker ¢) {
-      final GUI$Applicator g = getSpartanizer(¢);
-      final Applicator<?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢));
-      a.runAction(u -> {
-        try {
-          new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);
-        } catch (final InterruptedException x) {
-          monitor.logCancellationRequest(this, x);
-        }
-        return Boolean.FALSE;
-      });
-      g.setMarker(¢);
-      a.go();
-    }
-
-    @Override public String getLabel() {
-      return "Apply after preview";
-    }
-  };
-
   @Override public IMarkerResolution[] getResolutions(final IMarker m) {
     try {
       final GUI$Applicator $ = Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
       assert $ != null;
       return new IMarkerResolution[] { //
           apply, //
-          // $.getFixWithPreview(), //
           applyPreview, //
-          new LaconizeCurrent(), //
-          new LaconizeSelection.Enclosure(MethodDeclaration.class, "Laconize function"),
-          new LaconizeSelection.Enclosure(TypeDeclaration.class, "Laconize class"), //
+          laconizeFile, //
+          laconizeFunction, //
+          laconizeClass, //
           SingleTipper.InDeclaration.instance(), //
           SingleTipper.InFile.instance(), //
           SingleTipper.InProject.instance(), //
@@ -73,6 +39,50 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       monitor.logEvaluationError(this, x);
       return new IMarkerResolution[] {};
     }
+  }
+
+  /** Apply spartanization to marked code. */
+  private final IMarkerResolution apply = quickFix("Apply",
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.by(¢)).go());
+  /** Apply spartanization to marked code with a preview. */
+  private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
+    final GUI$Applicator g = getSpartanizer(¢);
+    final Applicator<?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢));
+    a.runAction(u -> {
+      try {
+        new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);
+      } catch (final InterruptedException x) {
+        monitor.logCancellationRequest(this, x);
+      }
+      return Boolean.FALSE;
+    });
+    g.setMarker(¢);
+    a.go();
+  });
+  /** Spartanize current file. */
+  private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> EventApplicator.defaultApplicator()
+      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+  /** Spartanize current function. */
+  private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> EventApplicator.defaultApplicator()
+      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
+  /** Spartanize current class. */
+  private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> EventApplicator.defaultApplicator()
+      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class)).go());
+
+  /** Factory method for {@link IMarkerResolution}s.
+   * @param name resolution's name
+   * @param solution resolution's solution
+   * @return marker resolution */
+  private static IMarkerResolution quickFix(final String name, final Consumer<IMarker> solution) {
+    return new IMarkerResolution() {
+      @Override public void run(IMarker ¢) {
+        solution.accept(¢);
+      }
+
+      @Override public String getLabel() {
+        return name;
+      }
+    };
   }
 
   static GUI$Applicator getSpartanizer(final IMarker m) {
