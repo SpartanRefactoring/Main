@@ -243,8 +243,8 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** .
-   * @return True if there are tipss which can be performed on the compilation
-   *         unit. */
+   * @return <code><b>true</b></code> <em>iff</em>there are tipss which can be
+   *         performed on the compilation unit. */
   public final boolean haveTips() {
     return countTips() > 0;
   }
@@ -252,7 +252,7 @@ public abstract class GUI$Applicator extends Refactoring {
   /** @param m marker which represents the range to apply the tipper within
    * @param n the node which needs to be within the range of
    *        <code><b>m</b></code>
-   * @return True if the node is within range */
+   * @return <code><b>true</b></code> <em>iff</em>the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
   }
@@ -326,8 +326,8 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   /** Determines if the node is outside of the selected text.
-   * @return true if the node is not inside selection. If there is no selection
-   *         at all will return false.
+   * @return <code><b>true</b></code> <em>iff</em>the node is not inside
+   *         selection. If there is no selection at all will return false.
    * @DisableSpartan */
   protected boolean isNodeOutsideSelection(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());

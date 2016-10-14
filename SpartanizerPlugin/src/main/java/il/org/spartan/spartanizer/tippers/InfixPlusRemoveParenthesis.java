@@ -24,7 +24,8 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
-   * @return True if the parenthesis can be removed and false otherwise */
+   * @return <code><b>true</b></code> <em>iff</em>the parenthesis can be removed
+   *         and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
     if (in(x.getOperator(), TIMES, DIVIDE))
       return true;
