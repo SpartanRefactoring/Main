@@ -11,7 +11,7 @@ public abstract class Applicator<L extends Listener> {
   /** The selection covered by this applicator. */
   private Selection selection;
   /** The context in which the application runs. The bulk of the application
-   * will run in this context, thus allow tracking and monitoring. */
+   * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
