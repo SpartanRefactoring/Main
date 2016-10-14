@@ -135,8 +135,12 @@ public class Matcher {
   /** @param n
    * @return */
   private boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
-    return iz.classInstanceCreation(n) && sameName(az.classInstanceCreation(p).getName(), az.classInstanceCreation(n).getName())
-        && consistent(az.classInstanceCreation(p).arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
+    return isClassInstanceCreationAndConsistentWith$AArgument(n, az.classInstanceCreation(p));
+  }
+
+  public boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation classInstanceCreation) {
+    return iz.classInstanceCreation(n) && sameName(classInstanceCreation.getName(), az.classInstanceCreation(n).getName())
+        && consistent(classInstanceCreation.arguments().get(0) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
   /** @param p

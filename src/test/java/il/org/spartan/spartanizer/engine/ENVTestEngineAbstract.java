@@ -49,7 +49,8 @@ public abstract class ENVTestEngineAbstract {
    * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
    * contained in the same order in the provided set.
    * @param contains JD
-   * @return <code><b>true</b></code> <em>iff</em> the sets specified, are equally the same. */
+   * @return <code><b>true</b></code> <em>iff</em> the sets specified, are
+   *         equally the same. */
   private static void compareInOrder(final LinkedHashSet<Entry<String, Information>> contains,
       final LinkedHashSet<Entry<String, Information>> contained) {
     assert contained != null;
@@ -75,7 +76,8 @@ public abstract class ENVTestEngineAbstract {
    * Comparison done out-of-order. Assertion fails <b>iff</b> testSet is not
    * contained in the provided set.
    * @param contains JD
-   * @return <code><b>true</b></code> <em>iff</em> the specified {@link LinkedHashSet} contains testSet. */
+   * @return <code><b>true</b></code> <em>iff</em> the specified
+   *         {@link LinkedHashSet} contains testSet. */
   private static void compareOutOfOrder(final LinkedHashSet<Entry<String, Information>> contains,
       final LinkedHashSet<Entry<String, Information>> contained) {
     assert contains != null;
