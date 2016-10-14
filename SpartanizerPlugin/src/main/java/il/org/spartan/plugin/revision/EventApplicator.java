@@ -71,6 +71,12 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     return this;
   }
 
+  /** Default settings for all {@link Applicator} components.
+   * @return this applicator */
+  public EventApplicator defaultSettings() {
+    return defaultListener().defaultPassesFew().defaultRunContext().defaultSelection();
+  }
+
   // TODO Roth: use Policy / replacement for Trimmer.
   /** Temporary solution using {@link Trimmer}. */
   private void goTrimmer() {
