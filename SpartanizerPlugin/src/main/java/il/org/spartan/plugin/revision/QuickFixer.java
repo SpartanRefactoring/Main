@@ -34,9 +34,9 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           singleTipperFunction, //
           singleTipperFile, //
           singleTipperProject, //
-          fixers.disableFunctionFix(), //
-          fixers.disableClassFix(), //
-          fixers.disableFileFix() };
+          disableFunction, //
+          disableClass, //
+          disableFile };
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
       return new IMarkerResolution[] {};
@@ -78,7 +78,13 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
   /** Apply tipper to entire project. */
   private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", ¢ -> SpartanizationHandler.applicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(¢)).go());
+      .defaultRunAction(SingleTipper.getApplicator(¢)).selection(Selection.Util.getAllCompilationUnit(¢)).go());
+  /** Disable spartanization in function. */
+  private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
+  /** Disable spartanization in class. */
+  private final IMarkerResolution disableClass = fixers.disableClassFix();
+  /** Disable spartanization in file. */
+  private final IMarkerResolution disableFile = fixers.disableFileFix();
 
   /** Factory method for {@link IMarkerResolution}s.
    * @param name resolution's name
