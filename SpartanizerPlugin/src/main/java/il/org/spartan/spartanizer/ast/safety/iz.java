@@ -419,7 +419,8 @@ public interface iz {
   }
 
   /** @param a the assignment whose operator we want to check
-   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is plus assign */
+   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is
+   *         plus assign */
   static boolean isMinusAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == MINUS_ASSIGN;
   }
@@ -432,13 +433,15 @@ public interface iz {
   }
 
   /** @param a the assignment whose operator we want to check
-   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is assign */
+   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is
+   *         assign */
   static boolean isPlainAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == ASSIGN;
   }
 
   /** @param a the assignment whose operator we want to check
-   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is plus assign */
+   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is
+   *         plus assign */
   static boolean isPlusAssignment(final Assignment ¢) {
     return ¢ != null && ¢.getOperator() == PLUS_ASSIGN;
   }
@@ -804,9 +807,9 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em> the statement is side effect and updating an initializer
-   *         from the for initializers. returns false if the parent is not a for
-   *         loop. */
+   * @return <code><b>true</b></code> <em>iff</em> the statement is side effect
+   *         and updating an initializer from the for initializers. returns
+   *         false if the parent is not a for loop. */
   static boolean usingForInitializer(final Statement ¢) {
     return az.forStatement(¢.getParent()) != null;
   }
@@ -880,8 +883,8 @@ public interface iz {
    * {@link ForStatement}.
    * @param s JD
    * @param n JD
-   * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a ForStatement's
-   *         condition, updaters, or body. */
+   * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
+   *         ForStatement's condition, updaters, or body. */
   static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
     if (!Collect.usesOf(n).in(step.condition(s)).isEmpty() || !Collect.usesOf(n).in(step.body(s)).isEmpty())
       return true;

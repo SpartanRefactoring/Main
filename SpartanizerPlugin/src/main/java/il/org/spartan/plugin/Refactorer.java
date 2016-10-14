@@ -28,12 +28,14 @@ import il.org.spartan.plugin.revision.*;
   }
   // public static final String UNKNOWN = "???";
 
-  /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a handler */
+  /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a
+   *         handler */
   public static boolean isHandler() {
     return false;
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a marker resolution */
+  /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a marker
+   *         resolution */
   public boolean isMarkerResolution() {
     return false;
   }
@@ -104,7 +106,8 @@ import il.org.spartan.plugin.revision.*;
     return IProgressMonitor.UNKNOWN;
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em> the refactorer shows a display while working */
+  /** @return <code><b>true</b></code> <em>iff</em> the refactorer shows a
+   *         display while working */
   public boolean hasDisplay() {
     return false;
   }
