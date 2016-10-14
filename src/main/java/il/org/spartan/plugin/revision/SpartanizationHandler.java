@@ -18,10 +18,13 @@ import il.org.spartan.plugin.*;
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link EventApplicator} as its applicator.
  * @author Ori Roth
- * @since 2016 */
+ * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
+  /** Handler name used for dialogs. */
   private static final String NAME = "Laconic";
+  /** Maximal number of passes conducted by the applicator of the handler. */
   private static final int PASSES = 20;
+  /** Number of files in selection that triggers dialogs. */
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -45,19 +48,25 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if ($.selection().size() >= DIALOG_THRESHOLD) {
+            if (d.getProgressMonitor().isCanceled())
+              $.stop();
             asynch(() -> {
               d.getProgressMonitor().subTask("Spartanizing " + ¢.getElementName());
               d.getProgressMonitor().worked(1);
             });
+          }
         })) //
         .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
         .expend(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
         .expend(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if ($.selection().size() >= DIALOG_THRESHOLD) {
+            if (d.getProgressMonitor().isCanceled())
+              $.stop();
             asynch(() -> {
               d.getProgressMonitor().beginTask(NAME, $.selection().size());
             });
+          }
         })) //
         .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD && !Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
@@ -83,9 +92,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();
         })));
     $.runContext(r -> {
-      // TODO Roth: allow cancellation
       try {
-        d.run(true, false, __ -> {
+        d.run(true, true, __ -> {
           r.run();
         });
       } catch (InvocationTargetException | InterruptedException x) {
@@ -96,6 +104,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     return $;
   }
 
+  /** Run asynchronously on UI thread.
+   * @param ¢ code to be run */
   private static void asynch(Runnable ¢) {
     Display.getDefault().asyncExec(¢);
   }
