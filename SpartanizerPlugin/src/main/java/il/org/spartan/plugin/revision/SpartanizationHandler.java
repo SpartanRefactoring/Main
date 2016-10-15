@@ -26,7 +26,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    EventApplicator a = applicator().defaultSelection();
+    final EventApplicator a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -143,7 +143,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static class Flag {
     boolean flag;
 
-    public Flag(boolean b) {
+    public Flag(final boolean b) {
       flag = b;
     }
   }

@@ -26,14 +26,14 @@ public class Selection extends AbstractSelection {
   }
 
   public Selection buildAll() {
-    for (CU ¢ : compilationUnits)
+    for (final CU ¢ : compilationUnits)
       ¢.build();
     return this;
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    List<ICompilationUnit> $ = new ArrayList<>();
-    for (CU ¢ : compilationUnits)
+    final List<ICompilationUnit> $ = new ArrayList<>();
+    for (final CU ¢ : compilationUnits)
       $.add(¢.descriptor);
     return $;
   }
@@ -55,7 +55,7 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation unit */
   public static Selection of(final ICompilationUnit ¢) {
-    List<CU> l = new ArrayList<>();
+    final List<CU> l = new ArrayList<>();
     if (¢ != null)
       l.add(CU.of(¢));
     return new Selection(l, null, getName(¢));
@@ -65,7 +65,7 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation unit and text selection */
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
-    List<CU> l = new ArrayList<>();
+    final List<CU> l = new ArrayList<>();
     if (u != null)
       l.add(CU.of(u));
     return new Selection(l, s, getName(u));
@@ -149,10 +149,10 @@ public class Selection extends AbstractSelection {
 
     /** @param m JD
      * @return selection of current compilation unit by marker */
-    public static Selection getCurrentCompilationUnit(IMarker m) {
+    public static Selection getCurrentCompilationUnit(final IMarker m) {
       if (!m.exists())
         return empty();
-      IResource r = m.getResource();
+      final IResource r = m.getResource();
       if (!(r instanceof IFile))
         return empty();
       return (Selection) by((IFile) r).setTextSelection(null);
@@ -160,10 +160,10 @@ public class Selection extends AbstractSelection {
 
     /** @param m JD
      * @return selection of all compilation units in project by marker */
-    public static Selection getAllCompilationUnit(IMarker m) {
+    public static Selection getAllCompilationUnit(final IMarker m) {
       if (!m.exists())
         return empty();
-      IResource r = m.getResource();
+      final IResource r = m.getResource();
       if (r == null)
         return empty();
       return by(getJavaProject(r.getProject()));
@@ -288,7 +288,7 @@ public class Selection extends AbstractSelection {
 
     /** @param p JD
      * @return java project */
-    private static IJavaProject getJavaProject(IProject p) {
+    private static IJavaProject getJavaProject(final IProject p) {
       return p == null ? null : JavaCore.create(p);
     }
 

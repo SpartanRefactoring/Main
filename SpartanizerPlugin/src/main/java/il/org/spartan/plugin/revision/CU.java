@@ -40,7 +40,7 @@ public class CU {
 
   /** [[SuppressWarningsSpartan]] */
   public static List<CU> of(final List<ICompilationUnit> ¢) {
-    List<CU> $ = new ArrayList<>();
+    final List<CU> $ = new ArrayList<>();
     for (final ICompilationUnit u : ¢)
       $.add(new CU(u));
     return $;

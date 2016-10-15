@@ -13,16 +13,16 @@ public class Logger {
   private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
 
   public static void summarize() {
-    for (Integer k : methodsStatistics.keySet()) {
-      MethodRecord m = methodsStatistics.get(k);
+    for (final Integer k : methodsStatistics.keySet()) {
+      final MethodRecord m = methodsStatistics.get(k);
       System.out.println(m.npCounter + " : " + m.methodName);
     }
     methodsStatistics = new HashMap<>();
   }
 
   public static void markNP(final ASTNode n, final String np) {
-    MethodDeclaration m = findMethodAncestor(n);
-    Integer key = Integer.valueOf(m.hashCode());
+    final MethodDeclaration m = findMethodAncestor(n);
+    final Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
       methodsStatistics.put(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(np);
@@ -61,7 +61,7 @@ public class Logger {
     public int numParameters;
     public int numStatements;
 
-    public MethodRecord(MethodDeclaration m) {
+    public MethodRecord(final MethodDeclaration m) {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
@@ -69,7 +69,7 @@ public class Logger {
     }
 
     /** @param np */
-    public void markNP(String np) {
+    public void markNP(final String np) {
       ++npCounter;
       nps.add(np);
     }

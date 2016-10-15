@@ -67,8 +67,8 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
 
-  private static boolean containsZeroOperand(final InfixExpression e) {
-    final List<Expression> allOperands = extract.allOperands(e);
+  private static boolean containsZeroOperand(final InfixExpression x) {
+    final List<Expression> allOperands = extract.allOperands(x);
     for (final Expression opnd : allOperands)
       if (iz.literal0(opnd))
         return true;

@@ -15,10 +15,10 @@ public abstract class Applicator<L extends Listener> {
   /** The context in which the application runs. The bulk of the application
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
-  /** The modification process for each {@link ICU} in
-   * {@link Selection}. May activate, for instance, a {@link GUI$Applicator}.
-   * The return value determines whether the compilation unit should continue to
-   * the next pass or not. */
+  /** The modification process for each {@link ICU} in {@link Selection}. May
+   * activate, for instance, a {@link GUI$Applicator}. The return value
+   * determines whether the compilation unit should continue to the next pass or
+   * not. */
   private Function<CU, Boolean> runAction;
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
