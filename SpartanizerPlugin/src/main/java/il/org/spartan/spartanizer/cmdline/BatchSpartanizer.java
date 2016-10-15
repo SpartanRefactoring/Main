@@ -75,14 +75,14 @@ public final class BatchSpartanizer {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
-//        System.out.println("OutputDir: " + outputDir);
+        // System.out.println("OutputDir: " + outputDir);
         ¢ += 2;
       } else if ("-i".equals(args[¢])) {
         inputDir = args[¢ + 1];
-//        System.out.println("InputDir: " + inputDir);
+        // System.out.println("InputDir: " + inputDir);
         ¢ += 2;
       } else if ("-d".equals(args[¢])) {
-        inputDir =".";
+        inputDir = ".";
         ¢ += 1;
       } else {
         System.out.println(args[¢]);
