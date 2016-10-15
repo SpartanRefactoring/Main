@@ -153,4 +153,16 @@ public interface metrics {
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
   }
+
+  /** @param d */
+  static int statementsQuantity(MethodDeclaration d) {
+    final Int $ = new Int();
+    d.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (¢ instanceof Statement)
+          ++$.inner;
+      }
+    });
+    return $.inner;
+  }
 }
