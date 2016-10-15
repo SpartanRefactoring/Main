@@ -159,7 +159,7 @@ public interface metrics {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
-        if (¢ instanceof Statement)
+        if (¢ instanceof Statement && !(¢ instanceof Block))
           ++$.inner;
       }
     });
