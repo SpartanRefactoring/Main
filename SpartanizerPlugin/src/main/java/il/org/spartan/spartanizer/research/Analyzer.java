@@ -175,6 +175,7 @@ public class Analyzer {
             new Getter(), //
             new Setter(), //
             new Mapper(), //
+            new Exploder(), //
             null);
   }
 }
