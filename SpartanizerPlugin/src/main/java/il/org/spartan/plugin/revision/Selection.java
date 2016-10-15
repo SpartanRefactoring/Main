@@ -6,6 +6,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
@@ -233,7 +234,7 @@ public class Selection extends AbstractSelection {
       ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return empty();
-      CU cu = CU.of(u).build();
+      CU cu = CU.of(u);
       ASTNode n = getNodeByMarker(cu, m);
       if (n == null)
         return empty();
@@ -437,6 +438,35 @@ public class Selection extends AbstractSelection {
         monitor.logEvaluationError(x);
       }
       return null;
+    }
+  }
+
+  public class WithTracking extends Selection {
+    ASTNode track;
+    ITrackedNodePosition position;
+
+    public WithTracking(CU compilationUnit, ITextSelection textSelection, String name) {
+      super(Collections.singletonList(compilationUnit), textSelection, name);
+    }
+
+    public WithTracking track(final ASTNode ¢) {
+      track = ¢;
+      return this;
+    }
+
+    public void acknowledge(final ASTRewrite ¢) {
+      if (track != null)
+        position = ¢.track(track);
+    }
+
+    public void update() {
+      if (track == null || Selection.this.compilationUnits == null || Selection.this.compilationUnits.size() != 1)
+        compilationUnits = null; // empty selection
+      else {
+        Selection.this.textSelection = new TextSelection(position.getStartPosition(), position.getLength());
+        track = new NodeFinder(compilationUnits.get(0).build().compilationUnit, Selection.this.textSelection.getOffset(),
+            Selection.this.textSelection.getLength()).getCoveredNode();
+      }
     }
   }
 }

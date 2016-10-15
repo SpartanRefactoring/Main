@@ -116,7 +116,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @return this applicator */
   public EventApplicator defaultRunAction() {
     final Trimmer t = new Trimmer();
-    runAction(u -> Boolean.valueOf(t.apply(u, selection().textSelection)));
+    runAction(u -> Boolean.valueOf(t.apply(u, selection())));
     return this;
   }
 
@@ -125,7 +125,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @param a JD
    * @return this applicator */
   public EventApplicator defaultRunAction(final GUI$Applicator a) {
-    runAction(u -> Boolean.valueOf(a.apply(u, selection().textSelection)));
+    runAction(u -> Boolean.valueOf(a.apply(u, selection())));
     return this;
   }
 
