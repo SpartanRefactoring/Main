@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class Logger {
   private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
+  private static int numMethods;
 
   public static void summarize(String outputDir) {
     CSVStatistics report = null;
@@ -31,13 +32,20 @@ public class Logger {
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
+          .put("#Expressions", m.numExpressions) //
+          .put("#NP expressions", m.numNPExpressions) //
           .put("#Paramaters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
     }
     report.close();
+    reset();
+  }
+
+  private static void reset() {
     methodsStatistics = new HashMap<>();
+    numMethods = 0;
   }
 
   public static void logNP(final ASTNode n, final String np) {
@@ -77,21 +85,30 @@ public class Logger {
     public String methodName;
     public String methodClassName;
     public int numNPStatements;
+    public int numNPExpressions;
     public List<String> nps = new ArrayList<>();
     public int numParameters;
     public int numStatements;
+    public int numExpressions;
 
     public MethodRecord(MethodDeclaration m) {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
-      numStatements = metrics.statementsQuantity(m);
+      numStatements = metrics.countStatements(m);
+      numExpressions = metrics.countExpressions(m);
     }
 
     /** @param np */
     public void markNP(ASTNode n, String np) {
-      numNPStatements += metrics.statementsQuantity(n);
+      numNPStatements += metrics.countStatements(n);
+      numNPExpressions += metrics.countExpressions(n);
       nps.add(np);
     }
+  }
+
+  /** @param cu */
+  public static void logCompilationUnit(ASTNode cu) {
+    numMethods += metrics.countMethods(cu);
   }
 }
