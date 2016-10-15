@@ -11,7 +11,7 @@ public class TrackerSelection extends Selection {
   ITrackedNodePosition position;
 
   public TrackerSelection(CU compilationUnit, ITextSelection textSelection, String name) {
-    super(compilationUnit == null ? null : Collections.singletonList(CU.nonDisposal(compilationUnit.descriptor)), textSelection, name);
+    super(asList(compilationUnit), textSelection, name);
   }
 
   public static TrackerSelection empty() {
@@ -38,5 +38,12 @@ public class TrackerSelection extends Selection {
       if (track == null || track.getStartPosition() != textSelection.getOffset() || track.getLength() != textSelection.getLength())
         compilationUnits.clear(); // empty selection
     }
+  }
+  
+  private static List<CU> asList(CU ¢) {
+    List<CU> $ = new ArrayList<>();
+    if (¢ != null)
+      $.add(¢);
+    return $;
   }
 }

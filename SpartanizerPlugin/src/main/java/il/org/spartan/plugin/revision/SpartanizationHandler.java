@@ -26,7 +26,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    applicator().defaultSelection().go();
+    EventApplicator a = applicator().defaultSelection();
+    a.passes(a.selection().textSelection != null ? 1 : PASSES);
+    a.go();
     return null;
   }
 
@@ -42,7 +44,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
   protected static EventApplicator applicator() {
     final EventApplicator $ = new EventApplicator();
-    $.passes(PASSES);
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();
     final Flag openDialog = new Flag(false);
