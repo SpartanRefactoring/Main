@@ -135,8 +135,8 @@ public class Analyzer {
       // System.out.println("Now: " + ¢.getName());
       spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
       appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
-      Logger.summarizeFile();
     }
+    Logger.summarize();
   }
 
   private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
@@ -148,12 +148,9 @@ public class Analyzer {
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
             null) //
-        .add(Block.class, //
-            new CachingPattern(), //
-            null) //
-//        .add(CastExpression.class, //
-//            new Coercion(), //
-//            null) //
+        // .add(CastExpression.class, //
+        // new Coercion(), //
+        // null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             null) //
