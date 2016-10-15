@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Ori Marcovitch
@@ -11,10 +12,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public class Logger {
   private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
 
-  public static void summarizeFile() {
+  public static void summarize() {
     for (Integer k : methodsStatistics.keySet()) {
       MethodRecord m = methodsStatistics.get(k);
-      System.out.println(m.methodName + " : " + m.npCounter);
+      System.out.println(m.npCounter + " : " + m.methodName);
     }
     methodsStatistics = new HashMap<>();
   }
@@ -57,12 +58,14 @@ public class Logger {
     public String methodClassName;
     public int npCounter;
     public List<String> nps = new ArrayList<>();
-    public int parameters;
+    public int numParameters;
+    public int numStatements;
 
     public MethodRecord(MethodDeclaration m) {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
-      parameters = m.parameters().size();
+      numParameters = m.parameters().size();
+      numStatements = metrics.statementsQuantity(m);
     }
 
     /** @param np */
