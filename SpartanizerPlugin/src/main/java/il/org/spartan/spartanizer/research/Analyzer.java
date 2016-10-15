@@ -133,7 +133,6 @@ public class Analyzer {
     new File(outputFolder + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
       // System.out.println("Now: " + ¢.getName());
-      Logger.enterFile(¢.getAbsolutePath());
       spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
       appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
       Logger.summarizeFile();

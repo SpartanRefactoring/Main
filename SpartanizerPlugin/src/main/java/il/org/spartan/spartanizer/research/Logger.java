@@ -9,25 +9,22 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Logger {
-  private static Map<String, Integer> npCounter = new HashMap<>();
-  private static String currentFile;
-
-  public static void enterFile(final String file) {
-    currentFile = file;
-  }
+  private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
 
   public static void summarizeFile() {
-    for (String k : npCounter.keySet())
-      System.out.println(npCounter.get(k) + " : " + k);
-    npCounter = new HashMap<>();
+    for (Integer k : methodsStatistics.keySet()) {
+      MethodRecord m = methodsStatistics.get(k);
+      System.out.println(m.methodName + " : " + m.npCounter);
+    }
+    methodsStatistics = new HashMap<>();
   }
 
   public static void markNP(final ASTNode n, final String np) {
     MethodDeclaration m = findMethodAncestor(n);
-    String s = findTypeAncestor(n) + "~" + m.getName() + m.parameters();
-    if (!npCounter.containsKey(s))
-      npCounter.put(s, Integer.valueOf(0));
-    npCounter.put(s, Integer.valueOf(npCounter.get(s).intValue() + 1));
+    Integer key = Integer.valueOf(m.hashCode());
+    if (!methodsStatistics.containsKey(key))
+      methodsStatistics.put(key, new MethodRecord(m));
+    methodsStatistics.get(key).markNP(np);
   }
 
   /** @param ¢
@@ -41,7 +38,7 @@ public class Logger {
 
   /** @param ¢
    * @return */
-  private static String findTypeAncestor(final ASTNode ¢) {
+  static String findTypeAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
     String $ = "";
     while (n != null) {
@@ -54,12 +51,24 @@ public class Logger {
     }
     return $.substring(1);
   }
-  // private boolean hasAncestorType(final ASTNode ¢) {
-  // if (¢ == null)
-  // return false;
-  // ASTNode n = ¢.getParent();
-  // while (!iz.abstractTypeDeclaration(n))
-  // n = n.getParent();
-  // return az.abstractTypeDeclaration(n).getName() + "";
-  // }
+
+  static class MethodRecord {
+    public String methodName;
+    public String methodClassName;
+    public int npCounter;
+    public List<String> nps = new ArrayList<>();
+    public int parameters;
+
+    public MethodRecord(MethodDeclaration m) {
+      methodName = m.getName() + "";
+      methodClassName = findTypeAncestor(m);
+      parameters = m.parameters().size();
+    }
+
+    /** @param np */
+    public void markNP(String np) {
+      ++npCounter;
+      nps.add(np);
+    }
+  }
 }
