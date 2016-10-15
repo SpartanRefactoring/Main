@@ -311,6 +311,7 @@ public class Selection extends AbstractSelection {
       return i == null ? null : by(i.getAdapter(IResource.class));
     }
 
+    // TODO Roth: decide whether to preserve the "full selection multi passes" feature
     /** @param s JD
      * @return selection by text selection */
     private static Selection by(final ITextSelection s) {
