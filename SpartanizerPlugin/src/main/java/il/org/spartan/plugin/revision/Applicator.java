@@ -9,11 +9,11 @@ import il.org.spartan.plugin.*;
 /** Configurable applicator.
  * @author Ori Roth
  * @since 2.6 */
-public abstract class Applicator<L extends Listener> {
+public abstract class Applicator<L extends Listener, F, T, S extends AbstractSelection<F, T>> {
   /** Generic listener. */
   private L listener;
   /** The selection covered by this applicator. */
-  private Selection selection;
+  private S selection;
   /** The context in which the application runs. The bulk of the application
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
@@ -21,7 +21,7 @@ public abstract class Applicator<L extends Listener> {
    * {@link Selection}. May activate, for instance, a {@link GUI$Applicator}.
    * The return value determines whether the compilation unit should continue to
    * the next pass or not. */
-  private Function<ICompilationUnit, Boolean> runAction;
+  private Function<F, Boolean> runAction;
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
   private int passes;
@@ -48,20 +48,20 @@ public abstract class Applicator<L extends Listener> {
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> runContext(final Consumer<Runnable> ¢) {
+  public Applicator<L, F, T, S> runContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
     return this;
   }
 
   /** @return run action for this applicator */
-  public Function<ICompilationUnit, Boolean> runAction() {
+  public Function<F, Boolean> runAction() {
     return runAction;
   }
 
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> runAction(final Function<ICompilationUnit, Boolean> ¢) {
+  public Applicator<L, F, T, S> runAction(final Function<F, Boolean> ¢) {
     runAction = ¢;
     return this;
   }
@@ -74,7 +74,7 @@ public abstract class Applicator<L extends Listener> {
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> passes(final int ¢) {
+  public Applicator<L, F, T, S> passes(final int ¢) {
     passes = ¢;
     return this;
   }
@@ -87,20 +87,20 @@ public abstract class Applicator<L extends Listener> {
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> listener(final L ¢) {
+  public Applicator<L, F, T, S> listener(final L ¢) {
     listener = ¢;
     return this;
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  public Selection selection() {
+  public S selection() {
     return selection;
   }
 
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> selection(final Selection ¢) {
+  public Applicator<L, F, T, S> selection(final S ¢) {
     selection = ¢;
     return this;
   }

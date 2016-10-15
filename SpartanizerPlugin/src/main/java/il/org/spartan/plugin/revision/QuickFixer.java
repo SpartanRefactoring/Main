@@ -46,7 +46,7 @@ import il.org.spartan.spartanizer.tipping.*;
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
     final GUI$Applicator g = getSpartanizer(¢);
-    final Applicator<?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢));
+    final Applicator<?, ?, ?, ?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢));
     a.runAction(u -> {
       try {
         new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);
@@ -74,7 +74,7 @@ import il.org.spartan.spartanizer.tipping.*;
   private final IMarkerResolution singleTipperFile = quickFix("Apply to compilation unit", ¢ -> EventApplicator.defaultApplicator()
       .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
   /** Apply tipper to entire project. */
-  private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", ¢ -> SpartanizationHandler.applicator()
+  private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", ¢ -> SpartanizationHandler.applicator(Selection.class)
       .defaultRunAction(SingleTipper.getApplicator(¢)).selection(Selection.Util.getAllCompilationUnit(¢)).go());
   /** Disable spartanization in function. */
   private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
