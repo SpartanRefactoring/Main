@@ -194,7 +194,7 @@ public final class BatchSpartanizer {
   }
 
   void collect(final File f) {
-//    if (!f.getPath().contains("src/test"))
+    if (!system.isTestFile(f))
       try {
         collect(FileUtils.read(f));
       } catch (final IOException e) {
