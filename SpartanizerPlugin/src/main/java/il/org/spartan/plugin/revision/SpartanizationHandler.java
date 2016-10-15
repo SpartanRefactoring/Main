@@ -45,11 +45,12 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.passes(PASSES);
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();
+    final Flag openDialog = new Flag(false);
     $.listener(EventMapper.empty(event.class) //
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(CU.class).does((__, ¢) -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if (openDialog.flag)
             asynch(() -> {
-              d.getProgressMonitor().subTask("Spartanizing " + ¢.name());
+              d.getProgressMonitor().subTask($.selection().compilationUnits.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
               d.getProgressMonitor().worked(1);
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
@@ -58,7 +59,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
         .expend(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
         .expend(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if (openDialog.flag)
             asynch(() -> {
               d.getProgressMonitor().beginTask(NAME, $.selection().size());
               if (d.getProgressMonitor().isCanceled())
@@ -69,17 +70,19 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           if ($.selection().size() >= DIALOG_THRESHOLD)
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
               $.stop();
-            else
+            else {
               asynch(() -> d.open());
+              openDialog.flag = true;
+            }
           time.set(System.nanoTime());
         })) //
         .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if (openDialog.flag)
             asynch(() -> {
               d.close();
             });
         }).does(¢ -> {
-          if ($.selection().size() >= DIALOG_THRESHOLD)
+          if (openDialog.flag)
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
                 + "\nSpartanized " + nanable(¢.get(event.visit_root)) //
                 + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
@@ -130,6 +133,17 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       if (places < 0)
         throw new IllegalArgumentException();
       return new BigDecimal(value).setScale(places, RoundingMode.HALF_UP).doubleValue();
+    }
+  }
+
+  /** Mutable boolean.
+   * @author Ori Roth
+   * @since 2.6 */
+  private static class Flag {
+    boolean flag;
+
+    public Flag(boolean b) {
+      flag = b;
     }
   }
 }
