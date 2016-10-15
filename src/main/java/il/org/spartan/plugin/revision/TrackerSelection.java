@@ -10,7 +10,7 @@ public class TrackerSelection extends Selection {
   ASTNode track;
   ITrackedNodePosition position;
 
-  public TrackerSelection(CU compilationUnit, ITextSelection textSelection, String name) {
+  public TrackerSelection(final CU compilationUnit, final ITextSelection textSelection, final String name) {
     super(asList(compilationUnit), textSelection, name);
   }
 
@@ -39,9 +39,9 @@ public class TrackerSelection extends Selection {
         compilationUnits.clear(); // empty selection
     }
   }
-  
-  private static List<CU> asList(CU ¢) {
-    List<CU> $ = new ArrayList<>();
+
+  private static List<CU> asList(final CU ¢) {
+    final List<CU> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
     return $;

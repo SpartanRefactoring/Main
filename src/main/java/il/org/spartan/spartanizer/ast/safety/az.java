@@ -471,9 +471,10 @@ public enum az {
       return az.numberLiteral(operand(¢)).getToken();
     }
   }
+
   /** @param ¢ JD
    * @return */
-  public static TypeDeclaration typeDeclaration(ASTNode ¢) {
+  public static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
   }
 }

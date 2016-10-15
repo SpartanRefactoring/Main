@@ -155,10 +155,10 @@ public interface metrics {
   }
 
   /** @param d */
-  static int statementsQuantity(MethodDeclaration d) {
+  static int statementsQuantity(final MethodDeclaration d) {
     final Int $ = new Int();
     d.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
           ++$.inner;
       }

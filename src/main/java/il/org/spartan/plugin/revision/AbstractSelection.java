@@ -19,7 +19,7 @@ public abstract class AbstractSelection {
   public boolean isEmpty() {
     return compilationUnits == null || compilationUnits.isEmpty();
   }
-  
+
   /** @return selection's size in compilation units */
   public int size() {
     return isEmpty() ? 0 : compilationUnits.size();
