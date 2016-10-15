@@ -208,10 +208,10 @@ public class Selection {
 
     /** @param m JD
      * @return selection of current compilation unit by marker */
-    public static Selection getCurrentCompilationUnit(IMarker m) {
+    public static Selection getCurrentCompilationUnit(final IMarker m) {
       if (!m.exists())
         return null;
-      IResource r = m.getResource();
+      final IResource r = m.getResource();
       if (!(r instanceof IFile))
         return null;
       return by((IFile) r).setTextSelection(null);
@@ -284,7 +284,7 @@ public class Selection {
     public static Selection expend(final IMarker m, final Class<? extends ASTNode> c) {
       if (m == null || !m.exists() || c == null || m.getResource() == null || !(m.getResource() instanceof IFile))
         return Selection.empty();
-      ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
+      final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return Selection.empty();
       ASTNode n = getNodeByMarker(u, m);
