@@ -34,9 +34,11 @@ public class Logger {
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements) //
           .put("#Expressions", m.numExpressions) //
           .put("#NP expressions", m.numNPExpressions) //
-          .put("#Paramaters", m.numParameters) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions) //
+          .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
