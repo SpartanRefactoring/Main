@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 
 /** @author Yossi Gil
  * @since 2016 */
@@ -39,9 +40,10 @@ public interface disabling {
       }
 
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (!(¢ instanceof BodyDeclaration) || !disabling.isDisabledByIdentifier((BodyDeclaration) ¢))
+        final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
+        if (!disabling.isDisabledByIdentifier(¢2))
           return true;
-        disabling.disable((BodyDeclaration) ¢);
+        disabling.disable(¢2);
         return false;
       }
     });
@@ -98,7 +100,10 @@ public interface disabling {
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
     if (d == null || d.getJavadoc() == null)
       return false;
-    final String s = d.getJavadoc() + "";
+    return contains(d.getJavadoc() + "", ids);
+  }
+
+  static boolean contains(final String s, final String[] ids) {
     for (final String ¢ : ids)
       if (s.contains(¢))
         return true;
