@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
@@ -40,17 +39,17 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   /** Creates and configures an applicator, without configuring the selection.
-   * @return applicator for this handler */
-  @SuppressWarnings("boxing") protected static EventApplicator applicator() {
+   * @return applicator for this handler [[SuppressWarningsSpartan]] */
+  protected static EventApplicator applicator() {
     final EventApplicator $ = new EventApplicator();
     $.passes(PASSES);
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();
     $.listener(EventMapper.empty(event.class) //
-        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
+        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(CU.class).does((__, ¢) -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
             asynch(() -> {
-              d.getProgressMonitor().subTask("Spartanizing " + ¢.getElementName());
+              d.getProgressMonitor().subTask("Spartanizing " + ¢.name());
               d.getProgressMonitor().worked(1);
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
@@ -84,7 +83,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
                 + "\nSpartanized " + nanable(¢.get(event.visit_root)) //
                 + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
-                  return c.size();
+                  return Integer.valueOf(c.size());
                 }) + " files" //
                 + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass)) //
                 + "\nTotal run time: " + time.intervalInSeconds(System.nanoTime()) + " seconds").open();
@@ -94,8 +93,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         d.run(true, true, __ -> {
           r.run();
         });
-      } catch (InvocationTargetException | InterruptedException x) {
-        monitor.log(x);
+      } catch (InvocationTargetException | InterruptedException e) {
+        monitor.log(e);
+        e.printStackTrace();
       }
     });
     $.defaultRunAction();

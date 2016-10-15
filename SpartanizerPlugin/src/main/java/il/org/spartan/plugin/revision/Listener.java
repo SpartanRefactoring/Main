@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.revision;
 
-import static il.org.spartan.plugin.revision.Listener.*;
-
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
