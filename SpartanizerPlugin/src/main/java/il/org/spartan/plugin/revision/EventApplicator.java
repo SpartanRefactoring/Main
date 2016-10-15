@@ -3,8 +3,10 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
+
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.utils.*;
 
 // TODO Roth: move into separate file
 /** Possible events during spartanization process */
@@ -31,18 +33,17 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     if (!shouldRun())
       return;
     runContext().accept(() -> {
-      final List<CU> alive = new LinkedList<>();
+      final List<ICompilationUnit> alive = new LinkedList<>();
       alive.addAll(selection().compilationUnits);
       final int l = selection().textSelection != null ? 1 : passes();
       for (int pass = 0; pass < l; ++pass) {
         listener().tick(event.run_pass);
         if (!shouldRun())
           break;
-        final List<CU> dead = new LinkedList<>();
-        for (final CU ¢ : alive) {
-          if (!runAction().apply(¢.build()).booleanValue())
+        final List<ICompilationUnit> dead = new LinkedList<>();
+        for (final ICompilationUnit ¢ : alive) {
+          if (!runAction().apply(¢).booleanValue())
             dead.add(¢);
-          ¢.dispose();
           listener().tick(event.visit_cu, ¢);
           if (!shouldRun())
             break;
@@ -116,7 +117,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @return this applicator */
   public EventApplicator defaultRunAction() {
     final Trimmer t = new Trimmer();
-    runAction(u -> Boolean.valueOf(t.apply(u, selection().textSelection)));
+    runAction(u -> Boolean.valueOf(t.apply(u, selection().textSelection == null ? new Range(0, 0)
+        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength()))));
     return this;
   }
 
@@ -125,7 +127,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @param a JD
    * @return this applicator */
   public EventApplicator defaultRunAction(final GUI$Applicator a) {
-    runAction(u -> Boolean.valueOf(a.apply(u, selection().textSelection)));
+    runAction(u -> Boolean.valueOf(a.apply(u, selection().textSelection == null ? new Range(0, 0)
+        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength()))));
     return this;
   }
 
