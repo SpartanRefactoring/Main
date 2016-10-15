@@ -160,8 +160,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
     <toolbar id="il.org.spartan.plugin.toolbars.spartanToolbar">
        <command 
-       tooltip="Fully laconize compilation unit shown in editor"
-         commandId="il.org.spartan.LaconizeCurrent" 
+       tooltip="Laconize"
+         commandId="il.org.spartan.SpartanGlobal" 
          icon="platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif" 
          id="il.org.spartan.plugin.toolbars.HelmetButton">
        </command>
