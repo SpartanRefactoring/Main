@@ -5,8 +5,6 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 

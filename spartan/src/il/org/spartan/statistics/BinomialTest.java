@@ -3,16 +3,14 @@
  */
 package il.org.spartan.statistics;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
-
-import il.org.spartan.*;
+import static org.junit.Assert.assertEquals;
 
 import java.math.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

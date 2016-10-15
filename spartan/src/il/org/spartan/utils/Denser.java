@@ -3,11 +3,9 @@
  */
 package il.org.spartan.utils;
 
-import static il.org.spatan.iteration.Iterables.*;
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
+import static il.org.spatan.iteration.Iterables.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 

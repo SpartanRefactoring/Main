@@ -2,7 +2,7 @@ package il.org.spartan.strings;
 
 import java.util.regex.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separate.*;

@@ -1,9 +1,6 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import java.io.*;
 import java.util.*;

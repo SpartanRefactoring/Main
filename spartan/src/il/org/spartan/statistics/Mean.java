@@ -5,9 +5,8 @@ package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.Skewness.*;
 import static il.org.spartan.statistics.Sum.*;
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.streotypes.*;
 

@@ -3,14 +3,11 @@
  */
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-
-import org.junit.*;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */

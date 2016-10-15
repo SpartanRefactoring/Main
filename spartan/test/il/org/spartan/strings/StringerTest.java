@@ -1,13 +1,10 @@
 package il.org.spartan.strings;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-
-import org.junit.*;
 
 @SuppressWarnings("static-method") public class StringerTest {
   @Test public void testFixNumericalSuffix() {

@@ -1,15 +1,12 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
-
-import il.org.spartan.*;
 
 import java.io.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class StringLiteralsTest {
   static Token toToken(final String s) {

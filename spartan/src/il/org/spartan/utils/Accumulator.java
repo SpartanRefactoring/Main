@@ -3,14 +3,11 @@
  */
 package il.org.spartan.utils;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-
-import org.junit.*;
 
 public abstract class Accumulator {
   static final int asInteger(final boolean b) {

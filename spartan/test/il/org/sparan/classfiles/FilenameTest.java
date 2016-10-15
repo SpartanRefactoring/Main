@@ -1,10 +1,8 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
 
-import org.junit.*;
-
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -128,7 +126,12 @@ import il.org.spartan.classfiles.*;
   }
 
   @Test public void simpleClass2Path() {
-    azzert.that(Filename.class2path(this.getClass()), is("il/ac/technion/cs/ssdl/classfiles/FilenameTest"));
+    @NonNull Class<? extends @NonNull FilenameTest> class1 = getClass();
+    azzert.that(Filename.class2path(class1), is(myImplementation(class1)));
+  }
+
+  private String myImplementation(Class<?> c) {
+    return c.getCanonicalName().replaceAll("[.]", "/");
   }
 
   @Test public void simpleObject2Path() {

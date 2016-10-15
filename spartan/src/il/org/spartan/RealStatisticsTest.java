@@ -1,11 +1,9 @@
 package il.org.spartan;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
-
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.statistics.*;
 

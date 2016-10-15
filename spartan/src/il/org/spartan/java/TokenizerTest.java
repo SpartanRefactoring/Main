@@ -1,17 +1,13 @@
 package il.org.spartan.java;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.java.Token.*;
-import static org.hamcrest.CoreMatchers.*;
-import static il.org.spartan.AssertToAzzert.*;
-import static il.org.spartan.azzert.is;
-
-import org.junit.*;
-
-import il.org.spartan.*;
 
 import java.io.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings("static-method")
 //

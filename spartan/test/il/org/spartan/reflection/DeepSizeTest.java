@@ -1,13 +1,8 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
-
-import org.junit.*;
-
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.reflection.DeepSize.*;

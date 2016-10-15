@@ -3,16 +3,14 @@
  */
 package il.org.spartan.collections;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
-
-import il.org.spartan.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** Manage a window of doubles of a certain size, supporting
  * {@link #add(double)} operations in such a fashion that the oldest value

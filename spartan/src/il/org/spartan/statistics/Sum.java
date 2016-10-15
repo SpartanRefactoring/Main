@@ -3,7 +3,6 @@
  */
 package il.org.spartan.statistics;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.statistics.Mean.mean;
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spatan.iteration.Iterables.*;

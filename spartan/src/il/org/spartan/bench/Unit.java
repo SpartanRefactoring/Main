@@ -1,16 +1,14 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.utils.Box.*;
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
-
-import il.org.spartan.*;
+import static il.org.spartan.utils.Box.*;
+import static org.junit.Assert.assertEquals;
 
 import java.text.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2010 */

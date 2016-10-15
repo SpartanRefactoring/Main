@@ -1,14 +1,12 @@
 package il.org.spartan.statistics;
 
-import static il.org.spatan.iteration.Iterables.*;
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
+import static il.org.spatan.iteration.Iterables.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-
-import org.junit.*;
 
 @SuppressWarnings({ "static-method" }) public class KendallTest {
   @Test public void test10() {

@@ -1,9 +1,6 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import java.lang.reflect.*;
 import java.util.*;
