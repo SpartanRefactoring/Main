@@ -23,29 +23,30 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** @author Yossi Gil
+/** A configurable object capable of making a scan.
+ * @author Yossi Gil
  * @since 2016 */
-abstract class AbstractBatch {
-  protected static final String folder = "/tmp/";
-  protected String afterFileName;
-  protected PrintWriter afters;
-  protected String beforeFileName;
-  protected PrintWriter befores;
-  protected File currentFile;
-  protected int done;
-  protected String inputPath;
-  protected CSVStatistics report;
-  protected String reportFileName;
-  protected Toolbox toolbox = new Toolbox();
-  protected final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
-  protected final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  protected CSVStatistics spectrumStats;
-  protected CSVStatistics coverageStats;
+final class AbstractBatch {
+  String folder = "/tmp/";
+  String afterFileName;
+  PrintWriter afters;
+  String beforeFileName;
+  PrintWriter befores;
+  File currentFile;
+  int done;
+  String inputPath;
+  CSVStatistics report;
+  String reportFileName;
+  Toolbox toolbox = new Toolbox();
+  final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
+  final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
+  CSVStatistics spectrumStats;
+  CSVStatistics coverageStats;
   private final String spectrumFileName;
   private final String coverageFileName;
   static String presentFileName;
   static String presentMethod;
-  protected static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
   int tippersAppliedOnCurrentObject;
 
   AbstractBatch(final String path) {
@@ -64,7 +65,7 @@ abstract class AbstractBatch {
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
+      @Override <N extends ASTNode> boolean go(final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
@@ -109,7 +110,7 @@ abstract class AbstractBatch {
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
-      @Override protected void initialization(final ASTNode ¢) {
+      @Override void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
@@ -143,7 +144,7 @@ abstract class AbstractBatch {
     return $;
   }
 
-  protected void fire() {
+  void fire() {
     go();
     reportSpectrum();
     reportCoverage();
@@ -318,7 +319,7 @@ abstract class AbstractBatch {
     System.err.print("\n Summary: " + report.close());
   }
 
-  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
 
