@@ -1,9 +1,11 @@
 package il.org.spartan.spartanizer.research;
 
+import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -12,11 +14,26 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public class Logger {
   private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
 
-  public static void summarize() {
+  public static void summarize(String outputDir) {
+    CSVStatistics report = null;
+    try {
+      report = new CSVStatistics(outputDir + "/report.csv", "property");
+    } catch (IOException x) {
+      x.printStackTrace();
+      return;
+    }
     for (Integer k : methodsStatistics.keySet()) {
       MethodRecord m = methodsStatistics.get(k);
-      System.out.println(m.npCounter + " : " + m.methodName);
+      report //
+          .put("Name", m.methodClassName + "~" + m.methodName) //
+          .put("#Statement", m.numStatements) //
+          .put("#NP Statements", m.numNPStatements) //
+          .put("#Paramaters", m.numParameters) //
+          .put("#NP", m.nps.size()) //
+      ;
+      report.nl();
     }
+    report.close();
     methodsStatistics = new HashMap<>();
   }
 
@@ -25,7 +42,7 @@ public class Logger {
     Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
       methodsStatistics.put(key, new MethodRecord(m));
-    methodsStatistics.get(key).markNP(np);
+    methodsStatistics.get(key).markNP(n, np);
   }
 
   /** @param ¢
@@ -56,7 +73,7 @@ public class Logger {
   static class MethodRecord {
     public String methodName;
     public String methodClassName;
-    public int npCounter;
+    public int numNPStatements;
     public List<String> nps = new ArrayList<>();
     public int numParameters;
     public int numStatements;
@@ -69,8 +86,8 @@ public class Logger {
     }
 
     /** @param np */
-    public void markNP(String np) {
-      ++npCounter;
+    public void markNP(ASTNode n, String np) {
+      numNPStatements += metrics.statementsQuantity(n);
       nps.add(np);
     }
   }

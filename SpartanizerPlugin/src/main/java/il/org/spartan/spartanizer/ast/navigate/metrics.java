@@ -154,10 +154,10 @@ public interface metrics {
     return dictionary(u).size();
   }
 
-  /** @param d */
-  static int statementsQuantity(MethodDeclaration d) {
+  /** @param n */
+  static int statementsQuantity(ASTNode n) {
     final Int $ = new Int();
-    d.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor() {
       @Override public void preVisit(ASTNode ¢) {
         if (¢ instanceof Statement)
           ++$.inner;
