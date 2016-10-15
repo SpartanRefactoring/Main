@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
@@ -27,7 +26,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    applicator(Selection.class).defaultSelection().go();
+    applicator().defaultSelection().go();
     return null;
   }
 
@@ -36,22 +35,21 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   @Override public void run(final IMarker ¢) {
-    applicator(Selection.class).passes(1).selection(Selection.Util.by(¢)).go();
+    applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
-  protected static <F, T, S extends AbstractSelection<F, T>, X extends S> EventApplicator<F, T, S> applicator(
-      @SuppressWarnings("unused") Class<X> x) {
-    final EventApplicator<F, T, S> $ = new EventApplicator<>();
+  protected static EventApplicator applicator() {
+    final EventApplicator $ = new EventApplicator();
     $.passes(PASSES);
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();
     $.listener(EventMapper.empty(event.class) //
-        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(ICompilationUnit.class).does((__, ¢) -> {
+        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(CU.class).does((__, ¢) -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
             asynch(() -> {
-              d.getProgressMonitor().subTask("Spartanizing " + ¢.getElementName());
+              d.getProgressMonitor().subTask("Spartanizing " + ¢.name());
               d.getProgressMonitor().worked(1);
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
@@ -97,6 +95,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         });
       } catch (InvocationTargetException | InterruptedException e) {
         monitor.log(e);
+        e.printStackTrace();
       }
     });
     $.defaultRunAction();
