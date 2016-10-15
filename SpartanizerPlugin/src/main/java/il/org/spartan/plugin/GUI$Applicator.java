@@ -441,11 +441,11 @@ public abstract class GUI$Applicator extends Refactoring {
   protected boolean isTextSelected() {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
-  
-  public boolean apply(final CU u, final ITextSelection s) {
+
+  public boolean apply(final CU u, final AbstractSelection s) {
     try {
       setICompilationUnit(u.descriptor);
-      setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
+      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
       progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
