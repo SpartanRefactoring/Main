@@ -63,19 +63,19 @@ import il.org.spartan.spartanizer.tipping.*;
       .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
   /** Spartanize current function. */
   private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
+      .defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
   /** Spartanize current class. */
   private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class)).go());
+      .defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class)).go());
   /** Apply tipper to current function. */
   private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
+      .defaultRunAction(SingleTipper.getApplicator(¢)).passes(1).selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
   /** Apply tipper to current file. */
   private final IMarkerResolution singleTipperFile = quickFix("Apply to compilation unit", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+      .defaultRunAction(SingleTipper.getApplicator(¢)).passes(1).selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
   /** Apply tipper to entire project. */
   private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", ¢ -> SpartanizationHandler.applicator(Selection.class)
-      .defaultRunAction(SingleTipper.getApplicator(¢)).selection(Selection.Util.getAllCompilationUnit(¢)).go());
+      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(¢)).go());
   /** Disable spartanization in function. */
   private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
   /** Disable spartanization in class. */
