@@ -26,6 +26,8 @@ public class Logger {
       x.printStackTrace();
       return;
     }
+    int sumSratio = 0;
+    int sumEratio = 0;
     for (Integer k : methodsStatistics.keySet()) {
       MethodRecord m = methodsStatistics.get(k);
       report //
@@ -38,7 +40,12 @@ public class Logger {
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
+      sumSratio += m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements;
+      sumEratio += m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions;
     }
+    System.out.println("Total methods number: " + numMethods);
+    System.out.println("Average statement ratio: " + sumSratio / numMethods);
+    System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
     reset();
   }
