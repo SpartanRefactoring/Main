@@ -472,15 +472,12 @@ public abstract class GUI$Applicator extends Refactoring {
       textChange.setTextType("java");
       final AtomicInteger counter = new AtomicInteger(0);
       final ASTRewrite r = createRewrite(u.build().compilationUnit, counter);
-      if (s != null)
-        s.acknowledge(r);
       textChange.setEdit(r.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       progressMonitor.done();
       if (s != null)
         s.update();
-      System.out.println("@@@ " + counter.get());
       return counter.get() > 0;
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
