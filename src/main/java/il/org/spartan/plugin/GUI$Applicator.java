@@ -20,6 +20,7 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import il.org.spartan.plugin.revision.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -439,5 +440,24 @@ public abstract class GUI$Applicator extends Refactoring {
 
   protected boolean isTextSelected() {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
+  }
+  
+  public boolean apply(final CU u, final ITextSelection s) {
+    try {
+      setICompilationUnit(u.descriptor);
+      setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
+      progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      textChange.setTextType("java");
+      final AtomicInteger counter = new AtomicInteger(0);
+      textChange.setEdit(createRewrite(u.build().compilationUnit, counter).rewriteAST());
+      if (textChange.getEdit().getLength() != 0)
+        textChange.perform(progressMonitor);
+      progressMonitor.done();
+      return counter.get() > 0;
+    } catch (final CoreException x) {
+      monitor.logEvaluationError(this, x);
+    }
+    return false;
   }
 }
