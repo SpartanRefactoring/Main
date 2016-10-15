@@ -480,7 +480,6 @@ public abstract class GUI$Applicator extends Refactoring {
       progressMonitor.done();
       if (s != null)
         s.update();
-      System.out.println("@@@ " + counter.get());
       return counter.get() > 0;
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);

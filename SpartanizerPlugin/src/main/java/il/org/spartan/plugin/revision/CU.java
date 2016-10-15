@@ -45,12 +45,4 @@ public class CU {
       $.add(new CU(u));
     return $;
   }
-
-  public static CU nonDisposal(ICompilationUnit ¢) {
-    return new CU(¢) {
-      @Override public CU dispose() {
-        return this;
-      }
-    };
-  }
 }
