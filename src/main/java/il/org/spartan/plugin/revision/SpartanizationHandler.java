@@ -27,7 +27,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    applicator().defaultSelection().go();
+    applicator(Selection.class).defaultSelection().go();
     return null;
   }
 
@@ -36,13 +36,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   @Override public void run(final IMarker ¢) {
-    applicator().passes(1).selection(Selection.Util.by(¢)).go();
+    applicator(Selection.class).passes(1).selection(Selection.Util.by(¢)).go();
   }
 
   /** Creates and configures an applicator, without configuring the selection.
-   * @return applicator for this handler */
-  @SuppressWarnings("boxing") protected static EventApplicator applicator() {
-    final EventApplicator $ = new EventApplicator();
+   * @return applicator for this handler [[SuppressWarningsSpartan]] */
+  protected static <F, T, S extends AbstractSelection<F, T>, X extends S> EventApplicator<F, T, S> applicator(
+      @SuppressWarnings("unused") Class<X> x) {
+    final EventApplicator<F, T, S> $ = new EventApplicator<>();
     $.passes(PASSES);
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();
@@ -84,7 +85,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
                 + "\nSpartanized " + nanable(¢.get(event.visit_root)) //
                 + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
-                  return c.size();
+                  return Integer.valueOf(c.size());
                 }) + " files" //
                 + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass)) //
                 + "\nTotal run time: " + time.intervalInSeconds(System.nanoTime()) + " seconds").open();
@@ -94,8 +95,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         d.run(true, true, __ -> {
           r.run();
         });
-      } catch (InvocationTargetException | InterruptedException x) {
-        monitor.log(x);
+      } catch (InvocationTargetException | InterruptedException e) {
+        monitor.log(e);
       }
     });
     $.defaultRunAction();

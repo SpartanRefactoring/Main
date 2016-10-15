@@ -3,6 +3,7 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.text.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,7 +19,7 @@ enum event {
 /** An {@link Applicator} suitable for eclipse GUI.
  * @author Ori Roth
  * @since 2.6 */
-public class EventApplicator extends Applicator<EventListener<event>> {
+public class EventApplicator<F, T, S extends AbstractSelection<F, T>> extends Applicator<EventListener<event>, F, T, S> {
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
@@ -33,15 +34,15 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     if (!shouldRun())
       return;
     runContext().accept(() -> {
-      final List<ICompilationUnit> alive = new LinkedList<>();
+      final List<F> alive = new LinkedList<>();
       alive.addAll(selection().compilationUnits);
       final int l = selection().textSelection != null ? 1 : passes();
       for (int pass = 0; pass < l; ++pass) {
         listener().tick(event.run_pass);
         if (!shouldRun())
           break;
-        final List<ICompilationUnit> dead = new LinkedList<>();
-        for (final ICompilationUnit ¢ : alive) {
+        final List<F> dead = new LinkedList<>();
+        for (final F ¢ : alive) {
           if (!runAction().apply(¢).booleanValue())
             dead.add(¢);
           listener().tick(event.visit_cu, ¢);
@@ -60,7 +61,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default listener configuration of {@link EventApplicator}. Simple printing
    * to console.
    * @return this applicator */
-  public EventApplicator defaultListenerNoisy() {
+  public EventApplicator<F, T, S> defaultListenerNoisy() {
     listener(EventListener.simpleListener(event.class, //
         e -> System.out.println(e), //
         (e, o) -> System.out.println(e + ":\t" + o)//
@@ -71,7 +72,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default listener configuration of {@link EventApplicator}. Silent
    * listener.
    * @return this applicator */
-  public EventApplicator defaultListenerSilent() {
+  public EventApplicator<F, T, S> defaultListenerSilent() {
     listener(EventListener.simpleListener(event.class, //
         e -> {
           //
@@ -84,21 +85,21 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default selection configuration of {@link EventApplicator}. Normal eclipse
    * user selection.
    * @return this applicator */
-  public EventApplicator defaultSelection() {
-    selection(Selection.Util.get());
-    return this;
+  @SuppressWarnings("unchecked") public EventApplicator<ICompilationUnit, ITextSelection, Selection> defaultSelection() {
+    ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection(Selection.Util.get());
+    return (EventApplicator<ICompilationUnit, ITextSelection, Selection>) this;
   }
 
   /** Default passes configuration of {@link EventApplicator}, with few passes.
    * @return this applicator */
-  public EventApplicator defaultPassesFew() {
+  public EventApplicator<F, T, S> defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration of {@link EventApplicator}, with many passes.
    * @return this applicator */
-  public EventApplicator defaultPassesMany() {
+  public EventApplicator<F, T, S> defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
@@ -106,7 +107,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default run context configuration of {@link EventApplicator}. Simply runs
    * the {@link Runnable} in the current thread.
    * @return this applicator */
-  public EventApplicator defaultRunContext() {
+  public EventApplicator<F, T, S> defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
@@ -115,32 +116,38 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   /** Default run action configuration of {@link EventApplicator}. Spartanize
    * the {@link ICompilationUnit} using a {@link Trimmer}.
    * @return this applicator */
-  public EventApplicator defaultRunAction() {
+  @SuppressWarnings("unchecked") public EventApplicator<ICompilationUnit, ITextSelection, Selection> defaultRunAction() {
     final Trimmer t = new Trimmer();
-    runAction(u -> Boolean.valueOf(t.apply(u, selection().textSelection == null ? new Range(0, 0)
-        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength()))));
-    return this;
+    ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).runAction(u -> Boolean.valueOf(t.apply(u,
+        selection().textSelection == null ? new Range(0, 0)
+            : new Range(((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection().textSelection.getOffset(),
+                ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection().textSelection.getOffset()
+                    + ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection().textSelection.getLength()))));
+    return (EventApplicator<ICompilationUnit, ITextSelection, Selection>) this;
   }
 
   /** Default run action configuration of {@link EventApplicator}. Spartanize
    * the {@link ICompilationUnit} using received {@link GUI$Applicator}.
    * @param a JD
    * @return this applicator */
-  public EventApplicator defaultRunAction(final GUI$Applicator a) {
-    runAction(u -> Boolean.valueOf(a.apply(u, (selection().textSelection == null ? new Range(0, 0)
-        : new Range(selection().textSelection.getOffset(), selection().textSelection.getOffset() + selection().textSelection.getLength())))));
-    return this;
+  @SuppressWarnings("unchecked") public EventApplicator<ICompilationUnit, ITextSelection, Selection> defaultRunAction(final GUI$Applicator a) {
+    ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).runAction(u -> Boolean.valueOf(a.apply(u,
+        (selection().textSelection == null ? new Range(0, 0)
+            : new Range(((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection().textSelection.getOffset(),
+                ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection().textSelection.getOffset()
+                    + ((EventApplicator<ICompilationUnit, ITextSelection, Selection>) this).selection().textSelection.getLength())))));
+    return (EventApplicator<ICompilationUnit, ITextSelection, Selection>) this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
-  public EventApplicator defaultSettings() {
+  public EventApplicator<ICompilationUnit, ITextSelection, Selection> defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
 
   /** Factory method.
    * @return default event applicator */
-  public static EventApplicator defaultApplicator() {
-    return new EventApplicator().defaultSettings();
+  public static EventApplicator<ICompilationUnit, ITextSelection, Selection> defaultApplicator() {
+    return new EventApplicator<ICompilationUnit, ITextSelection, Selection>().defaultSettings();
   }
 }
