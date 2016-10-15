@@ -155,7 +155,7 @@ import il.org.spartan.plugin.revision.*;
     put(attributes, attribute.MARKER, m);
     put(attributes, attribute.CU, selection.compilationUnits);
     put(attributes, attribute.APPLICATOR, applicator);
-    doWork(initialWork(applicator, selection.compilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
+    doWork(initialWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
     final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
     final IRunnableWithProgress r = runnable(selection, applicator, attributes);
     final MessageDialog initialDialog = show(getOpeningMessage(attributes));
@@ -168,7 +168,7 @@ import il.org.spartan.plugin.revision.*;
       return null;
     }
     closeDialog(initialDialog);
-    doWork(finalWork(applicator, selection.compilationUnits, attributes), eclipse.progressMonitorDialog(hasDisplay()));
+    doWork(finalWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
     show(getEndingMessage(attributes));
     return null;
   }
@@ -202,8 +202,8 @@ import il.org.spartan.plugin.revision.*;
         final List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
         for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
-          pm.beginTask(getProgressMonitorMessage(s.compilationUnits, pass), getProgressMonitorWork(s.compilationUnits));
-          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.compilationUnits, deadCompilationUnits);
+          pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
+          final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), deadCompilationUnits);
           if (currentCompilationUnits.isEmpty()) {
             finish(pm);
             break;
