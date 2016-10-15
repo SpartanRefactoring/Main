@@ -13,7 +13,7 @@ import il.org.spatan.iteration.*;
  * @since 21 November 2011 */
 public class MethodInfo extends ExecutableEntity {
   private static String class2name(final Class<?> param) {
-    return param.toString().startsWith("class ") ? param.toString().substring(param.toString().indexOf(' ') + 1) : param.toString();
+    return (param + "").startsWith("class ") ? (param + "").substring((param + "").indexOf(' ') + 1) : param + "";
   }
 
   private static String[] class2name(final Class<?>[] params) {

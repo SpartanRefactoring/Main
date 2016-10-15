@@ -4,10 +4,14 @@
 package il.org.spartan.utils;
 
 import static il.org.spatan.iteration.Iterables.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.xy.*;
 
 /** @author Yossi Gil
@@ -104,9 +108,9 @@ public class Denser {
 
     @Test public void gatherContent() {
       final int[] g = new Denser(14, 0, 12, 13).gather(11, 1, 2, 4);
-      assertEquals(11, g[0]);
-      assertEquals(2, g[1]);
-      assertEquals(4, g[2]);
+      azzert.that(g[0], is(11));
+      azzert.that(g[1], is(2));
+      azzert.that(g[2], is(4));
     }
 
     @Test public void gatherDoubles() {
@@ -134,11 +138,11 @@ public class Denser {
           ints(21, 22, 23, 24), //
           ints(0, 11, 12, 13) //
       ));
-      assertArrayEquals(ints(11, 13, 14), g[0]);
-      assertArrayEquals(ints(15, 17, 18), g[1]);
-      assertArrayEquals(ints(18, 20, 21), g[2]);
-      assertArrayEquals(ints(21, 23, 24), g[3]);
-      assertArrayEquals(ints(0, 12, 13), g[4]);
+      Assert.assertArrayEquals(ints(11, 13, 14), g[0]);
+      Assert.assertArrayEquals(ints(15, 17, 18), g[1]);
+      Assert.assertArrayEquals(ints(18, 20, 21), g[2]);
+      Assert.assertArrayEquals(ints(21, 23, 24), g[3]);
+      Assert.assertArrayEquals(ints(0, 12, 13), g[4]);
     }
 
     @Test public void gatherMatrixNotNull() {
@@ -146,36 +150,36 @@ public class Denser {
           ints(11, 12, 13, 14), //
           ints(15, 16, 17, 18)));
       assert null != g;
-      assertEquals(2, g.length);
+      azzert.that(g.length, is(2));
     }
 
     @Test public void gatherMatrixSize() {
       final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
           ints(11, 12, 13, 14), //
           ints(15, 16, 17, 18)));
-      assertEquals(2, g.length);
+      azzert.that(g.length, is(2));
     }
 
     @Test public void gatherSize() {
-      assertEquals(3, new Denser(14, 0, 12, 13).gather(11, 1, 2, 4).length);
+      azzert.that(new Denser(14, 0, 12, 13).gather(11, 1, 2, 4).length, is(3));
     }
 
     @Test public void m() {
-      assertEquals(3, new Denser(14, 0, 12, 13).m());
-      assertEquals(4, new Denser(3, 5, 0, 12, 13).m());
+      azzert.that(new Denser(14, 0, 12, 13).m(), is(3));
+      azzert.that(new Denser(3, 5, 0, 12, 13).m(), is(4));
     }
 
     @Test public void n() {
-      assertEquals(2, new Denser(12, 13).n());
-      assertEquals(3, new Denser(0, 12, 13).n());
+      azzert.that(new Denser(12, 13).n(), is(2));
+      azzert.that(new Denser(0, 12, 13).n(), is(3));
     }
 
     @Test public void scatterContent() {
       final int[] s = new Denser(14, 0, 12, 13).scatter(11, 1, 2);
-      assertEquals(11, s[0]);
-      assertEquals(0, s[1]);
-      assertEquals(1, s[2]);
-      assertEquals(2, s[3]);
+      azzert.that(s[0], is(11));
+      azzert.that(s[1], is(0));
+      azzert.that(s[2], is(1));
+      azzert.that(s[3], is(2));
     }
 
     @Test public void scatterDoubles() {
@@ -197,7 +201,7 @@ public class Denser {
     }
 
     @Test public void scatterSize() {
-      assertEquals(4, new Denser(14, 0, 12, 13).scatter(11, 1, 2).length);
+      azzert.that(new Denser(14, 0, 12, 13).scatter(11, 1, 2).length, is(4));
     }
   }
 }

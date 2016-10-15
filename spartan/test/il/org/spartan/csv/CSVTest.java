@@ -1,6 +1,9 @@
 package il.org.spartan.csv;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
 
 import java.util.*;
 
@@ -18,8 +21,8 @@ import il.org.spartan.streotypes.*;
     final String s = "abc,def\r\n\tg\\m";
     final String t = CSV.escape(s);
     final String u = CSV.unescape(t);
-    assertEquals("abc\\.def\\r\\n\\tg\\\\m", t);
-    assertEquals(s, u);
+    azzert.that(t, is("abc\\.def\\r\\n\\tg\\\\m"));
+    azzert.that(u, is(s));
     assert !s.equals(t);
   }
 
@@ -27,7 +30,7 @@ import il.org.spartan.streotypes.*;
     final String[] parts = { "abc", "", "def", "gh\n,", ",", "\r", "\ta", null, "a\t", "\rz", "o\np", "qwerty", ",,,,", ",1,2,3,4" };
     final String combo = CSV.combine(parts);
     final String[] t = CSV.split(combo);
-    assertEquals(parts.length, t.length);
+    azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
 
@@ -43,7 +46,7 @@ import il.org.spartan.streotypes.*;
     final String[] parts = { "abc", ",", "def" };
     final String combo = CSV.combine(parts);
     final String[] t = CSV.split(combo);
-    assertEquals(parts.length, t.length);
+    azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
 
@@ -51,7 +54,7 @@ import il.org.spartan.streotypes.*;
     final String[] parts = { null, };
     final String combo = CSV.combine(parts);
     final String[] t = CSV.split(combo);
-    assertEquals(parts.length, t.length);
+    azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
 
@@ -59,22 +62,22 @@ import il.org.spartan.streotypes.*;
     final String s = null;
     final String t = CSV.escape(s);
     final String u = CSV.unescape(t);
-    assertNull(s);
+    azzert.isNull(s);
     assert null != t;
-    assertNull(u);
+    azzert.isNull(u);
   }
 
   @Test public void testSplitCombineClasses() {
     final Class<?>[] cs = { String.class, System.class, Object.class, null };
     assert Arrays.deepEquals(cs, CSV.splitToClasses(CSV.combine(cs)));
     final String s = "java.lang.String,java.lang.System,java.lang.Object,\\0";
-    assertEquals(s, CSV.combine(CSV.splitToClasses(s)));
-    assertEquals(s, CSV.combine(cs));
+    azzert.that(CSV.combine(CSV.splitToClasses(s)), is(s));
+    azzert.that(CSV.combine(cs), is(s));
   }
 
   @Test public void testSplitCombineEnum() {
     final String s = "GREEN,RED,BLUE,\\0,RED";
-    assertEquals(s, CSV.combine(CSV.split(Rgb.class, s)));
+    azzert.that(CSV.combine(CSV.split(Rgb.class, s)), is(s));
   }
 
   public static enum Rgb {

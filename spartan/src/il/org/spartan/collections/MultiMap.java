@@ -84,7 +84,7 @@ import il.org.spartan.streotypes.*;
     final StringBuilder $ = new StringBuilder();
     for (final K k : this)
       $.append(k + "=>" + get(k) + '\n');
-    return $.toString();
+    return $ + "";
   }
 
   /** Obtain all images

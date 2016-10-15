@@ -3,7 +3,12 @@
  */
 package il.org.spartan.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -86,7 +91,7 @@ public abstract class Accumulator {
     }
 
     @Override public String toString() {
-      return "" + value;
+      return value + "";
     }
 
     @Override protected int transform(final int v) {
@@ -96,24 +101,24 @@ public abstract class Accumulator {
     @SuppressWarnings("static-method") public static class TEST {
       @Test public void booleanAdds() {
         final Counter c = new Counter();
-        assertEquals(0, c.value());
+        azzert.that(c.value(), is(0));
         c.add(true);
-        assertEquals(1, c.value());
+        azzert.that(c.value(), is(1));
         c.add(false);
-        assertEquals(1, c.value());
+        azzert.that(c.value(), is(1));
         c.add(false);
-        assertEquals(1, c.value());
+        azzert.that(c.value(), is(1));
         c.add(true);
-        assertEquals(2, c.value());
+        azzert.that(c.value(), is(2));
         c.add(true);
-        assertEquals(3, c.value());
+        azzert.that(c.value(), is(3));
       }
 
       @Test public void emptyAdds() {
         final Counter c = new Counter();
         for (int i = 0; i < 19; i++)
           c.add();
-        assertEquals(19, c.value());
+        azzert.that(c.value(), is(19));
       }
     }
   }
@@ -141,19 +146,19 @@ public abstract class Accumulator {
     @SuppressWarnings("static-method") public static class TEST {
       @SuppressWarnings("static-access") @Test public void booleanAdds() {
         final Last c = new Last();
-        assertEquals(0, Accumulator.asInteger(false));
-        assertEquals(0, c.value());
+        azzert.that(Accumulator.asInteger(false), is(0));
+        azzert.that(c.value(), is(0));
         c.add(true);
-        assertEquals(1, c.value());
-        assertEquals(0, Accumulator.asInteger(false));
+        azzert.that(c.value(), is(1));
+        azzert.that(Accumulator.asInteger(false), is(0));
         c.add(false);
-        assertEquals(0, c.value());
+        azzert.that(c.value(), is(0));
         c.add(false);
-        assertEquals(0, c.value());
+        azzert.that(c.value(), is(0));
         c.add(true);
-        assertEquals(1, c.value());
+        azzert.that(c.value(), is(1));
         c.add(true);
-        assertEquals(1, c.value());
+        azzert.that(c.value(), is(1));
       }
 
       @Test public void emptyAdds() {
@@ -161,7 +166,7 @@ public abstract class Accumulator {
         for (int i = 0; i < 19; i++)
           c.add(i);
         c.add(11);
-        assertEquals(11, c.value());
+        azzert.that(c.value(), is(11));
       }
     }
   }

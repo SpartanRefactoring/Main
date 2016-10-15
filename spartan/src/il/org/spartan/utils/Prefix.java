@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+import il.org.spartan.*;
 import il.org.spatan.iteration.*;
 
 /** Computes the longest common prefix of the names of objects in a given set.
@@ -7,7 +8,7 @@ import il.org.spatan.iteration.*;
  * @param <T> type of objects in the set */
 public class Prefix<T> {
   public static String trim(final String prefix, final String s) {
-    for (String $ = Defaults.to(prefix, s);; $ = shorten($))
+    for (String $ = defaults.to(prefix, s);; $ = shorten($))
       if (s.startsWith($))
         return $;
   }
@@ -19,7 +20,7 @@ public class Prefix<T> {
   private static <T> String trim(final Iterable<T> ts) {
     String $ = null;
     for (final T t : ts)
-      $ = trim($, t.toString());
+      $ = trim($, (t + ""));
     return $;
   }
 
@@ -34,6 +35,6 @@ public class Prefix<T> {
   }
 
   public String trim(final T t) {
-    return t.toString().substring(prefix.length());
+    return (t + "").substring(prefix.length());
   }
 }

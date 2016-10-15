@@ -1,7 +1,7 @@
 package il.org.spartan.classfiles;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartanl.testing.Assert.*;
-import static org.junit.Assert.*;
 
 import java.io.*;
 import java.net.*;
@@ -12,6 +12,7 @@ import org.junit.*;
 
 import il.org.sparan.classfiles.*;
 import il.org.sparan.classfiles.ClassRepositoryTest.*;
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
 
@@ -260,7 +261,7 @@ public class ClassRepository implements Iterable<String> {
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void empty() {
       final ClassRepository r = new ClassRepository();
-      assertZero(r.getClasses().size());
+      azzert.that(r.getClasses().size(), is(0));
     }
 
     @Test public void ensureDotSeparatedNames() {
@@ -286,7 +287,7 @@ public class ClassRepository implements Iterable<String> {
 
     @Test public void getClassesObject() {
       final Collection<String> classes = new ClassRepository.JRE().getClasses();
-      assertTrue(classes.contains("java.lang.Object"));
+      assert (classes.contains("java.lang.Object"));
     }
   }
 

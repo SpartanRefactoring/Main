@@ -1,10 +1,14 @@
 package il.org.spartan.graph;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
 
 import java.lang.reflect.*;
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.graph.Graph.*;
 
 public class GraphsSamplesGenerator {
@@ -74,7 +78,7 @@ public class GraphsSamplesGenerator {
         } catch (final InvocationTargetException e) {
           e.printStackTrace();
         }
-    assertEquals(28, $.size());
+    azzert.that($.size(), is(28));
     for (int i = 0; i < 6; i++) {
       $.add(makeClique(i));
       $.add(makeCLIQUE(i));
@@ -105,7 +109,7 @@ public class GraphsSamplesGenerator {
   public static Graph<String> makeChain(final int n) {
     final Graph.Builder<String> $ = new Graph.Builder<>("Chain " + n);
     for (char from = 'A'; from < 'A' + n - 1; from++)
-      $.newEdge("" + from, "" + (char) (from + 1));
+      $.newEdge(from + "", (char) (from + 1) + "");
     return $.build();
   }
 
@@ -130,17 +134,17 @@ public class GraphsSamplesGenerator {
   public static Graph<String> makeCLIQUE(final int n) {
     final Graph.Builder<String> $ = makeCliqueBuilder(n);
     for (char c = 'A'; c < 'A' + n; c++)
-      $.newEdge("" + c, "" + c);
+      $.newEdge(c + "", c + "");
     return $.build();
   }
 
   public static Builder<String> makeCliqueBuilder(final int n) {
     final Graph.Builder<String> $ = new Graph.Builder<>("Clique " + n);
     for (char from = 'A'; from < 'A' + n; from++) {
-      $.newVertex("" + from);
+      $.newVertex(from + "");
       for (char to = 'A'; to < 'A' + n; to++)
         if (from != to)
-          $.newEdge("" + from, "" + to);
+          $.newEdge(from + "", to + "");
     }
     return $;
   }

@@ -37,7 +37,7 @@ public abstract class Bencheon extends NamedOperation {
     return System.nanoTime() - begin - beforeEachMethodTime;
   }
 
-  @Override public final StopWatch netTime(final StopWatch netTime) {
+  @Override public final Stopwatch netTime(final Stopwatch netTime) {
     beforeAllRuns();
     beforeEachRun();
     netTime.start();
@@ -46,7 +46,7 @@ public abstract class Bencheon extends NamedOperation {
     return netTime;
   }
 
-  @Override public final StopWatch netTime(final StopWatch netTime, final int runs) {
+  @Override public final Stopwatch netTime(final Stopwatch netTime, final int runs) {
     beforeAllRuns();
     long netRunTime;
     do

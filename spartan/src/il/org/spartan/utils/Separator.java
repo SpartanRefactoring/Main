@@ -29,7 +29,7 @@ import il.org.spartan.streotypes.*;
     String $ = "";
     final Separator s = new Separator(between);
     for (final int i : is)
-      $ += s + new Integer(i).toString();
+      $ += s + "" + new Integer(i);
     return $;
   }
 
@@ -47,7 +47,7 @@ import il.org.spartan.streotypes.*;
     String $ = begin;
     final Separator s = new Separator(between);
     for (final T t : items)
-      $ += s + t.toString();
+      $ += s + "" + t;
     return $ + end;
   }
 
@@ -57,7 +57,7 @@ import il.org.spartan.streotypes.*;
     String $ = begin;
     final Separator s = new Separator(between);
     for (final T t : items)
-      $ += s + t.toString();
+      $ += s + "" + t;
     return $ + end;
   }
 
@@ -71,7 +71,7 @@ import il.org.spartan.streotypes.*;
   boolean first = true;
 
   public Separator(final char c) {
-    s = "" + c;
+    s = c + "";
   }
 
   public Separator(final String s) {

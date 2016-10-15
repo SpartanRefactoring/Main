@@ -3,12 +3,16 @@ package il.org.spartan.strings;
 
 import static il.org.spartan.strings.RE.*;
 import static il.org.spartan.utils.___.*;
-import static org.junit.Assert.*;
-
-import java.util.regex.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import java.util.regex.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 
@@ -174,49 +178,35 @@ import il.org.spartan.utils.*;
     private static final String tagRegularExpression = new Tag("dummy").makeRegularExpression();
 
     @Test public void testCRLFinPre() {
-      assertEquals("ABC", "A<dummy>\r\n</dummy>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<dummy>\r\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testDummyInContext() {
-      assertEquals("" + //
-          "\t /**\r\n" + //
-          "\t  * BEFORE\r\n" + //
-          "\t  * Content\r\n" + //
-          "\t  * AFTER\r\n" + //
-          "\t  */" + //
-          "", ("" + //
-              "\t /**\r\n" + //
-              "\t  * BEFORE\r\n" + //
-              "\t  * <dummy>\r\n" + //
-              "\t  * text\r\n" + //
-              "\t  * </dummy>\r\n" + //
-              "\t  * AFTER\r\n" + //
-              "\t  */" + //
-              "").replaceFirst(tagRegularExpression, "Content"));
+      azzert.that(("\t /**\r\n" + "" + "\t  * BEFORE\r\n" + "\t  * <dummy>\r\n" + "\t  * text\r\n" + "\t  * </dummy>\r\n" + "\t  * AFTER\r\n" + "\t  */" + "").replaceFirst(tagRegularExpression, "Content"), is("\t /**\r\n" + "" + "\t  * BEFORE\r\n" + "\t  * Content\r\n" + "\t  * AFTER\r\n" + "\t  */" + ""));
     }
 
     @Test public void testEmptyPre() {
-      assertEquals("ABC", "A<dummy></dummy>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<dummy></dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testLFinPre() {
-      assertEquals("ABC", "A<dummy>\n</dummy>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<dummy>\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testMiXeDCaSeTag() {
-      assertEquals("ABC", "A<DuMmY>a\nb\r\nABCDE</dUmMy>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<DuMmY>a\nb\r\nABCDE</dUmMy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testSeveralLinesInPre() {
-      assertEquals("ABC", "A<dummy>a\nb\r\nABCDE</dummy>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<dummy>a\nb\r\nABCDE</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testSimplePre() {
-      assertEquals("ABC", "A<dummy>X</dummy>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<dummy>X</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testUpperCaseTag() {
-      assertEquals("ABC", "A<DUMMY>a\nb\r\nABCDE</DUMMY>C".replaceFirst(tagRegularExpression, "B"));
+      azzert.that("A<DUMMY>a\nb\r\nABCDE</DUMMY>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
   }
 }

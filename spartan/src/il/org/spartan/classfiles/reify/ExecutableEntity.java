@@ -166,7 +166,7 @@ public class ExecutableEntity extends TypedEntity {
   private void referencesToClasses() {
     class2refsByComponents = new HashMap<>();
     for (final TypeInfo t : type.components()) {
-      final int[] refsByComponents = getClassRefsByComponents(t.toString());
+      final int[] refsByComponents = getClassRefsByComponents((t + ""));
       refsByComponents[LinkComponents.MethodDeclaration.ordinal()]++;
     }
     if (code == null)
@@ -207,7 +207,7 @@ public class ExecutableEntity extends TypedEntity {
         refsByComponents[component]++;
       }
       for (final TypeInfo t : decode(mr.getNameAndType().getDescriptor()).components()) {
-        final int[] refsByComponents = getClassRefsByComponents(t.toString());
+        final int[] refsByComponents = getClassRefsByComponents((t + ""));
         refsByComponents[component]++;
       }
     }

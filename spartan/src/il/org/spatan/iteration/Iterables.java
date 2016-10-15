@@ -425,7 +425,7 @@ public class Iterables {
   public static String toString(final Set<Entry<String, String>> entrySet, final String sep) {
     String $ = "";
     for (final Entry<String, String> e : entrySet) {
-      $ += e.toString();
+      $ += e + "";
       $ += sep;
     }
     return $;

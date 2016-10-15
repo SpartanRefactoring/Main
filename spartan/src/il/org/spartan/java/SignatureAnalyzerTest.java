@@ -3,7 +3,12 @@
  */
 package il.org.spartan.java;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.io.*;
 
@@ -18,20 +23,20 @@ import org.junit.*;
 
   @Test public void createFileStaticType() {
     final SignatureAnalyzer __ = SignatureAnalyzer.ofFile("Data/file");
-    assertEquals(SignatureAnalyzer.class, __.getClass());
+    azzert.that(__.getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createFileType() {
-    assertEquals(SignatureAnalyzer.class, SignatureAnalyzer.ofFile("Data/file").getClass());
+    azzert.that(SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderStaticType() {
     final SignatureAnalyzer __ = SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n"));
-    assertEquals(SignatureAnalyzer.class, __.getClass());
+    azzert.that(__.getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderType() {
-    assertEquals(SignatureAnalyzer.class, SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass());
+    azzert.that(SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createString() {
@@ -40,10 +45,10 @@ import org.junit.*;
 
   @Test public void createStringStaticType() {
     final SignatureAnalyzer __ = SignatureAnalyzer.ofString("Hello, World!\n");
-    assertEquals(SignatureAnalyzer.class, __.getClass());
+    azzert.that(__.getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createStringType() {
-    assertEquals(SignatureAnalyzer.class, SignatureAnalyzer.ofString("Hello, World!\n").getClass());
+    azzert.that(SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
   }
 }

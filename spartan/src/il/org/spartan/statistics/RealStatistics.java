@@ -1,11 +1,15 @@
 package il.org.spartan.statistics;
 
-import static org.junit.Assert.*;
-
-import java.util.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import java.util.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** A class to compute statistics, e.g., the minimal and maximal value, the mean
@@ -82,22 +86,22 @@ public class RealStatistics extends ImmutableStatistics {
       s11_20_5.median();
       s11_20_5.mad();
       final double[] vs = s11_20_5.all();
-      assertEquals(3, vs.length);
+      azzert.that(vs.length, is(3));
       assertEquals(11, vs[0], 1E-20);
       assertEquals(20, vs[1], 1E-20);
       assertEquals(5, vs[2], 1E-20);
     }
 
     @Test public void all0() {
-      assertEquals(0, new RealStatistics().all().length);
+      azzert.that(new RealStatistics().all().length, is(0));
     }
 
     @Test public void all1() {
-      assertEquals(1, new RealStatistics().record(0).all().length);
+      azzert.that(new RealStatistics().record(0).all().length, is(1));
     }
 
     @Test public void all5() {
-      assertEquals(5, new RealStatistics().record(0, 1, 2, 4, 5).all().length);
+      azzert.that(new RealStatistics().record(0, 1, 2, 4, 5).all().length, is(5));
     }
 
     @Test public void max() {
@@ -170,17 +174,17 @@ public class RealStatistics extends ImmutableStatistics {
     }
 
     @Test public void n() {
-      assertEquals(3, s11_20_5.n());
-      assertEquals(5, s15.n());
-      assertEquals(8, s07.n());
-      assertEquals(9, s_4x0_5x1.n());
+      azzert.that(s11_20_5.n(), is(3));
+      azzert.that(s15.n(), is(5));
+      azzert.that(s07.n(), is(8));
+      azzert.that(s_4x0_5x1.n(), is(9));
     }
 
     @Test public void simpleLength() {
-      assertEquals(3, s.n());
-      assertEquals(5, s15.n());
-      assertEquals(8, s07.n());
-      assertEquals(9, s_4x0_5x1.n());
+      azzert.that(s.n(), is(3));
+      azzert.that(s15.n(), is(5));
+      azzert.that(s07.n(), is(8));
+      azzert.that(s_4x0_5x1.n(), is(9));
     }
 
     @Test public void sum() {

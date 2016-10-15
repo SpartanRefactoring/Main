@@ -1,6 +1,8 @@
 package il.org.spartan.classfiles.reify;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
-import static org.junit.Assert.*;
+import org.junit.*;
 
 import java.io.*;
 import java.lang.reflect.*;
@@ -8,6 +10,7 @@ import java.util.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ClassInfo.*;
@@ -53,51 +56,51 @@ import il.org.spartan.utils.*;
   @Test public void allPrimitiveFieldsAttributes() {
     final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
     for (final FlaggedEntity f : fields)
-      assertEquals(0, f.attributes.length);
+      azzert.that(f.attributes.length, is(0));
   }
 
   @Test public void allPrimitiveFieldsCount() {
     final NamedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    assertEquals(7, fields.length);
+    azzert.that(fields.length, is(7));
   }
 
   @Test public void allPrimitiveFieldsModifiers() {
     final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
     for (final FlaggedEntity f : fields)
-      assertEquals(Modifier.FINAL | Modifier.PUBLIC, f.flags);
+      azzert.that(f.flags, is((Modifier.FINAL | Modifier.PUBLIC)));
   }
 
   @Test public void allPrimitiveFieldsNames() {
     final NamedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    assertEquals("firstField", fields[0].name);
-    assertEquals("secondField", fields[1].name);
-    assertEquals("thirdField", fields[2].name);
-    assertEquals("fourthField", fields[3].name);
-    assertEquals("fifthField", fields[4].name);
-    assertEquals("sixthField", fields[5].name);
+    azzert.that(fields[0].name, is("firstField"));
+    azzert.that(fields[1].name, is("secondField"));
+    azzert.that(fields[2].name, is("thirdField"));
+    azzert.that(fields[3].name, is("fourthField"));
+    azzert.that(fields[4].name, is("fifthField"));
+    azzert.that(fields[5].name, is("sixthField"));
   }
 
   @Test public void allPrimitiveFieldsTypes() {
     final TypedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    assertEquals("byte", fields[0].type.toString());
-    assertEquals("short", fields[1].type.toString());
-    assertEquals("long", fields[2].type.toString());
-    assertEquals("float", fields[3].type.toString());
-    assertEquals("double", fields[4].type.toString());
-    assertEquals("char", fields[5].type.toString());
-    assertEquals("boolean", fields[6].type.toString());
+    azzert.that((fields[0].type + ""), is("byte"));
+    azzert.that((fields[1].type + ""), is("short"));
+    azzert.that((fields[2].type + ""), is("long"));
+    azzert.that((fields[3].type + ""), is("float"));
+    azzert.that((fields[4].type + ""), is("double"));
+    azzert.that((fields[5].type + ""), is("char"));
+    azzert.that((fields[6].type + ""), is("boolean"));
   }
 
   @Test public void annotationCounts() {
     final ClassInfo __ = ClassInfo.make(Annotation.class);
-    assertEquals(0, __.constructors.length);
-    assertEquals(1, __.methods.length);
-    assertEquals(0, __.fields.length);
-    assertEquals(0, __.initializers.length);
+    azzert.that(__.constructors.length, is(0));
+    azzert.that(__.methods.length, is(1));
+    azzert.that(__.fields.length, is(0));
+    azzert.that(__.initializers.length, is(0));
   }
 
   @Test public void annotationFlags() {
-    assertEquals(0, ClassInfo.make(Annotation.class).flags & ~(Modifier.ABSTRACT | Modifier.INTERFACE | FlaggedEntity.ANNOTATION));
+    azzert.that((ClassInfo.make(Annotation.class).flags & ~(Modifier.ABSTRACT | Modifier.INTERFACE | FlaggedEntity.ANNOTATION)), is(0));
   }
 
   @Test public void annotationIsAnnotation() {
@@ -118,9 +121,9 @@ import il.org.spartan.utils.*;
 
   @Test public void arrayField() {
     final TypedEntity field = ClassInfo.make(ArrayField.class).fields[0];
-    assertEquals("fieldName", field.name);
-    assertEquals("[[[[I", field.descriptor);
-    assertEquals("int[][][][]", field.type.toString());
+    azzert.that(field.name, is("fieldName"));
+    azzert.that(field.descriptor, is("[[[[I"));
+    azzert.that((field.type + ""), is("int[][][][]"));
   }
 
   @Test public void badFile() {
@@ -134,7 +137,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void badInputStream() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    azzert.isNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void byteCodeCount() {
@@ -145,18 +148,18 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void classInfoFromBadPath() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    azzert.isNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void classInfoFromBadPathCLASSFILE() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    azzert.isNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void classWithCapitalL() {
     final TypedEntity field = ClassInfo.make(ClassWithCapitalL.class).fields[0];
-    assertEquals("fieldName", field.name);
-    assertEquals("Lil/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest$ClassWithCapitalL;", field.descriptor);
-    assertEquals("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL", field.type.toString());
+    azzert.that(field.name, is("fieldName"));
+    azzert.that(field.descriptor, is("Lil/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest$ClassWithCapitalL;"));
+    azzert.that((field.type + ""), is("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL"));
   }
 
   @Test public void codeAttributeExists() {
@@ -168,66 +171,67 @@ import il.org.spartan.utils.*;
   @Test public void codeAttributeMaxLocals() {
     class __ {
     }
-    assertEquals(1, ClassInfo.make(__.class).methods[0].getCode().maxLocals);
+    final int t2 = ClassInfo.make(__.class).methods[0].getCode().maxLocals;
+    azzert.that(t2, is(1));
   }
 
   @Test public void codeAttributeMaxStack() {
     class __ {
     }
-    assertEquals(0, ClassInfo.make(__.class).methods[0].getCode().maxStack);
+    final int t2 = ClassInfo.make(__.class).methods[0].getCode().maxStack;
+    azzert.that(t2, is(0));
   }
 
   @Test public void complexClassConstructorCounts() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(5, c.constructorsCount());
+    azzert.that(c.constructorsCount(), is(5));
   }
 
   @Test public void complexClassCounts() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(1, c.initializersCount());
+    azzert.that(c.initializersCount(), is(1));
   }
 
   @Test public void complexClassFieldsCounts() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(6, c.fieldsCount());
+    azzert.that(c.fieldsCount(), is(6));
   }
 
   @Test public void complexClassFieldsInterfaceCounts() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(3, c.interfacesCount());
+    azzert.that(c.interfacesCount(), is(3));
   }
 
   @Test public void complexClassFileAbstraction() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(Abstraction.PLAIN, c.abstraction());
+    azzert.that(c.abstraction(), is(Abstraction.PLAIN));
   }
 
   @Test public void complexClassFileKind() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(Kind.CLASS, c.kind());
+    azzert.that(c.kind(), is(Kind.CLASS));
   }
 
   @Test public void complexClassMethodCounts() {
     final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(8, c.methodCount());
+    azzert.that(c.methodCount(), is(8));
   }
 
   @Test public void complexClassMethodNames() {
     final MethodInfo[] ms = ClassInfo.make(LargeClass.class).methods;
     int i = 0;
-    assertEquals("method0", ms[i++].name);
-    assertEquals("method1", ms[i++].name);
-    assertEquals("method2", ms[i++].name);
-    assertEquals("method3", ms[i++].name);
-    assertEquals("method4", ms[i++].name);
-    assertEquals("method5", ms[i++].name);
-    assertEquals("method6", ms[i++].name);
-    assertEquals("method7", ms[i++].name);
+    azzert.that(ms[i++].name, is("method0"));
+    azzert.that(ms[i++].name, is("method1"));
+    azzert.that(ms[i++].name, is("method2"));
+    azzert.that(ms[i++].name, is("method3"));
+    azzert.that(ms[i++].name, is("method4"));
+    azzert.that(ms[i++].name, is("method5"));
+    azzert.that(ms[i++].name, is("method6"));
+    azzert.that(ms[i++].name, is("method7"));
   }
 
   @Test public void complexMethod() {
-    assertEquals("java.lang.Object[][][] (java.lang.Void, java.lang.Object, int, float, double[][])",
-        ClassInfo.make(ComplexMethod.class).methods[0].type.toString());
+    azzert.that((ClassInfo.make(ComplexMethod.class).methods[0].type + ""), is("java.lang.Object[][][] (java.lang.Void, java.lang.Object, int, float, double[][])"));
   }
 
   @Test public void dataInputStreamFromPath() throws FileNotFoundException {
@@ -252,23 +256,23 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassConstructorExceptions() {
-    assertEquals(0, ClassInfo.make(EmptyClass.class).constructors[0].exceptions.length);
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].exceptions.length, is(0));
   }
 
   @Test public void emptyClassDefaultConstructorAttributesLength() {
-    assertEquals(1, ClassInfo.make(EmptyClass.class).constructors[0].attributes.length);
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].attributes.length, is(1));
   }
 
   @Test public void emptyClassDefaultConstructorAttributesName() {
-    assertEquals("Code", ClassInfo.make(EmptyClass.class).constructors[0].attributes[0].name);
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].attributes[0].name, is("Code"));
   }
 
   @Test public void emptyClassDefaultConstructorFlags() {
-    assertEquals(Modifier.PUBLIC, ClassInfo.make(EmptyClass.class).constructors[0].flags);
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].flags, is(Modifier.PUBLIC));
   }
 
   @Test public void emptyClassDefaultConstructorgFlags() {
-    assertEquals(Modifier.PUBLIC, ClassInfo.make(EmptyClass.class).constructors[0].flags);
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].flags, is(Modifier.PUBLIC));
   }
 
   @Test public void emptyClassDefaultConstructorIsSynthetic() {
@@ -276,17 +280,17 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassDefaultConstructorName() {
-    assertEquals("", ClassInfo.make(EmptyClass.class).constructors[0].name);
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].name, is(""));
   }
 
   @Test public void emptyClassDefaultConstructorType() {
-    assertEquals("()", ClassInfo.make(EmptyClass.class).constructors[0].type.toString());
+    azzert.that((ClassInfo.make(EmptyClass.class).constructors[0].type + ""), is("()"));
   }
 
   @Test public void emptyClassDescriptor() {
     final TypedEntity constructor = ClassInfo.make(EmptyClass.class).constructors[0];
-    assertEquals("", constructor.name);
-    assertEquals("()V", constructor.descriptor);
+    azzert.that(constructor.name, is(""));
+    azzert.that(constructor.descriptor, is("()V"));
   }
 
   @Test public void emptyClassDGetConstructors() {
@@ -294,7 +298,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassFlags() {
-    assertEquals(Modifier.PUBLIC | Modifier.SYNCHRONIZED, ClassInfo.make(EmptyClass.class).flags);
+    azzert.that(ClassInfo.make(EmptyClass.class).flags, is((Modifier.PUBLIC | Modifier.SYNCHRONIZED)));
   }
 
   @Test public void emptyClassIsDeprecated() {
@@ -303,23 +307,23 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassNFields() {
-    assertEquals(0, ClassInfo.make(EmptyClass.class).fields.length);
+    azzert.that(ClassInfo.make(EmptyClass.class).fields.length, is(0));
   }
 
   @Test public void emptyClassNInterfaces() {
-    assertEquals(0, ClassInfo.make(EmptyClass.class).interfaces.length);
+    azzert.that(ClassInfo.make(EmptyClass.class).interfaces.length, is(0));
   }
 
   @Test public void emptyClassNMethods() {
-    assertEquals(0, ClassInfo.make(EmptyClass.class).methods.length);
+    azzert.that(ClassInfo.make(EmptyClass.class).methods.length, is(0));
   }
 
   @Test public void emptyClassOneMethodNFields() {
-    assertEquals(0, ClassInfo.make(EmptyClassOneMethod.class).fields.length);
+    azzert.that(ClassInfo.make(EmptyClassOneMethod.class).fields.length, is(0));
   }
 
   @Test public void emptyClassOneMethodNMethods() {
-    assertEquals(1, ClassInfo.make(EmptyClassOneMethod.class).methods.length);
+    azzert.that(ClassInfo.make(EmptyClassOneMethod.class).methods.length, is(1));
   }
 
   @Test public void enumClassFile() {
@@ -345,7 +349,7 @@ import il.org.spartan.utils.*;
 
   @Test public void enumConstructorsCounts() {
     final ClassInfo __ = ClassInfo.make(Enum.class);
-    assertEquals(1, __.constructors.length);
+    azzert.that(__.constructors.length, is(1));
   }
 
   @Test public void enumIsDeprecated() {
@@ -359,23 +363,23 @@ import il.org.spartan.utils.*;
 
   @Test public void enumMethod() {
     final ClassInfo __ = ClassInfo.make(Enum.class);
-    assertEquals(1, __.methods.length);
-    assertEquals(0, __.constructors.length);
-    assertEquals(0, __.initializers.length);
+    azzert.that(__.methods.length, is(1));
+    azzert.that(__.constructors.length, is(0));
+    azzert.that(__.initializers.length, is(0));
     assert __.methods[0].isAbstract();
     assert __.methods[0].isPublic();
   }
 
   @Test public void enumMethodCounts() {
     final ClassInfo __ = ClassInfo.make(Enum.class);
-    assertEquals(2, __.methods.length);
-    assertEquals(0, __.initializers.length);
+    azzert.that(__.methods.length, is(2));
+    azzert.that(__.initializers.length, is(0));
   }
 
   @Test public void enumMethodName() {
     final ClassInfo __ = ClassInfo.make(Enum.class);
-    assertEquals("myMethod", __.methods[0].name);
-    assertEquals("values", __.methods[1].name);
+    azzert.that(__.methods[0].name, is("myMethod"));
+    azzert.that(__.methods[1].name, is("values"));
     assert __.methods[1].isSynthetic();
   }
 
@@ -389,9 +393,9 @@ import il.org.spartan.utils.*;
 
   @Test public void InitializerConstructors() {
     final NamedEntity[] ctros = ClassInfo.make(Initializer.class).constructors;
-    assertEquals(2, ctros.length);
-    assertEquals("", ctros[0].name);
-    assertEquals("", ctros[1].name);
+    azzert.that(ctros.length, is(2));
+    azzert.that(ctros[0].name, is(""));
+    azzert.that(ctros[1].name, is(""));
   }
 
   @Test public void inputStreamFromPath() throws FileNotFoundException {
@@ -414,22 +418,22 @@ import il.org.spartan.utils.*;
 
   @Test public void interfaceMethod() {
     final ClassInfo __ = ClassInfo.make(Interface.class);
-    assertEquals(1, __.methods.length);
-    assertEquals(0, __.constructors.length);
-    assertEquals(0, __.initializers.length);
+    azzert.that(__.methods.length, is(1));
+    azzert.that(__.constructors.length, is(0));
+    azzert.that(__.initializers.length, is(0));
     assert __.methods[0].isAbstract();
     assert __.methods[0].isPublic();
   }
 
   @Test public void interfaceSuperClassName() {
-    assertEquals(Object.class.getCanonicalName(), ClassInfo.make(Serializable.class).superClass);
+    azzert.that(ClassInfo.make(Serializable.class).superClass, is(Object.class.getCanonicalName()));
   }
 
   @Test public void intFieldName() {
     final TypedEntity field = ClassInfo.make(IntField.class).fields[0];
-    assertEquals("fieldName", field.name);
-    assertEquals("I", field.descriptor);
-    assertEquals("int", field.type.toString());
+    azzert.that(field.name, is("fieldName"));
+    azzert.that(field.descriptor, is("I"));
+    azzert.that((field.type + ""), is("int"));
   }
 
   @Test public void isClass() {
@@ -440,89 +444,89 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void meFlags() {
-    assertEquals(Modifier.PUBLIC | Modifier.SYNCHRONIZED, ClassInfo.make(this.getClass()).flags);
+    azzert.that(ClassInfo.make(this.getClass()).flags, is((Modifier.PUBLIC | Modifier.SYNCHRONIZED)));
   }
 
   @Test public void meHasCorrectInteface() {
     final ClassInfo __ = ClassInfo.make(this.getClass());
-    assertEquals(Serializable.class.getCanonicalName(), __.interfaces[0].toString());
+    azzert.that((__.interfaces[0] + ""), is(Serializable.class.getCanonicalName()));
   }
 
   @Test public void meHasOneInteface() {
-    assertEquals(1, ClassInfo.make(this.getClass()).interfaces.length);
+    azzert.that(ClassInfo.make(this.getClass()).interfaces.length, is(1));
   }
 
   @Test public void meName() {
-    assertEquals(this.getClass().getCanonicalName(), ClassInfo.make(this.getClass()).name);
+    azzert.that(ClassInfo.make(this.getClass()).name, is(this.getClass().getCanonicalName()));
   }
 
   @Test public void meSuperClassName() {
-    assertEquals(Object.class.getCanonicalName(), ClassInfo.make(this.getClass()).superClass);
+    azzert.that(ClassInfo.make(this.getClass()).superClass, is(Object.class.getCanonicalName()));
   }
 
   @Test public void methodExceptionsLength() {
     class __ {
     }
-    assertEquals(2, ClassInfo.make(__.class).methods[0].exceptions.length);
+    azzert.that(ClassInfo.make(__.class).methods[0].exceptions.length, is(2));
   }
 
   @Test public void methodExceptionsName() {
     class __ {
     }
-    assertEquals(IOException.class.getName(), ClassInfo.make(__.class).methods[0].exceptions[0].toString());
-    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), ClassInfo.make(__.class).methods[0].exceptions[1].toString());
+    azzert.that((ClassInfo.make(__.class).methods[0].exceptions[0] + ""), is(IOException.class.getName()));
+    azzert.that((ClassInfo.make(__.class).methods[0].exceptions[1] + ""), is(ArrayIndexOutOfBoundsException.class.getName()));
   }
 
   @Test public void methodWithParameters() {
     final TypedEntity method = ClassInfo.make(MethodWithParametrs.class).methods[0];
-    assertEquals("method", method.name);
-    assertEquals("(III)Ljava/lang/Integer;", method.descriptor);
+    azzert.that(method.name, is("method"));
+    azzert.that(method.descriptor, is("(III)Ljava/lang/Integer;"));
   }
 
   @Test public void nameOneField() {
     final ClassInfo __ = ClassInfo.make(OneField.class);
-    assertEquals("fieldName", __.fields[0].name);
+    azzert.that(__.fields[0].name, is("fieldName"));
   }
 
   @Test public void namesTwoAnnotatedFields() {
     final NamedEntity[] fields = ClassInfo.make(TwoAnnotatedFields.class).fields;
-    assertEquals("firstField", fields[0].name);
-    assertEquals("secondField", fields[1].name);
+    azzert.that(fields[0].name, is("firstField"));
+    azzert.that(fields[1].name, is("secondField"));
   }
 
   @Test public void namesTwoFields() {
     final NamedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
-    assertEquals("firstField", fields[0].name);
-    assertEquals("secondField", fields[1].name);
+    azzert.that(fields[0].name, is("firstField"));
+    azzert.that(fields[1].name, is("secondField"));
   }
 
   @Test public void nameTwoMethods() {
     final ClassInfo __ = ClassInfo.make(TwoMethods.class);
-    assertEquals("", __.constructors[0].name);
-    assertEquals("firstMethod", __.methods[0].name);
-    assertEquals("secondMethod", __.methods[1].name);
+    azzert.that(__.constructors[0].name, is(""));
+    azzert.that(__.methods[0].name, is("firstMethod"));
+    azzert.that(__.methods[1].name, is("secondMethod"));
   }
 
   @Test public void noByteCodeEmptyClassConstructor() {
-    assertNull(ClassInfo.make(EmptyClass.class).constructors[0].code);
+    azzert.isNull(ClassInfo.make(EmptyClass.class).constructors[0].code);
   }
 
   @Test public void noByteCodeEmptyConstructor() {
     class __ {
     }
-    assertNull(ClassInfo.make(__.class).constructors[0].code);
+    azzert.isNull(ClassInfo.make(__.class).constructors[0].code);
   }
 
   @Test public void noByteCodeEmptyConstructorCallingSuper() {
     class __ {
     }
-    assertNull(ClassInfo.make(__.class).constructors[0].code);
+    azzert.isNull(ClassInfo.make(__.class).constructors[0].code);
   }
 
   @Test public void noExceptionsCount() {
     class __ {
     }
-    assertEquals(2, ClassInfo.make(__.class).methods[0].exceptions.length);
+    azzert.that(ClassInfo.make(__.class).methods[0].exceptions.length, is(2));
   }
 
   @Test public void objecClassCreate() {
@@ -531,13 +535,13 @@ import il.org.spartan.utils.*;
 
   @Test public void objectFieldName() {
     final TypedEntity field = ClassInfo.make(ObjectField.class).fields[0];
-    assertEquals("fieldName", field.name);
-    assertEquals("Ljava/lang/Object;", field.descriptor);
-    assertEquals("java.lang.Object", field.type.toString());
+    azzert.that(field.name, is("fieldName"));
+    azzert.that(field.descriptor, is("Ljava/lang/Object;"));
+    azzert.that((field.type + ""), is("java.lang.Object"));
   }
 
   @Test public void objectSuperClassName() {
-    assertNull(ClassInfo.make(Object.class).superClass);
+    azzert.isNull(ClassInfo.make(Object.class).superClass);
   }
 
   @Test public void omeMethoExceptions() {
@@ -545,7 +549,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void oneFieldFieldCount() {
-    assertEquals(1, ClassInfo.make(OneField.class).fields.length);
+    azzert.that(ClassInfo.make(OneField.class).fields.length, is(1));
   }
 
   @Test public void oneFieldFieldIsDeperecated() {
@@ -558,7 +562,7 @@ import il.org.spartan.utils.*;
 
   @Test public void oneFieldFlags() {
     final int flags = ClassInfo.make(OneField.class).fields[0].flags;
-    assertEquals(Modifier.FINAL | Modifier.PUBLIC | FlaggedEntity.DEPRECATED, flags);
+    azzert.that(flags, is((Modifier.FINAL | Modifier.PUBLIC | FlaggedEntity.DEPRECATED)));
   }
 
   @Test public void oneFieldIsDeperecated() {
@@ -571,33 +575,33 @@ import il.org.spartan.utils.*;
 
   @Test public void oneMethodFlags() {
     final int flags = ClassInfo.make(OneMethod.class).methods[0].flags;
-    assertEquals(Modifier.FINAL | Modifier.PUBLIC, flags);
+    azzert.that(flags, is((Modifier.FINAL | Modifier.PUBLIC)));
   }
 
   @Test public void oneMethodLengths() {
     final ClassInfo __ = ClassInfo.make(OneMethod.class);
-    assertEquals(1, __.constructors.length);
-    assertEquals(1, __.methods.length);
-    assertEquals(0, __.fields.length);
-    assertEquals(0, __.initializers.length);
+    azzert.that(__.constructors.length, is(1));
+    azzert.that(__.methods.length, is(1));
+    azzert.that(__.fields.length, is(0));
+    azzert.that(__.initializers.length, is(0));
   }
 
   @Test public void oneMethodName() {
     final ClassInfo __ = ClassInfo.make(OneMethod.class);
-    assertEquals("", __.constructors[0].name);
-    assertEquals("methodName", __.methods[0].name);
+    azzert.that(__.constructors[0].name, is(""));
+    azzert.that(__.methods[0].name, is("methodName"));
   }
 
   @Test public void oneMethodSize() {
-    assertEquals(1, ClassInfo.make(OneMethod.class).methods.length);
+    azzert.that(ClassInfo.make(OneMethod.class).methods.length, is(1));
   }
 
   @Test public void oneStaticMethodSize() {
-    assertEquals(1, ClassInfo.make(OneMethod.class).methods.length);
+    azzert.that(ClassInfo.make(OneMethod.class).methods.length, is(1));
   }
 
   @Test public void openBadPath() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    Assert.assertNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void openEmptyClass() {
@@ -613,7 +617,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openPathCLASSFILESBadPath() {
-    assertNull(ClassInfo.make(BAD_FILE_PATH));
+    azzert.isNull(ClassInfo.make(BAD_FILE_PATH));
   }
 
   @Test public void openSelf() {
@@ -678,22 +682,22 @@ import il.org.spartan.utils.*;
   @Test public void parseTableSwitch() {
     class __ {
     }
-    assertEquals("tableSwitch", ClassInfo.make(__.class).methods[0].name);
+    azzert.that(ClassInfo.make(__.class).methods[0].name, is("tableSwitch"));
     assert ClassInfo.make(__.class).methods[0].getCode().instructionsCount() > 20;
   }
 
   @Test public void readFromDataInputStreamFromPath() throws IOException {
     final DataInputStream f = new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
-    assertEquals(ClassInfo.Builder.MAGIC, f.readInt());
+    azzert.that(f.readInt(), is(ClassInfo.Builder.MAGIC));
     f.close();
   }
 
   @Test public void readFromNoExceptionsReaderFromBadPath() {
-    assertEquals(0, new RobustReader(BAD_FILE_PATH).readInt());
+    azzert.that(new RobustReader(BAD_FILE_PATH).readInt(), is(0));
   }
 
   @Test public void readFromNoExceptionsReaderFromGoodPath() {
-    assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD_FILE_PATH).readInt());
+    azzert.that(new RobustReader(GOOD_FILE_PATH).readInt(), is(ClassInfo.Builder.MAGIC));
   }
 
   @Test public void selfMakeNotNull() {
@@ -701,7 +705,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void selfSource() {
-    assertEquals(this.getClass().getSimpleName() + ".java", ClassInfo.make(this.getClass()).source);
+    azzert.that(ClassInfo.make(this.getClass()).source, is(this.getClass().getSimpleName() + ".java"));
   }
 
   @Test public void selfSourceNotNul() {
@@ -710,10 +714,10 @@ import il.org.spartan.utils.*;
 
   @Test public void singleStaticInitilizerLengths() {
     final ClassInfo __ = ClassInfo.make(SingleStaticInitializer.class);
-    assertEquals(1, __.constructors.length);
-    assertEquals(0, __.methods.length);
-    assertEquals(0, __.fields.length);
-    assertEquals(1, __.initializers.length);
+    azzert.that(__.constructors.length, is(1));
+    azzert.that(__.methods.length, is(0));
+    azzert.that(__.fields.length, is(0));
+    azzert.that(__.initializers.length, is(1));
   }
 
   @Test public void staticInitializerIsPrivate() {
@@ -728,15 +732,15 @@ import il.org.spartan.utils.*;
 
   @Test public void staticInitializerNames() {
     final ClassInfo __ = ClassInfo.make(StaticInitializer.class);
-    assertEquals(0, __.methods.length);
-    assertEquals("", __.initializers[0].name);
-    assertEquals("", __.constructors[0].name);
-    assertEquals("", __.constructors[1].name);
+    azzert.that(__.methods.length, is(0));
+    azzert.that(__.initializers[0].name, is(""));
+    azzert.that(__.constructors[0].name, is(""));
+    azzert.that(__.constructors[1].name, is(""));
   }
 
   @Test public void staticInitializerType() {
     final InitializerInfo[] initializers = ClassInfo.make(StaticInitializer.class).initializers;
-    assertEquals("()", initializers[0].type.toString());
+    azzert.that((initializers[0].type + ""), is("()"));
   }
 
   @Test public void twoFieldsAreNotPrimtive() {
@@ -746,31 +750,31 @@ import il.org.spartan.utils.*;
 
   @Test public void twoFieldsFlags() {
     final FlaggedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
-    assertEquals(Modifier.FINAL | Modifier.STATIC, fields[0].flags);
-    assertEquals(Modifier.FINAL | Modifier.PRIVATE, fields[1].flags);
+    azzert.that(fields[0].flags, is((Modifier.FINAL | Modifier.STATIC)));
+    azzert.that(fields[1].flags, is((Modifier.FINAL | Modifier.PRIVATE)));
   }
 
   @Test public void twoMethodLengths() {
     final ClassInfo __ = ClassInfo.make(OneMethod.class);
-    assertEquals(1, __.constructors.length);
-    assertEquals(1, __.methods.length);
-    assertEquals(0, __.fields.length);
-    assertEquals(0, __.initializers.length);
+    azzert.that(__.constructors.length, is(1));
+    azzert.that(__.methods.length, is(1));
+    azzert.that(__.fields.length, is(0));
+    azzert.that(__.initializers.length, is(0));
   }
 
   @Test public void twoMethodsCount() {
-    assertEquals(2, ClassInfo.make(TwoMethods.class).methods.length);
+    azzert.that(ClassInfo.make(TwoMethods.class).methods.length, is(2));
   }
 
   @Test public void twoMethodsFlags() {
     final FlaggedEntity[] methods = ClassInfo.make(TwoMethods.class).methods;
-    assertEquals(Modifier.ABSTRACT, methods[0].flags);
-    assertEquals(Modifier.FINAL | Modifier.PUBLIC | Modifier.STATIC, methods[1].flags);
+    azzert.that(methods[0].flags, is(Modifier.ABSTRACT));
+    azzert.that(methods[1].flags, is((Modifier.FINAL | Modifier.PUBLIC | Modifier.STATIC)));
   }
 
   @Test public void voidMethod() {
-    assertEquals("()V", ClassInfo.make(VoidMethod.class).methods[0].descriptor);
-    assertEquals("void ()", ClassInfo.make(VoidMethod.class).methods[0].type.toString());
+    azzert.that(ClassInfo.make(VoidMethod.class).methods[0].descriptor, is("()V"));
+    azzert.that((ClassInfo.make(VoidMethod.class).methods[0].type + ""), is("void ()"));
   }
 
   public static abstract class AllAccessLevels {
@@ -889,17 +893,9 @@ import il.org.spartan.utils.*;
 
     @Override public String toString() {
       final long stop = s.time();
-      return String
-          .format(
-              //
-              "Processed %s files, consisting of %s methods with %s code blocks\n" + //
-                  "comprising a total of %s bytecode instructions in %s.", //
-              Unit.INTEGER.format(nFiles), //
-              Unit.INTEGER.format(nMethods), //
-              Unit.INTEGER.format(nCodes), //
-              Unit.INTEGER.format(nInstructions), //
-              Unit.NANOSECONDS.format(stop)) //
-          .toString();
+      return String.format("Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
+          Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
+          Unit.NANOSECONDS.format(stop)) + "";
     }
 
     void parse(final ClassInfo c) {
@@ -921,7 +917,7 @@ import il.org.spartan.utils.*;
             try {
               parse(ClassInfo.make(f));
             } catch (final RuntimeException e) {
-              System.out.println("\n** " + f.toString() + ": " + e);
+              System.out.println("\n** " + "" + f + ": " + e);
             }
           }
 

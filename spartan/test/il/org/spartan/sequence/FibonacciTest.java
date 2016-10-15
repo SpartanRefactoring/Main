@@ -1,6 +1,11 @@
 package il.org.spartan.sequence;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -14,22 +19,22 @@ import org.junit.*;
   }
 
   @Test public void testFifth() {
-    assertEquals(8, new Fibonacci(1000).advance().advance().advance().advance().current());
+    azzert.that(new Fibonacci(1000).advance().advance().advance().advance().current(), is(8));
   }
 
   @Test public void testFirst() {
-    assertEquals(1, new Fibonacci(1000).current());
+    azzert.that(new Fibonacci(1000).current(), is(1));
   }
 
   @Test public void testFourth() {
-    assertEquals(5, new Fibonacci(1000).advance().advance().advance().current());
+    azzert.that(new Fibonacci(1000).advance().advance().advance().current(), is(5));
   }
 
   @Test public void testSecond() {
-    assertEquals(2, new Fibonacci(1000).advance().current());
+    azzert.that(new Fibonacci(1000).advance().current(), is(2));
   }
 
   @Test public void testThird() {
-    assertEquals(3, new Fibonacci(1000).advance().advance().current());
+    azzert.that(new Fibonacci(1000).advance().advance().current(), is(3));
   }
 }

@@ -97,7 +97,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
           sb.append(c);
           break;
       }
-    return sb.toString();
+    return sb + "";
   }
 
   public final double mad() {

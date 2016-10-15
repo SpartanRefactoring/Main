@@ -3,7 +3,12 @@
  */
 package il.org.spartan.statistics;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.math.*;
 
@@ -21,28 +26,27 @@ import org.junit.*;
   }
 
   @Test public void factorial10() {
-    assertEquals(Binomial.factorial(10), new BigInteger("3628800"));
+    azzert.that(new BigInteger("3628800"), is(Binomial.factorial(10)));
   }
 
   @Test public void factorial15() {
-    assertEquals(Binomial.factorial(15), new BigInteger("1307674368000"));
+    azzert.that(new BigInteger("1307674368000"), is(Binomial.factorial(15)));
   }
 
   @Test public void factorial20() {
-    assertEquals(Binomial.factorial(20), new BigInteger("2432902008176640000"));
+    azzert.that(new BigInteger("2432902008176640000"), is(Binomial.factorial(20)));
   }
 
   @Test public void factorial21() {
-    assertEquals(Binomial.factorial(21), new BigInteger("51090942171709440000"));
+    azzert.that(new BigInteger("51090942171709440000"), is(Binomial.factorial(21)));
   }
 
   @Test public void factorial4() {
-    assertEquals(Binomial.factorial(4), new BigInteger("24"));
+    azzert.that(new BigInteger("24"), is(Binomial.factorial(4)));
   }
 
   @Test public void factorial68() {
-    assertEquals(Binomial.factorial(68),
-        new BigInteger("2480035542436830599600990418569171581047399201355367672371710738018221445712183296000000000000000"));
+    azzert.that(new BigInteger("2480035542436830599600990418569171581047399201355367672371710738018221445712183296000000000000000"), is(Binomial.factorial(68)));
   }
 
   @Test public void probability() {

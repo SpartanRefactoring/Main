@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.*;
 import java.util.*;
 
-import org.junit.*;
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.classfiles.*;
 

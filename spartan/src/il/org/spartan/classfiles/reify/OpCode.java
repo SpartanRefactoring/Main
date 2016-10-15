@@ -3,12 +3,16 @@
  */
 package il.org.spartan.classfiles.reify;
 
-import static org.junit.Assert.*;
-
-import java.io.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import java.io.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
@@ -401,7 +405,7 @@ public enum OpCode {
   @SuppressWarnings("static-method") //
   public static class TEST {
     @Test public void valuesCount() {
-      assertEquals(256, OpCode.values().length);
+      azzert.that(OpCode.values().length, is(256));
     }
   }
 }

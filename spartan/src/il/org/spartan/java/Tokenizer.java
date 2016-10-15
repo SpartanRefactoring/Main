@@ -85,6 +85,6 @@ public class Tokenizer {
   }
 
   protected String state() {
-    return "" + inner.yystate();
+    return inner.yystate() + "";
   }
 }

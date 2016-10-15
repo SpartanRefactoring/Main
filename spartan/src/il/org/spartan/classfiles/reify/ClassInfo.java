@@ -486,7 +486,7 @@ public final class ClassInfo extends ConstantPoolEntity {
       if (i.getClassName().equals(className))
         $[LinkComponents.SuperInterface.ordinal()]++;
     for (final FieldInfo f : fields)
-      if (f.type.toString().equals(className))
+      if ((f.type + "").equals(className))
         $[LinkComponents.FieldDeclaration.ordinal()]++;
     return $;
   }

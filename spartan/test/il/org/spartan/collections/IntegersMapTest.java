@@ -3,7 +3,12 @@
  */
 package il.org.spartan.collections;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -32,42 +37,42 @@ public final class IntegersMapTest {
 
   @Test public void get1() {
     m.put(10, 100);
-    assertEquals(100, m.get(10));
+    azzert.that(m.get(10), is(100));
   }
 
   @Test public void get1000() {
     for (int i = 0; i < 1000; i++)
       m.put(i, 2 * i + 1);
     for (int i = 0; i < 1000; i++)
-      assertEquals(2 * i + 1, m.get(i));
+      azzert.that(m.get(i), is((2 * i + 1)));
   }
 
   @Test public void get2() {
     m.put(10, 100).put(20, 30);
-    assertEquals(100, m.get(10));
-    assertEquals(30, m.get(20));
+    azzert.that(m.get(10), is(100));
+    azzert.that(m.get(20), is(30));
   }
 
   @Test public void get3() {
     m.put(10, 100).put(20, 30).put(50, 60);
-    assertEquals(100, m.get(10));
-    assertEquals(30, m.get(20));
-    assertEquals(60, m.get(50));
+    azzert.that(m.get(10), is(100));
+    azzert.that(m.get(20), is(30));
+    azzert.that(m.get(50), is(60));
   }
 
   @Test public void get4() {
     m.put(10, 100).put(20, 30).put(30, 40).put(50, 60);
-    assertEquals(100, m.get(10));
-    assertEquals(30, m.get(20));
-    assertEquals(60, m.get(50));
-    assertEquals(40, m.get(30));
+    azzert.that(m.get(10), is(100));
+    azzert.that(m.get(20), is(30));
+    azzert.that(m.get(50), is(60));
+    azzert.that(m.get(30), is(40));
   }
 
   @Test public void increment1000() {
     for (int i = 0; i < 1000; i++)
       m.increment(i);
     for (int i = 0; i < 1000; i++)
-      assertEquals(1, m.get(i));
+      azzert.that(m.get(i), is(1));
   }
 
   @Test public void incrementMany() {
@@ -75,14 +80,14 @@ public final class IntegersMapTest {
       for (int j = 0; j <= i; j++)
         m.increment(i);
     for (int i = 0; i < 100; i++)
-      assertEquals(i + 1, m.get(i));
+      azzert.that(m.get(i), is((i + 1)));
   }
 
   @Test public void init1000() {
     for (int i = 0; i < 1000; i++)
       m.init(i);
     for (int i = 0; i < 1000; i++)
-      assertEquals(0, m.get(i));
+      azzert.that(m.get(i), is(0));
   }
 
   @Test public void initDoesClear() {
@@ -91,7 +96,7 @@ public final class IntegersMapTest {
     for (int i = 0; i < 1000; i++)
       m.init(i);
     for (int i = 0; i < 1000; i++)
-      assertEquals(0, m.get(i));
+      azzert.that(m.get(i), is(0));
   }
 
   @SuppressWarnings("static-method") //
@@ -103,32 +108,40 @@ public final class IntegersMapTest {
     for (int i = 0; i < 10000; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 10000; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 10000; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys10() {
     for (int i = 0; i < 10; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.keys();
-    for (int i = 0; i < 10; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 10; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys100() {
     for (int i = 0; i < 100; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 100; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 100; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys15() {
     for (int i = 0; i < 15; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.keys();
-    for (int i = 0; i < 15; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 15; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys15rehash() {
@@ -136,64 +149,78 @@ public final class IntegersMapTest {
       m.put(i, IntegersMap.hash(i));
     m.rehash();
     final int[] keys = m.keys();
-    for (int i = 0; i < 15; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 15; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys17() {
     for (int i = 0; i < 17; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.keys();
-    for (int i = 0; i < 17; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 17; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys18() {
     for (int i = 0; i < 18; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 18; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 18; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys18inverse() {
     for (int i = 0; i < 18; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 17; i >= 0; i--)
-      assertEquals(i, keys[i]);
+    for (int i = 17; i >= 0; i--) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys20inverse() {
     for (int i = 0; i < 20; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 19; i >= 0; i--)
-      assertEquals(i, keys[i]);
+    for (int i = 19; i >= 0; i--) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys22() {
     for (int i = 0; i < 22; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 22; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 22; i++) {
+      azzert.that(keys[i], is(i));
+    }
   }
 
   @Test public void keys30() {
     for (int i = 0; i < 30; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 30; i++)
-      assertEquals(i, keys[i]);
+    for (int i = 0; i < 30; i++) {
+      final int t1 = i;
+      azzert.that(keys[i], is(t1));
+    }
   }
 
   @Test public void keys30inverse() {
     for (int i = 0; i < 30; i++)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 29; i >= 0; i--)
-      assertEquals(i, keys[i]);
+    for (int i = 29; i >= 0; i--) {
+      azzert.that(keys[i], is(i));
+    }
   }
 
   @Test public void loaction1000() {
@@ -213,14 +240,14 @@ public final class IntegersMapTest {
   @Test public void location1() {
     final int h = IntegersMap.hash(0);
     m.put(h, h);
-    assertEquals(h, m.get(h));
+    azzert.that(m.get(h), is(h));
     assert m.location(h) >= 0;
   }
 
   @Test public void location1_1() {
     final int h = IntegersMap.hash(1);
     m.put(h, h);
-    assertEquals(h, m.get(h));
+    azzert.that(m.get(h), is(h));
     assert m.location(h) >= 0;
   }
 
@@ -231,15 +258,15 @@ public final class IntegersMapTest {
   @Test public void location2() {
     final int h0 = IntegersMap.hash(0);
     m.put(h0, 100);
-    assertEquals(100, m.get(h0));
+    azzert.that(m.get(h0), is(100));
     final int h1 = IntegersMap.hash(1);
     m.put(h1, 1);
     assert h1 != h0;
     assert m.location(h0) >= 0;
     assert m.location(h1) >= 0;
     assert m.location(h1) != m.location(h0);
-    assertEquals(1, m.get(h1));
-    assertEquals(100, m.get(h0));
+    azzert.that(m.get(h1), is(1));
+    azzert.that(m.get(h0), is(100));
   }
 
   @Test public void location30() {

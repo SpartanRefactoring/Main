@@ -50,7 +50,7 @@ public class RichToken {
   }
 
   @Override public String toString() {
-    return token.toString();
+    return token + "";
   }
 
   public static class Factory {

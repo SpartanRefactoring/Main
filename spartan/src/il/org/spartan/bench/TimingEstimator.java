@@ -85,8 +85,8 @@ public class TimingEstimator {
     for (;;) {
       Log.print("Running " + thousands(runs) + " times...");
       final JVM before = new JVM();
-      final StopWatch grossTime = new StopWatch().start();
-      final StopWatch netTime = o.netTime(runs);
+      final Stopwatch grossTime = new Stopwatch().start();
+      final Stopwatch netTime = o.netTime(runs);
       grossTime.stop();
       final JVM after = new JVM();
       nonnegative(netTime.time());

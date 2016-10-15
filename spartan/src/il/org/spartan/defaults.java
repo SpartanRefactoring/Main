@@ -1,7 +1,4 @@
-// <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
-package il.org.spartan.utils;
-
-import il.org.spartan.streotypes.*;
+package il.org.spartan;
 
 /** A bunch of <code><b>static</b></code> functions to manage the frequent
  * conditional of replacing a <code><b>null</b></code> value with some default.
@@ -17,7 +14,7 @@ import il.org.spartan.streotypes.*;
  * <code><b>null</b></code> then <code>guess</code>'s value will be that of
  * <code>answer</code>.
  * @author Yossi Gil, 2008/06/20 */
-@Utility public enum Defaults {
+public enum defaults {
   ;
   /** Return a default value for an {@link Integer} type.
    * @param v a possibly <code><b>null</b></code> value

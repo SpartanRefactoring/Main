@@ -12,11 +12,11 @@ import java.io.*;
  * @since 2011-11-19 */
 public class TokenAsIs extends TokenProcessor {
   public static String fileToString(final File f) throws IOException, FileNotFoundException {
-    return new TokenFeeder(new Tokenizer(f), new TokenAsIs()).go().processor.toString();
+    return new TokenFeeder(new Tokenizer(f), new TokenAsIs()).go().processor + "";
   }
 
   public static String fileToString(final String fileName) throws IOException, FileNotFoundException {
-    return new TokenFeeder(new Tokenizer(fileName), new TokenAsIs()).go().processor.toString();
+    return new TokenFeeder(new Tokenizer(fileName), new TokenAsIs()).go().processor + "";
   }
 
   public static void main(final String argv[]) throws IOException {
@@ -25,7 +25,7 @@ public class TokenAsIs extends TokenProcessor {
   }
 
   public static String stringToString(final String text) throws IOException, FileNotFoundException {
-    return new TokenFeeder(new StringReader(text), new TokenAsIs()).go().processor.toString();
+    return new TokenFeeder(new StringReader(text), new TokenAsIs()).go().processor + "";
   }
 
   private final StringBuilder $ = new StringBuilder();
@@ -36,6 +36,6 @@ public class TokenAsIs extends TokenProcessor {
   }
 
   @Override public String toString() {
-    return $.toString();
+    return $ + "";
   }
 }

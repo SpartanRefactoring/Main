@@ -3,7 +3,12 @@
  */
 package il.org.spartan.collections;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.util.*;
 
@@ -24,7 +29,7 @@ public class DoublesWindow {
    * @throws IllegalArgumentException in case the argument was non-positive */
   public DoublesWindow(final int capacity) {
     if (capacity < 1)
-      throw new IllegalArgumentException("" + capacity);
+      throw new IllegalArgumentException(capacity + "");
     window = new double[capacity];
   }
 
@@ -79,27 +84,27 @@ public class DoublesWindow {
     }
 
     @Test public void correctCapacity() {
-      assertEquals(10, new DoublesWindow(10).capacity());
+      azzert.that(new DoublesWindow(10).capacity(), is(10));
     }
 
     @Test public void correctSizeAfterOverflow() {
-      assertEquals(3, new DoublesWindow(3).add(1).add(3).add(4).add(5).size());
+      azzert.that(new DoublesWindow(3).add(1).add(3).add(4).add(5).size(), is(3));
     }
 
     @Test public void correctSizeBeforeOverflow() {
-      assertEquals(3, new DoublesWindow(3).add(1).add(3).add(4).size());
+      azzert.that(new DoublesWindow(3).add(1).add(3).add(4).size(), is(3));
     }
 
     @Test public void correctSizeOfEmpty() {
-      assertEquals(0, new DoublesWindow(10).size());
+      azzert.that(new DoublesWindow(10).size(), is(0));
     }
 
     @Test public void correctSizeOfOne() {
-      assertEquals(1, new DoublesWindow(10).add(1).size());
+      azzert.that(new DoublesWindow(10).add(1).size(), is(1));
     }
 
     @Test public void correctSizeOfTwo() {
-      assertEquals(2, new DoublesWindow(10).add(1).add(3).size());
+      azzert.that(new DoublesWindow(10).add(1).add(3).size(), is(2));
     }
 
     @Test public void create() {
@@ -153,18 +158,18 @@ public class DoublesWindow {
     @Test public void veryLongWindow() {
       final DoublesWindow w = new DoublesWindow(5);
       for (int i = 0; i < 5; i++) {
-        assertEquals(5, w.capacity());
-        assertEquals(i, w.size());
+        azzert.that(w.capacity(), is(5));
+        azzert.that(w.size(), is(i));
         assert !w.full();
         w.add(i);
-        assertEquals(i + 1, w.size());
+        azzert.that(w.size(), is((i + 1)));
         assertEquals(i, w.newest(), 1E-5);
         assertEquals(0, w.oldest(), 1E-5);
       }
       for (int i = 5; i < 100; i++) {
         assert w.full();
-        assertEquals(5, w.capacity());
-        assertEquals(5, w.size());
+        azzert.that(w.capacity(), is(5));
+        azzert.that(w.size(), is(5));
         w.add(i);
         assertEquals(i, w.newest(), 1E-10);
         assertEquals(i - 5 + 1, w.oldest(), 1E-10);

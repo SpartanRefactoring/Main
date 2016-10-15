@@ -860,7 +860,7 @@ public class RawTokenizer {
 
   /* user code: */
   public String text() {
-    return $.length() > 0 ? $.toString() : yytext();
+    return $.length() > 0 ? $ + "" : yytext();
   }
 
   public String token() {

@@ -3,15 +3,19 @@
  */
 package il.org.spartan.java;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
 
 import java.io.*;
 import java.util.*;
 
-import org.junit.*;
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 import org.junit.experimental.theories.*;
 import org.junit.runner.*;
 
+import il.org.spartan.*;
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.utils.*;
@@ -49,12 +53,12 @@ public class TestNoOther {
   private final File fin = new File("test/data/UnicodeFile");
 
   @Test public void brace_brace_newline() throws IOException {
-    assertEquals("{}\n", TokenAsIs.stringToString("{}\n"));
+    azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
 
   @Theory public void fullTokenization(final File f) throws IOException {
     System.err.println("Testing " + f);
-    assertEquals(read(f), TokenAsIs.fileToString(f));
+    azzert.that(TokenAsIs.fileToString(f), is(read(f)));
   }
 
   @Test public void some_method() throws IOException {
@@ -69,24 +73,24 @@ public class TestNoOther {
         " ", //
         " ", //
         "  ");
-    assertEquals(s, TokenAsIs.stringToString(s));
+    azzert.that(TokenAsIs.stringToString(s), is(s));
   }
 
   @Test public void unicode() throws IOException {
     final String s = "יוסי";
-    assertEquals(s, TokenAsIs.stringToString(s).toString());
+    azzert.that((TokenAsIs.stringToString(s) + ""), is(s));
   }
 
   @Test public void unicodeFileAgainstFileOutput() throws IOException {
     final String s = TokenAsIs.fileToString(fin);
     final File fout = new File(fin.getPath() + ".out");
     write(fout, s);
-    assertEquals(s, read(fout));
-    assertEquals(read(fin), read(fout));
+    azzert.that(read(fout), is(s));
+    azzert.that(read(fout), is(read(fin)));
   }
 
   @Test public void unicodeFileAgainstString() throws IOException {
-    assertEquals(read(fin), TokenAsIs.fileToString(fin));
+    azzert.that(TokenAsIs.fileToString(fin), is(read(fin)));
   }
 
   @Test public void unicodeFileLenth() throws IOException {

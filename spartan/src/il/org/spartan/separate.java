@@ -266,7 +266,7 @@ public enum separate {
      *         {@link Object#toString()} representations of the elements of
      *         saved objects <code>between</code> */
     public String by(final char between) {
-      return by("" + between);
+      return by(between + "");
     }
 
     /** Separate elements of a given array of <code><b>boolean</b></code>s by a
@@ -522,7 +522,7 @@ public enum separate {
     }
 
     @Test public final void spaceIsSpace() {
-      azzert.that("" + SPACE, is(" "));
+      azzert.that(SPACE + "", is(" "));
     }
 
     @Test public final void theseArraySize0() {

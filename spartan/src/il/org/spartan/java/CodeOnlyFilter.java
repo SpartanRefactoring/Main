@@ -11,7 +11,7 @@ public class CodeOnlyFilter extends TokenFilter {
   private final StringBuilder $ = new StringBuilder();
 
   @Override public String toString() {
-    return $.toString();
+    return $ + "";
   }
 
   @Override protected void __process(final Token t, final String text) {

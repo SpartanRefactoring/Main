@@ -30,7 +30,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final boolean[] bs, final char between) {
-    return by(box(bs), "" + between);
+    return by(box(bs), between + "");
   }
 
   /** Separate elements of a given array of <code><b>boolean</b></code>s by a
@@ -52,7 +52,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
   public static String by(final byte[] bs, final char between) {
-    return by(box(bs), "" + between);
+    return by(box(bs), between + "");
   }
 
   /** Separate elements of a given array of <code><b>byte</b></code>s by a given
@@ -74,7 +74,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
   public static String by(final char[] cs, final char between) {
-    return by(box(cs), "" + between);
+    return by(box(cs), between + "");
   }
 
   /** Separate elements of a given array of <code><b>char</b></code>s by a given
@@ -96,7 +96,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
   public static String by(final double[] ds, final char between) {
-    return by(box(ds), "" + between);
+    return by(box(ds), between + "");
   }
 
   /** Separate elements of a given array of <code><b>double</b></code>s by a
@@ -126,7 +126,7 @@ import il.org.spartan.streotypes.*;
     final StringBuffer $ = new StringBuffer();
     for (final T t : ts)
       $.append(s).append(f.__(t));
-    return $.toString();
+    return $ + "";
   }
 
   /** Separate elements of a given {{@link Iterable}} collection of objects by a
@@ -141,7 +141,7 @@ import il.org.spartan.streotypes.*;
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
   public static <T> String by(final F<T> f, final Iterable<T> ts, final char between) {
-    return by(f, ts, "" + between);
+    return by(f, ts, between + "");
   }
 
   /** Separate elements of a given generic array by a given
@@ -156,7 +156,7 @@ import il.org.spartan.streotypes.*;
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
   public static <T> String by(final F<T> f, final T[] ts, final char between) {
-    return by(f, ts, "" + between);
+    return by(f, ts, between + "");
   }
 
   /** Separate elements of a given generic array by a given {{link @String}},
@@ -175,7 +175,7 @@ import il.org.spartan.streotypes.*;
     final StringBuffer $ = new StringBuffer();
     for (final T t : ts)
       $.append(s).append(f.__(t));
-    return $.toString();
+    return $ + "";
   }
 
   /** Separate elements of a given array of <code><b>float</b></code>s by a
@@ -186,7 +186,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
   public static String by(final float[] fs, final char between) {
-    return by(box(fs), "" + between);
+    return by(box(fs), between + "");
   }
 
   /** Separate elements of a given array of <code><b>float</b></code>s by a
@@ -208,7 +208,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
   public static String by(final int[] is, final char between) {
-    return by(box(is), "" + between);
+    return by(box(is), between + "");
   }
 
   /** Separate elements of a given array of <code><b>int</b></code>s by a given
@@ -231,7 +231,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final Iterable<T> ts, final char between) {
-    return by(ts, "" + between);
+    return by(ts, between + "");
   }
 
   /** Separate elements of a given {@link Iterable} collection by a given
@@ -247,7 +247,7 @@ import il.org.spartan.streotypes.*;
     final StringBuffer $ = new StringBuffer();
     for (final T t : ts)
       $.append(s).append(t);
-    return $.toString();
+    return $ + "";
   }
 
   /** Separate elements of a given array of <code><b>long</b></code>s by a given
@@ -258,7 +258,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
   public static String by(final long[] ls, final char between) {
-    return by(box(ls), "" + between);
+    return by(box(ls), between + "");
   }
 
   /** Separate elements of a given array of <code><b>long</b></code>s by a given
@@ -292,7 +292,7 @@ import il.org.spartan.streotypes.*;
     final StringBuffer $ = new StringBuffer();
     for (final Key k : map.keySet())
       $.append(s).append(k).append(arrow).append(map.get(k));
-    return $.toString();
+    return $ + "";
   }
 
   /** Separate elements of a given array of <code><b>short</b></code>s by a
@@ -303,7 +303,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
   public static String by(final short[] ss, final char between) {
-    return by(box(ss), "" + between);
+    return by(box(ss), between + "");
   }
 
   /** Separate elements of a given array of <code><b>short</b></code>s by a
@@ -325,7 +325,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final T[] ts, final char between) {
-    return by(ts, "" + between);
+    return by(ts, between + "");
   }
 
   /** Separate elements of a given array by a given {{link @String}}
@@ -336,7 +336,7 @@ import il.org.spartan.streotypes.*;
    *         representation of the elements in <code>ts</code> separated by
    *         <code>between</code> */
   public static <T> String by(final T[] ts, final String between) {
-    return by((F<T>) t -> "" + t, ts, between);
+    return by((F<T>) t -> t + "", ts, between);
   }
 
   /** Separate elements of a given {{@link Iterable}} collection of objects by

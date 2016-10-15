@@ -17,7 +17,7 @@ public interface Stringer<T> extends Converter<T, String> {
 
   public static class Default<T> implements Stringer<T> {
     @Override public String __(final T t) {
-      return t.toString();
+      return t + "";
     }
   }
 
@@ -31,7 +31,7 @@ public interface Stringer<T> extends Converter<T, String> {
     public final String quote;
 
     public Quoter(final char quote) {
-      this("" + quote);
+      this(quote + "");
     }
 
     public Quoter(final String quote) {

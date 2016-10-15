@@ -1,6 +1,11 @@
 package il.org.spartan.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -8,7 +13,7 @@ import org.junit.*;
   @Test public void testSymmetry() {
     final Pair<Integer, Integer> p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017));
     final Pair<Integer, Integer> p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
-    assertEquals(p1.equals(p2), p2.equals(p1));
+    azzert.that(p2.equals(p1), is(p1.equals(p2)));
   }
 
   @SuppressWarnings("all") public static class NamedPair extends Pair<Integer, Integer> {

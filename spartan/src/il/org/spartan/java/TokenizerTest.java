@@ -2,7 +2,12 @@ package il.org.spartan.java;
 
 import static il.org.spartan.java.Token.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.is;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.io.*;
 
@@ -45,67 +50,67 @@ public class TokenizerTest {
 
   @Test public void annotation() throws IOException {
     final String text = "@interfac";
-    assertThat(firstToken(text), is(ANNOTATION));
-    assertEquals(text, firstTokenText(text));
-    assertThat(firstToken("@interface__"), is(ANNOTATION));
-    assertThat(firstToken("@__interface__"), is(ANNOTATION));
+    azzert.that(firstToken(text), is(ANNOTATION));
+    azzert.that(firstTokenText(text), is(text));
+    azzert.that(firstToken("@interface__"), is(ANNOTATION));
+    azzert.that(firstToken("@__interface__"), is(ANNOTATION));
   }
 
   @Test public void at_intreface() throws IOException {
     final String text = "@interface";
-    assertThat(firstToken(text), is(AT_INTERFACE));
-    assertEquals(text, firstTokenText(text));
+    azzert.that(firstToken(text), is(AT_INTERFACE));
+    azzert.that(firstTokenText(text), is(text));
   }
 
   @Test public void block_comment_empty() throws IOException {
-    assertThat(firstToken("/**/"), is(EMPTY_BLOCK_COMMENT));
+    azzert.that(firstToken("/**/"), is(EMPTY_BLOCK_COMMENT));
   }
 
   @Test public void block_comment_keyword() throws IOException {
     final String text = "/* a */ public\n" + //
         "public";
     reset(text);
-    assertThat(t.next(), is(BLOCK_COMMENT));
-    assertThat(t.next(), is(SPACE));
-    assertThat(t.next(), is(__public));
+    azzert.that(t.next(), is(BLOCK_COMMENT));
+    azzert.that(t.next(), is(SPACE));
+    azzert.that(t.next(), is(__public));
   }
 
   @Test public void block_comment_single_line() throws IOException {
-    assertThat(firstToken("/* block Comment */"), is(BLOCK_COMMENT));
+    azzert.that(firstToken("/* block Comment */"), is(BLOCK_COMMENT));
   }
 
   @Test public void block_comment_two_lines() throws IOException {
     final String text = "/* first Line \n Second Line */";
-    assertThat(getToken(text, 1), is(PARTIAL_BLOCK_COMMENT));
-    assertThat(getToken(text, 2), is(NL_BLOCK_COMMENT));
-    assertThat(getToken(text, 3), is(BLOCK_COMMENT));
-    assertEquals("/* first Line ", getTokenText(text, 1));
-    assertEquals("\n", getTokenText(text, 2));
-    assertEquals(" Second Line */", getTokenText(text, 3));
+    azzert.that(getToken(text, 1), is(PARTIAL_BLOCK_COMMENT));
+    azzert.that(getToken(text, 2), is(NL_BLOCK_COMMENT));
+    azzert.that(getToken(text, 3), is(BLOCK_COMMENT));
+    azzert.that(getTokenText(text, 1), is("/* first Line "));
+    azzert.that(getTokenText(text, 2), is("\n"));
+    azzert.that(getTokenText(text, 3), is(" Second Line */"));
   }
 
   @Test public void character_literal_of_quote() throws IOException {
-    assertEquals("'\\''", firstTokenText("'\\''"));
+    azzert.that(firstTokenText("'\\''"), is("'\\''"));
   }
 
   @Test public void character_literal_of_quote_kind() throws IOException {
-    assertThat(firstToken("'\''"), is(CHARACTER_LITERAL));
+    azzert.that(firstToken("'\''"), is(CHARACTER_LITERAL));
   }
 
   @Test public void character_literal_with_double_backslash() throws IOException {
-    assertEquals("'\\\\'", firstTokenText("'\\\\'"));
+    azzert.that(firstTokenText("'\\\\'"), is("'\\\\'"));
   }
 
   @Test public void character_literal_with_quote_text() throws IOException {
-    assertEquals("'\\a'", firstTokenText("'\\a'"));
+    azzert.that(firstTokenText("'\\a'"), is("'\\a'"));
   }
 
   @Test public void character_literal_with_tab() throws IOException {
-    assertEquals("'\t'", firstTokenText("'\t'"));
+    azzert.that(firstTokenText("'\t'"), is("'\t'"));
   }
 
   @Test public void character_literal_with_triple_backslash() throws IOException {
-    assertEquals("'\\\\\\''", firstTokenText("'\\\\\\''"));
+    azzert.that(firstTokenText("'\\\\\\''"), is("'\\\\\\''"));
   }
 
   @Test public void doc_comment_keyword() throws IOException {
@@ -116,268 +121,268 @@ public class TokenizerTest {
         "*/\n" + //
         "public";
     reset(text);
-    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
-    assertThat(t.next(), is(NL_DOC_COMMENT));
-    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
-    assertThat(t.next(), is(NL_DOC_COMMENT));
-    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
-    assertThat(t.next(), is(NL_DOC_COMMENT));
-    assertThat(t.next(), is(PARTIAL_DOC_COMMENT));
-    assertThat(t.next(), is(NL_DOC_COMMENT));
-    assertThat(t.next(), is(DOC_COMMENT));
-    assertThat(t.next(), is(NL));
-    assertThat(t.next(), is(__public));
+    azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
+    azzert.that(t.next(), is(NL_DOC_COMMENT));
+    azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
+    azzert.that(t.next(), is(NL_DOC_COMMENT));
+    azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
+    azzert.that(t.next(), is(NL_DOC_COMMENT));
+    azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
+    azzert.that(t.next(), is(NL_DOC_COMMENT));
+    azzert.that(t.next(), is(DOC_COMMENT));
+    azzert.that(t.next(), is(NL));
+    azzert.that(t.next(), is(__public));
   }
 
   @Test public void doc_comment_single_line() throws IOException {
-    assertThat(firstToken("/* block Comment */"), is(BLOCK_COMMENT));
+    azzert.that(firstToken("/* block Comment */"), is(BLOCK_COMMENT));
   }
 
   @Test public void doc_comment_two_lines() throws IOException {
     final String text = "/** first Line \n Second Line */";
-    assertThat(getToken(text, 1), is(PARTIAL_DOC_COMMENT));
-    assertThat(getToken(text, 2), is(NL_DOC_COMMENT));
-    assertThat(getToken(text, 3), is(DOC_COMMENT));
-    assertEquals("/** first Line ", getTokenText(text, 1));
-    assertEquals("\n", getTokenText(text, 2));
-    assertEquals(" Second Line */", getTokenText(text, 3));
+    azzert.that(getToken(text, 1), is(PARTIAL_DOC_COMMENT));
+    azzert.that(getToken(text, 2), is(NL_DOC_COMMENT));
+    azzert.that(getToken(text, 3), is(DOC_COMMENT));
+    azzert.that(getTokenText(text, 1), is("/** first Line "));
+    azzert.that(getTokenText(text, 2), is("\n"));
+    azzert.that(getTokenText(text, 3), is(" Second Line */"));
   }
 
   @Test public void empty_character_literal() throws IOException {
-    assertEquals("''", firstTokenText("''"));
+    azzert.that(firstTokenText("''"), is("''"));
   }
 
   @Test public void empty_string_empty_string() throws IOException {
     final String text = "\"\"\"\"";
-    assertThat(getToken(text, 1), is(STRING_LITERAL));
-    assertThat(getToken(text, 2), is(STRING_LITERAL));
-    assertEquals("\"\"", getTokenText(text, 1));
-    assertEquals("\"\"", getTokenText(text, 2));
+    azzert.that(getToken(text, 1), is(STRING_LITERAL));
+    azzert.that(getToken(text, 2), is(STRING_LITERAL));
+    azzert.that(getTokenText(text, 1), is("\"\""));
+    azzert.that(getTokenText(text, 2), is("\"\""));
   }
 
   @Test public void empty_string_id() throws IOException {
     final String text = "\"\"abcd";
-    assertThat(getToken(text, 1), is(STRING_LITERAL));
-    assertThat(getToken(text, 2), is(IDENTIFIER));
-    assertEquals("\"\"", getTokenText(text, 1));
-    assertEquals("abcd", getTokenText(text, 2));
+    azzert.that(getToken(text, 1), is(STRING_LITERAL));
+    azzert.that(getToken(text, 2), is(IDENTIFIER));
+    azzert.that(getTokenText(text, 1), is("\"\""));
+    azzert.that(getTokenText(text, 2), is("abcd"));
   }
 
   @Test public void empty_string_literal() throws IOException {
-    assertEquals("''", firstTokenText("''"));
+    azzert.that(firstTokenText("''"), is("''"));
   }
 
   @Test public void eof() throws IOException {
-    assertThat(firstToken(""), is(EOF));
+    azzert.that(firstToken(""), is(EOF));
   }
 
   @Test public void eof_terminated_character_literal() throws IOException {
-    assertThat(firstToken("'m"), is(UNTERMINATED_CHARACTER_LITERAL));
+    azzert.that(firstToken("'m"), is(UNTERMINATED_CHARACTER_LITERAL));
   }
 
   @Test public void eof_terminated_string_literal() throws IOException {
-    assertThat(firstToken("\"m"), is(UNTERMINATED_STRING_LITERAL));
+    azzert.that(firstToken("\"m"), is(UNTERMINATED_STRING_LITERAL));
   }
 
   @Test public void eof_terminated_string_literal_empty() throws IOException {
-    assertThat(firstToken("\""), is(UNTERMINATED_STRING_LITERAL));
+    azzert.that(firstToken("\""), is(UNTERMINATED_STRING_LITERAL));
   }
 
   @Test public void eof_terminated_string_literal_text() throws IOException {
-    assertThat(firstToken("\"m"), is(UNTERMINATED_STRING_LITERAL));
+    azzert.that(firstToken("\"m"), is(UNTERMINATED_STRING_LITERAL));
   }
 
   @Test public void id() throws IOException {
-    assertThat(firstToken("m"), is(IDENTIFIER));
+    azzert.that(firstToken("m"), is(IDENTIFIER));
   }
 
   @Test public void id_space() throws IOException {
-    assertThat(firstToken("m "), is(IDENTIFIER));
+    azzert.that(firstToken("m "), is(IDENTIFIER));
   }
 
   @Test public void id_space_id() throws IOException {
     final String text = "id1 id2";
-    assertThat(getToken(text, 1), is(IDENTIFIER));
-    assertThat(getToken(text, 2), is(SPACE));
-    assertThat(getToken(text, 3), is(IDENTIFIER));
-    assertEquals("id1", getTokenText(text, 1));
-    assertEquals(" ", getTokenText(text, 2));
-    assertEquals("id2", getTokenText(text, 3));
+    azzert.that(getToken(text, 1), is(IDENTIFIER));
+    azzert.that(getToken(text, 2), is(SPACE));
+    azzert.that(getToken(text, 3), is(IDENTIFIER));
+    azzert.that(getTokenText(text, 1), is("id1"));
+    azzert.that(getTokenText(text, 2), is(" "));
+    azzert.that(getTokenText(text, 3), is("id2"));
   }
 
   @Test public void line_comment() throws IOException {
-    assertThat(firstToken("// Comment\n"), is(LINE_COMMENT));
+    azzert.that(firstToken("// Comment\n"), is(LINE_COMMENT));
   }
 
   @Test public void line_comment_eof() throws IOException {
-    assertThat(firstToken("// Comment"), is(LINE_COMMENT));
+    azzert.that(firstToken("// Comment"), is(LINE_COMMENT));
   }
 
   @Test public void long_character_literal() throws IOException {
-    assertThat(firstToken("'masfasdfasdfas'"), is(CHARACTER_LITERAL));
+    azzert.that(firstToken("'masfasdfasdfas'"), is(CHARACTER_LITERAL));
   }
 
   @Test public void long_character_literal_text() throws IOException {
-    assertEquals("'masfasdfasdfas'", firstTokenText("'masfasdfasdfas'"));
+    azzert.that(firstTokenText("'masfasdfasdfas'"), is("'masfasdfasdfas'"));
   }
 
   @Test public void long_string_literal() throws IOException {
-    assertThat(firstToken("\"masfasdfasdfas\""), is(STRING_LITERAL));
+    azzert.that(firstToken("\"masfasdfasdfas\""), is(STRING_LITERAL));
   }
 
   @Test public void long_string_literal_text() throws IOException {
-    assertEquals("'masfasdfasdfas'", firstTokenText("'masfasdfasdfas'"));
+    azzert.that(firstTokenText("'masfasdfasdfas'"), is("'masfasdfasdfas'"));
   }
 
   @Test public void nl_string_space_id_popen_integer() throws IOException {
     final String text = "\n\"\" abcd(12";
-    assertThat(getToken(text, 1), is(NL));
-    assertThat(getToken(text, 2), is(STRING_LITERAL));
-    assertThat(getToken(text, 3), is(SPACE));
-    assertThat(getToken(text, 4), is(IDENTIFIER));
+    azzert.that(getToken(text, 1), is(NL));
+    azzert.that(getToken(text, 2), is(STRING_LITERAL));
+    azzert.that(getToken(text, 3), is(SPACE));
+    azzert.that(getToken(text, 4), is(IDENTIFIER));
   }
 
   /* escaped \ */
   @Test public void no_esc_block_comment() throws IOException {
-    assertThat(firstToken("/* block Comment \\*/"), is(BLOCK_COMMENT));
+    azzert.that(firstToken("/* block Comment \\*/"), is(BLOCK_COMMENT));
   }
 
   /* /* No nested comment */
   @Test public void no_nested_block_comment() throws IOException {
-    assertThat(firstToken("/*/* block Comment */"), is(BLOCK_COMMENT));
+    azzert.that(firstToken("/*/* block Comment */"), is(BLOCK_COMMENT));
   }
 
   @Test public void no_nested_block_comment_text() throws IOException {
-    assertEquals("/*/* block Comment */", firstTokenText("/*/* block Comment */"));
+    azzert.that(firstTokenText("/*/* block Comment */"), is("/*/* block Comment */"));
   }
 
   @Test public void no_nested_doc_comment_text_firstToken() throws IOException {
-    assertEquals("/**/", firstTokenText("/**/** doc Comment */"));
+    azzert.that(firstTokenText("/**/** doc Comment */"), is("/**/"));
   }
 
   @Test public void no_nested_doc_comment_text_secondToken() throws IOException {
-    assertEquals("/** doc Comment */", secondTokenText("/**//** doc Comment */"));
+    azzert.that(secondTokenText("/**//** doc Comment */"), is("/** doc Comment */"));
   }
 
   @Test public void no_nested_doc_commentFirstToken() throws IOException {
-    assertThat(firstToken("/**/** doc Comment */"), is(EMPTY_BLOCK_COMMENT));
+    azzert.that(firstToken("/**/** doc Comment */"), is(EMPTY_BLOCK_COMMENT));
   }
 
   @Test public void no_nested_doc_commentSecondToken() throws IOException {
-    assertThat(secondToken("/**/** doc Comment */"), is(MULT));
+    azzert.that(secondToken("/**/** doc Comment */"), is(MULT));
   }
 
   // ===================================
   @Test public void one_char_string_literal() throws IOException {
-    assertThat(firstToken("\"m\""), is(STRING_LITERAL));
+    azzert.that(firstToken("\"m\""), is(STRING_LITERAL));
   }
 
   @Test public void short_doc_comment_keyword() throws IOException {
     final String text = "/** a */ public\n" + //
         "public";
     reset(text);
-    assertThat(t.next(), is(DOC_COMMENT));
-    assertThat(t.next(), is(SPACE));
-    assertThat(t.next(), is(__public));
+    azzert.that(t.next(), is(DOC_COMMENT));
+    azzert.that(t.next(), is(SPACE));
+    azzert.that(t.next(), is(__public));
   }
 
   @Test public void simple_character_literal() throws IOException {
-    assertThat(firstToken("'m'"), is(CHARACTER_LITERAL));
+    azzert.that(firstToken("'m'"), is(CHARACTER_LITERAL));
   }
 
   @Test public void simple_character_literal_text() throws IOException {
-    assertEquals("'m'", firstTokenText("'m'"));
+    azzert.that(firstTokenText("'m'"), is("'m'"));
   }
 
   @Test public void simple_string_literal_text() throws IOException {
-    assertEquals("\"abc m'\"", firstTokenText("\"abc m'\""));
+    azzert.that(firstTokenText("\"abc m'\""), is("\"abc m'\""));
   }
 
   @Test public void something_after_emtpy_comment() throws IOException {
-    assertThat(secondToken("/**/something"), is(IDENTIFIER));
+    azzert.that(secondToken("/**/something"), is(IDENTIFIER));
   }
 
   @Test public void space_id_space() throws IOException {
-    assertThat(getToken(" m ", 2), is(IDENTIFIER));
+    azzert.that(getToken(" m ", 2), is(IDENTIFIER));
   }
 
   @Test public void string_id_string() throws IOException {
     final String text = "\"str1\"xid\"str2\"";
-    assertThat(getToken(text, 1), is(STRING_LITERAL));
-    assertThat(getToken(text, 2), is(IDENTIFIER));
-    assertThat(getToken(text, 3), is(STRING_LITERAL));
-    assertEquals("\"str1\"", getTokenText(text, 1));
-    assertEquals("xid", getTokenText(text, 2));
-    assertEquals("\"str2\"", getTokenText(text, 3));
+    azzert.that(getToken(text, 1), is(STRING_LITERAL));
+    azzert.that(getToken(text, 2), is(IDENTIFIER));
+    azzert.that(getToken(text, 3), is(STRING_LITERAL));
+    azzert.that(getTokenText(text, 1), is("\"str1\""));
+    azzert.that(getTokenText(text, 2), is("xid"));
+    azzert.that(getTokenText(text, 3), is("\"str2\""));
   }
 
   @Test public void string_keyword() throws IOException {
     final String text = "\" \"public";
     reset(text);
-    assertThat(t.next(), is(STRING_LITERAL));
-    assertEquals("\" \"", t.text());
-    assertThat(t.next(), is(__public));
-    assertEquals("public", t.text());
+    azzert.that(t.next(), is(STRING_LITERAL));
+    azzert.that(t.text(), is("\" \""));
+    azzert.that(t.next(), is(__public));
+    azzert.that(t.text(), is("public"));
   }
 
   @Test public void string_literal_of_quote() throws IOException {
-    assertEquals("'\\''", firstTokenText("'\\''"));
+    azzert.that(firstTokenText("'\\''"), is("'\\''"));
   }
 
   @Test public void string_literal_of_quote_kind() throws IOException {
-    assertThat(firstToken("\"\\\"\""), is(STRING_LITERAL));
+    azzert.that(firstToken("\"\\\"\""), is(STRING_LITERAL));
   }
 
   @Test public void string_literal_with_double_backslash() throws IOException {
-    assertEquals("'\\\\'", firstTokenText("'\\\\'"));
+    azzert.that(firstTokenText("'\\\\'"), is("'\\\\'"));
   }
 
   @Test public void string_literal_with_quote_text() throws IOException {
-    assertEquals("\"\\\"\"", firstTokenText("\"\\\"\""));
+    azzert.that(firstTokenText("\"\\\"\""), is("\"\\\"\""));
   }
 
   @Test public void string_literal_with_tab() throws IOException {
-    assertEquals("'\t'", firstTokenText("'\t'"));
+    azzert.that(firstTokenText("'\t'"), is("'\t'"));
   }
 
   @Test public void string_literal_with_triple_backslash() throws IOException {
-    assertEquals("'\\\\\\''", firstTokenText("'\\\\\\''"));
+    azzert.that(firstTokenText("'\\\\\\''"), is("'\\\\\\''"));
   }
 
   @Test public void string_space_keyword() throws IOException {
     final String text = "\" \" public\n";
     reset(text);
-    assertThat(t.next(), is(STRING_LITERAL));
-    assertThat(t.next(), is(SPACE));
-    assertThat(t.next(), is(__public));
+    azzert.that(t.next(), is(STRING_LITERAL));
+    azzert.that(t.next(), is(SPACE));
+    azzert.that(t.next(), is(__public));
   }
 
   @Test public void unterminated_block_comment() throws IOException {
-    assertThat(firstToken("/*/* block Comment"), is(UNTERMINATED_BLOCK_COMMENT));
+    azzert.that(firstToken("/*/* block Comment"), is(UNTERMINATED_BLOCK_COMMENT));
   }
 
   @Test public void unterminated_block_comment_text() throws IOException {
-    assertEquals("/*/* block Comment", firstTokenText("/*/* block Comment"));
+    azzert.that(firstTokenText("/*/* block Comment"), is("/*/* block Comment"));
   }
 
   @Test public void unterminated_character_literal() throws IOException {
-    assertEquals(firstToken("'m\n"), UNTERMINATED_CHARACTER_LITERAL);
+    azzert.that(UNTERMINATED_CHARACTER_LITERAL, is(firstToken("'m\n")));
   }
 
   @Test public void unterminated_doc_comment() throws IOException {
-    assertThat(firstToken("/** doc Comment"), is(UNTERMINATED_DOC_COMMENT));
+    azzert.that(firstToken("/** doc Comment"), is(UNTERMINATED_DOC_COMMENT));
   }
 
   @Test public void unterminated_doc_comment_text() throws IOException {
-    assertEquals("/*/* block Comment", firstTokenText("/*/* block Comment"));
+    azzert.that(firstTokenText("/*/* block Comment"), is("/*/* block Comment"));
   }
 
   @Test public void unterminated_string_literal() throws IOException {
-    assertThat(firstToken("\"masfasdfasdf\n"), is(UNTERMINATED_STRING_LITERAL));
+    azzert.that(firstToken("\"masfasdfasdf\n"), is(UNTERMINATED_STRING_LITERAL));
   }
 
   @Test public void unterminated_string_literal_text() throws IOException {
-    assertEquals("\"mabc", firstTokenText("\"mabc\n"));
+    azzert.that(firstTokenText("\"mabc\n"), is("\"mabc"));
   }
 
   void reset(final String text) {

@@ -3,56 +3,61 @@
  */
 package il.org.spartan.strings;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
 @SuppressWarnings("static-method") public class TestLeadingTabs {
   @Test public void testEmptyString() {
-    assertEquals("", StringUtils.expandLeadingTabs(""));
+    azzert.that(StringUtils.expandLeadingTabs(""), is(""));
   }
 
   @Test public void testFinalTab() {
-    assertEquals("AXY\t", StringUtils.expandLeadingTabs("AXY\t"));
+    azzert.that(StringUtils.expandLeadingTabs("AXY\t"), is("AXY\t"));
   }
 
   @Test public void testInnerTab() {
-    assertEquals("A\tB\t", StringUtils.expandLeadingTabs("A\tB\t"));
+    azzert.that(StringUtils.expandLeadingTabs("A\tB\t"), is("A\tB\t"));
   }
 
   @Test public void testLeadingInnerFinalTab() {
-    assertEquals("        A\tX\tY\t", StringUtils.expandLeadingTabs("\t\tA\tX\tY\t"));
+    azzert.that(StringUtils.expandLeadingTabs("\t\tA\tX\tY\t"), is("        A\tX\tY\t"));
   }
 
   @Test public void testNonEmptyString() {
-    assertEquals("ABC", StringUtils.expandLeadingTabs("ABC"));
+    azzert.that(StringUtils.expandLeadingTabs("ABC"), is("ABC"));
   }
 
   @Test public void testOneTab() {
-    assertEquals("    ", StringUtils.expandLeadingTabs("\t"));
+    azzert.that(StringUtils.expandLeadingTabs("\t"), is("    "));
   }
 
   @Test public void testSpaceThenTab() {
-    assertEquals(StringUtils.visualize(" \tX"), StringUtils.visualize(StringUtils.expandLeadingTabs(" \tX")));
+    azzert.that(StringUtils.visualize(StringUtils.expandLeadingTabs(" \tX")), is(StringUtils.visualize(" \tX")));
   }
 
   @Test public void testTabThenSpace() {
-    assertEquals("     X", StringUtils.expandLeadingTabs("\t X"));
+    azzert.that(StringUtils.expandLeadingTabs("\t X"), is("     X"));
   }
 
   @Test public void testThreeTabs() {
-    assertEquals("            ", StringUtils.expandLeadingTabs("\t\t\t"));
+    azzert.that(StringUtils.expandLeadingTabs("\t\t\t"), is("            "));
   }
 
   @Test public void testTwoLinesTabDOSMode() {
-    assertEquals("\r\nA\r\n    B", StringUtils.expandLeadingTabs("\r\nA\r\n\tB"));
+    azzert.that(StringUtils.expandLeadingTabs("\r\nA\r\n\tB"), is("\r\nA\r\n    B"));
   }
 
   @Test public void testTwoLinesTabUnixMode() {
-    assertEquals("\nA\n    B", StringUtils.expandLeadingTabs("\nA\n\tB"));
+    azzert.that(StringUtils.expandLeadingTabs("\nA\n\tB"), is("\nA\n    B"));
   }
 
   @Test public void testTwoTabs() {
-    assertEquals("        ", StringUtils.expandLeadingTabs("\t\t"));
+    azzert.that(StringUtils.expandLeadingTabs("\t\t"), is("        "));
   }
 }

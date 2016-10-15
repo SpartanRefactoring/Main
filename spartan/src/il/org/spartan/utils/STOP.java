@@ -1,8 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static org.junit.Assert.*;
-
+import static il.org.spartan.azzert.*;
 import il.org.spartan.streotypes.*;
 
 /** A utility class, serving as the system global manager of the policy of

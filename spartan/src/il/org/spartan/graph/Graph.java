@@ -294,7 +294,7 @@ public class Graph<E> extends AbstractGraph<E> {
       }
 
       @Override public String toString() {
-        return "<" + from.toString() + "," + to.toString() + ">";
+        return "<" + "" + from + "," + "" + to + ">";
       }
     }
   }

@@ -1,9 +1,15 @@
 package il.org.spartan.reflection;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import org.junit.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.reflection.DeepSize.*;
 import il.org.spartan.sequence.*;
 
@@ -17,49 +23,49 @@ import il.org.spartan.sequence.*;
 
   @Test public void DeepSize_of_Array_non_null() {
     final Object[] os = makeRecursiveArray(83);
-    assertEquals(ShallowSize.align(4 * os.length + 4 + 8), DeepSize.of(os));
+    azzert.that(DeepSize.of(os), is(ShallowSize.align(4 * os.length + 4 + 8)));
   }
 
   @Test public void getAllFields_objectByte() {
-    assertEquals(2, DeepSize.Visitor.getAllFields(new Object() {
+    azzert.that(DeepSize.Visitor.getAllFields(new Object() {
       byte __;
-
+    
       @Override public int hashCode() {
         return super.hashCode() ^ __;
       }
-    }.getClass()).size());
+    }.getClass()).size(), is(2));
   }
 
   @Test public void getFields_Object() {
-    assertEquals(0, Visitor.getAllFields(Object.class).size());
+    azzert.that(Visitor.getAllFields(Object.class).size(), is(0));
   }
 
   @Test public void getFields_ObjectObject() {
-    assertEquals(1, Visitor.getAllFields(ObjectObject.class).size());
+    azzert.that(Visitor.getAllFields(ObjectObject.class).size(), is(1));
   }
 
   @Test public void new_Visitor_ClassWithArray() {
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(3);
     o.os = os;
-    assertEquals(DeepSize.of(o.os), new DeepSize.Visitor().size(o.os));
+    azzert.that(new DeepSize.Visitor().size(o.os), is(DeepSize.of(o.os)));
   }
 
   @Test public void new_Visitor_size_ObjectInt() {
-    assertEquals(16, new Visitor().size(new ObjectInt()));
+    azzert.that(new Visitor().size(new ObjectInt()), is(16));
   }
 
   @Test public void new_Visitor_size_ObjectObject() {
     final Object o = new ObjectObject();
-    assertEquals(ShallowSize.of(o), new Visitor().size(o, Object.class));
+    azzert.that(new Visitor().size(o, Object.class), is(ShallowSize.of(o)));
   }
 
   @Test(expected = ClassCastException.class) public void new_Visitor_size_ObjectObjectArray() {
-    assertEquals(16, new Visitor().size(new ObjectObject(), Object[].class));
+    azzert.that(new Visitor().size(new ObjectObject(), Object[].class), is(16));
   }
 
   @Test public void objectChar() {
-    assertEquals(16, DeepSize.of(new ObjectChar()));
+    azzert.that(DeepSize.of(new ObjectChar()), is(16));
   }
 
   @Test public void objectInt() {
@@ -70,36 +76,36 @@ import il.org.spartan.sequence.*;
         return super.hashCode() ^ __;
       }
     };
-    assertEquals(ShallowSize.of(this) + ShallowSize.of(o), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o))));
   }
 
   @Test public void objectSize_ObjectObject() {
-    assertEquals(16, new Visitor().size(new ObjectObject()));
+    azzert.that(new Visitor().size(new ObjectObject()), is(16));
   }
 
   @Test public void objectSize_ObjectObject_ObjectObject() {
     final Object o = new ObjectObject();
-    assertEquals(ShallowSize.of(o), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(o)));
   }
 
   @Test public void of_array_0__bytes() {
-    assertEquals(0, new byte[0].length);
-    assertEquals(16, DeepSize.of(new byte[0]));
+    azzert.that(new byte[0].length, is(0));
+    azzert.that(DeepSize.of(new byte[0]), is(16));
   }
 
   @Test public void of_array_4__bytes() {
-    assertEquals(16, DeepSize.of(new byte[4]));
+    azzert.that(DeepSize.of(new byte[4]), is(16));
   }
 
   @Test public void of_array_of_nulls() {
-    assertEquals(48, DeepSize.of(new Object[8]));
+    azzert.that(DeepSize.of(new Object[8]), is(48));
   }
 
   @Test public void of_array_of_objects() {
     final Object[] os = new Object[8];
     for (int i = 0; i < os.length; i++)
       os[i] = os;
-    assertEquals(48, DeepSize.of(os));
+    azzert.that(DeepSize.of(os), is(48));
   }
 
   @Test public void of_ClassWithArray() {
@@ -109,25 +115,25 @@ import il.org.spartan.sequence.*;
     for (int i = 0; i < os.length; i++)
       if (i % 2 == 1)
         os[i] = o;
-    assertEquals(ShallowSize.of(os) + ShallowSize.of(o), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((ShallowSize.of(os) + ShallowSize.of(o))));
   }
 
   @Test public void of_ClassWithArray_non_null() {
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(13);
     o.os = os;
-    assertEquals(DeepSize.of(os) + ShallowSize.of(o), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((DeepSize.of(os) + ShallowSize.of(o))));
   }
 
   @Test public void of_ClassWithArray_null() {
-    assertEquals(16, DeepSize.of(new ClassWithArray()));
+    azzert.that(DeepSize.of(new ClassWithArray()), is(16));
   }
 
   @Test public void of_ClassWithArray_recursive() {
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(3);
     o.os = os;
-    assertEquals(ShallowSize.of(o) + ShallowSize.of(os), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((ShallowSize.of(o) + ShallowSize.of(os))));
   }
 
   @Test public void of_ClassWithArrayReursiveArray() {
@@ -140,7 +146,7 @@ import il.org.spartan.sequence.*;
       }
     };
     DeepSize.of(o);
-    assertEquals(ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize)), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize)))));
   }
 
   @Test public void of_ClassWithObjecReursiveArray() {
@@ -152,48 +158,48 @@ import il.org.spartan.sequence.*;
         return o__.hashCode();
       }
     };
-    assertEquals(ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize)), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize)))));
   }
 
   @Test public void of_MyHashMap() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
-    assertEquals(40, ShallowSize.of(m));
-    assertEquals(120, DeepSize.of(m));
+    azzert.that(ShallowSize.of(m), is(40));
+    azzert.that(DeepSize.of(m), is(120));
     m.put(null, null);
-    assertEquals(120 + 16 + ShallowSize.of(new Object()), DeepSize.of(m));
+    azzert.that(DeepSize.of(m), is((120 + 16 + ShallowSize.of(new Object()))));
   }
 
   @Test public void of_MyHashMap_DEFAULT_INITIAL_CAPACITY() {
-    assertEquals(MyHashMap.DEFAULT_INITIAL_CAPACITY, new MyHashMap<>().table.length);
+    azzert.that(new MyHashMap<>().table.length, is(MyHashMap.DEFAULT_INITIAL_CAPACITY));
   }
 
   @Test public void of_MyHashMap_table() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
     final int shallow = ShallowSize.of(m);
     final int deep = DeepSize.of(m);
-    assertEquals(ShallowSize.of(m.table) + DeepSize.of(m.keySet), deep - shallow);
+    azzert.that((deep - shallow), is((ShallowSize.of(m.table) + DeepSize.of(m.keySet))));
   }
 
   @Test public void of_MyHashMap_table_size() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
-    assertEquals(ShallowSize.arraySize(m.table.length), ShallowSize.of(m.table));
+    azzert.that(ShallowSize.of(m.table), is(ShallowSize.arraySize(m.table.length)));
   }
 
   @Test public void of_MyHashMap_table_size_80() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
-    assertEquals(80, ShallowSize.of(m.table));
+    azzert.that(ShallowSize.of(m.table), is(80));
   }
 
   @Test public void of_object() {
-    assertEquals(8, DeepSize.of(new Object()));
+    azzert.that(DeepSize.of(new Object()), is(8));
   }
 
   @Test public void of_Object() {
-    assertEquals(8, DeepSize.of(new Object()));
+    azzert.that(DeepSize.of(new Object()), is(8));
   }
 
   @Test public void of_ObjectBoolean() {
-    assertEquals(16, DeepSize.of(new ObjectBoolean()));
+    azzert.that(DeepSize.of(new ObjectBoolean()), is(16));
   }
 
   @Test public void of_objectByte() {
@@ -204,35 +210,35 @@ import il.org.spartan.sequence.*;
         return super.hashCode() ^ __;
       }
     };
-    assertEquals(ShallowSize.of(this) + ShallowSize.of(o), DeepSize.of(o));
+    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o))));
   }
 
   @Test public void of_ObjectInt_extends_ObjectInt() {
-    assertEquals(24, DeepSize.of(new ObjectInt_extends_ObjectInt()));
+    azzert.that(DeepSize.of(new ObjectInt_extends_ObjectInt()), is(24));
   }
 
   @Test public void of_ObjectObject() {
-    assertEquals(16, DeepSize.of(new ObjectObject()));
+    azzert.that(DeepSize.of(new ObjectObject()), is(16));
   }
 
   @Test public void of_objectStaticChar() {
-    assertEquals(8, DeepSize.of(new ObjectStaticChar()));
+    azzert.that(DeepSize.of(new ObjectStaticChar()), is(8));
   }
 
   @Test public void shallow_of_MyHashMap() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
     final int baseSize = ShallowSize.of(m);
     for (final Sequence f = new Fibonacci(1000); f.more(); f.advance())
-      assertEquals(baseSize, ShallowSize.of(createHashTable(f.current())));
+      azzert.that(ShallowSize.of(createHashTable(f.current())), is(baseSize));
   }
 
   @Test public void ShallowSize_of_Array_non_null() {
     final Object[] os = makeRecursiveArray(17);
-    assertEquals(ShallowSize.align(4 * os.length + 4 + 8), ShallowSize.of(os));
+    azzert.that(ShallowSize.of(os), is(ShallowSize.align(4 * os.length + 4 + 8)));
   }
 
   @Test public void Visitor_size_ObjectBoolean() {
-    assertEquals(16, new DeepSize.Visitor().size(new ObjectBoolean()));
+    azzert.that(new DeepSize.Visitor().size(new ObjectBoolean()), is(16));
   }
 
   Object[] makeRecursiveArray(final int n) {
