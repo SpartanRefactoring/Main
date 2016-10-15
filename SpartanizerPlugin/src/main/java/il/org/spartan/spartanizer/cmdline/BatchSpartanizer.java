@@ -36,12 +36,14 @@ public final class BatchSpartanizer {
         if (!input.isDirectory()) {
           System.out.println("Analyzing single file: " + input.getAbsolutePath());
           new BatchSpartanizer(input.getAbsolutePath()).fire();
-        } else
+        } else {
+          System.out.println("Analyzing directory: " + input.getAbsolutePath());
           for (final File ¢ : input.listFiles())
             if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
               System.out.println(¢.getAbsolutePath());
               new BatchSpartanizer(¢.getAbsolutePath()).fire();
             }
+        }
       }
       if (defaultDir) {
         new BatchSpartanizer(".", "current-working-directory").fire();
@@ -81,7 +83,7 @@ public final class BatchSpartanizer {
         ¢ += 2;
       } else if ("-d".equals(args[¢])) {
         inputDir =".";
-        ¢ += 2;
+        ¢ += 1;
       } else {
         System.out.println(args[¢]);
         System.out.println("[ERROR]: Something went wrong!");
@@ -192,7 +194,7 @@ public final class BatchSpartanizer {
   }
 
   void collect(final File f) {
-    if (!f.getPath().contains("src/test"))
+//    if (!f.getPath().contains("src/test"))
       try {
         collect(FileUtils.read(f));
       } catch (final IOException e) {
