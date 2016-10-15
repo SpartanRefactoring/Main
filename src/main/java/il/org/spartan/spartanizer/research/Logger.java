@@ -9,7 +9,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Ori Marcovitch
+/** The purpose of this class is to gather information about NPs and summarize
+ * it, so we can submit nice papers and win eternal fame. <br>
+ * Whenever an NP is matched it should log itself.
+ * @author Ori Marcovitch
  * @since 2016 */
 public class Logger {
   private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
@@ -37,7 +40,7 @@ public class Logger {
     methodsStatistics = new HashMap<>();
   }
 
-  public static void markNP(final ASTNode n, final String np) {
+  public static void logNP(final ASTNode n, final String np) {
     MethodDeclaration m = findMethodAncestor(n);
     Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))

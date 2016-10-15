@@ -23,7 +23,7 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Tip tip(final IfStatement ¢) throws TipperFailure {
-    Logger.markNP(¢, "IfNullThrow");
+    Logger.logNP(¢, "IfNullThrow");
     return tipper.tip(¢);
   }
 }
