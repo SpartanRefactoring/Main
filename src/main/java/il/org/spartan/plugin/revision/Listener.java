@@ -78,14 +78,14 @@ public interface Listener {
     }
 
     /** To be used in the following nano <code><pre> 
-           * public interface Applicator { 
-           *   public class Settings extends Listeners {
-           *      public class Action extends Setting { 
-           *         int action1() {} ; 
-           *         void action2(Type1 t1, Type2 t2, int i)  { ...}
-           *      } 
-           *   }  
-           * } </pre></code> parameterized solely by the name
+            * public interface Applicator { 
+            *   public class Settings extends Listeners {
+            *      public class Action extends Setting { 
+            *         int action1() {} ; 
+            *         void action2(Type1 t1, Type2 t2, int i)  { ...}
+            *      } 
+            *   }  
+            * } </pre></code> parameterized solely by the name
      * <code>Applicator</code> and the actions in class `Action` in
      * <code>Action</code>
      * @return <code><b>this</b></code> */
