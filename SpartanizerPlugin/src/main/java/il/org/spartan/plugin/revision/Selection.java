@@ -231,17 +231,17 @@ public class Selection extends AbstractSelection {
     public static Selection expend(final IMarker m, final Class<? extends ASTNode> c) {
       if (m == null || !m.exists() || c == null || m.getResource() == null || !(m.getResource() instanceof IFile))
         return empty();
-      ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
+      final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return empty();
-      CU cu = CU.of(u);
-      ASTNode n = getNodeByMarker(cu, m);
+      final CU cu = CU.of(u);
+      final ASTNode n = getNodeByMarker(cu, m);
       if (n == null)
         return empty();
-      n = searchAncestors.forClass(c).from(n);
-      if (n == null)
+      final ASTNode p = searchAncestors.forClass(c).from(n);
+      if (p == null)
         return empty();
-      return (Selection) TrackerSelection.empty().track(n).add(cu).setTextSelection(new TextSelection(n.getStartPosition(), n.getLength()));
+      return (Selection) TrackerSelection.empty().track(p).add(cu).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
     }
 
     /** @return current {@link ISelection} */
@@ -315,7 +315,11 @@ public class Selection extends AbstractSelection {
      * @return selection by text selection */
     private static Selection by(final ITextSelection s) {
       final Selection $ = getCompilationUnit();
-      return $ == null ? empty() : (Selection) ((Selection) $.setTextSelection(s)).fixEmptyTextSelection().setName(SELECTION_NAME);
+      if ($ == null || $.compilationUnits == null || $.compilationUnits.isEmpty())
+        return null;
+      if (s.getOffset() == 0 && s.getLength() == $.compilationUnits.get(0).build().compilationUnit.getLength())
+        return (Selection) $.setName(SELECTION_NAME);
+      return (Selection) ((Selection) $.setTextSelection(s)).fixEmptyTextSelection().setName(SELECTION_NAME);
     }
 
     /** Only support selection by {@link IFile}.
