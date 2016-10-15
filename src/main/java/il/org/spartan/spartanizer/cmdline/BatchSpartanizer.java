@@ -16,9 +16,10 @@ import il.org.spartan.utils.*;
 
 /** Scans files named by folder, ignore test files, and collect statistics.
  * @author Yossi Gil
- * @year 2015 */
+ * @author Matteo Orru'
+ * @year 2016 */
 public final class BatchSpartanizer {
-  private static final String folder = "/tmp/";
+  private static final String folder = "/tmp";
   private static final String script = "./essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static boolean defaultDir;
@@ -72,11 +73,14 @@ public final class BatchSpartanizer {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
-        System.out.println("OutputDir: " + outputDir);
+//        System.out.println("OutputDir: " + outputDir);
         ¢ += 2;
       } else if ("-i".equals(args[¢])) {
         inputDir = args[¢ + 1];
-        System.out.println("InputDir: " + inputDir);
+//        System.out.println("InputDir: " + inputDir);
+        ¢ += 2;
+      } else if ("-d".equals(args[¢])) {
+        inputDir =".";
         ¢ += 2;
       } else {
         System.out.println(args[¢]);
