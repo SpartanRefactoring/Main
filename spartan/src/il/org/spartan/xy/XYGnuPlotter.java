@@ -20,7 +20,7 @@ public class XYGnuPlotter {
 
   private static String gformat(final double d) {
     if (d == (long) d)
-      return "" + (long) d;
+      return (long) d + "";
     return String.format("%g", new Double(d));
   }
 

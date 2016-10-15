@@ -1,7 +1,10 @@
 package il.org.spartan.reflection;
 
 import static il.org.spartan.reflection.ClassPredicates.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
 
 import org.junit.*;
 
@@ -11,7 +14,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("static-method") public class ClassPredicatesTest {
   @Test public void testBoxFields() {
     dump.go(Box.class.getSuperclass());
-    assertEquals(2, nFields(Box.class));
+    azzert.that(nFields(Box.class), is(2));
   }
 
   @Test public void testBoxImmutable() {
@@ -19,7 +22,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testEmptyEnumFields() {
-    assertEquals(3, nFields(EmptyEnum.class));
+    azzert.that(nFields(EmptyEnum.class), is(3));
   }
 
   @Test public void testEmptyEnumImmutable() {
@@ -31,7 +34,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testEmptyNonStaticClassFields() {
-    assertEquals(0, nFields(EmptyNonStaticClass.class));
+    azzert.that(nFields(EmptyNonStaticClass.class), is(0));
   }
 
   @Test public void testEmptyStaticClass() {
@@ -103,7 +106,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testStaticUtilityClassFields() {
-    assertEquals(0, nFields(StaticUtilityClass.class));
+    azzert.that(nFields(StaticUtilityClass.class), is(0));
   }
 
   @Test public void testStaticUtilityClassImmutable() {

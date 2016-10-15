@@ -36,8 +36,8 @@ public enum BenchingPolicy {
   public static double approximateSteadyStateTime(final Operation o) {
     for (int runs = 1;; runs <<= 1) {
       // JVM.gc();
-      final StopWatch grossTime = new StopWatch().start();
-      final StopWatch netTime = o.netTime(runs);
+      final Stopwatch grossTime = new Stopwatch().start();
+      final Stopwatch netTime = o.netTime(runs);
       grossTime.stop();
       ___.nonnegative(netTime.time());
       if (new RunRecord(runs, netTime, grossTime).ok())
@@ -223,7 +223,7 @@ public enum BenchingPolicy {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       final Bencheon b = new Bencheon.Exact(0, 0, 10);
       for (int i = 0; i < 20; ++i) {
-        final StopWatch s = new StopWatch();
+        final Stopwatch s = new Stopwatch();
         s.start();
         b.call();
         s.stop();
@@ -235,7 +235,7 @@ public enum BenchingPolicy {
     @Test public void measureEmpty() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       for (int i = 0; i < 20; ++i) {
-        final StopWatch s = new StopWatch();
+        final Stopwatch s = new Stopwatch();
         s.start();
         s.stop();
         l.set("Type", "Empty").set("Run", i).record(s.time());
@@ -246,7 +246,7 @@ public enum BenchingPolicy {
     @Test public void measureNothingFunction() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       for (int i = 0; i < 20; ++i) {
-        final StopWatch s = new StopWatch();
+        final Stopwatch s = new Stopwatch();
         s.start();
         ___.nothing();
         s.stop();
@@ -263,7 +263,7 @@ public enum BenchingPolicy {
         b.call();
       for (int runs = 1; runs < 1 << 20; runs <<= 1) {
         l.set("Runs", runs);
-        final StopWatch s = new StopWatch();
+        final Stopwatch s = new Stopwatch();
         s.start();
         b.run(runs);
         s.stop();
@@ -295,7 +295,7 @@ public enum BenchingPolicy {
       l.set("Type", "Exponential Runs");
       for (int runs = 1; runs < 1 << 20; runs <<= 1) {
         l.set("Runs", runs);
-        final StopWatch s = new StopWatch();
+        final Stopwatch s = new Stopwatch();
         s.start();
         b.run(runs);
         s.stop();

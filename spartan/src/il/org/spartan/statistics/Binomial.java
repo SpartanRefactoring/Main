@@ -20,7 +20,7 @@ public class Binomial {
   }
 
   public static BigInteger factorial(final int m) {
-    return m <= 1 ? BigInteger.ONE : factorial(m - 1).multiply(new BigInteger("" + m));
+    return m <= 1 ? BigInteger.ONE : factorial(m - 1).multiply(new BigInteger(m + ""));
   }
 
   public static double probability(final int m, final int k) {

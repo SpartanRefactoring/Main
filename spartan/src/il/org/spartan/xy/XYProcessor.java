@@ -7,10 +7,14 @@ import static il.org.spartan.misc.LinearAlgebra.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.utils.*;
 
@@ -155,9 +159,9 @@ public interface XYProcessor {
             doubles(0, Double.NEGATIVE_INFINITY, 5, 3), //
             doubles(0, 1, 6, Double.NEGATIVE_INFINITY)//
         );
-        assertEquals(1, p.xs().length);
-        assertEquals(1, p.ys().length);
-        assertEquals(1, p.dys().length);
+        azzert.that(p.xs().length, is(1));
+        azzert.that(p.ys().length, is(1));
+        azzert.that(p.dys().length, is(1));
         assertEquals(4.0, p.xs()[0], 1E-10);
         assertEquals(5.0, p.ys()[0], 1E-10);
         assertEquals(6.0, p.dys()[0], 1E-10);

@@ -3,10 +3,14 @@
  */
 package il.org.spartan.sequence;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
@@ -15,13 +19,13 @@ import il.org.spartan.utils.*;
   @Test public void addSize() {
     final BooleanHistory h = new BooleanHistory(10);
     h.add(true);
-    assertEquals(1, h.size());
+    azzert.that(h.size(), is(1));
   }
 
   @Test public void countEmpty() {
     final BooleanHistory h = new BooleanHistory(10);
-    assertEquals(0, h.count(true));
-    assertEquals(0, h.count(false));
+    azzert.that(h.count(true), is(0));
+    azzert.that(h.count(false), is(0));
   }
 
   @Test public void countFalseLoop() {
@@ -31,7 +35,8 @@ import il.org.spartan.utils.*;
       int m = 0;
       for (int j = i; j >= 0 && j > i - 10; j--)
         m += As.binary(j % 3 != 1);
-      assertEquals(m, h.count(false));
+      final int t1 = m;
+      azzert.that(h.count(false), is(t1));
     }
   }
 
@@ -39,8 +44,8 @@ import il.org.spartan.utils.*;
     final BooleanHistory h = new BooleanHistory(10);
     h.add(false);
     h.add(false);
-    assertEquals(2, h.count(false));
-    assertEquals(0, h.count(true));
+    azzert.that(h.count(false), is(2));
+    azzert.that(h.count(true), is(0));
   }
 
   @Test public void countTrueLoop() {
@@ -50,7 +55,8 @@ import il.org.spartan.utils.*;
       int m = 0;
       for (int j = i; j >= 0 && j > i - 10; j--)
         m += As.binary(j % 3 == 1);
-      assertEquals(m, h.count(true));
+      final int t1 = m;
+      azzert.that(h.count(true), is(t1));
     }
   }
 
@@ -58,20 +64,20 @@ import il.org.spartan.utils.*;
     final BooleanHistory h = new BooleanHistory(10);
     h.add(true);
     h.add(true);
-    assertEquals(2, h.count(true));
-    assertEquals(0, h.count(false));
+    azzert.that(h.count(true), is(2));
+    azzert.that(h.count(false), is(0));
   }
 
   @Test public void createSize() {
     final BooleanHistory h = new BooleanHistory(10);
-    assertEquals(0, h.size());
+    azzert.that(h.size(), is(0));
   }
 
   @Test public void maxSize() {
     final BooleanHistory h = new BooleanHistory(10);
     for (int i = 0; i < 1000; i++) {
       h.add(i % 3 == 1);
-      assertEquals(Math.min(i + 1, 10), h.size());
+      azzert.that(h.size(), is(Math.min(i + 1, 10)));
     }
   }
 }

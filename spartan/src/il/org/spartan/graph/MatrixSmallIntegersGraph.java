@@ -4,12 +4,16 @@
 package il.org.spartan.graph;
 
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-
-import java.util.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import java.util.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** An immutable undirected graph whose nodes are short integers in the range
@@ -75,7 +79,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
         Arrays.fill(component, m, component.length, (short) -1);
       }
       nodes = append(nodes, n);
-      neighbors[n] = Defaults.to(neighbors[n], noNeighbors);
+      neighbors[n] = defaults.to(neighbors[n], noNeighbors);
       return this;
     }
 
@@ -122,7 +126,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void arsInsertedInNoOrder() {
       final SmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      assertEquals(3, g.arcsCount);
+      azzert.that(g.arcsCount, is(3));
     }
 
     @Test public void connectedCheckDisconnectedNodes() {
@@ -217,17 +221,17 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void disconnectedComponentsBuilder() {
       final Builder b = new Builder().add(5).add(6).add(7).add(8).add(9);
-      assertEquals(-1, b.component[5]);
-      assertEquals(-1, b.component[6]);
-      assertEquals(-1, b.component[7]);
-      assertEquals(-1, b.component[0]);
-      assertEquals(-1, b.component[8]);
+      azzert.that(b.component[5], is(-1));
+      azzert.that(b.component[6], is(-1));
+      azzert.that(b.component[7], is(-1));
+      azzert.that(b.component[0], is(-1));
+      azzert.that(b.component[8], is(-1));
     }
 
     @Test public void disconnectedComponentsBuilderFreeNodes() {
       final Builder b = new Builder().add(5).add(6).add(7).add(8).add(9);
-      assertEquals(-1, b.component[0]);
-      assertEquals(-1, b.component[8]);
+      azzert.that(b.component[0], is(-1));
+      azzert.that(b.component[8], is(-1));
     }
 
     @Test public void disconnectedComponentsCount() {
@@ -236,68 +240,68 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       b.add(6);
       b.add(7);
       b.add(9);
-      assertEquals(4, b.go().components());
+      azzert.that(b.go().components(), is(4));
     }
 
     @Test public void disconnectedComponentsGraph() {
       final MatrixSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
-      assertEquals(-1, g.component[5]);
-      assertEquals(-1, g.component[6]);
-      assertEquals(-1, g.component[7]);
-      assertEquals(-1, g.component[0]);
-      assertEquals(-1, g.component[8]);
+      azzert.that(g.component[5], is(-1));
+      azzert.that(g.component[6], is(-1));
+      azzert.that(g.component[7], is(-1));
+      azzert.that(g.component[0], is(-1));
+      azzert.that(g.component[8], is(-1));
     }
 
     @Test public void disconnectedComponentsGraphFreeNodes() {
       final MatrixSmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
-      assertEquals(-1, g.component[0]);
-      assertEquals(-1, g.component[8]);
+      azzert.that(g.component[0], is(-1));
+      azzert.that(g.component[8], is(-1));
     }
 
     @Test public void disconnectedComponentsGraphFreeNodesFunction() {
       final SmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
-      assertEquals(0, g.component((short) 0));
-      assertEquals(8, g.component((short) 8));
+      azzert.that(g.component((short) 0), is(0));
+      azzert.that(g.component((short) 8), is(8));
     }
 
     @Test public void disconnectedComponentsGraphFunction() {
       final SmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
-      assertEquals(5, g.component((short) 5));
-      assertEquals(6, g.component((short) 6));
-      assertEquals(7, g.component((short) 7));
+      azzert.that(g.component((short) 5), is(5));
+      azzert.that(g.component((short) 6), is(6));
+      azzert.that(g.component((short) 7), is(7));
     }
 
     @Test public void disconnectedComponentsGraphFunctionNotFoundNodesPublicFunctionCall() {
       final SmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(9).add(100).add(9).go();
-      assertEquals(-1, g.component(8));
-      assertEquals(-1, g.component(0));
+      azzert.that(g.component(8), is(-1));
+      azzert.that(g.component(0), is(-1));
     }
 
     @Test public void disconnectedComponentsGraphFunctionNotFoundNodesShortPrivateFunctionCall() {
       final SmallIntegersGraph g = new Builder().add(5).add(6).add(7).add(8).add(9).go();
-      assertEquals(8, g.component((short) 8));
-      assertEquals(0, g.component((short) 0));
+      azzert.that(g.component((short) 8), is(8));
+      azzert.that(g.component((short) 0), is(0));
     }
 
     @Test public void edgeFind() {
       final Builder b = new Builder();
       b.add(0);
       b.add(1);
-      assertEquals(0, b.find((short) 0));
-      assertEquals(1, b.find((short) 1));
+      azzert.that(b.find((short) 0), is(0));
+      azzert.that(b.find((short) 1), is(1));
       b.connect(0, 1);
-      assertEquals(1, b.find((short) 0));
-      assertEquals(1, b.find((short) 1));
+      azzert.that(b.find((short) 0), is(1));
+      azzert.that(b.find((short) 1), is(1));
     }
 
     @Test public void emptyCreationArcsCount() {
       final SmallIntegersGraph g = new Builder().go();
-      assertEquals(0, g.arcsCount);
+      azzert.that(g.arcsCount, is(0));
     }
 
     @Test public void emptyCreationNodesCount() {
       final MatrixSmallIntegersGraph g = new Builder().go();
-      assertEquals(0, g.nodesCount());
+      azzert.that(g.nodesCount(), is(0));
     }
 
     @Test public void emptyDoesNotContain() {
@@ -316,27 +320,27 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       b.connect(1, 2);
       b.connect(2, 3);
       b.connect(3, 4);
-      assertEquals(1, b.component[0]);
-      assertEquals(2, b.component[1]);
-      assertEquals(3, b.component[2]);
-      assertEquals(4, b.component[3]);
-      assertEquals(-1, b.component[4]);
+      azzert.that(b.component[0], is(1));
+      azzert.that(b.component[1], is(2));
+      azzert.that(b.component[2], is(3));
+      azzert.that(b.component[3], is(4));
+      azzert.that(b.component[4], is(-1));
       b.find((short) 0);
-      assertEquals(4, b.component[0]);
-      assertEquals(4, b.component[1]);
-      assertEquals(4, b.component[2]);
-      assertEquals(4, b.component[3]);
-      assertEquals(-1, b.component[4]);
+      azzert.that(b.component[0], is(4));
+      azzert.that(b.component[1], is(4));
+      azzert.that(b.component[2], is(4));
+      azzert.that(b.component[3], is(4));
+      azzert.that(b.component[4], is(-1));
     }
 
     @Test public void hasThreeNeighbors() {
       final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      assertEquals(3, g.neighbors(13).length);
+      azzert.that(g.neighbors(13).length, is(3));
     }
 
     @Test public void illegalNodeNeighbors() {
       final MatrixSmallIntegersGraph g = new Builder().connect(5, 14).connect(5, 13).connect(13, 14).go();
-      assertNull(g.neighbors(15));
+      azzert.isNull(g.neighbors(15));
     }
 
     @Test public void nastyReconnection() {
@@ -344,11 +348,11 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
           .connect(1, 2).connect(2, 3).connect(3, 4).connect(4, 5) //
           .connect(1, 5) // find(1) shall return 5 and will try to reconnect
           .go();
-      assertEquals(5, g.component(5));
-      assertEquals(5, g.component(4));
-      assertEquals(5, g.component(3));
-      assertEquals(5, g.component(2));
-      assertEquals(5, g.component(1));
+      azzert.that(g.component(5), is(5));
+      azzert.that(g.component(4), is(5));
+      azzert.that(g.component(3), is(5));
+      azzert.that(g.component(2), is(5));
+      azzert.that(g.component(1), is(5));
     }
 
     @Test(timeout = 20) public void neighborsIsNotNull() {
@@ -362,7 +366,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     public void newNodeIdempotent() {
-      assertEquals(1, new Builder().add(5).add(5).add(5).go().nodesCount());
+      azzert.that(new Builder().add(5).add(5).add(5).go().nodesCount(), is(1));
     }
 
     @Test(expected = IllegalArgumentException.class) public void newNodeLargeNumber() {
@@ -380,12 +384,12 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void noComponents() {
       final SmallIntegersGraph g = new Builder().go();
-      assertEquals(0, g.components());
+      azzert.that(g.components(), is(0));
     }
 
     @Test public void nodesEmpty() {
       final MatrixSmallIntegersGraph g = new Builder().go();
-      assertEquals(0, g.nodes().length);
+      azzert.that(g.nodes().length, is(0));
     }
 
     @Test public void nodesExists() {
@@ -396,34 +400,34 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     @Test public void nodesResistChange() {
       final MatrixSmallIntegersGraph g = new Builder().add(1).add(3).add(4).add(2).go();
       g.nodes()[0] = 5;
-      assertEquals(1, g.nodes()[0]);
-      assertEquals(2, g.nodes()[1]);
-      assertEquals(3, g.nodes()[2]);
-      assertEquals(4, g.nodes()[3]);
+      azzert.that(g.nodes()[0], is(1));
+      azzert.that(g.nodes()[1], is(2));
+      azzert.that(g.nodes()[2], is(3));
+      azzert.that(g.nodes()[3], is(4));
     }
 
     @Test public void nodesSingle() {
       final MatrixSmallIntegersGraph g = new Builder().add(1).go();
-      assertEquals(1, g.nodes().length);
+      azzert.that(g.nodes().length, is(1));
     }
 
     @Test public void nodesSingleCorrect() {
       final MatrixSmallIntegersGraph g = new Builder().add(1).go();
-      assertEquals(1, g.nodes()[0]);
+      azzert.that(g.nodes()[0], is(1));
     }
 
     @Test public void nodesTwoCorrect() {
       final MatrixSmallIntegersGraph g = new Builder().add(1).add(2).go();
-      assertEquals(1, g.nodes()[0]);
-      assertEquals(2, g.nodes()[1]);
+      azzert.that(g.nodes()[0], is(1));
+      azzert.that(g.nodes()[1], is(2));
     }
 
     @Test public void nodesUnsortedCorrect() {
       final MatrixSmallIntegersGraph g = new Builder().add(1).add(3).add(4).add(2).go();
-      assertEquals(1, g.nodes()[0]);
-      assertEquals(2, g.nodes()[1]);
-      assertEquals(3, g.nodes()[2]);
-      assertEquals(4, g.nodes()[3]);
+      azzert.that(g.nodes()[0], is(1));
+      azzert.that(g.nodes()[1], is(2));
+      azzert.that(g.nodes()[2], is(3));
+      azzert.that(g.nodes()[3], is(4));
     }
 
     @Test public void noNullCreation() {
@@ -432,12 +436,12 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void oneComponentOfOneEdge() {
       final SmallIntegersGraph g = new Builder().connect(1, 2).go();
-      assertEquals(1, g.components());
+      azzert.that(g.components(), is(1));
     }
 
     @Test public void oneComponents() {
       final SmallIntegersGraph g = new Builder().add(1).go();
-      assertEquals(1, g.components());
+      azzert.that(g.components(), is(1));
     }
 
     @Test public void safeModifictation() {
@@ -449,19 +453,19 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     @Test public void selfEdgeComponent() {
       final Builder b = new Builder();
       b.connect(5, 5);
-      assertEquals(-1, b.component[5]);
+      azzert.that(b.component[5], is(-1));
     }
 
     @Test public void selfEdgeFind() {
       final Builder b = new Builder();
       b.connect(5, 5);
-      assertEquals(5, b.find((short) 5));
+      azzert.that(b.find((short) 5), is(5));
     }
 
     @Test public void simpleFind() {
       final Builder b = new Builder();
       b.add(0);
-      assertEquals(0, b.find((short) 0));
+      azzert.that(b.find((short) 0), is(0));
     }
 
     @Test public void simpleNode0ContainsTrue() {
@@ -482,27 +486,27 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void singleArcCountArcs() {
       final SmallIntegersGraph g = new Builder().connect(13, 14).go();
-      assertEquals(1, g.arcsCount);
+      azzert.that(g.arcsCount, is(1));
     }
 
     @Test public void singleArcCountNodes() {
       final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).go();
-      assertEquals(2, g.nodesCount());
+      azzert.that(g.nodesCount(), is(2));
     }
 
     @Test public void singleArcHasOneNeighbor() {
       final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).go();
-      assertEquals(1, g.neighbors(13).length);
+      azzert.that(g.neighbors(13).length, is(1));
     }
 
     @Test public void singleArcInsertedTwiceCountArcs() {
       final SmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 14).go();
-      assertEquals(1, g.arcsCount);
+      azzert.that(g.arcsCount, is(1));
     }
 
     @Test public void singleArcInverseHasOneNeighbor() {
       final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).go();
-      assertEquals(1, g.neighbors(14).length);
+      azzert.that(g.neighbors(14).length, is(1));
     }
 
     @Test public void singleEdgeCheckComponent() {
@@ -511,8 +515,8 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       b.add(1);
       b.connect(0, 1);
       final SmallIntegersGraph g = b.go();
-      assertEquals(1, g.component((short) 0));
-      assertEquals(1, g.component((short) 1));
+      azzert.that(g.component((short) 0), is(1));
+      azzert.that(g.component((short) 1), is(1));
     }
 
     @Test public void singleNodeContainsFalse() {
@@ -532,17 +536,17 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     @Test public void singleNodeCountArcs() {
       final SmallIntegersGraph g = new Builder().add(13).go();
-      assertEquals(0, g.arcsCount);
+      azzert.that(g.arcsCount, is(0));
     }
 
     @Test public void singleNodeCountNodes() {
       final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      assertEquals(1, g.nodesCount());
+      azzert.that(g.nodesCount(), is(1));
     }
 
     @Test public void singleNodeHasNoNeighbors() {
       final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      assertEquals(0, g.neighbors(13).length);
+      azzert.that(g.neighbors(13).length, is(0));
     }
 
     @Test public void triangleAndPath() {
@@ -550,49 +554,49 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
           .connect(1, 2).connect(2, 3).connect(3, 4) //
           .connect(7, 8).connect(5, 6).connect(6, 7) //
           .go();
-      assertEquals(2, g.components());
+      azzert.that(g.components(), is(2));
     }
 
     @Test public void triangleHasTwoNeighbors() {
       final MatrixSmallIntegersGraph g = new Builder().connect(5, 14).connect(5, 13).connect(13, 14).go();
-      assertEquals(2, g.neighbors(14).length);
-      assertEquals(2, g.neighbors(13).length);
-      assertEquals(2, g.neighbors(5).length);
+      azzert.that(g.neighbors(14).length, is(2));
+      azzert.that(g.neighbors(13).length, is(2));
+      azzert.that(g.neighbors(5).length, is(2));
     }
 
     @Test public void twoArcsHasTwoNeighbors() {
       final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).go();
-      assertEquals(2, g.neighbors(13).length);
+      azzert.that(g.neighbors(13).length, is(2));
     }
 
     @Test public void twoArcsInverseHasTwoNeighbors() {
       final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).go();
-      assertEquals(1, g.neighbors(14).length);
-      assertEquals(1, g.neighbors(15).length);
+      azzert.that(g.neighbors(14).length, is(1));
+      azzert.that(g.neighbors(15).length, is(1));
     }
 
     @Test public void twoEdgeComponent() {
       final Builder b = new Builder();
       b.connect(0, 1);
       b.connect(1, 2);
-      assertEquals(1, b.component[0]);
-      assertEquals(2, b.component[1]);
-      assertEquals(2, b.component[1]);
+      azzert.that(b.component[0], is(1));
+      azzert.that(b.component[1], is(2));
+      azzert.that(b.component[1], is(2));
     }
 
     @Test public void twoEdgeFind() {
       final Builder b = new Builder();
       b.add(0);
       b.add(1);
-      assertEquals(0, b.find((short) 0));
-      assertEquals(1, b.find((short) 1));
+      azzert.that(b.find((short) 0), is(0));
+      azzert.that(b.find((short) 1), is(1));
       b.connect(0, 1);
-      assertEquals(1, b.find((short) 0));
-      assertEquals(1, b.find((short) 1));
+      azzert.that(b.find((short) 0), is(1));
+      azzert.that(b.find((short) 1), is(1));
       b.connect(1, 2);
-      assertEquals(2, b.find((short) 0));
-      assertEquals(2, b.find((short) 1));
-      assertEquals(2, b.find((short) 2));
+      azzert.that(b.find((short) 0), is(2));
+      azzert.that(b.find((short) 1), is(2));
+      azzert.that(b.find((short) 2), is(2));
     }
 
     @Test public void twoNodeContainsTrue() {

@@ -3,7 +3,12 @@
  */
 package il.org.spartan.classfiles.reify;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.io.*;
 
@@ -36,8 +41,8 @@ import org.junit.*;
         0, 0, 0, 1, //
         0, 0, 0, 1, //
     });
-    assertEquals(OpCode.NOP, OpCode.read(b).opCode);
-    assertEquals(OpCode.TABLESWITCH, OpCode.read(b).opCode);
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
     OpCode.read(b);
     assert b.eof();
     b.close();
@@ -53,9 +58,9 @@ import org.junit.*;
         0, 0, 0, 1, //
         0, 0, 0, 1, //
     });
-    assertEquals(OpCode.NOP, OpCode.read(b).opCode);
-    assertEquals(OpCode.NOP, OpCode.read(b).opCode);
-    assertEquals(OpCode.TABLESWITCH, OpCode.read(b).opCode);
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
     assert b.eof();
     b.close();
   }
@@ -70,10 +75,10 @@ import org.junit.*;
         0, 0, 0, 1, //
         0, 0, 0, 1, //
     });
-    assertEquals(OpCode.NOP, OpCode.read(b).opCode);
-    assertEquals(OpCode.NOP, OpCode.read(b).opCode);
-    assertEquals(OpCode.NOP, OpCode.read(b).opCode);
-    assertEquals(OpCode.TABLESWITCH, OpCode.read(b).opCode);
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
     assert b.eof();
     b.close();
   }

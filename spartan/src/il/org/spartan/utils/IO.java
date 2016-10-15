@@ -14,7 +14,7 @@ import il.org.spartan.streotypes.*;
     final Separator nl = new Separator("\n");
     for (final String s : ss)
       sb.append(nl).append(s);
-    return sb.toString();
+    return sb + "";
   }
 
   public static String concatLines(final String... ss) {
@@ -22,7 +22,7 @@ import il.org.spartan.streotypes.*;
     final Separator nl = new Separator("\n");
     for (final String s : ss)
       sb.append(nl).append(s);
-    return sb.toString();
+    return sb + "";
   }
 
   public static List<String> lines(final String str) throws IOException {
@@ -70,7 +70,7 @@ import il.org.spartan.streotypes.*;
     final StringBuilder $ = new StringBuilder();
     for (int c = r.read(); c >= 0; c = r.read())
       $.append((char) c);
-    return $.toString();
+    return $ + "";
   }
 
   /** Write a string to a file

@@ -14,19 +14,19 @@ public abstract class TimedOperation extends NamedOperation {
     super(name);
   }
 
-  @Override public final StopWatch call() {
+  @Override public final Stopwatch call() {
     return run(makeStopWatch());
   }
 
-  @Override public StopWatch netTime(final StopWatch netTime) {
+  @Override public Stopwatch netTime(final Stopwatch netTime) {
     return run(netTime);
   }
 
-  @Override public StopWatch netTime(final StopWatch netTime, final int runs) {
+  @Override public Stopwatch netTime(final Stopwatch netTime, final int runs) {
     for (int i = 0; i < runs; i++)
       run(netTime);
     return netTime;
   }
 
-  public abstract StopWatch run(StopWatch s);
+  public abstract Stopwatch run(Stopwatch s);
 }

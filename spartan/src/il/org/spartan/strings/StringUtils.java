@@ -33,7 +33,7 @@ import il.org.spartan.utils.*;
   }
 
   public static String capitalize(final String s) {
-    return s.length() == 0 ? s : ("" + first(s)).toUpperCase() + rest(s).toLowerCase();
+    return s.length() == 0 ? s : (first(s) + "").toUpperCase() + rest(s).toLowerCase();
   }
 
   /** Concatenate any number of strings.
@@ -43,14 +43,14 @@ import il.org.spartan.utils.*;
     final StringBuilder $ = new StringBuilder("");
     for (final String s : ss)
       $.append(s);
-    return $.toString();
+    return $ + "";
   }
 
   public static String cat(final String[]... ss) {
     final StringBuilder $ = new StringBuilder("");
     for (final String[] s : ss)
       $.append(cat(s));
-    return $.toString();
+    return $ + "";
   }
 
   public static double delta(final double a, final double b) {
@@ -58,7 +58,7 @@ import il.org.spartan.utils.*;
   }
 
   public static String dtoa(final double d) {
-    return "" + d;
+    return d + "";
   }
 
   public static <T> boolean eq(final T a, final T b) {
@@ -80,7 +80,7 @@ import il.org.spartan.utils.*;
       case '\\':
         return "\\\\";
       default:
-        return "" + c;
+        return c + "";
     }
   }
 
@@ -90,7 +90,7 @@ import il.org.spartan.utils.*;
     final StringBuilder $ = new StringBuilder(s.length());
     for (int i = 0; i < s.length(); i++)
       $.append(esc(s.charAt(i)));
-    return $.toString();
+    return $ + "";
   }
 
   public static String expandLeadingTabs(final String s) {
@@ -105,14 +105,14 @@ import il.org.spartan.utils.*;
   }
 
   public static String fill(final int n, final char c) {
-    return fill(n, "" + c);
+    return fill(n, c + "");
   }
 
   public static String fill(final int n, final String s) {
     final StringBuilder $ = new StringBuilder();
     for (int i = 0; i < n; ++i)
       $.append(s);
-    return $.toString();
+    return $ + "";
   }
 
   public static char first(final String s) {
@@ -122,7 +122,7 @@ import il.org.spartan.utils.*;
   }
 
   public static String ftoa(final float f) {
-    return "" + f;
+    return f + "";
   }
 
   public static boolean isDouble(final String s) {
@@ -162,11 +162,11 @@ import il.org.spartan.utils.*;
   }
 
   public static String itoa(final int i) {
-    return "" + i;
+    return i + "";
   }
 
   public static String javaCase(final String s) {
-    return s.length() == 0 ? s : ("" + first(s)).toLowerCase() + rest(s);
+    return s.length() == 0 ? s : (first(s) + "").toLowerCase() + rest(s);
   }
 
   public static char last(final String s) {
@@ -187,7 +187,7 @@ import il.org.spartan.utils.*;
   }
 
   public static String ltoa(final long l) {
-    return "" + l;
+    return l + "";
   }
 
   /** Compute the string equivalent ordinal of a positive integer, e.g., for 1
@@ -223,7 +223,7 @@ import il.org.spartan.utils.*;
       case 0:
         return "no " + plural;
       case 1:
-        return "" + singular;
+        return singular + "";
       case 2:
         return "two " + plural;
       case 3:
@@ -269,11 +269,11 @@ import il.org.spartan.utils.*;
    * @return the result of <code>o.toString()</code> wrapped with single
    *         quotes */
   public static String quote(final Object o) {
-    return wrap('\'', o.toString());
+    return wrap('\'', (o + ""));
   }
 
   public static String repeat(final int n, final char c) {
-    return repeat(n, "" + c);
+    return repeat(n, c + "");
   }
 
   /** Repeat a string a fixed number of times
@@ -285,7 +285,7 @@ import il.org.spartan.utils.*;
     final StringBuffer $ = new StringBuffer();
     for (int i = 0; i < n; i++)
       $.append(s);
-    return $.toString();
+    return $ + "";
   }
 
   /** Chop the first character of a string.
@@ -302,7 +302,7 @@ import il.org.spartan.utils.*;
   }
 
   public static String sprintf(final String format, final Object... args) {
-    return new Formatter().format(format, args).toString();
+    return new Formatter().format(format, args) + "";
   }
 
   public static String sprintf(final String[] args) {
@@ -315,7 +315,7 @@ import il.org.spartan.utils.*;
         final Object os[] = new Object[args.length - 1];
         for (int i = 1; i < args.length; i++)
           os[i - 1] = args[i];
-        return new Formatter().format(args[0], os).toString();
+        return new Formatter().format(args[0], os) + "";
     }
   }
 

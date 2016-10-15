@@ -1,6 +1,11 @@
 package il.org.spartan.java;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.io.*;
 
@@ -11,7 +16,7 @@ import org.junit.*;
     try {
       final RawTokenizer J = new RawTokenizer(new StringReader(s));
       final Token t = J.next();
-      assertEquals(Token.EOF, J.next());
+      azzert.that(J.next(), is(Token.EOF));
       return t;
     } catch (final IOException E) {
       return Token.EOF;
@@ -21,6 +26,6 @@ import org.junit.*;
   @Test public void test_simple_literal() {
     final String s = "\"abcd\"";
     final Token t = toToken(s);
-    assertEquals(Token.STRING_LITERAL, t);
+    azzert.that(t, is(Token.STRING_LITERAL));
   }
 }

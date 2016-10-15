@@ -30,7 +30,7 @@ public class TypedEntity extends ConstantPoolEntity {
     for (char c; cs.hasNext();)
       switch (c = cs.next()) {
         case ';':
-          return $.toString();
+          return $ + "";
         case '/':
           $.append('.');
           break;

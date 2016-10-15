@@ -15,7 +15,7 @@ import org.junit.*;
   }
 
   @Test public void content() {
-    assert null != makeFilter("Hello, World!\n").processor.toString();
+    assert null != makeFilter("Hello, World!\n").processor + "";
   }
 
   @Test public void creater() {

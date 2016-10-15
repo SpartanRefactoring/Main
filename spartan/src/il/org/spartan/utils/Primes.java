@@ -3,7 +3,12 @@
  */
 package il.org.spartan.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -28,20 +33,20 @@ public class Primes {
   @SuppressWarnings("static-method") //
   public static class TEST {
     @Test public void firstIsTwo() {
-      assertEquals(2, new Primes().next());
+      azzert.that(new Primes().next(), is(2));
     }
 
     @Test public void secondIsThree() {
       final Primes p = new Primes();
       p.next();
-      assertEquals(3, p.next());
+      azzert.that(p.next(), is(3));
     }
 
     @Test public void thirdIsFive() {
       final Primes p = new Primes();
       p.next();
       p.next();
-      assertEquals(5, p.next());
+      azzert.that(p.next(), is(5));
     }
   }
 }

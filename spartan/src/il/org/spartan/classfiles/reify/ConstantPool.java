@@ -54,15 +54,15 @@ public final class ConstantPool {
   public String[] getReferencedClasses() {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant c : pool)
-      if (c instanceof ClassConstant && c.toString() != null)
-        $.add(c.toString());
+      if (c instanceof ClassConstant && c + "" != null)
+        $.add((c + ""));
     return $.toArray(new String[$.size()]);
   }
 
   public int[] getReferencedClassesIndices() {
     final IntsArray $ = new IntsArray();
     for (int i = 0; i < pool.length; i++)
-      if (pool[i] instanceof ClassConstant && pool[i].toString() != null)
+      if (pool[i] instanceof ClassConstant && pool[i] + "" != null)
         $.push(i);
     return $.toArray();
   }
@@ -112,7 +112,7 @@ public final class ConstantPool {
   public String[] getReferencedMethods() {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant c : pool)
-      if (c instanceof MethodReference && !((MethodReference) c).getNameAndType().getName().equals("<init>") && c.toString() != null)
+      if (c instanceof MethodReference && !((MethodReference) c).getNameAndType().getName().equals("<init>") && c + "" != null)
         $.add(((MethodReference) c).getClassConstant().getClassName() + ":" + ((MethodReference) c).getNameAndType().getName());
     return $.toArray(new String[$.size()]);
   }
@@ -123,7 +123,7 @@ public final class ConstantPool {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant c : pool)
       if (c instanceof StringConstant)
-        $.add(c.toString());
+        $.add((c + ""));
     return $.toArray(new String[$.size()]);
   }
 
@@ -282,7 +282,7 @@ public final class ConstantPool {
     }
 
     @Override public String toString() {
-      return "" + value;
+      return value + "";
     }
 
     @Override public String typeName() {
@@ -382,7 +382,7 @@ public final class ConstantPool {
     }
 
     @Override public String toString() {
-      return "" + value;
+      return value + "";
     }
 
     @Override public String typeName() {
@@ -414,7 +414,7 @@ public final class ConstantPool {
     }
 
     @Override public String toString() {
-      return "" + value;
+      return value + "";
     }
 
     @Override public String typeName() {

@@ -1,13 +1,17 @@
 package il.org.spartan.graph;
 
+import static il.org.spartan.AssertToAzzert.assertNull;
+import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.assertEquals;
 import static il.org.spartan.graph.GraphsSamplesGenerator.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spatan.iteration.*;
 
@@ -475,7 +479,7 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A"), g.source(g.vertex("D")));
     assertEquals(g.vertex("A"), g.source(g.vertex("E")));
     for (final Vertex<String> v : g.vertices())
-      assertEquals("Node " + v.e(), g.vertex("A"), g.source(v));
+      azzert.that("Node " + v.e(), g.source(v), is(g.vertex("A")));
   }
 
   @Test public void testSingleEdgeSource() {
@@ -641,8 +645,8 @@ import il.org.spatan.iteration.*;
 
   @Test public void toStringTest() {
     final Graph<String> g = makeSingleEdge();
-    assertEquals("A", g.vertex("A").e().toString());
-    assertEquals("B", g.vertex("B").e().toString());
+    assertEquals("A", (g.vertex("A").e() + ""));
+    assertEquals("B", (g.vertex("B").e() + ""));
   }
 
   @Test public void tree() {

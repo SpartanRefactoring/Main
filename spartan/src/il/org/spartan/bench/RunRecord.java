@@ -7,7 +7,7 @@ import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 public class RunRecord extends AbstractRunRecord {
-  public RunRecord(final int runs, final StopWatch grossTime, final StopWatch netTime) {
+  public RunRecord(final int runs, final Stopwatch grossTime, final Stopwatch netTime) {
     this.runs = runs;
     this.grossTime = grossTime.time();
     this.netTime = netTime.time();

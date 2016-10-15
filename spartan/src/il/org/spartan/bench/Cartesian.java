@@ -1,10 +1,14 @@
 package il.org.spartan.bench;
 
 import static il.org.spartan.utils.___.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /**
@@ -29,14 +33,14 @@ public class Cartesian {
         final int j = sum - i;
         if (j < 1 || j > ss.length)
           continue;
-        positive(i);
-        positive(j);
-        sure(i <= rs.length);
-        sure(j <= ss.length);
-        sure(i < sum);
-        sure(j < sum);
-        nonnegative(n);
-        sure(n < $.length);
+        ___.positive(i);
+        ___.positive(j);
+        ___.sure(i <= rs.length);
+        ___.sure(j <= ss.length);
+        ___.sure(i < sum);
+        ___.sure(j < sum);
+        ___.nonnegative(n);
+        ___.sure(n < $.length);
         $[n++] = new Pair<>(rs[i - 1], ss[j - 1]);
       }
     ___.sure(n == $.length);
@@ -54,9 +58,9 @@ public class Cartesian {
           final int k = sum - i - j;
           if (k < 1 || k > ts.length)
             continue;
-          positive(i);
-          positive(j);
-          positive(k);
+          ___.positive(i);
+          ___.positive(j);
+          ___.positive(k);
           sure(i <= rs.length);
           sure(j <= ss.length);
           sure(k <= ts.length);
@@ -104,17 +108,17 @@ public class Cartesian {
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void makeArray000() {
       final int n = makeObliqueProduct(new Object[0], new Object[0], new Object[0]).length;
-      assertEquals(0, n);
+      azzert.that(n, is(0));
     }
 
     @Test public void makeArray111() {
       final int n = makeObliqueProduct(new Object[1], new Object[1], new Object[1]).length;
-      assertEquals(1, n);
+      azzert.that(n, is(1));
     }
 
     @Test public void makeArray3_13_19() {
       final int n = makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length;
-      assertEquals(702, n);
+      azzert.that(n, is(702));
     }
   }
 }

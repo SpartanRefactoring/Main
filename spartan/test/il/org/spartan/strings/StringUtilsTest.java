@@ -1,9 +1,13 @@
 package il.org.spartan.strings;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") //
@@ -25,20 +29,20 @@ public class StringUtilsTest {
   }
 
   @Test public void testToLowerLargeNumbers() {
-    assertEquals("z", StringUtils.lowCounter(25));
-    assertEquals("ba", StringUtils.lowCounter(26));
-    assertEquals("bb", StringUtils.lowCounter(27));
+    azzert.that(StringUtils.lowCounter(25), is("z"));
+    azzert.that(StringUtils.lowCounter(26), is("ba"));
+    azzert.that(StringUtils.lowCounter(27), is("bb"));
   }
 
   @Test public void testToLowerSmallNumbers() {
-    assertEquals("", StringUtils.lowCounter(-1));
-    assertEquals("a", StringUtils.lowCounter(0));
-    assertEquals("b", StringUtils.lowCounter(1));
+    azzert.that(StringUtils.lowCounter(-1), is(""));
+    azzert.that(StringUtils.lowCounter(0), is("a"));
+    azzert.that(StringUtils.lowCounter(1), is("b"));
   }
 
   @Test public final void testValidStrip() {
-    assertEquals("ab", StringUtils.strip("xaby"));
-    assertEquals("", StringUtils.strip("ab"));
-    assertEquals("b", StringUtils.strip("Abc"));
+    azzert.that(StringUtils.strip("xaby"), is("ab"));
+    azzert.that(StringUtils.strip("ab"), is(""));
+    azzert.that(StringUtils.strip("Abc"), is("b"));
   }
 }

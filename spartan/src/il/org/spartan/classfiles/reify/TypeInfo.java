@@ -51,7 +51,7 @@ public abstract class TypeInfo {
     }
 
     @Override public String toString() {
-      return inner.toString() + "[]";
+      return inner + "" + "[]";
     }
   }
 
@@ -127,7 +127,7 @@ public abstract class TypeInfo {
     }
 
     @Override public String toString() {
-      return returnValue.toString() + " (" + Separate.by(arguments, ", ") + ")";
+      return returnValue + "" + " (" + Separate.by(arguments, ", ") + ")";
     }
   }
 }

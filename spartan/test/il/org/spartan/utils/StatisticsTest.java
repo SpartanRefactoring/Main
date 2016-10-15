@@ -1,10 +1,14 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.streotypes.*;
 
@@ -20,7 +24,7 @@ import il.org.spartan.streotypes.*;
   @Test public void testOneCount() {
     final RealStatistics s = new RealStatistics();
     s.record(1);
-    assertEquals(1, s.n());
+    azzert.that(s.n(), is(1));
   }
 
   @Test public void testStdTwoValues() {
@@ -53,6 +57,6 @@ import il.org.spartan.streotypes.*;
 
   @Test public void testZeroCount() {
     final Statistics s = new RealStatistics();
-    assertEquals(0, s.n());
+    azzert.that(s.n(), is(0));
   }
 }

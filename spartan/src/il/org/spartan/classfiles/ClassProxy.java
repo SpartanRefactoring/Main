@@ -404,7 +404,7 @@ public class ClassProxy<T> {
 
   @Override public String toString() {
     try {
-      return clazz().toString();
+      return clazz() + "";
     } catch (final ClassNotFoundException __) {
       return null;
     }

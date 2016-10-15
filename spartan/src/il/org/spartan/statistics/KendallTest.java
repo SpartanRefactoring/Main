@@ -1,7 +1,12 @@
 package il.org.spartan.statistics;
 
 import static il.org.spatan.iteration.Iterables.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -43,75 +48,75 @@ import org.junit.*;
   }
 
   @Test public void testPairs() {
-    assertEquals(0, Kendall.pairs(1));
-    assertEquals(1, Kendall.pairs(2));
-    assertEquals(3, Kendall.pairs(3));
-    assertEquals(6, Kendall.pairs(4));
+    azzert.that(Kendall.pairs(1), is(0));
+    azzert.that(Kendall.pairs(2), is(1));
+    azzert.that(Kendall.pairs(3), is(3));
+    azzert.that(Kendall.pairs(4), is(6));
   }
 
   @Test public void testSigmaDistinactAndPair() {
     final double[] x = { 2, 5, 5 };
-    assertEquals(1, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(1));
   }
 
   @Test public void testSigmaDistinactAndQuad() {
     final double[] x = { 2, 5, 5, 5, 5 };
-    assertEquals(6, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(6));
   }
 
   @Test public void testSigmaDistinactAndTriple() {
     final double[] x = { 2, 5, 5, 5 };
-    assertEquals(3, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(3));
   }
 
   @Test public void testSigmaDistinctValues() {
     final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
-    assertEquals(0, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(0));
   }
 
   @Test public void testSigmaPair() {
     final double[] x = { 4, 4 };
-    assertEquals(1, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(1));
   }
 
   @Test public void testSigmaPairAndDistinct() {
     final double[] x = { 4, 4, 5 };
-    assertEquals(1, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(1));
   }
 
   @Test public void testSigmaPairAndPair() {
     final double[] x = { 4, 4, 5, 5 };
-    assertEquals(2, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(2));
   }
 
   @Test public void testSigmaQuad() {
     final double[] x = { 4, 4, 4, 4 };
-    assertEquals(6, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(6));
   }
 
   @Test public void testSigmaQuadAndDistinct() {
     final double[] x = { 4, 4, 4, 4, 5 };
-    assertEquals(6, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(6));
   }
 
   @Test public void testSigmaQuadAndPair() {
     final double[] x = { 4, 4, 4, 4, 5, 5 };
-    assertEquals(7, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(7));
   }
 
   @Test public void testSigmaTriple() {
     final double[] x = { 4, 4, 4 };
-    assertEquals(3, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(3));
   }
 
   @Test public void testSigmaTripleAndDistinct() {
     final double[] x = { 4, 4, 4, 5 };
-    assertEquals(3, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(3));
   }
 
   @Test public void testSigmaTripleAndPair() {
     final double[] x = new double[] { 4, 4, 4, 5, 5 };
-    assertEquals(4, Kendall.sigmaSortedArray(x));
+    azzert.that(Kendall.sigmaSortedArray(x), is(4));
   }
 
   @Test public void testTauBExample2() {

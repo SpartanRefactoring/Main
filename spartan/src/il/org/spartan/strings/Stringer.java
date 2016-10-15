@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
       return null;
     String $ = "";
     for (final char c : s.toCharArray())
-      $ += Character.isSpaceChar(c) ? "" : "" + c;
+      $ += Character.isSpaceChar(c) ? "" : c + "";
     return $;
   }
 
@@ -85,7 +85,7 @@ import il.org.spartan.utils.*;
     for (final T t : ts)
       b.append(s).append(t);
     b.append(end);
-    return b.toString();
+    return b + "";
   }
 
   /** @param <T> type of items in the list
@@ -102,7 +102,7 @@ import il.org.spartan.utils.*;
     for (final T t : ts)
       b.append(s).append(t);
     b.append(end);
-    return b.toString();
+    return b + "";
   }
 
   /** @author Oren Rubin
@@ -121,7 +121,7 @@ import il.org.spartan.utils.*;
     for (final T t : ts)
       b.append(s).append(converter.convert(t));
     b.append(end);
-    return b.toString();
+    return b + "";
   }
 
   /** Return the longest suffix of a String the starts with a certain character.
@@ -160,7 +160,7 @@ import il.org.spartan.utils.*;
     final Separator s = new Separator(between);
     for (final int i : ts)
       b.append(s).append(i);
-    value = b.toString();
+    value = b + "";
   }
 
   public <T> Stringer(final String separator, final String nullStr, final T... ts) {
@@ -170,7 +170,7 @@ import il.org.spartan.utils.*;
       b.append(s);
       b.append(t != null ? t : nullStr);
     }
-    value = b.toString();
+    value = b + "";
   }
 
   public <T> Stringer(final String between, final T... ts) {

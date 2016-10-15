@@ -2,12 +2,16 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.utils.___.*;
-import static org.junit.Assert.*;
-
-import java.io.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import java.io.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 
 /** Prefix text with varying indentation level. Class can be used for an
@@ -117,7 +121,7 @@ import il.org.spartan.streotypes.*;
 
     @Test public void emptyContent() {
       final Tab n = new Tab("abc");
-      assertEquals("", n.toString());
+      azzert.that((n + ""), is(""));
     }
 
     @Test public void emptyFalse() {
@@ -134,12 +138,12 @@ import il.org.spartan.streotypes.*;
     @Test public void testBeginAtLevelOne() {
       final Tab t = new Tab("abc");
       t.more();
-      assertEquals(cat("abc", "abcabc"), cat(t.begin(), t.toString()));
+      azzert.that(cat(t.begin(), (t + "")), is(cat("abc", "abcabc")));
     }
 
     @Test public void testBeginAtZero() {
       final Tab t = new Tab("abc");
-      assertEquals(cat("", "abc"), cat(t.begin(), t.toString()));
+      azzert.that(cat(t.begin(), (t + "")), is(cat("", "abc")));
     }
 
     @Test(expected = ___.Bug.Contract.Precondition.class) //
@@ -156,40 +160,40 @@ import il.org.spartan.streotypes.*;
     @Test public void testEndAtLevelOne() {
       final Tab t = new Tab("abc");
       t.more();
-      assertEquals(cat("", ""), cat(t.end(), t.toString()));
+      azzert.that(cat(t.end(), (t + "")), is(cat("", "")));
     }
 
     @Test public void testEndAtLevelTwo() {
       final Tab t = new Tab("abc");
       t.more();
       t.more();
-      assertEquals(cat("abc", "abc"), cat(t.end(), t.toString()));
+      azzert.that(cat(t.end(), (t + "")), is(cat("abc", "abc")));
     }
 
     @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testEndAtLevelZero() {
       final Tab t = new Tab("abc");
-      assertEquals(cat("", ""), cat(t.end(), t.toString()));
+      azzert.that(cat(t.end(), (t + "")), is(cat("", "")));
     }
 
     @Test public void testOneMore() {
       final Tab t = new Tab("abc");
       t.more();
-      assertEquals("abc", t.toString());
+      azzert.that((t + ""), is("abc"));
     }
 
     @Test public void testOneMoreOneLess() {
       final Tab t = new Tab("abc");
       t.more();
       t.less();
-      assertEquals("", t.toString());
+      azzert.that((t + ""), is(""));
     }
 
     @Test public void testTwoMore() {
       final Tab t = new Tab("abc");
       t.more();
       t.more();
-      assertEquals("abcabc", t.toString());
+      azzert.that((t + ""), is("abcabc"));
     }
 
     @Test public void testTwoMoreOneLess() {
@@ -197,7 +201,7 @@ import il.org.spartan.streotypes.*;
       t.more();
       t.more();
       t.less();
-      assertEquals("abc", t.toString());
+      azzert.that((t + ""), is("abc"));
     }
 
     @Test public void testTwoMoreTwoLessOneMore() {
@@ -207,7 +211,7 @@ import il.org.spartan.streotypes.*;
       t.less();
       t.less();
       t.more();
-      assertEquals("abc", t.toString());
+      azzert.that((t + ""), is("abc"));
     }
 
     @Test public void testTwoMoreTwoLessTwoMore() {
@@ -218,7 +222,7 @@ import il.org.spartan.streotypes.*;
       t.less();
       t.more();
       t.more();
-      assertEquals("abcabc", t.toString());
+      azzert.that((t + ""), is("abcabc"));
     }
   }
 }

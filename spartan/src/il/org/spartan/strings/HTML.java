@@ -50,7 +50,7 @@ import il.org.spartan.streotypes.*;
       case AMPERSAND:
         return "&amp;";
       default:
-        return "" + c;
+        return c + "";
     }
   }
 
@@ -71,7 +71,7 @@ import il.org.spartan.streotypes.*;
     final StringBuilder $ = new StringBuilder();
     for (int i = 0; i < s.length(); i++)
       $.append(esc(s.charAt(i)));
-    return $.toString();
+    return $ + "";
   }
 
   /** Escape an array of {@link String}s for inclusion in an HTML page.
@@ -101,6 +101,6 @@ import il.org.spartan.streotypes.*;
   }
 
   public static String tagContents(final String tag, final String s) {
-    return new StringBuilder(first(s)).append(tag(tag, peel(s))).append(last(s)).toString();
+    return new StringBuilder(first(s)).append(tag(tag, peel(s))).append(last(s)) + "";
   }
 }

@@ -4,12 +4,16 @@
 package il.org.spartan.misc;
 
 import static il.org.spatan.iteration.Iterables.*;
-import static org.junit.Assert.*;
-
-import java.util.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import java.util.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+
+import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 
 /** Offers a number of operations on two dimensional matrices and vectors. A
@@ -606,7 +610,7 @@ public enum LinearAlgebra {
       final double[][] y = LinearAlgebra.adjust(x);
       assertEquals(LinearAlgebra.rows(x), LinearAlgebra.rows(y));
       for (int i = 0; i < rows; i++)
-        assertEquals("Inappropriate column length at row " + i, rows - 1, y[i].length);
+        azzert.that("Inappropriate column length at row " + i, y[i].length, is((rows - 1)));
     }
 
     @Test public void isDefinedFalse() {
@@ -627,15 +631,15 @@ public enum LinearAlgebra {
       final double[][] __ = LinearAlgebra.make(rows, columns);
       assertEquals(rows, __.length);
       for (int i = 0; i < rows; i++)
-        assertEquals("Inappropriate column length at row " + i, columns, __[i].length);
+        azzert.that("Inappropriate column length at row " + i, __[i].length, is(columns));
     }
 
     @Test public void sqr() {
-      assertArrayEquals(doubles(1, 0, 1, 4), LinearAlgebra.sqr(doubles(-1, 0, 1, 2)), 1E-10);
+      Assert.assertArrayEquals(doubles(1, 0, 1, 4), LinearAlgebra.sqr(doubles(-1, 0, 1, 2)), 1E-10);
     }
 
     @Test public void sum() {
-      assertEquals(2, LinearAlgebra.sum(doubles(-1, 0, 1, 2)), 1E-10);
+      Assert.assertEquals(2, LinearAlgebra.sum(doubles(-1, 0, 1, 2)), 1E-10);
     }
 
     @Test public void transpose() {
@@ -644,7 +648,7 @@ public enum LinearAlgebra {
       final double[][] __ = LinearAlgebra.transpose(LinearAlgebra.make(rows, columns));
       assertEquals(columns, __.length);
       for (int i = 0; i < rows; i++)
-        assertEquals("Inappropriate column length at row " + i, rows, __[i].length);
+        azzert.that("Inappropriate column length at row " + i, __[i].length, is(rows));
     }
   }
 }

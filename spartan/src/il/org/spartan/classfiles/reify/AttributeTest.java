@@ -3,7 +3,12 @@
  */
 package il.org.spartan.classfiles.reify;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import org.junit.*;
 
@@ -33,9 +38,9 @@ import org.junit.*;
         return 3;
       }
     }
-    assertEquals("hashCode", Attribute.Extractor.attributes(new __()).get(0).name);
-    assertEquals("intAttribute", Attribute.Extractor.attributes(new __()).get(1).name);
-    assertEquals("anotherAttribute", Attribute.Extractor.attributes(new __()).get(2).name);
+    azzert.that(Attribute.Extractor.attributes(new __()).get(0).name, is("hashCode"));
+    azzert.that(Attribute.Extractor.attributes(new __()).get(1).name, is("intAttribute"));
+    azzert.that(Attribute.Extractor.attributes(new __()).get(2).name, is("anotherAttribute"));
   }
 
   @Test public void manyAttributeValues() {
@@ -53,9 +58,9 @@ import org.junit.*;
         return 19;
       }
     }
-    assertEquals("3", Attribute.Extractor.attributes(new __()).get(0).value);
-    assertEquals("19", Attribute.Extractor.attributes(new __()).get(1).value);
-    assertEquals("21", Attribute.Extractor.attributes(new __()).get(2).value);
+    azzert.that(Attribute.Extractor.attributes(new __()).get(0).value, is("3"));
+    azzert.that(Attribute.Extractor.attributes(new __()).get(1).value, is("19"));
+    azzert.that(Attribute.Extractor.attributes(new __()).get(2).value, is("21"));
   }
 
   @Test public void methodAttributeName() {
@@ -64,7 +69,7 @@ import org.junit.*;
         return 3;
       }
     }
-    assertEquals("intAttribute", Attribute.Extractor.attributes(new __()).get(0).name);
+    azzert.that(Attribute.Extractor.attributes(new __()).get(0).name, is("intAttribute"));
   }
 
   @Test public void nonNull() {

@@ -1,11 +1,12 @@
 package il.org.sparan.classfiles;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import java.io.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.utils.*;
 
@@ -17,7 +18,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testFindArray() {
-    assertNull(CLASSFILES.open(String[].class));
+    azzert.isNull(CLASSFILES.open(String[].class));
   }
 
   @Test public void testFindInner() {
@@ -66,11 +67,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testFindPrimitive() {
-    assertNull(CLASSFILES.open(int.class));
+    azzert.isNull(CLASSFILES.open(int.class));
   }
 
   @Test public void testFindPrimitiveArray() {
-    assertNull(CLASSFILES.open(int[].class));
+    azzert.isNull(CLASSFILES.open(int[].class));
   }
 
   @Test public void testFindStaticInner() {
@@ -86,7 +87,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testFindVoid() {
-    assertNull(CLASSFILES.open(void.class));
+    azzert.isNull(CLASSFILES.open(void.class));
   }
 
   @Test public void testIOException() {
@@ -94,7 +95,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testMeArray() {
-    assertNull(CLASSFILES.open(CLASSFILESTest[].class));
+    azzert.isNull(CLASSFILES.open(CLASSFILESTest[].class));
   }
 
   @Test public void testSeparate() {

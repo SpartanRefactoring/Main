@@ -20,7 +20,7 @@ public enum Log {
   private static PrintStream out = System.out;
   private static Tab tabber = new Tab("  ");
   private static int maxLevel = 100;
-  private static final Stack<StopWatch> stack = new Stack<>();
+  private static final Stack<Stopwatch> stack = new Stack<>();
 
   public static void activate() {
     active = true;
@@ -37,7 +37,7 @@ public enum Log {
 
   public static void beginStage(final String stage) {
     Log.ln("Begin:", stage);
-    stack.push(new StopWatch(stage).start());
+    stack.push(new Stopwatch(stage).start());
   }
 
   public static void deactivate() {
@@ -57,7 +57,7 @@ public enum Log {
   }
 
   public static void endStage(final Object... ss) {
-    final StopWatch s = stack.pop().stop();
+    final Stopwatch s = stack.pop().stop();
     Log.ln("End:", s.name(), StringUtils.paren(s) + ";", Separate.by(ss, " "));
   }
 

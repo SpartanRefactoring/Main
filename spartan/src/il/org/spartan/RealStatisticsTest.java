@@ -1,8 +1,11 @@
 package il.org.spartan;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.statistics.*;
 
@@ -48,10 +51,10 @@ import il.org.spartan.statistics.*;
   // assertEquals(d[4], 8, 0);
   // }
   @Test public void simpleLength() {
-    assertEquals(3, s.n());
-    assertEquals(5, s15.n());
-    assertEquals(8, s07.n());
-    assertEquals(9, s_4x0_5x1.n());
+    azzert.that(s.n(), is(3));
+    azzert.that(s15.n(), is(5));
+    azzert.that(s07.n(), is(8));
+    azzert.that(s_4x0_5x1.n(), is(9));
   }
 
   @Test public void testMax() {

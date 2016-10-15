@@ -1,6 +1,11 @@
 package il.org.spartan.reflection;
 
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
+
+import il.org.spartan.*;
 
 import java.util.*;
 
@@ -8,142 +13,142 @@ import org.junit.*;
 
 @SuppressWarnings("static-method") public class ShallowSizeTest {
   @Test public void align_9() {
-    assertEquals(16, ShallowSize.align(9));
+    azzert.that(ShallowSize.align(9), is(16));
   }
 
   @Test public void align1() {
-    assertEquals(8, ShallowSize.align(1));
+    azzert.that(ShallowSize.align(1), is(8));
   }
 
   @Test public void align7() {
-    assertEquals(8, ShallowSize.align(7));
+    azzert.that(ShallowSize.align(7), is(8));
   }
 
   @Test public void align8() {
-    assertEquals(8, ShallowSize.align(8));
+    azzert.that(ShallowSize.align(8), is(8));
   }
 
   @Test public void intrinsic_ObjectObject() {
-    assertEquals(4, ShallowSize.intrinsic(new ObjectObject()));
+    azzert.that(ShallowSize.intrinsic(new ObjectObject()), is(4));
   }
 
   @Test public void intrinsicBoolean() {
-    assertEquals(1, ShallowSize.intrinsic(new ObjectBoolean()));
+    azzert.that(ShallowSize.intrinsic(new ObjectBoolean()), is(1));
   }
 
   @Test public void intrinsicSize_intrinsicBoolean() {
-    assertEquals(1, ShallowSize.intrinsic(new ObjectBoolean()));
+    azzert.that(ShallowSize.intrinsic(new ObjectBoolean()), is(1));
   }
 
   @Test public void intrinsicSize_ObjectObject_Object() {
-    assertEquals(0, ShallowSize.intrinsic(Object.class));
+    azzert.that(ShallowSize.intrinsic(Object.class), is(0));
   }
 
   @Test public void intrinsicSize_ObjectObject_ObjectObject() {
-    assertEquals(4, ShallowSize.intrinsic(ObjectObject.class));
+    azzert.that(ShallowSize.intrinsic(ObjectObject.class), is(4));
   }
 
   @Test public void objectBoolean() {
-    assertEquals(16, ShallowSize.of(new ObjectBoolean()));
+    azzert.that(ShallowSize.of(new ObjectBoolean()), is(16));
   }
 
   @Test public void objectByte() {
-    assertEquals(16, ShallowSize.of(new Object() {
+    azzert.that(ShallowSize.of(new Object() {
       byte __;
-
+    
       @Override public int hashCode() {
         return super.hashCode() ^ __;
       }
-    }));
+    }), is(16));
   }
 
   @Test public void objectChar() {
-    assertEquals(16, ShallowSize.of(new ObjectChar()));
+    azzert.that(ShallowSize.of(new ObjectChar()), is(16));
   }
 
   @Test public void of_array_0__bytes() {
-    assertEquals(0, new byte[0].length);
-    assertEquals(16, ShallowSize.of(new byte[0]));
+    azzert.that(new byte[0].length, is(0));
+    azzert.that(ShallowSize.of(new byte[0]), is(16));
   }
 
   @Test public void of_array_4__bytes() {
-    assertEquals(16, ShallowSize.of(new byte[4]));
+    azzert.that(ShallowSize.of(new byte[4]), is(16));
   }
 
   @Test public void of_HashMap() {
     final HashMap<Object, Object> m = new HashMap<>();
-    assertEquals(40, ShallowSize.of(m));
+    azzert.that(ShallowSize.of(m), is(40));
     m.put(new Object(), new Object());
-    assertEquals(40, ShallowSize.of(m));
+    azzert.that(ShallowSize.of(m), is(40));
     m.put(null, null);
-    assertEquals(40, ShallowSize.of(m));
+    azzert.that(ShallowSize.of(m), is(40));
   }
 
   @Test public void of_Inner() {
-    assertEquals(16, ShallowSize.of(new Object() {
+    azzert.that(ShallowSize.of(new Object() {
       @Override public int hashCode() {
         return 17;
       }
-    }));
+    }), is(16));
   }
 
   @Test public void of_Interface() {
-    assertEquals(16, ShallowSize.of(new Cloneable() {
+    azzert.that(ShallowSize.of(new Cloneable() {
       @Override public int hashCode() {
         return 33;
       }
-    }));
+    }), is(16));
   }
 
   @Test public void of_Null() {
     final Object o = null;
-    assertEquals(0, ShallowSize.of(o));
+    azzert.that(ShallowSize.of(o), is(0));
   }
 
   @Test public void of_object() {
-    assertEquals(8, ShallowSize.of(new Object()));
+    azzert.that(ShallowSize.of(new Object()), is(8));
   }
 
   @Test public void of_Object() {
-    assertEquals(8, ShallowSize.of(new Object()));
+    azzert.that(ShallowSize.of(new Object()), is(8));
   }
 
   @Test public void of_objectBooleanO() {
-    assertEquals(16, ShallowSize.of(new ObjectBoolean()));
+    azzert.that(ShallowSize.of(new ObjectBoolean()), is(16));
   }
 
   @Test public void of_ObjectInt() {
-    assertEquals(16, ShallowSize.of(new ObjectInt()));
+    azzert.that(ShallowSize.of(new ObjectInt()), is(16));
   }
 
   @Test public void of_ObjectInt_Inner() {
-    assertEquals(16, ShallowSize.of(new Object() {
+    azzert.that(ShallowSize.of(new Object() {
       int __;
-
+    
       @Override public int hashCode() {
         return super.hashCode() ^ __;
       }
-    }));
+    }), is(16));
   }
 
   @Test public void of_objectStaticChar() {
-    assertEquals(8, ShallowSize.of(new ObjectStaticChar()));
+    azzert.that(ShallowSize.of(new ObjectStaticChar()), is(8));
   }
 
   @Test public void of_ObjectStaticInt() {
-    assertEquals(8, ShallowSize.of(new ObjectStaticInt()));
+    azzert.that(ShallowSize.of(new ObjectStaticInt()), is(8));
   }
 
   @Test public void size_ObjectObject() {
-    assertEquals(16, ShallowSize.of(new ObjectObject()));
+    azzert.that(ShallowSize.of(new ObjectObject()), is(16));
   }
 
   @Test public void size_ObjectObject_Object() {
-    assertEquals(8, ShallowSize.of(Object.class));
+    azzert.that(ShallowSize.of(Object.class), is(8));
   }
 
   @Test public void size_ObjectObject_ObjectObject() {
-    assertEquals(16, ShallowSize.of(ObjectObject.class));
+    azzert.that(ShallowSize.of(ObjectObject.class), is(16));
   }
 
   static class ObjectBoolean {

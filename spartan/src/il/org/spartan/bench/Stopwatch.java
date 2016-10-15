@@ -7,20 +7,20 @@ import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 01/05/2011 */
-public final class StopWatch {
+public final class Stopwatch {
   private long time = 0;
   private int runs = 0;
   private long begin;
   private final String name;
   private boolean started = false;
 
-  public StopWatch() {
+  public Stopwatch() {
     this(null);
   }
 
-  /** Instantiate {@link StopWatch}.
+  /** Instantiate {@link Stopwatch}.
    * @param name */
-  public StopWatch(final String name) {
+  public Stopwatch(final String name) {
     this.name = name;
   }
 
@@ -29,7 +29,7 @@ public final class StopWatch {
   }
 
   /** @return <code><b>this</b></code> */
-  public StopWatch reset() {
+  public Stopwatch reset() {
     time = runs = 0;
     return this;
   }
@@ -40,20 +40,20 @@ public final class StopWatch {
 
   /** @param runs
    * @return <code><b>this</b></code> */
-  public StopWatch setRuns(final int runs) {
+  public Stopwatch setRuns(final int runs) {
     this.runs = runs;
     return this;
   }
 
   /** @param time
    * @return <code><b>this</b></code> */
-  public StopWatch setTime(final long time) {
+  public Stopwatch setTime(final long time) {
     this.time = time;
     return this;
   }
 
   /** @return <code><b>this</b></code> */
-  public StopWatch start() {
+  public Stopwatch start() {
     ___.require(!started);
     begin = System.nanoTime();
     started = true;
@@ -61,7 +61,7 @@ public final class StopWatch {
   }
 
   /** @return <code><b>this</b></code> */
-  public StopWatch stop() {
+  public Stopwatch stop() {
     ___.require(started);
     time += System.nanoTime() - begin;
     runs++;

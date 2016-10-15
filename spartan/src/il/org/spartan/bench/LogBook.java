@@ -1,17 +1,21 @@
 package il.org.spartan.bench;
 
+import static il.org.spartan.AssertToAzzert.*;
+import static il.org.spartan.azzert.*;
+
+import org.junit.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
-import static org.junit.Assert.*;
 
 import java.io.*;
 import java.util.*;
 
-import org.junit.*;
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Accumulator.Counter;
@@ -326,7 +330,7 @@ public abstract class LogBook implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Override public final String toString() {
-      return size() != 1 ? super.toString() : Iterables.first(this).toString();
+      return size() != 1 ? super.toString() : Iterables.first(this) + "";
     }
   }
 
@@ -412,7 +416,7 @@ public abstract class LogBook implements Serializable {
       record(divide(v, n));
     }
 
-    public LogBook record(final StopWatch s, final long n) {
+    public LogBook record(final Stopwatch s, final long n) {
       return recordNanoseconds(s.time(), n);
     }
 
@@ -448,7 +452,7 @@ public abstract class LogBook implements Serializable {
       recordRelative((double) l1 / l2);
     }
 
-    public void recordRelative(final StopWatch s1, final StopWatch s2) {
+    public void recordRelative(final Stopwatch s1, final Stopwatch s2) {
       recordRelative(s1.time(), s2.time());
     }
 
@@ -459,23 +463,23 @@ public abstract class LogBook implements Serializable {
     }
 
     public Mutable set(final String option, final boolean value) {
-      return set(option, "" + value);
+      return set(option, value + "");
     }
 
     public Mutable set(final String option, final double value) {
-      return set(option, "" + value);
+      return set(option, value + "");
     }
 
     public Mutable set(final String option, final float value) {
-      return set(option, "" + value);
+      return set(option, value + "");
     }
 
     public Mutable set(final String option, final int value) {
-      return set(option, "" + value);
+      return set(option, value + "");
     }
 
     public Mutable set(final String option, final long value) {
-      return set(option, "" + value);
+      return set(option, value + "");
     }
 
     public Mutable set(final String option, final String value) {
@@ -512,8 +516,8 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        assertEquals("[A, B, D, C]", l.current().keySet().toString());
-        assertEquals(0, l.size());
+        azzert.that((l.current().keySet() + ""), is("[A, B, D, C]"));
+        azzert.that(l.size(), is(0));
       }
 
       @Test public final void demoteEntry() {
@@ -523,7 +527,7 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        assertEquals("[A, B, D, C]", l.find().keySet().toString());
+        azzert.that((l.find().keySet() + ""), is("[A, B, D, C]"));
       }
 
       @Test public final void demoteWithRecord() {
@@ -533,27 +537,27 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        assertEquals(0, l.size());
+        azzert.that(l.size(), is(0));
         l.demote("B");
         l.record(12);
-        assertEquals(1, l.size());
+        azzert.that(l.size(), is(1));
         l.demote("A");
         l.record(13);
-        assertEquals(1, l.size());
-        assertEquals("[D, C, B, A]", l.find().keySet().toString());
+        azzert.that(l.size(), is(1));
+        azzert.that((l.find().keySet() + ""), is("[D, C, B, A]"));
       }
 
       @Test public final void findEntry1() {
         final Mutable l = new Mutable(this).set("day", "Tuesday").set("time", 12);
         l.record(1);
-        assertEquals(1, l.find().records.n());
+        azzert.that(l.find().records.n(), is(1));
       }
 
       @Test public final void findEntry3() {
         final Mutable l = new Mutable(this);
         l.set("day", "Tuesday").set("time", 12);
         l.record(1).record(2).record(3);
-        assertEquals(3, l.find().records.n());
+        azzert.that(l.find().records.n(), is(3));
       }
 
       @Test public final void findNotNullEntry() {
@@ -568,7 +572,7 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         final Set<String> ss = l.find().keySet();
-        assertEquals("[A, B, C, D]", ss.toString());
+        azzert.that((ss + ""), is("[A, B, C, D]"));
       }
 
       @Test public final void keySet() {
@@ -576,8 +580,8 @@ public abstract class LogBook implements Serializable {
         l.set("day", "Tuesday");
         l.set("time", 12);
         final Set<String> ss = l.find().keySet();
-        assertEquals(2, ss.size());
-        assertEquals(2, ss.size());
+        azzert.that(ss.size(), is(2));
+        azzert.that(ss.size(), is(2));
         assert ss.contains("day");
         assert ss.contains("time");
       }
@@ -599,14 +603,14 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.remove("C");
-        assertEquals(0, l.size());
+        azzert.that(l.size(), is(0));
         l.remove("B");
         l.record(12);
-        assertEquals(1, l.size());
+        azzert.that(l.size(), is(1));
         l.remove("A");
         l.record(13);
-        assertEquals(1, l.size());
-        assertEquals("[D]", l.find().keySet().toString());
+        azzert.that(l.size(), is(1));
+        azzert.that((l.find().keySet() + ""), is("[D]"));
       }
 
       @Test public final void repeatedSettingsCount() {
@@ -623,18 +627,18 @@ public abstract class LogBook implements Serializable {
         l.record(n++);
         l.set("time", 12);
         l.record(n++);
-        assertEquals(2, l.find().records.n());
+        azzert.that(l.find().records.n(), is(2));
       }
 
       @Test public final void repeatedSettingsSize() {
         int n = 0;
         final Mutable l = new Mutable(this);
         l.set("day", "Tuesday");
-        assertEquals(0, l.size());
+        azzert.that(l.size(), is(0));
         l.set("time", 12);
-        assertEquals(0, l.size());
+        azzert.that(l.size(), is(0));
         l.record(n++);
-        assertEquals(1, l.size());
+        azzert.that(l.size(), is(1));
         l.set("day", "Wednesday");
         l.record(n++);
         l.set("time", 13);
@@ -643,20 +647,20 @@ public abstract class LogBook implements Serializable {
         l.record(n++);
         l.set("time", 12);
         l.record(n++);
-        assertEquals(4, l.size());
+        azzert.that(l.size(), is(4));
       }
 
       @Test public final void sizeZero() {
-        assertEquals(0, new Mutable(this).size());
+        azzert.that(new Mutable(this).size(), is(0));
       }
 
       @Test public final void value() {
-        assertNull(myBook.commonValue("B"));
-        assertNull(myBook.commonValue("C"));
-        assertNull(myBook.commonValue("D"));
-        assertNull(myBook.commonValue("A"));
-        assertNull(myBook.commonValue("E"));
-        assertEquals("Tuesday", myBook.commonValue("day"));
+        azzert.isNull(myBook.commonValue("B"));
+        azzert.isNull(myBook.commonValue("C"));
+        azzert.isNull(myBook.commonValue("D"));
+        azzert.isNull(myBook.commonValue("A"));
+        azzert.isNull(myBook.commonValue("E"));
+        azzert.that(myBook.commonValue("day"), is("Tuesday"));
       }
     }
   }
@@ -686,7 +690,7 @@ public abstract class LogBook implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Override public final String toString() {
-      return size() != 1 ? super.toString() : Iterables.first(this).toString();
+      return size() != 1 ? super.toString() : Iterables.first(this) + "";
     }
   }
 
@@ -772,7 +776,7 @@ public abstract class LogBook implements Serializable {
     }
 
     private String ratio(final Entry e1, final Entry e2) {
-      return String.format("%.2f*", box(e1.records.median() / e2.records.median())).toString();
+      return String.format("%.2f*", box(e1.records.median() / e2.records.median())) + "";
     }
 
     private Collection<Entry> select(final Iterable<Entry> es, final String key, final String value) {

@@ -264,14 +264,14 @@ public interface Cookbook {
       @Test public void sessionA04() {
         final Cell<Integer> x = value(Integer.valueOf(13));
         final Cell<Character> f = value(new Character('f'));
-        final Cell<String> fx = compute((final Integer i, final Character c) -> "" + c + "(" + i + ")").from(x, f);
+        final Cell<String> fx = compute((final Integer i, final Character c) -> c + "" + "(" + i + ")").from(x, f);
         azzert.that(fx.get(), is("f(13)"));
       }
 
       @SuppressWarnings("synthetic-access") @Test public void sessionA05() {
         final Cell<Integer> x = value(Integer.valueOf(13));
         final Cell<Character> f = value(new Character('f'));
-        final Cell<String> fx = cook(() -> "" + f.get() + "(" + x.get() + ")");
+        final Cell<String> fx = cook(() -> f.get() + "" + "(" + x.get() + ")");
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(f.dependents.size(), is(1));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
@@ -488,7 +488,7 @@ public interface Cookbook {
         }
 
         @Test(expected = NullPointerException.class) public void sessionA5() {
-          a().toString().getClass();
+          (a() + "").getClass();
         }
 
         @Test public void sessionB01() {

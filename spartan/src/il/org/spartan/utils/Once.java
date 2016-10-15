@@ -1,6 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 
 /** A class to manage printing a {@link String} exactly once. In the first
@@ -13,7 +14,7 @@ import il.org.spartan.streotypes.*;
   private String value;
 
   public Once(final String value) {
-    this.value = Defaults.to(value, "");
+    this.value = defaults.to(value, "");
   }
 
   @Override public String toString() {

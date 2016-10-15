@@ -6,9 +6,9 @@ package il.org.spartan.xy;
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Double.*;
-import static org.junit.Assert.*;
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
-import org.junit.*;
+import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.utils.*;
 
@@ -90,15 +90,15 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
     }
 
     @Test public void alpha() {
-      assertEquals(2, l.alpha(), 1E-5);
+      Assert.assertEquals(2, l.alpha(), 1E-5);
     }
 
     @Test public void beta() {
-      assertEquals(3, l.beta(), 1E-5);
+      Assert.assertEquals(3, l.beta(), 1E-5);
     }
 
     @Test public void eval() {
-      assertEquals(21, l.eval(9), 1E-5);
+      Assert.assertEquals(21, l.eval(9), 1E-5);
     }
   }
 }
