@@ -32,6 +32,10 @@ public interface iz {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
 
+  static boolean typeDeclaration(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
+  }
+
   static boolean annotation(final IExtendedModifier ¢) {
     return ¢ != null && ¢ instanceof Annotation;
   }
