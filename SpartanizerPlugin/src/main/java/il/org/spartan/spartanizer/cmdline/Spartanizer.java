@@ -73,7 +73,12 @@ public final class Spartanizer {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        final Tipper<N> tipper = getTipper(n);
+        Tipper<N> tipper = null;
+        try {
+          tipper = getTipper(n);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
         if (tipper == null)
           return true;
         Tip s = null;
@@ -82,6 +87,8 @@ public final class Spartanizer {
           tick(n, tipper);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
@@ -90,14 +97,14 @@ public final class Spartanizer {
         }
         return true;
       }
-
+  
       <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);
       }
-
+  
       /** @param n
        * @param w
        * @throws TipperFailure */
@@ -105,7 +112,7 @@ public final class Spartanizer {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-
+  
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -113,7 +120,7 @@ public final class Spartanizer {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-
+  
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
