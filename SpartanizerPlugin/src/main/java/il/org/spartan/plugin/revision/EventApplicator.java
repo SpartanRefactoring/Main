@@ -31,15 +31,13 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     if (!shouldRun())
       return;
     runContext().accept(() -> {
-      final List<CU> alive = new LinkedList<>();
-      alive.addAll(selection().compilationUnits);
       final int l = selection().textSelection != null ? 1 : passes();
       for (int pass = 0; pass < l; ++pass) {
         listener().tick(event.run_pass);
         if (!shouldRun())
           break;
         final List<CU> dead = new LinkedList<>();
-        for (final CU ¢ : alive) {
+        for (final CU ¢ : selection().compilationUnits) {
           if (!runAction().apply(¢.build()).booleanValue())
             dead.add(¢);
           ¢.dispose();
@@ -48,8 +46,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
             break;
         }
         listener().tick(event.run_pass_done);
-        alive.removeAll(dead);
-        if (alive.isEmpty() || !shouldRun())
+        selection().compilationUnits.removeAll(dead);
+        if (selection().compilationUnits.isEmpty() || !shouldRun())
           break;
       }
     });
