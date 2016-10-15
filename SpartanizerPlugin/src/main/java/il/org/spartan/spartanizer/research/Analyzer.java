@@ -16,34 +16,29 @@ public class Analyzer {
   public static void main(final String args[]) {
     if (args.length != 3)
       System.out.println("Usage: Analyzer <operation> <inputFolder> <outputFolder>");
-    final String inputFolder = args[1];
     switch (args[0]) {
-      case "-clean":
-        clean(inputFolder, args[2]);
-        break;
       case "-analyze":
-        analyze(inputFolder);
+        analyze(args[1]);
         break;
       case "-spartanize":
-        spartanize(inputFolder, args[2]);
+        spartanize(args[1], args[2]);
         break;
       case "-full":
       default:
-        spartanize(inputFolder, args[2]);
-        clean(inputFolder, args[2]);
-        analyze(inputFolder);
+        spartanize(args[1], args[2]);
+        analyze(args[1]);
     }
   }
 
-  /** Remove all comments from all files in directory @param outputFolder */
-  private static void clean(final String inputFolder, final String outputFolder) {
-    for (final File f : getJavaFiles(inputFolder)) {
-      final ASTNode cu = getCompilationUnit(f);
-      clean(cu);
-      updateFile(f, cu);
-    }
-  }
-
+  // /** Remove all comments from all files in directory @param outputFolder */
+  // private static void clean(final String inputFolder, final String
+  // outputFolder) {
+  // for (final File f : getJavaFiles(inputFolder)) {
+  // final ASTNode cu = getCompilationUnit(f);
+  // clean(cu);
+  // updateFile(f, cu);
+  // }
+  // }
   private static void updateFile(final File f, final ASTNode cu) {
     updateFile(f, cu + "");
   }
@@ -101,13 +96,11 @@ public class Analyzer {
   }
 
   private static void analyze(final ASTNode ¢) {
-    markAllNP(¢);
     report(¢);
   }
 
   private static void report(final ASTNode root) {
-    System.out.println("[" + markedNodes(root) + "/" + nodes(root) + "]");
-    // TODO Marco: much more than that..
+    root.accept(new ReporterVisitor());
   }
 
   private static int nodes(final ASTNode root) {
@@ -124,18 +117,11 @@ public class Analyzer {
     final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
+        if (Marker.isMarked(¢))
           $.incrementAndGet();
       }
     });
     return $.get();
-  }
-
-  /**
-   *
-   */
-  private static void markAllNP(final ASTNode ¢) {
-    ¢.accept(new NPMarkerVisitor());
   }
 
   /** @param inputFolder
@@ -147,8 +133,10 @@ public class Analyzer {
     new File(outputFolder + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
       // System.out.println("Now: " + ¢.getName());
+      Logger.enterFile(¢.getAbsolutePath());
       spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
       appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
+      Logger.summarizeFile();
     }
   }
 
@@ -164,9 +152,9 @@ public class Analyzer {
         .add(Block.class, //
             new CachingPattern(), //
             null) //
-        .add(CastExpression.class, //
-            new Coercion(), //
-            null) //
+//        .add(CastExpression.class, //
+//            new Coercion(), //
+//            null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             null) //

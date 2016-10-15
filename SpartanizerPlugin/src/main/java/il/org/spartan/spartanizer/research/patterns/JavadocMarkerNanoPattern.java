@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
@@ -27,6 +28,7 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
           r.replace(n,
               r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + javadoc() + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
               g);
+        Logger.markNP(n, javadoc());
       }
     };
   }

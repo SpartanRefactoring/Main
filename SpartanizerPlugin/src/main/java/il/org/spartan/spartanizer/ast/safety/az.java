@@ -467,4 +467,10 @@ public enum az {
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
+
+  /** @param ¢ JD
+   * @return */
+  public static TypeDeclaration typeDeclaration(ASTNode ¢) {
+    return !iz.typeDeclaration(¢) ? null : (TypeDeclaration) ¢;
+  }
 }
