@@ -15,14 +15,13 @@ public class MyComposite extends Composite {
     final Button button = new Button(parent, SWT.PUSH);
     button.setText("Press me");
     button.addSelectionListener(new SelectionAdapter() {
-      @Override public void widgetSelected(final SelectionEvent __) {
-        final Shell shell = parent.getShell();
-        openDialogs(shell);
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        openDialogs(parent.getShell());
       }
     });
   }
 
-  private void openDialogs(final Shell s) {
+  static void openDialogs(final Shell s) {
     // File standard dialog
     final FileDialog fileDialog = new FileDialog(s);
     // Set the text
