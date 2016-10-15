@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Find if(X == null) return null; <br>
@@ -34,9 +35,11 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Tip tip(final IfStatement s) throws TipperFailure {
+    Logger.markNP(s, "IfNullReturnNull");
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
       if (¢.canTip(s))
         return ¢.tip(s);
+    assert false;
     return null;
   }
 }

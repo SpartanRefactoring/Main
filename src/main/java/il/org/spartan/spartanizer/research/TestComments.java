@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+//TODO: Marco destroy
 
 /** @author Ori Marcovitch
  * @since 2016 */
