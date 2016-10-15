@@ -66,7 +66,7 @@ import il.org.spartan.spartanizer.tipping.*;
       .defaultRunAction(getSpartanizer(¢)).passes(1)/*defaultPassesMany()*/.selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
   /** Spartanize current class. */
   private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).passes(1)/*defaultPassesMany()*/.selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class).buildAll()).go());
+      .defaultRunAction(getSpartanizer(¢))./*passes(1)*/defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class).buildAll()).go());
   /** Apply tipper to current function. */
   private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", ¢ -> EventApplicator.defaultApplicator()
       .defaultRunAction(SingleTipper.getApplicator(¢)).passes(1)/*defaultPassesMany()*/.selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
