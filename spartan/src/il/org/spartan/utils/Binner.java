@@ -3,8 +3,8 @@
  */
 package il.org.spartan.utils;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 

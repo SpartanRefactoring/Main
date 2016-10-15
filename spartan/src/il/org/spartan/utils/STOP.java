@@ -2,6 +2,7 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
+
 import il.org.spartan.streotypes.*;
 
 /** A utility class, serving as the system global manager of the policy of

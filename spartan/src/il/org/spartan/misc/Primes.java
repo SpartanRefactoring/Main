@@ -6,7 +6,7 @@ import static il.org.spartan.azzert.*;
 import java.io.*;
 import java.util.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 

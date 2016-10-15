@@ -1,9 +1,6 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
@@ -13,7 +10,7 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.statistics.*;

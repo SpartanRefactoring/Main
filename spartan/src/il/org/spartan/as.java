@@ -2,7 +2,7 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 

@@ -1,14 +1,11 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import java.io.*;
 import java.util.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 import org.junit.experimental.theories.*;
 import org.junit.runner.*;
 

@@ -1,16 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.strings;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.strings.RE.*;
 import static il.org.spartan.utils.___.*;
-import static il.org.spartan.AssertToAzzert.*;
-import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import java.util.regex.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;

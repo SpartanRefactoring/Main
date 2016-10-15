@@ -3,16 +3,14 @@
  */
 package il.org.spartan.xy;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.misc.LinearAlgebra.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
-import static il.org.spartan.AssertToAzzert.*;
-import static il.org.spartan.azzert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
-
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;

@@ -3,14 +3,11 @@
  */
 package il.org.spartan.collections;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-
-import org.junit.*;
 
 public final class IntegersMapTest {
   final IntegersMap m = new IntegersMap();

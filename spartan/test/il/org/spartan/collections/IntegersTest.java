@@ -3,10 +3,7 @@
  */
 package il.org.spartan.collections;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import java.util.*;
 

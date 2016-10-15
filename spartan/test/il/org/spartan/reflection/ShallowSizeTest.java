@@ -1,15 +1,12 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
-
-import il.org.spartan.*;
 
 import java.util.*;
 
 import org.junit.*;
+
+import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class ShallowSizeTest {
   @Test public void align_9() {

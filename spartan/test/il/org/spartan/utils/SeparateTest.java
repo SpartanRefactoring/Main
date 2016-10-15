@@ -3,15 +3,12 @@
  */
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.Box.*;
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
+import static il.org.spartan.utils.Box.*;
 
 import java.util.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.Separate.*;

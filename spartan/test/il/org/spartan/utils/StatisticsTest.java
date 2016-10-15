@@ -1,12 +1,10 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
-
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.statistics.*;

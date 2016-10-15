@@ -4,7 +4,6 @@
 package il.org.spartan.statistics;
 
 import static il.org.spartan.statistics.MomentUtils.*;
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
 
 import org.junit.*;
 

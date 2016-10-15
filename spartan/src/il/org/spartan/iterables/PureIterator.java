@@ -7,7 +7,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 

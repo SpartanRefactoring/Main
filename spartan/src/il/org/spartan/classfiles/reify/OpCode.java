@@ -3,14 +3,11 @@
  */
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import java.io.*;
 
-import static il.org.spartan.AssertToAzzert.*;import org.junit.*;
+import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
