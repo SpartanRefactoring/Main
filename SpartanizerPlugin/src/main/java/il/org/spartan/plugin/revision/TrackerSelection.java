@@ -3,15 +3,13 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 
 public class TrackerSelection extends Selection {
   ASTNode track;
-  ITrackedNodePosition position;
 
   public TrackerSelection(CU compilationUnit, ITextSelection textSelection, String name) {
-    super(compilationUnit == null ? null : Collections.singletonList(CU.nonDisposal(compilationUnit.descriptor)), textSelection, name);
+    super(asList(compilationUnit), textSelection, name);
   }
 
   public static TrackerSelection empty() {
@@ -23,20 +21,21 @@ public class TrackerSelection extends Selection {
     return this;
   }
 
-  public void acknowledge(final ASTRewrite ¢) {
-    if (track != null)
-      position = ¢.track(track);
+  // TODO Roth: check safety of tracking
+  public void update() {
+    final ASTNode newTrack = new NodeFinder(compilationUnits.get(0).build().compilationUnit, textSelection.getOffset(), textSelection.getLength()).getCoveringNode();
+    if (newTrack == null || track.getStartPosition() != newTrack.getStartPosition()) {
+      compilationUnits.clear(); // empty selection
+      return;
+    }
+    track = newTrack;
+    textSelection = new TextSelection(track.getStartPosition(), track.getLength());
   }
 
-  public void update() {
-    if (track == null || compilationUnits == null || compilationUnits.size() != 1)
-      compilationUnits.clear(); // empty selection
-    else {
-      textSelection = new TextSelection(position.getStartPosition(), position.getLength());
-      compilationUnits.get(0).compilationUnit = null; // manual dispose
-      track = new NodeFinder(compilationUnits.get(0).build().compilationUnit, textSelection.getOffset(), textSelection.getLength()).getCoveringNode();
-      if (track == null || track.getStartPosition() != textSelection.getOffset() || track.getLength() != textSelection.getLength())
-        compilationUnits.clear(); // empty selection
-    }
+  private static List<CU> asList(CU ¢) {
+    List<CU> $ = new ArrayList<>();
+    if (¢ != null)
+      $.add(¢);
+    return $;
   }
 }
