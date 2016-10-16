@@ -1,6 +1,6 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
-import static il.org.spartan.plugin.eclipse.*;
+import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -15,6 +15,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;

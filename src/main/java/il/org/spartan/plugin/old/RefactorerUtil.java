@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import static il.org.spartan.lisp.*;
 
@@ -9,7 +9,8 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jface.operation.*;
 
-import il.org.spartan.plugin.Refactorer.*;
+import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.old.Refactorer.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 

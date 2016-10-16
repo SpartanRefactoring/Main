@@ -147,8 +147,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.revision.Handlers"/>
    <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.revision.Handlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
-   <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.RefreshAll"/>
-   <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.SpartanizeableAll"/>
+   <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.old.RefreshAll"/>
+   <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.old.SpartanizeableAll"/>
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.revision.SpartanizationHandler"/>
 </extension>

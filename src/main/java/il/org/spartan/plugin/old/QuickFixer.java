@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -6,6 +6,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
+import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.SuppressWarningsLaconicOnOff.Type;
 
 /** A quickfix generator for spartanization refactoring
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>

@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.jdt.core.*;
@@ -6,6 +6,8 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.handlers.*;
+
+import il.org.spartan.plugin.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
