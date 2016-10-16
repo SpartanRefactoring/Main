@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
 import java.util.*;
 
@@ -11,7 +11,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 

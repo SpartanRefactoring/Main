@@ -12,7 +12,6 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.revision.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
