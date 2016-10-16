@@ -23,7 +23,10 @@ public class Dialogs {
   private static boolean iconInitialized;
   /** Icon used for button/dialogs. May not appear on some OSs. */
   private static Image icon;
+  // TODO Roth: remember to update logo location
   /** Path of the {@link Dialogs#logo} used for dialogs. */
+  // private static final String LOGO_PATH =
+  // "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
   private static final String LOGO_PATH = "/src/main/java/il/org/spartan/plugin/revision/spartan-scholar.jpg";
   /** Whether or not the {@link Dialogs#logo} has been initialized. */
   private static boolean logoInitialized;
@@ -51,6 +54,12 @@ public class Dialogs {
   static Image logo() {
     if (!logoInitialized) {
       logoInitialized = true;
+      // try {
+      // logo = new Image(null, ImageDescriptor.createFromURL(new
+      // URL(LOGO_PATH)).getImageData());
+      // } catch (final MalformedURLException x) {
+      // monitor.log(x);
+      // }
       logo = new Image(null, ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
     }
     return logo;
