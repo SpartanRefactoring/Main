@@ -185,16 +185,11 @@ public class Selection extends AbstractSelection<Selection> {
       return by(getJavaProject(r.getProject()));
     }
 
-    // TODO Roth: delete this ASAP
     public static Selection getAllCompilationUnits() {
-      final ISelection s = getSelection();
-      if (s == null)
+      final IJavaProject p = getJavaProject();
+      if (p == null)
         return empty();
-      if (s instanceof ITextSelection) {
-        final IJavaProject p = getJavaProject();
-        return by(p).setTextSelection(null).setName(p.getElementName());
-      }
-      return empty();
+      return by(p).setTextSelection(null).setName(p.getElementName());
     }
 
     /** @return current user selection */
@@ -244,7 +239,11 @@ public class Selection extends AbstractSelection<Selection> {
       return by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
-    /** TODO Roth: what does expend mean? --yg
+    /** XXX Roth: what does expend mean? --yg TODO Yossi: this is a feature I
+     * just completed. It takes a TextSelection (i.e. text selected by the user)
+     * and expend it to contain overlapping markers. This increases usability
+     * and solves issue #454. Soon I will document all of the latest additions.
+     * --or
      * @param m
      * @param c
      * @return */
