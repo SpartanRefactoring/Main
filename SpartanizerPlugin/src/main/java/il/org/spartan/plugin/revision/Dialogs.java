@@ -1,7 +1,6 @@
 package il.org.spartan.plugin.revision;
 
 import java.net.*;
-
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.resource.*;
@@ -22,8 +21,14 @@ public class Dialogs {
   private static final String ICON_PATH = "platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif";
   /** Whether or not the {@link Dialogs#icon} has been initialized. */
   private static boolean iconInitialized;
-  /** Icon used for dialogs. May not appear on some OSs. */
-  static Image icon;
+  /** Icon used for button/dialogs. May not appear on some OSs. */
+  private static Image icon;
+  /** Path of the {@link Dialogs#logo} used for dialogs. */
+  private static final String LOGO_PATH = "/src/main/java/il/org/spartan/plugin/revision/spartan-scholar.jpg";
+  /** Whether or not the {@link Dialogs#logo} has been initialized. */
+  private static boolean logoInitialized;
+  /** Logo used for dialogs. */
+  private static Image logo;
   /** Id for run in background button. */
   public static final int RIB_ID = 2;
 
@@ -41,6 +46,16 @@ public class Dialogs {
     return icon;
   }
 
+  /** Lazy, dynamic loading of the dialogs' logo.
+   * @return icon used by dialogs */
+  static Image logo() {
+    if (!logoInitialized) {
+      logoInitialized = true;
+      logo = new Image(null, ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
+    }
+    return logo;
+  }
+
   /** Simple dialog, waits for user operation.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
@@ -48,6 +63,10 @@ public class Dialogs {
     return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
+      }
+
+      @Override public Image getInfoImage() {
+        return logo();
       }
     };
   }
@@ -59,6 +78,11 @@ public class Dialogs {
     final MessageDialog $ = new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
+      }
+
+      @Override public Image getInfoImage() {
+        imageLabel.setImage(logo());
+        return imageLabel.getImage();
       }
     };
     $.setBlockOnOpen(false);
