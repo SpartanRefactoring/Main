@@ -39,8 +39,7 @@ public class WrappedCompilationUnit {
 
   /** Factory method
    * @param ¢ JD
-   * @return an instance created by the parameter
-   */
+   * @return an instance created by the parameter */
   public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }

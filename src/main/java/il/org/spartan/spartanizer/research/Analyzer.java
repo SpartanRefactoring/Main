@@ -102,7 +102,7 @@ public class Analyzer {
     new File(outputDir + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
       // System.out.println("Now: " + ¢.getName());
-      ASTNode cu = clean(getCompilationUnit(¢));
+      final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
       appendFile(new File(outputDir + "/after.java"), spartanizedCode);

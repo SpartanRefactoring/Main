@@ -85,7 +85,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * user selection.
    * @return this applicator */
   public EventApplicator defaultSelection() {
-    selection(Selection.Util.get());
+    selection(Selection.Util.current());
     return this;
   }
 
