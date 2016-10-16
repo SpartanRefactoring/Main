@@ -29,15 +29,6 @@ public class Analyzer {
     }
   }
 
-  // /** Remove all comments from all files in directory @param outputFolder */
-  // private static void clean(final String inputFolder, final String
-  // outputFolder) {
-  // for (final File f : getJavaFiles(inputFolder)) {
-  // final ASTNode cu = getCompilationUnit(f);
-  // clean(cu);
-  // updateFile(f, cu);
-  // }
-  // }
   private static void updateFile(final File f, final ASTNode cu) {
     updateFile(f, cu + "");
   }
@@ -103,18 +94,20 @@ public class Analyzer {
   }
 
   /** @param inputFolder
-   * @param outputFolder */
-  private static void spartanize(final String inputFolder, final String outputFolder) {
+   * @param outputDir */
+  private static void spartanize(final String inputFolder, final String outputDir) {
     final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
     addNanoPatterns(spartanizer);
     String spartanizedCode = "";
-    new File(outputFolder + "/after.java").delete();
+    new File(outputDir + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
       // System.out.println("Now: " + ¢.getName());
-      spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
-      appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
+      ASTNode cu = clean(getCompilationUnit(¢));
+      Logger.logCompilationUnit(cu);
+      spartanizedCode = spartanizer.fixedPoint(cu + "");
+      appendFile(new File(outputDir + "/after.java"), spartanizedCode);
     }
-    Logger.summarize();
+    Logger.summarize(outputDir);
   }
 
   private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
@@ -126,9 +119,9 @@ public class Analyzer {
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
             null) //
-        // .add(CastExpression.class, //
-        // new Coercion(), //
-        // null) //
+        .add(CastExpression.class, //
+            new Coercion(), //
+            null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
             null) //
