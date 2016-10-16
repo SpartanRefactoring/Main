@@ -43,7 +43,7 @@ public final class TernaryNullCoallescing extends NanoPatternTipper<ConditionalE
     return new Tip(description(x), x, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, into.e("defaultsTo(" + step.expression(x) + "," + then(x) + ")"), g);
-        Logger.logNanoPattern(x, "defaultsTo");
+        Logger.logNP(x, "defaultsTo");
       }
     };
   }
