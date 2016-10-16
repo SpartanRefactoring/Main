@@ -10,7 +10,7 @@ public class TrackerSelection extends Selection {
   ASTNode track;
   ITrackedNodePosition position;
 
-  public TrackerSelection(final CU compilationUnit, final ITextSelection textSelection, final String name) {
+  public TrackerSelection(final WrappedCompilationUnit compilationUnit, final ITextSelection textSelection, final String name) {
     super(asList(compilationUnit), textSelection, name);
   }
 
@@ -40,8 +40,8 @@ public class TrackerSelection extends Selection {
     }
   }
 
-  private static List<CU> asList(final CU ¢) {
-    final List<CU> $ = new ArrayList<>();
+  private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
+    final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
     return $;

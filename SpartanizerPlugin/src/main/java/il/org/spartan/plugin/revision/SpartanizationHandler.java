@@ -33,7 +33,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   @Override public String getLabel() {
-    return "Apply Spartanization";
+    return "Apply";
   }
 
   @Override public void run(final IMarker ¢) {
@@ -48,7 +48,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final Time time = new Time();
     final Flag openDialog = new Flag(false);
     $.listener(EventMapper.empty(event.class) //
-        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(CU.class).does((__, ¢) -> {
+        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
           if (openDialog.flag)
             asynch(() -> {
               d.getProgressMonitor().subTask($.selection().compilationUnits.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
