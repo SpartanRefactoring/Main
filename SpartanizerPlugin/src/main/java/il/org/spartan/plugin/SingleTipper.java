@@ -55,7 +55,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     }
 
     @Override public Selection getSelection(final IMarker ¢) {
-      return (Selection) Selection.Util.getCurrentCompilationUnit().setTextSelection(domain(¢));
+      return Selection.Util.getCurrentCompilationUnit().setTextSelection(domain(¢));
     }
 
     private static InDeclaration instance;

@@ -43,6 +43,7 @@ public interface findFirst {
     });
     return $.get();
   }
+
   static <E> E elementOf(final List<E> ¢) {
     return first(¢);
   }
