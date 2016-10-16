@@ -65,7 +65,7 @@ public class Logger {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
-      numStatements = metrics.statementsQuantity(m);
+      numStatements = count.statements(m);
     }
 
     /** @param np */
