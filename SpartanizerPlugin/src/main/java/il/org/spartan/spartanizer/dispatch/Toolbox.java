@@ -272,9 +272,9 @@ public class Toolbox {
   public static void refresh() {
     defaultInstance = freshCopyOfAllTippers();
   }
-  
-  public static void refresh(final Trimmer t) {
-    t.toolbox = freshCopyOfAllTippers();
+
+  public static void refresh(final Trimmer ¢) {
+    ¢.toolbox = freshCopyOfAllTippers();
   }
 
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
