@@ -7,9 +7,9 @@ import org.eclipse.jface.text.*;
 /** An abstract selection, containing files and possible text selection.
  * @author Ori Roth
  * @since 2.6 */
-public abstract class AbstractSelection {
+public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Files in selection. */
-  public List<WrappedCompilationUnit> compilationUnits;
+  public List<WrappedCompilationUnit> inner;
   /** Text selection in selection. Nullable. */
   public ITextSelection textSelection;
   /** Selection's name. */
@@ -17,70 +17,74 @@ public abstract class AbstractSelection {
 
   /** @return true iff the selection is empty, i.e. contain no files */
   public boolean isEmpty() {
-    return compilationUnits == null || compilationUnits.isEmpty();
+    return inner == null || inner.isEmpty();
   }
 
   /** @return selection's size in compilation units */
   public int size() {
-    return isEmpty() ? 0 : compilationUnits.size();
+    return isEmpty() ? 0 : inner.size();
   }
 
   /** Set compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection setCompilationUnits(final List<WrappedCompilationUnit> ¢) {
-    compilationUnits = ¢ != null ? ¢ : new ArrayList<>();
-    return this;
+  public Self setCompilationUnits(final List<WrappedCompilationUnit> ¢) {
+    inner = ¢ != null ? ¢ : new ArrayList<>();
+    return self();
   }
 
   /** Set text selection for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection setTextSelection(final ITextSelection ¢) {
+  public Self setTextSelection(final ITextSelection ¢) {
     textSelection = ¢;
-    return this;
+    return self();
+  }
+
+  @SuppressWarnings("unchecked") public Self self() {
+    return (Self) this;
   }
 
   /** Set name for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection setName(final String ¢) {
+  public Self setName(final String ¢) {
     name = ¢;
-    return this;
+    return self();
   }
 
   /** Add a compilation unit for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection add(final WrappedCompilationUnit ¢) {
+  public Self add(final WrappedCompilationUnit ¢) {
     if (¢ != null)
-      compilationUnits.add(¢);
-    return this;
+      inner.add(¢);
+    return self();
   }
 
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection add(final List<WrappedCompilationUnit> ¢) {
+  public Self add(final List<WrappedCompilationUnit> ¢) {
     if (¢ != null)
-      compilationUnits.addAll(¢);
-    return this;
+      inner.addAll(¢);
+    return self();
   }
 
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection [[SuppressWarningsSpartan]] */
-  public AbstractSelection add(final WrappedCompilationUnit... ¢) {
+  public Self add(final WrappedCompilationUnit... ¢) {
     for (final WrappedCompilationUnit u : ¢)
-      compilationUnits.add(u);
-    return this;
+      inner.add(u);
+    return self();
   }
 
   /** Extend current selection using compilation units from another selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection unify(final AbstractSelection ¢) {
-    compilationUnits.addAll(¢.compilationUnits);
-    return this;
+  public Self unify(final Self ¢) {
+    inner.addAll(¢.inner);
+    return self();
   }
 }

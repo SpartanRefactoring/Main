@@ -38,7 +38,7 @@ public class EventApplicator extends Applicator<EventListener<event>> {
         if (!shouldRun())
           break;
         final List<WrappedCompilationUnit> alive = new LinkedList<>();
-        alive.addAll(selection().compilationUnits);
+        alive.addAll(selection().inner);
         final List<WrappedCompilationUnit> dead = new LinkedList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           if (!runAction().apply(¢.build()).booleanValue())
@@ -49,8 +49,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
             break;
         }
         listener().tick(event.run_pass_done);
-        selection().compilationUnits.removeAll(dead);
-        if (selection().compilationUnits.isEmpty() || !shouldRun())
+        selection().inner.removeAll(dead);
+        if (selection().inner.isEmpty() || !shouldRun())
           break;
       }
     });

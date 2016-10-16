@@ -51,7 +51,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
           if (openDialog.flag)
             asynch(() -> {
-              d.getProgressMonitor().subTask($.selection().compilationUnits.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
+              d.getProgressMonitor().subTask($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
               d.getProgressMonitor().worked(1);
               if (d.getProgressMonitor().isCanceled())
                 $.stop();

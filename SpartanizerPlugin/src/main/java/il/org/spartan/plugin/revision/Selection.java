@@ -18,22 +18,22 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * selection
  * @author Ori Roth
  * @since 2.6 */
-public class Selection extends AbstractSelection {
+public class Selection extends AbstractSelection<Selection> {
   public Selection(final List<WrappedCompilationUnit> compilationUnits, final ITextSelection textSelection, final String name) {
-    this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();
+    inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.textSelection = textSelection;
     this.name = name;
   }
 
   public Selection buildAll() {
-    for (final WrappedCompilationUnit ¢ : compilationUnits)
+    for (final WrappedCompilationUnit ¢ : inner)
       ¢.build();
     return this;
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
     final List<ICompilationUnit> $ = new ArrayList<>();
-    for (final WrappedCompilationUnit ¢ : compilationUnits)
+    for (final WrappedCompilationUnit ¢ : inner)
       $.add(¢.descriptor);
     return $;
   }
@@ -55,20 +55,20 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation unit */
   public static Selection of(final ICompilationUnit ¢) {
-    final List<WrappedCompilationUnit> l = new ArrayList<>();
+    final List<WrappedCompilationUnit> us = new ArrayList<>();
     if (¢ != null)
-      l.add(WrappedCompilationUnit.of(¢));
-    return new Selection(l, null, getName(¢));
+      us.add(WrappedCompilationUnit.of(¢));
+    return new Selection(us, null, getName(¢));
   }
 
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation unit and text selection */
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
-    final List<WrappedCompilationUnit> l = new ArrayList<>();
+    final List<WrappedCompilationUnit> us = new ArrayList<>();
     if (u != null)
-      l.add(WrappedCompilationUnit.of(u));
-    return new Selection(l, s, getName(u));
+      us.add(WrappedCompilationUnit.of(u));
+    return new Selection(us, s, getName(u));
   }
 
   /** Factory method.
@@ -94,9 +94,9 @@ public class Selection extends AbstractSelection {
   /** Extends text selection to include overlapping markers.
    * @return this selection */
   public Selection fixTextSelection() {
-    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null)
+    if (inner == null || inner.size() != 1 || textSelection == null)
       return this;
-    final WrappedCompilationUnit u = compilationUnits.get(0);
+    final WrappedCompilationUnit u = inner.get(0);
     final IResource r = u.descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
@@ -104,7 +104,7 @@ public class Selection extends AbstractSelection {
     final int l = o + textSelection.getLength();
     int no = o, nl = l;
     try {
-      IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
+      final IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
       int i = 0;
       boolean changed = false;
       for (; i < ms.length; ++i) {
@@ -135,8 +135,8 @@ public class Selection extends AbstractSelection {
   @Override public String toString() {
     if (isEmpty())
       return "{empty}";
-    final int s = compilationUnits == null ? 0 : compilationUnits.size();
-    return "{" + (compilationUnits == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
+    final int s = inner == null ? 0 : inner.size();
+    return "{" + (inner == null ? null : s + " " + RefactorerUtil.plurals("file", s)) + ", "
         + (textSelection == null ? null : printable(textSelection)) + "}";
   }
 
@@ -171,7 +171,7 @@ public class Selection extends AbstractSelection {
       final IResource r = m.getResource();
       if (!(r instanceof IFile))
         return empty();
-      return (Selection) by((IFile) r).setTextSelection(null);
+      return by((IFile) r).setTextSelection(null);
     }
 
     /** @param m JD
@@ -192,7 +192,7 @@ public class Selection extends AbstractSelection {
         return empty();
       if (s instanceof ITextSelection) {
         final IJavaProject p = getJavaProject();
-        return (Selection) by(p).setTextSelection(null).setName(p.getElementName());
+        return by(p).setTextSelection(null).setName(p.getElementName());
       }
       return empty();
     }
@@ -214,23 +214,21 @@ public class Selection extends AbstractSelection {
       final ISelection s = getSelection();
       if (s == null || s instanceof ITextSelection)
         return getProject();
-      /** TODO Roth: this looks like a bug to me, the second if will never
-       * fire */
-      if (s instanceof ITreeSelection) {
-        final Object o = ((ITreeSelection) s).getFirstElement();
-        if (o == null)
-          return getProject();
-        if (o instanceof MarkerItem) {
-          final IMarker m = ((MarkerItem) o).getMarker();
-          if (m == null)
-            return null;
-          final IResource r = m.getResource();
-          return r == null ? getProject() : r.getProject();
-        }
-        if (o instanceof IJavaElement) {
-          final IJavaProject p = ((IJavaElement) o).getJavaProject();
-          return p == null ? getProject() : p.getProject();
-        }
+      if (!(s instanceof ITreeSelection))
+        return getProject();
+      final Object o = ((ITreeSelection) s).getFirstElement();
+      if (o == null)
+        return getProject();
+      if (o instanceof MarkerItem) {
+        final IMarker m = ((MarkerItem) o).getMarker();
+        if (m == null)
+          return null;
+        final IResource r = m.getResource();
+        return r == null ? getProject() : r.getProject();
+      }
+      if (o instanceof IJavaElement) {
+        final IJavaProject p = ((IJavaElement) o).getJavaProject();
+        return p == null ? getProject() : p.getProject();
       }
       return getProject();
     }
@@ -243,7 +241,7 @@ public class Selection extends AbstractSelection {
       final ITextSelection s = getTextSelection(¢);
       if (s == null)
         return empty();
-      return (Selection) by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
+      return by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
     /** TODO Roth: what does expend mean? --yg
@@ -263,7 +261,7 @@ public class Selection extends AbstractSelection {
       final ASTNode p = searchAncestors.forClass(c).from(n);
       if (p == null)
         return empty();
-      return (Selection) TrackerSelection.empty().track(p).add(cu).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
+      return TrackerSelection.empty().track(p).add(cu).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
     }
 
     /** @return current {@link ISelection} */
@@ -338,11 +336,11 @@ public class Selection extends AbstractSelection {
      * @return selection by text selection */
     private static Selection by(final ITextSelection s) {
       final Selection $ = getCompilationUnit();
-      if ($ == null || $.compilationUnits == null || $.compilationUnits.isEmpty())
+      if ($ == null || $.inner == null || $.inner.isEmpty())
         return null;
-      if (s.getOffset() == 0 && s.getLength() == $.compilationUnits.get(0).build().compilationUnit.getLength())
-        return (Selection) $.setName(SELECTION_NAME);
-      return (Selection) ((Selection) $.setTextSelection(s)).fixTextSelection().setName(SELECTION_NAME);
+      if (s.getOffset() == 0 && s.getLength() == $.inner.get(0).build().compilationUnit.getLength())
+        return $.setName(SELECTION_NAME);
+      return $.setTextSelection(s).fixTextSelection().setName(SELECTION_NAME);
     }
 
     /** Only support selection by {@link IFile}.
@@ -355,13 +353,13 @@ public class Selection extends AbstractSelection {
     /** @param ¢ JD
      * @return selection by file */
     private static Selection by(final IFile ¢) {
-      return ¢ == null ? empty() : (Selection) Selection.of(JavaCore.createCompilationUnitFrom(¢)).setName(¢.getName());
+      return ¢ == null ? empty() : Selection.of(JavaCore.createCompilationUnitFrom(¢)).setName(¢.getName());
     }
 
     /** @param ¢ JD
      * @return selection by marker item */
     private static Selection by(final MarkerItem ¢) {
-      return ¢ == null ? empty() : (Selection) by(¢.getMarker()).setName(MARKER_NAME);
+      return ¢ == null ? empty() : by(¢.getMarker()).setName(MARKER_NAME);
     }
 
     /** @param s JD
@@ -398,7 +396,7 @@ public class Selection extends AbstractSelection {
       }
       for (final IPackageFragmentRoot ¢ : rs)
         $.unify(by(¢));
-      return (Selection) $.setName(p.getElementName());
+      return $.setName(p.getElementName());
     }
 
     /** @param r JD
@@ -413,7 +411,7 @@ public class Selection extends AbstractSelection {
         monitor.log(x);
         return empty();
       }
-      return (Selection) $.setName(r.getElementName());
+      return $.setName(r.getElementName());
     }
 
     /** @param f JD
@@ -421,7 +419,7 @@ public class Selection extends AbstractSelection {
     private static Selection by(final IPackageFragment f) {
       try {
         return f == null ? empty()
-            : (Selection) Selection.of(f.getCompilationUnits()).setName("".equals(f.getElementName()) ? DEFAULT_PACKAGE_NAME : f.getElementName());
+            : Selection.of(f.getCompilationUnits()).setName("".equals(f.getElementName()) ? DEFAULT_PACKAGE_NAME : f.getElementName());
       } catch (final JavaModelException x) {
         monitor.log(x);
         return empty();
@@ -431,27 +429,32 @@ public class Selection extends AbstractSelection {
     /** @param m JD
      * @return selection by member */
     private static Selection by(final IMember m) {
-      ISourceRange r;
+      ISourceRange r = makertToRange(m);
+      if (r == null)
+        return empty();
+      return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength())).setName(m.getElementName());
+    }
+
+    public static ISourceRange makertToRange(final IMember m) {
       try {
-        r = m.getSourceRange();
+        return m.getSourceRange();
       } catch (final JavaModelException x) {
         monitor.log(x);
-        return empty();
+        return null;
       }
-      return (Selection) Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength())).setName(m.getElementName());
     }
 
     /** @param ¢ JD
      * @return text selection by marker */
     private static ITextSelection getTextSelection(final IMarker ¢) {
-      int cs;
       try {
+        int cs;
         cs = ((Integer) ¢.getAttribute(IMarker.CHAR_START)).intValue();
         return new TextSelection(cs, ((Integer) ¢.getAttribute(IMarker.CHAR_END)).intValue() - cs);
       } catch (final CoreException x) {
         monitor.log(x);
+        return null;
       }
-      return null;
     }
 
     /** @param u JD
@@ -463,8 +466,8 @@ public class Selection extends AbstractSelection {
         return new NodeFinder(u.build().compilationUnit, s, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - s).getCoveredNode();
       } catch (final CoreException x) {
         monitor.logEvaluationError(x);
+        return null;
       }
-      return null;
     }
   }
 }

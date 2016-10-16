@@ -90,7 +90,7 @@ import il.org.spartan.plugin.revision.*;
     return getLabel();
   }
 
-  /** @param compilationUnits
+  /** @param inner
    * @param currentCompilationUnit
    * @return sub message to be displayed by a {@link IProgressMonitor}
    *         [[SuppressWarningsSpartan]] */
@@ -148,12 +148,12 @@ import il.org.spartan.plugin.revision.*;
   private Void go(final ExecutionEvent e, final IMarker m) {
     final Selection selection = either(getSelection(), getSelection(m));
     final GUI$Applicator applicator = either(getApplicator(e), getApplicator(m));
-    if (!valid(selection, applicator) || selection.compilationUnits.isEmpty())
+    if (!valid(selection, applicator) || selection.inner.isEmpty())
       return null;
     final Map<attribute, Object> attributes = unknowns();
     put(attributes, attribute.EVENT, e);
     put(attributes, attribute.MARKER, m);
-    put(attributes, attribute.CU, selection.compilationUnits);
+    put(attributes, attribute.CU, selection.inner);
     put(attributes, attribute.APPLICATOR, applicator);
     doWork(initialWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
     final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
