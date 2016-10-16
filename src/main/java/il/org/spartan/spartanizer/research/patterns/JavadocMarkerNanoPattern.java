@@ -28,7 +28,7 @@ public abstract class JavadocMarkerNanoPattern<N extends MethodDeclaration> exte
           r.replace(n,
               r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + javadoc() + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
               g);
-        Logger.logNanoPattern(n, javadoc());
+        Logger.logNP(n, javadoc());
       }
     };
   }
