@@ -199,7 +199,7 @@ public class Selection extends AbstractSelection {
       if (s == null || s instanceof ITextSelection)
         return getProject();
       /** TODO Roth: this looks like a bug to me, the second if will never
-       * fire  */
+       * fire */
       if (s instanceof ITreeSelection) {
         final Object o = ((ITreeSelection) s).getFirstElement();
         if (o == null)
@@ -233,8 +233,7 @@ public class Selection extends AbstractSelection {
     /** TODO Roth: what does expend mean? --yg
      * @param m
      * @param c
-     * @return
-     */
+     * @return */
     public static Selection expend(final IMarker m, final Class<? extends ASTNode> c) {
       if (m == null || !m.exists() || c == null || m.getResource() == null || !(m.getResource() instanceof IFile))
         return empty();
