@@ -15,11 +15,11 @@ public abstract class Applicator<L extends Listener> {
   /** The context in which the application runs. The bulk of the application
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
-  /** The modification process for each {@link ICU} in
-   * {@link Selection}. May activate, for instance, a {@link GUI$Applicator}.
-   * The return value determines whether the compilation unit should continue to
-   * the next pass or not. */
-  private Function<CU, Boolean> runAction;
+  /** The modification process for each {@link ICU} in {@link Selection}. May
+   * activate, for instance, a {@link GUI$Applicator}. The return value
+   * determines whether the compilation unit should continue to the next pass or
+   * not. */
+  private Function<WrappedCompilationUnit, Boolean> runAction;
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
   private int passes;
@@ -52,14 +52,14 @@ public abstract class Applicator<L extends Listener> {
   }
 
   /** @return run action for this applicator */
-  public Function<CU, Boolean> runAction() {
+  public Function<WrappedCompilationUnit, Boolean> runAction() {
     return runAction;
   }
 
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> runAction(final Function<CU, Boolean> ¢) {
+  public Applicator<L> runAction(final Function<WrappedCompilationUnit, Boolean> ¢) {
     runAction = ¢;
     return this;
   }

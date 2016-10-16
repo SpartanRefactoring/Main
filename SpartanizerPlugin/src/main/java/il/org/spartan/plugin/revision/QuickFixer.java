@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth
  * @since 2013/07/01 */
 @SuppressWarnings("unused") public final class QuickFixer implements IMarkerResolutionGenerator {
-  @Override public IMarkerResolution[] getResolutions(final IMarker m) {
+  @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     // TODO Roth: decide what resolutions should appear in the quick fix menu.
     // Note that in the current configuration the entire menu is accessible
     // without using the mouse wheel (=very good, elegant and spartanized).
@@ -62,14 +62,17 @@ import il.org.spartan.spartanizer.tipping.*;
   private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> EventApplicator.defaultApplicator()
       .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
   /** Spartanize current function. */
-  private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
+  private final IMarkerResolution laconizeFunction = quickFix("Laconize function",
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getSpartanizer(¢)).passes(1)
+          /* defaultPassesMany() */.selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
   /** Spartanize current class. */
-  private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class).buildAll()).go());
+  private final IMarkerResolution laconizeClass = quickFix("Laconize class",
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getSpartanizer(¢))
+          ./* passes(1) */defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class).buildAll()).go());
   /** Apply tipper to current function. */
-  private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
+  private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function",
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(SingleTipper.getApplicator(¢)).passes(1)
+          /* defaultPassesMany() */.selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
   /** Apply tipper to current file. */
   private final IMarkerResolution singleTipperFile = quickFix("Apply to compilation unit", ¢ -> EventApplicator.defaultApplicator()
       .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
@@ -89,7 +92,7 @@ import il.org.spartan.spartanizer.tipping.*;
    * @return marker resolution */
   private static IMarkerResolution quickFix(final String name, final Consumer<IMarker> solution) {
     return new IMarkerResolution() {
-      @Override public void run(IMarker ¢) {
+      @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
 

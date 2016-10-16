@@ -3,6 +3,7 @@ package il.org.spartan.plugin.revision;
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
+
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
@@ -36,10 +37,10 @@ public class EventApplicator extends Applicator<EventListener<event>> {
         listener().tick(event.run_pass);
         if (!shouldRun())
           break;
-        final List<CU> alive = new LinkedList<>();
+        final List<WrappedCompilationUnit> alive = new LinkedList<>();
         alive.addAll(selection().compilationUnits);
-        final List<CU> dead = new LinkedList<>();
-        for (final CU ¢ : alive) {
+        final List<WrappedCompilationUnit> dead = new LinkedList<>();
+        for (final WrappedCompilationUnit ¢ : alive) {
           if (!runAction().apply(¢.build()).booleanValue())
             dead.add(¢);
           ¢.dispose();

@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -92,27 +91,6 @@ public class Analyzer {
 
   private static void report(final ASTNode root) {
     root.accept(new ReporterVisitor());
-  }
-
-  private static int nodes(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
-    root.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        $.incrementAndGet();
-      }
-    });
-    return $.get();
-  }
-
-  private static int markedNodes(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
-    root.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
-        if (Marker.isMarked(¢))
-          $.incrementAndGet();
-      }
-    });
-    return $.get();
   }
 
   /** @param inputFolder

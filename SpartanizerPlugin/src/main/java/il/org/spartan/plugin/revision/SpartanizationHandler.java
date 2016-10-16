@@ -26,14 +26,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    EventApplicator a = applicator().defaultSelection();
+    final EventApplicator a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
   }
 
   @Override public String getLabel() {
-    return "Apply Spartanization";
+    return "Apply";
   }
 
   @Override public void run(final IMarker ¢) {
@@ -48,7 +48,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final Time time = new Time();
     final Flag openDialog = new Flag(false);
     $.listener(EventMapper.empty(event.class) //
-        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(CU.class).does((__, ¢) -> {
+        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
           if (openDialog.flag)
             asynch(() -> {
               d.getProgressMonitor().subTask($.selection().compilationUnits.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
@@ -143,7 +143,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static class Flag {
     boolean flag;
 
-    public Flag(boolean b) {
+    public Flag(final boolean b) {
       flag = b;
     }
   }

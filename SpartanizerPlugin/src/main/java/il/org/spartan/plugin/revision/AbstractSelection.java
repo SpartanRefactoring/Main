@@ -9,7 +9,7 @@ import org.eclipse.jface.text.*;
  * @since 2.6 */
 public abstract class AbstractSelection {
   /** Files in selection. */
-  public List<CU> compilationUnits;
+  public List<WrappedCompilationUnit> compilationUnits;
   /** Text selection in selection. Nullable. */
   public ITextSelection textSelection;
   /** Selection's name. */
@@ -19,7 +19,7 @@ public abstract class AbstractSelection {
   public boolean isEmpty() {
     return compilationUnits == null || compilationUnits.isEmpty();
   }
-  
+
   /** @return selection's size in compilation units */
   public int size() {
     return isEmpty() ? 0 : compilationUnits.size();
@@ -28,7 +28,7 @@ public abstract class AbstractSelection {
   /** Set compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection setCompilationUnits(final List<CU> ¢) {
+  public AbstractSelection setCompilationUnits(final List<WrappedCompilationUnit> ¢) {
     compilationUnits = ¢ != null ? ¢ : new ArrayList<>();
     return this;
   }
@@ -52,7 +52,7 @@ public abstract class AbstractSelection {
   /** Add a compilation unit for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection add(final CU ¢) {
+  public AbstractSelection add(final WrappedCompilationUnit ¢) {
     if (¢ != null)
       compilationUnits.add(¢);
     return this;
@@ -61,7 +61,7 @@ public abstract class AbstractSelection {
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection */
-  public AbstractSelection add(final List<CU> ¢) {
+  public AbstractSelection add(final List<WrappedCompilationUnit> ¢) {
     if (¢ != null)
       compilationUnits.addAll(¢);
     return this;
@@ -70,8 +70,8 @@ public abstract class AbstractSelection {
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return this selection [[SuppressWarningsSpartan]] */
-  public AbstractSelection add(final CU... ¢) {
-    for (final CU u : ¢)
+  public AbstractSelection add(final WrappedCompilationUnit... ¢) {
+    for (final WrappedCompilationUnit u : ¢)
       compilationUnits.add(u);
     return this;
   }

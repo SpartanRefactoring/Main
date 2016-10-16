@@ -442,7 +442,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
 
-  public boolean apply(final CU u, final AbstractSelection s) {
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection s) {
     if (s instanceof TrackerSelection)
       return apply(u, (TrackerSelection) s);
     try {
@@ -463,7 +463,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return false;
   }
 
-  public boolean apply(final CU u, final TrackerSelection s) {
+  public boolean apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
       setICompilationUnit(u.descriptor);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
