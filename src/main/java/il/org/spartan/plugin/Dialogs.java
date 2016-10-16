@@ -22,9 +22,9 @@ public class Dialogs {
   /** Icon used for button/dialogs. May not appear on some OSs. */
   private static Image icon;
   /** Path of the {@link Dialogs#logo} used for dialogs. */
+  private static final String LOGO_PATH = "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
   // private static final String LOGO_PATH =
-  // "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
-  private static final String LOGO_PATH = "/src/main/java/il/org/spartan/plugin/spartan-scholar.jpg";
+  // "/src/main/java/il/org/spartan/plugin/spartan-scholar.jpg";
   /** Whether or not the {@link Dialogs#logo} has been initialized. */
   private static boolean logoInitialized;
   /** Logo used for dialogs. */
@@ -51,13 +51,13 @@ public class Dialogs {
   static Image logo() {
     if (!logoInitialized) {
       logoInitialized = true;
-      // try {
-      // logo = new Image(null, ImageDescriptor.createFromURL(new
-      // URL(LOGO_PATH)).getImageData());
-      // } catch (final MalformedURLException x) {
-      // monitor.log(x);
-      // }
-      logo = new Image(null, ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
+      try {
+        logo = new Image(null, ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData());
+      } catch (final MalformedURLException x) {
+        monitor.log(x);
+      }
+      // logo = new Image(null,
+      // ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
     }
     return logo;
   }
@@ -87,8 +87,7 @@ public class Dialogs {
       }
 
       @Override public Image getInfoImage() {
-        imageLabel.setImage(logo());
-        return imageLabel.getImage();
+        return logo();
       }
     };
     $.setBlockOnOpen(false);
@@ -119,6 +118,10 @@ public class Dialogs {
           default:
             break;
         }
+      }
+
+      @Override public Image getInfoImage() {
+        return logo();
       }
     };
     $.setBlockOnOpen(false);
