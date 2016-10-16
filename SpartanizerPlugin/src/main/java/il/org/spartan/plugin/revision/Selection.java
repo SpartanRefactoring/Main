@@ -6,7 +6,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
@@ -56,14 +55,20 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation unit */
   public static Selection of(final ICompilationUnit ¢) {
-    return new Selection(¢ == null ? null : Collections.singletonList(CU.of(¢)), null, getName(¢));
+    List<CU> l = new ArrayList<>();
+    if (¢ != null)
+      l.add(CU.of(¢));
+    return new Selection(l, null, getName(¢));
   }
 
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation unit and text selection */
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
-    return new Selection(u == null ? null : Collections.singletonList(CU.of(u)), s, getName(u));
+    List<CU> l = new ArrayList<>();
+    if (u != null)
+      l.add(CU.of(u));
+    return new Selection(l, s, getName(u));
   }
 
   /** Factory method.
@@ -86,22 +91,22 @@ public class Selection extends AbstractSelection {
     return ¢ == null ? null : ¢.getElementName();
   }
 
-  /** Extends selection with empty (yet existing) text selection to include
-   * overlapping marker.
+  /** Extends text selection to include overlapping marker.
    * @return this selection */
-  public Selection fixEmptyTextSelection() {
-    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null || textSelection.getLength() > 0)
+  public Selection fixTextSelection() {
+    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null)
       return this;
     final CU u = compilationUnits.get(0);
     final IResource r = u.descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset();
+    final int l = textSelection.getLength();
     try {
       for (final IMarker m : ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
         final int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         final int ce = ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-        if (cs <= o && ce >= o)
+        if (cs <= o && ce >= l + o)
           return (Selection) setTextSelection(new TextSelection(cs, ce - cs));
       }
     } catch (final CoreException x) {
@@ -223,25 +228,20 @@ public class Selection extends AbstractSelection {
       return (Selection) by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
-    /** TODO Roth: do not create an ICompilationUnit for this Extends the marker
-     * to contain parent node of some kind.
-     * @param s JD
-     * @param c JD
-     * @return selection by extended marker */
     public static Selection expend(final IMarker m, final Class<? extends ASTNode> c) {
       if (m == null || !m.exists() || c == null || m.getResource() == null || !(m.getResource() instanceof IFile))
         return empty();
-      ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
+      final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return empty();
-      CU cu = CU.of(u);
-      ASTNode n = getNodeByMarker(cu, m);
+      final CU cu = CU.of(u);
+      final ASTNode n = getNodeByMarker(cu, m);
       if (n == null)
         return empty();
-      n = searchAncestors.forClass(c).from(n);
-      if (n == null)
+      final ASTNode p = searchAncestors.forClass(c).from(n);
+      if (p == null)
         return empty();
-      return (Selection) empty().add(cu).setTextSelection(new TextSelection(n.getStartPosition(), n.getLength()));
+      return (Selection) TrackerSelection.empty().track(p).add(cu).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
     }
 
     /** @return current {@link ISelection} */
@@ -311,11 +311,17 @@ public class Selection extends AbstractSelection {
       return i == null ? null : by(i.getAdapter(IResource.class));
     }
 
+    // TODO Roth: decide whether to preserve the "full selection multi passes"
+    // feature
     /** @param s JD
      * @return selection by text selection */
     private static Selection by(final ITextSelection s) {
       final Selection $ = getCompilationUnit();
-      return $ == null ? empty() : (Selection) ((Selection) $.setTextSelection(s)).fixEmptyTextSelection().setName(SELECTION_NAME);
+      if ($ == null || $.compilationUnits == null || $.compilationUnits.isEmpty())
+        return null;
+      if (s.getOffset() == 0 && s.getLength() == $.compilationUnits.get(0).build().compilationUnit.getLength())
+        return (Selection) $.setName(SELECTION_NAME);
+      return (Selection) ((Selection) $.setTextSelection(s)).fixTextSelection().setName(SELECTION_NAME);
     }
 
     /** Only support selection by {@link IFile}.
@@ -438,35 +444,6 @@ public class Selection extends AbstractSelection {
         monitor.logEvaluationError(x);
       }
       return null;
-    }
-  }
-
-  public class WithTracking extends Selection {
-    ASTNode track;
-    ITrackedNodePosition position;
-
-    public WithTracking(CU compilationUnit, ITextSelection textSelection, String name) {
-      super(Collections.singletonList(compilationUnit), textSelection, name);
-    }
-
-    public WithTracking track(final ASTNode ¢) {
-      track = ¢;
-      return this;
-    }
-
-    public void acknowledge(final ASTRewrite ¢) {
-      if (track != null)
-        position = ¢.track(track);
-    }
-
-    public void update() {
-      if (track == null || Selection.this.compilationUnits == null || Selection.this.compilationUnits.size() != 1)
-        compilationUnits = null; // empty selection
-      else {
-        Selection.this.textSelection = new TextSelection(position.getStartPosition(), position.getLength());
-        track = new NodeFinder(compilationUnits.get(0).build().compilationUnit, Selection.this.textSelection.getOffset(),
-            Selection.this.textSelection.getLength()).getCoveredNode();
-      }
     }
   }
 }

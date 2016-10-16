@@ -18,17 +18,18 @@ public class CU {
   public CU(final ICompilationUnit compilationUnit) {
     descriptor = compilationUnit;
   }
-  
+
   public CU build() {
     if (compilationUnit == null)
       compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(descriptor).createAST(npm);
     return this;
   }
-  
-  public void dispose() {
+
+  public CU dispose() {
     compilationUnit = null;
+    return this;
   }
-  
+
   public String name() {
     return descriptor == null ? null : descriptor.getElementName();
   }

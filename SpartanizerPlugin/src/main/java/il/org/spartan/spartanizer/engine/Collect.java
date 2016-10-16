@@ -124,7 +124,7 @@ public enum Collect {
 
   public static Collector usesOf(final String s) {
     return new Collector(s) {
-      @Override public List<SimpleName> in(final ASTNode... __) {
+      @Override public List<SimpleName> in(@SuppressWarnings("unused") final ASTNode... __) {
         return null;
       }
 
@@ -478,7 +478,7 @@ public enum Collect {
 
     /** @param ns
      * @return */
-    @SuppressWarnings("static-method") public List<String> inside(final ASTNode... __) {
+    @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
       return new ArrayList<>();
     }
 

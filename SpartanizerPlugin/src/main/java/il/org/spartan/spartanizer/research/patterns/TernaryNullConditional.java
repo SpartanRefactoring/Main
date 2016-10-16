@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace X == null ? null : X.Y with X?.Y <br>
@@ -38,9 +39,11 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
   }
 
   @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
+    Logger.logNP(x, "?.");
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
+    assert false;
     return null;
   }
 }

@@ -16,31 +16,17 @@ public class Analyzer {
   public static void main(final String args[]) {
     if (args.length != 3)
       System.out.println("Usage: Analyzer <operation> <inputFolder> <outputFolder>");
-    final String inputFolder = args[1];
     switch (args[0]) {
-      case "-clean":
-        clean(inputFolder, args[2]);
-        break;
       case "-analyze":
-        analyze(inputFolder);
+        analyze(args[1]);
         break;
       case "-spartanize":
-        spartanize(inputFolder, args[2]);
+        spartanize(args[1], args[2]);
         break;
       case "-full":
       default:
-        spartanize(inputFolder, args[2]);
-        clean(inputFolder, args[2]);
-        analyze(inputFolder);
-    }
-  }
-
-  /** Remove all comments from all files in directory @param outputFolder */
-  private static void clean(final String inputFolder, final String outputFolder) {
-    for (final File f : getJavaFiles(inputFolder)) {
-      final ASTNode cu = getCompilationUnit(f);
-      clean(cu);
-      updateFile(f, cu);
+        spartanize(args[1], args[2]);
+        analyze(args[1]);
     }
   }
 
@@ -101,13 +87,11 @@ public class Analyzer {
   }
 
   private static void analyze(final ASTNode ¢) {
-    markAllNP(¢);
     report(¢);
   }
 
   private static void report(final ASTNode root) {
-    System.out.println("[" + markedNodes(root) + "/" + nodes(root) + "]");
-    // TODO Marco: much more than that..
+    root.accept(new ReporterVisitor());
   }
 
   private static int nodes(final ASTNode root) {
@@ -124,32 +108,28 @@ public class Analyzer {
     final AtomicInteger $ = new AtomicInteger();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        if (¢.getProperty(Marker.AST_PROPERTY_NAME_NP_LIST) != null)
+        if (Marker.isMarked(¢))
           $.incrementAndGet();
       }
     });
     return $.get();
   }
 
-  /**
-   *
-   */
-  private static void markAllNP(final ASTNode ¢) {
-    ¢.accept(new NPMarkerVisitor());
-  }
-
   /** @param inputFolder
-   * @param outputFolder */
-  private static void spartanize(final String inputFolder, final String outputFolder) {
+   * @param outputDir */
+  private static void spartanize(final String inputFolder, final String outputDir) {
     final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
     addNanoPatterns(spartanizer);
     String spartanizedCode = "";
-    new File(outputFolder + "/after.java").delete();
+    new File(outputDir + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
       // System.out.println("Now: " + ¢.getName());
-      spartanizedCode = spartanizer.fixedPoint(clean(getCompilationUnit(¢)) + "");
-      appendFile(new File(outputFolder + "/after.java"), spartanizedCode);
+      ASTNode cu = clean(getCompilationUnit(¢));
+      Logger.logCompilationUnit(cu);
+      spartanizedCode = spartanizer.fixedPoint(cu + "");
+      appendFile(new File(outputDir + "/after.java"), spartanizedCode);
     }
+    Logger.summarize(outputDir);
   }
 
   private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
@@ -160,9 +140,6 @@ public class Analyzer {
             null) //
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
-            null) //
-        .add(Block.class, //
-            new CachingPattern(), //
             null) //
         .add(CastExpression.class, //
             new Coercion(), //

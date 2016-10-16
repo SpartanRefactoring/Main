@@ -443,6 +443,8 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   public boolean apply(final CU u, final AbstractSelection s) {
+    if (s instanceof TrackerSelection)
+      return apply(u, (TrackerSelection) s);
     try {
       setICompilationUnit(u.descriptor);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -454,6 +456,28 @@ public abstract class GUI$Applicator extends Refactoring {
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       progressMonitor.done();
+      return counter.get() > 0;
+    } catch (final CoreException x) {
+      monitor.logEvaluationError(this, x);
+    }
+    return false;
+  }
+
+  public boolean apply(final CU u, final TrackerSelection s) {
+    try {
+      setICompilationUnit(u.descriptor);
+      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
+      progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      textChange.setTextType("java");
+      final AtomicInteger counter = new AtomicInteger(0);
+      final ASTRewrite r = createRewrite(u.build().compilationUnit, counter);
+      textChange.setEdit(r.rewriteAST());
+      if (textChange.getEdit().getLength() != 0)
+        textChange.perform(progressMonitor);
+      progressMonitor.done();
+      if (s != null)
+        s.update();
       return counter.get() > 0;
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
