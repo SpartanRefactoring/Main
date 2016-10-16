@@ -8,7 +8,6 @@ import org.eclipse.ui.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.SuppressWarningsLaconicOnOff.Type;
 
 /** A quickfix generator for spartanization refactoring
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
