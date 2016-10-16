@@ -43,10 +43,6 @@ public interface findFirst {
     });
     return $.get();
   }
-  // iz.assignment(lastStatement(¢)) ||
-  // iz.incrementOrDecrement(lastStatement(¢)) ||
-  // haz.sideEffects(lastStatement(¢))
-
   static <E> E elementOf(final List<E> ¢) {
     return first(¢);
   }
