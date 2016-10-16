@@ -20,19 +20,18 @@ import il.org.spartan.spartanizer.tipping.*;
 public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
-  public static String getTipperName(final Map<attribute, Object> ¢) {
-    if (Refactorer.unknown.equals(¢.get(attribute.TIPPER)))
+  public static String getTipperName(final Map<attribute, Object> m) {
+    if (Refactorer.unknown.equals(m.get(attribute.TIPPER)))
       try {
-        final IMarker iMarker = (IMarker) ¢.get(attribute.MARKER);
+        final IMarker iMarker = (IMarker) m.get(attribute.MARKER);
         final Object att = iMarker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
-        @SuppressWarnings("unchecked") final Class<? extends Tipper<?>> att2 = (Class<? extends Tipper<?>>) att;
-        final String simpleName = att2.getSimpleName();
-        ¢.put(attribute.TIPPER, simpleName);
+        @SuppressWarnings("unchecked") final Class<? extends Tipper<?>> ¢ = (Class<? extends Tipper<?>>) att;
+        m.put(attribute.TIPPER, ¢.getSimpleName());
       } catch (final CoreException x) {
         monitor.log(x);
-        ¢.put(attribute.TIPPER, "tip");
+        m.put(attribute.TIPPER, "tip-core exception");
       }
-    return ¢.get(attribute.TIPPER) + "";
+    return m.get(attribute.TIPPER) + "";
   }
 
   public static String projectName(final Map<attribute, Object> ¢) {
