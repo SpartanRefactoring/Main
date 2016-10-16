@@ -82,16 +82,17 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   public static ASTNode replacement2(final InfixExpression x) {
-    List<Expression> ops = extract.allOperands(x);
-    ArrayList<Expression> ops2 = new ArrayList<>();
+    final List<Expression> ops = extract.allOperands(x);
+    final ArrayList<Expression> ops2 = new ArrayList<>();
     for (int ¢ = 0; ¢ < ops.size(); ++¢)
       if (!iz.literal0(ops.get(¢)))
         ops2.add(ops.get(¢));
     InfixExpression $ = null;
     for (int ¢ = 0; ¢ < ops2.size() - 1; ++¢)
-      $ = (subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1))).to(Operator.PLUS);
+      $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : ops2.get(0);
   }
+
   @Override public boolean prerequisite(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && containsZeroOperand($) && containsPlusOperator($);
   }
