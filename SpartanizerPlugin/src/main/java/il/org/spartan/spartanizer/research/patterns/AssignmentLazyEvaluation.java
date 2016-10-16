@@ -35,7 +35,7 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
   }
 
   @Override public Tip tip(final Assignment x) throws TipperFailure {
-    Logger.logNP(x, "cachingPattern");
+    Logger.logNanoPattern(x, "cachingPattern");
     for (final UserDefinedTipper<Assignment> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
