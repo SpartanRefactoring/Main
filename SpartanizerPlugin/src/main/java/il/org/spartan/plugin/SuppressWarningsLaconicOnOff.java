@@ -1,6 +1,6 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.eclipse.*;
+import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
 import java.util.regex.*;
@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 
+import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
