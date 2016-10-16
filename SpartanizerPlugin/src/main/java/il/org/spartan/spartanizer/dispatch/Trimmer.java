@@ -46,7 +46,12 @@ public class Trimmer extends GUI$Applicator {
         TrimmerLog.visitation(n);
         if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
-        final Tipper<N> w = getTipper(n);
+        Tipper<N> w = null;
+        try {
+          w = getTipper(n);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
         if (w == null)
           return true;
         Tip s = null;
@@ -55,6 +60,8 @@ public class Trimmer extends GUI$Applicator {
           TrimmerLog.tip(w, n);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
         }
         if (s != null) {
           i.incrementAndGet();
@@ -93,13 +100,20 @@ public class Trimmer extends GUI$Applicator {
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
-        final Tipper<N> w = getTipper(n);
+        Tipper<N> w = null;
+        try {
+          w = getTipper(n);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
+        }
         if (w != null)
           progressMonitor.worked(5);
         try {
           return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
         } catch (final TipperFailure f) {
           monitor.debug(this, f);
+        } catch (final Exception x) {
+          monitor.debug(this, x);
         }
         return false;
       }
