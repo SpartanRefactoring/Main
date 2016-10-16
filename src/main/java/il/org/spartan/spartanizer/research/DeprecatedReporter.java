@@ -14,13 +14,13 @@ public class DeprecatedReporter extends NanoPatternTipper<MethodDeclaration> {
     return Marker.isMarkedForReport(¢);
   }
 
-  @Override public String description(final MethodDeclaration __) {
+  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "report";
   }
 
   @Override public Tip tip(final MethodDeclaration ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
-      @Override public void go(final ASTRewrite __, final TextEditGroup g) {
+      @Override public void go(@SuppressWarnings("unused") final ASTRewrite __, final TextEditGroup g) {
         Marker.unmarkForReport(¢);
         System.out.println(Marker.getMarkers(¢));
       }
