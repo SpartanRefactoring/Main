@@ -429,7 +429,7 @@ public class Selection extends AbstractSelection<Selection> {
     /** @param m JD
      * @return selection by member */
     private static Selection by(final IMember m) {
-      ISourceRange r = makertToRange(m);
+      final ISourceRange r = makertToRange(m);
       if (r == null)
         return empty();
       return Selection.of(m.getCompilationUnit(), new TextSelection(r.getOffset(), r.getLength())).setName(m.getElementName());

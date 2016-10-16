@@ -14,7 +14,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   Set<UserDefinedTipper<Statement>> tippers;
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
-    @SuppressWarnings("unchecked") List<String> ps = (List<String>) step.parameters(d).stream().map(x -> x.getName() + "");
+    @SuppressWarnings("unchecked") final List<String> ps = (List<String>) step.parameters(d).stream().map(x -> x.getName() + "");
     final Bool $ = new Bool();
     $.inner = true;
     d.accept(new ASTVisitor() {
@@ -60,12 +60,12 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   /** @param n
    * @param ps
    * @return */
-  protected static boolean containsParameter(ASTNode root, List<String> ps) {
+  protected static boolean containsParameter(final ASTNode root, final List<String> ps) {
     final Bool $ = new Bool();
     $.inner = false;
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
-        for (String p : ps)
+        for (final String p : ps)
           if ((n + "").equals(p))
             $.inner = true;
         return false;

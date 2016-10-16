@@ -438,8 +438,8 @@ public interface wizard {
     return true;
   }
 
-  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(ASTNode n) {
-    List<MethodDeclaration> $ = new ArrayList<>();
+  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
+    final List<MethodDeclaration> $ = new ArrayList<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
