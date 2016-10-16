@@ -38,6 +38,7 @@ public interface disabling {
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return cautiousGo(¢);
       }
+
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.isDisabledByIdentifier(¢2))

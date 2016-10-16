@@ -83,26 +83,26 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return false;
   }
 
-  // public ASTNode replacement2(final InfixExpression ¢) {
-  // List<Expression> ops = extract.allOperands(¢);
-  // ArrayList<Expression> ops2 = new ArrayList<Expression>();
-  // for(int i=0; i < ops.size(); i++){
-  // Expression ¢2 = ops.get(i);
-  // if(!iz.literal0(¢2)){
-  // ops2.add(ops.get(i));
-  // }
-  // }
-  // InfixExpression inexp = null;
-  // for(int i=0; i < ops2.size()-1; i++ ){
-  // if(inexp != null)
-  // inexp = subject.pair(inexp, ops2.get(i+1)).to(Operator.PLUS);
-  // else
-  // inexp = subject.pair(ops2.get(i), ops2.get(i+1)).to(Operator.PLUS);
-  // }
-  // if(ops2.size() == 1)
-  // return ops2.get(0);
-  // return inexp;
-  // }
+  public static ASTNode replacement2(final InfixExpression ¢) {
+    List<Expression> ops = extract.allOperands(¢);
+    ArrayList<Expression> ops2 = new ArrayList<>();
+    for (int i = 0; i < ops.size(); i++) {
+      Expression ¢2 = ops.get(i);
+      if (!iz.literal0(¢2)) {
+        ops2.add(ops.get(i));
+      }
+    }
+    InfixExpression inexp = null;
+    for (int i = 0; i < ops2.size() - 1; i++) {
+      if (inexp != null)
+        inexp = subject.pair(inexp, ops2.get(i + 1)).to(Operator.PLUS);
+      else
+        inexp = subject.pair(ops2.get(i), ops2.get(i + 1)).to(Operator.PLUS);
+    }
+    if (ops2.size() == 1)
+      return ops2.get(0);
+    return inexp;
+  }
   @Override public boolean prerequisite(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && containsZeroOperand($) && containsPlusOperator($);
   }

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -41,12 +43,8 @@ public interface findFirst {
     });
     return $.get();
   }
-  // iz.assignment(lastStatement(¢)) ||
-  // iz.incrementOrDecrement(lastStatement(¢)) ||
-  // haz.sideEffects(lastStatement(¢))
-
   static <E> E elementOf(final List<E> ¢) {
-    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+    return first(¢);
   }
 
   /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
