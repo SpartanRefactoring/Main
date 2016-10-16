@@ -182,7 +182,7 @@ public class Selection extends AbstractSelection {
     }
 
     /** @return current user selection */
-    public static Selection get() {
+    public static Selection current() {
       final ISelection s = getSelection();
       if (s == null)
         return empty();
@@ -198,6 +198,8 @@ public class Selection extends AbstractSelection {
       final ISelection s = getSelection();
       if (s == null || s instanceof ITextSelection)
         return getProject();
+      /** TODO Roth: this looks like a bug to me, the second if will never
+       * fire  */
       if (s instanceof ITreeSelection) {
         final Object o = ((ITreeSelection) s).getFirstElement();
         if (o == null)
@@ -228,6 +230,11 @@ public class Selection extends AbstractSelection {
       return (Selection) by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
+    /** TODO Roth: what does expend mean? --yg
+     * @param m
+     * @param c
+     * @return
+     */
     public static Selection expend(final IMarker m, final Class<? extends ASTNode> c) {
       if (m == null || !m.exists() || c == null || m.getResource() == null || !(m.getResource() instanceof IFile))
         return empty();
@@ -279,8 +286,7 @@ public class Selection extends AbstractSelection {
       return r.getProject();
     }
 
-    // TODO Roth: delete this ASAP
-    /** @return current java project */
+    /** @return current Java project */
     private static IJavaProject getJavaProject() {
       final IProject p = getProject();
       return p == null ? null : JavaCore.create(p);
