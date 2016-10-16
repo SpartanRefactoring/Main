@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
