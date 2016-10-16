@@ -30,7 +30,8 @@ public final class Spartanizer {
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new Spartanizer(¢).fire();
-  } 
+  }
+
   String folder = "/tmp/";
   String afterFileName;
   PrintWriter afters;

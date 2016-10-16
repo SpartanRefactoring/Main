@@ -35,7 +35,7 @@ public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Tip tip(final IfStatement s) throws TipperFailure {
-    Logger.logNP(s, "IfNullReturnNull");
+    Logger.logNanoPattern(s, "IfNullReturnNull");
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
       if (¢.canTip(s))
         return ¢.tip(s);
