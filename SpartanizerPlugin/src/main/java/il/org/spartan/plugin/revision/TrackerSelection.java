@@ -31,14 +31,14 @@ public class TrackerSelection extends Selection {
   }
 
   public void update() {
-    if (track == null || compilationUnits == null || compilationUnits.size() != 1)
-      compilationUnits.clear(); // empty selection
+    if (track == null || inner == null || inner.size() != 1)
+      inner.clear(); // empty selection
     else {
       textSelection = new TextSelection(position.getStartPosition(), position.getLength());
-      first(compilationUnits).compilationUnit = null; // manual dispose
-      track = new NodeFinder(first(compilationUnits).build().compilationUnit, textSelection.getOffset(), textSelection.getLength()).getCoveringNode();
+      first(inner).compilationUnit = null; // manual dispose
+      track = new NodeFinder(first(inner).build().compilationUnit, textSelection.getOffset(), textSelection.getLength()).getCoveringNode();
       if (track == null || track.getStartPosition() != textSelection.getOffset() || track.getLength() != textSelection.getLength())
-        compilationUnits.clear(); // empty selection
+        inner.clear(); // empty selection
     }
   }
 
