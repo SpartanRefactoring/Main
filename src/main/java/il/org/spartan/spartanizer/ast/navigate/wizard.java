@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
@@ -436,5 +437,17 @@ public interface wizard {
       if (!same(ns1.get(¢), ns2.get(¢)))
         return false;
     return true;
+  }
+
+  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(ASTNode n) {
+    List<MethodDeclaration> $ = new ArrayList<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        $.add(¢);
+        return false;
+      }
+    });
+    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
+        || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
 }
