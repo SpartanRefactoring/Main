@@ -76,12 +76,12 @@ public class Logger {
   }
 
   /** @param cu */
-  public static void logCompilationUnit(ASTNode cu) {
+  public static void logCompilationUnit(final ASTNode cu) {
     // TODO Auto-generated method stub
   }
 
   /** @param outputDir */
-  public static void summarize(String outputDir) {
+  public static void summarize(final String outputDir) {
     // TODO Auto-generated method stub
   }
 }

@@ -1,5 +1,7 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -18,11 +20,14 @@ import il.org.spartan.spartanizer.tipping.*;
 public class RefactorerUtil {
   public static final int MANY_PASSES = 20;
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) public static String getTipperName(final Map<attribute, Object> ¢) {
+  public static String getTipperName(final Map<attribute, Object> ¢) {
     if (Refactorer.unknown.equals(¢.get(attribute.TIPPER)))
       try {
-        ¢.put(attribute.TIPPER,
-            ((Class<? extends Tipper>) ((IMarker) ¢.get(attribute.MARKER)).getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+        final IMarker iMarker = (IMarker) ¢.get(attribute.MARKER);
+        final Object att = iMarker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
+        @SuppressWarnings("unchecked") final Class<? extends Tipper<?>> att2 = (Class<? extends Tipper<?>>) att;
+        final String simpleName = att2.getSimpleName();
+        ¢.put(attribute.TIPPER, simpleName);
       } catch (final CoreException x) {
         monitor.log(x);
         ¢.put(attribute.TIPPER, "tip");
@@ -67,8 +72,8 @@ public class RefactorerUtil {
     final Trimmer tr = new Trimmer();
     return new IRunnableWithProgress() {
       @SuppressWarnings("boxing") @Override public void run(final IProgressMonitor pm) {
-        pm.beginTask("Counting tips in " + us.get(0).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
-        tr.setICompilationUnit(us.get(0));
+        pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+        tr.setICompilationUnit(first(us));
         m.put(t, tr.countTips());
         pm.done();
       }

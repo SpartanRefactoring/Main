@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -21,7 +23,7 @@ public abstract class MethodScanner {
       currentStatement = null;
     } else {
       statements = method.getBody().statements();
-      currentStatement = statements.isEmpty() ? null : statements.get(0);
+      currentStatement = first(statements);
     }
     currentIndex = -1;
   }
