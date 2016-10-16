@@ -14,10 +14,10 @@ public class Handlers extends AbstractHandler {
       return null;
     switch (¢.getCommand().getId()) {
       case LACONIZE_CURRENT:
-        SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit().buildAll()).go();
+        SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit()).go();
         break;
       case LACONIZE_PROJECT:
-        SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits().buildAll()).go();
+        SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits()).go();
         break;
       default:
         break;
