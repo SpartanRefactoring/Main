@@ -156,7 +156,6 @@ public class Selection extends AbstractSelection<Selection> {
     /** Default name for default package selections. */
     private static final String DEFAULT_PACKAGE_NAME = "(default package)";
 
-    // TODO Roth: delete this ASAP
     /** @return selection of current compilation unit */
     public static Selection getCurrentCompilationUnit() {
       final Selection $ = getCompilationUnit();
