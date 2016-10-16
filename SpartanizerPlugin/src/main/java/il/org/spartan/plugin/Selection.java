@@ -238,11 +238,9 @@ public class Selection extends AbstractSelection<Selection> {
       return by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
-    /** XXX Roth: what does expend mean? --yg TODO Yossi: this is a feature I
-     * just completed. It takes a TextSelection (i.e. text selected by the user)
-     * and expend it to contain overlapping markers. This increases usability
-     * and solves issue #454. Soon I will document all of the latest additions.
-     * --or
+    /** XXX Roth: what does expend mean? --yg TODO Yossi: [CORRECTION] this is
+     * an expansion of a marker selection to contain parent node
+     * (method/class/etc) and provide a *tracking service* for it. --or
      * @param m
      * @param c
      * @return */
