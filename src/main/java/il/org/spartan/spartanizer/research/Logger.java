@@ -20,12 +20,12 @@ public class Logger {
     methodsStatistics = new HashMap<>();
   }
 
-  public static void markNP(final ASTNode n, final String np) {
+  public static void logNanoPattern(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
     final Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
       methodsStatistics.put(key, new MethodRecord(m));
-    methodsStatistics.get(key).markNP(np);
+    methodsStatistics.get(key).markNanoPattern(np);
   }
 
   /** @param ¢
@@ -69,9 +69,19 @@ public class Logger {
     }
 
     /** @param np */
-    public void markNP(final String np) {
+    public void markNanoPattern(final String np) {
       ++npCounter;
       nps.add(np);
     }
+  }
+
+  /** @param cu */
+  public static void logCompilationUnit(ASTNode cu) {
+    // TODO Auto-generated method stub
+  }
+
+  /** @param outputDir */
+  public static void summarize(String outputDir) {
+    // TODO Auto-generated method stub
   }
 }

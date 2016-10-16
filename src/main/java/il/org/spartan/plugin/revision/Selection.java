@@ -19,21 +19,21 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Ori Roth
  * @since 2.6 */
 public class Selection extends AbstractSelection {
-  public Selection(final List<CU> compilationUnits, final ITextSelection textSelection, final String name) {
+  public Selection(final List<WrappedCompilationUnit> compilationUnits, final ITextSelection textSelection, final String name) {
     this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.textSelection = textSelection;
     this.name = name;
   }
 
   public Selection buildAll() {
-    for (final CU ¢ : compilationUnits)
+    for (final WrappedCompilationUnit ¢ : compilationUnits)
       ¢.build();
     return this;
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
     final List<ICompilationUnit> $ = new ArrayList<>();
-    for (final CU ¢ : compilationUnits)
+    for (final WrappedCompilationUnit ¢ : compilationUnits)
       $.add(¢.descriptor);
     return $;
   }
@@ -48,16 +48,16 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation units */
   public static Selection of(final List<ICompilationUnit> ¢) {
-    return new Selection(CU.of(¢), null, getName(¢));
+    return new Selection(WrappedCompilationUnit.of(¢), null, getName(¢));
   }
 
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation unit */
   public static Selection of(final ICompilationUnit ¢) {
-    final List<CU> l = new ArrayList<>();
+    final List<WrappedCompilationUnit> l = new ArrayList<>();
     if (¢ != null)
-      l.add(CU.of(¢));
+      l.add(WrappedCompilationUnit.of(¢));
     return new Selection(l, null, getName(¢));
   }
 
@@ -65,9 +65,9 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation unit and text selection */
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
-    final List<CU> l = new ArrayList<>();
+    final List<WrappedCompilationUnit> l = new ArrayList<>();
     if (u != null)
-      l.add(CU.of(u));
+      l.add(WrappedCompilationUnit.of(u));
     return new Selection(l, s, getName(u));
   }
 
@@ -76,7 +76,7 @@ public class Selection extends AbstractSelection {
    * @return selection by compilation units */
   public static Selection of(final ICompilationUnit[] ¢) {
     final List<ICompilationUnit> l = Arrays.asList(¢);
-    return new Selection(CU.of(l), null, getName(l));
+    return new Selection(WrappedCompilationUnit.of(l), null, getName(l));
   }
 
   /** @param ¢ JD
@@ -96,7 +96,7 @@ public class Selection extends AbstractSelection {
   public Selection fixTextSelection() {
     if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null)
       return this;
-    final CU u = compilationUnits.get(0);
+    final WrappedCompilationUnit u = compilationUnits.get(0);
     final IResource r = u.descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
@@ -234,7 +234,7 @@ public class Selection extends AbstractSelection {
       final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return empty();
-      final CU cu = CU.of(u);
+      final WrappedCompilationUnit cu = WrappedCompilationUnit.of(u);
       final ASTNode n = getNodeByMarker(cu, m);
       if (n == null)
         return empty();
@@ -436,7 +436,7 @@ public class Selection extends AbstractSelection {
     /** @param u JD
      * @param m JD
      * @return node marked by marker */
-    private static ASTNode getNodeByMarker(final CU u, final IMarker m) {
+    private static ASTNode getNodeByMarker(final WrappedCompilationUnit u, final IMarker m) {
       try {
         final int s = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, s, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - s).getCoveredNode();
