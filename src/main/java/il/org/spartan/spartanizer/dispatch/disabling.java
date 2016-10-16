@@ -38,7 +38,6 @@ public interface disabling {
       @Override public boolean visit(final EnumConstantDeclaration ¢) {
         return cautiousGo(¢);
       }
-
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.isDisabledByIdentifier(¢2))
@@ -98,9 +97,7 @@ public interface disabling {
   }
 
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
-    if (d == null || d.getJavadoc() == null)
-      return false;
-    return contains(d.getJavadoc() + "", ids);
+    return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 
   static boolean contains(final String s, final String[] ids) {

@@ -19,21 +19,21 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Ori Roth
  * @since 2.6 */
 public class Selection extends AbstractSelection {
-  public Selection(final List<CU> compilationUnits, final ITextSelection textSelection, final String name) {
+  public Selection(final List<WrappedCompilationUnit> compilationUnits, final ITextSelection textSelection, final String name) {
     this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.textSelection = textSelection;
     this.name = name;
   }
 
   public Selection buildAll() {
-    for (CU ¢ : compilationUnits)
+    for (final WrappedCompilationUnit ¢ : compilationUnits)
       ¢.build();
     return this;
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    List<ICompilationUnit> $ = new ArrayList<>();
-    for (CU ¢ : compilationUnits)
+    final List<ICompilationUnit> $ = new ArrayList<>();
+    for (final WrappedCompilationUnit ¢ : compilationUnits)
       $.add(¢.descriptor);
     return $;
   }
@@ -48,16 +48,16 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation units */
   public static Selection of(final List<ICompilationUnit> ¢) {
-    return new Selection(CU.of(¢), null, getName(¢));
+    return new Selection(WrappedCompilationUnit.of(¢), null, getName(¢));
   }
 
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation unit */
   public static Selection of(final ICompilationUnit ¢) {
-    List<CU> l = new ArrayList<>();
+    final List<WrappedCompilationUnit> l = new ArrayList<>();
     if (¢ != null)
-      l.add(CU.of(¢));
+      l.add(WrappedCompilationUnit.of(¢));
     return new Selection(l, null, getName(¢));
   }
 
@@ -65,9 +65,9 @@ public class Selection extends AbstractSelection {
    * @param ¢ JD
    * @return selection by compilation unit and text selection */
   public static Selection of(final ICompilationUnit u, final ITextSelection s) {
-    List<CU> l = new ArrayList<>();
+    final List<WrappedCompilationUnit> l = new ArrayList<>();
     if (u != null)
-      l.add(CU.of(u));
+      l.add(WrappedCompilationUnit.of(u));
     return new Selection(l, s, getName(u));
   }
 
@@ -76,7 +76,7 @@ public class Selection extends AbstractSelection {
    * @return selection by compilation units */
   public static Selection of(final ICompilationUnit[] ¢) {
     final List<ICompilationUnit> l = Arrays.asList(¢);
-    return new Selection(CU.of(l), null, getName(l));
+    return new Selection(WrappedCompilationUnit.of(l), null, getName(l));
   }
 
   /** @param ¢ JD
@@ -91,22 +91,22 @@ public class Selection extends AbstractSelection {
     return ¢ == null ? null : ¢.getElementName();
   }
 
-  /** Extends selection with empty (yet existing) text selection to include
-   * overlapping marker.
+  /** Extends text selection to include overlapping marker.
    * @return this selection */
-  public Selection fixEmptyTextSelection() {
-    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null || textSelection.getLength() > 0)
+  public Selection fixTextSelection() {
+    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null)
       return this;
-    final CU u = compilationUnits.get(0);
+    final WrappedCompilationUnit u = compilationUnits.get(0);
     final IResource r = u.descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset();
+    final int l = textSelection.getLength();
     try {
       for (final IMarker m : ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
         final int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         final int ce = ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-        if (cs <= o && ce >= o)
+        if (cs <= o && ce >= l + o)
           return (Selection) setTextSelection(new TextSelection(cs, ce - cs));
       }
     } catch (final CoreException x) {
@@ -149,10 +149,10 @@ public class Selection extends AbstractSelection {
 
     /** @param m JD
      * @return selection of current compilation unit by marker */
-    public static Selection getCurrentCompilationUnit(IMarker m) {
+    public static Selection getCurrentCompilationUnit(final IMarker m) {
       if (!m.exists())
         return empty();
-      IResource r = m.getResource();
+      final IResource r = m.getResource();
       if (!(r instanceof IFile))
         return empty();
       return (Selection) by((IFile) r).setTextSelection(null);
@@ -160,10 +160,10 @@ public class Selection extends AbstractSelection {
 
     /** @param m JD
      * @return selection of all compilation units in project by marker */
-    public static Selection getAllCompilationUnit(IMarker m) {
+    public static Selection getAllCompilationUnit(final IMarker m) {
       if (!m.exists())
         return empty();
-      IResource r = m.getResource();
+      final IResource r = m.getResource();
       if (r == null)
         return empty();
       return by(getJavaProject(r.getProject()));
@@ -234,7 +234,7 @@ public class Selection extends AbstractSelection {
       final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return empty();
-      final CU cu = CU.of(u);
+      final WrappedCompilationUnit cu = WrappedCompilationUnit.of(u);
       final ASTNode n = getNodeByMarker(cu, m);
       if (n == null)
         return empty();
@@ -288,7 +288,7 @@ public class Selection extends AbstractSelection {
 
     /** @param p JD
      * @return java project */
-    private static IJavaProject getJavaProject(IProject p) {
+    private static IJavaProject getJavaProject(final IProject p) {
       return p == null ? null : JavaCore.create(p);
     }
 
@@ -311,7 +311,8 @@ public class Selection extends AbstractSelection {
       return i == null ? null : by(i.getAdapter(IResource.class));
     }
 
-    // TODO Roth: decide whether to preserve the "full selection multi passes" feature
+    // TODO Roth: decide whether to preserve the "full selection multi passes"
+    // feature
     /** @param s JD
      * @return selection by text selection */
     private static Selection by(final ITextSelection s) {
@@ -320,7 +321,7 @@ public class Selection extends AbstractSelection {
         return null;
       if (s.getOffset() == 0 && s.getLength() == $.compilationUnits.get(0).build().compilationUnit.getLength())
         return (Selection) $.setName(SELECTION_NAME);
-      return (Selection) ((Selection) $.setTextSelection(s)).fixEmptyTextSelection().setName(SELECTION_NAME);
+      return (Selection) ((Selection) $.setTextSelection(s)).fixTextSelection().setName(SELECTION_NAME);
     }
 
     /** Only support selection by {@link IFile}.
@@ -435,7 +436,7 @@ public class Selection extends AbstractSelection {
     /** @param u JD
      * @param m JD
      * @return node marked by marker */
-    private static ASTNode getNodeByMarker(final CU u, final IMarker m) {
+    private static ASTNode getNodeByMarker(final WrappedCompilationUnit u, final IMarker m) {
       try {
         final int s = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, s, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - s).getCoveredNode();

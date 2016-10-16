@@ -9,9 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.leonidas.*;
 
 /** @author Ori Marcovitch
- * @since 2016
- * May collide with {@link IfNullThrow}
- *  */
+ * @since 2016 May collide with {@link IfNullThrow} */
 public class Exploder extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X1) throw $X2;", "", "");
 
