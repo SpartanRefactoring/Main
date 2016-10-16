@@ -39,7 +39,7 @@ public final class TernaryNullConditional extends NanoPatternTipper<ConditionalE
   }
 
   @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
-    Logger.logNP(x, "?.");
+    Logger.logNanoPattern(x, "?.");
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
