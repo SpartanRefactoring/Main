@@ -91,7 +91,7 @@ public class Selection extends AbstractSelection {
     return ¢ == null ? null : ¢.getElementName();
   }
 
-  /** Extends text selection to include overlapping marker.
+  /** Extends text selection to include overlapping markers.
    * @return this selection */
   public Selection fixTextSelection() {
     if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null)
@@ -101,14 +101,30 @@ public class Selection extends AbstractSelection {
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset();
-    final int l = textSelection.getLength();
+    final int l = o + textSelection.getLength();
+    int no = o, nl = l;
     try {
-      for (final IMarker m : ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
-        final int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
-        final int ce = ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-        if (cs <= o && ce >= l + o)
-          return (Selection) setTextSelection(new TextSelection(cs, ce - cs));
+      IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
+      int i = 0;
+      boolean changed = false;
+      for (; i < ms.length; ++i) {
+        final int cs = ((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue();
+        if (cs <= o && ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue() >= o) {
+          no = cs;
+          changed = true;
+          break;
+        }
       }
+      for (; i < ms.length; ++i) {
+        final int ce = ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue();
+        if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() <= l && ce >= l) {
+          nl = ce;
+          changed = true;
+          break;
+        }
+      }
+      if (changed)
+        textSelection = new TextSelection(no, nl - no);
     } catch (final CoreException x) {
       monitor.log(x);
       return this;
