@@ -26,8 +26,8 @@ public class Logger {
       x.printStackTrace();
       return;
     }
-    int sumSratio = 0;
-    int sumEratio = 0;
+    double sumSratio = 0;
+    double sumEratio = 0;
     for (Integer k : methodsStatistics.keySet()) {
       MethodRecord m = methodsStatistics.get(k);
       report //
