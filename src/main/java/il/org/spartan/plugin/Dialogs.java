@@ -21,11 +21,10 @@ public class Dialogs {
   private static boolean iconInitialized;
   /** Icon used for button/dialogs. May not appear on some OSs. */
   private static Image icon;
-  // TODO Roth: remember to update logo location
   /** Path of the {@link Dialogs#logo} used for dialogs. */
   // private static final String LOGO_PATH =
   // "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
-  private static final String LOGO_PATH = "/src/main/java/il/org/spartan/plugin/revision/spartan-scholar.jpg";
+  private static final String LOGO_PATH = "/src/main/java/il/org/spartan/plugin/spartan-scholar.jpg";
   /** Whether or not the {@link Dialogs#logo} has been initialized. */
   private static boolean logoInitialized;
   /** Logo used for dialogs. */
