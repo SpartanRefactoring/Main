@@ -19,7 +19,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return new Tip(description(¢), ¢, this.getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, wizard.ast("az(\"" + ¢.getType() + "\", " + ¢.getExpression() + ")"), g);
-        Logger.logNanoPattern(¢, "azX (coercion)");
+        Logger.logNP(¢, "azX (coercion)");
+
       }
     };
   }
