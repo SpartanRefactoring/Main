@@ -153,4 +153,42 @@ public interface metrics {
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
   }
+
+  /** @param n */
+  static int countStatements(ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (¢ instanceof Statement && !(¢ instanceof Block))
+          ++$.inner;
+      }
+    });
+    return $.inner;
+  }
+
+  /** @param n
+   * @return */
+  static int countExpressions(ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (¢ instanceof Expression)
+          ++$.inner;
+      }
+    });
+    return $.inner;
+  }
+
+  /** @param n
+   * @return */
+  static int countMethods(ASTNode n) {
+    final Int $ = new Int();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(@SuppressWarnings("unused") final MethodDeclaration __) {
+        ++$.inner;
+        return false;
+      }
+    });
+    return $.inner;
+  }
 }

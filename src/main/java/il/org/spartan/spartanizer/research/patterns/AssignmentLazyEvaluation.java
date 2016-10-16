@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** @author Ori Marcovitch
@@ -34,6 +35,7 @@ public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment
   }
 
   @Override public Tip tip(final Assignment x) throws TipperFailure {
+    Logger.logNP(x, "cachingPattern");
     for (final UserDefinedTipper<Assignment> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);

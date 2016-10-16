@@ -31,13 +31,15 @@ public class EventApplicator extends Applicator<EventListener<event>> {
     if (!shouldRun())
       return;
     runContext().accept(() -> {
-      final int l = selection().textSelection != null ? 1 : passes();
+      final int l = passes();
       for (int pass = 0; pass < l; ++pass) {
         listener().tick(event.run_pass);
         if (!shouldRun())
           break;
+        final List<CU> alive = new LinkedList<>();
+        alive.addAll(selection().compilationUnits);
         final List<CU> dead = new LinkedList<>();
-        for (final CU ¢ : selection().compilationUnits) {
+        for (final CU ¢ : alive) {
           if (!runAction().apply(¢.build()).booleanValue())
             dead.add(¢);
           ¢.dispose();
