@@ -472,8 +472,6 @@ public abstract class GUI$Applicator extends Refactoring {
       textChange.setTextType("java");
       final AtomicInteger counter = new AtomicInteger(0);
       final ASTRewrite r = createRewrite(u.build().compilationUnit, counter);
-      if (s != null)
-        s.acknowledge(r);
       textChange.setEdit(r.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);

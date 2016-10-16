@@ -91,22 +91,22 @@ public class Selection extends AbstractSelection {
     return ¢ == null ? null : ¢.getElementName();
   }
 
-  /** Extends selection with empty (yet existing) text selection to include
-   * overlapping marker.
+  /** Extends text selection to include overlapping marker.
    * @return this selection */
-  public Selection fixEmptyTextSelection() {
-    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null || textSelection.getLength() > 0)
+  public Selection fixTextSelection() {
+    if (compilationUnits == null || compilationUnits.size() != 1 || textSelection == null)
       return this;
     final CU u = compilationUnits.get(0);
     final IResource r = u.descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset();
+    final int l = textSelection.getLength();
     try {
       for (final IMarker m : ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
         final int cs = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         final int ce = ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-        if (cs <= o && ce >= o)
+        if (cs <= o && ce >= l + o)
           return (Selection) setTextSelection(new TextSelection(cs, ce - cs));
       }
     } catch (final CoreException x) {
@@ -311,6 +311,8 @@ public class Selection extends AbstractSelection {
       return i == null ? null : by(i.getAdapter(IResource.class));
     }
 
+    // TODO Roth: decide whether to preserve the "full selection multi passes"
+    // feature
     /** @param s JD
      * @return selection by text selection */
     private static Selection by(final ITextSelection s) {
@@ -319,7 +321,7 @@ public class Selection extends AbstractSelection {
         return null;
       if (s.getOffset() == 0 && s.getLength() == $.compilationUnits.get(0).build().compilationUnit.getLength())
         return (Selection) $.setName(SELECTION_NAME);
-      return (Selection) ((Selection) $.setTextSelection(s)).fixEmptyTextSelection().setName(SELECTION_NAME);
+      return (Selection) ((Selection) $.setTextSelection(s)).fixTextSelection().setName(SELECTION_NAME);
     }
 
     /** Only support selection by {@link IFile}.
