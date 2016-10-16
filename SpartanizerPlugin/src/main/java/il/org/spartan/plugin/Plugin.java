@@ -4,6 +4,8 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
 
+import il.org.spartan.plugin.old.*;
+
 /** @author Artium Nihamkin
  * @since 2013/01/01
  * @author Ofir Elmakias
