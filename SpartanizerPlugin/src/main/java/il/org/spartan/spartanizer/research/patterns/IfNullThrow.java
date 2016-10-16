@@ -4,13 +4,14 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** if(X == null) throw Exception;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
-  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X == null) throw new $N();", "ExplodeOnNullWith($N, $X)",
+  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X == null) throw new $N();", "ExplodeOnNullWith($N, $X);",
       "");
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
@@ -22,6 +23,7 @@ public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Tip tip(final IfStatement ¢) throws TipperFailure {
+    Logger.logNP(¢, "IfNullThrow");
     return tipper.tip(¢);
   }
 }

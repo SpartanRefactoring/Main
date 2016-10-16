@@ -58,22 +58,8 @@ public enum makeAST {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Constant used in order to get the source as a sequence of class body
    * declarations. */
-  CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS);
-  /** @param n The node from which to return statement.
-   * @return null if it is not possible to extract the return statement. */
-  public static ReturnStatement asReturn(final ASTNode ¢) {
-    if (¢ == null)
-      return null;
-    switch (¢.getNodeType()) {
-      case ASTNode.BLOCK:
-        return asReturn(¢);
-      case ASTNode.RETURN_STATEMENT:
-        return (ReturnStatement) ¢;
-      default:
-        return null;
-    }
-  }
-
+  CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS)//
+  ;
   /** IFile -> ICompilationUnit converter
    * @param f File
    * @return ICompilationUnit */
@@ -93,10 +79,10 @@ public enum makeAST {
    * @return entire contents of this file, as one string */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
-      final StringBuilder $ = new StringBuilder();
-      for (String ¢ = r.readLine();; ¢ = r.readLine(), $.append(¢).append(System.lineSeparator()))
+      String $ = "";
+      for (String ¢ = r.readLine();; ¢ = r.readLine(), $ += ¢ + System.lineSeparator())
         if (¢ == null)
-          return $ + "";
+          return $;
     } catch (final IOException ¢) {
       monitor.infoIOException(¢, f + "");
       return null;
