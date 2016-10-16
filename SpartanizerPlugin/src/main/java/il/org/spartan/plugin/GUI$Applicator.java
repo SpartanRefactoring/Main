@@ -21,7 +21,6 @@ import org.eclipse.ui.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;
-import il.org.spartan.plugin.revision.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
