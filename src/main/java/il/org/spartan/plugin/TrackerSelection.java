@@ -1,18 +1,15 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 
 public class TrackerSelection extends Selection {
   ASTNode track;
-  ITrackedNodePosition position;
+  int length;
 
-  public TrackerSelection(final WrappedCompilationUnit compilationUnit, final ITextSelection textSelection, final String name) {
+  public TrackerSelection(WrappedCompilationUnit compilationUnit, ITextSelection textSelection, String name) {
     super(asList(compilationUnit), textSelection, name);
   }
 
@@ -21,31 +18,47 @@ public class TrackerSelection extends Selection {
   }
 
   public TrackerSelection track(final ASTNode ¢) {
+    assert ¢ != null;
+    assert ¢ instanceof MethodDeclaration || ¢ instanceof AbstractTypeDeclaration;
     track = ¢;
+    length = ¢.getLength();
     return this;
   }
 
-  public void acknowledge(final ASTRewrite ¢) {
-    if (track != null)
-      position = ¢.track(track);
-  }
-
   public void update() {
-    if (track == null || inner == null || inner.size() != 1)
+    inner.get(0).dispose();
+    final ASTNode newTrack = track.getLength() > length
+        ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
+        : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode();
+    if (!match(track, newTrack)) {
       inner.clear(); // empty selection
-    else {
-      textSelection = new TextSelection(position.getStartPosition(), position.getLength());
-      first(inner).compilationUnit = null; // manual dispose
-      track = new NodeFinder(first(inner).build().compilationUnit, textSelection.getOffset(), textSelection.getLength()).getCoveringNode();
-      if (track == null || track.getStartPosition() != textSelection.getOffset() || track.getLength() != textSelection.getLength())
-        inner.clear(); // empty selection
+      return;
     }
+    track = newTrack;
+    length = track.getLength();
+    textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
-  private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
-    final List<WrappedCompilationUnit> $ = new ArrayList<>();
+  private static List<WrappedCompilationUnit> asList(WrappedCompilationUnit ¢) {
+    List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
     return $;
+  }
+
+  private static boolean match(ASTNode track, ASTNode newTrack) {
+    return newTrack != null && (track.getClass().isInstance(newTrack) || newTrack.getClass().isInstance(track))
+        && (track instanceof MethodDeclaration ? match((MethodDeclaration) track, (MethodDeclaration) newTrack)
+            : track instanceof AbstractTypeDeclaration && match((AbstractTypeDeclaration) track, (AbstractTypeDeclaration) newTrack));
+  }
+
+  private static boolean match(MethodDeclaration track, MethodDeclaration newTrack) {
+    return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
+        : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
+  }
+
+  private static boolean match(AbstractTypeDeclaration track, AbstractTypeDeclaration newTrack) {
+    return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
+        : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
   }
 }
