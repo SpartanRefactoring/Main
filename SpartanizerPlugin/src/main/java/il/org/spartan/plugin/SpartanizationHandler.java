@@ -1,6 +1,6 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.revision.Linguistic.*;
+import static il.org.spartan.plugin.Linguistic.*;
 
 import java.lang.reflect.*;
 import java.math.*;
@@ -13,8 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-
-import il.org.spartan.plugin.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link EventApplicator} as its applicator.

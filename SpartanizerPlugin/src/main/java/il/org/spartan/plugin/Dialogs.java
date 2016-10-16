@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
 import java.net.*;
 import org.eclipse.core.runtime.*;
@@ -8,8 +8,6 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-
-import il.org.spartan.plugin.*;
 
 /** Utility class for dialogs management.
  * @author Ori Roth
