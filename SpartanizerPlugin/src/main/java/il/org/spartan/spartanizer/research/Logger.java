@@ -30,26 +30,32 @@ public class Logger {
     double sumEratio = 0;
     for (Integer k : methodsStatistics.keySet()) {
       MethodRecord m = methodsStatistics.get(k);
+      double sRatio = m.numStatements == 0 ? 1 : min(1.0, m.numNPStatements * 1.0 / m.numStatements);
+      double eRatio = m.numExpressions == 0 ? 1 : min(1.0, m.numNPExpressions * 1.0 / m.numExpressions);
       report //
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
-          .put("Statement ratio", m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements) //
+          .put("Statement ratio", sRatio) //
           .put("#Expressions", m.numExpressions) //
           .put("#NP expressions", m.numNPExpressions) //
-          .put("Expression ratio", m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions) //
+          .put("Expression ratio", eRatio) //
           .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
-      sumSratio += m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements;
-      sumEratio += m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions;
+      sumSratio += sRatio;
+      sumEratio += eRatio;
     }
     System.out.println("Total methods number: " + numMethods);
     System.out.println("Average statement ratio: " + sumSratio / numMethods);
     System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
     reset();
+  }
+
+  private static double min(double a, double b) {
+    return a < b ? a : b;
   }
 
   private static void reset() {
