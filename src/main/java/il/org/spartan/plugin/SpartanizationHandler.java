@@ -3,7 +3,6 @@ package il.org.spartan.plugin;
 import static il.org.spartan.plugin.Linguistic.*;
 
 import java.lang.reflect.*;
-import java.math.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
@@ -13,10 +12,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-import org.junit.*;
+
+import il.org.spartan.plugin.Listener;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
- * that uses {@link EventApplicator} as its applicator.
+ * that uses {@link Spartanizer} as its applicator.
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
@@ -25,7 +25,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final EventApplicator a = applicator().defaultSelection();
+    final Spartanizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -40,15 +40,91 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   /** Creates and configures an applicator, without configuring the selection.
-   * @return applicator for this handler [[SuppressWarningsSpartan]] */
-  public static EventApplicator applicator() {
-    final EventApplicator $ = new EventApplicator();
+   * @return applicator for this handler */
+  public static Spartanizer applicator() {
+    final Spartanizer $ = new Spartanizer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
-    final Time time = new Time();
-    final Flag openDialog = new Flag(false);
+    $.runContext(r -> {
+      try {
+        d.run(true, true, __ -> r.run());
+      } catch (InvocationTargetException | InterruptedException e) {
+        monitor.log(e);
+        e.printStackTrace();
+      }
+    });
+    $.defaultRunAction();
+    $.listener(new Listener() {
+      static final int DIALOG_CREATION = 1;
+      static final int DIALOG_PROCESSING = 2;
+      int level;
+      boolean dialogOpen;
+
+      @Override public void tick(Object... ¢) {
+        asynch(() -> {
+          d.getProgressMonitor().subTask(Linguistic.merge(¢));
+          d.getProgressMonitor().worked(1);
+          if (d.getProgressMonitor().isCanceled())
+            $.stop();
+        });
+      }
+
+      @Override public void push(Object... ¢) {
+        switch (++level) {
+          case DIALOG_CREATION:
+            if ($.selection().size() >= DIALOG_THRESHOLD)
+              if (!Dialogs.ok(Dialogs.message(Linguistic.merge(¢))))
+                $.stop();
+              else {
+                dialogOpen = true;
+                asynch(() -> d.open());
+              }
+            break;
+          case DIALOG_PROCESSING:
+            if (dialogOpen)
+              asynch(() -> {
+                d.getProgressMonitor().beginTask(NAME, $.selection().size());
+                if (d.getProgressMonitor().isCanceled())
+                  $.stop();
+              });
+            break;
+          default:
+            break;
+        }
+      }
+
+      /** [[SuppressWarningsSpartan]] see issue #467 */
+      @Override public void pop(Object... ¢) {
+        switch (level--) {
+          case DIALOG_CREATION:
+            if (dialogOpen)
+              Dialogs.message(Linguistic.merge(¢)).open();
+            break;
+          case DIALOG_PROCESSING:
+
+            break;
+          default:
+            break;
+        }
+      }
+    });
+    return $;
+  }
+
+  /** Run asynchronously in UI thread.
+   * @param ¢ JD */
+  static void asynch(final Runnable ¢) {
+    Display.getDefault().asyncExec(¢);
+  }
+
+  /** Creates and configures an applicator, without configuring the selection.
+   * @return applicator for this handler [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("deprecation") @Deprecated public static Spartanizer applicatorMapper() {
+    final Spartanizer $ = new Spartanizer();
+    final ProgressMonitorDialog d = Dialogs.progress(false);
+    final AtomicBoolean openDialog = new AtomicBoolean(false);
     $.listener(EventMapper.empty(event.class) //
         .expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
-          if (openDialog.flag)
+          if (openDialog.get())
             asynch(() -> {
               d.getProgressMonitor().subTask($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
               d.getProgressMonitor().worked(1);
@@ -59,7 +135,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expand(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
         .expand(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
-          if (openDialog.flag)
+          if (openDialog.get())
             asynch(() -> {
               d.getProgressMonitor().beginTask(NAME, $.selection().size());
               if (d.getProgressMonitor().isCanceled())
@@ -72,22 +148,20 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               $.stop();
             else {
               asynch(() -> d.open());
-              openDialog.flag = true;
+              openDialog.set(true);
             }
-          time.set(System.nanoTime());
         })) //
         .expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
-          if (openDialog.flag)
+          if (openDialog.get())
             asynch(() -> d.close());
         }).does(¢ -> {
-          if (openDialog.flag)
+          if (openDialog.get())
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
                 + "\nSpartanized " + nanable(¢.get(event.visit_root)) //
                 + " with " + nanable((Collection<?>) ¢.get(event.visit_cu), c -> {
                   return Integer.valueOf(c.size());
                 }) + " files" //
-                + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass)) //
-                + "\nTotal run time: " + time.intervalInSeconds(System.nanoTime()) + " seconds").open();
+                + " in " + plurales("pass", (AtomicInteger) ¢.get(event.run_pass))).open();
         })));
     $.runContext(r -> {
       try {
@@ -99,48 +173,5 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     });
     $.defaultRunAction();
     return $;
-  }
-
-  /** Run asynchronously in UI thread.
-   * @param ¢ JD */
-  private static void asynch(final Runnable ¢) {
-    Display.getDefault().asyncExec(¢);
-  }
-
-  /** Used to measure run time.
-   * @author Ori Roth
-   * @since 2.6 */
-  @Deprecated @Ignore("Use class Stopwatch instead") private static class Time {
-    long time;
-
-    public Time() {
-      //
-    }
-
-    void set(final long ¢) {
-      time = ¢;
-    }
-
-    double intervalInSeconds(final long ¢) {
-      return round((¢ - time) / 1000000000.0, 2);
-    }
-
-    private static double round(final double value, final int places) {
-      if (places < 0)
-        throw new IllegalArgumentException();
-      return new BigDecimal(value).setScale(places, RoundingMode.HALF_UP).doubleValue();
-    }
-  }
-
-  /** Mutable boolean.
-   * @author Ori Roth
-   * @since 2.6 We do not want flags.... Use {@link AtomicBoolean} or
-   *        something */
-  @Deprecated private static class Flag {
-    boolean flag;
-
-    public Flag(final boolean b) {
-      flag = b;
-    }
   }
 }
