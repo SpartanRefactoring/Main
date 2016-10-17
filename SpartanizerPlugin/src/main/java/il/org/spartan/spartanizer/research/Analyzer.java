@@ -98,10 +98,10 @@ public class Analyzer {
   private static void spartanize(final String inputFolder, final String outputDir) {
     final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
     addNanoPatterns(spartanizer);
+    sanityCheck();
     String spartanizedCode = "";
     new File(outputDir + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
-      // System.out.println("Now: " + ¢.getName());
       final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
@@ -131,7 +131,13 @@ public class Analyzer {
             new Setter(), //
             new Mapper(), //
             new Exploder(), //
-//            new JDPattern(), //
+            new JDPattern(), //
             null);
+  }
+
+  private static void sanityCheck() {
+    final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+    addNanoPatterns(spartanizer);
+    assert spartanizer.fixedPoint(clean(makeAST.COMPILATION_UNIT.from(("public class A{ Object f(){ return c;} }"))) + "").contains("[[Getter]]");
   }
 }

@@ -26,7 +26,9 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   }
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
-    @SuppressWarnings("unchecked") final List<String> ps = (List<String>) step.parameters(d).stream().map(x -> x.getName() + "");
+    if (step.parameters(d) == null || step.parameters(d).isEmpty())
+      return false;
+    final List<String> ps = step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList());
     final Bool $ = new Bool();
     $.inner = true;
     d.accept(new ASTVisitor() {
@@ -77,12 +79,12 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   /** @param n
    * @param ps
    * @return */
-  protected static boolean containsParameter(final ASTNode root, final List<String> ps) {
+  protected static boolean containsParameter(ASTNode root, List<String> ps) {
     final Bool $ = new Bool();
     $.inner = false;
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
-        for (final String p : ps)
+        for (String p : ps)
           if ((n + "").equals(p) && !nullCheckExpression(az.infixExpression(n.getParent())))
             $.inner = true;
         return false;
