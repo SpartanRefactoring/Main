@@ -7,7 +7,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.PreferencesResources.*;
+import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** ??
@@ -43,12 +43,14 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
    * once a tipper preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
     @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
-      Toolbox.refresh();
-      try {
-        RefreshAll.go();
-      } catch (final Exception e) {
-        monitor.logEvaluationError(this, e);
-      }
+      new Thread(() -> {
+        Toolbox.refresh();
+        try {
+          RefreshAll.go();
+        } catch (final Exception e) {
+          monitor.logEvaluationError(this, e);
+        }
+      }).start();
     }
   }
 }

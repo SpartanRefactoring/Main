@@ -1,8 +1,10 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+
+import il.org.spartan.plugin.*;
 
 /** ??
  * @author Yossi Gil

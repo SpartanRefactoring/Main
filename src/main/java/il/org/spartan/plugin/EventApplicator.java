@@ -1,10 +1,9 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 // TODO Roth: move into separate file

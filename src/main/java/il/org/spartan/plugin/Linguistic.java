@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
 import java.util.concurrent.atomic.*;
 import java.util.function.*;

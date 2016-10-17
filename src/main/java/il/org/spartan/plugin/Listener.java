@@ -1,6 +1,4 @@
-package il.org.spartan.plugin.revision;
-
-import static il.org.spartan.plugin.revision.Listener.*;
+package il.org.spartan.plugin;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
@@ -93,6 +91,7 @@ public interface Listener {
     }
 
     /** To be used in the following nano <code><pre> 
+<<<<<<< HEAD:src/main/java/il/org/spartan/plugin/revision/Listener.java
                public interface Applicator { 
                  public class Settings extends Listeners {
                     public class Action extends Setting { 
@@ -102,6 +101,18 @@ public interface Listener {
                  }  
                } </pre></code> parameterized solely by the name
      * <code>Applicator</code> * and the body of class <code>Action</code>
+=======
+               * public interface Applicator { 
+               *   public class Settings extends Listeners {
+               *      public class Action extends Setting { 
+               *         int action1() {} ; 
+               *         void action2(Type1 t1, Type2 t2, int i)  { ...}
+               *      } 
+               *   }  
+               * } </pre></code> parameterized solely by the name
+     * <code>Applicator</code> and the actions in class `Action` in
+     * <code>Action</code>
+>>>>>>> 720f81c475ec59a40a84e7cd78c8f324cd1531c1:src/main/java/il/org/spartan/plugin/Listener.java
      * @return <code><b>this</b></code> */
     public List<Listener> listeners() {
       return this;
