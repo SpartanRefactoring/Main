@@ -51,8 +51,8 @@ public class LaTeXTableWriter extends CSVLineWriter {
   @Override public String close() {
     if (aggregating()) {
       writer.writeln(super.renderer.headerEnd());
-      for (final Aggregation a : aggregations())
-        writer.writeln(makeLine(collect(a).values()));
+      for (final Aggregation ¢ : aggregations())
+        writer.writeln(makeLine(collect(¢).values()));
     }
     return super.close();
   }

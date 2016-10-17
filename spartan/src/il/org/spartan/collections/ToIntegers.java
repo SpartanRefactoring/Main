@@ -22,20 +22,20 @@ public final class ToIntegers<E> {
   public static final float REMOVE_LOAD = 0.20f;
   public static final int MIN_CAPACITY = 4;
 
-  static <E> int hash(final E e) {
-    int $ = e.hashCode();
+  static <E> int hash(final E ¢) {
+    int $ = ¢.hashCode();
     $ ^= $ >>> 12 ^ $ >>> 20;
     return $ ^ $ >>> 4 ^ $ >>> 7;
   }
 
-  private static <E> E[] allocate(final int n) {
-    @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[n];
+  private static <E> E[] allocate(final int ¢) {
+    @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
     return $;
   }
 
-  private static int roundUp(final int i) {
+  private static int roundUp(final int ¢) {
     int $ = 1;
-    while ($ < i)
+    while ($ < ¢)
       $ <<= 1;
     return $;
   }
@@ -103,8 +103,8 @@ public final class ToIntegers<E> {
 
   public int[] get(final E keys[]) {
     final int[] $ = new int[keys.length];
-    for (int i = 0; i < keys.length; i++)
-      $[i] = get(keys[i]);
+    for (int ¢ = 0; ¢ < keys.length; ++¢)
+      $[¢] = get(keys[¢]);
     return $;
   }
 
@@ -146,9 +146,9 @@ public final class ToIntegers<E> {
    * @return an array of all elements in this set. */
   public E[] keys() {
     final E[] $ = allocate(size);
-    for (int i = 0, j = 0; i < capacity(); i++)
-      if (occupied[i] && !placeholder[i])
-        $[j++] = data[i];
+    for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
+      if (occupied[¢] && !placeholder[¢])
+        $[j++] = data[¢];
     return $;
   }
 
@@ -183,19 +183,16 @@ public final class ToIntegers<E> {
       return this;
     assert occupied[i] && data[i] == e;
     placeholder[i] = true;
-    if (--size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY)
-      return rehash(data.length >> 1);
-    if (++removed > capacity() * REMOVE_LOAD)
-      return rehash();
-    return this;
+    return --size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
+        : ++removed > capacity() * REMOVE_LOAD ? rehash() : this;
   }
 
   /** Remove an array of integers to this set, if they are in it.
-   * @param ns an array of integers; ; must not be <code><b>null</b></code>.
+   * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-  public ToIntegers<E> remove(final int... ns) {
-    for (final int n : ns)
-      remove(n);
+  public ToIntegers<E> remove(final int... is) {
+    for (final int ¢ : is)
+      remove(¢);
     return this;
   }
 
@@ -211,14 +208,13 @@ public final class ToIntegers<E> {
    * @return -1 if the parameter is in the table already, otherwise, the index
    *         at which it could be safely inserted. */
   int find(final E e) {
-    int $ = -1;
-    for (int i = hash(e), t = 0;; i += ++t) {
-      i &= data.length - 1;
-      if (placeholder[i] || !occupied[i])
-        $ = $ < 0 ? i : $;
-      if (!occupied[i])
+    for (int $ = -1, ¢ = hash(e), t = 0;; ¢ += ++t) {
+      ¢ &= data.length - 1;
+      if (placeholder[¢] || !occupied[¢])
+        $ = $ < 0 ? ¢ : $;
+      if (!occupied[¢])
         return $;
-      if (data[i] == e)
+      if (data[¢] == e)
         return -1;
     }
   }
@@ -228,14 +224,14 @@ public final class ToIntegers<E> {
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
   int location(final E e) {
-    for (int i = hash(e), t = 0;; i += ++t) {
-      i &= data.length - 1;
-      if (!occupied[i])
+    for (int $ = hash(e), t = 0;; $ += ++t) {
+      $ &= data.length - 1;
+      if (!occupied[$])
         return -1;
-      if (placeholder[i])
+      if (placeholder[$])
         continue;
-      if (data[i] == e)
-        return i;
+      if (data[$] == e)
+        return $;
     }
   }
 
@@ -249,12 +245,12 @@ public final class ToIntegers<E> {
     final E[] keys = keys();
     final int[] oldValues = get(keys);
     reset(newCapacity);
-    for (int i = 0; i < keys.length; i++)
-      put(keys[i], oldValues[i]);
+    for (int ¢ = 0; ¢ < keys.length; ++¢)
+      put(keys[¢], oldValues[¢]);
     return this;
   }
 
-  private final ToIntegers<E> reset(final int capacity) {
+  private ToIntegers<E> reset(final int capacity) {
     data = allocate(capacity);
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];
@@ -276,15 +272,15 @@ public final class ToIntegers<E> {
       assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE_LOAD)));
       assertThat(removed, comparesEqualTo(count(placeholder)));
       assertThat(size, comparesEqualTo(count(occupied) - removed));
-      for (int i = 0; i < capacity(); i++)
-        if (placeholder[i])
-          assert occupied[i];
+      for (int ¢ = 0; ¢ < capacity(); ++¢)
+        if (placeholder[¢])
+          assert occupied[¢];
     }
 
     private int count(final boolean bs[]) {
       int $ = 0;
-      for (final boolean b : bs)
-        $ += As.binary(b);
+      for (final boolean ¢ : bs)
+        $ += As.binary(¢);
       return $;
     }
   }

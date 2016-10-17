@@ -20,8 +20,8 @@ public abstract class Statistics {
     final int n = ds.length;
     final double median = median(ds);
     final double $[] = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Math.abs(ds[i] - median);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Math.abs(ds[¢] - median);
     return median($);
   }
 
@@ -35,16 +35,16 @@ public abstract class Statistics {
     final List<Double> $ = new ArrayList<>();
     final double median = median(ds);
     final double mad = mad(ds);
-    for (final double d : ds)
-      if (median - 2 * mad <= d && d <= median + 2 * mad)
-        $.add(box(d));
+    for (final double ¢ : ds)
+      if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)
+        $.add(box(¢));
     return Iterables.toArray($);
   }
 
   public static double sampleMean(final double[] ds) {
     double sum = 0;
-    for (final double d : ds)
-      sum += d;
+    for (final double ¢ : ds)
+      sum += ¢;
     return sum / ds.length;
   }
 
@@ -56,9 +56,9 @@ public abstract class Statistics {
   public static double sampleVariance(final double[] ds) {
     double sum = 0;
     double sum2 = 0;
-    for (final double d : ds) {
-      sum += d;
-      sum2 += d * d;
+    for (final double ¢ : ds) {
+      sum += ¢;
+      sum2 += ¢ * ¢;
     }
     final int n = ds.length;
     return sum2 / (n - 1) - sum * sum / (n * n - n);

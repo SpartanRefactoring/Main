@@ -14,11 +14,11 @@ import il.org.spartan.streotypes.*;
   // A namespace: no values to this <code><b>enum</b></code>
   ;
   /** Box a <code><b>boolean</b></code> into a {@link Boolean} object.
-   * @param b some <code><b>boolean</b></code> value
+   * @param ¢ some <code><b>boolean</b></code> value
    * @return a non-<code><b>null</b></code> {@link Boolean} with the value of
    *         <code>c</code> */
-  public static Boolean box(final boolean b) {
-    return Boolean.valueOf(b);
+  public static Boolean box(final boolean ¢) {
+    return Boolean.valueOf(¢);
   }
 
   /** Box an array of <code><b>boolean</b></code>s into an array of
@@ -29,17 +29,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Boolean[] box(final boolean bs[]) {
     final Boolean[] $ = new Boolean[bs.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(bs[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(bs[¢]);
     return $;
   }
 
   /** Box a <code><b>byte</b></code> into a {@link Byte} object.
-   * @param b some <code><b>long</b></code> value
+   * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
    *         <code>l</code> */
-  public static Byte box(final byte b) {
-    return Byte.valueOf(b);
+  public static Byte box(final byte ¢) {
+    return Byte.valueOf(¢);
   }
 
   /** Box an array of <code><b>byte</b></code>s into an array of {@link Byte}s.
@@ -49,17 +49,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Byte[] box(final byte bs[]) {
     final Byte[] $ = new Byte[bs.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(bs[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(bs[¢]);
     return $;
   }
 
   /** Box a <code><b>char</b></code> into a {@link Character} object.
-   * @param c some <code><b>char</b></code> value
+   * @param ¢ some <code><b>char</b></code> value
    * @return a non-<code><b>null</b></code> {@link Character} with the value of
    *         <code>c</code> */
-  public static Character box(final char c) {
-    return Character.valueOf(c);
+  public static Character box(final char ¢) {
+    return Character.valueOf(¢);
   }
 
   /** Box an array of <code><b>byte</b></code>s into an array of
@@ -70,17 +70,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Character[] box(final char cs[]) {
     final Character[] $ = new Character[cs.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(cs[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(cs[¢]);
     return $;
   }
 
   /** Box a <code><b>double</b></code> into a {@link Double} object.
-   * @param d some <code><b>double</b></code> value
+   * @param ¢ some <code><b>double</b></code> value
    * @return a non-<code><b>null</b></code> {@link Double} with the value of
    *         <code>d</code> */
-  public static Double box(final double d) {
-    return Double.valueOf(d);
+  public static Double box(final double ¢) {
+    return Double.valueOf(¢);
   }
 
   /** Box an array of <code><b>double</b></code>s into an array of
@@ -91,17 +91,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Double[] box(final double ds[]) {
     final Double[] $ = new Double[ds.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(ds[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(ds[¢]);
     return $;
   }
 
   /** Box a <code><b>float</b></code> into a {@link Float} object.
-   * @param f some <code><b>float</b></code> value
+   * @param ¢ some <code><b>float</b></code> value
    * @return a non-<code><b>null</b></code> {@link Float} with the value of
    *         <code>f</code> */
-  public static Float box(final float f) {
-    return Float.valueOf(f);
+  public static Float box(final float ¢) {
+    return Float.valueOf(¢);
   }
 
   /** Box an array of <code><b>float</b></code>s into an array of {@link Float}
@@ -112,17 +112,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Float[] box(final float fs[]) {
     final Float[] $ = new Float[fs.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(fs[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(fs[¢]);
     return $;
   }
 
   /** Box an <code><b>int</b></code> into an {@link Integer} object.
-   * @param n some <code><b>int</b></code> value
+   * @param ¢ some <code><b>int</b></code> value
    * @return a non-<code><b>null</b></code> {@link Integer} with the value of
    *         <code>n</code> */
-  public static Integer box(final int n) {
-    return Integer.valueOf(n);
+  public static Integer box(final int ¢) {
+    return Integer.valueOf(¢);
   }
 
   /** Box an array of <code><b>int</b></code>s into an array of {@link Integer}
@@ -133,17 +133,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Integer[] box(final int is[]) {
     final Integer[] $ = new Integer[is.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(is[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(is[¢]);
     return $;
   }
 
   /** Box a <code><b>long</b></code> into a {@link Long} object.
-   * @param l some <code><b>long</b></code> value
+   * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
    *         <code>l</code> */
-  public static Long box(final long l) {
-    return Long.valueOf(l);
+  public static Long box(final long ¢) {
+    return Long.valueOf(¢);
   }
 
   /** Box an array of <code><b>long</b></code>s into an array of {@link Long}s.
@@ -153,17 +153,17 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Long[] box(final long ls[]) {
     final Long[] $ = new Long[ls.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(ls[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(ls[¢]);
     return $;
   }
 
   /** Box a <code><b>short</b></code> into a {@link Short} object.
-   * @param s some <code><b>short</b></code> value
+   * @param ¢ some <code><b>short</b></code> value
    * @return a non-<code><b>null</b></code> {@link Short} with the value of
    *         <code>s</code> */
-  public static Short box(final short s) {
-    return Short.valueOf(s);
+  public static Short box(final short ¢) {
+    return Short.valueOf(¢);
   }
 
   /** Box an array of <code><b>short</b></code>s into an array of {@link Short}
@@ -174,39 +174,39 @@ import il.org.spartan.streotypes.*;
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
   public static Short[] box(final short ss[]) {
     final Short[] $ = new Short[ss.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = box(ss[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = box(ss[¢]);
     return $;
   }
 
-  public static Double it(final double d) {
-    return box(d);
+  public static Double it(final double ¢) {
+    return box(¢);
   }
 
   /** Box an <code><b>int</b></code> into an {@link Integer} object.
-   * @param n some <code><b>int</b></code> value
+   * @param ¢ some <code><b>int</b></code> value
    * @return a non-<code><b>null</b></code> {@link Integer} with the value of
    *         <code>n</code>
    * @see #box(int) */
-  public static Integer it(final int n) {
-    return box(n);
+  public static Integer it(final int ¢) {
+    return box(¢);
   }
 
   /** Box an array of <code><b>int</b></code>s into an array of {@link Integer}
    * s.
-   * @param is an array of <code><b>int</b></code>s
+   * @param ¢ an array of <code><b>int</b></code>s
    * @return an array of {@link Integer} of the same length as that of the
    *         parameter, and such that it in its <tt>i</tt><em>th</em> position
    *         is the boxed value of the <tt>i</tt><em>th</em> of the parameter */
-  public static Integer[] it(final int is[]) {
-    return box(is);
+  public static Integer[] it(final int ¢[]) {
+    return box(¢);
   }
 
   /** Box a <code><b>long</b></code> into a {@link Long} object.
-   * @param l some <code><b>long</b></code> value
+   * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
    *         <code>l</code> */
-  public static Long it(final long l) {
-    return box(l);
+  public static Long it(final long ¢) {
+    return box(¢);
   }
 }

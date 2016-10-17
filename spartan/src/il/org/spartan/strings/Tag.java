@@ -127,11 +127,11 @@ import il.org.spartan.utils.*;
 
   /** Make a {@link Matcher} of a given text, to capture the opening and closing
    * tag together with the enclosed content in this text.
-   * @param s where to look for this text?
+   * @param ¢ where to look for this text?
    * @return {@link Matcher} of the parameter to capture the tag and its
    *         content. The content is in group number 1. */
-  public Matcher makeMatcher(final String s) {
-    return makePattern().matcher(s);
+  public Matcher makeMatcher(final String ¢) {
+    return makePattern().matcher(¢);
   }
 
   /** Make a {@link Pattern} to capture the opening and closing tag together
@@ -151,24 +151,24 @@ import il.org.spartan.utils.*;
   }
 
   /** Wrap a given string within this tag.
-   * @param s a non-<code><b>null</b></code> representing the string to wrap
+   * @param ¢ a non-<code><b>null</b></code> representing the string to wrap
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then <code>"<b>Hello"</b>"</code> is returned. */
-  public String wrap(final String s) {
-    nonnull(s);
-    return s.length() == 0 ? s : begin + s + end;
+  public String wrap(final String ¢) {
+    nonnull(¢);
+    return ¢.length() == 0 ? ¢ : begin + ¢ + end;
   }
 
   /** Wrap a given string within newline characters and then within this tag.
-   * @param s a non-<code><b>null</b></code> representing the string to wrap
+   * @param ¢ a non-<code><b>null</b></code> representing the string to wrap
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then the string <code>"<b>\nHello\n</b>"</code> is
    *         returned. */
-  public String wrapNL(final String s) {
-    nonnull(s);
-    return wrap("\n" + s + "\n");
+  public String wrapNL(final String ¢) {
+    nonnull(¢);
+    return wrap("\n" + ¢ + "\n");
   }
 
   @SuppressWarnings("static-method") public static class TEST {

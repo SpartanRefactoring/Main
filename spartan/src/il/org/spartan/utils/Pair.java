@@ -2,22 +2,20 @@ package il.org.spartan.utils;
 
 public class Pair<First, Second> {
   @SuppressWarnings("unchecked") //
-  public static <First, Second> Pair<First, Second>[] makePairs(final int n) {
-    return new Pair[n];
+  public static <First, Second> Pair<First, Second>[] makePairs(final int ¢) {
+    return new Pair[¢];
   }
 
-  public static <First, Second> Pair<First, Second>[] makePairs(final int n, final int m) {
-    return makePairs(n * m);
+  public static <First, Second> Pair<First, Second>[] makePairs(final int i, final int m) {
+    return makePairs(i * m);
   }
 
   public static <A, B> Pair<A, B> newPair(final A a, final B b) {
     return new Pair<>(a, b);
   }
 
-  private static boolean eq(final Object a, final Object b) {
-    if (a == null)
-      return b == null;
-    return a.equals(b);
+  private static boolean eq(final Object a, final Object o) {
+    return a == null ? o == null : a.equals(o);
   }
 
   public final First first;

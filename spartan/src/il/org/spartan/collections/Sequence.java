@@ -48,14 +48,14 @@ public class Sequence<E> implements Iterable<E>, Serializable {
     return es[index + begin];
   }
 
-  public boolean has(final E e) {
-    return indexOf(e) >= 0;
+  public boolean has(final E ¢) {
+    return indexOf(¢) >= 0;
   }
 
   public int indexOf(final E e) {
-    for (int i = begin; i < end; ++i)
-      if (es[i].equals(e))
-        return i - begin;
+    for (int ¢ = begin; ¢ < end; ++¢)
+      if (es[¢].equals(e))
+        return ¢ - begin;
     return -1;
   }
 

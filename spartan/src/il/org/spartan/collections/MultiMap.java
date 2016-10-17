@@ -39,22 +39,22 @@ import il.org.spartan.streotypes.*;
   }
 
   /** Clear the set of all images of the given source value
-   * @param k Source value
+   * @param ¢ Source value
    * @return the newly created set object */
-  public Set<V> clear(final K k) {
+  public Set<V> clear(final K ¢) {
     final Set<V> $ = new HashSet<>();
-    implementation.put(k, $);
+    implementation.put(¢, $);
     return $;
   }
 
   /** Find the set of all images of the given source value. If this key does not
    * exist yet, add it with an empty set.
-   * @param k key value
+   * @param ¢ key value
    * @return A non-<code><b>null</b></code> representing the set of images
    *         associated with <code>k</code> */
-  public Set<V> get(final K k) {
-    final Set<V> $ = implementation.get(k);
-    return $ != null ? $ : clear(k);
+  public Set<V> get(final K ¢) {
+    final Set<V> $ = implementation.get(¢);
+    return $ != null ? $ : clear(¢);
   }
 
   /** Return an iterator over all keys
@@ -82,8 +82,8 @@ import il.org.spartan.streotypes.*;
 
   @Override public String toString() {
     final StringBuilder $ = new StringBuilder();
-    for (final K k : this)
-      $.append(k + "=>" + get(k) + '\n');
+    for (final K ¢ : this)
+      $.append(¢ + "=>" + get(¢) + '\n');
     return $ + "";
   }
 

@@ -8,7 +8,7 @@ package il.org.spartan.utils;
  * @param <T> an arbitrary type */
 public class Maximizer<T> {
   private double max = Double.NaN;
-  private T value = null;
+  private T value;
 
   public double max() {
     return max;

@@ -27,24 +27,24 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
 
   @Override public final Iterator<T> iterator() {
     return new ReadonlyIterator<T>() {
-      private T pending;
-      private boolean hasNext = true;
-      private final Iterator<? extends T> iterator = iterable.iterator();
+      T pending;
+      boolean hasNext = true;
+      final Iterator<? extends T> iterator = iterable.iterator();
       {
         advance();
       }
 
-      @Override final public boolean hasNext() {
+      @Override public boolean hasNext() {
         return hasNext;
       }
 
-      @Override final public T next() {
+      @Override public T next() {
         final T $ = pending;
         advance();
         return $;
       }
 
-      private void advance() {
+      void advance() {
         while (iterator.hasNext())
           if (holds(pending = iterator.next()))
             return;

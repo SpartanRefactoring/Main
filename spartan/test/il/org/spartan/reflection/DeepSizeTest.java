@@ -9,10 +9,10 @@ import il.org.spartan.reflection.DeepSize.*;
 import il.org.spartan.sequence.*;
 
 @SuppressWarnings("static-method") public class DeepSizeTest {
-  private static MyHashMap<String, String> createHashTable(final int n) {
+  private static MyHashMap<String, String> createHashTable(final int i) {
     final MyHashMap<String, String> $ = new MyHashMap<>();
-    for (int i = 0; i < n; i++)
-      $.put(String.valueOf(i * i + 1), String.valueOf((i + 5) * (i - 9) + 1));
+    for (int ¢ = 0; ¢ < i; ++¢)
+      $.put(String.valueOf(¢ * ¢ + 1), String.valueOf((¢ + 5) * (¢ - 9) + 1));
     return $;
   }
 
@@ -98,8 +98,8 @@ import il.org.spartan.sequence.*;
 
   @Test public void of_array_of_objects() {
     final Object[] os = new Object[8];
-    for (int i = 0; i < os.length; i++)
-      os[i] = os;
+    for (int ¢ = 0; ¢ < os.length; ++¢)
+      os[¢] = os;
     azzert.that(DeepSize.of(os), is(48));
   }
 
@@ -107,9 +107,9 @@ import il.org.spartan.sequence.*;
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(79);
     o.os = os;
-    for (int i = 0; i < os.length; i++)
-      if (i % 2 == 1)
-        os[i] = o;
+    for (int ¢ = 0; ¢ < os.length; ++¢)
+      if (¢ % 2 == 1)
+        os[¢] = o;
     azzert.that(DeepSize.of(o), is((ShallowSize.of(os) + ShallowSize.of(o))));
   }
 
@@ -236,10 +236,10 @@ import il.org.spartan.sequence.*;
     azzert.that(new DeepSize.Visitor().size(new ObjectBoolean()), is(16));
   }
 
-  Object[] makeRecursiveArray(final int n) {
-    final Object[] $ = new Object[n];
-    for (int i = 0; i < $.length; i++)
-      $[i] = $;
+  Object[] makeRecursiveArray(final int i) {
+    final Object[] $ = new Object[i];
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = $;
     return $;
   }
 

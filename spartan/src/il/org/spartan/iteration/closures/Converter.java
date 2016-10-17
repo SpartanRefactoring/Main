@@ -11,9 +11,9 @@ package il.org.spartan.iteration.closures;
 public interface Converter<F, T> {
   T __(F f);
 
-  public class Identity<T> implements Converter<T, T> {
-    @Override public T __(final T t) {
-      return t;
+  class Identity<T> implements Converter<T, T> {
+    @Override public T __(final T ¢) {
+      return ¢;
     }
   }
 }

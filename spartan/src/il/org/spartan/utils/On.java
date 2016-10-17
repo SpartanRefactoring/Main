@@ -45,9 +45,7 @@ import il.org.spartan.streotypes.*;
    *         <code>onPositive.__()</code>, depending on the sign of
    *         <code>selector</code> */
   public static <T> T sign(final int selector, final Function<T> onNegative, final Function<T> onZero, final Function<T> onPositive) {
-    if (selector == 0)
-      return onZero.__();
-    return selector < 0 ? onNegative.__() : onPositive.__();
+    return selector == 0 ? onZero.__() : selector < 0 ? onNegative.__() : onPositive.__();
   }
 
   /** A non-lazy selection between three values depending on the sign of a given
@@ -76,9 +74,9 @@ import il.org.spartan.streotypes.*;
     sign(selector.intValue(), asFunction(onNegative), asFunction(onZero), asFunction(onPositive));
   }
 
-  private static Function<Void> asFunction(final Action a) {
+  private static Function<Void> asFunction(final Action ¢) {
     return () -> {
-      a.__();
+      ¢.__();
       return null;
     };
   }

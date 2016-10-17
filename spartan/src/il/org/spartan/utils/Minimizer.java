@@ -8,8 +8,8 @@ package il.org.spartan.utils;
  * @param <T> an arbitrary type */
 public class Minimizer<T> {
   private double min = Double.NaN;
-  private T value = null;
-  private int index = 0;
+  private T value;
+  private int index;
   private int maxIndex = -1;
 
   public int index() {
@@ -27,7 +27,7 @@ public class Minimizer<T> {
       value = t;
       maxIndex = index;
     }
-    index++;
+    ++index;
     return this;
   }
 

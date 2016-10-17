@@ -16,8 +16,8 @@ import il.org.spartan.*;
     class __ {
       // empty
     }
-    for (final Attribute.Content c : Attribute.Extractor.attributes(new __()))
-      c.hashCode();
+    for (final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
+      ¢.hashCode();
   }
 
   @Test public void manyAttributeNames() {

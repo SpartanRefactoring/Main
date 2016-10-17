@@ -12,18 +12,18 @@ import il.org.spartan.classfiles.reify.OpCode.*;
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public class ExecutableEntity extends TypedEntity {
-  public static String signature(final String className, final String n, final String d) {
-    return className + "." + signature(n, d);
+  public static String signature(final String className, final String s, final String d) {
+    return className + "." + signature(s, d);
   }
 
-  private static String signature(final String n, final String d) {
-    return n + ":" + decode(d);
+  private static String signature(final String s, final String d) {
+    return s + ":" + decode(d);
   }
 
   public final ClassConstant[] exceptions;
   CodeEntity code;
-  Map<String, int[]> class2refsByComponents = null;
-  Map<String, int[]> class2staticRefsByComponents = null;
+  Map<String, int[]> class2refsByComponents;
+  Map<String, int[]> class2staticRefsByComponents;
 
   public ExecutableEntity(final ConstantPool constantPool, final int accessFlags, final String name, final String descriptor,
       final AttributeInfo[] attributes) {
@@ -60,7 +60,7 @@ public class ExecutableEntity extends TypedEntity {
     final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); index++) {
+    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
       int cpIndex;
       if (!i.isInvokeInstruction())
@@ -76,7 +76,7 @@ public class ExecutableEntity extends TypedEntity {
     final Set<String> $ = new HashSet<>();
     if (code == null)
       return $;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); index++) {
+    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
       if (i.opCode == OpCode.GETFIELD || i.opCode == OpCode.PUTFIELD) {
         final int cpIndex = i.args()[1] | i.args()[0] << 8;
@@ -91,14 +91,14 @@ public class ExecutableEntity extends TypedEntity {
     return code == null ? 0 : code.instructionsCount();
   }
 
-  public boolean isAccessed(final TypedEntity t, final String thisClassName) {
+  public boolean isAccessed(final TypedEntity e, final String thisClassName) {
     if (code == null)
       return false;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); index++) {
+    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
       if (!i.isFieldAccessInstruction() || i.isInvokeInstruction())
         continue;
-      if (isAccessed(t, thisClassName, i))
+      if (isAccessed(e, thisClassName, i))
         return true;
     }
     return false;
@@ -137,13 +137,11 @@ public class ExecutableEntity extends TypedEntity {
     return $;
   }
 
-  private boolean isAccessed(final TypedEntity t, final String thisClassName, final Instruction i) {
+  private boolean isAccessed(final TypedEntity e, final String thisClassName, final Instruction i) {
     final int cpIndex = i.args()[0] << 8 | i.args()[1];
     final MemberReference mr = constantPool.getMemberReference(cpIndex);
-    if (mr.getNameAndType().getName().equals(t.name) && mr.getNameAndType().getDescriptor().equals(t.descriptor)
-        && mr.getClassConstant().getClassName().endsWith(thisClassName))
-      return true;
-    return false;
+    return mr.getNameAndType().getName().equals(e.name) && mr.getNameAndType().getDescriptor().equals(e.descriptor)
+        && mr.getClassConstant().getClassName().endsWith(thisClassName) || false;
   }
 
   private CodeEntity readCodeAttribute() {
@@ -151,11 +149,9 @@ public class ExecutableEntity extends TypedEntity {
     return $ == null ? null : readCodeAttribute($);
   }
 
-  private CodeEntity readCodeAttribute(final AttributeInfo a) {
-    final ConstantPoolReader r = a.reader(constantPool);
-    final int maxStack = r.readUnsignedShort();
-    final int maxLocals = r.readUnsignedShort();
-    return new CodeEntity(maxStack, maxLocals, r.readBytesArrray());
+  private CodeEntity readCodeAttribute(final AttributeInfo i) {
+    final ConstantPoolReader r = i.reader(constantPool);
+    return new CodeEntity(r.readUnsignedShort(), r.readUnsignedShort(), r.readBytesArrray());
   }
 
   private ClassConstant[] readExceptions() {
@@ -165,13 +161,11 @@ public class ExecutableEntity extends TypedEntity {
 
   private void referencesToClasses() {
     class2refsByComponents = new HashMap<>();
-    for (final TypeInfo t : type.components()) {
-      final int[] refsByComponents = getClassRefsByComponents((t + ""));
-      refsByComponents[LinkComponents.MethodDeclaration.ordinal()]++;
-    }
+    for (final TypeInfo ¢ : type.components())
+      ++getClassRefsByComponents((¢ + ""))[LinkComponents.MethodDeclaration.ordinal()];
     if (code == null)
       return;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); index++) {
+    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
       final Instruction i = code.simplifiedCode.instructions().get(index);
       final int cpIndex = i.args()[1] | i.args()[0] << 8;
       int component = -1;
@@ -202,14 +196,10 @@ public class ExecutableEntity extends TypedEntity {
       }
       assert component != -1;
       final MemberReference mr = constantPool.getMemberReference(cpIndex);
-      if (!mr.getNameAndType().getName().equals("<init>")) {
-        final int[] refsByComponents = getClassRefsByComponents(mr.getClassConstant().getClassName());
-        refsByComponents[component]++;
-      }
-      for (final TypeInfo t : decode(mr.getNameAndType().getDescriptor()).components()) {
-        final int[] refsByComponents = getClassRefsByComponents((t + ""));
-        refsByComponents[component]++;
-      }
+      if (!mr.getNameAndType().getName().equals("<init>"))
+        ++getClassRefsByComponents(mr.getClassConstant().getClassName())[component];
+      for (final TypeInfo ¢ : decode(mr.getNameAndType().getDescriptor()).components())
+        ++getClassRefsByComponents((¢ + ""))[component];
     }
   }
 }

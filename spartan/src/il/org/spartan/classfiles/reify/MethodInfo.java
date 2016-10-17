@@ -13,14 +13,14 @@ import il.org.spatan.iteration.*;
  * @since 21 November 2011 */
 public class MethodInfo extends ExecutableEntity {
   private static String class2name(final Class<?> param) {
-    return (param + "").startsWith("class ") ? (param + "").substring((param + "").indexOf(' ') + 1) : param + "";
+    return !(param + "").startsWith("class ") ? param + "" : (param + "").substring((param + "").indexOf(' ') + 1);
   }
 
   private static String[] class2name(final Class<?>[] params) {
-    final String[] strParams = new String[params.length];
-    for (int i = 0; i < params.length; i++)
-      strParams[i] = class2name(params[i]);
-    return strParams;
+    final String[] $ = new String[params.length];
+    for (int ¢ = 0; ¢ < params.length; ++¢)
+      $[¢] = class2name(params[¢]);
+    return $;
   }
 
   private static String signature(final String name, final String returnType, final String[] parameterTypes) {
@@ -42,14 +42,10 @@ public class MethodInfo extends ExecutableEntity {
 
   public boolean isObjectMethod() {
     try {
-      final Class<?> objectClass = Class.forName("java.lang.Object");
-      for (final Method m : objectClass.getMethods()) {
-        if (!m.getName().equals(name))
+      for (final Method ¢ : Class.forName("java.lang.Object").getMethods()) {
+        if (!¢.getName().equals(name))
           continue;
-        final Class<?>[] params = m.getParameterTypes();
-        final String[] strParams = class2name(params);
-        final String s = signature(m.getName(), class2name(m.getReturnType()), strParams);
-        if (s.equals(signature()))
+        if (signature(¢.getName(), class2name(¢.getReturnType()), class2name(¢.getParameterTypes())).equals(signature()))
           return true;
       }
     } catch (final ClassNotFoundException e) {

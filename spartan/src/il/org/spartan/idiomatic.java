@@ -13,16 +13,22 @@ import org.junit.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface idiomatic {
-  /** Single quote: */
-  static final String QUOTE = "'";
-  /** an evaluating trigger */
-  static final Trigger eval = new Trigger() {
-    @Override public <@Nullable T> T eval(final Supplier<T> s) {
-      return s.get();
+  /**
+   * Single quote: 
+   */
+  final String QUOTE = "'";
+  /**
+   * an evaluating trigger 
+   */
+  final Trigger eval = new Trigger() {
+    @Override public <@Nullable T> T eval(final Supplier<T> ¢) {
+      return ¢.get();
     }
   };
-  /** an ignoring trigger */
-  static final Trigger ignore = new Trigger() {
+  /**
+   * an ignoring trigger 
+   */
+  final Trigger ignore = new Trigger() {
     @Override public <@Nullable T> T eval(final Supplier<T> ____) {
       return null;
     }
@@ -70,19 +76,19 @@ public interface idiomatic {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
-  /** @param r JD
+  /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
-  static Runner run(final Runnable r) {
-    return new Runner(r);
+  static Runner run(final Runnable ¢) {
+    return new Runner(¢);
   }
 
   /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
    * @param <T> JD
-   * @param t JD
+   * @param ¢ JD
    * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
    *         value of method <code>yield</code> */
-  static <T> Storer<T> take(final T t) {
-    return new Storer<>(t);
+  static <T> Storer<T> take(final T ¢) {
+    return new Storer<>(¢);
   }
 
   /** @param condition JD
@@ -128,15 +134,17 @@ public interface idiomatic {
     }
   }
 
-  /** A class which is just like {@link Supplier}, except that it uses the
-   * shorter name ({@link #λ()} and that it allows for {@link Exception}s to be
-   * thrown by the getters.
-   * @author Yossi Gil
-   * @param <T> JD
-   * @since 2016` */
-  @FunctionalInterface public interface Producer<@Nullable T> {
-    /** @return next value provided by this instance
-     * @throws Exception JD */
+  /**
+   * A class which is just like  {@link Supplier} , except that it uses the shorter name ( {@link #λ()}  and that it allows for  {@link Exception} s to be thrown by the getters.
+   * @author  Yossi Gil
+   * @param < T >  JD
+   * @since  2016` 
+   */
+  @FunctionalInterface interface Producer<@Nullable T> {
+    /**
+    * @return  next value provided by this instance
+    * @throws Exception  JD 
+    */
     T λ() throws Exception;
   }
 
@@ -190,7 +198,7 @@ public interface idiomatic {
     }
   }
 
-  @SuppressWarnings({ "javadoc", "static-method" }) public static class TEST {
+  @SuppressWarnings({ "javadoc", "static-method" }) static class TEST {
     @Test public void use0() {
       azzert.notNull(new Storer<>(this));
     }

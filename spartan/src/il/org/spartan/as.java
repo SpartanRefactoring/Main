@@ -45,7 +45,7 @@ public enum as {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}
     return () -> new Iterator<Integer>() {
-      int current = 0;
+      int current;
 
       @Override public boolean hasNext() {
         return current < is.length;
@@ -59,7 +59,7 @@ public enum as {
 
   public static Iterable<Integer> asIterableLambda(final Integer... is) {
     return () -> new Iterator<Integer>() {
-      int current = 0;
+      int current;
 
       @Override public boolean hasNext() {
         return current < is.length;
@@ -79,12 +79,12 @@ public enum as {
   }
 
   /** C like conversion of a reference to an {@link Object} into a 0/1 bit.
-   * @param o some object
+   * @param ¢ some object
    * @return <code>0</code> if the parameter is <code><b>null</b></code>.
    *         <code>1</code> otherwise.
    * @see as#bit(Object) */
-  public static int bit(final @Nullable Object o) {
-    return o == null ? 0 : 1;
+  public static int bit(final @Nullable Object ¢) {
+    return ¢ == null ? 0 : 1;
   }
 
   /** Converts a sequence of <code><b>int</b></code> values into a {@link List}
@@ -94,8 +94,8 @@ public enum as {
    *         <code><b>int</b></code> {@link Integer}s form. */
   public static List<Integer> ingeterList(final int... is) {
     final List<Integer> $ = new ArrayList<>();
-    for (final int i : is)
-      $.add(box.it(i));
+    for (final int ¢ : is)
+      $.add(box.it(¢));
     return $;
   }
 
@@ -127,7 +127,7 @@ public enum as {
     return new PureIterable.Sized<T>() {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
-          int current = 0;
+          int current;
 
           @Override public boolean hasNext() {
             return current < ts.length;
@@ -147,19 +147,19 @@ public enum as {
 
   /** Creates an iterable for an array of objects
    * @param <T> an arbitrary type
-   * @param ts what to iterate on
+   * @param ¢ what to iterate on
    * @return an {@link Iterable} over the parameter */
-  @SafeVarargs public static <T> PureIterator<T> iterator(final T... ts) {
-    return iterable(ts).iterator();
+  @SafeVarargs public static <T> PureIterator<T> iterator(final T... ¢) {
+    return iterable(¢).iterator();
   }
 
   /** Converts a list of <code><b>int</b></code>s into a {@link List} of
    * {@link Integer}s
-   * @param is what to convert
+   * @param ¢ what to convert
    * @return a {@link List} of of all <code><b>int</b></code>s in the
    *         parameter */
-  public static List<Integer> list(final int... is) {
-    return as.list(box.it(is));
+  public static List<Integer> list(final int... ¢) {
+    return as.list(box.it(¢));
   }
 
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
@@ -188,7 +188,7 @@ public enum as {
     return new PureIterable.Sized<T>() {
       @Override public PureIterator<T> iterator() {
         return new PureIterator<T>() {
-          int current = 0;
+          int current;
 
           @Override public boolean hasNext() {
             return current < ts.length;
@@ -209,10 +209,10 @@ public enum as {
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
    * @param <T> type of objects to be converted
-   * @param ts what to covert
+   * @param ¢ what to covert
    * @return parameter, converted into a {@link Set} */
-  @SafeVarargs public static <T> Set<? extends T> set(final @Nullable T... ts) {
-    return accumulate.to(new HashSet<T>()).add(ts).elements();
+  @SafeVarargs public static <T> Set<? extends T> set(final @Nullable T... ¢) {
+    return accumulate.to(new HashSet<T>()).add(¢).elements();
   }
 
   /** Converts a value, which can be either a <code><b>null</b></code> or
@@ -237,15 +237,15 @@ public enum as {
    *         {@link String} */
   public static String[] strings(final Iterable<? extends @Nullable Object> os) {
     final List<@NonNull String> $ = new ArrayList<>();
-    for (final @Nullable Object o : os)
-      if (o != null)
-        $.add(o + "");
+    for (final @Nullable Object ¢ : os)
+      if (¢ != null)
+        $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
   }
 
   static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
-      int current = 0;
+      int current;
 
       @Override public boolean hasNext() {
         return current < is.length;

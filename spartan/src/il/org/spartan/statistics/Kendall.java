@@ -31,8 +31,7 @@ import il.org.spatan.iteration.*;
 
   public static double tau(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
-    final int n = xs.length;
-    return computeS(xs, ys, n) / (double) pairs(n);
+    return computeS(xs, ys, xs.length) / (double) pairs(xs.length);
   }
 
   /** Compute Kendall's tau coefficient for a ranking of the integers 0,...,n
@@ -51,10 +50,10 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     final List<Double> Xs = new ArrayList<>();
     final List<Double> Ys = new ArrayList<>();
-    for (int i = 0; i < xs.length; i++)
-      if (!Double.isNaN(xs[i]) && !Double.isNaN(ys[i])) {
-        Xs.add(Box.it(xs[i]));
-        Ys.add(Box.it(ys[i]));
+    for (int ¢ = 0; ¢ < xs.length; ++¢)
+      if (!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢])) {
+        Xs.add(Box.it(xs[¢]));
+        Ys.add(Box.it(ys[¢]));
       }
     return tauB_pruned(Iterables.toArray(Xs), Iterables.toArray(Ys));
   }
@@ -62,8 +61,8 @@ import il.org.spatan.iteration.*;
   static int compueS(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
-    for (int i = 0; i < xs.length; i++)
-      for (int j = i + 1; j < xs.length; j++) {
+    for (int i = 0; i < xs.length; ++i)
+      for (int j = i + 1; j < xs.length; ++j) {
         final double xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
         if (xi == xj || yi == yj)
           continue;
@@ -78,8 +77,8 @@ import il.org.spatan.iteration.*;
   static int compueS(final int[] xs, final int[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
-    for (int i = 0; i < xs.length; i++)
-      for (int j = i + 1; j < xs.length; j++) {
+    for (int i = 0; i < xs.length; ++i)
+      for (int j = i + 1; j < xs.length; ++j) {
         final int xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
         if (xi == xj || yi == yj)
           continue;
@@ -91,9 +90,9 @@ import il.org.spatan.iteration.*;
     return $;
   }
 
-  static int pairs(final int n) {
-    ___.nonnegative(n);
-    return n * (n - 1) / 2;
+  static int pairs(final int ¢) {
+    ___.nonnegative(¢);
+    return ¢ * (¢ - 1) / 2;
   }
 
   static int sigma(final double[] ds) {
@@ -106,12 +105,12 @@ import il.org.spatan.iteration.*;
     int $ = 0;
     for (int i = 0; i < ds.length;) {
       if (Double.isNaN(ds[i])) {
-        i++;
+        ++i;
         continue;
       }
       int j = i;
       while (j < ds.length && ds[j] == ds[i])
-        j++;
+        ++j;
       $ += pairs(j - i);
       i = j;
     }
@@ -121,12 +120,12 @@ import il.org.spatan.iteration.*;
   private static int computeS(final double[] xs, final double[] ys, final int n) {
     int nc = 0;
     int nd = 0;
-    for (int i = 0; i < n; i++)
-      for (int j = i + 1; j < n; j++)
+    for (int i = 0; i < n; ++i)
+      for (int j = i + 1; j < n; ++j)
         if (xs[i] > xs[j] && ys[i] > ys[j] || xs[i] < xs[j] && ys[i] < ys[j])
-          nc++;
+          ++nc;
         else if (xs[i] > xs[j] && ys[i] < ys[j] || xs[i] < xs[j] && ys[i] > ys[j])
-          nd++;
+          ++nd;
     return nc - nd;
   }
 
@@ -140,8 +139,8 @@ import il.org.spatan.iteration.*;
   public static class Charectristics {
     private static int valid(final double[] xs, final double[] ys) {
       int $ = 0;
-      for (int i = 0; i < xs.length; i++)
-        $ += As.binary(!Double.isNaN(xs[i]) && !Double.isNaN(ys[i]));
+      for (int ¢ = 0; ¢ < xs.length; ++¢)
+        $ += As.binary(!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢]));
       return $;
     }
 

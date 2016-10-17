@@ -16,16 +16,16 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
    * use the values of <code>1L</code> to maintain upward compatibility. */
   private static final long serialVersionUID = 1L;
 
-  private static StringBuilder appendValue(final StringBuilder sb, final String name, final double v, final Unit u) {
-    return sb.append(name).append('=').append(u.format(v));
+  private static StringBuilder appendValue(final StringBuilder b, final String name, final double v, final Unit u) {
+    return b.append(name).append('=').append(u.format(v));
   }
 
-  private static void appendValue(final StringBuilder sb, final String name, final int n) {
-    sb.append(name).append('=').append(n);
+  private static void appendValue(final StringBuilder b, final String name, final int i) {
+    b.append(name).append('=').append(i);
   }
 
   protected Unit unit;
-  protected int flips = 0;
+  protected int flips;
   protected double[] values = new double[0];
 
   /** Generate a copy of the set of all recorded values
@@ -42,16 +42,16 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
     return format(unit != null ? unit : Unit.DOUBLE);
   }
 
-  public String format(final Unit u) {
-    return n() == 1 ? u.format(mean()) : format(u, "A D R N");
+  public String format(final Unit ¢) {
+    return n() == 1 ? ¢.format(mean()) : format(¢, "A D R N");
   }
 
   public String format(final Unit u, final String format) {
     if (format == null)
       return format(u);
     final StringBuilder sb = new StringBuilder();
-    for (final char c : format.toCharArray())
-      switch (c) {
+    for (final char ¢ : format.toCharArray())
+      switch (¢) {
         case 'A':
           appendValue(sb, "mean", mean(), u);
           appendError(sb, relativeError());
@@ -94,7 +94,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
           sb.append("]");
           break;
         default:
-          sb.append(c);
+          sb.append(¢);
           break;
       }
     return sb + "";
@@ -132,7 +132,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
     return unit;
   }
 
-  private StringBuilder appendError(final StringBuilder sb, final double e) {
-    return n() <= 1 ? sb : sb.append('±').append(RELATIVE.format(e));
+  private StringBuilder appendError(final StringBuilder b, final double d) {
+    return n() <= 1 ? b : b.append('±').append(RELATIVE.format(d));
   }
 }

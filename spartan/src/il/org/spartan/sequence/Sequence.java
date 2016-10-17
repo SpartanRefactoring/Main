@@ -20,8 +20,8 @@ public abstract class Sequence implements Cloneable {
 
   public abstract Sequence advance();
 
-  public final Sequence advanceTo(final int n) {
-    while (current() < n && more())
+  public final Sequence advanceTo(final int ¢) {
+    while (current() < ¢ && more())
       advance();
     return this;
   }
@@ -52,15 +52,15 @@ public abstract class Sequence implements Cloneable {
 
   public abstract Sequence reset();
 
-  public Sequence startAt(final int i) {
-    return reset().advanceTo(i);
+  public Sequence startAt(final int ¢) {
+    return reset().advanceTo(¢);
   }
 
   public final int[] toArray() {
     return clone().fill(new int[count()]);
   }
 
-  private final int __count() {
+  private int __count() {
     for (int $ = 0;; ++$) {
       if (!more())
         return $;
@@ -71,8 +71,8 @@ public abstract class Sequence implements Cloneable {
   /** @param $
    * @return */
   private int[] fill(final int[] $) {
-    for (int i = 0; more(); i++, advance())
-      $[i] = current();
+    for (int ¢ = 0; more(); ++¢, advance())
+      $[¢] = current();
     return $;
   }
 

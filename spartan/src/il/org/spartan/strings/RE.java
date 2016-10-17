@@ -8,8 +8,8 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separate.*;
 
 public class RE {
-  public static String all(final String s) {
-    return beginLine() + s + endLine();
+  public static String all(final String ¢) {
+    return beginLine() + ¢ + endLine();
   }
 
   public static String anyNumberOf(final String regularExpression) {
@@ -31,7 +31,7 @@ public class RE {
   public static String find(final String regularExpression, final String text) {
     final Pattern p = Pattern.compile(regularExpression);
     final Matcher m = p.matcher(text);
-    return m.find() ? m.group() : null;
+    return !m.find() ? null : m.group();
   }
 
   public static boolean found(final String regularExpression, final String text) {

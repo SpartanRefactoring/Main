@@ -90,7 +90,7 @@ public final class IntegersTest extends integers {
   @Test public void constantSizeRemoveInsert() {
     final int N = 20, M = 100;
     add(Permutation.identity(N));
-    for (int i = 0; i < M; i++) {
+    for (int i = 0; i < M; ++i) {
       invariant.check();
       azzert.that(N, is(size()));
       final int[] v = entries();

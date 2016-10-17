@@ -27,9 +27,9 @@ import il.org.spartan.streotypes.*;
 @Utility public enum Prune {
   ;
   public static <T, C extends Collection<T>> C nulls(final C ts) {
-    for (final Iterator<T> i = ts.iterator(); i.hasNext();)
-      if (i.next() == null)
-        i.remove();
+    for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
+      if (¢.next() == null)
+        ¢.remove();
     return ts;
   }
 
@@ -42,9 +42,9 @@ import il.org.spartan.streotypes.*;
    *         returned collection. */
   public static <T> List<T> nulls(final Iterable<T> ts) {
     final ArrayList<T> $ = new ArrayList<>();
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add(¢);
     return $;
   }
 
@@ -57,17 +57,17 @@ import il.org.spartan.streotypes.*;
    *         returned collection. */
   public static <T> T[] nulls(final T[] ts) {
     final List<T> $ = new ArrayList<>();
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add(¢);
     return $.toArray(shrink(ts));
   }
 
   public static <T> String[] whites(final T... ts) {
     final List<String> $ = new ArrayList<>();
-    for (final T t : ts)
-      if (t != null)
-        addNonEmpty($, (t + "").trim());
+    for (final T ¢ : ts)
+      if (¢ != null)
+        addNonEmpty($, (¢ + "").trim());
     return $.toArray(new String[0]);
   }
 
@@ -78,10 +78,10 @@ import il.org.spartan.streotypes.*;
 
   /** Shrink an array size to zero.
    * @param <T> type of elements in the input array.
-   * @param ts an array of values.
+   * @param ¢ an array of values.
    * @return an array of size 0 of elements of type <code>T</code>. */
-  private static <T> T[] shrink(final T[] ts) {
-    return Arrays.copyOf(ts, 0);
+  private static <T> T[] shrink(final T[] ¢) {
+    return Arrays.copyOf(¢, 0);
   }
 
   /** A JUnit test class for the enclosing class.

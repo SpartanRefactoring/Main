@@ -52,7 +52,7 @@ public enum BenchingPolicy {
 
   public static long gcCylces(final LogBook.Mutable m, final Operation o, final int runs) {
     final JVM before = new JVM();
-    for (int i = 0; i < runs; ++i)
+    for (int ¢ = 0; ¢ < runs; ++¢)
       o.call();
     final long $ = new JVM().gcCycles - before.gcCycles;
     m.set("runs", runs).record($);
@@ -84,8 +84,7 @@ public enum BenchingPolicy {
   }
 
   public static void main(final String[] args) {
-    final TEST t = new TEST();
-    t.compareHash();
+    (new TEST()).compareHash();
   }
 
   public static void measure(final LogBook.Mutable m, final Bencheon b, final int initialRuns) {
@@ -99,8 +98,8 @@ public enum BenchingPolicy {
     return (int) Math.round(benchingTime / time + 0.5);
   }
 
-  public static int runs(final Operation o) {
-    return runs(approximateSteadyStateTime(o));
+  public static int runs(final Operation ¢) {
+    return runs(approximateSteadyStateTime(¢));
   }
 
   public static void setBenchingTime(final double benchingTime) {
@@ -179,9 +178,9 @@ public enum BenchingPolicy {
     }
   }
 
-  private static void calibrate(final TimingEstimator e) {
+  private static void calibrate(final TimingEstimator ¢) {
     Log.beginCompoundStage("Calibration");
-    approximateSteadyStateTime(e);
+    approximateSteadyStateTime(¢);
     Log.endCompoundStage();
   }
 
@@ -195,7 +194,7 @@ public enum BenchingPolicy {
   public static class TEST {
     @Test public void benchBencheon0_0__10() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
-      for (int i = 0; i < 20; ++i)
+      for (int ¢ = 0; ¢ < 20; ++¢)
         go(l, new Bencheon.Exact(0, 0, 10));
       l.printBy(Consolidation.LIST);
     }
@@ -203,9 +202,9 @@ public enum BenchingPolicy {
     @Test public void benchBencheon0_0__1000() {
       final LogBook.Mutable l = new LogBook.Mutable(this);
       final Bencheon b = new Bencheon.Exact(0, 0, 1000);
-      for (int i = 0; i < 1000; ++i)
+      for (int ¢ = 0; ¢ < 1000; ++¢)
         b.call();
-      for (int i = 0; i < 20; ++i)
+      for (int ¢ = 0; ¢ < 20; ++¢)
         go(l, b);
       l.printBy(Consolidation.LIST);
     }

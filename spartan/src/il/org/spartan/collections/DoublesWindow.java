@@ -32,12 +32,12 @@ public class DoublesWindow {
   }
 
   /** add a value into the window, removing the oldest one if necessary
-   * @param d an arbitrary value
+   * @param ¢ an arbitrary value
    * @return <code><strong>this</strong></code> */
-  public DoublesWindow add(final double d) {
+  public DoublesWindow add(final double ¢) {
     if (size < window.length)
       ++size;
-    window[newest = (newest + 1) % window.length] = d;
+    window[newest = (newest + 1) % window.length] = ¢;
     return this;
   }
 
@@ -155,22 +155,22 @@ public class DoublesWindow {
 
     @Test public void veryLongWindow() {
       final DoublesWindow w = new DoublesWindow(5);
-      for (int i = 0; i < 5; i++) {
+      for (int ¢ = 0; ¢ < 5; ++¢) {
         azzert.that(w.capacity(), is(5));
-        azzert.that(w.size(), is(i));
+        azzert.that(w.size(), is(¢));
         assert !w.full();
-        w.add(i);
-        azzert.that(w.size(), is((i + 1)));
-        assertEquals(i, w.newest(), 1E-5);
+        w.add(¢);
+        azzert.that(w.size(), is((¢ + 1)));
+        assertEquals(¢, w.newest(), 1E-5);
         assertEquals(0, w.oldest(), 1E-5);
       }
-      for (int i = 5; i < 100; i++) {
+      for (int ¢ = 5; ¢ < 100; ++¢) {
         assert w.full();
         azzert.that(w.capacity(), is(5));
         azzert.that(w.size(), is(5));
-        w.add(i);
-        assertEquals(i, w.newest(), 1E-10);
-        assertEquals(i - 5 + 1, w.oldest(), 1E-10);
+        w.add(¢);
+        assertEquals(¢, w.newest(), 1E-10);
+        assertEquals(¢ - 5 + 1, w.oldest(), 1E-10);
       }
     }
   }

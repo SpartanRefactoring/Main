@@ -86,8 +86,8 @@ public class Cartesian {
     final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
     int n = 0;
     for (final R r : rs)
-      for (final S s : ss)
-        $[n++] = new Pair<>(r, s);
+      for (final S ¢ : ss)
+        $[n++] = new Pair<>(r, ¢);
     return $;
   }
 
@@ -96,26 +96,23 @@ public class Cartesian {
     int n = 0;
     for (final R r : rs)
       for (final S s : ss)
-        for (final T t : ts)
-          $[n++] = Triple.make(r, s, t);
+        for (final T ¢ : ts)
+          $[n++] = Triple.make(r, s, ¢);
     sure(n == $.length);
     return $;
   }
 
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void makeArray000() {
-      final int n = makeObliqueProduct(new Object[0], new Object[0], new Object[0]).length;
-      azzert.that(n, is(0));
+      azzert.that(makeObliqueProduct(new Object[0], new Object[0], new Object[0]).length, is(0));
     }
 
     @Test public void makeArray111() {
-      final int n = makeObliqueProduct(new Object[1], new Object[1], new Object[1]).length;
-      azzert.that(n, is(1));
+      azzert.that(makeObliqueProduct(new Object[1], new Object[1], new Object[1]).length, is(1));
     }
 
     @Test public void makeArray3_13_19() {
-      final int n = makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length;
-      azzert.that(n, is(702));
+      azzert.that(makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length, is(702));
     }
   }
 }

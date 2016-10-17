@@ -27,24 +27,24 @@ import il.org.spartan.streotypes.*;
 @Utility public enum Unbox {
   // A namespace: no values to this <code><b>enum</b></code>
   ;
-  public static double[] it(final Double[] ds) {
-    return unbox(ds);
+  public static double[] it(final Double[] ¢) {
+    return unbox(¢);
   }
 
-  public static int it(final Integer i) {
-    return i.intValue();
+  public static int it(final Integer ¢) {
+    return ¢.intValue();
   }
 
-  public static int[] it(final Integer[] is) {
-    return unbox(is);
+  public static int[] it(final Integer[] ¢) {
+    return unbox(¢);
   }
 
-  public static int[] it(final List<Integer> is) {
-    return it(is.toArray(new Integer[is.size()]));
+  public static int[] it(final List<Integer> ¢) {
+    return it(¢.toArray(new Integer[¢.size()]));
   }
 
-  public static boolean unbox(final Boolean b) {
-    return b.booleanValue();
+  public static boolean unbox(final Boolean ¢) {
+    return ¢.booleanValue();
   }
 
   /** Unbox an array of {@link Boolean}s into an array of
@@ -53,13 +53,13 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>boolean</b></code>s. */
   public static boolean[] unbox(final Boolean[] bs) {
     final boolean[] $ = new boolean[bs.length];
-    for (int i = 0; i < bs.length; i++)
-      $[i] = bs[i].booleanValue();
+    for (int ¢ = 0; ¢ < bs.length; ++¢)
+      $[¢] = bs[¢].booleanValue();
     return $;
   }
 
-  public static byte unbox(final Byte b) {
-    return b.byteValue();
+  public static byte unbox(final Byte ¢) {
+    return ¢.byteValue();
   }
 
   /** Unbox an array of {@link Byte}s into an array of <code><b>byte</b></code>
@@ -68,13 +68,13 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>byte</b></code>s. */
   public static byte[] unbox(final Byte[] bs) {
     final byte[] $ = new byte[bs.length];
-    for (int i = 0; i < bs.length; i++)
-      $[i] = bs[i].byteValue();
+    for (int ¢ = 0; ¢ < bs.length; ++¢)
+      $[¢] = bs[¢].byteValue();
     return $;
   }
 
-  public static char unbox(final Character c) {
-    return c.charValue();
+  public static char unbox(final Character ¢) {
+    return ¢.charValue();
   }
 
   /** Unbox an array of {@link Character}s into an array of
@@ -83,8 +83,8 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>char</b></code>s. */
   public static char[] unbox(final Character[] cs) {
     final char[] $ = new char[cs.length];
-    for (int i = 0; i < cs.length; i++)
-      $[i] = cs[i].charValue();
+    for (int ¢ = 0; ¢ < cs.length; ++¢)
+      $[¢] = cs[¢].charValue();
     return $;
   }
 
@@ -100,8 +100,8 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  public static double unbox(final Double d) {
-    return d.doubleValue();
+  public static double unbox(final Double ¢) {
+    return ¢.doubleValue();
   }
 
   /** Unbox an array of {@link Double}s into an array of
@@ -110,13 +110,13 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>double</b></code>s. */
   public static double[] unbox(final Double[] ds) {
     final double[] $ = new double[ds.length];
-    for (int i = 0; i < ds.length; i++)
-      $[i] = ds[i].floatValue();
+    for (int ¢ = 0; ¢ < ds.length; ++¢)
+      $[¢] = ds[¢].floatValue();
     return $;
   }
 
-  public static float unbox(final Float f) {
-    return f.floatValue();
+  public static float unbox(final Float ¢) {
+    return ¢.floatValue();
   }
 
   /** Unbox an array of {@link Float}s into an array of
@@ -125,13 +125,13 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>float</b></code>s. */
   public static float[] unbox(final Float[] fs) {
     final float[] $ = new float[fs.length];
-    for (int i = 0; i < fs.length; i++)
-      $[i] = fs[i].floatValue();
+    for (int ¢ = 0; ¢ < fs.length; ++¢)
+      $[¢] = fs[¢].floatValue();
     return $;
   }
 
-  public static int unbox(final Integer i) {
-    return i.intValue();
+  public static int unbox(final Integer ¢) {
+    return ¢.intValue();
   }
 
   /** Unbox an array of {@link Integer}s into an array of
@@ -140,13 +140,13 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>int</b></code>s. */
   public static int[] unbox(final Integer[] is) {
     final int[] $ = new int[is.length];
-    for (int i = 0; i < is.length; i++)
-      $[i] = is[i].intValue();
+    for (int ¢ = 0; ¢ < is.length; ++¢)
+      $[¢] = is[¢].intValue();
     return $;
   }
 
-  public static long unbox(final Long l) {
-    return l.longValue();
+  public static long unbox(final Long ¢) {
+    return ¢.longValue();
   }
 
   /** Unbox an array of {@link Long}s into an array of <code><b>long</b></code>
@@ -155,13 +155,13 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>long</b></code>s. */
   public static long[] unbox(final Long[] ls) {
     final long[] $ = new long[ls.length];
-    for (int i = 0; i < ls.length; i++)
-      $[i] = ls[i].longValue();
+    for (int ¢ = 0; ¢ < ls.length; ++¢)
+      $[¢] = ls[¢].longValue();
     return $;
   }
 
-  public static short unbox(final Short s) {
-    return s.shortValue();
+  public static short unbox(final Short ¢) {
+    return ¢.shortValue();
   }
 
   /** Unbox an array of {@link Short}s into an array of
@@ -170,8 +170,8 @@ import il.org.spartan.streotypes.*;
    * @return an equivalent array of <code><b>short</b></code>s. */
   public static short[] unbox(final Short[] ss) {
     final short[] $ = new short[ss.length];
-    for (int i = 0; i < ss.length; i++)
-      $[i] = ss[i].shortValue();
+    for (int ¢ = 0; ¢ < ss.length; ++¢)
+      $[¢] = ss[¢].shortValue();
     return $;
   }
 }

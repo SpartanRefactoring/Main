@@ -16,8 +16,8 @@ public class Things {
     nPattern4();
   }
 
-  private static void doSomethingWith(final Object... os) {
-    nothing(os);
+  private static void doSomethingWith(final Object... ¢) {
+    nothing(¢);
   }
 
   private static void doSomethingWithPair(final Object o1, final Object o2) {
@@ -26,19 +26,19 @@ public class Things {
 
   private static void nothing(final Object... os) {
     if (os.length >= 2)
-      for (final Object o : os)
-        nothing(o);
+      for (final Object ¢ : os)
+        nothing(¢);
   }
 
   private static void nPattern1() {
-    for (final Thing t : things)
-      doSomethingWith(t);
+    for (final Thing ¢ : things)
+      doSomethingWith(¢);
   }
 
   private static void nPattern2() {
     int i = 0;
-    for (final Thing t : things)
-      doSomethingWithPair(Integer.valueOf(i++), t);
+    for (final Thing ¢ : things)
+      doSomethingWithPair(Integer.valueOf(i++), ¢);
   }
 
   private static void nPattern3() {
@@ -67,13 +67,11 @@ interface Cat {
   interface in {
     interface the {
       interface Hat {
-        static final Thing thing1 = new Thing() {
-          /* Intentionally empty */
+        final Thing thing1 = new Thing() {
         };
-        static final Thing thing2 = new Thing() {
-          /* Intentionally empty */
+        final Thing thing2 = new Thing() {
         };
-        static final Thing[] things = { thing1, thing2 };
+        final Thing[] things = { thing1, thing2 };
 
         interface Thing {
           /* Intentionally empty */

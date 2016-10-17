@@ -14,18 +14,18 @@ public enum Filename {
   public static final char DOT = '.';
 
   /** Obtain the relative path name of a class
-   * @param c an arbitrary class
+   * @param ¢ an arbitrary class
    * @return the relative path name, with respect to JAVA packages directory
    *         system, of the parameter */
-  public static String class2path(final Class<?> c) {
-    return class2path(c.getCanonicalName());
+  public static String class2path(final Class<?> ¢) {
+    return class2path(¢.getCanonicalName());
   }
 
   /** obtain the relative path name of the class of a given object
-   * @param o an arbitrary object
+   * @param ¢ an arbitrary object
    * @return relative path of this class */
-  public static Object class2path(final Object o) {
-    return class2path(o.getClass());
+  public static Object class2path(final Object ¢) {
+    return class2path(¢.getClass());
   }
 
   /** Obtain the relative path name of a class
@@ -44,8 +44,8 @@ public enum Filename {
     return normalizedName.substring(normalizedName.lastIndexOf('\\') + 1);
   }
 
-  public static String getTrailer(final String s) {
-    return s.substring(s.lastIndexOf('.') + 1);
+  public static String getTrailer(final String ¢) {
+    return ¢.substring(¢.lastIndexOf('.') + 1);
   }
 
   /** Obtain the leading portion of a fully qualified class name.
@@ -88,10 +88,10 @@ public enum Filename {
   }
 
   public static String name2Canonical(final String name) {
-    for (String before = name, after;; before = after) {
-      after = before.replaceFirst("\\$([a-zA-Z__][a-zA-Z0-9__$]*)$", ".$1");
-      if (after.equals(before))
-        return after;
+    for (String before = name, $;; before = $) {
+      $ = before.replaceFirst("\\$([a-zA-Z__][a-zA-Z0-9__$]*)$", ".$1");
+      if ($.equals(before))
+        return $;
     }
   }
 

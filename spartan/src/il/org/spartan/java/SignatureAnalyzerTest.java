@@ -19,8 +19,7 @@ import il.org.spartan.*;
   }
 
   @Test public void createFileStaticType() {
-    final SignatureAnalyzer __ = SignatureAnalyzer.ofFile("Data/file");
-    azzert.that(__.getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createFileType() {
@@ -28,8 +27,7 @@ import il.org.spartan.*;
   }
 
   @Test public void createReaderStaticType() {
-    final SignatureAnalyzer __ = SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n"));
-    azzert.that(__.getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderType() {
@@ -41,8 +39,7 @@ import il.org.spartan.*;
   }
 
   @Test public void createStringStaticType() {
-    final SignatureAnalyzer __ = SignatureAnalyzer.ofString("Hello, World!\n");
-    azzert.that(__.getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createStringType() {

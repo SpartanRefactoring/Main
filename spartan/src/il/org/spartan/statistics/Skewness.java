@@ -19,16 +19,16 @@ import il.org.spartan.streotypes.*;
     return skewenessCorrection(vs.length);
   }
 
-  public static double skewenessCorrection(final int n) {
-    return Math.sqrt(n * (n - 1)) / (n - 2);
+  public static double skewenessCorrection(final int ¢) {
+    return Math.sqrt(¢ * (¢ - 1)) / (¢ - 2);
   }
 
   public static double skewness(final double... vs) {
     return skewnessNormalizedVector(normalize(vs.clone()));
   }
 
-  public static double skewness(final RealStatistics s) {
-    return skewness(s.all());
+  public static double skewness(final RealStatistics ¢) {
+    return skewness(¢.all());
   }
 
   public static double skewnessNormalizedVector(final double... vs) {

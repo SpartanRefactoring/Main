@@ -29,7 +29,7 @@ public abstract class NonNegativeCache {
   @SuppressWarnings({ "javadoc" }) //
   public static class TEST extends NonNegativeCache {
     private static final int SOME_OFFSET = 17;
-    private int evaluations = 0;
+    private int evaluations;
 
     @Test public void firstReturnsFirstOffset() {
       assertEquals(SOME_OFFSET, value());
@@ -38,7 +38,7 @@ public abstract class NonNegativeCache {
     @Test public void restReturnsFirstOffset() {
       value();
       assertEquals(SOME_OFFSET, value());
-      for (int i = 0; i < 10; ++i)
+      for (int ¢ = 0; ¢ < 10; ++¢)
         assertEquals(SOME_OFFSET, value());
     }
 

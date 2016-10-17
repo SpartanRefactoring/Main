@@ -58,16 +58,16 @@ public enum Enumerate {
   public static List<String> arabic(final Iterable<Object> os, final char separator) {
     final List<String> $ = new ArrayList<>();
     final int i = 1;
-    for (final Object o : os)
-      $.add(i + "" + separator + o);
+    for (final Object ¢ : os)
+      $.add(i + "" + separator + ¢);
     return $;
   }
 
   public static List<String> arabic(final Iterable<Object> os, final String separator) {
     final List<String> $ = new ArrayList<>();
     final int i = 1;
-    for (final Object o : os)
-      $.add(i + separator + o);
+    for (final Object ¢ : os)
+      $.add(i + separator + ¢);
     return $;
   }
 
@@ -81,15 +81,15 @@ public enum Enumerate {
 
   public static String[] arabic(final Object[] os, final char separator) {
     final String[] $ = new String[os.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = i + 1 + "" + separator + os[i];
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = ¢ + 1 + "" + separator + os[¢];
     return $;
   }
 
   public static String[] arabic(final Object[] os, final String separator) {
     final String[] $ = new String[os.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = i + 1 + separator + os[i];
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = ¢ + 1 + separator + os[¢];
     return $;
   }
 
@@ -103,15 +103,15 @@ public enum Enumerate {
 
   public static String[] arabic(final String[] ss, final char separator) {
     final String[] $ = new String[ss.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = i + 1 + separator + esc(ss[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = ¢ + 1 + separator + esc(ss[¢]);
     return $;
   }
 
   public static String[] arabic(final String[] ss, final String separator) {
     final String[] $ = new String[ss.length];
-    for (int i = 0; i < $.length; i++)
-      $[i] = i + 1 + separator + esc(ss[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = ¢ + 1 + separator + esc(ss[¢]);
     return $;
   }
 }

@@ -12,11 +12,11 @@ import il.org.spartan.streotypes.*;
  * @since 2011-08-1 */
 @Utility public enum Kurtosis {
   ;
-  public static double kurotsis(final double... ds) {
-    return kurtosisNormalizedVector(normalize(ds.clone()));
+  public static double kurotsis(final double... ¢) {
+    return kurtosisNormalizedVector(normalize(¢.clone()));
   }
 
-  public static double kurtosisNormalizedVector(final double... ds) {
-    return moment(4, ds) - 3;
+  public static double kurtosisNormalizedVector(final double... ¢) {
+    return moment(4, ¢) - 3;
   }
 }

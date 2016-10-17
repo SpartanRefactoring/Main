@@ -16,7 +16,7 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil,
  * @since 18/06/2008 */
 @Instantiable public class Stopper {
-  private static boolean mute = false;
+  private static boolean mute;
 
   /** Silence all stoppers from now on. */
   public static void mute() {
@@ -66,7 +66,7 @@ import il.org.spartan.streotypes.*;
   /** Used for measuring multiple (similar) events with the same stopper, this
    * method records a new case. */
   public void nextCase() {
-    cases++;
+    ++cases;
   }
 
   /** @return the time elapsed since creation. */

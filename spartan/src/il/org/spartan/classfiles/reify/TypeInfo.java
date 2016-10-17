@@ -5,15 +5,15 @@ import java.util.*;
 import il.org.spartan.utils.*;
 
 public abstract class TypeInfo {
-  public static TypeInfo makeArrayOf(final TypeInfo t) {
-    return new ArrayType(t);
+  public static TypeInfo makeArrayOf(final TypeInfo ¢) {
+    return new ArrayType(¢);
   }
 
-  public static TypeInfo makeConstructor(final TypeInfo t) {
-    return new ConstructorType(((MethodType) t).arguments);
+  public static TypeInfo makeConstructor(final TypeInfo ¢) {
+    return new ConstructorType(((MethodType) ¢).arguments);
   }
 
-  public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo t) {
+  public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo i) {
     return new InitializerType();
   }
 

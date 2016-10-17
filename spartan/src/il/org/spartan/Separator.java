@@ -21,9 +21,8 @@ import il.org.spartan.iterables.*;
 public final class Separator {
   /** @param args JD */
   public static void main(final String[] args) {
-    final Separator s = new Separator(", ");
     for (final String a : args)
-      System.out.print(s + a);
+      System.out.print(new Separator(", ") + a);
   }
 
   /** <code>separateBy</code>
@@ -36,8 +35,8 @@ public final class Separator {
       return "";
     String $ = "";
     final Separator s = new Separator(between);
-    for (final int i : is)
-      $ += s + (new Integer(i) + "");
+    for (final int ¢ : is)
+      $ += s + (new Integer(¢) + "");
     return $;
   }
 
@@ -73,8 +72,8 @@ public final class Separator {
       return "";
     final StringBuilder $ = new StringBuilder(begin);
     final Separator s = new Separator(between);
-    for (final T t : ts)
-      $.append(s).append(t);
+    for (final T ¢ : ts)
+      $.append(s).append(¢);
     return as.string($.append(end));
   }
 
@@ -89,8 +88,8 @@ public final class Separator {
       return "";
     final StringBuilder $ = new StringBuilder(begin);
     final Separator s = new Separator(between);
-    for (final T t : ts)
-      $.append(s).append(t);
+    for (final T ¢ : ts)
+      $.append(s).append(¢);
     return as.string($.append(end));
   }
 

@@ -18,8 +18,8 @@ public abstract class SmallIntegersGraph {
     this.component = component;
   }
 
-  public final short component(final int n) {
-    return !has(n) ? -1 : component((short) n);
+  public final short component(final int ¢) {
+    return !has(¢) ? -1 : component((short) ¢);
   }
 
   public final short components() {
@@ -33,7 +33,7 @@ public abstract class SmallIntegersGraph {
     return has(n1) && has(n2) && component((short) n1) == component((short) n2);
   }
 
-  public abstract boolean has(final int n);
+  public abstract boolean has(final int i);
 
   public abstract boolean has(final int n1, final int n2);
 

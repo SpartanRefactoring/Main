@@ -4,8 +4,8 @@ public class Multiplicative extends Sequence {
   private static final double DEFAULT_STEP = 0.1;
 
   public static void main(final String[] args) {
-    for (final Sequence s = new Multiplicative(0.16); s.current < 150; s.advance())
-      System.out.print(s.current() + " ");
+    for (final Sequence ¢ = new Multiplicative(0.16); ¢.current < 150; ¢.advance())
+      System.out.print(¢.current() + " ");
     System.out.println();
   }
 

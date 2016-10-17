@@ -45,9 +45,9 @@ public class LightWeightParser {
   }
 
   private Token skipUntil(final Token... ts) {
-    for (Token t = tokenizer.next(); t != null; t = tokenizer.next())
-      if (in(t, ts))
-        return t;
+    for (Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
+      if (in($, ts))
+        return $;
     return null;
   }
 }

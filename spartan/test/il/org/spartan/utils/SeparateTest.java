@@ -17,8 +17,8 @@ import il.org.spartan.utils.Separate.*;
 public class SeparateTest {
   private static <T> Collection<T> makeCollection(final T... ts) {
     final ArrayList<T> $ = new ArrayList<>();
-    for (final T t : ts)
-      $.add(t);
+    for (final T ¢ : ts)
+      $.add(¢);
     return $;
   }
 

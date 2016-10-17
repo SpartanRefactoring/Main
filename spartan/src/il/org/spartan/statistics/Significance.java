@@ -22,13 +22,7 @@ public enum Significance {
     }
   };
   public static Significance signifcance(final double z) {
-    if (Math.abs(z) < 1.960)
-      return INSIGNIFICANT;
-    if (Math.abs(z) < 2.575)
-      return FIVE_PERCENT;
-    if (Math.abs(z) < 3.08)
-      return ONE_PERCENT;
-    return ONE_PERMILLE;
+    return Math.abs(z) < 1.960 ? INSIGNIFICANT : Math.abs(z) < 2.575 ? FIVE_PERCENT : Math.abs(z) < 3.08 ? ONE_PERCENT : ONE_PERMILLE;
   }
 
   public static Significance signifcance(final Kendall.Charectristics c) {
@@ -65,10 +59,6 @@ public enum Significance {
         thresholdA = 1.5;
         thresholdB = 1.5;
     }
-    if (Math.abs(c.tau) < thresholdB)
-      return INSIGNIFICANT;
-    if (Math.abs(c.tau) < thresholdA)
-      return FIVE_PERCENT;
-    return ONE_PERCENT;
+    return Math.abs(c.tau) < thresholdB ? INSIGNIFICANT : Math.abs(c.tau) < thresholdA ? FIVE_PERCENT : ONE_PERCENT;
   }
 }

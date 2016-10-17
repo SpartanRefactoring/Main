@@ -66,8 +66,8 @@ import il.org.spartan.utils.Separate.*;
    *        marked {@link External}
    * @return the parameter */
   public <T> T extract(final T t) {
-    for (final Entry<String, String> e : External.Introspector.toOrderedMap(t).entrySet())
-      put(e.getKey(), e.getValue());
+    for (final Entry<String, String> ¢ : External.Introspector.toOrderedMap(t).entrySet())
+      put(¢.getKey(), ¢.getValue());
     return t;
   }
 
@@ -79,13 +79,13 @@ import il.org.spartan.utils.Separate.*;
     return map.keySet();
   }
 
-  public CSVLine put(final Accumulator a) {
-    return put(a.name(), a.value());
+  public CSVLine put(final Accumulator ¢) {
+    return put(¢.name(), ¢.value());
   }
 
   public CSVLine put(final Accumulator... as) {
-    for (final Accumulator c : as)
-      put(c);
+    for (final Accumulator ¢ : as)
+      put(¢);
     return this;
   }
 

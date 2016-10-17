@@ -26,9 +26,9 @@ public final class ConstantPool {
 
   public ConstantPool(final RobustReader reader) {
     pool = new Constant[reader.readUnsignedShort()];
-    for (int i = 1; i < pool.length; i++)
-      if ((pool[i] = readConstant(reader)).isDoubleLength())
-        pool[++i] = Empty.$$;
+    for (int ¢ = 1; ¢ < pool.length; ++¢)
+      if ((pool[¢] = readConstant(reader)).isDoubleLength())
+        pool[++¢] = Empty.$$;
   }
 
   /** @param classIndex
@@ -53,17 +53,17 @@ public final class ConstantPool {
    * @return an array with names of all classes that this class uses */
   public String[] getReferencedClasses() {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof ClassConstant && c + "" != null)
-        $.add((c + ""));
+    for (final Constant ¢ : pool)
+      if (¢ instanceof ClassConstant && ¢ + "" != null)
+        $.add((¢ + ""));
     return $.toArray(new String[$.size()]);
   }
 
   public int[] getReferencedClassesIndices() {
     final IntsArray $ = new IntsArray();
-    for (int i = 0; i < pool.length; i++)
-      if (pool[i] instanceof ClassConstant && pool[i] + "" != null)
-        $.push(i);
+    for (int ¢ = 0; ¢ < pool.length; ++¢)
+      if (pool[¢] instanceof ClassConstant && pool[¢] + "" != null)
+        $.push(¢);
     return $.toArray();
   }
 
@@ -72,9 +72,9 @@ public final class ConstantPool {
    * @return an array with <code><b>double</b></code>s that this class uses. */
   public double[] getReferencedDoubles() {
     final ArrayList<Double> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof DoubleLiteral)
-        $.add(box(((DoubleLiteral) c).value));
+    for (final Constant ¢ : pool)
+      if (¢ instanceof DoubleLiteral)
+        $.add(box(((DoubleLiteral) ¢).value));
     return unbox($.toArray(new Double[$.size()]));
   }
 
@@ -83,9 +83,9 @@ public final class ConstantPool {
    * @return an array with <code><b>float</b></code>s that this class uses. */
   public float[] getReferencedFloats() {
     final ArrayList<Float> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof FloatLiteral)
-        $.add(box(((FloatLiteral) c).value));
+    for (final Constant ¢ : pool)
+      if (¢ instanceof FloatLiteral)
+        $.add(box(((FloatLiteral) ¢).value));
     return unbox($.toArray(new Float[$.size()]));
   }
 
@@ -93,9 +93,9 @@ public final class ConstantPool {
    * @return an array with <code><b>int</b></code>s that this class uses. */
   public int[] getReferencedInts() {
     final ArrayList<Integer> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof IntLiteral)
-        $.add(box(((IntLiteral) c).value));
+    for (final Constant ¢ : pool)
+      if (¢ instanceof IntLiteral)
+        $.add(box(((IntLiteral) ¢).value));
     return unbox($.toArray(new Integer[$.size()]));
   }
 
@@ -103,17 +103,17 @@ public final class ConstantPool {
    * @return an array with <code><b>long</b></code>s that this class uses. */
   public long[] getReferencedLongs() {
     final ArrayList<Long> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof LongLiteral)
-        $.add(box(((LongLiteral) c).value));
+    for (final Constant ¢ : pool)
+      if (¢ instanceof LongLiteral)
+        $.add(box(((LongLiteral) ¢).value));
     return unbox($.toArray(new Long[$.size()]));
   }
 
   public String[] getReferencedMethods() {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof MethodReference && !((MethodReference) c).getNameAndType().getName().equals("<init>") && c + "" != null)
-        $.add(((MethodReference) c).getClassConstant().getClassName() + ":" + ((MethodReference) c).getNameAndType().getName());
+    for (final Constant ¢ : pool)
+      if (¢ instanceof MethodReference && !((MethodReference) ¢).getNameAndType().getName().equals("<init>") && ¢ + "" != null)
+        $.add(((MethodReference) ¢).getClassConstant().getClassName() + ":" + ((MethodReference) ¢).getNameAndType().getName());
     return $.toArray(new String[$.size()]);
   }
 
@@ -121,9 +121,9 @@ public final class ConstantPool {
    * @return an array with all {@link String}s that this class uses */
   public String[] getReferencedStrings() {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof StringConstant)
-        $.add((c + ""));
+    for (final Constant ¢ : pool)
+      if (¢ instanceof StringConstant)
+        $.add((¢ + ""));
     return $.toArray(new String[$.size()]);
   }
 
@@ -131,9 +131,9 @@ public final class ConstantPool {
    * @return an array with <code><b>UTF8</b></code>s that this class uses. */
   public String[] getReferencedUTF8() {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final Constant c : pool)
-      if (c instanceof UTF8)
-        $.add(((UTF8) c).value);
+    for (final Constant ¢ : pool)
+      if (¢ instanceof UTF8)
+        $.add(((UTF8) ¢).value);
     return $.toArray(new String[$.size()]);
   }
 
@@ -150,9 +150,9 @@ public final class ConstantPool {
   }
 
   /** Read the next constant pool entry from a given stream
-   * @param reader
+   * @param r
    * @return the next constant pool entry found in the given stream */
-  private Constant readConstant(final RobustReader reader) {
+  private Constant readConstant(final RobustReader r) {
     final int//
     CONSTANT_UTF8 = 1, //
         CONSTANT_INTEGER = 3, //
@@ -166,29 +166,29 @@ public final class ConstantPool {
         CONSTANT_INTERFACE_METHODREF = 11, //
         CONSTANT_NAME_AND_TYPE = 12; //
     int b;
-    switch (b = reader.readUnsignedByte()) {
+    switch (b = r.readUnsignedByte()) {
       case CONSTANT_CLASS:
-        return new ClassConstant(reader.readUnsignedShort());
+        return new ClassConstant(r.readUnsignedShort());
       case CONSTANT_FIELDREF:
-        return new FieldReference(reader.readUnsignedShort(), reader.readUnsignedShort());
+        return new FieldReference(r.readUnsignedShort(), r.readUnsignedShort());
       case CONSTANT_METHODREF:
-        return new MethodReference(reader.readUnsignedShort(), reader.readUnsignedShort());
+        return new MethodReference(r.readUnsignedShort(), r.readUnsignedShort());
       case CONSTANT_INTERFACE_METHODREF:
-        return new InterfaceMethodReference(reader.readUnsignedShort(), reader.readUnsignedShort());
+        return new InterfaceMethodReference(r.readUnsignedShort(), r.readUnsignedShort());
       case CONSTANT_STRING:
-        return new StringConstant(reader.readUnsignedShort());
+        return new StringConstant(r.readUnsignedShort());
       case CONSTANT_INTEGER:
-        return new IntLiteral(reader.readInt());
+        return new IntLiteral(r.readInt());
       case CONSTANT_FLOAT:
-        return new FloatLiteral(reader.readFloat());
+        return new FloatLiteral(r.readFloat());
       case CONSTANT_LONG:
-        return new LongLiteral(reader.readLong());
+        return new LongLiteral(r.readLong());
       case CONSTANT_DOUBLE:
-        return new DoubleLiteral(reader.readDouble());
+        return new DoubleLiteral(r.readDouble());
       case CONSTANT_NAME_AND_TYPE:
-        return new NameAndTypeConstant(reader.readUnsignedShort(), reader.readUnsignedShort());
+        return new NameAndTypeConstant(r.readUnsignedShort(), r.readUnsignedShort());
       case CONSTANT_UTF8:
-        return new UTF8(reader.readUTF());
+        return new UTF8(r.readUTF());
       default:
         System.out.print("Unfamiliar field identifier = " + b);
         return null;
@@ -225,9 +225,7 @@ public final class ConstantPool {
       if ($.startsWith("["))
         return null;
       final int i = $.lastIndexOf('/');
-      if (i == -1)
-        return "";
-      return $.substring(0, i).replace('/', '.');
+      return i == -1 ? "" : $.substring(0, i).replace('/', '.');
     }
 
     public String getShortClassName() {
@@ -236,9 +234,7 @@ public final class ConstantPool {
         return null;
       $ = $.replaceFirst("^[\\[]+L", "");
       $ = $.replaceAll(";$", "");
-      if ($.startsWith("["))
-        return null;
-      return $.substring($.lastIndexOf('/') + 1).replace('$', '.');
+      return $.startsWith("[") ? null : $.substring($.lastIndexOf('/') + 1).replace('$', '.');
     }
 
     @Override public String toString() {
@@ -250,17 +246,19 @@ public final class ConstantPool {
     }
   }
 
-  public static abstract class Constant {
-    /** Does this entry occupy double space?
-     * @return <code><b>true</b></code> <i>iff</i> this instance occupies two
-     *         32-bit words */
-    @SuppressWarnings("static-method") //
-    public boolean isDoubleLength() {
+  public abstract static class Constant {
+    /**
+    * Does this entry occupy double space?
+    * @return  <code><b>true</b></code> <i>iff</i> this instance occupies two 32-bit words 
+    */
+    @SuppressWarnings("static-method") public boolean isDoubleLength() {
       return false;
     }
 
-    /** What is the type of this constant?
-     * @return a textual representation of the type of this instance */
+    /**
+    * What is the type of this constant?
+    * @return  a textual representation of the type of this instance 
+    */
     public abstract String typeName();
   }
 
@@ -300,8 +298,10 @@ public final class ConstantPool {
    * pattern
    * @author Yossi Gil */
   public static final class Empty extends Literal {
-    /** Singleton instance */
-    public final static Empty $$ = new Empty();
+    /**
+     * Singleton instance 
+     */
+    public static final Empty $$ = new Empty();
 
     /** A default, inaccessible constructor, forcing the singleton
      * restriction */
@@ -527,11 +527,11 @@ public final class ConstantPool {
     }
 
     /** Return a UTF8 representation of a specific entry in the constants' pool
-     * @param i where to look for this entry?
+     * @param ¢ where to look for this entry?
      * @return a UTF8 representation of the content of this entry */
     @SuppressWarnings("synthetic-access") //
-    final String getUTF8(final int i) {
-      return !(pool[i] instanceof UTF8) ? null : ((UTF8) pool[i]).value;
+    final String getUTF8(final int ¢) {
+      return !(pool[¢] instanceof UTF8) ? null : ((UTF8) pool[¢]).value;
     }
   }
 

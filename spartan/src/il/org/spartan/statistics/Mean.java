@@ -14,22 +14,22 @@ import il.org.spartan.streotypes.*;
  * @since 2011-08-1 */
 @Utility public enum Mean {
   ;
-  public static double destructiveMoment(final int n, final double... ds) {
-    return sum(n, shift(ds)) / ds.length;
+  public static double destructiveMoment(final int i, final double... ds) {
+    return sum(i, shift(ds)) / ds.length;
   }
 
-  public static double mean(final double... ds) {
-    return sum(ds) / ds.length;
+  public static double mean(final double... ¢) {
+    return sum(¢) / ¢.length;
   }
 
-  public static double moment(final int n, final double... ds) {
-    return destructiveMoment(n, ds.clone());
+  public static double moment(final int i, final double... ds) {
+    return destructiveMoment(i, ds.clone());
   }
 
   public static double[] shift(final double... ds) {
     final double mean = mean(ds);
-    for (int i = 0; i < ds.length; i++)
-      ds[i] -= mean;
+    for (int ¢ = 0; ¢ < ds.length; ++¢)
+      ds[¢] -= mean;
     return ds;
   }
 

@@ -12,7 +12,7 @@ import il.org.spatan.iteration.*;
  * @see JRE */
 @Utility public class CLASSPATH {
   /** A class loader, which represents a */
-  private static ClassLoader classLoader = null;
+  private static ClassLoader classLoader;
   /** Which system property contains the class path? */
   private static final String JAVA_CLASS_PATH = "java.class.path";
   private static final String original = get();
@@ -119,7 +119,7 @@ import il.org.spatan.iteration.*;
   private static ClassLoader computeClassLoader() {
     final String[] path = asArray();
     final URL[] urls = new URL[path.length];
-    for (int i = 0; i < path.length; i++)
+    for (int i = 0; i < path.length; ++i)
       try {
         urls[i] = new File(path[i]).toURI().toURL();
       } catch (final MalformedURLException __) {

@@ -12,17 +12,15 @@ import il.org.spartan.*;
   static Token toToken(final String s) {
     try {
       final RawTokenizer J = new RawTokenizer(new StringReader(s));
-      final Token t = J.next();
+      final Token $ = J.next();
       azzert.that(J.next(), is(Token.EOF));
-      return t;
+      return $;
     } catch (final IOException E) {
       return Token.EOF;
     }
   }
 
   @Test public void test_simple_literal() {
-    final String s = "\"abcd\"";
-    final Token t = toToken(s);
-    azzert.that(t, is(Token.STRING_LITERAL));
+    azzert.that(toToken("\"abcd\""), is(Token.STRING_LITERAL));
   }
 }

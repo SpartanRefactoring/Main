@@ -18,8 +18,8 @@ import il.org.spatan.iteration.*;
     final int n = ds.length;
     final double median = destructiveMedian(ds);
     final double $[] = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Math.abs(ds[i] - median);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Math.abs(ds[¢] - median);
     return destructiveMedian($);
   }
 
@@ -29,21 +29,21 @@ import il.org.spatan.iteration.*;
     return (ds[n / 2] + ds[(n - 1) / 2]) / 2;
   }
 
-  public static double mad(final double... ds) {
-    return destructiveMad(ds.clone());
+  public static double mad(final double... ¢) {
+    return destructiveMad(¢.clone());
   }
 
-  public static double median(final double... ds) {
-    return destructiveMedian(ds.clone());
+  public static double median(final double... ¢) {
+    return destructiveMedian(¢.clone());
   }
 
   public static double[] prune(final double... ds) {
     final List<Double> $ = new ArrayList<>();
     final double median = destructiveMedian(ds);
     final double mad = mad(ds);
-    for (final double d : ds)
-      if (median - 2 * mad <= d && d <= median + 2 * mad)
-        $.add(box(d));
+    for (final double ¢ : ds)
+      if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)
+        $.add(box(¢));
     return Iterables.toArray($);
   }
 }

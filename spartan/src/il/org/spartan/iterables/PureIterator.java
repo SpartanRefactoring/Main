@@ -36,7 +36,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
   public abstract static class Staged<T> extends PureIterator<T> {
     /** Stores the next value that this iterator returns. It has non-null
      * content only after {@link #hasNext} returned true. */
-    private @Nullable T next = null;
+    private @Nullable T next;
 
     @Override public final T next() {
       final @NonNull T $ = cantBeNull(next);

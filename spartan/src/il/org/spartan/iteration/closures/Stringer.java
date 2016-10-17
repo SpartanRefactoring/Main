@@ -15,19 +15,19 @@ public interface Stringer<T> extends Converter<T, String> {
    * @see Converter#__ */
   @Override String __(T t);
 
-  public static class Default<T> implements Stringer<T> {
-    @Override public String __(final T t) {
-      return t + "";
+  static class Default<T> implements Stringer<T> {
+    @Override public String __(final T ¢) {
+      return ¢ + "";
     }
   }
 
-  public static class DoubleQuoter<T> extends Quoter<T> {
+  static class DoubleQuoter<T> extends Quoter<T> {
     public DoubleQuoter() {
       super('"');
     }
   }
 
-  public static class Quoter<T> extends Default<T> {
+  static class Quoter<T> extends Default<T> {
     public final String quote;
 
     public Quoter(final char quote) {
@@ -38,17 +38,17 @@ public interface Stringer<T> extends Converter<T, String> {
       this.quote = quote;
     }
 
-    @Override public final String __(final T t) {
-      return quote(t == null ? "" : super.__(t));
+    @Override public final String __(final T ¢) {
+      return quote(¢ == null ? "" : super.__(¢));
     }
 
-    public final String quote(final String s) {
-      nonnull(s);
-      return wrap(quote, s.replaceAll(quote, quote + quote));
+    public final String quote(final String ¢) {
+      nonnull(¢);
+      return wrap(quote, ¢.replaceAll(quote, quote + quote));
     }
   }
 
-  public static class SingleQuoter<T> extends Quoter<T> {
+  static class SingleQuoter<T> extends Quoter<T> {
     public SingleQuoter() {
       super('\'');
     }

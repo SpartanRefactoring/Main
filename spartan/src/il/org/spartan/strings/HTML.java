@@ -31,12 +31,12 @@ import il.org.spartan.streotypes.*;
   }
 
   /** Escape a single <code><b>char</b></code> for inclusion in an HTML page.
-   * @param c a <code><b>char</b></code> to escape.
+   * @param ¢ a <code><b>char</b></code> to escape.
    * @return a string representing the escaped form of the parameter (if it is a
    *         special character). Otherwise, the string containing the
    *         parameter. */
-  public static String esc(final char c) {
-    switch (c) {
+  public static String esc(final char ¢) {
+    switch (¢) {
       case ' ':
         return "&nbsp;";
       case '\t':
@@ -50,17 +50,17 @@ import il.org.spartan.streotypes.*;
       case AMPERSAND:
         return "&amp;";
       default:
-        return c + "";
+        return ¢ + "";
     }
   }
 
   /** Escape a {@link Collection} of {@link String}s for inclusion in an HTML
    * page.
-   * @param ss {@link Collection} of {@link String}s to be escaped.
+   * @param ¢ {@link Collection} of {@link String}s to be escaped.
    * @return an array containing the escaped version of the elements of the
    *         parameter. */
-  public static String[] esc(final Collection<String> ss) {
-    return esc(ss.toArray(new String[ss.size()]));
+  public static String[] esc(final Collection<String> ¢) {
+    return esc(¢.toArray(new String[¢.size()]));
   }
 
   /** Escape a {@link String} for inclusion in an HTML page.
@@ -69,8 +69,8 @@ import il.org.spartan.streotypes.*;
    *         special HTML characters are escaped. */
   public static String esc(final String s) {
     final StringBuilder $ = new StringBuilder();
-    for (int i = 0; i < s.length(); i++)
-      $.append(esc(s.charAt(i)));
+    for (int ¢ = 0; ¢ < s.length(); ++¢)
+      $.append(esc(s.charAt(¢)));
     return $ + "";
   }
 
@@ -79,21 +79,21 @@ import il.org.spartan.streotypes.*;
    * @return the same array, where each entry is replaced by its escaped
    *         form. */
   public static String[] esc(final String[] ss) {
-    for (int i = 0; i < ss.length; i++)
-      ss[i] = esc(ss[i]);
+    for (int ¢ = 0; ¢ < ss.length; ++¢)
+      ss[¢] = esc(ss[¢]);
     return ss;
   }
 
-  public static char first(final String s) {
-    return s.charAt(0);
+  public static char first(final String ¢) {
+    return ¢.charAt(0);
   }
 
-  public static char last(final String s) {
-    return s.charAt(s.length() - 1);
+  public static char last(final String ¢) {
+    return ¢.charAt(¢.length() - 1);
   }
 
-  public static String peel(final String s) {
-    return s.substring(1, s.length() - 1);
+  public static String peel(final String ¢) {
+    return ¢.substring(1, ¢.length() - 1);
   }
 
   public static String tag(final String tag, final String text) {

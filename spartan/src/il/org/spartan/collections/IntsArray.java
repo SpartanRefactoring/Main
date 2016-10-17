@@ -10,7 +10,7 @@ import java.util.*;
  * @author Yossi Gil
  * @since February 20, 2012 */
 public class IntsArray {
-  private int length = 0;
+  private int length;
   private int[] inner = new int[0];
 
   /** Makes sure the specified array index exists, extending {@link #length()}
@@ -33,25 +33,25 @@ public class IntsArray {
     return access(i).inner[i] += value;
   }
 
-  /** @param i a non-negative array index
+  /** @param ¢ a non-negative array index
    * @return the new contents of the specified array cell */
-  public int dec(final int i) {
-    return --access(i).inner[i];
+  public int dec(final int ¢) {
+    return --access(¢).inner[¢];
   }
 
   /** Retrieve the content of a specified array cell. If the contents of the
    * specified cell was not previously set, the returned value is zero, and the
    * array grow.
-   * @param i a non-negative array index
+   * @param ¢ a non-negative array index
    * @return the contents at the specified location */
-  public int get(final int i) {
-    return access(i).inner[i];
+  public int get(final int ¢) {
+    return access(¢).inner[¢];
   }
 
-  /** @param i a non-negative array index
+  /** @param ¢ a non-negative array index
    * @return the new contents of the specified array cell */
-  public int inc(final int i) {
-    return ++access(i).inner[i];
+  public int inc(final int ¢) {
+    return ++access(¢).inner[¢];
   }
 
   /** What is this array's length?

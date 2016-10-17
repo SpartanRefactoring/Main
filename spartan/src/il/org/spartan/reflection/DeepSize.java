@@ -33,8 +33,8 @@ public class DeepSize {
     return ShallowSize.of(it);
   }
 
-  public static int of(final Object o) {
-    return new Visitor().size(o);
+  public static int of(final Object ¢) {
+    return new Visitor().size(¢);
   }
 
   public static int of(final short it[]) {
@@ -54,8 +54,8 @@ public class DeepSize {
     static ArrayList<Field> getAllFields(final Class<?> c) {
       final ArrayList<Field> $ = new ArrayList<>();
       for (Class<?> p = c; p != null; p = p.getSuperclass())
-        for (final Field f : p.getDeclaredFields())
-          $.add(f);
+        for (final Field ¢ : p.getDeclaredFields())
+          $.add(¢);
       return $;
     }
 
@@ -82,19 +82,19 @@ public class DeepSize {
 
     final Set<Object> seen = new HashSet<>();
 
-    public int size(final Object o) {
-      if (seen.contains(o))
+    public int size(final Object ¢) {
+      if (seen.contains(¢))
         return 0;
-      seen.add(o);
-      return o == null ? 0 : size(o, o.getClass());
+      seen.add(¢);
+      return ¢ == null ? 0 : size(¢, ¢.getClass());
     }
 
     int size(final Object o, final Class<?> c) {
       if (c.isArray())
         return size(Object[].class.cast(o));
       int $ = ShallowSize.of(o);
-      for (final Field f : getAllFields(c))
-        $ += size(o, f);
+      for (final Field ¢ : getAllFields(c))
+        $ += size(o, ¢);
       // System.out.println("$ is:" + $);
       return $;
     }
@@ -105,8 +105,8 @@ public class DeepSize {
 
     private int size(final Object[] os) {
       int $ = ShallowSize.of(os);
-      for (final Object o : os)
-        $ += size(o);
+      for (final Object ¢ : os)
+        $ += size(¢);
       return $;
     }
   }

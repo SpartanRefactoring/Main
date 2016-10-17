@@ -15,13 +15,13 @@ import il.org.spartan.streotypes.*;
   ;
   public final static double GOLD = (Math.sqrt(5) - 1) / 2;
 
-  /** @param n a non-negative integer
+  /** @param i a non-negative integer
    * @return the decreasing permutation of length n, represented as an array. */
-  public static int[] decreasing(final int n) {
-    nonnegative(n);
-    final int[] $ = new int[n];
-    for (int i = 0; i < n; ++i)
-      $[i] = n - i - 1;
+  public static int[] decreasing(final int i) {
+    nonnegative(i);
+    final int[] $ = new int[i];
+    for (int ¢ = 0; ¢ < i; ++¢)
+      $[¢] = i - ¢ - 1;
     return $;
   }
 
@@ -32,33 +32,33 @@ import il.org.spartan.streotypes.*;
     return n <= 1 ? 1 : n * factorial((short) (n - 1));
   }
 
-  /** @param n a non-negative integer
+  /** @param i a non-negative integer
    * @return the increasing permutation of length n, represented as an array. */
-  public static int[] identity(final int n) {
-    nonnegative(n);
-    final int[] $ = new int[n];
-    for (int i = 0; i < n; i++)
-      $[i] = i;
+  public static int[] identity(final int i) {
+    nonnegative(i);
+    final int[] $ = new int[i];
+    for (int ¢ = 0; ¢ < i; ++¢)
+      $[¢] = ¢;
     return $;
   }
 
   public static int[] invert(final int[] a) {
     final int[] $ = new int[a.length];
-    for (int i = 0; i < a.length; i++)
-      $[a[i]] = i;
+    for (int ¢ = 0; ¢ < a.length; ++¢)
+      $[a[¢]] = ¢;
     return $;
   }
 
-  /** @param n a non-negative integer
+  /** @param ¢ a non-negative integer
    * @return a random permutation of length n, represented as an array. */
-  public static int[] random(final int n) {
-    nonnegative(n);
-    return shuffle(identity(n));
+  public static int[] random(final int ¢) {
+    nonnegative(¢);
+    return shuffle(identity(¢));
   }
 
   public static int[] scramble(final int n) {
     final int[] $ = identity(n);
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; ++i) {
       final double Gi = power(GOLD, i + 1, n);
       System.out.println("Gi=" + Gi);
       final int p = (int) (Gi * n);
@@ -67,42 +67,42 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  public static float[] shuffle(final float[] a) {
+  public static float[] shuffle(final float[] fs) {
     final Random r = new Random(System.nanoTime());
-    for (int i = 0; i < a.length; i++)
-      swap(a, i, r.nextInt(a.length));
-    return a;
+    for (int ¢ = 0; ¢ < fs.length; ++¢)
+      swap(fs, ¢, r.nextInt(fs.length));
+    return fs;
   }
 
   public static int[] shuffle(final int[] a) {
     final Random r = new Random(System.nanoTime());
-    for (int i = 0; i < a.length; i++)
-      swap(a, i, r.nextInt(a.length));
+    for (int ¢ = 0; ¢ < a.length; ++¢)
+      swap(a, ¢, r.nextInt(a.length));
     return a;
   }
 
   public static <T> void shuffle(final T[] ts) {
     final Random r = new Random(System.nanoTime());
-    for (int i = 0; i < ts.length; ++i)
-      swap(ts, i, r.nextInt(ts.length));
+    for (int ¢ = 0; ¢ < ts.length; ++¢)
+      swap(ts, ¢, r.nextInt(ts.length));
   }
 
   /** Swap the contents of two <code><b>float</b></code> array cells
-   * @param a the array with two cells to be swapped
+   * @param fs the array with two cells to be swapped
    * @param i index of this first array cell
    * @param j index of the second array cell */
-  public static void swap(final float[] a, final int i, final int j) {
+  public static void swap(final float[] fs, final int i, final int j) {
     nonnegative(i);
     nonnegative(j);
-    require(i <= a.length);
-    require(j <= a.length);
-    require(i < a.length);
-    require(j < a.length);
+    require(i <= fs.length);
+    require(j <= fs.length);
+    require(i < fs.length);
+    require(j < fs.length);
     if (i == j)
       return;
-    final float temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
+    final float temp = fs[i];
+    fs[i] = fs[j];
+    fs[j] = temp;
   }
 
   /** Swap the contents of two <code><b>int</b></code> array cells
@@ -129,35 +129,35 @@ import il.org.spartan.streotypes.*;
     ts[j] = t;
   }
 
-  private static double normalize(final double d, final int n) {
-    return normalizeDown(normalizeUp(d, n), n);
+  private static double normalize(final double d, final int i) {
+    return normalizeDown(normalizeUp(d, i), i);
   }
 
-  private static double normalizeDown(final double d, final int n) {
+  private static double normalizeDown(final double d, final int i) {
     if (d < 0)
-      return normalizeDown(-d, n);
-    for (double $ = d;; $ *= 1 - 1.0 / n)
+      return normalizeDown(-d, i);
+    for (double $ = d;; $ *= 1 - 1.0 / i)
       if ($ < 1.0)
         return $;
   }
 
-  private static double normalizeUp(final double d, final int n) {
+  private static double normalizeUp(final double d, final int i) {
     if (d < 0)
-      return normalizeUp(-d, n);
+      return normalizeUp(-d, i);
     if (d == 0)
-      return 1.0 / n;
-    if (d > 1.0 / n)
+      return 1.0 / i;
+    if (d > 1.0 / i)
       return d;
     for (double $ = d;; $ += $)
       if ($ >= 1.0)
         return $;
   }
 
-  private static double power(final double b, final int k, final int n) {
+  private static double power(final double d, final int k, final int i) {
     if (k == 0)
-      return b;
-    final double $ = power(normalize(b * b, n), k >> 1, n);
-    return (k & 0x1) == 0 ? $ : normalize($ * b, n);
+      return d;
+    final double $ = power(normalize(d * d, i), k >> 1, i);
+    return (k & 0x1) == 0 ? $ : normalize($ * d, i);
   }
 
   public static class BigFloat {

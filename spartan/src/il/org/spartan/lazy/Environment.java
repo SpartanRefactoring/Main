@@ -56,20 +56,20 @@ import il.org.spartan.reap.Cookbook.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 @SuppressWarnings("javadoc") public interface Environment {
-  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
-    return new Property<T>().bind(f);
+  static <@Nullable T, @Nullable A> Binder1<T, A> bind(final Function1<T, A> ¢) {
+    return new Property<T>().bind(¢);
   }
 
-  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
-    return new Property<T>().bind(f);
+  static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> ¢) {
+    return new Property<T>().bind(¢);
   }
 
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
-    return new Property<T>().bind(f);
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> ¢) {
+    return new Property<T>().bind(¢);
   }
 
-  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
-    return new Property<T>().bind(f);
+  static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> ¢) {
+    return new Property<T>().bind(¢);
   }
 
   static <@Nullable T> Property<T> function(final Function0<T> ¢) {
@@ -103,10 +103,10 @@ import il.org.spartan.reap.Cookbook.*;
    *  Property&lt;Integer&gt; genesis =  {@link Environment} .value(2);
    * </pre>
    *
-   * @param i JD
+   * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
-  static Property<@Nullable Integer> value(final int i) {
-    return new Property<>(Integer.valueOf(i));
+  static Property<@Nullable Integer> value(final int ¢) {
+    return new Property<>(Integer.valueOf(¢));
   }
 
   /** A factory method for class {@link Ingredient} as in
@@ -116,13 +116,13 @@ import il.org.spartan.reap.Cookbook.*;
    * </pre>
    *
    * @param < T > JD
-   * @param t JD
+   * @param ¢ JD
    * @return newly created instance of {@link Property} */
-  static <@Nullable T> Property<@Nullable T> value(final T t) {
-    return new Property<>(t);
+  static <@Nullable T> Property<@Nullable T> value(final T ¢) {
+    return new Property<>(¢);
   }
 
-  @SuppressWarnings({ "static-method", "null" }) public interface ____META {
+  @SuppressWarnings({ "static-method", "null" }) interface ____META {
     static class TEST {
       private static final String EMPTY = "";
       private static final int FIRST_MAGIC_NUMBER = 1729;
@@ -246,11 +246,9 @@ import il.org.spartan.reap.Cookbook.*;
       }
 
       @Test public void seriesA7() {
-        // TODO: fill this test case
       }
 
       @Test public void seriesA8() {
-        // TODO: fill this test case
       }
 
       @Test public void seriesA9() {
@@ -290,16 +288,13 @@ import il.org.spartan.reap.Cookbook.*;
     Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
   }
 
-  /** A property stores a value of some type (which is passed by parameter). A
-   * property may be either atomic which behaves simply like a variable, with
-   * appropriate {@link #get()} and {@link #set(Object)} methods. A computed
-   * property typically depends on other properties, which may either valued, or
-   * computed, and hence depending on yet other properties. A change to a
-   * property's value is triggers invalidates all properties that depend on it.
-   * @param <T> type of value of this property
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @since 2016 */
-  public static class Property<@Nullable T> implements Function0<T>, Cloneable {
+  /**
+   * A property stores a value of some type (which is passed by parameter). A property may be either atomic which behaves simply like a variable, with appropriate  {@link #get()}  and  {@link #set(Object)}  methods. A computed property typically depends on other properties, which may either valued, or computed, and hence depending on yet other properties. A change to a property's value is triggers invalidates all properties that depend on it.
+   * @param < T >  type of value of this property
+   * @author  Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since  2016 
+   */
+  static class Property<@Nullable T> implements Function0<T>, Cloneable {
     private static long maxVersion(final Iterable<Property<?>> ps) {
       long $ = 0;
       for (final Property<?> c : ps)
@@ -307,137 +302,130 @@ import il.org.spartan.reap.Cookbook.*;
       return $;
     }
 
-    /** The last value computed for this instance */
-    @Nullable T cache = null;
-    /** other properties that depend on this instance */
+    /**
+    * The last value computed for this instance 
+    */
+    @Nullable T cache;
+    /**
+    * other properties that depend on this instance 
+    */
     final List<Property<?>> dependents = new ArrayList<>();
-    /** other properties on which this instance depends */
+    /**
+    * other properties on which this instance depends 
+    */
     final List<Property<?>> prerequisites = new ArrayList<>();
-    /** version of this instance */
-    long version = 0;
-    /** returns the instance updated value when invoked */
-    @Nullable Function0<? extends @Nullable T> ϑ = null;
+    /**
+    * version of this instance 
+    */
+    long version;
+    /**
+    * returns the instance updated value when invoked 
+    */
+    @Nullable Function0<? extends @Nullable T> ϑ;
     private boolean frozen;
 
-    /** Instantiates this class. */
+    /**
+    * Instantiates this class. 
+    */
     public Property() {
-      // Nothing to do, we start with a default null value
     }
 
-    /** Instantiates this class.
-     * @param λ JD */
+    /**
+    * Instantiates this class.
+    * @param λ  JD 
+    */
     public Property(final Function0<? extends T> λ) {
       this.ϑ = λ;
     }
 
-    /** Instantiates this class.
-     * @param t initial cached value */
+    /**
+    * Instantiates this class.
+    * @param t  initial cached value 
+    */
     public Property(final T t) {
       cache(t);
     }
 
-    /** @return current value stored in this instance, recomputed if
-     *         necessary */
+    /**
+    * @return  current value stored in this instance, recomputed if necessary 
+    */
     @Override public T ¢() {
       update();
       return cache();
     }
 
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking one argument
-     * @param <A> argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object...)}
-     *         which when applied
-     *         <ol>
-     *         <li>changes the current instance
-     *         <li>returns <code><b>this</b></code>
-     *         </ol>
+    /**
+    * Used for fluent API; sets the current value of this instance to a be a function taking one argument
+    * @param < A >  argument's type
+    * @param ¢  a one argument function that returns a new value for this instance
+    * @return  a function with one argument named  {@link Binder#to(Object)} which when applied <ol> <li>changes the current instance <li>returns <code><b>this</b></code> </ol>
     */
-    public <@Nullable A> Property<@Nullable T> bind(final Function0<T> f) {
-      return ϑ(() -> f.¢());
+    public <@Nullable A> Property<@Nullable T> bind(final Function0<T> ¢) {
+      return ϑ(() -> ¢.¢());
     }
 
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking one argument
-     * @param <A> argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object...)}
-     *         which when applied
-     *         <ol>
-     *         <li>changes the current instance
-     *         <li>returns <code><b>this</b></code>
-     *         </ol>
+    /**
+    * Used for fluent API; sets the current value of this instance to a be a function taking one argument
+    * @param < A >  argument's type
+    * @param t  a one argument function that returns a new value for this instance
+    * @return  a function with one argument named  {@link Binder#to(Object)} which when applied <ol> <li>changes the current instance <li>returns <code><b>this</b></code> </ol>
     */
-    public <@Nullable A> Binder1<T, A> bind(final Function1<T, A> f) {
-      return ¢ -> ϑ(() -> f.ϑ(¢.¢()), ¢);
+    public <@Nullable A> Binder1<T, A> bind(final Function1<T, A> t) {
+      return ¢ -> ϑ(() -> t.ϑ(¢.¢()), ¢);
     }
 
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking two arguments
-     * @param <A1> 1st argument's type
-     * @param <A2> 2nd argument's type
-     * @param f a two argument function that returns a new value for this
-     *        instance
-     * @return a function with two arguments named {@link Binder2#to} which when
-     *         applied changes the current instance returning
-     *         <code><b>this</b></code> */
-    public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> f) {
-      return (¢1, ¢2) -> ϑ(() -> f.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
-    }
-
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking four arguments
-     * @param <A1> 1st argument's type
-     * @param <A2> 2nd argument's type
-     * @param <A3> 3rd argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with four arguments named {@link #toString()} which
-     *         when applied changes the current instance and returning
-     *         <code><b>this</b></code> */
-    public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> f) {
-      return (¢1, ¢2, ¢3) -> ϑ(() -> f.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
-    }
-
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking four arguments
-     * @param <A1> 1st argument's type
-     * @param <A2> 2nd argument's type
-     * @param <A3> 3rd argument's type
-     * @param <A4> 4th argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with four arguments named {@link #toString()} which
-     *         when applied changes the current instance and returning
-     *         <code><b>this</b></code> */
-    public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> f) {
-      return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> f.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
-    }
-
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking one argument
-     * @param <A> argument's type
-     * @param f a one argument function that returns a new value for this
-     *        instance
-     * @return a function with one argument named {@link Binder#to(Object...)}
-     *         which when applied
-     *         <ol>
-     *         <li>changes the current instance
-     *         <li>returns <code><b>this</b></code>
-     *         </ol>
+    /**
+    * Used for fluent API; sets the current value of this instance to a be a function taking two arguments
+    * @param < A1 >  1st argument's type
+    * @param < A2 >  2nd argument's type
+    * @param t  a two argument function that returns a new value for this instance
+    * @return  a function with two arguments named  {@link Binder2#to}  which when applied changes the current instance returning <code><b>this</b></code> 
     */
-    public <@Nullable A> Property<@Nullable T> bind2(final Function0<T> f) {
-      this.ϑ = (Function0<@Nullable T>) () -> f.¢(); // Set the encapsulated
-                                                     // function
+    public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(final Function2<T, A1, A2> t) {
+      return (¢1, ¢2) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
+    }
+
+    /**
+    * Used for fluent API; sets the current value of this instance to a be a function taking four arguments
+    * @param < A1 >  1st argument's type
+    * @param < A2 >  2nd argument's type
+    * @param < A3 >  3rd argument's type
+    * @param t  a one argument function that returns a new value for this instance
+    * @return  a function with four arguments named  {@link #toString()}  which when applied changes the current instance and returning <code><b>this</b></code> 
+    */
+    public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> t) {
+      return (¢1, ¢2, ¢3) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
+    }
+
+    /**
+    * Used for fluent API; sets the current value of this instance to a be a function taking four arguments
+    * @param < A1 >  1st argument's type
+    * @param < A2 >  2nd argument's type
+    * @param < A3 >  3rd argument's type
+    * @param < A4 >  4th argument's type
+    * @param t  a one argument function that returns a new value for this instance
+    * @return  a function with four arguments named  {@link #toString()}  which when applied changes the current instance and returning <code><b>this</b></code> 
+    */
+    public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> t) {
+      return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
+    }
+
+    /**
+    * Used for fluent API; sets the current value of this instance to a be a function taking one argument
+    * @param < A >  argument's type
+    * @param ¢  a one argument function that returns a new value for this instance
+    * @return  a function with one argument named  {@link Binder#to(Object)} which when applied <ol> <li>changes the current instance <li>returns <code><b>this</b></code> </ol>
+    */
+    public <@Nullable A> Property<@Nullable T> bind2(final Function0<T> ¢) {
+      this.ϑ = (Function0<@Nullable T>) () -> ¢.¢();
       prerequisites.clear();
       ingredients(this);
       return this;
     }
 
-    /** @return last value computed or set for this instance. */
+    /**
+    * @return  last value computed or set for this instance. 
+    */
     public final T cache() {
       return cache;
     }
@@ -461,24 +449,29 @@ import il.org.spartan.reap.Cookbook.*;
       return $;
     }
 
-    /** @return current value stored in this instance, recomputed if
-     *         necessary */
+    /**
+    * @return  current value stored in this instance, recomputed if necessary 
+    */
     public T get() {
       return ¢();
     }
 
-    /** Add another property on which this instance depends
-     * @param ¢ JD
-     * @return <code><b>this</b></code> */
+    /**
+    * Add another property on which this instance depends
+    * @param ¢  JD
+    * @return  <code><b>this</b></code> 
+    */
     public Property<T> ingredient(final Property<?> ¢) {
       run(() -> ¢.dependents.add(Property.this)).unless(¢.dependents.contains(this));
       run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
       return this;
     }
 
-    /** Add another property on which this instance depends
-     * @param ps JD
-     * @return <code><b>this</b></code> */
+    /**
+    * Add another property on which this instance depends
+    * @param ps  JD
+    * @return  <code><b>this</b></code> 
+    */
     public Property<T> ingredients(final Property<?>... ps) {
       for (final Property<?> ¢ : ps)
         ingredient(¢);
@@ -489,37 +482,29 @@ import il.org.spartan.reap.Cookbook.*;
       frozen = false;
     }
 
-    /** Used for fluent API; sets the current value of this instance to a be a
-     * function taking four arguments
-     * @param <A1> 1st argument's type
-     * @param <A2> 2nd argument's type
-     * @param <A3> 3rd argument's type
-     * @param <A4> 4th argument's type
-     * @param ϑ a one argument function that returns a new value for this
-     *        instance
-     * @return a function with three arguments named
-     *         {@link Binder3#to(Object, Object, Object)} which when applied
-     *         changes the current instance and returning
-     *         <code><b>this</b></code> */
-    /** Used for fluent API; sets the current value of this instance
-     * @param f a no-arguments function that returns a value for this instance
-     * @return <code><b>this</b></code> */
-    public Property<T> of(final Function0<T> f) {
-      return ϑ(f);
+    /**
+    * Used for fluent API; sets the current value of this instance
+    * @param ¢  a no-arguments function that returns a value for this instance
+    * @return  <code><b>this</b></code> 
+    */
+    public Property<T> of(final Function0<T> ¢) {
+      return ϑ(¢);
     }
 
-    /** Used for fluent API; sets the current value of this instance
-     * @param t JD
-     * @return <code><b>this</b></code>* */
-    public Property<T> of(final T t) {
-      cache(t);
+    /**
+    * Used for fluent API; sets the current value of this instance
+    * @param ¢  JD
+    * @return  <code><b>this</b></code>* 
+    */
+    public Property<T> of(final T ¢) {
+      cache(¢);
       ϑ = null;
-      version = latestDependentVersion() + 1; // Invalidate all dependents
+      version = latestDependentVersion() + 1;
       prerequisites.clear();
       return this;
     }
 
-    public Property<T> push(final Function0<T> f) {
+    public Property<T> push(final Function0<T> t) {
       return this;
     }
 
@@ -527,18 +512,20 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
-    /** forcibly set the value stored in this instance, ignoring the function
-     * used for computing it, and marks this instance as updated with respect to
-     * all prerequisites.
-     * @param t JD
-     * @return <code><b>this</b></code> */
-    public @Nullable T set(final T t) {
+    /**
+    * forcibly set the value stored in this instance, ignoring the function used for computing it, and marks this instance as updated with respect to all prerequisites.
+    * @param ¢  JD
+    * @return  <code><b>this</b></code> 
+    */
+    public @Nullable T set(final T ¢) {
       version = latestPrequisiteVersion() + 1;
-      return cache(t);
+      return cache(¢);
     }
 
-    /** puts this instance in an undefined state
-     * @return <code><b>this</b></code> */
+    /**
+    * puts this instance in an undefined state
+    * @return  <code><b>this</b></code> 
+    */
     public Property<@Nullable T> undefine() {
       cache(null);
       return this;
@@ -562,8 +549,9 @@ import il.org.spartan.reap.Cookbook.*;
       frozen = false;
     }
 
-    /** @return <code><b>true</b></code> <em>iff</em> the value in this cell is
-     *         updated with respect to all its prerequisites */
+    /**
+    * @return  <code><b>true</b></code> <em>iff</em> the value in this cell is updated with respect to all its prerequisites 
+    */
     public boolean updated() {
       if (ϑ == null)
         return true;
@@ -575,7 +563,9 @@ import il.org.spartan.reap.Cookbook.*;
       return true;
     }
 
-    /** @return version of this instance */
+    /**
+    * @return  version of this instance 
+    */
     public long version() {
       return version;
     }
@@ -592,11 +582,13 @@ import il.org.spartan.reap.Cookbook.*;
       return maxVersion(prerequisites);
     }
 
-    /** @param ϑ a no-arguments function that returns a value for this instance
-     * @param cs instances on which the cell depends
-     * @return <code><b>this</b></code> **/
+    /**
+    * @param ϑ  a no-arguments function that returns a value for this instance
+    * @param cs  instances on which the cell depends
+    * @return  <code><b>this</b></code> 
+    */
     Property<T> ϑ(@SuppressWarnings("hiding") final Function0<T> ϑ, final Property<?>... cs) {
-      this.ϑ = ϑ; // Set the encapsulated function
+      this.ϑ = ϑ;
       prerequisites.clear();
       ingredients(cs);
       version = 0;

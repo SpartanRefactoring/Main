@@ -37,8 +37,8 @@ import il.org.spartan.*;
 public class FilesGenerator {
   /** @param ____ ignored */
   public static void main(final String[] ____) {
-    for (final File f : new FilesGenerator(".java").from("."))
-      System.out.println(f);
+    for (final File ¢ : new FilesGenerator(".java").from("."))
+      System.out.println(¢);
   }
 
   /** @param directory should be a directory, but we still need to account for
@@ -128,7 +128,7 @@ public class FilesGenerator {
     }
 
     private class FilesIterator implements Iterator<File> {
-      private File next = null;
+      private File next;
       private final Stack<Iterator<File>> stack = new Stack<>();
 
       public FilesIterator(final Iterator<File> i) {

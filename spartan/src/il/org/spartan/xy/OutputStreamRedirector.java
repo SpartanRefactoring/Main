@@ -17,8 +17,7 @@ class OutputStreamRedirector extends Thread {
 
   @Override public void run() {
     try {
-      int nextChar;
-      while ((nextChar = from.read()) != -1)
+      for (int nextChar = from.read(); nextChar != -1;)
         to.append((char) nextChar);
     } catch (final IOException e) {
       e.printStackTrace();

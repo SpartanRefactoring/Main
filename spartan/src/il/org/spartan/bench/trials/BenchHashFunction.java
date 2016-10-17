@@ -14,7 +14,7 @@ public class BenchHashFunction {
     final LogBook.Mutable l = new LogBook.Mutable(BenchHashFunction.class);
     final Hash h = new Hash();
     Log.deactivate();
-    for (int i = 0; i < trials; i++)
+    for (int ¢ = 0; ¢ < trials; ++¢)
       BenchingPolicy.go(l, "hash", 1, h);
     System.err.println(l.currentEntry().format("A D I X") + h.a);
   }
@@ -25,7 +25,7 @@ public class BenchHashFunction {
       return $ ^ $ >>> 4 ^ $ >>> 7;
     }
 
-    int a = 0;
+    int a;
 
     @Override public Void call() {
       a = hash(++a);

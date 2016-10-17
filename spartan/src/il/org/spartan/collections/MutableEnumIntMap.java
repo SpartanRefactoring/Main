@@ -47,16 +47,16 @@ import il.org.spartan.streotypes.*;
     return new ImmutableEnumIntMap<>(implementation);
   }
 
-  @Override public int get(final E e) {
-    return implementation[e.ordinal()];
+  @Override public int get(final E ¢) {
+    return implementation[¢.ordinal()];
   }
 
   /** Increment the value associated with a specific <code><b>enum</b></code>
    * value.
-   * @param e some non-<code><b>null</b></code> value of type <code>E</code>. */
-  public void increment(final E e) {
-    nonnull(e);
-    ++implementation[e.ordinal()];
+   * @param ¢ some non-<code><b>null</b></code> value of type <code>E</code>. */
+  public void increment(final E ¢) {
+    nonnull(¢);
+    ++implementation[¢.ordinal()];
   }
 
   /** Set the value associated with a specific <code><b>enum</b></code> value.

@@ -23,7 +23,7 @@ public abstract class TimedOperation extends NamedOperation {
   }
 
   @Override public Stopwatch netTime(final Stopwatch netTime, final int runs) {
-    for (int i = 0; i < runs; i++)
+    for (int ¢ = 0; ¢ < runs; ++¢)
       run(netTime);
     return netTime;
   }

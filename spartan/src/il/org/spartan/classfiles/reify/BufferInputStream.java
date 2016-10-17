@@ -24,8 +24,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil */
 public class BufferInputStream extends InputStream {
   protected byte bytes[];
-  protected int position = 0;
-  protected int mark = 0;
+  protected int position;
+  protected int mark;
   protected int length;
 
   public BufferInputStream(final byte bytes[]) {
@@ -65,31 +65,31 @@ public class BufferInputStream extends InputStream {
     return !more() ? -1 : bytes[position++] & 0xff;
   }
 
-  @Override public synchronized int read(final byte b[], final int offset, final int len) {
-    if (b == null)
+  @Override public synchronized int read(final byte bs[], final int offset, final int len) {
+    if (bs == null)
       throw new NullPointerException();
-    if (offset < 0 || len < 0 || len > b.length - offset)
+    if (offset < 0 || len < 0 || len > bs.length - offset)
       throw new IndexOutOfBoundsException();
     if (eof())
       return -1;
     if (len <= 0)
       return 0;
-    final int toRead = position + len > length ? length - position : len;
-    System.arraycopy(bytes, position, b, offset, toRead);
-    position += toRead;
-    return toRead;
+    final int $ = position + len <= length ? len : length - position;
+    System.arraycopy(bytes, position, bs, offset, $);
+    position += $;
+    return $;
   }
 
   @Override public synchronized void reset() {
     position = mark;
   }
 
-  @Override public synchronized long skip(long n) {
-    if (position + n > length)
-      n = length - position;
-    if (n < 0)
+  @Override public synchronized long skip(long ¢) {
+    if (position + ¢ > length)
+      ¢ = length - position;
+    if (¢ < 0)
       return 0;
-    position += n;
-    return n;
+    position += ¢;
+    return ¢;
   }
 }

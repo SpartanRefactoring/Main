@@ -12,10 +12,10 @@ public class NullSafe {
 
   /** Return the hashCode of
    * @param <T> type of parameter to receive a default value
-   * @param t a possibly <code><b>null</b></code> value
+   * @param ¢ a possibly <code><b>null</b></code> value
    * @return <code>t.hashCode()</code> if <code>t</code> is not
    *         <code><b>null</b></code>, otherwise <code>0</code> */
-  public static <T> int hashCode(final T t) {
-    return t == null ? 0 : t.hashCode();
+  public static <T> int hashCode(final T ¢) {
+    return ¢ == null ? 0 : ¢.hashCode();
   }
 }

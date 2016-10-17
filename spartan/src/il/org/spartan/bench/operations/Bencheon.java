@@ -30,7 +30,7 @@ public abstract class Bencheon extends NamedOperation {
   public long netRunTime(final int runs) {
     final long beforeEachMethodTime = beforeEachMethodTime(runs);
     final long begin = System.nanoTime();
-    for (int i = 0; i < runs; i++) {
+    for (int ¢ = 0; ¢ < runs; ++¢) {
       beforeEachRun();
       call();
     }
@@ -57,7 +57,7 @@ public abstract class Bencheon extends NamedOperation {
 
   /** @param runs */
   public final void run(final int runs) {
-    for (int i = 0; i < runs; i++) {
+    for (int ¢ = 0; ¢ < runs; ++¢) {
       beforeEachRun();
       call();
     }
@@ -65,10 +65,9 @@ public abstract class Bencheon extends NamedOperation {
 
   long beforeEachMethodTime(final int runs) {
     final long beginBefore = System.nanoTime();
-    for (int i = 0; i < runs; i++)
+    for (int ¢ = 0; ¢ < runs; ++¢)
       beforeEachRun();
-    final long initTime = System.nanoTime() - beginBefore;
-    return initTime;
+    return System.nanoTime() - beginBefore;
   }
 
   public static abstract class Core extends Bencheon {
@@ -86,7 +85,7 @@ public abstract class Bencheon extends NamedOperation {
 
     @Override public long netRunTime(final int runs) {
       final long begin = System.nanoTime();
-      for (int i = 0; i < runs; i++)
+      for (int ¢ = 0; ¢ < runs; ++¢)
         call();
       return System.nanoTime() - begin;
     }
@@ -153,7 +152,7 @@ public abstract class Bencheon extends NamedOperation {
       return $ ^ $ >>> 4 ^ $ >>> 7;
     }
 
-    int a = 0;
+    int a;
 
     /** Instantiate {@link Hash}. */
     public Hash() {

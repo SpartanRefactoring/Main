@@ -130,8 +130,8 @@ import il.org.spartan.classfiles.*;
     azzert.that(Filename.class2path(class1), is(myImplementation(class1)));
   }
 
-  private String myImplementation(Class<?> c) {
-    return c.getCanonicalName().replaceAll("[.]", "/");
+  private String myImplementation(Class<?> ¢) {
+    return ¢.getCanonicalName().replaceAll("[.]", "/");
   }
 
   @Test public void simpleObject2Path() {

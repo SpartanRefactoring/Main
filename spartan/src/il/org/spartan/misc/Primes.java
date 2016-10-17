@@ -25,8 +25,8 @@ public class Primes {
   public static void main(final String[] args) throws IOException {
     final CSVStatistics w = new CSVStatistics("primes.csv", "Property");
     final Random r = new Random();
-    for (final Primes p = new Primes(); p.current < 100; w.nl()) {
-      w.put("Value", p.next());
+    for (final Primes ¢ = new Primes(); ¢.current < 100; w.nl()) {
+      w.put("Value", ¢.next());
       w.put("Bad Random", new Random().nextDouble());
       w.put("Good Random", r.nextDouble());
     }
@@ -88,10 +88,9 @@ public class Primes {
     }
 
     @Test public void selfConsistentUntil1000() {
-      final Primes ps = new Primes();
       for (int c = 0; c < 1000; ++c)
         if (isPrime(c))
-          azzert.that(ps.next(), is(c));
+          azzert.that((new Primes()).next(), is(c));
     }
 
     @Test public void thirdIsFive() {

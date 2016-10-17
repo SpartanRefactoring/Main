@@ -51,9 +51,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsAttributes() {
-    final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    for (final FlaggedEntity f : fields)
-      azzert.that(f.attributes.length, is(0));
+    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+      azzert.that(¢.attributes.length, is(0));
   }
 
   @Test public void allPrimitiveFieldsCount() {
@@ -63,8 +62,8 @@ import il.org.spartan.utils.*;
 
   @Test public void allPrimitiveFieldsModifiers() {
     final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    for (final FlaggedEntity f : fields)
-      azzert.that(f.flags, is((Modifier.FINAL | Modifier.PUBLIC)));
+    for (final FlaggedEntity ¢ : fields)
+      azzert.that(¢.flags, is((Modifier.FINAL | Modifier.PUBLIC)));
   }
 
   @Test public void allPrimitiveFieldsNames() {
@@ -672,8 +671,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseSelfAllMethods() {
-    for (final MethodInfo m : ClassInfo.make(this.getClass()).methods)
-      m.getCode().instructionsCount();
+    for (final MethodInfo ¢ : ClassInfo.make(this.getClass()).methods)
+      ¢.getCode().instructionsCount();
   }
 
   @Test public void parseTableSwitch() {
@@ -799,7 +798,7 @@ import il.org.spartan.utils.*;
   }
 
   public static class ArrayField {
-    int[][][][] fieldName = null;
+    int[][][][] fieldName;
   }
 
   public static class ClassWithCapitalL {
@@ -807,15 +806,14 @@ import il.org.spartan.utils.*;
   }
 
   public static class ComplexMethod {
-    public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] d) {
+    public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] dss) {
       ___.unused(v, a, Box.it(b), Box.it(c));
-      return new Object[d.length][][];
+      return new Object[dss.length][][];
     }
   }
 
   @Deprecated public static class DeprecatedClass {
     @Deprecated DeprecatedClass() {
-      super();
     }
   }
 
@@ -853,7 +851,6 @@ import il.org.spartan.utils.*;
 
   public static abstract class MethodWithParametrs {
     public MethodWithParametrs() {
-      super();
     }
 
     public final Integer method(final int a, final int b, final int c) {
@@ -876,16 +873,16 @@ import il.org.spartan.utils.*;
   }
 
   public static class OneStaticMethod {
-    public final static String methodName() {
+    public static String methodName() {
       return null;
     }
   }
 
   public static class Parser {
-    int nFiles = 0;
-    int nMethods = 0;
-    int nCodes = 0;
-    int nInstructions = 0;
+    int nFiles;
+    int nMethods;
+    int nCodes;
+    int nInstructions;
     Stopper s = new Stopper();
 
     @Override public String toString() {
@@ -895,20 +892,20 @@ import il.org.spartan.utils.*;
           Unit.NANOSECONDS.format(stop)) + "";
     }
 
-    void parse(final ClassInfo c) {
-      parse(c.methods);
+    void parse(final ClassInfo ¢) {
+      parse(¢.methods);
     }
 
-    void parse(final MethodInfo[] methods) {
-      nFiles++;
-      for (final MethodInfo m : methods)
-        parseMethod(m);
+    void parse(final MethodInfo[] is) {
+      ++nFiles;
+      for (final MethodInfo ¢ : is)
+        parseMethod(¢);
     }
 
     void parse(final String... path) {
       try {
         new ClassFilesVisitor(path, new FileOnlyAction() {
-          File zipFile = null;
+          File zipFile;
 
           @Override public void visitFile(final File f) {
             try {
@@ -922,9 +919,9 @@ import il.org.spartan.utils.*;
             zipFile = zip;
           }
 
-          @Override public void visitZipEntry(final String entryName, final InputStream stream) {
+          @Override public void visitZipEntry(final String entryName, final InputStream s) {
             try {
-              parse(ClassInfo.make(stream));
+              parse(ClassInfo.make(s));
             } catch (final RuntimeException e) {
               System.out.println(zipFile + ":" + entryName);
             }
@@ -937,15 +934,15 @@ import il.org.spartan.utils.*;
       }
     }
 
-    private void parse(final CodeEntity c) {
-      nCodes++;
-      nInstructions += c.instructionsCount();
+    private void parse(final CodeEntity ¢) {
+      ++nCodes;
+      nInstructions += ¢.instructionsCount();
     }
 
-    private void parseMethod(final MethodInfo m) {
-      nMethods++;
-      if (m.getCode() != null)
-        parse(m.getCode());
+    private void parseMethod(final MethodInfo ¢) {
+      ++nMethods;
+      if (¢.getCode() != null)
+        parse(¢.getCode());
     }
   }
 
@@ -991,7 +988,7 @@ import il.org.spartan.utils.*;
   }
 
   public static abstract class TwoMethods {
-    public static final String secondMethod() {
+    public static String secondMethod() {
       return null;
     }
 
@@ -1016,7 +1013,7 @@ import il.org.spartan.utils.*;
   }
 
   interface Interface {
-    public void method0();
+    void method0();
   }
 
   static class LargeClass implements Serializable, Cloneable, Interface {
@@ -1025,17 +1022,17 @@ import il.org.spartan.utils.*;
     static Random field4 = new Random();
     static {
       field4 = new Random(field4.nextLong());
-      for (int i = 1; i < 10; i++)
+      for (int ¢ = 1; ¢ < 10; ++¢)
         field4.nextDouble();
     }
     static Random field5 = new Random(field4.nextLong() + method3());
     static {
-      for (int i = 1; i < 20; i++)
+      for (int ¢ = 1; ¢ < 20; ++¢)
         field5.nextDouble();
     }
     static Random field6 = new Random(field5.nextLong());
     static {
-      for (int i = 1; i < 20; i++)
+      for (int ¢ = 1; ¢ < 20; ++¢)
         field4 = new Random(field6.nextLong());
     }
 
@@ -1096,8 +1093,8 @@ import il.org.spartan.utils.*;
       return method2(11);
     }
 
-    private int method2(final int i) {
-      return i * i + field3;
+    private int method2(final int ¢) {
+      return ¢ * ¢ + field3;
     }
   }
 }

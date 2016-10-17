@@ -36,8 +36,8 @@ public class ChainStringToIntegerMap {
     return this;
   }
 
-  public ChainStringToIntegerMap putAll(final Map<? extends String, ? extends Integer> i) {
-    inner.putAll(i);
+  public ChainStringToIntegerMap putAll(final Map<? extends String, ? extends Integer> ¢) {
+    inner.putAll(¢);
     return this;
   }
 

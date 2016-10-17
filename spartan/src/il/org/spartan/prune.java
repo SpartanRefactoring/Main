@@ -29,9 +29,9 @@ public enum prune {
    * @param ts JD
    * @return TODO document return type */
   public static <T, C extends Collection<T>> C nulls(final C ts) {
-    for (final Iterator<T> i = ts.iterator(); i.hasNext();)
-      if (i.next() == null)
-        i.remove();
+    for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
+      if (¢.next() == null)
+        ¢.remove();
     return ts;
   }
 
@@ -44,9 +44,9 @@ public enum prune {
    *         returned collection. */
   public static <T> List<T> nulls(final Iterable<T> ts) {
     final ArrayList<T> $ = new ArrayList<>();
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add(¢);
     return $;
   }
 
@@ -59,9 +59,9 @@ public enum prune {
    *         returned collection. */
   public static <T> T[] nulls(final T[] ts) {
     final List<T> $ = new ArrayList<>();
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add(¢);
     return cantBeNull($.toArray(shrink(ts)));
   }
 
@@ -69,9 +69,9 @@ public enum prune {
    * @return TODO document return type */
   @SafeVarargs public static String[] whites(final String... ss) {
     final List<String> $ = new ArrayList<>();
-    for (final String s : ss)
-      if (s != null)
-        accumulate.to($).add(s.trim());
+    for (final String ¢ : ss)
+      if (¢ != null)
+        accumulate.to($).add(¢.trim());
     return asArrray($);
   }
 
@@ -83,10 +83,10 @@ public enum prune {
 
   /** Shrink an array size to zero.
    * @param <T> type of elements in the input array.
-   * @param ts an array of values.
+   * @param ¢ an array of values.
    * @return an array of size 0 of elements of type <code>T</code>. */
-  private static <T> T[] shrink(final T @Nullable [] ts) {
-    return cantBeNull(Arrays.copyOf(ts, 0));
+  private static <T> T[] shrink(final T @Nullable [] ¢) {
+    return cantBeNull(Arrays.copyOf(¢, 0));
   }
 
   /** A JUnit test class for the enclosing class.

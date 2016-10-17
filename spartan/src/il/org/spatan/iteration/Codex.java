@@ -14,10 +14,10 @@ import il.org.spartan.collections.*;
  * @param <T> Type of encoded objects
  * @param <U> An upper bound on the type of encoded objects */
 public abstract class Codex<U, T extends U> implements Container<U, T> {
-  public final Set<T> decode(final BitSet b) {
+  public final Set<T> decode(final BitSet s) {
     final Set<T> $ = new HashSet<>();
-    for (int i = b.nextSetBit(0); i >= 0; i = b.nextSetBit(i + 1))
-      $.add(decode(i));
+    for (int ¢ = s.nextSetBit(0); ¢ >= 0; ¢ = s.nextSetBit(¢ + 1))
+      $.add(decode(¢));
     return $;
   }
 
@@ -27,10 +27,10 @@ public abstract class Codex<U, T extends U> implements Container<U, T> {
    * @return the translation of <code>i</code>. */
   public abstract T decode(final int i);
 
-  public final BitSet encode(final Iterable<? extends U> ts) {
-    nonnull(ts);
+  public final BitSet encode(final Iterable<? extends U> us) {
+    nonnull(us);
     final BitSet $ = new BitSet(size());
-    for (final U t : ts)
+    for (final U t : us)
       $.set(encode(t));
     return $;
   }

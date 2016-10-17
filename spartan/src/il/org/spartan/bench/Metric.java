@@ -30,7 +30,6 @@ public class Metric {
    * @since 02/05/2011 */
   public static abstract class Double extends Metric {
     private Double() {
-      super();
     }
 
     private Double(final String name) {

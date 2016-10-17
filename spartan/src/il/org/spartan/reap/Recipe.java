@@ -31,8 +31,8 @@ public class Recipe<@Nullable T> extends Cell<T> {
     if (updated())
       return cache();
     assert supplier != null;
-    for (final Cell<?> c : prerequisites)
-      c.get();
+    for (final Cell<?> ¢ : prerequisites)
+      ¢.get();
     assert supplier != null;
     cache(filter(eval()));
     version = latestPrequisiteVersion() + 1;
@@ -40,24 +40,24 @@ public class Recipe<@Nullable T> extends Cell<T> {
   }
 
   /** Add another cell on which this instance depends
-   * @param e JD
+   * @param ¢ JD
    * @return <code><b>this</b></code> */
-  public Recipe<T> ingredient(final Cell<?> e) {
+  public Recipe<T> ingredient(final Cell<?> ¢) {
     run(() -> {
-      e.dependents.add(this);
-    }).unless(e.dependents.contains(this));
+      ¢.dependents.add(this);
+    }).unless(¢.dependents.contains(this));
     run(() -> {
-      prerequisites.add(e);
+      prerequisites.add(¢);
     }).unless(prerequisites.contains(this));
     return this;
   }
 
   /** Add another cell on which this instance depends
-   * @param es JD
+   * @param cs JD
    * @return <code><b>this</b></code> */
-  public Recipe<T> ingredients(final Cell<?>... es) {
-    for (final Cell<?> e : es)
-      ingredient(e);
+  public Recipe<T> ingredients(final Cell<?>... cs) {
+    for (final Cell<?> ¢ : cs)
+      ingredient(¢);
     return this;
   }
 
@@ -66,8 +66,8 @@ public class Recipe<@Nullable T> extends Cell<T> {
       return true;
     if (version() <= latestPrequisiteVersion())
       return false;
-    for (final Cell<?> c : prerequisites)
-      if (!c.updated())
+    for (final Cell<?> ¢ : prerequisites)
+      if (!¢.updated())
         return false;
     return true;
   }
@@ -80,15 +80,15 @@ public class Recipe<@Nullable T> extends Cell<T> {
   /** To be overridden by extending classes for e.g., null protection
    * @param $ result
    * @return parameter */
-  @SuppressWarnings("static-method") <N> N filter(final N n) {
-    return n;
+  @SuppressWarnings("static-method") <N> N filter(final N ¢) {
+    return ¢;
   }
 
   final long latestPrequisiteVersion() {
     long $ = 0;
-    for (final Cell<?> c : prerequisites)
-      if ($ < c.version())
-        $ = c.version();
+    for (final Cell<?> ¢ : prerequisites)
+      if ($ < ¢.version())
+        $ = ¢.version();
     return $;
   }
 
@@ -116,17 +116,17 @@ public class Recipe<@Nullable T> extends Cell<T> {
     }
 
     /** Add another cell on which this instance depends
-     * @param cs JD
+     * @param ¢ JD
      * @return <code><b>this</b></code> */
-    @Override public Recipe.NotNull<T> ingredients(final Cell<?>... cs) {
-      return (Recipe.NotNull<T>) super.ingredients(cs);
+    @Override public Recipe.NotNull<T> ingredients(final Cell<?>... ¢) {
+      return (Recipe.NotNull<T>) super.ingredients(¢);
     }
 
     @Override public final boolean updated() {
       if (supplier == null)
         return true;
-      for (final Cell<?> c : prerequisites)
-        if (!c.updated() || version() < c.version())
+      for (final Cell<?> ¢ : prerequisites)
+        if (!¢.updated() || version() < ¢.version())
           return false;
       return true;
     }
@@ -166,10 +166,10 @@ public class Recipe<@Nullable T> extends Cell<T> {
     }
 
     /** Add another cell on which this instance depends
-     * @param cs JD
+     * @param ¢ JD
      * @return <code><b>this</b></code> */
-    @Override public Recipe.NullRobust<T> ingredients(final Cell<?>... cs) {
-      super.ingredients(cs);
+    @Override public Recipe.NullRobust<T> ingredients(final Cell<?>... ¢) {
+      super.ingredients(¢);
       return this;
     }
 

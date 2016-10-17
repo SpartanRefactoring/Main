@@ -28,19 +28,19 @@ public enum SystemProperty {
   USER_TIMEZONE, //
   ;
   public static void main(final String[] args) throws RuntimeException {
-    for (final SystemProperty sp : values()) {
-      if (sp.value() == null)
-        throw new RuntimeException("property " + sp + " is probably misspelled");
-      System.out.println(sp.key + "='" + sp.value() + "'");
+    for (final SystemProperty ¢ : values()) {
+      if (¢.value() == null)
+        throw new RuntimeException("property " + ¢ + " is probably misspelled");
+      System.out.println(¢.key + "='" + ¢.value() + "'");
     }
-    for (final String s : objectsToStrings(System.getProperties().keySet()))
-      System.out.println(s + " = '" + StringUtils.visualize((String) System.getProperties().get(s)) + "'");
+    for (final String ¢ : objectsToStrings(System.getProperties().keySet()))
+      System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
 
-  private static TreeSet<String> objectsToStrings(final Set<Object> s) {
+  private static TreeSet<String> objectsToStrings(final Set<Object> os) {
     final TreeSet<String> $ = new TreeSet<>();
-    for (final Object o : s)
-      $.add((String) o);
+    for (final Object ¢ : os)
+      $.add((String) ¢);
     return $;
   }
 
@@ -54,7 +54,7 @@ public enum SystemProperty {
     return StringUtils.visualize(value(System.getProperties()));
   }
 
-  public String value(final Properties p) {
-    return p.getProperty(key);
+  public String value(final Properties ¢) {
+    return ¢.getProperty(key);
   }
 }

@@ -64,15 +64,15 @@ public class XYSeries {
 
   private double[] dLogY() {
     final double $[] = new double[y.length];
-    for (int i = 0; i < y.length; i++)
-      $[i] = (Math.log(y[i] + dy[i]) - Math.log(y[i] - dy[i])) / 2;
+    for (int ¢ = 0; ¢ < y.length; ++¢)
+      $[¢] = (Math.log(y[¢] + dy[¢]) - Math.log(y[¢] - dy[¢])) / 2;
     return $;
   }
 
   private XYSeries scale(final double oldMaxY, final double newMaxY) {
-    for (int i = 0; i < n(); ++i) {
-      y[i] = newMaxY * y[i] / oldMaxY;
-      dy[i] = newMaxY * dy[i] / oldMaxY;
+    for (int ¢ = 0; ¢ < n(); ++¢) {
+      y[¢] = newMaxY * y[¢] / oldMaxY;
+      dy[¢] = newMaxY * dy[¢] / oldMaxY;
     }
     return this;
   }

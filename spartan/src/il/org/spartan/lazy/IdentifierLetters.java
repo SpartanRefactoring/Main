@@ -12,22 +12,19 @@ import il.org.spartan.*;
 public class IdentifierLetters {
   public static void main(final String[] args) {
     final CSVLineWriter w = new CSVLineWriter();
-    for (int i = Character.MIN_CODE_POINT; i <= Character.MAX_CODE_POINT; ++i)
-      if (Character.isJavaIdentifierStart(i) && !Character.isAlphabetic(i)) {
-        w.put("Character", "'" + (char) i + "'").put("Unicode", hex(i)).put("Decimal", i);
-        w.put("Ideographic", Character.isIdentifierIgnorable(i));
-        w.put("Mirrored", Character.isMirrored(i));
-        w.put("Title", Character.isTitleCase(i));
-        w.put("CharCount", Character.charCount(i));
-        w.put("hashCode", Character.hashCode((char) i));
+    for (int ¢ = Character.MIN_CODE_POINT; ¢ <= Character.MAX_CODE_POINT; ++¢)
+      if (Character.isJavaIdentifierStart(¢) && !Character.isAlphabetic(¢)) {
+        w.put("Character", "'" + (char) ¢ + "'").put("Unicode", hex(¢)).put("Decimal", ¢);
+        w.put("Ideographic", Character.isIdentifierIgnorable(¢));
+        w.put("Mirrored", Character.isMirrored(¢));
+        w.put("Title", Character.isTitleCase(¢));
+        w.put("CharCount", Character.charCount(¢));
+        w.put("hashCode", Character.hashCode((char) ¢));
         w.nl();
       }
   }
 
-  static @NonNull String hex(final int i) {
-    if (i > 255)
-      return String.format("U+%04X", Integer.valueOf(i));
-    else
-      return String.format("U+%02X", Integer.valueOf(i));
+  static @NonNull String hex(final int ¢) {
+    return String.format("U+%0" + (¢ > 255 ? "4" : "2") + "X", Integer.valueOf(¢));
   }
 }

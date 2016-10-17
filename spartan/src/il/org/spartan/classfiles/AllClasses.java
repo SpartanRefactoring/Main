@@ -11,8 +11,8 @@ public class AllClasses {
   public static void main(final String[] args) throws IOException, StopTraversal {
     for (final String root : CLASSPATH.asArray())
       new ClassFilesVisitor(root, new FileSystemVisitor.FileOnlyAction() {
-        @Override public void visitFile(final File f) {
-          System.out.println(Filename.path2class(f.getAbsolutePath(), root));
+        @Override public void visitFile(final File ¢) {
+          System.out.println(Filename.path2class(¢.getAbsolutePath(), root));
         }
 
         @Override public void visitZipEntry(final String entryName, final InputStream __) {

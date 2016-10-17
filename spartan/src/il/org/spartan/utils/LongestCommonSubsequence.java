@@ -19,8 +19,8 @@ public class LongestCommonSubsequence {
     as = tide.clean(a).toCharArray();
     bs = tide.clean(b).toCharArray();
     length = new int[as.length][];
-    for (int i = 0; i < as.length; ++i)
-      Arrays.fill(length[i] = new int[bs.length], -1);
+    for (int ¢ = 0; ¢ < as.length; ++¢)
+      Arrays.fill(length[¢] = new int[bs.length], -1);
   }
 
   /** @return A value between 0 and 1 */

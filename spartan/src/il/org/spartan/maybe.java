@@ -14,10 +14,10 @@ public class maybe<@Nullable T> {
   }
 
   /** @param <T> JD
-   * @param t JD
+   * @param ¢ JD
    * @return TODO document return type */
-  public static <@Nullable T> maybe<T> yes(final T t) {
-    return new maybe<>(t);
+  public static <@Nullable T> maybe<T> yes(final T ¢) {
+    return new maybe<>(¢);
   }
 
   private @Nullable T inner;
@@ -65,20 +65,17 @@ public class maybe<@Nullable T> {
      * <code>usecase0</code> void TODO Javadoc(2016) automatically generated for
      * returned value of method <code>usecase0</code> */
     @Test public void usecase0() {
-      final maybe<@Nullable Object> o = maybe.no();
-      azzert.isNull(o.get());
+      azzert.isNull(maybe.no().get());
     }
 
     @Test public void usecase1() {
       @Nullable final Object o = null;
-      final maybe<@Nullable Object> m = maybe.yes(o);
-      azzert.isNull(m.get());
+      azzert.isNull(maybe.yes(o).get());
     }
 
     @Test public void usecase2() {
       @Nullable final Object o = new Object();
-      final maybe<@Nullable Object> m = maybe.yes(o);
-      azzert.notNull(m.get());
+      azzert.notNull(maybe.yes(o).get());
     }
   }
 }

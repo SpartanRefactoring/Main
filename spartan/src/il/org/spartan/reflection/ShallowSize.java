@@ -69,7 +69,7 @@ public class ShallowSize {
 
   public static int of(final Class<?> c) {
     final Class<?> parent = c.getSuperclass();
-    return align(intrinsic(c) + (parent == null ? headerSize() : of(parent)));
+    return align(intrinsic(c) + (parent != null ? of(parent) : headerSize()));
   }
 
   public static int of(final double it[]) {
@@ -92,8 +92,8 @@ public class ShallowSize {
     return arraySize(it.length);
   }
 
-  public static int of(final Object o) {
-    return o == null ? 0 : of(o.getClass());
+  public static int of(final Object ¢) {
+    return ¢ == null ? 0 : of(¢.getClass());
   }
 
   public static int of(final short it[]) {
@@ -104,13 +104,12 @@ public class ShallowSize {
     return 4;
   }
 
-  static int align(final int n) {
-    final int i = 8;
-    return i + (n - 1) / i * i;
+  static int align(final int ¢) {
+    return 8 * (¢ - 1) / 8 + 8;
   }
 
   static int arraySize(final int length, final int size) {
-    return align(headerSize() + lengthSize() + length * size);
+    return align(headerSize() + lengthSize() + size * length);
   }
 
   static int headerSize() {
@@ -119,13 +118,13 @@ public class ShallowSize {
 
   static int intrinsic(final Class<?> c) {
     int $ = 0;
-    for (final Field f : c.getDeclaredFields())
-      $ += size(f);
+    for (final Field ¢ : c.getDeclaredFields())
+      $ += size(¢);
     return $;
   }
 
-  static int intrinsic(final Object o) {
-    return intrinsic(o.getClass());
+  static int intrinsic(final Object ¢) {
+    return intrinsic(¢.getClass());
   }
 
   static int lengthSize() {
@@ -136,14 +135,8 @@ public class ShallowSize {
     if (Modifier.isStatic(f.getModifiers()))
       return 0;
     final Class<?> c = f.getType();
-    if (c == byte.class || c == boolean.class)
-      return 1;
-    if (c == short.class || c == char.class)
-      return 2;
-    if (c == int.class || c == float.class)
-      return 4;
-    if (c == long.class || c == double.class)
-      return 8;
-    return referenceSize();
+    return c == byte.class || c == boolean.class ? 1
+        : c == short.class || c == char.class ? 2
+            : c == int.class || c == float.class ? 4 : c == long.class || c == double.class ? 8 : referenceSize();
   }
 }

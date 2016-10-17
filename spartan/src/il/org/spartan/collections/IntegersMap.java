@@ -23,15 +23,15 @@ public final class IntegersMap {
   public static final float REMOVE_LOAD = 0.20f;
   public static final int MIN_CAPACITY = 4;
 
-  static int hash(final int n) {
-    int $ = n;
+  static int hash(final int ¢) {
+    int $ = ¢;
     $ ^= $ >>> 20 ^ $ >>> 12;
     return $ ^ $ >>> 7 ^ $ >>> 4;
   }
 
-  private static int roundUp(final int n) {
+  private static int roundUp(final int ¢) {
     int $ = 1;
-    while ($ < n)
+    while ($ < ¢)
       $ <<= 1;
     return $;
   }
@@ -68,39 +68,39 @@ public final class IntegersMap {
   }
 
   /** Determine whether a given value is in this set.
-   * @param n an arbitrary integer
+   * @param ¢ an arbitrary integer
    * @return <code><b>true</b></code> if, and only if, the parameter is
    *         contained in this set. */
-  public boolean contains(final int n) {
-    return location(n) >= 0;
+  public boolean contains(final int ¢) {
+    return location(¢) >= 0;
   }
 
   /** Check whether an array of integers is contained in this set.
-   * @param ns an array of integers; ; must not be <code><b>null</b></code>.
+   * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
-  public boolean contains(final int... ns) {
-    for (final int n : ns)
-      if (!contains(n))
+  public boolean contains(final int... is) {
+    for (final int ¢ : is)
+      if (!contains(¢))
         return false;
     return true;
   }
 
   /** Check whether this object is disjoint from an array of integers
-   * @param ns an array of of integers; must not be <code><b>null</b></code>.
+   * @param is an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
-  public boolean disjoint(final int... ns) {
-    for (final int n : ns)
-      if (contains(n))
+  public boolean disjoint(final int... is) {
+    for (final int ¢ : is)
+      if (contains(¢))
         return false;
     return true;
   }
 
   public int[] get(final int keys[]) {
     final int[] $ = new int[keys.length];
-    for (int i = 0; i < keys.length; i++)
-      $[i] = get(keys[i]);
+    for (int ¢ = 0; ¢ < keys.length; ++¢)
+      $[¢] = get(keys[¢]);
     return $;
   }
 
@@ -142,9 +142,9 @@ public final class IntegersMap {
    * @return an array of all elements in this set. */
   public int[] keys() {
     final int[] $ = new int[size];
-    for (int i = 0, j = 0; i < capacity(); i++)
-      if (occupied[i] && !placeholder[i])
-        $[j++] = data[i];
+    for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
+      if (occupied[¢] && !placeholder[¢])
+        $[j++] = data[¢];
     return $;
   }/* What are all values stored in this object?
     *
@@ -172,11 +172,11 @@ public final class IntegersMap {
   }
 
   /** Remove an array of integers to this set, if they are in it.
-   * @param ns an array of integers; ; must not be <code><b>null</b></code>.
+   * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-  public IntegersMap remove(final int... ns) {
-    for (final int n : ns)
-      remove(n);
+  public IntegersMap remove(final int... is) {
+    for (final int ¢ : is)
+      remove(¢);
     return this;
   }
 
@@ -190,11 +190,8 @@ public final class IntegersMap {
       return this;
     assert occupied[i] && data[i] == n;
     placeholder[i] = true;
-    if (--size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY)
-      return rehash(data.length >> 1);
-    if (++removed > capacity() * REMOVE_LOAD)
-      return rehash();
-    return this;
+    return --size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
+        : ++removed > capacity() * REMOVE_LOAD ? rehash() : this;
   }
 
   /** How many elements are there in this set?
@@ -211,35 +208,35 @@ public final class IntegersMap {
 
   /** Find the index in the hash table into which the parameter could be
    * inserted.
-   * @param n some integer
+   * @param i some integer
    * @return -1 if the parameter is in the table already, otherwise, the index
    *         at which it could be safely inserted. */
-  int find(final int n) {
+  int find(final int i) {
     int $ = -1;
-    for (int i = hash(n), t = 0;; i += ++t) {
-      i &= data.length - 1;
-      if (placeholder[i] || !occupied[i])
-        $ = $ < 0 ? i : $;
-      if (!occupied[i])
+    for (int ¢ = hash(i), t = 0;; ¢ += ++t) {
+      ¢ &= data.length - 1;
+      if (placeholder[¢] || !occupied[¢])
+        $ = $ < 0 ? ¢ : $;
+      if (!occupied[¢])
         return $;
-      if (data[i] == n)
+      if (data[¢] == i)
         return -1;
     }
   }
 
   /** Find the index in the hash table of the parameter
-   * @param n some integer
+   * @param i some integer
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
-  int location(final int n) {
-    for (int i = hash(n), t = 0;; i += ++t) {
-      i &= data.length - 1;
-      if (!occupied[i])
+  int location(final int i) {
+    for (int $ = hash(i), t = 0;; $ += ++t) {
+      $ &= data.length - 1;
+      if (!occupied[$])
         return -1;
-      if (placeholder[i])
+      if (placeholder[$])
         continue;
-      if (data[i] == n)
-        return i;
+      if (data[$] == i)
+        return $;
     }
   }
 
@@ -253,12 +250,12 @@ public final class IntegersMap {
     final int[] keys = keys();
     final int[] oldValues = get(keys);
     reset(newCapacity);
-    for (int i = 0; i < keys.length; i++)
-      put(keys[i], oldValues[i]);
+    for (int ¢ = 0; ¢ < keys.length; ++¢)
+      put(keys[¢], oldValues[¢]);
     return this;
   }
 
-  private final IntegersMap reset(final int capacity) {
+  private IntegersMap reset(final int capacity) {
     data = new int[capacity];
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];
@@ -280,15 +277,15 @@ public final class IntegersMap {
       assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE_LOAD)));
       assertThat(removed, comparesEqualTo(count(placeholder)));
       assertThat(size, comparesEqualTo(count(occupied) - removed));
-      for (int i = 0; i < capacity(); i++)
-        if (placeholder[i])
-          assert occupied[i];
+      for (int ¢ = 0; ¢ < capacity(); ++¢)
+        if (placeholder[¢])
+          assert occupied[¢];
     }
 
     private int count(final boolean bs[]) {
       int $ = 0;
-      for (final boolean b : bs)
-        $ += As.binary(b);
+      for (final boolean ¢ : bs)
+        $ += As.binary(¢);
       return $;
     }
   }

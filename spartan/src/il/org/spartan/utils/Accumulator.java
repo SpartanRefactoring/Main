@@ -10,21 +10,23 @@ import org.junit.*;
 import il.org.spartan.*;
 
 public abstract class Accumulator {
-  static final int asInteger(final boolean b) {
-    return As.binary(b);
+  static int asInteger(final boolean ¢) {
+    return As.binary(¢);
   }
 
-  static final int asInteger(final Object o) {
-    return As.binary(o);
+  static int asInteger(final Object ¢) {
+    return As.binary(¢);
   }
 
-  /** @param s
-   * @return */
-  static final int asInteger(final String s) {
-    return As.binary(s);
+  /**
+   * @param ¢
+   * @return  
+   */
+  static int asInteger(final String ¢) {
+    return As.binary(¢);
   }
 
-  protected int value = 0;
+  protected int value;
   public int weight = 1;
   protected final String name;
 
@@ -36,16 +38,16 @@ public abstract class Accumulator {
     this.name = name;
   }
 
-  public final void add(final boolean b) {
-    add(asInteger(b));
+  public final void add(final boolean ¢) {
+    add(asInteger(¢));
   }
 
   public void add(final int v) {
     value += weight * transform(v);
   }
 
-  public final void add(final String s) {
-    add(asInteger(s));
+  public final void add(final String ¢) {
+    add(asInteger(¢));
   }
 
   public String name() {
@@ -56,7 +58,7 @@ public abstract class Accumulator {
     return value;
   }
 
-  abstract protected int transform(int v);
+  protected abstract int transform(int v);
 
   final int weight() {
     return weight;
@@ -71,7 +73,6 @@ public abstract class Accumulator {
    * @since Jul 30, 2007 */
   public static class Counter extends Accumulator {
     public Counter() {
-      super();
     }
 
     public Counter(final String name) {
@@ -113,7 +114,7 @@ public abstract class Accumulator {
 
       @Test public void emptyAdds() {
         final Counter c = new Counter();
-        for (int i = 0; i < 19; i++)
+        for (int ¢ = 0; ¢ < 19; ++¢)
           c.add();
         azzert.that(c.value(), is(19));
       }
@@ -123,7 +124,6 @@ public abstract class Accumulator {
   public static class Last extends Accumulator {
     /** Instantiate {@link Last}. */
     public Last() {
-      super();
     }
 
     /** Instantiate {@link Last}.
@@ -160,8 +160,8 @@ public abstract class Accumulator {
 
       @Test public void emptyAdds() {
         final Last c = new Last();
-        for (int i = 0; i < 19; i++)
-          c.add(i);
+        for (int ¢ = 0; ¢ < 19; ++¢)
+          c.add(¢);
         c.add(11);
         azzert.that(c.value(), is(11));
       }

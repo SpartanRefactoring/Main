@@ -26,7 +26,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
   /** A map that stores cached objects, keyed by their name */
   private final Map<String, T> map = new HashMap<>();
   /** <code><b>true</b></code> <em>iff</em>the cache holds all possible keys. */
-  private boolean exhaustive = false;
+  private boolean exhaustive;
 
   /** Initialize a cache using a given {@link Factory}.
    * @param factory to be used for creating objects not in the cache. */

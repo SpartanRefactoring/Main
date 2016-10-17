@@ -8,12 +8,12 @@ import static il.org.spartan.utils.___.*;
 /** @param <T> Type over which we shall iterate * @author Yossi Gil
  * @since 01/05/2011 */
 public abstract class Iteration<T> {
-  public void at(final T t) {
-    unused(t);
+  public void at(final T ¢) {
+    unused(¢);
   }
 
-  public void epilog(final T t) {
-    unused(t);
+  public void epilog(final T ¢) {
+    unused(¢);
   }
 
   public void next(final T t, final T next) {
@@ -26,7 +26,7 @@ public abstract class Iteration<T> {
     unused(t);
   }
 
-  public void prolog(final T t) {
-    unused(t);
+  public void prolog(final T ¢) {
+    unused(¢);
   }
 }

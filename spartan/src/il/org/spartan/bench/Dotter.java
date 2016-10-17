@@ -11,9 +11,9 @@ public class Dotter implements java.io.Serializable {
   public static final int DOTS_IN_LINE = 60;
   private static final long serialVersionUID = 1L;
   private final long initTime;
-  private int n = 0;
-  private int line = 0;
-  private boolean cleared = false;
+  private int n;
+  private int line;
+  private boolean cleared;
   private long lineStartTime = -1;
 
   public Dotter() {

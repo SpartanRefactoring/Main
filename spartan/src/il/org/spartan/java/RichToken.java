@@ -60,8 +60,8 @@ public class RichToken {
       this.tokenizer = tokenizer;
     }
 
-    @SuppressWarnings("synthetic-access") public RichToken make(final Token t) {
-      return new RichToken(tokenizer, t);
+    @SuppressWarnings("synthetic-access") public RichToken make(final Token ¢) {
+      return new RichToken(tokenizer, ¢);
     }
   }
 }

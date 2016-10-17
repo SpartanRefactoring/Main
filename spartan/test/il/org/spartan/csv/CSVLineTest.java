@@ -72,8 +72,8 @@ import il.org.spartan.streotypes.*;
   @Test public void elementsSortTest() {
     final String[] a = { "one", "two", "three", "four" };
     final CSVLine c = new CSVLine.Sorterd();
-    for (final String s : a)
-      c.put(s + "__key", s + "__value");
+    for (final String ¢ : a)
+      c.put(¢ + "__key", ¢ + "__value");
     azzert.that(c.header(), is("four_key,one_key,three_key,two_key"));
     azzert.that(c.line(), is("four_value,one_value,three_value,two_value"));
   }
@@ -169,8 +169,8 @@ import il.org.spartan.streotypes.*;
   @Test public void testOrder() {
     final String[] a = { "one", "two", "three", "four" };
     final CSVLine c = new CSVLine.Ordered();
-    for (final String s : a)
-      c.put(s + "__key", s + "__value");
+    for (final String ¢ : a)
+      c.put(¢ + "__key", ¢ + "__value");
     azzert.that(c.header(), is("one_key,two_key,three_key,four_key"));
     azzert.that(c.line(), is("one_value,two_value,three_value,four_value"));
   }

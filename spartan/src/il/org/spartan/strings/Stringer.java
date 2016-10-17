@@ -15,8 +15,8 @@ import il.org.spartan.utils.*;
     if (s == null)
       return null;
     String $ = "";
-    for (final char c : s.toCharArray())
-      $ += Character.isSpaceChar(c) ? "" : c + "";
+    for (final char ¢ : s.toCharArray())
+      $ += Character.isSpaceChar(¢) ? "" : ¢ + "";
     return $;
   }
 
@@ -45,9 +45,9 @@ import il.org.spartan.utils.*;
     if (s == null || s.length() == 0)
       return s;
     int numDigits = 0;
-    for (int i = 0, len = s.length(); i < len; ++i) {
-      numDigits = i;
-      if (!Character.isDigit(s.charAt(len - i - 1)))
+    for (int ¢ = 0, len = s.length(); ¢ < len; ++¢) {
+      numDigits = ¢;
+      if (!Character.isDigit(s.charAt(len - ¢ - 1)))
         break;
     }
     if (numDigits == 0)
@@ -71,55 +71,55 @@ import il.org.spartan.utils.*;
     return s.substring(0, p >= 0 ? p : s.length());
   }
 
-  /** @param <T> type of items in the list
-   * @param begin the string starting the string representation.
-   * @param ts the actual items in the list, method <code>toString()</code> is
-   *        used to compute obtain each item string represntation.
-   * @param sep a string so separate these items
-   * @param end a string terminating the string representation
-   * @return the string equivalent of the <code>ts</code> in the following
-   *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  public static final <T> String sequence(final String begin, final Iterable<T> ts, final String sep, final String end) {
+  /**
+   * @param < T >  type of items in the list
+   * @param begin  the string starting the string representation.
+   * @param ts  the actual items in the list, method <code>toString()</code> is used to compute obtain each item string represntation.
+   * @param sep  a string so separate these items
+   * @param end  a string terminating the string representation
+   * @return  the string equivalent of the <code>ts</code> in the following structure: <code> begin item1 sep item2 sep ... item2 end</code> 
+   */
+  public static <T> String sequence(final String begin, final Iterable<T> ts, final String sep, final String end) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
-    for (final T t : ts)
-      b.append(s).append(t);
+    for (final T ¢ : ts)
+      b.append(s).append(¢);
     b.append(end);
     return b + "";
   }
 
-  /** @param <T> type of items in the list
-   * @param begin the string starting the string representation.
-   * @param ts the actual items in the list, method <code>toString()</code> is
-   *        used to compute obtain each item string represntation.
-   * @param sep a string so separate these items
-   * @param end a string terminating the string representation
-   * @return the string equivalent of the <code>ts</code> in the following
-   *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  public static final <T> String sequence(final String begin, final T[] ts, final String sep, final String end) {
+  /**
+   * @param < T >  type of items in the list
+   * @param begin  the string starting the string representation.
+   * @param ts  the actual items in the list, method <code>toString()</code> is used to compute obtain each item string represntation.
+   * @param sep  a string so separate these items
+   * @param end  a string terminating the string representation
+   * @return  the string equivalent of the <code>ts</code> in the following structure: <code> begin item1 sep item2 sep ... item2 end</code> 
+   */
+  public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
-    for (final T t : ts)
-      b.append(s).append(t);
+    for (final T ¢ : ts)
+      b.append(s).append(¢);
     b.append(end);
     return b + "";
   }
 
-  /** @author Oren Rubin
-   * @param <T> type of items in the list
-   * @param begin the string starting the string representation.
-   * @param ts the actual items in the list, method <code>toString()</code> is
-   *        used to compute obtain each item string represntation.
-   * @param sep a string so separate these items
-   * @param end a string terminating the string representation
-   * @param converter class to customize conversions.
-   * @return the string equivalent of the <code>ts</code> in the following
-   *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
-  public static final <T> String sequence(final String begin, final T[] ts, final String sep, final String end, final Converter<T> converter) {
+  /**
+   * @author  Oren Rubin
+   * @param < T >  type of items in the list
+   * @param begin  the string starting the string representation.
+   * @param ts  the actual items in the list, method <code>toString()</code> is used to compute obtain each item string represntation.
+   * @param sep  a string so separate these items
+   * @param end  a string terminating the string representation
+   * @param t  class to customize conversions.
+   * @return  the string equivalent of the <code>ts</code> in the following structure: <code> begin item1 sep item2 sep ... item2 end</code> 
+   */
+  public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end, final Converter<T> t) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
-    for (final T t : ts)
-      b.append(s).append(converter.convert(t));
+    for (final T ¢ : ts)
+      b.append(s).append(t.convert(¢));
     b.append(end);
     return b + "";
   }
@@ -158,17 +158,17 @@ import il.org.spartan.utils.*;
   public <T> Stringer(final String between, final int... ts) {
     final StringBuilder b = new StringBuilder();
     final Separator s = new Separator(between);
-    for (final int i : ts)
-      b.append(s).append(i);
+    for (final int ¢ : ts)
+      b.append(s).append(¢);
     value = b + "";
   }
 
   public <T> Stringer(final String separator, final String nullStr, final T... ts) {
     final StringBuilder b = new StringBuilder();
     final Separator s = new Separator(separator);
-    for (final T t : ts) {
+    for (final T ¢ : ts) {
       b.append(s);
-      b.append(t != null ? t : nullStr);
+      b.append(¢ != null ? ¢ : nullStr);
     }
     value = b + "";
   }
@@ -181,7 +181,7 @@ import il.org.spartan.utils.*;
     return value;
   }
 
-  public static interface Converter<T> {
-    public String convert(T toBeConverted);
+  public interface Converter<T> {
+    String convert(T toBeConverted);
   }
 }

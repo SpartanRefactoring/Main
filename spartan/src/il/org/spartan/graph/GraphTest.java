@@ -16,24 +16,24 @@ import il.org.spartan.collections.*;
 import il.org.spatan.iteration.*;
 
 @SuppressWarnings("static-method") public class GraphTest {
-  static void verifyEdge(final Graph<String> g, final int from, final int to) {
-    assert null != g.vertices().get(from);
-    assert null != g.vertices().get(to);
-    assert null != g.vertices().get(from).outgoing();
-    assert null != g.vertices().get(to).incoming();
-    verifyFound(g.vertices().get(from).outgoing(), g.vertices().get(to));
-    verifyFound(g.vertices().get(to).incoming(), g.vertices().get(from));
+  static void verifyEdge(final Graph<String> s, final int from, final int to) {
+    assert null != s.vertices().get(from);
+    assert null != s.vertices().get(to);
+    assert null != s.vertices().get(from).outgoing();
+    assert null != s.vertices().get(to).incoming();
+    verifyFound(s.vertices().get(from).outgoing(), s.vertices().get(to));
+    verifyFound(s.vertices().get(to).incoming(), s.vertices().get(from));
   }
 
-  static void verifyEdge(final Graph<String> g, final String from, final String to) {
-    verifyEdge(g, index(g, from), index(g, to));
+  static void verifyEdge(final Graph<String> s, final String from, final String to) {
+    verifyEdge(s, index(s, from), index(s, to));
   }
 
-  static void verifyGraph(final Graph<String> g) {
-    verifyVertices(g);
-    verifySources(g);
-    verifySinks(g);
-    verifyPreorder(g);
+  static void verifyGraph(final Graph<String> ¢) {
+    verifyVertices(¢);
+    verifySources(¢);
+    verifySinks(¢);
+    verifyPreorder(¢);
   }
 
   static void verifyGraphsEquivlanet(final Graph<String> g1, final Graph<String> g2) {
@@ -51,100 +51,100 @@ import il.org.spatan.iteration.*;
       }
   }
 
-  static void verifyPreorder(final Graph<String> g) {
-    verifyCollection(g, g.preOrder(), g.vertices().size(), (Query) sink -> verifyVertex(g, sink.e()));
+  static void verifyPreorder(final Graph<String> s) {
+    verifyCollection(s, s.preOrder(), s.vertices().size(), (Query) sink -> verifyVertex(s, sink.e()));
   }
 
-  static void verifySink(final Graph<String> g, final String sink) {
-    verifySink(g, g.vertex(sink));
+  static void verifySink(final Graph<String> s, final String sink) {
+    verifySink(s, s.vertex(sink));
   }
 
-  static void verifySink(final Graph<String> g, final Vertex<String> v) {
-    assertEquals(0, g.outgoing(v).size());
+  static void verifySink(final Graph<String> s, final Vertex<String> v) {
+    assertEquals(0, s.outgoing(v).size());
   }
 
-  static void verifySinks(final Graph<String> g) {
-    verifyCollection(g, g.sinks(), g.sinksCount(), (Query) sink -> verifySink(g, sink));
+  static void verifySinks(final Graph<String> s) {
+    verifyCollection(s, s.sinks(), s.sinksCount(), (Query) sink -> verifySink(s, sink));
   }
 
-  static void verifySource(final Graph<String> g, final String source) {
-    verifySource(g, g.vertex(source));
+  static void verifySource(final Graph<String> s, final String source) {
+    verifySource(s, s.vertex(source));
   }
 
-  static void verifySource(final Graph<String> g, final Vertex<String> v) {
-    assert g.isSource(v);
+  static void verifySource(final Graph<String> s, final Vertex<String> v) {
+    assert s.isSource(v);
     assertEquals(0, v.incoming().size());
   }
 
-  static void verifySources(final Graph<String> g) {
-    verifyCollection(g, g.sources(), g.sourcesCount(), (Query) source -> verifySource(g, source));
+  static void verifySources(final Graph<String> s) {
+    verifyCollection(s, s.sources(), s.sourcesCount(), (Query) source -> verifySource(s, source));
   }
 
-  static void verifyVertex(final Graph<String> g, final String... vertices) {
+  static void verifyVertex(final Graph<String> s, final String... vertices) {
     for (final String vertex : vertices)
-      assert null != vertex : g.vertex(vertex);
+      assert null != vertex : s.vertex(vertex);
     for (final String vertex : vertices)
-      verifyVertex(g, g.vertex(vertex));
+      verifyVertex(s, s.vertex(vertex));
   }
 
-  static void verifyVertex(final Graph<String> g, final Vertex<String> v) {
+  static void verifyVertex(final Graph<String> s, final Vertex<String> v) {
     assert null != v;
-    assert index(g, v) >= 0;
-    assert index(g, v) < g.size();
-    assertEquals(v, g.vertices().get(index(g, v)));
+    assert index(s, v) >= 0;
+    assert index(s, v) < s.size();
+    assertEquals(v, s.vertices().get(index(s, v)));
   }
 
-  static void verifyVertices(final Graph<String> g) {
-    verifyCollection(g, g.vertices(), g.size(), (Query) v -> verifyVertex(g, v));
+  static void verifyVertices(final Graph<String> s) {
+    verifyCollection(s, s.vertices(), s.size(), (Query) v -> verifyVertex(s, v));
   }
 
   private static boolean among(final String what, final String... where) {
-    for (final String s : where)
-      if (what.equals(s))
+    for (final String ¢ : where)
+      if (what.equals(¢))
         return true;
     return false;
   }
 
-  private static int index(final Graph<String> g, final String v) {
-    for (int i = 0; i < g.vertices().size(); i++)
-      if (g.vertices().get(i).e().equals(v))
-        return i;
+  private static int index(final Graph<String> s, final String v) {
+    for (int $ = 0; $ < s.vertices().size(); ++$)
+      if (s.vertices().get($).e().equals(v))
+        return $;
     return -1;
   }
 
-  private static int index(final Graph<String> g, final Vertex<String> v) {
-    for (int i = 0; i < g.vertices().size(); i++)
-      if (g.vertices().get(i) == v)
-        return i;
+  private static int index(final Graph<String> s, final Vertex<String> v) {
+    for (int $ = 0; $ < s.vertices().size(); ++$)
+      if (s.vertices().get($) == v)
+        return $;
     return -1;
   }
 
-  private static void verifyCollection(final Graph<String> g, final ImmutableArrayList<Vertex<String>> vs, final int size, final Query q) {
+  private static void verifyCollection(final Graph<String> s, final ImmutableArrayList<Vertex<String>> vs, final int size, final Query q) {
     assert null != vs;
-    for (final Vertex<String> v : vs)
-      q.test(v);
+    for (final Vertex<String> ¢ : vs)
+      q.test(¢);
     assertEquals(size, vs.size());
-    final boolean[] seen = new boolean[g.size()];
-    for (final Vertex<String> v : vs) {
-      assert !seen[index(g, v)];
-      seen[index(g, v)] = true;
+    final boolean[] seen = new boolean[s.size()];
+    for (final Vertex<String> ¢ : vs) {
+      assert !seen[index(s, ¢)];
+      seen[index(s, ¢)] = true;
     }
   }
 
-  private static void verifyCollection(final Graph<String> g, final Iterable<Vertex<String>> vs, final int length, final Query q) {
-    assert null != vs;
-    for (final Vertex<String> v : vs)
-      q.test(v);
-    assertEquals(length, Iterables.count(vs));
-    final boolean[] seen = new boolean[g.size()];
-    for (final Vertex<String> v : vs) {
-      assert !seen[index(g, v)];
-      seen[index(g, v)] = true;
+  private static void verifyCollection(final Graph<String> s, final Iterable<Vertex<String>> ss, final int length, final Query q) {
+    assert null != ss;
+    for (final Vertex<String> ¢ : ss)
+      q.test(¢);
+    assertEquals(length, Iterables.count(ss));
+    final boolean[] seen = new boolean[s.size()];
+    for (final Vertex<String> ¢ : ss) {
+      assert !seen[index(s, ¢)];
+      seen[index(s, ¢)] = true;
     }
   }
 
-  private static void verifyFound(final ImmutableArrayList<Vertex<String>> vs, final Vertex<String> u) {
-    assertThat(vs, hasItem(u));
+  private static void verifyFound(final ImmutableArrayList<Vertex<String>> s, final Vertex<String> u) {
+    assertThat(s, hasItem(u));
   }
 
   @Test public void builderAddGraph() {
@@ -174,13 +174,11 @@ import il.org.spatan.iteration.*;
   }
 
   @Test public void emptyNamedGraph() {
-    final Graph<String> g = new Graph.Builder<String>("empty").build();
-    assertEquals("empty", g.name());
+    assertEquals("empty", new Graph.Builder<String>("empty").build().name());
   }
 
   @Test public void emptyNamedInvertedGraph() {
-    final AbstractGraph<String> g = new Graph.Builder<String>("empty").build().invert();
-    assertEquals("empty" + NamedEntity.INVERTED, g.name());
+    assertEquals("empty" + NamedEntity.INVERTED, new Graph.Builder<String>("empty").build().invert().name());
   }
 
   @Test public void flowGraph() {
@@ -203,8 +201,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("START"), g.source(g.vertex("f")));
     assertEquals(g.vertex("START"), g.source(g.vertex("g")));
     assertEquals(g.vertex("START"), g.source(g.vertex("END")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("START"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("START"), g.source(¢));
   }
 
   @Test public void invertedTree() {
@@ -237,8 +235,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("root"), g.source(g.vertex("root")));
     assertEquals(g.vertex("root"), g.source(g.vertex("side")));
     assertEquals(g.vertex("root"), g.source(g.vertex("tail")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("root"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("root"), g.source(¢));
   }
 
   @Test public void numbersTriagleExample() {
@@ -246,8 +244,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("one"), g.source(g.vertex("one")));
     assertEquals(g.vertex("one"), g.source(g.vertex("two")));
     assertEquals(g.vertex("one"), g.source(g.vertex("three")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("one"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("one"), g.source(¢));
   }
 
   @Test public void singleEdgeGraph() {
@@ -330,8 +328,8 @@ import il.org.spatan.iteration.*;
   }
 
   @Test public void testAll() {
-    for (final Graph<String> g : makeAll())
-      assertEquals(g.size(), Iterables.count(g.preOrder()));
+    for (final Graph<String> ¢ : makeAll())
+      assertEquals(¢.size(), Iterables.count(¢.preOrder()));
   }
 
   @Test public void testCFGExample() {
@@ -345,8 +343,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("START"), g.source(g.vertex("END")));
     assertEquals(g.vertex("START"), g.source(g.vertex("f")));
     assertEquals(g.vertex("START"), g.source(g.vertex("g")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("START"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("START"), g.source(¢));
   }
 
   @Test public void testChain() {
@@ -418,8 +416,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("a"), g.source(g.vertex("a")));
     assertEquals(g.vertex("a"), g.source(g.vertex("b")));
     assertEquals(g.vertex("a"), g.source(g.vertex("c")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("a"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("a"), g.source(¢));
   }
 
   @Test public void testPreOrderInnerCycle() {
@@ -463,8 +461,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A"), g.source(g.vertex("a")));
     assertEquals(g.vertex("A"), g.source(g.vertex("C")));
     assertEquals(g.vertex("A"), g.source(g.vertex("D")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("A"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("A"), g.source(¢));
   }
 
   @Test public void testSimpleTree() {
@@ -478,8 +476,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A"), g.source(g.vertex("C")));
     assertEquals(g.vertex("A"), g.source(g.vertex("D")));
     assertEquals(g.vertex("A"), g.source(g.vertex("E")));
-    for (final Vertex<String> v : g.vertices())
-      azzert.that("Node " + v.e(), g.source(v), is(g.vertex("A")));
+    for (final Vertex<String> ¢ : g.vertices())
+      azzert.that("Node " + ¢.e(), g.source(¢), is(g.vertex("A")));
   }
 
   @Test public void testSingleEdgeSource() {
@@ -686,8 +684,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A"), g.source(g.vertex("E")));
     assertEquals(g.vertex("A"), g.source(g.vertex("F")));
     assertEquals(g.vertex("A"), g.source(g.vertex("G")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("A"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("A"), g.source(¢));
   }
 
   @Test public void triangle() {
@@ -698,8 +696,8 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
     assertEquals(g.vertex("A"), g.source(g.vertex("B")));
     assertEquals(g.vertex("A"), g.source(g.vertex("C")));
-    for (final Vertex<String> v : g.vertices())
-      assertEquals(g.vertex("A"), g.source(v));
+    for (final Vertex<String> ¢ : g.vertices())
+      assertEquals(g.vertex("A"), g.source(¢));
   }
 
   @Test public void twoConnectedPairs() {
@@ -731,6 +729,6 @@ import il.org.spatan.iteration.*;
   }
 
   interface Query {
-    void test(Vertex<String> vertex);
+    void test(Vertex<String> s);
   }
 }

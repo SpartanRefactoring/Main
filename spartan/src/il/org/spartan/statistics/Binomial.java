@@ -14,7 +14,7 @@ public class Binomial {
 
   public static double cumulative(final int m, final int k) {
     double $ = 0;
-    for (int kʹ = 0; kʹ <= k; kʹ++)
+    for (int kʹ = 0; kʹ <= k; ++kʹ)
       $ += probability(m, kʹ);
     return $;
   }
@@ -28,6 +28,6 @@ public class Binomial {
   }
 
   public static double significance(final int m, final int k) {
-    return 2 * k > m ? significance(m, m - k) : 2 * k == m ? 2 * cumulative(m, k - 1) + probability(m, k) : 2 * cumulative(m, k);
+    return 2 * k > m ? significance(m, m - k) : 2 * k != m ? 2 * cumulative(m, k) : 2 * cumulative(m, k - 1) + probability(m, k);
   }
 }

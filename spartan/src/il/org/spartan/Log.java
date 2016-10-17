@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
  * @since 04/06/2011 */
 public enum Log {
   ;
-  private static int level = 0;
+  private static int level;
   private static boolean active = true;
   private static PrintStream out = System.out;
   private static Tab tabber = new Tab("  ");
@@ -26,13 +26,13 @@ public enum Log {
     active = true;
   }
 
-  public static void beginCompoundStage(final Object... os) {
-    beginStage(os);
+  public static void beginCompoundStage(final Object... ¢) {
+    beginStage(¢);
     increaseLevel();
   }
 
-  public static void beginStage(final Object... os) {
-    beginStage(Separate.by(os, " "));
+  public static void beginStage(final Object... ¢) {
+    beginStage(Separate.by(¢, " "));
   }
 
   public static void beginStage(final String stage) {
@@ -78,8 +78,8 @@ public enum Log {
     ++level;
   }
 
-  public static void ln(final Object... os) {
-    print(prefix() + Separate.by(os, " ") + "\n");
+  public static void ln(final Object... ¢) {
+    print(prefix() + Separate.by(¢, " ") + "\n");
   }
 
   public static boolean logging() {
@@ -90,10 +90,10 @@ public enum Log {
     return new SimpleDateFormat("HH:mm:ss ").format(Calendar.getInstance().getTime());
   }
 
-  public static void print(final Object o) {
+  public static void print(final Object ¢) {
     if (!logging())
       return;
-    out.print(o);
+    out.print(¢);
     flush();
   }
 

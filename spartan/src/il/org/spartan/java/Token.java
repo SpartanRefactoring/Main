@@ -103,7 +103,7 @@ public enum Token {
   }
 
   public final Kind kind;
-  protected final boolean isError;
+  final boolean isError;
 
   private Token() {
     this(KEYWORD);

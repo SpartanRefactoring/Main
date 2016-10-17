@@ -5,11 +5,11 @@ import static il.org.spartan.Utils.*;
 import java.util.*;
 
 public interface lisp {
-  static <T> List<T> chop(final List<T> ts) {
-    if (ts.isEmpty())
+  static <T> List<T> chop(final List<T> ¢) {
+    if (¢.isEmpty())
       return null;
-    ts.remove(0);
-    return ts;
+    ¢.remove(0);
+    return ¢;
   }
 
   static <T> List<T> cons(final T first, final List<T> rest) {
@@ -17,12 +17,12 @@ public interface lisp {
     return rest;
   }
 
-  static <T> T first(final List<T> ts) {
-    return ts == null || ts.isEmpty() ? null : ts.get(0);
+  static <T> T first(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : first(¢);
   }
 
-  static char first(final String s) {
-    return last(s, 0);
+  static char first(final String ¢) {
+    return last(¢, 0);
   }
 
   static char first(final String s, final int i) {
@@ -40,12 +40,12 @@ public interface lisp {
     return false;
   }
 
-  static <T> T last(final List<T> ts) {
-    return ts == null || ts.isEmpty() ? null : ts.get(ts.size() - 1);
+  static <T> T last(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
   }
 
-  static char last(final String s) {
-    return last(s, 0);
+  static char last(final String ¢) {
+    return last(¢, 0);
   }
 
   static char last(final String s, final int i) {
@@ -61,8 +61,8 @@ public interface lisp {
     return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
   }
 
-  static <T> T onlyOne(final List<T> ts) {
-    return ts == null || ts.size() != 1 ? null : ts.get(0);
+  static <T> T onlyOne(final List<T> ¢) {
+    return ¢ == null || ¢.size() != 1 ? null : first(¢);
   }
 
   /** Determine if an item is not included in a list of values
@@ -112,10 +112,10 @@ public interface lisp {
     return replace(ts, element, ts.size() - 1);
   }
 
-  static <T> Iterable<T> rest(final Iterable<T> ts) {
+  static <T> Iterable<T> rest(final Iterable<T> ¢) {
     return () -> {
       return new Iterator<T>() {
-        final Iterator<T> $ = ts.iterator();
+        final Iterator<T> $ = ¢.iterator();
         {
           $.next();
         }
@@ -131,11 +131,11 @@ public interface lisp {
     };
   }
 
-  static <T> Iterable<T> rest2(final Iterable<T> ts) {
-    return rest(rest(ts));
+  static <T> Iterable<T> rest2(final Iterable<T> ¢) {
+    return rest(rest(¢));
   }
 
-  static <T> T second(final List<T> ts) {
-    return ts == null || ts.size() < 2 ? null : ts.get(1);
+  static <T> T second(final List<T> ¢) {
+    return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
 }

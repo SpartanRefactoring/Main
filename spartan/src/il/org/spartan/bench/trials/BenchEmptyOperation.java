@@ -17,7 +17,7 @@ public class BenchEmptyOperation {
       }
     };
     Log.deactivate();
-    for (int i = 0; i < trials; i++)
+    for (int ¢ = 0; ¢ < trials; ++¢)
       BenchingPolicy.go(l, "empty", 1, o);
     System.err.println(l.currentEntry().format("A D I X"));
   }

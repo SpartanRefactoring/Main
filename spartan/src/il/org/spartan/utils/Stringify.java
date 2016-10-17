@@ -46,10 +46,10 @@ import il.org.spartan.utils.Separate.*;
  * @since 28/08/2008 */
 @Utility public enum Stringify {
   ; // No values in this namespace.
-  public static <T> ArrayList<String> apply(final F<T> f, final Iterable<? extends T> ts) {
+  public static <T> ArrayList<String> apply(final F<T> t, final Iterable<? extends T> ts) {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final T t : ts)
-      $.add(f.__(t));
+    for (final T ¢ : ts)
+      $.add(t.__(¢));
     return $;
   }
 
@@ -89,24 +89,24 @@ import il.org.spartan.utils.Separate.*;
    * objects using a supplied formatting style, after applying a user supplied
    * conversion to each object.
    * @param ts an array of objects of type <code>T</code>.
-   * @param f a function to apply on each object prior to conversion.
+   * @param t a function to apply on each object prior to conversion.
    * @param o formatting style for this list.
    * @param <T> type of arguments to be converted.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-  public static <T> String it(final Iterable<? extends T> ts, final F<T> f, final Option o) {
-    return it(apply(f, ts), o);
+  public static <T> String it(final Iterable<? extends T> ts, final F<T> t, final Option o) {
+    return it(apply(t, ts), o);
   }
 
   /** Convert an {@link Iterable} collection of objects to a {@link String}
    * using the default formatting style.
    * @param <T> type of arguments to be converted.
-   * @param ts a collection of objects of type <code>T</code>.
+   * @param ¢ a collection of objects of type <code>T</code>.
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-  public static <T> String it(final Iterable<T> ts) {
-    return it(ts, Option.defaultStyle);
+  public static <T> String it(final Iterable<T> ¢) {
+    return it(¢, Option.defaultStyle);
   }
 
   /** Create a textual representation of an {@link Iterable} collection of
@@ -123,12 +123,12 @@ import il.org.spartan.utils.Separate.*;
   /** Convert an array of objects to a {@link String} using the default
    * formatting style.
    * @param <T> type of arguments to be converted.
-   * @param ts an array of objects of type <code>T</code>.
+   * @param ¢ an array of objects of type <code>T</code>.
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-  public static <T> String it(final T[] ts) {
-    return it(ts, Option.defaultStyle);
+  public static <T> String it(final T[] ¢) {
+    return it(¢, Option.defaultStyle);
   }
 
   /** Convert an {@link Iterable} collection of objects to a {@link String}
@@ -169,16 +169,16 @@ import il.org.spartan.utils.Separate.*;
   private static <T> String[] asStringArray(final T[] ts, final String nullFiller) {
     final String[] $ = new String[ts.length];
     int i = 0;
-    for (final T t : ts)
-      $[i++] = t == null ? nullFiller : t + "";
+    for (final T ¢ : ts)
+      $[i++] = ¢ != null ? ¢ + "" : nullFiller;
     return $;
   }
 
   private static <T> Collection<String> asStringCollection(final Iterable<T> ts, final String nullFiller) {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final T t : ts)
-      if (t != null)
-        $.add((t + ""));
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add((¢ + ""));
       else if (nullFiller != null)
         $.add(nullFiller);
     return $;
@@ -189,7 +189,7 @@ import il.org.spartan.utils.Separate.*;
   }
 
   private static <T> Iterable<T> prune(final Iterable<T> ts, final Option o) {
-    return o.isOmittingNulls() ? Prune.nulls(ts) : ts;
+    return !o.isOmittingNulls() ? ts : Prune.nulls(ts);
   }
 
   private static <T> T[] prune(final T[] ts, final Option o) {
@@ -277,14 +277,14 @@ import il.org.spartan.utils.Separate.*;
   }
 
   @SuppressWarnings("static-method") public static class TEST {
-    private static String[] makeArray(final String... ss) {
-      return ss;
+    private static String[] makeArray(final String... ¢) {
+      return ¢;
     }
 
     private static Collection<String> makeCollection(final String... ss) {
       final ArrayList<String> $ = new ArrayList<>();
-      for (final String s : ss)
-        $.add(s);
+      for (final String ¢ : ss)
+        $.add(¢);
       return $;
     }
 

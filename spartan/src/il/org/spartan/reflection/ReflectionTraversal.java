@@ -45,17 +45,17 @@ public final class ReflectionTraversal {
     // Visit the class itself
     int $ = visitor.visit(from);
     // Visit all sorts of members
-    for (final Field f : from.getDeclaredFields())
-      $ += visitor.visit(f);
-    for (final Method m : from.getDeclaredMethods())
-      $ += visitor.visit(m);
-    for (final Constructor<?> c : from.getDeclaredConstructors())
-      $ += visitor.visit(c);
-    for (final Class<?> c : from.getDeclaredClasses())
-      $ += visitor.visit(c);
+    for (final Field ¢ : from.getDeclaredFields())
+      $ += visitor.visit(¢);
+    for (final Method ¢ : from.getDeclaredMethods())
+      $ += visitor.visit(¢);
+    for (final Constructor<?> ¢ : from.getDeclaredConstructors())
+      $ += visitor.visit(¢);
+    for (final Class<?> ¢ : from.getDeclaredClasses())
+      $ += visitor.visit(¢);
     // Recurse into inner, local and anonymous classes
-    for (final Class<?> c : from.getDeclaredClasses())
-      $ += go(c);
+    for (final Class<?> ¢ : from.getDeclaredClasses())
+      $ += go(¢);
     return $;
   }
 

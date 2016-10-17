@@ -27,13 +27,12 @@ import il.org.spartan.utils.*;
 
   @Test public void countFalseLoop() {
     final BooleanHistory h = new BooleanHistory(10);
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 1000; ++i) {
       h.add(i % 3 == 1);
       int m = 0;
-      for (int j = i; j >= 0 && j > i - 10; j--)
+      for (int j = i; j >= 0 && j > i - 10; --j)
         m += As.binary(j % 3 != 1);
-      final int t1 = m;
-      azzert.that(h.count(false), is(t1));
+      azzert.that(h.count(false), is(m));
     }
   }
 
@@ -47,13 +46,12 @@ import il.org.spartan.utils.*;
 
   @Test public void countTrueLoop() {
     final BooleanHistory h = new BooleanHistory(10);
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 1000; ++i) {
       h.add(i % 3 == 1);
       int m = 0;
-      for (int j = i; j >= 0 && j > i - 10; j--)
+      for (int j = i; j >= 0 && j > i - 10; --j)
         m += As.binary(j % 3 == 1);
-      final int t1 = m;
-      azzert.that(h.count(true), is(t1));
+      azzert.that(h.count(true), is(m));
     }
   }
 
@@ -66,15 +64,14 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void createSize() {
-    final BooleanHistory h = new BooleanHistory(10);
-    azzert.that(h.size(), is(0));
+    azzert.that((new BooleanHistory(10)).size(), is(0));
   }
 
   @Test public void maxSize() {
     final BooleanHistory h = new BooleanHistory(10);
-    for (int i = 0; i < 1000; i++) {
-      h.add(i % 3 == 1);
-      azzert.that(h.size(), is(Math.min(i + 1, 10)));
+    for (int ¢ = 0; ¢ < 1000; ++¢) {
+      h.add(¢ % 3 == 1);
+      azzert.that(h.size(), is(Math.min(¢ + 1, 10)));
     }
   }
 }

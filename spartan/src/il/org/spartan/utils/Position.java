@@ -16,16 +16,16 @@ public final class Position implements Comparable<Position>, Serializable {
     this.column = column;
   }
 
-  public boolean before(final Position p) {
-    return compareTo(p) < 0;
+  public boolean before(final Position ¢) {
+    return compareTo(¢) < 0;
   }
 
-  @Override public int compareTo(final Position p) {
-    return line != p.line ? line - p.line : column - p.column;
+  @Override public int compareTo(final Position ¢) {
+    return line != ¢.line ? line - ¢.line : column - ¢.column;
   }
 
-  @Override public boolean equals(final Object o) {
-    return o == this || o != null && getClass() == o.getClass() && column == ((Position) o).column && line == ((Position) o).line;
+  @Override public boolean equals(final Object ¢) {
+    return ¢ == this || ¢ != null && getClass() == ¢.getClass() && column == ((Position) ¢).column && line == ((Position) ¢).line;
   }
 
   @Override public int hashCode() {

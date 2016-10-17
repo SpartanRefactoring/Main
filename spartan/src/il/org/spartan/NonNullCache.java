@@ -14,7 +14,7 @@ import org.junit.*;
  * @since 2014-06-20 */
 public abstract class NonNullCache<T> {
   /** The cached value, null when the cache was not populated */
-  private @Nullable T value = null;
+  private @Nullable T value;
 
   /** Compute the cached value, either by looking up the memoized valued, or by
    * actual computation
@@ -32,7 +32,7 @@ public abstract class NonNullCache<T> {
   @SuppressWarnings("javadoc") //
   public static class TEST extends NonNullCache<String> {
     private static final int SOME_OFFSET = 17;
-    private int evaluations = 0;
+    private int evaluations;
 
     @Test public void firstReturnsFirstOffset() {
       azzert.that(value(), is(SOME_OFFSET + "x0"));
@@ -41,7 +41,7 @@ public abstract class NonNullCache<T> {
     @Test public void restReturnsFirstOffset() {
       value();
       azzert.that(value(), is(SOME_OFFSET + "x0"));
-      for (int i = 0; i < 10; ++i)
+      for (int ¢ = 0; ¢ < 10; ++¢)
         azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 

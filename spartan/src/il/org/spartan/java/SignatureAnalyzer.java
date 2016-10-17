@@ -15,13 +15,13 @@ public class SignatureAnalyzer {
     return new SignatureAnalyzer();
   }
 
-  public static SignatureAnalyzer ofReader(final StringReader stringReader) {
-    ___.______unused(stringReader);
+  public static SignatureAnalyzer ofReader(final StringReader ¢) {
+    ___.______unused(¢);
     return new SignatureAnalyzer();
   }
 
-  public static SignatureAnalyzer ofString(final String s) {
-    ___.______unused(s);
+  public static SignatureAnalyzer ofString(final String ¢) {
+    ___.______unused(¢);
     return new SignatureAnalyzer();
   }
 }

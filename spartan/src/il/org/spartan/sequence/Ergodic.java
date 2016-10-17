@@ -32,49 +32,47 @@ public class Ergodic {
 
   static int countDiff(final List<Integer> is, final float diff) {
     int $ = 0;
-    for (int i = 1; i < is.size(); i++)
-      if (diff(is, i) == diff)
-        $++;
+    for (int ¢ = 1; ¢ < is.size(); ++¢)
+      if (diff(is, ¢) == diff)
+        ++$;
     return $;
   }
 
-  static int countDiffDouble(final List<Double> is, final double diff) {
+  static int countDiffDouble(final List<Double> ds, final double diff) {
     int $ = 0;
-    for (int i = 1; i < is.size(); i++)
-      if (diffDouble(is, i) == diff)
-        $++;
+    for (int ¢ = 1; ¢ < ds.size(); ++¢)
+      if (diffDouble(ds, ¢) == diff)
+        ++$;
     return $;
   }
 
-  static final float maxDiff(final List<Integer> is) {
+  static float maxDiff(final List<Integer> is) {
     float $ = -1;
-    for (int i = 1; i < is.size(); i++)
-      if (valid(is, i) && diff(is, i) > $)
-        $ = diff(is, i);
+    for (int ¢ = 1; ¢ < is.size(); ++¢)
+      if (valid(is, ¢) && diff(is, ¢) > $)
+        $ = diff(is, ¢);
     return $;
   }
 
-  static final double maxDiffDouble(final List<Double> is) {
+  static double maxDiffDouble(final List<Double> ds) {
     double $ = -1;
-    for (int i = 1; i < is.size(); i++)
-      if (diffDouble(is, i) > $)
-        $ = diffDouble(is, i);
+    for (int ¢ = 1; ¢ < ds.size(); ++¢)
+      if (diffDouble(ds, ¢) > $)
+        $ = diffDouble(ds, ¢);
     return $;
   }
 
-  private static final float diff(final List<Integer> is, final int i) {
-    final int a = is.get(i - 1).intValue();
-    final int b = is.get(i).intValue();
-    return valid(is, i) ? (float) b / a : -1;
+  private static float diff(final List<Integer> is, final int i) {
+    return !valid(is, i) ? -1 : (float) is.get(i).intValue() / is.get(i - 1).intValue();
   }
 
-  private static final double diffDouble(final List<Double> is, final int i) {
-    return is.get(i).doubleValue() / is.get(i - 1).doubleValue();
+  private static double diffDouble(final List<Double> ds, final int i) {
+    return ds.get(i).doubleValue() / ds.get(i - 1).doubleValue();
   }
 
-  private static double[] makeDouble(final int n, final List<Double> $) {
+  private static double[] makeDouble(final int i, final List<Double> $) {
     for (;;) {
-      if ($.size() >= n)
+      if ($.size() >= i)
         break;
       final Double d = selectDouble($);
       if (d == null)
@@ -100,16 +98,16 @@ public class Ergodic {
     return mid(is.get(i - 1).intValue(), is.get(i).intValue());
   }
 
-  private static final Integer mid(final long a, final long b) {
+  private static Integer mid(final long a, final long b) {
     return new Integer((int) Math.round(Math.sqrt(a * b)));
   }
 
-  private static final Double midDouble(final double a, final double b) {
-    return new Double(Math.round(Math.sqrt(a * b)));
+  private static Double midDouble(final double a, final double d) {
+    return new Double(Math.round(Math.sqrt(a * d)));
   }
 
-  private static Double midDouble(final List<Double> is, final int i) {
-    return midDouble(is.get(i - 1).doubleValue(), is.get(i).doubleValue());
+  private static Double midDouble(final List<Double> ds, final int i) {
+    return midDouble(ds.get(i - 1).doubleValue(), ds.get(i).doubleValue());
   }
 
   private static Integer select(final List<Integer> l) {
@@ -121,34 +119,31 @@ public class Ergodic {
 
   private static Integer selectDiff(final List<Integer> is, final float maxDiff, final int nextInt) {
     int n = 0;
-    for (int i = 1; i < is.size(); i++)
-      if (valid(is, i) && diff(is, i) == maxDiff) {
+    for (int ¢ = 1; ¢ < is.size(); ++¢)
+      if (valid(is, ¢) && diff(is, ¢) == maxDiff) {
         if (n == nextInt)
-          return mid(is, i);
-        n++;
+          return mid(is, ¢);
+        ++n;
       }
     return null;
   }
 
-  private static Double selectDiffDouble(final List<Double> is, final double maxDiff, final int nextInt) {
+  private static Double selectDiffDouble(final List<Double> ds, final double maxDiff, final int nextInt) {
     int n = 0;
-    for (int i = 1; i < is.size(); i++)
-      if (diffDouble(is, i) == maxDiff) {
+    for (int ¢ = 1; ¢ < ds.size(); ++¢)
+      if (diffDouble(ds, ¢) == maxDiff) {
         if (n == nextInt)
-          return midDouble(is, i);
-        n++;
+          return midDouble(ds, ¢);
+        ++n;
       }
     return null;
   }
 
-  private static Double selectDouble(final List<Double> l) {
-    final List<Double> is = new ArrayList<>(l);
+  private static Double selectDouble(final List<Double> ds) {
+    final List<Double> is = new ArrayList<>(ds);
     Collections.sort(is);
     final double maxDiff = maxDiffDouble(is);
-    if (maxDiff < 0)
-      return null;
-    final Double $ = selectDiffDouble(is, maxDiff, new Random(0).nextInt(countDiffDouble(is, maxDiff)));
-    return $;
+    return maxDiff < 0 ? null : selectDiffDouble(is, maxDiff, new Random(0).nextInt(countDiffDouble(is, maxDiff)));
   }
 
   private static boolean valid(final List<Integer> is, final int i) {

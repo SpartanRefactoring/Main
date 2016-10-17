@@ -33,9 +33,9 @@ public class Assert extends org.junit.Assert {
   public static <T> void assertContained(final String s, final Collection<T> c1, final Collection<T> c2) {
     // assertLE(s, c1.size(), c2.size());
     final ArrayList<T> missing = new ArrayList<>();
-    for (final T t : c1)
-      if (!c2.contains(t))
-        missing.add(t);
+    for (final T ¢ : c1)
+      if (!c2.contains(¢))
+        missing.add(¢);
     switch (missing.size()) {
       case 0:
         return;
@@ -49,8 +49,8 @@ public class Assert extends org.junit.Assert {
     }
   }
 
-  public static <T> void assertContains(final Collection<T> c, final T t) {
-    assertContains("", c, t);
+  public static <T> void assertContains(final Collection<T> ts, final T t) {
+    assertContains("", ts, t);
   }
 
   public static <T> void assertContains(final String s, final Collection<T> ts, final T t) {
@@ -97,16 +97,16 @@ public class Assert extends org.junit.Assert {
     assertEquals(message, a, Integer.valueOf(b));
   }
 
-  public static void assertLE(final String s, final int n, final int m) {
-    assert n <= m : s + " n=" + n + " m=" + m;
+  public static void assertLE(final String s, final int i, final int m) {
+    assert i <= m : s + " n=" + i + " m=" + m;
   }
 
   public static <T> void assertNotContains(final Collection<T> ts, final T t) {
     assertNotContains("", ts, t);
   }
 
-  public static <T> void assertNotContains(final String s, final Collection<T> c, final T t) {
-    assert !c.contains(t) : s + " t = " + t;
+  public static <T> void assertNotContains(final String s, final Collection<T> ts, final T t) {
+    assert !ts.contains(t) : s + " t = " + t;
   }
 
   public static void assertNotEquals(final Object o1, final Object o2) {
@@ -125,24 +125,24 @@ public class Assert extends org.junit.Assert {
     assert !s1.equals(s2) : message;
   }
 
-  public static void assertNull(final Object o) {
-    assert o == null;
+  public static void assertNull(final Object ¢) {
+    assert ¢ == null;
   }
 
   public static void assertNull(final String message, final Object o) {
     assertEquals(message, null, o);
   }
 
-  public static void assertPositive(final int n) {
-    assert n > 0 : "Expecting a positive value, but got " + n;
+  public static void assertPositive(final int ¢) {
+    assert ¢ > 0 : "Expecting a positive value, but got " + ¢;
   }
 
   public static <T> void assertSubset(final Collection<T> c1, final Collection<T> c2) {
     assertContained("", c1, c2);
   }
 
-  public static void assertZero(final int n) {
-    assertEquals("Expecting a zero", n, 0);
+  public static void assertZero(final int ¢) {
+    assertEquals("Expecting a zero", ¢, 0);
   }
 
   public static <T> void equals(final String prefix, final Set<T> set, final Iterable<T> ts) {

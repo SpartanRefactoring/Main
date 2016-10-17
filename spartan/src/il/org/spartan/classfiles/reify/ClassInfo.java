@@ -11,20 +11,20 @@ import il.org.spartan.collections.*;
 /** An in memory representation of a class file.
  * @author Yossi Gil */
 public final class ClassInfo extends ConstantPoolEntity {
-  public static ClassInfo make(final Class<?> c) {
-    return make(CLASSFILES.open(c));
+  public static ClassInfo make(final Class<?> ¢) {
+    return make(CLASSFILES.open(¢));
   }
 
-  @SuppressWarnings("synthetic-access") public static AttributedEntity make(final DataInputStream s) {
-    return new Builder(s).go();
+  @SuppressWarnings("synthetic-access") public static AttributedEntity make(final DataInputStream ¢) {
+    return new Builder(¢).go();
   }
 
-  public static ClassInfo make(final File f) {
-    return new Builder(f).go();
+  public static ClassInfo make(final File ¢) {
+    return new Builder(¢).go();
   }
 
-  public static ClassInfo make(final InputStream is) {
-    return new Builder(is).go();
+  public static ClassInfo make(final InputStream ¢) {
+    return new Builder(¢).go();
   }
 
   public static ConstantPoolEntity make(final String fileName) {
@@ -34,96 +34,96 @@ public final class ClassInfo extends ConstantPoolEntity {
   private static void addLinkComponents(final int[] target, final int[] addition) {
     if (addition == null)
       return;
-    for (int i = 0; i < target.length; i++)
-      target[i] += addition[i];
+    for (int ¢ = 0; ¢ < target.length; ++¢)
+      target[¢] += addition[¢];
   }
 
-  private static ConstructorInfo asConstructor(final TypedEntity t) {
-    return new ConstructorInfo(t);
+  private static ConstructorInfo asConstructor(final TypedEntity ¢) {
+    return new ConstructorInfo(¢);
   }
 
   private static FieldInfo[] asFields(final TypedEntity[] fields) {
     final List<FieldInfo> $ = new ArrayList<>();
-    for (final TypedEntity t : fields)
-      if (!t.isSynthetic())
-        $.add(new FieldInfo(t));
+    for (final TypedEntity ¢ : fields)
+      if (!¢.isSynthetic())
+        $.add(new FieldInfo(¢));
     return $.toArray(new FieldInfo[$.size()]);
   }
 
-  private static InitializerInfo asInitializer(final TypedEntity t) {
-    return new InitializerInfo(t);
+  private static InitializerInfo asInitializer(final TypedEntity ¢) {
+    return new InitializerInfo(¢);
   }
 
-  private static MethodInfo asMethod(final TypedEntity t) {
-    return new MethodInfo(t);
+  private static MethodInfo asMethod(final TypedEntity ¢) {
+    return new MethodInfo(¢);
   }
 
   private static int codeSize(final ExecutableEntity[] es) {
     int $ = 0;
-    for (final ExecutableEntity e : es)
-      $ += e.codeSize();
+    for (final ExecutableEntity ¢ : es)
+      $ += ¢.codeSize();
     return $;
   }
 
   private static int cyclomaticComplexity(final ExecutableEntity[] es) {
     int $ = 0;
-    for (final ExecutableEntity e : es)
-      $ += e.cyclomaticComplexity();
+    for (final ExecutableEntity ¢ : es)
+      $ += ¢.cyclomaticComplexity();
     return $;
   }
 
   private static int instructionCount(final ExecutableEntity[] es) {
     int $ = 0;
-    for (final ExecutableEntity e : es)
-      $ += e.instructionCount();
+    for (final ExecutableEntity ¢ : es)
+      $ += ¢.instructionCount();
     return $;
   }
 
-  private static boolean isConstructor(final TypedEntity t) {
-    return "<init>".equals(t.name);
+  private static boolean isConstructor(final TypedEntity ¢) {
+    return "<init>".equals(¢.name);
   }
 
-  private static boolean isInitializer(final TypedEntity t) {
-    return "<clinit>".equals(t.name);
+  private static boolean isInitializer(final TypedEntity ¢) {
+    return "<clinit>".equals(¢.name);
   }
 
-  private static boolean isMethod(final TypedEntity t) {
-    return !t.name.startsWith("<");
+  private static boolean isMethod(final TypedEntity ¢) {
+    return !¢.name.startsWith("<");
   }
 
   private static ConstructorInfo[] selectConstructors(final TypedEntity[] executables) {
     final List<ConstructorInfo> $ = new ArrayList<>();
-    for (final TypedEntity t : executables)
-      if (isConstructor(t) && !t.isSynthetic())
-        $.add(asConstructor(t));
+    for (final TypedEntity ¢ : executables)
+      if (isConstructor(¢) && !¢.isSynthetic())
+        $.add(asConstructor(¢));
     return $.toArray(new ConstructorInfo[$.size()]);
   }
 
   private static InitializerInfo[] selectInitializers(final TypedEntity[] executables) {
     final List<InitializerInfo> $ = new ArrayList<>();
-    for (final TypedEntity t : executables)
-      if (isInitializer(t) && !t.isSynthetic())
-        $.add(asInitializer(t));
+    for (final TypedEntity ¢ : executables)
+      if (isInitializer(¢) && !¢.isSynthetic())
+        $.add(asInitializer(¢));
     return $.toArray(new InitializerInfo[$.size()]);
   }
 
   private static MethodInfo[] selectMethods(final TypedEntity[] executables) {
     final List<MethodInfo> $ = new ArrayList<>();
-    for (final TypedEntity t : executables)
-      if (isMethod(t) && !t.isSynthetic())
-        $.add(asMethod(t));
+    for (final TypedEntity ¢ : executables)
+      if (isMethod(¢) && !¢.isSynthetic())
+        $.add(asMethod(¢));
     return $.toArray(new MethodInfo[$.size()]);
   }
 
   private static int throwCount(final ExecutableEntity[] es) {
     int $ = 0;
-    for (final ExecutableEntity e : es)
-      $ += e.throwCount();
+    for (final ExecutableEntity ¢ : es)
+      $ += ¢.throwCount();
     return $;
   }
 
-  private String containingJar = null;
-  private String classFileName = null;
+  private String containingJar;
+  private String classFileName;
   final Map<String, Integer> refsToStatics = new HashMap<>();
   public final String superClass;
   public final ClassConstant[] interfaces;
@@ -154,33 +154,33 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   @Attribute public int abstractMethodCount() {
     int $ = 0;
-    for (final MethodInfo m : methods)
-      if (m.isAbstract())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (¢.isAbstract())
+        ++$;
     return $;
   }
 
   @Attribute public int accessedPublicConstructorsCount() {
     int $ = 0;
-    for (final ConstructorInfo c : constructors)
-      if (c.isPublic() && isAccessed(c))
-        $++;
+    for (final ConstructorInfo ¢ : constructors)
+      if (¢.isPublic() && isAccessed(¢))
+        ++$;
     return $;
   }
 
   @Attribute public int accessedPublicFieldsCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isPublic() && isAccessed(f))
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isPublic() && isAccessed(¢))
+        ++$;
     return $;
   }
 
   @Attribute public int accessedPublicMethodsCount() {
     int $ = 0;
-    for (final MethodInfo m : methods)
-      if (m.isPublic() && isAccessed(m))
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (¢.isPublic() && isAccessed(¢))
+        ++$;
     return $;
   }
 
@@ -194,9 +194,9 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   @Attribute public int concreteMethodCount() {
     int $ = 0;
-    for (final MethodInfo m : methods)
-      if (!m.isAbstract())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (!¢.isAbstract())
+        ++$;
     return $;
   }
 
@@ -210,34 +210,32 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   @Attribute public int defaultConstructorCount() {
     int $ = 0;
-    for (final ConstructorInfo c : constructors)
-      if (c.isDefault())
-        $++;
+    for (final ConstructorInfo ¢ : constructors)
+      if (¢.isDefault())
+        ++$;
     return $;
   }
 
   @Attribute public int defaultFieldCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isDefault())
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isDefault())
+        ++$;
     return $;
   }
 
   @Attribute public int defaultMethodCount() {
     int $ = 0;
-    for (final MethodInfo m : methods)
-      if (m.isDefault())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (¢.isDefault())
+        ++$;
     return $;
   }
 
-  @Override public boolean equals(final Object obj) {
-    if (obj == null)
+  @Override public boolean equals(final Object o) {
+    if (o == null || o.getClass() != getClass())
       return false;
-    if (obj.getClass() != getClass())
-      return false;
-    final ClassInfo other = (ClassInfo) obj;
+    final ClassInfo other = (ClassInfo) o;
     return other.name().equals(name()) && other.fieldsCount() == fieldsCount() && other.methodCount() == methodCount()
         && other.constructorsCount() == constructorsCount() && other.referencedClasses() == referencedClasses()
         && other.referencedDoubles() == referencedDoubles() && other.referencedInts() == referencedInts()
@@ -315,136 +313,134 @@ public final class ClassInfo extends ConstantPoolEntity {
   @Attribute public int lackOfCohesion() {
     int emptyIntersect = 0;
     int nonEmptyIntersect = 0;
-    for (final MethodInfo m1 : methods) {
-      final Set<String> s1 = m1.instanceVariables();
+    for (final MethodInfo m1 : methods)
       for (final MethodInfo m2 : methods) {
-        if (m1.hashCode() >= m2.hashCode()) // inspect each pair only once
+        if (m1.hashCode() >= m2.hashCode())
           continue;
         final Set<String> s2 = m2.instanceVariables();
-        s2.retainAll(s1);
+        s2.retainAll(m1.instanceVariables());
         boolean found = false;
-        for (final String s : s2)
-          if (s.startsWith(name + ":")) {
-            nonEmptyIntersect++;
+        for (final String ¢ : s2)
+          if (¢.startsWith(name + ":")) {
+            ++nonEmptyIntersect;
             found = true;
             break;
           }
         if (!found)
-          emptyIntersect++;
+          ++emptyIntersect;
       }
-    }
     return Math.max(emptyIntersect - nonEmptyIntersect, 0);
   }
 
   @Attribute public int methodCount() {
     int $ = 0;
-    for (final MethodInfo mi : methods)
-      if (!mi.isObjectMethod())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (!¢.isObjectMethod())
+        ++$;
     return $;
   }
 
   @Attribute public int privateConstructorCount() {
     int $ = 0;
-    for (final ConstructorInfo c : constructors)
-      if (c.isPrivate())
-        $++;
+    for (final ConstructorInfo ¢ : constructors)
+      if (¢.isPrivate())
+        ++$;
     return $;
   }
 
   @Attribute public int privateFieldCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isPrivate())
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isPrivate())
+        ++$;
     return $;
   }
 
   @Attribute public int privateMethodCount() {
     int $ = 0;
-    for (final MethodInfo m : methods)
-      if (m.isPrivate())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (¢.isPrivate())
+        ++$;
     return $;
   }
 
   @Attribute public int protectedConstructorCount() {
     int $ = 0;
-    for (final ConstructorInfo c : constructors)
-      if (c.isProtected())
-        $++;
+    for (final ConstructorInfo ¢ : constructors)
+      if (¢.isProtected())
+        ++$;
     return $;
   }
 
   @Attribute public int protectedFieldCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isProtected())
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isProtected())
+        ++$;
     return $;
   }
 
   @Attribute public int protectedMethodCount() {
     int $ = 0;
-    for (final MethodInfo mi : methods)
-      if (!mi.isObjectMethod() && mi.isProtected())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (!¢.isObjectMethod() && ¢.isProtected())
+        ++$;
     return $;
   }
 
   @Attribute public int publicConstructorCount() {
     int $ = 0;
-    for (final ConstructorInfo c : constructors)
-      if (c.isPublic())
-        $++;
+    for (final ConstructorInfo ¢ : constructors)
+      if (¢.isPublic())
+        ++$;
     return $;
   }
 
   @Attribute public int publicFieldCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isPublic())
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isPublic())
+        ++$;
     return $;
   }
 
   @Attribute public int publicMethodCount() {
     int $ = 0;
-    for (final MethodInfo mi : methods)
-      if (!mi.isObjectMethod() && mi.isPublic())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (!¢.isObjectMethod() && ¢.isPublic())
+        ++$;
     return $;
   }
 
   @Attribute public int publicNonStaticFieldCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isPublic() && !f.isStatic())
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isPublic() && !¢.isStatic())
+        ++$;
     return $;
   }
 
   @Attribute public int publicNonStaticMethodCount() {
     int $ = 0;
-    for (final MethodInfo mi : methods)
-      if (!mi.isObjectMethod() && mi.isPublic() && !mi.isStatic())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (!¢.isObjectMethod() && ¢.isPublic() && !¢.isStatic())
+        ++$;
     return $;
   }
 
   @Attribute public int publicStaticFieldCount() {
     int $ = 0;
-    for (final FieldInfo f : fields)
-      if (f.isPublic() && f.isStatic())
-        $++;
+    for (final FieldInfo ¢ : fields)
+      if (¢.isPublic() && ¢.isStatic())
+        ++$;
     return $;
   }
 
   @Attribute public int publicStaticMethodCount() {
     int $ = 0;
-    for (final MethodInfo mi : methods)
-      if (!mi.isObjectMethod() && mi.isPublic() && mi.isStatic())
-        $++;
+    for (final MethodInfo ¢ : methods)
+      if (!¢.isObjectMethod() && ¢.isPublic() && ¢.isStatic())
+        ++$;
     return $;
   }
 
@@ -474,29 +470,29 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   public int[] referencesToClass(final String className) {
     final int[] $ = new int[LinkComponents.values().length];
-    for (final MethodInfo m : methods)
-      addLinkComponents($, m.referencesToClass(className));
-    for (final ConstructorInfo c : constructors)
-      addLinkComponents($, c.referencesToClass(className));
-    for (final InitializerInfo i : initializers)
-      addLinkComponents($, i.referencesToClass(className));
+    for (final MethodInfo ¢ : methods)
+      addLinkComponents($, ¢.referencesToClass(className));
+    for (final ConstructorInfo ¢ : constructors)
+      addLinkComponents($, ¢.referencesToClass(className));
+    for (final InitializerInfo ¢ : initializers)
+      addLinkComponents($, ¢.referencesToClass(className));
     if (superClass.equals(className))
-      $[LinkComponents.SuperClass.ordinal()]++;
+      ++$[LinkComponents.SuperClass.ordinal()];
     for (final ClassConstant i : interfaces)
       if (i.getClassName().equals(className))
-        $[LinkComponents.SuperInterface.ordinal()]++;
-    for (final FieldInfo f : fields)
-      if ((f.type + "").equals(className))
-        $[LinkComponents.FieldDeclaration.ordinal()]++;
+        ++$[LinkComponents.SuperInterface.ordinal()];
+    for (final FieldInfo ¢ : fields)
+      if ((¢.type + "").equals(className))
+        ++$[LinkComponents.FieldDeclaration.ordinal()];
     return $;
   }
 
   @Attribute public int responseForClass() {
     final String[] referencedMethods = constantPool.getReferencedMethods();
     int $ = 0;
-    for (final String s : referencedMethods)
-      if (!s.startsWith(name + ":"))
-        $++;
+    for (final String ¢ : referencedMethods)
+      if (!¢.startsWith(name + ":"))
+        ++$;
     return $ + methodCount();
   }
 
@@ -517,27 +513,23 @@ public final class ClassInfo extends ConstantPoolEntity {
     return a == null ? "" : a.reader(constantPool).readStringConstant();
   }
 
-  private boolean isAccessed(final TypedEntity t) {
-    for (final ExecutableEntity e : methods)
-      if (e.isAccessed(t, name))
+  private boolean isAccessed(final TypedEntity e) {
+    for (final ExecutableEntity ¢ : methods)
+      if (¢.isAccessed(e, name))
         return true;
-    for (final ExecutableEntity e : constructors)
-      if (e.isAccessed(t, name))
+    for (final ExecutableEntity ¢ : constructors)
+      if (¢.isAccessed(e, name))
         return true;
-    for (final ExecutableEntity e : initializers)
-      if (e.isAccessed(t, name))
+    for (final ExecutableEntity ¢ : initializers)
+      if (¢.isAccessed(e, name))
         return true;
     return false;
   }
 
   public enum Abstraction {
     ABSTRACT, FINAL, PLAIN;
-    public static Abstraction abstraction(final ClassInfo c) {
-      if (c.isAbstract())
-        return ABSTRACT;
-      if (c.isFinal())
-        return FINAL;
-      return PLAIN;
+    public static Abstraction abstraction(final ClassInfo ¢) {
+      return ¢.isAbstract() ? ABSTRACT : ¢.isFinal() ? FINAL : PLAIN;
     }
   }
 
@@ -656,16 +648,8 @@ public final class ClassInfo extends ConstantPoolEntity {
 
   public enum Kind {
     INTERFACE, ANNOTATION, CLASS, ENUM;
-    public static Kind kind(final ClassInfo c) {
-      if (c.isInterface())
-        return Kind.INTERFACE;
-      if (c.isClass())
-        return Kind.CLASS;
-      if (c.isEnum())
-        return Kind.ENUM;
-      if (c.isAnnotation())
-        return Kind.ANNOTATION;
-      return null;
+    public static Kind kind(final ClassInfo ¢) {
+      return ¢.isInterface() ? Kind.INTERFACE : ¢.isClass() ? Kind.CLASS : ¢.isEnum() ? Kind.ENUM : ¢.isAnnotation() ? Kind.ANNOTATION : null;
     }
   }
 

@@ -33,12 +33,12 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     data.addAll(other);
   }
 
-  public boolean contains(final Object o) {
-    return data.contains(o);
+  public boolean contains(final Object ¢) {
+    return data.contains(¢);
   }
 
-  public boolean containsAll(final Collection<?> c) {
-    return data.containsAll(c);
+  public boolean containsAll(final Collection<?> ¢) {
+    return data.containsAll(¢);
   }
 
   @Override public boolean equals(final Object o) {
@@ -51,8 +51,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
   }
 
   @Override public int hashCode() {
-    final int PRIME = 31;
-    return PRIME * super.hashCode() + (data == null ? 0 : data.hashCode());
+    return 31 * super.hashCode() + (data == null ? 0 : data.hashCode());
   }
 
   public boolean isEmpty() {
@@ -76,7 +75,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.toArray();
   }
 
-  public T[] toArray(final T[] ts) {
-    return data.toArray(ts);
+  public T[] toArray(final T[] ¢) {
+    return data.toArray(¢);
   }
 }

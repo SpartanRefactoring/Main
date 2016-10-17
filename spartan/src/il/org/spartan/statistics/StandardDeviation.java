@@ -35,15 +35,13 @@ import il.org.spartan.streotypes.*;
    * @return the sample variance of the parameter */
   public static double sampleVariance(final double... ds) {
     final double sum = sum(ds);
-    final double sum2 = sum2(ds);
-    final int n = ds.length;
-    return sum2 / (n - 1) - sum * sum / (n * n - n);
+    return sum2(ds) / (ds.length - 1) - sum * sum / (ds.length * ds.length - ds.length);
   }
 
   public static double[] scale(final double[] vs) {
     final double sd = sd(vs);
-    for (int i = 0; i < vs.length; i++)
-      vs[i] /= sd;
+    for (int ¢ = 0; ¢ < vs.length; ++¢)
+      vs[¢] /= sd;
     return vs;
   }
 
@@ -55,8 +53,8 @@ import il.org.spartan.streotypes.*;
     return sdCorrection(vs.length);
   }
 
-  public static double sdCorrection(final int n) {
-    return Math.sqrt((double) n / (n - 1));
+  public static double sdCorrection(final int ¢) {
+    return Math.sqrt((double) ¢ / (¢ - 1));
   }
 
   public static double variance(final double... vs) {

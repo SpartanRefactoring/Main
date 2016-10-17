@@ -8,11 +8,11 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil
  * @since 01/05/2011 */
 public final class Stopwatch {
-  private long time = 0;
-  private int runs = 0;
+  private long time;
+  private int runs;
   private long begin;
   private final String name;
-  private boolean started = false;
+  private boolean started;
 
   public Stopwatch() {
     this(null);
@@ -64,7 +64,7 @@ public final class Stopwatch {
   public Stopwatch stop() {
     ___.require(started);
     time += System.nanoTime() - begin;
-    runs++;
+    ++runs;
     started = false;
     return this;
   }
