@@ -7,7 +7,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.old.*;
 
 /** @author Artium Nihamkin
@@ -78,7 +77,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       return;
     w.addResourceChangeListener(new IResourceChangeListener() {
       @Override public void resourceChanged(IResourceChangeEvent e) {
-        if (e == null || e.getDelta() == null)
+        if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is)
           return;
         try {
           final MProject mp = new MProject();
@@ -90,10 +89,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
               if (d.getKind() == IResourceDelta.ADDED) {
                 mp.p = p;
                 mp.type = Type.new_project;
-              } /*else if (d.getKind() == IResourceDelta.CHANGED && p.isOpen()) {
-                mp.p = p;
-                mp.type = Type.opened_project;
-              }*/
+              }
+              // else if (d.getKind() == IResourceDelta.CHANGED && p.isOpen()) {
+              // mp.p = p;
+              // mp.type = Type.opened_project;
+              // }
               return true;
             }
           });
@@ -104,10 +104,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                   eclipse.addNature(mp.p);
                   mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
                   break;
-                case opened_project:
-                  if (as.list(mp.p.getDescription().getNatureIds()).contains(Nature.NATURE_ID))
-                    TipsOnOffToggle.enableNature(mp.p);
-                  break;
+                // case opened_project:
+                // if
+                // (as.list(mp.p.getDescription().getNatureIds()).contains(Nature.NATURE_ID))
+                // TipsOnOffToggle.enableNature(mp.p);
+                // break;
                 default:
                   break;
               }
@@ -120,7 +121,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     });
     listening = true;
   }
-  
+
   static enum Type {
     new_project, opened_project
   }
