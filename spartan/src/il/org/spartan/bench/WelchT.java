@@ -7,7 +7,7 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-09-10 */
 public class WelchT {
-  public double p = 0;
+  public double p;
 
   /** Empty for now */
   /** Instantiates this class. @param s1 /** Instantiates this class. @param

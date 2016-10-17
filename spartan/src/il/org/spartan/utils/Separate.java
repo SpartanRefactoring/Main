@@ -115,17 +115,17 @@ import il.org.spartan.streotypes.*;
    * obtained by a user supplied function.
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
-   * @param f a function object, providing a function that translates an object
+   * @param t a function object, providing a function that translates an object
    *        of type <code>T</code> into a {@link String}
    * @param between what should be used for separating these elements
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> f, final Iterable<? extends T> ts, final String between) {
+  public static <T> String by(final F<T> t, final Iterable<? extends T> ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
-    for (final T t : ts)
-      $.append(s).append(f.__(t));
+    for (final T ¢ : ts)
+      $.append(s).append(t.__(¢));
     return $ + "";
   }
 
@@ -134,14 +134,14 @@ import il.org.spartan.streotypes.*;
    * object is obtained by a user supplied function.
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
-   * @param f a function object, providing a function that translates an object
+   * @param t a function object, providing a function that translates an object
    *        of type <code>T</code> into a {@link String}
    * @param between what should be used for separating these elements
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> f, final Iterable<T> ts, final char between) {
-    return by(f, ts, between + "");
+  public static <T> String by(final F<T> t, final Iterable<T> ts, final char between) {
+    return by(t, ts, between + "");
   }
 
   /** Separate elements of a given generic array by a given
@@ -149,14 +149,14 @@ import il.org.spartan.streotypes.*;
    * is obtained by a user supplied function.
    * @param ts an array of elements to be separated
    * @param <T> type of elements in <code>ts</code>
-   * @param f a function object, providing a function that translates an object
+   * @param t a function object, providing a function that translates an object
    *        of type <code>T</code> into a {@link String}
    * @param between what should be used for separating these elements
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> f, final T[] ts, final char between) {
-    return by(f, ts, between + "");
+  public static <T> String by(final F<T> t, final T[] ts, final char between) {
+    return by(t, ts, between + "");
   }
 
   /** Separate elements of a given generic array by a given {{link @String}},
@@ -164,17 +164,17 @@ import il.org.spartan.streotypes.*;
    * supplied function.
    * @param ts an array of elements to be separated
    * @param <T> type of elements in <code>ts</code>
-   * @param f a function object, providing a function that translates an object
+   * @param t a function object, providing a function that translates an object
    *        of type <code>T</code> into a {@link String}
    * @param between what should be used for separating these elements
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String by(final F<T> f, final T[] ts, final String between) {
+  public static <T> String by(final F<T> t, final T[] ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
-    for (final T t : ts)
-      $.append(s).append(f.__(t));
+    for (final T ¢ : ts)
+      $.append(s).append(t.__(¢));
     return $ + "";
   }
 
@@ -245,8 +245,8 @@ import il.org.spartan.streotypes.*;
   public static <T> String by(final Iterable<T> ts, final String between) {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
-    for (final T t : ts)
-      $.append(s).append(t);
+    for (final T ¢ : ts)
+      $.append(s).append(¢);
     return $ + "";
   }
 
@@ -275,7 +275,7 @@ import il.org.spartan.streotypes.*;
   /** A simple minded separation of members of a {@link Map} data type.
    * @param <Key> type of elements serving as keys of the map.
    * @param <Value> type of elements serving as values of the map.
-   * @param map a non-<code><b>null</b></code> {@link Map} objects whose entries
+   * @param k a non-<code><b>null</b></code> {@link Map} objects whose entries
    *        are to be separated.
    * @param between a non-<code><b>null</b></code> specifying what should be
    *        used for separating these entries.
@@ -284,14 +284,14 @@ import il.org.spartan.streotypes.*;
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>. */
-  public static <Key, Value> String by(final Map<Key, Value> map, final String between, final String arrow) {
-    nonnull(map);
+  public static <Key, Value> String by(final Map<Key, Value> k, final String between, final String arrow) {
+    nonnull(k);
     nonnull(between);
     nonnull(arrow);
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
-    for (final Key k : map.keySet())
-      $.append(s).append(k).append(arrow).append(map.get(k));
+    for (final Key ¢ : k.keySet())
+      $.append(s).append(¢).append(arrow).append(k.get(¢));
     return $ + "";
   }
 
@@ -344,45 +344,45 @@ import il.org.spartan.streotypes.*;
    * user supplied function.
    * @param ts an {@link Iterable} collection of elements to be separated
    * @param <T> type of elements in the {@link Iterable} collection parameter
-   * @param f a function object, providing a function that translates an object
+   * @param t a function object, providing a function that translates an object
    *        of type <code>T</code> into a {@link String}
    * @return a {{link @String}} obtained by concatenating the result of applying
    *         function <code>f</code> to the elements in <code>ts</code> ,
    *         separated by <code>between</code> */
-  public static <T> String byCommas(final F<T> f, final Iterable<? extends T> ts) {
-    return by(f, ts, ",");
+  public static <T> String byCommas(final F<T> t, final Iterable<? extends T> ts) {
+    return by(t, ts, ",");
   }
 
   /** Separate a variables length list of arguments by a comma character.
-   * @param os the objects to be separated.
+   * @param ¢ the objects to be separated.
    * @return a concatenation of the comma separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  public static String byCommas(final Object... os) {
-    return by(os, COMMA);
+  public static String byCommas(final Object... ¢) {
+    return by(¢, COMMA);
   }
 
   /** Separate a variables length list of arguments by a dot character.
-   * @param os the objects to be separated.
+   * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  public static String byDots(final Object... os) {
-    return by(Prune.whites(os), DOT);
+  public static String byDots(final Object... ¢) {
+    return by(Prune.whites(¢), DOT);
   }
 
   /** Separate a variables length list of arguments by a dot character.
-   * @param os the objects to be separated.
+   * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  public static String byNewLines(final Object... os) {
-    return by(Prune.whites(os), "\n");
+  public static String byNewLines(final Object... ¢) {
+    return by(Prune.whites(¢), "\n");
   }
 
   /** Separate a variables length list of arguments by a space character.
-   * @param os the objects to be separated.
+   * @param ¢ the objects to be separated.
    * @return a concatenation of the space separated {@link Object#toString()}
    *         representations of the elements of <code>os</code>. */
-  public static String bySpaces(final Object... os) {
-    return by(Prune.whites(os), SPACE);
+  public static String bySpaces(final Object... ¢) {
+    return by(Prune.whites(¢), SPACE);
   }
 
   /** A simple program demonstrating the use of this class. This program prints
@@ -393,12 +393,12 @@ import il.org.spartan.streotypes.*;
     System.out.println("Arguments are: " + Separate.by((F<String>) s -> "\"" + esc(s) + "\"", args, ", "));
   }
 
-  public static String nl(final Iterable<String> ss) {
-    return by(ss, NL);
+  public static String nl(final Iterable<String> ¢) {
+    return by(¢, NL);
   }
 
-  public static String nl(final String... ss) {
-    return by(ss, NL);
+  public static String nl(final String... ¢) {
+    return by(¢, NL);
   }
 
   /** An interface supplying a function object pointer, where the function

@@ -22,8 +22,8 @@ public enum iterables {
   public static <T> int count(final @Nullable Iterable<T> ts) {
     int $ = 0;
     if (ts != null)
-      for (final @Nullable T t : ts)
-        $ += as.bit(t != null);
+      for (final @Nullable T ¢ : ts)
+        $ += as.bit(¢ != null);
     return $;
   }
 
@@ -45,11 +45,11 @@ public enum iterables {
   /** TODO Javadoc(2016): automatically generated for method
    * <code>singleton</code>
    * @param <T> JD
-   * @param t JD
+   * @param ¢ JD
    * @return PureIterable.Sized<T> TODO Javadoc(2016) automatically generated
    *         for returned value of method <code>singleton</code> */
-  public static <T> PureIterable.Sized<T> singleton(final T t) {
-    return as.nonNullIterable(t);
+  public static <T> PureIterable.Sized<T> singleton(final T ¢) {
+    return as.nonNullIterable(¢);
   }
 
   /** wraps a value in a singleton iterator form

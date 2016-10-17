@@ -35,8 +35,8 @@ public enum LinearAlgebra {
   ;
   public static double[] abs(final double[] x) {
     final double[] $ = new double[x.length];
-    for (int i = 0; i < x.length; i++)
-      $[i] = Math.abs(x[i]);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = Math.abs(x[¢]);
     return $;
   }
 
@@ -47,8 +47,8 @@ public enum LinearAlgebra {
   public static double[] add(final double y, final double[] x) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] + y;
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] + y;
     return $;
   }
 
@@ -61,8 +61,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] + y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] + y[¢];
     return $;
   }
 
@@ -75,8 +75,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final int[] $ = new int[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] + y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] + y[¢];
     return $;
   }
 
@@ -84,15 +84,15 @@ public enum LinearAlgebra {
     final int rows = x.length;
     final int longestColumn = longestColumn(x);
     final double[][] $ = new double[rows][];
-    for (int i = 0; i < rows; i++)
-      $[i] = Arrays.copyOf(x[i], longestColumn);
+    for (int ¢ = 0; ¢ < rows; ++¢)
+      $[¢] = Arrays.copyOf(x[¢], longestColumn);
     return $;
   }
 
   public static int[][] adjust(final int[][] x) {
     final int longestColumn = longestColumn(x);
-    for (int i = 0; i < x.length; i++)
-      x[i] = Arrays.copyOf(x[i], longestColumn);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      x[¢] = Arrays.copyOf(x[¢], longestColumn);
     return x;
   }
 
@@ -100,8 +100,8 @@ public enum LinearAlgebra {
     final int rows = x.length;
     final int longestColumn = longestColumn(x);
     final short[][] $ = new short[rows][];
-    for (int i = 0; i < rows; i++)
-      $[i] = Arrays.copyOf(x[i], longestColumn);
+    for (int ¢ = 0; ¢ < rows; ++¢)
+      $[¢] = Arrays.copyOf(x[¢], longestColumn);
     return $;
   }
 
@@ -117,17 +117,17 @@ public enum LinearAlgebra {
     return x[0].length;
   }
 
-  public static short demote(final int i) {
-    if (i > Short.MAX_VALUE)
-      throw new ArithmeticException("i is " + i);
-    return (short) i;
+  public static short demote(final int ¢) {
+    if (¢ > Short.MAX_VALUE)
+      throw new ArithmeticException("i is " + ¢);
+    return (short) ¢;
   }
 
   public static short[] demote(final int[] xs) {
     final int n = xs.length;
     final short[] $ = new short[n];
-    for (int i = 0; i < n; i++)
-      $[i] = demote(xs[i]);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = demote(xs[¢]);
     return $;
   }
 
@@ -143,8 +143,8 @@ public enum LinearAlgebra {
   public static double[] divide(final double x, final double y[]) {
     final int n = y.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x / y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x / y[¢];
     return $;
   }
 
@@ -156,8 +156,8 @@ public enum LinearAlgebra {
   public static double[] divide(final double x[], final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] / y;
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] / y;
     return $;
   }
 
@@ -165,8 +165,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] / y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] / y[¢];
     return $;
   }
 
@@ -174,8 +174,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] / y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] / y[¢];
     return $;
   }
 
@@ -187,8 +187,8 @@ public enum LinearAlgebra {
   public static double[] divide(final double x, final int[] y) {
     final int n = y.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x / y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x / y[¢];
     return $;
   }
 
@@ -200,8 +200,8 @@ public enum LinearAlgebra {
   public static double[] divide(final int[] x, final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] / y;
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] / y;
     return $;
   }
 
@@ -209,8 +209,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] / y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] / y[¢];
     return $;
   }
 
@@ -218,8 +218,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = 1. * x[i] / y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = 1. * x[¢] / y[¢];
     return $;
   }
 
@@ -227,24 +227,24 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     double $ = 0;
-    for (int i = 0; i < n; i++)
-      $ += x[i] * y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $ += x[¢] * y[¢];
     return $;
   }
 
   public static double[] dot(final double a[][], final double v[]) {
     final int n = a.length;
     final double[] $ = new double[a.length];
-    for (int i = 0; i < n; i++)
-      $[i] = dot(a[i], v);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = dot(a[¢], v);
     return $;
   }
 
   public static double[] dot(final int a[][], final double v[]) {
     final int n = a.length;
     final double[] $ = new double[a.length];
-    for (int i = 0; i < n; i++)
-      $[i] = dot(a[i], v);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = dot(a[¢], v);
     return $;
   }
 
@@ -252,8 +252,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     double $ = 0;
-    for (int i = 0; i < n; i++)
-      $ += x[i] * y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $ += x[¢] * y[¢];
     return $;
   }
 
@@ -261,16 +261,16 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     double $ = 0;
-    for (int i = 0; i < n; i++)
-      $ += x[i] * y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $ += x[¢] * y[¢];
     return $;
   }
 
   public static double[] dot(final short a[][], final double v[]) {
     final int n = a.length;
     final double[] $ = new double[a.length];
-    for (int i = 0; i < n; i++)
-      $[i] = dot(a[i], v);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = dot(a[¢], v);
     return $;
   }
 
@@ -294,8 +294,8 @@ public enum LinearAlgebra {
   public static double[] log(final double[] x) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Math.log(x[i]);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Math.log(x[¢]);
     return $;
   }
 
@@ -303,12 +303,12 @@ public enum LinearAlgebra {
     return new double[rows][columns];
   }
 
-  public static int[][] makeFromIntArrays(final List<int[]> iss) {
-    return adjust(iss.toArray(new int[0][]));
+  public static int[][] makeFromIntArrays(final List<int[]> ¢) {
+    return adjust(¢.toArray(new int[0][]));
   }
 
-  public static short[][] makeFromShortArrays(final List<short[]> iss) {
-    return adjust(iss.toArray(new short[0][]));
+  public static short[][] makeFromShortArrays(final List<short[]> ¢) {
+    return adjust(¢.toArray(new short[0][]));
   }
 
   public static double max(final double xs[]) {
@@ -321,8 +321,8 @@ public enum LinearAlgebra {
   public static double[] max(final double x[], final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Math.max(x[i], y);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Math.max(x[¢], y);
     return $;
   }
 
@@ -336,16 +336,16 @@ public enum LinearAlgebra {
   public static double[] min(final double x[], final double y) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Math.min(x[i], y);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Math.min(x[¢], y);
     return $;
   }
 
   public static int[] min(final int[] x, final int[] y) {
     final int n = x.length;
     final int[] $ = new int[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Math.min(x[i], y[i]);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Math.min(x[¢], y[¢]);
     return $;
   }
 
@@ -368,8 +368,8 @@ public enum LinearAlgebra {
 
   public static double[] normalize(final double x[]) {
     final double norm = norm(x);
-    for (int i = 0; i < x.length; i++)
-      x[i] /= norm;
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      x[¢] /= norm;
     return x;
   }
 
@@ -382,8 +382,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] * y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] * y[¢];
     return $;
   }
 
@@ -395,8 +395,8 @@ public enum LinearAlgebra {
   public static double[] product(final double x, final double y[]) {
     final int n = y.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x * y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x * y[¢];
     return $;
   }
 
@@ -409,30 +409,30 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] * y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] * y[¢];
     return $;
   }
 
   public static double[] promote(final int[] x) {
     final double[] $ = new double[x.length];
-    for (int i = 0; i < x.length; i++)
-      $[i] = x[i];
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = x[¢];
     return $;
   }
 
   public static double[][] promote(final int[][] x) {
     final double[][] $ = new double[x.length][];
-    for (int i = 0; i < x.length; i++)
-      $[i] = promote(x[i]);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = promote(x[¢]);
     return $;
   }
 
   public static double[] prune(final double x[]) {
     final int n = x.length;
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = Double.isInfinite(x[i]) || Double.isNaN(x[i]) ? 0 : x[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = Double.isInfinite(x[¢]) || Double.isNaN(x[¢]) ? 0 : x[¢];
     return $;
   }
 
@@ -450,15 +450,15 @@ public enum LinearAlgebra {
 
   public static double[] sqr(final double x[]) {
     final double[] $ = new double[x.length];
-    for (int i = 0; i < x.length; i++)
-      $[i] = MomentUtils.sqr(x[i]);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = MomentUtils.sqr(x[¢]);
     return $;
   }
 
   public static double[] sqrt(final double x[]) {
     final double[] $ = new double[x.length];
-    for (int i = 0; i < x.length; i++)
-      $[i] = Math.sqrt(x[i]);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = Math.sqrt(x[¢]);
     return $;
   }
 
@@ -471,8 +471,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] - y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] - y[¢];
     return $;
   }
 
@@ -485,8 +485,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] - y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] - y[¢];
     return $;
   }
 
@@ -499,8 +499,8 @@ public enum LinearAlgebra {
     assert x.length == y.length;
     final int n = Math.max(x.length, y.length);
     final int[] $ = new int[n];
-    for (int i = 0; i < n; i++)
-      $[i] = x[i] - y[i];
+    for (int ¢ = 0; ¢ < n; ++¢)
+      $[¢] = x[¢] - y[¢];
     return $;
   }
 
@@ -547,8 +547,8 @@ public enum LinearAlgebra {
     final int rows = x.length;
     final int columns = x[0].length;
     final double[][] $ = make(columns, rows);
-    for (int i = 0; i < rows; i++)
-      for (int j = 0; j < columns; j++)
+    for (int i = 0; i < rows; ++i)
+      for (int j = 0; j < columns; ++j)
         $[j][i] = x[i][j];
     return $;
   }
@@ -557,8 +557,8 @@ public enum LinearAlgebra {
     final int rows = x.length;
     final int columns = x[0].length;
     final int[][] $ = new int[columns][rows];
-    for (int i = 0; i < rows; i++)
-      for (int j = 0; j < columns; j++)
+    for (int i = 0; i < rows; ++i)
+      for (int j = 0; j < columns; ++j)
         $[j][i] = x[i][j];
     return $;
   }
@@ -567,14 +567,14 @@ public enum LinearAlgebra {
     final int rows = x.length;
     final int columns = x[0].length;
     final short[][] $ = new short[columns][rows];
-    for (int i = 0; i < rows; i++)
-      for (int j = 0; j < columns; j++)
+    for (int i = 0; i < rows; ++i)
+      for (int j = 0; j < columns; ++j)
         $[j][i] = x[i][j];
     return $;
   }
 
-  public static double[] zeroes(final int n) {
-    return new double[n];
+  public static double[] zeroes(final int ¢) {
+    return new double[¢];
   }
 
   private static int longestColumn(final double[][] x) {
@@ -602,12 +602,12 @@ public enum LinearAlgebra {
     @Test public void adjust() {
       final int rows = 100;
       final double[][] x = new double[100][];
-      for (int i = 0; i < rows; i++)
-        x[i] = new double[i];
+      for (int ¢ = 0; ¢ < rows; ++¢)
+        x[¢] = new double[¢];
       final double[][] y = LinearAlgebra.adjust(x);
       assertEquals(LinearAlgebra.rows(x), LinearAlgebra.rows(y));
-      for (int i = 0; i < rows; i++)
-        azzert.that("Inappropriate column length at row " + i, y[i].length, is((rows - 1)));
+      for (int ¢ = 0; ¢ < rows; ++¢)
+        azzert.that("Inappropriate column length at row " + ¢, y[¢].length, is((rows - 1)));
     }
 
     @Test public void isDefinedFalse() {
@@ -627,8 +627,8 @@ public enum LinearAlgebra {
       final int columns = 20;
       final double[][] __ = LinearAlgebra.make(rows, columns);
       assertEquals(rows, __.length);
-      for (int i = 0; i < rows; i++)
-        azzert.that("Inappropriate column length at row " + i, __[i].length, is(columns));
+      for (int ¢ = 0; ¢ < rows; ++¢)
+        azzert.that("Inappropriate column length at row " + ¢, __[¢].length, is(columns));
     }
 
     @Test public void sqr() {
@@ -644,8 +644,8 @@ public enum LinearAlgebra {
       final int columns = 20;
       final double[][] __ = LinearAlgebra.transpose(LinearAlgebra.make(rows, columns));
       assertEquals(columns, __.length);
-      for (int i = 0; i < rows; i++)
-        azzert.that("Inappropriate column length at row " + i, __[i].length, is(rows));
+      for (int ¢ = 0; ¢ < rows; ++¢)
+        azzert.that("Inappropriate column length at row " + ¢, __[¢].length, is(rows));
     }
   }
 }

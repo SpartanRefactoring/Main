@@ -16,8 +16,8 @@ public interface AssertToAzzert {
     azzert.that(t2, is(t1));
   }
 
-  static void assertFalse(final boolean b) {
-    assert !(b);
+  static void assertFalse(final boolean ¢) {
+    assert !(¢);
   }
 
   static void assertFalse(final Object reason, final boolean b) {
@@ -28,26 +28,26 @@ public interface AssertToAzzert {
     azzert.that(t2, is(not(t1)));
   }
 
-  static <T> void assertNotNull(final T t) {
-    assert t != null;
+  static <T> void assertNotNull(final T ¢) {
+    assert ¢ != null;
   }
 
   static <T> void assertNotNull(Object reason, final T t) {
     assert t != null : reason;
   }
-  static <T> void assertNull(final T t) {
-    azzert.isNull(t);
+  static <T> void assertNull(final T ¢) {
+    azzert.isNull(¢);
   }
 
-  static void assertTrue(final boolean b) {
-    assert b;
+  static void assertTrue(final boolean ¢) {
+    assert ¢;
   }
 
   static void assertTrue(final Object reason, final boolean b) {
     assert b : reason;
   }
 
-  static void assertZero(final int i) {
-    azzert.zero(i);
+  static void assertZero(final int ¢) {
+    azzert.zero(¢);
   }
 }

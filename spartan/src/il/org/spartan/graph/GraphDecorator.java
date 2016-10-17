@@ -21,8 +21,8 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#contains(java.lang.Object) */
-  @Override public boolean contains(final E e) {
-    return inner.contains(e);
+  @Override public boolean contains(final E ¢) {
+    return inner.contains(¢);
   }
 
   /* (non-Javadoc)
@@ -36,8 +36,8 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.graph.AbstractGraph#incoming(il.org.spartan
    * .graph.Vertex) */
-  @Override public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> v) {
-    return inner.incoming(v);
+  @Override public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
+    return inner.incoming(¢);
   }
 
   /* (non-Javadoc)
@@ -51,8 +51,8 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.graph.AbstractGraph#outgoing(il.org.spartan
    * .graph.Vertex) */
-  @Override public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> v) {
-    return inner.outgoing(v);
+  @Override public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
+    return inner.outgoing(¢);
   }
 
   /* (non-Javadoc)
@@ -86,8 +86,8 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#vertex(java.lang.Object) */
-  @Override public Vertex<E> vertex(final E e) {
-    return inner.vertex(e);
+  @Override public Vertex<E> vertex(final E ¢) {
+    return inner.vertex(¢);
   }
 
   /* (non-Javadoc)

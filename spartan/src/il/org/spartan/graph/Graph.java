@@ -11,19 +11,19 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil
  * @since 2011-11-11 */
 public class Graph<E> extends AbstractGraph<E> {
-  private static <E> ImmutableArrayList<Vertex<E>> makeSinks(final ImmutableArrayList<Vertex<E>> vs) {
+  private static <E> ImmutableArrayList<Vertex<E>> makeSinks(final ImmutableArrayList<Vertex<E>> e) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (final Vertex<E> v : vs)
-      if (v.outgoing().size() == 0)
-        $.add(v);
+    for (final Vertex<E> ¢ : e)
+      if (¢.outgoing().size() == 0)
+        $.add(¢);
     return ImmutableArrayList.make($);
   }
 
-  private static <E> ImmutableArrayList<Vertex<E>> makeSources(final ImmutableArrayList<Vertex<E>> vs) {
+  private static <E> ImmutableArrayList<Vertex<E>> makeSources(final ImmutableArrayList<Vertex<E>> e) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (final Vertex<E> v : vs)
-      if (v.incoming().size() == 0)
-        $.add(v);
+    for (final Vertex<E> ¢ : e)
+      if (¢.incoming().size() == 0)
+        $.add(¢);
     return new ImmutableArrayList<>($);
   }
 
@@ -56,8 +56,8 @@ public class Graph<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.metrics.AbstractGraph#contains(il.ac.technion.cs
    * .ssdl.metrics.Vertex) */
-  @Override public boolean contains(final E e) {
-    return map.containsKey(e);
+  @Override public boolean contains(final E ¢) {
+    return map.containsKey(¢);
   }
 
   @Override public String description() {
@@ -66,8 +66,8 @@ public class Graph<E> extends AbstractGraph<E> {
 
   @SuppressWarnings("static-method") //
   public boolean hasEdge(final Vertex<E> from, final Vertex<E> to) {
-    for (final Vertex<E> v : from.outgoing())
-      if (v == to)
+    for (final Vertex<E> ¢ : from.outgoing())
+      if (¢ == to)
         return true;
     return false;
   }
@@ -92,8 +92,8 @@ public class Graph<E> extends AbstractGraph<E> {
     return sources.size();
   }
 
-  @Override public Vertex<E> vertex(final E e) {
-    return map.get(e);
+  @Override public Vertex<E> vertex(final E ¢) {
+    return map.get(¢);
   }
 
   @Override public ImmutableArrayList<Vertex<E>> vertices() {
@@ -108,10 +108,10 @@ public class Graph<E> extends AbstractGraph<E> {
       return new HashSet<>();
     }
 
-    private static <E> void fill(final Map<E, Vertex<E>> map, final Vertex<E>[] vs, final HashSet<E> es) {
+    private static <E> void fill(final Map<E, Vertex<E>> e, final Vertex<E>[] vs, final HashSet<E> es) {
       int i = 0;
-      for (final E e : es)
-        vs[i++] = map.get(e);
+      for (final E ¢ : es)
+        vs[i++] = e.get(¢);
     }
 
     @SuppressWarnings("unchecked") //
@@ -154,14 +154,14 @@ public class Graph<E> extends AbstractGraph<E> {
 
     /** Merges into the currently built graph all edges and vertices in the
      * supplied graph.
-     * @param g an arbitrary graph
+     * @param e an arbitrary graph
      * @return <code><b>this</b></code> */
-    public Builder<E> addGraph(final Graph<E> g) {
-      for (final Vertex<E> v : g.vertices())
-        if (g.outDegree(v) == 0)
+    public Builder<E> addGraph(final Graph<E> e) {
+      for (final Vertex<E> v : e.vertices())
+        if (e.outDegree(v) == 0)
           newVertex(v.e());
         else
-          for (final Vertex<E> u : g.outgoing(v))
+          for (final Vertex<E> u : e.outgoing(v))
             newEdge(v.e(), u.e());
       return this;
     }
@@ -210,18 +210,18 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
     public Builder<E> newSelfLoops(final E... es) {
-      for (final E e : es)
-        newEdge(e, e);
+      for (final E ¢ : es)
+        newEdge(¢, ¢);
       return this;
     }
 
     /** Records the presence of a new data element, to be used for cases in
      * which the data element may not participate in any association.
-     * @param e a data element.
+     * @param ¢ a data element.
      * @return <code><b>this</b></code> */
-    public Builder<E> newVertex(final E e) {
-      outgoing.put(e, Builder.<E> emptySet());
-      incoming.put(e, Builder.<E> emptySet());
+    public Builder<E> newVertex(final E ¢) {
+      outgoing.put(¢, Builder.<E> emptySet());
+      incoming.put(¢, Builder.<E> emptySet());
       return this;
     }
 
@@ -231,8 +231,8 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
     public Builder<E> newVertices(final E... es) {
-      for (final E e : es)
-        newVertex(e);
+      for (final E ¢ : es)
+        newVertex(¢);
       return this;
     }
 
@@ -250,9 +250,9 @@ public class Graph<E> extends AbstractGraph<E> {
 
     private Map<E, Vertex<E>> makeVerticesMap() {
       // Phase I: Determine vertex set, and record mappings.
-      for (final BuildingEdge<E> e : edges) {
-        outgoing.get(e.from).add(e.to);
-        incoming.get(e.to).add(e.from);
+      for (final BuildingEdge<E> ¢ : edges) {
+        outgoing.get(¢.from).add(¢.to);
+        incoming.get(¢.to).add(¢.from);
       }
       // Phase II: Allocate arrays for incoming and outgoing edges in all
       // vertices
@@ -266,8 +266,8 @@ public class Graph<E> extends AbstractGraph<E> {
       }
       // Phase III: create the vertices map.
       final Map<E, Vertex<E>> $ = new HashMap<>();
-      for (final E e : outgoing.keySet())
-        $.put(e, new Vertex<>(e, outgoingArrays.get(e), incomingArrays.get(e)));
+      for (final E ¢ : outgoing.keySet())
+        $.put(¢, new Vertex<>(¢, outgoingArrays.get(¢), incomingArrays.get(¢)));
       for (final E v : $.keySet()) {
         fill($, outgoingArrays.get(v), outgoing.get(v));
         fill($, incomingArrays.get(v), incoming.get(v));

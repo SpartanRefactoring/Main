@@ -12,34 +12,34 @@ import il.org.spartan.*;
 @SuppressWarnings("static-method")
 //
 public class TokenizerTest {
-  static Token getToken(final String s, final int n) throws IOException {
+  static Token getToken(final String s, final int i) throws IOException {
     final RawTokenizer j = new RawTokenizer(new StringReader(s));
-    for (int i = 0; i < n - 1; i++)
+    for (int ¢ = 0; ¢ < i - 1; ++¢)
       j.next();
     return j.next();
   }
 
-  static String getTokenText(final String s, final int n) throws IOException {
+  static String getTokenText(final String s, final int i) throws IOException {
     final RawTokenizer j = new RawTokenizer(new StringReader(s));
-    for (int i = 0; i < n; i++)
+    for (int ¢ = 0; ¢ < i; ++¢)
       j.next();
     return j.text();
   }
 
-  private static Token firstToken(final String s) throws IOException {
-    return getToken(s, 1);
+  private static Token firstToken(final String ¢) throws IOException {
+    return getToken(¢, 1);
   }
 
-  private static String firstTokenText(final String s) throws IOException {
-    return getTokenText(s, 1);
+  private static String firstTokenText(final String ¢) throws IOException {
+    return getTokenText(¢, 1);
   }
 
-  private static Token secondToken(final String s) throws IOException {
-    return getToken(s, 2);
+  private static Token secondToken(final String ¢) throws IOException {
+    return getToken(¢, 2);
   }
 
-  private static String secondTokenText(final String s) throws IOException {
-    return getTokenText(s, 2);
+  private static String secondTokenText(final String ¢) throws IOException {
+    return getTokenText(¢, 2);
   }
 
   final StringTokenizer t = new StringTokenizer("");

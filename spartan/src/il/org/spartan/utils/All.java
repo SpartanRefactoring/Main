@@ -19,8 +19,8 @@ import il.org.spartan.streotypes.*;
   public static <T> boolean notNull(final Iterable<T> ts) {
     if (ts == null)
       return false;
-    for (final T t : ts)
-      if (t == null)
+    for (final T ¢ : ts)
+      if (¢ == null)
         return false;
     return true;
   }
@@ -34,8 +34,8 @@ import il.org.spartan.streotypes.*;
   public static <T> boolean notNull(final T[] ts) {
     if (ts == null)
       return false;
-    for (final T t : ts)
-      if (t == null)
+    for (final T ¢ : ts)
+      if (¢ == null)
         return false;
     return true;
   }

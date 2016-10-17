@@ -12,12 +12,12 @@ public class BenchEmptyFinalOperation {
   public static void main(final String args[]) throws Exception {
     final LogBook.Mutable l = new LogBook.Mutable(BenchEmptyFinalOperation.class);
     final Operation o = new Operation() {
-      @Override public final Object call() {
+      @Override public Object call() {
         return null;
       }
     };
     Log.deactivate();
-    for (int i = 0; i < trials; i++)
+    for (int ¢ = 0; ¢ < trials; ++¢)
       BenchingPolicy.go(l, "empty", 1, o);
     System.err.println(l.currentEntry().format("A D I X"));
   }

@@ -36,8 +36,7 @@ public class FileUtils {
     final String ls = System.getProperty("line.separator");
     final StringBuilder $ = new StringBuilder();
     try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-      String line;
-      while ((line = reader.readLine()) != null)
+      for (String line = reader.readLine(); line != null;)
         $.append(line).append(ls);
     }
     return $ + "";
@@ -64,15 +63,15 @@ public class FileUtils {
   private static void iterateFiles(final File dir, final List<String> files) {
     if (dir == null)
       return;
-    for (final File f : dir.listFiles()) {
-      if (f.isDirectory())
-        iterateFiles(f, files);
-      if (f.isFile() && f.getName().endsWith(".java"))
-        files.add(f.getAbsolutePath());
+    for (final File ¢ : dir.listFiles()) {
+      if (¢.isDirectory())
+        iterateFiles(¢, files);
+      if (¢.isFile() && ¢.getName().endsWith(".java"))
+        files.add(¢.getAbsolutePath());
     }
   }
 
-  private static String read(final Path p) throws IOException {
-    return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
+  private static String read(final Path ¢) throws IOException {
+    return new String(Files.readAllBytes(¢), StandardCharsets.UTF_8);
   }
 }

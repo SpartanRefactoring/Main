@@ -26,16 +26,16 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     this.neighbors = neighbors;
   }
 
-  @Override public boolean has(final int n) {
-    return n >= 0 && n < neighbors.length && neighbors[n] != null;
+  @Override public boolean has(final int ¢) {
+    return ¢ >= 0 && ¢ < neighbors.length && neighbors[¢] != null;
   }
 
   @Override public boolean has(final int n1, final int n2) {
     return has(n1) && has(n2) && binarySearch(neighbors[n1], (short) n2) >= 0;
   }
 
-  public short[] neighbors(final int n) {
-    return n < 0 || n >= neighbors.length ? null : neighbors[n].clone();
+  public short[] neighbors(final int ¢) {
+    return ¢ < 0 || ¢ >= neighbors.length ? null : neighbors[¢].clone();
   }
 
   public short[] nodes() {
@@ -54,18 +54,18 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
       return $;
     }
 
-    private static short makeShort(final int n) {
-      if (n < 0 || n > Short.MAX_VALUE)
+    private static short makeShort(final int ¢) {
+      if (¢ < 0 || ¢ > Short.MAX_VALUE)
         throw new IllegalArgumentException();
-      return (short) n;
+      return (short) ¢;
     }
 
     private short[][] neighbors = new short[0][];
     private short[] component = new short[0];
     private short[] nodes = new short[0];
 
-    public Builder add(final int n) {
-      return add(makeShort(n));
+    public Builder add(final int ¢) {
+      return add(makeShort(¢));
     }
 
     public Builder add(final short n) {
@@ -100,9 +100,9 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
 
     private int countArcs() {
       int $ = 0;
-      for (final short[] ss : neighbors)
-        if (ss != null)
-          $ += ss.length;
+      for (final short[] ¢ : neighbors)
+        if (¢ != null)
+          $ += ¢.length;
       return $ / 2;
     }
 
@@ -122,28 +122,23 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     private static final int PSEUDO_ZERO = 2 * Short.MAX_VALUE + 2;
 
     @Test public void arsInsertedInNoOrder() {
-      final SmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      azzert.that(g.arcsCount, is(3));
+      azzert.that(new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().arcsCount, is(3));
     }
 
     @Test public void connectedCheckDisconnectedNodes() {
-      final SmallIntegersGraph g = new Builder().add(0).add(1).go();
-      assert !g.connected(0, 1);
+      assert !new Builder().add(0).add(1).go().connected(0, 1);
     }
 
     @Test public void connectedCheckRemoteNodes() {
-      final SmallIntegersGraph g = new Builder().connect(0, 1).connect(1, 2).go();
-      assert g.connected(0, 2);
+      assert new Builder().connect(0, 1).connect(1, 2).go().connected(0, 2);
     }
 
     @Test public void connectedExists() {
-      final SmallIntegersGraph g = new Builder().connect(0, 1).go();
-      assert !g.connected(2, 3);
+      assert !new Builder().connect(0, 1).go().connected(2, 3);
     }
 
     @Test public void connectedOfPresentNodes() {
-      final SmallIntegersGraph g = new Builder().connect(0, 1).go();
-      assert g.connected(0, 1);
+      assert new Builder().connect(0, 1).go().connected(0, 1);
     }
 
     @Test public void connectedTwoChains() {
@@ -162,58 +157,47 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void containsArcFalse() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      assert !g.has(13, 0);
+      assert !new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().has(13, 0);
     }
 
     @Test public void containsArcFirstLargeValue() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(Short.MAX_VALUE + 1, 0);
+      assert !new Builder().go().has(Short.MAX_VALUE + 1, 0);
     }
 
     @Test public void containsArcFirstNegativeValue() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(-1, 0);
+      assert !new Builder().go().has(-1, 0);
     }
 
     @Test public void containsArcSecondLargeValue() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(0, Short.MAX_VALUE + 1);
+      assert !new Builder().go().has(0, Short.MAX_VALUE + 1);
     }
 
     @Test public void containsArcSecondLargeValueAfterInsertion1() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(1, 0).go();
-      assert !g.has(1, PSEUDO_ZERO);
+      assert !new Builder().connect(1, 0).go().has(1, PSEUDO_ZERO);
     }
 
     @Test public void containsArcSecondLargeValueAfterInsertion2() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(0, 1).go();
-      assert !g.has(PSEUDO_ZERO, 0);
+      assert !new Builder().connect(0, 1).go().has(PSEUDO_ZERO, 0);
     }
 
     @Test public void containsArcSecondNegativeValue() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(0, -1);
+      assert !new Builder().go().has(0, -1);
     }
 
     @Test public void containsArcTrue() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      assert g.has(13, 14);
+      assert new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().has(13, 14);
     }
 
     @Test public void containsLargeValue() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(Short.MAX_VALUE + 1);
+      assert !new Builder().go().has(Short.MAX_VALUE + 1);
     }
 
     @Test public void containsNegativeValue() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(-1);
+      assert !new Builder().go().has(-1);
     }
 
     @Test public void containsPseudoZero() {
-      final MatrixSmallIntegersGraph g = new Builder().add(0).go();
-      assert !g.has(PSEUDO_ZERO);
+      assert !new Builder().add(0).go().has(PSEUDO_ZERO);
     }
 
     @Test public void disconnectedComponentsBuilder() {
@@ -292,23 +276,19 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void emptyCreationArcsCount() {
-      final SmallIntegersGraph g = new Builder().go();
-      azzert.that(g.arcsCount, is(0));
+      azzert.that(new Builder().go().arcsCount, is(0));
     }
 
     @Test public void emptyCreationNodesCount() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      azzert.that(g.nodesCount(), is(0));
+      azzert.that(new Builder().go().nodesCount(), is(0));
     }
 
     @Test public void emptyDoesNotContain() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(13);
+      assert !new Builder().go().has(13);
     }
 
     @Test public void emptyDoesNotContainNegative() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert !g.has(-1);
+      assert !new Builder().go().has(-1);
     }
 
     @Test public void fourEdgeFindIsTrimming() {
@@ -331,13 +311,11 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void hasThreeNeighbors() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      azzert.that(g.neighbors(13).length, is(3));
+      azzert.that(new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().neighbors(13).length, is(3));
     }
 
     @Test public void illegalNodeNeighbors() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(5, 14).connect(5, 13).connect(13, 14).go();
-      azzert.isNull(g.neighbors(15));
+      azzert.isNull(new Builder().connect(5, 14).connect(5, 13).connect(13, 14).go().neighbors(15));
     }
 
     @Test public void nastyReconnection() {
@@ -353,8 +331,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test(timeout = 20) public void neighborsIsNotNull() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go();
-      assert null != g.neighbors(13);
+      assert null != new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().neighbors(13);
     }
 
     @Test public void newArcReturnsThis() {
@@ -380,18 +357,15 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void noComponents() {
-      final SmallIntegersGraph g = new Builder().go();
-      azzert.that(g.components(), is(0));
+      azzert.that(new Builder().go().components(), is(0));
     }
 
     @Test public void nodesEmpty() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      azzert.that(g.nodes().length, is(0));
+      azzert.that(new Builder().go().nodes().length, is(0));
     }
 
     @Test public void nodesExists() {
-      final MatrixSmallIntegersGraph g = new Builder().go();
-      assert null != g.nodes();
+      assert null != new Builder().go().nodes();
     }
 
     @Test public void nodesResistChange() {
@@ -404,13 +378,11 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void nodesSingle() {
-      final MatrixSmallIntegersGraph g = new Builder().add(1).go();
-      azzert.that(g.nodes().length, is(1));
+      azzert.that(new Builder().add(1).go().nodes().length, is(1));
     }
 
     @Test public void nodesSingleCorrect() {
-      final MatrixSmallIntegersGraph g = new Builder().add(1).go();
-      azzert.that(g.nodes()[0], is(1));
+      azzert.that(new Builder().add(1).go().nodes()[0], is(1));
     }
 
     @Test public void nodesTwoCorrect() {
@@ -432,13 +404,11 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void oneComponentOfOneEdge() {
-      final SmallIntegersGraph g = new Builder().connect(1, 2).go();
-      azzert.that(g.components(), is(1));
+      azzert.that(new Builder().connect(1, 2).go().components(), is(1));
     }
 
     @Test public void oneComponents() {
-      final SmallIntegersGraph g = new Builder().add(1).go();
-      azzert.that(g.components(), is(1));
+      azzert.that(new Builder().add(1).go().components(), is(1));
     }
 
     @Test public void safeModifictation() {
@@ -466,13 +436,11 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void simpleNode0ContainsTrue() {
-      final MatrixSmallIntegersGraph g = new Builder().add(0).go();
-      assert g.has(0);
+      assert new Builder().add(0).go().has(0);
     }
 
     @Test public void simpleNode1ContainsTrue() {
-      final MatrixSmallIntegersGraph g = new Builder().add(1).go();
-      assert g.has(1);
+      assert new Builder().add(1).go().has(1);
     }
 
     @Test public void simpleTwoNodeContainsTrue() {
@@ -482,28 +450,23 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void singleArcCountArcs() {
-      final SmallIntegersGraph g = new Builder().connect(13, 14).go();
-      azzert.that(g.arcsCount, is(1));
+      azzert.that(new Builder().connect(13, 14).go().arcsCount, is(1));
     }
 
     @Test public void singleArcCountNodes() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).go();
-      azzert.that(g.nodesCount(), is(2));
+      azzert.that(new Builder().connect(13, 14).go().nodesCount(), is(2));
     }
 
     @Test public void singleArcHasOneNeighbor() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).go();
-      azzert.that(g.neighbors(13).length, is(1));
+      azzert.that(new Builder().connect(13, 14).go().neighbors(13).length, is(1));
     }
 
     @Test public void singleArcInsertedTwiceCountArcs() {
-      final SmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 14).go();
-      azzert.that(g.arcsCount, is(1));
+      azzert.that(new Builder().connect(13, 14).connect(13, 14).go().arcsCount, is(1));
     }
 
     @Test public void singleArcInverseHasOneNeighbor() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).go();
-      azzert.that(g.neighbors(14).length, is(1));
+      azzert.that(new Builder().connect(13, 14).go().neighbors(14).length, is(1));
     }
 
     @Test public void singleEdgeCheckComponent() {
@@ -517,41 +480,31 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void singleNodeContainsFalse() {
-      final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      assert !g.has(14);
+      assert !new Builder().add(13).go().has(14);
     }
 
     @Test public void singleNodeContainsFalseBelow() {
-      final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      assert !g.has(11);
+      assert !new Builder().add(13).go().has(11);
     }
 
     @Test public void singleNodeContainsTrue() {
-      final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      assert g.has(13);
+      assert new Builder().add(13).go().has(13);
     }
 
     @Test public void singleNodeCountArcs() {
-      final SmallIntegersGraph g = new Builder().add(13).go();
-      azzert.that(g.arcsCount, is(0));
+      azzert.that(new Builder().add(13).go().arcsCount, is(0));
     }
 
     @Test public void singleNodeCountNodes() {
-      final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      azzert.that(g.nodesCount(), is(1));
+      azzert.that(new Builder().add(13).go().nodesCount(), is(1));
     }
 
     @Test public void singleNodeHasNoNeighbors() {
-      final MatrixSmallIntegersGraph g = new Builder().add(13).go();
-      azzert.that(g.neighbors(13).length, is(0));
+      azzert.that(new Builder().add(13).go().neighbors(13).length, is(0));
     }
 
     @Test public void triangleAndPath() {
-      final SmallIntegersGraph g = new Builder()//
-          .connect(1, 2).connect(2, 3).connect(3, 4) //
-          .connect(7, 8).connect(5, 6).connect(6, 7) //
-          .go();
-      azzert.that(g.components(), is(2));
+      azzert.that(new Builder().connect(1, 2).connect(2, 3).connect(3, 4).connect(7, 8).connect(5, 6).connect(6, 7).go().components(), is(2));
     }
 
     @Test public void triangleHasTwoNeighbors() {
@@ -562,8 +515,7 @@ public class MatrixSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void twoArcsHasTwoNeighbors() {
-      final MatrixSmallIntegersGraph g = new Builder().connect(13, 14).connect(13, 15).go();
-      azzert.that(g.neighbors(13).length, is(2));
+      azzert.that(new Builder().connect(13, 14).connect(13, 15).go().neighbors(13).length, is(2));
     }
 
     @Test public void twoArcsInverseHasTwoNeighbors() {

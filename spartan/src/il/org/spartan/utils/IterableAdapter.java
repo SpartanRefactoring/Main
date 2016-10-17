@@ -16,10 +16,10 @@ import il.org.spartan.streotypes.*;
   /** A factory method, generating an {@link Iterable} from a given
    * {@link Enumeration}
    * @param <T> type of elements in the iterated collection
-   * @param e an enumeration to convert into an {@link Iterable}
+   * @param ¢ an enumeration to convert into an {@link Iterable}
    * @return a new {@link Iterable} created from the parameter */
-  public static <T> Iterable<T> make(final Enumeration<T> e) {
-    return new IterableAdapter<>(e);
+  public static <T> Iterable<T> make(final Enumeration<T> ¢) {
+    return new IterableAdapter<>(¢);
   }
 
   final Enumeration<T> implementation;

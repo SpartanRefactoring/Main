@@ -13,14 +13,14 @@ public class UnionFindSmallIntegersGraph extends AbstractSmallIntegersGraph {
   private final BitSet nodes = new BitSet();
   private short component[] = new short[0];
 
-  @Override public final short component(final int n) {
-    return !has(n) ? -1 : component((short) n);
+  @Override public final short component(final int ¢) {
+    return !has(¢) ? -1 : component((short) ¢);
   }
 
   @Override public final short components() {
     final BitSet $ = new BitSet();
-    for (int i = nodes.nextSetBit(0); i >= 0; i = nodes.nextSetBit(i + 1))
-      $.set(i);
+    for (int ¢ = nodes.nextSetBit(0); ¢ >= 0; ¢ = nodes.nextSetBit(¢ + 1))
+      $.set(¢);
     return (short) $.cardinality();
   }
 
@@ -34,13 +34,13 @@ public class UnionFindSmallIntegersGraph extends AbstractSmallIntegersGraph {
     union(i, j);
   }
 
-  @Override public boolean has(final int n) {
-    add(n);
+  @Override public boolean has(final int ¢) {
+    add(¢);
     return true;
   }
 
-  private void add(final int n) {
-    add(makeShort(n));
+  private void add(final int ¢) {
+    add(makeShort(¢));
   }
 
   private void add(final short n) {

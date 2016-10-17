@@ -31,11 +31,11 @@ public class TimingEstimator {
   /** Factory method retrieving the {@link TimingEstimator} associated with a
    * given {@link Operation}, creating a new such object when no association was
    * previously done.
-   * @param o arbitrary operation
+   * @param ¢ arbitrary operation
    * @return the {@link TimingEstimator} associated with the parameter */
-  public static TimingEstimator estimator(final Operation o) {
-    final TimingEstimator $ = estimators.get(o);
-    return $ != null ? $ : makeEstimator(o);
+  public static TimingEstimator estimator(final Operation ¢) {
+    final TimingEstimator $ = estimators.get(¢);
+    return $ != null ? $ : makeEstimator(¢);
   }
 
   /** Execute a given operation a specified number of times, updating the time
@@ -49,18 +49,18 @@ public class TimingEstimator {
     estimator(o).run(runs);
   }
 
-  private static TimingEstimator makeEstimator(final Operation o) {
-    final TimingEstimator $ = new TimingEstimator(o);
-    estimators.put(o, $);
+  private static TimingEstimator makeEstimator(final Operation ¢) {
+    final TimingEstimator $ = new TimingEstimator(¢);
+    estimators.put(¢, $);
     return $;
   }
 
   private final Operation o;
   private final RunRecordAccumulator usefulRuns = new RunRecordAccumulator();
   private final RunRecordAccumulator totalRuns = new RunRecordAccumulator();
-  private int consecutiveStable = 0;
+  private int consecutiveStable;
   private double estimate = Double.NaN;
-  private int n = 0;
+  private int n;
 
   private TimingEstimator(final Operation o) {
     this.o = o;
@@ -138,7 +138,7 @@ public class TimingEstimator {
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
   public RunRecord run(final int runs, final int trials) {
-    for (int i = 0; i < trials; i++) {
+    for (int ¢ = 0; ¢ < trials; ++¢) {
       final RunRecord $ = run(runs);
       if ($ != null)
         return $;

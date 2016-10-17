@@ -33,17 +33,17 @@ public class Range {
     this(other.from, other.to);
   }
 
-  @Override public boolean equals(final Object o) {
-    return o instanceof Range && from == ((Range) o).from && to == ((Range) o).to;
+  @Override public boolean equals(final Object ¢) {
+    return ¢ instanceof Range && from == ((Range) ¢).from && to == ((Range) ¢).to;
   }
 
   /** Find an including range
-   * @param rs some arbitrary {@link Range} objects
+   * @param ¢ some arbitrary {@link Range} objects
    * @return first {@link Range} object in the parameters that contains this
    *         instance, or <code><b>null</b></code> if not such value can be
    *         found. */
-  public Range findIncludedIn(final Iterable<? extends Range> rs) {
-    for (final Range $ : rs)
+  public Range findIncludedIn(final Iterable<? extends Range> ¢) {
+    for (final Range $ : ¢)
       if (includedIn($))
         return $;
     return null;
@@ -54,11 +54,11 @@ public class Range {
     return (int) (from + 0.5 * (to + from) * (to + from + 1));
   }
 
-  /** @param r arbitrary
+  /** @param ¢ arbitrary
    * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code> is
    *         included in the parameter. */
-  public boolean includedIn(final Range r) {
-    return from >= r.from && to <= r.to;
+  public boolean includedIn(final Range ¢) {
+    return from >= ¢.from && to <= ¢.to;
   }
 
   public boolean isEmpty() {
@@ -66,18 +66,18 @@ public class Range {
   }
 
   /** Merge with another record
-   * @param r JD
+   * @param ¢ JD
    * @return A newly created range representing the merge. */
-  public Range merge(final Range r) {
-    return new Range(Math.min(from, r.from), Math.max(to, r.to));
+  public Range merge(final Range ¢) {
+    return new Range(Math.min(from, ¢.from), Math.max(to, ¢.to));
   }
 
   /** Determine whether overlaps in any part another range
-   * @param r arbitrary
+   * @param ¢ arbitrary
    * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code>
    *         overlaps the parameter. */
-  public boolean overlapping(final Range r) {
-    return from >= r.from || to <= r.to;
+  public boolean overlapping(final Range ¢) {
+    return from >= ¢.from || to <= ¢.to;
   }
 
   /** Prune all ranges in a given list that include this object.

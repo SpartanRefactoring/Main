@@ -10,8 +10,8 @@ public class Bencher extends LogBook.Mutable {
     super(initiator);
   }
 
-  public void afterEachGo(final Operation o) {
-    after = o;
+  public void afterEachGo(final Operation ¢) {
+    after = ¢;
   }
 
   @Override public LogBook clear() {
@@ -21,8 +21,8 @@ public class Bencher extends LogBook.Mutable {
     return this;
   }
 
-  public void go(final Bencheon b) {
-    BenchingPolicy.go(this, b);
+  public void go(final Bencheon ¢) {
+    BenchingPolicy.go(this, ¢);
     BenchingPolicy.after(after);
   }
 

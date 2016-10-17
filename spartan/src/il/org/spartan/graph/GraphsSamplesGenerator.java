@@ -76,10 +76,10 @@ public class GraphsSamplesGenerator {
           e.printStackTrace();
         }
     azzert.that($.size(), is(28));
-    for (int i = 0; i < 6; i++) {
-      $.add(makeClique(i));
-      $.add(makeCLIQUE(i));
-      $.add(makeChain(i));
+    for (int ¢ = 0; ¢ < 6; ++¢) {
+      $.add(makeClique(¢));
+      $.add(makeCLIQUE(¢));
+      $.add(makeChain(¢));
     }
     return $;
   }
@@ -103,9 +103,9 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
-  public static Graph<String> makeChain(final int n) {
-    final Graph.Builder<String> $ = new Graph.Builder<>("Chain " + n);
-    for (char from = 'A'; from < 'A' + n - 1; from++)
+  public static Graph<String> makeChain(final int i) {
+    final Graph.Builder<String> $ = new Graph.Builder<>("Chain " + i);
+    for (char from = 'A'; from < 'A' + i - 1; ++from)
       $.newEdge(from + "", (char) (from + 1) + "");
     return $.build();
   }
@@ -124,22 +124,22 @@ public class GraphsSamplesGenerator {
     return b.build();
   }
 
-  public static Graph<String> makeClique(final int n) {
-    return makeCliqueBuilder(n).build();
+  public static Graph<String> makeClique(final int ¢) {
+    return makeCliqueBuilder(¢).build();
   }
 
-  public static Graph<String> makeCLIQUE(final int n) {
-    final Graph.Builder<String> $ = makeCliqueBuilder(n);
-    for (char c = 'A'; c < 'A' + n; c++)
-      $.newEdge(c + "", c + "");
+  public static Graph<String> makeCLIQUE(final int i) {
+    final Graph.Builder<String> $ = makeCliqueBuilder(i);
+    for (char ¢ = 'A'; ¢ < 'A' + i; ++¢)
+      $.newEdge(¢ + "", ¢ + "");
     return $.build();
   }
 
-  public static Builder<String> makeCliqueBuilder(final int n) {
-    final Graph.Builder<String> $ = new Graph.Builder<>("Clique " + n);
-    for (char from = 'A'; from < 'A' + n; from++) {
+  public static Builder<String> makeCliqueBuilder(final int i) {
+    final Graph.Builder<String> $ = new Graph.Builder<>("Clique " + i);
+    for (char from = 'A'; from < 'A' + i; ++from) {
       $.newVertex(from + "");
-      for (char to = 'A'; to < 'A' + n; to++)
+      for (char to = 'A'; to < 'A' + i; ++to)
         if (from != to)
           $.newEdge(from + "", to + "");
     }

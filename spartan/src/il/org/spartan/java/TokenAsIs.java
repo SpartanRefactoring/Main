@@ -11,8 +11,8 @@ import java.io.*;
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class TokenAsIs extends TokenProcessor {
-  public static String fileToString(final File f) throws IOException, FileNotFoundException {
-    return new TokenFeeder(new Tokenizer(f), new TokenAsIs()).go().processor + "";
+  public static String fileToString(final File ¢) throws IOException, FileNotFoundException {
+    return new TokenFeeder(new Tokenizer(¢), new TokenAsIs()).go().processor + "";
   }
 
   public static String fileToString(final String fileName) throws IOException, FileNotFoundException {
@@ -20,8 +20,7 @@ public class TokenAsIs extends TokenProcessor {
   }
 
   public static void main(final String argv[]) throws IOException {
-    final String s = fileToString(first(argv));
-    System.out.println(s);
+    System.out.println(fileToString(first(argv)));
   }
 
   public static String stringToString(final String text) throws IOException, FileNotFoundException {

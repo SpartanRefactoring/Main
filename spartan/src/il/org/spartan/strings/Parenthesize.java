@@ -17,28 +17,28 @@ import il.org.spartan.utils.*;
   ;
   private static final String COMMA = ",";
 
-  public static <T> String angular(final Collection<T> ts) {
-    return make("<", prune(ts), ">");
+  public static <T> String angular(final Collection<T> ¢) {
+    return make("<", prune(¢), ">");
   }
 
-  public static <T> String angular(final T[] ts) {
-    return make("<", prune(ts), ">");
+  public static <T> String angular(final T[] ¢) {
+    return make("<", prune(¢), ">");
   }
 
-  public static <T> String circual(final Collection<T> ts) {
-    return make("<", prune(ts), ">");
+  public static <T> String circual(final Collection<T> ¢) {
+    return make("<", prune(¢), ">");
   }
 
-  public static <T> String circular(final T[] ts) {
-    return make("<", prune(ts), ">");
+  public static <T> String circular(final T[] ¢) {
+    return make("<", prune(¢), ">");
   }
 
-  public static <T> String curly(final Collection<T> ts) {
-    return make("{", prune(ts), "}");
+  public static <T> String curly(final Collection<T> ¢) {
+    return make("{", prune(¢), "}");
   }
 
-  public static <T> String curly(final T[] ts) {
-    return make("{", prune(ts), "}");
+  public static <T> String curly(final T[] ¢) {
+    return make("{", prune(¢), "}");
   }
 
   public static <T> String make(final String begin, final Collection<T> ts, final String end) {
@@ -69,9 +69,7 @@ import il.org.spartan.utils.*;
    *         <code>ts</code> is <code>null</code>, then the empty string is
    *         returned. */
   public static <T> String make(final String begin, final Collection<T> ts, final String between, final String end) {
-    if (ts == null || ts.size() == 0)
-      return "";
-    return begin + Separate.by(ts, between) + end;
+    return ts == null || ts.size() == 0 ? "" : begin + Separate.by(ts, between) + end;
   }
 
   public static <T> String make(final String begin, final T[] ts, final String end) {
@@ -79,24 +77,22 @@ import il.org.spartan.utils.*;
   }
 
   public static <T> String make(final String begin, final T[] ts, final String between, final String end) {
-    if (ts == null || ts.length == 0)
-      return "";
-    return begin + Separate.by(ts, between) + end;
+    return ts == null || ts.length == 0 ? "" : begin + Separate.by(ts, between) + end;
   }
 
-  public static <T> String square(final Collection<T> ts) {
-    return make("[", prune(ts), "]");
+  public static <T> String square(final Collection<T> ¢) {
+    return make("[", prune(¢), "]");
   }
 
-  public static <T> String square(final T[] ts) {
-    return make("[", prune(ts), "]");
+  public static <T> String square(final T[] ¢) {
+    return make("[", prune(¢), "]");
   }
 
-  private static <T> Collection<T> prune(final Collection<T> ts) {
-    return Prune.nulls(ts);
+  private static <T> Collection<T> prune(final Collection<T> ¢) {
+    return Prune.nulls(¢);
   }
 
-  private static <T> T[] prune(final T[] ts) {
-    return Prune.nulls(ts);
+  private static <T> T[] prune(final T[] ¢) {
+    return Prune.nulls(¢);
   }
 }

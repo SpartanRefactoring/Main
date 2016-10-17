@@ -28,7 +28,7 @@ public interface XYProcessor {
 
   void p(int x, int y);
 
-  public static abstract class Filter extends Gatherer {
+  static abstract class Filter extends Gatherer {
     @Override public final void gather(final double x, final double y, final double dy) {
       if (valid(x, y, dy))
         super.gather(x, y, dy);
@@ -37,7 +37,7 @@ public interface XYProcessor {
     public abstract boolean valid(final double x, final double y, final double dy);
   }
 
-  public static abstract class Gatherer extends Vacuous {
+  static abstract class Gatherer extends Vacuous {
     private final DoublesArray xs = new DoublesArray();
     private final DoublesArray ys = new DoublesArray();
     private final DoublesArray dys = new DoublesArray();
@@ -65,9 +65,11 @@ public interface XYProcessor {
     }
   }
 
-  public static class LogLog extends Wrapper {
-    /** Instantiate {@link LogLog}.
-     * @param inner */
+  static class LogLog extends Wrapper {
+    /**
+    * Instantiate  {@link LogLog} .
+    * @param inner  
+    */
     public LogLog(final XYProcessor inner) {
       super(inner);
     }
@@ -88,7 +90,7 @@ public interface XYProcessor {
     }
   }
 
-  public static class MaxErrorFilter extends Wrapper {
+  static class MaxErrorFilter extends Wrapper {
     private static double DEFAULT_FACTOR = 2;
     private double maxError = Double.NaN;
     private final double factor;
@@ -112,8 +114,8 @@ public interface XYProcessor {
     }
   }
 
-  public static class Minimizer extends Vacuous {
-    private boolean improved = false;
+  static class Minimizer extends Vacuous {
+    private boolean improved;
     private double xMin = Double.NaN;
     private double yMin = Double.POSITIVE_INFINITY;
     private double dyMin = Double.NaN;
@@ -143,20 +145,15 @@ public interface XYProcessor {
     }
   }
 
-  public static class RealsOnly extends Filter {
+  static class RealsOnly extends Filter {
     @Override public boolean valid(final double x, final double y, final double dy) {
       return isReal(x) && isReal(y) && isReal(dy);
     }
 
-    @SuppressWarnings({ "static-method" }) //
-    public static class TEST {
+    @SuppressWarnings({ "static-method" }) public static class TEST {
       @Test public void feed() {
         final RealsOnly p = new RealsOnly();
-        p.feed(//
-            doubles(Double.NaN, 1, 4, 3), //
-            doubles(0, Double.NEGATIVE_INFINITY, 5, 3), //
-            doubles(0, 1, 6, Double.NEGATIVE_INFINITY)//
-        );
+        p.feed(doubles(Double.NaN, 1, 4, 3), doubles(0, Double.NEGATIVE_INFINITY, 5, 3), doubles(0, 1, 6, Double.NEGATIVE_INFINITY));
         azzert.that(p.xs().length, is(1));
         azzert.that(p.ys().length, is(1));
         azzert.that(p.dys().length, is(1));
@@ -179,9 +176,11 @@ public interface XYProcessor {
     }
   }
 
-  public static class SquareErrorWrapper extends Wrapper {
-    /** Instantiate {@link SquareErrorWrapper}.
-     * @param inner */
+  static class SquareErrorWrapper extends Wrapper {
+    /**
+    * Instantiate  {@link SquareErrorWrapper} .
+    * @param inner  
+    */
     public SquareErrorWrapper(final XYProcessor inner) {
       super(inner);
     }
@@ -197,7 +196,7 @@ public interface XYProcessor {
     }
   }
 
-  public abstract static class Vacuous implements XYProcessor {
+  abstract static class Vacuous implements XYProcessor {
     @Override public void done() {
       ___.nothing();
     }
@@ -205,8 +204,8 @@ public interface XYProcessor {
     public Vacuous feed(final double xs[], final double ys[]) {
       assert xs.length == ys.length;
       final int n = Math.max(xs.length, ys.length);
-      for (int i = 0; i < n; i++)
-        p(xs[i], ys[i]);
+      for (int ¢ = 0; ¢ < n; ++¢)
+        p(xs[¢], ys[¢]);
       done();
       return this;
     }
@@ -215,39 +214,39 @@ public interface XYProcessor {
       assert xs.length == ys.length;
       assert ys.length == dys.length;
       final int n = Math.max(xs.length, ys.length);
-      for (int i = 0; i < n; i++)
-        p(xs[i], ys[i], dys[i]);
+      for (int ¢ = 0; ¢ < n; ++¢)
+        p(xs[¢], ys[¢], dys[¢]);
       done();
       return this;
     }
 
     public Vacuous feed(final XYSeries s) {
-      for (int i = 0; i < s.n(); i++)
-        p(s.x[i], s.y[i], s.dy[i]);
+      for (int ¢ = 0; ¢ < s.n(); ++¢)
+        p(s.x[¢], s.y[¢], s.dy[¢]);
       done();
       return this;
     }
 
     public Vacuous feedHistogram(final double ds[]) {
-      for (int i = 0; i < ds.length; i++)
-        if (ds[i] != 0)
-          p(i, ds[i]);
+      for (int ¢ = 0; ¢ < ds.length; ++¢)
+        if (ds[¢] != 0)
+          p(¢, ds[¢]);
       done();
       return this;
     }
 
     public Vacuous feedHistogram(final double ys[], final double dys[]) {
-      for (int i = 0; i < ys.length; i++)
-        if (ys[i] != 0)
-          p(i, ys[i], dys[i]);
+      for (int ¢ = 0; ¢ < ys.length; ++¢)
+        if (ys[¢] != 0)
+          p(¢, ys[¢], dys[¢]);
       done();
       return this;
     }
 
     public Vacuous feedHistogram(final int as[]) {
-      for (int i = 0; i < as.length; i++)
-        if (as[i] != 0)
-          p(i, as[i]);
+      for (int ¢ = 0; ¢ < as.length; ++¢)
+        if (as[¢] != 0)
+          p(¢, as[¢]);
       done();
       return this;
     }
@@ -266,11 +265,13 @@ public interface XYProcessor {
     }
   }
 
-  public abstract static class Wrapper extends Vacuous {
+  abstract static class Wrapper extends Vacuous {
     protected final XYProcessor inner;
 
-    /** Instantiate {@link Wrapper}.
-     * @param inner */
+    /**
+    * Instantiate  {@link Wrapper} .
+    * @param inner  
+    */
     public Wrapper(final XYProcessor inner) {
       this.inner = inner;
     }
@@ -292,7 +293,7 @@ public interface XYProcessor {
     }
   }
 
-  public static class XShift extends Wrapper {
+  static class XShift extends Wrapper {
     private final double xshift;
 
     public XShift(final double xshift, final XYProcessor inner) {

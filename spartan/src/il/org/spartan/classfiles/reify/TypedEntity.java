@@ -25,17 +25,17 @@ public class TypedEntity extends ConstantPoolEntity {
       }
   }
 
-  private static String decodeReferenceType(final CharIterator cs) {
+  private static String decodeReferenceType(final CharIterator i) {
     final StringBuilder $ = new StringBuilder();
-    for (char c; cs.hasNext();)
-      switch (c = cs.next()) {
+    for (char ¢; i.hasNext();)
+      switch (¢ = i.next()) {
         case ';':
           return $ + "";
         case '/':
           $.append('.');
           break;
         default:
-          $.append(c);
+          $.append(¢);
           break;
       }
     return null;
@@ -73,8 +73,8 @@ public class TypedEntity extends ConstantPoolEntity {
     }
   }
 
-  private static TypeInfo decodeSingleType(final CharIterator cs) {
-    return decodeSingleType(cs.next(), cs);
+  private static TypeInfo decodeSingleType(final CharIterator ¢) {
+    return decodeSingleType(¢.next(), ¢);
   }
 
   public final TypeInfo type;

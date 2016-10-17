@@ -4,7 +4,6 @@ public class Fibonacci extends Sequence {
   private int previous;
 
   public Fibonacci() {
-    super();
   }
 
   public Fibonacci(final int threshold) {

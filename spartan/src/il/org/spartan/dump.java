@@ -73,21 +73,21 @@ public class dump {
 
   public static <T> void go(final List<T> ts, final String... ss) {
     out("Exploring list");
-    for (final String s : ss)
-      out(s);
-    for (final T t : ts)
-      dump.go(t);
+    for (final String ¢ : ss)
+      out(¢);
+    for (final T ¢ : ts)
+      dump.go(¢);
   }
 
-  public static void go(final Object o[], final String... ss) {
-    for (final String s : ss)
-      out(s);
-    out("elements", o);
+  public static void go(final Object os[], final String... ss) {
+    for (final String ¢ : ss)
+      out(¢);
+    out("elements", os);
   }
 
   public static void go(final @Nullable Object o, final String... ss) {
-    for (final String s : ss)
-      out(s);
+    for (final String ¢ : ss)
+      out(¢);
     if (o == null) {
       out("NULL");
       return;

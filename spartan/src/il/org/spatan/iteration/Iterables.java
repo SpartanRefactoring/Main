@@ -12,38 +12,38 @@ import il.org.spartan.utils.*;
 
 public class Iterables {
   public static <T, C extends Collection<T>> C addAll(final C c, final Iterable<? extends T> ts) {
-    for (final T t : ts)
-      c.add(t);
+    for (final T ¢ : ts)
+      c.add(¢);
     return c;
   }
 
   public static <T, C extends Collection<T>> C addAll(final C c, final T... ts) {
-    for (final T t : ts)
-      c.add(t);
+    for (final T ¢ : ts)
+      c.add(¢);
     return c;
   }
 
-  public static <F, T> Iterable<T> apply(final Iterable<? extends F> fs, final Converter<F, T> c) {
+  public static <F, T> Iterable<T> apply(final Iterable<? extends F> fs, final Converter<F, T> f) {
     final ArrayList<T> $ = new ArrayList<>();
-    for (final F f : fs)
-      $.add(c.__(f));
+    for (final F ¢ : fs)
+      $.add(f.__(¢));
     return $;
   }
 
-  public static int[] array(final int... is) {
-    return is;
+  public static int[] array(final int... ¢) {
+    return ¢;
   }
 
-  public static <T> T[] array(final T... ts) {
-    return ts;
+  public static <T> T[] array(final T... ¢) {
+    return ¢;
   }
 
   public static <T> boolean before(final Iterable<T> ts, final T t1, final T t2) {
     boolean seen = false;
-    for (final T t : ts) {
-      if (!seen && t1.equals(t))
+    for (final T ¢ : ts) {
+      if (!seen && t1.equals(¢))
         seen = true;
-      if (seen && t2.equals(t))
+      if (seen && t2.equals(¢))
         return true;
     }
     return false;
@@ -82,48 +82,48 @@ public class Iterables {
     return $;
   }
 
-  public static <T> int count(final Iterable<T> ts, final Condition<T> c) {
+  public static <T> int count(final Iterable<T> ts, final Condition<T> t) {
     int $ = 0;
-    for (final T t : ts)
-      $ += As.binary(c.holds(t));
+    for (final T ¢ : ts)
+      $ += As.binary(t.holds(¢));
     return $;
   }
 
-  public static <T> int count(final T[] ts, final Condition<T> c) {
+  public static <T> int count(final T[] ts, final Condition<T> t) {
     int $ = 0;
-    for (final T t : ts)
-      $ += As.binary(c.holds(t));
+    for (final T ¢ : ts)
+      $ += As.binary(t.holds(¢));
     return $;
   }
 
-  public static double[] doubles(final double... ds) {
-    return ds;
+  public static double[] doubles(final double... ¢) {
+    return ¢;
   }
 
-  public static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> cls) {
+  public static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> t) {
     return new ArrayList<>();
   }
 
   /** Determines whether an iterable has any values.
    * @param <T> type of elements iterated over
-   * @param ts an arbitrary iterable over this type
+   * @param ¢ an arbitrary iterable over this type
    * @return <code><b>true</b></code> <em>if an only if</em> the iterable is
    *         empty. */
-  public static <T> boolean empty(final Iterable<T> ts) {
-    return !ts.iterator().hasNext();
+  public static <T> boolean empty(final Iterable<T> ¢) {
+    return !¢.iterator().hasNext();
   }
 
   /** Retrieves the first element of a stream
    * @param <T> type of elements iterated over
-   * @param ts an arbitrary iterable over this type
+   * @param ¢ an arbitrary iterable over this type
    * @return the first element of the parameter, supposing there is one. If
    *         there is not such element, the results are unpredictable. */
-  public static <T> T first(final Iterable<T> ts) {
-    return ts.iterator().next();
+  public static <T> T first(final Iterable<T> ¢) {
+    return ¢.iterator().next();
   }
 
-  public static <T> T first(final Iterable<T> ts, final Condition<T> c) {
-    return first(ts.iterator(), c);
+  public static <T> T first(final Iterable<T> ts, final Condition<T> t) {
+    return first(ts.iterator(), t);
   }
 
   /** Retrieves a prefix of a specified size of a stream
@@ -134,17 +134,17 @@ public class Iterables {
   public static <T> ArrayList<T> first(final Iterable<T> ts, final int n) {
     final ArrayList<T> $ = new ArrayList<>();
     int i = 0;
-    for (final T t : ts) {
-      $.add(t);
+    for (final T ¢ : ts) {
+      $.add(¢);
       if (++i == n)
         break;
     }
     return $;
   }
 
-  public static <T> T first(final Iterator<T> i, final Condition<T> c) {
-    while (i.hasNext()) {
-      final T $ = i.next();
+  public static <T> T first(final Iterator<T> t, final Condition<T> c) {
+    while (t.hasNext()) {
+      final T $ = t.next();
       if (c.holds($))
         return $;
     }
@@ -153,18 +153,18 @@ public class Iterables {
 
   /** Retrieves the first element of an array
    * @param <T> type of elements in the array
-   * @param ts an arbitrary array of this type
+   * @param ¢ an arbitrary array of this type
    * @return the first element of the array if the array is of non-zero length,
    *         otherwise <code><b>null</b></code> */
-  public static <T> T first(final T[] ts) {
-    return ts.length > 0 ? ts[0] : null;
+  public static <T> T first(final T[] ¢) {
+    return ¢.length > 0 ? ¢[0] : null;
   }
 
   public static <T> T get(final Iterable<T> ts, final int i) {
     int j = 0;
-    for (final T t : ts)
+    for (final T $ : ts)
       if (++j > i)
-        return t;
+        return $;
     return null;
   }
 
@@ -175,8 +175,8 @@ public class Iterables {
    *         -1 if not found. */
   public static int index(final int j, final int[] is) {
     int $ = 0;
-    for (final int i : is) {
-      if (i == j)
+    for (final int ¢ : is) {
+      if (¢ == j)
         return $;
       ++$;
     }
@@ -199,45 +199,45 @@ public class Iterables {
     return -1;
   }
 
-  public static <T> int[] indices(final Collection<? extends T> ts, final Condition<T> c) {
+  public static <T> int[] indices(final Collection<? extends T> ts, final Condition<T> t) {
     final int[] $ = new int[ts.size()];
     int i = 0;
     int position = 0;
-    for (final T t : ts) {
-      if (c.holds(t))
+    for (final T ¢ : ts) {
+      if (t.holds(¢))
         $[i++] = position;
-      position++;
+      ++position;
     }
     return Arrays.copyOf($, i);
   }
 
-  public static int[] ints(final int... is) {
-    return is;
+  public static int[] ints(final int... ¢) {
+    return ¢;
   }
 
   public static <T> void iterate(final T[] ts, final Iteration<T> what) {
-    for (int i = 0; i < ts.length; i++) {
-      what.prolog(ts[i]);
-      if (i < ts.length - 1)
-        what.next(ts[i], ts[i + 1]);
-      what.at(ts[i]);
-      if (i > 1)
-        what.next(ts[i], ts[i - 1]);
-      what.prolog(ts[i]);
+    for (int ¢ = 0; ¢ < ts.length; ++¢) {
+      what.prolog(ts[¢]);
+      if (¢ < ts.length - 1)
+        what.next(ts[¢], ts[¢ + 1]);
+      what.at(ts[¢]);
+      if (¢ > 1)
+        what.next(ts[¢], ts[¢ - 1]);
+      what.prolog(ts[¢]);
     }
   }
 
-  public static int[] make(final BitSet bs) {
-    final int[] $ = new int[bs.cardinality()];
+  public static int[] make(final BitSet s) {
+    final int[] $ = new int[s.cardinality()];
     int i = 0;
-    for (int value = bs.nextSetBit(0); value >= 0; value = bs.nextSetBit(value + 1))
+    for (int value = s.nextSetBit(0); value >= 0; value = s.nextSetBit(value + 1))
       $[i++] = value;
     return $;
   }
 
   public static CharIterable make(final char... cs) {
     return () -> new CharIterator() {
-      int i = 0;
+      int i;
 
       @Override public boolean hasNext() {
         return i < cs.length;
@@ -249,30 +249,30 @@ public class Iterables {
     };
   }
 
-  public static <F, T> Iterable<T> make(final F[] fs, final Converter<F, T> c) {
+  public static <F, T> Iterable<T> make(final F[] fs, final Converter<F, T> f) {
     return () -> new ReadonlyIterator<T>() {
-      private int current = 0;
+      int current;
 
       @Override public boolean hasNext() {
         return current < fs.length;
       }
 
       @Override public T next() {
-        return c.__(fs[current++]);
+        return f.__(fs[current++]);
       }
     };
   }
 
   /** Create an {@link Iterable} over a range of integers.
-   * @param n an arbitrary integer
+   * @param i an arbitrary integer
    * @return an {@link Iterable} yields the {@link Integer}s in the range 0
    *         through the value of the parameter. */
-  public static Iterable<Integer> make(final int n) {
+  public static Iterable<Integer> make(final int i) {
     return () -> new Iterables.ReadonlyIterator<Integer>() {
-      int position = 0;
+      int position;
 
       @Override public boolean hasNext() {
-        return position < n;
+        return position < i;
       }
 
       @Override public Integer next() {
@@ -281,7 +281,7 @@ public class Iterables {
     };
   }
 
-  public static <F, T> Iterable<T> make(final Iterable<F> fs, final Converter<F, T> c) {
+  public static <F, T> Iterable<T> make(final Iterable<F> fs, final Converter<F, T> f) {
     return () -> new ReadonlyIterator<T>() {
       final Iterator<F> inner = fs.iterator();
 
@@ -290,24 +290,24 @@ public class Iterables {
       }
 
       @Override public T next() {
-        return c.__(inner.next());
+        return f.__(inner.next());
       }
     };
   }
 
-  public static <T> Iterable<T> make(final Iterator<T> ts) {
-    return () -> ts;
+  public static <T> Iterable<T> make(final Iterator<T> ¢) {
+    return () -> ¢;
   }
 
-  public static <T> Iterable<T> make(final T... ts) {
-    return new IterableArray<>(ts);
+  public static <T> Iterable<T> make(final T... ¢) {
+    return new IterableArray<>(¢);
   }
 
-  public static <F, T> Iterable<T> map(final Iterable<? extends F> fs, final Function<F, T> func) {
-    final List<T> ts = new ArrayList<>();
-    for (final F f : fs)
-      ts.add(func.eval(f));
-    return ts;
+  public static <F, T> Iterable<T> map(final Iterable<? extends F> fs, final Function<F, T> f) {
+    final List<T> $ = new ArrayList<>();
+    for (final F ¢ : fs)
+      $.add(f.eval(¢));
+    return $;
   }
 
   public static <E> Iterable<E> reverse(final Iterable<E> in) {
@@ -326,50 +326,50 @@ public class Iterables {
     return !t2.hasNext();
   }
 
-  public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, final Condition<T> c) {
+  public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, final Condition<T> t) {
     return new FilteredIterable<T>(ts) {
-      @Override public boolean holds(final T t) {
-        return c.holds(t);
+      @Override public boolean holds(final T ¢) {
+        return t.holds(¢);
       }
     };
   }
 
-  public static <T> Iterable<? extends T> select(final T[] ts, final Condition<T> c) {
-    return select(make(ts), c);
+  public static <T> Iterable<? extends T> select(final T[] ts, final Condition<T> t) {
+    return select(make(ts), t);
   }
 
-  public static double[] seq(final double ds[]) {
-    return seq(ds.length);
+  public static double[] seq(final double ¢[]) {
+    return seq(¢.length);
   }
 
   /** Construct a finite prefix of the infinite sequence 0,1,2,...
-   * @param n a non-negative integers
+   * @param i a non-negative integers
    * @return an array containing, in order, all non-negative integers up to the
    *         parameter. */
-  public static double[] seq(final int n) {
-    final double[] $ = new double[n];
-    for (int i = 0; i < n; i++)
-      $[i] = i;
+  public static double[] seq(final int i) {
+    final double[] $ = new double[i];
+    for (int ¢ = 0; ¢ < i; ++¢)
+      $[¢] = ¢;
     return $;
   }
 
-  public static <T> ArrayList<T> serialize(final Iterable<? extends T> ts) {
-    return copy(new ArrayList<T>(count(ts)), ts);
+  public static <T> ArrayList<T> serialize(final Iterable<? extends T> ¢) {
+    return copy(new ArrayList<T>(count(¢)), ¢);
   }
 
   public static <T> Iterable<T> sort(final Iterable<T> os) {
     return addAll(new TreeSet<T>(), os);
   }
 
-  public static <T> Iterable<T> sort(final Iterable<T> os, final Comparator<T> c) {
-    return addAll(new TreeSet<>(c), os);
+  public static <T> Iterable<T> sort(final Iterable<T> os, final Comparator<T> t) {
+    return addAll(new TreeSet<>(t), os);
   }
 
   public static String[] toArray(final Collection<String> ss) {
     final String[] $ = new String[ss.size()];
     int i = 0;
-    for (final String s : ss)
-      $[i++] = s;
+    for (final String ¢ : ss)
+      $[i++] = ¢;
     return $;
   }
 
@@ -379,44 +379,44 @@ public class Iterables {
     return es.toArray(__);
   }
 
-  public static double[] toArray(final Iterable<Double> ds) {
-    return toArray(toList(ds));
+  public static double[] toArray(final Iterable<Double> ¢) {
+    return toArray(toList(¢));
   }
 
   public static double[] toArray(final List<Double> ds) {
     final double[] $ = new double[ds.size()];
     int i = 0;
-    for (final Double d : ds)
-      $[i++] = unbox(d);
+    for (final Double ¢ : ds)
+      $[i++] = unbox(¢);
     return $;
   }
 
   public static List<Double> toList(final double... ds) {
     final List<Double> $ = new ArrayList<>();
-    for (final double d : ds)
-      $.add(Box.it(d));
+    for (final double ¢ : ds)
+      $.add(Box.it(¢));
     return $;
   }
 
   public static List<Integer> toList(final int... is) {
     final List<Integer> $ = new ArrayList<>();
-    for (final int i : is)
-      $.add(Box.it(i));
+    for (final int ¢ : is)
+      $.add(Box.it(¢));
     return $;
   }
 
-  public static <T> List<T> toList(final Iterable<? extends T> ts) {
-    return addAll(new ArrayList<T>(), ts);
+  public static <T> List<T> toList(final Iterable<? extends T> ¢) {
+    return addAll(new ArrayList<T>(), ¢);
   }
 
-  public static <T> ArrayList<T> toList(final T... ts) {
-    return new ArrayList<>(Arrays.asList(ts));
+  public static <T> ArrayList<T> toList(final T... ¢) {
+    return new ArrayList<>(Arrays.asList(¢));
   }
 
   public static String toString(final Iterable<String> items, final String sep) {
     String $ = "";
-    for (final String s : items) {
-      $ += s;
+    for (final String ¢ : items) {
+      $ += ¢;
       $ += sep;
     }
     return $;
@@ -424,8 +424,8 @@ public class Iterables {
 
   public static String toString(final Set<Entry<String, String>> entrySet, final String sep) {
     String $ = "";
-    for (final Entry<String, String> e : entrySet) {
-      $ += e + "";
+    for (final Entry<String, String> ¢ : entrySet) {
+      $ += ¢ + "";
       $ += sep;
     }
     return $;
@@ -433,18 +433,18 @@ public class Iterables {
 
   public static <T> List<T> union(final List<T>... tss) {
     final List<T> $ = new ArrayList<>();
-    for (final List<T> ts : tss)
-      $.addAll(ts);
+    for (final List<T> ¢ : tss)
+      $.addAll(¢);
     return $;
   }
 
   /** Determines whether an iterable is null or empty
    * @param <T>
-   * @param ts an arbitrary iterable
+   * @param ¢ an arbitrary iterable
    * @return <code><b>true</b></code> <em>if an only if</em> the parameter is
    *         <code><b>null</b></code> or offers no values. */
-  public static <T> boolean vacuous(final Iterable<T> ts) {
-    return ts == null || empty(ts);
+  public static <T> boolean vacuous(final Iterable<T> ¢) {
+    return ¢ == null || empty(¢);
   }
 
   private static <T> boolean isEqual(final T a, final T b) {
@@ -453,7 +453,7 @@ public class Iterables {
 
   public static abstract class RangeIterator<T> extends ReadonlyIterator<T> {
     private final int n;
-    private int i = 0;
+    private int i;
 
     public RangeIterator(final int n) {
       this.n = n;
@@ -465,7 +465,7 @@ public class Iterables {
 
     @Override public T next() {
       final T $ = value();
-      i++;
+      ++i;
       return $;
     }
 
@@ -491,8 +491,8 @@ public class Iterables {
    * @since Oct 19, 2009
    * @param <T> type of objects in the array */
   public static class Singleton<T> implements Iterable<T> {
-    public static <T> Iterable<T> make(final T t) {
-      return t == null ? null : new Singleton<>(t);
+    public static <T> Iterable<T> make(final T ¢) {
+      return ¢ == null ? null : new Singleton<>(¢);
     }
 
     T t;

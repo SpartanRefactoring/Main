@@ -27,10 +27,10 @@ public final class TokenFeeder {
     this.processor = processor;
   }
 
-  public final TokenFeeder go() {
+  public TokenFeeder go() {
     processor.before();
-    for (Token t = tokenizer.next(); t != EOF; t = tokenizer.next())
-      processor.process(t, tokenizer.text());
+    for (Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())
+      processor.process(¢, tokenizer.text());
     processor.after();
     return this;
   }

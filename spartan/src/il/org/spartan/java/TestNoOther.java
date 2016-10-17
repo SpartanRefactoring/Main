@@ -26,8 +26,8 @@ public class TestNoOther {
   @DataPoints public static File[] javaFiles() throws IOException {
     final Set<File> $ = new TreeSet<>();
     new JavaFilesVisitor(".", new PlainFileOnlyAction() {
-      @Override public void visitFile(final File f) {
-        $.add(f);
+      @Override public void visitFile(final File ¢) {
+        $.add(¢);
       }
     }).go();
     return Iterables.toArray($, File.class);
@@ -53,9 +53,9 @@ public class TestNoOther {
     azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
 
-  @Theory public void fullTokenization(final File f) throws IOException {
-    System.err.println("Testing " + f);
-    azzert.that(TokenAsIs.fileToString(f), is(read(f)));
+  @Theory public void fullTokenization(final File ¢) throws IOException {
+    System.err.println("Testing " + ¢);
+    azzert.that(TokenAsIs.fileToString(¢), is(read(¢)));
   }
 
   @Test public void some_method() throws IOException {
@@ -74,8 +74,7 @@ public class TestNoOther {
   }
 
   @Test public void unicode() throws IOException {
-    final String s = "יוסי";
-    azzert.that((TokenAsIs.stringToString(s) + ""), is(s));
+    azzert.that((TokenAsIs.stringToString("יוסי") + ""), is("יוסי"));
   }
 
   @Test public void unicodeFileAgainstFileOutput() throws IOException {

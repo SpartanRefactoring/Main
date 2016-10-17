@@ -99,8 +99,8 @@ public final class JVM {
   }
 
   /** Is this an object of the same type and with the same field contents? */
-  @Override public boolean equals(final Object o) {
-    return o == this || o instanceof JVM && equals((JVM) o);
+  @Override public boolean equals(final Object ¢) {
+    return ¢ == this || ¢ instanceof JVM && equals((JVM) ¢);
   }
 
   public boolean equalsWoGC(final JVM o) {
@@ -143,14 +143,14 @@ public final class JVM {
       return cycles(ManagementFactory.getGarbageCollectorMXBeans());
     }
 
-    public static long cycles(final GarbageCollectorMXBean b) {
-      return b.getCollectionCount();
+    public static long cycles(final GarbageCollectorMXBean ¢) {
+      return ¢.getCollectionCount();
     }
 
     public static long cycles(final List<GarbageCollectorMXBean> bs) {
       long $ = 0;
-      for (final GarbageCollectorMXBean g : bs)
-        $ += cycles(g);
+      for (final GarbageCollectorMXBean ¢ : bs)
+        $ += cycles(¢);
       return $;
     }
 
@@ -161,8 +161,8 @@ public final class JVM {
     public static String format(final Iterable<GarbageCollectorMXBean> bs) {
       final StringBuffer $ = new StringBuffer();
       final Separator s = new Separator(", ");
-      for (final GarbageCollectorMXBean g : bs)
-        $.append(s).append(format(g));
+      for (final GarbageCollectorMXBean ¢ : bs)
+        $.append(s).append(format(¢));
       return $ + "";
     }
 
@@ -170,23 +170,23 @@ public final class JVM {
       return time(ManagementFactory.getGarbageCollectorMXBeans());
     }
 
-    public static long time(final GarbageCollectorMXBean b) {
-      return b.getCollectionTime();
+    public static long time(final GarbageCollectorMXBean ¢) {
+      return ¢.getCollectionTime();
     }
 
     public static long time(final List<GarbageCollectorMXBean> bs) {
       long $ = 0;
-      for (final GarbageCollectorMXBean g : bs)
-        $ += time(g);
+      for (final GarbageCollectorMXBean ¢ : bs)
+        $ += time(¢);
       return $;
     }
 
-    static String format(final GarbageCollectorMXBean b) {
-      return new StringBuffer().append(b.getName()) //
-          .append((b.isValid() ? "" : "/invalid") + " ") //
-          .append(b.getCollectionCount()) //
-          .append("  ").append(Unit.MILLISECONDS.format(b.getCollectionTime())) //
-          .append(" (").append(Separate.by(b.getMemoryPoolNames(), ",")) //
+    static String format(final GarbageCollectorMXBean ¢) {
+      return new StringBuffer().append(¢.getName()) //
+          .append((¢.isValid() ? "" : "/invalid") + " ") //
+          .append(¢.getCollectionCount()) //
+          .append("  ").append(Unit.MILLISECONDS.format(¢.getCollectionTime())) //
+          .append(" (").append(Separate.by(¢.getMemoryPoolNames(), ",")) //
           .append(")") //
           + "";
     }
@@ -200,15 +200,15 @@ public final class JVM {
     public static String format(final Iterable<MemoryManagerMXBean> bs) {
       final StringBuffer $ = new StringBuffer("");
       final Separator s = new Separator(", ");
-      for (final MemoryManagerMXBean m : bs)
-        $.append(s).append(format(m));
+      for (final MemoryManagerMXBean ¢ : bs)
+        $.append(s).append(format(¢));
       return $ + "";
     }
 
-    public static String format(final MemoryManagerMXBean b) {
-      return new StringBuffer().append(b.getName()) //
-          .append(b.isValid() ? "" : "/invalid") //
-          .append("(").append(Separate.by(b.getMemoryPoolNames(), ",")).append(")") //
+    public static String format(final MemoryManagerMXBean ¢) {
+      return new StringBuffer().append(¢.getName()) //
+          .append(¢.isValid() ? "" : "/invalid") //
+          .append("(").append(Separate.by(¢.getMemoryPoolNames(), ",")).append(")") //
           + "";
     }
   }
@@ -218,20 +218,20 @@ public final class JVM {
       return "Total memory: " + format(ManagementFactory.getMemoryMXBean());
     }
 
-    public static String format(final MemoryMXBean b) {
+    public static String format(final MemoryMXBean ¢) {
       return new StringBuffer() //
-          .append("Zombies=").append(b.getObjectPendingFinalizationCount()).append("\t") //
-          .append("Heap [").append(format(b.getHeapMemoryUsage())).append("]\n")//
-          .append("\t\tNon Heap [").append(format(b.getNonHeapMemoryUsage())).append("] ")//
+          .append("Zombies=").append(¢.getObjectPendingFinalizationCount()).append("\t") //
+          .append("Heap [").append(format(¢.getHeapMemoryUsage())).append("]\n")//
+          .append("\t\tNon Heap [").append(format(¢.getNonHeapMemoryUsage())).append("] ")//
           + "";
     }
 
-    public static String format(final MemoryUsage u) {
+    public static String format(final MemoryUsage ¢) {
       return new StringBuffer() //
-          .append("Init:").append(format(u.getInit())).append(" ")//
-          .append("Max:").append(format(u.getMax())).append(" ")//
-          .append("Committed:").append(format(u.getCommitted())).append(" ")//
-          .append("Used:").append(format(u.getUsed())).append(" ")//
+          .append("Init:").append(format(¢.getInit())).append(" ")//
+          .append("Max:").append(format(¢.getMax())).append(" ")//
+          .append("Committed:").append(format(¢.getCommitted())).append(" ")//
+          .append("Used:").append(format(¢.getUsed())).append(" ")//
           + "";
     }
 

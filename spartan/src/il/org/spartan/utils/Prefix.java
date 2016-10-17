@@ -13,14 +13,14 @@ public class Prefix<T> {
         return $;
   }
 
-  private static String shorten(final String s) {
-    return s.substring(0, s.length() - 2);
+  private static String shorten(final String ¢) {
+    return ¢.substring(0, ¢.length() - 2);
   }
 
   private static <T> String trim(final Iterable<T> ts) {
     String $ = null;
-    for (final T t : ts)
-      $ = trim($, (t + ""));
+    for (final T ¢ : ts)
+      $ = trim($, (¢ + ""));
     return $;
   }
 
@@ -34,7 +34,7 @@ public class Prefix<T> {
     this(Iterables.make(ts));
   }
 
-  public String trim(final T t) {
-    return (t + "").substring(prefix.length());
+  public String trim(final T ¢) {
+    return (¢ + "").substring(prefix.length());
   }
 }

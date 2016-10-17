@@ -47,10 +47,10 @@ public class LCS {
     return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
   }
 
-  /** @param s
+  /** @param ¢
    * @return TODO document return type */
-  private static int hash(final String s) {
-    return s.replaceAll("\\s+", "").toLowerCase().hashCode();
+  private static int hash(final String ¢) {
+    return ¢.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
 
   private static int[] hash(final String[] ss) {
@@ -73,8 +73,8 @@ public class LCS {
     A_s = as;
     B_s = bs;
     length = new int @NonNull [as.length][];
-    for (int i = 0; i < as.length; ++i)
-      Arrays.fill(length[i] = new int[bs.length], -1);
+    for (int ¢ = 0; ¢ < as.length; ++¢)
+      Arrays.fill(length[¢] = new int[bs.length], -1);
   }
 
   /** Instantiates this class.
@@ -124,8 +124,8 @@ public class LCS {
     /** Dumb implementation, yeah, I know. --yg. */
     private static String[] chars2Lines(final String s) {
       final StringBuilder $ = new StringBuilder();
-      for (final char c : s.toCharArray())
-        $.append(c).append('\n');
+      for (final char ¢ : s.toCharArray())
+        $.append(¢).append('\n');
       return Lines.scatter(as.string($));
     }
 

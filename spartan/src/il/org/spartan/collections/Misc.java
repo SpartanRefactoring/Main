@@ -9,8 +9,7 @@ import java.util.*;
 public class Misc {
   public static boolean compareWithStream(final String s, final InputStream is) {
     final Scanner actual = new Scanner(s);
-    final Scanner expected = new Scanner(is);
-    while (true) {
+    for (final Scanner expected = new Scanner(is); true;) {
       if (actual.hasNext() != expected.hasNext())
         return false;
       if (!actual.hasNext())
@@ -27,8 +26,8 @@ public class Misc {
 
   public static boolean[] complement(final boolean[] bs) {
     final boolean[] $ = new boolean[bs.length];
-    for (int i = 0; i < bs.length; ++i)
-      $[i] = !bs[i];
+    for (int ¢ = 0; ¢ < bs.length; ++¢)
+      $[¢] = !bs[¢];
     return $;
   }
 
@@ -49,8 +48,8 @@ public class Misc {
 
   public static boolean[] toArray(final List<Boolean> bs) {
     final boolean[] $ = new boolean[bs.size()];
-    for (int i = 0; i < bs.size(); ++i)
-      $[i] = bs.get(i).booleanValue();
+    for (int ¢ = 0; ¢ < bs.size(); ++¢)
+      $[¢] = bs.get(¢).booleanValue();
     return $;
   }
 
@@ -60,8 +59,8 @@ public class Misc {
     nonnull(ts);
     @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(t.getClass(), ts.length + 1);
     $[0] = t;
-    for (int i = 0; i < ts.length; ++i)
-      $[i + 1] = ts[i];
+    for (int ¢ = 0; ¢ < ts.length; ++¢)
+      $[¢ + 1] = ts[¢];
     return $;
   }
 }

@@ -24,8 +24,7 @@ import il.org.spartan.*;
         4, 1, 3, 3, 1, 2, 5, 0, 4, 0, 1, 1, 3, 6, 3, 2, 2, 4, 1, 3, 2, 3, 1, 8, 2, 8, 1, 7, 6, 2, 5, 2, 8, 7, 6 };
     final double tau = Kendall.tauB(x, y);
     assertEquals(-0.0929, tau, 0.0001);
-    final double z = new Kendall.Charectristics(y.length, tau).z;
-    assertEquals(3.7983, z, 0.001);
+    assertEquals(3.7983, new Kendall.Charectristics(y.length, tau).z, 0.001);
   }
 
   @Test public void testMinorityVsTypesChange() {
@@ -41,8 +40,7 @@ import il.org.spartan.*;
         1.660714286 };
     final double tau = Kendall.tauB(x, y);
     assertEquals(-0.3549719, tau, 0.0001);
-    final double z = new Kendall.Charectristics(y.length, tau).z;
-    assertEquals(4.537, z, 0.0001);
+    assertEquals(4.537, new Kendall.Charectristics(y.length, tau).z, 0.0001);
   }
 
   @Test public void testPairs() {
@@ -53,96 +51,75 @@ import il.org.spartan.*;
   }
 
   @Test public void testSigmaDistinactAndPair() {
-    final double[] x = { 2, 5, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(1));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 2, 5, 5 })), is(1));
   }
 
   @Test public void testSigmaDistinactAndQuad() {
-    final double[] x = { 2, 5, 5, 5, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(6));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 2, 5, 5, 5, 5 })), is(6));
   }
 
   @Test public void testSigmaDistinactAndTriple() {
-    final double[] x = { 2, 5, 5, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(3));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 2, 5, 5, 5 })), is(3));
   }
 
   @Test public void testSigmaDistinctValues() {
-    final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(0));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 })), is(0));
   }
 
   @Test public void testSigmaPair() {
-    final double[] x = { 4, 4 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(1));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4 })), is(1));
   }
 
   @Test public void testSigmaPairAndDistinct() {
-    final double[] x = { 4, 4, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(1));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 5 })), is(1));
   }
 
   @Test public void testSigmaPairAndPair() {
-    final double[] x = { 4, 4, 5, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(2));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 5, 5 })), is(2));
   }
 
   @Test public void testSigmaQuad() {
-    final double[] x = { 4, 4, 4, 4 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(6));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 4, 4 })), is(6));
   }
 
   @Test public void testSigmaQuadAndDistinct() {
-    final double[] x = { 4, 4, 4, 4, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(6));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 4, 4, 5 })), is(6));
   }
 
   @Test public void testSigmaQuadAndPair() {
-    final double[] x = { 4, 4, 4, 4, 5, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(7));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 4, 4, 5, 5 })), is(7));
   }
 
   @Test public void testSigmaTriple() {
-    final double[] x = { 4, 4, 4 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(3));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 4 })), is(3));
   }
 
   @Test public void testSigmaTripleAndDistinct() {
-    final double[] x = { 4, 4, 4, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(3));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 4, 5 })), is(3));
   }
 
   @Test public void testSigmaTripleAndPair() {
-    final double[] x = new double[] { 4, 4, 4, 5, 5 };
-    azzert.that(Kendall.sigmaSortedArray(x), is(4));
+    azzert.that(Kendall.sigmaSortedArray((new double[] { 4, 4, 4, 5, 5 })), is(4));
   }
 
   @Test public void testTauBExample2() {
-    final double[] x = { 68, 70, 71, 71, 72, 77, 77, 86, 87, 88, 91, 91 };
-    final double[] y = { 64, 65, 77, 80, 72, 65, 76, 88, 72, 81, 90, 96 };
-    final double tau = Kendall.tau(x, y);
-    assertEquals(0.5606061, tau, 0.0001);
+    assertEquals(0.5606061, Kendall.tau((new double[] { 68, 70, 71, 71, 72, 77, 77, 86, 87, 88, 91, 91 }),
+        (new double[] { 64, 65, 77, 80, 72, 65, 76, 88, 72, 81, 90, 96 })), 0.0001);
   }
 
   @Test public void testTauBExample2WithTauB() {
-    final double[] x = { 68, 70, 71, 71, 72, 77, 77, 86, 87, 88, 91, 91 };
-    final double[] y = { 64, 65, 77, 80, 72, 65, 76, 88, 72, 81, 90, 96 };
-    final double tau = Kendall.tauB(x, y);
-    assertEquals(0.5737, tau, 0.0001);
+    assertEquals(0.5737, Kendall.tauB((new double[] { 68, 70, 71, 71, 72, 77, 77, 86, 87, 88, 91, 91 }),
+        (new double[] { 64, 65, 77, 80, 72, 65, 76, 88, 72, 81, 90, 96 })), 0.0001);
   }
 
   @Test public void testTauBExampleWithTau() {
-    final double[] x = { 0, 0, 0, 0, 20, 20, 0, 60, 0, 20, 10, 10, 0, 40, 0, 20, 0, 0, 0, 0 };
-    final double[] y = { 0, 80, 80, 80, 10, 33, 60, 0, 67, 27, 25, 80, 80, 80, 80, 80, 80, 0, 10, 45 };
-    final double tau = Kendall.tau(x, y);
-    assertEquals(-0.1105263, tau, 0.0001);
+    assertEquals(-0.1105263, Kendall.tau((new double[] { 0, 0, 0, 0, 20, 20, 0, 60, 0, 20, 10, 10, 0, 40, 0, 20, 0, 0, 0, 0 }),
+        (new double[] { 0, 80, 80, 80, 10, 33, 60, 0, 67, 27, 25, 80, 80, 80, 80, 80, 80, 0, 10, 45 })), 0.0001);
   }
 
   @Test public void testTauBExampleWithTauB() {
-    final double[] x = { 0, 0, 0, 0, 20, 20, 0, 60, 0, 20, 10, 10, 0, 40, 0, 20, 0, 0, 0, 0 };
-    final double[] y = { 0, 80, 80, 80, 10, 33, 60, 0, 67, 27, 25, 80, 80, 80, 80, 80, 80, 0, 10, 45 };
-    final double tau = Kendall.tauB(x, y);
-    assertEquals(-0.12069, tau, 0.0001);
+    assertEquals(-0.12069, Kendall.tauB((new double[] { 0, 0, 0, 0, 20, 20, 0, 60, 0, 20, 10, 10, 0, 40, 0, 20, 0, 0, 0, 0 }),
+        (new double[] { 0, 80, 80, 80, 10, 33, 60, 0, 67, 27, 25, 80, 80, 80, 80, 80, 80, 0, 10, 45 })), 0.0001);
   }
 
   @Test public void testTauBIdentical() {
@@ -151,48 +128,34 @@ import il.org.spartan.*;
   }
 
   @Test public void testTauBNegated() {
-    final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
-    final double[] y = { -4, -10, -3, -1, -9, -2, -6, -7, -8, -5 };
-    assertEquals(-1, Kendall.tauB(x, y), 0.0001);
+    assertEquals(-1, Kendall.tauB((new double[] { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 }), (new double[] { -4, -10, -3, -1, -9, -2, -6, -7, -8, -5 })),
+        0.0001);
   }
 
   @Test public void testTauIdentical() {
     final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
-    final double tau = Kendall.tau(x, x);
-    assertEquals(1, tau, 0.0001);
+    assertEquals(1, Kendall.tau(x, x), 0.0001);
   }
 
   @Test public void testTauNegated() {
-    final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
-    final double[] y = { -4, -10, -3, -1, -9, -2, -6, -7, -8, -5 };
-    final double tau = Kendall.tau(x, y);
-    assertEquals(-1, tau, 0.0001);
+    assertEquals(-1, Kendall.tau((new double[] { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 }), (new double[] { -4, -10, -3, -1, -9, -2, -6, -7, -8, -5 })),
+        0.0001);
   }
 
   @Test public void testWikiData1() {
-    final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
-    final double[] y = { 5, 8, 6, 2, 10, 3, 9, 4, 7, 1 };
-    final double tau = Kendall.tau(x, y);
-    assertEquals(0.5111, tau, 0.0001);
+    assertEquals(0.5111, Kendall.tau((new double[] { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 }), (new double[] { 5, 8, 6, 2, 10, 3, 9, 4, 7, 1 })), 0.0001);
   }
 
   @Test public void testWikiData2() {
-    final double[] x = { 1, 2, 3, 4, 5 };
-    final double[] y = { 3, 4, 1, 2, 5 };
-    final double tau = Kendall.tau(x, y);
-    assertEquals(0.2, tau, 0.0001);
+    assertEquals(0.2, Kendall.tau((new double[] { 1, 2, 3, 4, 5 }), (new double[] { 3, 4, 1, 2, 5 })), 0.0001);
   }
 
   @Test public void testWineData() {
-    final double[] x = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
-    final double[] y = { 1, 3, 4, 5, 7, 8, 2, 9, 10, 6, 11 };
-    final double tau = Kendall.tau(x, y);
-    assertEquals(tau, 0.6727, 0.0001);
+    assertEquals(Kendall.tau((new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), (new double[] { 1, 3, 4, 5, 7, 8, 2, 9, 10, 6, 11 })), 0.6727,
+        0.0001);
   }
 
   @Test public void testZ() {
-    final double tau = 0.6727;
-    final int size = 11;
-    assertEquals(2.88, new Kendall.Charectristics(size, tau).z, 0.001);
+    assertEquals(2.88, new Kendall.Charectristics(11, 0.6727).z, 0.001);
   }
 }

@@ -8,7 +8,7 @@ import java.io.*;
  * @since Dec 25, 2009 */
 public class CSVLineWriter extends CSVLine.Ordered {
   protected final CSVWriter writer;
-  private int count = 0;
+  private int count;
 
   /** Instantiate this class, setting CSV file to the standard output stream. */
   public CSVLineWriter() {

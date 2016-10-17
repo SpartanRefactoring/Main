@@ -18,7 +18,7 @@ import il.org.spartan.xy.*;
  * @since Feb 26, 2012 */
 public class Binner {
   private static int[] reverse(final int[] $) {
-    for (int i = 0, j = $.length - 1; i < j; i++, j--) {
+    for (int i = 0, j = $.length - 1; i < j; ++i, --j) {
       final int temp = $[i];
       $[i] = $[j];
       $[j] = temp;
@@ -35,8 +35,8 @@ public class Binner {
   public Binner(final int binSize, final int... is) {
     map = new int[n = is.length];
     final IntsArray fromStack = new IntsArray(), toStack = new IntsArray();
-    main: for (int t = n; t >= 0; t--)
-      for (int f = t - 1, s = 0; f >= 0; f--)
+    main: for (int t = n; t >= 0; --t)
+      for (int f = t - 1, s = 0; f >= 0; --f)
         if (f == 0 || (s += is[f]) >= binSize) {
           fromStack.push(f);
           toStack.push(t);
@@ -47,16 +47,16 @@ public class Binner {
     to = reverse(toStack.toArray());
     ___.sure(from.length == to.length);
     m = from.length;
-    for (int i = 0; i < from.length; i++)
-      for (int j = from[i]; j < to[i]; j++)
+    for (int i = 0; i < from.length; ++i)
+      for (int j = from[i]; j < to[i]; ++j)
         map[j] = i;
   }
 
   public double[] bin(final double[] ds) {
     ___.require(n == ds.length);
     final double[] $ = new double[m];
-    for (int i = 0; i < m; i++)
-      for (int j = from[i]; j < to[i]; j++)
+    for (int i = 0; i < m; ++i)
+      for (int j = from[i]; j < to[i]; ++j)
         $[i] += ds[j];
     return $;
   }
@@ -68,36 +68,36 @@ public class Binner {
   public int[] bin(final int[] is) {
     ___.require(n == is.length);
     final int[] $ = new int[m];
-    for (int i = 0; i < m; i++)
-      for (int j = from[i]; j < to[i]; j++)
+    for (int i = 0; i < m; ++i)
+      for (int j = from[i]; j < to[i]; ++j)
         $[i] += is[j];
     return $;
   }
 
-  public int[][] bin(final int[][] is) {
-    final int[][] $ = new int[is.length][];
-    for (int i = 0; i < $.length; i++)
-      $[i] = bin(is[i]);
+  public int[][] bin(final int[][] iss) {
+    final int[][] $ = new int[iss.length][];
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = bin(iss[¢]);
     return $;
   }
 
-  public double unbin(final double d) {
-    return unbin((int) (d + 0.5));
+  public double unbin(final double ¢) {
+    return unbin((int) (¢ + 0.5));
   }
 
   public double[] unbin(final double[] ds) {
     final double[] $ = new double[ds.length];
-    for (int i = 0; i < ds.length; i++)
-      $[i] = unbin(ds[i]);
+    for (int ¢ = 0; ¢ < ds.length; ++¢)
+      $[¢] = unbin(ds[¢]);
     return $;
   }
 
-  public double unbin(final int i) {
-    return (from[i] + to[i] - 1) / 2.;
+  public double unbin(final int ¢) {
+    return (from[¢] + to[¢] - 1) / 2.;
   }
 
-  public XYSeries unbin(final XYSeries s) {
-    return new XYSeries(unbin(s.x), s.y, s.dy);
+  public XYSeries unbin(final XYSeries ¢) {
+    return new XYSeries(unbin(¢.x), ¢.y, ¢.dy);
   }
 
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
@@ -105,13 +105,13 @@ public class Binner {
     @Test public void binLongRandomArray() {
       final Random r = new Random(0);
       final int[] is = new int[1000];
-      for (int i = 0; i < is.length; i++)
-        is[i] = r.nextInt(5);
+      for (int ¢ = 0; ¢ < is.length; ++¢)
+        is[¢] = r.nextInt(5);
       final Binner b = new Binner(4, is);
       checkBinner(b);
-      for (int i = 0; i < b.from.length; i++) {
+      for (int i = 0; i < b.from.length; ++i) {
         int s = 0;
-        for (int j = b.from[i]; j < b.to[i]; j++)
+        for (int j = b.from[i]; j < b.to[i]; ++j)
           s += is[j];
         assert i == 0 || s >= 4;
       }
@@ -256,20 +256,20 @@ public class Binner {
       azzert.that(b.to.length, is(0));
     }
 
-    private void checkBinner(final Binner b) {
-      startAtZero(b);
-      endsAtEnd(b, b.n);
-      sortedFrom(b);
-      sortedTo(b);
-      nonZeroInterval(b);
-      consecutive(b);
-      checkMap(b);
-      checkInverseMap(b);
+    private void checkBinner(final Binner ¢) {
+      startAtZero(¢);
+      endsAtEnd(¢, ¢.n);
+      sortedFrom(¢);
+      sortedTo(¢);
+      nonZeroInterval(¢);
+      consecutive(¢);
+      checkMap(¢);
+      checkInverseMap(¢);
     }
 
     private void checkInverseMap(final Binner b) {
-      for (int i = 0; i < b.from.length - 1; i++)
-        for (int j = b.from[i]; j < b.to[i]; j++) {
+      for (int i = 0; i < b.from.length - 1; ++i)
+        for (int j = b.from[i]; j < b.to[i]; ++j) {
           final double u = b.unbin(b.bin(j));
           assert u >= b.from[i];
           assert u < b.to[i];
@@ -278,41 +278,41 @@ public class Binner {
     }
 
     private void checkMap(final Binner b) {
-      for (int i = 0; i < b.from.length - 1; i++)
-        for (int j = b.from[i]; j < b.to[i]; j++) {
+      for (int i = 0; i < b.from.length - 1; ++i)
+        for (int j = b.from[i]; j < b.to[i]; ++j) {
           final int t1 = i;
           azzert.that(b.bin(j), is(t1));
         }
     }
 
     private void consecutive(final Binner b) {
-      for (int i = 1; i < b.to.length; i++)
-        azzert.that(b.from[i], is(b.to[i - 1]));
+      for (int ¢ = 1; ¢ < b.to.length; ++¢)
+        azzert.that(b.from[¢], is(b.to[¢ - 1]));
     }
 
-    private void endsAtEnd(final Binner b, final int n) {
+    private void endsAtEnd(final Binner b, final int i) {
       azzert.that(b.from.length, is(b.to.length));
-      assert n == 0 || b.to.length > 0;
-      azzert.that(b.to[b.to.length - 1], is(n));
+      assert i == 0 || b.to.length > 0;
+      azzert.that(b.to[b.to.length - 1], is(i));
     }
 
     private void nonZeroInterval(final Binner b) {
-      for (int i = 0; i < b.to.length; i++)
-        assert b.to[i] > b.from[i];
+      for (int ¢ = 0; ¢ < b.to.length; ++¢)
+        assert b.to[¢] > b.from[¢];
     }
 
     private void sortedFrom(final Binner b) {
-      for (int i = 0; i < b.from.length - 1; i++)
-        assert b.from[i] < b.from[i + 1];
+      for (int ¢ = 0; ¢ < b.from.length - 1; ++¢)
+        assert b.from[¢] < b.from[¢ + 1];
     }
 
     private void sortedTo(final Binner b) {
-      for (int i = 0; i < b.to.length - 1; i++)
-        assert b.to[i] < b.to[i + 1];
+      for (int ¢ = 0; ¢ < b.to.length - 1; ++¢)
+        assert b.to[¢] < b.to[¢ + 1];
     }
 
-    private void startAtZero(final Binner b) {
-      azzert.that(b.from[0], is(0));
+    private void startAtZero(final Binner ¢) {
+      azzert.that(¢.from[0], is(0));
     }
   }
 }

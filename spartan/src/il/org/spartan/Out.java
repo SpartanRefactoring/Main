@@ -6,8 +6,8 @@ public class Out {
   static final int MAX_FIRST = 20;
   static final int MAX_LAST = 10;
 
-  public static void out(final String s) {
-    System.out.print(s);
+  public static void out(final String ¢) {
+    System.out.print(¢);
   }
 
   public static void out(final String name, final boolean b) {
@@ -26,12 +26,12 @@ public class Out {
     }
     System.out.printf("Total of %d %s:\n", Integer.valueOf(os.size()), name);
     int n = 0;
-    for (final Object o : os) {
+    for (final Object ¢ : os) {
       if (++n > MAX_FIRST && n <= os.size() - MAX_LAST) {
         System.out.print("\t...\n");
         return;
       }
-      System.out.printf("\t%2d) %s\n", Integer.valueOf(n), o);
+      System.out.printf("\t%2d) %s\n", Integer.valueOf(n), ¢);
       continue;
     }
   }

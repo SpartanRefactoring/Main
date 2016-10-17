@@ -3,8 +3,8 @@ package il.org.spatan.iteration;
 import java.util.*;
 
 public class ArrayIterator<T> implements Iterator<T> {
-  public static <E> Iterator<E> make(final E[] es) {
-    return make(es, 0);
+  public static <E> Iterator<E> make(final E[] ¢) {
+    return make(¢, 0);
   }
 
   public static <E> Iterator<E> make(final E[] es, final int begin) {

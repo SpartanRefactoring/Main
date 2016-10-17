@@ -19,15 +19,15 @@ import il.org.spartan.streotypes.*;
   }
 
   /** Retrieve a value from the encapsulated array.
-   * @param i from which array index should the value be retrieved?
+   * @param ¢ from which array index should the value be retrieved?
    * @return the value at the location specified by the parameter. */
-  public T get(final int i) {
-    return implementation[i];
+  public T get(final int ¢) {
+    return implementation[¢];
   }
 
   @Override public Iterator<T> iterator() {
     return new Iterator<T>() {
-      private int i = 0;
+      int i;
 
       @Override public boolean hasNext() {
         return i < length();
@@ -60,10 +60,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public boolean get(final int i) {
-      return implementation[i];
+    public boolean get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -86,10 +86,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public byte get(final int i) {
-      return implementation[i];
+    public byte get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -112,10 +112,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public char get(final int i) {
-      return implementation[i];
+    public char get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -138,10 +138,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public double get(final int i) {
-      return implementation[i];
+    public double get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -164,10 +164,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public float get(final int i) {
-      return implementation[i];
+    public float get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -190,10 +190,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public int get(final int i) {
-      return implementation[i];
+    public int get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -216,10 +216,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public long get(final int i) {
-      return implementation[i];
+    public long get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.
@@ -242,10 +242,10 @@ import il.org.spartan.streotypes.*;
     }
 
     /** Retrieve a value from the encapsulated array.
-     * @param i from which array index should the value be retrieved?
+     * @param ¢ from which array index should the value be retrieved?
      * @return the value at the location specified by the parameter. */
-    public short get(final int i) {
-      return implementation[i];
+    public short get(final int ¢) {
+      return implementation[¢];
     }
 
     /** Determine how many elements are there in the encapsulated array.

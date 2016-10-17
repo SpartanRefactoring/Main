@@ -19,41 +19,41 @@ import il.org.spartan.Utils.FoundHandleForT.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface Utils {
-  static final String QUOTE = "'";
-  static final String WHITES = "(?m)\\s+";
+  final String QUOTE = "'";
+  final String WHITES = "(?m)\\s+";
 
   static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add(¢);
     return $;
   }
 
   @SafeVarargs static <T, C extends Collection<T>> C add(final C $, final T... ts) {
-    for (final T t : ts)
-      if (t != null)
-        $.add(t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        $.add(¢);
     return $;
   }
 
   @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Collection<? extends T>... tss) {
-    for (final Collection<? extends T> ts : tss)
-      if (ts != null)
-        $.addAll(ts);
+    for (final Collection<? extends T> ¢ : tss)
+      if (¢ != null)
+        $.addAll(¢);
     return $;
   }
 
   @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final Iterable<? extends T>... tss) {
-    for (final Iterable<? extends T> ts : tss)
-      if (ts != null)
-        add($, ts);
+    for (final Iterable<? extends T> ¢ : tss)
+      if (¢ != null)
+        add($, ¢);
     return $;
   }
 
   @SafeVarargs static <T, C extends Collection<T>> C addAll(final C $, final T... ts) {
-    for (final T t : ts)
-      if (t != null)
-        add($, t);
+    for (final T ¢ : ts)
+      if (¢ != null)
+        add($, ¢);
     return $;
   }
 
@@ -71,10 +71,10 @@ public interface Utils {
 
   /** @param < F > JD
    * @param < T > JD
-   * @param f JD
+   * @param ¢ JD
    * @return TODO document return type */
-  static <F, T> Applicator<F, T> apply(final Function<F, T> f) {
-    return new Applicator<>(f);
+  static <F, T> Applicator<F, T> apply(final Function<F, T> ¢) {
+    return new Applicator<>(¢);
   }
 
   /** Removes the @Nullable annotation present on the type of a value. This
@@ -187,17 +187,17 @@ public interface Utils {
     return $;
   }
 
-  /** @param i JD
+  /** @param ¢ JD
    * @return TODO document return type */
-  static FoundHandleForInt found(final int i) {
-    return new FoundHandleForInt(i);
+  static FoundHandleForInt found(final int ¢) {
+    return new FoundHandleForInt(¢);
   }
 
   /** @param < T > JD
-   * @param t JD
+   * @param ¢ JD
    * @return TODO document return type */
-  static <T> FoundHandleForT<T> found(final T t) {
-    return new FoundHandleForT<>(t);
+  static <T> FoundHandleForT<T> found(final T ¢) {
+    return new FoundHandleForT<>(¢);
   }
 
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
@@ -206,8 +206,8 @@ public interface Utils {
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
   static boolean hasNull(final Object... os) {
-    for (final Object o : os)
-      if (o == null)
+    for (final Object ¢ : os)
+      if (¢ == null)
         return true;
     return false;
   }
@@ -218,8 +218,8 @@ public interface Utils {
    * @param ts where to search
    * @return true if the the item is found in the list */
   @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
-    for (final T t : ts)
-      if (t != null && t.equals(candidate))
+    for (final T ¢ : ts)
+      if (¢ != null && ¢.equals(candidate))
         return true;
     return false;
   }
@@ -239,18 +239,18 @@ public interface Utils {
    * @param is where to search
    * @return true if the the item is found in the list */
   @SafeVarargs static boolean intIsIn(final int candidate, final int... is) {
-    for (final int i : is)
-      if (i == candidate)
+    for (final int ¢ : is)
+      if (¢ == candidate)
         return true;
     return false;
   }
 
   /** @param < T > JD
-   * @param ts JD
+   * @param ¢ JD
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> @Nullable T last(final @Nullable List<T> ts) {
-    return eval(() -> ts.get(ts.size() - 1)).unless(ts == null || ts.isEmpty());
+  @SuppressWarnings("null") static <T> @Nullable T last(final @Nullable List<T> ¢) {
+    return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
   }
 
   /** Determine whether an {@link Object} is the last in a {@link List} .
@@ -268,8 +268,8 @@ public interface Utils {
    * @return largest of the parameters */
   static int max(final int a, final int... is) {
     int $ = a;
-    for (final int i : is)
-      $ = Math.max($, i);
+    for (final int ¢ : is)
+      $ = Math.max($, ¢);
     return $;
   }
 
@@ -279,8 +279,8 @@ public interface Utils {
    * @return smallest of the parameters */
   static int min(final int a, final int... is) {
     int $ = a;
-    for (final int i : is)
-      $ = Math.min($, i);
+    for (final int ¢ : is)
+      $ = Math.min($, ¢);
     return $;
   }
 
@@ -296,26 +296,26 @@ public interface Utils {
     return null;
   }
 
-  /** @param f JD
+  /** @param ¢ JD
    * @return name of the parameter, which must not be
    *         <code><b>null</b></code> */
-  static String name(final File f) {
-    return cantBeNull(f.getName());
+  static String name(final File ¢) {
+    return cantBeNull(¢.getName());
   }
 
   /** Convert variadic list of arguments into an array
-   * @param os JD __
+   * @param ¢ JD __
    * @return parameter, as an array. */
-  static Object[] objects(final Object... os) {
-    return os;
+  static Object[] objects(final Object... ¢) {
+    return ¢;
   }
 
   /** @param < T > JD
-   * @param ts a list
+   * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> @Nullable T penultimate(final List<T> ts) {
-    return eval(() -> ts.get(ts.size() - 2)).unless(ts == null || ts.size() < 2);
+  @SuppressWarnings("null") static <T> @Nullable T penultimate(final List<T> ¢) {
+    return eval(() -> ¢.get(¢.size() - 2)).unless(¢ == null || ¢.size() < 2);
   }
 
   /** Determine whether an {@link Object} is penultimate in its {@link List} .
@@ -384,32 +384,32 @@ public interface Utils {
   }
 
   /** Remove all occurrences of white space character in a given {@link String}
-   * @param s JD
+   * @param ¢ JD
    * @return parameter after all such occurrences are removed. */
-  static String removeWhites(final String s) {
-    return cantBeNull(s.replaceAll("\\s+", ""));
+  static String removeWhites(final String ¢) {
+    return cantBeNull(¢.replaceAll("\\s+", ""));
   }
 
   /** Sorts an array
-   * @param is what to sort
+   * @param ¢ what to sort
    * @return given array with elements in sorted order */
-  static int[] sort(final int[] is) {
-    Arrays.sort(is);
-    return is;
+  static int[] sort(final int[] ¢) {
+    Arrays.sort(¢);
+    return ¢;
   }
 
   /** Computes the square of a given double
-   * @param d some number
+   * @param ¢ some number
    * @return square of the parameter */
-  static double sqr(final double d) {
-    return d * d;
+  static double sqr(final double ¢) {
+    return ¢ * ¢;
   }
 
   /** Computes the square of a given integer
-   * @param i some integer
+   * @param ¢ some integer
    * @return square of the parameter */
-  static int sqr(final int i) {
-    return i * i;
+  static int sqr(final int ¢) {
+    return ¢ * ¢;
   }
 
   /** Determine whether a file name ends with any one of the supplied
@@ -484,9 +484,9 @@ public interface Utils {
      * @return TODO document return type of this function */
     @SafeVarargs final Iterable<T> to(final F... fs) {
       final List<T> $ = new ArrayList<>();
-      for (final F f : fs)
-        if (f != null)
-          $.add(function.apply(f));
+      for (final F ¢ : fs)
+        if (¢ != null)
+          $.add(function.apply(¢));
       return $;
     }
 
@@ -495,71 +495,80 @@ public interface Utils {
      * @return TODO document return type */
     <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
       final List<T> $ = new ArrayList<>();
-      for (final @Nullable F f : s)
-        if (f != null)
-          $.add(function.apply(f));
+      for (final @Nullable F ¢ : s)
+        if (¢ != null)
+          $.add(function.apply(¢));
       return $;
     }
   }
 
-  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @param <T> JD
-   * @since 2016 */
-  public static class FoundHandleForT<T> {
+  /**
+   * @author  Yossi Gil <Yossi.Gil@GMail.COM>
+   * @param < T >  JD
+   * @since  2016 
+   */
+  static class FoundHandleForT<T> {
     final T candidate;
 
-    /** Instantiates this class. *
-     * @param candidate what to search for */
+    /**
+    * Instantiates this class. 
+    * @param candidate  what to search for 
+    */
     public FoundHandleForT(final T candidate) {
       this.candidate = candidate;
     }
 
-    /** Determine if an integer can be found in a list of values
-     * @param ts where to search
-     * @return true if the the item is found in the list */
+    /**
+    * Determine if an integer can be found in a list of values
+    * @param ts  where to search
+    * @return  true if the the item is found in the list 
+    */
     @SafeVarargs public final boolean in(final T... ts) {
-      for (final T t : ts)
-        if (t != null && t.equals(candidate))
+      for (final T ¢ : ts)
+        if (¢ != null && ¢.equals(candidate))
           return true;
       return false;
     }
 
-    /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016 */
+    /**
+    * @author  Yossi Gil <Yossi.Gil@GMail.COM>
+    * @since  2016 
+    */
     public static class FoundHandleForInt {
       final int candidate;
 
-      /** Instantiates this class.
-       * @param candidate what to search for */
+      /**
+      * Instantiates this class.
+      * @param candidate  what to search for 
+      */
       public FoundHandleForInt(final int candidate) {
         this.candidate = candidate;
       }
 
-      /** Determine if an integer can be found in a list of values
-       * @param is where to search
-       * @return true if the the item is found in the list */
+      /**
+      * Determine if an integer can be found in a list of values
+      * @param is  where to search
+      * @return  true if the the item is found in the list 
+      */
       @SafeVarargs public final boolean in(final int... is) {
-        for (final int i : is)
-          if (i == candidate)
+        for (final int ¢ : is)
+          if (¢ == candidate)
             return true;
         return false;
       }
     }
   }
 
-  /** A static nested class hosting unit tests for the nesting class Unit test
-   * for the containing class. Note the naming convention: a) names of test
-   * methods do not use are not prefixed by "test". This prefix is redundant. b)
-   * test methods begin with the name of the method they check.
-   * @author Yossi Gil
-   * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc", }) //
-  public static class TEST {
+  /**
+   * A static nested class hosting unit tests for the nesting class Unit test for the containing class. Note the naming convention: a) names of test methods do not use are not prefixed by "test". This prefix is redundant. b) test methods begin with the name of the method they check.
+   * @author  Yossi Gil
+   * @since  2014-05-31 
+   */
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) static class TEST {
     public static Integer[] intToIntegers(final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
-      for (int i = 0; i < is.length; ++i)
-        $[i] = box.it(is[i]);
+      for (int ¢ = 0; ¢ < is.length; ++¢)
+        $[¢] = box.it(is[¢]);
       return $;
     }
 
@@ -569,8 +578,8 @@ public interface Utils {
       azzert.nay(ss.contains("E"));
       azzert.nay(ss.contains(null));
       azzert.that(ss.size(), is(4));
-      for (final String s : ss)
-        azzert.aye("", ss.contains(s));
+      for (final String ¢ : ss)
+        azzert.aye("", ss.contains(¢));
     }
 
     @Test public void addTypical() {
@@ -579,8 +588,8 @@ public interface Utils {
       azzert.nay(ss.contains("E"));
       azzert.nay(ss.contains(null));
       azzert.that(ss.size(), is(4));
-      for (final String s : ss)
-        azzert.aye("", ss.contains(s));
+      for (final String ¢ : ss)
+        azzert.aye("", ss.contains(¢));
       azzert.aye(ss.contains("A"));
     }
 

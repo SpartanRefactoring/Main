@@ -57,8 +57,7 @@ public enum separate {
    * @return parameters, separated by {@link #SPACE} */
   public static String separateBySpaces(final Iterator<String> ss) {
     final StringBuilder $ = new StringBuilder();
-    final Separator s = new Separator(SPACE);
-    while (ss.hasNext())
+    for (final Separator s = new Separator(SPACE); ss.hasNext();)
       $.append(s).append(ss.next());
     return as.string($);
   }
@@ -72,52 +71,52 @@ public enum separate {
 
   /** Separate elements of a given array of <code><b>boolean</b></code>s by a
    * given <code><b>char</b></code>
-   * @param bs an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final boolean[] bs) {
-    return these(box.it(bs));
+  public static SeparationSubject these(final boolean[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Separate elements of a given array of <code><b>byte</b></code>s by a given
    * <code><b>char</b></code>
-   * @param bs an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>bs</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final byte[] bs) {
-    return these(box.it(bs));
+  public static SeparationSubject these(final byte[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Separate elements of a given array of <code><b>char</b></code>s by a given
    * <code><b>char</b></code>
-   * @param cs an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>cs</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final char[] cs) {
-    return these(box.it(cs));
+  public static SeparationSubject these(final char[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Separate elements of a given array of <code><b>double</b></code>s by a
    * given <code><b>char</b></code>
-   * @param ds an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>ds</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final double[] ds) {
-    return these(box.it(ds));
+  public static SeparationSubject these(final double[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Separate elements of a given array of <code><b>float</b></code>s by a
    * given <code><b>char</b></code>
-   * @param fs an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>fs</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final float[] fs) {
-    return these(box.it(fs));
+  public static SeparationSubject these(final float[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Separate a variable length list of arguments by a comma character.
@@ -128,45 +127,45 @@ public enum separate {
 
   /** Separate elements of a given array of <code><b>long</b></code>s by a given
    * <code><b>char</b></code>
-   * @param ls an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {@link String} obtained by concatenating the textual
    *         representation of the elements in <code>ls</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final long[] ls) {
-    return these(box.it(ls));
+  public static SeparationSubject these(final long[] ¢) {
+    return these(box.it(¢));
   }
 
   /** A simple minded separation of members of a {@link Map} data type.
    * @param <Key> type of elements serving as keys of the map.
    * @param <Value> type of elements serving as values of the map.
-   * @param map a non-<code><b>null</b></code> {@link Map} objects whose entries
+   * @param k a non-<code><b>null</b></code> {@link Map} objects whose entries
    *        are to be separated.
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>. */
-  public static <Key, Value> SeparationSubject these(final Map<Key, Value> map) {
-    cantBeNull(map);
+  public static <Key, Value> SeparationSubject these(final Map<Key, Value> k) {
+    cantBeNull(k);
     final List<Object> $ = new ArrayList<>();
-    for (final Key k : map.keySet())
-      $.add(k + "->" + map.get(k));
+    for (final Key ¢ : k.keySet())
+      $.add(¢ + "->" + k.get(¢));
     return new SeparationSubject($);
   }
 
   /** Separate elements of a given array of <code><b>short</b></code>s by a
    * given <code><b>char</b></code>
-   * @param ss an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>ss</code> separated by
    *         <code>between</code> */
-  public static SeparationSubject these(final short[] ss) {
-    return these(box.it(ss));
+  public static SeparationSubject these(final short[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Separate a variable length list of arguments by a comma character.
    * @param <T> type of items
-   * @param ts the objects to be separated. */
-  @SafeVarargs public static <T> SeparationSubject these(final T... ts) {
-    return new SeparationSubject(ts);
+   * @param ¢ the objects to be separated. */
+  @SafeVarargs public static <T> SeparationSubject these(final T... ¢) {
+    return new SeparationSubject(¢);
   }
 
   static <T> void assertEquals(final String reason, final T t1, final T t2) {
@@ -177,8 +176,8 @@ public enum separate {
     azzert.that(t2, is(t1));
   }
 
-  static void assertFalse(final boolean b) {
-    azzert.nay(b);
+  static void assertFalse(final boolean ¢) {
+    azzert.nay(¢);
   }
 
   static void assertFalse(final String reason, final boolean b) {
@@ -189,8 +188,8 @@ public enum separate {
     azzert.that(t2, is(t1));
   }
 
-  static void assertTrue(final boolean b) {
-    azzert.aye(b);
+  static void assertTrue(final boolean ¢) {
+    azzert.aye(¢);
   }
 
   static void assertTrue(final String reason, final boolean b) {
@@ -199,12 +198,12 @@ public enum separate {
 
   /** Separate elements of a given array of <code><b>int</b></code>s by a given
    * <code><b>char</b></code>
-   * @param is an array of elements to be separated
+   * @param ¢ an array of elements to be separated
    * @return a {{@link String}} obtained by concatenating the textual
    *         representation of the elements in <code>is</code> separated by
    *         <code>between</code> */
-  private static SeparationSubject these(final int[] is) {
-    return these(box.it(is));
+  private static SeparationSubject these(final int[] ¢) {
+    return these(box.it(¢));
   }
 
   /** Auxiliary class for fluent API.
@@ -222,8 +221,8 @@ public enum separate {
     static <T> String by(final Iterable<? extends T> ts, final String between) {
       final Separator s = new Separator(between);
       final StringBuffer $ = new StringBuffer();
-      for (final T t : ts)
-        $.append(s).append(t);
+      for (final T ¢ : ts)
+        $.append(s).append(¢);
       return as.string($);
     }
 
@@ -236,16 +235,16 @@ public enum separate {
     static String separateBy(final Iterable<?> os, final String between) {
       final Separator s = new Separator(between);
       final StringBuffer $ = new StringBuffer();
-      for (final Object o : os)
-        $.append(s).append(o);
+      for (final Object ¢ : os)
+        $.append(s).append(¢);
       return as.string($);
     }
 
     private static String separateBy(final Object[] os, final String between) {
       final Separator s = new Separator(between);
       final StringBuffer $ = new StringBuffer();
-      for (final Object o : os)
-        $.append(s).append(o);
+      for (final Object ¢ : os)
+        $.append(s).append(¢);
       return as.string($);
     }
 

@@ -24,7 +24,7 @@ public final class BufferDataInputStream extends DataInputStream {
     return inner.eof();
   }
 
-  public final int position() {
+  public int position() {
     return inner.position();
   }
 
@@ -32,9 +32,9 @@ public final class BufferDataInputStream extends DataInputStream {
     return inner.read();
   }
 
-  @Override public long skip(final long n) {
-    final long $ = inner.skip(n);
-    if ($ != n)
+  @Override public long skip(final long ¢) {
+    final long $ = inner.skip(¢);
+    if ($ != ¢)
       throw new RuntimeException();
     return $;
   }

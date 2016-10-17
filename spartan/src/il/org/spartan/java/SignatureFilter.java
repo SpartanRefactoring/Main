@@ -6,8 +6,8 @@ package il.org.spartan.java;
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class SignatureFilter extends CodeOnlyFilter {
-  private static boolean usefulKeyword(final Token t) {
-    switch (t) {
+  private static boolean usefulKeyword(final Token ¢) {
+    switch (¢) {
       default:
         return false;
       case __class:
@@ -20,9 +20,9 @@ public class SignatureFilter extends CodeOnlyFilter {
     }
   }
 
-  /** @param t a token */
-  private static boolean usefulPucntuation(final Token t) {
-    switch (t) {
+  /** @param ¢ a token */
+  private static boolean usefulPucntuation(final Token ¢) {
+    switch (¢) {
       default:
         return false;
       case SEMICOLON:
@@ -37,12 +37,12 @@ public class SignatureFilter extends CodeOnlyFilter {
     }
   }
 
-  @Override protected boolean ok(final Token t) {
-    switch (t.kind) {
+  @Override protected boolean ok(final Token ¢) {
+    switch (¢.kind) {
       case KEYWORD:
-        return usefulKeyword(t);
+        return usefulKeyword(¢);
       case PUNCTUATION:
-        return usefulPucntuation(t);
+        return usefulPucntuation(¢);
       default:
         return false;
     }

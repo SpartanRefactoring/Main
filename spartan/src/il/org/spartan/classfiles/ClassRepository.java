@@ -74,8 +74,8 @@ public class ClassRepository implements Iterable<String> {
     }
     final List<File> fs = new ArrayList<>();
     final String cp = System.getProperty("sun.boot.class.path");
-    for (final StringTokenizer st = new StringTokenizer(cp, File.pathSeparator); st.hasMoreTokens();)
-      fs.add(new File(st.nextToken()));
+    for (final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
+      fs.add(new File(¢.nextToken()));
     return filter(fs);
   }
 
@@ -83,8 +83,8 @@ public class ClassRepository implements Iterable<String> {
     final ClassRepository r = new ClassRepository.DEFAULT();
     System.out.println("Size is " + r.getClasses().size());
     final List<String> list = r.getClasses();
-    for (int i = 0; i < list.size(); ++i)
-      System.out.println(i + " " + list.get(i));
+    for (int ¢ = 0; ¢ < list.size(); ++¢)
+      System.out.println(¢ + " " + list.get(¢));
   }
 
   /** Adding all classes residing in archive to cache
@@ -94,9 +94,7 @@ public class ClassRepository implements Iterable<String> {
     try {
       if (!new File(jarFile).exists())
         return;
-      final ZipFile f = new ZipFile(jarFile);
-      final Enumeration<? extends ZipEntry> entries = f.entries();
-      while (entries.hasMoreElements()) {
+      for (final Enumeration<? extends ZipEntry> entries = (new ZipFile(jarFile)).entries(); entries.hasMoreElements();) {
         final ZipEntry ze = entries.nextElement();
         final NameDotSuffix nds = new NameDotSuffix(ze);
         if (!nds.suffixIs(DOT_CLASS))
@@ -114,10 +112,10 @@ public class ClassRepository implements Iterable<String> {
 
   private static List<File> filter(final Iterable<File> fs, final File... ignore) {
     final List<File> $ = new ArrayList<>();
-    for (File f : fs) {
-      f = f.getAbsoluteFile();
-      if (f.exists() && !onDirs(f, ignore))
-        $.add(f);
+    for (File ¢ : fs) {
+      ¢ = ¢.getAbsoluteFile();
+      if (¢.exists() && !onDirs(¢, ignore))
+        $.add(¢);
     }
     return $;
   }
@@ -163,8 +161,8 @@ public class ClassRepository implements Iterable<String> {
   public ClassRepository(final File... fs) {
     files = new File[fs.length];
     int i = 0;
-    for (final File f : fs)
-      files[i++] = f.getAbsoluteFile();
+    for (final File ¢ : fs)
+      files[i++] = ¢.getAbsoluteFile();
   }
 
   /** Initialize a new instance from an iterable collection.
@@ -188,8 +186,8 @@ public class ClassRepository implements Iterable<String> {
    * @return List of fully qualified names of all such classes */
   public ArrayList<String> getClasses() {
     final ArrayList<String> $ = new ArrayList<>();
-    for (final File f : files)
-      addFromDirectory(0, f, f.getAbsolutePath(), $, "");
+    for (final File ¢ : files)
+      addFromDirectory(0, ¢, ¢.getAbsolutePath(), $, "");
     return $;
   }
 
@@ -226,10 +224,8 @@ public class ClassRepository implements Iterable<String> {
   private void addFromDirectory(final int depth, final File dirOrFile, final String root, final ArrayList<String> result, final String path) {
     if (dirOrFile.isDirectory()) {
       final String[] children = dirOrFile.list();
-      for (final String s : children) {
-        final String newPath = depth == 0 ? "" : concat(path, dirOrFile.getName());
-        addFromDirectory(depth + 1, new File(dirOrFile, s), root, result, newPath);
-      }
+      for (final String ¢ : children)
+        addFromDirectory(depth + 1, new File(dirOrFile, ¢), root, result, (depth == 0 ? "" : concat(path, dirOrFile.getName())));
       return;
     }
     final NameDotSuffix nds = new NameDotSuffix(dirOrFile);
@@ -260,8 +256,7 @@ public class ClassRepository implements Iterable<String> {
 
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void empty() {
-      final ClassRepository r = new ClassRepository();
-      azzert.that(r.getClasses().size(), is(0));
+      azzert.that((new ClassRepository()).getClasses().size(), is(0));
     }
 
     @Test public void ensureDotSeparatedNames() {
@@ -286,8 +281,7 @@ public class ClassRepository implements Iterable<String> {
     }
 
     @Test public void getClassesObject() {
-      final Collection<String> classes = new ClassRepository.JRE().getClasses();
-      assert (classes.contains("java.lang.Object"));
+      assert (new ClassRepository.JRE().getClasses().contains("java.lang.Object"));
     }
   }
 
@@ -309,8 +303,8 @@ public class ClassRepository implements Iterable<String> {
       this(ze.getName().replace('/', '.'));
     }
 
-    public boolean suffixIs(final String s) {
-      return suffix.equalsIgnoreCase(s);
+    public boolean suffixIs(final String ¢) {
+      return suffix.equalsIgnoreCase(¢);
     }
   }
 }

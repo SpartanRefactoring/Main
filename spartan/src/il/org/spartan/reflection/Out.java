@@ -11,8 +11,8 @@ public class Out {
   static final int MAX_FIRST = 20;
   static final int MAX_LAST = 10;
 
-  public static void out(final String s) {
-    System.out.print(s);
+  public static void out(final String ¢) {
+    System.out.print(¢);
   }
 
   public static void out(final String name, final boolean v) {
@@ -28,12 +28,11 @@ public class Out {
     else {
       System.out.printf("Total of %d %s:\n", box(a.size()), name);
       int n = 0;
-      final Once ellipsis = new Once("\t...\n");
-      for (final Object o : a)
+      for (final Object ¢ : a)
         if (++n > MAX_FIRST && n <= a.size() - MAX_LAST)
-          System.out.print(ellipsis);
+          System.out.print((new Once("\t...\n")));
         else
-          System.out.printf("\t%2d) %s\n", box(n), o);
+          System.out.printf("\t%2d) %s\n", box(n), ¢);
     }
   }
 

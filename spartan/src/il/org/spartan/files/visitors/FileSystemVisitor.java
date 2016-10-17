@@ -204,27 +204,27 @@ public class FileSystemVisitor {
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
   public void go() throws IOException, StopTraversal {
-    for (final File f : from)
-      recurse(f);
+    for (final File ¢ : from)
+      recurse(¢);
   }
 
   /** Conduct recursive traversal starting at a given file
-   * @param f a file, which may be a directory, a ZIP, or a plain file, at which
+   * @param ¢ a file, which may be a directory, a ZIP, or a plain file, at which
    *        the traversal begins
    * @throws IOException if the file system could not traversed for some reason
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
-  private void recurse(final File f) throws IOException, StopTraversal {
-    if (f.isDirectory()) {
-      recurseDirectory(f);
+  private void recurse(final File ¢) throws IOException, StopTraversal {
+    if (¢.isDirectory()) {
+      recurseDirectory(¢);
       return;
     }
-    if (Zip.isZipFile(f)) {
-      scanZip(f);
+    if (Zip.isZipFile(¢)) {
+      scanZip(¢);
       return;
     }
-    if (Suffixed.by(f, extensions))
-      visitor.visitFile(f);
+    if (Suffixed.by(¢, extensions))
+      visitor.visitFile(¢);
   }
 
   /** conduct recursive traversal of a directory
@@ -285,69 +285,77 @@ public class FileSystemVisitor {
     }
   }
 
-  /** @author Yossi Gil
-   * @since 21/05/2007 */
-  public static interface Action {
-    /** action to conduct for each directory encountered throught the traversal.
-     * @param f the directory file object
-     * @throws StopTraversal in case the visitor wishes to stop the traversal of
-     *         this directory.
-     * @see #visitFile(File)
-     * @see #visitZip(File)
-     * @see #visitZipEntry(String, String, InputStream) */
+  /**
+   * @author  Yossi Gil
+   * @since  21/05/2007 
+   */
+  public interface Action {
+    /**
+    * action to conduct for each directory encountered throught the traversal.
+    * @param f  the directory file object
+    * @throws StopTraversal  in case the visitor wishes to stop the traversal of this directory.
+    * @see #visitFile(File)
+    * @see #visitZip(File)
+    * @see #visitZipEntry(String,String,InputStream)  
+    */
     void visitDirectory(File f) throws StopTraversal;
 
-    /** action to conduct for each ordinary, i.e., non-ZIP and non-directory,
-     * file.
-     * @param f the file to visit
-     * @throws StopTraversal in case the visitor wishes to <i>completely</i>
-     *         stop the traversal
-     * @see #visitDirectory(File)
-     * @see #visitZip(File) */
+    /**
+    * action to conduct for each ordinary, i.e., non-ZIP and non-directory, file.
+    * @param f  the file to visit
+    * @throws StopTraversal  in case the visitor wishes to <i>completely</i> stop the traversal
+    * @see #visitDirectory(File)
+    * @see #visitZip(File)  
+    */
     void visitFile(File f) throws StopTraversal;
 
-    /** action to conduct for each ZIP and other archive files encountered
-     * throughout the traversal.
-     * @param f the archive file object
-     * @throws StopTraversal in case the visitor wishes to stop the traversal of
-     *         this archive file.
-     * @see #visitFile(File)
-     * @see #visitDirectory(File) */
+    /**
+    * action to conduct for each ZIP and other archive files encountered throughout the traversal.
+    * @param f  the archive file object
+    * @throws StopTraversal  in case the visitor wishes to stop the traversal of this archive file.
+    * @see #visitFile(File)
+    * @see #visitDirectory(File)  
+    */
     void visitZip(File f) throws StopTraversal;
 
-    /** action to conduct for each directory encountered in an archival file
-     * scanned through the traversal.
-     * @param zipName the name of the ZIP file from which this entry was taken
-     * @param entryName the name of the visited entry in the ZIP file
-     * @param stream an open stream into the content of this entry
-     * @throws StopTraversal in case the visitor wishes to terminate the entire
-     *         traversal process
-     * @see #visitFile(File)
-     * @see #visitDirectory(File) */
-    void visitZipDirectory(String zipName, String entryName, InputStream stream) throws StopTraversal;
+    /**
+    * action to conduct for each directory encountered in an archival file scanned through the traversal.
+    * @param zipName  the name of the ZIP file from which this entry was taken
+    * @param entryName  the name of the visited entry in the ZIP file
+    * @param s  an open stream into the content of this entry
+    * @throws StopTraversal  in case the visitor wishes to terminate the entire traversal process
+    * @see #visitFile(File)
+    * @see #visitDirectory(File)  
+    */
+    void visitZipDirectory(String zipName, String entryName, InputStream s) throws StopTraversal;
 
-    /** action to conduct for each entry found in a ZIP file, encountered
-     * throughout the traversal
-     * @param zipName the name of the ZIP file from which this entry was taken
-     * @param entryName the name of the visited entry in the ZIP file
-     * @param stream an open stream into the content of this entry
-     * @throws StopTraversal in case the visitor wishes to terminate the entire
-     *         traversal process */
-    void visitZipEntry(String zipName, String entryName, InputStream stream) throws StopTraversal;
+    /**
+    * action to conduct for each entry found in a ZIP file, encountered throughout the traversal
+    * @param zipName  the name of the ZIP file from which this entry was taken
+    * @param entryName  the name of the visited entry in the ZIP file
+    * @param s  an open stream into the content of this entry
+    * @throws StopTraversal  in case the visitor wishes to terminate the entire traversal process 
+    */
+    void visitZipEntry(String zipName, String entryName, InputStream s) throws StopTraversal;
 
-    /** @author Yossi Gil
-     * @since 21/05/2007 */
+    /**
+    * @author  Yossi Gil
+    * @since  21/05/2007 
+    */
     class StopTraversal extends Exception {
       private static final long serialVersionUID = -4658857180021394864L;
 
-      /** Create a new {@link StopTraversal} object */
+      /**
+      * Create a new  {@link StopTraversal}  object 
+      */
       public StopTraversal() {
-        super();
       }
 
-      /** Create a new {@link StopTraversal} object with a specific message
-       * @param message a message to record
-       * @see Exception */
+      /**
+      * Create a new  {@link StopTraversal}  object with a specific message
+      * @param message  a message to record
+      * @see Exception  
+      */
       public StopTraversal(final String message) {
         super(message);
       }
@@ -429,14 +437,14 @@ public class FileSystemVisitor {
   public abstract static class FileOnlyAction extends EmptyAction {
     @Override public abstract void visitFile(File f);
 
-    public abstract void visitZipEntry(String entryName, InputStream stream);
+    public abstract void visitZipEntry(String entryName, InputStream s);
 
     /** Not to be used by clients.
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitZipEntry(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
-    @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream stream) {
+    @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream s) {
       unused(zipName);
-      visitZipEntry(entryName, stream);
+      visitZipEntry(entryName, s);
     }
   }
 
@@ -468,9 +476,9 @@ public class FileSystemVisitor {
      * @see EmptyAction#visitFile(File) */
     @Override abstract public void visitFile(final File f);
 
-    @Override public final void visitZipEntry(final String entryName, final InputStream stream) {
+    @Override public final void visitZipEntry(final String entryName, final InputStream s) {
       unused(entryName);
-      unused(stream);
+      unused(s);
     }
   }
 
@@ -510,26 +518,26 @@ public class FileSystemVisitor {
     /** Not to be called by clients
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitZipDirectory(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
-    @Override public final void visitZipDirectory(final String zipName, final String entryName, final InputStream stream) {
+    @Override public final void visitZipDirectory(final String zipName, final String entryName, final InputStream s) {
       unused(zipName);
-      visitZipDirectory(entryName, stream);
+      visitZipDirectory(entryName, s);
     }
 
     /** Visit a directory entry contained in an archive.
      * @param entryName the name of the discovered directory
-     * @param stream to be used for opening it if necessary */
-    protected abstract void visitZipDirectory(String entryName, InputStream stream);
+     * @param s to be used for opening it if necessary */
+    protected abstract void visitZipDirectory(String entryName, InputStream s);
   }
 
-  static interface NonStopAction extends Action {
+  interface NonStopAction extends Action {
     @Override void visitDirectory(File f);
 
     @Override void visitFile(File f);
 
     @Override void visitZip(File f) throws StopTraversal;
 
-    @Override void visitZipDirectory(String zipName, String entryName, InputStream stream);
+    @Override void visitZipDirectory(String zipName, String entryName, InputStream s);
 
-    @Override void visitZipEntry(String zipName, String entryName, InputStream stream);
+    @Override void visitZipEntry(String zipName, String entryName, InputStream s);
   }
 }

@@ -14,14 +14,12 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil
  * @since February 13, 2012 */
 public class XYGnuPlotter {
-  private static BufferedWriter getWriter(final Process p) {
-    return new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
+  private static BufferedWriter getWriter(final Process ¢) {
+    return new BufferedWriter(new OutputStreamWriter(¢.getOutputStream()));
   }
 
-  private static String gformat(final double d) {
-    if (d == (long) d)
-      return (long) d + "";
-    return String.format("%g", new Double(d));
+  private static String gformat(final double ¢) {
+    return ¢ == (long) ¢ ? (long) ¢ + "" : String.format("%g", new Double(¢));
   }
 
   private static Process gnuplot() {
@@ -68,8 +66,8 @@ public class XYGnuPlotter {
   }
 
   public XYGnuPlotter feed(final XYSeries s) {
-    for (int i = 0; i < s.n(); i++)
-      write(gformat(s.x[i]) + " " + gformat(s.y[i]) + " " + gformat(s.dy[i]) + "\n");
+    for (int ¢ = 0; ¢ < s.n(); ++¢)
+      write(gformat(s.x[¢]) + " " + gformat(s.y[¢]) + " " + gformat(s.dy[¢]) + "\n");
     write("e\n");
     return this;
   }

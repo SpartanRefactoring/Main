@@ -8,8 +8,8 @@ package il.org.spatan.iteration;
 public class Enumerating<T> extends Codex.Anchored<T> {
   private static int[] invert(final int[] is) {
     final int[] $ = new int[is.length];
-    for (int i = 0; i < is.length; i++)
-      $[is[i]] = i;
+    for (int ¢ = 0; ¢ < is.length; ++¢)
+      $[is[¢]] = ¢;
     return $;
   }
 
@@ -28,20 +28,20 @@ public class Enumerating<T> extends Codex.Anchored<T> {
     this.withRank = invert(rankOf);
   }
 
-  @Override public boolean contains(final T t) {
-    return codex.contains(t);
+  @Override public boolean contains(final T ¢) {
+    return codex.contains(¢);
   }
 
-  @Override public T decode(final int i) {
-    return codex.decode(withRank[i]);
+  @Override public T decode(final int ¢) {
+    return codex.decode(withRank[¢]);
   }
 
   @Override public Iterable<? extends T> elements() {
     return codex.elements();
   }
 
-  @Override public int encode(final T t) {
-    return rankOf[codex.encode(t)];
+  @Override public int encode(final T ¢) {
+    return rankOf[codex.encode(¢)];
   }
 
   /** Determines whether there are any elements associated with a given level
@@ -53,11 +53,11 @@ public class Enumerating<T> extends Codex.Anchored<T> {
   }
 
   /** Determines the level of a given object.
-   * @param t an arbitrary object, for which {@link #contains} returns true.
+   * @param ¢ an arbitrary object, for which {@link #contains} returns true.
    * @return the level of this object, which is guaranteed to be an integer in
    *         the range <tt>0</tt> through <tt>{@link #size()} -1 </tt>. */
-  public int order(final T t) {
-    return encode(t);
+  public int order(final T ¢) {
+    return encode(¢);
   }
 
   @Override public int size() {

@@ -96,8 +96,8 @@ import il.org.spartan.streotypes.*;
    * @param os what to print */
   public void println(final Object... os) {
     final StringBuilder sb = new StringBuilder();
-    for (final Object o : os)
-      sb.append(o);
+    for (final Object ¢ : os)
+      sb.append(¢);
     System.out.println(toString() + sb);
   }
 

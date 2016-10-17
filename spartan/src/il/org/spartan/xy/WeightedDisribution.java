@@ -6,9 +6,9 @@ package il.org.spartan.xy;
 /** @author Yossi Gil
  * @since February 22, 2012 */
 public class WeightedDisribution {
-  private double sum = 0;
-  private double sum2 = 0;
-  private double sumw = 0;
+  private double sum;
+  private double sum2;
+  private double sumw;
   private double sumwlogw;
 
   public void clear() {

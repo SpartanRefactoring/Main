@@ -21,7 +21,7 @@ public class CodeOnlyFilter extends TokenFilter {
   /* (non-Javadoc)
    *
    * @see il.org.spartan.java.TokenFilter#ok(il.org.spartan.java. Token) */
-  @Override protected boolean ok(final Token t) {
-    return !t.isError() && !t.isNL() && t.kind.category != IGNORE;
+  @Override protected boolean ok(final Token ¢) {
+    return !¢.isError() && !¢.isNL() && ¢.kind.category != IGNORE;
   }
 }

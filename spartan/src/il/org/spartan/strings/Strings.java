@@ -28,7 +28,7 @@ public class Strings extends ArrayList<String> {
     super(2 + ss.length);
     add(s1);
     add(s2);
-    for (final String s : ss)
-      add(s);
+    for (final String ¢ : ss)
+      add(¢);
   }
 }

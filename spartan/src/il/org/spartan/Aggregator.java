@@ -27,8 +27,8 @@ public class Aggregator {
 
   private static Map<Aggregation, String> toMap(final FormatSpecifier[] ss) {
     final Map<Aggregation, String> $ = new LinkedHashMap<>();
-    for (final FormatSpecifier a : ss)
-      $.put(a.getKey(), a.format());
+    for (final FormatSpecifier ¢ : ss)
+      $.put(¢.getKey(), ¢.format());
     return $;
   }
 
@@ -58,10 +58,10 @@ public class Aggregator {
     record(key, value, toMap(ss));
   }
 
-  public void record(final String key, final double value, final Map<Aggregation, String> as) {
+  public void record(final String key, final double value, final Map<Aggregation, String> a) {
     ensure(realStatistics, key, new RealStatistics());
-    force(columnSpecificAggregation, key, as);
-    merge(as);
+    force(columnSpecificAggregation, key, a);
+    merge(a);
     realStatistics.get(key).record(value);
   }
 
@@ -96,13 +96,13 @@ public class Aggregator {
 
   public enum Aggregation {
     COUNT {
-      @Override public double retreive(final RealStatistics s) {
-        return s.n();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.n();
       }
     },
     MIN {
-      @Override public double retreive(final RealStatistics s) {
-        return s.min();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.min();
       }
 
       @Override public String toString() {
@@ -110,8 +110,8 @@ public class Aggregator {
       }
     },
     MAX {
-      @Override public double retreive(final RealStatistics s) {
-        return s.max();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.max();
       }
 
       @Override public String toString() {
@@ -119,8 +119,8 @@ public class Aggregator {
       }
     },
     MEAN {
-      @Override public double retreive(final RealStatistics s) {
-        return s.mean();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.mean();
       }
 
       @Override public String toString() {
@@ -128,8 +128,8 @@ public class Aggregator {
       }
     },
     MEDIAN {
-      @Override public double retreive(final RealStatistics s) {
-        return s.median();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.median();
       }
 
       @Override public String toString() {
@@ -137,8 +137,8 @@ public class Aggregator {
       }
     },
     SD {
-      @Override public double retreive(final RealStatistics s) {
-        return s.sd();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.sd();
       }
 
       @Override public String toString() {
@@ -146,8 +146,8 @@ public class Aggregator {
       }
     },
     TOTAL {
-      @Override public double retreive(final RealStatistics s) {
-        return s.sum();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.sum();
       }
 
       @Override public String toString() {
@@ -155,8 +155,8 @@ public class Aggregator {
       }
     },
     MAD {
-      @Override public double retreive(final RealStatistics s) {
-        return s.mad();
+      @Override public double retreive(final RealStatistics ¢) {
+        return ¢.mad();
       }
 
       @Override public String toString() {

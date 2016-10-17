@@ -10,8 +10,8 @@ public enum Exceptions {
   public static RuntimeException toRuntimeException(final Throwable t) {
     if (t instanceof RuntimeException)
       return (RuntimeException) t;
-    final RuntimeException e = new RuntimeException(t);
-    e.setStackTrace(t.getStackTrace());
-    return e;
+    final RuntimeException $ = new RuntimeException(t);
+    $.setStackTrace(t.getStackTrace());
+    return $;
   }
 }

@@ -33,8 +33,8 @@ import il.org.spartan.utils.*;
       // Absorb this exception, let's try the other option...
       final List<File> $ = new ArrayList<>();
       final String cp = System.getProperty("sun.boot.class.path");
-      for (final StringTokenizer st = new StringTokenizer(cp, File.pathSeparator); st.hasMoreTokens();)
-        $.add(new File(st.nextToken()));
+      for (final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
+        $.add(new File(¢.nextToken()));
       return $;
     }
   }

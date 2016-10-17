@@ -30,7 +30,7 @@ import java.util.*;
  * The <tt>add</tt> operation runs in <i>amortized constant time</i>, that is,
  * adding n elements requires O(n) time. All of the other operations run in
  * linear time (roughly speaking). The constant factor is low compared to that
- * for the <tt>LinkedList</tt> implementation.
+ * for the <tt>ArrayList</tt> implementation.
  * <p>
  * Each <tt>ArrayList</tt> instance has a <i>capacity</i>. The capacity is the
  * size of the array used to store the elements in the list. It is always at
@@ -86,30 +86,27 @@ import java.util.*;
  * @author Neal Gafter
  * @see Collection
  * @see ArrayList
- * @see LinkedList
+ * @see ArrayList
  * @see Vector
  * @since 1.2 */
 public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
   private static final long serialVersionUID = 1L;
 
-  public static <E> ImmutableArrayList<E> make(final Collection<? extends E> es) {
-    return new ImmutableArrayList<>(es);
+  public static <E> ImmutableArrayList<E> make(final Collection<? extends E> ¢) {
+    return new ImmutableArrayList<>(¢);
   }
 
-  public static <E> ImmutableArrayList<E> make(final E[] es) {
-    return new ImmutableArrayList<>(es);
+  public static <E> ImmutableArrayList<E> make(final E[] ¢) {
+    return new ImmutableArrayList<>(¢);
   }
 
   static boolean fail() {
     throw new UnsupportedOperationException();
   }
 
-  private static <E> E[] asArray(final Collection<? extends E> c) {
-    @SuppressWarnings("unchecked") final E[] $ = (E[]) c.toArray();
-    // c.toArray might (incorrectly) not return Object[] (see 6260652)
-    if ($.getClass() == Object[].class)
-      return $;
-    return recopy($);
+  private static <E> E[] asArray(final Collection<? extends E> ¢) {
+    @SuppressWarnings("unchecked") final E[] $ = (E[]) ¢.toArray();
+    return $.getClass() == Object[].class ? $ : recopy($);
   }
 
   private static <E> E[] recopy(final E[] a) {
@@ -158,10 +155,10 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * collection is modified while the operation is in progress. (This implies
    * that the behavior of this call is undefined if the specified collection is
    * this list, and this list is nonempty.)
-   * @param c collection containing elements to be added to this list
+   * @param es collection containing elements to be added to this list
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws NullPointerException if the specified collection is null */
-  @Override public boolean addAll(final Collection<? extends E> c) {
+  @Override public boolean addAll(final Collection<? extends E> es) {
     return fail();
   }
 
@@ -172,11 +169,11 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * are returned by the specified collection's iterator.
    * @param index index at which to insert the first element from the specified
    *        collection
-   * @param c collection containing elements to be added to this list
+   * @param es collection containing elements to be added to this list
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws IndexOutOfBoundsException {@inheritDoc}
    * @throws NullPointerException if the specified collection is null */
-  @Override public boolean addAll(final int index, final Collection<? extends E> c) {
+  @Override public boolean addAll(final int index, final Collection<? extends E> es) {
     return fail();
   }
 
@@ -197,18 +194,18 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * formally, returns <tt>true</tt> if and only if this list contains at least
    * one element <tt>e</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
-   * @param o element whose presence in this list is to be tested
+   * @param ¢ element whose presence in this list is to be tested
    * @return <tt>true</tt> if this list contains the specified element */
-  @Override public boolean contains(final Object o) {
-    return indexOf(o) >= 0;
+  @Override public boolean contains(final Object ¢) {
+    return indexOf(¢) >= 0;
   }
 
   /* (non-Javadoc)
    *
    * @see java.util.List#containsAll(java.util.Collection) */
   @Override public boolean containsAll(final Collection<?> c) {
-    for (final Object o : c)
-      if (!contains(o))
+    for (final Object ¢ : c)
+      if (!contains(¢))
         return false;
     return true;
   }
@@ -238,14 +235,14 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
   @Override public int indexOf(final Object o) {
-    if (o == null) {
-      for (int i = 0; i < size(); i++)
-        if (data[i] == null)
-          return i;
-    } else
-      for (int i = 0; i < size(); i++)
-        if (o.equals(data[i]))
-          return i;
+    if (o == null)
+      for (int $ = 0; $ < size(); ++$)
+        if (data[$] == null)
+          return $;
+        else
+      for (int ¢ = 0; ¢ < size(); ++¢)
+        if (o.equals(data[¢]))
+          return ¢;
     return -1;
   }
 
@@ -269,14 +266,14 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
   @Override public int lastIndexOf(final Object o) {
-    if (o == null) {
-      for (int i = size() - 1; i >= 0; i--)
-        if (data[i] == null)
-          return i;
-    } else
-      for (int i = size() - 1; i >= 0; i--)
-        if (o.equals(data[i]))
-          return i;
+    if (o == null)
+      for (int $ = size() - 1; $ >= 0; --$)
+        if (data[$] == null)
+          return $;
+        else
+      for (int ¢ = size() - 1; ¢ >= 0; --¢)
+        if (o.equals(data[¢]))
+          return ¢;
     return -1;
   }
 

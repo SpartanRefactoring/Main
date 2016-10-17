@@ -12,20 +12,18 @@ public class BenchEmptyFinalBencheon {
   public static void main(final String args[]) throws Exception {
     final LogBook.Mutable l = new LogBook.Mutable(BenchEmptyFinalBencheon.class);
     final Bencheon b = new Bencheon("empty", 1) {
-      @Override public final void beforeAllRuns() {
-        // empty
+      @Override public void beforeAllRuns() {
       }
 
-      @Override public final void beforeEachRun() {
-        // empty
+      @Override public void beforeEachRun() {
       }
 
-      @Override public final Object call() {
+      @Override public Object call() {
         return null;
       }
     };
     Log.deactivate();
-    for (int i = 0; i < trials; i++)
+    for (int ¢ = 0; ¢ < trials; ++¢)
       BenchingPolicy.go(l, b);
     System.err.println(l.currentEntry().format("A D I X"));
   }

@@ -17,8 +17,8 @@ public abstract class AbstractGraph<E> {
 
   public int countEdges() {
     int $ = 0;
-    for (final Vertex<E> v : vertices())
-      $ += outDegree(v);
+    for (final Vertex<E> ¢ : vertices())
+      $ += outDegree(¢);
     return $;
   }
 
@@ -27,16 +27,16 @@ public abstract class AbstractGraph<E> {
   public abstract String description();
 
   /** Which edges are incident on this Vertex<E>?
-   * @param v some Vertex<E>
+   * @param ¢ some Vertex<E>
    * @return if v has no incoming edges then <code><b>null</b></code>,
    *         otherwise, all vertices from which there an edge leading to v. */
   @SuppressWarnings("static-method") //
-  public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> v) {
-    return v.incoming();
+  public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
+    return ¢.incoming();
   }
 
-  public int inDegree(final Vertex<E> v) {
-    return incoming(v).size();
+  public int inDegree(final Vertex<E> ¢) {
+    return incoming(¢).size();
   }
 
   /** Generates the inverse graph, in which all the direction of all edges is
@@ -48,11 +48,11 @@ public abstract class AbstractGraph<E> {
   }
 
   /** Determine whether a given Vertex<E> is a source
-   * @param v some Vertex<E>
+   * @param ¢ some Vertex<E>
    * @return <code><b>true</b></code> if and only if this Vertex<E> is a
    *         source */
-  public final boolean isSource(final Vertex<E> v) {
-    return inDegree(v) == 0;
+  public final boolean isSource(final Vertex<E> ¢) {
+    return inDegree(¢) == 0;
   }
 
   /** What is this graph's name?
@@ -60,32 +60,32 @@ public abstract class AbstractGraph<E> {
   public abstract String name();
 
   @SuppressWarnings("static-method") //
-  public int outDegree(final Vertex<E> v) {
-    return v.outgoing().size();
+  public int outDegree(final Vertex<E> ¢) {
+    return ¢.outgoing().size();
   }
 
   /** Which edges emanate from a given Vertex<E>?
-   * @param v some Vertex<E>
+   * @param ¢ some Vertex<E>
    * @return if v has no outgoing edges then <code><b>null</b></code>,
    *         otherwise, all vertices u such that there is an edge emanating from
    *         v and leading to u */
   @SuppressWarnings("static-method") //
-  public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> v) {
-    return v.outgoing();
+  public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
+    return ¢.outgoing();
   }
 
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
   public Iterable<Vertex<E>> preOrder() {
     return () -> new ReadonlyIterator<Vertex<E>>() {
-      final private Set<Vertex<E>> visited = new HashSet<>();
-      final private Set<Vertex<E>> unvisited = new HashSet<>();
-      final private Stack<Vertex<E>> stack = new Stack<>();
+      final Set<Vertex<E>> visited = new HashSet<>();
+      final Set<Vertex<E>> unvisited = new HashSet<>();
+      final Stack<Vertex<E>> stack = new Stack<>();
       {
-        for (final Vertex<E> v : vertices())
-          unvisited.add(v);
-        for (final Vertex<E> v : sources())
-          stack.push(v);
+        for (final Vertex<E> ¢ : vertices())
+          unvisited.add(¢);
+        for (final Vertex<E> ¢ : sources())
+          stack.push(¢);
       }
       Vertex<E> pending = findNext();
 
@@ -99,18 +99,18 @@ public abstract class AbstractGraph<E> {
         return $;
       }
 
-      private Vertex<E> findNext() {
+      Vertex<E> findNext() {
         while (!stack.empty() || !unvisited.isEmpty()) {
           if (stack.empty())
-            for (final Vertex<E> v : unvisited) {
-              stack.push(source(v));
+            for (final Vertex<E> ¢ : unvisited) {
+              stack.push(source(¢));
               break;
             }
           final Vertex<E> $ = stack.pop();
           if (outgoing($) != null)
-            for (final Vertex<E> v : outgoing($))
-              if (!visited(v))
-                stack.push(v);
+            for (final Vertex<E> ¢ : outgoing($))
+              if (!visited(¢))
+                stack.push(¢);
           if (!visited($))
             return visit($);
         }
@@ -120,14 +120,14 @@ public abstract class AbstractGraph<E> {
         return null;
       }
 
-      private Vertex<E> visit(final Vertex<E> v) {
-        visited.add(v);
-        unvisited.remove(v);
-        return v;
+      Vertex<E> visit(final Vertex<E> ¢) {
+        visited.add(¢);
+        unvisited.remove(¢);
+        return ¢;
       }
 
-      private boolean visited(final Vertex<E> v) {
-        return visited.contains(v);
+      boolean visited(final Vertex<E> ¢) {
+        return visited.contains(¢);
       }
     };
   }
@@ -157,13 +157,13 @@ public abstract class AbstractGraph<E> {
    * a source of a Vertex<E> <i>v</i> if <i>v</i>can be reached from <i>r</i>,
    * and if there is another Vertex<E> <i>r'</i> from which <i>r</i> can be
    * reached, then there is also a path from <i>r</i> to <i>r'</i>.<i>r</i>
-   * @param v an arbitrary Vertex<E> of this graph
+   * @param e an arbitrary Vertex<E> of this graph
    * @return a source of the parameter */
-  public final Vertex<E> source(final Vertex<E> v) {
+  public final Vertex<E> source(final Vertex<E> e) {
     final Queue<Vertex<E>> q = new ArrayBlockingQueue<>(size() + 1);
-    q.add(v);
+    q.add(e);
     final Set<Vertex<E>> seen = new HashSet<>();
-    seen.add(v);
+    seen.add(e);
     for (;;) {
       final Vertex<E> $ = q.poll();
       if (inDegree($) == 0)

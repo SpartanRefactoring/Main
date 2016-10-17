@@ -34,7 +34,7 @@ public abstract class Operation implements Callable<Object> {
 
   public Stopwatch netTime(final Stopwatch netTime, final int runs) {
     netTime.start();
-    for (int i = 0; i < runs; i++)
+    for (int ¢ = 0; ¢ < runs; ++¢)
       call();
     return netTime.stop();
   }

@@ -30,8 +30,8 @@ public enum has {
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
   public static boolean nulls(final Iterable<@Nullable Object> os) {
-    for (final Object o : os)
-      if (o == null)
+    for (final Object ¢ : os)
+      if (¢ == null)
         return true;
     return false;
   }
@@ -42,8 +42,8 @@ public enum has {
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
   public static boolean nulls(final Object... os) {
-    for (final Object o : os)
-      if (o == null)
+    for (final Object ¢ : os)
+      if (¢ == null)
         return true;
     return false;
   }

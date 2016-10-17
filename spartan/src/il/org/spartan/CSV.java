@@ -22,13 +22,13 @@ public enum CSV {
 
   /** Combine the given array of Class objects values into a comma separated
    * string.
-   * @param classes Input array
+   * @param cs Input array
    * @return Combined string
    * @see #splitToClasses(String) */
-  public static String combine(final Class<?>[] classes) {
-    final String[] ss = new String[classes.length];
-    for (int i = 0; i < ss.length; ++i)
-      ss[i] = classes[i] == null ? null : classes[i].getName();
+  public static String combine(final Class<?>[] cs) {
+    final String[] ss = new String[cs.length];
+    for (int ¢ = 0; ¢ < ss.length; ++¢)
+      ss[¢] = cs[¢] == null ? null : cs[¢].getName();
     return combine(ss);
   }
 
@@ -43,8 +43,8 @@ public enum CSV {
     nonnull(parts);
     final StringBuilder $ = new StringBuilder(10 * parts.length);
     final Separator sep = new Separator(",");
-    for (final T t : parts)
-      $.append(sep + escape(t == null ? null : t + ""));
+    for (final T ¢ : parts)
+      $.append(sep + escape(¢ == null ? null : ¢ + ""));
     return $ + "";
   }
 
@@ -57,8 +57,8 @@ public enum CSV {
    * @see CSV#escape(String) */
   public static <T extends Enum<T>> String combine(final T[] parts) {
     final String[] ss = new String[parts.length];
-    for (int i = 0; i < ss.length; ++i)
-      ss[i] = parts[i] == null ? null : parts[i].name();
+    for (int ¢ = 0; ¢ < ss.length; ++¢)
+      ss[¢] = parts[¢] == null ? null : parts[¢].name();
     return combine(ss);
   }
 
@@ -70,17 +70,17 @@ public enum CSV {
       return NULL;
     final int len = s.length();
     final StringBuilder out = new StringBuilder(len);
-    for (final char c : s.toCharArray())
-      out.append(c == '\\' ? "\\\\" : c == '\n' ? "\\n" : c == '\r' ? "\\r" : c == '\t' ? "\\t" : c == ',' ? "\\." : c);
+    for (final char ¢ : s.toCharArray())
+      out.append(¢ == '\\' ? "\\\\" : ¢ == '\n' ? "\\n" : ¢ == '\r' ? "\\r" : ¢ == '\t' ? "\\t" : ¢ == ',' ? "\\." : ¢);
     return out + "";
   }
 
   /** Read a CSV file.
-   * @param f Input file
+   * @param ¢ Input file
    * @return A two dimensional array of strings
    * @throws IOException some problem with file 'filename' */
-  public static String[][] load(final File f) throws IOException {
-    return load(new FileReader(f));
+  public static String[][] load(final File ¢) throws IOException {
+    return load(new FileReader(¢));
   }
 
   /** Read a CSV file from the given Reader object.
@@ -88,8 +88,8 @@ public enum CSV {
    * @return a two dimensional array of strings */
   public static String[][] load(final Reader r) {
     final ArrayList<String[]> $ = new ArrayList<>(20);
-    for (final Scanner s = new Scanner(r); s.hasNext();)
-      $.add(split(s.nextLine()));
+    for (final Scanner ¢ = new Scanner(r); ¢.hasNext();)
+      $.add(split(¢.nextLine()));
     return $.toArray(new String[$.size()][]);
   }
 
@@ -107,8 +107,8 @@ public enum CSV {
   public static <T extends Enum<T>> T[] split(final Class<T> clazz, final String s) {
     final String[] ss = split(s);
     @SuppressWarnings("unchecked") final T[] $ = (T[]) Array.newInstance(clazz, ss.length);
-    for (int i = 0; i < $.length; ++i)
-      $[i] = ss[i] == null ? null : Enum.valueOf(clazz, ss[i]);
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = ss[¢] == null ? null : Enum.valueOf(clazz, ss[¢]);
     return $;
   }
 
@@ -119,8 +119,7 @@ public enum CSV {
     if (s.length() == 0)
       return new String[0];
     final List<String> $ = new ArrayList<>();
-    int from = 0;
-    while (true) {
+    for (int from = 0; true;) {
       final int to = s.indexOf(',', from);
       if (to < 0) {
         $.add(unescape(s.substring(from, s.length())));
@@ -154,8 +153,8 @@ public enum CSV {
     final PrintWriter pw = new PrintWriter(sw);
     for (final String[] line : data) {
       final Separator comma = new Separator(",");
-      for (final String s : line)
-        pw.print(comma + escape(s));
+      for (final String ¢ : line)
+        pw.print(comma + escape(¢));
       pw.println();
     }
     pw.flush();

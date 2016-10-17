@@ -17,7 +17,7 @@ import il.org.spartan.streotypes.*;
     return jarqueBeraNormalizedVector(normalize(vs.clone()));
   }
 
-  public static double jarqueBeraNormalizedVector(final double... ds) {
-    return ds.length * (sqr(skewnessNormalizedVector(ds)) + sqr(kurtosisNormalizedVector(ds) / 2)) / 6;
+  public static double jarqueBeraNormalizedVector(final double... ¢) {
+    return ¢.length * (sqr(skewnessNormalizedVector(¢)) + sqr(kurtosisNormalizedVector(¢) / 2)) / 6;
   }
 }

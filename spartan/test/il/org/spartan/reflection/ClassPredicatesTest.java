@@ -122,12 +122,12 @@ import il.org.spartan.utils.*;
 
   public static class MutableInhertingFromImmutable extends ImmutableStatic {
     int c = 3;
-    Object object = null;
+    Object object;
   }
 
   public static class MutableStatic {
     int a = 3;
-    Object o = null;
+    Object o;
   }
 
   static enum EmptyEnum {

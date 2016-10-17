@@ -18,8 +18,8 @@ public class RealStatistics extends ImmutableStatistics {
    * use the values of <code>1L</code> to maintain upward compatibility. */
   private static final long serialVersionUID = 1L;
 
-  public static double[] increase(final double[] ds) {
-    return Arrays.copyOf(ds, ds.length * 2 + 1);
+  public static double[] increase(final double[] ¢) {
+    return Arrays.copyOf(¢, ¢.length * 2 + 1);
   }
 
   /** Make a record of the sequence of elements.
@@ -51,7 +51,7 @@ public class RealStatistics extends ImmutableStatistics {
   /** Add a ''missing'' value to the sequence.
    * @return the receiver, to be used, e.g., in chaining more such operations */
   public RealStatistics recordMissing() {
-    missing++;
+    ++missing;
     return this;
   }
 
@@ -67,8 +67,8 @@ public class RealStatistics extends ImmutableStatistics {
     min = Math.min(min, v);
     max = Math.max(max, v);
     double d = 1;
-    for (int i = 0; i < MOMENTS; ++i, d *= v)
-      moments[i] += d;
+    for (int ¢ = 0; ¢ < MOMENTS; ++¢, d *= v)
+      moments[¢] += d;
     return this;
   }
 

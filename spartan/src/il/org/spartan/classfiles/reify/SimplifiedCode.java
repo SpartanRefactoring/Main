@@ -5,8 +5,8 @@ import java.util.*;
 import il.org.spartan.classfiles.reify.OpCode.*;
 
 public class SimplifiedCode {
-  static private boolean isRelevant(final Instruction i) {
-    switch (i.opCode) {
+  static private boolean isRelevant(final Instruction ¢) {
+    switch (¢.opCode) {
       case GETSTATIC:
       case PUTSTATIC:
       case GETFIELD:
@@ -24,8 +24,8 @@ public class SimplifiedCode {
   }
 
   final List<Instruction> instructions = new ArrayList<>();
-  int instructionsCount = 0;
-  int throwCount = 0;
+  int instructionsCount;
+  int throwCount;
   private final byte[] codes;
 
   public SimplifiedCode(final byte[] codes) {
@@ -61,10 +61,10 @@ public class SimplifiedCode {
       if (i.invalid())
         throw new RuntimeException();
       if (i.opCode == OpCode.ATHROW)
-        throwCount++;
+        ++throwCount;
       if (isRelevant(i))
         instructions.add(i);
-      instructionsCount++;
+      ++instructionsCount;
     }
   }
 }

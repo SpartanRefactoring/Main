@@ -19,8 +19,8 @@ public class History<T> {
     this.n = n;
   }
 
-  void add(final T t) {
-    inner.add(t);
+  void add(final T ¢) {
+    inner.add(¢);
     while (inner.size() > n)
       inner.remove(0);
   }

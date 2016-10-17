@@ -7,8 +7,8 @@ import java.io.*;
 import il.org.spartan.utils.*;
 
 public class Tokenizer {
-  public static Reader reader(final File f) throws FileNotFoundException {
-    return new FileReader(f);
+  public static Reader reader(final File ¢) throws FileNotFoundException {
+    return new FileReader(¢);
   }
 
   public static Reader reader(final String fileName) throws FileNotFoundException {
@@ -54,8 +54,8 @@ public class Tokenizer {
     return inner.column();
   }
 
-  public String description(final Token t) {
-    return location() + t + " / " + t.kind + "<" + esc(text()) + "> S=" + state();
+  public String description(final Token ¢) {
+    return location() + ¢ + " / " + ¢.kind + "<" + esc(text()) + "> S=" + state();
   }
 
   public int line() {

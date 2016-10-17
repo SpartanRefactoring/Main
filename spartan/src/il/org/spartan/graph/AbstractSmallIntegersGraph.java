@@ -6,13 +6,13 @@ package il.org.spartan.graph;
 /** @author Yossi Gil
  * @since Apr 19, 2012 */
 public abstract class AbstractSmallIntegersGraph {
-  protected static short makeShort(final int n) {
-    if (n < 0 || n > Short.MAX_VALUE)
+  protected static short makeShort(final int ¢) {
+    if (¢ < 0 || ¢ > Short.MAX_VALUE)
       throw new IllegalArgumentException();
-    return (short) n;
+    return (short) ¢;
   }
 
-  public abstract short component(final int n);
+  public abstract short component(final int i);
 
   public abstract short components();
 
@@ -20,5 +20,5 @@ public abstract class AbstractSmallIntegersGraph {
     return has(n1) && has(n2) && component((short) n1) == component((short) n2);
   }
 
-  public abstract boolean has(final int n);
+  public abstract boolean has(final int i);
 }

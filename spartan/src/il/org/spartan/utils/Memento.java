@@ -43,12 +43,12 @@ import il.org.spartan.utils.___.*;
   }
 
   /** Determine whether a given object is equal to the saved snapshot
-   * @param t an object to compare to the saved snapshot
+   * @param ¢ an object to compare to the saved snapshot
    * @return <code><b>true</b></code>, <i>iff</i> the given object is deeply
    *         equal to the snapshot
    * @throws Bug.Contract.Precondition case object could not be serialized */
-  public boolean same(final T t) {
-    return Arrays.equals(snapshot, object2bytes(t));
+  public boolean same(final T ¢) {
+    return Arrays.equals(snapshot, object2bytes(¢));
   }
 
   /** Determine the size in bytes of the recorded snapshot

@@ -26,7 +26,7 @@ public class IterableArray<T> implements Iterable<T> {
   }
 
   public static class ArrayIterator<T> extends ReadonlyIterator<T> {
-    private int current = 0;
+    private int current;
     private final T[] ts;
 
     public ArrayIterator(final T[] ts) {

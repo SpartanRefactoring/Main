@@ -23,7 +23,7 @@ import il.org.spartan.streotypes.*;
   }
 
   private File file;
-  private String header = null;
+  private String header;
   /** The name of the file into which records are written. */
   private final String fileName;
   private final OutputStreamWriter inner;
@@ -68,8 +68,8 @@ import il.org.spartan.streotypes.*;
     return header;
   }
 
-  public void write(final AbstractStringProperties p) {
-    writeln(p.line());
+  public void write(final AbstractStringProperties ¢) {
+    writeln(¢.line());
   }
 
   /** Write a new CSV line into the file. All CSV lines written into the file

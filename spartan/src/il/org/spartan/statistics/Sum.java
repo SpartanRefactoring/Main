@@ -17,29 +17,29 @@ import il.org.spartan.streotypes.*;
   ;
   public static double sum(final double... ds) {
     double $ = 0;
-    for (final double d : ds)
-      $ += d;
+    for (final double ¢ : ds)
+      $ += ¢;
     return $;
   }
 
   public static double sum(final double[] t, final int i, final int n) {
     double $ = 0;
-    for (int j = i; j < i + n; j++)
+    for (int j = i; j < i + n; ++j)
       $ += t[j];
     return $;
   }
 
-  public static double sum(final int n, final double... ds) {
+  public static double sum(final int i, final double... ds) {
     double $ = 0;
-    for (final double d : ds)
-      $ += pow(d, n);
+    for (final double ¢ : ds)
+      $ += pow(¢, i);
     return $;
   }
 
   public static double sum2(final double... ds) {
     double $ = 0;
-    for (final double d : ds)
-      $ += sqr(d);
+    for (final double ¢ : ds)
+      $ += sqr(¢);
     return $;
   }
 

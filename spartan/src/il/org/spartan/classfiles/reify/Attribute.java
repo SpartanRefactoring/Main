@@ -28,14 +28,14 @@ import java.util.*;
   public class Extractor {
     public static List<Content> attributes(final Object target) {
       final List<Content> $ = new ArrayList<>();
-      for (final Method m : target.getClass().getMethods())
-        if (isAttribute(m))
-          $.add(new Content(m.getName(), value(target, m)));
+      for (final Method ¢ : target.getClass().getMethods())
+        if (isAttribute(¢))
+          $.add(new Content(¢.getName(), value(target, ¢)));
       return $;
     }
 
-    private static boolean isAttribute(final Method m) {
-      return m.getAnnotation(Attribute.class) != null;
+    private static boolean isAttribute(final Method ¢) {
+      return ¢.getAnnotation(Attribute.class) != null;
     }
 
     private static String value(final Object target, final Method m) {

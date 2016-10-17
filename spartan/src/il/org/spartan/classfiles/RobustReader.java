@@ -9,8 +9,8 @@ import java.util.*;
 /** @author Yossi Gil
  * @since 11 November 2011 */
 public class RobustReader {
-  protected static DataInputStream asDataInputStream(final InputStream is) {
-    return is == null ? null : new DataInputStream(is);
+  protected static DataInputStream asDataInputStream(final InputStream ¢) {
+    return ¢ == null ? null : new DataInputStream(¢);
   }
 
   protected static FileInputStream asFileInputStream(final File f) {
@@ -133,8 +133,8 @@ public class RobustReader {
     }
   }
 
-  public final void skipBytes(final int n) {
-    for (int i = 0; i < n; i++)
+  public final void skipBytes(final int i) {
+    for (int ¢ = 0; ¢ < i; ++¢)
       readUnsignedByte();
   }
 
@@ -147,14 +147,14 @@ public class RobustReader {
   }
 
   /** @param ioException */
-  protected int recordError(final Exception e) {
-    errors.add(e);
+  protected int recordError(final Exception ¢) {
+    errors.add(¢);
     return 0;
   }
 
-  int readBytes(final byte[] b, final int offset, final int howMany) {
+  int readBytes(final byte[] bs, final int offset, final int howMany) {
     try {
-      return inner.read(b, offset, howMany);
+      return inner.read(bs, offset, howMany);
     } catch (final IOException e) {
       recordError(e);
       return howMany;

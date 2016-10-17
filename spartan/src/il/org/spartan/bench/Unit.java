@@ -14,17 +14,17 @@ import il.org.spartan.*;
  * @since 2010 */
 public enum Unit {
   INTEGER {
-    @Override public String format(final double d) {
-      return new DecimalFormat("###,###,###,###,###,###,###.00").format(d);
+    @Override public String format(final double ¢) {
+      return new DecimalFormat("###,###,###,###,###,###,###.00").format(¢);
     }
 
-    @Override public String format(final long l) {
-      return new DecimalFormat("###,###,###,###,###,###,###").format(l);
+    @Override public String format(final long ¢) {
+      return new DecimalFormat("###,###,###,###,###,###,###").format(¢);
     }
   },
   DOUBLE {
-    @Override public String format(final double d) {
-      return String.format(format3(d), box(d));
+    @Override public String format(final double ¢) {
+      return String.format(format3(¢), box(¢));
     }
   },
   BYTES() {
@@ -36,25 +36,13 @@ public enum Unit {
     public static final long Eb = 1L << 60;
 
     @Override public String format(final double m) {
-      if (Double.isNaN(m))
-        return "NaN";
-      if (m < 0)
-        return "-" + format(-m);
-      if (Double.isInfinite(m))
-        return "∞";
-      if (m < Kb)
-        return format(m, 1, "B");
-      if (m < Mb)
-        return format(m, Kb, "㎅");
-      if (m < Gb)
-        return format(m, Mb, "㎆");
-      if (m < Tb)
-        return format(m, Gb, "㎇");
-      if (m < Pb)
-        return format(m, Tb, "TB");
-      if (m < Eb)
-        return format(m, Pb, "PB");
-      return format(m, Eb, "EB");
+      return Double.isNaN(m) ? "NaN"
+          : m < 0 ? "-" + format(-m)
+              : Double.isInfinite(m) ? "∞"
+                  : m < Kb ? format(m, 1, "B")
+                      : m < Mb ? format(m, Kb, "㎅")
+                          : m < Gb ? format(m, Mb, "㎆")
+                              : m < Tb ? format(m, Gb, "㎇") : m < Pb ? format(m, Tb, "TB") : m < Eb ? format(m, Pb, "PB") : format(m, Eb, "EB");
     }
   },
   NANOSECONDS {
@@ -68,52 +56,39 @@ public enum Unit {
     }
   },
   SECONDS {
-    @Override public String format(final double s) {
-      if (Double.isNaN(s))
-        return "NaN";
-      if (s < 0)
-        return "-" + format(-s);
-      if (Double.isInfinite(s))
-        return "∞";
-      if (s >= 7 * 24 * 60 * 60)
-        return format(s, 7 * 24 * 60 * 60, "wk");
-      if (s >= 24 * 60 * 60)
-        return format(s, 24 * 60 * 60, "day");
-      if (s >= 60 * 60)
-        return format(s, 24 * 60, "hr");
-      if (s >= 60)
-        return format(s, 60, "min");
-      if (s >= 1)
-        return format(s, 1, "s");
-      if (s >= 1E-3)
-        return format(s, 1E-3, "㎳");
-      if (s >= 1E-6)
-        return format(s, 1E-6, "㎲");
-      if (s >= 1E-9)
-        return format(s, 1E-9, "㎱");
-      return format(s, 1E-12, "㎰");
+    @Override public String format(final double ¢) {
+      return Double.isNaN(¢) ? "NaN"
+          : ¢ < 0 ? "-" + format(-¢)
+              : Double.isInfinite(¢) ? "∞"
+                  : ¢ >= 604800 ? format(¢, 604800, "wk")
+                      : ¢ >= 86400 ? format(¢, 86400, "day")
+                          : ¢ >= 3600 ? format(¢, 1440, "hr")
+                              : ¢ >= 60 ? format(¢, 60, "min")
+                                  : ¢ >= 1 ? format(¢, 1, "s")
+                                      : ¢ >= 1E-3 ? format(¢, 1E-3, "㎳")
+                                          : ¢ >= 1E-6 ? format(¢, 1E-6, "㎲") : ¢ >= 1E-9 ? format(¢, 1E-9, "㎱") : format(¢, 1E-12, "㎰");
     }
   },
   RELATIVE {
-    @Override public String format(final double d) {
-      return formatRelative(d);
+    @Override public String format(final double ¢) {
+      return formatRelative(¢);
     }
   };
   /** A field for identifying a streamed version of objects of this class; we
    * use the values of <code>1L</code> to maintain upward compatibility. */
   public static final long serialVersionUID = 1L;
-  public final static double PERCENT = 0.01;
-  public final static int NANOSECOND = 1;
-  public final static int MICROSECOND = 1000 * NANOSECOND;
-  public final static int MILLISECOND = 1000 * MICROSECOND;
-  public final static long SECOND = 1000 * MILLISECOND;
-  public final static long MINUTE = 60 * SECOND;
+  public static final double PERCENT = 0.01;
+  public static final int NANOSECOND = 1;
+  public static final int MICROSECOND = 1000 * NANOSECOND;
+  public static final int MILLISECOND = 1000 * MICROSECOND;
+  public static final long SECOND = 1000 * MILLISECOND;
+  public static final long MINUTE = 60 * SECOND;
 
   public static int digits(final double d) {
     if (d == 0)
       return -1;
     final double log = Math.log10(d);
-    return log < 0 ? 0 : 1 + (int) log;
+    return log < 0 ? 0 : (int) log + 1;
   }
 
   public static String format(final double v, final double scale, final String units) {
@@ -124,27 +99,15 @@ public enum Unit {
     return String.format(format3(d), box(d)) + units;
   }
 
-  public final static String format(final Stopwatch s) {
-    return formatNanoseconds(s.time());
+  public static String format(final Stopwatch ¢) {
+    return formatNanoseconds(¢.time());
   }
 
   public static String format2(final double d) {
     if (d < 0)
       return "-" + format2(-d);
     final double p = 100 * d;
-    if (p < 0.01)
-      return "%.0f";
-    if (p < 0.1)
-      return "%.2f";
-    if (p < 1)
-      return "%.1f";
-    if (p < 10)
-      return "%.1f";
-    if (p < 100)
-      return "%.0f";
-    if (p < 1000)
-      return "%.0f";
-    return "%5.0g";
+    return "%" + (p < 0.01 ? ".0f" : (p < 0.1 ? ".2f" : (p < 1 || p < 10 ? ".1f" : (p < 100 || p < 1000 ? ".0f" : "5.0g"))));
   }
 
   public static String format3(final double d) {
@@ -168,44 +131,44 @@ public enum Unit {
     return NANOSECONDS.format(t);
   }
 
-  public static String formatNanoseconds(final long l) {
-    return NANOSECONDS.format(l);
+  public static String formatNanoseconds(final long ¢) {
+    return NANOSECONDS.format(¢);
   }
 
-  public static String formatRelative(final double d) {
-    return String.format(format2(d) + "%%", box(100 * d));
+  public static String formatRelative(final double ¢) {
+    return String.format(format2(¢) + "%%", box(100 * ¢));
   }
 
   public static String formatRelative(final double d1, final double d2) {
     return formatRelative(d1 / d2);
   }
 
-  public static String thousands(final long l) {
-    return INTEGER.format(l);
+  public static String thousands(final long ¢) {
+    return INTEGER.format(¢);
   }
 
-  static double round3(final double d) {
-    switch (digits(d)) {
+  static double round3(final double ¢) {
+    switch (digits(¢)) {
       case -1:
       case 0:
-        return Math.round(1000 * d) / 1000.0;
+        return Math.round(1000 * ¢) / 1000.0;
       case 1:
-        return Math.round(100 * d) / 100.0;
+        return Math.round(100 * ¢) / 100.0;
       case 2:
-        return Math.round(10 * d) / 10.0;
+        return Math.round(10 * ¢) / 10.0;
       default:
-        return d;
+        return ¢;
     }
   }
 
   public abstract String format(final double d);
 
-  public final String format(final Double d) {
-    return format(d.doubleValue());
+  public final String format(final Double ¢) {
+    return format(¢.doubleValue());
   }
 
-  public String format(final long l) {
-    return format((double) l);
+  public String format(final long ¢) {
+    return format(1. * ¢);
   }
 
   @SuppressWarnings("static-method") public static class TEST {
@@ -288,7 +251,7 @@ public enum Unit {
     }
 
     @Test public void percentPerHunderdThousand() {
-      azzert.that(formatRelative(0.9 * 0.0001), is("0%"));
+      azzert.that(formatRelative(9.0E-5), is("0%"));
       azzert.that(formatRelative(0.00001), is("0%"));
       azzert.that(formatRelative(0.00001456), is("0%"));
       azzert.that(formatRelative(0.00001556), is("0%"));

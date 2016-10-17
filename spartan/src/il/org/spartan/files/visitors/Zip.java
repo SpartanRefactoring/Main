@@ -15,10 +15,10 @@ import il.org.spartan.strings.*;
   /** A list of all recognized extensions of archive file names. */
   private static final String[] ZIP_FILE_EXTENSIONS = { ".ZIP", ".jar", ".war", ".ear" };
 
-  /** @param file a file to examine
+  /** @param ¢ a file to examine
    * @return <code><b>true</b></code> <em>iff</em>the file is appears to be a
    *         ZIP file. */
-  public static boolean isZipFile(final File file) {
-    return Suffixed.by(file, ZIP_FILE_EXTENSIONS);
+  public static boolean isZipFile(final File ¢) {
+    return Suffixed.by(¢, ZIP_FILE_EXTENSIONS);
   }
 }

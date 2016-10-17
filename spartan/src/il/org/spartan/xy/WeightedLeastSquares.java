@@ -18,7 +18,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
     return !isInfinite(x) && !isNaN(x);
   }
 
-  protected int n = 0;
+  protected int n;
   protected final WeightedDisribution xs = new WeightedDisribution();
   protected final WeightedDisribution ys = new WeightedDisribution();
   protected final WeightedDisribution xys = new WeightedDisribution();
@@ -48,8 +48,8 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
 
   public double[] eval(final double[] x) {
     final double[] $ = new double[x.length];
-    for (int i = 0; i < x.length; i++)
-      $[i] = eval(x[i]);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = eval(x[¢]);
     return $;
   }
 

@@ -23,23 +23,23 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
     int2objects = new Vector<>();
     objects2ints = new HashMap<>();
     int position = 0;
-    for (final T t : ts)
-      if (!objects2ints.containsKey(t)) {
-        objects2ints.put(t, box(position++));
-        int2objects.add(t);
+    for (final T ¢ : ts)
+      if (!objects2ints.containsKey(¢)) {
+        objects2ints.put(¢, box(position++));
+        int2objects.add(¢);
       }
   }
 
-  @Override public boolean contains(final T t) {
-    return objects2ints.containsKey(t);
+  @Override public boolean contains(final T ¢) {
+    return objects2ints.containsKey(¢);
   }
 
   /** Returns the object represented by <code>i</code> as determined by this
    * translator.
-   * @param i the <code><b>int</b></code> whose translation shall be returned.
+   * @param ¢ the <code><b>int</b></code> whose translation shall be returned.
    * @return the translation of <code>i</code>. */
-  @Override public T decode(final int i) {
-    return int2objects.get(i);
+  @Override public T decode(final int ¢) {
+    return int2objects.get(¢);
   }
 
   @Override public Iterable<T> elements() {
@@ -48,12 +48,12 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
 
   /** Returns the <code><b>int</b></code> value of <code>c</code> as determined
    * by this translator.
-   * @param t the value whose <code><b>int</b></code> translation shall be
+   * @param ¢ the value whose <code><b>int</b></code> translation shall be
    *        returned.
    * @return the <code><b>int</b></code> translation of <code>c</code>. */
-  @Override public int encode(final T t) {
-    require(objects2ints.containsKey(t));
-    return objects2ints.get(t).intValue();
+  @Override public int encode(final T ¢) {
+    require(objects2ints.containsKey(¢));
+    return objects2ints.get(¢).intValue();
   }
 
   @Override public int size() {

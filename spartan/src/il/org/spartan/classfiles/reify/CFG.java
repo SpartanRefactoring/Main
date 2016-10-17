@@ -46,24 +46,18 @@ public class CFG {
     final Set<BasicBlock> basicBlocks = generateBasicBlocks(jumps2targets, builder);
     // third phase - add edges to the graph
     for (final Long jump : jumps2targets.keySet())
-      for (final Long target : jumps2targets.get(jump)) {
-        final BasicBlock from = offset2block(basicBlocks, jump);
-        final BasicBlock to = offset2block(basicBlocks, target);
-        builder.newEdge(from, to);
-      }
+      for (final Long target : jumps2targets.get(jump))
+        builder.newEdge(offset2block(basicBlocks, jump), offset2block(basicBlocks, target));
     for (final Long sub : subroutine2rets.keySet())
-      for (final Long ret : subroutine2rets.get(sub)) {
-        final BasicBlock from = offset2block(basicBlocks, sub);
-        final BasicBlock to = offset2block(basicBlocks, ret);
-        builder.newEdge(from, to);
-      }
+      for (final Long ret : subroutine2rets.get(sub))
+        builder.newEdge(offset2block(basicBlocks, sub), offset2block(basicBlocks, ret));
     g = builder.build();
   }
 
   @Override public String toString() {
     String $ = "";
-    for (final Vertex<BasicBlock> v : vertices())
-      $ += "basic block: " + v.e().startOffset + ", " + v.e().endOffset + "\n";
+    for (final Vertex<BasicBlock> ¢ : vertices())
+      $ += "basic block: " + ¢.e().startOffset + ", " + ¢.e().endOffset + "\n";
     for (final Vertex<BasicBlock> v : vertices())
       for (final Vertex<BasicBlock> v2 : v.outgoing())
         $ += "edge: " + v.e().endOffset + ", " + v2.e().startOffset + "\n";
@@ -156,8 +150,8 @@ public class CFG {
   }
 
   @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(final MultiMap<Long, Long> jumps2targets,
-      final Graph.Builder<BasicBlock> builder) {
-    final Set<BasicBlock> basicBlocks = new HashSet<>();
+      final Graph.Builder<BasicBlock> b) {
+    final Set<BasicBlock> $ = new HashSet<>();
     long offset = 0;
     BasicBlock currBlock = null;
     for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
@@ -168,8 +162,8 @@ public class CFG {
         throw new RuntimeException();
       if (currBlock != null && jumps2targets.values().contains(offset)) {
         currBlock.endOffset = offset - 1;
-        builder.newVertex(currBlock);
-        basicBlocks.add(currBlock);
+        b.newVertex(currBlock);
+        $.add(currBlock);
         currBlock = null;
       }
       if (currBlock == null) {
@@ -178,48 +172,31 @@ public class CFG {
       }
       if (jumps2targets.keySet().contains(offset)) {
         currBlock.endOffset = offset + i.size();
-        builder.newVertex(currBlock);
-        basicBlocks.add(currBlock);
+        b.newVertex(currBlock);
+        $.add(currBlock);
         currBlock = null;
       }
       offset = r.position();
     }
     if (currBlock != null) {
       currBlock.endOffset = offset;
-      builder.newVertex(currBlock);
-      basicBlocks.add(currBlock);
+      b.newVertex(currBlock);
+      $.add(currBlock);
     }
-    return basicBlocks;
+    return $;
   }
 
   class BasicBlock {
     long startOffset;
     long endOffset;
 
-    @Override public boolean equals(final Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      final BasicBlock other = (BasicBlock) obj;
-      if (!getOuterType().equals(other.getOuterType()))
-        return false;
-      if (endOffset != other.endOffset)
-        return false;
-      if (startOffset != other.startOffset)
-        return false;
-      return true;
+    @Override public boolean equals(final Object ¢) {
+      return ¢ == this || (¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType()) && endOffset == ((BasicBlock) ¢).endOffset
+          && startOffset == ((BasicBlock) ¢).startOffset);
     }
 
     @Override public int hashCode() {
-      final int prime = 31;
-      long result = 1;
-      result = prime * result + getOuterType().hashCode();
-      result = prime * result + endOffset;
-      result = prime * result + startOffset;
-      return (int) result;
+      return (int) (31 * (endOffset + 31 * (getOuterType().hashCode() + 31)) + startOffset);
     }
 
     private CFG getOuterType() {

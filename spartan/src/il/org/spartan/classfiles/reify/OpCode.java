@@ -186,16 +186,16 @@ public enum OpCode {
   JSR(2), // 168 (0xA8)
   RET(1), // 169 (0xA9)
   TABLESWITCH { // 170 (0xAA)
-    @Override Instruction readContent(final BufferDataInputStream r) {
-      r.align4();
+    @Override Instruction readContent(final BufferDataInputStream s) {
+      s.align4();
       try {
-        final int defaultOffset = r.readInt();
-        final int low = r.readInt();
-        final int high = r.readInt();
+        final int defaultOffset = s.readInt();
+        final int low = s.readInt();
+        final int high = s.readInt();
         ___.sure(low <= high);
         final int offsets[] = new int[high - low + 1];
-        for (int k = 0; k < high - low + 1; k++)
-          offsets[k] = r.readInt();
+        for (int k = 0; k < high - low + 1; ++k)
+          offsets[k] = s.readInt();
         return new Instruction(this, defaultOffset, offsets);
       } catch (final IOException e) {
         throw new RuntimeException();
@@ -203,15 +203,15 @@ public enum OpCode {
     }
   },
   LOOKUPSWITCH { // 171 (0xAB)
-    @Override Instruction readContent(final BufferDataInputStream r) {
-      r.align4();
+    @Override Instruction readContent(final BufferDataInputStream s) {
+      s.align4();
       try {
-        final int defaultOffset = r.readInt();
-        final int nPairs = r.readInt();
+        final int defaultOffset = s.readInt();
+        final int nPairs = s.readInt();
         final int offsets[] = new int[nPairs];
-        for (int k = 0; k < nPairs; k++) {
-          r.skip(4);
-          offsets[k] = r.readInt();
+        for (int k = 0; k < nPairs; ++k) {
+          s.skip(4);
+          offsets[k] = s.readInt();
         }
         return new Instruction(this, defaultOffset, offsets);
       } catch (final IOException e) {
@@ -244,11 +244,11 @@ public enum OpCode {
   MONITORENTER, // 194 (0xC2)
   MONITOREXIT, // 195 (0xC3)
   WIDE { // 196 (0xC4)
-    @Override Instruction readContent(final BufferDataInputStream r) {
-      final OpCode o = OpCode.values()[r.read()];
+    @Override Instruction readContent(final BufferDataInputStream s) {
+      final OpCode o = OpCode.values()[s.read()];
       if (o != IINC)
-        return readContent(r);
-      r.skip(4);
+        return readContent(s);
+      s.skip(4);
       return new Instruction(IINC, null);
     }
   },
@@ -312,11 +312,11 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
-  public static Instruction read(final BufferDataInputStream r) {
-    if (r.eof())
+  public static Instruction read(final BufferDataInputStream s) {
+    if (s.eof())
       return null;
     try {
-      return OpCode.values()[r.readUnsignedByte()].readContent(r);
+      return OpCode.values()[s.readUnsignedByte()].readContent(s);
     } catch (final EOFException e) {
       return null;
     } catch (final IOException e) {
@@ -338,10 +338,10 @@ public enum OpCode {
     return size < 0;
   }
 
-  Instruction readContent(final BufferDataInputStream r) throws IOException {
+  Instruction readContent(final BufferDataInputStream s) throws IOException {
     final short[] args = new short[size];
-    for (int i = 0; i < size; i++)
-      args[i] = (short) (0x000000FF & r.readByte());
+    for (int ¢ = 0; ¢ < size; ++¢)
+      args[¢] = (short) (0x000000FF & s.readByte());
     return new Instruction(this, args);
   }
 

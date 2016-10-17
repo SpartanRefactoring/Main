@@ -26,7 +26,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   @Nullable T cache;
   /** other cells that depend on this cell */
   final List<Cell<?>> dependents = new ArrayList<>();
-  long version = 0;
+  long version;
 
   /** @return last value computed or set for this cell. */
   public final T cache() {
@@ -38,17 +38,17 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
 
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
    * value of this cell
-   * @param t JD
+   * @param ¢ JD
    * @return <code><b>this</b></code>* */
-  public final Cell<T> of(final T t) {
-    return set(t);
+  public final Cell<T> of(final T ¢) {
+    return set(¢);
   }
 
   /** sets the current value of this cell
-   * @param t JD
+   * @param ¢ JD
    * @return <code><b>this</b></code> */
-  public final Cell<T> set(final T t) {
-    cache(t);
+  public final Cell<T> set(final T ¢) {
+    cache(¢);
     uponForcedSet();
     version = oldestDependent() + 1; // Invalidate all dependents
     return this;
@@ -85,8 +85,8 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
 
   private long oldestDependent() {
     long $ = 0;
-    for (final Cell<?> c : dependents)
-      $ = max($, c.version);
+    for (final Cell<?> ¢ : dependents)
+      $ = max($, ¢.version);
     return $;
   }
 
@@ -118,7 +118,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
 
     /** Fluent API */
     interface $$RecipeMaker {
-      <X> Cell<@Nullable X> make(final Supplier<X> s);
+      <X> Cell<@Nullable X> make(final Supplier<X> x);
     }
 
     /** TODO(2016) Javadoc: automatically generated for type

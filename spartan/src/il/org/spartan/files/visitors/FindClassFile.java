@@ -53,39 +53,39 @@ import il.org.spartan.utils.*;
    * @since 21/05/2007 */
   public static class Searcher implements Action {
     private final String sought;
-    private int directories = 0;
-    private int files = 0;
-    private int zips = 0;
-    private int entries = 0;
+    private int directories;
+    private int files;
+    private int zips;
+    private int entries;
 
     public Searcher(final String sought) {
       this.sought = sought;
     }
 
-    @Override public void visitDirectory(final File f) {
-      directories++;
-      report("Directory: " + f.getAbsolutePath());
+    @Override public void visitDirectory(final File ¢) {
+      ++directories;
+      report("Directory: " + ¢.getAbsolutePath());
     }
 
-    @Override public void visitFile(final File f) throws StopTraversal {
+    @Override public void visitFile(final File ¢) throws StopTraversal {
       ++files;
-      report("File: " + f.getAbsolutePath());
-      check(f.getName(), f.getAbsolutePath());
+      report("File: " + ¢.getAbsolutePath());
+      check(¢.getName(), ¢.getAbsolutePath());
     }
 
-    @Override public void visitZip(final File f) {
+    @Override public void visitZip(final File ¢) {
       ++zips;
-      report("Archive: " + f.getAbsolutePath());
+      report("Archive: " + ¢.getAbsolutePath());
     }
 
-    @Override public void visitZipDirectory(final String zipName, final String entryName, final InputStream stream) {
-      ___.unused(stream);
+    @Override public void visitZipDirectory(final String zipName, final String entryName, final InputStream s) {
+      ___.unused(s);
       report("Archive directory: " + entryName + " in zip " + zipName);
     }
 
-    @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream stream) throws StopTraversal {
-      ___.unused(stream);
-      entries++;
+    @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream s) throws StopTraversal {
+      ___.unused(s);
+      ++entries;
       report("Archive entry: " + entryName);
       check(entryName, zipName);
     }
@@ -98,9 +98,9 @@ import il.org.spartan.utils.*;
         throw new StopTraversal();
     }
 
-    private void report(final String s) {
+    private void report(final String ¢) {
       if (FindClassFile.reportCounts)
-        System.out.println(s + ". " + directories + " directories, " + files + " class files, " + zips + " ZIP archives, " + entries + " entries.");
+        System.out.println(¢ + ". " + directories + " directories, " + files + " class files, " + zips + " ZIP archives, " + entries + " entries.");
     }
   }
 }

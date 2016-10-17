@@ -25,8 +25,8 @@ public enum Spearman {
     final double[] y = x.clone();
     Arrays.sort(y);
     final double[] $ = new double[x.length];
-    for (int i = 0; i < x.length; i++)
-      $[i] = Arrays.binarySearch(y, x[i]);
+    for (int ¢ = 0; ¢ < x.length; ++¢)
+      $[¢] = Arrays.binarySearch(y, x[¢]);
     return $;
   }
 }

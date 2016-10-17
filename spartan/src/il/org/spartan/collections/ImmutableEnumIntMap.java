@@ -24,8 +24,8 @@ import il.org.spartan.streotypes.*;
   /* (non-Javadoc)
    *
    * @see il.org.spartan.collections.EnumIntMap#get(E) */
-  @Override public int get(final E e) {
-    sure(length() == e.getClass().getEnumConstants().length);
-    return get(e.ordinal());
+  @Override public int get(final E ¢) {
+    sure(length() == ¢.getClass().getEnumConstants().length);
+    return get(¢.ordinal());
   }
 }

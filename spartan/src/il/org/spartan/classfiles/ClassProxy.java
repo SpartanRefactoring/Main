@@ -89,9 +89,9 @@ public class ClassProxy<T> {
   /** The encapsulated {@link Class} reflective object. */
   private Class<? extends T> clazz;
   /** The name of this class. */
-  private String className = null;
+  private String className;
   /** The constant' pool information, initialized lazily. */
-  private ClassInfo inner = null;
+  private ClassInfo inner;
 
   /** Instantiate with a given {@link Class} object
    * @param clazz some {@link Class} object */
@@ -113,12 +113,12 @@ public class ClassProxy<T> {
   // ------------------------------------------------
   // Delegation to encapsulated {@link Class} object
   // ------------------------------------------------
-  public Class<?> asSubclass(final Class<?> c) throws ClassNotFoundException {
-    return clazz().asSubclass(c);
+  public Class<?> asSubclass(final Class<?> ¢) throws ClassNotFoundException {
+    return clazz().asSubclass(¢);
   }
 
-  public T cast(final Object obj) throws ClassNotFoundException {
-    return clazz().cast(obj);
+  public T cast(final Object ¢) throws ClassNotFoundException {
+    return clazz().cast(¢);
   }
 
   public String className() {
@@ -129,9 +129,9 @@ public class ClassProxy<T> {
     return clazz().desiredAssertionStatus();
   }
 
-  @Override public boolean equals(final Object obj) {
+  @Override public boolean equals(final Object o) {
     try {
-      return clazz().equals(obj);
+      return clazz().equals(o);
     } catch (final ClassNotFoundException __) {
       return false;
     }
@@ -366,16 +366,16 @@ public class ClassProxy<T> {
     return clazz().isArray();
   }
 
-  public boolean isAssignableFrom(final Class<?> cls) throws ClassNotFoundException {
-    return clazz().isAssignableFrom(cls);
+  public boolean isAssignableFrom(final Class<?> ¢) throws ClassNotFoundException {
+    return clazz().isAssignableFrom(¢);
   }
 
   public boolean isEnum() throws ClassNotFoundException {
     return clazz().isEnum();
   }
 
-  public boolean isInstance(final Object obj) throws ClassNotFoundException {
-    return clazz().isInstance(obj);
+  public boolean isInstance(final Object ¢) throws ClassNotFoundException {
+    return clazz().isInstance(¢);
   }
 
   public boolean isInterface() throws ClassNotFoundException {
@@ -433,14 +433,14 @@ public class ClassProxy<T> {
   private String retrieveClassName() {
     nonnull(clazz);
     final String $ = clazz.getName();
-    for (Class<?> c = clazz; c != null;) {
-      if (c.isMemberClass()) {
-        c = c.getDeclaringClass();
+    for (Class<?> ¢ = clazz; ¢ != null;) {
+      if (¢.isMemberClass()) {
+        ¢ = ¢.getDeclaringClass();
         $.replaceFirst("\\.([a-zA-Z0-9$]+)$", "\\$$1");
         continue;
       }
-      if (c.isLocalClass() || c.isAnonymousClass()) {
-        c = c.getEnclosingClass();
+      if (¢.isLocalClass() || ¢.isAnonymousClass()) {
+        ¢ = ¢.getEnclosingClass();
         $.replaceFirst("\\.([a-zA-Z0-9$]+)$", "\\$$1");
         continue;
       }

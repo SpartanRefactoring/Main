@@ -25,8 +25,8 @@ public enum BitSet {
   public static final short $$[];
   static {
     $$ = new short[MAX + 1];
-    for (int i = 0; i <= MAX; i++)
-      $$[i] = (short) (1 << i);
+    for (int ¢ = 0; ¢ <= MAX; ++¢)
+      $$[¢] = (short) (1 << ¢);
   }
   /** A data structure which makes it possible to iterate over the set of all
    * positions given by a bit representation of such a set. If <code>s</code> is
@@ -35,10 +35,10 @@ public enum BitSet {
    * an increasing order, that occur in this set. */
   public static final short positions[][] = new short[EXP_MAX][];
   static {
-    for (int set = 0; set < EXP_MAX; set++) {
+    for (int set = 0; set < EXP_MAX; ++set) {
       positions[set] = new short[cardinality(set)];
       int j = 0;
-      for (short b = 0; b < MAX; b++)
+      for (short b = 0; b < MAX; ++b)
         if ((set & $$[b]) != 0)
           positions[set][j++] = b;
       sure(j == positions[set].length);
@@ -46,37 +46,39 @@ public enum BitSet {
   }
 
   /** compute a mask representing the set [0...n-1]
-   * @param n a non-negative integer, must be no greater than {@link BitSet#MAX}
+   * @param ¢ a non-negative integer, must be no greater than {@link BitSet#MAX}
    * @return a bit mask including where all bits 0...n-1 are set. */
-  public static short all(final int n) {
-    nonnegative(n);
-    require(n <= MAX);
-    return (short) ($$[n + 1] - 1);
+  public static short all(final int ¢) {
+    nonnegative(¢);
+    require(¢ <= MAX);
+    return (short) ($$[¢ + 1] - 1);
   }
 
-  /** Return the number of elements in a set represented as a bit mask.
-   * @param mask a bit mask to examine
-   * @return the number of bits equal to 1 in the mask. */
-  public static final int cardinality(final int mask) {
+  /**
+   * Return the number of elements in a set represented as a bit mask.
+   * @param mask  a bit mask to examine
+   * @return  the number of bits equal to 1 in the mask. 
+   */
+  public static int cardinality(final int mask) {
     return mask == 0 ? 0 : (mask & 0x01) + cardinality(mask >>> 1);
   }
 
   /** Turn off a specific bit in a mask.
    * @param mask a bit mask representation of a set
-   * @param n index of the bit to turn off
+   * @param i index of the bit to turn off
    * @return the mask with the n<i>th</i> bit turned off. */
-  public static short clear(final short mask, final int n) {
-    return (short) (mask & ~$$[n]);
+  public static short clear(final short mask, final int i) {
+    return (short) (mask & ~$$[i]);
   }
 
   /** Determine set membership
    * @param mask a bit mask representing a set
-   * @param n an integer whose membership in the set is to be checked. Must be
+   * @param i an integer whose membership in the set is to be checked. Must be
    *        in the range <code>0...{@link BitSet#MAX}</code>
    * @return <code><b>true</b></code> <i>iff</i> <code>n</code> is a member of
    *         the set <code>mask</code> */
-  public static boolean contains(final short mask, final int n) {
-    return (mask & $$[n]) != 0;
+  public static boolean contains(final short mask, final int i) {
+    return (mask & $$[i]) != 0;
   }
 
   /** Compute the intersection of two set sets of positions.
@@ -88,12 +90,12 @@ public enum BitSet {
   }
 
   @SuppressWarnings("boxing") public static void main(final String argv[]) {
-    for (int i = 0; i < MAX; i++)
-      System.out.printf("exp[%d] = %d\n", i, $$[i]);
-    for (int i = 0; i < MAX; i++)
-      System.out.printf("bits(%d) = %d\n", i, cardinality(i));
+    for (int ¢ = 0; ¢ < MAX; ++¢)
+      System.out.printf("exp[%d] = %d\n", ¢, $$[¢]);
+    for (int ¢ = 0; ¢ < MAX; ++¢)
+      System.out.printf("bits(%d) = %d\n", ¢, cardinality(¢));
     System.out.printf("set: %o ", union(set(3), set(6)));
-    for (int i = 0; i < EXP_MAX; i++) {
+    for (int i = 0; i < EXP_MAX; ++i) {
       System.out.print(i + ". [");
       for (final int j : positions[i])
         System.out.print(j + " ");
@@ -112,20 +114,20 @@ public enum BitSet {
 
   /** Turn on a specific bit in a mask.
    * @param mask A bit mask representation of a set
-   * @param n index of the bit to turn on
+   * @param i index of the bit to turn on
    * @return the mask with the n<i>th</i> bit turned off. */
-  public static short raise(final short mask, final int n) {
-    return (short) (mask | $$[n]);
+  public static short raise(final short mask, final int i) {
+    return (short) (mask | $$[i]);
   }
 
   /** Convert an integer to a singleton set containing it.
-   * @param n an integer in the range <code>0...{@link BitSet#MAX}</code>
+   * @param ¢ an integer in the range <code>0...{@link BitSet#MAX}</code>
    * @return a bit mask representing the set whose sole member is
    *         <code>n</code> */
-  public static short set(final int n) {
-    nonnegative(n);
-    require(n < MAX);
-    return $$[n];
+  public static short set(final int ¢) {
+    nonnegative(¢);
+    require(¢ < MAX);
+    return $$[¢];
   }
 
   /** convert an array of <code><b>int</b></code>s into a bit mask

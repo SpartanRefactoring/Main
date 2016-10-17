@@ -9,10 +9,10 @@ import org.junit.runners.*;
 import il.org.spartan.iterables.*;
 
 @SuppressWarnings("javadoc") public interface beginning {
-  static final String COMMA = ",";
-  static final String DOT = ".";
-  static final String NL = "\n";
-  static final String SPACE = " ";
+  final String COMMA = ",";
+  final String DOT = ".";
+  final String NL = "\n";
+  final String SPACE = " ";
 
   static void main(final String[] args) {
     System.out.println("Arguments are: " + //
@@ -27,17 +27,15 @@ import il.org.spartan.iterables.*;
     );
   }
 
-  static with with(final char c) {
-    return with(c + "");
+  static with with(final char ¢) {
+    return with(¢ + "");
   }
 
-  static with with(final String s) {
-    return new with(s);
+  static with with(final String ¢) {
+    return new with(¢);
   }
 
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method" }) //
-  public static class TEST {
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method" }) static class TEST {
     @Test public void with() {
       azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
@@ -49,11 +47,13 @@ import il.org.spartan.iterables.*;
     }
   }
 
-  public static final class with {
+  static final class with {
     private final String beginWith;
 
-    /** Instantiate this class, with the string beginning the separation
-     * @param beginWith which string should initiate our composition */
+    /**
+    * Instantiate this class, with the string beginning the separation
+    * @param beginWith  which string should initiate our composition 
+    */
     public with(final String beginWith) {
       this.beginWith = beginWith;
     }
@@ -66,8 +66,8 @@ import il.org.spartan.iterables.*;
       return new C(os);
     }
 
-    public C separate(final String... ss) {
-      return new C(as.list(ss));
+    public C separate(final String... ¢) {
+      return new C(as.list(¢));
     }
 
     public final class C {
@@ -110,8 +110,8 @@ import il.org.spartan.iterables.*;
           this.separator = separator;
         }
 
-        public E endingWith(final String s) {
-          return new E(s);
+        public E endingWith(final String ¢) {
+          return new E(¢);
         }
 
         public String separator() {
@@ -127,8 +127,8 @@ import il.org.spartan.iterables.*;
             D.this.endWith = endWith;
           }
 
-          public I ifEmpty(final String s) {
-            return new I(s);
+          public I ifEmpty(final String ¢) {
+            return new I(¢);
           }
 
           @Override public String toString() {

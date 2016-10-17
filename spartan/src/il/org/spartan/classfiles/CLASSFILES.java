@@ -57,16 +57,16 @@ import il.org.spartan.utils.*;
    * <tt>.class</tt> file where this class was implemented. (The input stream is
    * found by searching the class files repositories, and hence is not
    * guaranteed to be precisely that of the given object);
-   * @param c an arbitrary {@link Class} object
+   * @param ¢ an arbitrary {@link Class} object
    * @return an {@link InputStream} to the result of best effort search for the
    *         <tt>.class</tt> where this class was implemented. Or,
    *         <code><b>null</b></code> if this class has no corresponding
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  public static InputStream open(final Class<?> c) {
-    nonnull(c);
-    return open(c.getName());
+  public static InputStream open(final Class<?> ¢) {
+    nonnull(¢);
+    return open(¢.getName());
   }
 
   /** Given the full name of a class, return an open input stream to the class
@@ -129,7 +129,7 @@ import il.org.spartan.utils.*;
 
   private static String location(final File where, final String className) {
     return where.isDirectory() ? searchDirectory(where, className) == null ? null : where.getName()
-        : searchZip(where, class2ZipFileName(className)) != null ? where.getName() : null;
+        : searchZip(where, class2ZipFileName(className)) == null ? null : where.getName();
   }
 
   private static InputStream open(final File where, final String className) {

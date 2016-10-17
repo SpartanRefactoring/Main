@@ -20,16 +20,16 @@ import il.org.spartan.streotypes.*;
   }
 
   /** Terminate the program with a specified error message
-   * @param s the error message associated with the termination */
-  public static void stop(final String s) {
-    stopHandler.stop(s);
+   * @param ¢ the error message associated with the termination */
+  public static void stop(final String ¢) {
+    stopHandler.stop(¢);
   }
 
   /** A never-returning method to be used for dealing with assertions that
    * should stop the program run.
-   * @param t the exception to be associated with this termination */
-  public static void stop(final Throwable t) {
-    stop(t, "Program must stop due to this error: ");
+   * @param ¢ the exception to be associated with this termination */
+  public static void stop(final Throwable ¢) {
+    stop(¢, "Program must stop due to this error: ");
   }
 
   /** A never-returning method to be used for dealing with assertions that
@@ -51,8 +51,8 @@ import il.org.spartan.streotypes.*;
         throw new AssertionError("Stop " + exitCode);
       }
 
-      @Override public void stop(final String s) {
-        System.out.println(s);
+      @Override public void stop(final String ¢) {
+        System.out.println(¢);
         stop(-1);
       }
     };
@@ -67,8 +67,8 @@ import il.org.spartan.streotypes.*;
         fail("Design by contract failue, code = " + exitCode);
       }
 
-      @Override public void stop(final String s) {
-        fail("Design by contract failue: " + s);
+      @Override public void stop(final String ¢) {
+        fail("Design by contract failue: " + ¢);
       }
     };
   }
@@ -82,23 +82,27 @@ import il.org.spartan.streotypes.*;
         throw new RuntimeException("Stop called, exit code=" + exitCode);
       }
 
-      @Override public void stop(final String s) {
-        throw new RuntimeException("Stop called:" + s);
+      @Override public void stop(final String ¢) {
+        throw new RuntimeException("Stop called:" + ¢);
       }
     };
   }
 
-  /** An interface representing a stopping policy.
-   * @author Yossi Gil, 2008/06/21 */
-  public static interface StopHandler {
-    /** What to do in case termination with an associated exit code was
-     * requested
-     * @param exitCode the exit code associated with the termination */
-    public void stop(int exitCode);
+  /**
+   * An interface representing a stopping policy.
+   * @author  Yossi Gil, 2008/06/21 
+   */
+  public interface StopHandler {
+    /**
+     * What to do in case termination with an associated exit code was requested
+     * @param exitCode   the exit code associated with the termination 
+     */
+    void stop(int exitCode);
 
-    /** What to do in case terminations with a specified error message was
-     * requested
-     * @param s the error message associated with the termination */
-    public void stop(String s);
+    /**
+     * What to do in case terminations with a specified error message was requested
+     * @param s   the error message associated with the termination 
+     */
+    void stop(String s);
   }
 }

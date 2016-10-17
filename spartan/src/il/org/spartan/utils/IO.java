@@ -12,23 +12,22 @@ import il.org.spartan.streotypes.*;
   public static String concatLines(final Iterable<String> ss) {
     final StringBuffer sb = new StringBuffer(1000);
     final Separator nl = new Separator("\n");
-    for (final String s : ss)
-      sb.append(nl).append(s);
+    for (final String ¢ : ss)
+      sb.append(nl).append(¢);
     return sb + "";
   }
 
   public static String concatLines(final String... ss) {
     final StringBuffer sb = new StringBuffer(1000);
     final Separator nl = new Separator("\n");
-    for (final String s : ss)
-      sb.append(nl).append(s);
+    for (final String ¢ : ss)
+      sb.append(nl).append(¢);
     return sb + "";
   }
 
-  public static List<String> lines(final String str) throws IOException {
+  public static List<String> lines(final String s) throws IOException {
     final List<String> $ = new ArrayList<>();
-    final BufferedReader br = new BufferedReader(new StringReader(str));
-    while (true) {
+    for (final BufferedReader br = new BufferedReader(new StringReader(s));;) {
       final String line = br.readLine();
       if (line == null)
         return $;
@@ -55,11 +54,11 @@ import il.org.spartan.streotypes.*;
   }
 
   /** Read the contents of the given stream and return it as a String
-   * @param is Input stream
+   * @param ¢ Input stream
    * @return the entire content of <code>is</code>
    * @throws IOException If an I/O error occur */
-  public static String toString(final InputStream is) throws IOException {
-    return toString(new InputStreamReader(is));
+  public static String toString(final InputStream ¢) throws IOException {
+    return toString(new InputStreamReader(¢));
   }
 
   /** Read the contents of the given reader and return it as a String
@@ -80,8 +79,8 @@ import il.org.spartan.streotypes.*;
   public static void writeLines(final File outputFile, final String... ss) throws IOException {
     final FileWriter fw = new FileWriter(outputFile);
     try {
-      for (final String s : ss) {
-        fw.append(s);
+      for (final String ¢ : ss) {
+        fw.append(¢);
         fw.append("\n");
       }
     } finally {

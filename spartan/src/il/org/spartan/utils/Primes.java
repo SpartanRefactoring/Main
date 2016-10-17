@@ -13,7 +13,7 @@ import il.org.spartan.*;
  * @since Mar 1, 2012 */
 public class Primes {
   private static boolean isPrime(final int c) {
-    for (int d = 2; d * d <= c; d++)
+    for (int d = 2; d * d <= c; ++d)
       if (c % d == 0)
         return false;
     return true;
