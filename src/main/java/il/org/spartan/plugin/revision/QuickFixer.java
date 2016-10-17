@@ -42,10 +42,10 @@ import il.org.spartan.spartanizer.tipping.*;
 
   /** Apply spartanization to marked code. */
   private final IMarkerResolution apply = quickFix("Apply",
-      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.by(¢).buildAll()).go());
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getApplicator(¢)).passes(1).selection(Selection.Util.by(¢).buildAll()).go());
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
-    final GUI$Applicator g = getSpartanizer(¢);
+    final GUI$Applicator g = getApplicator(¢);
     final Applicator<?> a = EventApplicator.defaultApplicator().passes(1).selection(Selection.Util.by(¢).buildAll());
     a.runAction(u -> {
       try {
@@ -60,14 +60,14 @@ import il.org.spartan.spartanizer.tipping.*;
   });
   /** Spartanize current file. */
   private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
+      .defaultRunAction(getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
   /** Spartanize current function. */
   private final IMarkerResolution laconizeFunction = quickFix("Laconize function",
-      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getSpartanizer(¢)).passes(1)
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getApplicator(¢)).passes(1)
           /* defaultPassesMany() */.selection(Selection.Util.expend(¢, MethodDeclaration.class).buildAll()).go());
   /** Spartanize current class. */
   private final IMarkerResolution laconizeClass = quickFix("Laconize class",
-      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getSpartanizer(¢))
+      ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getApplicator(¢))
           ./* passes(1) */defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class).buildAll()).go());
   /** Apply tipper to current function. */
   private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function",
@@ -102,7 +102,7 @@ import il.org.spartan.spartanizer.tipping.*;
     };
   }
 
-  static GUI$Applicator getSpartanizer(final IMarker m) {
+  static GUI$Applicator getApplicator(final IMarker m) {
     try {
       return Tips.get((String) m.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException x) {
