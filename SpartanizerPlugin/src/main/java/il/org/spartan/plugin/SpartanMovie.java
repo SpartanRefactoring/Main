@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.lang.reflect.*;
+import java.util.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
@@ -40,21 +41,19 @@ public class SpartanMovie extends AbstractHandler {
         pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
         int changes = 0;
         int filesModified = 0;
-        // TODO Roth: this function is much much too large. Try  to break it --yg
+        // TODO Roth: this function is much much too large. Try to break it --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-          // TODO Roth: seems strange; not saying it is not right, but try to
+          // XXX Roth: seems strange; not saying it is not right, but try to
           // make it evident why this is necessary. --yg
+          // TODO Yossi: it just looks better this way. Editors do not pile up
+          // and create a mess. --or
           close(page);
           final IFile file = (IFile) currentCompilationUnit.getResource();
-          // TODO Roth: seems awkward; why so? Can't you check if filesModified
-          // is not zero?--yg
-          boolean counterInitialized = false;
           try {
-            for (IMarker[] markers = getMarkers(file); markers.length > 0; markers = getMarkers(file)) {
-              if (!counterInitialized) {
-                ++filesModified;
-                counterInitialized = true;
-              }
+            IMarker[] markers = getMarkers(file);
+            if (markers.length > 0)
+              ++filesModified;
+            for (; markers.length > 0; markers = getMarkers(file)) {
               final IMarker marker = getFirstMarker(markers);
               pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
                   + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
@@ -100,9 +99,7 @@ public class SpartanMovie extends AbstractHandler {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
     } catch (final JavaModelException x) {
       monitor.log(x);
-      // TODO Roth: It would be more elegant to return an empty list, and save
-      // you testing for nullability later --yg
-      return null;
+      return new LinkedList<>();
     }
   }
 
@@ -125,8 +122,10 @@ public class SpartanMovie extends AbstractHandler {
       Thread.sleep((int) (1000 * i));
       return true;
     } catch (@SuppressWarnings("unused") final InterruptedException __) {
-      // TODO Roth: this seems like an awful bug to me. You cannot interrupt
+      // XXX Roth: this seems like an awful bug to me. You cannot interrupt
       // during sleep? Huh? --yg
+      // TODO Yossi: you are defiantly right. The current SpartanMovie is not
+      // releasable. Some big changes should be made. --or
       return false;
     }
   }
@@ -141,7 +140,7 @@ public class SpartanMovie extends AbstractHandler {
     final Shell p = s == null ? null : s.getParent().getShell();
     // TODO Roth: I think you should check for 'p' only; give it a meaningful
     // name --yg
-    if (s != null && p != null)
+    if (p != null)
       s.setLocation(p.getBounds().x + p.getBounds().width - s.getBounds().width, p.getBounds().y);
   }
 
@@ -149,8 +148,13 @@ public class SpartanMovie extends AbstractHandler {
     int $ = 0;
     for (int i = 0; i < ¢.length; ++i)
       try {
-        // TODO Roth: how could this ever be true? --yg
-        // TODO Roth: are you sure you can store 'int'? --yg
+        // XXX Roth: how could this ever be true? --yg
+        // XXX Roth: are you sure you can store 'int'? --yg
+        // TODO Yossi: this function finds the first marker in array in terms of
+        // textual location. The "CHAR_START" attribute is not something I have
+        // added, but an existing and well maintained marker attribute. I agree
+        // this can be done with more caution, although it works fine by now.
+        // --or
         if ((int) ¢[i].getAttribute(IMarker.CHAR_START) < (int) ¢[$].getAttribute(IMarker.CHAR_START))
           $ = i;
       } catch (final CoreException x) {
