@@ -12,14 +12,33 @@ import il.org.spartan.spartanizer.dispatch.*;
 
 /** ??
  * @author Daniel Mittelman
- * @year 2016 */
+ * @year 2016
+ * @author Ori Roth
+ * @since 2.6 */
 public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String TIPPER_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
+  private final MBoolean refreshNeeded;
 
   public PreferencesPage() {
     super(GRID);
-    listener = new SpartanPropertyListener();
+    refreshNeeded = new MBoolean(false);
+    listener = new SpartanPropertyListener(refreshNeeded);
+  }
+
+  @Override public boolean performOk() {
+    refreshNeeded.is = false;
+    boolean $ = super.performOk();
+    if (refreshNeeded.is)
+      new Thread(() -> {
+        Toolbox.refresh();
+        try {
+          RefreshAll.go();
+        } catch (final Exception x) {
+          monitor.logEvaluationError(this, x);
+        }
+      }).start();
+    return $;
   }
 
   /** Build the preferences page by adding controls */
@@ -42,15 +61,24 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
   /** An event handler used to re-initialize the {@link Trimmer} spartanization
    * once a tipper preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
-    @Override public void propertyChange(@SuppressWarnings("unused") final PropertyChangeEvent __) {
-      new Thread(() -> {
-        Toolbox.refresh();
-        try {
-          RefreshAll.go();
-        } catch (final Exception e) {
-          monitor.logEvaluationError(this, e);
-        }
-      }).start();
+    private final MBoolean refreshNeeded;
+
+    public SpartanPropertyListener(MBoolean refreshNeeded) {
+      this.refreshNeeded = refreshNeeded;
+    }
+
+    @Override public void propertyChange(final PropertyChangeEvent ¢) {
+      if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
+        refreshNeeded.is = true;
+      else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null && ¢.getNewValue() instanceof Boolean)
+        NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is = ((Boolean) ¢.getNewValue()).booleanValue();
+    }
+  }
+
+  static class MBoolean {
+    boolean is;
+    public MBoolean(boolean init) {
+      is = init;
     }
   }
 }
