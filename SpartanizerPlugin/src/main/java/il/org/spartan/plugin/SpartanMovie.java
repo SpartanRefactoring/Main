@@ -136,12 +136,12 @@ public class SpartanMovie extends AbstractHandler {
   }
 
   static void moveProgressDialog() {
-    final Shell s = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-    final Shell p = s == null ? null : s.getParent().getShell();
+    final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+    final Shell parentShell = shell == null ? null : shell.getParent().getShell();
     // TODO Roth: I think you should check for 'p' only; give it a meaningful
     // name --yg
-    if (p != null)
-      s.setLocation(p.getBounds().x + p.getBounds().width - s.getBounds().width, p.getBounds().y);
+    if (shell != null && parentShell != null)
+      shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }
 
   static IMarker getFirstMarker(final IMarker[] ¢) {
@@ -155,7 +155,7 @@ public class SpartanMovie extends AbstractHandler {
         // added, but an existing and well maintained marker attribute. I agree
         // this can be done with more caution, although it works fine by now.
         // --or
-        if ((int) ¢[i].getAttribute(IMarker.CHAR_START) < (int) ¢[$].getAttribute(IMarker.CHAR_START))
+        if (((Integer) ¢[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ¢[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
       } catch (final CoreException x) {
         monitor.log(x);
