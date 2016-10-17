@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.junit.*;
 
 import il.org.spartan.plugin.*;
 
@@ -48,7 +49,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final Time time = new Time();
     final Flag openDialog = new Flag(false);
     $.listener(EventMapper.empty(event.class) //
-        .expend(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
+        .expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
           if (openDialog.flag)
             asynch(() -> {
               d.getProgressMonitor().subTask($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
@@ -57,9 +58,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 $.stop();
             });
         })) //
-        .expend(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
-        .expend(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
-        .expend(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
+        .expand(EventMapper.recorderOf(event.visit_node).rememberBy(ASTNode.class)) //
+        .expand(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
+        .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.flag)
             asynch(() -> {
               d.getProgressMonitor().beginTask(NAME, $.selection().size());
@@ -67,7 +68,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 $.stop();
             });
         })) //
-        .expend(EventMapper.inspectorOf(event.run_start).does(¢ -> {
+        .expand(EventMapper.inspectorOf(event.run_start).does(¢ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
               $.stop();
@@ -77,7 +78,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             }
           time.set(System.nanoTime());
         })) //
-        .expend(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
+        .expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if (openDialog.flag)
             asynch(() -> {
               d.close();
@@ -115,7 +116,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   /** Used to measure run time.
    * @author Ori Roth
    * @since 2.6 */
-  private static class Time {
+  @Deprecated @Ignore("Use class Stopwatch instead") private static class Time {
     long time;
 
     public Time() {
@@ -139,8 +140,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Mutable boolean.
    * @author Ori Roth
-   * @since 2.6 */
-  private static class Flag {
+   * @since 2.6 We do not want flags.... Use {@link AtomicBoolean} or
+   *        something */
+  @Deprecated private static class Flag {
     boolean flag;
 
     public Flag(final boolean b) {

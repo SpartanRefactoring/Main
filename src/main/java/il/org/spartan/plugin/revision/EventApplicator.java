@@ -8,8 +8,12 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 // TODO Roth: move into separate file
-/** Possible events during spartanization process */
-enum event {
+/** Possible events during spartanization process
+ * <p>
+ * Why do we need to make such a strong binding between the event generator and
+ * the listener? Why should they agree on a common type of events? We should let
+ * the listener take, say strings, and just record them. */
+@Deprecated enum event {
   run_start, run_finish, run_pass, run_pass_done, //
   visit_root, visit_cu, visit_node, //
 }
@@ -37,9 +41,9 @@ public class EventApplicator extends Applicator<EventListener<event>> {
         listener().tick(event.run_pass);
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> alive = new LinkedList<>();
-        alive.addAll(selection().inner);
-        final List<WrappedCompilationUnit> dead = new LinkedList<>();
+        final List<WrappedCompilationUnit> selected = selection().inner;
+        final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
+        final List<WrappedCompilationUnit> dead = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           if (!runAction().apply(¢.build()).booleanValue())
             dead.add(¢);
@@ -49,8 +53,8 @@ public class EventApplicator extends Applicator<EventListener<event>> {
             break;
         }
         listener().tick(event.run_pass_done);
-        selection().inner.removeAll(dead);
-        if (selection().inner.isEmpty() || !shouldRun())
+        selected.removeAll(dead);
+        if (selected.isEmpty() || !shouldRun())
           break;
       }
     });
@@ -73,17 +77,13 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @return this applicator */
   public EventApplicator defaultListenerSilent() {
     listener(EventListener.simpleListener(event.class, //
-        e -> {
-          //
-        }, (e, o) -> {
-          //
-        }));
+        e -> { /*empty*/ }, (e, o) -> { /*empty*/ }));
     return this;
   }
 
   /** Default selection configuration of {@link EventApplicator}. Normal eclipse
    * user selection.
-   * @return this applicator */
+   * @return this ap;plicator */
   public EventApplicator defaultSelection() {
     selection(Selection.Util.current());
     return this;
