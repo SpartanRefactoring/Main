@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import static il.org.spartan.Utils.*;
 
@@ -24,6 +24,7 @@ import org.eclipse.ui.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Fluent API services for the plugin
@@ -45,7 +46,7 @@ public enum eclipse {
   static final boolean showDialogMenu = true;
 
   /** Add nature to one project */
-  static void addNature(final IProject p) throws CoreException {
+  public static void addNature(final IProject p) throws CoreException {
     final IProjectDescription d = p.getDescription();
     final String[] natures = d.getNatureIds();
     if (as.list(natures).contains(Nature.NATURE_ID))
@@ -94,7 +95,7 @@ public enum eclipse {
    *        operation times use {@link wizard@nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
-  static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
+  public static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor pm) throws JavaModelException {
     pm.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null) {
@@ -135,7 +136,7 @@ public enum eclipse {
 
   /** Retrieves the current {@link ICompilationUnit}
    * @return current {@link ICompilationUnit} */
-  static ICompilationUnit currentCompilationUnit() {
+  public static ICompilationUnit currentCompilationUnit() {
     return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
   }
 
@@ -145,7 +146,7 @@ public enum eclipse {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
-  // TODO Roth: do not create a compilation unit
+  // XXX Roth: do not create a compilation unit
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
@@ -190,7 +191,7 @@ public enum eclipse {
     return iconNonBusy;
   }
 
-  static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+  public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
@@ -223,7 +224,7 @@ public enum eclipse {
     }
   }
 
-  boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
+  public boolean isNodeOutsideMarker(final ASTNode n, final IMarker m) {
     try {
       return n.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || n.getLength() + n.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();

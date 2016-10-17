@@ -1,6 +1,6 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.revision.Linguistic.*;
+import static il.org.spartan.plugin.Linguistic.*;
 
 import java.lang.reflect.*;
 import java.math.*;
@@ -14,8 +14,6 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.junit.*;
-
-import il.org.spartan.plugin.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link EventApplicator} as its applicator.
@@ -43,7 +41,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler [[SuppressWarningsSpartan]] */
-  protected static EventApplicator applicator() {
+  public static EventApplicator applicator() {
     final EventApplicator $ = new EventApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Time time = new Time();

@@ -1,8 +1,6 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
 import java.util.function.*;
-
-import il.org.spartan.plugin.*;
 
 /** Configurable applicator.
  * @param <L> I think we do not need this one. It couples classes too much.

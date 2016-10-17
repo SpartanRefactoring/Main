@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -13,7 +13,7 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.revision.*;
+import il.org.spartan.plugin.*;
 
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth

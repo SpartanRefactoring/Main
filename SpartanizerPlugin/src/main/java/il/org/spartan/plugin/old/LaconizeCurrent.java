@@ -1,10 +1,11 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
 /** A handler for {@link Tips} This handler executes all safe spartanizations on

@@ -1,6 +1,6 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
-import static il.org.spartan.plugin.RefactorerUtil.*;
+import static il.org.spartan.plugin.old.RefactorerUtil.*;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
 
-import il.org.spartan.plugin.revision.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
