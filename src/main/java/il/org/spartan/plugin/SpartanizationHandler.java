@@ -78,9 +78,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         })) //
         .expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if (openDialog.flag)
-            asynch(() -> {
-              d.close();
-            });
+            asynch(() -> d.close());
         }).does(¢ -> {
           if (openDialog.flag)
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //
@@ -93,9 +91,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         })));
     $.runContext(r -> {
       try {
-        d.run(true, true, __ -> {
-          r.run();
-        });
+        d.run(true, true, __ -> r.run());
       } catch (InvocationTargetException | InterruptedException e) {
         monitor.log(e);
         e.printStackTrace();

@@ -13,6 +13,7 @@ import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.old.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Ori Roth
  * @since 2016 */
 public class SpartanMovie extends AbstractHandler {
-  private static final String NAME = "Spartan Movie";
+  private static final String NAME = "Spartan movie";
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
@@ -39,13 +40,17 @@ public class SpartanMovie extends AbstractHandler {
         pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
         int changes = 0;
         int filesModified = 0;
+        // TODO Roth: this function is much much too large. Try  to break it --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+          // TODO Roth: seems strange; not saying it is not right, but try to
+          // make it evident why this is necessary. --yg
           close(page);
           final IFile file = (IFile) currentCompilationUnit.getResource();
+          // TODO Roth: seems awkward; why so? Can't you check if filesModified
+          // is not zero?--yg
           boolean counterInitialized = false;
           try {
-            for (IMarker[] markers = file.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE); markers != null
-                && markers.length > 0; markers = file.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE)) {
+            for (IMarker[] markers = getMarkers(file); markers.length > 0; markers = getMarkers(file)) {
               if (!counterInitialized) {
                 ++filesModified;
                 counterInitialized = true;
@@ -58,7 +63,7 @@ public class SpartanMovie extends AbstractHandler {
               sleep(SLEEP_BETWEEN);
               trimmer.runAsMarkerFix(marker);
               ++changes;
-              marker.delete(); // TODO Roth: does not seam to make a difference
+              marker.delete(); // TODO Roth: does not seem to make a difference
               refresh(page);
               sleep(SLEEP_BETWEEN);
             }
@@ -78,13 +83,27 @@ public class SpartanMovie extends AbstractHandler {
     return null;
   }
 
+  /** @param ¢
+   * @return
+   * @throws CoreException */
+  private static IMarker[] getMarkers(final IFile ¢) {
+    try {
+      return ¢.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
+    } catch (CoreException x) {
+      monitor.log(x);
+      return new IMarker[0];
+    }
+  }
+
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
-      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), new NullProgressMonitor());
+      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
     } catch (final JavaModelException x) {
       monitor.log(x);
+      // TODO Roth: It would be more elegant to return an empty list, and save
+      // you testing for nullability later --yg
+      return null;
     }
-    return null;
   }
 
   static boolean focus(final IWorkbenchPage p, final IFile f) {
@@ -106,6 +125,8 @@ public class SpartanMovie extends AbstractHandler {
       Thread.sleep((int) (1000 * i));
       return true;
     } catch (@SuppressWarnings("unused") final InterruptedException __) {
+      // TODO Roth: this seems like an awful bug to me. You cannot interrupt
+      // during sleep? Huh? --yg
       return false;
     }
   }
@@ -118,14 +139,18 @@ public class SpartanMovie extends AbstractHandler {
   static void moveProgressDialog() {
     final Shell s = PlatformUI.getWorkbench().getDisplay().getActiveShell();
     final Shell p = s == null ? null : s.getParent().getShell();
+    // TODO Roth: I think you should check for 'p' only; give it a meaningful
+    // name --yg
     if (s != null && p != null)
       s.setLocation(p.getBounds().x + p.getBounds().width - s.getBounds().width, p.getBounds().y);
   }
 
-  @SuppressWarnings("boxing") static IMarker getFirstMarker(final IMarker[] ¢) {
+  static IMarker getFirstMarker(final IMarker[] ¢) {
     int $ = 0;
     for (int i = 0; i < ¢.length; ++i)
       try {
+        // TODO Roth: how could this ever be true? --yg
+        // TODO Roth: are you sure you can store 'int'? --yg
         if ((int) ¢[i].getAttribute(IMarker.CHAR_START) < (int) ¢[$].getAttribute(IMarker.CHAR_START))
           $ = i;
       } catch (final CoreException x) {
