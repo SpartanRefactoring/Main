@@ -199,7 +199,7 @@ import il.org.spartan.plugin.revision.*;
         final int passesCount = passesCount();
         int pass;
         int totalTips = 0;
-        final List<ICompilationUnit> deadCompilationUnits = new LinkedList<>();
+        final List<ICompilationUnit> deadCompilationUnits = new ArrayList<>();
         final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
         for (pass = 0; pass < passesCount && !finish(pm); ++pass) {
           pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
@@ -255,7 +255,7 @@ import il.org.spartan.plugin.revision.*;
   }
 
   private static List<ICompilationUnit> currentCompilationUnits(final List<ICompilationUnit> us, final List<ICompilationUnit> ds) {
-    final List<ICompilationUnit> $ = new LinkedList<>();
+    final List<ICompilationUnit> $ = new ArrayList<>();
     $.addAll(us);
     $.removeAll(ds);
     return $;

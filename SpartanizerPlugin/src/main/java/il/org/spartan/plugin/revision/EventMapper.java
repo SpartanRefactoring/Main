@@ -50,7 +50,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   /** Expend this EventMapper by adding a recorder.
    * @param ¢ JD
    * @return this EventMapper */
-  @SuppressWarnings("unchecked") public EventMapper<E> expend(@SuppressWarnings("rawtypes") final EventFunctor ¢) {
+  @SuppressWarnings("unchecked") public EventMapper<E> expand(@SuppressWarnings("rawtypes") final EventFunctor ¢) {
     recorders.put((E) ¢.domain, ¢);
     return this;
   }

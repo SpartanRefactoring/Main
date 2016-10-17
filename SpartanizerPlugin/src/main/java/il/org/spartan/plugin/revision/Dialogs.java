@@ -52,7 +52,8 @@ public class Dialogs {
     };
   }
 
-  /** Simple dialog, does not waits for user operation (i.e. non blocking).
+  /** Simple non-modal dialog. Does not wait for user operation (i.e., non
+   * blocking).
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog messageOnTheRun(final String message) {
