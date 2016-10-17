@@ -43,23 +43,19 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
       }
 
       @Override public boolean visit(final WhileStatement ¢) {
-        return checkContainsParameter(¢);
-      }
-
-      @Override public boolean visit(final EnhancedForStatement ¢) {
-        return checkContainsParameter(¢);
-      }
-
-      @Override public boolean visit(final TryStatement ¢) {
-        return checkContainsParameter(¢);
+        return checkContainsParameter(step.expression(¢));
       }
 
       @Override public boolean visit(final AssertStatement ¢) {
-        return checkContainsParameter(¢);
+        return checkContainsParameter(step.expression(¢));
       }
 
       @Override public boolean visit(final DoStatement ¢) {
-        return checkContainsParameter(¢);
+        return checkContainsParameter(step.expression(¢));
+      }
+
+      @Override public boolean visit(final ConditionalExpression ¢) {
+        return checkContainsParameter(step.expression(¢));
       }
 
       boolean checkContainsParameter(final ASTNode ¢) {
