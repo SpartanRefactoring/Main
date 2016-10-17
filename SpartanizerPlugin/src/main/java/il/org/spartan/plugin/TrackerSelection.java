@@ -27,9 +27,10 @@ public class TrackerSelection extends Selection {
 
   public void update() {
     inner.get(0).dispose();
-    final ASTNode newTrack = track.getLength() > length
-        ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
-        : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode();
+    final ASTNode newTrack = fix(track.getNodeType(),
+        track.getLength() > length
+            ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
+            : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
     if (!match(track, newTrack)) {
       inner.clear(); // empty selection
       return;
@@ -37,6 +38,13 @@ public class TrackerSelection extends Selection {
     track = newTrack;
     length = track.getLength();
     textSelection = new TextSelection(track.getStartPosition(), length);
+  }
+
+  private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
+    ASTNode $;
+    for ($ = coveredNode; $ != null && $.getNodeType() != nodeType;)
+      $ = $.getParent();
+    return $;
   }
 
   private static List<WrappedCompilationUnit> asList(WrappedCompilationUnit ¢) {
