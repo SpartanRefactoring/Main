@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.plugin;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
@@ -156,7 +156,6 @@ public class Selection extends AbstractSelection<Selection> {
     /** Default name for default package selections. */
     private static final String DEFAULT_PACKAGE_NAME = "(default package)";
 
-    // TODO Roth: delete this ASAP
     /** @return selection of current compilation unit */
     public static Selection getCurrentCompilationUnit() {
       final Selection $ = getCompilationUnit();
@@ -185,16 +184,11 @@ public class Selection extends AbstractSelection<Selection> {
       return by(getJavaProject(r.getProject()));
     }
 
-    // TODO Roth: delete this ASAP
     public static Selection getAllCompilationUnits() {
-      final ISelection s = getSelection();
-      if (s == null)
+      final IJavaProject p = getJavaProject();
+      if (p == null)
         return empty();
-      if (s instanceof ITextSelection) {
-        final IJavaProject p = getJavaProject();
-        return by(p).setTextSelection(null).setName(p.getElementName());
-      }
-      return empty();
+      return by(p).setTextSelection(null).setName(p.getElementName());
     }
 
     /** @return current user selection */
@@ -244,7 +238,9 @@ public class Selection extends AbstractSelection<Selection> {
       return by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
-    /** TODO Roth: what does expend mean? --yg
+    /** XXX Roth: what does expend mean? --yg TODO Yossi: [CORRECTION] this is
+     * an expansion of a marker selection to contain parent node
+     * (method/class/etc) and provide a *tracking service* for it. --or
      * @param m
      * @param c
      * @return */

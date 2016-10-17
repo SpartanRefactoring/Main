@@ -273,6 +273,10 @@ public class Toolbox {
     defaultInstance = freshCopyOfAllTippers();
   }
 
+  public static void refresh(final Trimmer ¢) {
+    ¢.toolbox = freshCopyOfAllTippers();
+  }
+
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {
     removing: for (;;) {
       for (int ¢ = 0; ¢ < ns.size(); ++¢)

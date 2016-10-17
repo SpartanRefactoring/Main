@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import java.lang.reflect.*;
 
@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;

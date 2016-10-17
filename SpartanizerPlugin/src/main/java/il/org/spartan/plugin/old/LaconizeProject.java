@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.plugin.old;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
