@@ -19,7 +19,7 @@ import il.org.spartan.plugin.old.*;
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
   private static boolean listening;
-  private static final int SAFTY_DELAY = 1000;
+  private static final int SAFTY_DELAY = 100;
 
   public static AbstractUIPlugin plugin() {
     return plugin;
@@ -99,6 +99,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           });
           if (mp.p != null) {
             Job.createSystem(pm -> {
+              try {
               switch (mp.type) {
                 case new_project:
                   eclipse.addNature(mp.p);
@@ -111,6 +112,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 // break;
                 default:
                   break;
+              }
+              } catch (final Exception x) {
+                monitor.log(x);
               }
             }).schedule(SAFTY_DELAY);
           }
