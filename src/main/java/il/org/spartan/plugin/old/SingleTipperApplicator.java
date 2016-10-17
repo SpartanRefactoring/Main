@@ -90,7 +90,7 @@ public final class SingleTipperApplicator {
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
-    // TODO Roth: find a better way to get tipper from marker
+    // XXX Roth: find a better way to get tipper from marker
     final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
       pm.done();
