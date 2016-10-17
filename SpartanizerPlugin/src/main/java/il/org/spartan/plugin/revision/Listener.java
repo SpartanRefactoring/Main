@@ -14,17 +14,34 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2.6 */
 public interface Listener {
-  final AtomicInteger id = new AtomicInteger();
+  final AtomicLong eventId = new AtomicLong();
 
-  static int id() {
-    return id.get();
+  default Listener asListener() {
+    return this;
+  }
+
+  /** Create a new id for an event
+   * @param ¢ notification details
+   * @return */
+  static long newId() {
+    return eventId.incrementAndGet();
   }
 
   /** Main listener function.
-   * @param ¢ object to be listened to */
-  default void tick(final Object... ¢) {
-    id.incrementAndGet();
-    ___.unused(¢);
+   * @param ¢ notification details */
+  void tick(final Object... os);
+
+  /** Begin a delimited listening session
+   * @param os notification details
+   * @see #pop */
+  default void push(final Object... os) {
+    tick(os);
+  }
+
+  /** Used to restore a pushed listening session
+   * @param ¢ notification details */
+  default void pop(final Object... os) {
+    tick(os);
   }
 
   /** A listener that records a long string of the message it got.
@@ -38,14 +55,11 @@ public interface Listener {
     }
 
     @Override public void tick(final Object... os) {
-      $.append(id() + ": ");
+      $.append(newId() + ": ");
+      final Separator s = new Separator(", ");
       for (final Object ¢ : os)
-        pack(¢);
+        $.append(s + trim(¢));
       $.append('\n');
-    }
-
-    private void pack(final Object ¢) {
-      $.append("," + trim(¢));
     }
 
     private static String trim(final Object ¢) {
@@ -54,13 +68,14 @@ public interface Listener {
   }
 
   /** An aggregating kind of {@link Listener} that dispatches the event it
-   * receives to the multiple {@link Listener} s it stores internally.
+   * receives to the multiple {@link Listener}s it stores internally.
    * @author Yossi Gil
    * @since 2.6 */
   class S extends ArrayList<Listener> implements Listener {
     private static final long serialVersionUID = 1L;
 
     @Override public void tick(final Object... os) {
+      asListener().tick(os);
       for (final Listener ¢ : this)
         ¢.tick(os);
     }
@@ -68,7 +83,7 @@ public interface Listener {
     /** for fluent API use, i.e., <code>
      *
      * <pre>
-     *  <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
+         <b>public final</b>  {@link Listener}  listeners =  {@link Listener.S} . {@link #empty()}
      * </pre>
      *
      * <code>
@@ -78,16 +93,15 @@ public interface Listener {
     }
 
     /** To be used in the following nano <code><pre> 
-               * public interface Applicator { 
-               *   public class Settings extends Listeners {
-               *      public class Action extends Setting { 
-               *         int action1() {} ; 
-               *         void action2(Type1 t1, Type2 t2, int i)  { ...}
-               *      } 
-               *   }  
-               * } </pre></code> parameterized solely by the name
-     * <code>Applicator</code> and the actions in class `Action` in
-     * <code>Action</code>
+               public interface Applicator { 
+                 public class Settings extends Listeners {
+                    public class Action extends Setting { 
+                       int action1() {} 
+                       void action2(Type1 t1, Type2 t2, int i)  { ...}
+                    } 
+                 }  
+               } </pre></code> parameterized solely by the name
+     * <code>Applicator</code> * and the body of class <code>Action</code>
      * @return <code><b>this</b></code> */
     public List<Listener> listeners() {
       return this;
