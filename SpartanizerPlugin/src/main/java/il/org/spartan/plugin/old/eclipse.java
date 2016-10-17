@@ -46,7 +46,7 @@ public enum eclipse {
   static final boolean showDialogMenu = true;
 
   /** Add nature to one project */
-  static void addNature(final IProject p) throws CoreException {
+  public static void addNature(final IProject p) throws CoreException {
     final IProjectDescription d = p.getDescription();
     final String[] natures = d.getNatureIds();
     if (as.list(natures).contains(Nature.NATURE_ID))

@@ -28,7 +28,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
       }
   }
 
-  private static void enableNature(final IProject p) throws CoreException {
+  public static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
     description.setNatureIds(append(natures, Nature.NATURE_ID));
