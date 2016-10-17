@@ -1,12 +1,12 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 
-// TODO Roth: move into separate file
 /** Possible events during spartanization process
  * <p>
  * Why do we need to make such a strong binding between the event generator and
@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** An {@link Applicator} suitable for eclipse GUI.
  * @author Ori Roth
  * @since 2.6 */
-public class EventApplicator extends Applicator<EventListener<event>> {
+public class Spartanizer extends Applicator {
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
@@ -30,14 +30,13 @@ public class EventApplicator extends Applicator<EventListener<event>> {
   @Override public void go() {
     if (selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
       return;
-    listener().tick(event.visit_root, selection().name);
-    listener().tick(event.run_start);
+    listener().push(message.run_start.get(selection().name));
     if (!shouldRun())
       return;
     runContext().accept(() -> {
       final int l = passes();
       for (int pass = 0; pass < l; ++pass) {
-        listener().tick(event.run_pass);
+        listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
         final List<WrappedCompilationUnit> selected = selection().inner;
@@ -47,97 +46,131 @@ public class EventApplicator extends Applicator<EventListener<event>> {
           if (!runAction().apply(¢.build()).booleanValue())
             dead.add(¢);
           ¢.dispose();
-          listener().tick(event.visit_cu, ¢);
+          listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), ¢.descriptor.getElementName()));
           if (!shouldRun())
             break;
         }
-        listener().tick(event.run_pass_done);
+        listener().pop(message.run_pass_finish.get(Integer.valueOf(pass)));
         selected.removeAll(dead);
         if (selected.isEmpty() || !shouldRun())
           break;
       }
     });
-    listener().tick(event.run_finish);
+    // TODO Roth: add metrics etc.
+    listener().pop(message.run_finish.get(selection().name));
   }
 
-  /** Default listener configuration of {@link EventApplicator}. Simple printing
+  /** Default listener configuration of {@link Spartanizer}. Simple printing
    * to console.
    * @return this applicator */
-  public EventApplicator defaultListenerNoisy() {
-    listener(EventListener.simpleListener(event.class, //
-        e -> System.out.println(e), //
-        (e, o) -> System.out.println(e + ":\t" + o)//
-    ));
+  public Spartanizer defaultListenerNoisy() {
+    listener(new Listener() {
+      @Override public void tick(Object... os) {
+        for (Object ¢ : os)
+          System.out.print(¢ + " ");
+        System.out.println();
+      }
+    });
     return this;
   }
 
-  /** Default listener configuration of {@link EventApplicator}. Silent
+  /** Default listener configuration of {@link Spartanizer}. Silent
    * listener.
    * @return this applicator */
-  public EventApplicator defaultListenerSilent() {
-    listener(EventListener.simpleListener(event.class, //
-        e -> { /*empty*/ }, (e, o) -> { /*empty*/ }));
+  public Spartanizer defaultListenerSilent() {
+    listener(new Listener() {
+      @Override public void tick(@SuppressWarnings("unused") Object... __) {
+        //
+      }
+    });
     return this;
   }
 
-  /** Default selection configuration of {@link EventApplicator}. Normal eclipse
+  /** Default selection configuration of {@link Spartanizer}. Normal eclipse
    * user selection.
-   * @return this ap;plicator */
-  public EventApplicator defaultSelection() {
+   * @return this applicator */
+  public Spartanizer defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
 
-  /** Default passes configuration of {@link EventApplicator}, with few passes.
+  /** Default passes configuration of {@link Spartanizer}, with few passes.
    * @return this applicator */
-  public EventApplicator defaultPassesFew() {
+  public Spartanizer defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
-  /** Default passes configuration of {@link EventApplicator}, with many passes.
+  /** Default passes configuration of {@link Spartanizer}, with many passes.
    * @return this applicator */
-  public EventApplicator defaultPassesMany() {
+  public Spartanizer defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
 
-  /** Default run context configuration of {@link EventApplicator}. Simply runs
+  /** Default run context configuration of {@link Spartanizer}. Simply runs
    * the {@link Runnable} in the current thread.
    * @return this applicator */
-  public EventApplicator defaultRunContext() {
+  public Spartanizer defaultRunContext() {
     runContext(r -> r.run());
     return this;
   }
 
   // TODO Roth: use Policy / replacement for Trimmer.
-  /** Default run action configuration of {@link EventApplicator}. Spartanize
+  /** Default run action configuration of {@link Spartanizer}. Spartanize
    * the {@link ICompilationUnit} using a {@link Trimmer}.
    * @return this applicator */
-  public EventApplicator defaultRunAction() {
+  public Spartanizer defaultRunAction() {
     final Trimmer t = new Trimmer();
     runAction(u -> Boolean.valueOf(t.apply(u, selection())));
     return this;
   }
 
-  /** Default run action configuration of {@link EventApplicator}. Spartanize
+  /** Default run action configuration of {@link Spartanizer}. Spartanize
    * the {@link ICompilationUnit} using received {@link GUI$Applicator}.
    * @param a JD
    * @return this applicator */
-  public EventApplicator defaultRunAction(final GUI$Applicator a) {
+  public Spartanizer defaultRunAction(final GUI$Applicator a) {
     runAction(u -> Boolean.valueOf(a.apply(u, selection())));
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return this applicator */
-  public EventApplicator defaultSettings() {
+  public Spartanizer defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
 
   /** Factory method.
    * @return default event applicator */
-  public static EventApplicator defaultApplicator() {
-    return new EventApplicator().defaultSettings();
+  public static Spartanizer defaultApplicator() {
+    return new Spartanizer().defaultSettings();
+  }
+  
+  /** Printing definition of events that occur during spartanization.
+   * @author Ori Roth
+   * @since 2.6 */
+  private enum message {
+    run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
+    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
+    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
+    visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
+    run_finish(1, inp -> "Done spartanizing " + printableAt(inp, 0));
+    private final int inputCount;
+    private final Function<Object[], String> printing;
+
+    message(int inputCount, Function<Object[], String> printing) {
+      this.inputCount = inputCount;
+      this.printing = printing;
+    }
+
+    public String get(Object... ¢) {
+      assert ¢.length == inputCount;
+      return printing.apply(¢);
+    }
+
+    private static String printableAt(Object[] os, int index) {
+      return Linguistic.nanable(os, xs -> xs[index]);
+    }
   }
 }
