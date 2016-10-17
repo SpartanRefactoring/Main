@@ -30,16 +30,16 @@ public interface Listener {
   void tick(final Object... os);
 
   /** Begin a delimited listening session
-   * @param os notification details
+   * @param ¢ notification details
    * @see #pop */
-  default void push(final Object... os) {
-    tick(os);
+  default void push(final Object... ¢) {
+    tick(¢);
   }
 
   /** Used to restore a pushed listening session
    * @param ¢ notification details */
-  default void pop(final Object... os) {
-    tick(os);
+  default void pop(final Object... ¢) {
+    tick(¢);
   }
 
   /** A listener that records a long string of the message it got.
