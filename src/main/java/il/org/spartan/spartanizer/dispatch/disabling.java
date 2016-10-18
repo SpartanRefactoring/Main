@@ -98,9 +98,7 @@ public interface disabling {
   }
 
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
-    if (d == null || d.getJavadoc() == null)
-      return false;
-    return contains(d.getJavadoc() + "", ids);
+    return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 
   static boolean contains(final String s, final String[] ids) {

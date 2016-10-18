@@ -49,7 +49,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   @SuppressWarnings("unchecked") public static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
-    final List<String> ts = new LinkedList<>();
+    final List<String> ts = new ArrayList<>();
     for (final VariableDeclaration ¢ : ds)
       ts.add((¢ instanceof SingleVariableDeclaration ? ((SingleVariableDeclaration) ¢).getType()
           : az.variableDeclrationStatement(¢.getParent()).getType()) + "");
@@ -62,7 +62,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   @SuppressWarnings("unchecked") private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d,
       final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
     Collections.sort(ds, new NaturalVariablesOrder(d));
-    final List<ASTNode> $ = new LinkedList<>();
+    final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = duplicate.of(d);
     fixStatements(d, d1, r);
     d1.getBody().statements().subList(d.getBody().statements().indexOf(forkPoint) + 1, d.getBody().statements().size()).clear();
@@ -134,12 +134,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (j == null)
       return;
     final List<TagElement> ts = j.tags();
-    final List<String> ns = new LinkedList<>();
+    final List<String> ns = new ArrayList<>();
     for (final VariableDeclaration ¢ : ds)
       ns.add(¢.getName() + "");
     boolean hasParamTags = false;
     int tagPosition = -1;
-    final List<TagElement> xs = new LinkedList<>();
+    final List<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && ¢.fragments().get(0) instanceof SimpleName) {
         hasParamTags = true;
@@ -177,8 +177,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     @SuppressWarnings("unchecked") public MethodVariablesScanner(final MethodDeclaration method) {
       super(method);
       uses = new HashMap<>();
-      active = new LinkedList<>();
-      inactive = new LinkedList<>();
+      active = new ArrayList<>();
+      inactive = new ArrayList<>();
       variablesTerminated = 0;
       for (final SingleVariableDeclaration ¢ : (List<SingleVariableDeclaration>) method.parameters()) {
         setUsesMapping(¢, 0);
@@ -194,7 +194,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("unchecked") public void update() {
-      final List<VariableDeclaration> vs = new LinkedList<>();
+      final List<VariableDeclaration> vs = new ArrayList<>();
       vs.addAll(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
         if ((!(currentStatement instanceof ExpressionStatement) || !(((ExpressionStatement) currentStatement).getExpression() instanceof Assignment))
@@ -223,7 +223,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     public List<VariableDeclaration> usedVariables() {
-      final List<VariableDeclaration> $ = new LinkedList<>();
+      final List<VariableDeclaration> $ = new ArrayList<>();
       $.addAll(uses.keySet());
       return $;
     }
@@ -237,7 +237,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       if (Collect.usesOf(d.getName()).in(s).isEmpty())
         return;
       if (!uses.containsKey(d))
-        uses.put(d, new LinkedList<>());
+        uses.put(d, new ArrayList<>());
       uses.get(d).add(s);
     }
   }

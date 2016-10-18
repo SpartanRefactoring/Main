@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 
 public class MyComposite extends Composite {
-  public static void main(final String[] args) {
+  @SuppressWarnings("unused") public static void main(final String[] args) {
     new MyComposite(null, SWT.NONE);
   }
 

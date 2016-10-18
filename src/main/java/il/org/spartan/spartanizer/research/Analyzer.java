@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.research;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -14,35 +13,14 @@ import il.org.spartan.spartanizer.research.patterns.*;
  * @since 2016 */
 public class Analyzer {
   public static void main(final String args[]) {
-    if (args.length != 3)
-      System.out.println("Usage: Analyzer <operation> <inputFolder> <outputFolder>");
-    switch (args[0]) {
-      case "-analyze":
-        analyze(args[1]);
-        break;
-      case "-spartanize":
-        spartanize(args[1], args[2]);
-        break;
-      case "-full":
-      default:
-        spartanize(args[1], args[2]);
-        analyze(args[1]);
-    }
+    if (args.length != 2)
+      System.out.println("Usage: Analyzer <inputFolder> <outputFolder>");
+    analyze(args[0], args[1]);
   }
 
-  private static void updateFile(final File f, final ASTNode cu) {
-    updateFile(f, cu + "");
-  }
-
-  private static void updateFile(final File f, final String s) {
-    try (final PrintWriter writer = new PrintWriter(f.getAbsolutePath())) {
-      writer.print(s);
-      writer.close();
-    } catch (final FileNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
-
+  /** Append String to file.
+   * @param f file
+   * @param s string */
   private static void appendFile(final File f, final String s) {
     try (FileWriter fw = new FileWriter(f, true)) {
       fw.write(s);
@@ -51,34 +29,38 @@ public class Analyzer {
     }
   }
 
+  /** Clean {@link cu} from any comments, javadoc, importDeclarations,
+   * packageDeclarations and FieldDeclarations.
+   * @param cu
+   * @return */
   private static ASTNode clean(final ASTNode cu) {
     cu.accept(new CleanerVisitor());
     return cu;
   }
 
+  /** @param ¢ file
+   * @return compilation unit out of file */
   private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
-  public static void analyze(final String folderName) {
-    for (final File f : getJavaFiles(folderName)) {
-      final ASTNode cu = getCompilationUnit(f);
-      analyze(cu);
-      updateFile(f, cu);
-    }
+  /** Get all java files contained in folder recursively. <br>
+   * Heuristically, we ignore test files.
+   * @param dirName name of directory to search in
+   * @return All java files nested inside the folder */
+  private static Set<File> getJavaFiles(final String dirName) {
+    return getJavaFiles(new File(dirName));
   }
 
-  private static Set<File> getJavaFiles(final String folderName) {
-    return getJavaFiles(new File(folderName));
-  }
-
-  /** @param folderName
-   * @return */
-  private static Set<File> getJavaFiles(final File dir) {
+  /** Get all java files contained in folder recursively. <br>
+   * Heuristically, we ignore test files.
+   * @param directory to search in
+   * @return All java files nested inside the folder */
+  private static Set<File> getJavaFiles(final File directory) {
     final Set<File> $ = new HashSet<>();
-    if (dir == null || dir.listFiles() == null)
+    if (directory == null || directory.listFiles() == null)
       return $;
-    for (final File entry : dir.listFiles())
+    for (final File entry : directory.listFiles())
       if (entry.isFile() && entry.getName().endsWith(".java") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test"))
         $.add(entry);
       else
@@ -86,45 +68,17 @@ public class Analyzer {
     return $;
   }
 
-  private static void analyze(final ASTNode ¢) {
-    report(¢);
-  }
-
-  private static void report(final ASTNode root) {
-    root.accept(new ReporterVisitor());
-  }
-
-  private static int nodes(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
-    root.accept(new ASTVisitor() {
-      @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        $.incrementAndGet();
-      }
-    });
-    return $.get();
-  }
-
-  private static int markedNodes(final ASTNode root) {
-    final AtomicInteger $ = new AtomicInteger();
-    root.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
-        if (Marker.isMarked(¢))
-          $.incrementAndGet();
-      }
-    });
-    return $.get();
-  }
-
-  /** @param inputFolder
-   * @param outputDir */
-  private static void spartanize(final String inputFolder, final String outputDir) {
+  /** @param inputFolder of the project to be analyzed.
+   * @param outputDir to which the spartanized code file and CSV files will be
+   *        placed in */
+  private static void analyze(final String inputFolder, final String outputDir) {
     final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
     addNanoPatterns(spartanizer);
+    sanityCheck();
     String spartanizedCode = "";
     new File(outputDir + "/after.java").delete();
     for (final File ¢ : getJavaFiles(inputFolder)) {
-      // System.out.println("Now: " + ¢.getName());
-      ASTNode cu = clean(getCompilationUnit(¢));
+      final ASTNode cu = clean(getCompilationUnit(¢));
       Logger.logCompilationUnit(cu);
       spartanizedCode = spartanizer.fixedPoint(cu + "");
       appendFile(new File(outputDir + "/after.java"), spartanizedCode);
@@ -132,12 +86,14 @@ public class Analyzer {
     Logger.summarize(outputDir);
   }
 
+  /** Add our wonderful patterns (which are actually just special tippers) to
+   * the spartanizer.
+   * @param ¢ our spartanizer */
   private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
-    ¢.toolbox
-        .add(ConditionalExpression.class, //
-            new TernaryNullCoallescing(), //
-            new TernaryNullConditional(), //
-            null) //
+    ¢.add(ConditionalExpression.class, //
+        new DefaultsTo(), //
+        new SafeReference(), //
+        null) //
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
             null) //
@@ -146,6 +102,8 @@ public class Analyzer {
             null) //
         .add(IfStatement.class, //
             new IfNullThrow(), //
+            new IfNullReturn(), //
+            new IfNullReturnNull(), //
             null) //
         .add(MethodDeclaration.class, //
             new MethodEmpty(), //
@@ -153,6 +111,16 @@ public class Analyzer {
             new Setter(), //
             new Mapper(), //
             new Exploder(), //
+            new JDPattern(), //
+            new Examiner(), //
             null);
+  }
+
+  /** This us just to check that the InteractiveSpartanizer works and that
+   * tippers can be added to it. */
+  private static void sanityCheck() {
+    final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+    addNanoPatterns(spartanizer);
+    assert spartanizer.fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }
