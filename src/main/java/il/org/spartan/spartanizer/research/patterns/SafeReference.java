@@ -36,7 +36,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
   }
 
   @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
-    Logger.logNP(x, "?.");
+    Logger.logNP(x, "safeReference");
     for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
