@@ -213,7 +213,7 @@ public enum az {
    * @return argument, but down-casted to a {@link MethodDeclaration}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
   public static MethodDeclaration methodDeclaration(final ASTNode $) {
-    return eval(() -> ((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
+    return $ == null ? null : eval(() -> ((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
   }
 
   /** Down-cast, if possible, to {@link MethodInvocation}
