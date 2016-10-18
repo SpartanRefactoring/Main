@@ -1,9 +1,11 @@
 package il.org.spartan.spartanizer.engine;
 
+import java.text.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
@@ -12,6 +14,7 @@ public interface Linguistic {
   /** Error string, replacing null/error value. */
   final String UNKNOWN = "???";
   final String SEPARATOR = ", ";
+  final String DOUBLE_FORMAT = "####0.00";
 
   /** Cut string's suffix to maximal length.
    * @param s JD
@@ -88,5 +91,14 @@ public interface Linguistic {
 
   static String merge(final Object[] os, final String separator) {
     return separate.these(os).by(separator);
+  }
+
+  static String time(long t) {
+    try {
+      return (new DecimalFormat(DOUBLE_FORMAT)).format(t / 1000000000.0);
+    } catch (final ArithmeticException x) {
+      monitor.log(x);
+      return UNKNOWN;
+    }
   }
 }
