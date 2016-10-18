@@ -131,11 +131,7 @@ public class Analyzer {
             new Setter(), //
             new Mapper(), //
             new Exploder(), //
-<<<<<<< HEAD
             // new JDPattern(), //
-=======
-            new JDPattern(), //
->>>>>>> 72f2373eb20490fa21ff8ccbdb9234a3d76a41cf
             null);
   }
 

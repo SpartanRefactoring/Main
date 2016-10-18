@@ -3,12 +3,14 @@ package il.org.spartan.spartanizer.engine;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
+import il.org.spartan.*;
+
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
  * @since 2.6 */
 public interface Linguistic {
   /** Error string, replacing null/error value. */
-  public static final String NAN = "???";
+  public static final String UNKNOWN = "???";
   public static final String SEPARATOR = ", ";
 
   /** Cut string's suffix to maximal length.
@@ -24,7 +26,7 @@ public interface Linguistic {
    * @param i count
    * @return fixed string */
   public static String plurals(final String s, final Integer i) {
-    return i == null ? NAN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
+    return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
@@ -32,7 +34,7 @@ public interface Linguistic {
    * @param i count
    * @return fixed string */
   public static String plurales(final String s, final Integer i) {
-    return i == null ? NAN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
+    return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
   /** Get the plural form of the word if needed, by adding an 's' to its end.
@@ -40,7 +42,7 @@ public interface Linguistic {
    * @param i count
    * @return fixed string */
   public static String plurals(final String s, final AtomicInteger i) {
-    return i == null ? NAN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
+    return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
@@ -48,7 +50,7 @@ public interface Linguistic {
    * @param i count
    * @return fixed string */
   public static String plurales(final String s, final AtomicInteger i) {
-    return i == null ? NAN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
+    return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
   /** Get the plural form of the word if needed, by adding an 's' to its end.
@@ -70,33 +72,22 @@ public interface Linguistic {
   /** @param ¢ something
    * @return printable {@link String} for it */
   public static <X> String nanable(final X ¢) {
-    return ¢ == null ? NAN : ¢ + "";
+    return ¢ == null ? UNKNOWN : ¢ + "";
   }
 
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
+  // TODO Marco: This is an exact case of defaultsTo
   public static <X> String nanable(final X x, final Function<X, ?> f) {
-    return x == null ? NAN : f.apply(x) + "";
+    return x == null ? UNKNOWN : f.apply(x) + "";
   }
   
   public static String merge(final Object[] os) {
-    if (os.length == 0)
-      return "";
-    StringBuilder b = new StringBuilder();
-    for (int ¢ = 0; ¢ < os.length - 1; ++¢)
-      b.append(os[¢]).append(SEPARATOR);
-    b.append(os[os.length - 1]);
-    return b + "";
+    return separate.these(os).by(SEPARATOR);
   }
 
   public static String merge(final Object[] os, final String separator) {
-    if (os.length == 0)
-      return "";
-    StringBuilder b = new StringBuilder();
-    for (int ¢ = 0; ¢ < os.length - 1; ++¢)
-      b.append(os[¢]).append(separator);
-    b.append(os[os.length - 1]);
-    return b + "";
+    return separate.these(os).by(separator);
   }
 }

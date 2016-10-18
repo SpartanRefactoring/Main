@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -116,14 +117,14 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   }
 
   protected static String extractName(Expression root) {
-    final Str str = new Str();
+    final StringBuilder $ = new StringBuilder();
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
-        str.inner = n + "";
+        $.append(n);
         return false;
       }
     });
-    return str.inner;
+    return $ + ""; 
   }
 
   /** [[SuppressWarningsSpartan]] */
