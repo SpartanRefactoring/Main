@@ -6,9 +6,9 @@ import java.util.function.*;
  * @param <L> I think we do not need this one. It couples classes too much.
  * @author Ori Roth
  * @since 2.6 */
-public abstract class Applicator<L extends Listener> {
+public abstract class Applicator {
   /** Generic listener. */
-  private L listener;
+  private Listener listener;
   /** The selection covered by this applicator. */
   private Selection selection;
   /** The context in which the application runs. The bulk of the application
@@ -45,7 +45,7 @@ public abstract class Applicator<L extends Listener> {
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> runContext(final Consumer<Runnable> ¢) {
+  public Applicator runContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
     return this;
   }
@@ -58,7 +58,7 @@ public abstract class Applicator<L extends Listener> {
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> runAction(final Function<WrappedCompilationUnit, Boolean> ¢) {
+  public Applicator runAction(final Function<WrappedCompilationUnit, Boolean> ¢) {
     runAction = ¢;
     return this;
   }
@@ -71,20 +71,20 @@ public abstract class Applicator<L extends Listener> {
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> passes(final int ¢) {
+  public Applicator passes(final int ¢) {
     passes = ¢;
     return this;
   }
 
   /** @return selection of the applicator, ready to be configured. */
-  public L listener() {
+  public Listener listener() {
     return listener;
   }
 
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> listener(final L ¢) {
+  public Applicator listener(final Listener ¢) {
     listener = ¢;
     return this;
   }
@@ -97,7 +97,7 @@ public abstract class Applicator<L extends Listener> {
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator<L> selection(final Selection ¢) {
+  public Applicator selection(final Selection ¢) {
     selection = ¢;
     return this;
   }

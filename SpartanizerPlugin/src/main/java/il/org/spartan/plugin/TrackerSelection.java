@@ -27,9 +27,10 @@ public class TrackerSelection extends Selection {
 
   public void update() {
     inner.get(0).dispose();
-    final ASTNode newTrack = track.getLength() > length
-        ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
-        : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode();
+    final ASTNode newTrack = fix(track.getNodeType(),
+        track.getLength() > length
+            ? new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
+            : new NodeFinder(inner.get(0).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
     if (!match(track, newTrack)) {
       inner.clear(); // empty selection
       return;
@@ -39,8 +40,20 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
+<<<<<<< HEAD
   private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
     final List<WrappedCompilationUnit> $ = new ArrayList<>();
+=======
+  private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
+    ASTNode $;
+    for ($ = coveredNode; $ != null && $.getNodeType() != nodeType;)
+      $ = $.getParent();
+    return $;
+  }
+
+  private static List<WrappedCompilationUnit> asList(WrappedCompilationUnit ¢) {
+    List<WrappedCompilationUnit> $ = new ArrayList<>();
+>>>>>>> 72f2373eb20490fa21ff8ccbdb9234a3d76a41cf
     if (¢ != null)
       $.add(¢);
     return $;
