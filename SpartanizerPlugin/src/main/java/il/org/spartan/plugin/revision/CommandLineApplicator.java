@@ -2,6 +2,9 @@ package il.org.spartan.plugin.revision;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.*;
+
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** An {@link Applicator} suitable for the command line.
@@ -101,6 +104,15 @@ public class CommandLineApplicator extends Applicator<EventListener<event>> {
 //    final Trimmer t = new Trimmer();
     final Spartanizer$Applicator s = new Spartanizer$Applicator();
     runAction(u -> Boolean.valueOf(s.apply(u, selection())));
+    return this;
+  }
+  
+  /** Default run action configuration of {@link CommandLineApplicator}. Spartanize
+   * the {@link CompilationUnit} using received {@link Spartanizer$Applicator}.
+   * @param a JD
+   * @return this applicator */
+  public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
+    runAction(u -> Boolean.valueOf(a.apply(u, selection())));
     return this;
   }
   
