@@ -1,17 +1,12 @@
 package il.org.spartan.spartanizer.research.patterns;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace X != null ? X : Y with X ?? Y <br>
  * replace X == null ? Y : X with X ?? Y <br>
@@ -20,31 +15,36 @@ import il.org.spartan.spartanizer.research.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
-  private static boolean prerequisite(final Expression left, final Expression right, final Expression elze) {
-    return !iz.nullLiteral(left) && iz.nullLiteral(right) && wizard.same(left, elze)
-        || iz.nullLiteral(left) && !iz.nullLiteral(right) && wizard.same(right, elze);
-  }
+  @SuppressWarnings("serial") List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
+    {
+      add(TipperFactory.tipper("$X1 != null ? $X1 : $X2", "defaultsTo($X1, $X2)", ""));
+      add(TipperFactory.tipper("$X1 == null ? $X2 : $X1", "defaultsTo($X1, $X2)", ""));
+      add(TipperFactory.tipper("null != $X1 ? $X1 : $X2", "defaultsTo($X1, $X2)", ""));
+      add(TipperFactory.tipper("null == $X1 ? $X2 : $X1", "defaultsTo($X1, $X2)", ""));
+      add(TipperFactory.tipper("$X1 != null ? $X2 : $X3", "defaultsTo($X1, $X2, $X3)", ""));
+      add(TipperFactory.tipper("$X1 == null ? $X2 : $X3", "defaultsTo($X1, $X2, $X3)", ""));
+      add(TipperFactory.tipper("null != $X1 ? $X2 : $X3", "defaultsTo($X1, $X2, $X3)", ""));
+      add(TipperFactory.tipper("null == $X1 ? $X2 : $X3", "defaultsTo($X1, $X2, $X3)", ""));
+    }
+  };
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "replace null coallescing ternary with ??";
+    return "defaulsTo pattern";
   }
 
   @Override public boolean canTip(final ConditionalExpression x) {
-    if (!iz.comparison(az.infixExpression(step.expression(x))))
-      return false;
-    final InfixExpression condition = az.comparison(step.expression(x));
-    final Expression left = left(condition);
-    final Expression right = right(condition);
-    return operator(condition) == EQUALS ? prerequisite(left, right, elze(x))
-        : operator(condition) == NOT_EQUALS && prerequisite(left, right, then(x));
+    for (UserDefinedTipper<ConditionalExpression> ¢ : tippers)
+      if (¢.canTip(x))
+        return true;
+    return false;
   }
 
-  @Override public Tip tip(final ConditionalExpression x) {
-    return new Tip(description(x), x, this.getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(x, into.e("defaultsTo(" + step.expression(x) + "," + then(x) + ")"), g);
-        Logger.logNP(x, "defaultsTo");
-      }
-    };
+  @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
+    Logger.logNP(x, "defaultsTo");
+    for (UserDefinedTipper<ConditionalExpression> ¢ : tippers)
+      if (¢.canTip(x))
+        return ¢.tip(x);
+    assert false;
+    return null;
   }
 }

@@ -111,11 +111,10 @@ public class Analyzer {
   }
 
   private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
-    ¢.toolbox
-        .add(ConditionalExpression.class, //
-            new DefaultsTo(), //
-            new TernaryNullConditional(), //
-            null) //
+    ¢.add(ConditionalExpression.class, //
+        new DefaultsTo(), //
+        new TernaryNullConditional(), //
+        null) //
         .add(Assignment.class, //
             new AssignmentLazyEvaluation(), //
             null) //

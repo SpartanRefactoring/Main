@@ -29,7 +29,7 @@ public final class InteractiveSpartanizer {
     return $;
   }
 
-  public final Toolbox toolbox = Toolbox.defaultInstance();
+  public Toolbox toolbox = Toolbox.defaultInstance();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
@@ -55,5 +55,14 @@ public final class InteractiveSpartanizer {
         return false;
       }
     };
+  }
+
+  boolean changed;
+
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(Class<N> n, Tipper<N>... ns) {
+    if (!changed)
+      toolbox = Toolbox.muttableDefaultInstance();
+    toolbox.add(n, ns);
+    return this;
   }
 }
