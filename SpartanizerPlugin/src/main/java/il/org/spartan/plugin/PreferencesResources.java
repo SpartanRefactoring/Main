@@ -20,9 +20,10 @@ public final class PreferencesResources {
           "always_off" } };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "Preference_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
-  public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT SAFE
+  public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT
+                                                                        // SAFE
   public static MBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new MBoolean(true);
-  
+
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
   public enum TipperGroup {

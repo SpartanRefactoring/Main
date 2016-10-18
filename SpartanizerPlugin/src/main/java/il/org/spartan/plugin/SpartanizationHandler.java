@@ -1,6 +1,6 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.Linguistic.*;
+import static il.org.spartan.spartanizer.engine.Linguistic.*;
 
 import java.lang.reflect.*;
 import java.math.*;

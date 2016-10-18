@@ -11,7 +11,6 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;

@@ -76,7 +76,10 @@ public class EventApplicator extends Applicator<EventListener<event>> {
    * @return this applicator */
   public EventApplicator defaultListenerSilent() {
     listener(EventListener.simpleListener(event.class, //
-        e -> { /*empty*/ }, (e, o) -> { /*empty*/ }));
+        e -> {
+          /* empty */ },
+        (e, o) -> {
+          /* empty */ }));
     return this;
   }
 

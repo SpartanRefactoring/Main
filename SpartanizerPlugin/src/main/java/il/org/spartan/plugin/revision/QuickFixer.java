@@ -60,8 +60,8 @@ import il.org.spartan.spartanizer.tipping.*;
     a.go();
   });
   /** Spartanize current file. */
-  private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> EventApplicator.defaultApplicator()
-      .defaultRunAction(getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
+  private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getApplicator(¢))
+      .defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
   /** Spartanize current function. */
   private final IMarkerResolution laconizeFunction = quickFix("Laconize function",
       ¢ -> EventApplicator.defaultApplicator().defaultRunAction(getApplicator(¢)).passes(1)

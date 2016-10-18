@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.net.*;
+
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.resource.*;
