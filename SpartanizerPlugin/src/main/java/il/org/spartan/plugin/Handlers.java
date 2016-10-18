@@ -9,7 +9,7 @@ public class Handlers extends AbstractHandler {
   private static final String LACONIZE_CURRENT = "il.org.spartan.LaconizeCurrent";
   private static final String LACONIZE_PROJECT = "il.org.spartan.LaconizeAll";
 
-  @Override public Object execute(ExecutionEvent ¢) {
+  @Override public Object execute(final ExecutionEvent ¢) {
     if (¢ == null || ¢.getCommand() == null)
       return null;
     switch (¢.getCommand().getId()) {

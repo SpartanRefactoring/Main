@@ -1,4 +1,4 @@
-package il.org.spartan.plugin;
+package il.org.spartan.spartanizer.engine;
 
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
@@ -6,8 +6,8 @@ import java.util.function.*;
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
  * @since 2.6 */
-public class Linguistic {
-  /** Error string, replacing null/errored value. */
+public interface Linguistic {
+  /** Error string, replacing null/error value. */
   public static final String NAN = "???";
 
   /** Cut string's suffix to maximal length.

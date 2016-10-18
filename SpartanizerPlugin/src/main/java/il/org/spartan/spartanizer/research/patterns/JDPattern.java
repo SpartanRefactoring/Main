@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -64,8 +63,8 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return false;
       }
 
-      boolean checkContainsParameter(List<Expression> xs) {
-        for (Expression ¢ : xs)
+      boolean checkContainsParameter(final List<Expression> xs) {
+        for (final Expression ¢ : xs)
           if (checkContainsParameter(¢))
             return true;
         return false;
@@ -92,10 +91,10 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  static boolean nullCheckExpression(Expression ¢) {
+  static boolean nullCheckExpression(final Expression ¢) {
     if (¢ == null)
       return false;
-    for (UserDefinedTipper<Expression> t : tippers)
+    for (final UserDefinedTipper<Expression> t : tippers)
       if (t.canTip(¢))
         return true;
     return false;

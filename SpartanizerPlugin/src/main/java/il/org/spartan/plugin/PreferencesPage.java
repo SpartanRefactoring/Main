@@ -7,6 +7,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
@@ -28,7 +29,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
 
   @Override public boolean performOk() {
     refreshNeeded.is = false;
-    boolean $ = super.performOk();
+    final boolean $ = super.performOk();
     if (refreshNeeded.is)
       new Thread(() -> {
         Toolbox.refresh();
@@ -63,21 +64,23 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
   static class SpartanPropertyListener implements IPropertyChangeListener {
     private final MBoolean refreshNeeded;
 
-    public SpartanPropertyListener(MBoolean refreshNeeded) {
+    public SpartanPropertyListener(final MBoolean refreshNeeded) {
       this.refreshNeeded = refreshNeeded;
     }
 
     @Override public void propertyChange(final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
         refreshNeeded.is = true;
-      else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null && ¢.getNewValue() instanceof Boolean)
+      else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null
+          && ¢.getNewValue() instanceof Boolean)
         NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is = ((Boolean) ¢.getNewValue()).booleanValue();
     }
   }
 
   static class MBoolean {
     boolean is;
-    public MBoolean(boolean init) {
+
+    public MBoolean(final boolean init) {
       is = init;
     }
   }

@@ -131,7 +131,7 @@ public class Analyzer {
             new Setter(), //
             new Mapper(), //
             new Exploder(), //
-//            new JDPattern(), //
+            // new JDPattern(), //
             null);
   }
 }

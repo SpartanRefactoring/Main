@@ -9,7 +9,7 @@ public class TrackerSelection extends Selection {
   ASTNode track;
   int length;
 
-  public TrackerSelection(WrappedCompilationUnit compilationUnit, ITextSelection textSelection, String name) {
+  public TrackerSelection(final WrappedCompilationUnit compilationUnit, final ITextSelection textSelection, final String name) {
     super(asList(compilationUnit), textSelection, name);
   }
 
@@ -39,25 +39,25 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
-  private static List<WrappedCompilationUnit> asList(WrappedCompilationUnit ¢) {
-    List<WrappedCompilationUnit> $ = new ArrayList<>();
+  private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
+    final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
     return $;
   }
 
-  private static boolean match(ASTNode track, ASTNode newTrack) {
+  private static boolean match(final ASTNode track, final ASTNode newTrack) {
     return newTrack != null && (track.getClass().isInstance(newTrack) || newTrack.getClass().isInstance(track))
         && (track instanceof MethodDeclaration ? match((MethodDeclaration) track, (MethodDeclaration) newTrack)
             : track instanceof AbstractTypeDeclaration && match((AbstractTypeDeclaration) track, (AbstractTypeDeclaration) newTrack));
   }
 
-  private static boolean match(MethodDeclaration track, MethodDeclaration newTrack) {
+  private static boolean match(final MethodDeclaration track, final MethodDeclaration newTrack) {
     return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
         : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
   }
 
-  private static boolean match(AbstractTypeDeclaration track, AbstractTypeDeclaration newTrack) {
+  private static boolean match(final AbstractTypeDeclaration track, final AbstractTypeDeclaration newTrack) {
     return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
         : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
   }

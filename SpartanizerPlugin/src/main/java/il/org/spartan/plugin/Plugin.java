@@ -72,34 +72,31 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static void addPartListener() {
     if (listening)
       return;
-    IWorkspace w = ResourcesPlugin.getWorkspace();
+    final IWorkspace w = ResourcesPlugin.getWorkspace();
     if (w == null)
       return;
-    w.addResourceChangeListener(new IResourceChangeListener() {
-      @Override public void resourceChanged(IResourceChangeEvent e) {
-        if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is)
-          return;
-        try {
-          final MProject mp = new MProject();
-          e.getDelta().accept(new IResourceDeltaVisitor() {
-            @Override public boolean visit(IResourceDelta d) {
-              if (d == null || d.getResource() == null || !(d.getResource() instanceof IProject))
-                return true;
-              IProject p = (IProject) d.getResource();
-              if (d.getKind() == IResourceDelta.ADDED) {
-                mp.p = p;
-                mp.type = Type.new_project;
-              }
-              // else if (d.getKind() == IResourceDelta.CHANGED && p.isOpen()) {
-              // mp.p = p;
-              // mp.type = Type.opened_project;
-              // }
-              return true;
-            }
-          });
-          if (mp.p != null) {
-            Job.createSystem(pm -> {
-              try {
+    w.addResourceChangeListener(e -> {
+      if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is)
+        return;
+      try {
+        final MProject mp = new MProject();
+        e.getDelta().accept(d -> {
+          if (d == null || d.getResource() == null || !(d.getResource() instanceof IProject))
+            return true;
+          final IProject p = (IProject) d.getResource();
+          if (d.getKind() == IResourceDelta.ADDED) {
+            mp.p = p;
+            mp.type = Type.new_project;
+          }
+          // else if (d.getKind() == IResourceDelta.CHANGED && p.isOpen()) {
+          // mp.p = p;
+          // mp.type = Type.opened_project;
+          // }
+          return true;
+        });
+        if (mp.p != null)
+          Job.createSystem(pm -> {
+            try {
               switch (mp.type) {
                 case new_project:
                   eclipse.addNature(mp.p);
@@ -113,14 +110,12 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 default:
                   break;
               }
-              } catch (final Exception x) {
-                monitor.log(x);
-              }
-            }).schedule(SAFTY_DELAY);
-          }
-        } catch (CoreException x) {
-          monitor.log(x);
-        }
+            } catch (final Exception x1) {
+              monitor.log(x1);
+            }
+          }).schedule(SAFTY_DELAY);
+      } catch (final CoreException x2) {
+        monitor.log(x2);
       }
     });
     listening = true;

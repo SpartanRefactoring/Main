@@ -88,7 +88,7 @@ public class SpartanMovie extends AbstractHandler {
   private static IMarker[] getMarkers(final IFile ¢) {
     try {
       return ¢.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
-    } catch (CoreException x) {
+    } catch (final CoreException x) {
       monitor.log(x);
       return new IMarker[0];
     }
