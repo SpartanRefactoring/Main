@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * replace null != X ? X.Y : null with X?.Y <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class TernaryNullConditional extends NanoPatternTipper<ConditionalExpression> {
+public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {
   @SuppressWarnings("serial") static Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
     {
       add(TipperFactory.tipper("$X1 == null ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
