@@ -138,6 +138,6 @@ public class Analyzer {
   private static void sanityCheck() {
     final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
     addNanoPatterns(spartanizer);
-    assert spartanizer.fixedPoint(clean(makeAST.COMPILATION_UNIT.from(("public class A{ Object f(){ return c;} }"))) + "").contains("[[Getter]]");
+    assert spartanizer.fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }

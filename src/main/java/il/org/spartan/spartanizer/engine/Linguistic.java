@@ -82,7 +82,7 @@ public interface Linguistic {
   public static <X> String nanable(final X x, final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
-  
+
   public static String merge(final Object[] os) {
     return separate.these(os).by(SEPARATOR);
   }

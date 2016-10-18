@@ -59,14 +59,14 @@ import il.org.spartan.spartanizer.tipping.*;
     a.go();
   });
   /** Spartanize current file. */
-  private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> Spartanizer.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+  private final IMarkerResolution laconizeFile = quickFix("Laconize file", ¢ -> Spartanizer.defaultApplicator().defaultRunAction(getSpartanizer(¢))
+      .defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
   /** Spartanize current function. */
   private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> Spartanizer.defaultApplicator()
       .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());
   /** Spartanize current class. */
-  private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> Spartanizer.defaultApplicator()
-      .defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class)).go());
+  private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> Spartanizer.defaultApplicator().defaultRunAction(getSpartanizer(¢))
+      .defaultPassesMany().selection(Selection.Util.expend(¢, AbstractTypeDeclaration.class)).go());
   /** Apply tipper to current function. */
   private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", ¢ -> Spartanizer.defaultApplicator()
       .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.expend(¢, MethodDeclaration.class)).go());

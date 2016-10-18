@@ -13,7 +13,6 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.Listener;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
@@ -60,7 +59,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       int level;
       boolean dialogOpen;
 
-      @Override public void tick(Object... ¢) {
+      @Override public void tick(final Object... ¢) {
         asynch(() -> {
           d.getProgressMonitor().subTask(Linguistic.merge(¢));
           d.getProgressMonitor().worked(1);
@@ -69,7 +68,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         });
       }
 
-      @Override public void push(Object... ¢) {
+      @Override public void push(final Object... ¢) {
         switch (++level) {
           case DIALOG_CREATION:
             if ($.selection().size() >= DIALOG_THRESHOLD)
@@ -94,14 +93,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       }
 
       /** [[SuppressWarningsSpartan]] see issue #467 */
-      @Override public void pop(Object... ¢) {
+      @Override public void pop(final Object... ¢) {
         switch (level--) {
           case DIALOG_CREATION:
             if (dialogOpen)
               Dialogs.message(Linguistic.merge(¢)).open();
             break;
           case DIALOG_PROCESSING:
-
             break;
           default:
             break;
