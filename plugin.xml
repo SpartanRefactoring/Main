@@ -103,7 +103,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </toolbar>
   </menuContribution>
 
-  <!-- Popup menus -->
+  <!-- Popup menus // disabled, see issue #429
   <menuContribution allPopups="true" locationURI="popup:org.eclipse.ui.popup.any?after=additions" >
      <menu id="il.org.spartan.menus.spartanization" label="Laconize..." mnemonic="L">
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
@@ -122,6 +122,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         </visibleWhen>
      </menu>
   </menuContribution>
+  -->
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
@@ -141,12 +142,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.bindings">
 	<key sequence="Ctrl+4"
 		commandId="il.org.spartan.TipsToggleOnOff"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<key sequence="Ctrl+5"
-		commandId="il.org.spartan.LaconizeCurrent"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<key sequence="Ctrl+Alt+M"
-		commandId="il.org.spartan.SpartanMovie"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
