@@ -7,6 +7,8 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.*;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -66,6 +68,8 @@ public class ConfigurableSpartanizer {
   private boolean runApplicator = true;
   private boolean applyToEntireProject = true;
   private CommandLineSelection selection;
+  private boolean entireProject = true;
+  private boolean specificTipper = false;
   
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
@@ -174,7 +178,7 @@ public class ConfigurableSpartanizer {
   void fire() {
     go();
     reportSpectrum();
-    reportCoverage();
+//    reportCoverage();
     runEssence();
     runWordCount();
   }
@@ -332,7 +336,7 @@ public class ConfigurableSpartanizer {
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
-      coverageStats = new CSVStatistics(coverageFileName, "property");
+//      coverageStats = new CSVStatistics(coverageFileName, "property");
       
       if(applyToEntireProject){
         selection = new CommandLineSelection(new ArrayList<CU>(),"project");
@@ -346,11 +350,18 @@ public class ConfigurableSpartanizer {
           go(¢);
         }
       if(runApplicator){
-        CommandLineApplicator.defaultApplicator()
-                             .defaultRunAction();
+        if(entireProject ){
+          CommandLineApplicator.defaultApplicator()
+                               .defaultRunAction();
 //                             .selection(CommandLineSelection.Util.getAllCompilationUnits()
 //                                          .buildAll())
 //                             .go();
+        }
+        
+        if(specificTipper){
+          CommandLineApplicator.defaultApplicator();
+//                               .defaultRunAction(getSpartanizer(""));
+        }
       }
     } catch (final IOException x) {
       x.printStackTrace();
@@ -358,6 +369,10 @@ public class ConfigurableSpartanizer {
     }
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
+  }
+  
+  static GUI$Applicator getSpartanizer(final String tipperName) {
+    return Tips2.get(tipperName);
   }
 
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
