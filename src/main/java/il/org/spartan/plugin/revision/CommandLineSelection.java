@@ -17,21 +17,21 @@ import il.org.spartan.spartanizer.engine.*;
 public class CommandLineSelection extends AbstractSelection {
   
   private CompilationUnit compilationUnit;
-  private Object compilationUnits;
+  private List<WrappedCompilationUnit> compilationUnits;
 
-  public CommandLineSelection(final List<CU> compilationUnits, final String name){
+  public CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name){
     this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
   
   public List<CompilationUnit> getCompilationUnits() {
     List<CompilationUnit> $ = new ArrayList<>();
-    for (CU ¢: compilationUnits)
+    for (WrappedCompilationUnit ¢: compilationUnits)
       $.add(¢.compilationUnit);
     return $;
   }
   
-  public List<CU> get() {
+  public List<WrappedCompilationUnit> get() {
     return compilationUnits;
   }
   
@@ -55,18 +55,18 @@ public class CommandLineSelection extends AbstractSelection {
      * @return
      */
     public static AbstractSelection get() {
-      List<CU> cuList = new ArrayList<>();
+      List<WrappedCompilationUnit> cuList = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(".")) {
-        CU cu = CU.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+        WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
         cuList.add(cu);
       }
       return new CommandLineSelection(cuList,"default");
     }
     
     public static AbstractSelection getFromPath(String path) {
-      List<CU> cuList = new ArrayList<>();
+      List<WrappedCompilationUnit> cuList = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path)) {
-        CU cu = CU.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+        WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
         cuList.add(cu);
       }
       return new CommandLineSelection(cuList,"selection");
@@ -79,17 +79,17 @@ public class CommandLineSelection extends AbstractSelection {
    * @return
    */
   public void createSelectionFromProjectDir(String inputPath) {
-    List<CU> cuList = new ArrayList<>();
+    List<WrappedCompilationUnit> cuList = new ArrayList<>();
     for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
       System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
-      CU cu = CU.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+      WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
       cuList.add(cu);
     }
     compilationUnits = cuList;
   }
 
   public CommandLineSelection buildAll() {
-    for (CU ¢ : compilationUnits)
+    for (WrappedCompilationUnit ¢ : compilationUnits)
       ¢.build();
     return this;
   }
