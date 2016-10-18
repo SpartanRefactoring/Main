@@ -18,18 +18,18 @@ public class Logger {
   private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
   private static int numMethods;
 
-  public static void summarize(final String outputDir) {
+  public static void summarize(String outputDir) {
     CSVStatistics report = null;
     try {
       report = new CSVStatistics(outputDir + "/report.csv", "property");
-    } catch (final IOException x) {
+    } catch (IOException x) {
       x.printStackTrace();
       return;
     }
     double sumSratio = 0;
     double sumEratio = 0;
-    for (final Integer k : methodsStatistics.keySet()) {
-      final MethodRecord m = methodsStatistics.get(k);
+    for (Integer k : methodsStatistics.keySet()) {
+      MethodRecord m = methodsStatistics.get(k);
       report //
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
@@ -58,8 +58,8 @@ public class Logger {
   }
 
   public static void logNP(final ASTNode n, final String np) {
-    final MethodDeclaration m = findMethodAncestor(n);
-    final Integer key = Integer.valueOf(m.hashCode());
+    MethodDeclaration m = findMethodAncestor(n);
+    Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
       methodsStatistics.put(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
@@ -100,7 +100,7 @@ public class Logger {
     public int numStatements;
     public int numExpressions;
 
-    public MethodRecord(final MethodDeclaration m) {
+    public MethodRecord(MethodDeclaration m) {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
@@ -109,7 +109,7 @@ public class Logger {
     }
 
     /** @param np */
-    public void markNP(final ASTNode n, final String np) {
+    public void markNP(ASTNode n, String np) {
       numNPStatements += metrics.countStatements(n);
       numNPExpressions += metrics.countExpressions(n);
       nps.add(np);
@@ -117,7 +117,7 @@ public class Logger {
   }
 
   /** @param cu */
-  public static void logCompilationUnit(final ASTNode cu) {
+  public static void logCompilationUnit(ASTNode cu) {
     numMethods += metrics.countMethods(cu);
   }
 }

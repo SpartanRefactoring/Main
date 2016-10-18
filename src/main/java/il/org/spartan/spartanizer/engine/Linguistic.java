@@ -9,6 +9,7 @@ import java.util.function.*;
 public interface Linguistic {
   /** Error string, replacing null/error value. */
   public static final String NAN = "???";
+  public static final String SEPARATOR = ", ";
 
   /** Cut string's suffix to maximal length.
    * @param s JD
@@ -77,5 +78,25 @@ public interface Linguistic {
    * @return printable {@link String} for f(x) */
   public static <X> String nanable(final X x, final Function<X, ?> f) {
     return x == null ? NAN : f.apply(x) + "";
+  }
+  
+  public static String merge(final Object[] os) {
+    if (os.length == 0)
+      return "";
+    StringBuilder b = new StringBuilder();
+    for (int ¢ = 0; ¢ < os.length - 1; ++¢)
+      b.append(os[¢]).append(SEPARATOR);
+    b.append(os[os.length - 1]);
+    return b + "";
+  }
+
+  public static String merge(final Object[] os, final String separator) {
+    if (os.length == 0)
+      return "";
+    StringBuilder b = new StringBuilder();
+    for (int ¢ = 0; ¢ < os.length - 1; ++¢)
+      b.append(os[¢]).append(separator);
+    b.append(os[os.length - 1]);
+    return b + "";
   }
 }
