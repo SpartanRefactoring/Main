@@ -143,6 +143,7 @@ public class Trimmer extends GUI$Applicator {
   @SafeVarargs public final <N extends ASTNode> Trimmer add(Class<N> n, Tipper<N>... ns) {
     if (!changed)
       toolbox = Toolbox.muttableDefaultInstance();
+    changed = true;
     toolbox.add(n, ns);
     return this;
   }
