@@ -30,7 +30,8 @@ public final class Spartanizer {
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new Spartanizer(¢).fire();
-  } 
+  }
+
   String folder = "/tmp/";
   String afterFileName;
   PrintWriter afters;
@@ -97,14 +98,14 @@ public final class Spartanizer {
         }
         return true;
       }
-  
+
       <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);
       }
-  
+
       /** @param n
        * @param w
        * @throws TipperFailure */
@@ -112,7 +113,7 @@ public final class Spartanizer {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-  
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -120,7 +121,7 @@ public final class Spartanizer {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-  
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
@@ -266,7 +267,7 @@ public final class Spartanizer {
     });
   }
 
-  boolean filter(final ASTNode ¢) {
+  static boolean filter(@SuppressWarnings("unused") final ASTNode ¢) {
     return true;
   }
 
