@@ -23,7 +23,7 @@ public final class IfApply extends NanoPatternTipper<IfStatement> implements Tip
     return elze(¢) == null && !iz.block(step.then(¢));
   }
 
-  @Override public Tip tip(final IfStatement ¢) {
+  @Override public Tip tip(@SuppressWarnings("unused") final IfStatement ¢) {
     // TODO Marco: Auto-generated method stub
     return null;
   }
