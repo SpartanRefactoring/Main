@@ -76,7 +76,7 @@ public class Spartanizer extends Applicator {
   /** Default listener configuration of {@link Spartanizer}. Silent listener.
    * @return this applicator */
   public Spartanizer defaultListenerSilent() {
-    listener((@SuppressWarnings("unused") final Object... __) -> {
+    listener((final Object... __) -> {
       //
     });
     return this;

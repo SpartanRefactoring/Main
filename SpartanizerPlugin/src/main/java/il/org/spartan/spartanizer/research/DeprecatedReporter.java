@@ -20,7 +20,7 @@ public class DeprecatedReporter extends NanoPatternTipper<MethodDeclaration> {
 
   @Override public Tip tip(final MethodDeclaration ¢) {
     return new Tip(description(¢), ¢, this.getClass()) {
-      @Override public void go(@SuppressWarnings("unused") final ASTRewrite __, final TextEditGroup g) {
+      @Override public void go(@SuppressWarnings("unused") final ASTRewrite __, @SuppressWarnings("unused") final TextEditGroup g) {
         Marker.unmarkForReport(¢);
         System.out.println(Marker.getMarkers(¢));
       }
