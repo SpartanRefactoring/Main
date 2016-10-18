@@ -45,8 +45,7 @@ public class ConfigurableSpartanizer {
   private final String coverageFileName;
   static String presentFileName;
   static String presentMethod;
-
-  
+ 
   PrintWriter afters;
   PrintWriter befores;
   
@@ -335,10 +334,11 @@ public class ConfigurableSpartanizer {
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
       coverageStats = new CSVStatistics(coverageFileName, "property");
       
-      if(applyToEntireProject)
+      if(applyToEntireProject){
         selection = new CommandLineSelection(new ArrayList<CU>(),"project");
         selection.createSelectionFromProjectDir(inputPath);
-
+      }  
+      
       if(!shouldRun)
         for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
           presentFileName = ¢.getName();
@@ -347,10 +347,10 @@ public class ConfigurableSpartanizer {
         }
       if(runApplicator){
         CommandLineApplicator.defaultApplicator()
-                             .defaultRunAction()
+                             .defaultRunAction();
 //                             .selection(CommandLineSelection.Util.getAllCompilationUnits()
 //                                          .buildAll())
-                             .go();
+//                             .go();
       }
     } catch (final IOException x) {
       x.printStackTrace();
