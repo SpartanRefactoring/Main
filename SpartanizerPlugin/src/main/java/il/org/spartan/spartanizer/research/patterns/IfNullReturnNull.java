@@ -13,14 +13,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class IfNullReturnNull extends NanoPatternTipper<IfStatement> {
-  private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<>();
-
-  public IfNullReturnNull() {
-    if (!tippers.isEmpty())
-      return;
-    tippers.add(TipperFactory.tipper("if($X == null) return null;", "returnNullIfNull($X);", ""));
-    tippers.add(TipperFactory.tipper("if(null == $X) return null;", "returnNullIfNull($X);", ""));
-  }
+  @SuppressWarnings("serial") static Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
+    {
+      add(TipperFactory.tipper("if($X == null) return null;", "returnNullIfNull($X);", ""));
+      add(TipperFactory.tipper("if(null == $X) return null;", "returnNullIfNull($X);", ""));
+    }
+  };
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "replace with #default #deault x";
