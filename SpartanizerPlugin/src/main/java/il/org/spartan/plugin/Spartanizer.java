@@ -61,28 +61,23 @@ public class Spartanizer extends Applicator {
     listener().pop(message.run_finish.get(selection().name));
   }
 
-  /** Default listener configuration of {@link Spartanizer}. Simple printing
-   * to console.
+  /** Default listener configuration of {@link Spartanizer}. Simple printing to
+   * console.
    * @return this applicator */
   public Spartanizer defaultListenerNoisy() {
-    listener(new Listener() {
-      @Override public void tick(Object... os) {
-        for (Object ¢ : os)
-          System.out.print(¢ + " ");
-        System.out.println();
-      }
+    listener(os -> {
+      for (final Object ¢ : os)
+        System.out.print(¢ + " ");
+      System.out.println();
     });
     return this;
   }
 
-  /** Default listener configuration of {@link Spartanizer}. Silent
-   * listener.
+  /** Default listener configuration of {@link Spartanizer}. Silent listener.
    * @return this applicator */
   public Spartanizer defaultListenerSilent() {
-    listener(new Listener() {
-      @Override public void tick(@SuppressWarnings("unused") Object... __) {
-        //
-      }
+    listener((@SuppressWarnings("unused") final Object... __) -> {
+      //
     });
     return this;
   }
@@ -109,8 +104,8 @@ public class Spartanizer extends Applicator {
     return this;
   }
 
-  /** Default run context configuration of {@link Spartanizer}. Simply runs
-   * the {@link Runnable} in the current thread.
+  /** Default run context configuration of {@link Spartanizer}. Simply runs the
+   * {@link Runnable} in the current thread.
    * @return this applicator */
   public Spartanizer defaultRunContext() {
     runContext(r -> r.run());
@@ -118,8 +113,8 @@ public class Spartanizer extends Applicator {
   }
 
   // TODO Roth: use Policy / replacement for Trimmer.
-  /** Default run action configuration of {@link Spartanizer}. Spartanize
-   * the {@link ICompilationUnit} using a {@link Trimmer}.
+  /** Default run action configuration of {@link Spartanizer}. Spartanize the
+   * {@link ICompilationUnit} using a {@link Trimmer}.
    * @return this applicator */
   public Spartanizer defaultRunAction() {
     final Trimmer t = new Trimmer();
@@ -127,8 +122,8 @@ public class Spartanizer extends Applicator {
     return this;
   }
 
-  /** Default run action configuration of {@link Spartanizer}. Spartanize
-   * the {@link ICompilationUnit} using received {@link GUI$Applicator}.
+  /** Default run action configuration of {@link Spartanizer}. Spartanize the
+   * {@link ICompilationUnit} using received {@link GUI$Applicator}.
    * @param a JD
    * @return this applicator */
   public Spartanizer defaultRunAction(final GUI$Applicator a) {
@@ -147,7 +142,7 @@ public class Spartanizer extends Applicator {
   public static Spartanizer defaultApplicator() {
     return new Spartanizer().defaultSettings();
   }
-  
+
   /** Printing definition of events that occur during spartanization.
    * @author Ori Roth
    * @since 2.6 */
@@ -160,17 +155,17 @@ public class Spartanizer extends Applicator {
     private final int inputCount;
     private final Function<Object[], String> printing;
 
-    message(int inputCount, Function<Object[], String> printing) {
+    message(final int inputCount, final Function<Object[], String> printing) {
       this.inputCount = inputCount;
       this.printing = printing;
     }
 
-    public String get(Object... ¢) {
+    public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
 
-    private static String printableAt(Object[] os, int index) {
+    private static String printableAt(final Object[] os, final int index) {
       return Linguistic.nanable(os, xs -> xs[index]);
     }
   }

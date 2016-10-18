@@ -29,7 +29,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     if (step.parameters(d) == null || step.parameters(d).isEmpty())
       return false;
     final Set<String> ps = new HashSet<>(step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList()));
-    Set<String> set = new HashSet<>(ps);
+    final Set<String> set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
     final Bool $ = new Bool();
     $.inner = true;
@@ -77,12 +77,12 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   /** @param root node to search in
    * @param ss variable names which are influenced by parameters
    * @return */
-  static boolean containsParameter(ASTNode root, Set<String> ss) {
+  static boolean containsParameter(final ASTNode root, final Set<String> ss) {
     final Bool $ = new Bool();
     $.inner = false;
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
-        for (String p : ss)
+        for (final String p : ss)
           if ((n + "").equals(p) && !nullCheckExpression(az.infixExpression(n.getParent())))
             $.inner = true;
         return false;
@@ -91,7 +91,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     return $.inner;
   }
 
-  static Set<String> getInfluenced(MethodDeclaration root, Set<String> ps) {
+  static Set<String> getInfluenced(final MethodDeclaration root, final Set<String> ps) {
     final Set<String> $ = new HashSet<>();
     $.addAll(ps);
     step.body(root).accept(new ASTVisitor() {
@@ -116,7 +116,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     return $;
   }
 
-  protected static String extractName(Expression root) {
+  protected static String extractName(final Expression root) {
     final StringBuilder $ = new StringBuilder();
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
@@ -124,7 +124,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
         return false;
       }
     });
-    return $ + ""; 
+    return $ + "";
   }
 
   /** [[SuppressWarningsSpartan]] */
