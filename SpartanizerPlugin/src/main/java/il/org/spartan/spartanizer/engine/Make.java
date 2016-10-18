@@ -25,7 +25,7 @@ public enum Make {
    * value
    * @param tipper The {@link makeAST} type
    * @return corresponding {@link Make} value to the argument */
-  public static Make of(final makeAST ¢) {
+  public static Make from(final makeAST ¢) {
     switch (¢) {
       case STATEMENTS:
         return Make.STATEMENTS;

@@ -78,7 +78,6 @@ public interface Linguistic {
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
-  // TODO Marco: This is an exact case of defaultsTo
   public static <X> String nanable(final X x, final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
