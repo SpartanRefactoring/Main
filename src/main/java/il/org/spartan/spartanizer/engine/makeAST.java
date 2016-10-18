@@ -124,7 +124,7 @@ public enum makeAST {
   /** @param f IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
-    return Make.of(this).parser(¢).createAST(null);
+    return Make.from(this).parser(¢).createAST(null);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -132,7 +132,7 @@ public enum makeAST {
    * @param pm ProgressMonitor
    * @return ASTNode */
   public ASTNode from(final IMarker m, final IProgressMonitor pm) {
-    return Make.of(this).parser(m).createAST(pm);
+    return Make.from(this).parser(m).createAST(pm);
   }
 
   /** String -> ASTNode converter
