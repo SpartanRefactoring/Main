@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.patterns;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -11,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016 */
 public final class CachingPattern extends NanoPatternTipper<Block> {
   private static final UserDefinedTipper<Block> tipper = TipperFactory.subBlockTipper("if($X1 == null) $X1 = $X2; return $X1;",
-      "return $X1 = $X1 == null ? $X2 : $X1;", "Caching pattern: inline into ternary return");
+      "return $X1 != null ? $X1 : ($X1 = $X2);", "Caching pattern: inline into ternary return");
 
   @Override public String description(@SuppressWarnings("unused") final Block __) {
     return tipper.description();

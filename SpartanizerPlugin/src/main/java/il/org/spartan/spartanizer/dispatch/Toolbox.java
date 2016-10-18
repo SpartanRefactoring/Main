@@ -85,6 +85,10 @@ public class Toolbox {
   public static Toolbox defaultInstance() {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
+  
+  public static Toolbox muttableDefaultInstance() {
+    return freshCopyOfAllTippers();
+  }
 
   public static Toolbox emptyToolboox() {
     return new Toolbox();
@@ -271,6 +275,10 @@ public class Toolbox {
 
   public static void refresh() {
     defaultInstance = freshCopyOfAllTippers();
+  }
+
+  public static void refresh(final Trimmer ¢) {
+    ¢.toolbox = freshCopyOfAllTippers();
   }
 
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ns) {

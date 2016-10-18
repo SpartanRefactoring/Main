@@ -21,7 +21,7 @@ public class Issue321 {
             " return instance;" + //
             "}").gives( //
                 "public static Toolbox defaultInstance() {" + //
-                    " return  instance = instance == null? allTippers() : instance ;" + //
+                    " return  instance != null ? instance : (instance = allTippers());" + //
                     "}");
   }
 }

@@ -1,6 +1,6 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.plugin.eclipse.*;
+import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.plugin.revision.*;
+import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -336,11 +336,11 @@ public abstract class GUI$Applicator extends Refactoring {
 
   protected abstract ASTVisitor makeTipsCollector(final List<Tip> $);
 
-  protected void parse() {
+  public void parse() {
     compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
-  protected void scan() {
+  public void scan() {
     tips.clear();
     compilationUnit.accept(makeTipsCollector(tips));
   }
@@ -442,7 +442,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
 
-  public boolean apply(final CU u, final AbstractSelection s) {
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
     if (s instanceof TrackerSelection)
       return apply(u, (TrackerSelection) s);
     try {
@@ -463,7 +463,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return false;
   }
 
-  public boolean apply(final CU u, final TrackerSelection s) {
+  public boolean apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
       setICompilationUnit(u.descriptor);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);

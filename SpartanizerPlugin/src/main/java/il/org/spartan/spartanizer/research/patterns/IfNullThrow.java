@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.patterns;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -11,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class IfNullThrow extends NanoPatternTipper<IfStatement> {
-  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X == null) throw new $N();", "ExplodeOnNullWith($N, $X);",
+  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X == null) throw $X2;", "ExplodeOnNullWith($N, $X);",
       "");
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

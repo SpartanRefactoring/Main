@@ -26,7 +26,7 @@ public class Trimmer extends GUI$Applicator {
     return true;
   }
 
-  public final Toolbox toolbox;
+  public Toolbox toolbox;
 
   /** Instantiates this class */
   public Trimmer() {
@@ -39,7 +39,6 @@ public class Trimmer extends GUI$Applicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final AtomicInteger i) {
-    Toolbox.refresh();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -95,6 +94,7 @@ public class Trimmer extends GUI$Applicator {
   }
 
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
+    Toolbox.refresh(this);
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -136,5 +136,15 @@ public class Trimmer extends GUI$Applicator {
 
   protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
+  }
+
+  boolean changed;
+
+  @SafeVarargs public final <N extends ASTNode> Trimmer add(Class<N> n, Tipper<N>... ns) {
+    if (!changed)
+      toolbox = Toolbox.muttableDefaultInstance();
+    changed = true;
+    toolbox.add(n, ns);
+    return this;
   }
 }

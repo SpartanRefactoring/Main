@@ -437,4 +437,16 @@ public interface wizard {
         return false;
     return true;
   }
+
+  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
+    final List<MethodDeclaration> $ = new ArrayList<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        $.add(¢);
+        return false;
+      }
+    });
+    return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
+        || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
+  }
 }

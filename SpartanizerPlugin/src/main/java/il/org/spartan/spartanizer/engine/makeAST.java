@@ -79,8 +79,7 @@ public enum makeAST {
    * @return entire contents of this file, as one string */
   public static String string(final File f) {
     try (final BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
-      String $ = "";
-      for (String ¢ = r.readLine();; ¢ = r.readLine(), $ += ¢ + System.lineSeparator())
+      for (String $ = "", ¢ = r.readLine();; ¢ = r.readLine(), $ += ¢ + System.lineSeparator())
         if (¢ == null)
           return $;
     } catch (final IOException ¢) {
@@ -125,7 +124,7 @@ public enum makeAST {
   /** @param f IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
-    return Make.of(this).parser(¢).createAST(null);
+    return Make.from(this).parser(¢).createAST(null);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -133,7 +132,7 @@ public enum makeAST {
    * @param pm ProgressMonitor
    * @return ASTNode */
   public ASTNode from(final IMarker m, final IProgressMonitor pm) {
-    return Make.of(this).parser(m).createAST(pm);
+    return Make.from(this).parser(m).createAST(pm);
   }
 
   /** String -> ASTNode converter

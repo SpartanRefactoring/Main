@@ -6,32 +6,36 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
- * it, so we can submit nice papers and win eternal fame. <br>
+ * it, so we can submit nice papers and win eternal fame.
+ * <p>
  * Whenever an NP is matched it should log itself.
  * @author Ori Marcovitch
  * @since 2016 */
 public class Logger {
-  private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
+  private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
+  private static final Map<String, NPRecord> npStatistics = new HashMap<>();
   private static int numMethods;
 
-  public static void summarize(String outputDir) {
-    CSVStatistics report = null;
-    try {
-      report = new CSVStatistics(outputDir + "/report.csv", "property");
-    } catch (IOException x) {
-      x.printStackTrace();
+  public static void summarize(final String outputDir) {
+    summarizeMethodStatistics(outputDir);
+    summarizeNPStatistics(outputDir);
+    reset();
+  }
+
+  private static void summarizeMethodStatistics(final String outputDir) {
+    final CSVStatistics report = openMethodSummaryFile(outputDir);
+    if (report == null)
       return;
-    }
-    int sumSratio = 0;
-    int sumEratio = 0;
-    for (Integer k : methodsStatistics.keySet()) {
-      MethodRecord m = methodsStatistics.get(k);
-      report //
-          .put("Name", m.methodClassName + "~" + m.methodName) //
+    double sumSratio = 0;
+    double sumEratio = 0;
+    for (final Integer k : methodsStatistics.keySet()) {
+      final MethodRecord m = methodsStatistics.get(k);
+      report.put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
           .put("Statement ratio", m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements) //
@@ -49,17 +53,62 @@ public class Logger {
     System.out.println("Average statement ratio: " + sumSratio / numMethods);
     System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
-    reset();
+  }
+
+  private static void summarizeNPStatistics(final String outputDir) {
+    final CSVStatistics report = openNPSummaryFile(outputDir);
+    if (report == null)
+      return;
+    for (final String k : npStatistics.keySet()) {
+      final NPRecord n = npStatistics.get(k);
+      report //
+          .put("Name", n.name) //
+          .put("#Statement", n.numNPStatements) //
+          .put("#Expression", n.numNPExpressions) //
+      ;
+      report.nl();
+    }
+    report.close();
+  }
+
+  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/methodStatistics.csv");
+  }
+
+  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/npStatistics.csv");
+  }
+
+  public static CSVStatistics openSummaryFile(final String fileName) {
+    try {
+      return new CSVStatistics(fileName, "property");
+    } catch (final IOException x) {
+      monitor.infoIOException(x, "opening report file");
+      return null;
+    }
   }
 
   private static void reset() {
-    methodsStatistics = new HashMap<>();
+    methodsStatistics.clear();
     numMethods = 0;
   }
 
   public static void logNP(final ASTNode n, final String np) {
-    MethodDeclaration m = findMethodAncestor(n);
-    Integer key = Integer.valueOf(m.hashCode());
+    logMethodInfo(n, np);
+    logNPInfo(n, np);
+  }
+
+  /** @param n
+   * @param np */
+  private static void logNPInfo(ASTNode n, String np) {
+    if (!npStatistics.containsKey(np))
+      npStatistics.put(np, new NPRecord(np));
+    npStatistics.get(np).markNP(n);
+  }
+
+  private static void logMethodInfo(final ASTNode n, final String np) {
+    final MethodDeclaration m = findMethodAncestor(n);
+    final Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
       methodsStatistics.put(key, new MethodRecord(m));
     methodsStatistics.get(key).markNP(n, np);
@@ -90,6 +139,9 @@ public class Logger {
     return $.substring(1);
   }
 
+  /** Collects statistics for a method in which a nanopattern was found.
+   * @author Ori Marcovitch
+   * @since 2016 */
   static class MethodRecord {
     public String methodName;
     public String methodClassName;
@@ -100,7 +152,7 @@ public class Logger {
     public int numStatements;
     public int numExpressions;
 
-    public MethodRecord(MethodDeclaration m) {
+    public MethodRecord(final MethodDeclaration m) {
       methodName = m.getName() + "";
       methodClassName = findTypeAncestor(m);
       numParameters = m.parameters().size();
@@ -108,16 +160,40 @@ public class Logger {
       numExpressions = metrics.countExpressions(m);
     }
 
-    /** @param np */
-    public void markNP(ASTNode n, String np) {
+    /** @param n matched node
+     * @param np matching nanopattern */
+    public void markNP(final ASTNode n, final String np) {
       numNPStatements += metrics.countStatements(n);
       numNPExpressions += metrics.countExpressions(n);
       nps.add(np);
     }
   }
 
-  /** @param cu */
-  public static void logCompilationUnit(ASTNode cu) {
+  /** Collect statistics of a compilation unit which will be analyzed.
+   * @param cu compilation unit */
+  public static void logCompilationUnit(final ASTNode cu) {
     numMethods += metrics.countMethods(cu);
+  }
+
+  /** Collects statistics for a nanopattern.
+   * @author Ori Marcovitch
+   * @since 2016 */
+  static class NPRecord {
+    final String name;
+    int occurences;
+    int numNPStatements;
+    int numNPExpressions;
+
+    /** @param name */
+    public NPRecord(String name) {
+      this.name = name;
+    }
+
+    /** @param ¢ matched node */
+    public void markNP(ASTNode ¢) {
+      ++occurences;
+      numNPStatements += metrics.countStatements(¢);
+      numNPExpressions += metrics.countExpressions(¢);
+    }
   }
 }

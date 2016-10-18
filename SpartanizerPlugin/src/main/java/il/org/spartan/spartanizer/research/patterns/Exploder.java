@@ -6,12 +6,10 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
- * @since 2016
- * May collide with {@link IfNullThrow}
- *  */
+ * @since 2016 May collide with {@link IfNullThrow} */
 public class Exploder extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X1) throw $X2;", "", "");
 
@@ -23,7 +21,7 @@ public class Exploder extends JavadocMarkerNanoPattern<MethodDeclaration> {
   }
 
   @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is a exploder method";
+    return ¢.getName() + " is an exploder method";
   }
 
   @Override protected String javadoc() {
