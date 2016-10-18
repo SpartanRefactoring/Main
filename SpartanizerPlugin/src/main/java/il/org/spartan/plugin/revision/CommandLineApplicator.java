@@ -5,36 +5,40 @@ import java.util.*;
 import org.eclipse.jdt.core.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.EventListener;
+import il.org.spartan.plugin.EventListener.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
  * @param EventListener<event>
  * @since 2016 */
-public class CommandLineApplicator extends Applicator<EventListener<event>> {
+public class CommandLineApplicator extends Applicator{
 
   private static final int PASSES_FEW = 1;
   private static final int PASSES_MANY = 20;
+  
+  private CommandLineSelection selection;
   
   /* (non-Javadoc)
    * @see il.org.spartan.plugin.revision.Applicator#go()
    */
   @Override public void go() {
     
-    if(selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
-      return;
-    runContext().accept(() -> {
-      final int l = passes();
-      for (int pass = 0; pass < l; ++pass){
-        final List<CU> alive = new LinkedList<>();
-        alive.addAll(selection().compilationUnits);
-        final List<CU> dead = new LinkedList<>();
-        for (final CU ¢ : alive) {
-          if(!runAction().apply(¢.build()).booleanValue())
-            dead.add(¢);
-        }
-      }
-    });
+//    if(selection() == null || listener() == null || passes() <= 0 || selection().isEmpty())
+//      return;
+//    runContext().accept(() -> {
+//      final int l = passes();
+//      for (int pass = 0; pass < l; ++pass){
+//        final List<? extends WrappedCompilationUnit> alive = new LinkedList<>();
+//        alive.addAll(selection().getCompilationUnits());
+//        final List<WrappedCompilationUnit> dead = new LinkedList<>();
+//        for (final WrappedCompilationUnit ¢ : alive) {
+//          if(!runAction().apply(¢.build()).booleanValue())
+//            dead.add(¢);
+//        }
+//      }
+//    });
   }
   
   public static CommandLineApplicator defaultApplicator(){
@@ -58,6 +62,15 @@ public class CommandLineApplicator extends Applicator<EventListener<event>> {
     selection(CommandLineSelection.Util.get());
     return this;
   }
+  
+  /** Initialize the selection of this applicator.
+   * @param as JD
+   * @return this applicator */
+  public CommandLineApplicator selection(final AbstractSelection<CommandLineSelection> as) {
+    selection = (CommandLineSelection) as;
+    return this;
+  }
+
 
   /**
    * @return this
@@ -87,13 +100,16 @@ public class CommandLineApplicator extends Applicator<EventListener<event>> {
    * @return this
    */
   private CommandLineApplicator defaultListenerSilent() {
-    listener(EventListener.simpleListener(event.class, 
-        e -> {
-          // empty
-        },  
-        (e, o) -> {
-          // empty
-        }));
+     listener((final Object... __) -> {
+        //
+      });
+//    listener(EventListener.simpleListener(event.class, 
+//        e -> {
+//          // empty
+//        },  
+//        (e, o) -> {
+//          // empty
+//        }));
     return this;
   }
 
