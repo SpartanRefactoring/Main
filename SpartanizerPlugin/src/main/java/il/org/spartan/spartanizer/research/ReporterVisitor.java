@@ -10,7 +10,7 @@ public class ReporterVisitor extends ASTVisitor {
     return false;
   }
 
-  private static int countOccurences(String javadoc, String pattern) {
+  private static int countOccurences(final String javadoc, final String pattern) {
     int lastIndex = 0;
     int $ = 0;
     while (lastIndex != -1) {

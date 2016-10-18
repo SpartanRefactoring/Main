@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import il.org.spartan.spartanizer.research.*;
+
 /** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method") //

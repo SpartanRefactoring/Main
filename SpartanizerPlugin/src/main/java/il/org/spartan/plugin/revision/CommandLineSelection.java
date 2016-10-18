@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /**
@@ -16,6 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 public class CommandLineSelection extends AbstractSelection {
   
   private CompilationUnit compilationUnit;
+  private Object compilationUnits;
 
   public CommandLineSelection(final List<CU> compilationUnits, final String name){
     this.compilationUnits = compilationUnits != null ? compilationUnits : new ArrayList<>();

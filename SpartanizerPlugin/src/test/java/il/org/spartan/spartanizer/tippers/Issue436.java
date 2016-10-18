@@ -6,6 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.leonidas.*;
+import il.org.spartan.spartanizer.research.*;
 
 /** Failing test, originally from {@link TestFactoryTest}.
  * @since 2016 */
