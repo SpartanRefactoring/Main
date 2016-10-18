@@ -18,50 +18,70 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class Logger {
   private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
-  private static final Map<String, NpRecord> npStatistics = new HashMap<>();
+  private static final Map<String, NPRecord> npStatistics = new HashMap<>();
   private static int numMethods;
 
   public static void summarize(final String outputDir) {
-    final CSVStatistics report = openSummaryFile(outputDir);
-    if (report == null)
-      return;
-    summarizeMethodStatistics(report);
-    report.close();
+    summarizeMethodStatistics(outputDir);
+    summarizeNPStatistics(outputDir);
     reset();
   }
 
-  private static void summarizeMethodStatistics(final CSVStatistics report) {
+  private static void summarizeMethodStatistics(final String outputDir) {
+    final CSVStatistics report = openMethodSummaryFile(outputDir);
+    if (report == null)
+      return;
     double sumSratio = 0;
     double sumEratio = 0;
     for (final Integer k : methodsStatistics.keySet()) {
       final MethodRecord m = methodsStatistics.get(k);
-      reportMethod(report, m);
+      report.put("Name", m.methodClassName + "~" + m.methodName) //
+          .put("#Statement", m.numStatements) //
+          .put("#NP Statements", m.numNPStatements) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements) //
+          .put("#Expressions", m.numExpressions) //
+          .put("#NP expressions", m.numNPExpressions) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions) //
+          .put("#Parameters", m.numParameters) //
+          .put("#NP", m.nps.size()) //
+      ;
+      report.nl();
       sumSratio += m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements;
       sumEratio += m.numExpressions == 0 ? 1 : m.numNPExpressions / m.numExpressions;
     }
     System.out.println("Total methods number: " + numMethods);
     System.out.println("Average statement ratio: " + sumSratio / numMethods);
     System.out.println("Average Expression ratio: " + sumEratio / numMethods);
+    report.close();
   }
 
-  private static void reportMethod(final CSVStatistics report, final MethodRecord r) {
-    report //
-        .put("Name", r.methodClassName + "~" + r.methodName) //
-        .put("#Statement", r.numStatements) //
-        .put("#NP Statements", r.numNPStatements) //
-        .put("Statement ratio", r.numStatements == 0 ? 1 : r.numNPStatements / r.numStatements) //
-        .put("#Expressions", r.numExpressions) //
-        .put("#NP expressions", r.numNPExpressions) //
-        .put("Expression ratio", r.numExpressions == 0 ? 1 : r.numNPExpressions / r.numExpressions) //
-        .put("#Parameters", r.numParameters) //
-        .put("#NP", r.nps.size()) //
-    ;
-    report.nl();
+  private static void summarizeNPStatistics(final String outputDir) {
+    final CSVStatistics report = openNPSummaryFile(outputDir);
+    if (report == null)
+      return;
+    for (final String k : npStatistics.keySet()) {
+      final NPRecord n = npStatistics.get(k);
+      report //
+          .put("Name", n.name) //
+          .put("#Statement", n.numNPStatements) //
+          .put("#Expression", n.numNPExpressions) //
+      ;
+      report.nl();
+    }
+    report.close();
   }
 
-  public static CSVStatistics openSummaryFile(final String outputDir) {
+  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/methodStatistics.csv");
+  }
+
+  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/npStatistics.csv");
+  }
+
+  public static CSVStatistics openSummaryFile(final String fileName) {
     try {
-      return new CSVStatistics(outputDir + "/report.csv", "property");
+      return new CSVStatistics(fileName, "property");
     } catch (final IOException x) {
       monitor.infoIOException(x, "opening report file");
       return null;
@@ -82,7 +102,7 @@ public class Logger {
    * @param np */
   private static void logNPInfo(ASTNode n, String np) {
     if (!npStatistics.containsKey(np))
-      npStatistics.put(np, new NpRecord(np));
+      npStatistics.put(np, new NPRecord(np));
     npStatistics.get(np).markNP(n);
   }
 
@@ -158,14 +178,14 @@ public class Logger {
   /** Collects statistics for a nanopattern.
    * @author Ori Marcovitch
    * @since 2016 */
-  static class NpRecord {
+  static class NPRecord {
     final String name;
     int occurences;
     int numNPStatements;
     int numNPExpressions;
 
     /** @param name */
-    public NpRecord(String name) {
+    public NPRecord(String name) {
       this.name = name;
     }
 
