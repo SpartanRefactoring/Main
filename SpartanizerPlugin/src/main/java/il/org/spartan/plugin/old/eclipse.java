@@ -191,7 +191,7 @@ public enum eclipse {
     return iconNonBusy;
   }
 
-  public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+  @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
