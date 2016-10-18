@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @year 2016 */
 public final class BatchSpartanizer {
   private static final String folder = "/tmp";
-  private static final String script = "./essence";
+  private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class).disable(Nanos.class);
   private static boolean defaultDir;
   private static String outputDir;
@@ -75,14 +75,14 @@ public final class BatchSpartanizer {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
-//        System.out.println("OutputDir: " + outputDir);
+        // System.out.println("OutputDir: " + outputDir);
         ¢ += 2;
       } else if ("-i".equals(args[¢])) {
         inputDir = args[¢ + 1];
-//        System.out.println("InputDir: " + inputDir);
+        // System.out.println("InputDir: " + inputDir);
         ¢ += 2;
       } else if ("-d".equals(args[¢])) {
-        inputDir =".";
+        inputDir = ".";
         ¢ += 1;
       } else {
         System.out.println(args[¢]);
@@ -120,13 +120,13 @@ public final class BatchSpartanizer {
     final int nodes = count.nodes(in);
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
-    final int essence = code.essenceNew(in + "").length();
+    final int essence = code.essence(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);
     final int tide2 = clean(out + "").length();
-    final int essence2 = code.essenceNew(out + "").length();
-    final int wordCount = code.wc(code.essenceNew(out + ""));
+    final int essence2 = code.essence(out + "").length();
+    final int wordCount = code.wc(code.essence(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = count.nodes(from);
     final int body2 = metrics.bodySize(from);
