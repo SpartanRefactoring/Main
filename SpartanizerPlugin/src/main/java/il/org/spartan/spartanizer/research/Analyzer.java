@@ -112,6 +112,7 @@ public class Analyzer {
             new Mapper(), //
             new Exploder(), //
             new JDPattern(), //
+            new Examiner(), //
             null);
   }
 
