@@ -6,26 +6,24 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** The purpose of this class is to gather information about NPs and summarize
- * it, so we can submit nice papers and win eternal fame. <br>
+ * it, so we can submit nice papers and win eternal fame.
+ * <p>
  * Whenever an NP is matched it should log itself.
  * @author Ori Marcovitch
  * @since 2016 */
 public class Logger {
-  private static Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
+  private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
   private static int numMethods;
 
   public static void summarize(final String outputDir) {
-    CSVStatistics report = null;
-    try {
-      report = new CSVStatistics(outputDir + "/report.csv", "property");
-    } catch (final IOException x) {
-      x.printStackTrace();
+    final CSVStatistics report = openSummaryFile(outputDir);
+    if (report == null)
       return;
-    }
     double sumSratio = 0;
     double sumEratio = 0;
     for (final Integer k : methodsStatistics.keySet()) {
@@ -52,8 +50,17 @@ public class Logger {
     reset();
   }
 
+  public static CSVStatistics openSummaryFile(final String outputDir) {
+    try {
+      return new CSVStatistics(outputDir + "/report.csv", "property");
+    } catch (final IOException x) {
+      monitor.infoIOException(x, "opening report file");
+      return null;
+    }
+  }
+
   private static void reset() {
-    methodsStatistics = new HashMap<>();
+    methodsStatistics.clear();
     numMethods = 0;
   }
 
