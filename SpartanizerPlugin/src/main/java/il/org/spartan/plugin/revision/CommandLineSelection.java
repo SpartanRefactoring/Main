@@ -60,6 +60,15 @@ public class CommandLineSelection extends AbstractSelection {
       }
       return new CommandLineSelection(cuList,"default");
     }
+    
+    public static AbstractSelection getFromPath(String path) {
+      List<CU> cuList = new ArrayList<>();
+      for (final File ¢ : new FilesGenerator(".java").from(path)) {
+        CU cu = CU.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+        cuList.add(cu);
+      }
+      return new CommandLineSelection(cuList,"selection");
+    }
  
   }
   
