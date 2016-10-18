@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.leonidas;
+package il.org.spartan.spartanizer.research;
 
 /** @author Ori Marcovitch
  * @since 2016 */
