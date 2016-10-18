@@ -411,7 +411,7 @@ public interface iz {
   }
 
   static boolean intType(final Expression ¢) {
-    return type.of(¢) == INT;
+    return ¢ != null && type.of(¢) == INT;
   }
 
   /** @param ¢ JD
@@ -508,7 +508,7 @@ public interface iz {
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {
-    return literal(az.booleanLiteral(¢), b);
+    return ¢ != null && literal(az.booleanLiteral(¢), b);
   }
 
   static boolean literal(final ASTNode ¢, final double d) {
