@@ -62,6 +62,7 @@ public final class InteractiveSpartanizer {
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(Class<N> n, Tipper<N>... ns) {
     if (!changed)
       toolbox = Toolbox.muttableDefaultInstance();
+    changed = true;
     toolbox.add(n, ns);
     return this;
   }
