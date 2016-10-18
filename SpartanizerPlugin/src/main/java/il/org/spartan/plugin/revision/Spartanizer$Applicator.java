@@ -59,8 +59,9 @@ public class Spartanizer$Applicator {
    * @param selection
    * @return
    */
-  public boolean apply(CU u, AbstractSelection selection) {
+  public boolean apply(WrappedCompilationUnit u, AbstractSelection selection) {
     go(u.compilationUnit);
+    
 //    if (s instanceof TrackerSelection)
 //      return apply(u, (TrackerSelection) s);
 //    try {
