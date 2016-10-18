@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.engine.Linguistic.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.function.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -58,6 +59,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       static final int DIALOG_PROCESSING = 2;
       int level;
       boolean dialogOpen;
+      int passes;
+      int compilationUnitCount;
+      long startTime;
 
       @Override public void tick(final Object... ¢) {
         asynch(() -> {
@@ -66,6 +70,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           if (d.getProgressMonitor().isCanceled())
             $.stop();
         });
+        if (passes == 1)
+          ++compilationUnitCount;
       }
 
       @Override public void push(final Object... ¢) {
@@ -78,6 +84,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 dialogOpen = true;
                 asynch(() -> d.open());
               }
+            startTime = System.nanoTime();
             break;
           case DIALOG_PROCESSING:
             if (dialogOpen)
@@ -86,6 +93,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
               });
+            ++passes;
             break;
           default:
             break;
@@ -97,7 +105,10 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         switch (level--) {
           case DIALOG_CREATION:
             if (dialogOpen)
-              Dialogs.message(Linguistic.merge(¢)).open();
+              Dialogs.message(Linguistic.merge(new Object[] { //
+                  message.title.get(Linguistic.merge(¢)), //
+                  message.passes.get(Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)), //
+                  message.time.get(Linguistic.time(System.nanoTime() - startTime)) }, "\n")).open();
             break;
           case DIALOG_PROCESSING:
             break;
@@ -172,5 +183,26 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     });
     $.defaultRunAction();
     return $;
+  }
+
+  /** Printing definition.
+   * @author Ori Roth
+   * @since 2.6 */
+  private enum message {
+    title(1, inp -> inp[0] + ""), //
+    passes(2, inp -> "Spartanized " + inp[0] + " compilation units in " + Linguistic.plurales("pass", (Integer) inp[1])), //
+    time(1, inp -> "Run time " + inp[0] + " seconds");
+    private final int inputCount;
+    private final Function<Object[], String> printing;
+
+    message(final int inputCount, final Function<Object[], String> printing) {
+      this.inputCount = inputCount;
+      this.printing = printing;
+    }
+
+    public String get(final Object... ¢) {
+      assert ¢.length == inputCount;
+      return printing.apply(¢);
+    }
   }
 }
