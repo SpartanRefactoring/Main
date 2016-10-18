@@ -32,6 +32,12 @@ public interface iz {
     return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
   }
 
+  /** @param ¢ JD
+   * @return */
+  static boolean booleanType(Type ¢) {
+    return ¢ != null && (¢ instanceof PrimitiveType) && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
+  }
+
   static boolean typeDeclaration(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, TYPE_DECLARATION);
   }

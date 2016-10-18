@@ -9,22 +9,22 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** @author Ori Marcovitch
- * @since 2016 May collide with {@link IfNullThrow} */
-public class Exploder extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  private static final UserDefinedTipper<IfStatement> tipper = TipperFactory.tipper("if($X1) throw $X2;", "", "");
+ * @since 2016 */
+public class Examiner extends JavadocMarkerNanoPattern<MethodDeclaration> {
+  private static final UserDefinedTipper<ReturnStatement> tipper = TipperFactory.tipper("return $X;", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    if (step.body(¢) == null)
+    if (step.body(¢) == null || !haz.booleanReturnType(¢))
       return false;
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
-    return ss.size() == 1 && iz.ifStatement(ss.get(0)) && tipper.canTip(az.ifStatement(ss.get(0)));
+    return ss.size() == 1 && iz.returnStatement(ss.get(0)) && tipper.canTip(az.returnStatement(ss.get(0)));
   }
 
   @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + " is an exploder method";
+    return ¢.getName() + " is an examiner method";
   }
 
   @Override protected String javadoc() {
-    return "[[Exploder]]";
+    return "[[Examiner]]";
   }
 }
