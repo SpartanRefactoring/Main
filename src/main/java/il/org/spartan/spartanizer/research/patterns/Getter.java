@@ -10,15 +10,12 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  Set<UserDefinedTipper<Statement>> tippers;
-
-  public Getter() {
-    if (tippers != null)
-      return;
-    tippers = new HashSet<>();
-    tippers.add(TipperFactory.tipper("return $N;", "", ""));
-    tippers.add(TipperFactory.tipper("return this.$N;", "", ""));
-  }
+  @SuppressWarnings("serial") Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+    {
+      add(TipperFactory.tipper("return $N;", "", ""));
+      add(TipperFactory.tipper("return this.$N;", "", ""));
+    }
+  };
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (step.body(d) == null || step.statements(step.body(d)) == null || step.statements(step.body(d)).isEmpty())

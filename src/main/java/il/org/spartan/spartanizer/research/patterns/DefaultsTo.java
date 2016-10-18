@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.*;
  * replace null != X ? X : Y with X ?? Y <br>
  * @author Ori Marcovitch
  * @year 2016 */
-public final class TernaryNullCoallescing extends NanoPatternTipper<ConditionalExpression> {
+public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   private static boolean prerequisite(final Expression left, final Expression right, final Expression elze) {
     return !iz.nullLiteral(left) && iz.nullLiteral(right) && wizard.same(left, elze)
         || iz.nullLiteral(left) && !iz.nullLiteral(right) && wizard.same(right, elze);
