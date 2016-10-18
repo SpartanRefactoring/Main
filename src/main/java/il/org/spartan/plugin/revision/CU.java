@@ -45,4 +45,15 @@ public class CU {
       $.add(new CU(u));
     return $;
   }
+
+  /**
+   * @param ¢
+   */
+  public static CU of(CompilationUnit ¢) {
+    return new CU(¢);
+  }
+  
+  public CU(CompilationUnit ¢) {
+    this.compilationUnit = ¢;
+  }
 }
