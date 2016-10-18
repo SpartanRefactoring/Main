@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.revision.*;
 //import il.org.spartan.plugin.revision.QuickFixer.SingleTipper;
 import il.org.spartan.spartanizer.dispatch.*;
