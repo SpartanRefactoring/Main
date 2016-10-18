@@ -40,22 +40,17 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
-<<<<<<< HEAD
   private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
-    final List<WrappedCompilationUnit> $ = new ArrayList<>();
-=======
+    List<WrappedCompilationUnit> $ = new ArrayList<>();
+    if (¢ != null)
+      $.add(¢);
+    return $;
+  }
+
   private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
     ASTNode $;
     for ($ = coveredNode; $ != null && $.getNodeType() != nodeType;)
       $ = $.getParent();
-    return $;
-  }
-
-  private static List<WrappedCompilationUnit> asList(WrappedCompilationUnit ¢) {
-    List<WrappedCompilationUnit> $ = new ArrayList<>();
->>>>>>> 72f2373eb20490fa21ff8ccbdb9234a3d76a41cf
-    if (¢ != null)
-      $.add(¢);
     return $;
   }
 

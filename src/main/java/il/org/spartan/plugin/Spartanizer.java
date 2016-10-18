@@ -6,6 +6,7 @@ import java.util.function.*;
 import org.eclipse.jdt.core.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Possible events during spartanization process
  * <p>
