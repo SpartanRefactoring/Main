@@ -55,15 +55,18 @@ public final class TrimmerTestsUtils {
   }
 
   static class Operand extends Wrapper<String> {
+    private Trimmer trimmer;
+
     public Operand(final String inner) {
       super(inner);
+      trimmer = new Trimmer();
     }
 
     public Operand gives(final String expected) {
       assert expected != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final String unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
+      final String unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -73,6 +76,11 @@ public final class TrimmerTestsUtils {
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       assertSimilar(expected, peeled);
       return new Operand(expected);
+    }
+
+    public <N extends ASTNode> Operand withTipper(final Class<N> n, final Tipper<N> t) {
+      trimmer.add(n, t);
+      return this;
     }
 
     public void stays() {
