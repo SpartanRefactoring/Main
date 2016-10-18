@@ -339,7 +339,7 @@ public class ConfigurableSpartanizer {
 //      coverageStats = new CSVStatistics(coverageFileName, "property");
       
       if(applyToEntireProject){
-        selection = new CommandLineSelection(new ArrayList<CU>(),"project");
+        selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(),"project");
         selection.createSelectionFromProjectDir(inputPath);
       }  
       
