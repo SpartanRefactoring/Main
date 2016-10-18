@@ -95,21 +95,21 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
     final Set<String> $ = new HashSet<>();
     $.addAll(ps);
     step.body(root).accept(new ASTVisitor() {
-      @Override public boolean visit(final Assignment n) {
-        if (containsParameter(step.right(n), $))
-          $.add(extractName(step.left(n)));
+      @Override public boolean visit(final Assignment ¢) {
+        if (containsParameter(step.right(¢), $))
+          $.add(extractName(step.left(¢)));
         return true;
       }
 
-      @Override public boolean visit(final VariableDeclarationFragment n) {
-        if (containsParameter(n.getInitializer(), $))
-          $.add(extractName(n.getName()));
+      @Override public boolean visit(final VariableDeclarationFragment ¢) {
+        if (containsParameter(¢.getInitializer(), $))
+          $.add(extractName(¢.getName()));
         return true;
       }
 
-      @Override public boolean visit(final SingleVariableDeclaration n) {
-        if (containsParameter(n.getInitializer(), $))
-          $.add(extractName(n.getInitializer()));
+      @Override public boolean visit(final SingleVariableDeclaration ¢) {
+        if (containsParameter(¢.getInitializer(), $))
+          $.add(extractName(¢.getInitializer()));
         return true;
       }
     });
@@ -119,8 +119,8 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   protected static String extractName(final Expression root) {
     final StringBuilder $ = new StringBuilder();
     root.accept(new ASTVisitor() {
-      @Override public boolean visit(final SimpleName n) {
-        $.append(n);
+      @Override public boolean visit(final SimpleName ¢) {
+        $.append(¢);
         return false;
       }
     });
