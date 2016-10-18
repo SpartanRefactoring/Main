@@ -91,15 +91,15 @@ public interface Listener {
     }
 
     /** To be used in the following nano <code><pre> 
-     <<<<<<< HEAD:src/main/java/il/org/spartan/plugin/revision/Listener.java
-                 public interface Applicator { 
-                   public class Settings extends Listeners {
-                      public class Action extends Setting { 
-                         int action1() {} 
-                         void action2(Type1 t1, Type2 t2, int i)  { ...}
-                      } 
-                   }  
-                 } </pre></code> parameterized solely by the name
+      <<<<<<< HEAD:src/main/java/il/org/spartan/plugin/revision/Listener.java
+                  public interface Applicator { 
+                    public class Settings extends Listeners {
+                       public class Action extends Setting { 
+                          int action1() {} 
+                          void action2(Type1 t1, Type2 t2, int i)  { ...}
+                       } 
+                    }  
+                  } </pre></code> parameterized solely by the name
      * <code>Applicator</code> * and the body of class <code>Action</code>
      * ======= public interface Applicator { public class Settings extends
      * Listeners { public class Action extends Setting { int action1() {} ; void
