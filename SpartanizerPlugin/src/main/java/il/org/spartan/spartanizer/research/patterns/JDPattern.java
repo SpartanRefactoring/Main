@@ -13,17 +13,14 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  static Set<UserDefinedTipper<Expression>> tippers;
-
-  public JDPattern() {
-    if (tippers != null)
-      return;
-    tippers = new HashSet<>();
-    tippers.add(TipperFactory.tipper("$X == null", "", ""));
-    tippers.add(TipperFactory.tipper("$X != null", "", ""));
-    tippers.add(TipperFactory.tipper("null == $X", "", ""));
-    tippers.add(TipperFactory.tipper("null == $X", "", ""));
-  }
+  @SuppressWarnings("serial") static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+    {
+      add(TipperFactory.tipper("$X == null", "", ""));
+      add(TipperFactory.tipper("$X != null", "", ""));
+      add(TipperFactory.tipper("null == $X", "", ""));
+      add(TipperFactory.tipper("null == $X", "", ""));
+    }
+  };
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (step.parameters(d) == null || step.parameters(d).isEmpty())
