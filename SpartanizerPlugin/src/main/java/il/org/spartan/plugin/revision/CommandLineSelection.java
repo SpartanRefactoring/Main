@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
  * Selection useful to deal with projects using the command line
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLineSelection extends AbstractSelection {
+
+public class CommandLineSelection extends AbstractSelection <CommandLineSelection>{
   
   private CompilationUnit compilationUnit;
   private List<WrappedCompilationUnit> compilationUnits;
@@ -54,7 +55,7 @@ public class CommandLineSelection extends AbstractSelection {
     /**
      * @return
      */
-    public static AbstractSelection get() {
+    public static AbstractSelection<CommandLineSelection> get() {
       List<WrappedCompilationUnit> cuList = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(".")) {
         WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
