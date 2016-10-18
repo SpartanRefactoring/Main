@@ -10,9 +10,10 @@ public interface code {
         .replaceAll("^\\s*\\n", "")//
         .replaceAll("\\s*$", "")//
         .replaceAll("\\s+", " ")
-        .replaceAll("\\([^a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([^a-zA-Z]\\)\\([^a-zA-Z]\\)")
-        .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z]\\)\\([a-zA-Z]\\)")
-        .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z]\\)\\([^a-zA-Z]\\)");
+    // TODO Matteo: I think this is buggy; the replacement should not be phrased like so.
+        .replaceAll("\\([^a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)")
+        .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([a-zA-Z¢$_]\\)")
+        .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)");
   }
 
   static int wc(final String $) {
