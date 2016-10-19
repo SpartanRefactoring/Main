@@ -20,15 +20,15 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
     @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
     if (ss.size() != 1 || !iz.returnStatement(ss.get(0)) || !tipper.canTip(az.returnStatement(ss.get(0))))
       return false;
-    Expression e = step.expression(az.returnStatement(ss.get(0)));
+    final Expression e = step.expression(az.returnStatement(ss.get(0)));
     return iz.methodInvocation(e) && step.parametersNames(¢).containsAll(dependencies(step.arguments(az.methodInvocation(e))));
   }
 
   /** @param arguments
    * @return */
-  private static List<String> dependencies(List<Expression> arguments) {
+  private static List<String> dependencies(final List<Expression> arguments) {
     final Set<Name> names = new HashSet<>();
-    for (Expression ¢ : arguments) {
+    for (final Expression ¢ : arguments) {
       names.addAll(find.dependencies(¢));
       if (iz.name(¢))
         names.add(az.name(¢));
