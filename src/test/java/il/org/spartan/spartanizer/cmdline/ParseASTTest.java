@@ -23,7 +23,7 @@ public class ParseASTTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
@@ -33,7 +33,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */
@@ -51,7 +51,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
@@ -61,7 +61,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * ImportDeclaration) */
@@ -71,7 +71,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * PackageDeclaration) */
@@ -81,7 +81,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodInvocation) */
@@ -91,7 +91,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * Assignment) */
@@ -101,7 +101,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * NormalAnnotation) */
@@ -111,7 +111,7 @@ public class ParseASTTest {
       }
 
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MarkerAnnotation) */
@@ -128,7 +128,7 @@ public class ParseASTTest {
     final ASTNode n = makeAST.COMPILATION_UNIT.from(test1);
     n.accept(new ASTVisitor() {
       /* (non-Javadoc)
-       * 
+       *
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */

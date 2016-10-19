@@ -260,8 +260,6 @@ public class ConfigurableSpartanizer {
     });
   }
 
-
-
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     ASTNode parentNode = ¢.getParent();
     assert parentNode != null;

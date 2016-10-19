@@ -81,8 +81,8 @@ public class SpartanMovie extends AbstractHandler {
   /** Just in case, so that editors don't pile up. Not sure this is the right
    * behavior
    * <p>
-   * Ori Roth says: it just looks better this way. Editors do not pile up and create
-   * a mess.
+   * Ori Roth says: it just looks better this way. Editors do not pile up and
+   * create a mess.
    * @author Yossi Gil
    * @param p JD */
   // sure this is the right behavior
