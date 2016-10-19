@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
     delegator("public class A{boolean foo(int a){return bar(a,a);} }");
   }
 
-  @Ignore @Test public void basic4() {
+  @Test public void basic4() {
     delegator("public class A{boolean foo(int a){return bar(a,f(a));} }");
   }
 
@@ -43,10 +43,10 @@ import il.org.spartan.spartanizer.research.patterns.*;
   }
 
   private void delegator(String ¢) {
-    assertTrue(examiner(¢));
+    assertTrue(javadocedDelegator(¢));
   }
 
-  private static boolean examiner(String ¢) {
+  private static boolean javadocedDelegator(String ¢) {
     return spartanized(¢).contains("[[Delegator]]");
   }
 
@@ -56,6 +56,6 @@ import il.org.spartan.spartanizer.research.patterns.*;
 
   /** @param s */
   private static void notDelegator(String ¢) {
-    assertFalse(examiner(¢));
+    assertFalse(javadocedDelegator(¢));
   }
 }

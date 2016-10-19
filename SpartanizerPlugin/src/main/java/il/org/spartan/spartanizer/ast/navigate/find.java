@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** A class to find all sort all things about a node, typically some small
  * analyses.
  * @author Ori Marcovitch
@@ -14,7 +16,8 @@ public enum find {
     Set<Name> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(SimpleName node) {
-        $.add(node);
+        if (!iz.methodInvocation(step.parent(node)))
+          $.add(node);
         return true;
       }
 
