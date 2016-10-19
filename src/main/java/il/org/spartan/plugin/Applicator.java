@@ -18,7 +18,7 @@ public abstract class Applicator {
    * activate, for instance, a {@link GUI$Applicator}. The return value
    * determines whether the compilation unit should continue to the next pass or
    * not. */
-  private Function<WrappedCompilationUnit, Boolean> runAction;
+  private Function<WrappedCompilationUnit, Integer> runAction;
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
   private int passes;
@@ -51,14 +51,14 @@ public abstract class Applicator {
   }
 
   /** @return run action for this applicator */
-  public Function<WrappedCompilationUnit, Boolean> runAction() {
+  public Function<WrappedCompilationUnit, Integer> runAction() {
     return runAction;
   }
 
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return this applicator */
-  public Applicator runAction(final Function<WrappedCompilationUnit, Boolean> ¢) {
+  public Applicator runAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
   }
