@@ -13,7 +13,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -41,7 +40,7 @@ public abstract class AbstractSpartanizer {
   static GUI$Applicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
-  protected String folder = "/tmp/";
+  protected String folder = "/home/matteo/Desktop/";
   protected String afterFileName;
   protected String beforeFileName;
   protected String inputPath;
@@ -59,9 +58,9 @@ public abstract class AbstractSpartanizer {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
-  public AbstractSpartanizer() {
-    super();
-  }
+//  public AbstractSpartanizer() {
+//    super();
+//  }
 
   public abstract void apply();
 
@@ -177,10 +176,20 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-    setUpPrintWriters();
+    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+      befores = b;
+      afters = a;
+    } catch (final IOException x) {
+      x.printStackTrace();
+      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
+    }
     setUpReports();
     // coverageStats = new CSVStatistics(coverageFileName, "property");
+    
     apply();
+    
+    closePrintWriters();
 //    if (!shouldRun)
 //      for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
 //        presentFileName = ¢.getName();
@@ -197,10 +206,16 @@ public abstract class AbstractSpartanizer {
 //        CommandLineApplicator.defaultApplicator();
 //      // .defaultRunAction(getSpartanizer(""));
 //    }
-
-    
+        
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
+  }
+  /**
+   * 
+   */
+  private void closePrintWriters() {
+    befores.close();
+    afters.close();
   }
 
   boolean go(final ASTNode input) {
@@ -224,6 +239,11 @@ public abstract class AbstractSpartanizer {
     final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
     final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
+//    System.out.println("print before");
+//    System.out.println(beforeFileName);
+//    System.out.println(befores);
+//    System.out.println(input);
+    befores.print(" ------------------- ");
     befores.print(input);
     afters.print(out);
     report.summaryFileName();
@@ -280,6 +300,7 @@ public abstract class AbstractSpartanizer {
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
+        System.out.println(!selectedNodeTypes.contains(¢.getClass()) || go(¢));
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
@@ -328,9 +349,10 @@ public abstract class AbstractSpartanizer {
   }
 
   /**
-   * 
+   * Setup PrintWriters
+   * @author matteo
    */
-  private void setUpPrintWriters() {
+  @SuppressWarnings("unused") private void setUpPrintWriters() {
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
@@ -342,7 +364,8 @@ public abstract class AbstractSpartanizer {
   }
 
   /**
-   * 
+   * Setup reports
+   * @author matteo
    */
   private void setUpReports() {
     try {
