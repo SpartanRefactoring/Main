@@ -8,6 +8,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -183,9 +184,8 @@ public class leonidasSays {
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);
-      } catch (MalformedTreeException | BadLocationException e) {
-        e.printStackTrace();
-        fail();
+      } catch (MalformedTreeException | BadLocationException x) {
+        monitor.logEvaluationError(this, x);
       }
       azzertEquals(res, document);
     }

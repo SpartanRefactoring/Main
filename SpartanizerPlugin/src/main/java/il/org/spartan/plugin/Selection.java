@@ -220,13 +220,7 @@ public class Selection extends AbstractSelection<Selection> {
       return s == null ? empty() : by(¢.getResource()).setTextSelection(s).setName(MARKER_NAME);
     }
 
-    /** XXX Roth: what does expend mean? --yg TODO Yossi: [CORRECTION] this is
-     * an expansion of a marker selection to contain parent node
-     * (method/class/etc) and provide a *tracking service* for it. --or
-     * @param m
-     * @param c
-     * @return */
-    public static Selection expend(final IMarker m, final Class<? extends ASTNode> c) {
+    public static Selection expand(final IMarker m, final Class<? extends ASTNode> c) {
       if (m == null || !m.exists() || c == null || m.getResource() == null || !(m.getResource() instanceof IFile))
         return empty();
       final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
