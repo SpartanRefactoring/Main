@@ -442,7 +442,7 @@ public abstract class GUI$Applicator extends Refactoring {
     return selection != null && !selection.isEmpty() && selection.getLength() != 0;
   }
 
-  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
+  public int apply(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
     if (s instanceof TrackerSelection)
       return apply(u, (TrackerSelection) s);
     try {
@@ -456,14 +456,14 @@ public abstract class GUI$Applicator extends Refactoring {
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       progressMonitor.done();
-      return counter.get() > 0;
+      return counter.get();
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
     }
-    return false;
+    return 0;
   }
 
-  public boolean apply(final WrappedCompilationUnit u, final TrackerSelection s) {
+  public int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
       setICompilationUnit(u.descriptor);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -478,10 +478,10 @@ public abstract class GUI$Applicator extends Refactoring {
       progressMonitor.done();
       if (s != null)
         s.update();
-      return counter.get() > 0;
+      return counter.get();
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
     }
-    return false;
+    return 0;
   }
 }
