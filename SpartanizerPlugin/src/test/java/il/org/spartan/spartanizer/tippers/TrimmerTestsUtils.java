@@ -55,7 +55,7 @@ public final class TrimmerTestsUtils {
   }
 
   static class Operand extends Wrapper<String> {
-    private Trimmer trimmer;
+    private final Trimmer trimmer;
 
     public Operand(final String inner) {
       super(inner);

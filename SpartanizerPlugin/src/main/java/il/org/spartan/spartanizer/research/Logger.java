@@ -100,7 +100,7 @@ public class Logger {
 
   /** @param n
    * @param np */
-  private static void logNPInfo(ASTNode n, String np) {
+  private static void logNPInfo(final ASTNode n, final String np) {
     if (!npStatistics.containsKey(np))
       npStatistics.put(np, new NPRecord(np));
     npStatistics.get(np).markNP(n);
@@ -189,12 +189,12 @@ public class Logger {
     int numNPExpressions;
 
     /** @param name */
-    public NPRecord(String name) {
+    public NPRecord(final String name) {
       this.name = name;
     }
 
     /** @param ¢ matched node */
-    public void markNP(ASTNode ¢) {
+    public void markNP(final ASTNode ¢) {
       ++occurences;
       numNPStatements += metrics.countStatements(¢);
       numNPExpressions += metrics.countExpressions(¢);

@@ -121,7 +121,6 @@ public final class BatchSpartanizer {
     final int body = metrics.bodySize(in);
     final int tide = clean(in + "").length();
     final int essence = code.essence(in + "").length();
-    
     final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length();
     final int tokens2 = metrics.tokens(out);

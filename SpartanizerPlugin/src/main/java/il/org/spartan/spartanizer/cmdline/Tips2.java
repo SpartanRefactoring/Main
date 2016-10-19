@@ -6,15 +6,12 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-/**
- * @author Matteo Orru'
+/** @author Matteo Orru'
  * @since 2016 */
 public class Tips2 {
-  
   private static GUI$Applicator[] all = { //
       new Trimmer(), //
   };
-  
   private final GUI$Applicator value;
 
   private Tips2(final GUI$Applicator value) {
@@ -25,9 +22,8 @@ public class Tips2 {
   public GUI$Applicator value() {
     return value;
   }
-  
-//  private static Toolbox toolbox = Toolbox.defaultInstance();
-   
+
+  // private static Toolbox toolbox = Toolbox.defaultInstance();
   @SuppressWarnings("synthetic-access") //
   private static final Map<String, GUI$Applicator> map = new HashMap<String, GUI$Applicator>() {
     static final long serialVersionUID = -8921699276699040030L;
@@ -77,5 +73,4 @@ public class Tips2 {
     for (final GUI$Applicator ¢ : all)
       map.put(¢.getName(), ¢);
   }
-
 }
