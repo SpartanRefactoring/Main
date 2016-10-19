@@ -27,10 +27,10 @@ import il.org.spartan.utils.*;
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
-public class ConfigurableSpartanizer {
+public class CommandLineSpartanizer {
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new ConfigurableSpartanizer(¢).fire();
+      new CommandLineSpartanizer(¢).fire();
   }
 
   String folder = "/tmp/";
@@ -60,11 +60,11 @@ public class ConfigurableSpartanizer {
   private final boolean specificTipper = false;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
-  ConfigurableSpartanizer(final String path) {
+  CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
-  ConfigurableSpartanizer(final String inputPath, final String name) {
+  CommandLineSpartanizer(final String inputPath, final String name) {
     this.inputPath = inputPath;
     beforeFileName = folder + name + ".before.java";
     afterFileName = folder + name + ".after.java";
