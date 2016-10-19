@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.util.function.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
