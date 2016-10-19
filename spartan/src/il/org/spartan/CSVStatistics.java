@@ -36,9 +36,8 @@ public class CSVStatistics extends CSVLine.Ordered {
    *        numerical columns in the principal file
    * @throws IOException */
   public CSVStatistics(final String baseName, final String keysHeader) throws IOException {
-    // TODO: Yossi: I have a compilation error also for this method (nonnull).
-    // nonnull(baseName);
-    // nonnull(keysHeader);
+    assert baseName != null;
+    assert keysHeader != null;
     inner = new CSVWriter(removeExtension(baseName));
     summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;
