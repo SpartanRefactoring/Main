@@ -42,6 +42,18 @@ import il.org.spartan.spartanizer.research.patterns.*;
     notDelegator("public class A{boolean foo(int a){return bar(a,b);} }");
   }
 
+  @Test public void basic7() {
+    notDelegator("public class A{boolean foo(int a){return bar(a,f(b));} }");
+  }
+
+  @Test public void basic8() {
+    notDelegator("public class A{boolean foo(int a){return bar(a,f(f(b)));} }");
+  }
+
+  @Test public void basic9() {
+    notDelegator("public class A{void foo(int a){return bar(a);} }");
+  }
+
   private void delegator(String ¢) {
     assertTrue(javadocedDelegator(¢));
   }
