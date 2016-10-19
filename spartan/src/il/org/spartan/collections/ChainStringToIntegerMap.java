@@ -18,7 +18,7 @@ public class ChainStringToIntegerMap {
     return inner.entrySet();
   }
 
-  public int get(final Object key) {
+  @SuppressWarnings("null") public int get(final Object key) {
     return inner.get(key).intValue();
   }
 

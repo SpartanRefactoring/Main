@@ -21,10 +21,10 @@ public class Hamlet implements Environment {
     @Nullable final Boolean second = $.get();
     @Nullable final Boolean third = $.get();
     @Nullable final Boolean fourth = $.get();
-    azzert.assertThat("", first + "", is("false"));
-    azzert.assertThat("", second + "", is("true"));
-    azzert.assertThat("", third + "", is("false"));
-    azzert.assertThat("", fourth + "", is("true"));
+    azzert.that(first + "", is("false"));
+    azzert.that(second + "", is("true"));
+    azzert.that(third + "", is("false"));
+    azzert.that(fourth + "", is("true"));
   }
 
   private Boolean first() {

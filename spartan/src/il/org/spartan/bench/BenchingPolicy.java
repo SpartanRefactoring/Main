@@ -22,7 +22,7 @@ public enum BenchingPolicy {
   private static long benchingTime = SECOND / 10;
   public static final long MAX_TIME = MINUTE;
   public static final int MIN_RUNS = 17;
-  public final static int MAX_RUNS = 1 << 30;
+  public static final int MAX_RUNS = 1 << 30;
 
   public static void after(final Operation after) {
     if (after != null)
@@ -145,10 +145,8 @@ public enum BenchingPolicy {
   }
 
   static void measure(final LogBook.Mutable m, final long size, final Operation o, final int initialRuns) {
-    int runs = initialRuns;
-    for (;;) {
+    for (int runs = initialRuns;;) {
       Log.print("Silence, measuring " + Unit.INTEGER.format(runs) + " runs ... ");
-      // JVM.gc();
       final JVM before = new JVM();
       final long time = o.netTime(runs).time();
       final JVM after = new JVM();

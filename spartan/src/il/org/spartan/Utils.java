@@ -614,15 +614,15 @@ public interface Utils {
     }
 
     @Test public void quoteEmptyString() {
-      azzert.assertThat("", idiomatic.quote(""), is("''"));
+      azzert.that(idiomatic.quote(""), is("''"));
     }
 
     @Test public void quoteNull() {
-      azzert.assertThat("", idiomatic.quote(null), is("<null reference>"));
+      azzert.that(idiomatic.quote(null), is("<null reference>"));
     }
 
     @Test public void quoteSimpleString() {
-      azzert.assertThat("", idiomatic.quote("A"), is("'A'"));
+      azzert.that(idiomatic.quote("A"), is("'A'"));
     }
 
     @Test public void swapDegenerate() {

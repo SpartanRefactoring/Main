@@ -78,26 +78,26 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     return map.size();
   }
 
-  /** A simple abstract factory, allowing its clients to generate objects not
-   * present in the {@link Cache}.
-   * @author Yossi Gil
-   * @since 16/06/2007
-   * @param <T> the type of objects that this factory generates. */
-  public static abstract class Factory<T> {
-    /** retrieve the universal set, i.e., the set of all possible objects,
-     * indexed by their respective keys.
-     * @return the base implementation returns the empty set, but it is meant to
-     *         be overridden by concrete classes inheriting from
-     *         {@link Cache.Factory} */
-    @SuppressWarnings("static-method") //
-    public Map<String, T> all() {
+  /**
+   * A simple abstract factory, allowing its clients to generate objects not present in the  {@link Cache} .
+   * @author  Yossi Gil
+   * @since  16/06/2007
+   * @param < T >  the type of objects that this factory generates. 
+   */
+  public abstract static class Factory<T> {
+    /**
+    * retrieve the universal set, i.e., the set of all possible objects, indexed by their respective keys.
+    * @return  the base implementation returns the empty set, but it is meant to be overridden by concrete classes inheriting from {@link Cache.Factory}  
+    */
+    @SuppressWarnings("static-method") public Map<String, T> all() {
       return new HashMap<>();
     }
 
-    /** create a new object from its {@link String} name
-     * @param key the identifier for the newly created object.
-     * @return the newly created object, or <code><b>null</b></code> if no such
-     *         object can be created. */
+    /**
+    * create a new object from its  {@link String}  name
+    * @param key  the identifier for the newly created object.
+    * @return  the newly created object, or <code><b>null</b></code> if no such object can be created. 
+    */
     public abstract T make(String key);
   }
 }

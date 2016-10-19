@@ -69,7 +69,7 @@ import il.org.spartan.utils.*;
    *         <code>ts</code> is <code>null</code>, then the empty string is
    *         returned. */
   public static <T> String make(final String begin, final Collection<T> ts, final String between, final String end) {
-    return ts == null || ts.size() == 0 ? "" : begin + Separate.by(ts, between) + end;
+    return ts == null || ts.isEmpty() ? "" : begin + Separate.by(ts, between) + end;
   }
 
   public static <T> String make(final String begin, final T[] ts, final String end) {

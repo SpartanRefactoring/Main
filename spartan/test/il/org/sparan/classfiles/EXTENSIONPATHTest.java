@@ -6,6 +6,6 @@ import il.org.spartan.classfiles.*;
 
 @SuppressWarnings("static-method") public class EXTENSIONPATHTest {
   @Test public void test() {
-    assert null != EXTENSIONPATH.asArray();
+    assert EXTENSIONPATH.asArray() != null;
   }
 }

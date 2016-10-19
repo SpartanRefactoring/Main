@@ -17,19 +17,19 @@ import il.org.spartan.utils.*;
   static final int MAX_LAST = 10;
 
   public static double atod(final String ¢) {
-    return new Double(¢).doubleValue();
+    return Double.valueOf(¢).doubleValue();
   }
 
   public static float atof(final String ¢) {
-    return new Float(¢).floatValue();
+    return Float.valueOf(¢).floatValue();
   }
 
   public static int atoi(final String ¢) {
-    return new Integer(¢).intValue();
+    return Integer.valueOf(¢).intValue();
   }
 
   public static long atol(final String ¢) {
-    return new Long(¢).longValue();
+    return Long.valueOf(¢).longValue();
   }
 
   public static String capitalize(final String ¢) {
@@ -95,8 +95,7 @@ import il.org.spartan.utils.*;
 
   public static String expandLeadingTabs(final String s) {
     nonnull(s);
-    String $ = s;
-    for (;;) {
+    for (String $ = s;;) {
       final String newValue = $.replaceAll("(?m)^([\t]*)\t", "$1    ");
       if ($.equals(newValue))
         return $;
@@ -127,7 +126,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isDouble(final String s) {
     try {
-      new Double(s);
+      Double.valueOf(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -136,7 +135,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isFloat(final String s) {
     try {
-      new Float(s);
+      Float.valueOf(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -145,7 +144,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isInt(final String s) {
     try {
-      new Integer(s);
+      Integer.valueOf(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -154,7 +153,7 @@ import il.org.spartan.utils.*;
 
   public static boolean isLong(final String s) {
     try {
-      new Long(s);
+      Long.valueOf(s);
       return true;
     } catch (final NumberFormatException __) {
       return false;
@@ -196,14 +195,13 @@ import il.org.spartan.utils.*;
    * @return the ordinal string representation of <code>n</code> */
   public static String ordinal(final int i) {
     nonnegative(i);
-    final String th = "th";
     switch (i % 10) {
       case 1:
-        return i + (i == 11 ? th : "st");
+        return i + (i == 11 ? "th" : "st");
       case 2:
-        return i + (i == 12 ? th : "nd");
+        return i + (i == 12 ? "th" : "nd");
       default:
-        return i + th;
+        return i + "th";
     }
   }
 
@@ -250,7 +248,7 @@ import il.org.spartan.utils.*;
   }
 
   public static String pretty(final String singular, final String plural, final Collection<? extends Object> a) {
-    if (a == null || a.size() <= 0)
+    if (a == null || a.isEmpty())
       return "";
     if (a.size() == 1)
       return "1 " + singular + ": " + a.iterator().next() + "\n";

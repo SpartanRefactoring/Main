@@ -113,9 +113,9 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testNonNullArrayItems() {
-      azzert.assertThat("", nulls(nonNullArray)[0], is("1"));
-      azzert.assertThat("", nulls(nonNullArray)[1], is("2"));
-      azzert.assertThat("", nulls(nonNullArray)[2], is("4"));
+      azzert.that(nulls(nonNullArray)[0], is("1"));
+      azzert.that(nulls(nonNullArray)[1], is("2"));
+      azzert.that(nulls(nonNullArray)[2], is("4"));
     }
 
     @Test public void testNonNullArrayLength() {
@@ -123,9 +123,9 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testPruneArrayAltenatingItems() {
-      azzert.assertThat("", nulls(alternatingArray)[0], is("A"));
-      azzert.assertThat("", nulls(alternatingArray)[1], is("B"));
-      azzert.assertThat("", nulls(alternatingArray)[2], is("C"));
+      azzert.that(nulls(alternatingArray)[0], is("A"));
+      azzert.that(nulls(alternatingArray)[1], is("B"));
+      azzert.that(nulls(alternatingArray)[2], is("C"));
     }
 
     @Test public void testPruneArrayAltenatingLength() {
@@ -134,9 +134,9 @@ import il.org.spartan.streotypes.*;
 
     @Test public void testPruneSparseCollectionContents() {
       final String[] a = nulls(sparseCollection).toArray(new String[3]);
-      azzert.assertThat("", a[0], is("A"));
-      azzert.assertThat("", a[1], is("B"));
-      azzert.assertThat("", a[2], is("C"));
+      azzert.that(a[0], is("A"));
+      azzert.that(a[1], is("B"));
+      azzert.that(a[2], is("C"));
       azzert.that(a.length, is(3));
     }
 
@@ -145,7 +145,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void testPrunNotNull() {
-      assert null != nulls(sparseCollection);
+      assert nulls(sparseCollection) != null;
     }
 
     @Test public void testShrink() {

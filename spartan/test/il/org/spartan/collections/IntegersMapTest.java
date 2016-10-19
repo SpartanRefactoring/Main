@@ -101,6 +101,7 @@ public final class IntegersMapTest {
     new IntegersMap().put(10, 100);
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys() {
     for (int ¢ = 0; ¢ < 10000; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -111,6 +112,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys10() {
     for (int ¢ = 0; ¢ < 10; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -121,6 +123,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys100() {
     for (int ¢ = 0; ¢ < 100; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -131,6 +134,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys15() {
     for (int ¢ = 0; ¢ < 15; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -141,6 +145,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys15rehash() {
     for (int ¢ = 0; ¢ < 15; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -152,6 +157,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys17() {
     for (int ¢ = 0; ¢ < 17; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -162,6 +168,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys18() {
     for (int ¢ = 0; ¢ < 18; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -172,6 +179,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys18inverse() {
     for (int ¢ = 0; ¢ < 18; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -182,6 +190,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys20inverse() {
     for (int ¢ = 0; ¢ < 20; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -192,6 +201,7 @@ public final class IntegersMapTest {
     }
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys22() {
     for (int ¢ = 0; ¢ < 22; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -200,6 +210,7 @@ public final class IntegersMapTest {
       azzert.that(keys[¢], is(¢));
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Test public void keys30() {
     for (int ¢ = 0; ¢ < 30; ++¢)
       m.put(¢, IntegersMap.hash(¢));
@@ -210,6 +221,9 @@ public final class IntegersMapTest {
     }
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   @Test public void keys30inverse() {
     for (int ¢ = 0; ¢ < 30; ++¢)
       m.put(¢, IntegersMap.hash(¢));

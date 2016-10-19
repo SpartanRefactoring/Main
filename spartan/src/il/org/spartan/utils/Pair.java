@@ -31,8 +31,7 @@ public class Pair<First, Second> {
       return true;
     if (o == null || !getClass().equals(o.getClass()))
       return false;
-    final Pair<?, ?> that = (Pair<?, ?>) o;
-    return eq(first, that.first) && eq(second, that.second);
+    return eq(first, ((Pair<?, ?>) o).first) && eq(second, ((Pair<?, ?>) o).second);
   }
 
   @Override public int hashCode() {

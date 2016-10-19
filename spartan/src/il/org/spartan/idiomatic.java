@@ -222,7 +222,7 @@ public interface idiomatic {
     }
 
     @Test public void use3() {
-      azzert.assertThat("", take(this).when(true), is(this));
+      azzert.that(take(this).when(true), is(this));
     }
 
     @Test public void use4() {
@@ -230,7 +230,7 @@ public interface idiomatic {
     }
 
     @Test public void use5() {
-      azzert.assertThat("", take(this).unless(false), is(this));
+      azzert.that(take(this).unless(false), is(this));
     }
 
     @Test public void use6() {

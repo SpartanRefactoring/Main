@@ -58,8 +58,8 @@ public class ConstantPoolReader extends RobustReader {
 
   public TypedEntity[] readMembers() {
     final TypedEntity[] $ = new TypedEntity[readUnsignedShort()];
-    for (int i = 0; i < $.length; ++i)
-      $[i] = new TypedEntity(constantPool, readUnsignedShort(), readStringConstant(), readStringConstant(), readAttributes());
+    for (int ¢ = 0; ¢ < $.length; ++¢)
+      $[¢] = new TypedEntity(constantPool, readUnsignedShort(), readStringConstant(), readStringConstant(), readAttributes());
     return $;
   }
 

@@ -17,8 +17,7 @@ import il.org.spartan.classfiles.*;
 @SuppressWarnings("static-method") //
 public class ClassRepositoryTest {
   public static void main(final String[] args) {
-    final ClassRepository cr = new ClassRepository(ClassRepositoryTest.class);
-    System.out.println(cr);
+    System.out.println((new ClassRepository(ClassRepositoryTest.class)));
   }
 
   @Test public void noDuplications() {

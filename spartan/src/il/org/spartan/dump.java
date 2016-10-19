@@ -93,7 +93,7 @@ public class dump {
       return;
     }
     final Class<?> c = o.getClass();
-    out("\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "" + "\n");
+    out("\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n");
     out("Class canonical name", c.getCanonicalName());
     out("Class name", c.getName());
     for (final Method m : c.getMethods()) {

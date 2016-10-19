@@ -14,7 +14,7 @@ public class Graph<E> extends AbstractGraph<E> {
   private static <E> ImmutableArrayList<Vertex<E>> makeSinks(final ImmutableArrayList<Vertex<E>> e) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (final Vertex<E> ¢ : e)
-      if (¢.outgoing().size() == 0)
+      if (¢.outgoing().isEmpty())
         $.add(¢);
     return ImmutableArrayList.make($);
   }
@@ -294,7 +294,7 @@ public class Graph<E> extends AbstractGraph<E> {
       }
 
       @Override public String toString() {
-        return "<" + "" + from + "," + "" + to + ">";
+        return "<" + from + "," + to + ">";
       }
     }
   }

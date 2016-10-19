@@ -218,7 +218,7 @@ public class Aggregator {
       }
     }
 
-    public static abstract class FormatSpecifier {
+    public abstract static class FormatSpecifier {
       public abstract String format();
 
       public abstract Aggregation getKey();

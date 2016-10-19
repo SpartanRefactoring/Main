@@ -3,6 +3,7 @@
  */
 package il.org.spartan.sequence;
 
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
@@ -29,7 +30,7 @@ public class BooleanHistory {
   public int count(final boolean b) {
     int $ = 0;
     for (int ¢ = 0; ¢ < size; ++¢)
-      $ += As.binary(b == bs[(bs.length + last - 1 - ¢) % bs.length]);
+      $ += as.bit(b == bs[(bs.length + last - 1 - ¢) % bs.length]);
     return $;
   }
 

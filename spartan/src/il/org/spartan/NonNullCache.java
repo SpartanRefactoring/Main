@@ -35,14 +35,14 @@ public abstract class NonNullCache<T> {
     private int evaluations;
 
     @Test public void firstReturnsFirstOffset() {
-      azzert.assertThat("", value(), is(SOME_OFFSET + "x0"));
+      azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 
     @Test public void restReturnsFirstOffset() {
       value();
-      azzert.assertThat("", value(), is(SOME_OFFSET + "x0"));
+      azzert.that(value(), is(SOME_OFFSET + "x0"));
       for (int ¢ = 0; ¢ < 10; ++¢)
-        azzert.assertThat("", value(), is(SOME_OFFSET + "x0"));
+        azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
 
     @Override protected String ____() {

@@ -138,10 +138,10 @@ public class ExecutableEntity extends TypedEntity {
   }
 
   private boolean isAccessed(final TypedEntity e, final String thisClassName, final Instruction i) {
-    final int cpIndex = i.args()[0] << 8 | i.args()[1];
+    final int cpIndex = i.args()[1] | i.args()[0] << 8;
     final MemberReference mr = constantPool.getMemberReference(cpIndex);
     return mr.getNameAndType().getName().equals(e.name) && mr.getNameAndType().getDescriptor().equals(e.descriptor)
-        && mr.getClassConstant().getClassName().endsWith(thisClassName) || false;
+        && mr.getClassConstant().getClassName().endsWith(thisClassName);
   }
 
   private CodeEntity readCodeAttribute() {
@@ -163,43 +163,42 @@ public class ExecutableEntity extends TypedEntity {
     class2refsByComponents = new HashMap<>();
     for (final TypeInfo ¢ : type.components())
       ++getClassRefsByComponents(¢ + "")[LinkComponents.MethodDeclaration.ordinal()];
-    if (code == null)
-      return;
-    for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
-      final Instruction i = code.simplifiedCode.instructions().get(index);
-      final int cpIndex = i.args()[1] | i.args()[0] << 8;
-      int component = -1;
-      switch (i.opCode) {
-        case NEW:
-          final int[] refsByComponents = getClassRefsByComponents(constantPool.getClassName(cpIndex));
-          ++refsByComponents[LinkComponents.Instantiation.ordinal()];
-          continue;
-        case GETSTATIC:
-        case PUTSTATIC:
-          component = LinkComponents.StaticFieldAccess.ordinal();
-          break;
-        case GETFIELD:
-        case PUTFIELD:
-          component = LinkComponents.FieldAccess.ordinal();
-          break;
-        case INVOKEVIRTUAL:
-        case INVOKESPECIAL:
-        case INVOKEINTERFACE:
-        case INVOKEDYNAMIC:
-          component = LinkComponents.MethodInvocation.ordinal();
-          break;
-        case INVOKESTATIC:
-          component = LinkComponents.StaticMethodInvocation.ordinal();
-          break;
-        default:
-          continue;
+    if (code != null)
+      for (int index = 0; index < code.simplifiedCode.instructions().size(); ++index) {
+        final Instruction i = code.simplifiedCode.instructions().get(index);
+        final int cpIndex = i.args()[1] | i.args()[0] << 8;
+        int component = -1;
+        switch (i.opCode) {
+          case NEW:
+            final int[] refsByComponents = getClassRefsByComponents(constantPool.getClassName(cpIndex));
+            ++refsByComponents[LinkComponents.Instantiation.ordinal()];
+            continue;
+          case GETSTATIC:
+          case PUTSTATIC:
+            component = LinkComponents.StaticFieldAccess.ordinal();
+            break;
+          case GETFIELD:
+          case PUTFIELD:
+            component = LinkComponents.FieldAccess.ordinal();
+            break;
+          case INVOKEVIRTUAL:
+          case INVOKESPECIAL:
+          case INVOKEINTERFACE:
+          case INVOKEDYNAMIC:
+            component = LinkComponents.MethodInvocation.ordinal();
+            break;
+          case INVOKESTATIC:
+            component = LinkComponents.StaticMethodInvocation.ordinal();
+            break;
+          default:
+            continue;
+        }
+        assert component != -1;
+        final MemberReference mr = constantPool.getMemberReference(cpIndex);
+        if (!"<init>".equals(mr.getNameAndType().getName()))
+          ++getClassRefsByComponents(mr.getClassConstant().getClassName())[component];
+        for (final TypeInfo ¢ : decode(mr.getNameAndType().getDescriptor()).components())
+          ++getClassRefsByComponents(¢ + "")[component];
       }
-      assert component != -1;
-      final MemberReference mr = constantPool.getMemberReference(cpIndex);
-      if (!mr.getNameAndType().getName().equals("<init>"))
-        ++getClassRefsByComponents(mr.getClassConstant().getClassName())[component];
-      for (final TypeInfo ¢ : decode(mr.getNameAndType().getDescriptor()).components())
-        ++getClassRefsByComponents(¢ + "")[component];
-    }
   }
 }

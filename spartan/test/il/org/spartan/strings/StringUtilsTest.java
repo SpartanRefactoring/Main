@@ -26,20 +26,20 @@ public class StringUtilsTest {
   }
 
   @Test public void testToLowerLargeNumbers() {
-    azzert.assertThat("", StringUtils.lowCounter(25), is("z"));
-    azzert.assertThat("", StringUtils.lowCounter(26), is("ba"));
-    azzert.assertThat("", StringUtils.lowCounter(27), is("bb"));
+    azzert.that(StringUtils.lowCounter(25), is("z"));
+    azzert.that(StringUtils.lowCounter(26), is("ba"));
+    azzert.that(StringUtils.lowCounter(27), is("bb"));
   }
 
   @Test public void testToLowerSmallNumbers() {
-    azzert.assertThat("", StringUtils.lowCounter(-1), is(""));
-    azzert.assertThat("", StringUtils.lowCounter(0), is("a"));
-    azzert.assertThat("", StringUtils.lowCounter(1), is("b"));
+    azzert.that(StringUtils.lowCounter(-1), is(""));
+    azzert.that(StringUtils.lowCounter(0), is("a"));
+    azzert.that(StringUtils.lowCounter(1), is("b"));
   }
 
   @Test public final void testValidStrip() {
-    azzert.assertThat("", StringUtils.strip("xaby"), is("ab"));
-    azzert.assertThat("", StringUtils.strip("ab"), is(""));
-    azzert.assertThat("", StringUtils.strip("Abc"), is("b"));
+    azzert.that(StringUtils.strip("xaby"), is("ab"));
+    azzert.that(StringUtils.strip("ab"), is(""));
+    azzert.that(StringUtils.strip("Abc"), is("b"));
   }
 }

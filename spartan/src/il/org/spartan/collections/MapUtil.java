@@ -5,11 +5,7 @@ import java.util.*;
 public class MapUtil {
   @SuppressWarnings("boxing") //
   public static <K> void addToValue(final Map<K, Integer> k, final K key, final int val) {
-    Integer i = k.get(key);
-    if (i == null)
-      i = new Integer(0);
-    i += val;
-    k.put(key, i);
+    k.put(key, ((k.get(key) != null ? k.get(key) : Integer.valueOf(0)) + val));
   }
 
   public static <K, V> Iterator<K> keysIterator(final Map<K, V> k) {

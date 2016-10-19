@@ -13,7 +13,7 @@ public abstract class TypeInfo {
     return new ConstructorType(((MethodType) ¢).arguments);
   }
 
-  public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo i) {
+  public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo __) {
     return new InitializerType();
   }
 
@@ -51,11 +51,11 @@ public abstract class TypeInfo {
     }
 
     @Override public String toString() {
-      return inner + "" + "[]";
+      return inner + "[]";
     }
   }
 
-  public final static class AtomicType extends TypeInfo {
+  public static final class AtomicType extends TypeInfo {
     final String name;
     final boolean isPrimitive;
 
@@ -127,7 +127,7 @@ public abstract class TypeInfo {
     }
 
     @Override public String toString() {
-      return returnValue + "" + " (" + Separate.by(arguments, ", ") + ")";
+      return returnValue + " (" + Separate.by(arguments, ", ") + ")";
     }
   }
 }

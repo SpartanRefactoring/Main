@@ -31,7 +31,7 @@ import il.org.spartan.utils.*;
       h.add(i % 3 == 1);
       int m = 0;
       for (int j = i; j >= 0 && j > i - 10; --j)
-        m += As.binary(j % 3 != 1);
+        m += as.bit(j % 3 != 1);
       azzert.that(h.count(false), is(m));
     }
   }
@@ -50,7 +50,7 @@ import il.org.spartan.utils.*;
       h.add(i % 3 == 1);
       int m = 0;
       for (int j = i; j >= 0 && j > i - 10; --j)
-        m += As.binary(j % 3 == 1);
+        m += as.bit(j % 3 == 1);
       azzert.that(h.count(true), is(m));
     }
   }

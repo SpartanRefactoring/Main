@@ -15,10 +15,10 @@ import il.org.spatan.iteration.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class GraphTest {
   static void verifyEdge(final Graph<String> s, final int from, final int to) {
-    assert null != s.vertices().get(from);
-    assert null != s.vertices().get(to);
-    assert null != s.vertices().get(from).outgoing();
-    assert null != s.vertices().get(to).incoming();
+    assert s.vertices().get(from) != null;
+    assert s.vertices().get(to) != null;
+    assert s.vertices().get(from).outgoing() != null;
+    assert s.vertices().get(to).incoming() != null;
     verifyFound(s.vertices().get(from).outgoing(), s.vertices().get(to));
     verifyFound(s.vertices().get(to).incoming(), s.vertices().get(from));
   }
@@ -80,13 +80,13 @@ public class GraphTest {
 
   static void verifyVertex(final Graph<String> s, final String... vertices) {
     for (final String vertex : vertices)
-      assert null != vertex : s.vertex(vertex);
+      assert vertex != null : s.vertex(vertex);
     for (final String vertex : vertices)
       verifyVertex(s, s.vertex(vertex));
   }
 
   static void verifyVertex(final Graph<String> s, final Vertex<String> v) {
-    assert null != v;
+    assert v != null;
     assert index(s, v) >= 0;
     assert index(s, v) < s.size();
     assertEquals(v, s.vertices().get(index(s, v)));
@@ -118,7 +118,7 @@ public class GraphTest {
   }
 
   private static void verifyCollection(final Graph<String> s, final ImmutableArrayList<Vertex<String>> vs, final int size, final Query q) {
-    assert null != vs;
+    assert vs != null;
     for (final Vertex<String> ¢ : vs)
       q.test(¢);
     assertEquals(size, vs.size());
@@ -130,7 +130,7 @@ public class GraphTest {
   }
 
   private static void verifyCollection(final Graph<String> s, final Iterable<Vertex<String>> ss, final int length, final Query q) {
-    assert null != ss;
+    assert ss != null;
     for (final Vertex<String> ¢ : ss)
       q.test(¢);
     assertEquals(length, Iterables.count(ss));
@@ -369,10 +369,10 @@ public class GraphTest {
     assertEquals(4, g.vertices().size());
     assertEquals(1, g.sourcesCount());
     assertEquals(1, g.sinksCount());
-    assert null != g.vertex("D");
-    assert null != g.vertex("B1");
-    assert null != g.vertex("B2");
-    assert null != g.vertex("V");
+    assert g.vertex("D") != null;
+    assert g.vertex("B1") != null;
+    assert g.vertex("B2") != null;
+    assert g.vertex("V") != null;
     assertEquals(1 + 2 + 3, index(g, "D") + index(g, "B1") + index(g, "B2") + index(g, "V"));
     verifySink(g, "V");
     verifySource(g, "D");

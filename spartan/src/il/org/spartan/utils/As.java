@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 
 /** A utility encapsulating conversion function.
@@ -12,7 +13,7 @@ import il.org.spartan.streotypes.*;
    * @return 1 if the parameter is <b><code>true</code></b>, 0 if it is <b>
    *         <code>false</code></b> */
   public static int binary(final boolean ¢) {
-    return ¢ ? 1 : 0;
+    return as.bit(¢);
   }
 
   /** C like conversion of a pointer into a boolean.

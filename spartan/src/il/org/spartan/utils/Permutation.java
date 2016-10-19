@@ -13,7 +13,7 @@ import il.org.spartan.streotypes.*;
  * @since 19/06/2008 */
 @Utility public enum Permutation {
   ;
-  public final static double GOLD = (Math.sqrt(5) - 1) / 2;
+  public static final double GOLD = (Math.sqrt(5) - 1) / 2;
 
   /** @param i a non-negative integer
    * @return the decreasing permutation of length n, represented as an array. */
@@ -61,8 +61,7 @@ import il.org.spartan.streotypes.*;
     for (int i = 0; i < n; ++i) {
       final double Gi = power(GOLD, i + 1, n);
       System.out.println("Gi=" + Gi);
-      final int p = (int) (Gi * n);
-      swap($, i, p);
+      swap($, i, ((int) (n * Gi)));
     }
     return $;
   }
@@ -82,9 +81,8 @@ import il.org.spartan.streotypes.*;
   }
 
   public static <T> void shuffle(final T[] ts) {
-    final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < ts.length; ++¢)
-      swap(ts, ¢, r.nextInt(ts.length));
+      swap(ts, ¢, (new Random(System.nanoTime())).nextInt(ts.length));
   }
 
   /** Swap the contents of two <code><b>float</b></code> array cells

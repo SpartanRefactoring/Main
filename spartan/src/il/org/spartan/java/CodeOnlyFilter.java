@@ -14,7 +14,7 @@ public class CodeOnlyFilter extends TokenFilter {
     return $ + "";
   }
 
-  @Override protected void __process(final Token t, final String text) {
+  @Override protected void __process(final Token __, final String text) {
     $.append(text);
   }
 

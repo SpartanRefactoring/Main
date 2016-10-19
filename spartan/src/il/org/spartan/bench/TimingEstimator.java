@@ -24,9 +24,9 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2011-08-04 */
 public class TimingEstimator {
-  private final static IdentityHashMap<Operation, TimingEstimator> estimators = new IdentityHashMap<>();
-  private final static double MAX_DEVIATION = 15 * PERCENT;
-  private final static int MIN_CONSECUTIVE_STABLE = 5;
+  private static final IdentityHashMap<Operation, TimingEstimator> estimators = new IdentityHashMap<>();
+  private static final double MAX_DEVIATION = 15 * PERCENT;
+  private static final int MIN_CONSECUTIVE_STABLE = 5;
 
   /** Factory method retrieving the {@link TimingEstimator} associated with a
    * given {@link Operation}, creating a new such object when no association was
@@ -106,7 +106,7 @@ public class TimingEstimator {
       }
       usefulRuns.add($);
       positive($.estimate());
-      consecutiveStable += As.binary(delta(estimate, $.estimate()) < MAX_DEVIATION);
+      consecutiveStable += as.bit(delta(estimate, $.estimate()) < MAX_DEVIATION);
       final double previous = estimate;
       updateEstimate($.estimate());
       Log.f("time estimate=%s (current) %s (overall) %s (previous) %s", //

@@ -13,7 +13,7 @@ public abstract class TokenFilter extends TokenProcessor {
    * @param t a {@link Token} to inspect
    * @return <code><strong>true</strong></code> <em>iff</em> the given token
    *         should be processed. */
-  @SuppressWarnings("static-method") protected boolean ok(final Token t) {
+  @SuppressWarnings("static-method") protected boolean ok(final Token __) {
     return true;
   }
 

@@ -19,7 +19,7 @@ public class XYGnuPlotter {
   }
 
   private static String gformat(final double ¢) {
-    return ¢ == (long) ¢ ? (long) ¢ + "" : String.format("%g", new Double(¢));
+    return ¢ == (long) ¢ ? (long) ¢ + "" : String.format("%g", Double.valueOf(¢));
   }
 
   private static Process gnuplot() {

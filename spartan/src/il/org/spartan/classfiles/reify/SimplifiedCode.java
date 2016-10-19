@@ -5,7 +5,7 @@ import java.util.*;
 import il.org.spartan.classfiles.reify.OpCode.*;
 
 public class SimplifiedCode {
-  static private boolean isRelevant(final Instruction ¢) {
+  private static boolean isRelevant(final Instruction ¢) {
     switch (¢.opCode) {
       case GETSTATIC:
       case PUTSTATIC:
@@ -52,19 +52,18 @@ public class SimplifiedCode {
   }
 
   private void parse() {
-    if (instructionsCount != 0)
-      return;
-    for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-      final Instruction i = OpCode.read(r);
-      if (i == null)
-        return;
-      if (i.invalid())
-        throw new RuntimeException();
-      if (i.opCode == OpCode.ATHROW)
-        ++throwCount;
-      if (isRelevant(i))
-        instructions.add(i);
-      ++instructionsCount;
-    }
+    if (instructionsCount == 0)
+      for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
+        final Instruction i = OpCode.read(r);
+        if (i == null)
+          return;
+        if (i.invalid())
+          throw new RuntimeException();
+        if (i.opCode == OpCode.ATHROW)
+          ++throwCount;
+        if (isRelevant(i))
+          instructions.add(i);
+        ++instructionsCount;
+      }
   }
 }

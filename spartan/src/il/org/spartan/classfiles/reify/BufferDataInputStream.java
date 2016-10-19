@@ -15,9 +15,8 @@ public final class BufferDataInputStream extends DataInputStream {
   }
 
   public void align4() {
-    if (position() % 4 == 0)
-      return;
-    skip(4 - position() % 4);
+    if (position() % 4 != 0)
+      skip(4 - position() % 4);
   }
 
   public boolean eof() {

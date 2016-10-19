@@ -59,7 +59,7 @@ public class RobustReader {
   }
 
   public final boolean hasErrors() {
-    return errors.size() != 0;
+    return !errors.isEmpty();
   }
 
   public final double readDouble() {

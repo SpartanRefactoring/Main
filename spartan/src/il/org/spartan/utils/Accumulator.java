@@ -11,7 +11,7 @@ import il.org.spartan.*;
 
 public abstract class Accumulator {
   static int asInteger(final boolean ¢) {
-    return As.binary(¢);
+    return as.bit(¢);
   }
 
   static int asInteger(final Object ¢) {

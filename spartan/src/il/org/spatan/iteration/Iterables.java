@@ -7,6 +7,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.*;
 
+import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.utils.*;
 
@@ -78,21 +79,21 @@ public class Iterables {
   public static <T> int count(final Iterable<? extends T> ts, final T t) {
     int $ = 0;
     for (final T candidate : ts)
-      $ += As.binary(isEqual(t, candidate));
+      $ += as.bit(isEqual(t, candidate));
     return $;
   }
 
   public static <T> int count(final Iterable<T> ts, final Condition<T> t) {
     int $ = 0;
     for (final T ¢ : ts)
-      $ += As.binary(t.holds(¢));
+      $ += as.bit(t.holds(¢));
     return $;
   }
 
   public static <T> int count(final T[] ts, final Condition<T> t) {
     int $ = 0;
     for (final T ¢ : ts)
-      $ += As.binary(t.holds(¢));
+      $ += as.bit(t.holds(¢));
     return $;
   }
 
@@ -100,7 +101,7 @@ public class Iterables {
     return ¢;
   }
 
-  public static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> t) {
+  public static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> __) {
     return new ArrayList<>();
   }
 
@@ -229,9 +230,8 @@ public class Iterables {
 
   public static int[] make(final BitSet s) {
     final int[] $ = new int[s.cardinality()];
-    int i = 0;
-    for (int value = s.nextSetBit(0); value >= 0; value = s.nextSetBit(value + 1))
-      $[i++] = value;
+    for (int ¢ = 0, value = s.nextSetBit(0); value >= 0; value = s.nextSetBit(value + 1))
+      $[¢++] = value;
     return $;
   }
 
@@ -451,7 +451,7 @@ public class Iterables {
     return b == a || a != null && a.equals(b);
   }
 
-  public static abstract class RangeIterator<T> extends ReadonlyIterator<T> {
+  public abstract static class RangeIterator<T> extends ReadonlyIterator<T> {
     private final int n;
     private int i;
 
@@ -476,7 +476,7 @@ public class Iterables {
     protected abstract T value();
   }
 
-  public static abstract class ReadonlyIterator<T> implements Iterator<T> {
+  public abstract static class ReadonlyIterator<T> implements Iterator<T> {
     @Override public final void remove() {
       throw new UnsupportedOperationException();
     }

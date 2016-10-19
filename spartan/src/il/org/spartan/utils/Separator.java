@@ -29,7 +29,7 @@ import il.org.spartan.streotypes.*;
     String $ = "";
     final Separator s = new Separator(between);
     for (final int ¢ : is)
-      $ += s + "" + new Integer(¢);
+      $ += s + "" + Integer.valueOf(¢);
     return $;
   }
 
@@ -62,9 +62,8 @@ import il.org.spartan.streotypes.*;
   }
 
   static void main(final String[] args) {
-    final Separator s = new Separator(", ");
     for (final String a : args)
-      System.out.print(s + a);
+      System.out.print(new Separator(", ") + a);
   }
 
   private final String s;

@@ -38,8 +38,8 @@ import il.org.spartan.*;
         0, 0, 0, 1, //
         0, 0, 0, 1, //
     });
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.NOP));
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
     OpCode.read(b);
     assert b.eof();
     b.close();
@@ -55,9 +55,9 @@ import il.org.spartan.*;
         0, 0, 0, 1, //
         0, 0, 0, 1, //
     });
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.NOP));
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.NOP));
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
     assert b.eof();
     b.close();
   }
@@ -72,10 +72,10 @@ import il.org.spartan.*;
         0, 0, 0, 1, //
         0, 0, 0, 1, //
     });
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.NOP));
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.NOP));
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.NOP));
-    azzert.assertThat("", OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.NOP));
+    azzert.that(OpCode.read(b).opCode, is(OpCode.TABLESWITCH));
     assert b.eof();
     b.close();
   }
