@@ -16,9 +16,13 @@ public enum find {
     Set<Name> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(SimpleName node) {
-        if (!iz.methodInvocation(step.parent(node)))
+        if (!izMethodName(node))
           $.add(node);
         return true;
+      }
+
+      boolean izMethodName(SimpleName ¢) {
+        return iz.methodInvocation(step.parent(¢)) && step.name(az.methodInvocation(step.parent(¢))).equals(¢);
       }
 
       @Override public boolean visit(QualifiedName node) {
