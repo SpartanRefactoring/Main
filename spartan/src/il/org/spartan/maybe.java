@@ -32,23 +32,23 @@ public class maybe<@Nullable T> {
     inner = null;
   }
 
-  /** @return TODO document return type */
+
   public maybe<@Nullable T> clear() {
     inner = null;
     return this;
   }
 
-  /** @return TODO document return type */
+
   public @Nullable T get() {
     return inner;
   }
 
-  /** @return TODO document return type */
+
   public boolean missing() {
     return inner == null;
   }
 
-  /** @return TODO document return type */
+
   public boolean present() {
     return inner != null;
   }

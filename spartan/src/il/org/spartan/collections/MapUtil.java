@@ -2,9 +2,11 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
 public class MapUtil {
   @SuppressWarnings("boxing") //
-  public static <K> void addToValue(final Map<K, Integer> k, final K key, final int val) {
+  public static <@Nullable K> void addToValue(final Map<K, Integer> k, final K key, final int val) {
     k.put(key, ((k.get(key) != null ? k.get(key) : Integer.valueOf(0)) + val));
   }
 
