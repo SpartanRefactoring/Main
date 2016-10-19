@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast;
+package il.org.spartan.spartanizer.java;
 
 import static java.lang.System.*;
 
