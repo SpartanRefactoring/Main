@@ -66,7 +66,9 @@ import il.org.spartan.*;
     assert null == null : "This assert must never fail";
   }
 
-  /** if fails, enable assertions (flag '-va') to the JVM */
+  /** if fails, enable assertions (flag '-va') to the JVM. --yg In Windows it
+   * worked for me by adding '-ea' flag in the run configurations -> VM
+   * arguments. --or */
   @Test(expected = AssertionError.class) public void Z$020() {
     assert null != null;
   }
