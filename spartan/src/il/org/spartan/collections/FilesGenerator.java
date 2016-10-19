@@ -3,6 +3,8 @@ package il.org.spartan.collections;
 import java.io.*;
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
 import il.org.spartan.*;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
@@ -139,7 +141,7 @@ public class FilesGenerator {
         for (;;) {
           if (stack.isEmpty())
             return false;
-          final Iterator<File> currentIterator = stack.peek();
+          final @Nullable Iterator<File> currentIterator = stack.peek();
           if (currentIterator == null || !currentIterator.hasNext()) {
             stack.pop();
             continue;
