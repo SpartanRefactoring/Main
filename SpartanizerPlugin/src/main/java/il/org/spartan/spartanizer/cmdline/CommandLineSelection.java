@@ -46,19 +46,15 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     /** @return */
     public static AbstractSelection<CommandLineSelection> get() {
       final List<WrappedCompilationUnit> cuList = new ArrayList<>();
-      for (final File ¢ : new FilesGenerator(".java").from(".")) {
-        final WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
-        cuList.add(cu);
-      }
+      for (final File ¢ : new FilesGenerator(".java").from("."))
+        cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
       return new CommandLineSelection(cuList, "default");
     }
 
     public static AbstractSelection<?> getFromPath(final String path) {
       final List<WrappedCompilationUnit> cuList = new ArrayList<>();
-      for (final File ¢ : new FilesGenerator(".java").from(path)) {
-        final WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
-        cuList.add(cu);
-      }
+      for (final File ¢ : new FilesGenerator(".java").from(path))
+        cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
       return new CommandLineSelection(cuList, "selection");
     }
   }
@@ -69,8 +65,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
       System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
-      final WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
-      cuList.add(cu);
+      cuList.add(WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢)));
     }
     compilationUnits = cuList;
   }

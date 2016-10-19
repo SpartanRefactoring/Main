@@ -125,13 +125,7 @@ public class ParseASTTest {
   }
 
   @Test public void testStepMethod_01() {
-    final ASTNode n = makeAST.COMPILATION_UNIT.from(test1);
-    n.accept(new ASTVisitor() {
-      /* (non-Javadoc)
-       *
-       * @see
-       * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-       * MethodDeclaration) */
+    makeAST.COMPILATION_UNIT.from(test1).accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
         final Block b = step.body(node);
         final List<Statement> ls = step.statements(b);
