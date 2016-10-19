@@ -16,8 +16,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016 */
 public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {
   static Set<UserDefinedTipper<ConditionalExpression>> tippers = new HashSet<UserDefinedTipper<ConditionalExpression>>() {
-    /**
-     */
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("$X1 == null ? null : $X1.$X2", "NullConditional($X1,$X2)", "null Conditional"));
