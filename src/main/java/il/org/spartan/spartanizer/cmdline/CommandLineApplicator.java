@@ -46,9 +46,9 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** Initialize the selection of this applicator.
-   * @param as JD
+   * @param s JD
    * @return this applicator */
-  public CommandLineApplicator selection(@SuppressWarnings("unused") final AbstractSelection<CommandLineSelection> as) {
+  public CommandLineApplicator selection(@SuppressWarnings("unused") final AbstractSelection<CommandLineSelection> __) {
     return this;
   }
 

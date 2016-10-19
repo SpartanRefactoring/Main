@@ -4,6 +4,9 @@ package il.org.spartan.plugin;
  * @author Yossi Gil
  * @year 2016 */
 public interface MyDemoOfConfigurableObject {
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
     //@formatter:off
@@ -34,7 +37,9 @@ public interface MyDemoOfConfigurableObject {
     //@formatter:on
 
     class Action extends Settings {
-      /** real serialvVersionUID comes much later in mproduction ode */
+      /** 
+       * real serialvVersionUID comes much later in mproduction ode 
+       */
       private static final long serialVersionUID = 1L;
 
       int go() {

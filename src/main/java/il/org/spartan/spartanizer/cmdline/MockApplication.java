@@ -33,12 +33,9 @@ public class MockApplication implements IApplication {
       System.out.println("No args");
     prepareTempIJavaProject();
     System.out.println(srcRoot);
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
-      System.out.println(f);
-      ICompilationUnit u = null;
-      u = openCompilationUnit(f);
-      processCU(u);
-      // defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.by(¢).buildAll()).go());
+    for (final File ¢ : new FilesGenerator(".java", ".JAVA").from(optPath)) {
+      System.out.println(¢);
+      processCU(openCompilationUnit(¢));
     }
     return IApplication.EXIT_OK;
   }
