@@ -35,7 +35,7 @@ public final class BatchSpartanizerApplication implements IApplication {
    * 
    * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
    * IApplicationContext) */
-  @Override public Object start(final IApplicationContext arg0) {
+  @Override public Object start(@SuppressWarnings("unused") final IApplicationContext arg0) {
     // if(arg0.getArguments().size() == 0)
     // optPath = ".";
     // // place here instructions from command line
@@ -213,7 +213,7 @@ public final class BatchSpartanizerApplication implements IApplication {
     this(path, system.folder2File(path));
   }
 
-  private BatchSpartanizerApplication(final String inputPath, final String name) {
+  @SuppressWarnings("unused") private BatchSpartanizerApplication(final String inputPath, final String name) {
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());

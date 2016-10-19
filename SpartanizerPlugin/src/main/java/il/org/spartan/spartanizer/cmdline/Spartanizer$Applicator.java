@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
@@ -15,7 +15,6 @@ import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -47,7 +46,7 @@ public class Spartanizer$Applicator {
   /** @param u
    * @param selection
    * @return */
-  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> selection) {
+  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> selection) {
     go(u.compilationUnit);
     // if (s instanceof TrackerSelection)
     // return apply(u, (TrackerSelection) s);
@@ -248,7 +247,7 @@ public class Spartanizer$Applicator {
     });
   }
 
-  static boolean filter(final ASTNode ¢) {
+  static boolean filter(@SuppressWarnings("unused") final ASTNode ¢) {
     return false;
   }
 
