@@ -36,7 +36,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
     final Statement then = then(s);
-    final ReturnStatement deleteMe = az.returnStatement(hop.lastStatementIn(then));
+    final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     r.replace(deleteMe, make.emptyStatement(deleteMe), g);

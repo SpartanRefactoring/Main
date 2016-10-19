@@ -64,7 +64,7 @@ public enum Tippers {
   public static boolean endsWithSequencer(final Statement ¢) {
     if (¢ == null)
       return false;
-    final Statement $ = (Statement) hop.lastStatementIn(¢);
+    final Statement $ = (Statement) hop.lastStatement(¢);
     if ($ == null)
       return false;
     switch ($.getNodeType()) {
@@ -153,8 +153,8 @@ public enum Tippers {
   }
 
   public static boolean shoudlInvert(final IfStatement s) {
-    final int rankThen = sequencerRank(hop.lastStatementIn(then(s)));
-    final int rankElse = sequencerRank(hop.lastStatementIn(elze(s)));
+    final int rankThen = sequencerRank(hop.lastStatement(then(s)));
+    final int rankElse = sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s);
   }
 
