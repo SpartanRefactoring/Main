@@ -10,7 +10,11 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Mapper extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  @SuppressWarnings("serial") Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("for($N1 $N2 : $X) $N2.$N3($A);", "", ""));
       add(TipperFactory.tipper("for($N1 $N2 : $X) $N3($N2);", "", ""));

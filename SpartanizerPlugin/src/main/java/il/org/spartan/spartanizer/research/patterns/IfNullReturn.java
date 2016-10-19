@@ -13,7 +13,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Marcovitch
  * @year 2016 */
 public final class IfNullReturn extends NanoPatternTipper<IfStatement> {
-  @SuppressWarnings("serial") static Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
+  static Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
+    /** */
+    private static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("if($X == null) return;", "returnIfNull($X);", ""));
       add(TipperFactory.tipper("if(null == $X) return;", "returnIfNull($X);", ""));

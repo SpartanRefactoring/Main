@@ -13,7 +13,11 @@ import il.org.spartan.spartanizer.utils.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  @SuppressWarnings("serial") static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("$X == null", "", ""));
       add(TipperFactory.tipper("$X != null", "", ""));

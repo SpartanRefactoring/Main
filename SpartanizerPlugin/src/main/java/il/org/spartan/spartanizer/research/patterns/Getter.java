@@ -10,7 +10,11 @@ import il.org.spartan.spartanizer.research.*;
 /** @author Ori Marcovitch
  * @since 2016 */
 public class Getter extends JavadocMarkerNanoPattern<MethodDeclaration> {
-  @SuppressWarnings("serial") Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("return $N;", "", ""));
       add(TipperFactory.tipper("return this.$N;", "", ""));

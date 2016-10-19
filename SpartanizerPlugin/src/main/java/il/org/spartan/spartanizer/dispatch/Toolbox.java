@@ -20,10 +20,14 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  @SuppressWarnings({ "serial", "unchecked" }) //
+  @SuppressWarnings({ "unchecked" }) //
   static final Map<Class<? extends ASTNode>, Integer> //
   classToNodeType //
       = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
         {
           for (int nodeType = 1;; ++nodeType)
             try {
