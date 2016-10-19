@@ -27,8 +27,7 @@ public interface idiomatic {
     }
   };
 
-  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   * @param <T> JD
+  /** @param <T> JD
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
   static <T> Holder<T> eval(final Supplier<T> $) {
@@ -36,13 +35,12 @@ public interface idiomatic {
   }
 
   /** @param condition JD
-   * @return TODO document return type */
-  /** TODO Javadoc(2016): automatically generated for method <code>incase</code>
+   * @return */
+  /** <code>incase</code>
    * @param <T> JD
-   * @param condition TODO
+   * @param condition
    * @param t JD
-   * @return T TODO Javadoc(2016) automatically generated for returned value of
-   *         method <code>incase</code> */
+   * @return T */
   static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
@@ -75,17 +73,15 @@ public interface idiomatic {
     return new Runner(¢);
   }
 
-  /** TODO Javadoc(2016): automatically generated for method <code>yield</code>
-   * @param <T> JD
+  /** @param <T> JD
    * @param ¢ JD
-   * @return Yielder<T> TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>yield</code> */
+   * @return Yielder<T> value of method <code>yield</code> */
   static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
 
   /** @param condition JD
-   * @return TODO document return type */
+   * @return */
   static Trigger unless(final boolean condition) {
     return when(!condition);
   }
@@ -100,7 +96,7 @@ public interface idiomatic {
   }
 
   /** @param condition JD
-   * @return TODO document return type */
+   * @return */
   static Trigger when(final boolean condition) {
     return condition ? eval : ignore;
   }
@@ -156,8 +152,7 @@ public interface idiomatic {
       run.run();
     }
 
-    /** TODO Javadoc(2016): automatically generated for method
-     * <code>unless</code>
+    /** <code>unless</code>
      * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
@@ -248,12 +243,12 @@ public interface idiomatic {
   interface Trigger {
     /** @param <T> JD
      * @param t JD
-     * @return TODO document return type */
+     * @return */
     <T> T eval(final Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD
-     * @return TODO document return type */
+     * @return */
     default <T> T eval(final T $) {
       return eval(() -> $);
     }

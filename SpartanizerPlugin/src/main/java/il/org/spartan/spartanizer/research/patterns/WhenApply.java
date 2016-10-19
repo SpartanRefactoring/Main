@@ -9,15 +9,15 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace if(X) Y; with Y #when X
+/** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
  * @year 2016 */
-public final class ApplyWhen extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
+public final class WhenApply extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X) $N($A);", "applyWhen($X, $N($A));", ""));
-      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "applyWhen($X1, $X2.$N($A));", ""));
+      add(TipperFactory.tipper("if($X) $N($A);", "when($X).eval($N($A));", ""));
+      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "when($X1).eval($X2.$N($A));", ""));
     }
   };
 
