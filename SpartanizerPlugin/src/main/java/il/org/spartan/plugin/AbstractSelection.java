@@ -84,7 +84,11 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
    * @param ¢ JD
    * @return this selection */
   public Self unify(final Self ¢) {
-    inner.addAll(¢.inner);
+    if (¢ != null && ¢.inner != null) {
+      if (inner == null)
+        inner = new LinkedList<>();
+      inner.addAll(¢.inner);
+    }
     return self();
   }
 }
