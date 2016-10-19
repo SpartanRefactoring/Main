@@ -94,8 +94,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     R apply(T1 ¢1, T2 ¢2);
   }
 
-  /** TODO(2016) Javadoc: automatically generated for type <code>Cookbook</code>
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Internal {
     /** @return never! The <code><b>none</b></code> type. There is no legal
@@ -121,8 +120,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
       <X> Cell<@Nullable X> make(final Supplier<X> x);
     }
 
-    /** TODO(2016) Javadoc: automatically generated for type
-     * <code>Cookbook</code>
+    /** <code>Cookbook</code>
      * @param <T1>
      * @param <T2>
      * @param <T3>
