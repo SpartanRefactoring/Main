@@ -14,10 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016 */
 public final class ApplyWhen extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("if($X) $N($A);", "applyWhen($X, $N($A));", ""));
       add(TipperFactory.tipper("if($X1) $X2.$N($A);", "applyWhen($X1, $X2.$N($A));", ""));
