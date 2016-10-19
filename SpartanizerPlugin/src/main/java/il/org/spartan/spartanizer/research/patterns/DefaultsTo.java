@@ -16,8 +16,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    /**
-     */
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("$X1 != null ? $X1 : $X2", "defaultsTo($X1, $X2)", ""));

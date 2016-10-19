@@ -247,7 +247,7 @@ public class Spartanizer$Applicator {
     });
   }
 
-  static boolean filter(@SuppressWarnings("unused") final ASTNode ¢) {
+  static boolean filter(@SuppressWarnings("unused") final ASTNode __) {
     return false;
   }
 
