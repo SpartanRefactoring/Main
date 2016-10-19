@@ -79,11 +79,15 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
+  // TODO Matteo: I have changed the "run action" to return number of tips
+  // committed instead of whether tips were committed (Boolean -> Integer).
+  // Added a quick fix to your code. Also I do not understand why you wrote this
+  // - we will inspect it once we meet. --or
   /** @return this */
   public CommandLineApplicator defaultRunAction() {
     // final Trimmer t = new Trimmer();
     final Spartanizer$Applicator s = new Spartanizer$Applicator();
-    runAction(u -> Boolean.valueOf(s.apply(u, selection())));
+    runAction(u -> Integer.valueOf(s.apply(u, selection()) ? 1 : 0));
     return this;
   }
 
@@ -93,7 +97,7 @@ public class CommandLineApplicator extends Applicator {
    * @param a JD
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
-    runAction(u -> Boolean.valueOf(a.apply(u, selection())));
+    runAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
     return this;
   }
 }
