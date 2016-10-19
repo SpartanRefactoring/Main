@@ -423,31 +423,31 @@ public class azzert extends org.junit.Assert {
   }
 
   public static Matcher<Boolean> not(final boolean ¢) {
-    return cantBeNull(IsNot.not(new Boolean(¢)));
+    return cantBeNull(IsNot.not(Boolean.valueOf(¢)));
   }
 
   public static Matcher<Byte> not(final byte ¢) {
-    return cantBeNull(IsNot.not(new Byte(¢)));
+    return cantBeNull(IsNot.not(Byte.valueOf(¢)));
   }
 
   public static Matcher<Character> not(final char i) {
-    return cantBeNull(IsNot.not(new Character(i)));
+    return cantBeNull(IsNot.not(Character.valueOf(i)));
   }
 
   public static Matcher<Double> not(final double ¢) {
-    return cantBeNull(IsNot.not(new Double(¢)));
+    return cantBeNull(IsNot.not(Double.valueOf(¢)));
   }
 
   public static Matcher<Float> not(final float ¢) {
-    return cantBeNull(IsNot.not(new Float(¢)));
+    return cantBeNull(IsNot.not(Float.valueOf(¢)));
   }
 
   public static Matcher<Integer> not(final int ¢) {
-    return cantBeNull(IsNot.not(new Integer(¢)));
+    return cantBeNull(IsNot.not(Integer.valueOf(¢)));
   }
 
   public static Matcher<Long> not(final long i) {
-    return cantBeNull(IsNot.not(new Long(i)));
+    return cantBeNull(IsNot.not(Long.valueOf(i)));
   }
 
   public static <T> Matcher<T> not(final Matcher<T> ¢) {
@@ -455,7 +455,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static Matcher<Short> not(final short ¢) {
-    return cantBeNull(IsNot.not(new Short(¢)));
+    return cantBeNull(IsNot.not(Short.valueOf(¢)));
   }
 
   public static <T> Matcher<T> not(final T value) {

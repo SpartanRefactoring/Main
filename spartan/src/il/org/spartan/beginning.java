@@ -37,13 +37,13 @@ import il.org.spartan.iterables.*;
 
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method" }) static class TEST {
     @Test public void with() {
-      azzert.assertThat("", beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
+      azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
 
     @Test public void withType() {
       final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
       azzert.notNull(endingWith);
-      azzert.assertThat("", endingWith + "", is("ax,yc"));
+      azzert.that(endingWith + "", is("ax,yc"));
     }
   }
 

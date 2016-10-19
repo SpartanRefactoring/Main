@@ -54,7 +54,6 @@ import il.org.spartan.streotypes.*;
   }
 
   @Test public void testZeroCount() {
-    final Statistics s = new RealStatistics();
-    azzert.that(s.n(), is(0));
+    azzert.that((new RealStatistics()).n(), is(0));
   }
 }

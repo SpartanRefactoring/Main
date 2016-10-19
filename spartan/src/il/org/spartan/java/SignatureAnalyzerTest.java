@@ -15,34 +15,34 @@ import il.org.spartan.*;
  * @since 19 November 2011 */
 @SuppressWarnings("static-method") public class SignatureAnalyzerTest {
   @Test public void createFile() {
-    assert null != SignatureAnalyzer.ofFile("Data/file");
+    assert SignatureAnalyzer.ofFile("Data/file") != null;
   }
 
   @Test public void createFileStaticType() {
-    azzert.assertThat("", SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createFileType() {
-    azzert.assertThat("", SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderStaticType() {
-    azzert.assertThat("", SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderType() {
-    azzert.assertThat("", SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createString() {
-    assert null != SignatureAnalyzer.ofString("Hello, World!\n");
+    assert SignatureAnalyzer.ofString("Hello, World!\n") != null;
   }
 
   @Test public void createStringStaticType() {
-    azzert.assertThat("", SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createStringType() {
-    azzert.assertThat("", SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
+    azzert.that(SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
   }
 }

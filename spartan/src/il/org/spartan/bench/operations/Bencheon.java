@@ -70,17 +70,15 @@ public abstract class Bencheon extends NamedOperation {
     return System.nanoTime() - beginBefore;
   }
 
-  public static abstract class Core extends Bencheon {
+  public abstract static class Core extends Bencheon {
     public Core(final String name, final int size) {
       super(name, size);
     }
 
     @Override public final void beforeAllRuns() {
-      // Empty
     }
 
     @Override public final void beforeEachRun() {
-      // Empty
     }
 
     @Override public long netRunTime(final int runs) {

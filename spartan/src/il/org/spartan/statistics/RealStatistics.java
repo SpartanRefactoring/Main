@@ -19,7 +19,7 @@ public class RealStatistics extends ImmutableStatistics {
   private static final long serialVersionUID = 1L;
 
   public static double[] increase(final double[] ¢) {
-    return Arrays.copyOf(¢, ¢.length * 2 + 1);
+    return Arrays.copyOf(¢, 2 * ¢.length + 1);
   }
 
   /** Make a record of the sequence of elements.
@@ -63,7 +63,7 @@ public class RealStatistics extends ImmutableStatistics {
     if (n == values.length)
       values = increase(values);
     values[n++] = v;
-    flips += As.binary(min > v || max < v);
+    flips += as.bit(min > v || max < v);
     min = Math.min(min, v);
     max = Math.max(max, v);
     double d = 1;

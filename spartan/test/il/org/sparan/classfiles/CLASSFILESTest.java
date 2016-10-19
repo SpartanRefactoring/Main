@@ -10,9 +10,8 @@ import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class CLASSFILESTest {
   @Test public void testFindAnonymous() {
-    assert null != CLASSFILES.open(new Object() {
-      // Empty
-    }.getClass());
+    assert CLASSFILES.open(new Object() {
+    }.getClass()) != null;
   }
 
   @Test public void testFindArray() {
@@ -20,48 +19,48 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testFindInner() {
-    assert null != CLASSFILES.open(new InnerClass().getClass());
+    assert CLASSFILES.open(new InnerClass().getClass()) != null;
   }
 
   @Test public void testFindInnerAnnotation() {
-    assert null != CLASSFILES.open(Annotation.class);
+    assert CLASSFILES.open(Annotation.class) != null;
   }
 
   @Test public void testFindInnerEnum() {
-    assert null != CLASSFILES.open(InnerEnum.class);
+    assert CLASSFILES.open(InnerEnum.class) != null;
   }
 
   @Test public void testFindInnerEnumValue() {
-    assert null != CLASSFILES.open(InnerEnumValues.A.getClass());
-    assert null != CLASSFILES.open(InnerEnumValues.B.getClass());
-    assert null != CLASSFILES.open(InnerEnumValues.class);
+    assert CLASSFILES.open(InnerEnumValues.A.getClass()) != null;
+    assert CLASSFILES.open(InnerEnumValues.B.getClass()) != null;
+    assert CLASSFILES.open(InnerEnumValues.class) != null;
   }
 
   @Test public void testFindInnerInterface() {
-    assert null != CLASSFILES.open(InnerInterface.class);
+    assert CLASSFILES.open(InnerInterface.class) != null;
   }
 
   @Test public void testFindJunitAssert() {
-    assert null != CLASSFILES.open(Assert.class);
+    assert CLASSFILES.open(Assert.class) != null;
   }
 
   @Test public void testFindJunitTest() {
-    assert null != CLASSFILES.open(Test.class);
+    assert CLASSFILES.open(Test.class) != null;
   }
 
   @Test public void testFindLocal() {
     class Local {
       // Empty
     }
-    assert null != CLASSFILES.open(new Local().getClass());
+    assert CLASSFILES.open(new Local().getClass()) != null;
   }
 
   @Test public void testFindMe() {
-    assert null != CLASSFILES.open(this.getClass());
+    assert CLASSFILES.open(this.getClass()) != null;
   }
 
   @Test public void testFindObject() {
-    assert null != CLASSFILES.open(Object.class);
+    assert CLASSFILES.open(Object.class) != null;
   }
 
   @Test public void testFindPrimitive() {
@@ -73,15 +72,15 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testFindStaticInner() {
-    assert null != CLASSFILES.open(new StaticInnerClass().getClass());
+    assert CLASSFILES.open(new StaticInnerClass().getClass()) != null;
   }
 
   @Test public void testFindString() {
-    assert null != CLASSFILES.open(String.class);
+    assert CLASSFILES.open(String.class) != null;
   }
 
   @Test public void testFindStringBuilder() {
-    assert null != CLASSFILES.open(StringBuilder.class);
+    assert CLASSFILES.open(StringBuilder.class) != null;
   }
 
   @Test public void testFindVoid() {
@@ -89,7 +88,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testIOException() {
-    assert null != CLASSFILES.open(IOException.class);
+    assert CLASSFILES.open(IOException.class) != null;
   }
 
   @Test public void testMeArray() {
@@ -97,7 +96,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testSeparate() {
-    assert null != CLASSFILES.open(Separate.class);
+    assert CLASSFILES.open(Separate.class) != null;
   }
 
   static @interface Annotation {

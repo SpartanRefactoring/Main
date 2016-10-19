@@ -28,7 +28,7 @@ public interface XYProcessor {
 
   void p(int x, int y);
 
-  static abstract class Filter extends Gatherer {
+  abstract static class Filter extends Gatherer {
     @Override public final void gather(final double x, final double y, final double dy) {
       if (valid(x, y, dy))
         super.gather(x, y, dy);
@@ -37,7 +37,7 @@ public interface XYProcessor {
     public abstract boolean valid(final double x, final double y, final double dy);
   }
 
-  static abstract class Gatherer extends Vacuous {
+  abstract static class Gatherer extends Vacuous {
     private final DoublesArray xs = new DoublesArray();
     private final DoublesArray ys = new DoublesArray();
     private final DoublesArray dys = new DoublesArray();
@@ -257,7 +257,7 @@ public interface XYProcessor {
     }
 
     @Override public void p(final int x, final int y) {
-      p((double) x, (double) y);
+      p(1. * x, 1. * y);
     }
   }
 

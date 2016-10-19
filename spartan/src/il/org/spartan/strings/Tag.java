@@ -175,36 +175,36 @@ import il.org.spartan.utils.*;
     private static final String tagRegularExpression = new Tag("dummy").makeRegularExpression();
 
     @Test public void testCRLFinPre() {
-      azzert.assertThat("", "A<dummy>\r\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<dummy>\r\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testDummyInContext() {
-      azzert.assertThat("", ("\t /**\r\n" + "" + "\t  * BEFORE\r\n" + "\t  * <dummy>\r\n" + "\t  * text\r\n" + "\t  * </dummy>\r\n" + "\t  * AFTER\r\n" + "\t  */" + "")
-      .replaceFirst(tagRegularExpression, "Content"), is("\t /**\r\n" + "" + "\t  * BEFORE\r\n" + "\t  * Content\r\n" + "\t  * AFTER\r\n" + "\t  */" + ""));
+      azzert.that(("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * <dummy>\r\n" + "\t  * text\r\n" + "\t  * </dummy>\r\n" + "\t  * AFTER\r\n" + "\t  */")
+      .replaceFirst(tagRegularExpression, "Content"), is("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * Content\r\n" + "\t  * AFTER\r\n" + "\t  */"));
     }
 
     @Test public void testEmptyPre() {
-      azzert.assertThat("", "A<dummy></dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<dummy></dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testLFinPre() {
-      azzert.assertThat("", "A<dummy>\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<dummy>\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testMiXeDCaSeTag() {
-      azzert.assertThat("", "A<DuMmY>a\nb\r\nABCDE</dUmMy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<DuMmY>a\nb\r\nABCDE</dUmMy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testSeveralLinesInPre() {
-      azzert.assertThat("", "A<dummy>a\nb\r\nABCDE</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<dummy>a\nb\r\nABCDE</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testSimplePre() {
-      azzert.assertThat("", "A<dummy>X</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<dummy>X</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
 
     @Test public void testUpperCaseTag() {
-      azzert.assertThat("", "A<DUMMY>a\nb\r\nABCDE</DUMMY>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
+      azzert.that("A<DUMMY>a\nb\r\nABCDE</DUMMY>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
   }
 }

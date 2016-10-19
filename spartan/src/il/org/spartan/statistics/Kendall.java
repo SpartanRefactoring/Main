@@ -4,6 +4,7 @@ import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
@@ -29,6 +30,7 @@ import il.org.spatan.iteration.*;
     return tau(seq(ys.length), ys);
   }
 
+  /** [[SuppressWarningsSpartan]] */
   public static double tau(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     return computeS(xs, ys, xs.length) / (double) pairs(xs.length);
@@ -133,14 +135,14 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     final int n = xs.length;
     final int pairs = pairs(n);
-    return computeS(xs, ys, n) / Math.sqrt((double) (pairs - sigma(xs)) * (pairs - sigma(ys)));
+    return computeS(xs, ys, n) / Math.sqrt((pairs - sigma(ys)) * 1. * (pairs - sigma(xs)));
   }
 
   public static class Charectristics {
     private static int valid(final double[] xs, final double[] ys) {
       int $ = 0;
       for (int ¢ = 0; ¢ < xs.length; ++¢)
-        $ += As.binary(!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢]));
+        $ += as.bit(!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢]));
       return $;
     }
 
@@ -159,7 +161,7 @@ import il.org.spatan.iteration.*;
     public Charectristics(final int n, final double tau) {
       this.tau = tau;
       this.n = n;
-      z = 3 * tau * n * (n - 1) / 2 / Math.sqrt(n * (n - 1.0) * (2.0 * n + 5) / 2);
+      z = 3 * n * tau * (n - 1) / 2 / Math.sqrt(n * (n - 1.0) * (2.0 * n + 5) / 2);
     }
   }
 }

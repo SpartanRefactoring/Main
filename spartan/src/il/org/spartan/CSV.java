@@ -119,16 +119,15 @@ public enum CSV {
     if (s.length() == 0)
       return new String[0];
     final List<String> $ = new ArrayList<>();
-    for (int from = 0; true;) {
+    for (int from = 0;;) {
       final int to = s.indexOf(',', from);
       if (to < 0) {
         $.add(unescape(s.substring(from, s.length())));
-        break;
+        return $.toArray(new String[$.size()]);
       }
       $.add(unescape(s.substring(from, to)));
       from = to + 1;
     }
-    return $.toArray(new String[$.size()]);
   }
 
   /** Split a comma separated string into an array of classes.

@@ -54,7 +54,7 @@ import il.org.spartan.streotypes.*;
   }
 
   public static double sdCorrection(final int ¢) {
-    return Math.sqrt((double) ¢ / (¢ - 1));
+    return Math.sqrt(1. * ¢ / (¢ - 1));
   }
 
   public static double variance(final double... vs) {

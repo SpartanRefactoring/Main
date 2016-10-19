@@ -27,7 +27,7 @@ public class ClassProxyTest {
   @Test public void testClassFileOfStringBuilder() throws IOException, ClassNotFoundException {
     for (final String className : new ClassProxy<>(StringBuilder.class).getReferencedClasses())
       if (className != null)
-        assert null != new ClassProxy<>(className);
+        assert new ClassProxy<>(className) != null;
   }
 
   @Test public void testClassFileUsingMagic() throws IOException, ClassNotFoundException {
@@ -45,22 +45,21 @@ public class ClassProxyTest {
   }
 
   @Test(timeout = 200000) public void testClassName() {
-    final ClassProxy<java.util.Map.Entry> c = new ClassProxy<>(java.util.Map.Entry.class);
-    azzert.assertThat("", c.className(), is("java.util.Map$Entry"));
+    azzert.that((new ClassProxy<>(java.util.Map.Entry.class)).className(), is("java.util.Map$Entry"));
   }
 
   @Test public void testClassNameAnonymousCLass() {
-    azzert.assertThat("", new ClassProxy<Object>(new Object() {
+    azzert.that(new ClassProxy<Object>(new Object() {
       // Nothing to extend in this anonymous class.
     }.getClass()).className(), is(myName() + "$1"));
   }
 
   @Test public void testClassNameConstructor() {
-    assert null != new ClassProxy<>("java.lang.Object");
+    assert new ClassProxy<>("java.lang.Object") != null;
   }
 
   @Test public void testClassNameDoubleMemberCLass() {
-    azzert.assertThat("", new ClassProxy<>(Inner1.Inner2.class).className(), is(myName() + "$Inner1$Inner2"));
+    azzert.that(new ClassProxy<>(Inner1.Inner2.class).className(), is(myName() + "$Inner1$Inner2"));
   }
 
   @Test public void testClassNameLocalCLass() {
@@ -69,31 +68,31 @@ public class ClassProxyTest {
         return this.getClass();
       }
     }
-    azzert.assertThat("", new ClassProxy<Local>(new Local().me()).className(), is(myName() + "$1Local"));
+    azzert.that(new ClassProxy<Local>(new Local().me()).className(), is(myName() + "$1Local"));
   }
 
   public void testClassNameMemberCLass() {
-    azzert.assertThat("", new ClassProxy<>(Map.Entry.class).className(), is("java.util.Map$Entry"));
+    azzert.that(new ClassProxy<>(Map.Entry.class).className(), is("java.util.Map$Entry"));
   }
 
   @Test public void testClassNameNormalCLass() {
-    azzert.assertThat("", new ClassProxy<>(Object.class).className(), is("java.lang.Object"));
+    azzert.that(new ClassProxy<>(Object.class).className(), is("java.lang.Object"));
   }
 
   @Test public void testClassNameNormalMapCLass() {
-    azzert.assertThat("", new ClassProxy<>(Map.class).className(), is("java.util.Map"));
+    azzert.that(new ClassProxy<>(Map.class).className(), is("java.util.Map"));
   }
 
   @Test public void testClassNameStringCLass() {
-    azzert.assertThat("", new ClassProxy<>(String.class).className(), is("java.lang.String"));
+    azzert.that(new ClassProxy<>(String.class).className(), is("java.lang.String"));
   }
 
   @Test public void testFindClassForNameObject() throws ClassNotFoundException {
-    assert null != ClassProxy.findClass("java.lang.Object");
+    assert ClassProxy.findClass("java.lang.Object") != null;
   }
 
   @Test public void testFindClassMapEntry() throws ClassNotFoundException {
-    assert null != ClassProxy.findClass("java.util.Map.Entry");
+    assert ClassProxy.findClass("java.util.Map.Entry") != null;
   }
 
   @Test(expected = ClassNotFoundException.class) public void testFindSemicoloned() throws ClassNotFoundException {
@@ -101,33 +100,33 @@ public class ClassProxyTest {
   }
 
   @Test(expected = ClassNotFoundException.class) public void testForNameUnfound() throws ClassNotFoundException {
-    assert null != Class.forName("java.util.Map.xxx");
+    assert Class.forName("java.util.Map.xxx") != null;
   }
 
   @Test(expected = ClassNotFoundException.class) public void testForNameUnfoundInProxy() throws ClassNotFoundException {
-    assert null != ClassProxy.findClass("java.util.Map.xxx");
+    assert ClassProxy.findClass("java.util.Map.xxx") != null;
   }
 
   @Test public void testGetReferencedClasses() throws IOException, ClassNotFoundException {
-    assert null != new ClassProxy<>(Object.class).getReferencedClasses();
+    assert new ClassProxy<>(Object.class).getReferencedClasses() != null;
   }
 
   @Test public void testGetReferencedClassesAllValidArrayList() throws IOException, ClassNotFoundException {
     for (final String className : new ClassProxy<>(ArrayList.class).getReferencedClasses())
-      assert null != new ClassProxy<>(className);
+      assert new ClassProxy<>(className) != null;
   }
 
   @Test public void testGetReferencedClassesAllValidObject() throws IOException, ClassNotFoundException {
     for (final String className : new ClassProxy<>(Object.class).getReferencedClasses())
-      assert null != new ClassProxy<>(className);
+      assert new ClassProxy<>(className) != null;
   }
 
   @Test public void testGetReferencedStrings() throws IOException, ClassNotFoundException {
-    assert null != new ClassProxy<>(Object.class).getReferencedStrings();
+    assert new ClassProxy<>(Object.class).getReferencedStrings() != null;
   }
 
   @Test public void testInvalidClassNameConstructor() {
-    assert null != new ClassProxy<>("Invalid Class Name!");
+    assert new ClassProxy<>("Invalid Class Name!") != null;
   }
 
   @Test(expected = ClassNotFoundException.class) public void testInvalidClassNameGetFields() throws SecurityException, ClassNotFoundException {
@@ -135,8 +134,7 @@ public class ClassProxyTest {
   }
 
   @Test(expected = ClassNotFoundException.class) public void testMakeSemicoloned() throws ClassNotFoundException {
-    final ClassProxy<Object> c = new ClassProxy<>("java.lang.Object;");
-    c.getFields();
+    (new ClassProxy<>("java.lang.Object;")).getFields();
   }
 
   @Test public void testMeReferencingClassFileProxy() throws IOException, ClassNotFoundException {
@@ -189,18 +187,18 @@ public class ClassProxyTest {
   }
 
   @Test public void testNameFormat() throws ClassNotFoundException {
-    assert null != ClassProxy.findClass("java.util.Map.Entry");
-    assert null != ClassProxy.findClass("java.util.Map$Entry");
+    assert ClassProxy.findClass("java.util.Map.Entry") != null;
+    assert ClassProxy.findClass("java.util.Map$Entry") != null;
   }
 
   @Test public void testNormalizeNameObject() {
-    azzert.assertThat("", ClassProxy.normalizeClassName("java.lang.Object"), is("java.lang.Object"));
-    azzert.assertThat("", ClassProxy.normalizeClassName("java.util.Map$Entry"), is("java.util.Map$Entry"));
-    azzert.assertThat("", ClassProxy.normalizeClassName("java.util.Map.Entry"), is("java.util.Map$Entry"));
+    azzert.that(ClassProxy.normalizeClassName("java.lang.Object"), is("java.lang.Object"));
+    azzert.that(ClassProxy.normalizeClassName("java.util.Map$Entry"), is("java.util.Map$Entry"));
+    azzert.that(ClassProxy.normalizeClassName("java.util.Map.Entry"), is("java.util.Map$Entry"));
   }
 
   @Test public void testReflectiveConstructor() {
-    assert null != new ClassProxy<>(Object.class);
+    assert new ClassProxy<>(Object.class) != null;
   }
 
   private String myName() {

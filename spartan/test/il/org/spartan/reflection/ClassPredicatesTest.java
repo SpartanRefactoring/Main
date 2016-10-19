@@ -52,7 +52,7 @@ import il.org.spartan.utils.*;
       final Object o = null;
 
       int b() {
-        a = 2 * a;
+        a *= 2;
         return a + (o == null ? 1 : 2);
       }
     }
@@ -130,7 +130,7 @@ import il.org.spartan.utils.*;
     Object o;
   }
 
-  static enum EmptyEnum {
+  enum EmptyEnum {
     ;
     public int x;
 
@@ -147,7 +147,7 @@ import il.org.spartan.utils.*;
     // Empty
   }
 
-  static enum NonEmptyEnum {
+  enum NonEmptyEnum {
     A, B, C;
     int a;
 

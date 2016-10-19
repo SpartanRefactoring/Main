@@ -215,15 +215,11 @@ public class FileSystemVisitor {
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
   private void recurse(final File ¢) throws IOException, StopTraversal {
-    if (¢.isDirectory()) {
+    if (¢.isDirectory())
       recurseDirectory(¢);
-      return;
-    }
-    if (Zip.isZipFile(¢)) {
+    else if (Zip.isZipFile(¢))
       scanZip(¢);
-      return;
-    }
-    if (Suffixed.by(¢, extensions))
+    else if (Suffixed.by(¢, extensions))
       visitor.visitFile(¢);
   }
 
@@ -439,33 +435,13 @@ public class FileSystemVisitor {
     }
   }
 
-  /** An <code><b>abstract</b></code> class, to be extended by those clients
-   * interested in examining plain files only, i.e., files not contained in
-   * archive, during a file system traversal as carried out by class
-   * {@link FileSystemVisitor}. Such clients must give body to one function
-   * only:
-   * <ol>
-   * <li>{@link #visitFile(File)} - action to carry out on ordinary files
-   * </ol>
-   * Class {@link PlainFileOnlyAction} is in fact a Facade offering a simplified
-   * interface to the more general {@link Action}. Simplifications are:
-   * <ol>
-   * <li>no exceptions thrown
-   * <li>partial implementation that does nothing for directories and archives,
-   * and leaves it to the extending class to implement a concrete action for
-   * files and archive entries visitation.
-   * <li>In visiting archive entries it invokes function {@link #visitZip(File)}
-   * (instead of {@link #visitZipDirectory(String, String, InputStream)}), i.e.,
-   * the implementor of this function does is not bothered with the archive
-   * name.
-   * </ol>
-   * @author Yossi Gil
-   * @since 16/05/2011 */
-  public static abstract class PlainFileOnlyAction extends FileOnlyAction {
-    /* (non-Javadoc)
-     *
-     * @see EmptyAction#visitFile(File) */
-    @Override abstract public void visitFile(final File f);
+  /**
+   * An <code><b>abstract</b></code> class, to be extended by those clients interested in examining plain files only, i.e., files not contained in archive, during a file system traversal as carried out by class {@link FileSystemVisitor} . Such clients must give body to one function only: <ol> <li> {@link #visitFile(File)}  - action to carry out on ordinary files </ol> Class  {@link PlainFileOnlyAction}  is in fact a Facade offering a simplified interface to the more general  {@link Action} . Simplifications are: <ol> <li>no exceptions thrown <li>partial implementation that does nothing for directories and archives, and leaves it to the extending class to implement a concrete action for files and archive entries visitation. <li>In visiting archive entries it invokes function  {@link #visitZip(File)} (instead of  {@link #visitZipDirectory(String,String,InputStream)} ), i.e., the implementor of this function does is not bothered with the archive name. </ol>
+   * @author  Yossi Gil
+   * @since  16/05/2011 
+   */
+  public abstract static class PlainFileOnlyAction extends FileOnlyAction {
+    @Override public abstract void visitFile(final File f);
 
     @Override public final void visitZipEntry(final String entryName, final InputStream s) {
       unused(entryName);

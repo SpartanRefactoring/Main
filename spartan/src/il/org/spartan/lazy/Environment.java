@@ -184,31 +184,31 @@ import il.org.spartan.reap.Cookbook.*;
         azzert.that(supplierCalls, is(0));
         azzert.that(integer.version(), is(0L));
         azzert.nay(integer.updated());
-        azzert.assertThat("", integer.¢(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
-        azzert.assertThat("", integer.¢(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.get(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.¢(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.get(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.¢(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.get(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.¢(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.get(), is(FIRST_MAGIC_NUMBER));
-        azzert.assertThat("", integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.¢(), is(FIRST_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
-        azzert.assertThat("", integer.get(), is(FIRST_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(FIRST_MAGIC_NUMBER));
         integer.set(Integer.valueOf(SECOND_MAGIC_NUMBER));
         azzert.aye(integer.updated());
-        azzert.assertThat("", integer.get(), is(SECOND_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1L));
-        azzert.assertThat("", integer.get(), is(SECOND_MAGIC_NUMBER));
+        azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
       }
 
       @Test public void seriesA5() {
         azzert.that(helloWorld.prerequisites.size(), is(3));
-        azzert.assertThat("", helloWorld.dependents, empty());
+        azzert.that(helloWorld.dependents, empty());
         azzert.that(helloWorld.version, is(0L));
         azzert.nay(helloWorld.updated());
       }
@@ -216,7 +216,7 @@ import il.org.spartan.reap.Cookbook.*;
       @Test public void seriesA6() {
         final Property<String> $ = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
         azzert.that($.prerequisites.size(), is(3));
-        azzert.assertThat("", $.dependents, empty());
+        azzert.that($.dependents, empty());
         azzert.that($.version, is(0L));
         azzert.that(hello.version, is(0L));
         azzert.that(separator.version, is(0L));
@@ -263,9 +263,9 @@ import il.org.spartan.reap.Cookbook.*;
         azzert.aye(b.dependents.isEmpty()).andAye(b.prerequisites.isEmpty());
         azzert.zero(b.version);
         b.bind((final String ¢) -> "Hello, " + ¢).to(a);
-        azzert.assertThat("", b.dependents, empty());
+        azzert.that(b.dependents, empty());
         azzert.nay(b.prerequisites.isEmpty());
-        azzert.assertThat("", b.prerequisites, contains(azzert.is(a)));
+        azzert.that(b.prerequisites, contains(azzert.is(a)));
         b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
         b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
       }
@@ -503,11 +503,11 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
-    public Property<T> push(final Function0<T> t) {
+    public Property<T> push(final Function0<T> __) {
       return this;
     }
 
-    public Property<T> push(final T t) {
+    public Property<T> push(final T __) {
       return this;
     }
 

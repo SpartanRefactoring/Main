@@ -35,7 +35,7 @@ public abstract class ImmutableStatistics extends Statistics implements java.io.
   }
 
   public double flipping() {
-    return (double) flips / n;
+    return 1. * flips / n;
   }
 
   public String format() {

@@ -118,7 +118,7 @@ public final class IntegersTest extends integers {
 
   @Test public void constructorInitialCapacitySmallValue() {
     final Integers a = new Integers(1);
-    assert null != a;
+    assert a != null;
     azzert.that(size(), is(0));
     azzert.that(capacity(), is(Integers.MIN_CAPACITY));
     assert !contains(0xDEAD);
@@ -133,7 +133,7 @@ public final class IntegersTest extends integers {
 
   @Test public void defaultConstructor() {
     final Integers a = new Integers();
-    assert null != a;
+    assert a != null;
     azzert.that(size(), is(0));
     azzert.that(capacity(), is(Integers.MIN_CAPACITY));
     assert !contains(0xDEAD);

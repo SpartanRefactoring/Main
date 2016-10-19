@@ -61,7 +61,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * (16) and the default load factor (0.75). */
   public MyHashMap() {
     this.loadFactor = DEFAULT_LOAD_FACTOR;
-    threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
+    threshold = (int) (DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
     table = new Entry[DEFAULT_INITIAL_CAPACITY];
   }
 
@@ -127,8 +127,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     }
     $.table = new Entry[table.length];
     $.entrySet = null;
-    $.modCount = 0;
-    $.size = 0;
+    $.size = $.modCount = 0;
     $.putAllForCreate(this);
     return $;
   }
@@ -216,8 +215,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations. */
   @Override public Set<K> keySet() {
-    final Set<K> ks = keySet;
-    return ks != null ? ks : (keySet = new KeySet());
+    return keySet != null ? keySet : (keySet = new KeySet());
   }
 
   /** Associates the specified value with the specified key in this map. If the
@@ -325,8 +323,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * <tt>clear</tt> operations. It does not support the <tt>add</tt> or
    * <tt>addAll</tt> operations. */
   @SuppressWarnings("synthetic-access") @Override public Collection<V> values() {
-    final Collection<V> vs = values;
-    return vs != null ? vs : (values = new Values());
+    return values != null ? values : (values = new Values());
   }
 
   /** Adds a new entry with the specified key, value and hash code to the
@@ -403,7 +400,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
         else
           prev.next = next;
         $.recordRemoval(this);
-        return $;
+        break;
       }
       prev = $;
       $ = next;
@@ -431,7 +428,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
         else
           prev.next = next;
         $.recordRemoval(this);
-        return $;
+        break;
       }
       prev = $;
       $ = next;
@@ -457,7 +454,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
     transfer(newTable);
     table = newTable;
-    threshold = (int) (newCapacity * loadFactor);
+    threshold = (int) (loadFactor * newCapacity);
   }
 
   /** Transfers all entries from current table to newTable. */
@@ -489,8 +486,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   }
 
   private Set<Map.Entry<K, V>> entrySet0() {
-    final Set<Map.Entry<K, V>> es = entrySet;
-    return es != null ? es : (entrySet = new EntrySet());
+    return entrySet != null ? entrySet : (entrySet = new EntrySet());
   }
 
   /** Offloaded version of get() to look up null keys. Null keys map to index 0.
@@ -530,11 +526,11 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
 
   /** Offloaded version of put for null keys */
   private V putForNullKey(final V value) {
-    for (Entry<K, V> e = table[0]; e != null; e = e.next)
-      if (e.key == null) {
-        final V $ = e.value;
-        e.value = value;
-        e.recordAccess(this);
+    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
+      if (¢.key == null) {
+        final V $ = ¢.value;
+        ¢.value = value;
+        ¢.recordAccess(this);
         return $;
       }
     ++modCount;
@@ -730,7 +726,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       if ($ == null)
         throw new NoSuchElementException();
       if ((next = $.next) == null)
-        for (@SuppressWarnings("rawtypes") final Entry[] t = table; index < t.length && (next = t[index++]) == null;)
+        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
           nothing();
       current = $;
       return $;

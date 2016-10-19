@@ -15,10 +15,10 @@ import org.junit.*;
   }
 
   @Test public void content() {
-    assert null != makeFilter("Hello, World!\n").processor + "";
+    assert makeFilter("Hello, World!\n").processor + "" != null;
   }
 
   @Test public void creater() {
-    assert null != makeFilter("Hello, World!\n");
+    assert makeFilter("Hello, World!\n") != null;
   }
 }

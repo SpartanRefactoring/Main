@@ -35,13 +35,13 @@ public abstract class Codex<U, T extends U> implements Container<U, T> {
     return $;
   }
 
-  /** Returns the <code><b>int</b></code> value of <code>c</code> as determined
-   * by this translator.
-   * @param t the whose <code><b>int</b></code> translation shall be returned.
-   * @return the <code><b>int</b></code> translation of <code>c</code>. */
-  abstract public int encode(final U t);
+  /**
+   * Returns the <code><b>int</b></code> value of <code>c</code> as determined by this translator.
+   * @param t  the whose <code><b>int</b></code> translation shall be returned.
+   * @return  the <code><b>int</b></code> translation of <code>c</code>. 
+   */
+  public abstract int encode(final U t);
 
-  public static abstract class Anchored<T> extends Codex<T, T> {
-    //
+  public abstract static class Anchored<T> extends Codex<T, T> {
   }
 }

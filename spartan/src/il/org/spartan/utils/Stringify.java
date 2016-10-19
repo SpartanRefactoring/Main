@@ -293,84 +293,84 @@ import il.org.spartan.utils.Separate.*;
     }
 
     @Test public void testArrayFillerSeparatorBeginEnd() {
-      azzert.assertThat("", it(//
+      azzert.that(it(//
           makeArray(null, "A", null, "B", "C", null), //
           filler("__").begin("[[").end("]]").separator(":")//
       ), is("[[__:A:__:B:C:__]]"));
     }
 
     @Test public void testArrayNoBegin() {
-      azzert.assertThat("", it(makeArray("A", "B", "C"), begin("")), is("A,B,C]"));
+      azzert.that(it(makeArray("A", "B", "C"), begin("")), is("A,B,C]"));
     }
 
     @Test public void testArrayNoEnd() {
-      azzert.assertThat("", it(makeArray("A", "B", "C"), end("")), is("[A,B,C"));
+      azzert.that(it(makeArray("A", "B", "C"), end("")), is("[A,B,C"));
     }
 
     @Test public void testDefaultsArray() {
-      azzert.assertThat("", it(makeArray("A", "B", "C")), is("[A,B,C]"));
+      azzert.that(it(makeArray("A", "B", "C")), is("[A,B,C]"));
     }
 
     @Test public void testMakeBeginOption() {
-      assert null != begin("(");
+      assert begin("(") != null;
     }
 
     @Test public void testMakeEndOption() {
-      assert null != end(")");
+      assert end(")") != null;
     }
 
     @Test public void testMakeFillerOption() {
-      assert null != filler(")");
+      assert filler(")") != null;
     }
 
     @Test public void testMakeIgnoreNulls() {
-      assert null != filler(")");
+      assert filler(")") != null;
     }
 
     @Test public void testMakeSeparatorOption() {
-      assert null != separator(")");
+      assert separator(")") != null;
     }
 
     @Test public void testNulledList() {
-      azzert.assertThat("", it(makeCollection(null, "A", null, "B", null, "C", null)), is("[(null),A,(null),B,(null),C,(null)]"));
+      azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null)), is("[(null),A,(null),B,(null),C,(null)]"));
     }
 
     @Test public void testNulledListPruned() {
-      azzert.assertThat("", it(makeCollection(null, "A", null, "B", null, "C", null), filler(null)), is("[A,B,C]"));
+      azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), filler(null)), is("[A,B,C]"));
     }
 
     @Test public void testNulledListPrunedWithOmitNulls() {
-      azzert.assertThat("", it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls()), is("[A,B,C]"));
+      azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls()), is("[A,B,C]"));
     }
 
     @Test public void testPrunedEmptyCollectionBeginEnd() {
-      azzert.assertThat("", it(//
+      azzert.that(it(//
       makeCollection(), //
       omitNulls().separator(",").begin("(").end(")")), is(""));
     }
 
     @Test public void testPrunedEmptyCollectionOmittingNullsBeginEnd() {
-      azzert.assertThat("", it(//
+      azzert.that(it(//
       makeCollection(null, null, null), //
       omitNulls().separator(",").begin("(").end(")")), is(""));
     }
 
     @Test public void testPrunedNulledListCommas() {
-      azzert.assertThat("", it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls().separator(",")), is("[A,B,C]"));
+      azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls().separator(",")), is("[A,B,C]"));
     }
 
     @Test public void testPrunedNulledListCommasCallsBeginEnd() {
-      azzert.assertThat("", it(//
+      azzert.that(it(//
       makeCollection(null, "A", null, "B", null, "C", null), //
       omitNulls().separator(",").begin("(").end(")")), is("(A,B,C)"));
     }
 
     @Test public void testPrunedNulledListSemiColons() {
-      azzert.assertThat("", it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls().separator(";")), is("[A;B;C]"));
+      azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls().separator(";")), is("[A;B;C]"));
     }
 
     @Test public void testSimpleList() {
-      azzert.assertThat("", it(makeCollection("A", "B", "C")), is("[A,B,C]"));
+      azzert.that(it(makeCollection("A", "B", "C")), is("[A,B,C]"));
     }
   }
 }

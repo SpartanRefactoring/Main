@@ -99,11 +99,11 @@ public class Ergodic {
   }
 
   private static Integer mid(final long a, final long b) {
-    return new Integer((int) Math.round(Math.sqrt(a * b)));
+    return Integer.valueOf((int) Math.round(Math.sqrt(a * b)));
   }
 
   private static Double midDouble(final double a, final double d) {
-    return new Double(Math.round(Math.sqrt(a * d)));
+    return Double.valueOf(Math.round(Math.sqrt(a * d)));
   }
 
   private static Double midDouble(final List<Double> ds, final int i) {
@@ -118,8 +118,7 @@ public class Ergodic {
   }
 
   private static Integer selectDiff(final List<Integer> is, final float maxDiff, final int nextInt) {
-    int n = 0;
-    for (int ¢ = 1; ¢ < is.size(); ++¢)
+    for (int n = 0, ¢ = 1; ¢ < is.size(); ++¢)
       if (valid(is, ¢) && diff(is, ¢) == maxDiff) {
         if (n == nextInt)
           return mid(is, ¢);
@@ -129,8 +128,7 @@ public class Ergodic {
   }
 
   private static Double selectDiffDouble(final List<Double> ds, final double maxDiff, final int nextInt) {
-    int n = 0;
-    for (int ¢ = 1; ¢ < ds.size(); ++¢)
+    for (int n = 0, ¢ = 1; ¢ < ds.size(); ++¢)
       if (diffDouble(ds, ¢) == maxDiff) {
         if (n == nextInt)
           return midDouble(ds, ¢);

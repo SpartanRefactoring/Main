@@ -327,7 +327,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test(timeout = 20) public void neighborsIsNotNull() {
-      assert null != new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().neighbors(13);
+      assert new Builder().connect(13, 14).connect(13, 15).connect(13, 12).go().neighbors(13) != null;
     }
 
     @Test public void newArcReturnsThis() {
@@ -361,7 +361,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void nodesExists() {
-      assert null != new Builder().go().nodes();
+      assert new Builder().go().nodes() != null;
     }
 
     @Test public void nodesResistChange() {
@@ -396,7 +396,7 @@ public class BitSetSmallIntegersGraph extends SmallIntegersGraph {
     }
 
     @Test public void noNullCreation() {
-      assert null != new Builder().go();
+      assert new Builder().go() != null;
     }
 
     @Test public void oneComponentOfOneEdge() {

@@ -32,10 +32,9 @@ public final class ClassInfo extends ConstantPoolEntity {
   }
 
   private static void addLinkComponents(final int[] target, final int[] addition) {
-    if (addition == null)
-      return;
-    for (int ¢ = 0; ¢ < target.length; ++¢)
-      target[¢] += addition[¢];
+    if (addition != null)
+      for (int ¢ = 0; ¢ < target.length; ++¢)
+        target[¢] += addition[¢];
   }
 
   private static ConstructorInfo asConstructor(final TypedEntity ¢) {

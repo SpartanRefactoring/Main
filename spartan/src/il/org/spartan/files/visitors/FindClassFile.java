@@ -37,11 +37,11 @@ import il.org.spartan.utils.*;
   }
 
   private static boolean processOption(final String option) {
-    if (option.equals("-n")) {
+    if ("-n".equals(option)) {
       reportCounts = true;
       return true;
     }
-    if (!option.equals("-f"))
+    if (!"-f".equals(option))
       return false;
     findFirstOnly = true;
     return true;

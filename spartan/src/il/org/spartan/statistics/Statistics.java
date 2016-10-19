@@ -25,10 +25,9 @@ public abstract class Statistics {
     return median($);
   }
 
-  public static double median(final double[] ds) {
-    Arrays.sort(ds);
-    final int n = ds.length;
-    return (ds[n / 2] + ds[(n - 1) / 2]) / 2;
+  public static double median(final double[] ¢) {
+    Arrays.sort(¢);
+    return (¢[¢.length / 2] + ¢[(¢.length - 1) / 2]) / 2;
   }
 
   public static double[] prune(final double[] ds) {
@@ -60,8 +59,7 @@ public abstract class Statistics {
       sum += ¢;
       sum2 += ¢ * ¢;
     }
-    final int n = ds.length;
-    return sum2 / (n - 1) - sum * sum / (n * n - n);
+    return sum2 / (ds.length - 1) - sum * sum / (ds.length * ds.length - ds.length);
   }
 
   protected int n;

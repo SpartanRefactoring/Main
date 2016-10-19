@@ -3,6 +3,7 @@ package il.org.spartan.collections;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.___.*;
 
@@ -120,7 +121,7 @@ public final class ToIntegers<E> {
     data[find] = key;
     values[find] = 1;
     occupied[find] = true;
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > MAX_LOAD * capacity())
       rehash(data.length << 1);
     return 1;
   }
@@ -137,7 +138,7 @@ public final class ToIntegers<E> {
       values[find] = 0;
       occupied[find] = true;
     }
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > MAX_LOAD * capacity())
       rehash(data.length << 1);
     return this;
   }
@@ -162,7 +163,7 @@ public final class ToIntegers<E> {
       values[find] = value;
       occupied[find] = true;
     }
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > MAX_LOAD * capacity())
       rehash(data.length << 1);
     return this;
   }
@@ -183,8 +184,8 @@ public final class ToIntegers<E> {
       return this;
     assert occupied[i] && data[i] == e;
     placeholder[i] = true;
-    return --size < capacity() * MIN_LOAD && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
-        : ++removed > capacity() * REMOVE_LOAD ? rehash() : this;
+    return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
+        : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
 
   /** Remove an array of integers to this set, if they are in it.
@@ -224,7 +225,7 @@ public final class ToIntegers<E> {
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
   int location(final E e) {
-    for (int $ = hash(e), t = 0;; $ += ++t) {
+    for (int $ = hash(e), ¢ = 0;; $ += ++¢) {
       $ &= data.length - 1;
       if (!occupied[$])
         return -1;
@@ -267,9 +268,9 @@ public final class ToIntegers<E> {
       assertThat(placeholder.length, lessThanOrEqualTo(capacity()));
       assertThat(occupied.length, lessThanOrEqualTo(capacity()));
       assertThat(data.length, lessThanOrEqualTo(capacity()));
-      assertThat(size, lessThanOrEqualTo((int) (capacity() * MAX_LOAD)));
-      assertThat(size, greaterThanOrEqualTo((int) (capacity() * MIN_LOAD)));
-      assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE_LOAD)));
+      assertThat(size, lessThanOrEqualTo((int) (MAX_LOAD * capacity())));
+      assertThat(size, greaterThanOrEqualTo((int) (MIN_LOAD * capacity())));
+      assertThat(removed, lessThanOrEqualTo((int) (REMOVE_LOAD * capacity())));
       assertThat(removed, comparesEqualTo(count(placeholder)));
       assertThat(size, comparesEqualTo(count(occupied) - removed));
       for (int ¢ = 0; ¢ < capacity(); ++¢)
@@ -280,7 +281,7 @@ public final class ToIntegers<E> {
     private int count(final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)
-        $ += As.binary(¢);
+        $ += as.bit(¢);
       return $;
     }
   }

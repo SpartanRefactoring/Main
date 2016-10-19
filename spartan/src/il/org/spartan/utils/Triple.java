@@ -4,8 +4,8 @@
 package il.org.spartan.utils;
 
 public class Triple<First, Second, Third> extends Pair<First, Second> {
-  public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third third) {
-    return new Triple<>(f, s, third);
+  public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third t) {
+    return new Triple<>(f, s, t);
   }
 
   @SuppressWarnings("unchecked") //
@@ -18,7 +18,7 @@ public class Triple<First, Second, Third> extends Pair<First, Second> {
   public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
       makeTriples(final int i, final int m, final int k) {
-    return Triple.makeTriples(i * m * k);
+    return Triple.makeTriples(i * k * m);
   }
 
   public final Third third;

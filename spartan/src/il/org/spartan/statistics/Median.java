@@ -23,10 +23,9 @@ import il.org.spatan.iteration.*;
     return destructiveMedian($);
   }
 
-  public static double destructiveMedian(final double... ds) {
-    Arrays.sort(ds);
-    final int n = ds.length;
-    return (ds[n / 2] + ds[(n - 1) / 2]) / 2;
+  public static double destructiveMedian(final double... ¢) {
+    Arrays.sort(¢);
+    return (¢[¢.length / 2] + ¢[(¢.length - 1) / 2]) / 2;
   }
 
   public static double mad(final double... ¢) {

@@ -283,18 +283,18 @@ public enum as {
 
     @Test public void asListSimple() {
       final List<Integer> is = as.list(12, 13, 14);
-      azzert.assertThat("", is.get(0), is(box.it(12)));
-      azzert.assertThat("", is.get(1), is(box.it(13)));
-      azzert.assertThat("", is.get(2), is(box.it(14)));
+      azzert.that(is.get(0), is(box.it(12)));
+      azzert.that(is.get(1), is(box.it(13)));
+      azzert.that(is.get(2), is(box.it(14)));
       azzert.that(is.size(), is(3));
     }
 
     @Test public void stringOfNull() {
-      azzert.assertThat("", as.string(null), is("null"));
+      azzert.that(as.string(null), is("null"));
     }
 
     @Test public void stringWhenToStringReturnsNull() {
-      azzert.assertThat("", as.string(new Object() {
+      azzert.that(as.string(new Object() {
         @Override public @Nullable String toString() {
           return null;
         }

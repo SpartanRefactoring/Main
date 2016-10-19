@@ -61,14 +61,13 @@ public class FileUtils {
   }
 
   private static void iterateFiles(final File dir, final List<String> files) {
-    if (dir == null)
-      return;
-    for (final File ¢ : dir.listFiles()) {
-      if (¢.isDirectory())
-        iterateFiles(¢, files);
-      if (¢.isFile() && ¢.getName().endsWith(".java"))
-        files.add(¢.getAbsolutePath());
-    }
+    if (dir != null)
+      for (final File ¢ : dir.listFiles()) {
+        if (¢.isDirectory())
+          iterateFiles(¢, files);
+        if (¢.isFile() && ¢.getName().endsWith(".java"))
+          files.add(¢.getAbsolutePath());
+      }
   }
 
   private static String read(final Path ¢) throws IOException {

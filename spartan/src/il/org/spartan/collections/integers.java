@@ -3,6 +3,7 @@ package il.org.spartan.collections;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.___.*;
 
@@ -22,9 +23,9 @@ public class integers {
   public static final float REMOVE_LOAD = 0.20f;
   public static final int MIN_CAPACITY = 4;
 
+  /** [[SuppressWarningsSpartan]] */
   static int hash(final int ¢) {
-    int $ = ¢;
-    $ ^= $ >>> 20 ^ $ >>> 12;
+    int $ = ¢ ^ ¢ >>> 20 ^ ¢ >>> 12;
     return $ ^ $ >>> 7 ^ $ >>> 4;
   }
 
@@ -63,7 +64,7 @@ public class integers {
       return this;
     data[i] = n;
     occupied[i] = true;
-    if (++size > capacity() * MAX_LOAD)
+    if (++size > MAX_LOAD * capacity())
       rehash(data.length << 1);
     return this;
   }
@@ -147,7 +148,7 @@ public class integers {
     assert occupied[i] && data[i] == n;
     placeholder[i] = true;
     return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
-        : ++removed > capacity() * REMOVE_LOAD ? rehash() : this;
+        : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
 
   /** Remove an array of integers to this set, if they are in it.
@@ -171,8 +172,7 @@ public class integers {
    * @return -1 if the parameter is in the table already, otherwise, the index
    *         at which it could be safely inserted. */
   protected int find(final int i) {
-    int $ = -1;
-    for (int ¢ = hash(i), t = 0;; ¢ += ++t) {
+    for (int $ = -1, ¢ = hash(i), t = 0;; ¢ += ++t) {
       ¢ &= data.length - 1;
       if (placeholder[¢] || !occupied[¢])
         $ = $ < 0 ? ¢ : $;
@@ -193,7 +193,7 @@ public class integers {
     return reset(newCapacity).add(entries());
   }
 
-  final protected integers reset(final int capacity) {
+  protected final integers reset(final int capacity) {
     data = new int[capacity];
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];
@@ -212,7 +212,7 @@ public class integers {
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
   private int location(final int i) {
-    for (int $ = hash(i), t = 0;; $ += ++t) {
+    for (int $ = hash(i), ¢ = 0;; $ += ++¢) {
       $ &= data.length - 1;
       if (!occupied[$])
         return -1;
@@ -231,9 +231,9 @@ public class integers {
       assertThat(placeholder.length, lessThanOrEqualTo(capacity()));
       assertThat(occupied.length, lessThanOrEqualTo(capacity()));
       assertThat(data.length, lessThanOrEqualTo(capacity()));
-      assertThat(size, lessThanOrEqualTo((int) (capacity() * MAX_LOAD)));
-      assertThat(size, greaterThanOrEqualTo((int) (capacity() * MIN_LOAD)));
-      assertThat(removed, lessThanOrEqualTo((int) (capacity() * REMOVE_LOAD)));
+      assertThat(size, lessThanOrEqualTo((int) (MAX_LOAD * capacity())));
+      assertThat(size, greaterThanOrEqualTo((int) (MIN_LOAD * capacity())));
+      assertThat(removed, lessThanOrEqualTo((int) (REMOVE_LOAD * capacity())));
       assertThat(removed, comparesEqualTo(count(placeholder)));
       assertThat(size, comparesEqualTo(count(occupied) - removed));
       for (int ¢ = 0; ¢ < capacity(); ++¢)
@@ -244,7 +244,7 @@ public class integers {
     private int count(final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)
-        $ += As.binary(¢);
+        $ += as.bit(¢);
       return $;
     }
   }

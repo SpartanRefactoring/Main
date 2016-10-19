@@ -106,19 +106,19 @@ public class DoublesWindow {
     }
 
     @Test public void create() {
-      assert null != new DoublesWindow(10);
+      assert new DoublesWindow(10) != null;
     }
 
     @Test(expected = IllegalArgumentException.class) public void createMinusOneSize() {
-      assert null != new DoublesWindow(-1);
+      assert new DoublesWindow(-1) != null;
     }
 
     @Test(expected = IllegalArgumentException.class) public void createNegativeSize() {
-      assert null != new DoublesWindow(-10);
+      assert new DoublesWindow(-10) != null;
     }
 
     @Test(expected = IllegalArgumentException.class) public void createZeroSize() {
-      assert null != new DoublesWindow(0);
+      assert new DoublesWindow(0) != null;
     }
 
     @Test public void hasAdd() {

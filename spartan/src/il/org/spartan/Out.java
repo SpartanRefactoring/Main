@@ -11,7 +11,7 @@ public class Out {
   }
 
   public static void out(final String name, final boolean b) {
-    System.out.printf("%s = %b\n", name, new Boolean(b));
+    System.out.printf("%s = %b\n", name, Boolean.valueOf(b));
   }
 
   public static void out(final String name, final Collection<Object> os) {
@@ -37,7 +37,7 @@ public class Out {
   }
 
   public static void out(final String name, final int i) {
-    System.out.printf("%s = %d\n", name, new Integer(i));
+    System.out.printf("%s = %d\n", name, Integer.valueOf(i));
   }
 
   public static void out(final String name, final Object a) {
@@ -51,6 +51,6 @@ public class Out {
     else if (os.length == 1)
       System.out.printf("Only one %s: %s\n", name, os[0]);
     else
-      System.out.printf("Total of %d %s:\n\t%s\n", new Integer(os.length), name, separate.these(os).by("\n\t"));
+      System.out.printf("Total of %d %s:\n\t%s\n", Integer.valueOf(os.length), name, separate.these(os).by("\n\t"));
   }
 }

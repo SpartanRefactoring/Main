@@ -18,6 +18,8 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
 /** Resizable-array implementation of the <tt>List</tt> interface. Implements
  * all optional list operations, and permits all elements, including
  * <tt>null</tt>. In addition to implementing the <tt>List</tt> interface, this
@@ -135,7 +137,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   /** Appends the specified element to the end of this list.
    * @param e element to be appended to this list
    * @return never returns */
-  @Override public boolean add(final E e) {
+  @Override public boolean add(final E __) {
     return fail();
   }
 
@@ -158,7 +160,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @param es collection containing elements to be added to this list
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws NullPointerException if the specified collection is null */
-  @Override public boolean addAll(final Collection<? extends E> es) {
+  @Override public boolean addAll(final Collection<? extends E> __) {
     return fail();
   }
 
@@ -173,7 +175,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws IndexOutOfBoundsException {@inheritDoc}
    * @throws NullPointerException if the specified collection is null */
-  @Override public boolean addAll(final int index, final Collection<? extends E> es) {
+  @Override public boolean addAll(final int index, final Collection<? extends E> __) {
     return fail();
   }
 
@@ -236,13 +238,13 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * or -1 if there is no such index. */
   @Override public int indexOf(final Object o) {
     if (o == null)
-      for (int $ = 0; $ < size(); ++$)
+      for (int $ = 0; $ < size(); ++$) {
         if (data[$] == null)
           return $;
-        else
-          for (int ¢ = 0; ¢ < size(); ++¢)
-            if (o.equals(data[¢]))
-              return ¢;
+        for (int ¢ = 0; ¢ < size(); ++¢)
+          if (o.equals(data[¢]))
+            return ¢;
+      }
     return -1;
   }
 
@@ -265,15 +267,15 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * returns the highest index <tt>i</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
    * or -1 if there is no such index. */
-  @Override public int lastIndexOf(final Object o) {
+  @Override public int lastIndexOf(final @Nullable Object o) {
     if (o == null)
-      for (int $ = size() - 1; $ >= 0; --$)
+      for (int $ = size() - 1; $ >= 0; --$) {
         if (data[$] == null)
           return $;
-        else
-          for (int ¢ = size() - 1; ¢ >= 0; --¢)
-            if (o.equals(data[¢]))
-              return ¢;
+        for (int ¢ = size() - 1; ¢ >= 0; --¢)
+          if (o.equals(data[¢]))
+            return ¢;
+      }
     return -1;
   }
 
@@ -321,7 +323,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * the call).
    * @param o element to be removed from this list, if present
    * @return <tt>true</tt> if this list contained the specified element */
-  @Override public boolean remove(final Object o) {
+  @Override public boolean remove(final Object __) {
     return fail();
   }
 
@@ -335,7 +337,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    *         specified collection does not permit null elements (optional), or
    *         if the specified collection is null
    * @see Collection#contains(Object) */
-  @Override public boolean removeAll(final Collection<?> c) {
+  @Override public boolean removeAll(final Collection<?> __) {
     return fail();
   }
 
@@ -350,7 +352,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    *         specified collection does not permit null elements (optional), or
    *         if the specified collection is null
    * @see Collection#contains(Object) */
-  @Override public boolean retainAll(final Collection<?> c) {
+  @Override public boolean retainAll(final Collection<?> __) {
     return fail();
   }
 
@@ -462,7 +464,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     }
 
     @SuppressWarnings("unused") //
-    @Override public void add(final E e) {
+    @Override public void add(final E __) {
       fail();
     }
 
@@ -487,7 +489,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     }
 
     @SuppressWarnings("unused") //
-    @Override public void set(final E e) {
+    @Override public void set(final E __) {
       fail();
     }
   }

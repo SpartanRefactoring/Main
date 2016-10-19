@@ -51,7 +51,7 @@ public class ClassRepository implements Iterable<String> {
           // continue;
         }
     }
-    ___.sure($.size() > 0);
+    ___.sure(!$.isEmpty());
     return $;
   }
 

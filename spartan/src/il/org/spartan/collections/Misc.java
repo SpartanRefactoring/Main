@@ -8,8 +8,7 @@ import java.util.*;
 
 public class Misc {
   public static boolean compareWithStream(final String s, final InputStream is) {
-    final Scanner actual = new Scanner(s);
-    for (final Scanner expected = new Scanner(is); true;) {
+    for (final Scanner actual = new Scanner(s), expected = new Scanner(is);;) {
       if (actual.hasNext() != expected.hasNext())
         return false;
       if (!actual.hasNext())

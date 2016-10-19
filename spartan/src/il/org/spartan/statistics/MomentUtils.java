@@ -45,7 +45,7 @@ public class MomentUtils {
   }
 
   public static double pow(final double d, final int i) {
-    return i < 0 ? 1 / pow(d, -i) : i == 0 ? 1 : i == 1 ? d : pow(d * d, i / 2) * pow(d, i % 2);
+    return i < 0 ? 1 / pow(d, -i) : i == 0 ? 1 : i == 1 ? d : pow(d, i % 2) * pow(d * d, i / 2);
   }
 
   public static double skewness(final RealStatistics ¢) {
@@ -77,7 +77,7 @@ public class MomentUtils {
   }
 
   static double sdCorrection(final int ¢) {
-    return Math.sqrt((double) ¢ / (¢ - 1));
+    return Math.sqrt(1. * ¢ / (¢ - 1));
   }
 
   static double skewenessCorrection(final double... vs) {

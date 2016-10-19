@@ -117,8 +117,7 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void emptyContent() {
-      final Tab n = new Tab("abc");
-      azzert.assertThat("", n + "", is(""));
+      azzert.that(new Tab("abc") + "", is(""));
     }
 
     @Test public void emptyFalse() {
@@ -128,69 +127,66 @@ import il.org.spartan.streotypes.*;
     }
 
     @Test public void emtpyTrue() {
-      final Tab t = new Tab();
-      assert t.isEmpty();
+      assert (new Tab()).isEmpty();
     }
 
     @Test public void testBeginAtLevelOne() {
       final Tab t = new Tab("abc");
       t.more();
-      azzert.assertThat("", cat(t.begin(), t + ""), is(cat("abc", "abcabc")));
+      azzert.that(cat(t.begin(), t + ""), is(cat("abc", "abcabc")));
     }
 
     @Test public void testBeginAtZero() {
       final Tab t = new Tab("abc");
-      azzert.assertThat("", cat(t.begin(), t + ""), is(cat("", "abc")));
+      azzert.that(cat(t.begin(), t + ""), is(cat("", "abc")));
     }
 
     @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testDecrementFailsWhenDone() {
-      final Tab t = new Tab("abc");
-      t.less();
+      (new Tab("abc")).less();
     }
 
     @Test public void testDone() {
-      final Tab t = new Tab();
-      assert t.isEmpty();
+      assert (new Tab()).isEmpty();
     }
 
     @Test public void testEndAtLevelOne() {
       final Tab t = new Tab("abc");
       t.more();
-      azzert.assertThat("", cat(t.end(), t + ""), is(cat("", "")));
+      azzert.that(cat(t.end(), t + ""), is(cat("", "")));
     }
 
     @Test public void testEndAtLevelTwo() {
       final Tab t = new Tab("abc");
       t.more();
       t.more();
-      azzert.assertThat("", cat(t.end(), t + ""), is(cat("abc", "abc")));
+      azzert.that(cat(t.end(), t + ""), is(cat("abc", "abc")));
     }
 
     @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testEndAtLevelZero() {
       final Tab t = new Tab("abc");
-      azzert.assertThat("", cat(t.end(), t + ""), is(cat("", "")));
+      azzert.that(cat(t.end(), t + ""), is(cat("", "")));
     }
 
     @Test public void testOneMore() {
       final Tab t = new Tab("abc");
       t.more();
-      azzert.assertThat("", t + "", is("abc"));
+      azzert.that(t + "", is("abc"));
     }
 
     @Test public void testOneMoreOneLess() {
       final Tab t = new Tab("abc");
       t.more();
       t.less();
-      azzert.assertThat("", t + "", is(""));
+      azzert.that(t + "", is(""));
     }
 
     @Test public void testTwoMore() {
       final Tab t = new Tab("abc");
       t.more();
       t.more();
-      azzert.assertThat("", t + "", is("abcabc"));
+      azzert.that(t + "", is("abcabc"));
     }
 
     @Test public void testTwoMoreOneLess() {
@@ -198,7 +194,7 @@ import il.org.spartan.streotypes.*;
       t.more();
       t.more();
       t.less();
-      azzert.assertThat("", t + "", is("abc"));
+      azzert.that(t + "", is("abc"));
     }
 
     @Test public void testTwoMoreTwoLessOneMore() {
@@ -208,7 +204,7 @@ import il.org.spartan.streotypes.*;
       t.less();
       t.less();
       t.more();
-      azzert.assertThat("", t + "", is("abc"));
+      azzert.that(t + "", is("abc"));
     }
 
     @Test public void testTwoMoreTwoLessTwoMore() {
@@ -219,7 +215,7 @@ import il.org.spartan.streotypes.*;
       t.less();
       t.more();
       t.more();
-      azzert.assertThat("", t + "", is("abcabc"));
+      azzert.that(t + "", is("abcabc"));
     }
   }
 }

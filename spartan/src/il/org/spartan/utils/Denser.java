@@ -31,7 +31,7 @@ public class Denser {
   private static int zeroes(final int[] is) {
     int $ = 0;
     for (final int ¢ : is)
-      $ += As.binary(¢ == 0);
+      $ += as.bit(¢ == 0);
     return $;
   }
 
@@ -40,8 +40,7 @@ public class Denser {
 
   public Denser(final int... is) {
     gather = new int[(n = is.length) - zeroes(is)];
-    int j = 0;
-    for (int ¢ = 0; ¢ < is.length; ++¢)
+    for (int j = 0, ¢ = 0; ¢ < is.length; ++¢)
       if (is[¢] != 0)
         gather[j++] = ¢;
   }
@@ -100,8 +99,8 @@ public class Denser {
   @SuppressWarnings("static-method") //
   public static class TEST {
     @Test public void constructorExists() {
-      assert null != new Denser(12, 13);
-      assert null != new Denser(0, 12, 13);
+      assert new Denser(12, 13) != null;
+      assert new Denser(0, 12, 13) != null;
     }
 
     @Test public void gatherContent() {
@@ -147,15 +146,12 @@ public class Denser {
       final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
           ints(11, 12, 13, 14), //
           ints(15, 16, 17, 18)));
-      assert null != g;
+      assert g != null;
       azzert.that(g.length, is(2));
     }
 
     @Test public void gatherMatrixSize() {
-      final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
-          ints(11, 12, 13, 14), //
-          ints(15, 16, 17, 18)));
-      azzert.that(g.length, is(2));
+      azzert.that(new Denser(14, 0, 12, 13).gather(array(ints(11, 12, 13, 14), ints(15, 16, 17, 18))).length, is(2));
     }
 
     @Test public void gatherSize() {

@@ -12,13 +12,15 @@ public interface Condition<Argument> {
    * @return <code><b>true</b></code> if the predicate holds. */
   boolean holds(Argument v);
 
-  public static enum Make {
-    ; // Typedef
-    /** A an implementation of a filter that approves all objects.
-     * @author Yossi Gil
-     * @since November 26, 2009
-     * @param <T> type of elements in the iterable
-     * @return the passed argument */
+  enum Make {
+    ;
+    /**
+    * A an implementation of a filter that approves all objects.
+    * @author  Yossi Gil
+    * @since  November 26, 2009
+    * @param < T >  type of elements in the iterable
+    * @return  the passed argument 
+    */
     public static <T> Condition<T> all() {
       return ¢ -> {
         unused(¢);
@@ -38,11 +40,13 @@ public interface Condition<Argument> {
       return and(c1, and(c2, c3, c4));
     }
 
-    /** A an implementation of a filter that rejects all objects.
-     * @author Yossi Gil
-     * @since November 26, 2009
-     * @param <T> type of elements in the iterable
-     * @return an empty iterable */
+    /**
+    * A an implementation of a filter that rejects all objects.
+    * @author  Yossi Gil
+    * @since  November 26, 2009
+    * @param < T >  type of elements in the iterable
+    * @return  an empty iterable 
+    */
     public static <T> Condition<T> none() {
       return ¢ -> {
         unused(¢);
@@ -50,12 +54,13 @@ public interface Condition<Argument> {
       };
     }
 
-    /** A an implementation of a filter that approves all non-null objects.
-     * @author Yossi Gil
-     * @since November 26, 2009
-     * @param <T> type of elements in the iterable
-     * @return an iterable which is identical to the arugment, except that all
-     *         null elements are removed. */
+    /**
+    * A an implementation of a filter that approves all non-null objects.
+    * @author  Yossi Gil
+    * @since  November 26, 2009
+    * @param < T >  type of elements in the iterable
+    * @return  an iterable which is identical to the arugment, except that all null elements are removed. 
+    */
     public static <T> Condition<T> nonnull() {
       return t -> t != null;
     }

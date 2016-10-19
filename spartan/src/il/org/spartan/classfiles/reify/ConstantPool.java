@@ -112,7 +112,7 @@ public final class ConstantPool {
   public String[] getReferencedMethods() {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
-      if (¢ instanceof MethodReference && !((MethodReference) ¢).getNameAndType().getName().equals("<init>") && ¢ + "" != null)
+      if (¢ instanceof MethodReference && !"<init>".equals(((MethodReference) ¢).getNameAndType().getName()) && ¢ + "" != null)
         $.add(((MethodReference) ¢).getClassConstant().getClassName() + ":" + ((MethodReference) ¢).getNameAndType().getName());
     return $.toArray(new String[$.size()]);
   }

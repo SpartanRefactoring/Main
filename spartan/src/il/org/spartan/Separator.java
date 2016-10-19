@@ -36,7 +36,7 @@ public final class Separator {
     String $ = "";
     final Separator s = new Separator(between);
     for (final int ¢ : is)
-      $ += s + (new Integer(¢) + "");
+      $ += s + (Integer.valueOf(¢) + "");
     return $;
   }
 
