@@ -44,9 +44,9 @@ public class Spartanizer$Applicator {
   }
 
   /** @param u
-   * @param selection
+   * @param s
    * @return */
-  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> selection) {
+  public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
     go(u.compilationUnit);
     // if (s instanceof TrackerSelection)
     // return apply(u, (TrackerSelection) s);
@@ -221,8 +221,8 @@ public class Spartanizer$Applicator {
       //// coverage.put(key, 0);
       //// coverage.put(key, coverage.get(key) + 1);
       // }
-      <N extends ASTNode> Tipper<N> getTipper(final N n) {
-        return toolbox.firstTipper(n);
+      <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+        return toolbox.firstTipper(¢);
       }
 
       /** @param n
