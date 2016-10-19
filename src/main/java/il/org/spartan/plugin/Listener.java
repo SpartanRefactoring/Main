@@ -95,8 +95,8 @@ public interface Listener {
       return new S();
     }
 
-    /** To be used in the nano found in {@link ConfigurableObjectTemplate} 
-          * @return <code><b>this</b></code> */
+    /** To be used in the nano found in {@link ConfigurableObjectTemplate}
+     * @return <code><b>this</b></code> */
     public Listener listeners() {
       return this;
     }
