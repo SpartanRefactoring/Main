@@ -10,7 +10,7 @@ public interface code {
         .replaceAll("\\s*$", "")//
         .replaceAll("\\s+", " ")
         // TODO Matteo: I think this is buggy; the replacement should not be
-        // phrased like so.
+        // phrased like so. $1, $2
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)")
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([a-zA-Z¢$_]\\)")
         .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)");

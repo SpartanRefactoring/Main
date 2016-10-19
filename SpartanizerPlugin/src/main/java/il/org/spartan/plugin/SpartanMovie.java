@@ -43,11 +43,7 @@ public class SpartanMovie extends AbstractHandler {
         int filesModified = 0;
         // TODO Roth: this function is much much too large. Try to break it --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-          // XXX Roth: seems strange; not saying it is not right, but try to
-          // make it evident why this is necessary. --yg
-          // TODO Yossi: it just looks better this way. Editors do not pile up
-          // and create a mess. --or
-          close(page);
+          mightNotBeSlick(page);
           final IFile file = (IFile) currentCompilationUnit.getResource();
           try {
             IMarker[] markers = getMarkers(file);
@@ -80,6 +76,18 @@ public class SpartanMovie extends AbstractHandler {
     }
     sleep(1);
     return null;
+  }
+
+  /** Just in case, so that editors don't pile up. Not sure this is the right
+   * behavior
+   * <p>
+   * Ori Roth says: it just looks better this way. Editors do not pile up and create
+   * a mess.
+   * @author Yossi Gil
+   * @param p JD */
+  // sure this is the right behavior
+  public static void mightNotBeSlick(final IWorkbenchPage p) {
+    close(p);
   }
 
   /** @param ¢
@@ -117,15 +125,16 @@ public class SpartanMovie extends AbstractHandler {
     ¢.closeAllEditors(true);
   }
 
-  static boolean sleep(final double i) {
+  /** The current SpartanMovie is not releaseable. Some big changes should be
+   * made.
+   * @author Ori Roth
+   * @param howMuch
+   * @return */
+  static boolean sleep(final double howMuch) {
     try {
-      Thread.sleep((int) (1000 * i));
+      Thread.sleep((int) (1000 * howMuch));
       return true;
     } catch (@SuppressWarnings("unused") final InterruptedException __) {
-      // XXX Roth: this seems like an awful bug to me. You cannot interrupt
-      // during sleep? Huh? --yg
-      // TODO Yossi: you are defiantly right. The current SpartanMovie is not
-      // releasable. Some big changes should be made. --or
       return false;
     }
   }
@@ -142,17 +151,14 @@ public class SpartanMovie extends AbstractHandler {
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }
 
+  /** Finds the first marker in array in terms of textual location. The
+   * "CHAR_START" attribute is not something I have added, but an existing and
+   * well maintained marker attribute.
+   * @author Ori Roth */
   static IMarker getFirstMarker(final IMarker[] ¢) {
     int $ = 0;
     for (int i = 0; i < ¢.length; ++i)
       try {
-        // XXX Roth: how could this ever be true? --yg
-        // XXX Roth: are you sure you can store 'int'? --yg
-        // TODO Yossi: this function finds the first marker in array in terms of
-        // textual location. The "CHAR_START" attribute is not something I have
-        // added, but an existing and well maintained marker attribute. I agree
-        // this can be done with more caution, although it works fine by now.
-        // --or
         if (((Integer) ¢[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ¢[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
       } catch (final CoreException x) {
