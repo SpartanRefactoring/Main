@@ -7,15 +7,10 @@ import org.junit.*;
  * @param <T> JD
  * @since @{year}-@{month}-@{day} */
 public class maybe<@Nullable T> {
-  /** @param <T> JD
-   * @return TODO document return type */
   public static <@Nullable T> maybe<T> no() {
     return new maybe<>();
   }
 
-  /** @param <T> JD
-   * @param ¢ JD
-   * @return TODO document return type */
   public static <@Nullable T> maybe<T> yes(final T ¢) {
     return new maybe<>(¢);
   }
@@ -54,14 +49,13 @@ public class maybe<@Nullable T> {
   }
 
   /** @param inner TODO document this parameter
-   * @return TODO document return type */
+   * */
   public maybe<@Nullable T> set(final T inner) {
     this.inner = inner;
     return this;
   }
 
   @SuppressWarnings({ "javadoc", "static-method" }) public static class TEST {
-    /** TODO Javadoc(2016): automatically generated for method
      * <code>usecase0</code> void TODO Javadoc(2016) automatically generated for
      * returned value of method <code>usecase0</code> */
     @Test public void usecase0() {

@@ -28,7 +28,7 @@ public final class Separator {
   /** <code>separateBy</code>
    * @param is JD
    * @param between what to put between the items
-   * @return String TODO Javadoc(2016) automatically generated for returned
+   * @return String 
    *         value of method <code>separateBy</code> */
   public static String separateBy(final int[] is, final String between) {
     if (is.length == 0)
@@ -49,13 +49,12 @@ public final class Separator {
     return wrap("", "", ts, between);
   }
 
-  /** TODO Javadoc(2016): automatically generated for method <code>wrap</code>
+  /** <code>wrap</code>
    * @param <T> JD
-   * @param wrap TODO
+   * @param wrap what to wrap the characters with
    * @param ts JD
    * @param between what to put between the items
-   * @return String TODO Javadoc(2016) automatically generated for returned
-   *         value of method <code>wrap</code> */
+   * @return String value of method <code>wrap</code> */
   public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
@@ -65,8 +64,7 @@ public final class Separator {
    * @param end what to place after the items
    * @param ts JD
    * @param between what to put between the items
-   * @return String // TODO: automatically generated for return method
-   *         <code>wrap</code> */
+   * @return String <code>wrap</code> */
   public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
     if (iterables.isEmpty(ts))
       return "";
@@ -82,7 +80,7 @@ public final class Separator {
    * @param end what to place after the items
    * @param ts JD
    * @param between what to put between the items
-   * @return TODO document return type */
+   * */
   public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
     if (ts.length == 0)
       return "";

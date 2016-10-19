@@ -72,7 +72,7 @@ public interface Utils {
   /** @param < F > JD
    * @param < T > JD
    * @param ¢ JD
-   * @return TODO document return type */
+   * */
   static <F, T> Applicator<F, T> apply(final Function<F, T> ¢) {
     return new Applicator<>(¢);
   }
@@ -188,14 +188,14 @@ public interface Utils {
   }
 
   /** @param ¢ JD
-   * @return TODO document return type */
+   * */
   static FoundHandleForInt found(final int ¢) {
     return new FoundHandleForInt(¢);
   }
 
   /** @param < T > JD
    * @param ¢ JD
-   * @return TODO document return type */
+   * */
   static <T> FoundHandleForT<T> found(final T ¢) {
     return new FoundHandleForT<>(¢);
   }
@@ -480,8 +480,6 @@ public interface Utils {
       this.function = function;
     }
 
-    /** @param fs JD
-     * @return TODO document return type of this function */
     @SafeVarargs final Iterable<T> to(final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F ¢ : fs)
@@ -492,7 +490,7 @@ public interface Utils {
 
     /** @param <FS> JD
      * @param s JD
-     * @return TODO document return type */
+     * */
     <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
       final List<T> $ = new ArrayList<>();
       for (final @Nullable F ¢ : s)

@@ -13,7 +13,7 @@ public interface accumulate<T, C extends Collection<T>> {
   /** @param <T> JD
    * @param <C> JD
    * @param c JD
-   * @return TODO document return type */
+   * */
   static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
     return new accumulate<T, C>() {
       @Override public accumulate<T, C> add(final @Nullable T ¢) {

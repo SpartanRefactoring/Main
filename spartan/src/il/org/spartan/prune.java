@@ -27,7 +27,7 @@ public enum prune {
   /** @param <T> JD
    * @param <C> JD
    * @param ts JD
-   * @return TODO document return type */
+   * */
   public static <T, C extends Collection<T>> C nulls(final C ts) {
     for (final Iterator<T> ¢ = ts.iterator(); ¢.hasNext();)
       if (¢.next() == null)
@@ -66,7 +66,7 @@ public enum prune {
   }
 
   /** @param ss JD
-   * @return TODO document return type */
+   * */
   @SafeVarargs public static String[] whites(final String... ss) {
     final List<String> $ = new ArrayList<>();
     for (final String ¢ : ss)
@@ -76,7 +76,7 @@ public enum prune {
   }
 
   /** @param $
-   * @return TODO document return type */
+   * */
   private static String[] asArrray(final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }
