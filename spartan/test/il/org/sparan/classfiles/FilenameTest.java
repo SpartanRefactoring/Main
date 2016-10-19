@@ -8,8 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) //
-public class FilenameTest {
+@SuppressWarnings("static-method") public class FilenameTest {
   @Test public void Head() {
     azzert.that( Filename.headPart(""), is(""));
     azzert.that( Filename.headPart("a"), is(""));
