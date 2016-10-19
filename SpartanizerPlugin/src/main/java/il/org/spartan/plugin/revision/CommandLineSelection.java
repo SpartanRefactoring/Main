@@ -53,7 +53,7 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
       return new CommandLineSelection(cuList, "default");
     }
 
-    public static AbstractSelection getFromPath(final String path) {
+    public static AbstractSelection<?> getFromPath(final String path) {
       final List<WrappedCompilationUnit> cuList = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path)) {
         final WrappedCompilationUnit cu = WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));

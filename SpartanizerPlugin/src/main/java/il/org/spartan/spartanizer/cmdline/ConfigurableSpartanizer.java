@@ -256,14 +256,12 @@ public class ConfigurableSpartanizer {
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
-        return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
+        return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
   }
 
-  boolean filter(final ASTNode ¢) {
-    return true;
-  }
+
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     ASTNode parentNode = ¢.getParent();
