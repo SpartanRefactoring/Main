@@ -46,11 +46,11 @@ public class ClassProxyTest {
 
   @Test(timeout = 200000) public void testClassName() {
     final ClassProxy<java.util.Map.Entry> c = new ClassProxy<>(java.util.Map.Entry.class);
-    azzert.that(c.className(), is("java.util.Map$Entry"));
+    azzert.assertThat("", c.className(), is("java.util.Map$Entry"));
   }
 
   @Test public void testClassNameAnonymousCLass() {
-    azzert.that(new ClassProxy<Object>(new Object() {
+    azzert.assertThat("", new ClassProxy<Object>(new Object() {
       // Nothing to extend in this anonymous class.
     }.getClass()).className(), is(myName() + "$1"));
   }
@@ -60,7 +60,7 @@ public class ClassProxyTest {
   }
 
   @Test public void testClassNameDoubleMemberCLass() {
-    azzert.that(new ClassProxy<>(Inner1.Inner2.class).className(), is(myName() + "$Inner1$Inner2"));
+    azzert.assertThat("", new ClassProxy<>(Inner1.Inner2.class).className(), is(myName() + "$Inner1$Inner2"));
   }
 
   @Test public void testClassNameLocalCLass() {
@@ -69,23 +69,23 @@ public class ClassProxyTest {
         return this.getClass();
       }
     }
-    azzert.that(new ClassProxy<Local>(new Local().me()).className(), is(myName() + "$1Local"));
+    azzert.assertThat("", new ClassProxy<Local>(new Local().me()).className(), is(myName() + "$1Local"));
   }
 
   public void testClassNameMemberCLass() {
-    azzert.that(new ClassProxy<>(Map.Entry.class).className(), is("java.util.Map$Entry"));
+    azzert.assertThat("", new ClassProxy<>(Map.Entry.class).className(), is("java.util.Map$Entry"));
   }
 
   @Test public void testClassNameNormalCLass() {
-    azzert.that(new ClassProxy<>(Object.class).className(), is("java.lang.Object"));
+    azzert.assertThat("", new ClassProxy<>(Object.class).className(), is("java.lang.Object"));
   }
 
   @Test public void testClassNameNormalMapCLass() {
-    azzert.that(new ClassProxy<>(Map.class).className(), is("java.util.Map"));
+    azzert.assertThat("", new ClassProxy<>(Map.class).className(), is("java.util.Map"));
   }
 
   @Test public void testClassNameStringCLass() {
-    azzert.that(new ClassProxy<>(String.class).className(), is("java.lang.String"));
+    azzert.assertThat("", new ClassProxy<>(String.class).className(), is("java.lang.String"));
   }
 
   @Test public void testFindClassForNameObject() throws ClassNotFoundException {
@@ -194,9 +194,9 @@ public class ClassProxyTest {
   }
 
   @Test public void testNormalizeNameObject() {
-    azzert.that(ClassProxy.normalizeClassName("java.lang.Object"), is("java.lang.Object"));
-    azzert.that(ClassProxy.normalizeClassName("java.util.Map$Entry"), is("java.util.Map$Entry"));
-    azzert.that(ClassProxy.normalizeClassName("java.util.Map.Entry"), is("java.util.Map$Entry"));
+    azzert.assertThat("", ClassProxy.normalizeClassName("java.lang.Object"), is("java.lang.Object"));
+    azzert.assertThat("", ClassProxy.normalizeClassName("java.util.Map$Entry"), is("java.util.Map$Entry"));
+    azzert.assertThat("", ClassProxy.normalizeClassName("java.util.Map.Entry"), is("java.util.Map$Entry"));
   }
 
   @Test public void testReflectiveConstructor() {

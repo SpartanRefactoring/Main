@@ -508,7 +508,7 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        azzert.that(l.current().keySet() + "", is("[A, B, D, C]"));
+        azzert.assertThat("", l.current().keySet() + "", is("[A, B, D, C]"));
         azzert.that(l.size(), is(0));
       }
 
@@ -519,7 +519,7 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        azzert.that(l.find().keySet() + "", is("[A, B, D, C]"));
+        azzert.assertThat("", l.find().keySet() + "", is("[A, B, D, C]"));
       }
 
       @Test public void demoteWithRecord() {
@@ -536,7 +536,7 @@ public abstract class LogBook implements Serializable {
         l.demote("A");
         l.record(13);
         azzert.that(l.size(), is(1));
-        azzert.that(l.find().keySet() + "", is("[D, C, B, A]"));
+        azzert.assertThat("", l.find().keySet() + "", is("[D, C, B, A]"));
       }
 
       @Test public void findEntry1() {
@@ -562,7 +562,7 @@ public abstract class LogBook implements Serializable {
         l.set("B", c.value());
         l.set("C", c.value());
         l.set("D", c.value());
-        azzert.that(l.find().keySet() + "", is("[A, B, C, D]"));
+        azzert.assertThat("", l.find().keySet() + "", is("[A, B, C, D]"));
       }
 
       @Test public void keySet() {
@@ -600,7 +600,7 @@ public abstract class LogBook implements Serializable {
         l.remove("A");
         l.record(13);
         azzert.that(l.size(), is(1));
-        azzert.that(l.find().keySet() + "", is("[D]"));
+        azzert.assertThat("", l.find().keySet() + "", is("[D]"));
       }
 
       @Test public void repeatedSettingsCount() {
@@ -650,7 +650,7 @@ public abstract class LogBook implements Serializable {
         azzert.isNull(myBook.commonValue("D"));
         azzert.isNull(myBook.commonValue("A"));
         azzert.isNull(myBook.commonValue("E"));
-        azzert.that(myBook.commonValue("day"), is("Tuesday"));
+        azzert.assertThat("", myBook.commonValue("day"), is("Tuesday"));
       }
     }
   }

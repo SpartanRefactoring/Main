@@ -85,10 +85,6 @@ public class azzert extends org.junit.Assert {
     assertEquals(box.it(expected), box.it(actual));
   }
 
-  public static void assertEquals(final Object exp, final @Nullable Object val) {
-    that(val, is(exp));
-  }
-
   public static void assertEquals(final String reason, final int i1, final int i2) {
     assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
   }
@@ -102,7 +98,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void assertNotEquals(final Object o1, final @Nullable Object o2) {
-    that(o1, CoreMatchers.not(o2));
+    assertThat("", o1, CoreMatchers.not(o2));
   }
 
   public static void assertNotEquals(final String reason, final Object o1, final Object o2) {
@@ -317,7 +313,7 @@ public class azzert extends org.junit.Assert {
     return is(Long.valueOf(¢));
   }
 
-  public static <T> Matcher<T> is(final Matcher<T> ¢) {
+  public static <T> Matcher<T> is(final @Nullable Matcher<@Nullable T> ¢) {
     return Is.<T> is(¢);
   }
 
@@ -334,7 +330,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void isNull(final @Nullable Object ¢) {
-    that(¢, nullValue());
+    assertThat("", ¢, nullValue());
   }
 
   /** @param message what to print
@@ -467,7 +463,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void notNull(final @Nullable Object ¢) {
-    that(¢, notNullValue());
+    assertThat("", ¢, notNullValue());
   }
 
   public static void notNull(final String s, final @Nullable Object o) {
@@ -510,39 +506,39 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void that(final boolean b, final Matcher<? super @Nullable Boolean> m) {
-    that(Boolean.valueOf(b), m);
+    assertThat("", Boolean.valueOf(b), m);
   }
 
   public static void that(final byte b, final Matcher<? super @Nullable Byte> m) {
-    that(Byte.valueOf(b), m);
+    assertThat("", Byte.valueOf(b), m);
   }
 
   public static void that(final char c, final Matcher<? super @Nullable Character> m) {
-    that(Character.valueOf(c), m);
+    assertThat("", Character.valueOf(c), m);
   }
 
   public static void that(final double d, final Matcher<? super @Nullable Double> m) {
-    that(Double.valueOf(d), m);
+    assertThat("", Double.valueOf(d), m);
   }
 
   public static void that(final float f, final Matcher<? super @Nullable Float> m) {
-    that(Float.valueOf(f), m);
+    assertThat("", Float.valueOf(f), m);
   }
 
   public static void that(final int i, final Matcher<? super @Nullable Integer> m) {
-    that(Integer.valueOf(i), m);
+    assertThat("", Integer.valueOf(i), m);
   }
 
   public static void that(final long l, final Matcher<? super @Nullable Long> m) {
-    that(Long.valueOf(l), m);
+    assertThat("", Long.valueOf(l), m);
   }
 
   public static void that(final Object actual, final Wrapper<@Nullable String> expected) {
-    that(compressSpaces(actual + ""), is(compressSpaces(expected.get())));
+    assertThat("", compressSpaces(actual + ""), is(compressSpaces(expected.get())));
   }
 
   public static void that(final short s, final Matcher<? super @Nullable Short> m) {
-    that(Short.valueOf(s), m);
+    assertThat("", Short.valueOf(s), m);
   }
 
   public static void that(final String reason, final boolean b, final Matcher<? super Boolean> m) {
@@ -581,7 +577,7 @@ public class azzert extends org.junit.Assert {
     assertThat(reason, actual, t);
   }
 
-  public static <@Nullable T> void that(final @Nullable T actual, final Matcher<? super @Nullable T> t) {
+  public static <@Nullable T> void that(final @Nullable T actual, final @Nullable Matcher<? super @Nullable T> t) {
     assertThat("", actual, t);
   }
 

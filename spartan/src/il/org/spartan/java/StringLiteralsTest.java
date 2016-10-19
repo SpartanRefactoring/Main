@@ -13,7 +13,7 @@ import il.org.spartan.*;
     try {
       final RawTokenizer J = new RawTokenizer(new StringReader(s));
       final Token $ = J.next();
-      azzert.that(J.next(), is(Token.EOF));
+      azzert.assertThat("", J.next(), is(Token.EOF));
       return $;
     } catch (final IOException E) {
       return Token.EOF;
@@ -21,6 +21,6 @@ import il.org.spartan.*;
   }
 
   @Test public void test_simple_literal() {
-    azzert.that(toToken("\"abcd\""), is(Token.STRING_LITERAL));
+    azzert.assertThat("", toToken("\"abcd\""), is(Token.STRING_LITERAL));
   }
 }

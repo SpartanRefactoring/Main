@@ -63,7 +63,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
     }
 
     public static <T> void assertEquals(final T t1, final T t2) {
-      azzert.that(t2, is(t1));
+      azzert.assertThat("", t2, is(t1));
     }
 
     public static <T> void assertNotEquals(final String reason, final T t1, final T t2) {
@@ -71,7 +71,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
     }
 
     public static <T> void assertNotEquals(final T t1, final T t2) {
-      azzert.that(t2, is(t1));
+      azzert.assertThat("", t2, is(t1));
     }
 
     @Override public boolean hasNext() {

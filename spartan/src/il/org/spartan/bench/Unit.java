@@ -187,90 +187,90 @@ public enum Unit {
     }
 
     @Test public void format3() {
-      azzert.that(Unit.format3(0), is("%.0f"));
-      azzert.that(Unit.format3(0.001), is("%.3f"));
-      azzert.that(Unit.format3(0.00099999999999), is("%.3f"));
-      azzert.that(Unit.format3(0.00049999999999), is("%.3f"));
+      azzert.assertThat("", Unit.format3(0), is("%.0f"));
+      azzert.assertThat("", Unit.format3(0.001), is("%.3f"));
+      azzert.assertThat("", Unit.format3(0.00099999999999), is("%.3f"));
+      azzert.assertThat("", Unit.format3(0.00049999999999), is("%.3f"));
     }
 
     @Test public void from10to100() {
-      azzert.that(DOUBLE.format(1), is("1"));
-      azzert.that(DOUBLE.format(1.123), is("1.12"));
-      azzert.that(DOUBLE.format(1.1234), is("1.12"));
-      azzert.that(DOUBLE.format(9.1235), is("9.12"));
-      azzert.that(DOUBLE.format(9.01499999), is("9.01"));
-      azzert.that(DOUBLE.format(8.9999999999), is("9.00"));
-      azzert.that(DOUBLE.format(9.999), is("10.0"));
-      azzert.that(DOUBLE.format(1.9999), is("2.00"));
+      azzert.assertThat("", DOUBLE.format(1), is("1"));
+      azzert.assertThat("", DOUBLE.format(1.123), is("1.12"));
+      azzert.assertThat("", DOUBLE.format(1.1234), is("1.12"));
+      azzert.assertThat("", DOUBLE.format(9.1235), is("9.12"));
+      azzert.assertThat("", DOUBLE.format(9.01499999), is("9.01"));
+      azzert.assertThat("", DOUBLE.format(8.9999999999), is("9.00"));
+      azzert.assertThat("", DOUBLE.format(9.999), is("10.0"));
+      azzert.assertThat("", DOUBLE.format(1.9999), is("2.00"));
     }
 
     @Test public void from10to1000() {
-      azzert.that(DOUBLE.format(211.9), is("212"));
+      azzert.assertThat("", DOUBLE.format(211.9), is("212"));
     }
 
     @Test public void from1to10() {
-      azzert.that(DOUBLE.format(1), is("1"));
-      azzert.that(DOUBLE.format(1.123), is("1.12"));
-      azzert.that(DOUBLE.format(1.1234), is("1.12"));
-      azzert.that(DOUBLE.format(9.1235), is("9.12"));
-      azzert.that(DOUBLE.format(9.01499999), is("9.01"));
-      azzert.that(DOUBLE.format(8.9999999999), is("9.00"));
-      azzert.that(DOUBLE.format(9.999), is("10.0"));
-      azzert.that(DOUBLE.format(1.9999), is("2.00"));
+      azzert.assertThat("", DOUBLE.format(1), is("1"));
+      azzert.assertThat("", DOUBLE.format(1.123), is("1.12"));
+      azzert.assertThat("", DOUBLE.format(1.1234), is("1.12"));
+      azzert.assertThat("", DOUBLE.format(9.1235), is("9.12"));
+      azzert.assertThat("", DOUBLE.format(9.01499999), is("9.01"));
+      azzert.assertThat("", DOUBLE.format(8.9999999999), is("9.00"));
+      azzert.assertThat("", DOUBLE.format(9.999), is("10.0"));
+      azzert.assertThat("", DOUBLE.format(1.9999), is("2.00"));
     }
 
     @Test public void nanoSeconds() {
-      azzert.that(formatNanoseconds(1E-3), is("1㎰"));
-      azzert.that(formatNanoseconds(1), is("1㎱"));
-      azzert.that(formatNanoseconds(1E3), is("1㎲"));
-      azzert.that(formatNanoseconds(1E6), is("1㎳"));
-      azzert.that(formatNanoseconds(1E9), is("1s"));
-      azzert.that(formatNanoseconds(1000000000), is("1s"));
-      azzert.that(formatNanoseconds(223525012), is("224㎳"));
-      azzert.that(formatNanoseconds(304232501), is("304㎳"));
+      azzert.assertThat("", formatNanoseconds(1E-3), is("1㎰"));
+      azzert.assertThat("", formatNanoseconds(1), is("1㎱"));
+      azzert.assertThat("", formatNanoseconds(1E3), is("1㎲"));
+      azzert.assertThat("", formatNanoseconds(1E6), is("1㎳"));
+      azzert.assertThat("", formatNanoseconds(1E9), is("1s"));
+      azzert.assertThat("", formatNanoseconds(1000000000), is("1s"));
+      azzert.assertThat("", formatNanoseconds(223525012), is("224㎳"));
+      azzert.assertThat("", formatNanoseconds(304232501), is("304㎳"));
     }
 
     @Test public void percent2_3() {
-      azzert.that(formatRelative(0.02349), is("2.3%"));
+      azzert.assertThat("", formatRelative(0.02349), is("2.3%"));
     }
 
     @Test public void percent200() {
-      azzert.that(formatRelative(2), is("200%"));
+      azzert.assertThat("", formatRelative(2), is("200%"));
     }
 
     @Test public void percent3_765() {
-      azzert.that(formatRelative(0.03765), is("3.8%"));
+      azzert.assertThat("", formatRelative(0.03765), is("3.8%"));
     }
 
     @Test public void percentMisc() {
-      azzert.that(formatRelative(0.2887), is("29%"));
-      azzert.that(formatRelative(0.0525), is("5.3%"));
-      azzert.that(formatRelative(0.0501), is("5.0%"));
-      azzert.that(formatRelative(0.01089), is("1.1%"));
-      azzert.that(formatRelative(0.1089), is("11%"));
+      azzert.assertThat("", formatRelative(0.2887), is("29%"));
+      azzert.assertThat("", formatRelative(0.0525), is("5.3%"));
+      azzert.assertThat("", formatRelative(0.0501), is("5.0%"));
+      azzert.assertThat("", formatRelative(0.01089), is("1.1%"));
+      azzert.assertThat("", formatRelative(0.1089), is("11%"));
     }
 
     @Test public void percentPerHunderdThousand() {
-      azzert.that(formatRelative(9.0E-5), is("0%"));
-      azzert.that(formatRelative(0.00001), is("0%"));
-      azzert.that(formatRelative(0.00001456), is("0%"));
-      azzert.that(formatRelative(0.00001556), is("0%"));
+      azzert.assertThat("", formatRelative(9.0E-5), is("0%"));
+      azzert.assertThat("", formatRelative(0.00001), is("0%"));
+      azzert.assertThat("", formatRelative(0.00001456), is("0%"));
+      azzert.assertThat("", formatRelative(0.00001556), is("0%"));
     }
 
     @Test public void percentPerMille() {
-      azzert.that(formatRelative(0.001), is("0.1%"));
-      azzert.that(formatRelative(0.001456), is("0.1%"));
-      azzert.that(formatRelative(0.001556), is("0.2%"));
+      azzert.assertThat("", formatRelative(0.001), is("0.1%"));
+      azzert.assertThat("", formatRelative(0.001456), is("0.1%"));
+      azzert.assertThat("", formatRelative(0.001556), is("0.2%"));
     }
 
     @Test public void percentPerTenThousand() {
-      azzert.that(formatRelative(0.0001), is("0.01%"));
-      azzert.that(formatRelative(0.0001456), is("0.01%"));
-      azzert.that(formatRelative(0.0001556), is("0.02%"));
+      azzert.assertThat("", formatRelative(0.0001), is("0.01%"));
+      azzert.assertThat("", formatRelative(0.0001456), is("0.01%"));
+      azzert.assertThat("", formatRelative(0.0001556), is("0.02%"));
     }
 
     @Test public void percentZero() {
-      azzert.that(formatRelative(0), is("0%"));
+      azzert.assertThat("", formatRelative(0), is("0%"));
     }
 
     @Test public void round3() {
@@ -280,21 +280,21 @@ public enum Unit {
     }
 
     @Test public void roundToOne() {
-      azzert.that(DOUBLE.format(0.9999), is("1.00"));
+      azzert.assertThat("", DOUBLE.format(0.9999), is("1.00"));
     }
 
     @Test public void under0_001() {
-      azzert.that(DOUBLE.format(0.00099999999999), is("0.001"));
+      azzert.assertThat("", DOUBLE.format(0.00099999999999), is("0.001"));
     }
 
     @Test public void under1() {
-      azzert.that(DOUBLE.format(0), is("0"));
-      azzert.that(DOUBLE.format(0.123), is("0.123"));
-      azzert.that(DOUBLE.format(0.1234), is("0.123"));
-      azzert.that(DOUBLE.format(0.1235), is("0.124"));
-      azzert.that(DOUBLE.format(0.001499999), is("0.001"));
-      azzert.that(DOUBLE.format(0.00049999999999), is("0.000"));
-      azzert.that(DOUBLE.format(0.999), is("0.999"));
+      azzert.assertThat("", DOUBLE.format(0), is("0"));
+      azzert.assertThat("", DOUBLE.format(0.123), is("0.123"));
+      azzert.assertThat("", DOUBLE.format(0.1234), is("0.123"));
+      azzert.assertThat("", DOUBLE.format(0.1235), is("0.124"));
+      azzert.assertThat("", DOUBLE.format(0.001499999), is("0.001"));
+      azzert.assertThat("", DOUBLE.format(0.00049999999999), is("0.000"));
+      azzert.assertThat("", DOUBLE.format(0.999), is("0.999"));
     }
   }
 }

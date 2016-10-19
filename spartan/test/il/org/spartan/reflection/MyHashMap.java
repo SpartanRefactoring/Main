@@ -5,8 +5,10 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings({ "unchecked", "static-method" }) //
-public final class MyHashMap<K, V> implements Map<K, V> {
+import org.eclipse.jdt.annotation.*;
+
+@SuppressWarnings({ "unchecked", "static-method", "javadoc" }) //
+public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** The default initial capacity - MUST be a power of two. */
   static final int DEFAULT_INITIAL_CAPACITY = 16;// ProbesTest.HASH_MAP_SIZE;
   /** The maximum capacity, used if a higher value is implicitly specified by

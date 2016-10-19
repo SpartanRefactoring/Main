@@ -186,40 +186,40 @@ public interface Cookbook {
 
       @SuppressWarnings({ "synthetic-access" }) public static class TEST extends A {
         @Test public void sessionA00() {
-          azzert.that(wrap(), is("<p>"));
+          azzert.assertThat("", wrap(), is("<p>"));
         }
 
         @Test public void sessionA01() {
           begin.set("(");
-          azzert.that(wrap(), is("(p>"));
+          azzert.assertThat("", wrap(), is("(p>"));
           end.set(")");
-          azzert.that(wrap(), is("(p)"));
+          azzert.assertThat("", wrap(), is("(p)"));
         }
 
         @Test public void sessionA02() {
-          azzert.that(wrap, instanceOf(Recipe.class));
+          azzert.assertThat("", wrap, instanceOf(Recipe.class));
           final Recipe<?> r = (Recipe<?>) wrap;
           azzert.that(r.dependents.size(), is(1));
           azzert.that(r.prerequisites.size(), is(3));
-          azzert.that(begin(), is("<"));
-          azzert.that(end(), is(">"));
-          azzert.that(text(), is("p"));
-          azzert.that(wrap(), is("<p>"));
+          azzert.assertThat("", begin(), is("<"));
+          azzert.assertThat("", end(), is(">"));
+          azzert.assertThat("", text(), is("p"));
+          azzert.assertThat("", wrap(), is("<p>"));
         }
 
         @Test public void sessionA03() {
-          azzert.that(xBoxed.get(), is("[[<p>]]"));
+          azzert.assertThat("", xBoxed.get(), is("[[<p>]]"));
           end.set("+");
-          azzert.that(xBoxed.get(), is("[[<p+]]"));
+          azzert.assertThat("", xBoxed.get(), is("[[<p+]]"));
         }
 
         /** Local ingredients and recipes */
         @Test public void sessionA04() {
-          azzert.that(zzz.get(), is("zzz"));
+          azzert.assertThat("", zzz.get(), is("zzz"));
           final Cell<String> foo = value("foo");
           final Cell<String> ba = value("ba");
           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
-          azzert.that(from(foo, bazzz).make(() -> foo.get() + bazzz.get()).get(), is("foobazzz"));
+          azzert.assertThat("", from(foo, bazzz).make(() -> foo.get() + bazzz.get()).get(), is("foobazzz"));
         }
 
         /** Cloning */
@@ -227,28 +227,26 @@ public interface Cookbook {
           final Cell<String> foo = value("foo");
           final Cell<String> ba = value("ba");
           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
-          azzert.that(from(foo, bazzz).make(() -> foo.get() + bazzz.get()).clone().get(), is("foobazzz"));
+          azzert.assertThat("", from(foo, bazzz).make(() -> foo.get() + bazzz.get()).clone().get(), is("foobazzz"));
         }
       }
     }
 
     @SuppressWarnings({ "static-method", "javadoc", "null" }) @FixMethodOrder(MethodSorters.NAME_ASCENDING) public static class C {
       @Test public void sessionA01() {
-        azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
+        azzert.assertThat("", compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
       }
 
       @Test public void sessionA02() {
-        azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
+        azzert.assertThat("", compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
       }
 
       @Test public void sessionA03() {
-        azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
+        azzert.assertThat("", compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
       }
 
       @Test public void sessionA04() {
-        azzert.that(
-            compute((final Integer i, final Character c) -> c + "(" + i + ")").from(value(Integer.valueOf(13)), value(Character.valueOf('f'))).get(),
-            is("f(13)"));
+        azzert.assertThat("", compute((final Integer i, final Character c) -> c + "(" + i + ")").from(value(Integer.valueOf(13)), value(Character.valueOf('f'))).get(), is("f(13)"));
       }
 
       @SuppressWarnings("synthetic-access") @Test public void sessionA05() {
@@ -258,11 +256,11 @@ public interface Cookbook {
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(f.dependents.size(), is(1));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
-        azzert.that(fx.get(), is("f(13)"));
+        azzert.assertThat("", fx.get(), is("f(13)"));
         f.set(Character.valueOf('g'));
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
-        azzert.that(fx.get(), is("g(13)"));
+        azzert.assertThat("", fx.get(), is("g(13)"));
       }
     }
 
@@ -373,13 +371,13 @@ public interface Cookbook {
         @Test public void sessionA06() {
           a.set(2);
           azzert.notNull(aPower02());
-          azzert.that(aPower02(), is(4));
+          azzert.assertThat("", aPower02(), is(4));
         }
 
         @Test public void sessionA07() {
           a.set(2);
           azzert.notNull(aPower03());
-          azzert.that(aPower03(), is(8));
+          azzert.assertThat("", aPower03(), is(8));
         }
 
         @Test public void sessionA08() {
@@ -412,14 +410,14 @@ public interface Cookbook {
           azzert.isNull(aPower17NullSafe());
           a.set(2);
           azzert.notNull(aPower17NullSafe());
-          azzert.that(a(), is(2));
+          azzert.assertThat("", a(), is(2));
         }
 
         @Test public void sessionA14() {
           a.set(2);
           azzert.notNull(aPower17NullSafe());
-          azzert.that(a(), is(2));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", a(), is(2));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
         }
 
         @Test public void sessionA15() {
@@ -469,33 +467,33 @@ public interface Cookbook {
         @Test public void sessionB01() {
           a.set(2);
           azzert.notNull(a());
-          azzert.that(a(), is(2));
+          azzert.assertThat("", a(), is(2));
           a.set(3);
-          azzert.that(a(), is(3));
+          azzert.assertThat("", a(), is(3));
           a.set(4);
-          azzert.that(a(), is(4));
+          azzert.assertThat("", a(), is(4));
           a.set(null);
           azzert.isNull(a());
           a.set(5);
-          azzert.that(a(), is(5));
+          azzert.assertThat("", a(), is(5));
         }
 
         @Test public void sessionB02() {
           a.set(2);
           azzert.notNull(aPower02());
-          azzert.that(aPower02(), is(4));
+          azzert.assertThat("", aPower02(), is(4));
           a.set(3);
           azzert.notNull(aPower02());
-          azzert.that(aPower02(), is(9));
+          azzert.assertThat("", aPower02(), is(9));
         }
 
         @Test public void sessionB03() {
           a.set(2);
           azzert.notNull(aPower03());
-          azzert.that(aPower03(), is(8));
+          azzert.assertThat("", aPower03(), is(8));
           a.set(3);
           azzert.notNull(aPower03());
-          azzert.that(aPower03(), is(27));
+          azzert.assertThat("", aPower03(), is(27));
         }
 
         @Test public void sessionB04() {
@@ -511,7 +509,7 @@ public interface Cookbook {
 
         @Test public void sessionC01() {
           a.set(-3);
-          azzert.that(aPower03(), is(-27));
+          azzert.assertThat("", aPower03(), is(-27));
           azzert.that(__aPower03Calls, is(1));
           azzert.that(__aPower02Calls, is(1));
         }
@@ -531,14 +529,14 @@ public interface Cookbook {
           azzert.that(a.version(), is(1L));
           azzert.that(aPower03.version(), is(0L));
           azzert.that(__aPower03Calls, is(0));
-          azzert.that(aPower17NullSafe(), is(-(1 << 17)));
+          azzert.assertThat("", aPower17NullSafe(), is(-(1 << 17)));
           azzert.that(__aPower02Calls, is(1));
           azzert.that(__aPower03Calls, is(1));
         }
 
         @Test public void sessionC05() {
           a.set(-2);
-          azzert.that(aPower17NullSafe(), is(-(1 << 17)));
+          azzert.assertThat("", aPower17NullSafe(), is(-(1 << 17)));
           azzert.that(__aPower02Calls, is(1));
           azzert.that(__aPower03Calls, is(1));
         }
@@ -562,7 +560,7 @@ public interface Cookbook {
         @Test public void sessionD03() {
           a.set(14);
           azzert.that(aPower02.version, is(0L));
-          azzert.that(aPower02.get(), is(196));
+          azzert.assertThat("", aPower02.get(), is(196));
           azzert.that(aPower03.version, is(0L));
           azzert.that(aPower02.version, is(2L));
           azzert.that(aPower17NullSafe.version, is(0L));
@@ -576,8 +574,8 @@ public interface Cookbook {
         @Test public void sessionD05() {
           a.set(14);
           azzert.notNull(a.get());
-          azzert.that(a.get(), is(14));
-          azzert.that(aPower02.get(), is(196));
+          azzert.assertThat("", a.get(), is(14));
+          azzert.assertThat("", aPower02.get(), is(196));
         }
 
         @Test public void sessionD06() {
@@ -598,7 +596,7 @@ public interface Cookbook {
 
         @Test public void sessionD08() {
           a.set(14);
-          azzert.that(a.get(), is(14));
+          azzert.assertThat("", a.get(), is(14));
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.that(((Recipe<Integer>) aPower02).latestPrequisiteVersion(), is(1L));
@@ -606,7 +604,7 @@ public interface Cookbook {
 
         @Test public void sessionD09() {
           a.set(14);
-          azzert.that(a.get(), is(14));
+          azzert.assertThat("", a.get(), is(14));
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.notNull(a.dependents);
@@ -614,7 +612,7 @@ public interface Cookbook {
 
         @Test public void sessionD10() {
           a.set(14);
-          azzert.that(a.get(), is(14));
+          azzert.assertThat("", a.get(), is(14));
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
           azzert.that(a.dependents.size(), is(4));
@@ -624,7 +622,7 @@ public interface Cookbook {
 
         @Test public void sessionD11() {
           a.set(14);
-          azzert.that(a.get(), is(14));
+          azzert.assertThat("", a.get(), is(14));
           azzert.that(a.version(), is(1L));
         }
 
@@ -646,25 +644,25 @@ public interface Cookbook {
 
         @Test public void sessionD16() {
           a.set(2);
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
           azzert.that(__aPower03Calls, is(1));
         }
 
         @Test public void sessionD17() {
           a.set(2);
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
           azzert.that(__aPower02Calls, is(1));
           a.set(3);
           a.set(2);
-          azzert.that(aPower17NullSafe(), is(1 << 17));
-          azzert.that(aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
+          azzert.assertThat("", aPower17NullSafe(), is(1 << 17));
           azzert.that(__aPower02Calls, is(2));
           azzert.that(__aPower03Calls, is(2));
         }
@@ -682,7 +680,7 @@ public interface Cookbook {
           azzert.that(aPower05.version(), is(0L));
           azzert.that(aPower17NullSafe.version(), is(0L));
           aPower02();
-          azzert.that(aPower02(), is(4));
+          azzert.assertThat("", aPower02(), is(4));
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version(), is(2L));
           azzert.that(aPower03.version(), is(0L));
@@ -789,19 +787,19 @@ public interface Cookbook {
           a.set(2);
           b.set(3);
           c.set(4);
-          azzert.that(d.get(), is(9));
+          azzert.assertThat("", d.get(), is(9));
         }
 
         @Test public void sessionE04() {
           a.set(2);
           aPower02.set(3);
           aPower03.set(5);
-          azzert.that(aPower05.get(), is(15));
+          azzert.assertThat("", aPower05.get(), is(15));
         }
 
         @Test public void sessionE05() {
           a.set(2);
-          azzert.that(aPower05.get(), is(1 << 5));
+          azzert.assertThat("", aPower05.get(), is(1 << 5));
           azzert.that(aPower17NullSafe.version(), is(0L));
           azzert.that(aPower02.version(), is(2L));
           azzert.that(aPower03.version(), is(3L));
@@ -816,14 +814,14 @@ public interface Cookbook {
         @Test public void sessionF01() {
           a.set(11);
           assertFalse(aPower02.updated());
-          azzert.that(aPower02.get(), is(121));
+          azzert.assertThat("", aPower02.get(), is(121));
           azzert.aye(aPower02.updated());
           aPower02.set(0xDADA);
           azzert.aye(aPower02.updated());
-          azzert.that(aPower02.get(), is(0xDADA));
+          azzert.assertThat("", aPower02.get(), is(0xDADA));
           a.set(0xCAFE);
           azzert.aye(aPower02.updated());
-          azzert.that(aPower02.get(), is(0xDADA));
+          azzert.assertThat("", aPower02.get(), is(0xDADA));
         }
 
         @Test public void sessionF02() {
@@ -834,7 +832,7 @@ public interface Cookbook {
 
         @Test public void sessionF03() {
           a.set(2);
-          azzert.that(aPower05.get(), is(1 << 5));
+          azzert.assertThat("", aPower05.get(), is(1 << 5));
           azzert.that(aPower17NullSafe.version(), is(0L));
           azzert.that(aPower02.version(), is(2L));
           azzert.that(aPower03.version(), is(3L));
@@ -859,7 +857,7 @@ public interface Cookbook {
         @SuppressWarnings("synthetic-access") @Test public void sessionG02() {
           aPower02.set(0xDADA);
           azzert.notNull(aPower02.cache);
-          azzert.that(aPower02.cache, is(0xDADA));
+          azzert.assertThat("", aPower02.cache, is(0xDADA));
           azzert.isNull(((Recipe<?>) aPower02).supplier);
         }
       }
