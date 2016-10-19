@@ -21,9 +21,9 @@ public class WrappedCompilationUnit {
   public WrappedCompilationUnit(final ICompilationUnit compilationUnit) {
     descriptor = compilationUnit;
   }
-  
-  /** Instantiates this class with a Compilation Unit (useful for 
-   * command line applicator
+
+  /** Instantiates this class with a Compilation Unit (useful for command line
+   * applicator
    * @author Matteo Orru'
    * @param compilationUnit JD */
   public WrappedCompilationUnit(final CompilationUnit cu) {
@@ -60,11 +60,9 @@ public class WrappedCompilationUnit {
     return $;
   }
 
-  /**
-   * @param from
-   * @return
-   */
-  public static WrappedCompilationUnit of(CompilationUnit from) {
+  /** @param from
+   * @return */
+  public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
   }
 }

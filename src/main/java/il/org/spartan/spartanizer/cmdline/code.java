@@ -5,12 +5,12 @@ package il.org.spartan.spartanizer.cmdline;
 public interface code {
   static String essence(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")
-        .replaceAll("^\\s*$", "")//
+        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "").replaceAll("^\\s*$", "")//
         .replaceAll("^\\s*\\n", "")//
         .replaceAll("\\s*$", "")//
         .replaceAll("\\s+", " ")
-    // TODO Matteo: I think this is buggy; the replacement should not be phrased like so.
+        // TODO Matteo: I think this is buggy; the replacement should not be
+        // phrased like so.
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)")
         .replaceAll("\\([^a-zA-Z¢$_]\\) \\([a-zA-Z¢$_]\\)", "\\([^a-zA-Z¢$_]\\)\\([a-zA-Z¢$_]\\)")
         .replaceAll("\\([a-zA-Z¢$_]\\) \\([^a-zA-Z¢$_]\\)", "\\([a-zA-Z¢$_]\\)\\([^a-zA-Z¢$_]\\)");

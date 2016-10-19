@@ -34,8 +34,8 @@ public interface iz {
 
   /** @param ¢ JD
    * @return */
-  static boolean booleanType(Type ¢) {
-    return ¢ != null && (¢ instanceof PrimitiveType) && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
+  static boolean booleanType(final Type ¢) {
+    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
   }
 
   static boolean typeDeclaration(final ASTNode ¢) {

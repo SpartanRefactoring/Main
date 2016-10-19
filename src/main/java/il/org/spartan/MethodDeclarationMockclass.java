@@ -1,21 +1,21 @@
 package il.org.spartan;
 
-/**
- * @author Ori Marcovitch
+/** @author Ori Marcovitch
  * @since 2016 */
+  @SuppressWarnings("static-method") 
 public class MethodDeclarationMockclass {
-  
   private int field;
-  
-  void f(int a){}
-  
-  @SuppressWarnings("static-method") public void fooSet(int input){
-    int temp = 3 + input;
-//    this.field = input;
+
+  void f(final int a) {
+    field += a;
   }
-  
-  @SuppressWarnings("static-method") public String fooGet(){
+
+  public void fooSet(final int input) {
+    final int temp = 3 + input;
+    this.field = input * temp;
+  }
+
+  public String fooGet() {
     return "";
   }
-  
 }

@@ -439,7 +439,7 @@ public enum step {
   /** Returns the return type of the function
    * @param ¢ JD
    * @return */
-  public static Type returnType(MethodDeclaration ¢) {
+  public static Type returnType(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getReturnType2();
   }
 }
