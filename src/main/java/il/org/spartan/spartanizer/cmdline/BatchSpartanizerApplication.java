@@ -35,7 +35,7 @@ public final class BatchSpartanizerApplication implements IApplication {
    *
    * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
    * IApplicationContext) */
-  @Override public Object start(@SuppressWarnings("unused") final IApplicationContext arg0) {
+  @Override public Object start(@SuppressWarnings("unused") final IApplicationContext __) {
     // if(arg0.getArguments().size() == 0)
     // optPath = ".";
     // // place here instructions from command line

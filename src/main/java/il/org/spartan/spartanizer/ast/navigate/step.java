@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -313,6 +314,13 @@ public enum step {
    *         its correct type */
   @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
     return ¢.parameters();
+  }
+
+  /** Expose the list of parameters names in a {@link MethodDeclaration}
+   * @param d JD
+   * @return */
+  public static List<String> parametersNames(MethodDeclaration d) {
+    return new ArrayList<>(step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList()));
   }
 
   /** Shorthand for {@link ASTNode#getParent()}
