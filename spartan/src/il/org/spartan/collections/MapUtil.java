@@ -28,7 +28,7 @@ public class MapUtil {
     };
   }
 
-  public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(final Map<K, V> k) {
+  public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValue(final Map<K, V> k) {
     final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
     Collections.sort(list, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
     final Map<K, V> $ = new LinkedHashMap<>();
@@ -37,7 +37,7 @@ public class MapUtil {
     return $;
   }
 
-  public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueReverse(final Map<K, V> k) {
+  public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValueReverse(final Map<K, V> k) {
     final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
     Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
     final Map<K, V> $ = new LinkedHashMap<>();
