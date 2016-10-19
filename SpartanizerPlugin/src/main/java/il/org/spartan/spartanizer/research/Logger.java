@@ -108,6 +108,10 @@ public class Logger {
 
   private static void logMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
+    if (m == null) {
+      System.out.println(n);
+      return;
+    }
     final Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
       methodsStatistics.put(key, new MethodRecord(m));
@@ -118,7 +122,7 @@ public class Logger {
    * @return */
   private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
-    while (!iz.methodDeclaration(n))
+    while (!iz.methodDeclaration(n) && n != null)
       n = n.getParent();
     return az.methodDeclaration(n);
   }
