@@ -104,7 +104,7 @@ public interface hop {
    * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
    *         <code><b>null</b></code> if not such sideEffects exists. */
-  static ASTNode lastStatement(final Statement ¢) {
+  static ASTNode lastStatementIn(final Statement ¢) {
     return last(extract.statements(¢));
   }
 
@@ -156,10 +156,10 @@ public interface hop {
    * @return converssion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
   static VariableDeclarationFragment precidingFragmentToLastExpression(final ForStatement ¢) {
-    final ASTNode n = hop.lastStatement(duplicate.of(step.body(¢)));
+    final ASTNode n = hop.lastStatementIn(duplicate.of(step.body(¢)));
     if (n == null)
       return null;
-    final Statement current = az.asStatement(n);
+    final Statement current = az.statement(n);
     if (current == null)
       return null;
     final Statement previous = previousStatementInBody(current);
@@ -173,10 +173,10 @@ public interface hop {
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
   static VariableDeclarationFragment prevFragmentToLastExpression(final WhileStatement ¢) {
-    final ASTNode n = hop.lastStatement(duplicate.of(step.body(¢)));
+    final ASTNode n = hop.lastStatementIn(duplicate.of(step.body(¢)));
     if (n == null)
       return null;
-    final Statement current = az.asStatement(n);
+    final Statement current = az.statement(n);
     if (current == null)
       return null;
     final Statement previous = previousStatementInBody(current);
