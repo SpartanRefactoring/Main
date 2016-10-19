@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.*;
@@ -34,6 +35,7 @@ public class Spartanizer extends Applicator {
     listener().push(message.run_start.get(selection().name));
     if (!shouldRun())
       return;
+    AtomicInteger totalTipsInvoked = new AtomicInteger(0);
     runContext().accept(() -> {
       final int l = passes();
       for (int pass = 0; pass < l; ++pass) {
@@ -44,10 +46,12 @@ public class Spartanizer extends Applicator {
         final List<WrappedCompilationUnit> alive = new ArrayList<>(selected);
         final List<WrappedCompilationUnit> dead = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
-          if (!runAction().apply(¢.build()).booleanValue())
+          final int tipsInvoked = runAction().apply(¢.build()).intValue();
+          if (tipsInvoked <= 0)
             dead.add(¢);
           ¢.dispose();
           listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), ¢.descriptor.getElementName()));
+          totalTipsInvoked.addAndGet(tipsInvoked);
           if (!shouldRun())
             break;
         }
@@ -58,7 +62,7 @@ public class Spartanizer extends Applicator {
       }
     });
     // TODO Roth: add metrics etc.
-    listener().pop(message.run_finish.get(selection().name));
+    listener().pop(message.run_finish.get(selection().name, totalTipsInvoked));
   }
 
   /** Default listener configuration of {@link Spartanizer}. Simple printing to
@@ -118,7 +122,7 @@ public class Spartanizer extends Applicator {
    * @return this applicator */
   public Spartanizer defaultRunAction() {
     final Trimmer t = new Trimmer();
-    runAction(u -> Boolean.valueOf(t.apply(u, selection())));
+    runAction(u -> Integer.valueOf(t.apply(u, selection())));
     return this;
   }
 
@@ -127,7 +131,7 @@ public class Spartanizer extends Applicator {
    * @param a JD
    * @return this applicator */
   public Spartanizer defaultRunAction(final GUI$Applicator a) {
-    runAction(u -> Boolean.valueOf(a.apply(u, selection())));
+    runAction(u -> Integer.valueOf(a.apply(u, selection())));
     return this;
   }
 
@@ -151,7 +155,7 @@ public class Spartanizer extends Applicator {
     run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
     run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
     visit_cu(3, inp -> printableAt(inp, 0) + "/" + printableAt(inp, 1) + "\tSpartanizing " + printableAt(inp, 2)), //
-    run_finish(1, inp -> "Done spartanizing " + printableAt(inp, 0));
+    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1));
     private final int inputCount;
     private final Function<Object[], String> printing;
 
