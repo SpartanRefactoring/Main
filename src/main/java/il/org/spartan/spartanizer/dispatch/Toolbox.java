@@ -24,10 +24,7 @@ public class Toolbox {
   static final Map<Class<? extends ASTNode>, Integer> //
   classToNodeType //
       = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1L;
+        static final long serialVersionUID = 1L;
         {
           for (int nodeType = 1;; ++nodeType)
             try {
