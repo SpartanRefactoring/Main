@@ -42,7 +42,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement> imple
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatementIn(step.body(¢));
+    return hop.lastStatement(step.body(¢));
   }
 
   @Override public String description(final WhileStatement ¢) {
