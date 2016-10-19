@@ -1,68 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
-
-<plugin>
-<!-- Which class to run at startup -->
-<extension point="org.eclipse.ui.startup">
-  <startup class="il.org.spartan.plugin.Plugin"/>
-</extension>
-
-<!-- Builder, i.e, the system component that keeps generating spartan tips when
-the program changes: https://goo.gl/sIqIBC
- -->
-<extension 
-  name="Spartan tipper" 
-  id="spartan.tipper" 
-  point="org.eclipse.core.resources.builders"
->
-
-<!-- the central part of tipping: which Java class to run on changes -->
-  <builder hasNature="true"> 
-    <run class="il.org.spartan.plugin.Builder"/> 
-  </builder>
-</extension>
-
-<!-- Preferences page -->
-<extension point="org.eclipse.ui.preferencePages">
-  <page 
-  name="Laconization Tips"
-  class="il.org.spartan.plugin.PreferencesPage"
-  id="il.org.spartan.plugin.PluginPreferencesPage"
-  category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
-  </page>
-</extension>
-
-<!-- Preferences-->
-<extension point="org.eclipse.core.runtime.preferences">
-  <scope 
-    name="PluginPreferencesPage" 
-    class="il.org.spartan.plugin.PreferencesPage"
-  />
-  <initializer class="il.org.spartan.plugin.PreferencesDefaultValuesInitializer"/>
-</extension>
-
-<!-- Daniel Mittleman' application, used to produce the PLATEAU submission-->
-<extension 
-  point="org.eclipse.core.runtime.applications" 
-  name="Batch spartanization"
-  id="il.org.spartan.spartanizer.application"
->
-  <application>
-  <run class="il.org.spartan.spartanizer.cmdline.Application"/>
-  </application>
-</extension>
-
-<!-- Matteo Orru's application, work in progres-->
-<extension
-  point="org.eclipse.core.runtime.applications"
-  name="Metrics collector by Matteo Orru"
- id="il.org.spartan.spartanizer.collectmetricsapp"
->
-  <application>
-  <run class="il.org.spartan.spartanizer.cmdline.Spartanizer"></run>
-  </application>
-</extension>
-
 <!-- Marker: for showing the tips of spartanizaton 
 https://goo.gl/OI2pBd -->
 <extension 
@@ -214,3 +149,4 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 </extension>
 
 </plugin>
+
