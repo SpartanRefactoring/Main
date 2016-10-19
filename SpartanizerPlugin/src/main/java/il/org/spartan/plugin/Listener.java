@@ -91,8 +91,8 @@ public interface Listener {
      *
      * <code>
      * @return an empty new instance */
-    public static S empty() {
-      return new S();
+    public static Listener.S empty() {
+      return new Listener.S();
     }
 
     /** To be used in the nano found in {@link ConfigurableObjectTemplate}
