@@ -11,16 +11,14 @@ import il.org.spartan.spartanizer.tipping.*;
 /** @author Ori Marcovitch
  * @year 2016 */
 public final class AssignmentLazyEvaluation extends NanoPatternTipper<Assignment> {
-  private static final List<UserDefinedTipper<Assignment>> tippers = new ArrayList<>();
-
-  public AssignmentLazyEvaluation() {
-    if (tippers.size() == 4)
-      return;
-    tippers.add(TipperFactory.tipper("$X1 = $X1 != null ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-    tippers.add(TipperFactory.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-    tippers.add(TipperFactory.tipper("$X1 = null != $X1 ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-    tippers.add(TipperFactory.tipper("$X1 = null == $X1 ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
-  }
+  @SuppressWarnings("serial") static Set<UserDefinedTipper<Assignment>> tippers = new HashSet<UserDefinedTipper<Assignment>>() {
+    {
+      add(TipperFactory.tipper("$X1 = $X1 != null ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.tipper("$X1 = $X1 == null ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.tipper("$X1 = null != $X1 ? $X1 : $X2", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+      add(TipperFactory.tipper("$X1 = null == $X1 ? $X2 : $X1", "lazyEvaluatedTo($X1,$X2)", "lazy evaluation"));
+    }
+  };
 
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "replace lazy evaluation with lazyEvaluatedTo($X1,$X2)";
