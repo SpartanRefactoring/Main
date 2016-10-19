@@ -84,7 +84,7 @@ public enum BenchingPolicy {
   }
 
   public static void main(final String[] args) {
-    (new TEST()).compareHash();
+    new TEST().compareHash();
   }
 
   public static void measure(final LogBook.Mutable m, final Bencheon b, final int initialRuns) {

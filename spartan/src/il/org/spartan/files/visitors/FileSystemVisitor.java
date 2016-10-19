@@ -285,77 +285,68 @@ public class FileSystemVisitor {
     }
   }
 
-  /**
-   * @author  Yossi Gil
-   * @since  21/05/2007 
-   */
+  /** @author Yossi Gil
+   * @since 21/05/2007 */
   public interface Action {
-    /**
-    * action to conduct for each directory encountered throught the traversal.
-    * @param f  the directory file object
-    * @throws StopTraversal  in case the visitor wishes to stop the traversal of this directory.
-    * @see #visitFile(File)
-    * @see #visitZip(File)
-    * @see #visitZipEntry(String,String,InputStream)  
-    */
+    /** action to conduct for each directory encountered throught the traversal.
+     * @param f the directory file object
+     * @throws StopTraversal in case the visitor wishes to stop the traversal of
+     *         this directory.
+     * @see #visitFile(File)
+     * @see #visitZip(File)
+     * @see #visitZipEntry(String,String,InputStream) */
     void visitDirectory(File f) throws StopTraversal;
 
-    /**
-    * action to conduct for each ordinary, i.e., non-ZIP and non-directory, file.
-    * @param f  the file to visit
-    * @throws StopTraversal  in case the visitor wishes to <i>completely</i> stop the traversal
-    * @see #visitDirectory(File)
-    * @see #visitZip(File)  
-    */
+    /** action to conduct for each ordinary, i.e., non-ZIP and non-directory,
+     * file.
+     * @param f the file to visit
+     * @throws StopTraversal in case the visitor wishes to <i>completely</i>
+     *         stop the traversal
+     * @see #visitDirectory(File)
+     * @see #visitZip(File) */
     void visitFile(File f) throws StopTraversal;
 
-    /**
-    * action to conduct for each ZIP and other archive files encountered throughout the traversal.
-    * @param f  the archive file object
-    * @throws StopTraversal  in case the visitor wishes to stop the traversal of this archive file.
-    * @see #visitFile(File)
-    * @see #visitDirectory(File)  
-    */
+    /** action to conduct for each ZIP and other archive files encountered
+     * throughout the traversal.
+     * @param f the archive file object
+     * @throws StopTraversal in case the visitor wishes to stop the traversal of
+     *         this archive file.
+     * @see #visitFile(File)
+     * @see #visitDirectory(File) */
     void visitZip(File f) throws StopTraversal;
 
-    /**
-    * action to conduct for each directory encountered in an archival file scanned through the traversal.
-    * @param zipName  the name of the ZIP file from which this entry was taken
-    * @param entryName  the name of the visited entry in the ZIP file
-    * @param s  an open stream into the content of this entry
-    * @throws StopTraversal  in case the visitor wishes to terminate the entire traversal process
-    * @see #visitFile(File)
-    * @see #visitDirectory(File)  
-    */
+    /** action to conduct for each directory encountered in an archival file
+     * scanned through the traversal.
+     * @param zipName the name of the ZIP file from which this entry was taken
+     * @param entryName the name of the visited entry in the ZIP file
+     * @param s an open stream into the content of this entry
+     * @throws StopTraversal in case the visitor wishes to terminate the entire
+     *         traversal process
+     * @see #visitFile(File)
+     * @see #visitDirectory(File) */
     void visitZipDirectory(String zipName, String entryName, InputStream s) throws StopTraversal;
 
-    /**
-    * action to conduct for each entry found in a ZIP file, encountered throughout the traversal
-    * @param zipName  the name of the ZIP file from which this entry was taken
-    * @param entryName  the name of the visited entry in the ZIP file
-    * @param s  an open stream into the content of this entry
-    * @throws StopTraversal  in case the visitor wishes to terminate the entire traversal process 
-    */
+    /** action to conduct for each entry found in a ZIP file, encountered
+     * throughout the traversal
+     * @param zipName the name of the ZIP file from which this entry was taken
+     * @param entryName the name of the visited entry in the ZIP file
+     * @param s an open stream into the content of this entry
+     * @throws StopTraversal in case the visitor wishes to terminate the entire
+     *         traversal process */
     void visitZipEntry(String zipName, String entryName, InputStream s) throws StopTraversal;
 
-    /**
-    * @author  Yossi Gil
-    * @since  21/05/2007 
-    */
+    /** @author Yossi Gil
+     * @since 21/05/2007 */
     class StopTraversal extends Exception {
       private static final long serialVersionUID = -4658857180021394864L;
 
-      /**
-      * Create a new  {@link StopTraversal}  object 
-      */
+      /** Create a new {@link StopTraversal} object */
       public StopTraversal() {
       }
 
-      /**
-      * Create a new  {@link StopTraversal}  object with a specific message
-      * @param message  a message to record
-      * @see Exception  
-      */
+      /** Create a new {@link StopTraversal} object with a specific message
+       * @param message a message to record
+       * @see Exception */
       public StopTraversal(final String message) {
         super(message);
       }

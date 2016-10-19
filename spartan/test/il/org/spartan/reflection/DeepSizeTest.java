@@ -24,7 +24,7 @@ import il.org.spartan.sequence.*;
   @Test public void getAllFields_objectByte() {
     azzert.that(DeepSize.Visitor.getAllFields(new Object() {
       byte __;
-    
+
       @Override public int hashCode() {
         return super.hashCode() ^ __;
       }
@@ -71,7 +71,7 @@ import il.org.spartan.sequence.*;
         return super.hashCode() ^ __;
       }
     };
-    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o))));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(this) + ShallowSize.of(o)));
   }
 
   @Test public void objectSize_ObjectObject() {
@@ -110,14 +110,14 @@ import il.org.spartan.sequence.*;
     for (int ¢ = 0; ¢ < os.length; ++¢)
       if (¢ % 2 == 1)
         os[¢] = o;
-    azzert.that(DeepSize.of(o), is((ShallowSize.of(os) + ShallowSize.of(o))));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(os) + ShallowSize.of(o)));
   }
 
   @Test public void of_ClassWithArray_non_null() {
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(13);
     o.os = os;
-    azzert.that(DeepSize.of(o), is((DeepSize.of(os) + ShallowSize.of(o))));
+    azzert.that(DeepSize.of(o), is(DeepSize.of(os) + ShallowSize.of(o)));
   }
 
   @Test public void of_ClassWithArray_null() {
@@ -128,7 +128,7 @@ import il.org.spartan.sequence.*;
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(3);
     o.os = os;
-    azzert.that(DeepSize.of(o), is((ShallowSize.of(o) + ShallowSize.of(os))));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(o) + ShallowSize.of(os)));
   }
 
   @Test public void of_ClassWithArrayReursiveArray() {
@@ -141,7 +141,7 @@ import il.org.spartan.sequence.*;
       }
     };
     DeepSize.of(o);
-    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize)))));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize))));
   }
 
   @Test public void of_ClassWithObjecReursiveArray() {
@@ -153,7 +153,7 @@ import il.org.spartan.sequence.*;
         return o__.hashCode();
       }
     };
-    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize)))));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(this) + ShallowSize.of(o) + DeepSize.of(makeRecursiveArray(arraySize))));
   }
 
   @Test public void of_MyHashMap() {
@@ -161,7 +161,7 @@ import il.org.spartan.sequence.*;
     azzert.that(ShallowSize.of(m), is(40));
     azzert.that(DeepSize.of(m), is(120));
     m.put(null, null);
-    azzert.that(DeepSize.of(m), is((120 + 16 + ShallowSize.of(new Object()))));
+    azzert.that(DeepSize.of(m), is(120 + 16 + ShallowSize.of(new Object())));
   }
 
   @Test public void of_MyHashMap_DEFAULT_INITIAL_CAPACITY() {
@@ -172,7 +172,7 @@ import il.org.spartan.sequence.*;
     final MyHashMap<Object, Object> m = new MyHashMap<>();
     final int shallow = ShallowSize.of(m);
     final int deep = DeepSize.of(m);
-    azzert.that((deep - shallow), is((ShallowSize.of(m.table) + DeepSize.of(m.keySet))));
+    azzert.that(deep - shallow, is(ShallowSize.of(m.table) + DeepSize.of(m.keySet)));
   }
 
   @Test public void of_MyHashMap_table_size() {
@@ -205,7 +205,7 @@ import il.org.spartan.sequence.*;
         return super.hashCode() ^ __;
       }
     };
-    azzert.that(DeepSize.of(o), is((ShallowSize.of(this) + ShallowSize.of(o))));
+    azzert.that(DeepSize.of(o), is(ShallowSize.of(this) + ShallowSize.of(o)));
   }
 
   @Test public void of_ObjectInt_extends_ObjectInt() {

@@ -191,8 +191,8 @@ public class CFG {
     long endOffset;
 
     @Override public boolean equals(final Object ¢) {
-      return ¢ == this || (¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType()) && endOffset == ((BasicBlock) ¢).endOffset
-          && startOffset == ((BasicBlock) ¢).startOffset);
+      return ¢ == this || ¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType())
+          && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
     }
 
     @Override public int hashCode() {

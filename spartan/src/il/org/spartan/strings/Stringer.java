@@ -71,14 +71,14 @@ import il.org.spartan.utils.*;
     return s.substring(0, p >= 0 ? p : s.length());
   }
 
-  /**
-   * @param < T >  type of items in the list
-   * @param begin  the string starting the string representation.
-   * @param ts  the actual items in the list, method <code>toString()</code> is used to compute obtain each item string represntation.
-   * @param sep  a string so separate these items
-   * @param end  a string terminating the string representation
-   * @return  the string equivalent of the <code>ts</code> in the following structure: <code> begin item1 sep item2 sep ... item2 end</code> 
-   */
+  /** @param < T > type of items in the list
+   * @param begin the string starting the string representation.
+   * @param ts the actual items in the list, method <code>toString()</code> is
+   *        used to compute obtain each item string represntation.
+   * @param sep a string so separate these items
+   * @param end a string terminating the string representation
+   * @return the string equivalent of the <code>ts</code> in the following
+   *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   public static <T> String sequence(final String begin, final Iterable<T> ts, final String sep, final String end) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
@@ -88,14 +88,14 @@ import il.org.spartan.utils.*;
     return b + "";
   }
 
-  /**
-   * @param < T >  type of items in the list
-   * @param begin  the string starting the string representation.
-   * @param ts  the actual items in the list, method <code>toString()</code> is used to compute obtain each item string represntation.
-   * @param sep  a string so separate these items
-   * @param end  a string terminating the string representation
-   * @return  the string equivalent of the <code>ts</code> in the following structure: <code> begin item1 sep item2 sep ... item2 end</code> 
-   */
+  /** @param < T > type of items in the list
+   * @param begin the string starting the string representation.
+   * @param ts the actual items in the list, method <code>toString()</code> is
+   *        used to compute obtain each item string represntation.
+   * @param sep a string so separate these items
+   * @param end a string terminating the string representation
+   * @return the string equivalent of the <code>ts</code> in the following
+   *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);
@@ -105,16 +105,16 @@ import il.org.spartan.utils.*;
     return b + "";
   }
 
-  /**
-   * @author  Oren Rubin
-   * @param < T >  type of items in the list
-   * @param begin  the string starting the string representation.
-   * @param ts  the actual items in the list, method <code>toString()</code> is used to compute obtain each item string represntation.
-   * @param sep  a string so separate these items
-   * @param end  a string terminating the string representation
-   * @param t  class to customize conversions.
-   * @return  the string equivalent of the <code>ts</code> in the following structure: <code> begin item1 sep item2 sep ... item2 end</code> 
-   */
+  /** @author Oren Rubin
+   * @param < T > type of items in the list
+   * @param begin the string starting the string representation.
+   * @param ts the actual items in the list, method <code>toString()</code> is
+   *        used to compute obtain each item string represntation.
+   * @param sep a string so separate these items
+   * @param end a string terminating the string representation
+   * @param t class to customize conversions.
+   * @return the string equivalent of the <code>ts</code> in the following
+   *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   public static <T> String sequence(final String begin, final T[] ts, final String sep, final String end, final Converter<T> t) {
     final StringBuilder b = new StringBuilder(begin);
     final Separator s = new Separator(sep);

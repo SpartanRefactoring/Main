@@ -88,21 +88,17 @@ import il.org.spartan.streotypes.*;
     };
   }
 
-  /**
-   * An interface representing a stopping policy.
-   * @author  Yossi Gil, 2008/06/21 
-   */
+  /** An interface representing a stopping policy.
+   * @author Yossi Gil, 2008/06/21 */
   public interface StopHandler {
-    /**
-     * What to do in case termination with an associated exit code was requested
-     * @param exitCode   the exit code associated with the termination 
-     */
+    /** What to do in case termination with an associated exit code was
+     * requested
+     * @param exitCode the exit code associated with the termination */
     void stop(int exitCode);
 
-    /**
-     * What to do in case terminations with a specified error message was requested
-     * @param s   the error message associated with the termination 
-     */
+    /** What to do in case terminations with a specified error message was
+     * requested
+     * @param s the error message associated with the termination */
     void stop(String s);
   }
 }

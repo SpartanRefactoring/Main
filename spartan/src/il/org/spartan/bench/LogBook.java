@@ -203,14 +203,14 @@ public abstract class LogBook implements Serializable {
         return 0;
       }
 
+      int compare(final String s1, final String s2) {
+        return s1 == null ? As.binary(s2) : compareNumeric(s1, s2);
+      }
+
       int compareNumeric(final String s1, final String s2) {
         return isInt(s1) && isInt(s2) ? atoi(s1) - atoi(s2)
             : isDouble(s1) && isDouble(s2) ? signum(atod(s1) - atod(s2))
                 : isInt(s1) || isDouble(s1) ? -1 : isInt(s2) || isDouble(s2) ? 1 : s1.compareTo(s2);
-      }
-
-      int compare(final String s1, final String s2) {
-        return s1 == null ? As.binary(s2) : compareNumeric(s1, s2);
       }
     });
     book.clear();
@@ -508,7 +508,7 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        azzert.that((l.current().keySet() + ""), is("[A, B, D, C]"));
+        azzert.that(l.current().keySet() + "", is("[A, B, D, C]"));
         azzert.that(l.size(), is(0));
       }
 
@@ -519,7 +519,7 @@ public abstract class LogBook implements Serializable {
         l.set("C", c.value());
         l.set("D", c.value());
         l.demote("C");
-        azzert.that((l.find().keySet() + ""), is("[A, B, D, C]"));
+        azzert.that(l.find().keySet() + "", is("[A, B, D, C]"));
       }
 
       @Test public void demoteWithRecord() {
@@ -536,7 +536,7 @@ public abstract class LogBook implements Serializable {
         l.demote("A");
         l.record(13);
         azzert.that(l.size(), is(1));
-        azzert.that((l.find().keySet() + ""), is("[D, C, B, A]"));
+        azzert.that(l.find().keySet() + "", is("[D, C, B, A]"));
       }
 
       @Test public void findEntry1() {
@@ -562,7 +562,7 @@ public abstract class LogBook implements Serializable {
         l.set("B", c.value());
         l.set("C", c.value());
         l.set("D", c.value());
-        azzert.that((l.find().keySet() + ""), is("[A, B, C, D]"));
+        azzert.that(l.find().keySet() + "", is("[A, B, C, D]"));
       }
 
       @Test public void keySet() {
@@ -600,7 +600,7 @@ public abstract class LogBook implements Serializable {
         l.remove("A");
         l.record(13);
         azzert.that(l.size(), is(1));
-        azzert.that((l.find().keySet() + ""), is("[D]"));
+        azzert.that(l.find().keySet() + "", is("[D]"));
       }
 
       @Test public void repeatedSettingsCount() {

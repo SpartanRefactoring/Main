@@ -2,11 +2,10 @@
 package il.org.spartan;
 
 import static il.org.spartan.azzert.*;
-/**
- * Fluent API 
+
+/** Fluent API
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-10-15
- */
+ * @since 2016-10-15 */
 public interface AssertToAzzert {
   static <T> void assertEquals(final String reason, final T t1, final T t2) {
     azzert.that(reason, t2, is(t1));
@@ -17,24 +16,25 @@ public interface AssertToAzzert {
   }
 
   static void assertFalse(final boolean ¢) {
-    assert !(¢);
+    assert !¢;
   }
 
   static void assertFalse(final Object reason, final boolean b) {
-    assert !(b) : reason;
+    assert !b : reason;
   }
 
   static <T> void assertNotEquals(final T t1, final T t2) {
     azzert.that(t2, is(not(t1)));
   }
 
+  static <T> void assertNotNull(final Object reason, final T t) {
+    assert t != null : reason;
+  }
+
   static <T> void assertNotNull(final T ¢) {
     assert ¢ != null;
   }
 
-  static <T> void assertNotNull(Object reason, final T t) {
-    assert t != null : reason;
-  }
   static <T> void assertNull(final T ¢) {
     azzert.isNull(¢);
   }

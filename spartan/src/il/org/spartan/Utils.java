@@ -502,27 +502,21 @@ public interface Utils {
     }
   }
 
-  /**
-   * @author  Yossi Gil <Yossi.Gil@GMail.COM>
-   * @param < T >  JD
-   * @since  2016 
-   */
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @param < T > JD
+   * @since 2016 */
   static class FoundHandleForT<T> {
     final T candidate;
 
-    /**
-    * Instantiates this class. 
-    * @param candidate  what to search for 
-    */
+    /** Instantiates this class.
+     * @param candidate what to search for */
     public FoundHandleForT(final T candidate) {
       this.candidate = candidate;
     }
 
-    /**
-    * Determine if an integer can be found in a list of values
-    * @param ts  where to search
-    * @return  true if the the item is found in the list 
-    */
+    /** Determine if an integer can be found in a list of values
+     * @param ts where to search
+     * @return true if the the item is found in the list */
     @SafeVarargs public final boolean in(final T... ts) {
       for (final T ¢ : ts)
         if (¢ != null && ¢.equals(candidate))
@@ -530,26 +524,20 @@ public interface Utils {
       return false;
     }
 
-    /**
-    * @author  Yossi Gil <Yossi.Gil@GMail.COM>
-    * @since  2016 
-    */
+    /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+     * @since 2016 */
     public static class FoundHandleForInt {
       final int candidate;
 
-      /**
-      * Instantiates this class.
-      * @param candidate  what to search for 
-      */
+      /** Instantiates this class.
+       * @param candidate what to search for */
       public FoundHandleForInt(final int candidate) {
         this.candidate = candidate;
       }
 
-      /**
-      * Determine if an integer can be found in a list of values
-      * @param is  where to search
-      * @return  true if the the item is found in the list 
-      */
+      /** Determine if an integer can be found in a list of values
+       * @param is where to search
+       * @return true if the the item is found in the list */
       @SafeVarargs public final boolean in(final int... is) {
         for (final int ¢ : is)
           if (¢ == candidate)
@@ -559,11 +547,12 @@ public interface Utils {
     }
   }
 
-  /**
-   * A static nested class hosting unit tests for the nesting class Unit test for the containing class. Note the naming convention: a) names of test methods do not use are not prefixed by "test". This prefix is redundant. b) test methods begin with the name of the method they check.
-   * @author  Yossi Gil
-   * @since  2014-05-31 
-   */
+  /** A static nested class hosting unit tests for the nesting class Unit test
+   * for the containing class. Note the naming convention: a) names of test
+   * methods do not use are not prefixed by "test". This prefix is redundant. b)
+   * test methods begin with the name of the method they check.
+   * @author Yossi Gil
+   * @since 2014-05-31 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method", "javadoc" }) static class TEST {
     public static Integer[] intToIntegers(final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];

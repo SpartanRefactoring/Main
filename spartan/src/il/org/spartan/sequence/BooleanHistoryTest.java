@@ -64,7 +64,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void createSize() {
-    azzert.that((new BooleanHistory(10)).size(), is(0));
+    azzert.that(new BooleanHistory(10).size(), is(0));
   }
 
   @Test public void maxSize() {

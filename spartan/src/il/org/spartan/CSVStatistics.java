@@ -2,7 +2,6 @@ package il.org.spartan;
 // TODO: Yossi: I commented this one too.
 
 // import static il.org.spartan.utils.___.*;
-
 import java.io.*;
 import java.util.*;
 

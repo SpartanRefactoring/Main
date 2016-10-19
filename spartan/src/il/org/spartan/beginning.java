@@ -50,10 +50,8 @@ import il.org.spartan.iterables.*;
   static final class with {
     private final String beginWith;
 
-    /**
-    * Instantiate this class, with the string beginning the separation
-    * @param beginWith  which string should initiate our composition 
-    */
+    /** Instantiate this class, with the string beginning the separation
+     * @param beginWith which string should initiate our composition */
     public with(final String beginWith) {
       this.beginWith = beginWith;
     }

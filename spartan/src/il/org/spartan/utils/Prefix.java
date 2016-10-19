@@ -20,7 +20,7 @@ public class Prefix<T> {
   private static <T> String trim(final Iterable<T> ts) {
     String $ = null;
     for (final T ¢ : ts)
-      $ = trim($, (¢ + ""));
+      $ = trim($, ¢ + "");
     return $;
   }
 

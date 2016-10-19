@@ -17,7 +17,7 @@ import il.org.spartan.*;
   @Test public void align0() throws IOException {
     final BufferDataInputStream b = new BufferDataInputStream(new byte[1000]);
     b.align4();
-    azzert.that((b.position() % 4), is(0));
+    azzert.that(b.position() % 4, is(0));
     azzert.that(b.position(), is(0));
     b.close();
   }
@@ -26,7 +26,7 @@ import il.org.spartan.*;
     final BufferDataInputStream b = new BufferDataInputStream(new byte[1000]);
     b.read();
     b.align4();
-    azzert.that((b.position() % 4), is(0));
+    azzert.that(b.position() % 4, is(0));
     azzert.that(b.position(), is(4));
     b.close();
   }
@@ -36,7 +36,7 @@ import il.org.spartan.*;
     b.read();
     b.read();
     b.align4();
-    azzert.that((b.position() % 4), is(0));
+    azzert.that(b.position() % 4, is(0));
     azzert.that(b.position(), is(4));
     b.close();
   }
@@ -48,7 +48,7 @@ import il.org.spartan.*;
     b.read();
     azzert.that(b.position(), is(3));
     b.align4();
-    azzert.that((b.position() % 4), is(0));
+    azzert.that(b.position() % 4, is(0));
     azzert.that(b.position(), is(4));
     b.close();
   }
@@ -60,7 +60,7 @@ import il.org.spartan.*;
     b.read();
     b.read();
     b.align4();
-    azzert.that((b.position() % 4), is(0));
+    azzert.that(b.position() % 4, is(0));
     azzert.that(b.position(), is(4));
     b.close();
   }
@@ -73,7 +73,7 @@ import il.org.spartan.*;
     b.read();
     b.read();
     b.align4();
-    azzert.that((b.position() % 4), is(0));
+    azzert.that(b.position() % 4, is(0));
     azzert.that(b.position(), is(8));
     b.close();
   }

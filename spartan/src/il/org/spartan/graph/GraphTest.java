@@ -643,8 +643,8 @@ import il.org.spatan.iteration.*;
 
   @Test public void toStringTest() {
     final Graph<String> g = makeSingleEdge();
-    assertEquals("A", (g.vertex("A").e() + ""));
-    assertEquals("B", (g.vertex("B").e() + ""));
+    assertEquals("A", g.vertex("A").e() + "");
+    assertEquals("B", g.vertex("B").e() + "");
   }
 
   @Test public void tree() {

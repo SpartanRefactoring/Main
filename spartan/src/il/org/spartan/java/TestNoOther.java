@@ -74,7 +74,7 @@ public class TestNoOther {
   }
 
   @Test public void unicode() throws IOException {
-    azzert.that((TokenAsIs.stringToString("יוסי") + ""), is("יוסי"));
+    azzert.that(TokenAsIs.stringToString("יוסי") + "", is("יוסי"));
   }
 
   @Test public void unicodeFileAgainstFileOutput() throws IOException {

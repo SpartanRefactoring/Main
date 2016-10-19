@@ -354,9 +354,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     ++size;
   }
 
-  /**
-   * Returns the entry associated with the specified key in the HashMap. Returns null if the HashMap contains no mapping for the key. 
-   */
+  /** Returns the entry associated with the specified key in the HashMap.
+   * Returns null if the HashMap contains no mapping for the key. */
   Entry<K, V> getEntry(final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     for (Entry<K, V> $ = table[indexFor(hash, table.length)]; $ != null; $ = $.next) {
@@ -384,9 +383,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     return new ValueIterator();
   }
 
-  /**
-   * Removes and returns the entry associated with the specified key in the HashMap. Returns null if the HashMap contains no mapping for this key. 
-   */
+  /** Removes and returns the entry associated with the specified key in the
+   * HashMap. Returns null if the HashMap contains no mapping for this key. */
   Entry<K, V> removeEntryForKey(final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
@@ -411,9 +409,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     return $;
   }
 
-  /**
-   * Special version of remove for EntrySet. 
-   */
+  /** Special version of remove for EntrySet. */
   Entry<K, V> removeMapping(final Object o) {
     if (!(o instanceof Map.Entry))
       return null;

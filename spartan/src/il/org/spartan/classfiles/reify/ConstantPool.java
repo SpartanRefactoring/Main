@@ -55,7 +55,7 @@ public final class ConstantPool {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof ClassConstant && ¢ + "" != null)
-        $.add((¢ + ""));
+        $.add(¢ + "");
     return $.toArray(new String[$.size()]);
   }
 
@@ -123,7 +123,7 @@ public final class ConstantPool {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof StringConstant)
-        $.add((¢ + ""));
+        $.add(¢ + "");
     return $.toArray(new String[$.size()]);
   }
 
@@ -247,18 +247,15 @@ public final class ConstantPool {
   }
 
   public abstract static class Constant {
-    /**
-    * Does this entry occupy double space?
-    * @return  <code><b>true</b></code> <i>iff</i> this instance occupies two 32-bit words 
-    */
+    /** Does this entry occupy double space?
+     * @return <code><b>true</b></code> <i>iff</i> this instance occupies two
+     *         32-bit words */
     @SuppressWarnings("static-method") public boolean isDoubleLength() {
       return false;
     }
 
-    /**
-    * What is the type of this constant?
-    * @return  a textual representation of the type of this instance 
-    */
+    /** What is the type of this constant?
+     * @return a textual representation of the type of this instance */
     public abstract String typeName();
   }
 
@@ -298,9 +295,7 @@ public final class ConstantPool {
    * pattern
    * @author Yossi Gil */
   public static final class Empty extends Literal {
-    /**
-     * Singleton instance 
-     */
+    /** Singleton instance */
     public static final Empty $$ = new Empty();
 
     /** A default, inaccessible constructor, forcing the singleton

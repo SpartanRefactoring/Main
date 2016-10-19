@@ -52,7 +52,7 @@ import il.org.spartan.*;
   @Test public void objectByte() {
     azzert.that(ShallowSize.of(new Object() {
       byte __;
-    
+
       @Override public int hashCode() {
         return super.hashCode() ^ __;
       }
@@ -121,7 +121,7 @@ import il.org.spartan.*;
   @Test public void of_ObjectInt_Inner() {
     azzert.that(ShallowSize.of(new Object() {
       int __;
-    
+
       @Override public int hashCode() {
         return super.hashCode() ^ __;
       }

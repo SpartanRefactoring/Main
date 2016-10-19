@@ -94,7 +94,7 @@ public class ClassRepository implements Iterable<String> {
     try {
       if (!new File(jarFile).exists())
         return;
-      for (final Enumeration<? extends ZipEntry> entries = (new ZipFile(jarFile)).entries(); entries.hasMoreElements();) {
+      for (final Enumeration<? extends ZipEntry> entries = new ZipFile(jarFile).entries(); entries.hasMoreElements();) {
         final ZipEntry ze = entries.nextElement();
         final NameDotSuffix nds = new NameDotSuffix(ze);
         if (!nds.suffixIs(DOT_CLASS))
@@ -225,7 +225,7 @@ public class ClassRepository implements Iterable<String> {
     if (dirOrFile.isDirectory()) {
       final String[] children = dirOrFile.list();
       for (final String ¢ : children)
-        addFromDirectory(depth + 1, new File(dirOrFile, ¢), root, result, (depth == 0 ? "" : concat(path, dirOrFile.getName())));
+        addFromDirectory(depth + 1, new File(dirOrFile, ¢), root, result, depth == 0 ? "" : concat(path, dirOrFile.getName()));
       return;
     }
     final NameDotSuffix nds = new NameDotSuffix(dirOrFile);
@@ -256,7 +256,7 @@ public class ClassRepository implements Iterable<String> {
 
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void empty() {
-      azzert.that((new ClassRepository()).getClasses().size(), is(0));
+      azzert.that(new ClassRepository().getClasses().size(), is(0));
     }
 
     @Test public void ensureDotSeparatedNames() {
@@ -281,7 +281,7 @@ public class ClassRepository implements Iterable<String> {
     }
 
     @Test public void getClassesObject() {
-      assert (new ClassRepository.JRE().getClasses().contains("java.lang.Object"));
+      assert new ClassRepository.JRE().getClasses().contains("java.lang.Object");
     }
   }
 

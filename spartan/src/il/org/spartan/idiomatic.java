@@ -13,21 +13,15 @@ import org.junit.*;
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface idiomatic {
-  /**
-   * Single quote: 
-   */
+  /** Single quote: */
   final String QUOTE = "'";
-  /**
-   * an evaluating trigger 
-   */
+  /** an evaluating trigger */
   final Trigger eval = new Trigger() {
     @Override public <@Nullable T> T eval(final Supplier<T> ¢) {
       return ¢.get();
     }
   };
-  /**
-   * an ignoring trigger 
-   */
+  /** an ignoring trigger */
   final Trigger ignore = new Trigger() {
     @Override public <@Nullable T> T eval(final Supplier<T> ____) {
       return null;
@@ -134,17 +128,15 @@ public interface idiomatic {
     }
   }
 
-  /**
-   * A class which is just like  {@link Supplier} , except that it uses the shorter name ( {@link #λ()}  and that it allows for  {@link Exception} s to be thrown by the getters.
-   * @author  Yossi Gil
-   * @param < T >  JD
-   * @since  2016` 
-   */
+  /** A class which is just like {@link Supplier} , except that it uses the
+   * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
+   * be thrown by the getters.
+   * @author Yossi Gil
+   * @param < T > JD
+   * @since 2016` */
   @FunctionalInterface interface Producer<@Nullable T> {
-    /**
-    * @return  next value provided by this instance
-    * @throws Exception  JD 
-    */
+    /** @return next value provided by this instance
+     * @throws Exception JD */
     T λ() throws Exception;
   }
 

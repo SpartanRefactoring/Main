@@ -160,7 +160,7 @@ public class DoublesWindow {
         azzert.that(w.size(), is(¢));
         assert !w.full();
         w.add(¢);
-        azzert.that(w.size(), is((¢ + 1)));
+        azzert.that(w.size(), is(¢ + 1));
         assertEquals(¢, w.newest(), 1E-5);
         assertEquals(0, w.oldest(), 1E-5);
       }

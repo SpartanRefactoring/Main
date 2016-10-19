@@ -178,7 +178,7 @@ import il.org.spartan.utils.Separate.*;
     final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)
-        $.add((¢ + ""));
+        $.add(¢ + "");
       else if (nullFiller != null)
         $.add(nullFiller);
     return $;
@@ -345,14 +345,14 @@ import il.org.spartan.utils.Separate.*;
 
     @Test public void testPrunedEmptyCollectionBeginEnd() {
       azzert.that(it(//
-      makeCollection(), //
-      omitNulls().separator(",").begin("(").end(")")), is(""));
+          makeCollection(), //
+          omitNulls().separator(",").begin("(").end(")")), is(""));
     }
 
     @Test public void testPrunedEmptyCollectionOmittingNullsBeginEnd() {
       azzert.that(it(//
-      makeCollection(null, null, null), //
-      omitNulls().separator(",").begin("(").end(")")), is(""));
+          makeCollection(null, null, null), //
+          omitNulls().separator(",").begin("(").end(")")), is(""));
     }
 
     @Test public void testPrunedNulledListCommas() {
@@ -361,8 +361,8 @@ import il.org.spartan.utils.Separate.*;
 
     @Test public void testPrunedNulledListCommasCallsBeginEnd() {
       azzert.that(it(//
-      makeCollection(null, "A", null, "B", null, "C", null), //
-      omitNulls().separator(",").begin("(").end(")")), is("(A,B,C)"));
+          makeCollection(null, "A", null, "B", null, "C", null), //
+          omitNulls().separator(",").begin("(").end(")")), is("(A,B,C)"));
     }
 
     @Test public void testPrunedNulledListSemiColons() {
