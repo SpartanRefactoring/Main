@@ -47,7 +47,7 @@ public class Spartanizer$Applicator {
   /** @param u
    * @param selection
    * @return */
-  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection selection) {
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection<?> selection) {
     go(u.compilationUnit);
     // if (s instanceof TrackerSelection)
     // return apply(u, (TrackerSelection) s);
@@ -248,7 +248,7 @@ public class Spartanizer$Applicator {
     });
   }
 
-  private static boolean filter(final ASTNode ¢) {
+  static boolean filter(final ASTNode ¢) {
     return false;
   }
 
