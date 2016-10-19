@@ -21,29 +21,6 @@ public final class Spartanizer extends AbstractSpartanizer{
     }
   }
   
-//
-//  String folder = "/tmp/";
-//  String afterFileName;
-//  PrintWriter afters;
-//  String beforeFileName;
-//  PrintWriter befores;
-//  File currentFile;
-//  int done;
-//  String inputPath;
-//  CSVStatistics report;
-//  String reportFileName;
-//  Toolbox toolbox = new Toolbox();
-//  final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
-//  final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-//  CSVStatistics spectrumStats;
-//  CSVStatistics coverageStats;
-//  private final String spectrumFileName;
-//  private final String coverageFileName;
-//  static String presentFileName;
-//  static String presentMethod;
-//  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
-//  int tippersAppliedOnCurrentObject;
-//
   Spartanizer(final String path) {
     this(path, system.folder2File(path));
   }
