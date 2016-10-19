@@ -153,6 +153,8 @@ public class Selection extends AbstractSelection<Selection> {
     private static final String SELECTION_NAME = "selection";
     /** Default name for default package selections. */
     private static final String DEFAULT_PACKAGE_NAME = "(default package)";
+    /** Default name for multi selection. */
+    private static final String MULTI_SELECTION_NAME = "selections";
 
     /** @return selection of current compilation unit */
     public static Selection getCurrentCompilationUnit() {
@@ -336,12 +338,26 @@ public class Selection extends AbstractSelection<Selection> {
     /** @param s JD
      * @return selection by tree selection */
     private static Selection by(final ITreeSelection s) {
-      final Object o = s.getFirstElement();
-      return o instanceof MarkerItem ? by((MarkerItem) o)
-          : o instanceof IJavaProject ? by((IJavaProject) o)
-              : o instanceof IPackageFragmentRoot ? by((IPackageFragmentRoot) o)
-                  : o instanceof IPackageFragment ? by((IPackageFragment) o)
-                      : o instanceof ICompilationUnit ? Selection.of((ICompilationUnit) o) : !(o instanceof IMember) ? empty() : by((IMember) o);
+      final List<?> ss = s.toList();
+      if (ss.size() == 1) {
+        final Object o = ss.get(0);
+        return o == null ? empty()
+            : o instanceof MarkerItem ? by((MarkerItem) o)
+                : o instanceof IJavaProject ? by((IJavaProject) o)
+                    : o instanceof IPackageFragmentRoot ? by((IPackageFragmentRoot) o)
+                        : o instanceof IPackageFragment ? by((IPackageFragment) o)
+                            : o instanceof ICompilationUnit ? Selection.of((ICompilationUnit) o)
+                                : !(o instanceof IMember) ? empty() : by((IMember) o);
+      }
+      final Selection $ = Selection.empty();
+      for (final Object ¢ : ss)
+        $.unify(¢ == null ? null
+            : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
+                : ¢ instanceof IJavaProject ? by((IJavaProject) ¢)
+                    : ¢ instanceof IPackageFragmentRoot ? by((IPackageFragmentRoot) ¢)
+                        : ¢ instanceof IPackageFragment ? by((IPackageFragment) ¢)
+                            : ¢ instanceof ICompilationUnit ? Selection.of((ICompilationUnit) ¢) : ¢ instanceof IMember ? by((IMember) ¢) : null);
+      return $.setName(MULTI_SELECTION_NAME);
     }
 
     /** @param p JD
