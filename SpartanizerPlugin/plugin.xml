@@ -133,9 +133,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <extension point="org.eclipse.ui.commands">
      <command id="il.org.spartan.LaconizeCurrent" name="active Window"/>
      <command id="il.org.spartan.LaconizeAll" name="entire Project"/>
-     <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off">
-           <state class="org.eclipse.ui.handlers.RegistryToggleState:true" id="org.eclipse.ui.commands.toggleState"/>
-    </command>
+     <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
      <command id="il.org.spartan.SpartanizeableAll" name="Add spartanization nature to all projects" />
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
@@ -195,11 +193,53 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <menu label="Laconize..." mnemonic="L">
         <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="W"/>       
         <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="P"/>
-        <command commandId="il.org.spartan.TipsToggleOnOff" style="push" mnemonic="O"/> 
         <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
         <command commandId="il.org.spartan.SpartanizeableAll" style="push" mnemonic="N"/> 
    </menu>
    </menu>
+</menuContribution>
+
+<menuContribution
+    allPopups="true"
+    locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+  <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
+    <command
+        commandId="il.org.spartan.TipsToggleOnOff"
+        style="push"
+        mnemonic="O"
+        label="Spartanization tips on">
+      <visibleWhen checkEnabled="false">
+        <with variable="activeMenuSelection">
+         <iterate ifEmpty="false" operator="and">
+           <adapt type="org.eclipse.core.resources.IProject">
+             <not>
+               <test
+                   property="org.eclipse.core.resources.projectNature"
+                   value="il.org.spartan.nature"/>
+             </not>
+           </adapt>
+         </iterate>
+        </with>       
+      </visibleWhen>
+    </command>
+    <command
+        commandId="il.org.spartan.TipsToggleOnOff"
+        style="push"
+        mnemonic="O"
+        label="Spartanization tips off">
+      <visibleWhen checkEnabled="false">
+        <with variable="activeMenuSelection">
+         <iterate ifEmpty="false" operator="and">
+           <adapt type="org.eclipse.core.resources.IProject">
+             <test
+                 property="org.eclipse.core.resources.projectNature"
+                 value="il.org.spartan.nature"/>
+           </adapt>
+         </iterate>
+        </with>       
+      </visibleWhen>
+    </command>
+  </menu>
 </menuContribution>
 </extension>
 
