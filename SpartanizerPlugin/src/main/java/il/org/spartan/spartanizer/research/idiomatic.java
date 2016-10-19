@@ -76,7 +76,7 @@ public interface idiomatic {
 
   /** @param <T> JD
    * @param ¢ JD
-   * @return Yielder<T> value of method <code>yield</code> */
+   * @return Yielder<T> */
   static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
@@ -102,6 +102,10 @@ public interface idiomatic {
     return condition ? eval : ignore;
   }
 
+  static <T> Storer<T> defolt(final T ¢) {
+    return new Storer<>(¢);
+  }
+
   /** Supplier with {@link #when(boolean)} method
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -121,6 +125,10 @@ public interface idiomatic {
      * @param when condition on which value is returned */
     default T when(final boolean when) {
       return when ? get() : null;
+    }
+
+    default T to(final T ¢) {
+      return get() == null ? ¢ : get();
     }
   }
 
