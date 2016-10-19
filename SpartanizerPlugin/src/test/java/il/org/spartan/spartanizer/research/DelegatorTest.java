@@ -54,20 +54,20 @@ import il.org.spartan.spartanizer.research.patterns.*;
     notDelegator("public class A{void foo(int a){return bar(a);} }");
   }
 
-  private void delegator(String ¢) {
+  private void delegator(final String ¢) {
     assertTrue(javadocedDelegator(¢));
   }
 
-  private static boolean javadocedDelegator(String ¢) {
+  private static boolean javadocedDelegator(final String ¢) {
     return spartanized(¢).contains("[[Delegator]]");
   }
 
-  private static String spartanized(String ¢) {
+  private static String spartanized(final String ¢) {
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 
   /** @param s */
-  private static void notDelegator(String ¢) {
+  private static void notDelegator(final String ¢) {
     assertFalse(javadocedDelegator(¢));
   }
 }

@@ -12,20 +12,20 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public enum find {
   ;
-  public static Set<Name> dependencies(ASTNode n) {
-    Set<Name> $ = new HashSet<>();
+  public static Set<Name> dependencies(final ASTNode n) {
+    final Set<Name> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(SimpleName node) {
+      @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))
           $.add(node);
         return true;
       }
 
-      boolean izMethodName(SimpleName ¢) {
+      boolean izMethodName(final SimpleName ¢) {
         return iz.methodInvocation(step.parent(¢)) && step.name(az.methodInvocation(step.parent(¢))).equals(¢);
       }
 
-      @Override public boolean visit(QualifiedName node) {
+      @Override public boolean visit(final QualifiedName node) {
         $.add(node);
         return true;
       }
