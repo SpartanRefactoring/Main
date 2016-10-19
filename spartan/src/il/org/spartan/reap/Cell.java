@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.*;
  * @see Recipe */
 @SuppressWarnings("null") //
 public abstract class Cell<T> implements Supplier<T>, Cloneable {
-  /** TODO */
+  
   public static Set<Cell<?>> trace;
   /** The last value computed for this cell */
   @Nullable T cache;

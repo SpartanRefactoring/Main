@@ -71,7 +71,7 @@ public interface Cookbook {
     return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
   }
 
-  /** TODO Javadoc(2016): automatically generated for method
+  /** 
    * <code>compute</code>
    * @param <T1> first parameter type
    * @param <T2> second parameter type
@@ -82,9 +82,7 @@ public interface Cookbook {
     return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
   }
 
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>traceWizard</code>
-   * @param < T > JD
+  /** @param <T> JD
    * @param $ JD
    * @return a newly created {@link Cell} */
   static <@Nullable T> Cell<T> cook(final Supplier<T> $) {
@@ -875,7 +873,7 @@ public interface Cookbook {
    * @see Ingredient
    * @see Recipe */
   @SuppressWarnings("null") abstract class Cell<T> implements Supplier<T>, Cloneable {
-    /** TODO */
+    
     public static Set<Cell<?>> trace;
     /** The last value computed for this cell */
     @Nullable T cache;

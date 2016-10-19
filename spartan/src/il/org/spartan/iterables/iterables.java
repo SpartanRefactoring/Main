@@ -34,7 +34,7 @@ public enum iterables {
   }
 
   /** @param os JD
-   * @return TODO document return type */
+   * */
   public static boolean isEmpty(final Iterable<?> os) {
     for (final Object name2 : os)
       if (name2 != null)
@@ -42,12 +42,11 @@ public enum iterables {
     return true;
   }
 
-  /** TODO Javadoc(2016): automatically generated for method
-   * <code>singleton</code>
+  /** <code>singleton</code>
    * @param <T> JD
    * @param ¢ JD
-   * @return PureIterable.Sized<T> TODO Javadoc(2016) automatically generated
-   *         for returned value of method <code>singleton</code> */
+   * @return PureIterable.Sized<T> for returned value of method
+   *         <code>singleton</code> */
   public static <T> PureIterable.Sized<T> singleton(final T ¢) {
     return as.nonNullIterable(¢);
   }

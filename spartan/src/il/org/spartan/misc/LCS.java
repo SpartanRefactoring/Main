@@ -24,21 +24,21 @@ import il.org.spartan.text.*;
 public class LCS {
   /** @param ia JD
    * @param is2 JD
-   * @return TODO document return type */
+   * */
   public static int length(final int[] ia, final int[] is2) {
     return new LCS(ia, is2).length();
   }
 
   /** @param a JD
    * @param s2 JD
-   * @return TODO document return type */
+   * */
   public static int length(final String a, final String s2) {
     return new LCS(a, s2).length();
   }
 
   /** @param ssa JD
    * @param ssb JD
-   * @return TODO document return type */
+   * */
   public static int length(final String[] ssa, final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
@@ -48,7 +48,7 @@ public class LCS {
   }
 
   /** @param ¢
-   * @return TODO document return type */
+   * */
   private static int hash(final String ¢) {
     return ¢.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
@@ -66,7 +66,7 @@ public class LCS {
   private final int[] B_s;
   private final int[][] length;
 
-  /** Instantiates this class. TODO: Document this method
+  /** Instantiates this class.
    * @param as JD
    * @param bs JD */
   public LCS(final int[] as, final int[] bs) {
@@ -105,7 +105,7 @@ public class LCS {
    * substring of a (respectively b) are empty.
    * @param i JD
    * @param j
-   * @return TODO document return type */
+   * */
   private int length(final int i, final int j) {
     return i < 0 || j < 0 ? 0 : obtainLength(i, j);
   }

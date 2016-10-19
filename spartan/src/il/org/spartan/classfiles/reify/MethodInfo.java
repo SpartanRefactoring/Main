@@ -49,7 +49,6 @@ public class MethodInfo extends ExecutableEntity {
           return true;
       }
     } catch (final ClassNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return false;
