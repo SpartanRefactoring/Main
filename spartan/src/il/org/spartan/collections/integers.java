@@ -226,16 +226,16 @@ public class integers {
   @SuppressWarnings({ "synthetic-access", "boxing" }) //
   public final class INVARIANT implements Invariantable {
     @Override public void check() {
-      assertThat(size, lessThanOrEqualTo(capacity()));
-      assertThat(capacity(), greaterThanOrEqualTo(MIN_CAPACITY));
-      assertThat(placeholder.length, lessThanOrEqualTo(capacity()));
-      assertThat(occupied.length, lessThanOrEqualTo(capacity()));
-      assertThat(data.length, lessThanOrEqualTo(capacity()));
-      assertThat(size, lessThanOrEqualTo((int) (MAX_LOAD * capacity())));
-      assertThat(size, greaterThanOrEqualTo((int) (MIN_LOAD * capacity())));
-      assertThat(removed, lessThanOrEqualTo((int) (REMOVE_LOAD * capacity())));
-      assertThat(removed, comparesEqualTo(count(placeholder)));
-      assertThat(size, comparesEqualTo(count(occupied) - removed));
+      azzert.that(size, lessThanOrEqualTo(capacity()));
+      azzert.that(capacity(), greaterThanOrEqualTo(MIN_CAPACITY));
+      azzert.that(placeholder.length, lessThanOrEqualTo(capacity()));
+      azzert.that(occupied.length, lessThanOrEqualTo(capacity()));
+      azzert.that(data.length, lessThanOrEqualTo(capacity()));
+      azzert.that(size, lessThanOrEqualTo((int) (MAX_LOAD * capacity())));
+      azzert.that(size, greaterThanOrEqualTo((int) (MIN_LOAD * capacity())));
+      azzert.that(removed, lessThanOrEqualTo((int) (REMOVE_LOAD * capacity())));
+      azzert.that(removed, comparesEqualTo(count(placeholder)));
+      azzert.that(size, comparesEqualTo(count(occupied) - removed));
       for (int ¢ = 0; ¢ < capacity(); ++¢)
         if (placeholder[¢])
           assert occupied[¢];
