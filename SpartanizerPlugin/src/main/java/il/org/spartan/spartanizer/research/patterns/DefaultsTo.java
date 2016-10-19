@@ -33,7 +33,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   }
 
   @Override public boolean canTip(final ConditionalExpression x) {
-    for (UserDefinedTipper<ConditionalExpression> ¢ : tippers)
+    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return true;
     return false;
@@ -41,7 +41,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
 
   @Override public Tip tip(final ConditionalExpression x) throws TipperFailure {
     Logger.logNP(x, "defaultsTo");
-    for (UserDefinedTipper<ConditionalExpression> ¢ : tippers)
+    for (final UserDefinedTipper<ConditionalExpression> ¢ : tippers)
       if (¢.canTip(x))
         return ¢.tip(x);
     assert false;

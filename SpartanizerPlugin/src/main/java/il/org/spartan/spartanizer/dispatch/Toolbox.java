@@ -85,7 +85,7 @@ public class Toolbox {
   public static Toolbox defaultInstance() {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
-  
+
   public static Toolbox muttableDefaultInstance() {
     return freshCopyOfAllTippers();
   }

@@ -7,8 +7,6 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -26,51 +24,41 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/**
- * A configurable version of the Spartanizer that relies on {@link CommandLineApplicator} 
- * and {@link CommandLineSelection}
+/** A configurable version of the Spartanizer that relies on
+ * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
  * @since 2016 */
 public class ConfigurableSpartanizer {
-  
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new ConfigurableSpartanizer(¢).fire();
   }
-  
+
   String folder = "/tmp/";
   String afterFileName;
   String beforeFileName;
   String inputPath;
   String reportFileName;
   private final String spectrumFileName;
-  private final String coverageFileName;
   static String presentFileName;
   static String presentMethod;
- 
   PrintWriter afters;
   PrintWriter befores;
-  
   File currentFile;
-  
   int done;
   int tippersAppliedOnCurrentObject;
-  
   CSVStatistics report;
   CSVStatistics spectrumStats;
   CSVStatistics coverageStats;
-  
   Toolbox toolbox = new Toolbox();
-  
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  private boolean shouldRun = false;
-  private boolean runApplicator = true;
-  private boolean applyToEntireProject = true;
+  private final boolean shouldRun = false;
+  private final boolean runApplicator = true;
+  private final boolean applyToEntireProject = true;
   private CommandLineSelection selection;
-  private boolean entireProject = true;
-  private boolean specificTipper = false;
-  
+  private final boolean entireProject = true;
+  private final boolean specificTipper = false;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
   ConfigurableSpartanizer(final String path) {
@@ -83,7 +71,6 @@ public class ConfigurableSpartanizer {
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
     spectrumFileName = folder + name + ".spectrum.CSV";
-    coverageFileName = folder + name + ".coverage.CSV";
   }
 
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
@@ -117,14 +104,14 @@ public class ConfigurableSpartanizer {
         }
         return true;
       }
-  
+
       <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);
       }
-  
+
       /** @param n
        * @param w
        * @throws TipperFailure */
@@ -132,7 +119,7 @@ public class ConfigurableSpartanizer {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-  
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -140,7 +127,7 @@ public class ConfigurableSpartanizer {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-  
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
@@ -178,21 +165,9 @@ public class ConfigurableSpartanizer {
   void fire() {
     go();
     reportSpectrum();
-//    reportCoverage();
+    // reportCoverage();
     runEssence();
     runWordCount();
-  }
-
-  private void reportCoverage() {
-    for (final Entry<String, Integer> ¢ : coverage.entrySet()) {
-      final int i = ¢.getKey().indexOf(".java");
-      final String file = ¢.getKey().substring(0, i + 5);
-      coverageStats.put("File", file);
-      coverageStats.put("Method", ¢.getKey());
-      coverageStats.put("Spartanization", ¢.getValue());
-      coverageStats.nl();
-    }
-    System.err.print("\n Coverage: " + coverageStats.close());
   }
 
   private void reportSpectrum() {
@@ -336,32 +311,26 @@ public class ConfigurableSpartanizer {
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
-//      coverageStats = new CSVStatistics(coverageFileName, "property");
-      
-      if(applyToEntireProject){
-        selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(),"project");
+      // coverageStats = new CSVStatistics(coverageFileName, "property");
+      if (applyToEntireProject) {
+        selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
         selection.createSelectionFromProjectDir(inputPath);
-      }  
-      
-      if(!shouldRun)
+      }
+      if (!shouldRun)
         for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
           presentFileName = ¢.getName();
           System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
           go(¢);
         }
-      if(runApplicator){
-        if(entireProject ){
-          CommandLineApplicator.defaultApplicator()
-                               .defaultRunAction();
-//                             .selection(CommandLineSelection.Util.getAllCompilationUnits()
-//                                          .buildAll())
-//                             .go();
-        }
-        
-        if(specificTipper){
+      if (runApplicator) {
+        if (entireProject)
+          CommandLineApplicator.defaultApplicator().defaultRunAction();
+        // .selection(CommandLineSelection.Util.getAllCompilationUnits()
+        // .buildAll())
+        // .go();
+        if (specificTipper)
           CommandLineApplicator.defaultApplicator();
-//                               .defaultRunAction(getSpartanizer(""));
-        }
+        // .defaultRunAction(getSpartanizer(""));
       }
     } catch (final IOException x) {
       x.printStackTrace();
@@ -370,7 +339,7 @@ public class ConfigurableSpartanizer {
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
   }
-  
+
   static GUI$Applicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
@@ -393,6 +362,4 @@ public class ConfigurableSpartanizer {
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
-
-
 }

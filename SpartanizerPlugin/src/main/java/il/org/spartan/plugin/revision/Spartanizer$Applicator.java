@@ -4,14 +4,10 @@ import static il.org.spartan.tide.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
-import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
@@ -24,74 +20,69 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**
- * @author Matteo Orru'
+/** @author Matteo Orru'
  * @since 2016 */
 public class Spartanizer$Applicator {
-
-  private String name;
-  private Toolbox toolbox;
-  private int tippersAppliedOnCurrentObject;
+  Toolbox toolbox;
+  int tippersAppliedOnCurrentObject;
   private int done;
   private PrintStream befores;
   private PrintStream afters;
   private CSVStatistics report;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
-  private static String spectrumFileName = "spectrum";
-  CSVStatistics spectrumStats; //= new CSVStatistics(spectrumFileName, "property");
+  CSVStatistics spectrumStats; // = new CSVStatistics(spectrumFileName,
+                               // "property");
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
 
   /** Instantiates this class */
   public Spartanizer$Applicator() {
     this(Toolbox.defaultInstance());
   }
-  
-  /**
-   * @param defaultInstance
-   */
-  public Spartanizer$Applicator(Toolbox toolbox) {
-    this.name = "Apply";
+
+  /** @param defaultInstance */
+  public Spartanizer$Applicator(final Toolbox toolbox) {
     this.toolbox = toolbox;
   }
 
-  /**
-   * @param u
+  /** @param u
    * @param selection
-   * @return
-   */
-  public boolean apply(WrappedCompilationUnit u, AbstractSelection selection) {
+   * @return */
+  public boolean apply(final WrappedCompilationUnit u, final AbstractSelection selection) {
     go(u.compilationUnit);
-    
-//    if (s instanceof TrackerSelection)
-//      return apply(u, (TrackerSelection) s);
-//    try {
-//      setICompilationUnit(u.descriptor);
-//      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-//      progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-//      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-//      textChange.setTextType("java");
-//      final AtomicInteger counter = new AtomicInteger(0);
-//      textChange.setEdit(createRewrite(u.build().compilationUnit, counter).rewriteAST());
-//      if (textChange.getEdit().getLength() != 0)
-//        textChange.perform(progressMonitor);
-//      progressMonitor.done();
-//      return counter.get() > 0;
-//    } catch (final CoreException x) {
-//      monitor.logEvaluationError(this, x);
-//    }
+    // if (s instanceof TrackerSelection)
+    // return apply(u, (TrackerSelection) s);
+    // try {
+    // setICompilationUnit(u.descriptor);
+    // setSelection(s == null || s.textSelection == null ||
+    // s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null :
+    // s.textSelection);
+    // progressMonitor.beginTask("Creating change for a single compilation
+    // unit...", IProgressMonitor.UNKNOWN);
+    // final TextFileChange textChange = new
+    // TextFileChange(u.descriptor.getElementName(), (IFile)
+    // u.descriptor.getResource());
+    // textChange.setTextType("java");
+    // final AtomicInteger counter = new AtomicInteger(0);
+    // textChange.setEdit(createRewrite(u.build().compilationUnit,
+    // counter).rewriteAST());
+    // if (textChange.getEdit().getLength() != 0)
+    // textChange.perform(progressMonitor);
+    // progressMonitor.done();
+    // return counter.get() > 0;
+    // } catch (final CoreException x) {
+    // monitor.logEvaluationError(this, x);
+    // }
     return false;
-   }
-  
+  }
+
   void go(final CompilationUnit u) {
-    
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         return !selectedNodeTypes.contains(¢.getClass()) || !filter(¢) || go(¢);
       }
     });
-    
   }
-  
+
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final int length = input.getLength();
@@ -117,7 +108,7 @@ public class Spartanizer$Applicator {
     afters.print(out);
     report.summaryFileName();
     report//
-//        .put("File", currentFile)//
+        // .put("File", currentFile)//
         .put("Category", extract.category(input))//
         .put("Name", extract.name(input))//
         .put("# Tippers", tippersAppliedOnCurrentObject) //
@@ -166,11 +157,8 @@ public class Spartanizer$Applicator {
     return false;
   }
 
-
-  /**
-   * @param input
-   * @return
-   */
+  /** @param input
+   * @return */
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
       final BodyDeclaration u = (BodyDeclaration) makeAST.CLASS_BODY_DECLARATIONS.from($.get());
@@ -187,16 +175,14 @@ public class Spartanizer$Applicator {
     }
   }
 
-  /**
-   * @param u
-   * @return
-   */
+  /** @param u
+   * @return */
   public ASTRewrite createRewrite(final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
   }
-  
+
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
@@ -223,19 +209,19 @@ public class Spartanizer$Applicator {
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
-//          tick2(tipper); // save coverage info
+          // tick2(tipper); // save coverage info
           TrimmerLog.application(r, s);
         }
         return true;
       }
-  
-//      <N extends ASTNode> void tick2(final Tipper<N> w) {
-//        final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
-////        if (!coverage.containsKey(key))
-////          coverage.put(key, 0);
-////        coverage.put(key, coverage.get(key) + 1);
-//      }
-  
+
+      // <N extends ASTNode> void tick2(final Tipper<N> w) {
+      // final String key = presentFileName + "-" + presentMethod +
+      // monitor.className(w.getClass());
+      //// if (!coverage.containsKey(key))
+      //// coverage.put(key, 0);
+      //// coverage.put(key, coverage.get(key) + 1);
+      // }
       <N extends ASTNode> Tipper<N> getTipper(final N n) {
         return toolbox.firstTipper(n);
       }
@@ -247,7 +233,7 @@ public class Spartanizer$Applicator {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-  
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -255,21 +241,18 @@ public class Spartanizer$Applicator {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-  
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
 
-
-  private boolean filter(ASTNode ¢) {
+  private static boolean filter(final ASTNode ¢) {
     return false;
   }
-  
-  @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") 
-  final Class<? extends BodyDeclaration>... ¢) {
+
+  @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
-  
 }

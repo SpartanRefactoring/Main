@@ -11,13 +11,11 @@ import il.org.spartan.spartanizer.research.patterns.*;
  * @since 2016 */
 @SuppressWarnings("static-method") public class DefaultsToTest {
   @Test public void basic() {
-    trimmingOf("return ¢ != null ? ¢ : \"\";").withTipper(ConditionalExpression.class, new DefaultsTo())
-        .gives("return defaultsTo(¢, \"\");");
+    trimmingOf("return ¢ != null ? ¢ : \"\";").withTipper(ConditionalExpression.class, new DefaultsTo()).gives("return defaultsTo(¢, \"\");");
   }
 
   @Test public void methodOnX() {
-    trimmingOf("return ¢ == null ? UNKNOWN : x.apply(¢) + \"\";")
-        .withTipper(ConditionalExpression.class, new DefaultsTo())
+    trimmingOf("return ¢ == null ? UNKNOWN : x.apply(¢) + \"\";").withTipper(ConditionalExpression.class, new DefaultsTo())
         .gives("return defaultsTo(¢, UNKNOWN, x.apply(¢) + \"\");");
   }
 }

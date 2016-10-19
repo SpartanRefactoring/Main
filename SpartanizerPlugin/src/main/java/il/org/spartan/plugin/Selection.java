@@ -409,7 +409,7 @@ public class Selection extends AbstractSelection<Selection> {
      * @return text selection by marker */
     private static ITextSelection getTextSelection(final IMarker ¢) {
       try {
-        int cs = ((Integer) ¢.getAttribute(IMarker.CHAR_START)).intValue();
+        final int cs = ((Integer) ¢.getAttribute(IMarker.CHAR_START)).intValue();
         return new TextSelection(cs, ((Integer) ¢.getAttribute(IMarker.CHAR_END)).intValue() - cs);
       } catch (final CoreException x) {
         monitor.log(x);
