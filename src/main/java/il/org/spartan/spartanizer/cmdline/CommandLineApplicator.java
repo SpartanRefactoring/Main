@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.revision;
+package il.org.spartan.spartanizer.cmdline;
 
 import il.org.spartan.plugin.*;
 
@@ -48,7 +48,7 @@ public class CommandLineApplicator extends Applicator {
   /** Initialize the selection of this applicator.
    * @param as JD
    * @return this applicator */
-  public CommandLineApplicator selection(final AbstractSelection<CommandLineSelection> as) {
+  public CommandLineApplicator selection(@SuppressWarnings("unused") final AbstractSelection<CommandLineSelection> as) {
     return this;
   }
 
