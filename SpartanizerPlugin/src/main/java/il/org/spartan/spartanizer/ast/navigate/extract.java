@@ -441,7 +441,7 @@ public enum extract {
   public static Statement containingStatement(final ASTNode ¢) {
     for (ASTNode $ = ¢; $ != null; $ = $.getParent())
       if (iz.statement($))
-        return az.asStatement($);
+        return az.statement($);
     return null;
   }
 
@@ -451,8 +451,8 @@ public enum extract {
    * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
     final List<Statement> $ = new ArrayList<>();
-    return ¢ == null || !(¢ instanceof Statement) ? $ : //
-        extract.statementsInto((Statement) ¢, $);
+    return iz.statement(¢) ? $ : //
+        extract.statementsInto(az.statement(¢), $);
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
