@@ -50,11 +50,11 @@ public final class TrimmerTestsUtils {
     return new OperandToTipper<>(from, clazz);
   }
 
-  static Operand trimmingOf(final String from) {
+  public static Operand trimmingOf(final String from) {
     return new Operand(from);
   }
 
-  static class Operand extends Wrapper<String> {
+  public static class Operand extends Wrapper<String> {
     private final Trimmer trimmer;
 
     public Operand(final String inner) {

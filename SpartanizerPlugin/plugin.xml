@@ -199,6 +199,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    </menu>
 </menuContribution>
 
+  <!-- Project menu -->
 <menuContribution
     allPopups="true"
     locationURI="popup:org.eclipse.ui.popup.any?after=additions">

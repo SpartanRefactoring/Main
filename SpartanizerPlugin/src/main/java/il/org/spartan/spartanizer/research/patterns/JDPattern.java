@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.patterns;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -14,10 +13,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   static Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       add(TipperFactory.tipper("$X == null", "", ""));
       add(TipperFactory.tipper("$X != null", "", ""));
@@ -29,7 +25,7 @@ public class JDPattern extends JavadocMarkerNanoPattern<MethodDeclaration> {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (step.parameters(d) == null || step.parameters(d).isEmpty())
       return false;
-    final Set<String> ps = new HashSet<>(step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList()));
+    final Set<String> ps = new HashSet<>(step.parametersNames(d));
     final Set<String> set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
     final Bool $ = new Bool();
