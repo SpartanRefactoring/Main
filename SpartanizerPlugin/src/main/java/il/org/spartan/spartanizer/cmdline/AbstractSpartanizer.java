@@ -13,7 +13,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,24 +22,30 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** A configurable version of the Spartanizer that relies on
- * {@link CommandLineApplicator} and {@link CommandLineSelection}
- * @author Matteo Orru'
- * @since 2016 */
-public class ConfigurableSpartanizer {
-  public static void main(final String[] args) {
-    for (final String ¢ : args.length != 0 ? args : new String[] { "." })
-      new ConfigurableSpartanizer(¢).fire();
-  }
+public abstract class AbstractSpartanizer {
 
-  String folder = "/tmp/";
-  String afterFileName;
-  String beforeFileName;
-  String inputPath;
-  String reportFileName;
-  private final String spectrumFileName;
   static String presentFileName;
   static String presentMethod;
+  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+  static String getEnclosingMethodName(final BodyDeclaration ¢) {
+    ASTNode parentNode = ¢.getParent();
+    assert parentNode != null;
+    while (parentNode.getNodeType() != ASTNode.METHOD_DECLARATION) {
+      if (parentNode instanceof CompilationUnit)
+        return null;
+      parentNode = parentNode.getParent();
+    }
+    return ((MethodDeclaration) parentNode).getName() + "";
+  }
+  static GUI$Applicator getSpartanizer(final String tipperName) {
+    return Tips2.get(tipperName);
+  }
+  protected String folder = "/home/matteo/Desktop/";
+  protected String afterFileName;
+  protected String beforeFileName;
+  protected String inputPath;
+  protected String reportFileName;
+  protected String spectrumFileName;
   PrintWriter afters;
   PrintWriter befores;
   File currentFile;
@@ -52,25 +57,8 @@ public class ConfigurableSpartanizer {
   Toolbox toolbox = new Toolbox();
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  private final boolean shouldRun = false;
-  private final boolean runApplicator = true;
-  private final boolean applyToEntireProject = true;
-  private CommandLineSelection selection;
-  private final boolean entireProject = true;
-  private final boolean specificTipper = false;
-  static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
 
-  ConfigurableSpartanizer(final String path) {
-    this(path, system.folder2File(path));
-  }
-
-  ConfigurableSpartanizer(final String inputPath, final String name) {
-    this.inputPath = inputPath;
-    beforeFileName = folder + name + ".before.java";
-    afterFileName = folder + name + ".after.java";
-    reportFileName = folder + name + ".CSV";
-    spectrumFileName = folder + name + ".spectrum.CSV";
-  }
+  public abstract void apply();
 
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
@@ -103,14 +91,11 @@ public class ConfigurableSpartanizer {
         }
         return true;
       }
-
-      <N extends ASTNode> void tick2(final Tipper<N> w) {
-        final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
-        if (!coverage.containsKey(key))
-          coverage.put(key, 0);
-        coverage.put(key, coverage.get(key) + 1);
+  
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
       }
-
+  
       /** @param n
        * @param w
        * @throws TipperFailure */
@@ -118,7 +103,7 @@ public class ConfigurableSpartanizer {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-
+  
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -126,9 +111,12 @@ public class ConfigurableSpartanizer {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-
-      @Override protected void initialization(final ASTNode ¢) {
-        disabling.scan(¢);
+  
+      <N extends ASTNode> void tick2(final Tipper<N> w) {
+        final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
+        if (!coverage.containsKey(key))
+          coverage.put(key, 0);
+        coverage.put(key, coverage.get(key) + 1);
       }
     });
   }
@@ -137,6 +125,20 @@ public class ConfigurableSpartanizer {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
+  }
+
+  void fire() {
+    go();
+    reportSpectrum();
+    // reportCoverage();
+    runEssence();
+    runWordCount();
+  }
+
+  /** @param ¢
+   * @return */
+  String fixedPoint(final ASTNode ¢) {
+    return fixedPoint(¢ + "");
   }
 
   public String fixedPoint(final String from) {
@@ -155,27 +157,43 @@ public class ConfigurableSpartanizer {
     }
   }
 
-  public ASTRewrite rewriterOf(final BodyDeclaration ¢) {
-    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
-    consolidateTips($, ¢);
-    return $;
+  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
   }
 
-  void fire() {
-    go();
-    reportSpectrum();
-    // reportCoverage();
-    runEssence();
-    runWordCount();
-  }
-
-  private void reportSpectrum() {
-    for (final Entry<String, Integer> ¢ : spectrum.entrySet()) {
-      spectrumStats.put("Tipper", ¢.getKey());
-      spectrumStats.put("Times", ¢.getValue());
-      spectrumStats.nl();
+  private void go() {
+    System.err.printf( //
+        " Input path=%s\n" + //
+            "Before path=%s\n" + //
+            " After path=%s\n" + //
+            "Report path=%s\n" + //
+            "\n", //
+        inputPath, //
+        beforeFileName, //
+        afterFileName, //
+        reportFileName);
+    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+      befores = b;
+      afters = a;
+    } catch (final IOException x) {
+      x.printStackTrace();
+      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
     }
-    System.err.print("\n Spectrum: " + spectrumStats.close());
+    setUpReports();
+    // coverageStats = new CSVStatistics(coverageFileName, "property");
+    apply();
+    closePrintWriters();
+        
+    System.err.print("\n Done: " + done + " items processed.");
+    System.err.print("\n Summary: " + report.close());
+  }
+  /**
+   * 
+   */
+  private void closePrintWriters() {
+    befores.close();
+    afters.close();
   }
 
   boolean go(final ASTNode input) {
@@ -255,20 +273,10 @@ public class ConfigurableSpartanizer {
   void go(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
+        System.out.println(!selectedNodeTypes.contains(¢.getClass()) || go(¢));
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
       }
     });
-  }
-
-  static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    ASTNode parentNode = ¢.getParent();
-    assert parentNode != null;
-    while (parentNode.getNodeType() != ASTNode.METHOD_DECLARATION) {
-      if (parentNode instanceof CompilationUnit)
-        return null;
-      parentNode = parentNode.getParent();
-    }
-    return ((MethodDeclaration) parentNode).getName() + "";
   }
 
   void go(final File f) {
@@ -285,62 +293,19 @@ public class ConfigurableSpartanizer {
     go((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  private void runWordCount() {
-    system.bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
-  }
-
-  private void go() {
-    System.err.printf( //
-        " Input path=%s\n" + //
-            "Before path=%s\n" + //
-            " After path=%s\n" + //
-            "Report path=%s\n" + //
-            "\n", //
-        inputPath, //
-        beforeFileName, //
-        afterFileName, //
-        reportFileName);
-    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-      befores = b;
-      afters = a;
-      report = new CSVStatistics(reportFileName, "property");
-      spectrumStats = new CSVStatistics(spectrumFileName, "property");
-      // coverageStats = new CSVStatistics(coverageFileName, "property");
-      if (applyToEntireProject) {
-        selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
-        selection.createSelectionFromProjectDir(inputPath);
-      }
-      if (!shouldRun)
-        for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
-          presentFileName = ¢.getName();
-          System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
-          go(¢);
-        }
-      if (runApplicator) {
-        if (entireProject)
-          CommandLineApplicator.defaultApplicator().defaultRunAction();
-        // .selection(CommandLineSelection.Util.getAllCompilationUnits()
-        // .buildAll())
-        // .go();
-        if (specificTipper)
-          CommandLineApplicator.defaultApplicator();
-        // .defaultRunAction(getSpartanizer(""));
-      }
-    } catch (final IOException x) {
-      x.printStackTrace();
-      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
+  private void reportSpectrum() {
+    for (final Entry<String, Integer> ¢ : spectrum.entrySet()) {
+      spectrumStats.put("Tipper", ¢.getKey());
+      spectrumStats.put("Times", ¢.getValue());
+      spectrumStats.nl();
     }
-    System.err.print("\n Done: " + done + " items processed.");
-    System.err.print("\n Summary: " + report.close());
+    System.err.print("\n Spectrum: " + spectrumStats.close());
   }
 
-  static GUI$Applicator getSpartanizer(final String tipperName) {
-    return Tips2.get(tipperName);
-  }
-
-  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
+  public ASTRewrite rewriterOf(final BodyDeclaration ¢) {
+    final ASTRewrite $ = ASTRewrite.create(¢.getAST());
+    consolidateTips($, ¢);
+    return $;
   }
 
   void runEssence() {
@@ -348,13 +313,40 @@ public class ConfigurableSpartanizer {
     system.shellEssenceMetrics(afterFileName);
   }
 
-  /** @param ¢
-   * @return */
-  String fixedPoint(final ASTNode ¢) {
-    return fixedPoint(¢ + "");
+  private void runWordCount() {
+    system.bash("wc " + separate.these(beforeFileName, afterFileName, essenced(beforeFileName), essenced(afterFileName)));
   }
 
   @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
+  }
+
+  /**
+   * Setup PrintWriters
+   * @author matteo
+   */
+  @SuppressWarnings("unused") private void setUpPrintWriters() {
+    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+      befores = b;
+      afters = a;
+    } catch (final IOException x) {
+      x.printStackTrace();
+      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
+    }
+  }
+
+  /**
+   * Setup reports
+   * @author matteo
+   */
+  private void setUpReports() {
+    try {
+      report = new CSVStatistics(reportFileName, "property");
+      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+    } catch (IOException x) {
+      x.printStackTrace();
+      System.err.println("problem in setting up reports");
+    }
   }
 }

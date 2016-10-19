@@ -53,7 +53,7 @@ import il.org.spartan.spartanizer.tipping.*;
       } catch (final InterruptedException x) {
         monitor.logCancellationRequest(this, x);
       }
-      return Boolean.FALSE;
+      return Integer.valueOf(0);
     });
     g.setMarker(¢);
     a.go();
