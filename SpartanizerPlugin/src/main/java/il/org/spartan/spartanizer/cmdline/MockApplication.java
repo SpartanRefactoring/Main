@@ -24,7 +24,7 @@ public class MockApplication implements IApplication {
   private int optRounds;
 
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
    * IApplicationContext) */
   @Override public Object start(final IApplicationContext arg0) throws Exception {
@@ -82,7 +82,7 @@ public class MockApplication implements IApplication {
   }
 
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.equinox.app.IApplication#stop() */
   @Override public void stop() {
     ___.nothing();
