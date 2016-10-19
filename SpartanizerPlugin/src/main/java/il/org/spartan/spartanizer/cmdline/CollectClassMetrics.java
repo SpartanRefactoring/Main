@@ -76,8 +76,7 @@ public final class CollectClassMetrics {
   // TODO: Yossi Gil: make this even more clever, by using function interfaces..
   private static void report(final String prefix, final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
-    // Do
-    // this by adding stuff to the metrics suite.
+    // Do this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
     output.put(prefix + "Count", count.nodes(¢));
     output.put(prefix + "Non whites", count.nonWhiteCharacters(¢));
