@@ -56,8 +56,6 @@ public class maybe<@Nullable T> {
   }
 
   @SuppressWarnings({ "javadoc", "static-method" }) public static class TEST {
-     * <code>usecase0</code> void TODO Javadoc(2016) automatically generated for
-     * returned value of method <code>usecase0</code> */
     @Test public void usecase0() {
       azzert.isNull(maybe.no().get());
     }
