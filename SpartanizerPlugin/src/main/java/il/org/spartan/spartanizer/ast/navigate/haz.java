@@ -33,6 +33,13 @@ public enum haz {
     return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
 
+  /** Determines whether the method's return type is boolean.
+   * @param ¢ method
+   * @return */
+  public static boolean booleanReturnType(final MethodDeclaration ¢) {
+    return ¢ != null && step.returnType(¢) != null && iz.booleanType(step.returnType(¢));
+  }
+
   public static boolean cent(final ASTNode ¢) {
     return !Collect.usesOf("¢").inside(¢).isEmpty();
   }

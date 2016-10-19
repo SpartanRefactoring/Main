@@ -138,8 +138,6 @@ public class SpartanMovie extends AbstractHandler {
   static void moveProgressDialog() {
     final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
     final Shell parentShell = shell == null ? null : shell.getParent().getShell();
-    // TODO Roth: I think you should check for 'p' only; give it a meaningful
-    // name --yg
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }

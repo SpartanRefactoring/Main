@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.engine;
-
+import java.text.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
-
+import static java.text.DecimalFormat.*;
 import il.org.spartan.*;
+import il.org.spartan.plugin.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
@@ -24,7 +25,14 @@ public interface Linguistic {
   static String trim(final String s, final int l) {
     return s == null || s.length() < l ? s : s.substring(0, l);
   }
-
+  static String time(long t) {
+    try {
+      return (new DecimalFormat(DOUBLE_FORMAT)).format(t / 1000000000.0);
+    } catch (final ArithmeticException x) {
+      monitor.log(x);
+      return UNKNOWN;
+    }
+  }
   /**
    * Get the plural form of the word if needed, by adding an 's' to its end.
    * @param s  string to be pluralize
