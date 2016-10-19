@@ -58,10 +58,6 @@ public abstract class AbstractSpartanizer {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
 
-//  public AbstractSpartanizer() {
-//    super();
-//  }
-
   public abstract void apply();
 
   public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
@@ -186,26 +182,8 @@ public abstract class AbstractSpartanizer {
     }
     setUpReports();
     // coverageStats = new CSVStatistics(coverageFileName, "property");
-    
     apply();
-    
     closePrintWriters();
-//    if (!shouldRun)
-//      for (final File ¢ : new FilesGenerator(".java").from(inputPath)) {
-//        presentFileName = ¢.getName();
-//        System.out.println("Free memory (bytes): " + Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
-//        go(¢);
-//      }
-//    if (runApplicator) {
-//      if (entireProject)
-//        CommandLineApplicator.defaultApplicator().defaultRunAction();
-//      // .selection(CommandLineSelection.Util.getAllCompilationUnits()
-//      // .buildAll())
-//      // .go();
-//      if (specificTipper)
-//        CommandLineApplicator.defaultApplicator();
-//      // .defaultRunAction(getSpartanizer(""));
-//    }
         
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
@@ -239,11 +217,6 @@ public abstract class AbstractSpartanizer {
     final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
     final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
-//    System.out.println("print before");
-//    System.out.println(beforeFileName);
-//    System.out.println(befores);
-//    System.out.println(input);
-    befores.print(" ------------------- ");
     befores.print(input);
     afters.print(out);
     report.summaryFileName();
