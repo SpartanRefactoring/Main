@@ -17,6 +17,7 @@ public interface Linguistic {
    */
   final String UNKNOWN = "???";
   final String SEPARATOR = ", ";
+  final String DOUBLE_FORMAT = "0.00";
 
   /**
    * Cut string's suffix to maximal length.
