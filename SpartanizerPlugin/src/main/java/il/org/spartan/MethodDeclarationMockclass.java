@@ -2,7 +2,6 @@ package il.org.spartan;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-  @SuppressWarnings("static-method") 
 public class MethodDeclarationMockclass {
   private int field;
 
@@ -16,6 +15,6 @@ public class MethodDeclarationMockclass {
   }
 
   public String fooGet() {
-    return "";
+    return "" + field;
   }
 }
