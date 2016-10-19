@@ -10,7 +10,7 @@ public class MethodDeclarationMockclass {
   }
 
   public void fooSet(final int input) {
-    this.field = input * (input + 3);
+    field = input * (input + 3);
   }
 
   public String fooGet() {

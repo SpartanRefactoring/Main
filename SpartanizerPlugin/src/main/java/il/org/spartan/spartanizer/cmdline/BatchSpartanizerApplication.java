@@ -32,7 +32,7 @@ public final class BatchSpartanizerApplication implements IApplication {
   private IPackageFragment pack;
 
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
    * IApplicationContext) */
   @Override public Object start(@SuppressWarnings("unused") final IApplicationContext arg0) {
@@ -155,7 +155,7 @@ public final class BatchSpartanizerApplication implements IApplication {
   }
 
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.equinox.app.IApplication#stop() */
   @Override public void stop() {
     ___.nothing();

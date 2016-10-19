@@ -10,7 +10,7 @@ public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
 
   /* (non-Javadoc)
-   * 
+   *
    * @see il.org.spartan.plugin.revision.Applicator#go() */
   @Override public void go() {
     // if(selection() == null || listener() == null || passes() <= 0 ||
