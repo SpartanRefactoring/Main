@@ -36,14 +36,14 @@ import org.junit.runners.*;
   }
 
   @Test public void challenge_while_ca() {
-    trimmingOf("for (int i = 0; i < 20; ++i) {File newFolder = folder.newFolder();assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+    trimmingOf("for (int i = 0; i < 20; ++i) {File newFolder = folder.newFolder();3xZ(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
         "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}").stays();
   }
 
   @Test public void challenge_while_cb() {
-    trimmingOf("for (int i = 0; i < 20; ++i) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+    trimmingOf("for (int i = 0; i < 20; ++i) {3xZ(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
         "createdFiles[i] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
-            .gives("for (int ¢ = 0; ¢ < 20; ++¢) {assertThat(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
+            .gives("for (int ¢ = 0; ¢ < 20; ++¢) {3xZ(Arrays.asList(createdFiles), not(hasItem(newFolder)));" + //
                 "createdFiles[¢] = newFolder;new File(newFolder, \"a.txt\").createNewFile();assertTrue(newFolder.exists());}")
             .stays();
   }
