@@ -41,6 +41,7 @@ import il.org.spartan.spartanizer.research.patterns.*;
   @Ignore @Test public void basic6() {
     notDelegator("public class A{boolean foo(int a){return bar(a,b);} }");
   }
+  
 
   private void delegator(String ¢) {
     assertTrue(examiner(¢));
