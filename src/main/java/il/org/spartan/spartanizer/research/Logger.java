@@ -108,7 +108,7 @@ public class Logger {
   }
 
   private static void logMethodInfo(final ASTNode n, final String np) {
-    final MethodDeclaration m = hop.methodDeclaration(n);
+    final MethodDeclaration m = findMethodAncestor(n);
     if (m == null) {
       System.out.println(n);
       return;
@@ -119,14 +119,15 @@ public class Logger {
     methodsStatistics.get(key).markNP(n, np);
   }
 
-  // /** @param ¢
-  // * @return */
-  // private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
-  // ASTNode n = ¢;
-  // while (!iz.methodDeclaration(n) && n != null)
-  // n = n.getParent();
-  // return az.methodDeclaration(n);
-  // }
+  /** @param ¢
+   * @return */
+  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {
+    ASTNode n = ¢;
+    while (!iz.methodDeclaration(n) && n != null)
+      n = n.getParent();
+    return az.methodDeclaration(n);
+  }
+
   /** @param ¢
    * @return */
   static String findTypeAncestor(final ASTNode ¢) {
