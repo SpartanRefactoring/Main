@@ -56,7 +56,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement> implement
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {
-    return hop.lastStatementIn(step.body(¢));
+    return hop.lastStatement(step.body(¢));
   }
 
   private static void setUpdaters(final ForStatement $) {

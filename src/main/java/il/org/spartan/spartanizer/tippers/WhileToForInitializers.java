@@ -46,11 +46,11 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return duplicate.of(az.variableDeclrationStatement(¢.getParent()));
   }
 
-  /** TODO: now fitting returns true iff all fragments fitting. We may want to
-   * be able to treat each fragment separately */
+  // TODO: now fitting returns true iff all fragments fitting. We
+  // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     for (final VariableDeclarationFragment ¢ : step.fragments(vds))
-      if (!variableUsedInWhile(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(az.statement(s), ¢.getName()))
+      if (!variableUsedInWhile(s, ¢.getName()) || !iz.variableNotUsedAfterStatement(az.asStatement(s), ¢.getName()))
         return false;
     return true;
   }
