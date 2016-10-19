@@ -435,4 +435,11 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢.values();
   }
+
+  /** Returns the return type of the function
+   * @param ¢ JD
+   * @return */
+  public static Type returnType(MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.getReturnType2();
+  }
 }

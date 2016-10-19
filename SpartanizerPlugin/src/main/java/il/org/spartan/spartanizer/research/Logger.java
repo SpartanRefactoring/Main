@@ -18,18 +18,24 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public class Logger {
   private static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
+  private static final Map<String, NPRecord> npStatistics = new HashMap<>();
   private static int numMethods;
 
   public static void summarize(final String outputDir) {
-    final CSVStatistics report = openSummaryFile(outputDir);
+    summarizeMethodStatistics(outputDir);
+    summarizeNPStatistics(outputDir);
+    reset();
+  }
+
+  private static void summarizeMethodStatistics(final String outputDir) {
+    final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
     double sumSratio = 0;
     double sumEratio = 0;
     for (final Integer k : methodsStatistics.keySet()) {
       final MethodRecord m = methodsStatistics.get(k);
-      report //
-          .put("Name", m.methodClassName + "~" + m.methodName) //
+      report.put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements) //
           .put("Statement ratio", m.numStatements == 0 ? 1 : m.numNPStatements / m.numStatements) //
@@ -47,12 +53,35 @@ public class Logger {
     System.out.println("Average statement ratio: " + sumSratio / numMethods);
     System.out.println("Average Expression ratio: " + sumEratio / numMethods);
     report.close();
-    reset();
   }
 
-  public static CSVStatistics openSummaryFile(final String outputDir) {
+  private static void summarizeNPStatistics(final String outputDir) {
+    final CSVStatistics report = openNPSummaryFile(outputDir);
+    if (report == null)
+      return;
+    for (final String k : npStatistics.keySet()) {
+      final NPRecord n = npStatistics.get(k);
+      report //
+          .put("Name", n.name) //
+          .put("#Statement", n.numNPStatements) //
+          .put("#Expression", n.numNPExpressions) //
+      ;
+      report.nl();
+    }
+    report.close();
+  }
+
+  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/methodStatistics.csv");
+  }
+
+  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+    return openSummaryFile(outputDir + "/npStatistics.csv");
+  }
+
+  public static CSVStatistics openSummaryFile(final String fileName) {
     try {
-      return new CSVStatistics(outputDir + "/report.csv", "property");
+      return new CSVStatistics(fileName, "property");
     } catch (final IOException x) {
       monitor.infoIOException(x, "opening report file");
       return null;
@@ -65,6 +94,19 @@ public class Logger {
   }
 
   public static void logNP(final ASTNode n, final String np) {
+    logMethodInfo(n, np);
+    logNPInfo(n, np);
+  }
+
+  /** @param n
+   * @param np */
+  private static void logNPInfo(ASTNode n, String np) {
+    if (!npStatistics.containsKey(np))
+      npStatistics.put(np, new NPRecord(np));
+    npStatistics.get(np).markNP(n);
+  }
+
+  private static void logMethodInfo(final ASTNode n, final String np) {
     final MethodDeclaration m = findMethodAncestor(n);
     final Integer key = Integer.valueOf(m.hashCode());
     if (!methodsStatistics.containsKey(key))
@@ -97,6 +139,9 @@ public class Logger {
     return $.substring(1);
   }
 
+  /** Collects statistics for a method in which a nanopattern was found.
+   * @author Ori Marcovitch
+   * @since 2016 */
   static class MethodRecord {
     public String methodName;
     public String methodClassName;
@@ -115,7 +160,8 @@ public class Logger {
       numExpressions = metrics.countExpressions(m);
     }
 
-    /** @param np */
+    /** @param n matched node
+     * @param np matching nanopattern */
     public void markNP(final ASTNode n, final String np) {
       numNPStatements += metrics.countStatements(n);
       numNPExpressions += metrics.countExpressions(n);
@@ -123,8 +169,31 @@ public class Logger {
     }
   }
 
-  /** @param cu */
+  /** Collect statistics of a compilation unit which will be analyzed.
+   * @param cu compilation unit */
   public static void logCompilationUnit(final ASTNode cu) {
     numMethods += metrics.countMethods(cu);
+  }
+
+  /** Collects statistics for a nanopattern.
+   * @author Ori Marcovitch
+   * @since 2016 */
+  static class NPRecord {
+    final String name;
+    int occurences;
+    int numNPStatements;
+    int numNPExpressions;
+
+    /** @param name */
+    public NPRecord(String name) {
+      this.name = name;
+    }
+
+    /** @param ¢ matched node */
+    public void markNP(ASTNode ¢) {
+      ++occurences;
+      numNPStatements += metrics.countStatements(¢);
+      numNPExpressions += metrics.countExpressions(¢);
+    }
   }
 }
