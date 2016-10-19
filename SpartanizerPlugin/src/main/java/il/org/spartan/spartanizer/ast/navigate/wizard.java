@@ -38,9 +38,8 @@ public interface wizard {
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
   Map<InfixExpression.Operator, InfixExpression.Operator> conjugate = new HashMap<InfixExpression.Operator, InfixExpression.Operator>() {
     /**
-     *
      */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       put(GREATER, LESS);
       put(LESS, GREATER);
@@ -50,9 +49,8 @@ public interface wizard {
   };
   final Set<String> boxedTypes = new LinkedHashSet<String>() {
     /**
-     *
      */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
         add(¢);
@@ -62,9 +60,8 @@ public interface wizard {
   };
   final Set<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
     /**
-     *
      */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       for (final String ¢ : new String[] { "String" }) {
         add(¢);
@@ -76,9 +73,8 @@ public interface wizard {
    * {@link Assignment.Operator} . */
   final Map<InfixExpression.Operator, Assignment.Operator> infix2assign = new HashMap<InfixExpression.Operator, Assignment.Operator>() {
     /**
-     *
      */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       put(PLUS, PLUS_ASSIGN);
       put(MINUS, MINUS_ASSIGN);
@@ -99,9 +95,8 @@ public interface wizard {
    * {@link Assignment.Operator} . */
   final Map<Assignment.Operator, InfixExpression.Operator> assign2infix = new HashMap<Assignment.Operator, InfixExpression.Operator>() {
     /**
-     *
      */
-    private static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       put(PLUS_ASSIGN, PLUS);
       put(MINUS_ASSIGN, MINUS);
