@@ -6,14 +6,19 @@ import static il.org.spartan.azzert.*;
 /** Fluent API
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-10-15 */
+@SuppressWarnings("javadoc") //
 public interface AssertToAzzert {
   static <T> void assertEquals(final String reason, final T t1, final T t2) {
     azzert.that(reason, t2, is(t1));
   }
 
-  static <T> void assertEquals(final T t1, final T t2) {
-    azzert.that(t2, is(t1));
-  }
+  // public static void assertEquals(final @Nullable Object exp, final @Nullable
+  // Object val) {
+  // azzert.that(val, is(exp));
+  // }
+  // static <T> void assertEquals(final @Nullable T t1, final @Nullable T t2) {
+  // azzert.that(t2, is(t1));
+  // }
 
   static void assertFalse(final boolean ¢) {
     assert !¢;

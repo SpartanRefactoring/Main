@@ -18,8 +18,8 @@ import il.org.spartan.streotypes.*;
     final String s = "abc,def\r\n\tg\\m";
     final String t = CSV.escape(s);
     final String u = CSV.unescape(t);
-    azzert.that(t, is("abc\\.def\\r\\n\\tg\\\\m"));
-    azzert.that(u, is(s));
+    azzert.assertThat("", t, is("abc\\.def\\r\\n\\tg\\\\m"));
+    azzert.assertThat("", u, is(s));
     assert !s.equals(t);
   }
 
@@ -68,13 +68,13 @@ import il.org.spartan.streotypes.*;
     final Class<?>[] cs = { String.class, System.class, Object.class, null };
     assert Arrays.deepEquals(cs, CSV.splitToClasses(CSV.combine(cs)));
     final String s = "java.lang.String,java.lang.System,java.lang.Object,\\0";
-    azzert.that(CSV.combine(CSV.splitToClasses(s)), is(s));
-    azzert.that(CSV.combine(cs), is(s));
+    azzert.assertThat("", CSV.combine(CSV.splitToClasses(s)), is(s));
+    azzert.assertThat("", CSV.combine(cs), is(s));
   }
 
   @Test public void testSplitCombineEnum() {
     final String s = "GREEN,RED,BLUE,\\0,RED";
-    azzert.that(CSV.combine(CSV.split(Rgb.class, s)), is(s));
+    azzert.assertThat("", CSV.combine(CSV.split(Rgb.class, s)), is(s));
   }
 
   public static enum Rgb {

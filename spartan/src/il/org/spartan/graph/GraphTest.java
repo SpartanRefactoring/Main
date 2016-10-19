@@ -1,11 +1,8 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.AssertToAzzert.assertNull;
+import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertEquals;
 import static il.org.spartan.graph.GraphsSamplesGenerator.*;
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
@@ -15,7 +12,8 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spatan.iteration.*;
 
-@SuppressWarnings("static-method") public class GraphTest {
+@SuppressWarnings({ "static-method", "javadoc" }) //
+public class GraphTest {
   static void verifyEdge(final Graph<String> s, final int from, final int to) {
     assert null != s.vertices().get(from);
     assert null != s.vertices().get(to);
@@ -144,7 +142,7 @@ import il.org.spatan.iteration.*;
   }
 
   private static void verifyFound(final ImmutableArrayList<Vertex<String>> s, final Vertex<String> u) {
-    assertThat(s, hasItem(u));
+    azzert.that(s, hasItem(u));
   }
 
   @Test public void builderAddGraph() {
@@ -277,7 +275,7 @@ import il.org.spatan.iteration.*;
     assert i.hasNext();
     assertEquals(i.next(), g.vertex("B"));
     assert !i.hasNext();
-    assertNull(i.next());
+    azzert.isNull(i.next());
   }
 
   @Test public void singleLoopGraph() {

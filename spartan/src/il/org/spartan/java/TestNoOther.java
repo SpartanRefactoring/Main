@@ -50,12 +50,12 @@ public class TestNoOther {
   private final File fin = new File("test/data/UnicodeFile");
 
   @Test public void brace_brace_newline() throws IOException {
-    azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
+    azzert.assertThat("", TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
 
   @Theory public void fullTokenization(final File ¢) throws IOException {
     System.err.println("Testing " + ¢);
-    azzert.that(TokenAsIs.fileToString(¢), is(read(¢)));
+    azzert.assertThat("", TokenAsIs.fileToString(¢), is(read(¢)));
   }
 
   @Test public void some_method() throws IOException {
@@ -70,23 +70,23 @@ public class TestNoOther {
         " ", //
         " ", //
         "  ");
-    azzert.that(TokenAsIs.stringToString(s), is(s));
+    azzert.assertThat("", TokenAsIs.stringToString(s), is(s));
   }
 
   @Test public void unicode() throws IOException {
-    azzert.that(TokenAsIs.stringToString("יוסי") + "", is("יוסי"));
+    azzert.assertThat("", TokenAsIs.stringToString("יוסי") + "", is("יוסי"));
   }
 
   @Test public void unicodeFileAgainstFileOutput() throws IOException {
     final String s = TokenAsIs.fileToString(fin);
     final File fout = new File(fin.getPath() + ".out");
     write(fout, s);
-    azzert.that(read(fout), is(s));
-    azzert.that(read(fout), is(read(fin)));
+    azzert.assertThat("", read(fout), is(s));
+    azzert.assertThat("", read(fout), is(read(fin)));
   }
 
   @Test public void unicodeFileAgainstString() throws IOException {
-    azzert.that(TokenAsIs.fileToString(fin), is(read(fin)));
+    azzert.assertThat("", TokenAsIs.fileToString(fin), is(read(fin)));
   }
 
   @Test public void unicodeFileLenth() throws IOException {

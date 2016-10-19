@@ -19,19 +19,19 @@ import il.org.spartan.*;
   }
 
   @Test public void createFileStaticType() {
-    azzert.that(SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
+    azzert.assertThat("", SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createFileType() {
-    azzert.that(SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
+    azzert.assertThat("", SignatureAnalyzer.ofFile("Data/file").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderStaticType() {
-    azzert.that(SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
+    azzert.assertThat("", SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createReaderType() {
-    azzert.that(SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
+    azzert.assertThat("", SignatureAnalyzer.ofReader(new StringReader("Hello, World!\n")).getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createString() {
@@ -39,10 +39,10 @@ import il.org.spartan.*;
   }
 
   @Test public void createStringStaticType() {
-    azzert.that(SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
+    azzert.assertThat("", SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
   }
 
   @Test public void createStringType() {
-    azzert.that(SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
+    azzert.assertThat("", SignatureAnalyzer.ofString("Hello, World!\n").getClass(), is(SignatureAnalyzer.class));
   }
 }
