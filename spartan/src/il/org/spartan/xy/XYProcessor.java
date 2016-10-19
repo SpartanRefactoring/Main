@@ -66,10 +66,8 @@ public interface XYProcessor {
   }
 
   static class LogLog extends Wrapper {
-    /**
-    * Instantiate  {@link LogLog} .
-    * @param inner  
-    */
+    /** Instantiate {@link LogLog} .
+     * @param inner */
     public LogLog(final XYProcessor inner) {
       super(inner);
     }
@@ -177,10 +175,8 @@ public interface XYProcessor {
   }
 
   static class SquareErrorWrapper extends Wrapper {
-    /**
-    * Instantiate  {@link SquareErrorWrapper} .
-    * @param inner  
-    */
+    /** Instantiate {@link SquareErrorWrapper} .
+     * @param inner */
     public SquareErrorWrapper(final XYProcessor inner) {
       super(inner);
     }
@@ -268,10 +264,8 @@ public interface XYProcessor {
   abstract static class Wrapper extends Vacuous {
     protected final XYProcessor inner;
 
-    /**
-    * Instantiate  {@link Wrapper} .
-    * @param inner  
-    */
+    /** Instantiate {@link Wrapper} .
+     * @param inner */
     public Wrapper(final XYProcessor inner) {
       this.inner = inner;
     }

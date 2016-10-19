@@ -30,7 +30,7 @@ public class Out {
       int n = 0;
       for (final Object ¢ : a)
         if (++n > MAX_FIRST && n <= a.size() - MAX_LAST)
-          System.out.print((new Once("\t...\n")));
+          System.out.print(new Once("\t...\n"));
         else
           System.out.printf("\t%2d) %s\n", box(n), ¢);
     }

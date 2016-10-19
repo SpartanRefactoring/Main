@@ -240,9 +240,9 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
         if (data[$] == null)
           return $;
         else
-      for (int ¢ = 0; ¢ < size(); ++¢)
-        if (o.equals(data[¢]))
-          return ¢;
+          for (int ¢ = 0; ¢ < size(); ++¢)
+            if (o.equals(data[¢]))
+              return ¢;
     return -1;
   }
 
@@ -271,9 +271,9 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
         if (data[$] == null)
           return $;
         else
-      for (int ¢ = size() - 1; ¢ >= 0; --¢)
-        if (o.equals(data[¢]))
-          return ¢;
+          for (int ¢ = size() - 1; ¢ >= 0; --¢)
+            if (o.equals(data[¢]))
+              return ¢;
     return -1;
   }
 

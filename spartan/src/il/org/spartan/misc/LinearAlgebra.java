@@ -607,7 +607,7 @@ public enum LinearAlgebra {
       final double[][] y = LinearAlgebra.adjust(x);
       assertEquals(LinearAlgebra.rows(x), LinearAlgebra.rows(y));
       for (int ¢ = 0; ¢ < rows; ++¢)
-        azzert.that("Inappropriate column length at row " + ¢, y[¢].length, is((rows - 1)));
+        azzert.that("Inappropriate column length at row " + ¢, y[¢].length, is(rows - 1));
     }
 
     @Test public void isDefinedFalse() {

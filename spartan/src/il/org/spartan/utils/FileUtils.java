@@ -36,7 +36,7 @@ public class FileUtils {
     final String ls = System.getProperty("line.separator");
     final StringBuilder $ = new StringBuilder();
     try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-      for (String line = reader.readLine(); line != null;)
+      for (final String line = reader.readLine(); line != null;)
         $.append(line).append(ls);
     }
     return $ + "";

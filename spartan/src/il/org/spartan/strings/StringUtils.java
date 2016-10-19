@@ -269,7 +269,7 @@ import il.org.spartan.utils.*;
    * @return the result of <code>o.toString()</code> wrapped with single
    *         quotes */
   public static String quote(final Object ¢) {
-    return wrap('\'', (¢ + ""));
+    return wrap('\'', ¢ + "");
   }
 
   public static String repeat(final int i, final char c) {

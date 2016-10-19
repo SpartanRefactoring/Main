@@ -41,7 +41,7 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 1000; ++¢)
       m.put(¢, 2 * ¢ + 1);
     for (int ¢ = 0; ¢ < 1000; ++¢)
-      azzert.that(m.get(¢), is((2 * ¢ + 1)));
+      azzert.that(m.get(¢), is(2 * ¢ + 1));
   }
 
   @Test public void get2() {
@@ -77,7 +77,7 @@ public final class IntegersMapTest {
       for (int j = 0; j <= i; ++j)
         m.increment(i);
     for (int ¢ = 0; ¢ < 100; ++¢)
-      azzert.that(m.get(¢), is((¢ + 1)));
+      azzert.that(m.get(¢), is(¢ + 1));
   }
 
   @Test public void init1000() {

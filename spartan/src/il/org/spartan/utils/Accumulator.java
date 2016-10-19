@@ -18,10 +18,8 @@ public abstract class Accumulator {
     return As.binary(¢);
   }
 
-  /**
-   * @param ¢
-   * @return  
-   */
+  /** @param ¢
+   * @return */
   static int asInteger(final String ¢) {
     return As.binary(¢);
   }

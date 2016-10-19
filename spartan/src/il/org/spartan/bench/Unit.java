@@ -107,7 +107,7 @@ public enum Unit {
     if (d < 0)
       return "-" + format2(-d);
     final double p = 100 * d;
-    return "%" + (p < 0.01 ? ".0f" : (p < 0.1 ? ".2f" : (p < 1 || p < 10 ? ".1f" : (p < 100 || p < 1000 ? ".0f" : "5.0g"))));
+    return "%" + (p < 0.01 ? ".0f" : p < 0.1 ? ".2f" : p < 1 || p < 10 ? ".1f" : p < 100 || p < 1000 ? ".0f" : "5.0g");
   }
 
   public static String format3(final double d) {

@@ -44,7 +44,8 @@ import il.org.spartan.*;
   }
 
   @Test public void factorial68() {
-    azzert.that(new BigInteger("2480035542436830599600990418569171581047399201355367672371710738018221445712183296000000000000000"), is(Binomial.factorial(68)));
+    azzert.that(new BigInteger("2480035542436830599600990418569171581047399201355367672371710738018221445712183296000000000000000"),
+        is(Binomial.factorial(68)));
   }
 
   @Test public void probability() {

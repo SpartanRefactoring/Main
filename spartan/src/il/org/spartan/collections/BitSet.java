@@ -54,11 +54,9 @@ public enum BitSet {
     return (short) ($$[¢ + 1] - 1);
   }
 
-  /**
-   * Return the number of elements in a set represented as a bit mask.
-   * @param mask  a bit mask to examine
-   * @return  the number of bits equal to 1 in the mask. 
-   */
+  /** Return the number of elements in a set represented as a bit mask.
+   * @param mask a bit mask to examine
+   * @return the number of bits equal to 1 in the mask. */
   public static int cardinality(final int mask) {
     return mask == 0 ? 0 : (mask & 0x01) + cardinality(mask >>> 1);
   }

@@ -106,7 +106,7 @@ public final class IntegersTest extends integers {
       assert !disjoint(v);
       Arrays.sort(v);
       azzert.that(i, is(v[0]));
-      azzert.that((i + N - 1), is(v[N - 1]));
+      azzert.that(i + N - 1, is(v[N - 1]));
       remove(i);
       add(i + N);
     }

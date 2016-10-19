@@ -1,4 +1,5 @@
 package il.org.spartan.classfiles.reify;
+
 import static il.org.spartan.azzert.*;
 
 import java.io.*;
@@ -63,7 +64,7 @@ import il.org.spartan.utils.*;
   @Test public void allPrimitiveFieldsModifiers() {
     final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
     for (final FlaggedEntity ¢ : fields)
-      azzert.that(¢.flags, is((Modifier.FINAL | Modifier.PUBLIC)));
+      azzert.that(¢.flags, is(Modifier.FINAL | Modifier.PUBLIC));
   }
 
   @Test public void allPrimitiveFieldsNames() {
@@ -78,13 +79,13 @@ import il.org.spartan.utils.*;
 
   @Test public void allPrimitiveFieldsTypes() {
     final TypedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    azzert.that((fields[0].type + ""), is("byte"));
-    azzert.that((fields[1].type + ""), is("short"));
-    azzert.that((fields[2].type + ""), is("long"));
-    azzert.that((fields[3].type + ""), is("float"));
-    azzert.that((fields[4].type + ""), is("double"));
-    azzert.that((fields[5].type + ""), is("char"));
-    azzert.that((fields[6].type + ""), is("boolean"));
+    azzert.that(fields[0].type + "", is("byte"));
+    azzert.that(fields[1].type + "", is("short"));
+    azzert.that(fields[2].type + "", is("long"));
+    azzert.that(fields[3].type + "", is("float"));
+    azzert.that(fields[4].type + "", is("double"));
+    azzert.that(fields[5].type + "", is("char"));
+    azzert.that(fields[6].type + "", is("boolean"));
   }
 
   @Test public void annotationCounts() {
@@ -96,7 +97,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void annotationFlags() {
-    azzert.that((ClassInfo.make(Annotation.class).flags & ~(Modifier.ABSTRACT | Modifier.INTERFACE | FlaggedEntity.ANNOTATION)), is(0));
+    azzert.that(ClassInfo.make(Annotation.class).flags & ~(Modifier.ABSTRACT | Modifier.INTERFACE | FlaggedEntity.ANNOTATION), is(0));
   }
 
   @Test public void annotationIsAnnotation() {
@@ -119,7 +120,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ArrayField.class).fields[0];
     azzert.that(field.name, is("fieldName"));
     azzert.that(field.descriptor, is("[[[[I"));
-    azzert.that((field.type + ""), is("int[][][][]"));
+    azzert.that(field.type + "", is("int[][][][]"));
   }
 
   @Test public void badFile() {
@@ -155,7 +156,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ClassWithCapitalL.class).fields[0];
     azzert.that(field.name, is("fieldName"));
     azzert.that(field.descriptor, is("Lil/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest$ClassWithCapitalL;"));
-    azzert.that((field.type + ""), is("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL"));
+    azzert.that(field.type + "", is("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL"));
   }
 
   @Test public void codeAttributeExists() {
@@ -227,7 +228,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void complexMethod() {
-    azzert.that((ClassInfo.make(ComplexMethod.class).methods[0].type + ""), is("java.lang.Object[][][] (java.lang.Void, java.lang.Object, int, float, double[][])"));
+    azzert.that(ClassInfo.make(ComplexMethod.class).methods[0].type + "",
+        is("java.lang.Object[][][] (java.lang.Void, java.lang.Object, int, float, double[][])"));
   }
 
   @Test public void dataInputStreamFromPath() throws FileNotFoundException {
@@ -280,7 +282,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassDefaultConstructorType() {
-    azzert.that((ClassInfo.make(EmptyClass.class).constructors[0].type + ""), is("()"));
+    azzert.that(ClassInfo.make(EmptyClass.class).constructors[0].type + "", is("()"));
   }
 
   @Test public void emptyClassDescriptor() {
@@ -294,7 +296,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassFlags() {
-    azzert.that(ClassInfo.make(EmptyClass.class).flags, is((Modifier.PUBLIC | Modifier.SYNCHRONIZED)));
+    azzert.that(ClassInfo.make(EmptyClass.class).flags, is(Modifier.PUBLIC | Modifier.SYNCHRONIZED));
   }
 
   @Test public void emptyClassIsDeprecated() {
@@ -429,7 +431,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(IntField.class).fields[0];
     azzert.that(field.name, is("fieldName"));
     azzert.that(field.descriptor, is("I"));
-    azzert.that((field.type + ""), is("int"));
+    azzert.that(field.type + "", is("int"));
   }
 
   @Test public void isClass() {
@@ -440,12 +442,12 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void meFlags() {
-    azzert.that(ClassInfo.make(this.getClass()).flags, is((Modifier.PUBLIC | Modifier.SYNCHRONIZED)));
+    azzert.that(ClassInfo.make(this.getClass()).flags, is(Modifier.PUBLIC | Modifier.SYNCHRONIZED));
   }
 
   @Test public void meHasCorrectInteface() {
     final ClassInfo __ = ClassInfo.make(this.getClass());
-    azzert.that((__.interfaces[0] + ""), is(Serializable.class.getCanonicalName()));
+    azzert.that(__.interfaces[0] + "", is(Serializable.class.getCanonicalName()));
   }
 
   @Test public void meHasOneInteface() {
@@ -469,8 +471,8 @@ import il.org.spartan.utils.*;
   @Test public void methodExceptionsName() {
     class __ {
     }
-    azzert.that((ClassInfo.make(__.class).methods[0].exceptions[0] + ""), is(IOException.class.getName()));
-    azzert.that((ClassInfo.make(__.class).methods[0].exceptions[1] + ""), is(ArrayIndexOutOfBoundsException.class.getName()));
+    azzert.that(ClassInfo.make(__.class).methods[0].exceptions[0] + "", is(IOException.class.getName()));
+    azzert.that(ClassInfo.make(__.class).methods[0].exceptions[1] + "", is(ArrayIndexOutOfBoundsException.class.getName()));
   }
 
   @Test public void methodWithParameters() {
@@ -533,7 +535,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ObjectField.class).fields[0];
     azzert.that(field.name, is("fieldName"));
     azzert.that(field.descriptor, is("Ljava/lang/Object;"));
-    azzert.that((field.type + ""), is("java.lang.Object"));
+    azzert.that(field.type + "", is("java.lang.Object"));
   }
 
   @Test public void objectSuperClassName() {
@@ -558,7 +560,7 @@ import il.org.spartan.utils.*;
 
   @Test public void oneFieldFlags() {
     final int flags = ClassInfo.make(OneField.class).fields[0].flags;
-    azzert.that(flags, is((Modifier.FINAL | Modifier.PUBLIC | FlaggedEntity.DEPRECATED)));
+    azzert.that(flags, is(Modifier.FINAL | Modifier.PUBLIC | FlaggedEntity.DEPRECATED));
   }
 
   @Test public void oneFieldIsDeperecated() {
@@ -571,7 +573,7 @@ import il.org.spartan.utils.*;
 
   @Test public void oneMethodFlags() {
     final int flags = ClassInfo.make(OneMethod.class).methods[0].flags;
-    azzert.that(flags, is((Modifier.FINAL | Modifier.PUBLIC)));
+    azzert.that(flags, is(Modifier.FINAL | Modifier.PUBLIC));
   }
 
   @Test public void oneMethodLengths() {
@@ -736,7 +738,7 @@ import il.org.spartan.utils.*;
 
   @Test public void staticInitializerType() {
     final InitializerInfo[] initializers = ClassInfo.make(StaticInitializer.class).initializers;
-    azzert.that((initializers[0].type + ""), is("()"));
+    azzert.that(initializers[0].type + "", is("()"));
   }
 
   @Test public void twoFieldsAreNotPrimtive() {
@@ -746,8 +748,8 @@ import il.org.spartan.utils.*;
 
   @Test public void twoFieldsFlags() {
     final FlaggedEntity[] fields = ClassInfo.make(TwoFields.class).fields;
-    azzert.that(fields[0].flags, is((Modifier.FINAL | Modifier.STATIC)));
-    azzert.that(fields[1].flags, is((Modifier.FINAL | Modifier.PRIVATE)));
+    azzert.that(fields[0].flags, is(Modifier.FINAL | Modifier.STATIC));
+    azzert.that(fields[1].flags, is(Modifier.FINAL | Modifier.PRIVATE));
   }
 
   @Test public void twoMethodLengths() {
@@ -765,12 +767,12 @@ import il.org.spartan.utils.*;
   @Test public void twoMethodsFlags() {
     final FlaggedEntity[] methods = ClassInfo.make(TwoMethods.class).methods;
     azzert.that(methods[0].flags, is(Modifier.ABSTRACT));
-    azzert.that(methods[1].flags, is((Modifier.FINAL | Modifier.PUBLIC | Modifier.STATIC)));
+    azzert.that(methods[1].flags, is(Modifier.FINAL | Modifier.PUBLIC | Modifier.STATIC));
   }
 
   @Test public void voidMethod() {
     azzert.that(ClassInfo.make(VoidMethod.class).methods[0].descriptor, is("()V"));
-    azzert.that((ClassInfo.make(VoidMethod.class).methods[0].type + ""), is("void ()"));
+    azzert.that(ClassInfo.make(VoidMethod.class).methods[0].type + "", is("void ()"));
   }
 
   public static abstract class AllAccessLevels {
@@ -887,7 +889,8 @@ import il.org.spartan.utils.*;
 
     @Override public String toString() {
       final long stop = s.time();
-      return String.format("Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
+      return String.format(
+          "Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
           Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
           Unit.NANOSECONDS.format(stop)) + "";
     }
