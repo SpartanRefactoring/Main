@@ -68,7 +68,7 @@ public class Analyzer {
     return $;
   }
 
-  /** @param inputFolder of the project to be analyzed.
+  /** @param inputFolder of the project to be analyzed
    * @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
   private static void analyze(final String inputFolder, final String outputDir) {
