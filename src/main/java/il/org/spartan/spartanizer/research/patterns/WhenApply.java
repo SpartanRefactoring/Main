@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -16,8 +18,8 @@ public final class WhenApply extends NanoPatternTipper<IfStatement> implements T
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X) $N($A);", "eval((x) -> $N($A)).when($X);", ""));
-      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "eval((x) -> $X2.$N($A)).when($X1);", ""));
+      add(TipperFactory.tipper("if($X) $N($A);", "execute((x) -> $N($A)).when($X);", ""));
+      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "execute((x) -> $X2.$N($A)).when($X1);", ""));
     }
   };
 
@@ -27,8 +29,15 @@ public final class WhenApply extends NanoPatternTipper<IfStatement> implements T
 
   @Override public boolean canTip(final IfStatement x) {
     for (final UserDefinedTipper<IfStatement> ¢ : tippers)
-      if (¢.canTip(x))
+      if (¢.canTip(x) && !throwing(step.then(x)) && !iz.returnStatement(step.then(x)))
         return true;
+    return false;
+  }
+
+  /** @param then
+   * @return */
+  private static boolean throwing(Statement then) {
+    // TODO Auto-generated method stub
     return false;
   }
 
