@@ -448,15 +448,15 @@ public abstract class GUI$Applicator extends Refactoring {
     if (s instanceof TrackerSelection)
       return apply(u, (TrackerSelection) s);
     try {
-      return internalApply(u, s);
+      return apply(u);
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
       return 0;
     }
   }
 
-  private int internalApply(final WrappedCompilationUnit u, final AbstractSelection<?> s) throws JavaModelException, CoreException {
-    final TextFileChange textChange = init(u, s);
+  private int apply(final WrappedCompilationUnit u)  throws JavaModelException, CoreException {
+    final TextFileChange textChange = init(u);
     assert textChange != null;
     final AtomicInteger $ = new AtomicInteger();
     try {
@@ -468,7 +468,6 @@ public abstract class GUI$Applicator extends Refactoring {
           "\n counter=" + $ + //
           "\n u=" + u + //
           "\n u=" + u.name() + //
-          "\n s=" + s + //
           "\n textchange=" + textChange + //
           "\n textchange.getEdit.length=" + textChange.getEdit() + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
@@ -480,9 +479,8 @@ public abstract class GUI$Applicator extends Refactoring {
     return $.get();
   }
 
-  private TextFileChange init(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
+  private TextFileChange init(final WrappedCompilationUnit u) {
     setICompilationUnit(u.descriptor);
-    setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
     progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
     textChange.setTextType("java");
@@ -491,10 +489,10 @@ public abstract class GUI$Applicator extends Refactoring {
 
   public int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
-      final TextFileChange textChange = init(u, s);
+      final TextFileChange textChange = init(u);
+      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
       final AtomicInteger $ = new AtomicInteger();
-      final ASTRewrite r = createRewrite(u.build().compilationUnit, $);
-      textChange.setEdit(r.rewriteAST());
+      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       if (s != null)
