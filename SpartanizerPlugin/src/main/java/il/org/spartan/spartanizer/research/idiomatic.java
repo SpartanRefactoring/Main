@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.junit.*;
 
@@ -247,6 +248,21 @@ public interface idiomatic {
       azzert.isNull(take(null).unless(true));
       azzert.isNull(take(null).unless(false));
     }
+
+    String mapper(final String ¢) {
+      return ¢ + ¢;
+    }
+
+    @Test public void useApplier() {
+      List<String> before = new ArrayList<>();
+      before.add("1");
+      before.add("2");
+      before.add("3");
+      List<String> after = (List<String>) apply(before).to(x -> mapper(x));
+      assertEquals("11", after.get(0));
+      assertEquals("22", after.get(1));
+      assertEquals("33", after.get(2));
+    }
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -265,14 +281,42 @@ public interface idiomatic {
     }
   }
 
-  static <T> With<T> map(Collection<T> ¢) {
-    return new With<>(¢);
+  static <T> WithMapper<T> apply(Collection<T> ¢) {
+    return new WithMapper<>(¢);
   }
 
-  class With<T> {
+  // static <T> WithReducer<T> reduce(Collection<T> ¢) {
+  // return new WithReducer<>(¢);
+  // }
+  class WithMapper<T> {
     final Collection<T> collection;
 
-    public With(final Collection<T> collection) {
+    public WithMapper(final Collection<T> collection) {
+      this.collection = collection;
+    }
+
+    public <R> Collection<R> to(final Function<? super T, ? extends R> mapper) {
+      return collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
+      // Collection<R> $ = null;
+      // try {
+      // $ = collection.getClass().getConstructor().newInstance();
+      // for (T ¢ : collection)
+      // $.add(mapper.apply(¢));
+      // } catch (InstantiationException | IllegalAccessException |
+      // IllegalArgumentException | InvocationTargetException |
+      // NoSuchMethodException
+      // | SecurityException x) {
+      // x.printStackTrace();
+      // }
+      // return $;
+      // }
+    }
+  }
+
+  class WithReducer<T> {
+    final Collection<T> collection;
+
+    public WithReducer(final Collection<T> collection) {
       this.collection = collection;
     }
 
@@ -287,6 +331,48 @@ public interface idiomatic {
         x.printStackTrace();
       }
       return $;
+    }
+  }
+
+  @SuppressWarnings("rawtypes") class GenericCollector<R> implements Collector<R, Collection<R>, Collection<R>> {
+    private Class<? extends Collection> cls;
+
+    public GenericCollector(Class<? extends Collection> cls) {
+      this.cls = cls;
+    }
+
+    @SuppressWarnings("unchecked") private <I> Function<I, Collection<R>> castingIdentity() {
+      return i -> (Collection<R>) i;
+    }
+
+    @SuppressWarnings("unchecked") @Override public Supplier<Collection<R>> supplier() {
+      return () -> {
+        try {
+          return cls.getConstructor().newInstance();
+        } catch (Exception x) {
+          x.printStackTrace();
+        }
+        return null;
+      };
+    }
+
+    @Override public BiConsumer<Collection<R>, R> accumulator() {
+      return (c, t) -> c.add(t);
+    }
+
+    @Override public BinaryOperator<Collection<R>> combiner() {
+      return (left, right) -> {
+        left.addAll(right);
+        return left;
+      };
+    }
+
+    @Override public Function<Collection<R>, Collection<R>> finisher() {
+      return castingIdentity();
+    }
+
+    @Override public Set<Characteristics> characteristics() {
+      return new HashSet<>();
     }
   }
 }
