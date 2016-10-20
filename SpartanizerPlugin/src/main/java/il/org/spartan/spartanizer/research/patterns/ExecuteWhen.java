@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
  * @year 2016 */
-public final class WhenApply extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
+public final class ExecuteWhen extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
