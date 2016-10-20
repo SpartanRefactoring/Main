@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.io.*;
 import java.util.*;
 import il.org.spartan.plugin.*;
 
@@ -30,6 +31,12 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
     spectrumFileName = folder + name + ".spectrum.CSV";
+    try {
+      befores = new PrintWriter(beforeFileName);
+      afters = new PrintWriter(afterFileName);
+    } catch (FileNotFoundException x) {
+      x.printStackTrace();
+    }  
   }
 
   @Override public void apply() {
