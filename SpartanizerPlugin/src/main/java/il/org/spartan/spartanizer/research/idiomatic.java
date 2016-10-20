@@ -301,6 +301,14 @@ public interface idiomatic {
     return new ReducerCollectionHolder<>(¢);
   }
 
+  static <T> MaxCollectionHolder<T> max(Collection<T> ¢) {
+    return new MaxCollectionHolder<>(¢);
+  }
+
+  static <T> MinCollectionHolder<T> min(Collection<T> ¢) {
+    return new MinCollectionHolder<>(¢);
+  }
+
   class MapperCollectionHolder<T> {
     final Collection<T> collection;
 
@@ -322,6 +330,30 @@ public interface idiomatic {
 
     public T with(final BinaryOperator<T> reducer) {
       return collection.stream().reduce(reducer).get();
+    }
+  }
+
+  class MaxCollectionHolder<T> {
+    final Collection<T> collection;
+
+    public MaxCollectionHolder(final Collection<T> collection) {
+      this.collection = collection;
+    }
+
+    public T to(final Comparator<? super T> comperator) {
+      return collection.stream().max(comperator).get();
+    }
+  }
+
+  class MinCollectionHolder<T> {
+    final Collection<T> collection;
+
+    public MinCollectionHolder(final Collection<T> collection) {
+      this.collection = collection;
+    }
+
+    public T to(final Comparator<? super T> comperator) {
+      return collection.stream().min(comperator).get();
     }
   }
 
