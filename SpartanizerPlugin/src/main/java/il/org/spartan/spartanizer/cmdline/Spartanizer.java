@@ -1,12 +1,17 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
+
+import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 
-/** A configurable object capable of making a scan.
+/** A command line client to apply the spartanization process on a bunch of
+ * projects together.
  * @author Yossi Gil
+ * @author Matteo Orru'
  * @since 2016 */
+
 public final class Spartanizer extends AbstractSpartanizer{
   
   public static void main(final String[] args) {
@@ -31,7 +36,20 @@ public final class Spartanizer extends AbstractSpartanizer{
     afterFileName = folder + name + ".after.java";
     reportFileName = folder + name + ".CSV";
     spectrumFileName = folder + name + ".spectrum.CSV";
-//    coverageFileName = folder + name + ".coverage.CSV";
+//    setUpPrintWriters(); // Note: temporarily removed
+    try {
+      befores = new PrintWriter(beforeFileName);
+      afters = new PrintWriter(afterFileName);
+    } catch (FileNotFoundException x) {
+      x.printStackTrace();
+    }    
+//    coverageFileName = folder + name + ".coverage.CSV"; // Note: temporarily removed
+    try {
+      report = new CSVStatistics(reportFileName, "property");
+      spectrumStats = new CSVStatistics(spectrumFileName, "property");
+    } catch (IOException x) {
+      x.printStackTrace();
+      System.err.println("problem in setting up reports");
+    }
   }
-
 }
