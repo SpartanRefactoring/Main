@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.*;
@@ -22,10 +23,10 @@ public class Analyzer {
    * @param f file
    * @param s string */
   private static void appendFile(final File f, final String s) {
-    try (FileWriter fw = new FileWriter(f, true)) {
-      fw.write(s);
-    } catch (final IOException e) {
-      e.printStackTrace();
+    try (FileWriter w = new FileWriter(f, true)) {
+      w.write(s);
+    } catch (final IOException x) {
+      monitor.infoIOException(x, "append");
     }
   }
 
@@ -72,8 +73,7 @@ public class Analyzer {
    * @param outputDir to which the spartanized code file and CSV files will be
    *        placed in */
   private static void analyze(final String inputFolder, final String outputDir) {
-    final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
-    addNanoPatterns(spartanizer);
+    final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
     sanityCheck();
     String spartanizedCode = "";
     new File(outputDir + "/after.java").delete();
@@ -88,8 +88,10 @@ public class Analyzer {
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the spartanizer.
-   * @param ¢ our spartanizer */
-  private static void addNanoPatterns(final InteractiveSpartanizer ¢) {
+   * @param ¢ our spartanizer 
+   * @return */
+  private static InteractiveSpartanizer addNanoPatterns(final InteractiveSpartanizer ¢) {
+    return 
     ¢.add(ConditionalExpression.class, //
         new DefaultsTo(), //
         new SafeReference(), //
@@ -122,8 +124,7 @@ public class Analyzer {
   /** This us just to check that the InteractiveSpartanizer works and that
    * tippers can be added to it. */
   private static void sanityCheck() {
-    final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
-    addNanoPatterns(spartanizer);
-    assert spartanizer.fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
+    assert addNanoPatterns(new InteractiveSpartanizer())
+        .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }
