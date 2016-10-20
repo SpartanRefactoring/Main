@@ -6,6 +6,7 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 import java.util.*;
 import java.util.Map.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -172,17 +173,6 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-//    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-//        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-//      befores = b;
-//      afters = a;
-//    } catch (final IOException x) {
-//      x.printStackTrace();
-//      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
-//    }
-//    setUpPrintWriters();
-//    setUpReports();
-    // coverageStats = new CSVStatistics(coverageFileName, "property");
     apply();
     closePrintWriters();
         
@@ -206,8 +196,13 @@ public abstract class AbstractSpartanizer {
     return false;
   }
   
+  /**
+   * Compute metrics for a generic number of ASTNode
+   * @param $
+   * @author Matteo Orru'
+   */
+  
   @SuppressWarnings("unused") private void computeMetricsGeneric(final ASTNode ... $){ 
-    
     int length;
     int tokens;
     int nodes;
@@ -215,7 +210,6 @@ public abstract class AbstractSpartanizer {
     int statements;
     int tide;
     int essence;
-    
     // input metrics
     for(ASTNode ¢: $){
       length = ¢.getLength();
@@ -225,17 +219,24 @@ public abstract class AbstractSpartanizer {
       statements = extract.statements(az.methodDeclaration(¢).getBody()).size();
       tide = clean($ + "").length();
       essence = Essence.of(¢ + "").length();
-           
       report.summaryFileName();
       report//
           .put("Category", extract.category(¢))//
           .put("Name", extract.name(¢))//
           .put("Nodes1", ¢)//
-          .put("Body", body);
-      
+          .put("Body", body)
+          .put("Length1", length)//
+          .put("Tokens1", tokens)
+          .put("Length1", length)
+          .put("Tide1", tide)//
+          .put("Essence1", essence)//
+          .put("Statements1", statements);//
     }
-    
     report.nl();
+  }
+  
+  public void runReport(Consumer<CSVStatistics> report){
+    
   }
 
   /**
