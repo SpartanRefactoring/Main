@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 
 import java.util.*;
 import java.util.function.*;
-import java.util.function.Function;
 import java.util.stream.*;
 
 import org.junit.*;
@@ -107,10 +106,22 @@ public interface idiomatic {
     return condition ? eval : tIgnore;
   }
 
-  /** @param condition JD
-   * @return */
-  static Executor when(final boolean condition) {
-    return condition ? Executor.execute : Executor.ignore;
+  /** Like eval.when but returning void
+   * @author Ori Marcovitch
+   * @since 2016 */
+  abstract static class Executor {
+    public abstract <T> void when(final boolean c);
+  }
+
+  static <S> Executor execute(final Consumer<S> s) {
+    return new Executor() {
+      final Consumer<S> consumer = s;
+
+      @Override public void when(boolean condition) {
+        if (condition)
+          consumer.accept(null);
+      }
+    };
   }
 
   static <T> Storer<T> defolt(final T ¢) {
@@ -297,23 +308,9 @@ public interface idiomatic {
     }
   }
 
-  /** @author Ori Marcovitch
-   * @since 2016 */
-  abstract static class Executor {
-    public abstract <T> void execute(final Consumer<T> v);
-
-    static Executor execute = new Executor() {
-      @Override public <T> void execute(final Consumer<T> ¢) {
-        ¢.accept(null);
-      }
-    };
-    static Executor ignore = new Executor() {
-      @Override public <T> void execute(@SuppressWarnings("unused") final Consumer<T> __) {
-        // do nothing
-      }
-    };
-  }
-
+  //////////////////////////////////////////////////////
+  /////////////////// Collections //////////////////////
+  //////////////////////////////////////////////////////
   static <T> MapperCollectionHolder<T> apply(Collection<T> ¢) {
     return map(¢);
   }
