@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.research;
 
 import static il.org.spartan.azzert.*;
 
-import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -14,7 +13,9 @@ import il.org.spartan.*;
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
- * @since 2013/07/01 */
+ * @since 2013/07/01
+ * @author Ori Marcovitch
+ * @since 20/10/2016 */
 public interface idiomatic {
   /** Single quote: */
   final String QUOTE = "'";
@@ -263,6 +264,14 @@ public interface idiomatic {
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
     }
+
+    @Test public void useReducer() {
+      List<String> before = new ArrayList<>();
+      before.add("1");
+      before.add("2");
+      before.add("3");
+      assertEquals("123", reduce(before).with((x, y) -> x + y));
+    }
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -289,6 +298,18 @@ public interface idiomatic {
     return new MapperCollectionHolder<>(¢);
   }
 
+  static <T> ReducerCollectionHolder<T> reduce(Collection<T> ¢) {
+    return new ReducerCollectionHolder<>(¢);
+  }
+
+  static <T> MaxCollectionHolder<T> max(Collection<T> ¢) {
+    return new MaxCollectionHolder<>(¢);
+  }
+
+  static <T> MinCollectionHolder<T> min(Collection<T> ¢) {
+    return new MinCollectionHolder<>(¢);
+  }
+
   class MapperCollectionHolder<T> {
     final Collection<T> collection;
 
@@ -301,24 +322,39 @@ public interface idiomatic {
     }
   }
 
-  class WithReducer<T> {
+  class ReducerCollectionHolder<T> {
     final Collection<T> collection;
 
-    public WithReducer(final Collection<T> collection) {
+    public ReducerCollectionHolder(final Collection<T> collection) {
       this.collection = collection;
     }
 
-    @SuppressWarnings("unchecked") public <R> Collection<R> with(final Function<? super T, ? extends R> mapper) {
-      Collection<R> $ = null;
-      try {
-        $ = collection.getClass().getConstructor().newInstance();
-        for (T ¢ : collection)
-          $.add(mapper.apply(¢));
-      } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-          | SecurityException x) {
-        x.printStackTrace();
-      }
-      return $;
+    public T with(final BinaryOperator<T> reducer) {
+      return collection.stream().reduce(reducer).get();
+    }
+  }
+
+  class MaxCollectionHolder<T> {
+    final Collection<T> collection;
+
+    public MaxCollectionHolder(final Collection<T> collection) {
+      this.collection = collection;
+    }
+
+    public T to(final Comparator<? super T> comperator) {
+      return collection.stream().max(comperator).get();
+    }
+  }
+
+  class MinCollectionHolder<T> {
+    final Collection<T> collection;
+
+    public MinCollectionHolder(final Collection<T> collection) {
+      this.collection = collection;
+    }
+
+    public T to(final Comparator<? super T> comperator) {
+      return collection.stream().min(comperator).get();
     }
   }
 
