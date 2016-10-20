@@ -63,9 +63,10 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       int compilationUnitCount;
       long startTime;
 
-      @Override public void tick(final Object... ¢) {
+      @Override public void tick(@SuppressWarnings("unused") final Object... ¢) {
         asynch(() -> {
-          d.getProgressMonitor().subTask(Linguistic.trim(Linguistic.merge(¢)));
+          // see issue #444 --or
+          // d.getProgressMonitor().subTask(Linguistic.trim(Linguistic.merge(¢)));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
