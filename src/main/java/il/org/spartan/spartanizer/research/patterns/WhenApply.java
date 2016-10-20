@@ -16,13 +16,13 @@ public final class WhenApply extends NanoPatternTipper<IfStatement> implements T
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X) $N($A);", "when($X).execute((x) -> $N($A));", ""));
-      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "when($X1).execute((x) -> $X2.$N($A));", ""));
+      add(TipperFactory.tipper("if($X) $N($A);", "eval((x) -> $N($A)).when($X);", ""));
+      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "eval((x) -> $X2.$N($A)).when($X1);", ""));
     }
   };
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "applyWhen";
+    return "turn into when(x).execute(()->y)";
   }
 
   @Override public boolean canTip(final IfStatement x) {
