@@ -16,7 +16,7 @@ public interface Linguistic {
   final String SEPARATOR = ", ";
   final String DOUBLE_FORMAT = "0.00";
   final String TRIM_SUFFIX = "...";
-  final int TRIM_THRESHOLD = 45;
+  final int TRIM_THRESHOLD = 50;
 
   /** Cut string's suffix to maximal length for every row.
    * @param ¢ JD
