@@ -281,35 +281,23 @@ public interface idiomatic {
     }
   }
 
-  static <T> WithMapper<T> apply(Collection<T> ¢) {
-    return new WithMapper<>(¢);
+  static <T> MapperCollectionHolder<T> apply(Collection<T> ¢) {
+    return map(¢);
   }
 
-  // static <T> WithReducer<T> reduce(Collection<T> ¢) {
-  // return new WithReducer<>(¢);
-  // }
-  class WithMapper<T> {
+  static <T> MapperCollectionHolder<T> map(Collection<T> ¢) {
+    return new MapperCollectionHolder<>(¢);
+  }
+
+  class MapperCollectionHolder<T> {
     final Collection<T> collection;
 
-    public WithMapper(final Collection<T> collection) {
+    public MapperCollectionHolder(final Collection<T> collection) {
       this.collection = collection;
     }
 
     public <R> Collection<R> to(final Function<? super T, ? extends R> mapper) {
       return collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
-      // Collection<R> $ = null;
-      // try {
-      // $ = collection.getClass().getConstructor().newInstance();
-      // for (T ¢ : collection)
-      // $.add(mapper.apply(¢));
-      // } catch (InstantiationException | IllegalAccessException |
-      // IllegalArgumentException | InvocationTargetException |
-      // NoSuchMethodException
-      // | SecurityException x) {
-      // x.printStackTrace();
-      // }
-      // return $;
-      // }
     }
   }
 
