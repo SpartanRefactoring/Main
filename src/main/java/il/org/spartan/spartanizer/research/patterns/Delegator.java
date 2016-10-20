@@ -29,7 +29,7 @@ public class Delegator extends JavadocMarkerNanoPattern<MethodDeclaration> {
   private static List<String> dependencies(final List<Expression> arguments) {
     final Set<Name> names = new HashSet<>();
     for (final Expression ¢ : arguments) {
-      names.addAll(find.dependencies(¢));
+      names.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
         names.add(az.name(¢));
     }

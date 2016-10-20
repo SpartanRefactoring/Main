@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.research;
 
 import static il.org.spartan.azzert.*;
 
+import java.lang.reflect.*;
+import java.util.*;
 import java.util.function.*;
 
 import org.junit.*;
@@ -260,6 +262,31 @@ public interface idiomatic {
      * @return */
     default <T> T eval(final T $) {
       return eval(() -> $);
+    }
+  }
+
+  static <T> With<T> map(Collection<T> ¢) {
+    return new With<>(¢);
+  }
+
+  class With<T> {
+    final Collection<T> collection;
+
+    public With(final Collection<T> collection) {
+      this.collection = collection;
+    }
+
+    @SuppressWarnings("unchecked") public <R> Collection<R> with(final Function<? super T, ? extends R> mapper) {
+      Collection<R> $ = null;
+      try {
+        $ = collection.getClass().getConstructor().newInstance();
+        for (T ¢ : collection)
+          $.add(mapper.apply(¢));
+      } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+          | SecurityException x) {
+        x.printStackTrace();
+      }
+      return $;
     }
   }
 }
