@@ -293,19 +293,10 @@ public abstract class AbstractSpartanizer {
       
       report.summaryFileName();
       report//
-//          .put("File", currentFile)//
           .put("Category", extract.category(n))//
           .put("Name", extract.name(n))//
-//          .put("# Tippers", tippersAppliedOnCurrentObject) //
           .put("Nodes1", n)//
-//          .put("Nodes2", nodes2)//
-//          .put("Δ Nodes", nodes - nodes2)//
-//          .put("δ Nodes", system.d(nodes, nodes2))//
-//          .put("δ Nodes %", system.p(nodes, nodes2))//
-          .put("Body", body)//
-//          .put("Body2", body2)//
-//          .put("Δ Body", body - body2)//
-//          .put("δ Body", system.d(body, body2))//
+          .put("Body", body);//
     }
   }
 
