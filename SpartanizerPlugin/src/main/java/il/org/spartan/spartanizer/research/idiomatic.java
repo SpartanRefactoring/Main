@@ -13,7 +13,9 @@ import il.org.spartan.*;
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
- * @since 2013/07/01 */
+ * @since 2013/07/01
+ * @author Ori Marcovitch
+ * @since 20/10/2016 */
 public interface idiomatic {
   /** Single quote: */
   final String QUOTE = "'";
