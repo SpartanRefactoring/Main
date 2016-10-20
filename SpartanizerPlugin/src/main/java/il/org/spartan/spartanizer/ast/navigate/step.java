@@ -319,7 +319,7 @@ public enum step {
   /** Expose the list of parameters names in a {@link MethodDeclaration}
    * @param d JD
    * @return */
-  public static List<String> parametersNames(MethodDeclaration d) {
+  public static List<String> parametersNames(final MethodDeclaration d) {
     return new ArrayList<>(step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList()));
   }
 
