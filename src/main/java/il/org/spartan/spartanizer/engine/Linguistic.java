@@ -18,12 +18,14 @@ public interface Linguistic {
   final String TRIM_SUFFIX = "...";
   final int TRIM_THRESHOLD = 45;
 
-  /** Cut string's suffix to maximal length.
+  /** Cut string's suffix to maximal length for every row.
    * @param ¢ JD
-   * @return cut string */
+   * @return cut string [[SuppressWarningsSpartan]] */
   static String trim(final String ¢) {
-    assert TRIM_THRESHOLD - TRIM_SUFFIX.length() >= 0;
-    return ¢ == null || ¢.length() <= TRIM_THRESHOLD ? ¢ : ¢.substring(0, TRIM_THRESHOLD - TRIM_SUFFIX.length()) + TRIM_SUFFIX;
+    String[] rows = ¢.split("\n");
+    for (int i = 0; i < rows.length; ++i)
+      rows[i] = trimAbsolute(rows[i], TRIM_THRESHOLD, TRIM_SUFFIX);
+    return String.join("\n", rows);
   }
 
   /** Cut string's suffix to maximal length.
@@ -31,7 +33,7 @@ public interface Linguistic {
    * @param l JD
    * @param x replacement suffix string
    * @return cut string */
-  static String trim(final String s, final int l, final String x) {
+  static String trimAbsolute(final String s, final int l, final String x) {
     assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
