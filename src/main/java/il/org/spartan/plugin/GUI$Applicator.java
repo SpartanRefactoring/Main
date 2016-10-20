@@ -1,4 +1,5 @@
 package il.org.spartan.plugin;
+
 import static il.org.spartan.spartanizer.utils.fault.*;
 import static il.org.spartan.plugin.old.eclipse.*;
 
@@ -454,15 +455,18 @@ public abstract class GUI$Applicator extends Refactoring {
       textChange.setTextType("java");
       final AtomicInteger counter = new AtomicInteger(0);
       try {
-      textChange.setEdit(createRewrite(u.build().compilationUnit, counter).rewriteAST());
+        textChange.setEdit(createRewrite(u.build().compilationUnit, counter).rewriteAST());
       } catch (AssertionError x) {
-        assert unreachable(): dump() +  //
-        "\n counter=" + counter +  // 
-        "\n u=" + u +  // 
-        "\n u.d=" + u.descriptor +  // 
-        "\n s=" + s +  // 
-        "\n textchang=" + textChange +  // 
-        done();
+        assert unreachable() : dump() + //
+            "\n x=" + x + //
+            "\n counter=" + counter + //
+            "\n u=" + u + //
+            "\n s=" + s + //
+            "\n textchange=" + textChange + //
+            "\n textchange.getEdit.length=" + textChange.getEdit().getLength() + //
+            "\n textchange.getEdit=" + textChange.getEdit() + //
+            "\n textchange.getCurrentContent=" + textChange.getCurrentContent(progressMonitor) + //
+            done();
       }
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
