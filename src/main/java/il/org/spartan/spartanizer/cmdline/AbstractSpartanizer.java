@@ -40,14 +40,14 @@ public abstract class AbstractSpartanizer {
   static GUI$Applicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
-  protected String folder = "/home/matteo/Desktop/";
+  protected String folder = "/tmp/";
   protected String afterFileName;
   protected String beforeFileName;
   protected String inputPath;
   protected String reportFileName;
   protected String spectrumFileName;
-  PrintWriter afters;
-  PrintWriter befores;
+  protected PrintWriter afters;
+  protected PrintWriter befores;
   File currentFile;
   int done;
   int tippersAppliedOnCurrentObject;
@@ -172,15 +172,16 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-      befores = b;
-      afters = a;
-    } catch (final IOException x) {
-      x.printStackTrace();
-      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
-    }
-    setUpReports();
+//    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+//        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+//      befores = b;
+//      afters = a;
+//    } catch (final IOException x) {
+//      x.printStackTrace();
+//      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
+//    }
+//    setUpPrintWriters();
+//    setUpReports();
     // coverageStats = new CSVStatistics(coverageFileName, "property");
     apply();
     closePrintWriters();
@@ -217,6 +218,7 @@ public abstract class AbstractSpartanizer {
     final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
     final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
+    System.out.println(befores.checkError());
     befores.print(input);
     afters.print(out);
     report.summaryFileName();
@@ -325,7 +327,8 @@ public abstract class AbstractSpartanizer {
    * Setup PrintWriters
    * @author matteo
    */
-  @SuppressWarnings("unused") private void setUpPrintWriters() {
+  @SuppressWarnings("unused") 
+  protected void setUpPrintWriters() {
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
@@ -340,7 +343,7 @@ public abstract class AbstractSpartanizer {
    * Setup reports
    * @author matteo
    */
-  private void setUpReports() {
+  protected void setUpReports() {
     try {
       report = new CSVStatistics(reportFileName, "property");
       spectrumStats = new CSVStatistics(spectrumFileName, "property");
