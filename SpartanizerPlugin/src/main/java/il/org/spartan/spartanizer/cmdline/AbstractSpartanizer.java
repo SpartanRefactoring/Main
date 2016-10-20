@@ -206,6 +206,12 @@ public abstract class AbstractSpartanizer {
     return false;
   }
   
+  /**
+   * Compute metrics for a generic number of ASTNode
+   * @param $
+   * @author Matteo Orru'
+   */
+  
   @SuppressWarnings("unused") private void computeMetricsGeneric(final ASTNode ... $){ 
     
     int length;
@@ -231,10 +237,14 @@ public abstract class AbstractSpartanizer {
           .put("Category", extract.category(¢))//
           .put("Name", extract.name(¢))//
           .put("Nodes1", ¢)//
-          .put("Body", body);
-      
+          .put("Body", body)
+          .put("Length1", length)//
+          .put("Tokens1", tokens)
+          .put("Length1", length)
+          .put("Tide1", tide)//
+          .put("Essence1", essence)//
+          .put("Statements1", statements);//
     }
-    
     report.nl();
   }
 
