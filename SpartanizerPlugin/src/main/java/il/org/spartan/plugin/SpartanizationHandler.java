@@ -65,7 +65,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
       @Override public void tick(final Object... ¢) {
         asynch(() -> {
-          d.getProgressMonitor().subTask(Linguistic.merge(¢));
+          d.getProgressMonitor().subTask(Linguistic.trim(Linguistic.merge(¢)));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
@@ -89,7 +89,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_PROCESSING:
             if (dialogOpen)
               asynch(() -> {
-                d.getProgressMonitor().beginTask(NAME, $.selection().size());
+                d.getProgressMonitor().beginTask(Linguistic.trim(NAME), $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
               });
@@ -136,7 +136,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
           if (openDialog.get())
             asynch(() -> {
-              d.getProgressMonitor().subTask($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name());
+              d.getProgressMonitor()
+                  .subTask(Linguistic.trim($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name()));
               d.getProgressMonitor().worked(1);
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
@@ -147,7 +148,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.get())
             asynch(() -> {
-              d.getProgressMonitor().beginTask(NAME, $.selection().size());
+              d.getProgressMonitor().beginTask(Linguistic.trim(NAME), $.selection().size());
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
             });
