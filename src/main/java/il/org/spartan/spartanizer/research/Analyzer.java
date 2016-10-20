@@ -106,7 +106,7 @@ public class Analyzer {
             new IfNullThrow(), //
             new IfNullReturn(), //
             new IfNullReturnNull(), //
-            new WhenApply(), //
+            new ExecuteWhen(), //
             null) //
         .add(MethodDeclaration.class, //
             new MethodEmpty(), //
@@ -116,6 +116,8 @@ public class Analyzer {
             new Exploder(), //
             new JDPattern(), //
             new Examiner(), //
+            new Delegator(), //
+            new Carrier(), //
             null);
   }
 
