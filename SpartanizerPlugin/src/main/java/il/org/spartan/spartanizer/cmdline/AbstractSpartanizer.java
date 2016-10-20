@@ -23,10 +23,10 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 public abstract class AbstractSpartanizer {
-
   static String presentFileName;
   static String presentMethod;
   static List<Class<? extends BodyDeclaration>> selectedNodeTypes = as.list(MethodDeclaration.class);
+
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     ASTNode parentNode = ¢.getParent();
     assert parentNode != null;
@@ -37,9 +37,11 @@ public abstract class AbstractSpartanizer {
     }
     return ((MethodDeclaration) parentNode).getName() + "";
   }
+
   static GUI$Applicator getSpartanizer(final String tipperName) {
     return Tips2.get(tipperName);
   }
+
   protected String folder = "/tmp/";
   protected String afterFileName;
   protected String beforeFileName;
@@ -91,11 +93,11 @@ public abstract class AbstractSpartanizer {
         }
         return true;
       }
-  
+
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
-  
+
       /** @param n
        * @param w
        * @throws TipperFailure */
@@ -103,7 +105,7 @@ public abstract class AbstractSpartanizer {
         tick(w);
         TrimmerLog.tip(w, n);
       }
-  
+
       /** @param w */
       <N extends ASTNode> void tick(final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
@@ -111,7 +113,7 @@ public abstract class AbstractSpartanizer {
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
-  
+
       <N extends ASTNode> void tick2(final Tipper<N> w) {
         final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
@@ -172,23 +174,24 @@ public abstract class AbstractSpartanizer {
         beforeFileName, //
         afterFileName, //
         reportFileName);
-//    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-//        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
-//      befores = b;
-//      afters = a;
-//    } catch (final IOException x) {
-//      x.printStackTrace();
-//      System.err.println(done + " items processed; processing of " + inputPath + " failed for some I/O reason");
-//    }
-//    setUpPrintWriters();
-//    setUpReports();
+    // try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+    // PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+    // befores = b;
+    // afters = a;
+    // } catch (final IOException x) {
+    // x.printStackTrace();
+    // System.err.println(done + " items processed; processing of " + inputPath
+    // + " failed for some I/O reason");
+    // }
+    // setUpPrintWriters();
+    // setUpReports();
     // coverageStats = new CSVStatistics(coverageFileName, "property");
     apply();
     closePrintWriters();
-        
     System.err.print("\n Done: " + done + " items processed.");
     System.err.print("\n Summary: " + report.close());
   }
+
   /**
    * 
    */
@@ -323,11 +326,8 @@ public abstract class AbstractSpartanizer {
     selectedNodeTypes = as.list(¢);
   }
 
-  /**
-   * Setup PrintWriters
-   * @author matteo
-   */
-  @SuppressWarnings("unused") 
+  /** Setup PrintWriters
+   * @author matteo */
   protected void setUpPrintWriters() {
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
@@ -339,10 +339,8 @@ public abstract class AbstractSpartanizer {
     }
   }
 
-  /**
-   * Setup reports
-   * @author matteo
-   */
+  /** Setup reports
+   * @author matteo */
   protected void setUpReports() {
     try {
       report = new CSVStatistics(reportFileName, "property");
