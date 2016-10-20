@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.function.Function;
 import java.util.stream.*;
 
 import org.junit.*;
@@ -13,7 +14,9 @@ import il.org.spartan.*;
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
- * @since 2013/07/01 */
+ * @since 2013/07/01
+ * @author Ori Marcovitch
+ * @since 20/10/2016 */
 public interface idiomatic {
   /** Single quote: */
   final String QUOTE = "'";
@@ -24,7 +27,7 @@ public interface idiomatic {
     }
   };
   /** an ignoring trigger */
-  final Trigger ignore = new Trigger() {
+  final Trigger tIgnore = new Trigger() {
     @Override public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
       return null;
     }
@@ -86,7 +89,7 @@ public interface idiomatic {
   /** @param condition JD
    * @return */
   static Trigger unless(final boolean condition) {
-    return when(!condition);
+    return vhen(!condition);
   }
 
   /** @param <T> JD
@@ -100,8 +103,14 @@ public interface idiomatic {
 
   /** @param condition JD
    * @return */
-  static Trigger when(final boolean condition) {
-    return condition ? eval : ignore;
+  static Trigger vhen(final boolean condition) {
+    return condition ? eval : tIgnore;
+  }
+
+  /** @param condition JD
+   * @return */
+  static Executor when(final boolean condition) {
+    return condition ? Executor.execute : Executor.ignore;
   }
 
   static <T> Storer<T> defolt(final T ¢) {
@@ -214,11 +223,11 @@ public interface idiomatic {
     }
 
     @Test public void use10() {
-      azzert.notNull(when(true).eval(() -> new Object()));
+      azzert.notNull(vhen(true).eval(() -> new Object()));
     }
 
     @Test public void use11() {
-      azzert.isNull(when(false).eval(() -> new Object()));
+      azzert.isNull(vhen(false).eval(() -> new Object()));
     }
 
     @Test public void use2() {
@@ -288,6 +297,23 @@ public interface idiomatic {
     }
   }
 
+  /** @author Ori Marcovitch
+   * @since 2016 */
+  abstract static class Executor {
+    public abstract <T> void execute(final Consumer<T> v);
+
+    static Executor execute = new Executor() {
+      @Override public <T> void execute(final Consumer<T> ¢) {
+        ¢.accept(null);
+      }
+    };
+    static Executor ignore = new Executor() {
+      @Override public <T> void execute(@SuppressWarnings("unused") final Consumer<T> __) {
+        // do nothing
+      }
+    };
+  }
+
   static <T> MapperCollectionHolder<T> apply(Collection<T> ¢) {
     return map(¢);
   }
@@ -306,6 +332,22 @@ public interface idiomatic {
 
   static <T> MinCollectionHolder<T> min(Collection<T> ¢) {
     return new MinCollectionHolder<>(¢);
+  }
+
+  static <T, R> MapperLambdaHolder<T, R> mapp(final Function<T, R> mapper) {
+    return new MapperLambdaHolder<>(mapper);
+  }
+
+  class MapperLambdaHolder<T, R> {
+    final Function<T, R> mapper;
+
+    public MapperLambdaHolder(final Function<T, R> mapper) {
+      this.mapper = mapper;
+    }
+
+    public Collection<R> to(Collection<T> ¢) {
+      return ¢.stream().map(mapper).collect(new GenericCollector<R>(¢.getClass()));
+    }
   }
 
   class MapperCollectionHolder<T> {
