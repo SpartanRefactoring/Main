@@ -142,8 +142,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Handlers of commands: which class to activate for each command id -->
 <extension point="org.eclipse.ui.handlers">
-   <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.old.LaconizeProject"/>
-   <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.old.LaconizeCurrent"/>
+   <handler commandId="il.org.spartan.LaconizeAll" class="il.org.spartan.plugin.Handlers"/>
+   <handler commandId="il.org.spartan.LaconizeCurrent" class="il.org.spartan.plugin.Handlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.old.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanizeableAll" class="il.org.spartan.plugin.old.SpartanizeableAll"/>
