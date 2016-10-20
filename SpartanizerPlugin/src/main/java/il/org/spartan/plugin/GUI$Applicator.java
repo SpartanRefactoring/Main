@@ -456,24 +456,22 @@ public abstract class GUI$Applicator extends Refactoring {
   }
 
   private int internalApply(final WrappedCompilationUnit u, final AbstractSelection<?> s) throws JavaModelException, CoreException {
-    setICompilationUnit(u.descriptor);
-    setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-    progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-    textChange.setTextType("java");
+    final TextFileChange textChange = init(u, s);
+    assert textChange != null;
     final AtomicInteger $ = new AtomicInteger();
     try {
-      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+      final ASTRewrite r = createRewrite(u.build().compilationUnit, $);
+      textChange.setEdit(r.rewriteAST());
     } catch (AssertionError x) {
       assert unreachable() : dump() + //
           "\n x=" + x + //
           "\n counter=" + $ + //
           "\n u=" + u + //
+          "\n u=" + u.name() + //
           "\n s=" + s + //
           "\n textchange=" + textChange + //
-          "\n textchange.getEdit.length=" + textChange.getEdit().getLength() + //
+          "\n textchange.getEdit.length=" + textChange.getEdit() + //
           "\n textchange.getEdit=" + textChange.getEdit() + //
-          "\n textchange.getCurrentContent=" + textChange.getCurrentContent(progressMonitor) + //
           done();
     }
     if (textChange.getEdit().getLength() != 0)
@@ -482,25 +480,31 @@ public abstract class GUI$Applicator extends Refactoring {
     return $.get();
   }
 
+  private TextFileChange init(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
+    setICompilationUnit(u.descriptor);
+    setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
+    progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+    textChange.setTextType("java");
+    return textChange;
+  }
+
   public int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
-      setICompilationUnit(u.descriptor);
-      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-      progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-      textChange.setTextType("java");
-      final AtomicInteger counter = new AtomicInteger(0);
-      final ASTRewrite r = createRewrite(u.build().compilationUnit, counter);
+      final TextFileChange textChange = init(u, s);
+      final AtomicInteger $ = new AtomicInteger();
+      final ASTRewrite r = createRewrite(u.build().compilationUnit, $);
       textChange.setEdit(r.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
-      progressMonitor.done();
       if (s != null)
         s.update();
-      return counter.get();
+      return $.get();
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
+      return 0;
+    } finally {
+      progressMonitor.done();
     }
-    return 0;
   }
 }
