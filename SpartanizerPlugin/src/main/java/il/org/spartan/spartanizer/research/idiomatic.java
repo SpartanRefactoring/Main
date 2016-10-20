@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.research;
 
 import static il.org.spartan.azzert.*;
 
-import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
