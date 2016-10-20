@@ -371,6 +371,8 @@ public class Toolbox {
     return get(¢.getNodeType());
   }
 
+  /** [[SuppressWarningsSpartan]] TODO: Apparently there is no check that ¢ is
+   * not occupied already... */
   public static List<String> get(final TipperGroup ¢) {
     final List<String> $ = new LinkedList<>();
     if (¢ == null)
