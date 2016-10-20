@@ -1,5 +1,6 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.spartanizer.utils.fault.*;
 import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
@@ -22,6 +23,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** the base class for all GUI applicators contains common functionality
@@ -446,21 +448,38 @@ public abstract class GUI$Applicator extends Refactoring {
     if (s instanceof TrackerSelection)
       return apply(u, (TrackerSelection) s);
     try {
-      setICompilationUnit(u.descriptor);
-      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-      progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-      textChange.setTextType("java");
-      final AtomicInteger counter = new AtomicInteger(0);
-      textChange.setEdit(createRewrite(u.build().compilationUnit, counter).rewriteAST());
-      if (textChange.getEdit().getLength() != 0)
-        textChange.perform(progressMonitor);
-      progressMonitor.done();
-      return counter.get();
+      return internalApply(u, s);
     } catch (final CoreException x) {
       monitor.logEvaluationError(this, x);
+      return 0;
     }
-    return 0;
+  }
+
+  private int internalApply(final WrappedCompilationUnit u, final AbstractSelection<?> s) throws JavaModelException, CoreException {
+    setICompilationUnit(u.descriptor);
+    setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
+    progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+    textChange.setTextType("java");
+    final AtomicInteger $ = new AtomicInteger();
+    try {
+      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+    } catch (AssertionError x) {
+      assert unreachable() : dump() + //
+          "\n x=" + x + //
+          "\n counter=" + $ + //
+          "\n u=" + u + //
+          "\n s=" + s + //
+          "\n textchange=" + textChange + //
+          "\n textchange.getEdit.length=" + textChange.getEdit().getLength() + //
+          "\n textchange.getEdit=" + textChange.getEdit() + //
+          "\n textchange.getCurrentContent=" + textChange.getCurrentContent(progressMonitor) + //
+          done();
+    }
+    if (textChange.getEdit().getLength() != 0)
+      textChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $.get();
   }
 
   public int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
