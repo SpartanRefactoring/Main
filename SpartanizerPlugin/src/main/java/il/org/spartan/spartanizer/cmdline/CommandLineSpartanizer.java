@@ -8,20 +8,18 @@ import il.org.spartan.plugin.*;
  * @author Matteo Orru'
  * @since 2016 */
 public class CommandLineSpartanizer extends AbstractSpartanizer {
-  
   private CommandLineSelection selection;
-  
-//  private final boolean shouldRun = false;
+  // private final boolean shouldRun = false;
   private final boolean applyToEntireProject = true;
   private final boolean runApplicator = true;
   private final boolean entireProject = true;
   private final boolean specificTipper = false;
-    
+
   public static void main(final String[] args) {
     for (final String ¢ : args.length != 0 ? args : new String[] { "." })
       new CommandLineSpartanizer(¢).fire();
   }
-  
+
   CommandLineSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
@@ -39,16 +37,11 @@ public class CommandLineSpartanizer extends AbstractSpartanizer {
       selection = new CommandLineSelection(new ArrayList<WrappedCompilationUnit>(), "project");
       selection.createSelectionFromProjectDir(inputPath);
     }
-    
-    if (runApplicator) {
-      if (entireProject)
-        CommandLineApplicator.defaultApplicator().defaultRunAction();
-      // .selection(CommandLineSelection.Util.getAllCompilationUnits()
-      // .buildAll())
-      // .go();
-      if (specificTipper)
-        CommandLineApplicator.defaultApplicator();
-      // .defaultRunAction(getSpartanizer(""));
-    }
+    if (!runApplicator)
+      return;
+    if (entireProject)
+      CommandLineApplicator.defaultApplicator().defaultRunAction();
+    if (specificTipper)
+      CommandLineApplicator.defaultApplicator();
   }
 }
