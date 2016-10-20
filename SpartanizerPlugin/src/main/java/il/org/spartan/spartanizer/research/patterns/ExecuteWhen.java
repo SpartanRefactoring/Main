@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -14,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
  * @year 2016 */
-public final class ExecuteWhen extends NanoPatternTipper<IfStatement> implements TipperCategory.CommnoFactoring {
+public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
@@ -36,8 +35,8 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> implements
 
   /** @param then
    * @return */
-  private static boolean throwing(Statement then) {
-    // TODO Auto-generated method stub
+  private static boolean throwing(@SuppressWarnings("unused") Statement __) {
+    // TODO: check if method throws
     return false;
   }
 

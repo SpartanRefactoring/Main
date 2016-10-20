@@ -277,7 +277,17 @@ public interface idiomatic {
       before.add("1");
       before.add("2");
       before.add("3");
-      List<String> after = (List<String>) apply(before).to(x -> mapper(x));
+      List<String> after = (List<String>) apply(before).to(x -> mapper(x)); // TODO:
+                                                                            // Yossi
+                                                                            // here
+                                                                            // I
+                                                                            // have
+                                                                            // to
+                                                                            // cast,
+                                                                            // otherwise
+                                                                            // considered
+                                                                            // as
+                                                                            // List<Object>
       assertEquals("11", after.get(0));
       assertEquals("22", after.get(1));
       assertEquals("33", after.get(2));
@@ -331,6 +341,9 @@ public interface idiomatic {
     return new MinCollectionHolder<>(¢);
   }
 
+  /** This is not good. java cannot infer types.
+   * @param mapper
+   * @return */
   static <T, R> MapperLambdaHolder<T, R> mapp(final Function<T, R> mapper) {
     return new MapperLambdaHolder<>(mapper);
   }
