@@ -122,14 +122,17 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
             final int i = selection.index;
             if (i >= 0) {
               final String r = selection.text;
-              System.out.println(r);
               if (alive.contains(r)) {
                 alive.remove(r);
                 dead.add(r);
                 getAddButton().setEnabled(true);
+                if (getList().getItemCount() > 0)
+                  selection.text = getList().getItem(selection.index);
+                else {
+                  selection.index = -1;
+                  selection.text = null;
+                }
               }
-              selection.index = -1;
-              selection.text = null;
             }
           }
         }
@@ -189,7 +192,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       d.setInput(dead);
       d.open();
       Object[] os = d.getResult();
-      if (os.length == 0)
+      if (os == null || os.length == 0)
         return null;
       final String $ = os[0] + "";
       dead.remove($);
