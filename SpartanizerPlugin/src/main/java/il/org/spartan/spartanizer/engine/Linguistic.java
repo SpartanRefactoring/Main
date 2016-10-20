@@ -15,13 +15,25 @@ public interface Linguistic {
   final String UNKNOWN = "???";
   final String SEPARATOR = ", ";
   final String DOUBLE_FORMAT = "0.00";
+  final String TRIM_SUFFIX = "...";
+  final int TRIM_THRESHOLD = 50;
+
+  /** Cut string's suffix to maximal length.
+   * @param ¢ JD
+   * @return cut string */
+  static String trim(final String ¢) {
+    assert TRIM_THRESHOLD - TRIM_SUFFIX.length() >= 0;
+    return ¢ == null || ¢.length() <= TRIM_THRESHOLD ? ¢ : ¢.substring(0, TRIM_THRESHOLD - TRIM_SUFFIX.length()) + TRIM_SUFFIX;
+  }
 
   /** Cut string's suffix to maximal length.
    * @param s JD
    * @param l JD
+   * @param x replacement suffix string
    * @return cut string */
-  static String trim(final String s, final int l) {
-    return s == null || s.length() < l ? s : s.substring(0, l);
+  static String trim(final String s, final int l, final String x) {
+    assert l - x.length() >= 0;
+    return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
 
   static String time(final long t) {
