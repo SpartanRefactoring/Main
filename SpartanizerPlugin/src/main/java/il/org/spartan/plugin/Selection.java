@@ -105,8 +105,8 @@ public class Selection extends AbstractSelection<Selection> {
     int no = o, nl = l;
     try {
       final IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
-      int i = 0;
       boolean changed = false;
+      int i = 0;
       for (; i < ms.length; ++i) {
         final int cs = ((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue();
         if (cs <= o && ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue() >= o) {
