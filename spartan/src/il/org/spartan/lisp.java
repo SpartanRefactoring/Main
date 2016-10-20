@@ -4,8 +4,11 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
+/** @noinspection unused*/
 public interface lisp {
-  static <T> List<T> chop(final List<T> ¢) {
+  static <T> @Nullable List<T> chop(final List<T> ¢) {
     if (¢.isEmpty())
       return null;
     ¢.remove(0);
@@ -40,7 +43,7 @@ public interface lisp {
     return false;
   }
 
-  static <T> T last(final List<T> ¢) {
+  static <@Nullable T> @Nullable T last(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
   }
 
@@ -66,7 +69,7 @@ public interface lisp {
   }
 
   /** Determine if an item is not included in a list of values
-   * @param < T > JD
+   * @param <T> JD
    * @param candidate what to search for
    * @param ts where to search
    * @return true if the the item is not found in the list */
@@ -113,21 +116,19 @@ public interface lisp {
   }
 
   static <T> Iterable<T> rest(final Iterable<T> ¢) {
-    return () -> {
-      return new Iterator<T>() {
-        final Iterator<T> $ = ¢.iterator();
-        {
-          $.next();
-        }
+    return () -> new Iterator<T>() {
+      final Iterator<T> $ = ¢.iterator();
+      {
+        $.next();
+      }
 
-        @Override public boolean hasNext() {
-          return $.hasNext();
-        }
+      @Override public boolean hasNext() {
+        return $.hasNext();
+      }
 
-        @Override public T next() {
-          return $.next();
-        }
-      };
+      @Override public T next() {
+        return $.next();
+      }
     };
   }
 
