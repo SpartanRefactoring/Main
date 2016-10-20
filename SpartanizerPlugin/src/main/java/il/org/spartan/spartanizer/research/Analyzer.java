@@ -122,7 +122,7 @@ public class Analyzer {
   /** This us just to check that the InteractiveSpartanizer works and that
    * tippers can be added to it. */
   private static void sanityCheck() {
-    final InteractiveSpartanizer spartanizer = addNanoPatterns(new InteractiveSpartanizer());
-    assert spartanizer.fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
+    assert addNanoPatterns(new InteractiveSpartanizer())
+        .fixedPoint(clean(makeAST.COMPILATION_UNIT.from("public class A{ Object f(){ return c;} }")) + "").contains("[[Getter]]");
   }
 }

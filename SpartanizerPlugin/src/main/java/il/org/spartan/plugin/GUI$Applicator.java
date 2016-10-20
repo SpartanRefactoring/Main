@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static il.org.spartan.spartanizer.utils.fault.*;
 import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
@@ -22,6 +22,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** the base class for all GUI applicators contains common functionality
@@ -448,11 +449,21 @@ public abstract class GUI$Applicator extends Refactoring {
     try {
       setICompilationUnit(u.descriptor);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-      progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+      progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final AtomicInteger counter = new AtomicInteger(0);
+      try {
       textChange.setEdit(createRewrite(u.build().compilationUnit, counter).rewriteAST());
+      } catch (AssertionError x) {
+        assert unreachable(): dump() +  //
+        "\n counter=" + counter +  // 
+        "\n u=" + u +  // 
+        "\n u.d=" + u.descriptor +  // 
+        "\n s=" + s +  // 
+        "\n textchang=" + textChange +  // 
+        done();
+      }
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       progressMonitor.done();
