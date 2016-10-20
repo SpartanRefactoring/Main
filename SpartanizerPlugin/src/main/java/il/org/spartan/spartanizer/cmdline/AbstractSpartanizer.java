@@ -200,9 +200,10 @@ public abstract class AbstractSpartanizer {
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input);
+    final ASTNode outputASTNode = makeAST.CLASS_BODY_DECLARATIONS.from(output);
     befores.print(input);
     afters.print(output);
-    computeMetrics(input, output);
+    computeMetrics(input, outputASTNode);
     
 //    // input metrics
 //    final int length = input.getLength();
@@ -278,11 +279,25 @@ public abstract class AbstractSpartanizer {
     
     return false;
   }
+  
+  private void computeMetricsGeneric(final ASTNode ... $){ //, final ASTNode output) {
+    // input metrics
+    for(ASTNode n: $){
+      final int length = n.getLength();
+      final int tokens = metrics.tokens(n + "");
+      final int nodes = count.nodes(n);
+      final int body = metrics.bodySize(n);
+      final int statements = extract.statements(az.methodDeclaration(n).getBody()).size();
+      final int tide = clean($ + "").length();
+      final int essence = Essence.of(n + "").length();
+    }
+  }
+
   /**
    * @param input
    * @param output
    */
-  private void computeMetrics(final ASTNode input, final String output) {
+  private void computeMetrics(final ASTNode input, final ASTNode output) {
     // input metrics
     final int length = input.getLength();
     final int tokens = metrics.tokens(input + "");
@@ -292,22 +307,23 @@ public abstract class AbstractSpartanizer {
     final int tide = clean(input + "").length();
     final int essence = Essence.of(input + "").length();
     // output metrics
-    final int length2 = output.length();
-    final int tokens2 = metrics.tokens(output);
-    final int tide2 = clean(output + "").length();
-    final int essence2 = Essence.of(output + "").length();
-    final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(output + ""));
-    final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(output);
-    final int nodes2 = count.nodes(to);
-    final int body2 = metrics.bodySize(to);
-    final MethodDeclaration methodDeclaration = az.methodDeclaration(to);
+    String outputString = output + "";
+    final int length2 = outputString.length();
+    final int tokens2 = metrics.tokens(outputString);
+    final int nodes2 = count.nodes(output);
+    final int body2 = metrics.bodySize(output);
+    final MethodDeclaration methodDeclaration = az.methodDeclaration(output);
     final int statements2 = methodDeclaration == null ? -1 : extract.statements(methodDeclaration.getBody()).size();
+    final int tide2 = clean(outputString).length();
+    final int essence2 = Essence.of(outputString).length();
+    final int wordCount = code.wc(il.org.spartan.spartanizer.cmdline.Essence.of(outputString));
+//    final ASTNode to = makeAST.CLASS_BODY_DECLARATIONS.from(output);
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     System.out.println(befores.checkError());
     
     report.summaryFileName();
     report//
-        .put("File", currentFile)//
+//        .put("File", currentFile)//
         .put("Category", extract.category(input))//
         .put("Name", extract.name(input))//
         .put("# Tippers", tippersAppliedOnCurrentObject) //
