@@ -3,10 +3,14 @@ package il.org.spartan.plugin;
 import static il.org.spartan.plugin.PreferencesResources.*;
 import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
 
+import java.util.*;
+import java.util.List;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
+import org.eclipse.swt.events.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
@@ -45,11 +49,13 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
   @Override public void createFieldEditors() {
     addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
-    final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
-    for (final TipperGroup ¢ : TipperGroup.values())
+    for (final TipperGroup ¢ : TipperGroup.values()) {
+      final GroupFieldEditor g = new GroupFieldEditor(null, getFieldEditorParent());
       g.add(new BooleanFieldEditor(¢.id, ¢.label, g.getFieldEditor()));
-    addField(g);
-    g.init();
+      g.add(getListEditor(¢, g));
+      g.init();
+      addField(g);
+    }
   }
 
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
@@ -81,6 +87,76 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
 
     public MBoolean(final boolean init) {
       is = init;
+    }
+  }
+
+  private static FieldEditor getListEditor(final TipperGroup g, final GroupFieldEditor e) {
+    return new TipsListEditor(g.label, "Available tippers", g, e);
+  }
+
+  static class TipsListEditor extends ListEditor {
+    static final String DELIMETER = "|";
+    final List<String> alive;
+    final List<String> dead;
+    final Selection selection;
+
+    public TipsListEditor(final String name, final String labelText, final TipperGroup g, final GroupFieldEditor e) {
+      super(name, labelText, e.getFieldEditor());
+      alive = Toolbox.get(g);
+      dead = new LinkedList<>();
+      selection = new Selection();
+      getAddButton().setText("Add");
+      getDownButton().setEnabled(false);
+      getDownButton().setVisible(false);
+      getUpButton().setEnabled(false);
+      getUpButton().setVisible(false);
+      getRemoveButton().addSelectionListener(new SelectionAdapter() {
+        /** [[SuppressWarningsSpartan]] */
+        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(SelectionEvent x) {
+          if (x == null)
+            return;
+          if (getRemoveButton().equals(x.widget)) {
+            final int i = selection.index;
+            if (i >= 0) {
+              final String r = selection.text;
+              if (alive.contains(r)) {
+                alive.remove(r);
+                dead.add(r);
+              }
+            }
+          }
+        }
+      });
+      getList().addSelectionListener(new SelectionAdapter() {
+        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(SelectionEvent x) {
+          if (x == null)
+            return;
+          selection.index = getList().getSelectionIndex();
+          if (selection.index >= 0 && selection.index < getList().getItemCount())
+            selection.text = getList().getItem(selection.index);
+        }
+      });
+    }
+
+    @Override protected String[] parseString(String stringList) {
+      return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
+    }
+
+    @Override protected String getNewInputObject() {
+      return dead.isEmpty() ? null : dead.remove(0);
+    }
+
+    @Override protected String createList(String[] items) {
+      return separate.these(items).by(DELIMETER);
+    }
+
+    @Override public void createSelectionListener() {
+      super.createSelectionListener();
+    }
+
+    static class Selection {
+      int index = -1;
+      String text;
     }
   }
 }
