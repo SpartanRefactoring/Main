@@ -16,25 +16,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 
-/** convert
- *
- * <pre>
- * int a = 3;
- * return a;
- * </pre>
- *
- * into
- *
- * <pre>
- * return a;
- * </pre>
- *
+/** Converts <code>int a=3;return a;</code> into <code>return 3;</code>
  * @author Yossi Gil
  * @since 2015-08-07
  * @DisableSpartan */
 public final class DeclarationInitializerReturnAssignment extends $VariableDeclarationFragementAndStatement implements TipperCategory.Collapse {
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate temporary " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
+    return "Eliminate temporary '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
