@@ -34,6 +34,8 @@ public class Dialogs {
   private static Image logo;
   /** Id for run in background button. */
   public static final int RIB_ID = 2;
+  /** Id for cancel button. */
+  public static final int CNC_ID = SWT.DEFAULT;
 
   /** Lazy, dynamic loading of the dialogs' icon.
    * @return icon used by dialogs */
@@ -73,6 +75,11 @@ public class Dialogs {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
+      
+      @Override protected void createButtonsForButtonBar(final Composite ¢) {
+        createButton(¢, CNC_ID, "Cancel", false);
+        super.createButtonsForButtonBar(¢);
+      }
 
       @Override public Image getInfoImage() {
         return logo();
@@ -85,15 +92,7 @@ public class Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog messageOnTheRun(final String message) {
-    final MessageDialog $ = new MessageDialog(null, NAME, icon(), Linguistic.trim(message), MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
-      @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
-        super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
-      }
-
-      @Override public Image getInfoImage() {
-        return logo();
-      }
-    };
+    final MessageDialog $ = message(message);
     $.setBlockOnOpen(false);
     return $;
   }
