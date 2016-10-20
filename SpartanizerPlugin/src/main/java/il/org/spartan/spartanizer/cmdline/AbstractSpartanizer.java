@@ -373,7 +373,6 @@ public abstract class AbstractSpartanizer {
    * Setup PrintWriters
    * @author matteo
    */
-  @SuppressWarnings("unused") 
   protected void setUpPrintWriters() {
     try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
         PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
