@@ -1,8 +1,9 @@
 package il.org.spartan.plugin;
 
+import java.util.concurrent.atomic.*;
+
 import org.eclipse.jface.preference.*;
 
-import il.org.spartan.plugin.PreferencesPage.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 public final class PreferencesResources {
@@ -22,7 +23,7 @@ public final class PreferencesResources {
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT
                                                                         // SAFE
-  public static MBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new MBoolean(true);
+  public static AtomicBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new AtomicBoolean(true);
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */

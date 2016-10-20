@@ -5,10 +5,16 @@ import static il.org.spartan.plugin.PreferencesResources.TipperGroup.*;
 
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.*;
+
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
+import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.eclipse.ui.dialogs.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.old.*;
@@ -22,18 +28,18 @@ import il.org.spartan.spartanizer.dispatch.*;
 public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   public static final String TIPPER_COMBO_OPTIONS[][] = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
-  private final MBoolean refreshNeeded;
+  private final AtomicBoolean refreshNeeded;
 
   public PreferencesPage() {
     super(GRID);
-    refreshNeeded = new MBoolean(false);
+    refreshNeeded = new AtomicBoolean(false);
     listener = new SpartanPropertyListener(refreshNeeded);
   }
 
   @Override public boolean performOk() {
-    refreshNeeded.is = false;
+    refreshNeeded.set(false);
     final boolean $ = super.performOk();
-    if (refreshNeeded.is)
+    if (refreshNeeded.get())
       new Thread(() -> {
         Toolbox.refresh();
         try {
@@ -47,7 +53,9 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
 
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
-    addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID, PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS, getFieldEditorParent()));
+    // addField(new ComboFieldEditor(PLUGIN_STARTUP_BEHAVIOR_ID,
+    // PLUGIN_STARTUP_BEHAVIOR_TEXT, PLUGIN_STARTUP_BEHAVIOR_OPTIONS,
+    // getFieldEditorParent()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     for (final TipperGroup ¢ : TipperGroup.values()) {
       final GroupFieldEditor g = new GroupFieldEditor(null, getFieldEditorParent());
@@ -67,26 +75,18 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
   /** An event handler used to re-initialize the {@link Trimmer} spartanization
    * once a tipper preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
-    private final MBoolean refreshNeeded;
+    private final AtomicBoolean refreshNeeded;
 
-    public SpartanPropertyListener(final MBoolean refreshNeeded) {
+    public SpartanPropertyListener(final AtomicBoolean refreshNeeded) {
       this.refreshNeeded = refreshNeeded;
     }
 
     @Override public void propertyChange(final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
-        refreshNeeded.is = true;
+        refreshNeeded.set(true);
       else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null
           && ¢.getNewValue() instanceof Boolean)
-        NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.is = ((Boolean) ¢.getNewValue()).booleanValue();
-    }
-  }
-
-  static class MBoolean {
-    boolean is;
-
-    public MBoolean(final boolean init) {
-      is = init;
+        NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(((Boolean) ¢.getNewValue()).booleanValue());
     }
   }
 
@@ -96,16 +96,19 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
 
   static class TipsListEditor extends ListEditor {
     static final String DELIMETER = "|";
+    final Composite composite;
     final List<String> alive;
     final List<String> dead;
     final Selection selection;
 
     public TipsListEditor(final String name, final String labelText, final TipperGroup g, final GroupFieldEditor e) {
       super(name, labelText, e.getFieldEditor());
+      composite = e.getFieldEditor();
       alive = Toolbox.get(g);
       dead = new LinkedList<>();
       selection = new Selection();
       getAddButton().setText("Add");
+      getAddButton().setEnabled(false);
       getDownButton().setEnabled(false);
       getDownButton().setVisible(false);
       getUpButton().setEnabled(false);
@@ -119,10 +122,14 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
             final int i = selection.index;
             if (i >= 0) {
               final String r = selection.text;
+              System.out.println(r);
               if (alive.contains(r)) {
                 alive.remove(r);
                 dead.add(r);
+                getAddButton().setEnabled(true);
               }
+              selection.index = -1;
+              selection.text = null;
             }
           }
         }
@@ -142,8 +149,54 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
-    @Override protected String getNewInputObject() {
-      return dead.isEmpty() ? null : dead.remove(0);
+    @SuppressWarnings("unused") @Override protected String getNewInputObject() {
+      if (dead.isEmpty() || composite == null)
+        return null;
+      final ListDialog d = new ListDialog(composite.getShell());
+      d.setContentProvider(new IStructuredContentProvider() {
+        @Override public Object[] getElements(Object inputElement) {
+          return dead.toArray(new String[dead.size()]);
+        }
+      });
+      d.setLabelProvider(new ILabelProvider() {
+        @Override public void removeListener(ILabelProviderListener __) {
+          //
+        }
+
+        @Override public boolean isLabelProperty(Object element, String property) {
+          return false;
+        }
+
+        @Override public void dispose() {
+          //
+        }
+
+        @Override public void addListener(ILabelProviderListener __) {
+          //
+        }
+
+        @Override public String getText(Object element) {
+          return element + "";
+        }
+
+        @Override public Image getImage(Object element) {
+          return null;
+        }
+      });
+      d.setBlockOnOpen(true);
+      d.setTitle("Add tipper");
+      d.setMessage("Select a tipper to activate:");
+      d.setInput(dead);
+      d.open();
+      Object[] os = d.getResult();
+      if (os.length == 0)
+        return null;
+      final String $ = os[0] + "";
+      dead.remove($);
+      if (dead.isEmpty())
+        getAddButton().setEnabled(false);
+      alive.add($);
+      return $;
     }
 
     @Override protected String createList(String[] items) {
