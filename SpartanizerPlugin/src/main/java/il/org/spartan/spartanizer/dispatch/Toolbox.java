@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.PreferencesResources.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -206,6 +207,7 @@ public class Toolbox {
             new IfDegenerateElse(), //
             new IfEmptyThen(), //
             new IfShortestFirst(), //
+            new WhenApply(), //
             null)//
         .add(PrefixExpression.class, //
             new PrefixIncrementDecrementReturn(), //
@@ -367,5 +369,21 @@ public class Toolbox {
 
   <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
     return get(¢.getNodeType());
+  }
+
+  /** [[SuppressWarningsSpartan]] TODO: Apparently there is no check that ¢ is
+   * not occupied already... */
+  public static List<String> get(final TipperGroup ¢) {
+    final List<String> $ = new LinkedList<>();
+    if (¢ == null)
+      return $;
+    final Toolbox t = freshCopyOfAllTippers();
+    assert t.implementation != null;
+    for (int i = 0; i < t.implementation.length; ++i)
+      if (t.implementation[i] != null)
+        for (final Tipper<?> p : t.implementation[i])
+          if (¢.equals(p.tipperGroup()))
+            $.add(p.myName());
+    return $;
   }
 }
