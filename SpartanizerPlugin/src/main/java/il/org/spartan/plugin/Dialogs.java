@@ -10,6 +10,8 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.spartanizer.engine.*;
+
 /** Utility class for dialogs management.
  * @author Ori Roth
  * @since 2.6 */
@@ -67,7 +69,7 @@ public class Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog message(final String message) {
-    return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+    return new MessageDialog(null, NAME, icon(), Linguistic.trim(message), MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
@@ -83,7 +85,7 @@ public class Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog messageOnTheRun(final String message) {
-    final MessageDialog $ = new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+    final MessageDialog $ = new MessageDialog(null, NAME, icon(), Linguistic.trim(message), MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP | SWT.MODELESS);
       }
