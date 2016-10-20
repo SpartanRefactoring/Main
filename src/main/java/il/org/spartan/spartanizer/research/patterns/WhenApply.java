@@ -16,8 +16,8 @@ public final class WhenApply extends NanoPatternTipper<IfStatement> implements T
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X) $N($A);", "when($X).eval($N($A));", ""));
-      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "when($X1).eval($X2.$N($A));", ""));
+      add(TipperFactory.tipper("if($X) $N($A);", "when($X).eval(() -> $N($A));", ""));
+      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "when($X1).eval(() -> $X2.$N($A));", ""));
     }
   };
 

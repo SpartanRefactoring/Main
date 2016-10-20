@@ -11,11 +11,11 @@ import il.org.spartan.spartanizer.research.patterns.*;
  * @since 2016 */
 @SuppressWarnings("static-method") public class ApplyWhenTest {
   @Test public void basic() {
-    trimmingOf("if(x == 8) print(8);").withTipper(IfStatement.class, new WhenApply()).gives("applyWhen(x==8, print(8));");
+    trimmingOf("if(x == 8) print(8);").withTipper(IfStatement.class, new WhenApply()).gives("when(x==8).eval(() -> print(8));");
   }
 
   @Test public void comlicated() {
     trimmingOf("if(x == 8 && iz.Literal(lit) || bigDaddy(d)) a.b()._(f,g).f.x(8,g,h*p);").withTipper(IfStatement.class, new WhenApply())
-        .gives("applyWhen(x == 8 && iz.Literal(lit) || bigDaddy(d), a.b()._(f,g).f.x(8,g,h*p));");
+        .gives("when(x == 8 && iz.Literal(lit) || bigDaddy(d)).eval(()->a.b()._(f,g).f.x(8,g,h*p));");
   }
 }
