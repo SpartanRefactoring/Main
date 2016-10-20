@@ -114,6 +114,8 @@ public class Analyzer {
             new Exploder(), //
             new JDPattern(), //
             new Examiner(), //
+            new Delegator(), //
+            new Carrier(), //
             null);
   }
 

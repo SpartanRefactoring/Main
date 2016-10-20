@@ -170,9 +170,12 @@ import org.junit.*;
   @Test public void testTips11() {
     leonidasSays.tipper("if($X == null) throw new $N();", "ExplodeOnNullWith($N, $X)", "").tips("if (o == null) throw new RuntimeErrorException();");
   }
-  // @Test public void testTips12() {
-  // leonidasSays.tipper("if($X == null) throw new $N();",
-  // "ExplodeOnNullWith($N, $X)", "").tips("if (o == null) throw new
-  // RuntimeErrorException(\"\");");
-  // }
+
+  @Test public void testTips12() {
+    leonidasSays.tipper("if($X) $N($A);", "when($X).execute((x) -> $N($A));", "").tips("if (o == null) print(8);");
+  }
+
+  @Test public void testTips13() {
+    leonidasSays.tipper("if($X1) $X2.$N($A);", "when($X1).execute((x) -> $X2.$N($A));", "").tips("if (o == null) o.print(8);");
+  }
 }
