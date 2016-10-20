@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert <code>
  * int a = 3;
  * while(Panic) {
- *    ++OS.is.in.denger;
+ *    ++OS.is.in.danger;
  * }
  * </code> to <code>
  * for(int a = 3; Panic;) {
- *    ++OS.is.in.denger;
+ *    ++OS.is.in.danger;
  * }
  * </code>
  * @author Alex Kopzon
@@ -80,7 +80,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Merge with subequent 'while', making a for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + "loop";
+    return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
