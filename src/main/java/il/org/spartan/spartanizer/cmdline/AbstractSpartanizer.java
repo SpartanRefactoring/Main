@@ -192,9 +192,6 @@ public abstract class AbstractSpartanizer {
     System.err.print("\n Summary: " + report.close());
   }
 
-  /**
-   * 
-   */
   private void closePrintWriters() {
     befores.close();
     afters.close();

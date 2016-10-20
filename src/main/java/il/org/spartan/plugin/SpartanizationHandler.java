@@ -64,7 +64,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       long startTime;
 
       @Override public void tick(final Object... ¢) {
-        asynch(() -> {
+        runAsynchronouslyInUIThread(() -> {
           d.getProgressMonitor().subTask(Linguistic.trim(Linguistic.merge(¢)));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
@@ -82,13 +82,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 $.stop();
               else {
                 dialogOpen = true;
-                asynch(() -> d.open());
+                runAsynchronouslyInUIThread(() -> d.open());
               }
             startTime = System.nanoTime();
             break;
           case DIALOG_PROCESSING:
             if (dialogOpen)
-              asynch(() -> {
+              runAsynchronouslyInUIThread(() -> {
                 d.getProgressMonitor().beginTask(Linguistic.trim(NAME), $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
@@ -122,7 +122,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Run asynchronously in UI thread.
    * @param ¢ JD */
-  static void asynch(final Runnable ¢) {
+  static void runAsynchronouslyInUIThread(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
   }
 
@@ -135,7 +135,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.listener(EventMapper.empty(event.class) //
         .expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
           if (openDialog.get())
-            asynch(() -> {
+            runAsynchronouslyInUIThread(() -> {
               d.getProgressMonitor()
                   .subTask(Linguistic.trim($.selection().inner.indexOf(¢) + "/" + $.selection().size() + "\tSpartanizing " + ¢.name()));
               d.getProgressMonitor().worked(1);
@@ -147,7 +147,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expand(EventMapper.recorderOf(event.visit_root).rememberLast(String.class)) //
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.get())
-            asynch(() -> {
+            runAsynchronouslyInUIThread(() -> {
               d.getProgressMonitor().beginTask(Linguistic.trim(NAME), $.selection().size());
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
@@ -158,13 +158,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + nanable(¢.get(event.visit_root)))))
               $.stop();
             else {
-              asynch(() -> d.open());
+              runAsynchronouslyInUIThread(() -> d.open());
               openDialog.set(true);
             }
         })) //
         .expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if (openDialog.get())
-            asynch(() -> d.close());
+            runAsynchronouslyInUIThread(() -> d.close());
         }).does(¢ -> {
           if (openDialog.get())
             Dialogs.message("Done spartanizing " + nanable(¢.get(event.visit_root)) //

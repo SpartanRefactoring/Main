@@ -128,7 +128,7 @@ public final class ForToForInitializers extends ReplaceToNextStatementExclude<Va
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Merge with subequent 'for' loop, rewrite as (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "loop";
+    return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
