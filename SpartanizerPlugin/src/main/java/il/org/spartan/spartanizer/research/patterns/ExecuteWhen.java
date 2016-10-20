@@ -17,8 +17,8 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
   Set<UserDefinedTipper<IfStatement>> tippers = new HashSet<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.tipper("if($X) $N($A);", "execute((x) -> $N($A)).when($X);", ""));
-      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "execute((x) -> $X2.$N($A)).when($X1);", ""));
+      add(TipperFactory.tipper("if($X) $N($A);", "execute((x) -> $N($A)).when($X);", "turn into when(X).execute(Y)"));
+      add(TipperFactory.tipper("if($X1) $X2.$N($A);", "execute((x) -> $X2.$N($A)).when($X1);", "turn into when(X).execute(Y)"));
     }
   };
 
